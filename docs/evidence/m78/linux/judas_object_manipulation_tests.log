@@ -1,0 +1,28 @@
+Carry target orientation
+  OK   eye offset follows arbitrary player orientation and look
+  OK   carry target rotates rigidly with the universe
+  OK   carry orientation is a real orientation, not a fixed world axis
+  OK   look-relative carried orientation rotates with the universe
+Physics-backed pickup/drop/throw
+  OK   whitelisted dynamic body is eligible
+  OK   unlisted dynamic body is rejected
+  OK   static body is rejected
+  OK   eligible body can be picked up
+  OK   only one body can be held
+  OK   carry is achieved by forces moving the authoritative physics body
+  OK   held orientation follows a target through ordinary torque/inertia
+  OK   drop clears held state
+  OK   drop preserves existing body velocity
+  OK   drop preserves existing angular velocity
+  OK   throw releases held object
+  OK   throw adds a mass-scaled impulse in the full look direction
+  OK   throw without a held body is harmless
+Pickup interaction selection
+  OK   pickup uses shared interaction range and facing selection
+  OK   target behind player is not selectable
+  OK   target outside interaction radius is not selectable
+  OK   held object is no longer offered as a pickup target
+  OK   menu-owned throw request cannot alter held state
+  OK   resuming does not apply a stale menu-owned throw
+  OK   reset protocol clears held state before body reset
+PASS (0 failure(s))

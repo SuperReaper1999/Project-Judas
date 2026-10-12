@@ -1,0 +1,32 @@
+﻿{
+    "sceneBeforeSHA256":  "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+    "seconds":  8.3045052,
+    "freeBytes":  32727040,
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "sceneAfterSHA256":  "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\editor-autotest.edit.png",
+                      "sha256":  "57545279b72286a10c464ef996d92da8ebfdcb07b975a24b750531d4d8525573",
+                      "name":  "m78-final2-repair-editor-editor-autotest.edit.png",
+                      "bytes":  177346
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\editor-autotest.play.png",
+                      "sha256":  "dc4963de108a6eeb9f561107e0df9f3dadf02ba1108840367447cf32d6d4fa47",
+                      "name":  "m78-final2-repair-editor-editor-autotest.play.png",
+                      "bytes":  129785
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\editor-autotest.saved.judas",
+                      "sha256":  "f46bcea835e6a49d94453ecd41c23330739ff56379fe4a564e24ce1828cd9a95",
+                      "name":  "m78-final2-repair-editor-editor-autotest.saved.judas",
+                      "bytes":  40001
+                  }
+              ],
+    "executableSHA256":  "d47f99bb93ba7f87089a4139fe320138d1fa30ff76702885b498a5ed260e2f5b",
+    "scope":  "Fresh final native editor relink against proper production repair; unchanged source/layout objects. Ordinary copied project edit/duplicate/undo/Play/Stop/save; VM software GL functional-only.",
+    "authoredScene":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\editor-project\\Scenes\\standing.judas",
+    "exitCode":  0,
+    "sceneUnchanged":  true
+}

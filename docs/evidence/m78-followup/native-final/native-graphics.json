@@ -1,0 +1,7 @@
+﻿{
+    "defaultExit":  3,
+    "default":  "OpenGL library: C:\\Windows\\SYSTEM32\\opengl32.dll\r\nPixel format: 3\r\nContext creation failed 2000\r\n",
+    "mesa":  "OpenGL library: C:\\JudasValidation\\Mesa\\x64\\opengl32.dll\r\nPixel format: 87\r\nVendor: Mesa\r\nRenderer: llvmpipe (LLVM 23.1.2, 256 bits)\r\nVersion: 4.6 (Compatibility Profile) Mesa 26.2.4 (git-9a0169f2a7)\r\n",
+    "session":  1,
+    "mesaExit":  0
+}

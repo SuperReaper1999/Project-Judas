@@ -1,0 +1,21 @@
+{
+  "sourcePriorTargetEqualsActualFirstTarget": true,
+  "actualPriorTarget": [
+    0.9600256681442261,
+    0.279535174369812,
+    0.004058910068124533,
+    0.013939954340457916
+  ],
+  "actualRecalculatedTarget": [
+    0.9601045250892639,
+    0.27925994992256165,
+    0.004077824763953686,
+    0.014019742608070374
+  ],
+  "rotationDifferenceRadians": 0.0005956201742335109,
+  "normalizedAbsoluteDot": 0.9999999556545763,
+  "existingNoChangeThreshold": 0.9999999,
+  "insideExistingTargetDeadband": true,
+  "source": "src/PhysicsWorld.cpp:2702",
+  "scope": "Actual source first target equals last completed command. Newly calculated restored normal-phase target lies inside existing SetJointAngularDrive no-change deadband. This explains retained-command difference without attributing it to cross-platform ULP noise. It is not itself a proven causal failure."
+}

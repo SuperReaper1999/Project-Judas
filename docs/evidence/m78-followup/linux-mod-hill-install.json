@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_mod",
+    "install",
+    ".cache/m78-followup/review-mod-package/game.judasproj",
+    ".cache/m78/hill-map.judasmod"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:15:28.093322+00:00",
+  "seconds": 0.016313055999489734,
+  "exitCode": 1,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "7a43f867b1b5ece3d3053226338eab73883d5adc35c536e98b6584b2bea63af9",
+  "logSHA256": "d60ea4adea03bb1536c26169cf2d926c35342b3397b501746676ba7fbe8eb7fc",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

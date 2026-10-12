@@ -1,0 +1,27 @@
+﻿{
+    "sceneBeforeSHA256":  "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+    "seconds":  10.4818392,
+    "sceneAfterSHA256":  "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+    "freeBytes":  9617408,
+    "observations":  [
+                         {
+                             "sha256":  "57545279b72286a10c464ef996d92da8ebfdcb07b975a24b750531d4d8525573",
+                             "name":  "m78-closure-editor_v3-editor-autotest.edit.png",
+                             "bytes":  177346
+                         },
+                         {
+                             "sha256":  "5ef93cc2689985c645705dfd0b2f7d2e2827b57654f3df4f96bea28a1ee30e76",
+                             "name":  "m78-closure-editor_v3-editor-autotest.play.png",
+                             "bytes":  129828
+                         },
+                         {
+                             "sha256":  "f46bcea835e6a49d94453ecd41c23330739ff56379fe4a564e24ce1828cd9a95",
+                             "name":  "m78-closure-editor_v3-editor-autotest.saved.judas",
+                             "bytes":  40001
+                         }
+                     ],
+    "scope":  "Final source explicit-PW/WP link, unchanged editor-source objects; copied ordinary project edit/duplicate/undo/Play/Stop/save. NativeWindows softwareGL functionality only.",
+    "authoredScene":  "C:\\JudasValidation\\M78ClosureResults\\editor-project\\Scenes\\standing.judas",
+    "exitCode":  0,
+    "sceneUnchanged":  true
+}

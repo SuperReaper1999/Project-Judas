@@ -1,0 +1,26 @@
+{
+  "id": "judas_combustion_tests",
+  "source": "tests/CombustionTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_combustion_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e74a8225124823182716bc2b45cacb65fbdb51b1322d70d9682248f12f05fb67",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 76,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_combustion_tests.log",
+  "logSHA256": "5c185ae6c863f599b70ed51c02737d051132b57a4b10842fb783fd150975dc72",
+  "seconds": 0.07240647400067246
+}

@@ -1,0 +1,5 @@
+$out='C:\JudasValidation\M78FollowupResults';$files=@();Get-ChildItem $out -Filter '*retry*'|ForEach-Object {$files+=@{name=$_.Name;bytes=$_.Length;modified=$_.LastWriteTime.ToString('o')}};$procs=@();Get-Process cl,link,lib,MSBuild,cmake,ninja -ErrorAction SilentlyContinue|ForEach-Object {$procs+=@{name=$_.ProcessName;pid=$_.Id;cpu=$_.CPU}};$lines=@();foreach($name in @('m78-candidate-retry-configure.log','m78-candidate-retry-build.log','m78-candidate-retry-build-failure.log')){$p=Join-Path $out $name;if(Test-Path $p){foreach($line in ([IO.File]::ReadAllLines($p)|Select-Object -Last 4)){$lines+=[string]::Join('',[char[]]$line)}}}
+$result=@{free=(Get-PSDrive C).Free;files=$files;processes=$procs;tail=$lines}|ConvertTo-Json -Depth 4 -Compress
+Invoke-WebRequest -UseBasicParsing http://192.168.122.1:8872/m78-native-build-progress.json -Method Post -Body $result -ContentType application/json|Out-Null
+
+foreach($name in @('m78-candidate-retry-build.log','m78-candidate-retry-configure.log')){$p=Join-Path $out $name;if(Test-Path $p){try{Invoke-WebRequest -UseBasicParsing ('http://192.168.122.1:8872/progress-'+$name) -Method Post -InFile $p|Out-Null}catch{}}}

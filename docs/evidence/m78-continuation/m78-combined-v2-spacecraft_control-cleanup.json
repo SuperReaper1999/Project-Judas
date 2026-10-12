@@ -1,0 +1,19 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_spacecraft_control.exe",
+                      "sha256":  "dcb928fd726981df1134245ab3257952c7160202b0bbcbcca7a7ff71e1166861",
+                      "name":  "m78_combined-v2_spacecraft_control.exe",
+                      "bytes":  2102272
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\spacecraft_control-0.obj",
+                      "sha256":  "3ef1f11b3186d218ad5a945a1144998f1e54918fbb303ba3e59254b476b17def",
+                      "name":  "spacecraft_control-0.obj",
+                      "bytes":  106008
+                  }
+              ],
+    "archiveSHA256":  "a3969d47705888bcede6bdfdb4392a7e240c99ea19deeda829e12f6a49bc7619",
+    "freeBytes":  465010688
+}

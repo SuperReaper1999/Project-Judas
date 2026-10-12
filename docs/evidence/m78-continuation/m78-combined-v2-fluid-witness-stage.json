@@ -1,0 +1,6 @@
+﻿{
+    "sameFinalArchive":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "scope":  "Stage immutable supplemental original FLU-001 witness only; no fluid implementation, input, timestep, or threshold change.",
+    "source":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\ProductionFluidTests.cpp",
+    "sourceSHA256":  "f8cb588439c884c8709a4c3ac333dbd727d390f22b35ad9a51ae0756428fb3ae"
+}

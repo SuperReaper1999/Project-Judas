@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_mod",
+    "package",
+    ".cache/m78-followup/dependency-final-project/landscape_fork.judasproj",
+    ".cache/m78-followup/shared-terrain-fixed.judasmod"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:15:26.810566+00:00",
+  "seconds": 0.31488910999905784,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "7a43f867b1b5ece3d3053226338eab73883d5adc35c536e98b6584b2bea63af9",
+  "logSHA256": "209a225917f3aa406b070ce351b15b603c9b86b9f5d4bb5dce95e39b8908635c",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

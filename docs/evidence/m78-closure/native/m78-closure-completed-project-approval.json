@@ -1,0 +1,724 @@
+{
+  "rows": [
+    {
+      "name": "m78-closure-mixed-cold-project.zip",
+      "bytes": 459519,
+      "files": [
+        {
+          "path": "balance_lab.judasproj",
+          "sha256": "8d9bca3703e157c55326180ede9cb731edc5760dd9964570169833b1022e91fa",
+          "bytes": 10611
+        },
+        {
+          "path": "README.md",
+          "sha256": "74410e7315c6e66d3741f4487d582a01fa955ee9c755bc891810829bba4c4eb0",
+          "bytes": 3401
+        },
+        {
+          "path": ".cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "103e0aa6ce8e4a08634bc75b361eba6433167eaa14076989ef4893015a3c27e1",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "d7c333ee7c9c9cb949194008e0509dd84466b27b3e5786ccdbb2015119f1604c",
+          "bytes": 33279
+        },
+        {
+          "path": ".cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "fb9cb5878f5218bb6b7ae65f9d978060bfe582d9c571d99cae4a4a8b0b28fe2e",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "2a5487b447aa5552383d56ba6bbdfb51ad0eab8fc8f0bbe52cf1500ed76f4103",
+          "bytes": 33339
+        },
+        {
+          "path": ".cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "10c99372e6ba009cfc42950ae5f2d6f02a76f2a6eb0f9daaa33b2c2607ae7003",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "09bc2c3237eaced91e053a1a3975a5522a9756aab06e63b4c0953f3d720fe84b",
+          "bytes": 33383
+        },
+        {
+          "path": "Assets/LICENSE.txt",
+          "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+          "bytes": 184
+        },
+        {
+          "path": "Assets/fonts/DejaVuSans.ttf",
+          "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+          "bytes": 759720
+        },
+        {
+          "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+          "sha256": "4fc9a1adec88a69847c26bda7c323aad59eccd15c3cc2fd21103b8ae80129416",
+          "bytes": 167
+        },
+        {
+          "path": "Assets/fonts/LICENSE.txt",
+          "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+          "bytes": 3859
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel",
+          "sha256": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0",
+          "bytes": 34818
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel.import-report.json",
+          "sha256": "0e8ad80d708d4dce594ebdbc422b59c5f160e02ccd4cf40ccbab82aa42834b04",
+          "bytes": 2688
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel.judasmeta",
+          "sha256": "b5a139bdeb42968c80f92e9b7d9fe5222c8037a0d5b23666071fc3d037675117",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel",
+          "sha256": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e",
+          "bytes": 34652
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel.import-report.json",
+          "sha256": "44fb2ffd2630ba8f11c92050be185f018b2f9c3407ab60fdcd6534a31e1be1ed",
+          "bytes": 2560
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel.judasmeta",
+          "sha256": "13263195d801c15b64422ded80d2c41b73488c872c9191eea322081caf8e5ff9",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/models/stride.judasmodel",
+          "sha256": "fa6741ac4795b3faee8db92871f417ca7ae99154078319a9bb0fbdba2f0c4876",
+          "bytes": 34742
+        },
+        {
+          "path": "Assets/models/stride.judasmodel.import-report.json",
+          "sha256": "b6288bd8e5e941cb90d5e4546d7986b85b707bc47e9558b72066e4364b14771b",
+          "bytes": 2624
+        },
+        {
+          "path": "Assets/models/stride.judasmodel.judasmeta",
+          "sha256": "408e4a42573f1cbd4ee92587258c5f521f6c50e99520c8d28bbe3964c9b8e625",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/prefabs/anchor.judasprefab",
+          "sha256": "8fd1953cf1145cadc587491976e338a8db0008ce239a0163847a4c322e74c93b",
+          "bytes": 18213
+        },
+        {
+          "path": "Assets/prefabs/anchor.judasprefab.judasmeta",
+          "sha256": "2fbd09618a59ad245deab178d59a78a16145be53525337da48a9d62997772427",
+          "bytes": 175
+        },
+        {
+          "path": "Assets/scripts/lab.js",
+          "sha256": "c98db0d35f6587a6427ef6d11ab4e306e5f61e69c8fdc9cf99d7a0b413929e5d",
+          "bytes": 8894
+        },
+        {
+          "path": "Assets/scripts/lab.js.judasmeta",
+          "sha256": "180b7c22069997ac97cca74f485f6138d1bd070b329a59593d3839c06aa46662",
+          "bytes": 163
+        },
+        {
+          "path": "Assets/ui/lab.judasui",
+          "sha256": "81a50aa26b288a3a91169239760c8375f98fd657040deb8717c37f2610cfd52c",
+          "bytes": 9832
+        },
+        {
+          "path": "Assets/ui/lab.judasui.judasmeta",
+          "sha256": "034e38b6456720e1828068209c776e540b6a5e2a8fc4b7b5586f02d45ba18a31",
+          "bytes": 159
+        },
+        {
+          "path": "Authoring/profiles.json",
+          "sha256": "81ba2dc1302cc3cd3a6be173969003b61036f8024f7e7cda2d4a3867d33d9f89",
+          "bytes": 3608
+        },
+        {
+          "path": "Authoring/template-empty.json",
+          "sha256": "47e741f42967e13b1f7b97350a2b817247b33714e7b2c33355a9cbc51cf50966",
+          "bytes": 950
+        },
+        {
+          "path": "Authoring/template-gravity.json",
+          "sha256": "8c52b3b91a9494f3685849dbdb3088ccb272522f85a095a901ad722deff36e95",
+          "bytes": 1225
+        },
+        {
+          "path": "Authoring/template-render-animation-motor.json",
+          "sha256": "b08834c822079d1ad61af48d763d3a38e82b73b7208bead036a5b9518cea71af",
+          "bytes": 2344
+        },
+        {
+          "path": "Authoring/template-render-body.json",
+          "sha256": "7dae9d355b8a57c5460ea8a32bd73fe231accea6f637977fb4a2257f40984426",
+          "bytes": 2134
+        },
+        {
+          "path": "Imports/anchor.judasimport",
+          "sha256": "1200622260fae5caa448ef4c5d14bd78feb19daeb015a3220883540e6fefd96b",
+          "bytes": 346
+        },
+        {
+          "path": "Imports/receiver.judasimport",
+          "sha256": "eb748f2632665d47dfd5b1652660b2e2a70f2f9acf1ea6802cd7b4f6d59e7814",
+          "bytes": 350
+        },
+        {
+          "path": "Imports/stride.judasimport",
+          "sha256": "2b264225fbecec48e5fe0d59ad114d4901321f5c3f17f5903c3d216ed95f6be3",
+          "bytes": 346
+        },
+        {
+          "path": "Scenes/radial.judas",
+          "sha256": "906c91c3efefdf5d718013f0b231d3c3f8e1af9a1d0d513e84c1ed5836ff9587",
+          "bytes": 76092
+        },
+        {
+          "path": "Scenes/recovery.judas",
+          "sha256": "87677ca212617907ea9e3f69ac280f1e22e2fa405de0694d099f85e8f7303018",
+          "bytes": 77663
+        },
+        {
+          "path": "Scenes/standing.judas",
+          "sha256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+          "bytes": 75978
+        },
+        {
+          "path": "Scenes/supports.judas",
+          "sha256": "a1f6b3d2836449f1cd1e956da00f29a19e43787aa40239c0088296c51a217d48",
+          "bytes": 84661
+        },
+        {
+          "path": "Sources/anchor.gltf",
+          "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6",
+          "bytes": 16166
+        },
+        {
+          "path": "Sources/LICENSE.txt",
+          "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+          "bytes": 184
+        },
+        {
+          "path": "Sources/receiver.gltf",
+          "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb",
+          "bytes": 16136
+        },
+        {
+          "path": "Sources/stride.gltf",
+          "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e",
+          "bytes": 16123
+        },
+        {
+          "path": "Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf",
+          "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6",
+          "bytes": 16166
+        },
+        {
+          "path": "Sources/ef577ba3b3430811e4d8e6b80f7bbf3e/stride.gltf",
+          "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e",
+          "bytes": 16123
+        },
+        {
+          "path": "Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf",
+          "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb",
+          "bytes": 16136
+        }
+      ],
+      "archive": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed-cold-project.zip",
+      "sha256": "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+      "project": "C:\\JudasValidation\\M78ClosureResults\\mixed-cold\\project"
+    },
+    {
+      "name": "m78-closure-mixed-endpoint-project.zip",
+      "bytes": 459519,
+      "files": [
+        {
+          "path": "balance_lab.judasproj",
+          "sha256": "8d9bca3703e157c55326180ede9cb731edc5760dd9964570169833b1022e91fa",
+          "bytes": 10611
+        },
+        {
+          "path": "README.md",
+          "sha256": "74410e7315c6e66d3741f4487d582a01fa955ee9c755bc891810829bba4c4eb0",
+          "bytes": 3401
+        },
+        {
+          "path": ".cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "103e0aa6ce8e4a08634bc75b361eba6433167eaa14076989ef4893015a3c27e1",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "d7c333ee7c9c9cb949194008e0509dd84466b27b3e5786ccdbb2015119f1604c",
+          "bytes": 33279
+        },
+        {
+          "path": ".cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "fb9cb5878f5218bb6b7ae65f9d978060bfe582d9c571d99cae4a4a8b0b28fe2e",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "2a5487b447aa5552383d56ba6bbdfb51ad0eab8fc8f0bbe52cf1500ed76f4103",
+          "bytes": 33339
+        },
+        {
+          "path": ".cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "10c99372e6ba009cfc42950ae5f2d6f02a76f2a6eb0f9daaa33b2c2607ae7003",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "09bc2c3237eaced91e053a1a3975a5522a9756aab06e63b4c0953f3d720fe84b",
+          "bytes": 33383
+        },
+        {
+          "path": "Assets/LICENSE.txt",
+          "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+          "bytes": 184
+        },
+        {
+          "path": "Assets/fonts/DejaVuSans.ttf",
+          "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+          "bytes": 759720
+        },
+        {
+          "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+          "sha256": "4fc9a1adec88a69847c26bda7c323aad59eccd15c3cc2fd21103b8ae80129416",
+          "bytes": 167
+        },
+        {
+          "path": "Assets/fonts/LICENSE.txt",
+          "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+          "bytes": 3859
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel",
+          "sha256": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0",
+          "bytes": 34818
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel.import-report.json",
+          "sha256": "0e8ad80d708d4dce594ebdbc422b59c5f160e02ccd4cf40ccbab82aa42834b04",
+          "bytes": 2688
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel.judasmeta",
+          "sha256": "b5a139bdeb42968c80f92e9b7d9fe5222c8037a0d5b23666071fc3d037675117",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel",
+          "sha256": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e",
+          "bytes": 34652
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel.import-report.json",
+          "sha256": "44fb2ffd2630ba8f11c92050be185f018b2f9c3407ab60fdcd6534a31e1be1ed",
+          "bytes": 2560
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel.judasmeta",
+          "sha256": "13263195d801c15b64422ded80d2c41b73488c872c9191eea322081caf8e5ff9",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/models/stride.judasmodel",
+          "sha256": "fa6741ac4795b3faee8db92871f417ca7ae99154078319a9bb0fbdba2f0c4876",
+          "bytes": 34742
+        },
+        {
+          "path": "Assets/models/stride.judasmodel.import-report.json",
+          "sha256": "b6288bd8e5e941cb90d5e4546d7986b85b707bc47e9558b72066e4364b14771b",
+          "bytes": 2624
+        },
+        {
+          "path": "Assets/models/stride.judasmodel.judasmeta",
+          "sha256": "408e4a42573f1cbd4ee92587258c5f521f6c50e99520c8d28bbe3964c9b8e625",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/prefabs/anchor.judasprefab",
+          "sha256": "8fd1953cf1145cadc587491976e338a8db0008ce239a0163847a4c322e74c93b",
+          "bytes": 18213
+        },
+        {
+          "path": "Assets/prefabs/anchor.judasprefab.judasmeta",
+          "sha256": "2fbd09618a59ad245deab178d59a78a16145be53525337da48a9d62997772427",
+          "bytes": 175
+        },
+        {
+          "path": "Assets/scripts/lab.js",
+          "sha256": "c98db0d35f6587a6427ef6d11ab4e306e5f61e69c8fdc9cf99d7a0b413929e5d",
+          "bytes": 8894
+        },
+        {
+          "path": "Assets/scripts/lab.js.judasmeta",
+          "sha256": "180b7c22069997ac97cca74f485f6138d1bd070b329a59593d3839c06aa46662",
+          "bytes": 163
+        },
+        {
+          "path": "Assets/ui/lab.judasui",
+          "sha256": "81a50aa26b288a3a91169239760c8375f98fd657040deb8717c37f2610cfd52c",
+          "bytes": 9832
+        },
+        {
+          "path": "Assets/ui/lab.judasui.judasmeta",
+          "sha256": "034e38b6456720e1828068209c776e540b6a5e2a8fc4b7b5586f02d45ba18a31",
+          "bytes": 159
+        },
+        {
+          "path": "Authoring/profiles.json",
+          "sha256": "81ba2dc1302cc3cd3a6be173969003b61036f8024f7e7cda2d4a3867d33d9f89",
+          "bytes": 3608
+        },
+        {
+          "path": "Authoring/template-empty.json",
+          "sha256": "47e741f42967e13b1f7b97350a2b817247b33714e7b2c33355a9cbc51cf50966",
+          "bytes": 950
+        },
+        {
+          "path": "Authoring/template-gravity.json",
+          "sha256": "8c52b3b91a9494f3685849dbdb3088ccb272522f85a095a901ad722deff36e95",
+          "bytes": 1225
+        },
+        {
+          "path": "Authoring/template-render-animation-motor.json",
+          "sha256": "b08834c822079d1ad61af48d763d3a38e82b73b7208bead036a5b9518cea71af",
+          "bytes": 2344
+        },
+        {
+          "path": "Authoring/template-render-body.json",
+          "sha256": "7dae9d355b8a57c5460ea8a32bd73fe231accea6f637977fb4a2257f40984426",
+          "bytes": 2134
+        },
+        {
+          "path": "Imports/anchor.judasimport",
+          "sha256": "1200622260fae5caa448ef4c5d14bd78feb19daeb015a3220883540e6fefd96b",
+          "bytes": 346
+        },
+        {
+          "path": "Imports/receiver.judasimport",
+          "sha256": "eb748f2632665d47dfd5b1652660b2e2a70f2f9acf1ea6802cd7b4f6d59e7814",
+          "bytes": 350
+        },
+        {
+          "path": "Imports/stride.judasimport",
+          "sha256": "2b264225fbecec48e5fe0d59ad114d4901321f5c3f17f5903c3d216ed95f6be3",
+          "bytes": 346
+        },
+        {
+          "path": "Scenes/radial.judas",
+          "sha256": "906c91c3efefdf5d718013f0b231d3c3f8e1af9a1d0d513e84c1ed5836ff9587",
+          "bytes": 76092
+        },
+        {
+          "path": "Scenes/recovery.judas",
+          "sha256": "87677ca212617907ea9e3f69ac280f1e22e2fa405de0694d099f85e8f7303018",
+          "bytes": 77663
+        },
+        {
+          "path": "Scenes/standing.judas",
+          "sha256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+          "bytes": 75978
+        },
+        {
+          "path": "Scenes/supports.judas",
+          "sha256": "a1f6b3d2836449f1cd1e956da00f29a19e43787aa40239c0088296c51a217d48",
+          "bytes": 84661
+        },
+        {
+          "path": "Sources/anchor.gltf",
+          "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6",
+          "bytes": 16166
+        },
+        {
+          "path": "Sources/LICENSE.txt",
+          "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+          "bytes": 184
+        },
+        {
+          "path": "Sources/receiver.gltf",
+          "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb",
+          "bytes": 16136
+        },
+        {
+          "path": "Sources/stride.gltf",
+          "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e",
+          "bytes": 16123
+        },
+        {
+          "path": "Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf",
+          "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6",
+          "bytes": 16166
+        },
+        {
+          "path": "Sources/ef577ba3b3430811e4d8e6b80f7bbf3e/stride.gltf",
+          "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e",
+          "bytes": 16123
+        },
+        {
+          "path": "Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf",
+          "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb",
+          "bytes": 16136
+        }
+      ],
+      "archive": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed-endpoint-project.zip",
+      "sha256": "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+      "project": "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint\\project"
+    },
+    {
+      "name": "m78-closure-mixed-endpoint-pair-v2-project.zip",
+      "bytes": 459519,
+      "files": [
+        {
+          "path": "balance_lab.judasproj",
+          "sha256": "8d9bca3703e157c55326180ede9cb731edc5760dd9964570169833b1022e91fa",
+          "bytes": 10611
+        },
+        {
+          "path": "README.md",
+          "sha256": "74410e7315c6e66d3741f4487d582a01fa955ee9c755bc891810829bba4c4eb0",
+          "bytes": 3401
+        },
+        {
+          "path": ".cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "103e0aa6ce8e4a08634bc75b361eba6433167eaa14076989ef4893015a3c27e1",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "d7c333ee7c9c9cb949194008e0509dd84466b27b3e5786ccdbb2015119f1604c",
+          "bytes": 33279
+        },
+        {
+          "path": ".cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "fb9cb5878f5218bb6b7ae65f9d978060bfe582d9c571d99cae4a4a8b0b28fe2e",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "2a5487b447aa5552383d56ba6bbdfb51ad0eab8fc8f0bbe52cf1500ed76f4103",
+          "bytes": 33339
+        },
+        {
+          "path": ".cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+          "sha256": "10c99372e6ba009cfc42950ae5f2d6f02a76f2a6eb0f9daaa33b2c2607ae7003",
+          "bytes": 144
+        },
+        {
+          "path": ".cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+          "sha256": "09bc2c3237eaced91e053a1a3975a5522a9756aab06e63b4c0953f3d720fe84b",
+          "bytes": 33383
+        },
+        {
+          "path": "Assets/LICENSE.txt",
+          "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+          "bytes": 184
+        },
+        {
+          "path": "Assets/fonts/DejaVuSans.ttf",
+          "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+          "bytes": 759720
+        },
+        {
+          "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+          "sha256": "4fc9a1adec88a69847c26bda7c323aad59eccd15c3cc2fd21103b8ae80129416",
+          "bytes": 167
+        },
+        {
+          "path": "Assets/fonts/LICENSE.txt",
+          "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+          "bytes": 3859
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel",
+          "sha256": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0",
+          "bytes": 34818
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel.import-report.json",
+          "sha256": "0e8ad80d708d4dce594ebdbc422b59c5f160e02ccd4cf40ccbab82aa42834b04",
+          "bytes": 2688
+        },
+        {
+          "path": "Assets/models/anchor.judasmodel.judasmeta",
+          "sha256": "b5a139bdeb42968c80f92e9b7d9fe5222c8037a0d5b23666071fc3d037675117",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel",
+          "sha256": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e",
+          "bytes": 34652
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel.import-report.json",
+          "sha256": "44fb2ffd2630ba8f11c92050be185f018b2f9c3407ab60fdcd6534a31e1be1ed",
+          "bytes": 2560
+        },
+        {
+          "path": "Assets/models/receiver.judasmodel.judasmeta",
+          "sha256": "13263195d801c15b64422ded80d2c41b73488c872c9191eea322081caf8e5ff9",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/models/stride.judasmodel",
+          "sha256": "fa6741ac4795b3faee8db92871f417ca7ae99154078319a9bb0fbdba2f0c4876",
+          "bytes": 34742
+        },
+        {
+          "path": "Assets/models/stride.judasmodel.import-report.json",
+          "sha256": "b6288bd8e5e941cb90d5e4546d7986b85b707bc47e9558b72066e4364b14771b",
+          "bytes": 2624
+        },
+        {
+          "path": "Assets/models/stride.judasmodel.judasmeta",
+          "sha256": "408e4a42573f1cbd4ee92587258c5f521f6c50e99520c8d28bbe3964c9b8e625",
+          "bytes": 88
+        },
+        {
+          "path": "Assets/prefabs/anchor.judasprefab",
+          "sha256": "8fd1953cf1145cadc587491976e338a8db0008ce239a0163847a4c322e74c93b",
+          "bytes": 18213
+        },
+        {
+          "path": "Assets/prefabs/anchor.judasprefab.judasmeta",
+          "sha256": "2fbd09618a59ad245deab178d59a78a16145be53525337da48a9d62997772427",
+          "bytes": 175
+        },
+        {
+          "path": "Assets/scripts/lab.js",
+          "sha256": "c98db0d35f6587a6427ef6d11ab4e306e5f61e69c8fdc9cf99d7a0b413929e5d",
+          "bytes": 8894
+        },
+        {
+          "path": "Assets/scripts/lab.js.judasmeta",
+          "sha256": "180b7c22069997ac97cca74f485f6138d1bd070b329a59593d3839c06aa46662",
+          "bytes": 163
+        },
+        {
+          "path": "Assets/ui/lab.judasui",
+          "sha256": "81a50aa26b288a3a91169239760c8375f98fd657040deb8717c37f2610cfd52c",
+          "bytes": 9832
+        },
+        {
+          "path": "Assets/ui/lab.judasui.judasmeta",
+          "sha256": "034e38b6456720e1828068209c776e540b6a5e2a8fc4b7b5586f02d45ba18a31",
+          "bytes": 159
+        },
+        {
+          "path": "Authoring/profiles.json",
+          "sha256": "81ba2dc1302cc3cd3a6be173969003b61036f8024f7e7cda2d4a3867d33d9f89",
+          "bytes": 3608
+        },
+        {
+          "path": "Authoring/template-empty.json",
+          "sha256": "47e741f42967e13b1f7b97350a2b817247b33714e7b2c33355a9cbc51cf50966",
+          "bytes": 950
+        },
+        {
+          "path": "Authoring/template-gravity.json",
+          "sha256": "8c52b3b91a9494f3685849dbdb3088ccb272522f85a095a901ad722deff36e95",
+          "bytes": 1225
+        },
+        {
+          "path": "Authoring/template-render-animation-motor.json",
+          "sha256": "b08834c822079d1ad61af48d763d3a38e82b73b7208bead036a5b9518cea71af",
+          "bytes": 2344
+        },
+        {
+          "path": "Authoring/template-render-body.json",
+          "sha256": "7dae9d355b8a57c5460ea8a32bd73fe231accea6f637977fb4a2257f40984426",
+          "bytes": 2134
+        },
+        {
+          "path": "Imports/anchor.judasimport",
+          "sha256": "1200622260fae5caa448ef4c5d14bd78feb19daeb015a3220883540e6fefd96b",
+          "bytes": 346
+        },
+        {
+          "path": "Imports/receiver.judasimport",
+          "sha256": "eb748f2632665d47dfd5b1652660b2e2a70f2f9acf1ea6802cd7b4f6d59e7814",
+          "bytes": 350
+        },
+        {
+          "path": "Imports/stride.judasimport",
+          "sha256": "2b264225fbecec48e5fe0d59ad114d4901321f5c3f17f5903c3d216ed95f6be3",
+          "bytes": 346
+        },
+        {
+          "path": "Scenes/radial.judas",
+          "sha256": "906c91c3efefdf5d718013f0b231d3c3f8e1af9a1d0d513e84c1ed5836ff9587",
+          "bytes": 76092
+        },
+        {
+          "path": "Scenes/recovery.judas",
+          "sha256": "87677ca212617907ea9e3f69ac280f1e22e2fa405de0694d099f85e8f7303018",
+          "bytes": 77663
+        },
+        {
+          "path": "Scenes/standing.judas",
+          "sha256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+          "bytes": 75978
+        },
+        {
+          "path": "Scenes/supports.judas",
+          "sha256": "a1f6b3d2836449f1cd1e956da00f29a19e43787aa40239c0088296c51a217d48",
+          "bytes": 84661
+        },
+        {
+          "path": "Sources/anchor.gltf",
+          "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6",
+          "bytes": 16166
+        },
+        {
+          "path": "Sources/LICENSE.txt",
+          "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+          "bytes": 184
+        },
+        {
+          "path": "Sources/receiver.gltf",
+          "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb",
+          "bytes": 16136
+        },
+        {
+          "path": "Sources/stride.gltf",
+          "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e",
+          "bytes": 16123
+        },
+        {
+          "path": "Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf",
+          "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6",
+          "bytes": 16166
+        },
+        {
+          "path": "Sources/ef577ba3b3430811e4d8e6b80f7bbf3e/stride.gltf",
+          "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e",
+          "bytes": 16123
+        },
+        {
+          "path": "Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf",
+          "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb",
+          "bytes": 16136
+        }
+      ],
+      "archive": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed-endpoint-pair-v2-project.zip",
+      "sha256": "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+      "project": "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\project"
+    }
+  ],
+  "scope": "Only three named completed NEW closure copied projects, after both read/writer finished; original projects, snapshots/logs/runtime/source unchanged",
+  "hostVerified": true,
+  "verification": "Lossless archive SHA/size plus every decompressed file exact SHA/size; Windows ZIP and manifest relative separators normalized for comparison only"
+}

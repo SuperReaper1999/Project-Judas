@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "state_observer",
+  "archiveSHA256": "4b23210ee7d45cc8bd522f9cf802a2984df3335c9f11e9105f9e123b6a11d74b",
+  "archiveBytes": 5108424,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_state_observer.exe",
+      "sha256": "ca873c40dc8ec5b0addd7ea80e12ec4aab7218f1ed2e11f4361eeae1bc0c7a61",
+      "name": "m78_combined-v2_state_observer.exe",
+      "bytes": 9528832
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\state_observer-0.obj",
+      "sha256": "ce2a8c5e55c5cace5b12b352e5dd7de08920dee98252a850305019efc0fd3c8d",
+      "name": "state_observer-0.obj",
+      "bytes": 3023236
+    }
+  ]
+}

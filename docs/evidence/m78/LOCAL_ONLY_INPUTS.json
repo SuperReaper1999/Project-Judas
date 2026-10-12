@@ -1,0 +1,43 @@
+{
+  "purpose": "Local reproduction prerequisite; unavailable in clean checkout by deliberate licensing exclusion",
+  "files": [
+    {
+      "path": "projects/import_lab/Assets/models/skate_original.judasmodel",
+      "sha256": "611932b1eb7bc920d4858b9563e7a0d2ed3b9ae42c250d782d0ec905e5fa1275",
+      "bytes": 142653401
+    },
+    {
+      "path": "projects/import_lab/Assets/models/skate_original.judasmodel.judasmeta",
+      "sha256": "caf27aeabec5438e4b445198c97a141e16b0b9b3be2b4e310675cdf4c5c5c229",
+      "bytes": 88
+    },
+    {
+      "path": "projects/import_lab/Assets/models/skate_original.judasmodel.import-report.json",
+      "sha256": "d065c634a74b483858b423d6cb493d27f54330e2ba1ebab1141fead402da18d6",
+      "bytes": 14816
+    },
+    {
+      "path": "projects/import_lab/Assets/models/halfpipe.judasmodel.import-report.json",
+      "sha256": "d14951a9823a8e7bd1e912994c528827c1ee04f56b1bc96d5bbd6f2e591527cc",
+      "bytes": 11403
+    },
+    {
+      "path": "projects/import_lab/Assets/models/halfpipe.judasmodel.judasmeta",
+      "sha256": "31f607a642188e571cd4149faa3fbb0167a722f668296585852efb253d1cc307",
+      "bytes": 88
+    },
+    {
+      "path": "projects/import_lab/Assets/models/halfpipe.judasmodel",
+      "sha256": "7ba04ba9bc88a9eb1155d234f8d789d10f1bfc343f00e12424e8233183e7842d",
+      "bytes": 15282861
+    },
+    {
+      "path": ".cache/m66/originals/Skateboarder.fbx",
+      "sha256": "953aa682ae141b7ba09656c6873150aa3f06cc38ea4a7f5500a357440bc64814",
+      "bytes": 53981136,
+      "reason": "unchanged legacy reimport test uses this exact relative fixture path"
+    }
+  ],
+  "redistributed": false,
+  "originalFilesChanged": false
+}

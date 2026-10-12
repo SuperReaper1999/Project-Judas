@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_rigid_motion_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:08:44.730347+00:00",
+  "seconds": 0.06437724199713557,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "a056ad2901c9133eb71dab9e6b70ccaf004b561f5a53700369a2fd7177796e55",
+  "logSHA256": "d35b2a1498aea77c19c745311d3c778a5b7c1e8d7ac472817d4d3c3491e6bcda",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

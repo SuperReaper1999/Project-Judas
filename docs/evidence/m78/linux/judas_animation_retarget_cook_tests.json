@@ -1,0 +1,27 @@
+{
+  "id": "judas_animation_retarget_cook_tests",
+  "source": "tests/AnimationRetargetCookTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_cook_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_animation_retarget_cook_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e7bfc88759ccdc02518b2b77506bb57692cc166e8e57d67c1b1e1b7bb6f56267",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 37,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_animation_retarget_cook_tests.log",
+  "logSHA256": "602225fc78a7f4d78402d9d096b0c42fddde4733f5fedb1fa9ca81662408cc26",
+  "seconds": 0.9133176260002074
+}

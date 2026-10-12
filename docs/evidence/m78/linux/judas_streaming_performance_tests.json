@@ -1,0 +1,27 @@
+{
+  "id": "judas_streaming_performance_tests",
+  "source": "tests/StreamingPerformanceTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_performance_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_streaming_performance_tests"
+  ],
+  "adapter": "inspected owned output path; full existing modes",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "9684a618ba0bdc32b430b87fdb97107b59e16c1840183192ed98dc3fc6c64cbc",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_streaming_performance_tests.log",
+  "logSHA256": "84ce4daaeabd02ef13d842e6571daed03f753456b9d1ce7a523a9f2fa57b963b",
+  "seconds": 87.58019441100078
+}

@@ -1,0 +1,1880 @@
+{
+  "commands": {
+    "actualPreReplayDriveDifferences": [
+      {
+        "joint": 0,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 0,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 0,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 0,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 0,
+        "field": "target",
+        "source": [
+          0.996474027633667,
+          0.08362583816051483,
+          0.000568490824662149,
+          -0.0067736199125647545
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 1,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 1,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 1,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 1,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 1,
+        "field": "target",
+        "source": [
+          0.9695813655853271,
+          -0.2447691708803177,
+          -4.321918822824955e-08,
+          -4.2852479964494705e-07
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 2,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 2,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 2,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 2,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 2,
+        "field": "target",
+        "source": [
+          0.9866317510604858,
+          0.1628241091966629,
+          0.00110685417894274,
+          0.006707147695124149
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 3,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 3,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 3,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 3,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 3,
+        "field": "target",
+        "source": [
+          -0.9001833200454712,
+          -0.4352664053440094,
+          -0.006355894263833761,
+          0.013144687749445438
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 4,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 4,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 4,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 4,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 4,
+        "field": "target",
+        "source": [
+          -0.7428759932518005,
+          0.6694290637969971,
+          5.820766091346741e-09,
+          5.541369318962097e-08
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 5,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 5,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 5,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 5,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 5,
+        "field": "target",
+        "source": [
+          0.9600256681442261,
+          0.279535174369812,
+          0.004058910068124533,
+          0.013939954340457916
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "jointCommands": [
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 0,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 1,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 2,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 3,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 4,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 5,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "seeds": {
+    "actualPreReplayDriveDifferences": [
+      {
+        "joint": 0,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 0,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 0,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 0,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 0,
+        "field": "target",
+        "source": [
+          0.996474027633667,
+          0.08362583816051483,
+          0.000568490824662149,
+          -0.0067736199125647545
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 1,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 1,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 1,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 1,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 1,
+        "field": "target",
+        "source": [
+          0.9695813655853271,
+          -0.2447691708803177,
+          -4.321918822824955e-08,
+          -4.2852479964494705e-07
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 2,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 2,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 2,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 2,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 2,
+        "field": "target",
+        "source": [
+          0.9866317510604858,
+          0.1628241091966629,
+          0.00110685417894274,
+          0.006707147695124149
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 3,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 3,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 3,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 3,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 3,
+        "field": "target",
+        "source": [
+          -0.9001833200454712,
+          -0.4352664053440094,
+          -0.006355894263833761,
+          0.013144687749445438
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 4,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 4,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 4,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 4,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 4,
+        "field": "target",
+        "source": [
+          -0.7428759932518005,
+          0.6694290637969971,
+          5.820766091346741e-09,
+          5.541369318962097e-08
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "joint": 5,
+        "field": "damping",
+        "source": 80.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 5,
+        "field": "enabled",
+        "source": true,
+        "actualPreReplay": false
+      },
+      {
+        "joint": 5,
+        "field": "maxTorque",
+        "source": 150.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 5,
+        "field": "stiffness",
+        "source": 800.0,
+        "actualPreReplay": 0.0
+      },
+      {
+        "joint": 5,
+        "field": "target",
+        "source": [
+          0.9600256681442261,
+          0.279535174369812,
+          0.004058910068124533,
+          0.013939954340457916
+        ],
+        "actualPreReplay": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "jointCommands": [
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 0,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 1,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 2,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 3,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 4,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 0.0,
+          "enabled": false,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 0.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 0.0,
+          "target": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 5,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "commands-normal-prepare": {
+    "actualPreReplayDriveDifferences": [
+      {
+        "joint": 5,
+        "field": "target",
+        "source": [
+          0.9600256681442261,
+          0.279535174369812,
+          0.004058910068124533,
+          0.013939954340457916
+        ],
+        "actualPreReplay": [
+          0.9601045250892639,
+          0.27925994992256165,
+          0.004077824763953686,
+          0.014019742608070374
+        ]
+      }
+    ],
+    "jointCommands": [
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.996474027633667,
+            0.08362583816051483,
+            0.000568490824662149,
+            -0.0067736199125647545
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 0,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9695813655853271,
+            -0.2447691708803177,
+            -4.321918822824955e-08,
+            -4.2852479964494705e-07
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 1,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9866317510604858,
+            0.1628241091966629,
+            0.00110685417894274,
+            0.006707147695124149
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 2,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            -0.9001833200454712,
+            -0.4352664053440094,
+            -0.006355894263833761,
+            0.013144687749445438
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 3,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            -0.7428759932518005,
+            0.6694290637969971,
+            5.820766091346741e-09,
+            5.541369318962097e-08
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 4,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9601045250892639,
+            0.27925994992256165,
+            0.004077824763953686,
+            0.014019742608070374
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 5,
+        "kind": "captured_boundary_before_replay",
+        "mode": "commands",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "seeds-normal-prepare": {
+    "actualPreReplayDriveDifferences": [
+      {
+        "joint": 5,
+        "field": "target",
+        "source": [
+          0.9600256681442261,
+          0.279535174369812,
+          0.004058910068124533,
+          0.013939954340457916
+        ],
+        "actualPreReplay": [
+          0.9601045250892639,
+          0.27925994992256165,
+          0.004077824763953686,
+          0.014019742608070374
+        ]
+      }
+    ],
+    "jointCommands": [
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.996474027633667,
+            0.08362583816051483,
+            0.000568490824662149,
+            -0.0067736199125647545
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 0,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9695813655853271,
+            -0.2447691708803177,
+            -4.321918822824955e-08,
+            -4.2852479964494705e-07
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 1,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9866317510604858,
+            0.1628241091966629,
+            0.00110685417894274,
+            0.006707147695124149
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 2,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            -0.9001833200454712,
+            -0.4352664053440094,
+            -0.006355894263833761,
+            0.013144687749445438
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 3,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            -0.7428759932518005,
+            0.6694290637969971,
+            5.820766091346741e-09,
+            5.541369318962097e-08
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 4,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9601045250892639,
+            0.27925994992256165,
+            0.004077824763953686,
+            0.014019742608070374
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 5,
+        "kind": "captured_boundary_before_replay",
+        "mode": "seeds",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "both-normal-prepare": {
+    "actualPreReplayDriveDifferences": [
+      {
+        "joint": 5,
+        "field": "target",
+        "source": [
+          0.9600256681442261,
+          0.279535174369812,
+          0.004058910068124533,
+          0.013939954340457916
+        ],
+        "actualPreReplay": [
+          0.9601045250892639,
+          0.27925994992256165,
+          0.004077824763953686,
+          0.014019742608070374
+        ]
+      }
+    ],
+    "jointCommands": [
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.996474027633667,
+            0.08362583816051483,
+            0.000568490824662149,
+            -0.0067736199125647545
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 0,
+        "kind": "captured_boundary_before_replay",
+        "mode": "both",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9695813655853271,
+            -0.2447691708803177,
+            -4.321918822824955e-08,
+            -4.2852479964494705e-07
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 1,
+        "kind": "captured_boundary_before_replay",
+        "mode": "both",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9866317510604858,
+            0.1628241091966629,
+            0.00110685417894274,
+            0.006707147695124149
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 2,
+        "kind": "captured_boundary_before_replay",
+        "mode": "both",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            -0.9001833200454712,
+            -0.4352664053440094,
+            -0.006355894263833761,
+            0.013144687749445438
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 3,
+        "kind": "captured_boundary_before_replay",
+        "mode": "both",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            -0.7428759932518005,
+            0.6694290637969971,
+            5.820766091346741e-09,
+            5.541369318962097e-08
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 4,
+        "kind": "captured_boundary_before_replay",
+        "mode": "both",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "drive": {
+          "damping": 80.0,
+          "enabled": true,
+          "impulses": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maxTorque": 150.0,
+          "relativeAngularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "stiffness": 800.0,
+          "target": [
+            0.9601045250892639,
+            0.27925994992256165,
+            0.004077824763953686,
+            0.014019742608070374
+          ]
+        },
+        "iteration": 0,
+        "jointOrdinal": 5,
+        "kind": "captured_boundary_before_replay",
+        "mode": "both",
+        "prepare": 0,
+        "tick": 0,
+        "warm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Signals Lab (C:/JudasValidation/Source/projects/signals_lab/signals_lab.judasproj)
+Scene: Signals Lab (C:/JudasValidation/Source/projects/signals_lab/Scenes/lab.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=b965f16e11e30c20891b4ea3a0fa5354 entity=90 slot=1 uiUpdate: ReferenceError: stale or invalid entity 30
+    at __judas (native)
+    at call (judas:2:51)
+    at destroy (judas:19:19)
+    at uiUpdate (Assets/scripts/lab.js:24:59)
+

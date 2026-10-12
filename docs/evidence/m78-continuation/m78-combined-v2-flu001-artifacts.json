@@ -1,0 +1,55 @@
+﻿{
+    "scope":  "Exact unchanged ProductionFluidTests rotated_half native witness; actual platform result preserved. Does not close overall Linux FLU-001 failure.",
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "files":  [
+                  {
+                      "sha256":  "67155785f12764a95ae0b4a995fae377216444f27023ae2cf02293329bd11f1f",
+                      "name":  "m78-combined-v2-flu001-rotated_half.csv",
+                      "bytes":  59026,
+                      "relativePath":  "rotated_half.csv"
+                  },
+                  {
+                      "sha256":  "493cffce9bb546ecea0e346faaf973f5c26b73172ee5ef2053085f3ac6b816d3",
+                      "name":  "m78-combined-v2-flu001-rotated_half.judas",
+                      "bytes":  44783,
+                      "relativePath":  "rotated_half.judas"
+                  },
+                  {
+                      "sha256":  "6b7fc486dfb37e7a1ef3e955331bb8c8d00afec47a96d6cd6d2ce9fba702d750",
+                      "name":  "m78-combined-v2-flu001-rotated_half_release_body.csv",
+                      "bytes":  300,
+                      "relativePath":  "rotated_half_release_body.csv"
+                  },
+                  {
+                      "sha256":  "7be60cdfe2c93bbfcf28b9c3fa7bece3f741aeae00077fb4dde6ab5cd38b86eb",
+                      "name":  "m78-combined-v2-flu001-rotated_half_release_particles.csv",
+                      "bytes":  221925,
+                      "relativePath":  "rotated_half_release_particles.csv"
+                  },
+                  {
+                      "sha256":  "3d82b710c7700c59b3f312a94349e6a35c28e06255f9acffdbe6f23160c0e93b",
+                      "name":  "m78-combined-v2-flu001-rotated_half_step10_body.csv",
+                      "bytes":  300,
+                      "relativePath":  "rotated_half_step10_body.csv"
+                  },
+                  {
+                      "sha256":  "39659df9178e0a4c0e15a449f3d4239c79b0c7dabc66fc996e0e1f200e739e2b",
+                      "name":  "m78-combined-v2-flu001-rotated_half_step10_particles.csv",
+                      "bytes":  218613,
+                      "relativePath":  "rotated_half_step10_particles.csv"
+                  },
+                  {
+                      "sha256":  "61520b5101e87d29c6dea70b693589ba1f2e1a6df38be7b0987325cbb188d0d8",
+                      "name":  "m78-combined-v2-flu001-rotated_half_step240_body.csv",
+                      "bytes":  301,
+                      "relativePath":  "rotated_half_step240_body.csv"
+                  },
+                  {
+                      "sha256":  "a45af4b6028b534cf19b7fafc8dc20a6838a3836b5ec084283aed26646afd5e3",
+                      "name":  "m78-combined-v2-flu001-rotated_half_step240_particles.csv",
+                      "bytes":  219050,
+                      "relativePath":  "rotated_half_step240_particles.csv"
+                  }
+              ],
+    "sourceSHA256":  "f8cb588439c884c8709a4c3ac333dbd727d390f22b35ad9a51ae0756428fb3ae"
+}

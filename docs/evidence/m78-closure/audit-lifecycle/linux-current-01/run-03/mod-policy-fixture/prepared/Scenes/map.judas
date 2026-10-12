@@ -1,0 +1,24 @@
+JudasScene 3
+settings
+  name ""
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2
+end
+
+object 1 "published behavior root"
+  prefab.asset "ca6baab4e261afd84b4861660ce8e5a5"
+  prefab.root 1
+  prefab.source 1
+  prefab.ids "1 \"1\" \"1\""
+  prefab.overrides "0"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

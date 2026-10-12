@@ -1,0 +1,9 @@
+# Controlled closure split: DIAGNOSTIC ONLY
+
+Build same copied fixture and JointSolver sources against unchanged current verified archive. For original-Prepare variants link only the copied JointSolver object; for normal-Prepare variants additionally link copied PhysicalBalance. Existing map proof requirements apply. The replayed input is exactly the original a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b saved file, unchanged project, 60Hz and 720 resumed steps. Fresh owned output directories required.
+
+Common env: JUDAS_BOUNDARY_REPLAY_CAPTURED_NATIVE=1, JUDAS_BOUNDARY_STEPS=1. Remove prior oracle, discard, sidecar-restore and continue-write flags. Set JUDAS_BOUNDARY_REPLAY_MODE=commands or seeds. Commands replay replaces only actual enabled/target/k/d/cap/rate values, retaining current numerical impulses. Seeds replay replaces only recorded passive warm array and angular drive impulse history, retaining current actuator command fields. Before-replay records show actual producer commands before any overwriting. Exact incoming body and geometry guards must pass.
+
+Useful native cases: commands (original PB), seeds (original PB), commands-normal-prepare, seeds-normal-prepare. Linux results: commands13/1, seeds13/0, commands-normal13/1, seeds-normal13/0; both-normal13/0 separately retained. In original PB the first drive is disabled; drive seeds are unused and get cleared when enabled on the next step, so seed-only original pass isolates passive joint warm history. This is numerical-state causality evidence only, not a proposal to serialize caches or fabricate missing old saved state.
+
+Run EXE OUTPUT cold-read. Capture all raw logs/receipt hashes, journal, physical-final JSON, first10 physical snapshots and full720-step diagnostic trace. Verify save hash before/after. Do not weaken equality guards or acceptance assertions.

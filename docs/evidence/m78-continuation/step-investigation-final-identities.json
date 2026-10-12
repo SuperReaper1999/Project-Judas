@@ -1,0 +1,13 @@
+{
+  "src/PhysicalBalance.cpp": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+  "src/WorldPersistence.cpp": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+  "src/WorldPersistence.h": "5e365077f0fc3178aeb7fefb0d0febf2d2032379fea34b0f3e61d6eaffb9a777",
+  "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+  "tests/PhysicalBalanceControllerTests.cpp": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+  "tests/ContactLifecycleTests.cpp": "59bf3711105a68444c8a3ff5f8c9ecf8617e43dfb732cbc4574f921a70067014",
+  "docs/evidence/m78-continuation/M77_COLD_CONTINUATION_DIAGNOSIS.md": "b04241519368c4e88c5058adaf591c2ac50ce7054dbd86f3710801c939e554fc",
+  "docs/evidence/m78-continuation/M77_ANGULAR_MIDPOINT_PROOF.md": "95a891a0bb4a6901ed731a2e4dd332e0ac98d6f34c3db39aa102cae847d5389d",
+  "docs/evidence/m78-continuation/M77_MECHANISM_ISOLATION.md": "3e0a1cb69e17a8570ac360e1b2c362644a82680ffaddb3898b84cd2fd68a3ce4",
+  "docs/evidence/m78-continuation/repro/m77-native-in-progress-step-failed.save": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+  "productionPersistenceAndControllerUnchangedAtHEAD": true
+}

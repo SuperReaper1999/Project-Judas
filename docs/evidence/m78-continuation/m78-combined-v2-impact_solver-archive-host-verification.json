@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "impact_solver",
+  "archiveSHA256": "2e070962ee868e172d89d4fbfa08c3f5c5a9cda403ece5c0894e76f35ec31872",
+  "archiveBytes": 98704,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_impact_solver.exe",
+      "sha256": "ce7cdd7ab5992fdc87f24f821d3ac22d405ccee9c99717464fa181e5cb229b3d",
+      "name": "m78_combined-v2_impact_solver.exe",
+      "bytes": 157696
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\impact_solver-0.obj",
+      "sha256": "a659fe6090fe80191916e87ac84db098c4051e16e6907bda10744def97113688",
+      "name": "impact_solver-0.obj",
+      "bytes": 108829
+    }
+  ]
+}

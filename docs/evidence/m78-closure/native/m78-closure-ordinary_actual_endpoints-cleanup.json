@@ -1,0 +1,13 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  0,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-ordinary_actual_endpoints.exe",
+                        "sha256":  "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+                        "name":  "m78-closure-ordinary_actual_endpoints.exe",
+                        "bytes":  9569792
+                    }
+                ],
+    "freeAfter":  9056256
+}

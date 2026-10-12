@@ -1,0 +1,27 @@
+{
+  "id": "judas_runtime_render_retained_region_tests",
+  "source": "tests/RuntimeRenderRetainedRegionTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_retained_region_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_render_retained_region_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "9540c49ed26b8d3f70b4f5f840618c52d7ce33469356f4074ef591ae7e8dc8aa",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 5,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_runtime_render_retained_region_tests.log",
+  "logSHA256": "dcf3a2ae99f24ca20d97c6361aabf22d32eb49e600d6d4415a561a897a57d05b",
+  "seconds": 0.46747081600005913
+}

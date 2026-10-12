@@ -1,0 +1,8 @@
+Insufficient bounded package runtime headroom
+At C:\JudasValidation\m78-closure-moved-runtime.ps1:6 char:61
++ ... Bytes+4MB)){throw 'Insufficient bounded package runtime headroom'};Ne ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Insufficient bo...untime headroom:String) [], RuntimeException
+    + FullyQualifiedErrorId : Insufficient bounded package runtime headroom
+ 
+

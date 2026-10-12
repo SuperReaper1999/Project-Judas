@@ -1,0 +1,28 @@
+{
+  "id": "judas_async_application_tests",
+  "source": "tests/AsyncApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_async_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_async_application_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "906d13b12a838a49caef5c60aa904ef3da9ca68a623f447d6ed5c921345926a8",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 246,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_async_application_tests.log",
+  "logSHA256": "f4990de24bda56513068591348d1a4867abea6a7976ae27cbfd4dfebeb0c9220",
+  "seconds": 9.965873212999213
+}

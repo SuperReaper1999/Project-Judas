@@ -1,0 +1,10 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/tmp/judas-m78-followup-terrain-review/game.judasproj)
+Scene: Protected hub (/tmp/judas-m78-followup-terrain-review/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+FAIL bounded real application readiness
+FAIL bounded real application readiness
+FAIL both real dependent scenes and reload complete normally
+3 checks 3 failures

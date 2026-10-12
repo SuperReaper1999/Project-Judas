@@ -1,0 +1,5 @@
+{
+  "scope": "Independent single-hinge row-construction diagnostic. Same physical state and authored limits; only warm seed presence differs. Diagnostic copied source, no production changes.",
+  "sourceSHA256": "72e43f81cb8c773a8029528fc0ac290b41966614a405a468c93cc45132726444",
+  "overlaySHA256": "75e9f5330a600e37a95eb0e7e4f74fa57e3f1e9ff2abc0be25027ab3089d388a"
+}

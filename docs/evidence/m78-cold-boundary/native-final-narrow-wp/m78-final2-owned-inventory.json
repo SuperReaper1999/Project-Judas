@@ -1,0 +1,142 @@
+﻿{
+    "scope":  "Read-only file size inventory; no deletion authorized by this inventory",
+    "files":  [
+                  {
+                      "bytes":  67015480,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib"
+                  },
+                  {
+                      "bytes":  326376,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source.zip"
+                  },
+                  {
+                      "bytes":  1462385,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicalBalance.obj"
+                  },
+                  {
+                      "bytes":  1494120,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                  },
+                  {
+                      "bytes":  1272989,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\WorldPersistence.obj"
+                  },
+                  {
+                      "bytes":  223383,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v1\\sources.zip"
+                  },
+                  {
+                      "bytes":  31094,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v1\\objects\\RigidBody.obj"
+                  },
+                  {
+                      "bytes":  460251,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\sources.zip"
+                  },
+                  {
+                      "bytes":  2230400,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj"
+                  },
+                  {
+                      "bytes":  247280,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\CollisionGeometry.obj"
+                  },
+                  {
+                      "bytes":  669883,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\concave-0.obj"
+                  },
+                  {
+                      "bytes":  169808,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj"
+                  },
+                  {
+                      "bytes":  523780,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\flu001-0.obj"
+                  },
+                  {
+                      "bytes":  1392761,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\PhysicsWorld.obj"
+                  },
+                  {
+                      "bytes":  31094,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\RigidBody.obj"
+                  },
+                  {
+                      "bytes":  483778,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\sources.zip"
+                  },
+                  {
+                      "bytes":  874371,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\objects\\JointSolver.obj"
+                  },
+                  {
+                      "bytes":  475038,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\sources.zip"
+                  },
+                  {
+                      "bytes":  71392,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\JointSolver.obj"
+                  },
+                  {
+                      "bytes":  1406860,
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\PhysicsWorld.obj"
+                  },
+                  {
+                      "bytes":  987012,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_app_icon.lib"
+                  },
+                  {
+                      "bytes":  1825742,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_audio_backend.lib"
+                  },
+                  {
+                      "bytes":  140690,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_glad.lib"
+                  },
+                  {
+                      "bytes":  2350944,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_imgui.lib"
+                  },
+                  {
+                      "bytes":  52222,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_materials.lib"
+                  },
+                  {
+                      "bytes":  8229652,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_model_import.lib"
+                  },
+                  {
+                      "bytes":  474824,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_navigation_backend.lib"
+                  },
+                  {
+                      "bytes":  467012,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_navigation_baker.lib"
+                  },
+                  {
+                      "bytes":  380506,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_profiler.lib"
+                  },
+                  {
+                      "bytes":  2563434,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_quickjs.lib"
+                  },
+                  {
+                      "bytes":  1118156,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_ufbx.lib"
+                  },
+                  {
+                      "bytes":  10809686,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_world_authoring.lib"
+                  },
+                  {
+                      "bytes":  8870400,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_concave.exe"
+                  },
+                  {
+                      "bytes":  8098304,
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_flu001.exe"
+                  }
+              ],
+    "freeBytes":  71446528
+}

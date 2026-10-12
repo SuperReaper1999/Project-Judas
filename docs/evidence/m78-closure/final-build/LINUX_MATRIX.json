@@ -1,0 +1,208 @@
+{
+  "scope": "Final combined closure focused Linux matrix; unchanged controller settings and fixtures; legacy failure remains classified.",
+  "buildSHA256": "d273702de98b73f00295c45bf40c9b46524527d735f75577213f8268f0745af5",
+  "results": [
+    {
+      "name": "physics_continuation",
+      "utc": "2026-10-12T01:06:35.547711+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_physics_continuation_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.10146527300094021,
+      "executableSHA256": "037813e7a723e6a8c76af329ce7ac6879275318de763039832cee52ed19aede2",
+      "logSHA256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534",
+      "summary": [
+        "SUMMARY 112 checks 0 failures"
+      ]
+    },
+    {
+      "name": "physical_balance_controller",
+      "utc": "2026-10-12T01:06:45.613944+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_physical_balance_controller_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 9.64009727499797,
+      "executableSHA256": "e98f077a230d8442fd7a11fa1602cbcd7d67641dc69534c9d8ba632624580e3c",
+      "logSHA256": "3ae721971c11f39f834f82506bcb39e8c6aa9043dc3a7be293d061979aeedd58",
+      "summary": [
+        "Physical balance controller development: 119 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "physical_balance_foundation",
+      "utc": "2026-10-12T01:06:45.714657+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_physical_balance_foundation_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.08645824600534979,
+      "executableSHA256": "d27f05fbe3c08d811a0678ffc969a28d22936454c8b8da3e454705257d1ea3b1",
+      "logSHA256": "22ac0c93103ff0faa2ba81a2e85fdd669b8d20029fa2721f095e3c8e04dc0144",
+      "summary": [
+        "Physical balance foundations: 34 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "rigid_motion",
+      "utc": "2026-10-12T01:06:46.251015+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_rigid_motion_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.07355072799691698,
+      "executableSHA256": "994eceba046e4f11116ee878162b7437e8ad71e66327da05fc2bb7581feadbce",
+      "logSHA256": "d9f968cc8b1bbb021f6b469c8e27314acdcdf2f72c8a2667fc6d8e43877c6cc5",
+      "summary": []
+    },
+    {
+      "name": "physical_animation",
+      "utc": "2026-10-12T01:06:46.554977+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_physical_animation_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.2821049620033591,
+      "executableSHA256": "3e13d221133292a865e04807a57c31ff7d2e826497ba47721e000b1d8a4a55d2",
+      "logSHA256": "723361e89434065106ed53b66ac5d7429839b56e9c734deb423a55843fd075da",
+      "summary": [
+        "SUMMARY 64 checks 0 failures"
+      ]
+    },
+    {
+      "name": "joint",
+      "utc": "2026-10-12T01:06:47.213461+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_joint_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.1056145140028093,
+      "executableSHA256": "75270c4d2468772e91dd6049e3336eb540343dcd0e582acd3de699cc46e2d164",
+      "logSHA256": "1441ded2a6b422c5d857981a622c51db01cb472cb367d9ec922cab23bdf7f15b",
+      "summary": [
+        "SUMMARY 29 checks 0 failures"
+      ]
+    },
+    {
+      "name": "ragdoll",
+      "utc": "2026-10-12T01:06:50.840007+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_ragdoll_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 3.616124355001375,
+      "executableSHA256": "f3f447e9a6bfee11c2bb07906450dda7428b1deb81024bddfad03b843470d956",
+      "logSHA256": "3c44fd8eb3db265e3ddf9d710a1ce90427359a7bdd4cab7cbce526a2a94a52b5",
+      "summary": [
+        "SUMMARY 36 checks 0 failures"
+      ]
+    },
+    {
+      "name": "contact_lifecycle",
+      "utc": "2026-10-12T01:06:51.622951+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_contact_lifecycle_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.2001978100015549,
+      "executableSHA256": "44aaebb511e9a7cef6e6a24606e78610f701e814da2a080287c96bbd8c61b78a",
+      "logSHA256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7",
+      "summary": [
+        "FTFT4A contact lifecycle: 30 fixtures, 90 fixed steps, 6 convenience contacts, 1076 checks, 0 failures"
+      ]
+    },
+    {
+      "name": "impact_timing",
+      "utc": "2026-10-12T01:06:52.080264+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_impact_timing_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.04099072000099113,
+      "executableSHA256": "54d43d1bb0db1d7f2722ec143c4cf841493163b74128304893a3d79b037274fc",
+      "logSHA256": "4915e4a212d5cf950e8b561a5cbb3ffe7b0690b3815cd6ca867b6b1582bc6d8b",
+      "summary": []
+    },
+    {
+      "name": "world_persistence",
+      "utc": "2026-10-12T01:06:52.166802+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_world_persistence_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.07251526900654426,
+      "executableSHA256": "14185a617e73ec51d8f8998ce24a0ec0c895596eabd88e09e7c9ccd609a572ea",
+      "logSHA256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e",
+      "summary": [
+        "SUMMARY 27 checks 0 failures"
+      ]
+    },
+    {
+      "name": "prefab",
+      "utc": "2026-10-12T01:06:52.892850+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_prefab_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.23492195500148227,
+      "executableSHA256": "f12b6fbacd51da8470660df016badf74f06c8db97b7323e5171b693e0b0102b8",
+      "logSHA256": "f19a8a3cd323c435963b64a2f93ef8ac21bebb45636cb6e7111a2bd5211421b0",
+      "summary": [
+        "SUMMARY 37 checks 0 failures"
+      ]
+    },
+    {
+      "name": "streaming",
+      "utc": "2026-10-12T01:06:54.040760+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_streaming_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.7561948459988344,
+      "executableSHA256": "0f194140a5150902c444062bef2f0b57e18e84cb378313f3a655d4bb682435b5",
+      "logSHA256": "12847d5f659d347e2ba737a5fc53efbc8868702c385c606fbcc4e75c21988482",
+      "summary": [
+        "M59 82 checks 0 failures"
+      ]
+    },
+    {
+      "name": "navigation_dependency",
+      "utc": "2026-10-12T01:06:54.683368+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/judas_navigation_dependency_tests"
+      ],
+      "exitCode": 2,
+      "expectedExit": 0,
+      "programPassed": false,
+      "seconds": 0.033294421002210584,
+      "executableSHA256": "049e30c6ec2724487f5cc01a830bbd898ddcbb281b93e501c20bd515aacf5a5b",
+      "logSHA256": "83589e4107296ec30070ecbb4053e984fcfa4d71768036a7f30294378a428d9b",
+      "summary": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "c852597f31c0176847959d261e4eb54e175842993b434cef700abd807d1e0890",
+    "case":  "lifecycle",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_lifecycle.exe",
+                      "sha256":  "62186efe046e2860e861428ab3fb790c9aaa0563212da97515f51d105f1062e0",
+                      "name":  "m78_combined-v2_lifecycle.exe",
+                      "bytes":  8239616
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\lifecycle-0.obj",
+                      "sha256":  "067a80784aa0c6167f41ed2a17d00d93038cf754eaaede50b7bef4a7fade07f1",
+                      "name":  "lifecycle-0.obj",
+                      "bytes":  629023
+                  }
+              ],
+    "freeBytes":  456257536,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  3909688,
+    "archiveName":  "m78-combined-v2-lifecycle-archive.zip"
+}

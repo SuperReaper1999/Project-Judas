@@ -1,0 +1,135 @@
+﻿{
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final-repair-character_lab.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\character_lab-0.obj\"",
+    "librarySHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "case":  "character_lab",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-character_lab.exe",
+    "executableSHA256":  "d79f4c12325aa850fd722a60d2b8769ec06e3730dc7b2fc8c3c9539bd944d8f7",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "runs":  [
+                 {
+                     "seconds":  7.7567220999999993,
+                     "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+                     "case":  "character_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "character-baseline",
+                     "executableSHA256":  "d79f4c12325aa850fd722a60d2b8769ec06e3730dc7b2fc8c3c9539bd944d8f7",
+                     "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character\\multi-target-ik.json",
+                                       "sha256":  "12d9a3fdb469e842d4d0a31ed2667e0e59c3fd5c5fa0b6ee0c29b2198f2001ef",
+                                       "bytes":  106,
+                                       "reportName":  "m78-final-repair-character-baseline-multi-target-ik.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character\\owner-contact-sequence.json",
+                                       "sha256":  "0cdc70afdbddb9f36cdd8246abf618a9dad64bccf945c7c96f70a65b7e321692",
+                                       "bytes":  265,
+                                       "reportName":  "m78-final-repair-character-baseline-owner-contact-sequence.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character\\physical-animation.json",
+                                       "sha256":  "c67a300c71865f6f16661a4d59e61fa71e575f956a4d8aff874d9579aad8a41d",
+                                       "bytes":  152,
+                                       "reportName":  "m78-final-repair-character-baseline-physical-animation.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalResults\\character"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  62296064,
+                     "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+                 },
+                 {
+                     "seconds":  1.0306382,
+                     "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+                     "case":  "character_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "character-cold-write",
+                     "executableSHA256":  "d79f4c12325aa850fd722a60d2b8769ec06e3730dc7b2fc8c3c9539bd944d8f7",
+                     "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\cold-write-state.json",
+                                       "sha256":  "cdbbfc0dbde32b7924d1f7d1d274fe4f62b923c8aec03970f24ba21a84fa5351",
+                                       "bytes":  286,
+                                       "reportName":  "m78-final-repair-character-cold-write-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final-repair-character-cold-write-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\slots\\m70.save",
+                                       "sha256":  "c5ea9da7a165e8fadfa23ddd652e3da6631a26e620862faa798f3f05c78df7de",
+                                       "bytes":  107796,
+                                       "reportName":  "m78-final-repair-character-cold-write-m70.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold",
+                                       "cold-write"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  60334080,
+                     "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+                 },
+                 {
+                     "seconds":  0.7494022,
+                     "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+                     "case":  "character_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "character-cold-read",
+                     "executableSHA256":  "d79f4c12325aa850fd722a60d2b8769ec06e3730dc7b2fc8c3c9539bd944d8f7",
+                     "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\cold-read-state.json",
+                                       "sha256":  "c37a01aa65e20714d62325ed2d3fefae11230a55da307834d1faa71a9b5b6361",
+                                       "bytes":  290,
+                                       "reportName":  "m78-final-repair-character-cold-read-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\cold-write-state.json",
+                                       "sha256":  "cdbbfc0dbde32b7924d1f7d1d274fe4f62b923c8aec03970f24ba21a84fa5351",
+                                       "bytes":  286,
+                                       "reportName":  "m78-final-repair-character-cold-read-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final-repair-character-cold-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold\\slots\\m70.save",
+                                       "sha256":  "c5ea9da7a165e8fadfa23ddd652e3da6631a26e620862faa798f3f05c78df7de",
+                                       "bytes":  107796,
+                                       "reportName":  "m78-final-repair-character-cold-read-m70.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalResults\\character-cold",
+                                       "cold-read"
+                                   ],
+                     "exitCode":  1,
+                     "freeBytes":  60321792,
+                     "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+                 }
+             ],
+    "freeBytes":  60317696,
+    "objects":  [
+                    {
+                        "objectSHA256":  "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09",
+                        "source":  "tests/CharacterLabTests.cpp",
+                        "bytes":  2208781,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\character_lab-0.obj",
+                        "sourceSHA256":  "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+                        "reuseOriginal":  true
+                    }
+                ],
+    "executableBytes":  9198592
+}

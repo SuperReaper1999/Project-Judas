@@ -1,0 +1,669 @@
+{
+  "scope": "Fresh native functional follow-up on frozen production archive; VM timing descriptive only. Original acceptance unchanged and all preceding failures preserved.",
+  "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+  "executions": 24,
+  "zeroExitExecutions": 23,
+  "remainingFailures": [
+    "balance-exact-cold-read"
+  ],
+  "rows": [
+    {
+      "seconds": 7.5697947,
+      "freeBytes": 104239104,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_controller.exe",
+      "case": "controller",
+      "expectedSaveSHA256": null,
+      "run": "controller",
+      "executableSHA256": "b91ccbd4e0949bf4124db59d021cbda5afbf24d80af1a384445132af3900eef1",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "4fc407ef4a5979fe3ca713a599242d2cb923a1d3c92439855cf658c95422e7be",
+      "receiptPath": "native-functional/m78-native-functional-controller.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.2002502,
+      "freeBytes": 104357888,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_motion.exe",
+      "case": "motion",
+      "expectedSaveSHA256": null,
+      "run": "motion",
+      "executableSHA256": "c9e207b6eb30583d3317880e571772e818484dfd34359ab57a6691c291471a67",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "e5a700cdc69ca0683753293e1e4d88d93287cacdc9416463c249aca8cb08a20f",
+      "receiptPath": "native-functional/m78-native-functional-motion.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.8144781999999999,
+      "freeBytes": 97435648,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_foundation.exe",
+      "case": "foundation",
+      "expectedSaveSHA256": null,
+      "run": "foundation",
+      "executableSHA256": "ba74d6e59d95bcea45bf983c602f6076b4bec1f38bb49fb0fd1a426cf824b161",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "4b6959e2c69b5d8c0e39a0b99ec3f23c56b72e25b45b3616d499431289498e24",
+      "receiptPath": "native-functional/m78-native-functional-foundation.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.9896934,
+      "freeBytes": 97292288,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_physical.exe",
+      "case": "physical",
+      "expectedSaveSHA256": null,
+      "run": "physical",
+      "executableSHA256": "e72fb4113333db3989546420873502dcc0358ad4ae0a7c0311e33f5d4c0c7b0f",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "c3675e87f8eb0fa4b3ec6dc973d833f4832fde01100e1dbba2424dfad8f1e9ac",
+      "receiptPath": "native-functional/m78-native-functional-physical.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.1786732,
+      "freeBytes": 104349696,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_joints.exe",
+      "case": "joints",
+      "expectedSaveSHA256": null,
+      "run": "joints",
+      "executableSHA256": "87708a10fc270b89c62bcbb61a8fd335786efe90c7c6c5b54faf5c3baa291d8c",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "d666f8befcfd008cfc52970fc264caf63fd080acbc1a9ae88fd5e2b1714e0172",
+      "receiptPath": "native-functional/m78-native-functional-joints.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.9481592999999999,
+      "freeBytes": 96481280,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_contact_lifecycle.exe",
+      "case": "contact_lifecycle",
+      "expectedSaveSHA256": null,
+      "run": "contact_lifecycle",
+      "executableSHA256": "880264c00aeee97186bed2124750d34fc41fef8bbdf6a13887826879f9d8b8a0",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "b6bec14eaf6a4d0527966ba32bdc27e91e3b2c8ea42cefcdfdd4446041d89464",
+      "receiptPath": "native-functional/m78-native-functional-contact_lifecycle.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.136075,
+      "freeBytes": 104091648,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_impact_timing.exe",
+      "case": "impact_timing",
+      "expectedSaveSHA256": null,
+      "run": "impact-timing",
+      "executableSHA256": "05a5e5417ca877214e6e1a77d764b0384b545d5439c134777394bd1e1f213fde",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "all"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "56dac3819640a1fba9017a813a0f89260d153378a6a8ad8eeeb127074182e785",
+      "receiptPath": "native-functional/m78-native-functional-impact-timing.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 3.2075633999999997,
+      "freeBytes": 95350784,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_gravity.exe",
+      "case": "gravity",
+      "expectedSaveSHA256": null,
+      "run": "gravity",
+      "executableSHA256": "a1e4895b219b2ec8c5592d363d13b995175dd8fd0739162b57e4567797319417",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "42ee3779e68879513bb197712fe6089d7e1cf9812b321c1ec69bbd7764e157a3",
+      "receiptPath": "native-functional/m78-native-functional-gravity.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.5208931,
+      "freeBytes": 96784384,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_world_save.exe",
+      "case": "world_save",
+      "expectedSaveSHA256": null,
+      "run": "world_save",
+      "executableSHA256": "60360e4d448a68bc7fcbc9f4ea8107c2089f4372726bebec6e3777e70cae0b58",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "f918ffc3fb3697fc5369afbc1e1ca7846f8acd6981d235c2a1646b5c037270b9",
+      "receiptPath": "native-functional/m78-native-functional-world_save.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 3.6111136,
+      "freeBytes": 92934144,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-step-trace",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-step-trace",
+        "step-trace"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "587011d40688c774c4ace5e9b1e8022704d0cb8c1bbd9fe52da4bee48001457f",
+      "receiptPath": "native-functional/m78-native-functional-balance-step-trace.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 3.0807206999999996,
+      "freeBytes": 91394048,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-standing",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-standing",
+        "standing"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "0c467ccd7c8cda5cfaf71b4b1aa81ff0008ddeb82a1b6d1d8f654194858cc4dc",
+      "receiptPath": "native-functional/m78-native-functional-balance-standing.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.2570794,
+      "freeBytes": 89858048,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-supports",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-supports",
+        "supports"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "ff279c82a83d96712f752303cba0dd25f221fedaab0ba05c8408ada86081ae11",
+      "receiptPath": "native-functional/m78-native-functional-balance-supports.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 6.9733968,
+      "freeBytes": 88322048,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-variants",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-variants",
+        "variants"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "501e631110df1dc12fbea313d4e4cab4cb66181183bfdedd70fc63a800d590e3",
+      "receiptPath": "native-functional/m78-native-functional-balance-variants.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 4.6776294,
+      "freeBytes": 86786048,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-recovery",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-recovery",
+        "recovery"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "02bbdef54a8e04e69cacb5ad516958548b8d1f7993181ba04e748172164fadea",
+      "receiptPath": "native-functional/m78-native-functional-balance-recovery.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.9678,
+      "freeBytes": 85245952,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-radial",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-radial",
+        "radial"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "e32529f03f8e99c3a40c18154f40c033049b6ea172d35348d03bd0a87c55491e",
+      "receiptPath": "native-functional/m78-native-functional-balance-radial.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 3.0920128,
+      "freeBytes": 83447808,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-lifecycle",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-lifecycle",
+        "lifecycle"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "ebe6e51382944407cd70fcacd999e00184b4f38b35f9408c6fb90f7223b10492",
+      "receiptPath": "native-functional/m78-native-functional-balance-lifecycle.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.6092575,
+      "freeBytes": 81858560,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-cold-stand-write",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-stand",
+        "cold-stand-write"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "4bdde48e2f6b02e5e6ba81d3493d32bc262092268ac3bc68714e57bc62e0c61a",
+      "receiptPath": "native-functional/m78-native-functional-balance-cold-stand-write.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.489278,
+      "freeBytes": 81842176,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-cold-stand-read",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-stand",
+        "cold-stand-read"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "79ce762d9514f00a5a000cf7bccb9b96d8cd2884569ad7e9be78040f7fa57acc",
+      "receiptPath": "native-functional/m78-native-functional-balance-cold-stand-read.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.22661,
+      "freeBytes": 79720448,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-cold-recovery-write",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-recovery",
+        "cold-recovery-write"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "76c8cb707546341db11307649e830d10c43187d1a26fd88764b030499a9ae71a",
+      "receiptPath": "native-functional/m78-native-functional-balance-cold-recovery-write.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.430936,
+      "freeBytes": 79708160,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": null,
+      "run": "balance-cold-recovery-read",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-recovery",
+        "cold-recovery-read"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "0fadd1ce46278d5e277f25fef56b98e5718fd32fe77d9c9c9cdb00fc33190f5f",
+      "receiptPath": "native-functional/m78-native-functional-balance-cold-recovery-read.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 2.5707635,
+      "freeBytes": 77848576,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "case": "balance_lab",
+      "expectedSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "run": "balance-exact-cold-read",
+      "executableSHA256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-exact-cold",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "b454c555b478edd1d920fc583182d95b44c1e3586fc9607ab0c98b5c57e47d78",
+      "receiptPath": "native-functional/m78-native-functional-balance-exact-cold-read.json",
+      "expectedOutcome": "remaining failure"
+    },
+    {
+      "seconds": 8.5956075,
+      "freeBytes": 76161024,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+      "case": "character_lab",
+      "expectedSaveSHA256": null,
+      "run": "character-baseline",
+      "executableSHA256": "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\character"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "fe288a2996265634b13b6f8fb5643f17ce1377e90fa61480b30601038abd971e",
+      "receiptPath": "native-functional/m78-native-functional-character-baseline.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 1.0330013,
+      "freeBytes": 74211328,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+      "case": "character_lab",
+      "expectedSaveSHA256": null,
+      "run": "character-cold-write",
+      "executableSHA256": "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\character-cold",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "e8e82efcb83b3574baa727816d9bc8d516f9385e614befeba85c0697c19aaf84",
+      "receiptPath": "native-functional/m78-native-functional-character-cold-write.json",
+      "expectedOutcome": "pass"
+    },
+    {
+      "seconds": 0.8033475999999999,
+      "freeBytes": 74199040,
+      "executable": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+      "case": "character_lab",
+      "expectedSaveSHA256": null,
+      "run": "character-cold-read",
+      "executableSHA256": "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "scope": "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+      "arguments": [
+        "C:\\JudasValidation\\M78NativeFunctionalResults\\character-cold",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "environment": {
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source"
+      },
+      "receiptSHA256": "7da42ea20482300d764f4c5d31131572ff510c626be216fa89a0d8b4714837c0",
+      "receiptPath": "native-functional/m78-native-functional-character-cold-read.json",
+      "expectedOutcome": "pass"
+    }
+  ],
+  "executionsIncludingApps": 26,
+  "zeroExitExecutionsIncludingApps": 25,
+  "applicationReceipts": [
+    {
+      "sceneBeforeSHA256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+      "seconds": 8.6366444,
+      "freeBytes": 48230400,
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "sceneAfterSHA256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+      "files": [
+        {
+          "path": "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest.edit.png",
+          "sha256": "57545279b72286a10c464ef996d92da8ebfdcb07b975a24b750531d4d8525573",
+          "name": "m78-native-final-editor-autotest.edit.png",
+          "bytes": 177346
+        },
+        {
+          "path": "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest.play.png",
+          "sha256": "dc4963de108a6eeb9f561107e0df9f3dadf02ba1108840367447cf32d6d4fa47",
+          "name": "m78-native-final-editor-autotest.play.png",
+          "bytes": 129785
+        },
+        {
+          "path": "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest.saved.judas",
+          "sha256": "f46bcea835e6a49d94453ecd41c23330739ff56379fe4a564e24ce1828cd9a95",
+          "name": "m78-native-final-editor-autotest.saved.judas",
+          "bytes": 40001
+        }
+      ],
+      "executableSHA256": "5b9a4d31976fbd7820901dbadee14e6f85667e5ac6264024d96ce82206033085",
+      "environment": {
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\Source",
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_EDITOR_AUTOTEST": "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest"
+      },
+      "scope": "Fresh unchanged-source editor target linked against final physics archive. Ordinary copied project autotest: edit/duplicate/undo/Play/Stop/save; authored scene identity measured before/after. Native software GL functional-only.",
+      "authoredScene": "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-project\\Scenes\\standing.judas",
+      "exitCode": 0,
+      "sceneUnchanged": true,
+      "receiptSHA256": "dc3b99f6dc17a6d24bf8236b08b9277bef1672dc86f0b455836277f3240d8c45",
+      "receiptPath": "native-functional/m78-native-final-editor-smoke.json"
+    },
+    {
+      "verifiedPackageFiles": 45,
+      "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "seconds": 2.1990450999999998,
+      "exitCode": 0,
+      "arguments": [],
+      "cwd": "C:\\Windows\\Temp",
+      "previousPackageReceiptSHA256": "25ed3f66be231dc151e34431188f692c261392ac8263dac4bed758fda789b515",
+      "runtimeSHA256": "ea39694571f4e8dbf0322cd6f5c216cd97437104c4a7432af4100b2c1ac326bf",
+      "scope": "Fresh no-argument launch of exact final moved package from unrelated C:\\Windows\\Temp with deliberately unavailable engine root; original1720-frame four-scene/save/load/pause/reload harness. VM software GL functional-only.",
+      "movedPath": "C:\\JudasValidation\\M78ContinuationMoved-combined-v2",
+      "freeBytes": 48128000,
+      "environment": {
+        "JUDAS_ENGINE_ROOT": "C:\\JudasValidation\\UnavailableEngineRoot",
+        "GALLIUM_DRIVER": "llvmpipe",
+        "JUDAS_TEST_SCRIPT": "C:\\JudasValidation\\M78NativeFunctionalResults\\moved-services.harness"
+      },
+      "harnessSHA256": "6f975418b9e6f0a2af2644c509bc98115be2407db0e8f0afae88d092e149ef1d",
+      "receiptSHA256": "cddd241eeee181a02b81fd8a13e1a245d25b8184d0fe1e417441604d969d61dc",
+      "receiptPath": "native-functional/m78-native-functional-moved-package.json"
+    }
+  ],
+  "diagnosticOnly": {
+    "scope": "Copied observer objects only; no production source/library/fixture change and no warm caches restored by production. These are causal experiments, not passing production validation.",
+    "exactInputSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "runs": [
+      {
+        "variant": "commands-seeds",
+        "exitCode": 0,
+        "inputSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+        "executableSHA256": "9d1c9680a3a222fbd2c741e775e457169d5a666d120a6e4c5ca7f1d5e6b54f10",
+        "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+        "sourceBundleSHA256": "8af55c57e26746be22eed2870ca17ebfc2b239b504c04ce9cd73398d5c38deca",
+        "receipt": "native-closure/m78-native-first-closure-pair.json",
+        "receiptSHA256": "15c0d9aa803f1b3028f09a5b60ec586ed69b8a5ed87c1b65eb2ccf61da4bc8c7",
+        "interpretation": "Original 13 checks 0 failures, actual final physical standing"
+      },
+      {
+        "variant": "commands-seeds-normal-prepare",
+        "exitCode": 0,
+        "inputSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+        "executableSHA256": "5da89c0c9df414df7a8d52d20bdf4b5becb24a9a73c6eaa916ff948c2f72b617",
+        "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+        "sourceBundleSHA256": "8af55c57e26746be22eed2870ca17ebfc2b239b504c04ce9cd73398d5c38deca",
+        "receipt": "native-closure/m78-native-first-closure-pair.json",
+        "receiptSHA256": "15c0d9aa803f1b3028f09a5b60ec586ed69b8a5ed87c1b65eb2ccf61da4bc8c7",
+        "interpretation": "Original 13 checks 0 failures, actual final physical standing"
+      },
+      {
+        "variant": "commands-normal-prepare",
+        "exitCode": 1,
+        "inputSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+        "executableSHA256": "aa3c1f3cb1d333a8f37d29b446d509406be894eab240c456331b4ccf3fe1c6d9",
+        "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+        "sourceBundleSHA256": "6edeb41a13328a42f4fa3a909a77546c52cbaa5efdbd4c37fed9617aa08d83ce",
+        "receipt": "native-split/m78-native-first-split-pair-commands.json",
+        "receiptSHA256": "8f39b32a56ca2bdc5c496c005d01a55fbd44116187cb74b6051979e3bcbe6fdc",
+        "interpretation": "Original 13 checks 1 failure, actual final physical failure"
+      },
+      {
+        "variant": "seeds-normal-prepare",
+        "exitCode": 0,
+        "inputSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+        "executableSHA256": "10750536909b2c6e4ed0106cb6b543ab926a55b18695f227811293cb632af1bf",
+        "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+        "sourceBundleSHA256": "6edeb41a13328a42f4fa3a909a77546c52cbaa5efdbd4c37fed9617aa08d83ce",
+        "receipt": "native-split/m78-native-first-split-pair-seeds.json",
+        "receiptSHA256": "6da27d6c3a575c80189f411ee870799c9056d11b5e9027f7b192e30f40726209",
+        "interpretation": "Original 13 checks 0 failures, actual final physical standing"
+      }
+    ]
+  },
+  "supplementalScope": {
+    "path": "WINDOWS_SUPPLEMENTAL_SCOPE.json",
+    "sha256": "1e44dc7c9da63db5494391e210b27231ea1df1ec5ae3e658a2b515de32e8bb19",
+    "retainedFinalSourceNativePasses": [
+      "spacecraft_control",
+      "spacecraft_flight",
+      "prefab",
+      "streaming",
+      "nav_dependency"
+    ],
+    "excludeOlderMSBuildSupplementsFromFreshCombinedCounts": true
+  },
+  "windowsLimits": [
+    "VM native functional validation; no physical GPU/controller/human validation",
+    "VM timing descriptive only; Linux host governs performance acceptance",
+    "Exact mid-step a106 cold restore still fails unchanged on production final archive",
+    "FLU-001 remains failed/unresolved overall (Linux731/1, native731/0), unchanged fluid code"
+  ]
+}

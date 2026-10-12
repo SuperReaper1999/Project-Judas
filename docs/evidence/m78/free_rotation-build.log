@@ -1,0 +1,5 @@
+docs/evidence/m78/probes/free_rotation.cpp: In function ‘glm::dvec3 L(const RigidBody&)’:
+docs/evidence/m78/probes/free_rotation.cpp:9:26: error: ‘dmat3_cast’ is not a member of ‘glm’; did you mean ‘mat3_cast’?
+    9 |  const glm::dmat3 R=glm::dmat3_cast(glm::dquat(b.orientation));
+      |                          ^~~~~~~~~~
+      |                          mat3_cast

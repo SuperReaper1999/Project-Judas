@@ -1,0 +1,659 @@
+# M77 - Judas Learns to Keep Its Feet
+## Physical balance, corrective stepping and bounded recovery
+### We Have Euphoria at Home, Part 2
+
+Latest operator-reported committed main:
+ab3dfbab13585680a9e6cc92fa318c8d95012979
+General housekeeping and improved demo game
+
+That checkpoint includes reported editor-notification, Windows-check, spaceship
+and planet additions. The detailed demo report is still incoming. Inspect the
+actual current tree; do not invent its contents or revert those changes to the
+older M76 baseline. Read the supplemental report if it arrives before or during
+this work and reconcile any relevant ownership changes.
+
+M76 is committed at 88cb0cce18117c157d1316ead06cdd6f9f060530 and explicitly NOT HUMAN
+VALIDATED. M74 retargeting human review and M67's deferred review also remain
+outstanding. M75 terrain has separate recorded human acceptance. None of those
+statuses is silently upgraded by M77, and their pending reviews do not block this
+authorized work unless an actual prerequisite defect does.
+
+Implement ONE coherent M77 candidate and return it UNCOMMITTED for human review.
+Do not commit, push, tag, or start M78 without subsequent operator authorization.
+M78 is reserved for an engine-wide capability/implementation audit. M77's focused
+proof does not perform or replace that audit.
+
+THE DELIVERABLE
+An explicitly configured physical character can maintain standing balance, take
+corrective steps when an in-place correction is insufficient, genuinely lose its
+balance, and attempt a physically driven return to stable standing when the game
+allows it and the situation is within the documented support envelope.
+
+This is not an animation studio, universal locomotion brain, or a claim to match
+proprietary Euphoria. Judas supplies reusable physical-character control. Project
+JavaScript decides whether an actor tries, gives up, dies, gets back up, or resumes
+its ordinary motor-driven gameplay.
+
+Core ownership:
+GAME INTENT + ACTUAL PHYSICAL STATE -> BALANCE / STEP / RECOVERY REFERENCE
+-> BOUNDED ACTUATOR EFFORT -> EXISTING PHYSICSWORLD CONTACTS AND CONSTRAINTS
+-> ACTUAL PHYSICAL POSE -> EXISTING FINAL POSE / SOCKETS / SKINNING
+
+A requested pose is not an achieved pose. A selected foothold is not a contact.
+A completed reference trajectory is not proof that a character has stood up.
+
+## 1. Inspect the foundations, then build what is genuinely needed
+
+Read repository and agent rules first. Check HEAD, branch, remote-tracking state,
+index and working tree. The last report had HEAD = main = origin/main and only
+unrelated POST_M73_REPORT.txt untracked. Preserve other agents' work. Do not reset,
+stash, cherry-pick, clean or absorb unrelated changes without authorization.
+
+Inspect current source and relevant guidance, resolving paths in this checkout:
+- M70 shared IK, PhysicalAnimation, Ragdoll, WorldAnimation and M47 pose resolution.
+- PhysicsWorld, articulated body/joint mappings, current contact/constraint solver,
+  collision queries/BVH, sleeping and continuous-motion history.
+- M71 kinematic trajectories and support velocities; CharacterMotor and its
+  explicit animation/physical authority handoffs.
+- Entity gravity selection, FaithfulGravity, RadicalGravity and local/fixed-origin
+  coordinates. Read the current consumer paths, not only a summary.
+- M66 imported skeleton/rest/contact frames, M74 baked clips and source signatures.
+- Scene/named authoring, prefabs, editor component controls, M61 saves and M59 regions.
+- Current JudasJS animation/ragdoll, physics, character, lifecycle and signals docs.
+- M75 terrain collision and exact-range BVH correction, M76 mod/content admission,
+  WINDOWS.md, TEST_HARNESS.md, profiling and active checkpoint documentation.
+
+Record a short reuse/extend/new table and a phase/authority diagram in docs/M77.md.
+Identify real gaps in support observations, joint actuation, controller state,
+reference composition and safe recovery. This is a focused implementation preflight,
+not an excuse to run the entire engine audit before starting.
+
+Engineering permission: implement, extend or restructure the necessary generic
+physics, articulated-control, reference-composition, authoring and persistence
+foundations where the current ones are absent or unsuitable. Do not presume a
+primitive exists merely because a demo looks similar. Do not preserve inadequate
+internals solely because they already exist.
+
+Conversely, do not build another physics world, skeleton, animation player,
+CharacterMotor, resource loader or script VM. Preserve supported public behaviour,
+not every implementation detail. Reuse the existing solver and authoritative
+geometry. A needed generic joint/contact correction belongs here when demonstrated;
+an unrelated solver rewrite, protected-code change or material scope expansion
+requires consultation. Keep Judas ownership of the controller and actuation. No
+third-party character-controller/mocap service, downloaded pretrained policy or
+proprietary Euphoria code. Consult before adding a new dependency.
+
+## 2. Required core and bounded first-version envelope
+
+All three are required in the same candidate:
+A. Contact-aware physical balance, including recovery from bounded disturbances
+   without moving the feet when physically achievable.
+B. Actual corrective foot repositioning that extends the demonstrated recovery
+   envelope, with touchdown established by real contact.
+C. A game-requested, physically driven get-up/recovery attempt from supported fallen
+   configurations, ending in stable physical standing before optional motor return.
+
+An initial explicitly mapped, two-legged articulated controller is sufficient.
+Its assumptions must be structural and authored, not based on humanoid bone names,
+asset filenames or Lastlight/Skate states. Do not claim arbitrary anatomy support.
+Use configurable support effectors, body groups, frames and physical limits so
+compatible differently named/proportioned rigs can share the implementation.
+
+Minimum successful envelope: ordinary solid ground, modest uneven/slope geometry,
+locally coherent nonzero gravity, and modest translating/rotating kinematic supports.
+Demonstrate a locally curved radial-gravity case as well as a rigidly rotated setup.
+Define actual tested speeds, slopes, gravity variation, rig masses and actuator limits.
+A new field of locomotion research is not required for every combination.
+
+Dynamic supports must receive normal physical reactions. Stable balance on every
+lightweight rocking object is not promised. Conflicting independently moving supports,
+large gravity discontinuities, tiny footholds, zero gravity, missing ground, severe
+impacts and obstructed recovery must degrade or refuse honestly, not acquire hidden
+assistance. The runtime should explain the observed reason where it can.
+
+Full procedural walking/running/gait generation is not required. Corrective steps
+are a bounded response to a balance task, not navigation to arbitrary destinations.
+No motion matching, reinforcement-learning pipeline, facial/hand mocap, parkour,
+skate trick recognition, injury scoring, combat AI, rope climbing or flying recovery.
+
+## 3. Authority: motor support remains valid, physical balance stays physical
+
+Preserve existing independent uses:
+- Animation and M70 IK without a ragdoll remain valid and cheap.
+- CharacterMotor locomotion with selected partial physical limbs remains valid.
+- Existing M70 active/passive/animation modes and legacy enter/leave keep their
+  documented meaning when M77 is absent.
+- Configuring M77 does not silently activate it or take locomotion authority.
+
+The physical-standing proof must use a fully dynamic, unpinned articulation,
+including its root, after an explicit motor handoff. A capsule standing underneath
+it, a kinematic pelvis, invisible support, or a position servo applied directly to
+the owner cannot count as physical balance. Ordinary motor-driven games are not
+forced to adopt full dynamic locomotion merely because this feature exists.
+
+Use the existing explicit authority transition, or a narrowly extended equivalent,
+to enter the physical task. Return to motor/animation only at a safe boundary after
+a separate game-authorized request. Resume placement and inherited motion must be
+derived from current authoritative physical state and pass existing collision
+checks. Refusal must leave a coherent physical actor, not half-retired bodies.
+
+Do not retire a fallen ragdoll, snap the capsule to a clear spot and blend a standing
+clip, then call that physical recovery. That existing visual handoff can follow an
+actual get-up; it does not substitute for one. Document velocity inheritance when
+switching representation. Do not claim total momentum conservation when replacing
+an articulated physical model with a query-only CharacterMotor.
+
+Keep one owner per physical degree of freedom and one explicit reference/actuator
+composition rule. M77 must not race a game-authored ikTargets batch or add duplicate
+M70 and M77 torques to the same joint unknowingly. Define which regions/chains the
+controller owns while opted in, how base clip/layer references contribute, and how
+external requests are rejected, masked or deliberately composed. Disabling M77
+must release its contributions without clearing unrelated game layers or settings.
+
+## 4. Actual support and articulated-state observations
+
+Build controller observations from a coherent authoritative fixed sample:
+- Physical body COM positions, orientations, actual linear/angular velocities,
+  masses and inertias. Sum each physical body once; do not count render bones,
+  helper joints or the collider-free owner as additional mass.
+- Whole-articulation centre of mass and its actual velocity; retain enough angular
+  motion information for meaningful disturbance/recovery decisions.
+- Actual external contacts for configured feet and, during recovery, other declared
+  support regions such as hands/knees. Preserve real filtering and self-collision.
+- Contact positions/normals, support identity and point velocity. State explicitly
+  whether load/impulse observations are available or approximated.
+- Current effective gravity sampled through the existing consumers and the physical
+  rig's configuration, not inferred from a camera, animation up or a floor tag.
+
+Trace whether existing contact callbacks contain enough information. A coalesced
+public body-pair event is not automatically a full contact manifold. Add a bounded
+native observation/snapshot mechanism if necessary without changing existing event
+meanings or flooding scripts with contact internals. Public contact subscription
+must not be required merely for the native controller to observe its own state.
+
+Distinguish actual supporting contacts from nearby ray hits, remembered contacts,
+possible footholds and planted reference targets. A ray finding the floor below an
+airborne foot does not grant support. Account for enabled/sensor/layer state and
+lost generation-safe handles. Reference/support loss must invalidate intent promptly.
+
+Support-region/centre-of-mass projections are permitted diagnostics or planning
+approximations; they are not a universal stability proof. Use velocity and the
+available physical actuation, not only whether a static point is inside a polygon.
+State the approximations for noncoplanar contacts, moving supports and varying
+gravity. Do not infer a semantic floor or an infinite plane behind finite geometry.
+
+Use explicit sole/palm contact frames, shape extents and relevant support patches.
+Imported ankle/wrist origins are not automatically the actual contacting surfaces.
+Do not fabricate a large support footprint from the collider-free owner's bounds.
+
+## 5. Standing balance and bounded physical control
+
+Implement a documented feedback mechanism that changes coordinated body references
+and/or joint actuator effort using observed balance error, motion and support.
+Select the mathematical approach after the preflight; the deliverable is not tied
+to a branded algorithm. State equations, frames, units, physical assumptions,
+saturation handling and stability limitations clearly enough to audit in M78.
+
+Effort reaches the actor through real bounded joint/actuator operations. Existing
+M70 implicit drives may be reused/extended; a feed-forward or inverse-dynamics
+contribution must have defined joint ownership, units and limits. If a planner uses
+virtual forces, explain how they become legitimate joint effort and reactions.
+There must be no unpaired external stabilizing force/torque at the root/COM and no
+invisible world anchor. Dynamic-to-dynamic actuator reactions remain paired.
+
+Check the actual physical joint axes, drive authority and limits. A limit imposed
+only on an IK reference is not proof that the simulated articulation has that
+constraint. Where the controller requires a missing generic drive/limit, implement
+and validate it through the ordinary joint path, or diagnose the unsupported
+configuration explicitly. Do not loosen existing authored limits to pass the lab.
+
+No dynamic-body transform assignment, velocity overwrite, artificial upward thrust,
+extra gravity used to glue feet, or post-physics IK that erases the physical response.
+Finite actuator caps and documented numerical safety bounds are appropriate; clamping
+actual body motion to conceal a failed controller is not. Preserve normal friction,
+restitution, mass, inertia, gravity, collision and solver cadence.
+
+In the physical lab, visual physics contribution is full-strength: do not use
+poseWeight below one to make an unstable collider rig look upright. Ordinary game
+presentation blending remains available under its existing approximation contract.
+Keep target pose, actual body pose and displayed pose distinguishable in diagnostics.
+
+Standing must survive a modest real disturbance and settle, not merely stay upright
+when initialized at exact rest. There must also be disturbances the same actor cannot
+recover from. It must slip or fall when grip/effort/support is inadequate. No scene
+or incoming test-button branch selects a prerecorded 'successful stumble'.
+
+Do not defeat ordinary sleep by rewriting identical targets or renormalizing the
+same represented quaternion forever. A sleeping stable rig may retain bounded
+residual error; meaningful target, support or physical changes must wake correctly.
+
+## 6. Corrective stepping, not animated foot sliding
+
+Use observed motion and remaining support to decide whether a corrective step is
+needed, which configured foot can move, and a bounded reachable placement. The game
+may allow/deny stepping and set its envelope; the controller chooses mechanics
+within that envelope. Do not require the game to implement the native balance
+algorithm again in JS.
+
+Candidate generation and clearance use ordinary geometry queries with explicit
+filters, ignored self bodies and bounded counts/ranges. Retain selected footholds
+in the supporting body's local frame when applicable and validate their lifetime.
+Reject unreachable, blocked, overly steep or unsupported placements. Respect real
+joint/limb reach, physical collision shapes and the currently loaded world.
+
+A selected foot must actually unload/lift, travel under bounded physical actuation,
+and contact the selected or another accepted physical surface. Do not teleport its
+body, turn it kinematic, disable collisions for the swing, move the entire entity,
+or weld the stance foot to its target. Targets may be trajectories; actual contact
+and progress determine touchdown and transfer of support. Timing alone is not proof.
+
+Allow a bounded number of corrective steps/replans per task episode with defined
+completion, no-progress and failure criteria. Small corrective sequences are enough;
+infinite alternating foot commands that never recover are not a successful result.
+The controller must not jitter-select a different support every step without reason.
+
+Measure stance slip, swing-foot clearance/contact, physical support change and
+subsequent settling. A blocked swing or disappearing foothold must trigger a real
+replan/failure response, not a fake landing. Do not promise exact rotational CCD for
+a public cast that only translates; rely on the existing physical sweep/contact
+path and document the planner's clearance approximation.
+
+The decisive comparison: from equivalent initial physical state and the same real
+perturbation, in-place balance alone fails a chosen case, while enabling stepping
+makes at least one actual corrective landing and achieves stable standing.
+
+## 7. Falling, bracing and recovery to standing
+
+Expose a game-controlled recovery task. The game decides whether recovery is
+allowed and may choose an authored reference/profile or clip; the engine provides
+bounded physical execution, progress and failure diagnostics. No automatic revive,
+health test, zombie state, animation-name convention or mandatory get-up policy.
+
+A practical first version may use mapped staged target references and ordinary
+existing clips as guides. Reusable profile data can describe support regions,
+reference poses and progression conditions. A few original lab reference poses
+are acceptable; building an animation authoring application or producing commercial
+character animations is not. Do not encode one fixture's joint arrays in native code.
+
+Demonstrate recovery from BOTH a settled face-up and a settled face-down position
+on clear supported ground, with modest start-pose variation. The actor must obtain
+real supports, raise its real mass through joint effort/contact reactions and reach
+stable physical standing. Hand/knee support is allowed when declared and simulated.
+The recovery need not solve every tangled, inverted, trapped or airborne ragdoll.
+
+Where useful, a bounded bracing response may precede a fall or failed step. It must
+be driven by actual disturbance state, not an impact-animation trigger pretending
+to be dynamics. Failure to brace or get up remains possible.
+
+Recovery stage advancement checks actual progress/support, finite effort and
+clearance. Reference trajectories can have durations, but a timer expiring cannot
+mark recovery complete through a low ceiling or a trapped limb. Include bounded
+stall/timeout/attempt limits with reasons. A failed or cancelled task leaves the
+current physical pose/velocities intact and transitions to the configured allowed
+physical state; it does not replay the initial fall or silently relocate the actor.
+
+If balance or stepping becomes infeasible, report that state and follow only an
+explicit configured release/continue policy. A passive request or explicit disable
+must stop M77 actuation; old intents must not restore active effort next frame.
+Active-to-passive release must preserve current articulation and velocities without
+an extra activation impulse. Recovery from passive is another explicit request.
+
+After standing, hold it long enough to prove support before reporting success.
+Then demonstrate an optional collision-checked return to the ordinary animated
+CharacterMotor and existing crossfades/sockets. A moving support must not add its
+velocity twice or reset inherited world motion. Also prove a requested return can
+be refused safely when capsule placement is obstructed.
+
+## 8. Gravity, reference frames and moving supports
+
+Never introduce universal world Y, a world-horizontal threshold or a camera-based
+balance frame. Configuration uses declared model/contact frames; the controller
+uses actual local physical state and gravity/support observations.
+
+Per-entity gravity selection currently does NOT implicitly propagate from an owner
+to every child or ragdoll bone. Verify the current tree and preserve that contract.
+Sampling only the owner while its physical bones fall under a different field is
+not correct. Use the bones' actual gravity; give the lab explicit per-body selections
+where necessary. Any added convenience must be opt-in, narrowly owned and restore
+prior state safely, not redefine all existing articulation gravity inheritance.
+
+For locally coherent gravity, use the physical rig's sampled accelerations and a
+documented local planning frame. In zero/near-zero gravity or strongly conflicting
+body fields, report unsupported/unavailable standing support or a defined passive
+fallback. No fake down vector, square-root singularity, NaN, or root push to invent
+a floor. In-flight internal pose control may remain, but is not standing recovery.
+
+Support motion must use the actual sampled body trajectory and point velocity,
+including angular motion about its physical COM. Store contact plans relative to
+the specific support, not a stale world position. Any support acceleration estimate
+must use real history and time; first activation, reload or teleport cannot fabricate
+an enormous derivative. Discontinuities invalidate/replan as appropriate.
+
+A fully dynamic articulation receives support carry through ordinary contact/friction,
+not CharacterMotor carry plus a second velocity/transform update. Kinematic supports
+are prescribed and may do external work; dynamic supports receive ordinary reactions.
+Do not make a dynamic platform infinite-mass merely because the balance task uses it.
+
+Demonstrate translating and gently rotating supports, support removal, an oblique
+gravity equivalent, and a modest local patch under RadicalGravity. These validate
+frames and compatibility, not arbitrary spinning spaceships, relativistic frames,
+whole-planet gait planning or live origin rebasing. Fixed double-origin/local-float
+rules remain unchanged. Use transformed-equivalent fixtures to catch axis assumptions.
+
+## 9. Fixed-step integration, API and configuration ownership
+
+Integrate at existing fixed boundaries with a clear phase table. A suitable shape is:
+1. JS issues validated task/configuration/mode intent in fixedUpdate.
+2. The controller observes the preceding completed physical sample and current
+   reference inputs, derives bounded balance/step/recovery intent, and prepares
+   the reference/actuator work for this physics interval.
+3. Existing PhysicsWorld integrates once with ordinary contacts and constraints.
+4. Completed physical state publishes observations/task progress and feeds M47's
+   final pose; existing events follow their documented boundary.
+5. Presentation interpolates the published result for cameras/sockets/skinning.
+
+Adapt that arrangement to the actual scheduler, documenting any necessary opt-in
+extension. Do not make an earlier callback observe a later solve from the same
+step, recurse into physics from a signal, or run the controller per camera/render
+frame. Pause, zero-step frames and multiple catch-up steps retain normal meaning.
+
+Add the minimum declarative authoring/JS surface necessary to configure, start,
+cancel/disable and inspect the task. API names must follow the actual architecture;
+do not invent a public signature merely to satisfy this prose. One facade on the
+existing articulated owner or a small owned component is sufficient.
+
+Required semantics:
+- Explicit stable-key rig/body/support mapping; validated masses/frames/shape
+  readiness and required physical degrees of freedom.
+- Authored rest/reference posture and optional recovery references; meaningful
+  effort, reach, response and attempt limits with documented units.
+- Balance/step/recovery permissions, explicit task intent and cancellation.
+- Detached current status: active authority/task, readiness/reason, actual COM and
+  velocity, actual support identities/points, planned step and actual touchdown,
+  recovery progress, saturation and failure/settling observations as applicable.
+- Clear distinction between 'requested', 'accepted', 'executing', 'succeeded' and
+  'failed/cancelled'. A bounded heuristic must not claim universal recoverability.
+- Fixed-boundary mutation with all-or-nothing validation. Bad input or stale owners
+  preserve prior valid settings. Loading/unready rigs never count as successful work.
+
+Reuse M70's existing vector/tuple conventions where extending those configurations;
+ordinary live Vec3/Quat readbacks keep their existing object shape. Types, examples
+and error paths must agree. Avoid a gratuitous mix of interchangeable formats.
+
+If notifications are useful, use existing appropriate lifecycle/event infrastructure
+or expose task status for game JS to publish through M73 signals. No second event
+bus, callbacks inside solver loops or persistence of transient signal queues.
+
+Provide practical consumer examples: motor-controlled actor temporarily entering
+physical balance/recovery and returning; physical actor remaining active after
+standing; game refusing get-up and releasing to passive. No modifications to Lastlight
+or Claude's game are required or authorized by these examples.
+
+## 10. Editor, asset compatibility and lifecycle
+
+The tool must be authorable, not just reachable through a test-only native setter.
+Use normal inspector/picker/undo and named scene/prefab serialization. Separate saved
+configuration, runtime task state and preview controls. Show missing mapping or
+insufficient actuator/support configuration before hiding behind a failed demo.
+
+Preserve imported rest hierarchy, binds, weights, clip identities and M74 baked
+playback. Rig-specific tuning lives in authored configuration. Unrelated hidden
+head/helpers, carry layers and visual sockets retain their meaning. Preview axes,
+COM/support overlays and targets are diagnostics, not forces or collision geometry.
+
+Independent instances must not share mutable controller state, targets, contacts or
+phase clocks. Disabled/unconfigured projects do no balance scans, allocate no active
+controller buffers and keep their previous timing/semantics. Bounded shared immutable
+configuration is fine; cached mapping must validate against current asset identity.
+
+Scene/prefab save, duplication, runtime spawn, asset change, destroyed bodies,
+script disable/fault, task cancellation, reload and Play/Stop must have explicit
+lifetime behavior. State belongs to native owner/component lifetime, not a JS
+closure. Fault cleanup must not depend on destroy callbacks that never run for a
+faulted slot. Decide whether a game script fault cancels its owned command or leaves
+an explicitly native-owned task running, and document/test that rule.
+
+Modern saves must retain the supported live task/configuration and actual physical
+state coherently. Save/load during standing and during an in-progress step or recovery
+must not reset bodies, replay an impulse, replay 'start', or silently complete a task.
+Retain semantic planner history that affects continuation; rebuild disposable caches
+and reacquire safe references. Distinguish unavailable first-sample diagnostics from
+fabricated pre-load observations. No raw pointers/GPU state in archives.
+
+Use existing participant/version/reference rules for any required extension. Keep
+unchanged/unconfigured old saves and fingerprints compatible. Corrupt/incompatible
+required configuration must reject before replacing the live world or good save.
+
+Respect existing active-articulation region pinning. It is acceptable to retain that
+pin with a clear reason instead of inventing lossless active-controller suspension.
+Exercise source/target reference pins, destruction and supported complete-assembly
+adoption; do not adopt transient bones individually. Where ordinary inactive config
+can suspend, revisit must rebuild fresh valid mappings. No claim of new arbitrary
+active-articulation streaming support.
+
+M76 must not accidentally admit unsupported component/resource combinations because
+M77 adds fields. Trace new serialized state/dependencies through the existing mod
+contract and validation; preserve default-off behavior and existing exclusions.
+Do not widen mod permissions, design a new mod architecture or assume that trusted
+mod code is sandboxed. A focused existing mod/package regression is enough unless
+an actual newly supported content path changes.
+
+## 11. One physical-character lab with meaningful controls
+
+Create an ordinary small project, for example projects/balance_lab/, using original
+or appropriately licensed imported art and normal engine authoring. Reuse suitable
+neutral M70/M74 rigs as inputs or generate original compatible fixtures without
+rewriting accepted originals. At least two demonstrably different mapped rigs:
+different names, proportions and mass distributions, with authored contact frames.
+No one native humanoid layout, fake model swap or cosmetic-only second rig.
+
+Organize the lab into a few clear areas/scenes, not dozens of separate demos:
+A. Standing and disturbance: weak push, stepping-required push, unrecoverable push,
+   low-friction/support-edge variants and effort/stepping disable controls.
+B. Supports and frames: moving/rotating platform, uneven cooked ground, rotated
+   equivalent and modest radial-gravity patch; removable support and a finite edge.
+C. Fallen recovery: face-up/face-down starts or actual falls, clear/blocked space,
+   interrupted get-up, physical standing, and optional return to normal motor motion.
+
+Use real impulses or colliding bodies at known physical points. The same inputs
+must pass through the public path the game uses. Fixture setup may arrange initial
+poses/geometry; it must be labelled and must not repeatedly repair state after the
+trial begins. Ship human controls without an autopilot or auto-scoring driver.
+
+Display task/authority, COM/support, planned and actual feet, effort/saturation,
+progress/failure and timing sample boundaries clearly. Overlays must be switchable.
+Let the operator vary push direction/strength rather than inspect one canned event.
+Include full physical collision visualization so a beautiful mesh cannot conceal
+an unstable or teleported ragdoll.
+
+Include a motor/partial-physical compatibility control, a shared-asset independent
+instance, a normal socket/layer interaction, save/load, region/reference lifecycle,
+and a moved standalone. Additional camera views may stay at existing cheaper fidelity;
+no per-view solver or shadow-quality parity work.
+
+## 12. Proof that can distinguish a controller from a staged animation
+
+Set acceptance metrics/tolerances and a small reproducible perturbation matrix
+before judging final results. Report units, masses, friction, drive limits, starting
+poses, contact geometry, duration and seed where applicable. No 'passed 200 tests'
+without the behaviours and negative controls those tests establish.
+
+Required focused evidence:
+1. In-place balance: a free-root rig rejects bounded disturbances from more than
+   one direction and settles on real feet. Disturbed trials must include motion,
+   not just an exact-rest equilibrium. Effort-off/control-off ablation loses the
+   claimed recovery benefit in a documented nontrivial case.
+2. Corrective stepping: equivalent setup with stepping denied versus allowed shows
+   why a step matters. Observe physical lift, path/contact, support change and
+   subsequent stability, not only a planned foot coordinate or 'step count'.
+3. Genuine failure: excessive perturbation, no support, inadequate friction/effort,
+   unreachable foothold and blocked step cannot all magically succeed. Report real
+   outcomes and stable finite failure handling without swallowing diagnostics.
+4. Physical recovery: face-up and face-down trials, plus modest pose variations,
+   get to stable physical standing; an obstruction and an effort-disabled trial
+   do not complete merely because a reference clock reaches its end. Interrupt
+   recovery with a push/cancel and show coherent continuing physics.
+5. Actuation audit: trace every M77 physical write. Free-flight/gravity-off controls
+   with no external contact check that internal actuation does not manufacture net
+   linear motion or unpaired whole-system angular impulse. Account for actual
+   external gravity/contact/kinematic work rather than demanding energy conservation
+   from powered motors. Document numerical tolerance and measured residuals.
+6. Frames/supports: rotated-equivalent comparison, modest radial gravity, translated
+   and rotating supports, moving-point velocity, dynamic-support reactions and
+   support disappearance. Zero gravity gives a defined finite non-standing result.
+7. Rig/ownership: both mapped rigs and independent instances; physical root remains
+   dynamic, binds/weights unchanged; old motor/partial/IK-only paths still operate.
+8. Lifecycle: actual QuickJS requests, invalid batches/stale handles, pause and
+   catch-up timing, save in flight with fresh-process restoration, reload, normal
+   Play/Stop and region pins/revisit with no stale reservations or duplicate task.
+
+Use state/physical measurements independent of controller success flags. Where
+feasibility estimates are approximate, label them as estimates. Support-load or
+contact probes must observe the ordinary solver, not return an expected fixture
+answer. All asserted successes should identify the actual test envelope.
+
+The stand/step proof must not quietly use hidden torso forces, foot anchors,
+extra friction, body teleports, collision suppression, animated root translation,
+physical-pose blending or a helper floor. Disabled pose drives as a negative control
+must include every relevant M77 effort contribution, not leave a hidden drive active.
+
+Analytic/contact/math unit checks are useful but not enough. Exercise Application,
+actual JS VM, renderer, physics, normal resource readiness, saves, prefabs and exports.
+Use the actual scene-input harness; correct fixture mistakes honestly and retain
+real failures. Do not construct synthetic failure evidence after the fact.
+
+## 13. Performance and implementation cadence
+
+This is substantial work, not a mandate to run all historical tests after each edit.
+Use a compact implementation plan: observations/actuation, balance/steps, recovery,
+then integration and the planned affected Release validation. Necessary small
+math/controller experiments and fault reproductions are allowed while developing.
+Do not turn the plan into serial approval gates or deliver a diagnostics-only half
+milestone instead of the three required capabilities.
+
+Implement the coherent change, then perform one planned affected Release build and
+focused verification pass. Genuine failures permit necessary corrections and affected
+reruns. This is not a one-attempt trap. After repeated failure of the same approach,
+surface the mechanism/constraint and a bounded change of plan rather than tuning
+magic numbers indefinitely or weakening acceptance without discussion.
+
+Profile zero-use, existing M70 baseline, one active actor and a modest four-actor
+load using the same declared rig/scene where comparisons are claimed. Separate
+controller/queries, reference IK, drives, contacts/CCD, pose publication and rendering.
+Record median/p95/maximum, first activation, landing/first-contact, stepping, get-up,
+settled state, memory/work bounds and solver saturation. A standing-versus-collapsed
+contact workload is not a clean same-workload speedup comparison.
+
+Use real wall-clock application runs for stalls; fixed scripted frames completing
+eventually do not prove responsive playback. Preserve outliers and cold/steady scope.
+Do not time under concurrent VM compilation, CPU/GPU saturation or screenshot encoding
+and present that as isolated controller cost. Capture overhead can be measured and
+labelled separately. Do not claim a universal FPS guarantee or exact allocator census.
+
+Bound support candidates, query radius, mapped joints/contacts, solver iterations,
+step candidates, recovery attempts/history and allocations. Reuse validated per-instance
+mappings/scratch buffers. No whole-scene scan per foot, reimport per step or uncontrolled
+per-contact heap churn. A cap must reject/defer with a reason, not silently drop mass,
+contacts or simulation quality.
+
+Preserve the existing quaternion/contact-history corrections, M75 exact-range BVH
+path and ordinary sleeping. Do not disable CCD, skip collision pairs, reduce physical
+cadence, force sleep, lower mesh quality or use elapsed-time heuristics to conceal a
+freeze. A discovered pathological stall/regression needs a current-tree reproduction
+and cause; do not assume an old consumer report proves the current bug. Consult if
+a necessary remedy would breach protected scope. Do not hand over a visually upright
+lab that repeatedly locks the application for seconds without flagging that blocker.
+
+## 14. Linux host and native Windows VM validation
+
+FHS operates on Kubuntu. Use the established Windows 10 VM for native compilation
+and automated execution, not as a substitute primary workspace. The operator owns
+its configuration and access rules: local Conner administrator account, internet,
+no Linux filesystem mount, four vCPUs, 6 GB RAM, fixed preallocated 60 GB virtual disk.
+
+Use approved transfer/tooling and bounded build parallelism. Serialize heavy host
+and guest work. Do not change VM hardware/configuration, mounts, privileges, storage,
+networking or host settings without consultation. No host sudo, disk expansion,
+reset/wipe/snapshot rollback or broad cleanup merely to make a test pass. Recover
+space only through clearly owned disposable build/test outputs under existing rules;
+retain compiler/SDK, user data, source and required evidence. Ask when unsure.
+
+On both native platforms run the affected builds, core/controller checks, actual
+application lab controls, editor configuration/Play-Stop, fresh-process restoration
+and moved-export smoke. Verify transferred source/asset hashes and rebuilt executables;
+avoid counting stale guest objects caused by timestamp skew as final evidence.
+
+Use a safe short Windows root for the existing path limitation; exercise ordinary
+spaces/Unicode without changing global long-path policy. App-local Mesa/llvmpipe
+belongs only to disposable VM test copies, not the stock SDK or pristine exports.
+A moved runtime must work from unrelated CWD with development project/source paths
+unavailable. It must use ordinary packaged assets and no compiler/editor/controller
+training inputs. Native Windows execution does not imply physical GPU, controller,
+audio hardware or human animation/feel acceptance. Report inherited warnings honestly.
+
+## 15. Preserve other work and prepare M78 evidence, not M78 itself
+
+Preserve the latest housekeeping/demo/editor changes at ab3dfbab..., M75 terrain
+and physics corrections, M74 baked animation, M73 signals and M76 content/save
+contracts. Do not update Lastlight, Claude's Skate/Parkour, spaceship/planet gameplay
+or unrelated existing demo content as an unrequested consumer integration task.
+New lab content may reuse approved primitives through ordinary APIs.
+
+Protected FTFT/P1/research/historical evidence and accepted fluid implementation
+remain untouched. TripleTake, Terrain-ML, original low-poly libraries/backups,
+local Kate setup, ignored video_work/, locally excluded asset_packs/ and the existing
+untracked POST_M73_REPORT.txt remain separate. Do not force-add them or republish
+assets as a side deliverable. No full animation-studio or mocap work.
+
+Keep production code/tests/docs in normal repo locations, one lab and proportionate
+reproducible evidence under docs/evidence/m77/. Temporary exports, large captures,
+profiling dumps and disposable reproductions go in appropriate ignored workspaces.
+Do not turn repository organization into a parallel maintenance project.
+
+For M78, include a compact table for M77 ONLY: claimed capability, implementation
+mechanism, test/negative control, supported envelope, observed result, open limit and
+human-review status. This creates an auditable handoff without inventorying or fixing
+the whole engine now. No later milestone or new release promise is authorized.
+
+## 16. Final documentation and handoff
+
+Update current M77, architecture, physics/animation ownership, editor and JudasJS
+references only where behaviour actually changed. Keep historical accounts clearly
+historical. Supply actual configuration, exact public signatures, copyable scripts,
+normal named authoring examples, units/caps and failure/cleanup semantics. Do not add
+phantom APIs to the inventory because a proposal used an illustrative name.
+
+Document incremental adoption for existing consumers: keep ordinary locomotion,
+configure a physical task, explicitly hand off, inspect/handle failure, optionally
+recover, then explicitly resume motor/animation. State what the game must author,
+what the controller plans, what physics decides and what remains unsupported.
+
+Return ONE combined UNCOMMITTED candidate with:
+- Ownership/phase diagram, control method and reuse/extend/new table.
+- Implemented stand/step/fall/recovery/return contracts and exact support envelope.
+- Normal Balance Lab project, editable rig/profile provenance, runnable Linux and
+  Windows packages and exact application/editor controls.
+- Focused Linux/native-Windows results, matched final input/binary provenance,
+  genuine failure/correction receipts, ablations, performance and outstanding issues.
+- Exact changed-file list and final source/tool/document/fixture fingerprints,
+  explicitly describing exclusions and any pre-existing unrelated files.
+- Git base/index/worktree status and suggested eventual commit message.
+- One human checklist, rather than repeated full-suite instructions.
+
+Suggested commit ONLY after subsequent explicit authorization:
+Add M77 physical balance, corrective stepping and bounded character recovery
+
+Human checklist should let the operator: see a free physical actor stand; push it
+from several directions; compare effort/stepping off and on; see a real step and a
+real fall; request face-up/face-down recovery; block/cancel/interfere with get-up;
+try moving/rotated/radial supports and remove one; inspect a second rig and ordinary
+motor return; test save/restart/load, reload and Play/Stop; repeat in moved standalone.
+Human motion quality and practical editor feel remain pending until the operator
+actually validates them. No screenshot or automatic success flag closes that review.
+
+Final sanity check: Is Judas still a game engine?
+Judas observes supports, plans bounded physical corrections and applies legitimate
+joint effort through its existing physics and pose systems. Game scripts decide
+whether a character attempts to stay upright, takes a risk, gives up or gets back
+into play. The character can genuinely fail. Neither a zombie nor a skateboard is
+required for any of it to work.

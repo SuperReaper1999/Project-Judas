@@ -1,0 +1,22 @@
+﻿{
+    "seconds":  4.0146484,
+    "freeBytes":  24805376,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_diagnostic-boundary-v1_boundary_observer.exe",
+    "case":  "boundary_observer",
+    "label":  "diagnostic-boundary-v1",
+    "run":  "boundary-seed-off",
+    "executableSHA256":  "a5da0e1a2ba1331276f8353a17743fc28198e6fc300f52140a2824e183c393b0",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "scope":  "Fresh native execution of a verified final candidate executable; no recompile",
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off",
+                      "cold-write"
+                  ],
+    "exitCode":  0,
+    "archiveSHA256":  "cac3377b110dd81a2262aa0757fbabfdfb06b0bf1daa34a7817bf2c676a3eeb6"
+}

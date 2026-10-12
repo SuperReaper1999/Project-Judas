@@ -1,0 +1,16 @@
+--- src/WorldPersistence.cpp
++++ src/WorldPersistence.cpp
+@@ -44,11 +44,11 @@
+  if(a.reading){w.m_nextRuntimeId=next;w.m_simulationTime=time;}
+  auto n=count(a,objects.size());a.Require(!a.reading||n==w.ScriptObjects().size(),"incomplete saved entity records");std::set<EntityId> seen;
+  for(uint32_t i=0;i<n;++i){EntityId id=0;EntityPhysicalState state;bool hasState=false,authored=true,transient=false;SimulationFidelity fidelity=SimulationFidelity::Full;CoarseMotion coarse=CoarseMotion::Settled;double dormant=-1;bool forced=false;SimulationFidelity forcedValue=SimulationFidelity::Full;
+-  if(!a.reading){id=objects.at(i).id;hasState=w.GetEntityState(id,state);if(auto* e=w.FindEntity(id)){authored=e->authored;transient=e->transient;fidelity=e->fidelity;coarse=e->coarseMotion;dormant=e->dormantSinceSeconds;forced=e->forcedFidelity.has_value();if(forced)forcedValue=*e->forcedFidelity;}}
++  if(!a.reading){id=objects.at(i).id;hasState=w.GetEntityState(id,state);if(auto body=w.RuntimeBody(id);body.IsValid()){const auto pose=w.Physics().GetTransform(body);state.position=pose.position;state.rotation=pose.rotation;state.linearVelocity=w.Physics().GetLinearVelocity(body);state.angularVelocity=w.Physics().GetAngularVelocity(body);hasState=true;}if(auto* e=w.FindEntity(id)){authored=e->authored;transient=e->transient;fidelity=e->fidelity;coarse=e->coarseMotion;dormant=e->dormantSinceSeconds;forced=e->forcedFidelity.has_value();if(forced)forcedValue=*e->forcedFidelity;}}
+   a(id,hasState,authored,transient,fidelity,coarse,dormant,forced,forcedValue);physical(a,state);bool bodyPresent=!a.reading&&w.RuntimeBody(id).IsValid();a(bodyPresent);a.Require(seen.insert(id).second&&w.RuntimeDefinition(id),"unknown/duplicate saved entity");
+   a.Require(int(fidelity)>=0&&int(fidelity)<=2&&int(coarse)>=0&&int(coarse)<=1,"invalid saved fidelity");
+   if(a.reading&&hasState)a.Require(w.SetEntityState(id,state),"cannot restore physical state");
+-  if(bodyPresent){auto handle=w.RuntimeBody(id);a.Require(handle.IsValid(),"saved force body missing");w.Physics().PersistBodyForces(a,handle);}
++  if(bodyPresent){auto handle=w.RuntimeBody(id);a.Require(handle.IsValid(),"saved force body missing");if(a.reading&&hasState){w.Physics().SetLinearVelocity(handle,state.linearVelocity);w.Physics().SetAngularVelocity(handle,state.angularVelocity);}w.Physics().PersistBodyForces(a,handle);}
+   if(a.reading){if(auto* e=w.FindEntity(id)){e->authored=authored;e->transient=transient;e->coarseMotion=coarse;e->dormantSinceSeconds=dormant;if(forced){a.Require(int(forcedValue)>=0&&int(forcedValue)<=2,"invalid saved forced fidelity");e->forcedFidelity=forcedValue;}if(fidelity!=SimulationFidelity::Full){std::string error;a.Require(w.SetEntityFidelity(id,fidelity,&error),"cannot restore entity fidelity");}}}
+  }
+  bool view=bool(w.view);a(view);if(view){RuntimeWorld::RuntimeView v;if(!a.reading)v=*w.view;transform(a,v.pose);a(v.fov);if(a.reading)a.Require(w.SetRuntimeView(v.pose,v.fov),"invalid saved view");}

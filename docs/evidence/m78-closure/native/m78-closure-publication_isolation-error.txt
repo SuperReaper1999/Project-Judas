@@ -1,0 +1,9 @@
+Invoke-WebRequest : The process cannot access the file 
+'C:\JudasValidation\Build\Release\m78-closure-publication_isolation.exe' because it is being used by another process.
+At C:\JudasValidation\m78-closure-case.ps1:3 char:24
++ ... load($p,$n){Invoke-WebRequest -UseBasicParsing "$base/$n" -Method Pos ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], IOException
+    + FullyQualifiedErrorId : System.IO.IOException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+ 
+

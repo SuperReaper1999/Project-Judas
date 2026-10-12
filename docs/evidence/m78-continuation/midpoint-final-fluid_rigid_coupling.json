@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_fluid_rigid_coupling_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T18:49:40.629686+00:00",
+  "seconds": 13.19205810999847,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/config"
+  },
+  "sourceSHA256": {
+    "src/RigidBody.cpp": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b",
+    "src/RigidBody.h": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+    "src/CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+  },
+  "executableSHA256": "95b08d1e5dbc8f9b65149d80e3725264f9deb629d4c5e8bf07a361a2b9c77c5c",
+  "logSHA256": "da412d81beb6e72dd0e84723d717d7ef34eda720fc56aa4ca78189570fb72ba3",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

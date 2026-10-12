@@ -1,0 +1,119 @@
+{
+  "scope": "Actual public native C++ ReadBodyContactSample before first resumed Prepare, paired newly captured proper copied format. Every alive body compared by durable entity ID, including query-only bodies; no invented support, no row injection or mutated inputs.",
+  "sourceSHA256": "6dae424fb3df703310bf644445fed4a23b809995fbc4e6725ad3098f7cff4388",
+  "restoredSHA256": "fb905e1913327fa3a97d63433bb15d72a610ef69b04e17cc24a159e76d1b3af4",
+  "bodyCount": 12,
+  "returnedRows": [
+    {
+      "entity": 4611686018427387907,
+      "row": 0,
+      "source": {
+        "normal": [
+          -0.9980431795120239,
+          0.0241999514400959,
+          -0.0576554536819458
+        ],
+        "normalImpulse": 0.19666458666324615,
+        "otherEntity": 4611686018427387910,
+        "point": [
+          2.9301135540008545,
+          0.10911557078361511,
+          0.5433396697044373
+        ],
+        "separation": -2.2873210525631293e-07,
+        "sleeping": false,
+        "supportVelocity": [
+          -0.41271740198135376,
+          0.476285457611084,
+          1.3103729486465454
+        ]
+      },
+      "restored": {
+        "normal": [
+          -0.9980431795120239,
+          0.0241999514400959,
+          -0.0576554536819458
+        ],
+        "normalImpulse": 0.19666458666324615,
+        "otherEntity": 4611686018427387910,
+        "point": [
+          2.9301135540008545,
+          0.10911557078361511,
+          0.5433396697044373
+        ],
+        "separation": -2.2873210525631293e-07,
+        "sleeping": false,
+        "supportVelocity": [
+          -0.41271740198135376,
+          0.476285457611084,
+          1.3103729486465454
+        ]
+      },
+      "maxAbsDifferences": {
+        "normal": 0.0,
+        "normalImpulse": 0.0,
+        "otherEntity": 0,
+        "point": 0.0,
+        "separation": 0.0,
+        "sleeping": 0,
+        "supportVelocity": 0.0
+      }
+    },
+    {
+      "entity": 4611686018427387910,
+      "row": 0,
+      "source": {
+        "normal": [
+          0.9980431795120239,
+          -0.0241999514400959,
+          0.0576554536819458
+        ],
+        "normalImpulse": 0.19666458666324615,
+        "otherEntity": 4611686018427387907,
+        "point": [
+          2.9301135540008545,
+          0.10911557078361511,
+          0.5433396697044373
+        ],
+        "separation": -2.2873210525631293e-07,
+        "sleeping": false,
+        "supportVelocity": [
+          -0.37181955575942993,
+          0.48180145025253296,
+          0.46158087253570557
+        ]
+      },
+      "restored": {
+        "normal": [
+          0.9980431795120239,
+          -0.0241999514400959,
+          0.0576554536819458
+        ],
+        "normalImpulse": 0.19666458666324615,
+        "otherEntity": 4611686018427387907,
+        "point": [
+          2.9301135540008545,
+          0.10911557078361511,
+          0.5433396697044373
+        ],
+        "separation": -2.2873210525631293e-07,
+        "sleeping": false,
+        "supportVelocity": [
+          -0.37181955575942993,
+          0.48180145025253296,
+          0.46158087253570557
+        ]
+      },
+      "maxAbsDifferences": {
+        "normal": 0.0,
+        "normalImpulse": 0.0,
+        "otherEntity": 0,
+        "point": 0.0,
+        "separation": 0.0,
+        "sleeping": 0,
+        "supportVelocity": 0.0
+      }
+    }
+  ],
+  "differences": []
+}

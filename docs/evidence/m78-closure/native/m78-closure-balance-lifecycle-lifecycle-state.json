@@ -1,0 +1,13 @@
+{
+  "effort": true,
+  "elapsed": 17.91666760109365,
+  "pitch": -0.12,
+  "pushAngle": 0,
+  "refusal": "",
+  "selected": 4,
+  "spawned": [
+    "entity:4611686018427387918"
+  ],
+  "stepping": true,
+  "yaw": 0
+}

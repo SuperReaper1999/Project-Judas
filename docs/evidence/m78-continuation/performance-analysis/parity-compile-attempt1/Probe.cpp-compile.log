@@ -1,0 +1,7 @@
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/existence-parity/Probe.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/existence-parity/Probe.cpp:48:26: error: aggregate ‘Scene original’ has incomplete type and cannot be defined
+   48 |  std::string error;Scene original;context="original imported rig";
+      |                          ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/existence-parity/Probe.cpp:52:72: error: ‘RagdollShape’ has not been declared
+   52 |  for(const auto& b:owner->ragdoll->bones){rigShapes.push_back(b.shape==RagdollShape::Sphere?Shape::Sphere(b.radius):Shape::Box(b.halfExtents));offsets.push_back(b.offset);childRotations.push_back(b.orientation);}
+      |                                                                        ^~~~~~~~~~~~

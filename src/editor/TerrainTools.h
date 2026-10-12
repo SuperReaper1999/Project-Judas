@@ -1,5 +1,6 @@
 #pragma once
 #include "TerrainAuthoring.h"
+#include "NavigationDependencies.h"
 #include "EditorPanels.h"
 #include "Renderer.h"
 #include <memory>
@@ -11,6 +12,8 @@ struct TerrainEditor {
  char path[512]="Imports/landscape.judasterrain";int resolution=65;float width=64,depth=64;
  std::shared_ptr<MeshData> preview;uint64_t previewRevision=~uint64_t(0);bool appearanceDirty=true;
  MeshHandle mesh;TextureHandle texture;DebugLineList footprint;uint64_t appearanceRevision=~uint64_t(0);
+ std::vector<NavigationDependency> navigationDependencies;
+ struct NavigationTask {JobHandle job;};std::shared_ptr<NavigationTask> navigationTask;
  struct Task {JobHandle job;TerrainCookResult result;};std::shared_ptr<Task> task;
  void Panel(EditorDocument&,EditorPanelState&,EditorRequests&);
  bool Busy(const EditorPanelState&)const;

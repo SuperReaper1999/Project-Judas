@@ -1,0 +1,556 @@
+# M78 - Judas Faces the Truth
+## Engine-wide capability, implementation and behavioural validation
+## FIRST: checkpoint and push M77 as NOT HUMAN VALIDATED
+
+This is an execution directive for FHS. Complete the M77 checkpoint action below,
+then begin M78 immediately. Do not stop at a proposed audit plan and do not wait
+for the operator's human testing before starting the authorized audit.
+
+The operator plans to perform outstanding human validation later tonight.
+That plan is not evidence that any human test has already happened.
+
+Latest reported committed base BEFORE the M77 checkpoint:
+ab3dfbab13585680a9e6cc92fa318c8d95012979
+General housekeeping and improved demo game
+
+The current M77 review candidate is reported uncommitted and unstaged, with
+1,254 recorded fingerprints matching and Linux/native Windows VM evidence.
+It provides bounded mechanical-rig balance, corrective stepping and recovery,
+not general humanoid walking/get-up. Read the actual final candidate records.
+Do not use the earlier incomplete M77 foundation report as its current status.
+
+M78's audited baseline will be the ACTUAL NEW M77 COMMIT created in Phase 0.
+Do not invent that hash or continue to label ab3dfbab as the audited M77 commit.
+
+## 0. Explicitly authorized: commit and push the existing M77 candidate
+
+This instruction supersedes the previous M77 requirement to wait for human
+acceptance before committing. It does NOT authorize calling M77 human validated.
+
+0.1 Read repository/agent rules and inspect branch, HEAD, index, worktree and
+remote state. Identify the exact M77 candidate against its changed-file list and
+final fingerprints. Preserve the unrelated POST_M73_REPORT.txt, video_work/,
+asset_packs/, local tooling, other agents' work and all existing exclusions.
+Verify which of the reported 1,254 entries are source, assets, documents, fixtures
+or evidence; a fingerprint count is not a file-staging instruction or test count.
+
+0.2 Checkpoint the reported tested implementation, without further feature work,
+refactors, retuning or speculative corrections. Make only the necessary current
+status-documentation changes to say, explicitly:
+
+    M77 checkpointed by operator instruction.
+    NOT HUMAN VALIDATED / NOT HUMAN TESTED.
+    Automated Linux and native Windows VM evidence retains its recorded scope.
+    Physical Windows GPU/input acceptance remains outstanding.
+
+Keep the bounded mechanical-rig limitations, cold presentation stalls and other
+known issues. Do not promote the candidate into universal humanoid capability.
+Preserve original candidate/failure receipts as historical evidence. Put the new
+checkpoint status in the normal current status record, with links where needed;
+do not rewrite original observations to pretend they were made after the commit.
+
+0.3 Verify the existing input fingerprints before status edits. After those edits,
+record the small status-only delta and refresh only the appropriate current
+manifest entries, preserving prior receipts. Do not claim modified documentation
+still matches its old hash. No implementation rerun is needed merely to change a
+checkpoint-status paragraph. Do not repeat the entire M77 validation campaign as
+an administrative precondition to this commit.
+
+0.4 Review the exact staged diff and explicitly stage ONLY the M77 candidate and
+necessary checkpoint-status changes. Do not use a blanket add that captures the
+unrelated report, build products, video work or asset libraries. Stop and explain
+unexpected implementation drift, conflicting ownership or unmatched candidate
+inputs rather than silently treating them as the tested state.
+
+Use commit subject:
+    Add M77 physical balance and recovery
+
+Use the commit body/status note to record the provisional checkpoint and explicit
+lack of human validation. Follow existing repository attribution rules; do not
+invent collaborators or amend prior commits. Push normally to the established
+main/origin workflow. No tag, force push, destructive reset/clean, silent rebase,
+cherry-pick, VM reconfiguration or unrelated change is authorized. If remote
+history/authentication actually blocks the safe push, preserve the work and report
+the blocker rather than silently overwriting anything.
+
+0.5 Confirm push success and the actual HEAD/main/origin/main relationship against
+the remote. Report the full M77 hash and exact remaining worktree state. A clean
+tracked worktree may still contain the intentionally untracked report.
+
+Then proceed directly to M78 on that new hash. No additional approval gate is
+needed between successful M77 checkpoint/push and the audit. Human approval is
+still required to mark M77 accepted, but does not block this audit.
+
+AUTHORIZATION BOUNDARY: this prompt authorizes the M77 commit and push only.
+M78 audit documents, new probes and evidence must remain UNCOMMITTED at handoff.
+No M79 work, product fixes or additional commits are authorized.
+
+## 1. The M78 question and deliverable
+
+What does Judas actually do at the frozen post-M77 checkpoint, against what its
+current supported contracts and authorized milestone requirements say it does?
+
+Audit the whole engine, not just M77, current demo scenes, public JavaScript
+bindings or tests that happen to be convenient to run. Produce a reusable
+capability register with a traceable chain:
+
+    EXPECTED ABILITY AND LIMITS
+    -> REAL ENTRY POINT / OWNERSHIP / IMPLEMENTATION
+    -> INDEPENDENTLY CHECKABLE OBSERVATION
+    -> ACTUAL RESULT / GAP / FAILURE
+    -> REPRODUCTION AND PLATFORM/HUMAN STATUS
+
+This is audit-first and implementation-read-only. The objective is to discover
+truth, not generate a reassuring all-green summary or make the implementation
+match an expectation by changing it during the investigation.
+
+A passing test is evidence for its assertions and input envelope, not proof of an
+entire subsystem. A documented limitation is not automatically a defect. Equally,
+a narrow demonstration or a newly written caveat cannot silently cancel an
+unmet authorized requirement. Record that disagreement explicitly.
+
+M100 remains Judas Alpha v1.0, not a stable-release certification. M78 does not
+need to invent new features, remove every limitation, or certify every imaginable
+configuration. It must account for every current feature and expose the actual
+coverage and gaps without hiding them in an aggregate score.
+
+## 2. Freeze the subject; keep experiments and findings separate
+
+Record the post-M77 commit, source/input manifest, build settings, tool versions,
+platforms and pre-existing worktree exceptions. Use disposable test projects,
+user-data roots and an isolated audit workspace. Do not damage the operator's
+real games, saves, installed mods, mod trust/selection, source art or packages.
+
+After Phase 0, do not edit frozen production code, existing tests, accepted
+baselines, historical receipts, protected research or original projects.
+Do not weaken assertions, enlarge tolerances, regenerate goldens or make bugs
+vanish by adjusting a scene, rig, timestep, density, friction or solver budget.
+
+Allowed M78 work:
+- Read and trace the actual current sources and original requirements.
+- Run appropriate existing builds/tests/application paths against the frozen hash.
+- Add clearly isolated audit runners, public-API scripts, fixtures, analysis and
+  result documentation. Use existing test/application hooks wherever possible.
+- Correct an M78-only observer/fixture after proving its own error, retaining both
+  before and after receipts. Label a broken legacy harness as a harness finding;
+  do not silently repair it and count the repaired test as a baseline pass.
+- Make a disposable, explicitly labelled instrumented or negative-control copy
+  when essential. Keep its exact diff/hash, never use it as the baseline binary,
+  and reproduce important findings on the unmodified product wherever feasible.
+
+A production correction requires separate authorization. Record a minimal repro,
+mechanism, impact and suggested correction boundary, then continue through other
+features. Stop only the affected unsafe test when data/resource safety is at risk;
+do not abandon the entire audit because the first subsystem has a defect.
+
+Use new, organized M78 locations following repository convention, for example
+`docs/evidence/m78/` for retained results and `.cache/m78/` for disposable outputs.
+Do not scatter diagnostics across the root, promote ignored content into Git,
+recreate ROADMAP.md, or clean unrelated directories. Preserve protected FTFT/P1
+work and accepted fluid implementation exactly. Separate fluid research, TripleTake
+and Terrain-ML are not dependencies or work items for this milestone.
+
+If the operator changes or tests the live workspace during the audit, keep the
+audited source frozen in a separate checkout/workspace. Record a later human result
+against its actual hash and scenario; do not silently move the audit baseline or
+mix before/after evidence. Preserve runnable milestone review packages for them.
+
+## 3. Inventory first, from multiple independent surfaces
+
+Read current root guidance and the relevant architecture/subsystem docs, original
+milestone briefs where present, acceptance/status records, source/build targets,
+component/serializer registration, editor menus, runtime facades, asset types,
+export tools, SDK contents and current demos. Trace repository paths rather than
+assuming this prompt's examples are exhaustive or that a referenced file exists.
+
+Build a requirement-to-feature-to-evidence crosswalk for M1-M77 and unnumbered
+engine changes. Distinguish retained functionality from superseded or removed
+implementations. Do not require obsolete Jolt paths or old limitations to remain
+current. Do not mistake historically retained text for a present-day guarantee.
+Record exactly which later decision superseded a claim; unresolved contradictions
+remain findings, not opportunities to choose the easiest definition of success.
+
+Check the reverse direction too: current code/editor/API features without a
+milestone or documented contract must not disappear from the inventory. Public
+runtime symbol enumeration is useful but does not cover native, editor, tooling,
+serialization or mathematical behaviour. Native dispatcher counts are not counts
+of independent public capabilities.
+
+For each feature identify the actual scope of support: production, legacy
+compatibility, experimental/research-only, absent/proposed, or removed. Separate
+core mechanism, supported combinations, default-off behaviour and public authoring
+access. An engine primitive used by a game is not a native game-rule subsystem.
+
+Preserve source terminology and units. Do not silently replace Judas's actual
+contracts with conventional-engine expectations or general textbook physics.
+Where a contract is ambiguous, show the competing source passages, the observed
+implementation and what the operator must decide. Label an engineering probe's
+new tolerance as such; it is not a retroactive accepted specification.
+
+## 4. Minimum coverage map; discover additional current features
+
+Use this as a coverage floor, not a substitute for source discovery. Split broad
+rows into individually testable capabilities. Every current feature needs a row,
+including unsuccessful, unavailable and human-only cases.
+
+A. Core world and simulation
+   Fixed-step scheduling/catch-up, pause, frame/UI/presentation boundaries,
+   authoritative versus presented transforms, generation-safe identity,
+   hierarchies, prefab construction/remapping, component ownership, destruction,
+   script faults, legacy-gameplay opt-in and default-off feature costs.
+
+B. Gravity, reference frames and scale
+   FaithfulGravity, RadicalGravity, spatial zones and optional per-entity
+   selection; actual consumers/exclusions/fallbacks; support versus attachment;
+   relative-frame transitions; celestial/orbital forces and vehicle paths where
+   retained; fixed double origin/local float representation and actual limits.
+   Do not relabel fixed-origin precision as live origin rebasing or demand a new
+   rebasing feature. Use rotated equivalents within declared numeric precision.
+
+C. Rigid physics and physical queries
+   Shape/pair coverage, cooked mesh/hull/compound geometry, broadphase/BVH,
+   overlap/casts/batches/closest point, contacts/CCD/events, sensors and filtering,
+   mass/inertia/forces/impulses/torques, constraints/motors/resistance, sleeping,
+   static/dynamic/kinematic authority, prescribed trajectories and point velocity.
+   Distinguish query approximations from continuous physical collision claims.
+
+D. Characters and animation
+   CharacterMotor movement/support/carry/release, root authority and query capsule;
+   import/rest/bind/weights/parts, native clips, layers/crossfades/root-motion data;
+   sockets, legacy limb IK, M70 shared IK and physical animation, passive ragdolls,
+   M74 offline retargeting and M77 standing/stepping/recovery. Verify actual pose,
+   physical body state and skinning rather than only controller flags. Preserve
+   explicitly bounded anatomy, topology and mechanical-rig envelopes.
+
+E. Fluids, atmosphere, fire, deformables and fracture
+   Inventory each CURRENT production representation separately: legacy particle
+   liquid, conserved reservoir/container/parcel accounting and dynamic surfaces,
+   hydrostatic/solid interaction, atmosphere/drag/heating, combustion, visual
+   particles, cloth/solid deformables, attachments and fracture as present.
+   Map governing model, boundary conditions, invariants, approximations and
+   unsupported coupling. Research-only JSGT/FTFT/P1 artifacts are context, not
+   evidence that their method is running in the game. No new fluid research,
+   solver replacement or rerunning historical research campaigns by default.
+
+F. Rendering and presentation
+   Current material models, lights/shadows, M72 appearance/visibility/instance
+   overrides, transparency and texture roles, meshes/skinning/culling, environment,
+   colour/exposure/UI separation, particles and camera/render-target ownership.
+   Observe actual rendered differences and resource lifetimes. Auxiliary cameras
+   deliberately retain their cheaper quality/cadence/main-focused shadows; demand
+   coherent supported behaviour, not main-camera feature parity.
+
+G. Terrain and navigation
+   Existing radial terrain separately from M75 finite local height patches;
+   create/sculpt/paint/fork/draft/cook, render/collider triangle agreement,
+   placement/scale rejection, dependency freshness, baked navigation, profiles,
+   filters, obstacles, links, advisory steering and actual motor movement.
+   No expectation of unimplemented caves, spherical sculpting, runtime terrain
+   editing, automatic seams/LOD or a universal 3D navigation system.
+
+H. Audio, UI, input, localization and scripting
+   Playback/one-shots/streaming/groups/spatial effects/reverb/lifetime;
+   authored UI/layout/input capture/modal pause; supported Unicode shaping,
+   localization/fallbacks; logical keys/controllers and paired-stick history;
+   QuickJS modules/properties/phase rules/budgets, handles, errors and M73 signals.
+   Verify temporal/payload/lifetime semantics, not just export/member presence.
+
+I. Persistence, resources, jobs and streaming
+   Modern and legacy save boundaries, every required participant, strict content
+   compatibility, cold reconstruction, prior-good retention, pending work;
+   ordinary regions, dependencies/pins, adoption, suspension and revisit;
+   immutable resources, async jobs, cancellations/stale publication, caching,
+   budgets and reported versus actual memory/work. A soft budget is not a hard
+   wall-clock or memory guarantee; a pin is not successful unloading.
+
+J. Authoring, importing, packaging, mods and developer usability
+   New project through edit/undo/save/reopen/Play/Stop/export; scene navigation and
+   picking; named/CLI authoring; imports/reimports/last-good outputs; M74/M75 tools;
+   M76 contracts, curated kits, qualified identities, dependency/conflict handling,
+   install/trust/selection, mod-aware saves and content admission; SDKs and
+   Linux/Windows moved standalone launch. Check current supported asset families,
+   not a hypothetical all-assets mod system. Include the milestone notice's
+   optional check, failure handling and no-update/no-repository-mutation contract.
+
+K. Diagnostics and the validation machinery itself
+   Profiling, logs, test harness execution paths, stale binaries, swallowed errors,
+   test skip/exit behaviour, fingerprints, status labels and reproduction scripts.
+   Verify tests observe the shipping mechanism and report failures honestly.
+
+## 5. Per-capability investigation procedure
+
+For each register row, do the following in proportion to risk:
+
+1. State a falsifiable expected behaviour, supported inputs/limits and its source
+   reference. Identify any later approved change. Keep human acceptance separate.
+2. Trace the real public/editor/native entry through state ownership and update
+   ordering to the effect. Record relevant paths/symbols at the frozen commit.
+   Identify who writes state, applies forces, resolves resources and publishes it.
+3. Inspect the current test and fixture. Explain what would make it fail if the
+   feature were missing, disconnected or wrong. Reused expected-value code,
+   mere getters, mocked mechanisms and fixtures that directly set the claimed
+   outcome are not independent proof of that outcome.
+4. Execute an ordinary successful case and a meaningful adversarial/negative case
+   for the mechanism. Use existing public paths for delivered user-facing claims.
+   Where safe, vary identity, pose/orientation, proportions, topology, counts or
+   lifecycle within the supported range to expose demo-specific assumptions.
+5. Declare comparison criteria before judging new results. Use independent analytic
+   references, paired on/off controls, equivalent transforms or differential
+   observations where appropriate. Distinguish a numerical tolerance, source-data
+   approximation, subjective quality goal and observed performance sample.
+6. Capture command, exact input/binary identity, environment, assertions, exit code,
+   logs and output measurements. A screenshot or a completed process alone does
+   not establish physics, saving, timing or human usability.
+7. Classify the result and remaining coverage. Reduce failures to small repros
+   without changing the failure condition. Validate that the observer itself is
+   sane. Preserve failed receipts, timeouts, skips and environmental blockers.
+
+Inspection for suspicious mechanisms must be specific: scene/entity/bone names
+choosing engine behaviour; decorative motion substituted for claimed physics;
+state/velocity resets; missing reactions or duplicate authority; hidden clamps,
+repairs or thresholds; divergent editor/runtime paths; stale identities; unbounded
+scans; assert-disabled tests; cached success from old binaries; and ignored faults.
+
+These patterns are investigation leads, not automatic guilty verdicts. An explicit
+teleport API, torque cap, bounded approximation, game-script policy, numerical
+stabilization or external work from a kinematic actuator can be legitimate.
+Explain whether it matches the stated contract and whether energy/momentum/work
+is accounted for. Do not flag every number or authored policy as a cheat.
+
+Use negative controls without polluting production. Prefer public effort/feature
+off, denied permission, malformed input or missing-resource cases. Any deliberate
+mutation belongs only to a separate audit copy, and is not an engine fix or a
+claim that the unmodified engine exhibited the injected fault.
+
+## 6. Cross-system checks that cannot be replaced by isolated unit tests
+
+Create a small risk-based interaction matrix. Explain each selected interaction
+and explicitly list uncovered combinations; do not attempt a blind Cartesian
+product of every option. At minimum exercise these supported routes:
+
+- Author -> Save -> Reopen -> Cook -> Editor Play/Stop -> Export -> Relocate ->
+  actual shipped runtime. Include fresh directories and unavailable source trees
+  using disposable copies, not moving the operator's real working project.
+- Instance independence and reference remapping across duplication/prefabs, scene
+  replacement, region suspension/revisit, asset replacement and destruction.
+- Fresh-process save/load during meaningful active state, including animation/
+  articulation/balance, kinematic intent and modded content as supported; omitted,
+  stale/corrupt/incompatible required data must not replace the live world or
+  overwrite a good save. Do not just serialize and deserialize a struct.
+- Rotated gravity and moving supports with characters/articulations, then support
+  removal, pause and return of authority. Check actual bodies and presentation
+  separately. Root-owner gravity must not silently become bone inheritance.
+- Skeletal animation/layers/IK/physics/sockets under multiple cameras, including
+  low/zero/multiple fixed-step frames. Cameras must not advance another simulation.
+- Terrain edits with collision and navigation freshness, independently forked
+  assets, region use and a mod-authored terrain map in an unchanged exported game.
+- UI/input/signals around modal opening/closing, zero-step frames, faults and
+  teardown; callbacks must not replay or acquire permissions from the wrong phase.
+- Resource/job cancellation and scene replacement while assets are pending;
+  verify last-good ownership, no stale GPU/publication result and honest failure.
+- A small script-only project with legacy gameplay disabled and optional systems
+  unused. A game must not inherit demo controllers or pay unexplained mandatory
+  setup/work for systems it did not request.
+
+Use Lastlight and other available ordinary consumers as integration evidence only
+where the frozen committed content is relevant. Their gameplay bugs, missing art
+and balancing choices are not automatically engine defects. Do not modify Claude's
+branch, Lastlight, Wayfarer or anyone's original project to make an audit pass.
+An unavailable external consumer is an unavailable check, not a synthetic success.
+
+## 7. Known questions to investigate, not conclusions to rubber-stamp
+
+Include these in the register and verify the current mechanisms independently:
+
+- M77's bounded mechanical-rig standing/step/recovery versus its original brief.
+  Check real joint effort and contacts, actual lift/touchdown, dwell, denied steps,
+  blocked recovery, cancellation and authority handoff. Weighted feet are an
+  explicit rig condition, not proof of general humanoid recovery. Record any gap
+  between intended capability and demonstrated scope without changing the scope.
+- M77 documents nonzero angular-momentum residuals and missing gyroscopic transport
+  in the inherited integration. Separate paired-drive reaction from total-system
+  angular conservation. Quantify implications under declared assumptions; do not
+  excuse a defect merely because it is old, or demand exact conservation where
+  external work/constraints/numerical approximations make that claim inapplicable.
+- Earlier ragdoll/concave-mesh CCD stalls were reported on an older consumer base.
+  Reproduce on the frozen current baseline with real wall-clock measurements
+  before asserting either recurrence or closure. Check M75's exact-range BVH path
+  and M77 cold/first-contact costs without conflating distinct failure mechanisms.
+- Audit each current fluid model's actual quantities and coupling independently.
+  Conserved volume alone does not certify momentum, pressure, buoyancy or interface
+  accuracy. External pumps/kinematic work, model reductions and source/sink policy
+  must be identified. Do not apply full 3D Navier-Stokes claims to a documented
+  reduced model or import separate research as shipped code.
+- M74 baked retarget clips must work without a runtime retarget evaluator or
+  authoring inputs; M75 terrain must be editable source plus matching published
+  products; M76 must work from a curated kit without private base-game sources.
+  Preserve their explicitly unsupported combinations while testing real promises.
+- M76 contract/content checks and exact-payload trust do not create a hostile-code
+  sandbox. Test within owned disposable installations; never run unknown external
+  mods, grant permissions, change user trust or target someone else's systems.
+- Existing Windows long-path, hardware rendering/input and cold-presentation limits
+  need accurate status, not a new Windows configuration change or hidden short-root
+  workaround advertised as general support.
+- Check documentation for active stale status labels, phantoms and contradictions,
+  but preserve genuinely historical notes. The audit register may explain current
+  truth without retroactively editing earlier evidence or silently declaring
+  pending operator reviews completed.
+
+Read these current records where they exist: docs/M77.md, its final RESULTS and
+PERFORMANCE evidence; M74/M75/M76 guides and original briefs; current JudasJS
+lifecycle/physics/character/animation-ragdoll/material/liquid/save/stream/mod
+references; ARCHITECTURE.md, TEST_HARNESS.md, SCALABILITY.md, WINDOWS.md and
+documentation-maintenance guidance. Discover remaining subsystems from the tree.
+Missing records belong in the findings; do not fabricate their contents.
+
+## 8. Execution and platform discipline
+
+This is the explicitly authorized broad validation milestone. The earlier
+feature-milestone rule against automatic whole-suite marathons does not restrict
+M78 to M77's focused checks. Plan one engine-wide baseline campaign using applicable
+existing tests, then fill coverage gaps with targeted adversarial experiments.
+Do not repeatedly rebuild/rerun everything whenever an audit document changes.
+A necessary correction to a new observer permits its affected rerun.
+
+Use build/test discovery, not guessed executable names or invented totals. Execute
+applicable existing current suites; list intentionally omitted/research-only,
+unsupported and unavailable targets with reasons. Reusing an old receipt is
+historical evidence, not a fresh run on the M78 baseline.
+
+Audit Linux and native Windows at matching source identity. FHS remains on Kubuntu
+and operates the existing Windows 10 VM for MSVC builds/native execution. Retain
+the operator's four-vCPU, 6 GB RAM, fixed 60 GB virtual disk and no Linux-filesystem
+sharing configuration. Transfer deliberately through the established method.
+Do not resize the disk, change VM settings/security/global path policy, enable
+host mounts, alter the user's physical Windows installation or prompt for logins.
+Clean only owned disposable audit artifacts when space is needed; preserve tools,
+SDK, source and review packages. Consult before configuration changes.
+
+Verify guest source hashes, generated configuration and executable freshness,
+especially after timestamp-skewed transfers or interrupted builds. Serialize
+heavy CPU/GPU/build loads rather than hammering Linux and the VM simultaneously.
+Use bounded timeouts and resource budgets; timeout is a result, not a pass or a
+reason to change simulation cadence. Record tool/backend/environment failures
+separately from observed engine failures and continue unaffected coverage.
+
+VM software OpenGL is genuine Windows execution, not physical GPU validation.
+Keep Mesa additions in disposable test copies and distinguish pristine SDK/export
+contents. Run native common checks on both platforms; explain platform-specific
+count differences rather than demanding identical numbers. Synthetic key input,
+images, offscreen pixels and audio counters do not supply human input/audio feel.
+
+For performance use comparable workloads with explicit source/scene, release build,
+backend/hardware, frame count, warmup, resolution, timestep and input schedule.
+Separate CPU/controller/solver from rendering, startup from steady state, first
+activation/contact/recovery from settled rigs, and peak/tail cost from averages.
+Report sample counts, median/mean as appropriate, p95 and max, dropped/capped steps,
+relevant allocation/resource observations and measurement interference. Inclusive
+profiler scopes overlap; do not sum them as independent costs. A prescribed-frame
+run must not masquerade as real-time performance or conceal a stalled fixed step.
+Do not convert VM FPS into a physical-GPU prediction or promise universal speedups.
+
+## 9. Capability register and findings format
+
+Maintain one compact authoritative machine-readable register with a human-readable
+summary, not three divergent hand-maintained inventories. Stable feature IDs should
+link the requirement crosswalk, test cases, findings and human checklist.
+
+Each feature record should include:
+- Feature/subsystem and lifecycle/combination being claimed.
+- Contract source, exact supported envelope/units, historical supersession and any
+  unresolved requirement-versus-documentation discrepancy.
+- Actual ownership/entry points and source paths/symbols at the frozen commit.
+- Linked tests, independent oracle/negative control and declared tolerances.
+- Execution status per platform, input/binary identities, commands and receipts.
+- Observed values/errors and scope of evidence, not merely PASS.
+- Known limitations, untested combinations and human/hardware acceptance separately.
+- Findings/repro IDs, severity and proposed correction boundary, without fixes.
+
+Keep at least these dimensions independent:
+  Implementation: present / partial / absent / intentionally unsupported / unknown.
+  Behavioural evidence: verified-within-envelope / partially verified / failed /
+                        blocked / not-executed / not-applicable.
+  Acceptance: operator accepted / human review pending / hardware pending,
+              each with its own scope, date and checkpoint when available.
+
+A source-only inspection is not an execution pass. A failed required behaviour
+cannot be relabelled untested. An intentionally absent feature is not a bug unless
+it was promised. Marking one sampled case verified does not erase uncovered inputs.
+
+For every finding provide the claim, expected versus actual result, smallest
+reproduction, affected entry points and versions, determinism/frequency, platform,
+raw evidence, impact/severity, known/new status, confidence and unresolved cause.
+Distinguish engine, game-content, harness, documentation and environment defects.
+Suggested fix boundaries are welcome; implementation is not authorized.
+
+Coverage reporting must expose denominators: inventoried current features, traced,
+executed on each platform, passed/partial/failed/blocked/unexecuted, and operator-only
+checks. Do not weight trivial getters into a flattering global pass percentage or
+call every subsystem verified because one aggregate test executable exited zero.
+
+## 10. Human review later tonight, without blocking the audit
+
+Carry forward pending M67 specified authoring review, M74 retargeting motion,
+M76 modding workflow and M77 physical motion. M75 acceptance remains recorded.
+Lastlight/Wayfarer boarding/flight and physical Windows GPU/input/audio checks keep
+their own current status. Confirm any later operator report rather than guessing.
+
+Prepare one prioritized operator checklist using existing runnable labs/packages:
+startup path, exact controls, expected visible outcome, failure sign, tested build
+hash and what the check does NOT establish. Reuse existing checklists rather than
+making the operator re-run every historical milestone by hand. Link coverage gaps
+that actually require human judgement; automated evidence should handle mechanical
+state and repeatable invalid-input checks where possible.
+
+Do not schedule a reminder, shut down the user's session, monopolize their GPU/VM,
+or mark results based merely on their plan to test tonight. If they report a failure,
+record the exact scenario/build and continue the frozen audit; a new product fix
+still needs authorization and a separately identifiable follow-up checkpoint.
+
+## 11. Deliverables, completion and handoff
+
+Use the repository's existing evidence organization. Suggested new outputs:
+- docs/M78.md: audit purpose, frozen checkpoint, coverage and current status.
+- docs/evidence/m78/CAPABILITIES.json: source-of-truth register and crosswalk.
+- docs/evidence/m78/REPORT.md: readable results and prioritized findings.
+- docs/evidence/m78/REPRODUCE.md: actual build/run commands, isolated inputs and
+  tool/platform configuration; distinguish baseline from audit-only variants.
+- docs/evidence/m78/HUMAN_CHECKLIST.md: concise outstanding operator checks.
+- Owned probe source/fixtures plus raw receipts; large disposable artifacts stay
+  in the ignored audit workspace, with retained paths/hashes sufficient to locate
+  them and reproduce the result. Do not point final evidence solely at ephemeral
+  /tmp files without retaining essential inputs and results.
+- Exact changed-file list, baseline-preservation proof and final audit fingerprints.
+
+Names are organizational suggestions, not claims these files already exist. Reuse
+an existing suitable register format rather than introducing a new framework.
+Do not edit root product promises, public contracts or prior evidence to conceal
+findings; propose such corrections in the report for later approval.
+
+Continue beyond planning, inventory and the first successful suite. Reach a
+whole-engine report where every discovered current capability is accounted for
+with evidence or an explicit failure/gap/blocker. Finish breadth before disappearing
+into one numerical research rabbit hole. Unknown is an honest outcome, not a pass.
+The audit can be delivered with defects and pending human checks; it is not an
+engine-correctness certificate or permission to omit unexplored subsystems.
+
+Maintain resumable progress with completed feature IDs, running jobs, remaining
+coverage and next exact commands. If execution is genuinely interrupted, label it
+PARTIAL, preserve progress and outstanding scope, and resume from there. Never
+present an inventory-only or recent-milestones-only report as the completed audit.
+
+Final handoff must state:
+1. Actual M77 commit/push hash and explicit NOT HUMAN VALIDATED status.
+2. Exact audited checkpoint, source preservation and platform execution scope.
+3. Feature coverage counts, strongest findings and significant unresolved claims.
+4. Minimal reproductions and evidence; no fabricated pass totals or root causes.
+5. Outstanding operator/hardware checks and known product/environment limits.
+6. Recommended prioritized corrective work, not silently assigned M79 milestones.
+7. Exact M78-only new/changed files and worktree/index state.
+
+Leave M78 results/probes UNCOMMITTED and UNSTAGED for review. Do not fix findings,
+push an audit commit, create a tag or start the next milestone without approval.
+
+Final sanity check: Is Judas still a game engine, and can we trace what it promises
+to reusable mechanisms that actually produce the observed behaviour? M78 measures
+the answer. It does not manufacture a favourable one.

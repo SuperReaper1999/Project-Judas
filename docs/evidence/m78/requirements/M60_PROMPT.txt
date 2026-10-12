@@ -1,0 +1,397 @@
+# M60 — Judas learns to hear the world.
+
+Starting checkpoint:
+277e67d2b0811644b2122bae27a4301d6dd3c96b
+
+This is the accepted post-M59 icon checkpoint. Verify HEAD/main/origin/main and
+working-tree state before editing; preserve any unexpected operator changes.
+Read the actual M59 implementation and handoff rather than assuming unsupported
+component families can already stream. Do not begin M61 persistence work.
+
+Implement M60 to candidate completion. No commit, push or tag before review.
+
+GOAL
+Extend existing Judas audio with genuine bounded-memory streaming, motion-based
+Doppler, geometry-driven obstruction/occlusion, and authored environmental reverb.
+Provide the editor, public JavaScript and streamed-world integration needed for
+ordinary games to use them. This is practical game audio, not acoustic CFD.
+
+Judas owns playback, spatial/DSP primitives and resource lifetime.
+Projects own sounds, routing and environment settings.
+JavaScript decides why music, effects or other sounds play.
+
+## 1. Extend the current audio system
+
+Trace AudioSystem, emitter/listener bindings, ResourceManager, JobSystem, current
+JudasJS audio controls and M59 region registration/suspension/destruction.
+Reuse their working paths. EngineHost's audio device/service remains independent
+of Renderer; runtime worlds own their voice and environment bindings. Do not
+create a device, mixer, listener selection policy or audio world per region.
+
+The M34 baseline used miniaudio 0.11.23. Verify the current pin and configuration.
+Prefer its existing decoding, spatialization, filters and effect infrastructure;
+inspect the pinned implementation, not just current online examples. Do not
+replace the backend or upgrade it speculatively. A small pinned permissively
+licensed reverb implementation is acceptable if required. Record provenance,
+license and exported notices for any addition.
+
+Preserve ordinary whole-clip WAV/MP3/FLAC playback, independent voices, existing
+attenuation, full listener orientation, one-shots and loops. New effects should
+be opt-in/compatibly defaulted, not silently change every historical sound.
+A single active listener is sufficient. Secondary/render-texture cameras must
+not create listeners or tick audio again.
+
+## 2. Real audio streaming, not asynchronous whole-file loading
+
+Support an authored buffered-versus-streamed loading policy through normal audio
+assets/emitters. Long music and spatial ambience must start after bounded
+prefill and continue reading/decoding incrementally. Stream the existing
+WAV/MP3/FLAC formats where their decoder supports it; reject any unsupported
+combination explicitly. Additional codecs are not a requirement.
+
+Decoded stream memory must be bounded by configured buffering and active voices,
+not track duration. Reading the entire encoded file before playback is not the
+intended streaming solution either. Two users of the same asset share immutable
+metadata but keep independent stream cursors and playback state.
+
+Expose coherent loading/ready/playing/paused/seeking/ended/failed information,
+using the existing API style. Support play, pause/resume, stop/restart, looping,
+seek and playback position/duration queries. Unknown duration is explicit, not a
+fabricated zero. Document seconds versus audio frames, sample-rate conversion,
+seek granularity and authored pitch behaviour. Readiness, EOF and temporary
+buffer starvation are distinct states.
+
+Looping must cross buffer boundaries without an engine-inserted gap for a
+loop-compatible fixture. Do not promise sample-exact compressed-codec seeking
+or universal gapless MP3 unless demonstrated. Rapid replacement/seek requests
+must reject stale completions instead of replaying old pages.
+
+Keep short effects buffered. Repeated shots must have independent playback where
+requested, subject to a bounded documented voice policy; do not globally share
+one decoder cursor or turn each shot into a heavyweight disk stream.
+
+## 3. Audio-thread, worker and clock boundaries
+
+Perform file I/O, decoding, initialization and expensive destruction outside the
+audio callback. Reuse Judas jobs or deliberately integrate bounded backend jobs;
+no uncontrolled extra worker pool. Keep page/decoder operations ordered per
+stream, generation-safe and fair enough that one long file cannot starve others.
+
+The callback consumes prepared audio/control state and performs bounded DSP.
+No JS, physics queries, live-world traversal, GL, filesystem access, logging,
+WaitAll, per-block heap churn or waits on gameplay/worker completion. Use safe
+command/parameter handoff and acknowledged retirement. Audit backend locks/waits;
+do not claim strict lock-freedom merely because our wrapper uses atomics.
+
+IMPORTANT backend trap: inspect stream uninitialization. miniaudio's data-stream
+uninit can wait for a queued cleanup job. Ordinary M59 region unloading must not
+block behind that operation. Detach/fade the voice, retain its resources until
+safe, and retire asynchronously where necessary. Never wait on the same worker
+needed to complete that retirement. Bound and report pending retirement; do not
+solve lifetime safety by leaking streams or permanently pinning empty regions.
+
+Underruns must produce defined safe output, not garbage or a stalled callback.
+Document whether the media cursor pauses or advances through starvation; count
+underruns and recover without falsely reporting EOF. Invalid assets fail with
+useful diagnostics. A missing audio device must not crash the game.
+
+Audio runs on its sample clock, not once per physics step. Frame updates publish
+spatial/control state; a 0/1/multiple-fixed-step frame must not duplicate playback.
+Backend completion/error notifications are queued to a safe main-thread boundary
+if exposed to scripts. Never call QuickJS from the mixer/decoder thread. Do not
+promise sample-exact audiovisual or deterministic network synchronization.
+
+## 4. Doppler, orientation and motion
+
+Add opt-in Doppler using real source/listener motion, not distance alone or a
+scripted pitch curve. Use one Doppler calculation: backend or Judas-owned,
+not both. Compose it explicitly with authored pitch.
+
+Positions, directions and velocities must use one consistent world/reference
+frame. Reuse the current presented-pose path for smooth spatial presentation;
+obtain trustworthy velocity from physics/CharacterMotor/camera tracking where
+available. Attached emitters/listeners need point velocity, including angular
+motion at their offset. For purely scripted motion, accept explicit generic
+velocity or use a documented finite-difference fallback with a coherent clock.
+
+Initialization, camera switches, teleports and region placement must reset any
+motion estimate that would otherwise create a huge pitch spike. Do not estimate
+velocity from the asset-local position of one frame and world position of another.
+Transform region-local anchors exactly once. Full listener orientation supplies
+panning axes; gravity is not an audio up vector.
+
+Use metres/seconds and a documented sound speed/Doppler scale. Define the assumed
+acoustic-medium rest frame: stationary uniform air in the simulation frame is
+sufficient. Source/listener velocities must be relative to that same medium.
+A change of coordinate frame must transform the medium too. Do not claim exact
+acoustics from only the magnitude of relative velocity.
+
+Coincident positions, zero Doppler and extreme velocities remain finite under a
+declared subsonic/game approximation. Do not simulate shock waves or alter
+physical body velocities to protect audio. 2D/UI/music voices bypass spatial
+Doppler unless deliberately configured otherwise.
+
+Prove stationary, approaching, receding, co-moving and rotated configurations,
+plus a rotating offset emitter and a discontinuous view change. Preserve M23's
+fixed double origin/local-float contract; no live rebasing or atmosphere rewrite.
+
+## 5. Geometry-aware obstruction/occlusion
+
+Use the existing PhysicsWorld/M44 geometry and filtering to determine whether
+eligible spatial sources have a clear path to the listener. Evaluate queries
+outside the audio thread at a bounded control cadence. Source selection/query
+budgets should use active/audible demand with stable ordering, not render visibility.
+
+One or a small fixed set of rays is adequate initially. Turn the obstruction
+result into smoothed attenuation and low-pass filtering. The actual DSP must
+change, not just a displayed occlusion flag. Keep distance attenuation, authored
+gain and occlusion separately observable and avoid applying the same gain twice.
+
+Reuse M39 collision/query masks and ignored handles. Exclude source/listener
+geometry appropriately, skip sensors unless opted in, and handle legitimate
+geometry hits with no entity wrapper. Render layers do not decide whether a wall
+blocks sound. A moved/opened door changes the result through its actual collider,
+not a hardcoded Door/Shooter/Room special case.
+
+Skipped updates retain/interpolate a known result rather than abruptly toggling.
+Reset stale observations on destruction/replacement. Clearly document query
+latency, thin/grazing geometry limits and the use of currently resident geometry.
+Do not synchronously load missing regions merely to trace a sound.
+
+This is approximate obstruction, not diffraction, transmission through arbitrary
+materials or a geometric acoustic propagation solver.
+
+## 6. Authored environmental reverb
+
+Provide real bounded algorithmic reverb, not a volume boost or a canned echo
+recording. Prefer existing permissive DSP rather than inventing a research reverb.
+Use reusable settings/assets and ordinary environment-zone components with
+explicit shape/frame, priority, blend distance, wet/send amount and the supported
+decay/damping parameters. No inferred room names or hardcoded presets in C++.
+
+Support at least two audibly different authored environments and a dry/default
+outside. Listener-weighted zones with per-emitter sends are an acceptable initial
+approximation; state that this is not portal-connected multi-room acoustics.
+Overlaps resolve deterministically from authored/stable identity, never whichever
+streaming job finished last. Zone orientation/placement must work off world-Y.
+
+Share a bounded number of reverb processors/sends rather than allocate one large
+reverb per voice. Avoid doubling the dry signal. Smooth transitions; do not
+reinitialize delay buffers every frame. Parameter changes must be safe for the
+selected DSP and preserve/transition tails without obvious bursts or clicks.
+
+A stopped source may leave a legitimate bounded tail. Region/zone removal must
+fade or retire that tail safely without retaining live entity pointers or leaving
+effects on the next world. Full Stop/project replacement clears runtime DSP state.
+
+## 7. Minimal routing, fades and pause policy
+
+Add/reuse only the routing needed to make these features usable: master output
+and project-defined sound groups/buses with gain, mute, pause and smooth fades.
+Music/effects/UI are demo routing choices, not engine-required game categories.
+Keep environment sends and per-emitter effect bypass understandable.
+
+Projects must be able to pause gameplay sounds while keeping chosen music/menu
+sounds running, or pause them all. JavaScript/M41 UI chooses the policy. Pausing
+must not repeatedly restart sources or accumulate scene events for a burst on
+resume. Use the audio clock for audible fades even when fixed simulation is paused.
+
+No interactive music framework, sequencer or mixer graph editor. Two ordinary
+voices and fades are enough to demonstrate a music transition if useful.
+
+## 8. M59 ownership and lifecycle integration
+
+Audio streaming and world streaming are different kinds of streaming. A voice
+must retain the audio data it needs without making an entire region immortal.
+Use M59's ordinary registration, demand, adoption and dependency contracts.
+
+Required cases:
+- Persistent-root music continues through additive gallery loads/unloads without
+  restarting or duplicating, including independent requests for the same region.
+- Region-local ambience activates once, deactivates cleanly and releases decoder,
+  buffer, query and zone resources after safe retirement.
+- A carried/adopted sound-emitting entity keeps its existing voice and position
+  across ownership transfer; unloading its birthplace does not kill it.
+- Cancelled preparation and late completions cannot resurrect unloaded sources.
+- Repeated outbound/backtracking trips leave no stuck-unloading regions, stale
+  sends, unintended pins or increasing voice/buffer counts.
+
+Do not let loading a region silently replace the active listener. Distinguish
+suspension from destruction. Preserve M59's documented restart-on-resume policy
+for ordinary suspended region sounds unless explicitly improving and testing it;
+lossless decoder/DSP snapshot suspension is not required. Persistent music is
+owned by the retained root, not saved and restored on every boundary crossing.
+
+Whole-scene replacement, reload, Play/Stop and process shutdown have explicit
+cleanup ordering. Script destroy callbacks may issue valid final audio commands
+while their world service still exists; commands are invalid after teardown.
+Do not build M61 disk saves or serialize backend pointers, decoder heaps or tails.
+
+## 9. Editor, resources and JudasJS
+
+Integrate loading policy, relevant emitter/listener controls, routing and reverb
+zones with current inspector authoring, stable assets, scene serialization,
+prefab overrides/remapping, runtime spawning and composed-region placement.
+Use invariant serialized numbers regardless of M58 display locale. Playback
+cursors and diagnostic counters are runtime state, not authored fingerprints.
+Follow current schema/conditional-field conventions without gratuitous bumps.
+
+Extend existing public audio access rather than replacing it with an incompatible
+API. Expose enough safe control/query data for streaming readiness, seek/time,
+looping, fades/groups, Doppler/occlusion settings and environments. Provide useful
+errors, units, optional-result semantics and validity/lifetime documentation.
+Do not expose raw miniaudio objects or require project scripts to poll private
+native dispatch. Validate parameters and protect callback/handle lifetimes.
+
+Update judas.d.ts, reference/landing page, machine inventory, live enumeration,
+drift checking and an executed cookbook example. Update current architecture
+and M59's coverage matrix only where M60 actually changes the contract.
+
+Export every referenced audio/effect/settings dependency through normal package
+resolution, including long streamed files and notices. Run after moving the
+package, from unrelated CWD and read-only installation. No network service,
+repository fallback or file writes beside installed assets are required.
+
+## 10. One clear listening lab and a real game integration
+
+Provide an ordinary small audio project with safe initial volume and straightforward
+JS/M35/M41 controls. Original or clearly redistributable assets only. Use an
+actual long audio file for streaming proof, not a procedural oscillator hidden
+behind a streaming label. Short generated signals are fine for numerical tests;
+do not commit giant raw test recordings or soak-test output.
+
+The lab should make each capability easy to hear in isolation: streamed music
+with pause/seek/loop; a moving tone/source for Doppler; a source behind a wall and
+openable physical door; dry and contrasting reverb spaces; independent routing
+controls. Include a rotated-frame case in a focused fixture or the lab, not a
+whole new planetary game. Display readiness and simple measured audio diagnostics.
+A dry/bypass comparison is useful; it must bypass actual DSP, not swap recordings.
+
+Also integrate the features into Streamed Spring Range with minimal content changes:
+persistent-root streamed music, region-local ambience, physical-wall/door
+occlusion, environment transitions and a travelling sound-emitting prop. Existing
+shots/hits/UI remain usable; avoid duplicate upgraded and legacy playback paths.
+Keep chase, score, camera, carrying and door decisions in JS. Preserve M58 locale
+switching and the M59 return journey. Do not redesign gameplay, navigation or water.
+
+## 11. Focused proof, then one candidate gate
+
+Use the real production decoding/mixing path with device-free PCM capture where
+appropriate. A control flag changing is not proof that the sound changed.
+Headless signal measurements establish mechanics, not human listening acceptance.
+
+Keep focused coverage around these behaviours rather than a huge audio matrix:
+
+1. Long file begins after bounded prefill, memory plateaus across repeated pages,
+   and a longer equivalent track does not require proportionally more PCM memory.
+   Exercise normal WAV/MP3/FLAC paths without testing every codec combination.
+2. Two voices share an asset but independently play/pause/seek/loop. Page/loop
+   transitions, EOF and rapid seek/replacement do not emit stale data.
+3. Deliberately delayed decode demonstrates safe underrun recovery; cancel,
+   missing/corrupt input and queued teardown cannot crash or stall the mixer.
+4. Captured tones show the expected stationary/approach/recede/co-moving Doppler
+   direction and approximate ratio. Rotated/far-origin and teleport cases are safe.
+5. A real collider causes gain/high-frequency changes; moving it restores output.
+   Filtering, self-ignore and physics-only occluders behave as documented.
+6. An impulse produces a real decaying wet tail, bypass is dry, zone overlap and
+   removal are deterministic, and repeated settings changes remain finite.
+7. Bus/fade/pause controls affect actual output independently; UI sounds can keep
+   playing while chosen gameplay sounds pause, with no resume burst.
+8. Repeated region trips, demand cancellation, adoption, source/zone destruction
+   and slot reuse retire only the right voices. Persistent music keeps one cursor.
+9. Project scripts use public APIs; declarations, inventory and examples match.
+   Locale changes do not affect audio-setting serialization or gameplay state.
+10. Editor authoring/prefabs/Play-Stop, whole-world reload, device-free failure
+    handling and a moved/read-only export all work through normal paths.
+
+Test real-time device playback briefly as well as offline DSP. Do not change OS
+volume, close the operator's applications or monopolize CPU/GPU for stress tests.
+After completion run one clean Release build, one production suite, actual async
+integration, focused M60 checks, affected M59/control regressions, API/cookbook
+checks and editor/standalone/export smoke. During development use focused checks.
+Narrow late corrections get affected reruns, not another full gate by ritual.
+Preserve genuine failure evidence and distinguish original versus final results.
+
+## 12. M56 performance and boundedness
+
+Use existing profiler scopes/counters for preparation/decode workers, main-thread
+spatial/occlusion/zone work and resource retirement. Export lightweight audio
+counters safely; do not insert allocating profiler scopes or global locking into
+the callback merely to time it. Measure DSP cost offline or through appropriate
+bounded device diagnostics, and label what was actually measured.
+
+Report buffered versus streaming memory, stream prefill/seek latency, underruns,
+voices, decoded buffer high-water marks, active reverb processors, query counts,
+pending retirements and region pin reasons. Distinguish owned bytes from OS caches
+and process RSS. Include maximum indivisible unload/retirement work.
+
+Compare a small useful workload: no audio, ordinary buffered effects, then music
+plus spatial/occluded voices and reverb. Around 8 and 32 voices are enough for a
+sanity check. Capture frame median/p95/max and audio/control/DSP cost separately;
+CPU submission time is not device latency. Use the current i7-4790/GTX 970-class
+machine and disclose concurrent applications without demanding they be stopped.
+
+With optional acoustics/streaming unused, ordinary small games should not pay
+for a large reverb bank, continuing occlusion queries or needless workers. Stop
+must drain resources safely. Avoid optimizing unrelated engine systems.
+
+## 13. Scope limits
+
+No sound-propagation PDE, diffraction research, acoustic ray tracing, automatic
+room reconstruction, portal-acoustics graph, baked acoustic probes, convolution
+IR authoring suite, HRTF/binaural framework, mandatory new codecs, voice chat,
+microphone recording, networking, interactive-music framework or full audio editor.
+No automatic atmosphere/vacuum/underwater physics coupling; generic filter/gain
+controls can support later project choices without altering M54/M55.
+No multiple-device/listener redesign, broad decoder rewrite, M61 save system or
+unrelated physics/render/navigation changes. Keep current platform scope.
+
+Approximate occlusion and reverb are acceptable when audibly useful and honestly
+bounded. Do not advertise a real acoustic simulation or claim listening from PCM
+numbers. Inspect the pinned backend if a proposed operation is unavailable; report
+an actual blocker rather than silently dropping a core requirement or repeatedly
+hammering a failing approach.
+
+## 14. Human review and delivery
+
+Provide controls and ONE concise checklist covering:
+- Start the long track; pause/resume, seek, loop and adjust group gain.
+- Hear a source approach/pass/recede; compare Doppler off/on.
+- Walk behind a wall, open the door and hear the obstruction change smoothly.
+- Move between dry/reverberant spaces; compare wet/dry and listen for clean tails.
+- Play Streamed Spring Range across several galleries AND back: music continues,
+  local sounds clean up, and a carried emitter survives its original region unload.
+- Pause, switch locale, resume, reload and Stop; no stuck controls or ghost audio.
+- Inspect M56 buffering/query/retirement diagnostics and repeat in moved standalone.
+
+The operator owns auditory/gameplay acceptance. Do not mark it passed yourself.
+
+Deliver concise architecture/ownership, streaming/threading/retirement contracts,
+Doppler frame and velocity semantics, occlusion/reverb approximations, routing and
+pause policy, M59 suspension/adoption behaviour, editor/JS/export integration,
+validation actually run, memory/performance/underruns, dependency licenses, limits,
+human checklist, project/docs/evidence paths and exact changed-file/fingerprint
+manifest. Preserve protected FTFT/P1 research, historical failures and accepted
+simulation work; any genuine shared integration correction must be identified.
+
+Leave the complete candidate uncommitted for operator review. Do not start M61.
+Suggested commit only after acceptance:
+Add M60 streaming audio and environmental acoustics
+
+IMPLEMENTATION REFERENCES — starting points, not substitutes for pinned source
+
+- miniaudio manual, particularly resource management, node graph and spatialization:
+  https://miniaud.io/docs/manual/index.html
+- Resource-manager examples (including integration with externally managed jobs):
+  https://miniaud.io/docs/examples/resource_manager.html
+  https://miniaud.io/docs/examples/resource_manager_advanced.html
+- Existing 0.11.23 implementation; inspect data-stream uninitialization and Doppler:
+  https://raw.githubusercontent.com/mackron/miniaudio/0.11.23/miniaudio.h
+- Effect graph and optional reverb-node examples. Check compatibility and pin any
+  separately adopted source/dependency rather than importing moving master blindly:
+  https://miniaud.io/docs/examples/engine_effects.html
+  https://github.com/mackron/miniaudio/tree/master/extras/nodes/ma_reverb_node
+
+Then stop for operator review.
+
+Milestone 60 — Judas learns to hear the world.

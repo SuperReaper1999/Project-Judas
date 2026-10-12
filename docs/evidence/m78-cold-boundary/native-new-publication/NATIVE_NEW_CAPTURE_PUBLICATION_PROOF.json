@@ -1,0 +1,358 @@
+{
+  "scope": "Copied-only diagnostic prototype. Not final production acceptance or source change. Original tests unchanged; legacy a106 remains failed. Prior three successful compiles reused after restoring exact archived fixture objects.",
+  "sourceBundleSHA256": "b380317ed504dd3236a416b50653766a004b78ad4e3a404ee7ca54fc4aa74690",
+  "newSaveSHA256": "3346e5b6ed579bfe28eacbbe355b5b1936f1815108a92ea86fcd8ed61a4479b9",
+  "results": [
+    {
+      "case": "balance_lab",
+      "mode": "cold-read",
+      "exitCode": 0
+    },
+    {
+      "case": "balance_lab",
+      "mode": "cold-write",
+      "exitCode": 0
+    },
+    {
+      "case": "balance_lab",
+      "mode": "legacy-a106-read",
+      "exitCode": 1
+    },
+    {
+      "case": "controller",
+      "mode": "controller",
+      "exitCode": 0
+    }
+  ],
+  "links": [
+    {
+      "mapSHA256": "ad6beb8cd29476e4f53441906077db92a1a3631ce02309209bbd5fe3f449c9cb",
+      "linkerResponse": "\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj\" \"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj\" \"C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj\" \"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-balance_lab.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level='asInvoker' uiAccess='false'\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\balance_lab.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\balance_lab.lib\" /MACHINE:X64  /machine:x64 /VERBOSE:LIB /MAP:\"C:\\JudasValidation\\M78NewCapturePublicationResults\\m78-native-new-publication-balance_lab.map\"",
+      "fixtures": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\BalanceLabTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\BalanceLabTests.cpp",
+          "sourceSHA256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+          "objectSHA256": "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff"
+        }
+      ],
+      "mapBytes": 14287213,
+      "case": "balance_lab",
+      "exe": "C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-balance_lab.exe",
+      "sha256": "4d65e46d189bbd558f49a171377f6db0d2a292fd188446274084e482c1919e16",
+      "compiles": [
+        {
+          "objectSHA256": "c6fc5855a923cc3f8e768ec3baf7609d53ccb240008c02f332678a0768d47053",
+          "source": "C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicsWorld.cpp",
+          "response": "/I\"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicsWorld.cpp\"",
+          "object": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj",
+          "sourceSHA256": "28fcf10deb0c20da8473449d215912108452d51ecbba04902a5818cda5ec792f",
+          "bytes": 1443399
+        },
+        {
+          "objectSHA256": "875529ce9aa1abf1617f36e9efd0dc9f949c95c8fc00ec9eb11c81ed2771d24c",
+          "source": "C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\WorldPersistence.cpp",
+          "response": "/I\"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\WorldPersistence.cpp\"",
+          "object": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj",
+          "sourceSHA256": "6bae8c1df97baef985cfadf27ee9c6e659c6d7e1556bc70799c6beb066f8969e",
+          "bytes": 1250794
+        },
+        {
+          "objectSHA256": "6477dd5d359f09625c98b6e12721bcebb6e7ef98fb044bbae4a2f55f177c0051",
+          "source": "C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicalBalance.cpp",
+          "response": "/I\"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj\" /Fd\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicalBalance.cpp\"",
+          "object": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj",
+          "sourceSHA256": "90b54aea7864d89f9358ae3744676a80be488b2cccfc2a3dbb416e2784a1ecd1",
+          "bytes": 1462368
+        }
+      ],
+      "bytes": 9497600
+    },
+    {
+      "mapSHA256": "94c7e9bbf71152b78581ad2ad618f2da7dec62a9d560a603f98d412f24288a63",
+      "linkerResponse": "\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj\" \"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj\" \"C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj\" \"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-controller.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level='asInvoker' uiAccess='false'\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\controller.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\controller.lib\" /MACHINE:X64  /machine:x64 /VERBOSE:LIB /MAP:\"C:\\JudasValidation\\M78NewCapturePublicationResults\\m78-native-new-publication-controller.map\"",
+      "fixtures": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalBalanceControllerTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalBalanceControllerTests.cpp",
+          "sourceSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+          "objectSHA256": "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7"
+        }
+      ],
+      "mapBytes": 3653199,
+      "case": "controller",
+      "exe": "C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-controller.exe",
+      "sha256": "c4fea07840a06768213ebf2ab81b429df9c32fe022dbfc17731bd1c0c4688c3d",
+      "compiles": [
+        {
+          "objectSHA256": "c6fc5855a923cc3f8e768ec3baf7609d53ccb240008c02f332678a0768d47053",
+          "source": "C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicsWorld.cpp",
+          "response": "/I\"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicsWorld.cpp\"",
+          "object": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj",
+          "sourceSHA256": "28fcf10deb0c20da8473449d215912108452d51ecbba04902a5818cda5ec792f",
+          "bytes": 1443399
+        },
+        {
+          "objectSHA256": "875529ce9aa1abf1617f36e9efd0dc9f949c95c8fc00ec9eb11c81ed2771d24c",
+          "source": "C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\WorldPersistence.cpp",
+          "response": "/I\"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\WorldPersistence.cpp\"",
+          "object": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj",
+          "sourceSHA256": "6bae8c1df97baef985cfadf27ee9c6e659c6d7e1556bc70799c6beb066f8969e",
+          "bytes": 1250794
+        },
+        {
+          "objectSHA256": "6477dd5d359f09625c98b6e12721bcebb6e7ef98fb044bbae4a2f55f177c0051",
+          "source": "C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicalBalance.cpp",
+          "response": "/I\"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj\" /Fd\"C:\\JudasValidation\\M78NewCapturePublication\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78NewCapturePublication\\source\\src\\PhysicalBalance.cpp\"",
+          "object": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj",
+          "sourceSHA256": "90b54aea7864d89f9358ae3744676a80be488b2cccfc2a3dbb416e2784a1ecd1",
+          "bytes": 1462368
+        }
+      ],
+      "bytes": 4385280
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read-.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read-cold-read-state.json",
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+      "bytes": 365,
+      "originalBytes": 365,
+      "originalSHA256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read-cold-write-state.json",
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+      "bytes": 364,
+      "originalBytes": 364,
+      "originalSHA256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read-m77.save",
+      "sha256": "3346e5b6ed579bfe28eacbbe355b5b1936f1815108a92ea86fcd8ed61a4479b9",
+      "bytes": 53503,
+      "originalBytes": 53503,
+      "originalSHA256": "3346e5b6ed579bfe28eacbbe355b5b1936f1815108a92ea86fcd8ed61a4479b9"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read.json",
+      "sha256": "01f2c3ae25fb4a015198d3e3ee795bf36b3f3badd9d1fa3985a0be2c3434175f",
+      "bytes": 2672,
+      "originalBytes": 2672,
+      "originalSHA256": "01f2c3ae25fb4a015198d3e3ee795bf36b3f3badd9d1fa3985a0be2c3434175f"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read.stderr.log",
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e",
+      "bytes": 61,
+      "originalBytes": 61,
+      "originalSHA256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read.stdout.log",
+      "sha256": "ab9db0df106ce6cb5b5b94e643836d66cb419d9b8ba07fbb1c7c980b498ab8be",
+      "bytes": 816,
+      "originalBytes": 816,
+      "originalSHA256": "ab9db0df106ce6cb5b5b94e643836d66cb419d9b8ba07fbb1c7c980b498ab8be"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write-.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write-cold-write-state.json",
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+      "bytes": 364,
+      "originalBytes": 364,
+      "originalSHA256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write-m77.save",
+      "sha256": "3346e5b6ed579bfe28eacbbe355b5b1936f1815108a92ea86fcd8ed61a4479b9",
+      "bytes": 53503,
+      "originalBytes": 53503,
+      "originalSHA256": "3346e5b6ed579bfe28eacbbe355b5b1936f1815108a92ea86fcd8ed61a4479b9"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write.json",
+      "sha256": "e81fe9760787889d156d4029b3e76cc2a6d55d37093159905f38679316efff85",
+      "bytes": 2261,
+      "originalBytes": 2261,
+      "originalSHA256": "e81fe9760787889d156d4029b3e76cc2a6d55d37093159905f38679316efff85"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write.stderr.log",
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e",
+      "bytes": 61,
+      "originalBytes": 61,
+      "originalSHA256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write.stdout.log",
+      "sha256": "2a40d9c4e57ce05644785d1faf3fbaa9852ca6ca728f185b8a4dc25cc55745b2",
+      "bytes": 1470,
+      "originalBytes": 1470,
+      "originalSHA256": "2a40d9c4e57ce05644785d1faf3fbaa9852ca6ca728f185b8a4dc25cc55745b2"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read-.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read-cold-read-state.json",
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+      "bytes": 365,
+      "originalBytes": 365,
+      "originalSHA256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read-m77.save",
+      "sha256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "bytes": 52557,
+      "originalBytes": 52557,
+      "originalSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read.json",
+      "sha256": "cd70cebdd4b0455b47143953324d58021681ccd5f77c329d2b87ca3c879348e1",
+      "bytes": 2282,
+      "originalBytes": 2282,
+      "originalSHA256": "cd70cebdd4b0455b47143953324d58021681ccd5f77c329d2b87ca3c879348e1"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read.stderr.log",
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e",
+      "bytes": 61,
+      "originalBytes": 61,
+      "originalSHA256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read.stdout.log",
+      "sha256": "da0f1ac740f80f3e756a32d9634139904a042bfa3207a653c5ed2ee9e830d9b2",
+      "bytes": 832,
+      "originalBytes": 832,
+      "originalSHA256": "da0f1ac740f80f3e756a32d9634139904a042bfa3207a653c5ed2ee9e830d9b2"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-link.log",
+      "sha256": "5af5713cb2c3c8ef4c8a4fd19166781fe09a19fa2c578d79809a0678b311c9ef",
+      "bytes": 33804,
+      "originalBytes": 33804,
+      "originalSHA256": "5af5713cb2c3c8ef4c8a4fd19166781fe09a19fa2c578d79809a0678b311c9ef"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab.map.gz",
+      "sha256": "55bf5a59a984b65ba2cdfd835d1c7647186c6360cfa2413c301e88422021d7af",
+      "bytes": 1257354,
+      "originalBytes": 14287213,
+      "originalSHA256": "ad6beb8cd29476e4f53441906077db92a1a3631ce02309209bbd5fe3f449c9cb"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-controller-controller.json",
+      "sha256": "27b8b43f19d49c88311d83c49481ea509b9d3ab41073a3560368646ea8f15cce",
+      "bytes": 924,
+      "originalBytes": 924,
+      "originalSHA256": "27b8b43f19d49c88311d83c49481ea509b9d3ab41073a3560368646ea8f15cce"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-controller-controller.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-controller-controller.stdout.log",
+      "sha256": "98a46c4bd826d8bd3bf3320ffa5c280398bcfb2499318c4d3c5106887680c7ea",
+      "bytes": 1579,
+      "originalBytes": 1579,
+      "originalSHA256": "98a46c4bd826d8bd3bf3320ffa5c280398bcfb2499318c4d3c5106887680c7ea"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-controller-link.log",
+      "sha256": "5af5713cb2c3c8ef4c8a4fd19166781fe09a19fa2c578d79809a0678b311c9ef",
+      "bytes": 33804,
+      "originalBytes": 33804,
+      "originalSHA256": "5af5713cb2c3c8ef4c8a4fd19166781fe09a19fa2c578d79809a0678b311c9ef"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-controller.map.gz",
+      "sha256": "6febffeeecc8acca5e0923748b5a156fb49d70c1b9ebedbab083be5aa7483940",
+      "bytes": 463617,
+      "originalBytes": 3653199,
+      "originalSHA256": "94c7e9bbf71152b78581ad2ad618f2da7dec62a9d560a603f98d412f24288a63"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-error.txt",
+      "sha256": "3189f884cbb71f0aa09f29f2f7b95ca3a0cc923d07a7b50a3897656c1e28e32c",
+      "bytes": 125,
+      "originalBytes": 125,
+      "originalSHA256": "3189f884cbb71f0aa09f29f2f7b95ca3a0cc923d07a7b50a3897656c1e28e32c"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-proof-recovery.json",
+      "sha256": "98decfe09651c75cecb0c7f4e1fbb6dcc2f2d8172d95b96a273549aaeeaccca2",
+      "bytes": 36812,
+      "originalBytes": 36812,
+      "originalSHA256": "98decfe09651c75cecb0c7f4e1fbb6dcc2f2d8172d95b96a273549aaeeaccca2"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-recovery-error.txt",
+      "sha256": "0061b3e8c404d382e5709a45d187c3f9e6f1756733f3237814eb7a6f8ea9b85c",
+      "bytes": 82,
+      "originalBytes": 82,
+      "originalSHA256": "0061b3e8c404d382e5709a45d187c3f9e6f1756733f3237814eb7a6f8ea9b85c"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-recovery.json",
+      "sha256": "ecc50efe274c25b1e55839ea0cc8d7c7197850cfc2a0f53029d49da99924f64e",
+      "bytes": 1546300,
+      "originalBytes": 1546300,
+      "originalSHA256": "ecc50efe274c25b1e55839ea0cc8d7c7197850cfc2a0f53029d49da99924f64e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-new-publication-PhysicalBalance-compile.log",
+      "sha256": "3710a469c57e8401e9086c6a1c8fed0efe32d6e30bf67e18834f2509d6e1b052",
+      "bytes": 44,
+      "originalBytes": 44,
+      "originalSHA256": "3710a469c57e8401e9086c6a1c8fed0efe32d6e30bf67e18834f2509d6e1b052"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-new-publication-PhysicsWorld-compile.log",
+      "sha256": "0bb12559a9e5a2ec5ddd58b0b73df95a7e3e72ea20e082f50d84416aa1383e7c",
+      "bytes": 1910,
+      "originalBytes": 1910,
+      "originalSHA256": "0bb12559a9e5a2ec5ddd58b0b73df95a7e3e72ea20e082f50d84416aa1383e7c"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-new-publication-WorldPersistence-compile.log",
+      "sha256": "64419f43ac34c2c2575a7648b96187d38c99a22c68be8069b175bf6653f2b4e3",
+      "bytes": 9946,
+      "originalBytes": 9946,
+      "originalSHA256": "64419f43ac34c2c2575a7648b96187d38c99a22c68be8069b175bf6653f2b4e3"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-new-publication-generated-archive.json",
+      "sha256": "c0813abd8715433b7e1c326812bd844a0d266894dbbf9ac7103ae20a2866dbe9",
+      "bytes": 2106,
+      "originalBytes": 2106,
+      "originalSHA256": "c0813abd8715433b7e1c326812bd844a0d266894dbbf9ac7103ae20a2866dbe9"
+    }
+  ],
+  "mapProof": "No original PhysicsWorld/WorldPersistence/PhysicalBalance archive member extracted, checked actual /VERBOSE:LIB logs; lossless raw map gzip SHA matches linker receipts."
+}

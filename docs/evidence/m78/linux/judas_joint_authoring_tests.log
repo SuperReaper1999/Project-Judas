@@ -1,0 +1,15 @@
+PASS joint authored roundtrip
+PASS joint settings affect canonical authored fingerprint
+PASS joint prefab normal asset
+PASS first joint prefab
+PASS second joint prefab
+PASS stable participant remapping
+PASS generic joint override
+PASS joint prefab actual world build
+PASS runtime joint respects authored override
+PASS runtime spawned participant hierarchy creates joint
+PASS created joint hierarchy persistence
+PASS hierarchy destruction invalidates joint
+PASS missing participant rejected atomically
+PASS hierarchy deletion clears joint references
+SUMMARY 14 checks 0 failures ERROR scene line 68: joint requires existing bodies and at least one dynamic body

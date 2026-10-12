@@ -1,0 +1,494 @@
+{
+  "archiveBytes": 799680,
+  "archiveSHA256": "571d2eeb6d467055d2d00eca46a7b81026e1a226228c336b9bc1f9d73fbbb946",
+  "files": [
+    {
+      "path": ".AuthoringCache/Cache/120148947e20bc019f0c0e48bb7e9ae5bb45d792b748481eb1ccebf75cfb19c7.judasmodel",
+      "sha256": "6949639a86c4f924d264c20d7eeb2c68ccdf1ff4e1aba397c28150b694c0a597"
+    },
+    {
+      "path": ".AuthoringCache/Cache/3c4949f233eed8aa040671d739157c235ed7759369979a50d4dbd49b4e98af4c.judasnav",
+      "sha256": "a558c085ffd6568ad1b649ec6f2c2a02619c70477275f2f97215f3e41bc38ca1"
+    },
+    {
+      "path": ".AuthoringCache/Cache/533ff270a3948a3d949e5b4cb84c6d9559b31e56109978a06514d81f7eaf94bf.judascollision",
+      "sha256": "bd1e9d5954398308cf1215e98319431f898cca20494747dedd0dbc791b27a14f"
+    },
+    {
+      "path": ".AuthoringCache/Cache/5e839140a0028cf7afef0ecac1c9f806fbf3f9bb1a4204c19132b8deb0915eaf.judas",
+      "sha256": "f9610ccb3d91936fcedb06b6ed10a804ce2655612f31d23d11538c5ca786335e"
+    },
+    {
+      "path": ".AuthoringCache/Cache/7bd7d0cb6a90f2c4afa939c1a31425c4cc82e22191b8f589d65cc37ab73e1fea.tga",
+      "sha256": "4b8783821614e4f30c37509016eddc4220ec47ad7a9f9e306af0ec7dd113fe3d"
+    },
+    {
+      "path": ".AuthoringCache/Cache/889587a4f05259c2c4d92a27dd67c11954aef51271c5a8996a318ba6e6b5fd34.judas",
+      "sha256": "27ce0b25723a640cd20ff73c52d942a91a951331fb1918380d00597cf5dfebb3"
+    },
+    {
+      "path": ".AuthoringCache/Cache/e64793b963dfa9a5345f35e0be17e2308bc5be71f6f2a9a3d997f54862734e6d.txt",
+      "sha256": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e"
+    },
+    {
+      "path": ".AuthoringCache/Cache/fc540b692f45dd32262ce7e07b6f28b282ff429b863349ed26fdf78b796c59a2.judasnav",
+      "sha256": "21ea3853763c82f97f504209c32525f881447ac1fcf74d86faff1d4d62464e65"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.judascollision",
+      "sha256": "bd1e9d5954398308cf1215e98319431f898cca20494747dedd0dbc791b27a14f"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.judascollision.judasmeta",
+      "sha256": "5794ff0f031be731ce50fe5947e9c167056e51b42267b930cd4f97d3b8395790"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.judasmodel",
+      "sha256": "6949639a86c4f924d264c20d7eeb2c68ccdf1ff4e1aba397c28150b694c0a597"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.judasmodel.judasmeta",
+      "sha256": "1e1d9babe1c2e893965498de269d3ea4533326db71863de221ad002b2db3321a"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.receipt.json",
+      "sha256": "5f4b054fc3c8247fee235f60f10694699f784e85d73d651e05fa4b8c61619ff1"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.tga",
+      "sha256": "4b8783821614e4f30c37509016eddc4220ec47ad7a9f9e306af0ec7dd113fe3d"
+    },
+    {
+      "path": "Assets/Terrain/e2d66939a4409dea1b2650051a0b0595/terrain.tga.judasmeta",
+      "sha256": "09bc0587821519dcb496a642bc46dc058d95a7244c8a21c7db28f9f0047400f5"
+    },
+    {
+      "path": "Assets/navigation/landscape.judasnav",
+      "sha256": "21ea3853763c82f97f504209c32525f881447ac1fcf74d86faff1d4d62464e65"
+    },
+    {
+      "path": "Assets/navigation/landscape.judasnav.judasmeta",
+      "sha256": "20bc693d62669785a569696fe43cccf9f18a5037f85a8a561e18bdff9d9b172f"
+    },
+    {
+      "path": "Assets/navigation/surface-50.judasnav",
+      "sha256": "a558c085ffd6568ad1b649ec6f2c2a02619c70477275f2f97215f3e41bc38ca1"
+    },
+    {
+      "path": "Assets/navigation/surface-50.judasnav.judasmeta",
+      "sha256": "828e136841ba0d79daa0a200a9193831d28aa2348a9ed315d5d29c26b3ae397b"
+    },
+    {
+      "path": "Imports/landscape.judasterrain",
+      "sha256": "52a2ea1e6886eb50b8c571be60609919ef1cb136c731f9daada190c909e7a4de"
+    },
+    {
+      "path": "Kit/Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judascollision",
+      "sha256": "6517b4948683f3688c8433a17a2835efe578ff10472c696da3a36790fac5e0bb"
+    },
+    {
+      "path": "Kit/Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judascollision.judasmeta",
+      "sha256": "165ad3dfa5278df838ba13262742c9a28beea83996ecff86cce89e47a1935754"
+    },
+    {
+      "path": "Kit/Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judasmodel",
+      "sha256": "a1946caad8493af7f0e77709f774a206bff0c574a8e396baae84d1c73bd612a5"
+    },
+    {
+      "path": "Kit/Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judasmodel.judasmeta",
+      "sha256": "9e2296e5b91b245f03724a4c6f5a7e1f5be02e3196b3b34599c1a179f86ec44a"
+    },
+    {
+      "path": "Kit/Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.tga",
+      "sha256": "13e7e672fc015eccfea986002b861e2ded330c373f57f9fb06d510cb77dd5798"
+    },
+    {
+      "path": "Kit/Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.tga.judasmeta",
+      "sha256": "3a66a950d75c7cabcd9da5902724324d248407be812c99b21d6c887bbd4dd11e"
+    },
+    {
+      "path": "Kit/Assets/fonts/DejaVuSans.ttf",
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "Kit/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "sha256": "52f9bcba2b3132b1f040d20500116ae6b97cdbef219efc943cfdcc677b8a961e"
+    },
+    {
+      "path": "Kit/Assets/fonts/LICENSE.txt",
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "Kit/Assets/navigation/landscape.judasnav",
+      "sha256": "65a1251c38005942d6c51470b0cb33aff703b02e1618986b1ff9e9da2ec5358e"
+    },
+    {
+      "path": "Kit/Assets/navigation/landscape.judasnav.judasmeta",
+      "sha256": "f59d1de56086f2fdabd25de377019cf91e0c2a91f2a1733eb919d3b5fffb0b67"
+    },
+    {
+      "path": "Kit/Assets/prefabs/drop.judasprefab",
+      "sha256": "d162b19e7a90ff346f35afe60be51ad45ccabdd60547a1521affbfe644d0a671"
+    },
+    {
+      "path": "Kit/Assets/prefabs/drop.judasprefab.judasmeta",
+      "sha256": "65d3473d00b71f860088f0ee14254901598e88004c9fba8784c8ccc6f7b8bdb5"
+    },
+    {
+      "path": "Kit/Assets/scripts/controller.js",
+      "sha256": "51db2523e93e19cca227b7b2a310c328ac16b4c1ed648d8ca6c118cd9dcca8c3"
+    },
+    {
+      "path": "Kit/Assets/scripts/controller.js.judasmeta",
+      "sha256": "6d6562e9285e998194d2ceaad2571413582318e44040b986c15e74ee8fafa5fb"
+    },
+    {
+      "path": "Kit/Assets/textures/grass.png",
+      "sha256": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6"
+    },
+    {
+      "path": "Kit/Assets/textures/grass.png.judasmeta",
+      "sha256": "926423d13d44a9761014f50e40e23831b4d169fc1b6f41b119eb0446cdc36c17"
+    },
+    {
+      "path": "Kit/Assets/textures/stone.png",
+      "sha256": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23"
+    },
+    {
+      "path": "Kit/Assets/textures/stone.png.judasmeta",
+      "sha256": "23cfed5508cb109f85e69de4a177cff0ac2bf1413317961606f92e10efa5c5c2"
+    },
+    {
+      "path": "Kit/Assets/ui/lab.judasui",
+      "sha256": "86e075610906558998e577051daf34608b90c2b16b4f439d945ba517aa4e19d7"
+    },
+    {
+      "path": "Kit/Assets/ui/lab.judasui.judasmeta",
+      "sha256": "52cf20bd608e5920dd9e8260a55feba6e2ea23ea43527b9791b4f23ae9d2bb0d"
+    },
+    {
+      "path": "Kit/Documentation/JUDASJS.md",
+      "sha256": "5d7de804c602b47abfa6fd3ab828531c9c50aa9ac938a9256c85501e9238074f"
+    },
+    {
+      "path": "Kit/Documentation/M76.md",
+      "sha256": "6e395b9842618c81419088caf1dbfecac8fa86fb6f683b6bcc48819c06997842"
+    },
+    {
+      "path": "Kit/Documentation/MODDING.md",
+      "sha256": "a0c0af72d6456f1418834a620285c2f730ef443c8087b2cd258d20a564a20844"
+    },
+    {
+      "path": "Kit/Documentation/judas.d.ts",
+      "sha256": "814fd0a5b4403fc542b5763ad649fdb6a4b1d6a9bb9297875c46eba08d9dfca3"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/API_INVENTORY.md",
+      "sha256": "18cc000af1d204cc86c2a4acd297c71b6e1e22abe205b68ded882601763b878d"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/animation-ragdolls.md",
+      "sha256": "023f102be8a02928584f2b0314d531e6179e55f1779e061f604068095cf157f4"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/audio.md",
+      "sha256": "779f1277f18e4f63bdd3cabf3107f5140fea030f2198a60e0e4f35137ecfa080"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/character.md",
+      "sha256": "1fb6b915bf485907c031803d4a87e9047a536cb200cb26ecacd15caf542a1515"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/cookbook.md",
+      "sha256": "6b7aa438764676308cb4625d4d8a9fa4258b172c3b4f1b347862e989cbb0cb5c"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/deformables.md",
+      "sha256": "0ca6ce4105310a5fbd3fd6b8f5e2e5f3c07c4aced9949fc96d4f478918059029"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/effects-camera.md",
+      "sha256": "4a963f01831304c4a4b044b7504dc4bbce17ac2c8c5ffe9822998715844c7409"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/entities.md",
+      "sha256": "1227bd78e07e5204d86aed82b1f1dd73a9d0c72233b847b56f586f64ea810608"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/animation.js",
+      "sha256": "842ff8e38f9b91fcc5da48398e8b37d4bfaa1c1e88444149dc788bcba4fc04ae"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/audio.js",
+      "sha256": "177229445fd446b71fabc1a00f505adb73ed5354b8e69507e6321030b846f1ab"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/authoring-runtime.js",
+      "sha256": "f4fae6b5a563343295d253737c6e8f9c9c694a79f6e97108b7f8dac80859ffec"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/character.js",
+      "sha256": "a3b9ef259b93fa17ba76b1a72f29f10af3730c623e7b447df3cb4e12693e8ae9"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/contacts.js",
+      "sha256": "b0c7ad4c250c875b8a89e69c8930e9d2e15164b3bba004eb80f1dd36707b3434"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/deformable.js",
+      "sha256": "5de995a15d3651b00f93cc1f0b36db08539dc41ec468315865ecffb93e1ab94a"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/developer-integration.js",
+      "sha256": "4ced7832c27daa7be7dd594cb6005f5663f7c305dc06b0325a66bd96f9692301"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/fracture.js",
+      "sha256": "b41c9e09d86fc80be0844040556ce52087a198e3d222855ffe9a6a4d1a878144"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/gravity-selection.js",
+      "sha256": "91c449745fb115861c54d26f15621981764d1428d06ef11a6303ea4f5713f368"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/imported-model.js",
+      "sha256": "d17881e90864e829f87e1d08108ac91e16aa7e2717d25ebca99a8186c0babf12"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/impulse-point.js",
+      "sha256": "b267518e1e2726782d73d8324d1865091f08a311a58a6a15504d30b36076a993"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/input-motion.js",
+      "sha256": "8ad6e9db63f0969226df95015daa88e993e0c8b2060e9252505f2350432493d4"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/joint.js",
+      "sha256": "f2c3e99115376ed83c499d3eadd86f5f08bef01a6bd09b0785e7794fbf08bbbd"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/kinematic.js",
+      "sha256": "447a8f6d9a40182e4c20406fa9b42dd82654e23bc5f5ded607e417a41f22ef74"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/liquid-surface.js",
+      "sha256": "b865b1c3a999655393204ab0e5b21c2590ff048fd807a38ec0dc97d90d88c5d6"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/liquid.js",
+      "sha256": "0b2e357938d1d497bb931c029eb5f01d9ac35d65a557a357154fd888d9c2cc68"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/localization.js",
+      "sha256": "d8ebb5e89ffd181aa7be696e235664c99daeaa1c44856b900db5ac7b45c8d077"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/materials.js",
+      "sha256": "8f1d452b81d9df9fad8dcb0553be1598f8ff317bf9f6195f48a48da43f9af138"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/minimal.js",
+      "sha256": "28ce94e56a153e55b7a91ca6735a72eb543ed40b16a5b4bb0736f31fe73de1a9"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/multi-target-ik.js",
+      "sha256": "bf1ca7ca20517bf10e0700aa40565163ec3c24b22723f33deeaed6114fb34669"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/navigation.js",
+      "sha256": "1516f8c32deacf647a33877017dfce11b9cc9d1c7eac18f52c18ac81429843b2"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/paired-stick.js",
+      "sha256": "b4a08922fefbe9d71cf30ad7e9449eeda3fbe10e39ad6c2543547c8d8f34e27f"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/particles.js",
+      "sha256": "0a668d156c337e5a8beb9b433334f020481c7ba92818dcaa4b98eba0d3bfda1f"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/physical-animation.js",
+      "sha256": "989ab1ed2759333fa99fbe91d99f10058db986b92fe72d32dcf0f8adc67027d0"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/physical-balance.js",
+      "sha256": "68fbe01a4d0ceb5d1401acf5520a77067c88a719ad61a5f3d707f0f7ea0d9f3f"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/physical-control.js",
+      "sha256": "94b724d84212a9b3fedd05dd94d9e2e2bdb35336bbce194410d329098d4fb56d"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/presentation.js",
+      "sha256": "553b43fda8274e8ec26d7a2b89b9a5c213951b259ff55b635bd4f9980b0b76b1"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/profiling.js",
+      "sha256": "d7b8c13c7c3de265b5ed6aa71944fd9bb789165bc894f5727d4eb417317c7dc9"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/queries.js",
+      "sha256": "4c905a1c994ecc9900c7e5fa3b12868a6763034fd685a3302c0a1e03d1c2f7a9"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/ragdoll.js",
+      "sha256": "630acb523409965f78c5e3b29cb5a2def2d75f76d0dd49d1f7955bfd8ab2f445"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/ray-fan.js",
+      "sha256": "ec0699e4cdce11f65e3c4614e2ea4a1ebe2d6e793e33a4e2fad9390b7e94e0dd"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/saves.js",
+      "sha256": "39dd8e6dade63a947c62adecac8fa0c40e55cdf9cf1a8e9fe779ac6d26cb5741"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/scene-session.js",
+      "sha256": "f815541ae10fdcc869e5ab81af11f5b6e2967fae641c710a8abc611e23f5760c"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/signals.js",
+      "sha256": "76eef56106331942e0238f8c574b8ba9406e789ae438e800809ccfb52cad305e"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/spawn.js",
+      "sha256": "97a719502e768d2031e17aecf700389067852528d7718c3e23995047454cdbeb"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/stale-handle.js",
+      "sha256": "e3feebd9f464fc7a391d977ee0749de538d40d266a45305e23a96eff452868ac"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/streaming.js",
+      "sha256": "08c3be43a63fb4f0776f93b3ee765fbe886110f0eb253555b4be8da273aae18a"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/surface.js",
+      "sha256": "4f6cafa78009e325a649675f7295c23009870c614091c23732244af47be61a67"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/examples/ui.js",
+      "sha256": "d6c67adc40d0240f5c33d6d4c96ca5c6c4b73a237be003dc64c868c32830c8e7"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/fracture.md",
+      "sha256": "1d1070484c64d0338f8477c810adb7d19ab60c32ebd386a8065ceac48c344313"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/getting-started.md",
+      "sha256": "9b04fe623cc6671b9a423b644234d1cdf2cfc9addd46f24f994dae95f9b4f7c5"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/input.md",
+      "sha256": "6d09ed651ab6682a6948e9485e5d0334dbd6a12eb45741500834a5107b4141a8"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/lifecycle.md",
+      "sha256": "b6484002a793dfe8d9d593f988f9216924e0bb5cedb81b843b2fbd5f176c00aa"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/liquid.md",
+      "sha256": "7340ae47216778c3328dc688b74e4425ece2a873f3baf6f7521a7e6ed6f3fcb7"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/localization.md",
+      "sha256": "03a59294c94147f99413f51719f6859262c779d66b8ccd6a2387270b781d7e02"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/materials.md",
+      "sha256": "d14e6e581ad3cdb028bd3a2c94b65aae54674727d41e147c9314780bd2a1e9c0"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/mods.md",
+      "sha256": "9ded18767b943b6bcfbe5756501223a501ddcd95c4b39872843e9c7f9f138771"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/navigation.md",
+      "sha256": "46047770a8b16e0ed9e2bedcb3f577822fc30eba71ae770633525b5cc51460f1"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/physics.md",
+      "sha256": "9faf2ecce3b037ce23ea59cd1125228f7705cd40c154f7efc7e5c1ae697ddefc"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/practices.md",
+      "sha256": "5387797e0cad7a4ba1f1f8be59c4b86e42c8a78aeff2fe0b8b49d20304527a36"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/profiling.md",
+      "sha256": "42e8255e2537c23934f4eaa9f1b5e394db2ea0af2d8bde85853aaf427c81b7b4"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/saves.md",
+      "sha256": "48d783f14fe5b910baf3dbbc4068548cfec8edf0befe4005d223e6c51dfa2004"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/scenes-state.md",
+      "sha256": "8cef5184b949f7444f0b17206574d67ccf6c8de25888eb91e3f96565a41d6d76"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/signals.md",
+      "sha256": "7689cfc2ac7f1268799b2fcac56f5e65c95a31daa9ddaf287b1a5741efc4d72e"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/streaming.md",
+      "sha256": "d7c728c218550e2a1e98edd144b4002c410d15d7557b94e210f45adb87926163"
+    },
+    {
+      "path": "Kit/Documentation/judasjs/ui.md",
+      "sha256": "3f7ee24d28e6877834b8ee08dab33fc94b919af864c2a6a7db0e9200edd32207"
+    },
+    {
+      "path": "Kit/Documentation/judasmod.example.json",
+      "sha256": "c718a23df07ef0a72134f3826b3b3338fdc75386982c8648c81a60411ca02c9c"
+    },
+    {
+      "path": "Kit/Imports/landscape.judasterrain",
+      "sha256": "5dcd83a2fe231fcc5168e9c820391da8095204cfcc0ff4d98a6eadb3971efd3a"
+    },
+    {
+      "path": "Kit/NOTICE.txt",
+      "sha256": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e"
+    },
+    {
+      "path": "Kit/README.txt",
+      "sha256": "4da7902cbb9e7023a9ae818df4b7a0713305b6ab3bce78eecf72ac5edc837112"
+    },
+    {
+      "path": "Kit/Scenes/landscape.judas",
+      "sha256": "8480531e0f6b3d63042c628ecdbacc208c8249562ee77d13d0d539782284be5a"
+    },
+    {
+      "path": "Kit/Scenes/region.judas",
+      "sha256": "bf8fe766bab26ded1aea72932ce1698e5e84c0646501f96c76dabe10c2a66f33"
+    },
+    {
+      "path": "Kit/kit.json",
+      "sha256": "1e0772844e85c8c2c4d960b635491e19503d9b5e39e96f4c796c487c81377d19"
+    },
+    {
+      "path": "NOTICE.txt",
+      "sha256": "cc2e8814d4736758e4849f063b68181272f628c8546fd73e847a28b921f4d02e"
+    },
+    {
+      "path": "Scenes/main.judas",
+      "sha256": "f9610ccb3d91936fcedb06b6ed10a804ce2655612f31d23d11538c5ca786335e"
+    },
+    {
+      "path": "Scenes/region.judas",
+      "sha256": "27ce0b25723a640cd20ff73c52d942a91a951331fb1918380d00597cf5dfebb3"
+    },
+    {
+      "path": "landscape_fork.judasproj",
+      "sha256": "fb362db056948a6ab9895adbb95921ffb4eebc5585c62ecdff3d900d5c91fc61"
+    },
+    {
+      "path": "mod-authoring.json",
+      "sha256": "81b937fb285acc94101534a06ce2be88b7e851464ed6554dc447b323228c4963"
+    },
+    {
+      "path": "mod.json",
+      "sha256": "b778e9cff47b7cd7beb73b6295f66258fa95f7223b5bf135942ad4f8c60a913b"
+    }
+  ]
+}

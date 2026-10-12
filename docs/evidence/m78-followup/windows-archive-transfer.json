@@ -1,0 +1,8 @@
+{
+  "exitcode": 0,
+  "err-data": "#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S=\"progress\" RefId=\"1\"><TNRef RefId=\"0\" /><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>",
+  "out-data": "okokokokokokokokok{\r\n    \"chunks\":  9,\r\n    \"sha256\":  \"616E92AFE92088E0263B0F14C1C79B2B68CA0C94DA279897AFDDB0B551A08559\"\r\n}\r\n",
+  "err-truncated": false,
+  "out-truncated": false,
+  "exited": true
+}

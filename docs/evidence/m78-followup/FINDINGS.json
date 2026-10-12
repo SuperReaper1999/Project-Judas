@@ -1,0 +1,60 @@
+{
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "candidateAcceptance": "NOT FULLY PASSING; NOT HUMAN VALIDATED",
+  "findings": [
+    {
+      "id": "PHY-002",
+      "status": "PARTLY FIXED",
+      "result": "Complete-mesh conservative CCD bound and per-witness contact depths; final four-rig 1.040693/18.875046/33.793832 ms. p95 >16.67 ms; 39/52 sleep.",
+      "evidence": "PHY-002.md"
+    },
+    {
+      "id": "PHY-001",
+      "status": "FIXED FREE-BODY DEFECT; INTEGRATION BLOCKED BY REG-001",
+      "result": "World-L transport and midpoint generator; all four cadence vector/energy checks pass. Contact/constraint residuals approximate; stepping regression not concealed.",
+      "evidence": "PHY-001.md"
+    },
+    {
+      "id": "PERF-001",
+      "status": "FIXED IDENTIFIED RANK-SCAN DEFECT",
+      "result": "6400-object resolve 52-62 ms vs ~1850 ms; flattening still substantial and not corrected.",
+      "evidence": "linux-inert-combined-final.log"
+    },
+    {
+      "id": "TST-001",
+      "status": "NOT A DEFAULT-BUDGET PRODUCT DEFECT; FIXTURE/PROOF FIXED",
+      "result": "Explicit 16 MiB fit fixture; unchanged small-budget pin/shrink/retirement/restoration test. Snapshot memory finding remains.",
+      "evidence": "linux-streaming.log"
+    },
+    {
+      "id": "FLU-001",
+      "status": "BLOCKED / CONTRACT REVIEW DEFERRED BY OPERATOR",
+      "result": "Original 0.558701396 m/s >0.5 remains. Conditional calm ODE converges to ~0.608983 at four seconds. No fluid/threshold change.",
+      "evidence": "FLU-001.md"
+    },
+    {
+      "id": "WORK-001",
+      "status": "FIXED IN TESTED OWNED-SCENE WORKFLOW; WINDOWS APPLICATION GAP",
+      "result": "38 Linux/native transaction checks, independent fork/appearance controls, 20 Linux moved-package checks; private unpublished scenes unknown.",
+      "evidence": "WORK-001.md"
+    },
+    {
+      "id": "DOC-001",
+      "status": "FIXED CURRENT FOLLOW-UP STATUS; HISTORICAL AUDIT PRESERVED",
+      "result": "Committed, passing, human accepted and changed-candidate statuses distinguished. Missing originals remain gaps.",
+      "evidence": "../../M78_FOLLOWUP.md"
+    },
+    {
+      "id": "REQ-001",
+      "status": "RECONCILED; M77 STEP GAP EXPLICIT",
+      "result": "24 rows cover all 16 original M77 sections. Not a universal capability/acceptance certificate.",
+      "evidence": "M77_REQUIREMENTS.md"
+    },
+    {
+      "id": "REG-001",
+      "status": "NEW CANDIDATE REGRESSION / BLOCKED",
+      "result": "Unchanged corrective step lifts/lands then falls; reproduced Linux/native and real application. Bounded proposal, no concealed retuning.",
+      "evidence": "REG-001.md"
+    }
+  ]
+}

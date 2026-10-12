@@ -1,0 +1,236 @@
+{
+  "checks": [
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary owned project",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "physical prefab source",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal prefab identity",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "linked physical prefab instance",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal prefab and hierarchy resolution",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary compact initial bake",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "save accepted initial bake",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal navigation identity",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "owned scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "linked physical prefab instance",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal prefab and hierarchy resolution",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary compact initial bake",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "save accepted initial bake",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal navigation identity",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "owned scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "registered startup",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "inspect transitive physical prefab dependency",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "both independently authored scenes are fresh dependents of the prefab",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "real shared collider edit",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "reinspect changed source",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "both scenes detect changed resolved prefab geometry",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "source changes after the actual bounded bake",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "Navigation inputs changed during rebuild: Scenes/shared-0.judas; prior outputs retained",
+        "polls": 4
+      },
+      "name": "revision race rejected before batch publication",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "failed rebuild retains exact scene/assets/metadata/project bytes and creates no published orphan",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "failed revision race releases private staging",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "changed source remains inspectable",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "neither dependent is falsely reported fresh after race rejection",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "new explicit rebuild from the current source",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "recheck newly accepted batch",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "both owned dependents are now fresh",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "read accepted scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal export validation accepts actual refreshed dependency",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "read accepted scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal export validation accepts actual refreshed dependency",
+      "passed": true
+    }
+  ],
+  "contract": "Navigation rebuild must revalidate current transitive physical inputs and preserve the previous published batch if inputs changed during bake",
+  "failures": 0,
+  "scope": "Standalone M78 lifecycle audit; original fixtures and source unchanged."
+}

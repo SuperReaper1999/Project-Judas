@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_fluid_boundary_contact_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:59.380136+00:00",
+  "seconds": 0.0038523469993378967,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "fc59d1c11a183ff083a971ef36d40f3eda79a98478225d3671128e4b47851848",
+  "logSHA256": "ff375b0ddc5d2b1b2f820243a42dc81327edf975f686816b9074385e544f3601",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

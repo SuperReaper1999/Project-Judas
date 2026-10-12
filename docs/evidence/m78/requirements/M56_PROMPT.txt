@@ -1,0 +1,262 @@
+# M56 — Judas learns to perform
+
+Starting checkpoint:
+7b1e5ea1eab46456bead72b0dcdc7b7fdc9b36fd
+
+M55 is human-accepted, committed and pushed. Verify HEAD, branch and worktree before starting. Preserve any pre-existing operator edits, including roadmap/documentation edits; do not assume that a missing root ROADMAP.md means there is no roadmap elsewhere.
+
+Implement M56 only. Read no further than M56 in any working roadmap. Do not create a roadmap for this task. Do not begin M57.
+
+## Goal and boundary
+
+Build an integrated, low-overhead performance profiler and diagnostics facility that answers:
+
+“Where did this frame actually go?”
+
+Use the actual engine/editor/runtime paths. M55's expensive moving-solid storage and water-boundary work should be identifiable without adding temporary timers ever again.
+
+This is an OBSERVABILITY milestone, not an engine-wide optimization pass. Preserve gameplay, simulation, rendering quality, liquid cadence and resource scheduling. Record expensive systems; do not redesign them. Fix only defects necessary to make profiling trustworthy and usable.
+
+Judas owns instrumentation and diagnostic data. Editor/runtime views consume it. Game scripts may emit custom measurements, but do not own the native profiler or use its timings as simulation inputs.
+
+## 1. Profiler service and CPU instrumentation
+
+First inspect existing timers, counters, lifecycle ownership and diagnostic tools. Reuse useful machinery; do not build a competing set of measurements for the same phase.
+
+Provide:
+- Reusable exception/early-return-safe CPU scopes, preferably RAII on the native side.
+- Hierarchical scope identity: the same name under different parents must not merge accidentally.
+- Repeated-call counts and inclusive duration; exclusive duration where correctly derivable.
+- Static/interned labels and bounded IDs. No per-scope string construction or ordinary hot-path heap allocation after registration/warmup.
+- Bounded per-thread storage, frame history and recent-spike history.
+- Cheap counters/gauges with documented reset, sum, latest-value or maximum semantics.
+- Collection enable/disable independent of whether the profiler window is visible.
+
+Choose the simplest integration that fits Judas. Do not build a general tracing platform or add a heavyweight dependency without a concrete benefit.
+
+CPU scope duration is elapsed time on that thread, not automatically CPU utilization. Do not sum overlapping workers or nested scopes and label the result “total frame time.”
+
+Record dropped events, exhausted labels, truncated captures and incomplete scopes explicitly. Saturation must not block/crash gameplay or silently produce apparently complete evidence.
+
+## 2. Measure the real frame, including waiting
+
+Instrument the actual OUTER loops for standalone and editor, including edit mode and Play. Avoid starting a second logical frame inside a nested Play/render call.
+
+Record a monotonically identified frame with:
+- Frame interval and the boundaries of the measured outer-frame work.
+- Input/event collection, resource pumping, simulation, presentation, submission and UI where those phases really occur.
+- Swap/present, frame limiting and other meaningful waits separately from active work.
+- Startup/first-use work distinguished from warmed-up execution, not silently discarded from history.
+
+A 16.7 ms frame waiting for presentation is not automatically 16.7 ms of expensive game code. Uninstrumented time must remain visible rather than being assigned to a made-up subsystem.
+
+Fixed simulation must show zero, one or multiple actual steps per rendered frame. Record per-step identity/cost, aggregate cost, accumulator/backlog, cap reached and discarded backlog where the engine exposes them. Use the current timing policy; do not change it.
+
+Define inclusive/exclusive percentages and aggregation windows. For intermittently executed scopes, distinguish per-call cost from per-frame contribution so absent samples do not produce misleading statistics.
+
+## 3. Instrument meaningful subsystem boundaries
+
+Follow actual call structure, not a fictional diagram. Cover, where present:
+
+- Script lifecycle, update, fixedUpdate, UI and collision/trigger dispatch.
+- Rigid physics, broadphase/contact/joint stages and CharacterMotor movement.
+- Navigation updates, path queries, obstacle work and avoidance.
+- Animation sampling/composition and ragdoll integration.
+- Audio main-thread updates; backend callback work only if collection is demonstrably real-time-safe.
+- Resource demand, IO/decode jobs, installation/upload, eviction and lifecycle work.
+- Culling, shadow passes, ordinary/secondary cameras, particles, runtime UI and presentation.
+- M54/M55 reservoir/container/transfer work, surface solve, solid-excluded storage rebuilding, body loading, parcels, surface geometry and water-boundary/underwater work.
+
+The liquid breakdown must distinguish a cheap wave solve from expensive solid geometry or presentation.
+
+Instrument batches/phases, not every contact, tetrahedron, glyph or draw. Reuse specialized counters where available. Preserve useful standalone benchmarks and all historical evidence.
+
+Provide optional per-script-asset attribution so a developer can identify an expensive script, not just “JavaScript.” Avoid unbounded per-entity scope names. Per-instance detail is optional and must be bounded.
+
+## 4. Counters and memory diagnostics
+
+Expose useful existing measurements without adding expensive recounting passes:
+- Bodies, contacts, candidate pairs, joints and motors.
+- Navigation agents, paths and obstacle updates.
+- Liquid reservoirs, containers, cells/faces, parcels, solve iterations and storage rebuilds.
+- Scripts/callbacks.
+- Camera/pass counts, submitted draws/triangles, visible/rejected objects, particles and UI draws where available.
+- Resource states, queue activity and known resident/budgeted bytes.
+
+Counters must describe what is actually counted: CPU submission is not proof of visible pixels, and resource byte estimates are not measured driver VRAM.
+
+Show profiler-owned memory/capacity. Add inexpensive Linux process-memory sampling if useful, labelled separately from engine-tracked memory and sampled at a sensible cadence. No allocator replacement or exhaustive heap profiler.
+
+## 5. GPU timing without stalling the GPU
+
+Verify the existing OpenGL loader/context capabilities and instrument coarse Renderer-owned passes using actual GPU timer facilities where available.
+
+Requirements:
+- Asynchronous query collection with a bounded ring/pool.
+- Poll availability and retrieve older completed results; never force completion to display this frame's numbers.
+- Keep the originating frame/pass/camera identity with every result. A result arriving several frames later belongs to that earlier frame.
+- Respect query nesting restrictions; use timestamp pairs or a valid non-overlapping scheme.
+- No glFinish, synchronous readback or blocking result retrieval for profiling.
+- If queries remain pending or storage fills, skip/drop measurements with a visible diagnostic rather than stall the game.
+- Unsupported/unavailable GPU data is marked unavailable, never replaced with CPU timers or zero.
+- Query lifetime/cleanup remains Renderer/context-owned and safe through Stop, scene changes and shutdown.
+
+Distinguish CPU submission, GPU elapsed timing and CPU waiting. Do not add them together as independent pieces of one frame. Explain any GPU scheduling/measurement limitations. No per-draw instrumentation.
+
+## 6. Threads, lifetime and capture controls
+
+Worker activity retains thread identity and absolute monotonic timestamps. Jobs may overlap frames; do not force them into the main-thread nesting tree. A simple bounded per-thread lane/list is enough.
+
+Avoid a global lock on every scope. Registration may have a slower path; ordinary recording should not.
+
+Initialize collection before instrumented workers use it and shut it down after they stop. Records contain stable IDs/names/value data, not dangling world/entity/script pointers. Handle repeated host/world creation safely.
+
+Enable/disable, freeze, clear and thread teardown must not corrupt open scopes. Define how scopes crossing a capture boundary are marked or omitted. Capture freeze stops changing the inspected recording; it does not pause simulation or require worker synchronization.
+
+Keep useful captures available after Stop. Mark world/session boundaries so old samples are not presented as current-world data.
+
+## 7. Editor and runtime diagnostics
+
+Add a practical editor profiler view with:
+- Rolling frame-time graph, fixed-step count and cap/backlog indicators.
+- Select/freeze a recent frame and inspect its CPU hierarchy, thread activity and counters.
+- Latest/mean/median/p95/max over a clearly identified bounded window; compute expensive aggregates on demand or at a modest refresh rate.
+- Inclusive/exclusive labels and call counts where supported.
+- GPU results with their source frame and pending/unavailable state.
+- Resource/memory diagnostics.
+- Recent spikes with enough preserved scope/counter detail to explain them.
+- Enable, freeze/resume, clear and export-snapshot controls.
+
+Snapshots must own the referenced data so a wrapped history buffer cannot corrupt a frozen/spike frame. Render the view from completed snapshots, not live mutable worker buffers.
+
+Show profiler UI overhead separately where measurable. Retain a useful lightweight runtime FPS/debug overlay; consolidate duplicate timing definitions instead of removing useful information.
+
+Default normal exported-game collection to OFF unless deliberately enabled. A documented development/runtime switch is sufficient; do not force every shipped game to retain profiling history.
+
+## 8. Headless capture and structured report
+
+CPU profiling must work without Renderer, an OpenGL context or editor widgets.
+
+Provide a bounded text/JSON snapshot/report usable by tools and agents. Include units, frame/window IDs, thread/scopes, fixed-step state, counters, diagnostic limits/drops, GPU availability and known memory fields. Identify capture mode and whether startup or presentation waits are included.
+
+No unbounded trace logging. Use ordinary writable user/tool-selected paths; do not write into protected evidence or installed package assets automatically.
+
+Optional configurable spike/budget warnings are diagnostics, not engine correctness failures. They must not change simulation cadence, skip work, or fail CI merely because the machine was busy.
+
+## 9. Small safe JudasJS surface
+
+Expose only useful custom profiling functionality, following the real current API style.
+
+Prefer an exception-safe scoped callback operation and a counter/gauge over unsafe unmatched begin/end calls. If begin/end is chosen, use owned tokens and guaranteed cleanup at callback exit.
+
+Required semantics:
+- The wrapped callback executes exactly once and preserves its return value/exception, including when collection is disabled.
+- Exceptions, interrupts, entity destruction and nested markers cannot unbalance native scopes.
+- Script labels/records are bounded and cached; a script generating unique labels cannot grow profiler memory forever.
+- Disabled custom instrumentation avoids unnecessary registration/recording work.
+- No private dispatcher usage by project scripts.
+
+Update JudasJS declarations, reference, inventory, manifest, live enumeration/drift checking and a small executed cookbook example. Do not assume the old symbol count; inventory the actual post-M55 surface.
+
+Do not add a tracing language, JavaScript debugger or gameplay framework.
+
+## 10. Integration demonstrations
+
+Use existing CURRENT projects without changing gameplay:
+
+SPRING RANGE:
+Make scripts, CharacterMotor, navigation, physics, rendering, UI and relevant counts visible. A developer should be able to identify whether chasing agents cost time in navigation, movement or script policy.
+
+M55 LIQUID DEMO:
+Capture ordinary operation and actual body/bucket interaction. Show surface solving separately from moving-solid storage, container/transfer, body loading and water presentation. No static screenshot substituted for the interactive workload.
+
+Keep the accepted pool dimensions, cadence, body interaction and numerical behaviour unchanged. Do not optimize M55 as part of this task.
+
+## 11. Focused correctness and overhead checks
+
+Use deterministic synthetic timing inputs for core accounting tests where helpful, plus real-clock integration. Do not try to prove precise durations by adding arbitrary sleeps.
+
+Cover:
+- Nested/repeated scopes, hierarchy, counts and coherent inclusive/exclusive accounting.
+- Zero/multiple fixed steps, waits, cap/backlog reporting and paused gameplay.
+- History wrapping, freeze/clear, spike retention and bounded overflow reporting.
+- Concurrent workers, cross-frame jobs, capture toggles and teardown.
+- Counter semantics, bounded labels and no steady-state hot-scope allocation.
+- Delayed/unavailable GPU results, originating-frame association and nonblocking collection.
+- JS nesting/errors/interrupt cleanup and disabled callback equivalence.
+- Headless report parsing, world/Play-Stop/reload safety and unchanged authored fingerprints.
+- Meaningful captures from both existing integration projects.
+
+Measure profiler overhead explicitly:
+A. Collection disabled.
+B. Collection enabled, UI hidden.
+C. Collection enabled, profiler UI visible.
+
+Use comparable Release workloads with the same scene, camera, input and simulation steps. Measure instrumentation-only overhead separately from UI rendering; bound profiler memory and report dropped records.
+
+Use paired/interleaved measurements and report noise. Vsync/FPS caps can hide overhead; include CPU active-work/step measurements, not FPS alone. Annotate concurrent workloads. Do not stop the operator's applications or chase tiny timing differences through endless reruns.
+
+Compare deterministic simulation/gameplay state for identical fixed-step inputs with collection on/off. Timing differences are expected; physics/update-order or authored-content differences are not.
+
+No “zero overhead” claim and no arbitrary universal speed guarantee.
+
+## 12. Candidate validation — once
+
+During implementation use focused profiler and affected subsystem checks.
+
+At candidate completion:
+- One clean Release build.
+- One production-suite run because instrumentation spans many boundaries.
+- Actual async integration.
+- Focused M56 tests and overhead captures.
+- JudasJS type/inventory/live-enumeration/cookbook checks for the new API.
+- Editor profiler interaction and Play/Stop.
+- Scene reload/transition and standalone runtime smoke.
+- Moved export smoke proving ordinary startup with profiling off, and opt-in diagnostics where supported.
+
+A narrow late fix gets affected reruns only unless it invalidates broader evidence. Do not repeatedly hammer fluids, navigation, orbital mechanics or protected prototypes. Preserve genuine failures and follow-ups; do not fabricate them.
+
+## 13. Human checklist
+
+Provide exact controls/paths and one short checklist:
+1. Open the profiler in Spring Range; inspect frame, scripts, nav, motor and physics costs.
+2. Freeze/select a frame while the game continues; resume and inspect a spike.
+3. Inspect counters and delayed GPU data without hitching from collection.
+4. Open the M55 demo; move a body/use the bucket and distinguish surface solve from storage/loading/presentation cost.
+5. Toggle collection and the UI; confirm acceptable responsiveness.
+6. Export a readable snapshot, then test Stop/reload and standalone behaviour.
+
+Automated timing checks do not establish human UI usability. Hand back for operator review without claiming visual acceptance.
+
+## 14. Scope and preservation
+
+No broad optimizations, rendering modernization, new fluid algorithms, world streaming, networking, allocation overhaul, automatic quality scaling, remote debugger, full trace-analysis application or post-M56 feature work.
+
+Profiler history/timestamps are diagnostic state, never scene/save gameplay state. Editor/user preferences may persist through existing appropriate settings; transient timings must not enter canonical fingerprints.
+
+Preserve protected FTFT/P1 research and historical milestone evidence exactly. Current runtime files may receive instrumentation, but accepted subsystem behaviour and existing project content must remain intact except for an explicitly justified diagnostic integration change.
+
+## Delivery
+
+Implement M56 to candidate completion. Do NOT commit, push or tag before operator review.
+
+Report concisely:
+- CPU hierarchy/frame/fixed-step semantics and ownership.
+- GPU technique, support, result latency and nonblocking behaviour.
+- Thread/lifetime/bounded-buffer/drop handling.
+- Actual instrumentation and counter coverage, including any missing areas.
+- Editor/runtime/headless controls and snapshot path/format.
+- JudasJS API and synchronized documentation/tooling.
+- Correctness and on/off/UI-visible overhead results with workload conditions.
+- Representative Spring Range and M55 captures.
+- Expensive existing phases discovered but intentionally not optimized.
+- Known limitations and HUMAN CHECKLIST.
+- Docs/evidence paths, exact changed files, final fingerprints and Git status.
+- Confirmation protected evidence is unchanged and no M57 work began.
+
+Suggested commit after operator approval:
+Add M56 integrated performance profiling and diagnostics
+
+No milestone tag. Stop for review.
+
+Milestone 56 — Judas learns to perform.

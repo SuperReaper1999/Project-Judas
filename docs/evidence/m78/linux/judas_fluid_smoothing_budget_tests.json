@@ -1,0 +1,26 @@
+{
+  "id": "judas_fluid_smoothing_budget_tests",
+  "source": "tests/FluidSmoothingBudgetTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_smoothing_budget_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "07193cd04e3be173c99079638fd8f1cea90fd9535d6d67befaa7a78b9db349ea",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_fluid_smoothing_budget_tests.log",
+  "logSHA256": "b91e0801004bcdd3659a3de18911663a21f0878c4a90b5f183c9cf59d09f4307",
+  "seconds": 0.008738075999644934
+}

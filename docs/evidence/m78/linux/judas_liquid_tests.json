@@ -1,0 +1,26 @@
+{
+  "id": "judas_liquid_tests",
+  "source": "tests/LiquidTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "77450569451d80d386f7ec4bd3c1b87d54109a5aee1ffd8a70d38b844f3f9715",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 67,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_liquid_tests.log",
+  "logSHA256": "57bd8c33eaf39ce634790ca657216f6d5654882244f7a5f63c9189d8b1ee1574",
+  "seconds": 0.7018477310011804
+}

@@ -243,7 +243,7 @@ void TestSasCounterTorqueAndTranslationIndependence() {
     world.ResetBody(ship, glm::vec3(0.0f), startOrientation);
     world.SetLinearVelocity(ship, glm::vec3(12.0f, -3.0f, 5.0f));
     world.SetAngularVelocity(ship, glm::vec3(0.7f, -0.5f, 0.4f));
-    const glm::vec3 initialAngularVelocity = world.GetAngularVelocity(ship);
+    const glm::vec3 initialAngularMomentum = world.GetInertiaWorld(ship)*world.GetAngularVelocity(ship);
     Window window;
     window.SetTestInputMode(true);
     FlyingPrimitiveControl control;
@@ -254,8 +254,9 @@ void TestSasCounterTorqueAndTranslationIndependence() {
         ApplyFlyingPrimitiveControl(control, window, world);
         world.Step(kDt);
     }
-    Check(glm::length(world.GetAngularVelocity(ship) - initialAngularVelocity) < 1.0e-5f,
-          "SAS off preserves M12 angular inertia when no rotation input is held");
+    // Torque-free anisotropic rotation conserves world L, not world omega.
+    Check(glm::length(world.GetInertiaWorld(ship)*world.GetAngularVelocity(ship)-initialAngularMomentum) < glm::length(initialAngularMomentum)*1.0e-5f,
+          "SAS off preserves world angular momentum when no rotation input is held");
 
     SetSpacecraftSasEnabled(control, true, world);
     const glm::quat target = world.GetTransform(ship).rotation;
@@ -289,10 +290,11 @@ void TestSasCounterTorqueAndTranslationIndependence() {
 
     SetSpacecraftSasEnabled(control, false, world);
     world.SetAngularVelocity(ship, glm::vec3(0.2f, 0.1f, -0.3f));
+    const auto coastMomentum=world.GetInertiaWorld(ship)*world.GetAngularVelocity(ship);
     ApplyFlyingPrimitiveControl(control, window, world);
     world.Step(kDt);
-    Check(glm::length(world.GetAngularVelocity(ship) - glm::vec3(0.2f, 0.1f, -0.3f)) < 1.0e-5f,
-          "disabling SAS restores torque-free M12 rotational coast");
+    Check(glm::length(world.GetInertiaWorld(ship)*world.GetAngularVelocity(ship)-coastMomentum) < glm::length(coastMomentum)*1.0e-5f,
+          "disabling SAS restores torque-free angular-momentum coast");
     world.Shutdown();
 }
 

@@ -1,0 +1,442 @@
+{
+  "schema": 1,
+  "scope": "New Linux lifecycle probe source snapshots, raw inputs/results/receipts; no binaries/build outputs",
+  "files": [
+    {
+      "path": "AUDIT_RECEIPT.json",
+      "bytes": 8267,
+      "sha256": "63958f0b2936848e6eaa7361f8dc92d5f8a9e34ecb049195d91ecd0a132b8141"
+    },
+    {
+      "path": "SUMMARY.md",
+      "bytes": 8395,
+      "sha256": "be786c1315f26b96a2814c81a410c36d02526cf580ca52eee198347b16fe1b3d"
+    },
+    {
+      "path": "run-01/IDENTITY.json",
+      "bytes": 14689,
+      "sha256": "6f96ff4d1b4f2afea9c3cce638168cf9fc3978692a7fefbc81ac22db11677280"
+    },
+    {
+      "path": "run-01/RECEIPTS.json",
+      "bytes": 6228,
+      "sha256": "36e9bf40bb4d71d7c38094a81c663dd24426e82b8d73e52d7bded4dd541c74a5"
+    },
+    {
+      "path": "run-01/compiled-source/FixtureSupport.h",
+      "bytes": 1773,
+      "sha256": "486de2747e6cb489631e60d503d26f5a24f75237bf77d0b0e47bed63a654edbd"
+    },
+    {
+      "path": "run-01/compiled-source/NavigationInputRace.cpp",
+      "bytes": 6036,
+      "sha256": "bbd5b335bf6fc38eb303ae63d1acebe880f96a9954555e876bd73f8a799f0258"
+    },
+    {
+      "path": "run-01/compiled-source/ResolvedPrefabModPolicy.cpp",
+      "bytes": 6269,
+      "sha256": "fd1f130b6c7831f657151684e3893776be3bf18945222cdf46f75d0e27f0a232"
+    },
+    {
+      "path": "run-01/compiled-source/StreamingMotorPublication.cpp",
+      "bytes": 6070,
+      "sha256": "e219463b621140b7f9203f98cf565eb9d0415a938113a37e539dcda835519b9d"
+    },
+    {
+      "path": "run-01/mod-policy-compile.stderr.log",
+      "bytes": 405,
+      "sha256": "1dd31696b5c873ab32fafdd40bd242b5973fb7ef4930dfba4f86ed8fd4bcfff0"
+    },
+    {
+      "path": "run-01/mod-policy-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-01/navigation-compile.stderr.log",
+      "bytes": 401,
+      "sha256": "93cdc2f84c33e87438c1535d20054d1c9bfb8b16663ccae91543570b1445470a"
+    },
+    {
+      "path": "run-01/navigation-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-01/run_prepared.py",
+      "bytes": 3729,
+      "sha256": "d8d7b056c58d04aa7955cdfc84c6ff30caf0107c103de21008d6b97b2dc728ee"
+    },
+    {
+      "path": "run-01/streaming-compile.stderr.log",
+      "bytes": 407,
+      "sha256": "48927c7163d3dc87bdde28fd4d087d3e2deca1d47d8184a6c3bec5c153ea687e"
+    },
+    {
+      "path": "run-01/streaming-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/IDENTITY.json",
+      "bytes": 14689,
+      "sha256": "e739e2be7aa34bab57349be98c254e88af2085114b64ef9b01f9d1747fe6950d"
+    },
+    {
+      "path": "run-02/RECEIPTS.json",
+      "bytes": 11292,
+      "sha256": "b8303303d1ccf05c2ce92d0927f81e69be4945a75adae7ecfce878f865897a0a"
+    },
+    {
+      "path": "run-02/compiled-source/FixtureSupport.h",
+      "bytes": 1771,
+      "sha256": "e79a4376eeb705e9a611076d302060327c4bfac15dfe296887a6b8930a40ec3b"
+    },
+    {
+      "path": "run-02/compiled-source/NavigationInputRace.cpp",
+      "bytes": 6036,
+      "sha256": "bbd5b335bf6fc38eb303ae63d1acebe880f96a9954555e876bd73f8a799f0258"
+    },
+    {
+      "path": "run-02/compiled-source/ResolvedPrefabModPolicy.cpp",
+      "bytes": 6269,
+      "sha256": "fd1f130b6c7831f657151684e3893776be3bf18945222cdf46f75d0e27f0a232"
+    },
+    {
+      "path": "run-02/compiled-source/StreamingMotorPublication.cpp",
+      "bytes": 6070,
+      "sha256": "e219463b621140b7f9203f98cf565eb9d0415a938113a37e539dcda835519b9d"
+    },
+    {
+      "path": "run-02/mod-policy-compile.stderr.log",
+      "bytes": 2487,
+      "sha256": "bd91f1cae362ec19d1784f2517553797dc2d6cc7f1916c6c06ec1752a0bd0987"
+    },
+    {
+      "path": "run-02/mod-policy-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/navigation-compile.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/navigation-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/navigation-fixture/RESULT.json",
+      "bytes": 4870,
+      "sha256": "dda0050519ae6213b76cb26c940ce585467f136633633b056b5e38263bc3e391"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/initial-0.judasnav",
+      "bytes": 28365,
+      "sha256": "d7994799a2a9d69616ceb2be36c5d8b59c5ec630176e2e9593d2ae69c7d59610"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/initial-0.judasnav.judasmeta",
+      "bytes": 214,
+      "sha256": "2453593e8e8f477b4f08780d836b4b1499e807bc2e5ae36650ee2eaa0a80750d"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/initial-1.judasnav",
+      "bytes": 28365,
+      "sha256": "d7994799a2a9d69616ceb2be36c5d8b59c5ec630176e2e9593d2ae69c7d59610"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/initial-1.judasnav.judasmeta",
+      "bytes": 214,
+      "sha256": "ad7d94558991a4ce49509463179ac73b17d106b157a0b8133e7e30e3bace0b0e"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/navigation/rebake-41fa8c7188a1cdc55ed837736ed1dc08.judasnav",
+      "bytes": 28365,
+      "sha256": "d07db6ffb3359ce2edd825cc7585aedea9a54e0ff3992e0fc628732b41984a64"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/navigation/rebake-41fa8c7188a1cdc55ed837736ed1dc08.judasnav.judasmeta",
+      "bytes": 255,
+      "sha256": "6343d61650b8090498925c3db394325aca437e4b4a676167e22b67bda74a910c"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/navigation/rebake-b2d6d534ac536002dc1218c6de71c06a.judasnav",
+      "bytes": 28365,
+      "sha256": "d07db6ffb3359ce2edd825cc7585aedea9a54e0ff3992e0fc628732b41984a64"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/navigation/rebake-b2d6d534ac536002dc1218c6de71c06a.judasnav.judasmeta",
+      "bytes": 255,
+      "sha256": "c81a6a05a457d73b7e7da2a8c388351c946571ac43d04ab433a1454b55ff20a4"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/shared.judasprefab",
+      "bytes": 600,
+      "sha256": "2a1b7cd94ef1c02b4825de53b1963a465279338f9dcb51023a32c1c39c365153"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Assets/shared.judasprefab.judasmeta",
+      "bytes": 210,
+      "sha256": "b560c1b7f5037b00c33932af6665e61bebec952927619ef578ac8041bdee8a46"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Navigation_input_revision_audit.judasproj",
+      "bytes": 2488,
+      "sha256": "005a7a0875c24504437e62c8030444adcca639ed398c7f19349b05526c39ec86"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Scenes/shared-0.judas",
+      "bytes": 1219,
+      "sha256": "419ff7dce873ac5482db8cda2a99ad8f063ac34c1118d90d8340f3466f2fcc52"
+    },
+    {
+      "path": "run-02/navigation-fixture/source/Scenes/shared-1.judas",
+      "bytes": 1219,
+      "sha256": "a951f1807832b1b56a5c3db00c012e0fa86e571078099193c30e8f9e203d67e1"
+    },
+    {
+      "path": "run-02/navigation-link.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/navigation-link.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/navigation-run.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/navigation-run.stdout.log",
+      "bytes": 1448,
+      "sha256": "07bbf9cc8aeb779675f153c259c8881527be7ed2c3c6e9e516796ae6e8b99456"
+    },
+    {
+      "path": "run-02/run_prepared.py",
+      "bytes": 3729,
+      "sha256": "d8d7b056c58d04aa7955cdfc84c6ff30caf0107c103de21008d6b97b2dc728ee"
+    },
+    {
+      "path": "run-02/streaming-compile.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/streaming-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/streaming-fixture/RESULT.json",
+      "bytes": 9642,
+      "sha256": "1cdc9e1a2b1d4dfe2ecb326bf61ff613413a1282bb4ccb2ab15b803f0084c6bf"
+    },
+    {
+      "path": "run-02/streaming-fixture/source/Motor_publication_audit.judasproj",
+      "bytes": 2563,
+      "sha256": "184aef32ea5d66741b77e47b74f5ba0a1cfd9238a9f57522e6ffb9a44e4dbc19"
+    },
+    {
+      "path": "run-02/streaming-fixture/source/Scenes/motors.judas",
+      "bytes": 1286,
+      "sha256": "773ad59f91074cb67945f9d1f1ca2aa91ad8598b5b2385e323f6af1db57b27f8"
+    },
+    {
+      "path": "run-02/streaming-link.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/streaming-link.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/streaming-run.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-02/streaming-run.stdout.log",
+      "bytes": 3111,
+      "sha256": "e473f87bd3f6f12ff5b7910b2ad519ac3165e54a76ed51ae536bf1d93fbfe7a6"
+    },
+    {
+      "path": "run-03/IDENTITY.json",
+      "bytes": 5037,
+      "sha256": "36bb4bfe9a071ebd2e8f0cf8d00329ccde6aab74a1cd263522dfc484302660a1"
+    },
+    {
+      "path": "run-03/RECEIPTS.json",
+      "bytes": 4481,
+      "sha256": "84416fb77a3c47801a3d893071042b1768dc8147833edb01f341b3c94fa7240c"
+    },
+    {
+      "path": "run-03/compiled-source/FixtureSupport.h",
+      "bytes": 1771,
+      "sha256": "e79a4376eeb705e9a611076d302060327c4bfac15dfe296887a6b8930a40ec3b"
+    },
+    {
+      "path": "run-03/compiled-source/ResolvedPrefabModPolicy.cpp",
+      "bytes": 6294,
+      "sha256": "6cc8e89cd1a80969806c13f699cbfdb21f927f9b08758c063ce4165b40ad2be4"
+    },
+    {
+      "path": "run-03/mod-policy-compile.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-03/mod-policy-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/RESULT.json",
+      "bytes": 2857,
+      "sha256": "1aa53f6242b60806f99d323d2adf956e5f91f421797255cf4835503c2e4053fe"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/consumer.judasmod",
+      "bytes": 1358,
+      "sha256": "23b6f755f6ac8797374aaa95d5edcd1290b643fb55b7231fa96887709c0378a0"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/prepared/NOTICE.txt",
+      "bytes": 25,
+      "sha256": "5bc8e6aa5370e18d232f08f8c356a50a6c855edad5150818c90456c086a8b793"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/prepared/Scenes/map.judas",
+      "bytes": 470,
+      "sha256": "f1e57ba98150af65d79deea9cd53ca8078c0eecf5a39e833d727a7d5e55d55e6"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/source/Assets/published.js",
+      "bytes": 143,
+      "sha256": "1e122cfba5fbe0c599984331eccbaa007ef4b9efeb4e6b4e6dce5bfaead1a91a"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/source/Assets/published.js.judasmeta",
+      "bytes": 204,
+      "sha256": "c7ebd9881298f39ddb730ff5b26b8937d7f3e1dc969d542f2bff280d74d5b801"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/source/Assets/published.judasprefab",
+      "bytes": 476,
+      "sha256": "6a8e100728ab10b69548ff2db4eecd372403a7e78099e0dc457b90285eab6e9f"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/source/Assets/published.judasprefab.judasmeta",
+      "bytes": 213,
+      "sha256": "56df23d739633b66048c4f34dbcfc51e95dd9b132124f80031305a53052e197c"
+    },
+    {
+      "path": "run-03/mod-policy-fixture/source/Resolved_prefab_policy_audit.judasproj",
+      "bytes": 2464,
+      "sha256": "ae1caf9581fabb8a1bc0eaaae24085d6c0970176e428f751d4540177f7e9f694"
+    },
+    {
+      "path": "run-03/mod-policy-link.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-03/mod-policy-link.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-03/mod-policy-run.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-03/mod-policy-run.stdout.log",
+      "bytes": 888,
+      "sha256": "18bfec2c052042fa1d2403047203c79bcbe611fbdfc28865b78f07d97dd9bd64"
+    },
+    {
+      "path": "run-03/run_prepared.py",
+      "bytes": 3729,
+      "sha256": "d8d7b056c58d04aa7955cdfc84c6ff30caf0107c103de21008d6b97b2dc728ee"
+    },
+    {
+      "path": "run-04/IDENTITY.json",
+      "bytes": 5031,
+      "sha256": "eba65a1c54a4b525500f38496b146465c946f535d7095f25cd32e20e84ead4b8"
+    },
+    {
+      "path": "run-04/RECEIPTS.json",
+      "bytes": 4474,
+      "sha256": "952a419e8460f81b67104cb8b235f8f2264f6353abd3ed6b5fb5f87a2123c11e"
+    },
+    {
+      "path": "run-04/compiled-source/FixtureSupport.h",
+      "bytes": 1771,
+      "sha256": "e79a4376eeb705e9a611076d302060327c4bfac15dfe296887a6b8930a40ec3b"
+    },
+    {
+      "path": "run-04/compiled-source/StreamingMotorPublication.cpp",
+      "bytes": 6276,
+      "sha256": "969e2cdb0026823a4145915d0efd7ec85034353e73c85aa1bbd317d414027161"
+    },
+    {
+      "path": "run-04/run_prepared.py",
+      "bytes": 3729,
+      "sha256": "d8d7b056c58d04aa7955cdfc84c6ff30caf0107c103de21008d6b97b2dc728ee"
+    },
+    {
+      "path": "run-04/streaming-compile.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-04/streaming-compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-04/streaming-fixture/RESULT.json",
+      "bytes": 10538,
+      "sha256": "caa5ff89577ca071340fcff97795986e7e9bc42eadf227c4c1b9014847593e7a"
+    },
+    {
+      "path": "run-04/streaming-fixture/source/Motor_publication_audit.judasproj",
+      "bytes": 2563,
+      "sha256": "98d232133a4eb6c5b457eb70539a74bb9643df896483ca7816ad4f9ff9bd514f"
+    },
+    {
+      "path": "run-04/streaming-fixture/source/Scenes/motors.judas",
+      "bytes": 1286,
+      "sha256": "773ad59f91074cb67945f9d1f1ca2aa91ad8598b5b2385e323f6af1db57b27f8"
+    },
+    {
+      "path": "run-04/streaming-link.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-04/streaming-link.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-04/streaming-run.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-04/streaming-run.stdout.log",
+      "bytes": 3111,
+      "sha256": "e473f87bd3f6f12ff5b7910b2ad519ac3165e54a76ed51ae536bf1d93fbfe7a6"
+    }
+  ],
+  "totalBytes": 327255
+}

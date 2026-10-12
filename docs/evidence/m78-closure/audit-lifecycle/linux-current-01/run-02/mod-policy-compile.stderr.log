@@ -1,0 +1,13 @@
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp:12:112: error: aggregate ‘Project project’ has incomplete type and cannot be defined
+   12 | int main(int argc,char** argv){Receipt r;fs::path out;try{out=FreshOutput(argc,argv);std::string error;Project project;AssetDatabase db;r.Require(Project::CreateNew((out/"source").string(),"Resolved prefab policy audit",project,error),"ordinary project",error);db.Scan(project.RootDir(),project.AssetsDir());
+      |                                                                                                                ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp:12:156: error: incomplete type ‘Project’ used in nested name specifier
+   12 | int main(int argc,char** argv){Receipt r;fs::path out;try{out=FreshOutput(argc,argv);std::string error;Project project;AssetDatabase db;r.Require(Project::CreateNew((out/"source").string(),"Resolved prefab policy audit",project,error),"ordinary project",error);db.Scan(project.RootDir(),project.AssetsDir());
+      |                                                                                                                                                            ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp:18:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   18 |  for(auto& object:requested.Objects())object.scripts.clear();r.Check(std::all_of(requested.Objects().begin(),requested.Objects().end(),[](const auto& v){return v.scripts.empty();}),"requesting authored scene contains no direct script slot");
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp:18:62: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   18 |  for(auto& object:requested.Objects())object.scripts.clear();r.Check(std::all_of(requested.Objects().begin(),requested.Objects().end(),[](const auto& v){return v.scripts.empty();}),"requesting authored scene contains no direct script slot");
+      |                                                              ^

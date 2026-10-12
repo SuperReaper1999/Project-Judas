@@ -46,7 +46,7 @@ int main() {
  contactAnchor.orientation=glm::quat(.6061418652534485f,.25942757725715637f,.005194163415580988f,.751839280128479f);
  contactAnchor.angularVelocity={-.9205920696258545f,-.5645646452903748f,.3782026171684265f};
  auto normalized=contactAnchor;IntegrateRigidBodyPosition(normalized,0);
- check(!sameState(contactAnchor,normalized));
+ check(sameState(contactAnchor,normalized)); // zero-time integration preserves the represented anchor
  IntegrateRigidBodyPosition(normalized,0);check(sameState(contactAnchor,normalized));
  RigidMotion contactLedger;contactLedger.Begin(77,contactAnchor,1.f/60);
  for(double elapsed:{0.0,5.014435e-19,3.388132e-21})
@@ -115,6 +115,26 @@ int main() {
  rejects(instant,std::nextafter(0.0,1.0));
  RigidMotion empty;rejects(empty,0);rejects(empty,std::numeric_limits<double>::quiet_NaN());
  longLedger.Clear();rejects(longLedger,.5);
+ // History queries intentionally remain left limits; solver queries must
+ // observe every impulse already applied at the same instant.
+ RigidBody eventBody;eventBody.inverseMass=1;eventBody.linearVelocity={1,0,0};
+ RigidMotion events;events.Begin(27,eventBody,1);
+ eventBody.linearVelocity={2,0,0};events.ChangeVelocity(eventBody,.5);
+ eventBody.linearVelocity={3,0,0};events.ChangeVelocity(eventBody,.5);
+ check(events.Evaluate(.5).linearVelocity==glm::vec3(1,0,0));
+ check(events.EvaluateAfterEvents(.5).linearVelocity==glm::vec3(3,0,0));
+ check(events.EvaluateAfterEvents(std::nextafter(.5,0.0)).linearVelocity==glm::vec3(1,0,0));
+ check(events.EvaluateAfterEvents(std::nextafter(.5,1.0)).linearVelocity==glm::vec3(3,0,0));
+ eventBody.linearVelocity={4,0,0};events.ChangeVelocity(eventBody,1);
+ check(events.Evaluate(1).linearVelocity==glm::vec3(3,0,0));
+ check(events.EvaluateAfterEvents(1).linearVelocity==glm::vec3(4,0,0));
+ for(double time:{-1.0,std::nextafter(1.0,2.0),std::numeric_limits<double>::infinity(),
+                  std::numeric_limits<double>::quiet_NaN()}) {
+  bool rejected=false;try{(void)events.EvaluateAfterEvents(time);}catch(const std::out_of_range&){rejected=true;}
+  check(rejected);
+ }
+ bool emptyRejected=false;try{(void)empty.EvaluateAfterEvents(0);}catch(const std::out_of_range&){emptyRejected=true;}
+ check(emptyRejected);
  for(bool elsewhere : {false,true}) {
   PhysicsWorld w;w.Init();auto b=w.CreateDynamicSphere({100,100,100},.5,1,0,0);
   w.SetAngularVelocity(b,{0,0,100});w.SetLinearVelocity(b,{1,2,3});
@@ -123,5 +143,67 @@ int main() {
   IntegrateRigidBodyPosition(oracle,1.f/60);w.Step(1.f/60);
   check(w.GetTransform(b).position==oracle.position);check(w.GetTransform(b).rotation==oracle.orientation);
  }
- std::cout<<"Rigid motion checks "<<checks<<" PASS (event restart/query integration remains Stage B/F)\n";
+ // Actual PhysicsWorld: torque-free anisotropic rotation must preserve the
+ // world momentum VECTOR, while energy convergence is a separate assertion.
+ // Independent continuous orientation reference. Conserved energy already
+ // reaches binary32 rounding error with the implicit midpoint; that error is
+ // not expected to decrease monotonically when the number of steps increases.
+ // Test time convergence on orientation instead, and tighten the energy gate.
+ const glm::dvec3 half(glm::vec3(.2f,.5f,.9f));glm::dmat3 analyticInertia(0);
+ analyticInertia[0][0]=half.y*half.y+half.z*half.z;
+ analyticInertia[1][1]=half.x*half.x+half.z*half.z;
+ analyticInertia[2][2]=half.x*half.x+half.y*half.y;
+ const auto analyticInverse=glm::inverse(analyticInertia);
+ const auto initialMomentum=analyticInertia*glm::dvec3(1,2,3);
+ auto reference=[&](int hz){
+  glm::dquat q(1,0,0,0);const double h=1.0/hz;
+  auto derivative=[&](glm::dquat value){const auto r=glm::mat3_cast(glm::normalize(value));
+   const auto omega=r*analyticInverse*glm::transpose(r)*initialMomentum;
+   return .5*glm::dquat(0,omega.x,omega.y,omega.z)*value;
+  };
+  for(int n=0;n<2*hz;++n){const auto a=derivative(q),b=derivative(q+.5*h*a),c=derivative(q+.5*h*b),d=derivative(q+h*c);q=glm::normalize(q+(h/6)*(a+2.0*b+2.0*c+d));}
+  return q;
+ };
+ auto angle=[](glm::dquat a,glm::dquat b){const auto delta=glm::normalize(a)*glm::conjugate(glm::normalize(b));
+  return 2*std::atan2(glm::length(glm::dvec3(delta.x,delta.y,delta.z)),std::abs(delta.w));};
+ const auto referencePose=reference(8192);check(angle(reference(4096),referencePose)<1e-8);
+ double previousOrientationError=1;
+ for(int hz:{60,120,240,480}) {
+  PhysicsWorld world;check(world.Init());auto body=world.CreateDynamicBox({0,0,0},{.2f,.5f,.9f},3,0,0);
+  world.SetAngularVelocity(body,{1,2,3});
+  auto momentum=[&]{return glm::dmat3(world.GetInertiaWorld(body))*glm::dvec3(world.GetAngularVelocity(body));};
+  auto initial=momentum();double energy=.5*glm::dot(initial,glm::dvec3(world.GetAngularVelocity(body))),peak=0;
+  for(int step=0;step<2*hz;++step){world.Step(1.f/hz);check(glm::length(momentum()-initial)/glm::length(initial)<1e-4);peak=std::max(peak,std::abs(.5*glm::dot(momentum(),glm::dvec3(world.GetAngularVelocity(body)))-energy)/energy);}
+  check(peak<1e-4); // 50 times tighter than the previous .005 energy gate.
+  const auto orientationError=angle(glm::dquat(world.GetTransform(body).rotation),referencePose);
+  check(orientationError<.005);if(hz<=240)check(orientationError<previousOrientationError*.35);previousOrientationError=orientationError;
+  std::cout<<"FREE hz="<<hz<<" energy_relative="<<peak<<" orientation_error_rad="<<orientationError<<'\n';
+ }
+ for(auto rotation:{glm::quat(1,0,0,0),glm::angleAxis(.8f,glm::normalize(glm::vec3(1,2,-3)))}) {
+  PhysicsWorld world;check(world.Init());BodyTransform pose;pose.rotation=rotation;auto body=world.CreateShape(Shape::Box({.2f,.5f,.9f}),pose,true,3,0,0);
+  world.SetAngularVelocity(body,rotation*glm::vec3(1,2,3));auto momentum=[&]{return glm::dmat3(world.GetInertiaWorld(body))*glm::dvec3(world.GetAngularVelocity(body));};
+  auto initial=momentum();world.Step(1.f/60);check(glm::length(momentum()-initial)<1e-5);
+  const glm::vec3 arm=rotation*glm::vec3(.4f,0,0),linearImpulse=rotation*glm::vec3(0,.5f,.1f),impulse=glm::cross(arm,linearImpulse);world.ApplyImpulseAtPoint(body,linearImpulse,world.GetTransform(body).position+arm);check(glm::length(momentum()-initial-glm::dvec3(impulse))<1e-5);
+  initial=momentum();const glm::vec3 torque=rotation*glm::vec3(.7f,-.3f,.2f);world.ApplyTorque(body,torque);world.Step(1.f/60);check(glm::length(momentum()-initial-glm::dvec3(torque)/60.)<1e-5);
+ }
+ // Independent inertia formula, including orbital momentum: an internal TOI
+ // impulse must not lose the anisotropic body's transported angular state.
+ for(auto rotation:{glm::quat(1,0,0,0),glm::angleAxis(.8f,glm::normalize(glm::vec3(1,2,-3)))}) {
+  PhysicsWorld world;check(world.Init());BodyTransform pose;
+  pose.position=rotation*glm::vec3(-.5f,.1f,0);pose.rotation=rotation;
+  const auto a=world.CreateShape(Shape::Box({.2f,.5f,.9f}),pose,true,3,0,0);
+  const auto c=world.CreateDynamicSphere(rotation*glm::vec3(.2f,0,0),.2f,5,0,0);
+  world.SetLinearVelocity(a,rotation*glm::vec3(30,0,0));world.SetAngularVelocity(a,rotation*glm::vec3(1,2,3));
+  glm::dmat3 inertia(0);inertia[0][0]=.5*.5+.9*.9;
+  inertia[1][1]=.2*.2+.9*.9;inertia[2][2]=.2*.2+.5*.5;
+  auto angular=[&](BodyHandle h,double mass,const glm::dmat3& local){
+   const auto p=world.GetTransform(h);const auto q=glm::mat3_cast(glm::normalize(glm::dquat(p.rotation)));
+   return glm::cross(glm::dvec3(p.position),mass*glm::dvec3(world.GetLinearVelocity(h)))+
+    q*local*glm::transpose(q)*glm::dvec3(world.GetAngularVelocity(h));
+  };
+  auto total=[&]{return angular(a,3,inertia)+angular(c,5,glm::dmat3(.4*5*.2*.2));};
+  const auto before=total();world.Step(1.f/60);
+  check(world.LastStepStats().impactEvents>0);check(glm::length(total()-before)<1e-5);
+ }
+ std::cout<<"Rigid motion checks "<<checks<<" PASS\n";
 }

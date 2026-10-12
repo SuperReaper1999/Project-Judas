@@ -1,0 +1,21 @@
+﻿{
+    "archiveBytes":  3633125,
+    "scope":  "Archive only; cleanup requires host verification",
+    "archiveSHA256":  "93dd99d7f4e235dd1f98208c174ae31e9b152a9ce766f4aa9f750552b5402ed7",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-physics_continuation.exe",
+                      "sha256":  "3eb3053e1af95c20a66bc5e5f8ec66e8775ef6fc251de3825c87c9428765ec93",
+                      "name":  "m78-final-repair-physics_continuation.exe",
+                      "bytes":  7838720
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\physics_continuation-0.obj",
+                      "sha256":  "b2c137049f2757d4d4cb039e02150923b55eaa154b08f3ae8bd7676b84221976",
+                      "name":  "physics_continuation-0.obj",
+                      "bytes":  310458
+                  }
+              ],
+    "archiveName":  "m78-final-repair-physics_continuation-generated.zip",
+    "archivePath":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-physics_continuation-generated.zip"
+}

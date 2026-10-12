@@ -1,0 +1,23 @@
+{
+  "steps": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-state-observer/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-state-linux",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.5109474829987448
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-state-observer/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-state-linux",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.2394389339970076
+    }
+  ],
+  "executableSHA256": "5e83bdd9620cbdbdcf9aeddd4a940d7844bb8549a1f00bf8f6fa5eeca9b88566"
+}

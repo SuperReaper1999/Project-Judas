@@ -1,5 +1,5 @@
 // FTFT4A: first-step contact through ordinary scene/lifecycle/persistence paths.
-// No temporal-impact acceptance: all fixture surfaces are independently shown
+// Original FTFT4A cases have no temporal-impact acceptance: all fixture surfaces are independently shown
 // to touch exactly (canonical axes) or overlap slightly (represented oblique
 // geometry). There is no positive-gap-as-touching expectation in this suite.
 #include <cmath>
@@ -229,6 +229,123 @@ void TestSphereConvenience(const char* name, const glm::quat& rotation, bool sph
           "central normal impulse creates no angular velocity in either body");
 }
 
+// M78: completed physical observations must not be solver warm-start storage.
+// This ordinary box/floor fixture receives an actual incoming sphere TOI;
+// no controller, animation, query-generated contacts or gain retuning is used.
+struct SolvedSupport {
+    PhysicsWorld physics;
+    BodyHandle floor,body,ball,second;
+    explicit SolvedSupport(bool compound=false,bool connected=false) {
+        physics.Init();
+        if(compound) {
+            // One support handle, two distinct collision primitives. Both
+            // pads are beneath the broad box, on opposite sides of its COM.
+            floor=physics.CreateShape(Shape::Compound({
+                CompoundBox({-.6f,0,0},{.3f,.5f,.5f}),
+                CompoundBox({ .6f,0,0},{.3f,.5f,.5f})}),
+                {{0,-.5f,0},{1,0,0,0}},false,0,.8f,0);
+        }else floor=physics.CreateStaticBox({0,-.5f,0},{4,.5f,3},.8f,0);
+        body=physics.CreateDynamicBox({0,.5f,0},
+            compound?glm::vec3(.8f,.5f,.5f):glm::vec3(.5f),4,.8f,0);
+        if(connected) {
+            second=physics.CreateDynamicBox({2,.5f,0},{.5f,.5f,.5f},4,.8f,0);
+            JointSettings link;link.type=JointType::Fixed;link.bodyA=body;link.bodyB=second;
+            link.anchorA={1,0,0};link.anchorB={-1,0,0};physics.CreateJoint(link);
+            physics.SetPairCollisionEnabled(body,second,false);
+        }
+        for(int i=0;i<4;++i)Step();
+    }
+    void Step() {
+        for(auto handle:{body,ball,second})if(handle.IsValid())
+            physics.ApplyLinearAcceleration(handle,{0,-9.81f,0},SimulationTiming::kFixedTimestep);
+        physics.Step(SimulationTiming::kFixedTimestep);
+    }
+    void Impact() {
+        ball=physics.CreateDynamicSphere({0,1.3f,0},.15f,2,.8f,0);
+        physics.SetLinearVelocity(ball,{0,-20,0});Step();
+    }
+};
+unsigned SupportRows(PhysicsWorld& physics,BodyHandle body,BodyHandle floor) {
+    std::vector<PhysicsWorld::BodyContactSample> contacts;
+    if(!physics.ReadBodyContactSample(body,contacts))return 0;
+    unsigned rows=0;
+    for(const auto& contact:contacts)if(contact.other.id==floor.id&&contact.normalImpulse>0)++rows;
+    return rows;
+}
+void TestCompletedSupportObservations() {
+    SolvedSupport fixture;
+    auto& physics=fixture.physics;
+    std::vector<PhysicsWorld::BodyContactSample> contacts;
+    Check(SupportRows(physics,fixture.body,fixture.floor)>0,"completed start solve exposes real load-bearing floor rows");
+    fixture.Impact();
+    Check(physics.LastStepStats().impactEvents>0,"incoming sphere produces an actual bounded TOI solve");
+    Check(physics.ReadBodyContactSample(fixture.body,contacts),"completed TOI observations remain available after warm-cache invalidation");
+    unsigned floors=0;double load=0;bool finite=true;
+    for(const auto& contact:contacts)if(contact.other.id==fixture.floor.id){
+        ++floors;load+=contact.normalImpulse;
+        finite&=std::isfinite(contact.normalImpulse)&&contact.normalImpulse>0&&
+            std::isfinite(contact.point.x)&&std::isfinite(contact.point.y)&&std::isfinite(contact.point.z)&&
+            std::isfinite(contact.normal.x)&&std::isfinite(contact.normal.y)&&std::isfinite(contact.normal.z);
+    }
+    Check(floors>0&&load>0&&finite,"actual ground reaction is observable without a scripted ground or balance controller");
+    std::printf("  COMPLETED_TOI floor_rows=%u normal_impulse=%.9g events=%zu\n",floors,load,physics.LastStepStats().impactEvents);
+    Check(!physics.ReadBodyContactSample(fixture.body,contacts,1)&&contacts.empty(),"completed-row contact overflow remains fail-closed");
+    Check(!physics.ReadBodyContactSample(fixture.body,contacts,64,1)&&contacts.empty(),"completed-row candidate overflow remains fail-closed");
+    Check(!physics.ReadBodyContactSample(fixture.body,contacts,0),"zero completed-row budget is invalid");
+
+    physics.SetCollisionFilter(fixture.body,0,0);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"current collision masks exclude completed support observations");
+    physics.SetCollisionFilter(fixture.body,0,kAllCategories);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"restoring a filter before another solve cannot revive old observations");
+    fixture.Step();
+    Check(SupportRows(physics,fixture.body,fixture.floor)>0,"next real solve reacquires support after filter invalidation");
+    physics.SetPhysicalMaterial(fixture.body,"changed authored material",.6f,0);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"physical-material mutation invalidates completed observations with warm history");
+    fixture.Step();
+    Check(SupportRows(physics,fixture.body,fixture.floor)>0,"next real solve reacquires support after material invalidation");
+    const auto pose=physics.GetTransform(fixture.body);
+    physics.ResetBody(fixture.body,pose.position,pose.rotation);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"even same-pose reset invalidates completed observation revisions");
+    fixture.Step();
+    physics.SetBodyEnabled(fixture.body,false);
+    Check(!physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"disabled body cannot expose completed observations");
+    physics.SetBodyEnabled(fixture.body,true);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"re-enabling before another solve cannot revive disabled observations");
+    fixture.Step();
+    physics.SetBodySensor(fixture.body,true);
+    Check(!physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"sensor cannot grant physical support from completed rows");
+    physics.SetBodySensor(fixture.body,false);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"leaving sensor mode cannot revive earlier physical observations");
+    fixture.Step();
+    physics.SetPairCollisionEnabled(fixture.body,fixture.floor,false);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"suppressed pair cannot expose completed support");
+    physics.SetPairCollisionEnabled(fixture.body,fixture.floor,true);
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"unsuppressing before another solve cannot revive old support");
+    fixture.Step();
+    const auto removedFloor=fixture.floor;physics.DestroyBody(removedFloor);
+    fixture.floor=physics.CreateStaticBox({0,-.5f,0},{4,.5f,3},.8f,0);
+    Check(fixture.floor.id!=removedFloor.id&&physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"reused support slot cannot alias completed contact generations");
+    const auto removedBody=fixture.body;physics.DestroyBody(removedBody);
+    fixture.body=physics.CreateDynamicBox({0,8,0},{.5f,.5f,.5f},4,.8f,0);
+    Check(!physics.ReadBodyContactSample(removedBody,contacts)&&contacts.empty(),"destroyed observer handle fails safely after slot reuse");
+    Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"new body inherits no old completed observations");
+
+    SolvedSupport island(false,true);
+    Check(SupportRows(island.physics,island.second,island.floor)>0,"connected articulation has observed stance support before incoming impact");
+    island.Impact();
+    Check(island.physics.LastStepStats().impactEvents>0&&SupportRows(island.physics,island.second,island.floor)>0,
+          "incoming connected-body impact cannot erase the other load-bearing stance observations");
+
+    SolvedSupport compound(true,false);
+    compound.Impact();
+    bool left=false,right=false;
+    Check(compound.physics.ReadBodyContactSample(compound.body,contacts),"compound primitive TOI rows retain valid observation mapping");
+    for(const auto& contact:contacts)if(contact.other.id==compound.floor.id&&contact.normalImpulse>0){
+        left|=contact.point.x<0;right|=contact.point.x>0;
+    }
+    Check(compound.physics.LastStepStats().impactEvents>0&&left&&right,"distinct compound support primitives retain independent actual solved rows");
+}
+
 void Run(const Fixture& f, bool sphere, const glm::vec3& offset) {
     std::printf("CASE %s %s offset=(%.9g,%.9g,%.9g)\n",f.name,sphere?"sphere":"box",offset.x,offset.y,offset.z);
     const int failuresBefore=g_failures;
@@ -306,6 +423,7 @@ int main() {
         TestSphereConvenience("quarter_z",quarter,spherePair);
         TestSphereConvenience("oblique",oblique,spherePair);
     }
+    TestCompletedSupportObservations();
     std::printf("FTFT4A contact lifecycle: %d fixtures, %d fixed steps, 6 convenience contacts, %d checks, %d failures\n",
                 fixtures,g_steps,g_checks,g_failures);
     return g_failures==0?0:1;

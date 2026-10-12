@@ -1,0 +1,11 @@
+FAIL entity root state remains motor root rather than offset proxy
+FAIL motor query geometry is exact before first resumed callback
+FAIL motor query collision layer and mask restore before first step
+FAIL motor authored tags are queryable before first resumed callback
+FAIL motor enabled and disabled layer-filtered rays match before first step
+FAIL motor restored nonzero-offset ray geometry matches actual source
+FAIL entity root state remains motor root rather than offset proxy
+FAIL motor query geometry is exact before first resumed callback
+FAIL motor query collision layer and mask restore before first step
+FAIL disabled motor handoff does not expose an enabled query capsule
+SUMMARY 49 checks 10 failures

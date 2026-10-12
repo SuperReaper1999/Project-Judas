@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "foundation",
+  "archiveSHA256": "6a982fff351645a7aa69064e76ee910018cc421bfc922328a2a3ceff7047c482",
+  "archiveBytes": 3387064,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_foundation.exe",
+      "sha256": "ba74d6e59d95bcea45bf983c602f6076b4bec1f38bb49fb0fd1a426cf824b161",
+      "name": "m78_combined-v2_foundation.exe",
+      "bytes": 7396352
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\foundation-0.obj",
+      "sha256": "eca39443345ae73ae082d21d8eb9457dd0feb9bc8de25326759a082ebdbd20b1",
+      "name": "foundation-0.obj",
+      "bytes": 96467
+    }
+  ]
+}

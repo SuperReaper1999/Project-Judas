@@ -1,0 +1,36 @@
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp: In constructor ‘{anonymous}::Articulation::Articulation()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:23:49: error: no matching function for call to ‘PhysicsWorld::CreateShape(Shape, <brace-enclosed initializer list>, bool, int)’
+   23 |  Articulation(){world.Init();a=world.CreateShape(Shape::Box({.2f,.3f,.2f}),{{-.5f,2,0},glm::quat(1,0,0,0)},true,2);
+      |                                ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:23:49: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate 1: ‘BodyHandle PhysicsWorld::CreateShape(const Shape&, const BodyTransform&, bool, float, float, float)’
+  128 |     BodyHandle CreateShape(const Shape&,const BodyTransform&,bool dynamic,float mass,float friction,float restitution);
+      |                ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate expects 6 arguments, 4 provided
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:24:22: error: no matching function for call to ‘PhysicsWorld::CreateShape(Shape, <brace-enclosed initializer list>, bool, int)’
+   24 |   b=world.CreateShape(Shape::Box({.2f,.3f,.2f}),{{.5f,2,0},glm::quat(1,0,0,0)},true,3);
+      |     ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:24:22: note: there is 1 candidate
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate 1: ‘BodyHandle PhysicsWorld::CreateShape(const Shape&, const BodyTransform&, bool, float, float, float)’
+  128 |     BodyHandle CreateShape(const Shape&,const BodyTransform&,bool dynamic,float mass,float friction,float restitution);
+      |                ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate expects 6 arguments, 4 provided
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:56:97: error: no matching function for call to ‘PhysicsWorld::CreateShape(Shape, <brace-enclosed initializer list>, bool)’
+   56 |  explicit Contacts(bool reverse=false){world.Init();auto createFloor=[&]{floor=world.CreateShape(Shape::Box({3,.5f,3}),{{0,-.5f,0},glm::quat(1,0,0,0)},false);};
+      |                                                                                ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:56:97: note: there is 1 candidate
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate 1: ‘BodyHandle PhysicsWorld::CreateShape(const Shape&, const BodyTransform&, bool, float, float, float)’
+  128 |     BodyHandle CreateShape(const Shape&,const BodyTransform&,bool dynamic,float mass,float friction,float restitution);
+      |                ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate expects 6 arguments, 3 provided
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:57:45: error: no matching function for call to ‘PhysicsWorld::CreateShape(Shape, <brace-enclosed initializer list>, bool, int)’
+   57 |   auto createBody=[&]{body=world.CreateShape(Shape::Sphere(.5f),{{0,.5f,0},glm::quat(1,0,0,0)},true,2);};
+      |                            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsContinuationTests.cpp:57:45: note: there is 1 candidate
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate 1: ‘BodyHandle PhysicsWorld::CreateShape(const Shape&, const BodyTransform&, bool, float, float, float)’
+  128 |     BodyHandle CreateShape(const Shape&,const BodyTransform&,bool dynamic,float mass,float friction,float restitution);
+      |                ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/proposed-continuation/src/PhysicsWorld.h:128:16: note: candidate expects 6 arguments, 4 provided

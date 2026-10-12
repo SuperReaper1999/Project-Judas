@@ -1,0 +1,19 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_streaming.exe",
+                      "sha256":  "39bd078d75131c449e11d5f49c106438724f87c89c4c7af9a5647756acf7d61e",
+                      "name":  "m78_combined-v2_streaming.exe",
+                      "bytes":  8044032
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\streaming-0.obj",
+                      "sha256":  "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a",
+                      "name":  "streaming-0.obj",
+                      "bytes":  1100935
+                  }
+              ],
+    "archiveSHA256":  "93d2a7c0abf5f550e1b0c1768978f1bbe0adbaa9be2a0186981747adeaa44f75",
+    "freeBytes":  464683008
+}

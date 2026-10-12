@@ -1,0 +1,24 @@
+{
+  "scope": "Fresh native final case, all generated member bytes independently host SHA/size verified before exact guest cleanup",
+  "hostVerified": true,
+  "case": "balance_lab",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-balance_lab.exe",
+      "sha256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "name": "m78-final2-repair-balance_lab.exe",
+      "bytes": 9509376
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\balance_lab-0.obj",
+      "sha256": "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff",
+      "name": "balance_lab-0.obj",
+      "bytes": 2230400
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\m78-final2-repair-balance_lab-generated.zip",
+      "bytes": 5016041,
+      "sha256": "bdacdd96f49265c09c5de43bc5b2218654f3942ac04ca3da8afba6a9b186c1d1"
+    }
+  ]
+}

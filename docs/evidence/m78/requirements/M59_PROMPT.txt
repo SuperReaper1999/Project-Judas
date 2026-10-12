@@ -1,0 +1,421 @@
+# M59 — Judas learns to move worlds.
+
+Starting checkpoint : 6fb90d56562651d027a8740cc8d17bb655d9b8b0
+
+
+M58 must be human-accepted, committed and pushed before this brief is executed.
+If the checkpoint above is blank, STOP and ask for it; do not substitute M57 or
+an unreviewed working tree. Verify actual HEAD/main/origin/main and repository
+state before implementation. Read the completed M58 handoff and current source;
+this prepared brief does not assume which APIs or dependency versions M58 added.
+
+The known operator-owned change is an unstaged `docs/ROADMAP.md` edit. Preserve
+its exact bytes and staging state. Verify its actual status after M58; do not
+restore, recreate, stage or rewrite it. Report unexpected changes without
+clobbering them. Do not read beyond M59 or start M60/M61 work.
+
+Implement M59 to candidate completion. No commit, push or tag before review.
+
+GOAL
+Add optional additive scene composition and asynchronous region/world streaming.
+A running game can retain its player/session while loading, activating and
+releasing nearby authored regions. More authored world must not imply that every
+region is simultaneously instantiated, simulated or resident in memory.
+
+Judas owns residency, lifetime and safe world composition.
+JavaScript owns travel rules, loading-screen policy and game behaviour.
+
+This is content/residency streaming, NOT automatic origin rebasing. M23 remains
+fixed double absolute origin + precise local floats. M61 remains the broader
+save/persistence milestone. Do not quietly bundle either into M59.
+
+## 1. Extend the actual world lifecycle, not a parallel engine
+
+Trace M43 scene replacement, RuntimeWorld construction/destruction, M29 entity
+lifecycle, M31 jobs/resources, script startup/teardown and current component
+registration. Identify whole-scene assumptions before changing them.
+
+Additive regions participate in ONE authoritative played RuntimeWorld: shared
+physics, gravity resolution, navigation service and ordinary fixed-step ordering.
+Keep one played-world scripting runtime, not one VM or simulation per region.
+A region is an ownership/lifetime group, not another game loop.
+
+Reuse existing component creation/destruction through a coherent incremental
+registration path. Do not squeeze everything through SpawnPrefab if its supported
+subset is insufficient, and do not clone RuntimeWorld constructors into a second
+streaming implementation. Keep existing single-scene projects working without
+having to author a streaming manifest.
+
+M43 replace/reload remains a distinct whole-played-world operation. Define
+`scenes.current`, reload and session-store behaviour explicitly: additive loads
+must not silently replace the root scene identity or clear session data. A whole
+replacement invalidates old region requests and handles. No need to change the
+existing replacement API to asynchronous merely for symmetry.
+
+## 2. Authored regions, placement and stable identity
+
+Provide a normal project-owned streaming/world manifest or equivalent asset.
+A region has a stable identity, registered source scene, spatial bounds/placement,
+load priority, dependencies and residency policy. Reuse `.judas` content and the
+existing project registry; no hardcoded directories, numeric scene-name convention
+or mandatory terrain generator. Static region placement is sufficient.
+
+Separate authored object identity from runtime entity identity. Different scenes
+may contain identical local object IDs. Remap local references for bodies, joints,
+prefabs, navigation links and liquid connections consistently; never alias them.
+Use generation-aware region/request handles. Reloading a region must not resurrect
+an old runtime handle. Loading the same region twice is coalesced/idempotent;
+independent copies require distinct declared instance identities.
+
+Use qualified references for cross-region authored links. Unloaded targets are
+unresolved, not stale pointers or an invitation to block synchronously. Distinguish
+hard dependencies from soft references; detect cycles and group or reject them
+with useful diagnostics. Do not rewrite immutable source assets to relocate IDs.
+
+Place all active content in the session's fixed simulation frame. Subtract double
+origins BEFORE narrowing coordinates. Preserve arbitrary orientation and transform
+all supported spatial components coherently. Require unit scale initially; reject
+unsupported placements explicitly rather than moving visuals but not colliders,
+gravity, navigation or baked liquids. Do not reset the session origin per region.
+Document the demonstrated local precision envelope: streaming does not make
+unbounded float-space travel precise. Reuse/validate baked local data under
+placement; never suppress stale-bake checks just to make instancing work.
+
+## 3. Genuine asynchronous preparation and bounded installation
+
+Reuse JobSystem and ResourceManager rather than creating another worker pool.
+Represent request states clearly, for example:
+Unloaded -> Queued -> Preparing -> Prepared -> Installing -> Active -> Unloading.
+Include cancellation, failure and blocked-by-dependency/budget states where needed.
+Names may differ; expose what is actually happening.
+
+Workers may read, parse, validate and prepare immutable CPU descriptors. They may
+not mutate live physics/navigation/liquids, access a live QuickJS context, call GL
+or start gameplay. Renderer retains context-thread GPU ownership. Thread-unsafe
+parsing/font/asset operations must use the existing safe ownership rules.
+
+Background reading followed by a huge synchronous constructor is NOT sufficient.
+Budget incremental main-thread installation, resource handoff AND teardown. Use
+bounded work units with configurable time/work budgets. A single native upload,
+registration or JS callback may be indivisible: measure the largest such unit,
+report overruns and split/preprocess excessive content where appropriate. Do not
+promise hard real-time deadlines that these operations cannot meet.
+
+Required physics/geometry and hard dependencies must be ready before a region is
+playable. Optional visual-resource placeholders may follow the existing loading
+policy, but distinguish CPU-prepared, playable and fully visual-ready states.
+Progress is staged work/bytes/counts where known, not a fabricated smooth percent.
+
+Normal frame processing must not WaitAll, poll in a busy loop, or synchronously
+fetch unfinished work. Honour cooperative cancellation and discard late completions
+using request AND world generations. Cancellation must release only its own demand;
+it must not cancel a shared asset still needed by another region.
+
+## 4. Safe activation, unloading and callback order
+
+Perform mutations at a documented safe outer-runtime boundary, never while a
+physics query, solver or script/event callback is using the affected structures.
+Stage privately and publish a complete validated activation unit. Preparation must
+not expose half-built entities, runnable scripts or colliders without dependencies.
+
+Establish identities/references/components before calling script start. Order
+activation and callbacks deterministically; I/O completion order must not select
+gravity precedence or gameplay singletons. This does not promise identical frame
+numbers for nondeterministic disk completion—report activation events explicitly.
+
+Unload prevents new work on the departing group, runs destroy callbacks while the
+required services remain valid, invalidates handles and removes registrations at
+the safe boundary, then releases resources. Destructive script callbacks may queue
+new requests safely. Reuse existing error isolation; do not pretend arbitrary JS
+side effects can be transactionally undone after start has executed.
+
+Failed validation/installation leaves the existing world playable and releases
+staged demand. Define the no-return point clearly. Test cancellation during each
+relevant phase and scene replacement/project close while old work is outstanding.
+Pause may allow background preparation; activation/script scheduling must honour
+the existing pause contract. Show the actual policy in docs and tests.
+
+## 5. Optional streaming policy and bounded residency
+
+Provide both explicit script requests and an optional generic spatial-interest
+policy. Interest sources have authored/runtime positions or bounds, priorities and
+prefetch distances. Do not hardcode the player or equate the camera with gameplay
+interest. Multiple interest sources must coexist.
+
+Use hysteresis between load/retain/unload thresholds, bounded concurrent requests,
+priority and deduplicated demand. Avoid traversing/parsing every scene each frame;
+manifest bounds and an appropriate inexpensive spatial index are sufficient.
+Use 3D bounds/distances, not world-XZ ground assumptions.
+
+Budget pending CPU data, live region content and shared-resource demand. Report
+estimated versus known bytes honestly. Region limits are useful, but not proof of
+memory boundedness when individual regions vary in size. Under pressure, evict
+eligible low-priority content, defer work or report blocked demand. Never evict
+safety-pinned content or discard unique state just to satisfy the counter.
+
+An unloaded region must release real entity/simulation registrations and its asset
+references, not merely hide draw calls. Shared textures/materials/fonts stay alive
+while still referenced. Bounded caches may retain data under a documented budget;
+retained data remains visible in diagnostics, not labelled freed.
+
+## 6. Ownership, travelling entities and session state
+
+Persistent session/root content may remain resident while regions change: player,
+HUD, cameras and game coordinator are ordinary project entities, not engine
+singletons named Player. Expose generic pin/release and ownership-transfer/adoption
+operations sufficient to move a runtime hierarchy between groups safely.
+
+Ownership is distinct from position. A carried crate or travelling agent must not
+vanish because the region where it spawned is released. Preserve runtime identity,
+velocity and script state when rehoming an active entity. Transfer complete owned
+assemblies, or retain external dependencies; do not orphan joints or ragdoll bones.
+
+Retain supports/attachments and required dependency groups while still in use.
+Cross-region joints, ongoing link traversal and liquid connections need a defined
+pin/grouping policy. Do not sever them silently to make unloading convenient.
+Expose pin reasons and lifetime; detect permanently accumulating dependency pins.
+
+Automatic residency eviction is NOT gameplay destruction or round reset. Reuse
+existing supported entity/JS snapshot mechanisms for bounded in-session retention.
+Demonstrate that one changed/destroyed object does not silently respawn on return.
+For state that cannot yet be safely suspended/reconstructed, retain/pin its region
+and report the limitation. Do not implement universal VM/physics/liquid snapshots
+or a new disk-save format just to claim every region is evictable.
+
+Bound retained session records too; pressure must produce backpressure or an
+explicit caller choice, not silent state loss. Report instantiated, cached,
+suspended and pinned quantities separately. A documented explicit discard/reload
+may reset content, but must never be disguised as ordinary automatic streaming.
+Full M43 reload remains the deliberate whole-world reset using its existing rules.
+
+## 7. Compose existing systems without changing their semantics
+
+Make a compact registration/unregistration matrix for current component families.
+State which stream incrementally, which are session-owned and which need grouped
+residency. Inspect actual M58 output; do not invent its interfaces.
+
+PHYSICS / GRAVITY / MOTORS
+Bodies from adjacent regions collide and answer ordinary queries in the same
+PhysicsWorld. Contacts, M42 events, joints and support handles clean up safely.
+A motor retains its support while needed. Region seams must not imply missing
+floors, duplicate overlapping floors or a physics reset.
+Gravity uses normal fields/zones, with stable authored precedence independent of
+load completion order. Flat platforms still require authored uniform regions;
+never derive gravity from the supporting polygon or scene name. Do not let
+unloading an in-use gravity dependency abruptly change an actor's field.
+
+NAVIGATION
+Register/unregister existing M53 surfaces/tiles through the normal service.
+Invalidate affected corridors/links and safely repath or report unavailable
+residency; never follow stale native polygon references. Bind cross-region links
+only when endpoints are active. An agent waiting for unavailable content does not
+teleport or acquire a complete path across absent data. Whole-world route planning
+through unloaded geometry is not required. Navigation remains advisory; scripts
+choose destinations and CharacterMotor resolves movement.
+
+LIQUIDS / ARTICULATIONS
+Preserve M54/M55 quantity ownership and the legacy-fluid guard. Streaming must not
+invoke destruction's parked-parcel behaviour and then reload a second copy of the
+initial water. Keep a connected liquid group resident while transfers, bodies or
+parcels depend on it unless an already-supported lossless suspension path exists.
+Pin/report unsupported suspension. Do not split a live surface into independently
+simulated sectors or redesign fluid coupling. Ragdoll/joint assemblies similarly
+remain complete dependency groups, not independently evicted bones.
+
+RENDERING / AUDIO / TEXT
+Shared M57 materials/environment data and M58 fonts/catalogs keep valid resource
+lifetimes. Region-local lights, emitters, particles and M33 cameras can register and
+leave cleanly. Presentation/interpolation state initializes coherently on activation;
+no startup bind-pose flash or fixed/presented camera mismatch.
+Session environment/exposure, active view, listener, input map and locale have
+explicit ownership/selection. Reject conflicting providers or apply authored
+selection; never let the last I/O completion overwrite global state. Do not build
+M60 audio features. Preserve localized UI and language selection during streaming.
+Per-world module caches remain per-world; document any non-reclaimable cached JS
+state rather than claiming a region unload destroyed the whole module environment.
+
+## 8. JudasJS: requests and useful residency information
+
+Extend the existing scene/world API coherently. Exact naming follows current
+JudasJS; do not build a second scene manager vocabulary without reason.
+
+Expose a small practical surface for:
+- request additive load/preload, activate and unload;
+- inspect region/request status, readiness, stage progress and errors;
+- cancel/release demand without invalidating another consumer's request;
+- enumerate resident regions and identify entity ownership;
+- pin/release dependencies and transfer appropriate entity ownership;
+- configure generic interest sources or explicitly drive residency from JS;
+- receive/poll completion and unloading at safe script boundaries.
+
+Use generation-safe tokens and bounded value snapshots. Distinguish one request's
+cancellation from the shared region's residency. State/readiness reads do not block.
+No Promise/async language-runtime expansion is necessary; existing synchronous
+callbacks can poll or receive queued notifications. Define request coalescing,
+conflicting load/unload ordering and what happens when a requesting script dies.
+
+Scripts own loading UI, travel gates and destination choice. No NativeLevelPortal,
+OpenWorldPlayer, quest-region manager or mandatory global Player reference.
+Update judas.d.ts, inventory/manifest, live enumeration/drift checking, reference,
+landing links and a copyable executed streaming example with every public addition.
+
+## 9. Authoring, export and save compatibility
+
+Provide ordinary editor controls for region source/bounds/dependencies/policy,
+preview of several additive regions, selecting the edit target, and inspection of
+runtime states/pins/budgets. Editing a region writes its source document—not a
+flattened composite scene or runtime data. Play/Stop must restore all authored
+files. Keep the current lightweight single-scene workflow intact.
+
+Use project registration and normal assets. M38 export traverses declared region
+and asset dependencies without instantiating the world or guessing JS control flow.
+Include dynamically requestable registered content, M57 environment/material data,
+M58 fonts/catalogs and existing baked navigation/liquid assets as appropriate.
+Reject missing/incompatible/stale data before replacing a valid export.
+
+Canonical identity depends on authored content and qualified identities, not disk
+paths, load order, resident subset, request progress or profiler measurements.
+Preserve compatible old-scene fingerprints; version new authored formats only when
+necessary and explain it. Do not apply an old single-scene saved delta to a streamed
+composition by coincidence of numeric IDs. Unsupported composed-world disk saves
+must be explicitly rejected/disabled, not partially applied. General save migration
+and comprehensive streamed-state persistence remain M61 work.
+
+## 10. Playable integration: a streamed Spring Range extension
+
+Create a current streaming project/variant reusing Spring Range assets and scripts;
+preserve the accepted original as a non-streamed regression reference. Use a small
+persistent bootstrap plus roughly 5–8 separately authored regions. Only a subset
+should be active; each should have some distinct assets so eviction is measurable.
+Do not preload all content and demonstrate visibility toggles as streaming.
+
+Keep the same first/third-person player, HUD/locale and round state while walking
+through the joined area. Targets and JS-driven navigators still work. Demonstrate
+one navigator crossing an active region boundary, one carried/rehomed prop, and
+returning to previously visited content with the declared state policy intact.
+Use normal authored adjacency/navigation links, not teleported travel between rooms.
+
+Include a small optional liquid region to prove pinning/quantity preservation,
+not another ocean benchmark. A compact separate oblique/radial fixture verifies
+gravity/placement composition and fixed-origin precision without demanding a
+whole-planet navigation or terrain-streaming system.
+
+Make residency visible in a localized diagnostic panel: pending/prepared/active/
+unloading, pinned reasons, approximate bytes and integration work. Provide manual
+load/unload controls alongside the spatial policy for operator diagnosis.
+
+Delayed loads need an honest safe outcome. Readiness can drive a project-scripted
+door/loading boundary or explicit wait UI; the engine must not silently teleport
+actors, create hidden colliders or allow them onto absent collision geometry.
+Show that gameplay continues elsewhere while a real load is held pending.
+
+## 11. Focused correctness proofs
+
+Build focused fixtures while implementing; group related assertions rather than
+inventing a giant combinatorial validation programme.
+
+- Two additive scenes with colliding authored IDs and local references instantiate
+  correctly; real cross-region rigid contact/query proves one simulation world.
+- Repeated load of one region coalesces; unload/reload invalidates old handles.
+- A real worker read/parse is held by a test gate while ordinary frames continue.
+  Releasing the gate uses the actual preparation/installation path, not a fake timer.
+- Cancellation before/after preparation, during staged installation and during
+  world replacement releases demand and discards late completion safely.
+- A malformed/missing dependency leaves the active world intact, without orphaned
+  entities/resources. Cyclic dependencies fail or group according to the contract.
+- Reversing worker completion order does not alter authored gravity/settings
+  precedence. Oblique placement and a huge fixed absolute origin preserve results.
+- Active supports, cross-region joints, links, liquid connections and parcels
+  prevent unsafe unload. Moving a carried hierarchy preserves identity/motion.
+- A changed/destroyed object follows the declared retention policy; bounded cache
+  pressure cannot silently reset it. Clean content genuinely unloads and reloads.
+- Navigation invalidation/rebinding and script cleanup handle missing neighbours.
+  Shared assets survive one consumer unloading and become releasable after the last.
+- Rapid travel/reversal exercises hysteresis, priorities and backpressure; repeated
+  traversals plateau in live regions, jobs and accounted memory after warmup.
+- M58 locale/HUD/capture survives additive changes; M43 full reload/replacement
+  still follows its separate contract. Editor Stop restores authored files exactly.
+- API/types/examples pass. Moved/read-only export loads a non-startup region from
+  an unrelated working directory with no repository fallback.
+
+Deterministic tests may control completion order. Production must remain genuinely
+asynchronous; do not substitute the legacy blocking harness for async evidence.
+
+## 12. M56 performance evidence and human review
+
+Use the integrated profiler. Distinguish I/O/decode, validation, resource upload,
+installation/activation, script startup, unload and shared-resource release. Capture
+main-thread spikes and worker overlap; do not hide install stalls in average FPS.
+
+Compare non-streamed original, equivalent all-resident extension, and streamed
+extension at matched active workload. Include cold/prepared loads, rapid boundary
+reversal and repeated visits. Report median/p95/max frame and integration times,
+worst indivisible operation, fixed-step catch-up, load latency, pending/resident/
+retained bytes and resource counts. Distinguish engine estimates from process RSS.
+Do not kill the operator's other workloads; record contention honestly.
+
+Show a much larger authored region set can retain only a configured working set;
+metadata need not be zero-cost, but unloaded scenes must not be instantiated.
+Inactive single-scene overhead should be small and measured. Use modest fixtures;
+no gigabyte stress assets or procedural universe required.
+
+Human checklist: walk both camera modes through region boundaries; shoot/chase;
+carry a prop across and back; inspect unload/pins and navigation; exercise a delayed
+load; revisit changed content; verify locale/pause/restart; inspect profiler spikes;
+check the liquid retention case; repeat in the moved export.
+
+## 13. Candidate gate and limits
+
+Once candidate-complete: one clean Release build, one production-suite run, actual
+async integration, focused streaming/lifecycle/state tests, API/type/drift/example
+checks, affected navigation/motor/liquid/material/M58 checks, editor multi-region
+Play/Stop and export smoke. Reuse suite results instead of rerunning the same checks
+under multiple labels. Narrow late fixes get affected reruns only.
+
+Do not turn this into FTFT-scale auditing or broad optimization. Do not change
+physics laws, wave solvers, character behaviour or asset quality to hide a streaming
+problem. A structural blocker deserves a measured report, not repeated unrelated
+patches or a fabricated completion claim.
+
+Out of scope: live origin rebasing, multiple simultaneously simulated worlds,
+continuous planet generation, Terrain-ML integration, ocean-cell streaming, terrain
+LOD, render LOD/occlusion work, portals, networking, AI upgrades, M60 acoustics,
+M61 universal saves, arbitrary VM suspension, new scripting runtime or editor rewrite.
+Static authored region streaming is the target, not moving coordinate universes.
+
+## 14. Delivery
+
+Leave the complete candidate uncommitted. Preserve protected FTFT/P1 research,
+historical M33–M58 evidence and accepted simulation/gameplay. Keep the operator's
+roadmap edit exactly as found. Update current architecture/reference documentation
+without rewriting historical results. Preserve genuine failures and follow-ups.
+
+Report concisely:
+- World/region ownership, identity remapping and exact component coverage matrix.
+- Async stages, budgets, atomic activation boundary, cancellation and teardown.
+- Streaming policy, references/pins, travelling entities and session-state limits.
+- Navigation/liquid/graphics/audio/M58 integration and fixed-origin limitations.
+- Editor/manifest/export workflow; public JS API and synchronized documentation.
+- Integration project/controls, human checklist and tests actually executed.
+- Profiler latency/spikes/memory evidence, including blocked/indivisible work.
+- Known limitations, exact changed-file list, final fingerprints and Git status.
+
+Suggested commit after operator approval:
+Add M59 additive scenes and asynchronous world streaming
+
+No commit, push, tag or post-M59 work now. Stop at operator review.
+
+PRIMARY IMPLEMENTATION REFERENCES
+The repository's actual source and pinned versions define Judas behaviour.
+These references explain specific integration hazards, not a mandate to imitate
+another engine or import another streaming framework:
+
+Unity: background preparation is separate from main-thread object integration.
+https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Application-backgroundLoadingPriority.html
+Godot: retrieving unfinished background work can still block the caller.
+https://docs.godotengine.org/en/stable/tutorials/io/background_loading.html
+Detour: tile/polygon reference invalidation and tile registration lifetime.
+https://recastnav.com/group__detour.html
+https://recastnav.com/classdtNavMesh.html
+
+Milestone 59 — Judas learns to move worlds.

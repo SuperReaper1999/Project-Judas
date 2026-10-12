@@ -1,0 +1,26 @@
+{
+  "id": "judas_post_consumer_ragdoll_tests",
+  "source": "tests/PostConsumerRagdollTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_ragdoll_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "d2ed998469e523c5c446f80dc21f8a13501c7da46c446d1b8cfeb3e3155beb5b",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_post_consumer_ragdoll_tests.log",
+  "logSHA256": "6676e9c4b0cef77c115f26075298aded90fd3a8479a57cb0779b0f4a4aad4868",
+  "seconds": 46.5296562959993
+}

@@ -1,0 +1,26 @@
+{
+  "id": "judas_navigation_tests",
+  "source": "tests/NavigationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e40c4f934babeae016c3ae6508bfdabc59e36305bc6bb1a982a680f027e05952",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_navigation_tests.log",
+  "logSHA256": "77b51d776524b622748476d888f9def11bd583b154c2f356fdfc04503108ba59",
+  "seconds": 0.5495659650005109
+}

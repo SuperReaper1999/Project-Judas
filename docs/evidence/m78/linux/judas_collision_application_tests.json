@@ -1,0 +1,29 @@
+{
+  "id": "judas_collision_application_tests",
+  "source": "tests/CollisionApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/collision_lab/collision_lab.judasproj",
+    "probe",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_collision_application_tests"
+  ],
+  "adapter": "ordinary project and inspected application probe mode",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "50fc010c41f68fed9771f6df51a08794f2e6cd7c42a6401912e5581fa09e361f",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 23,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_collision_application_tests.log",
+  "logSHA256": "35d56ce32c2d1d805a54d00af3815a39dd7c92f711a70701aa0fe3850b6f2e6e",
+  "seconds": 5.757710619000136
+}

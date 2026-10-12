@@ -1,0 +1,28 @@
+{
+  "id": "judas_scene_transition_tests",
+  "source": "tests/SceneTransitionTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_transition_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_scene_transition_tests"
+  ],
+  "adapter": "existing argc==3 output path; test assertions unchanged",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "22566cba20998a6a5d7cbf5897bebddb5d1dd4d2f698f2a700533f0c6f24ae7b",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 23,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_scene_transition_tests.log",
+  "logSHA256": "b9c446747024b478171319b5517422f1ead7ff202e54bce1508568fb79cf612f",
+  "seconds": 1.275885005001328
+}

@@ -1,0 +1,6 @@
+{
+  "windowsTransport": "Original large PowerShell metadata expansion guest-exec-status timed out. Empty windows-common-agent.json and windows-common-recovered-agent.json are invalid receipts; compact recovered native results are WINDOWS_COMMON.json. No native crash inferred.",
+  "unbuiltNavigationTool": "Initial mod-region-rebake invoked absent build/judas_navigation_bake; observer failed before producing case receipt. Retained subsequent stale-package/missing-payload failures; navigation-tool-build.log and corrected case follow. No product source changed.",
+  "modFilename": "First invocation used hill-map.judasproj, but builder emits hill_map.judasproj. Both wrong and corrected case receipts retained.",
+  "noticeFixtures": "Owned fake child scripts retained under probes/notice-fixtures; missing control uses an empty PATH directory."
+}

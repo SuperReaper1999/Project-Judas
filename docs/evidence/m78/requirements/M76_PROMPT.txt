@@ -1,0 +1,585 @@
+# M76 - Judas Learns to Be Modded
+## Optional local mods, reusable modding kits, and the M75 terrain workflow
+
+Latest operator-reported accepted main:
+38d345883a541d4eb2faa43c321e940d223fce09
+Add M75 reusable terrain authoring, sculpting, painting and cooking
+
+M75 is committed, pushed and human accepted, including its final UI correction.
+M74 retargeting is committed with human motion/editor review still pending. M67's
+previously deferred review also remains deferred. Native Windows VM execution and
+physical Windows GPU/input acceptance remain different evidence categories.
+
+Implement ONE coherent M76 candidate, then return it UNCOMMITTED for human review.
+Do not commit, push, tag or begin M77 without subsequent operator authorization.
+
+The required end-to-end workflow is:
+GAME OPTS IN -> EXPORT MODDING KIT -> CREATE MOD PROJECT -> AUTHOR / SCULPT / COOK
+-> VALIDATE / PACKAGE -> INSTALL / ENABLE -> PLAY THE UNCHANGED EXPORTED GAME
+
+A developer must be able to ship a moddable Judas game and a curated modding kit.
+Another person must be able to make a new terrain/map, add scripted content, and
+replace explicitly permitted content using that kit and Judas's tools, without
+access to the developer's complete source project or recompiling the game. The
+installed game must consume these packages through its ordinary runtime systems.
+
+Judas supplies packaging, content resolution, validation, tools and lifetime.
+The project decides what content means, how it is discovered by gameplay, and
+which published extension/replacement points it supports. This is not a native
+inventory, weapon, quest, enemy, terrain simulation or game-mode framework.
+
+## 1. Verify the actual tree and reuse the current foundations
+
+Read repository/agent rules and inspect HEAD, branch, remote-tracking state, index
+and unrelated changes. The last report had aligned HEAD/main/origin/main, a clean
+tracked tree and the existing untracked POST_M73_REPORT.txt. Do not reset, discard,
+stash or silently absorb another agent's work. Resolve genuine base/ownership
+conflicts with the operator. Prior candidate wording is not newer than the
+operator's accepted checkpoint.
+
+Inspect the implementation, not just names in documentation. Establish what can
+already supply package IO, stable identities, asset resolution, source freshness,
+project authoring, save compatibility and safe runtime startup. Reuse any suitable
+optional-pack work that actually exists and is authorized; ignored asset_packs/
+content is not permission to modify it or evidence that a pack system is shipped.
+
+Read the relevant current source and guides, resolving actual paths in this tree:
+M75.md; M74.md; ARCHITECTURE.md; EDITOR_GUIDE.md; SCALABILITY.md; WINDOWS.md;
+AssetDatabase/ResourceManager/dependency/export code; M66 import recipes and cooking;
+M67 named authoring; navigation source fingerprints; M61 save application/storage;
+SceneSession/regions; and JudasJS lifecycle, modules, entities, saves and signals.
+
+Record a short existing/reuse/extend/new capability table in docs/M76.md, then
+implement. This is not a separate audit milestone or a full documentation rewrite.
+
+Engineering permission: extend or restructure the necessary generic asset, tooling,
+loader and persistence internals where current mechanisms are insufficient. Do not
+preserve an unsuitable implementation just because it exists. Conversely, do not
+introduce a parallel ResourceManager, script VM, scene constructor or physics world
+merely to label it mod support. Preserve supported contracts, not every old line.
+
+Keep Judas ownership of mod policy, resolution and authoring. Reuse approved
+commodity archive/hash/serialization services where appropriate; do not adopt
+another engine's mod framework or invent a compression algorithm for this task.
+Consult before adding an unapproved dependency or crossing a protected boundary.
+
+## 2. Scope and explicit trust model
+
+Required scope is local, developer-opted-in modding:
+- Versioned .judasmod packages, manifests, dependency checks and deterministic
+  resolution of a user-selected installed set.
+- Additive content and explicit, game-authorized whole-resource replacements.
+- Trusted local JudasJS mods, through existing scripting and callback machinery.
+- Exportable game-specific modding kits and a usable editor/CLI authoring workflow.
+- M75 terrain creation, sculpting, painting, cooking and terrain/map replacement
+  through those tools, not just the ability to copy a cooked mesh into an archive.
+- Local install, inspect, enable/disable, update/remove and useful diagnostics.
+- Standalone runtime integration, save/load compatibility, Linux and Windows.
+
+Modding is OFF by default. An ordinary unmodded project must retain its current
+asset identities, scene behaviour, save semantics and export defaults. It must not
+scan arbitrary Mods directories, execute discovered scripts or allocate an active
+mod subsystem just because M76 exists. Opted-in games with an empty enabled set
+remain usable.
+
+IMPORTANT: CONTENT PERMISSIONS ARE NOT A JAVASCRIPT SECURITY SANDBOX.
+The existing JudasJS runtime treats scripts as trusted project code. M76 must
+preserve its current limits and not claim that a manifest confines a trusted mod's
+runtime behaviour. Permitting a script gives it the ordinary exposed game-world
+capabilities. It may affect entities, state or game policy through those APIs even
+when it cannot replace the base script asset itself. Subscription ownership in
+M73 does not make signal names a security boundary.
+
+The game decides whether executable mod content is permitted at all. A user must
+explicitly enable/trust that executable content before it runs; merely inspecting,
+installing or listing a package must not execute it. A simple visible trust/enable
+step and corresponding explicit CLI option are sufficient. Revalidate trust when
+executable payload changes; an unchanged mod ID/version is not proof of unchanged
+code. Do not run metadata extraction by evaluating an untrusted module first.
+
+Data-only mode must inspect referenced scripts and scripted scenes/prefabs, not
+just reject files ending in .js. A data-only package may instantiate specifically
+published base behaviours through validated properties when game policy allows it;
+that is different from supplying or replacing executable code. Trace indirect
+references so an archive cannot conceal forbidden code in a dependency or alias.
+
+Do not add Node, arbitrary OS commands, native DLL/SO loading, new file/network
+bindings or package install hooks. Do not claim hostile-code containment from
+QuickJS budgets, filename checks or the absence of those bindings. Enforcing
+loader-owned content rules and safe filesystem operations IS required; isolating
+malicious gameplay code is outside this trusted-mod milestone.
+
+## 3. Game-authored mod contract
+
+Add the minimum versioned project/export settings needed for a game's explicit
+mod contract. Use existing appropriate identities and registries when possible;
+do not identify a game by its display name, installation path or executable name.
+Keep game compatibility, tool/content-format compatibility, save identity and mod
+identity conceptually distinct even where existing fields can be reused.
+
+The immutable exported game owns the authority to declare:
+- Modding enabled/disabled, allowed addition types and executable-content policy.
+- Published base asset references available to mod authors.
+- Exact replacement targets or small named replacement groups, with required
+  type/structural contracts and any expected compatible base revision.
+- Named extension points and their bounded contribution descriptors, interpreted
+  by the game's own code rather than native gameplay classes.
+- Game/mod-contract versions and a bounded, documented compatibility rule.
+
+Default-deny unpublished replacement targets. A mod cannot enlarge permissions,
+rewrite the base contract, replace the startup project/executable/save identity,
+or grant itself a capability by modifying its own manifest. Enforce the same
+contract in editor validation, CLI packaging and the shipped runtime; bypassing
+the editor must not bypass the loader's checks.
+
+Whole-asset replacement is sufficient. Do not introduce arbitrary JSON patching,
+script monkey-patching or semantic three-way merges. Types and required interfaces
+must remain compatible: a texture is not a script; a prefab with expected script
+properties must satisfy its declared schema. Reject a protected target even when
+its bytes happen to be visible in the installed game's resources.
+
+A declared dependency grants access to its published exports, not ownership of its
+private files or permission to replace it. Supported registry use must be explicit:
+mods cannot silently renumber base tags, input bindings, collision/render layers,
+nav profiles or other numeric registries. Reusing the kit's published registries
+is sufficient for v1; document/reject unsupported new registry definitions rather
+than expanding every project-setting system.
+
+If two enabled mods replace the same target, reject the ambiguous loadout with
+both owners named. Dependency order or filesystem enumeration alone is not an
+implicit override permission. A separately explicit game-authorized precedence
+rule is optional only if it already fits the architecture; no general conflict
+merge framework is required.
+
+## 4. Package identity, dependencies and bounded IO
+
+Use one versioned .judasmod distribution format. The outer container may reuse a
+supported ordinary archive implementation; its extension does not justify new
+model/texture/terrain serializers. Runtime payloads are existing cooked assets,
+registered scripts, prefabs/scenes and other expressly supported ordinary content.
+
+A manifest records stable mod ID, display metadata, package version, target game
+and contract compatibility, required dependencies/versions, exported content,
+contributions, requested replacements, executable-content declaration, and content
+inventory with sizes/hashes. Include author/license/attribution metadata and retain
+required notices. Identity and declared compatibility are not proof of authorship
+or a digital signature; no signing PKI or license-policing system is required.
+
+Choose a small documented version grammar. Exact versions or straightforward
+bounded comparisons are enough; reject unknown syntax. Resolve only installed,
+explicitly selected versions. No downloading, online resolver or SAT-based version
+negotiation. Duplicate selected IDs, missing required dependencies, cycles,
+incompatible formats/game contracts and invalid references fail preflight.
+
+Build a stable dependency order with a documented stable-ID tie-break for unrelated
+mods. Do not depend on directory order, timestamps, machine paths or hash-map
+iteration. Save the actual selected/resolved order for inspection and compatibility.
+An invalid requested loadout is not permission to silently drop a mod or launch a
+partially modded save. Offer explicit correction or a separate no-mod launch.
+
+Validate manifests and archive directories before allocation/publication. Set and
+test finite caps for mods, dependency edges, metadata depth/counts, file count,
+path length, per-file and total decoded bytes, extraction work and cache storage.
+Check integer overflow and actual decoded output, not just declared sizes. Normal
+M75 terrain products and their texture/navigation dependencies must fit a useful
+v1 envelope. State the limits instead of designing only for the tiny lab.
+
+Reject paths that can escape the package or collide after platform normalization:
+absolute/drive/UNC paths, traversal through either separator, embedded NUL, Windows
+alternate streams/reserved names/trailing-dot-space aliases, and duplicate or
+case/Unicode-normalization-colliding entries. Define the portable path policy.
+Preserve legitimate Unicode paths; do not turn all Unicode into a false error.
+Reject archive symlinks/hardlinks and non-regular payloads unless an existing safe
+policy already covers them. Never extract through an existing filesystem link into
+base content or another directory. No shell interpolation for package paths.
+
+Treat package corruption, truncated/oversized data, hash mismatches and unsupported
+versions as actionable errors. Hashes establish integrity/content identity, not that
+a downloaded script is trustworthy. Metadata inspection and rejected installation
+must not create or execute content outside designated staging/storage.
+
+Installation stages and validates the complete candidate before making it available.
+Failed or cancelled operations retain the last good installed version and do not
+modify the base game. Document actual crash/durability guarantees; do not describe
+per-file rollback as filesystem-wide crash atomicity. Reuse existing publishers.
+
+## 5. One effective content view, stable references
+
+Compose a validated, immutable session content view from the base package plus the
+selected mods. ResourceManager, script loading, scene/prefab construction, rendering,
+physics, navigation and streaming must all resolve against that same view. Base
+installation bytes remain unchanged. A private derived index/cache is acceptable;
+physically overwriting Assets/ or weakening base integrity validation is not.
+
+Freeze the effective package versions/bytes for the played session. Updating a
+package on disk must not give an existing world half old and half new resources.
+Use versioned retained storage or another demonstrated immutable snapshot policy.
+Caches key content and relevant resolution identity, not a filename alone. Late
+resource jobs cannot publish a different loadout's data into the current world.
+
+Define namespace and reference rules before implementing remapping. Independent
+mods can use the same relative filename or copied source-local identifier without
+silently overwriting each other. Use qualified ownership and a stable validated
+mapping to existing runtime AssetIds, or another compatible scheme. Check real
+collisions explicitly; random regeneration on each load or dependency-order-based
+IDs must not invalidate saves or cross-mod references.
+
+Keep base AssetIds unchanged. Additive IDs never become replacements just because
+they collide. Explicit replacements select a new effective provider for the allowed
+logical target, preserving a consistent interpretation for all consumers. Referenced
+replacement dependencies must resolve in their provider's context, not accidentally
+bind a same-named base texture or another mod's script.
+
+Apply established scene/prefab/region entity remapping and safe handle generations.
+Entity identity is not asset identity. Maintain correct sockets, typed entity
+properties, script slots, navigation/region references and restore references.
+Do not globally search/replace decimal IDs in JSON or arbitrary JavaScript strings.
+
+Provide a minimal supported way for gameplay and mod scripts to obtain published
+contributions/references. Prefer validated descriptors and existing authored
+properties where sufficient; add a small generic lookup/catalog API if necessary.
+Names below are concepts, not an invented required signature: active mods, published
+contributions, safe resolution of a declared exported asset or map. Return detached
+bounded data, never filesystem paths/native handles or mutable loader internals.
+Game JS chooses whether to list a map, instantiate a prefab or register an item.
+
+Retain the ordinary virtual 'judas' module and module registration rules. Relative
+imports must resolve from the owning registered module and stay within the allowed
+package/dependency content. A package must not shadow the engine module, reach an
+arbitrary host path with ../, or acquire private dependency modules by basename.
+Do not promise to rewrite script-literal AssetIds. Use explicit exported references,
+a qualified resolver or documented construction properties for relocatable content.
+
+Executable contributions enter through ordinary authored script slots/approved
+bootstrap entities and existing start/restore/fixed/UI lifecycles, not raw code run
+during directory discovery. No new gameplay callback phase, VM per mod, hot module
+reload or unowned global initialization convention. M73 signals can communicate
+between trusted scripts; no automatic broadcast of every engine event is introduced.
+
+Preflight before activating scripts or replacing a live world. Document which
+structural/reference/cook checks are eager and which existing resource decodes are
+asynchronous. A later script exception follows existing slot-fault rules; do not
+claim arbitrary gameplay side effects can be rolled back by uninstalling a mod.
+Errors must retain mod/asset/phase attribution so the user can identify the owner.
+
+## 6. Usable install and selection workflow
+
+Provide inspect, install, list, enable/disable, update/remove and validate operations
+through a small editor/tool workflow and matching CLI. Users must be able to use
+installed mods with the standalone game, not only by opening its source in Judas.
+A compact prelaunch selector/launcher or another discoverable non-code workflow is
+enough; no polished online browser is required.
+
+Use a game-specific writable user-data location through current platform services.
+Read-only installation directories must work. Optional adjacent Mods/ discovery can
+be supported, but must not be the only path or grant arbitrary write locations.
+Do not install mods in Saves/ or require administrator rights. Installed payloads,
+selected loadout, temporary staging/cache and save slots have distinct ownership.
+
+Changes take effect at the next fresh played session or process launch. Requiring a
+restart is acceptable and must be visible. Do not hot-mount/unmount active resources
+or scripts. Uninstalling an in-use version must be deferred/refused, not invalidate
+live file reads. Dependents receive useful diagnostics. Removal deletes only the
+selected mod's owned installed/cache data; it never removes base/shared assets,
+another mod, authoring work or save slots.
+
+A failed update keeps the working version. Do not overwrite locally edited mod
+source: editable authoring projects are distinct from installed immutable packages.
+Expose diagnostics for enabled versus installed, compatibility, dependency order,
+replacements and the resolved active signature. Add an explicit no-mod launch path
+that leaves files and existing loadout settings intact.
+
+## 7. Export a real modding kit, not the whole game source
+
+Developers export a game-specific kit from their ordinary Judas project. Include
+only deliberately published interfaces, required registries/settings, reference
+catalogs, template mod project, examples, permitted editable source and notices.
+Include matching offline guidance and JudasJS declarations. Show an inclusion report
+with why each item is present. Fail on missing required dependencies rather than
+quietly copying the entire repository or stripping validation.
+
+The kit may use the normal matching Judas Editor/tool SDK, distributed alongside
+it or supplied as an explicit versioned prerequisite. A second editor implementation
+or giant self-installing SDK is not required. The author must not need engine source,
+the original private game project, or to compile C++ to make a mod.
+
+Published cooked base resources can be referenced read-only from the installed game
+or curated kit data. Private game scripts/raw art/Blender sources are not required
+unless the developer deliberately publishes them. Do not promise DRM or secrecy for
+resources already shipped to players. Base contract and reference data must not
+become writable game installation files while editing a mod.
+
+The new/open mod-project workflow binds to the kit identity and makes ownership
+visible: base references versus writable mod content; export versus replacement;
+source versus cook product. Preview can use a declared kit preview scene or the
+installed game's content, using the same effective resolver. A preview harness is
+not proof of behaviour inside the actual shipped game; test that separately.
+
+Profile/manifest edits use suitable draft validation and normal Undo/Redo/cancel.
+Save and package/publication are separate explicit actions. Preserve dirty-state,
+external-change and last-good output protection. The editor and CLI call the same
+services, not independent implementations with different permission checks.
+
+## 8. Terrain tools are a REQUIRED mod-author workflow
+
+Reuse the actual M75 TerrainAuthoring/TerrainDraft/CreateTerrain/ForkTerrain/
+CookTerrain services and viewport tools. Do not rebuild brushes in a mod editor,
+require an external terrain application or claim that packaging a prebuilt mesh
+satisfies this requirement.
+
+A mod author must be able to:
+1. Open a kit-bound mod project without the original game source.
+2. Create a new .judasterrain, or fork a terrain source deliberately provided by
+   the kit, with new writable source/product identities.
+3. Raise/lower, flatten, smooth and paint through the real editor; Undo/Redo,
+   save/reopen, cook and place it in an ordinary map/prefab.
+4. Bake relevant navigation against the intended effective collision geometry.
+5. Validate/export a .judasmod, install it and use it in the untouched shipped game.
+
+Keep editable terrain and other source artifacts in the authoring project or an
+explicit developer kit/source deliverable. Runtime mods need ordinary cooked model,
+texture, collision and navigation assets, not brush services or raw terrain source.
+Packaging checks freshness/provenance before export; runtime requires verified
+cooked payloads, not the developer's receipt paths or unavailable source project.
+Do not bypass M75 freshness checks just because authoring occurs in a mod project.
+
+Terrain replacement is a CONSISTENCY problem, not merely a texture substitution.
+The same composed session must use matching render geometry, collision, declared
+material dependencies and any geometry-dependent navigation bake. Permit replacement
+of an explicit bundle or terrain-bearing prefab/scene where that is the clean
+existing boundary. A mod replaces all required products together, or is rejected;
+never display a new hill over old collision or accept stale navigation underneath.
+The kit must supply the geometry/authoring references needed for permitted rebakes.
+Missing private source is not justification to claim a stale bake is valid.
+
+Weights/tiling-only paint retains M75's geometry behaviour. Changing palette resource
+identities currently has broader freshness effects; preserve/document that existing
+contract rather than claiming all appearance changes are geometry-independent.
+Prove both new-map addition and an allowed replacement of a base landscape. A
+protected landscape remains unreplaceable. Two replacement mods conflict clearly.
+
+Retain M75's finite static open height-patch limits, four base-colour layers, unit
+collision scale, arbitrary rigid orientation and independently authored gravity.
+No caves, automatic seams/LOD, spherical sculpting, terrain runtime brushes, dynamic
+navigation baking or water coupling is added here. Do not change accepted radial
+terrain/fluid behaviour. The mod tools expose supported capabilities honestly.
+
+## 9. Other ordinary content and packaging completeness
+
+Required usable content includes models/textures/materials, audio, prefabs, scenes,
+registered JudasJS and the M75 terrain product set. Ordinary UI/fonts/localization,
+baked animation and other supported registered types should follow the existing
+pipeline where valid; publish an explicit support matrix. Do not claim every engine
+component is moddable because an archive accepts arbitrary bytes. Reject unsupported
+mandatory content/types/features with context.
+
+Reuse M38/M68 dependency discovery and conservative/explicit runtime roots. Do not
+invent complete dependency discovery by scanning JavaScript strings. Modules, UI,
+fonts, runtime-selected assets, region scenes and save/retained-only references need
+the same deliberate completeness guarantees as normal game exports.
+
+Separate imports of published base/dependency content from payloads actually owned
+by the mod. The packer must not accidentally redistribute the entire base game or
+omit a transitive collider/texture/module required by its own content. Validate
+references, stable part/joint bindings and source rights metadata through existing
+services. Preserve authored model/animation identities on compatible cooking.
+
+No host CWD, development environment override, original repository path, Linux-only
+absolute reference or raw authoring library should be needed at runtime. One
+content-only mod should be portable between matching Linux and Windows game builds;
+normal platform runtime libraries belong to the game, not the mod archive.
+
+## 10. Saves, scenes and lifetime
+
+Integrate effective mod content into modern save compatibility. Record enough to
+identify the exact selected mod IDs/versions/content hashes and the resolution/
+replacement contract that affected the world. A user-visible version string alone
+is insufficient: replacing bytes while retaining the same version must be detected.
+Continue normal fingerprinting of the effective required resources.
+
+Strict matching is an acceptable v1 policy. Report missing, disabled, incompatible,
+changed or conflicting mods BEFORE publishing a replacement world. Do not silently
+remove modded entities, substitute base terrain, auto-enable executable packages,
+download dependencies or run script migrations. Offer a way to return to the
+required installed loadout. Existing save files remain untouched after refusal.
+
+Preserve unmodded save behaviour and compatibility when the effective set is empty.
+Old saves without mod metadata represent the original no-mod content context, not
+an invitation to load under arbitrary mods. Keep base save identity stable; document
+how modded slots/loadout metadata are listed without overwriting unrelated saves.
+Any required archive extension/versioning must follow current checked compatibility
+rules, not weaken strict content validation globally.
+
+Same-loadout restore uses ordinary state/session capture and start-versus-restore
+semantics. Reacquire wrappers, preserve normal entity/prefab/region identity and
+rebuild runtime caches. Pending M73 messages/subscriptions remain transient; do not
+serialize VM closures or replay startup registrations as game facts. Region unload,
+retention/revisit and whole-scene replacement retain their existing distinctions.
+
+Free or retain mounted data according to actual world/resource ownership; no stale
+handles, duplicate instances, leaked module namespaces or cross-project contamination
+when Stop/project change or fresh-session loadout replacement occurs. Installation
+and save request transactions must not race world replacement into a partial state.
+
+## 11. Demonstration and acceptance fixtures
+
+Create one small neutral Modding Lab and export its curated kit. Keep Lastlight and
+Claude's consumer game unchanged; integration into those games is a later consumer
+choice, not a prerequisite or shortcut. Use original/permitted compact assets.
+
+The base game has a protected element, one permitted landscape/replacement group,
+a published map/prefab contribution point and simple JS that consumes contributions.
+It remains playable with modding disabled and with no active mods. Native code must
+not recognize lab names or decide what the contribution does in gameplay.
+
+Build at least two genuine independent mods in separate kit-created projects:
+A. A new sculpted/painted terrain map with collision, offline navigation and a small
+   trusted scripted interaction using an ordinary prefab, signal and saved fact.
+B. An allowed replacement landscape/appearance, authored by forking published kit
+   source, with the required matching collision/navigation products.
+Use a compact extra fixture to prove a declared mod dependency/exported reference.
+Exercise equal filenames/local IDs without accidental overrides.
+
+The decisive test uses only the kit, matching tools and installed game. Hide or
+make the original developer project inaccessible for kit-side authoring, validation,
+cooking and packaging. Then hide mod authoring projects for runtime tests. Never
+silently reopen source files from the repository to make the proof pass.
+
+Required negative cases include modding disabled, protected replacement, duplicate
+IDs, conflicting replacements, missing/incompatible/cyclic dependencies, undeclared
+references, forbidden/hidden executable content, tampering/truncation, unsafe paths,
+capacity exhaustion, stale terrain/nav, interrupted update, and changed/missing mod
+on save load. Rejections must preserve the prior package/loadout/world as applicable.
+A discovered script must not run before explicit executable enable/trust.
+
+Exercise editor-produced and CLI-produced packages through actual Application,
+ResourceManager, QuickJS, scene/prefab loading, physics and saves. Do not substitute
+mock loaders, screenshots of manifests or fixtures that directly edit final state.
+A hill must be walkable at its actual edited height; a dropped prop must collide
+there. A navigation user must route on the valid composed bake, not a hidden floor.
+Save a visible mod fact and restore it in a fresh process. Test region revisit and
+ordinary Stop/Play without treating pending signal delivery as durable state.
+
+## 12. Focused verification and performance
+
+Implement the coherent change, then perform one planned affected Release build and
+focused validation pass. Real failures authorize necessary corrections and affected
+reruns. This is not a literal one-attempt rule and not permission to conceal bugs.
+Do not repeatedly run the full production suite or unrelated fluid/physics research.
+
+Plan focused coverage of manifest/package IO, policy/identity/dependency resolution,
+installer transactions, kit export, asset freshness, terrain integration, script
+lifecycle, modern saves and shipped exports. Exercise current API/type/live-VM drift
+checks if public surfaces change; update declarations and inventories truthfully.
+Do not fabricate a new JS API if the implementation needs none.
+
+Include actual editor create/open/Save/Cook/package/preview interactions and normal
+Play/Stop byte preservation. Trace missing published references and type/schema
+errors through the actual runtime, not only author-tool validation. Preserve genuine
+initial failures and corrections with their source/test scope; no synthetic failure
+logs and no false claim that old binaries represent the final candidate.
+
+Measure zero-use and empty-enabled cases, a realistic terrain/script loadout, and
+bounded many-small-assets/dependency stress. Separate discovery/verification/install,
+startup/readiness, resource loading and steady gameplay costs. Record payload/cache
+sizes and admission limits. No steady directory scanning, recooking or repeated
+whole-package hashing should be needed after the active content view is frozen.
+Do not compare unlike workloads as a speedup or promise exact allocator accounting.
+
+Bound parser/routing/extraction work and use existing jobs/publication boundaries.
+A maximum message/file count is not a guarantee on arbitrary trusted script wall
+time. Preserve simulation cadence, content quality and existing resource budgets;
+no physics throttling or silent asset dropping to make a benchmark pass.
+
+## 13. Linux host and native Windows VM
+
+FHS remains on Kubuntu and uses the established Windows 10 VM for native compilation
+and execution. The operator configured it: local Conner admin account, internet,
+no Linux filesystem mount, four vCPUs, 6 GB RAM, fixed 60 GB disk. Use existing
+approved transfer and guest tooling. Do not change VM configuration, privileges,
+mounts, networking or storage, resize its disk, or alter host settings without consent.
+No host sudo. Do not delete the compiler/SDK or unrelated data to gain space.
+
+Serialize heavy host/VM work and use established bounded build parallelism. Collect
+native MSVC results, transferred final-source hashes and actually refreshed binaries.
+If VM setup becomes unavailable, report the specific blocked check rather than
+substituting Linux/Wine or fabricating Windows validation.
+
+On both platforms, test kit-based authoring/cook/package, dependency/policy rejection,
+normal install/enable/disable, editor Play/Stop, fresh-process restore and moved
+standalone execution. Test spaces and ordinary Unicode in paths, unrelated CWD and
+read-only base content with writable per-game user data. Use a safe short test root
+for the already documented Windows long-path limitation; do not enable global
+long-path policy or claim to have fixed it as part of M76.
+
+Prove at least one identical .judasmod payload works in both matching native game
+exports. Explicitly distinguish content portability from native tool binaries.
+VM llvmpipe DLLs stay only in disposable test copies; pristine exports do not acquire
+them. Native Windows VM success does not establish physical GPU/input/audio acceptance.
+No broad zero-warning claim when inherited platform warnings remain.
+
+## 14. Scope protection and repository hygiene
+
+Preserve M75's terrain UI and exact-range BVH correction, collider scale validation,
+M74's baked playback design, M73 signals and all existing supported ownership rules.
+Keep lower-cost auxiliary camera behaviour, arbitrary gravity and fixed-origin
+coordinates; modding does not introduce camera parity, world-up or live rebasing.
+
+Do not alter accepted Lastlight/Skate/Parkour gameplay to demonstrate this feature.
+Protected FTFT/P1/accepted fluid and historical evidence stay unchanged. TripleTake,
+Terrain-ML, local Kate tooling, original low-poly backups, ignored video_work/,
+locally excluded asset_packs/ and untracked POST_M73_REPORT.txt remain separate.
+Do not stage ignored assets or clean another agent's workspace.
+
+Use compact source/tests under normal repo conventions, a normal modding-lab project
+and docs/evidence/m76/. Builds, installed test mods, kit-export copies, temporary
+archives and captures go in appropriate ignored work folders. Keep only proportionate
+fixtures/evidence needed to reproduce claims. Do not duplicate entire game/SDK trees
+inside tracked fixtures. Reuse existing low-level pack code if appropriate, but do
+not convert or publish the user's free asset library as an additional deliverable.
+
+Excluded: Workshop/online stores/accounts/downloads, native executable plugins,
+multiplayer mod synchronization, adversarial JS isolation, live hot reload, code
+signing infrastructure, automatic save migrations, arbitrary content merge tools,
+runtime terrain editing, volumetric worlds and a separate mod-editor application.
+Genuine generic blocking defects may receive narrow demonstrated fixes. A conflict
+with protected work or a substantial scope expansion requires operator consultation.
+
+## 15. Documentation and final handoff
+
+Update current architecture/editor/export/modding guidance and any actual public API
+changes. Supply copyable game opt-in/export settings, a real mod manifest, kit export,
+new/fork terrain authoring, CLI packaging/install/loadout examples and troubleshooting.
+Document what is shipped in kits versus runtime mods, declared limits, identity and
+resolution rules, script trust, save compatibility and each platform's actual scope.
+No guessed signatures or examples that only work inside the test harness.
+
+Return one combined UNCOMMITTED candidate with:
+- Implementation/ownership summary and support/permission matrix.
+- Base lab, exported game, curated kit, separate example mod projects and their
+  installable packages; exact runnable paths and commands.
+- Evidence for authoring with original source unavailable, then runtime with all
+  authoring source unavailable, including Linux/Windows package portability.
+- Focused results, failures/corrections, timings, size/budget limits and open issues.
+- Exact changed-file list and final source/tool/document/fixture fingerprints;
+  identify what those hashes exclude rather than claiming they cover everything.
+- Git base/index/worktree status, proposed commit message and one human checklist.
+
+Suggested commit after explicit approval:
+Add M76 local mod packages, game-owned contracts and terrain-capable modding kits
+
+Human checklist should cover: export/open a kit; create/fork/sculpt/paint a terrain
+mod; Save/Cook/bake navigation/package; install/enable in a moved base game; see
+render/collision and scripted contribution; apply a permitted replacement; inspect
+a denied replacement/conflict; save/restart/load; disable the required mod and see
+safe refusal; no-mod launch; editor Stop/Play and independent mod projects.
+
+Record M76 as candidate with human review pending until the operator says otherwise.
+M74's deferred human review is neither completed by this work nor a blocker on the
+operator-authorized M76. Physical Windows acceptance retains its own status.
+
+Final sanity check: Is Judas still a game engine?
+Judas resolves permitted content and supplies reusable authoring/runtime machinery.
+Developers publish a game's extension contract. Mod authors sculpt maps and provide
+content. Game JavaScript decides what those additions do. No game is required to
+support mods, and no mod needs its own engine hidden inside the archive.

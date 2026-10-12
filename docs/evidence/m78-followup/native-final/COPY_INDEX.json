@@ -1,0 +1,367 @@
+{
+  "scope": "New corrective native text receipts only; original audit and binary archives preserved separately",
+  "files": [
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-all-build-intermediates.json",
+      "bytes": 43392,
+      "sha256": "ccf003659299713c9d642ad2d30b2f21b81c646160f0072d4f3a889818c738fa"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-candidate-build-failure.log",
+      "bytes": 397,
+      "sha256": "85c92a64b71cd2c197501756ceb652146f92ac9ba3e380265abbbe329f576586"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-candidate-native-tests.json",
+      "bytes": 5820,
+      "sha256": "0c670f12f9cdcc1b8df2ff6c0159b28ef39f87bae391fbe671c5f5390547084d"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-candidate-retry-build.json",
+      "bytes": 8844,
+      "sha256": "7b22e3b817ba80dad270d5c4042a6eb4cb16006e989dccad94774d9f47b45f55"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-candidate-retry-build.log",
+      "bytes": 99936,
+      "sha256": "805a7735d3d3652629b547f32607b0fb0002ded4dc1d680c13425bae95a9248d"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-candidate-retry-configure.log",
+      "bytes": 3732,
+      "sha256": "7b1932ceba32e8879df89ee92737ad8625bc8b4f298b52118a25e528c7ef8b28"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-compiler-intermediate-cleanup.json",
+      "bytes": 25178,
+      "sha256": "a9b226c7d3298fbc02322c67b7870e80da52663487df4eaeaf50e5c5ced39bb8"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-config-scratch-bounded.json",
+      "bytes": 497290,
+      "sha256": "d6d2aff5b79946c75a88fee362a60ca8352cd685861e1b881bc94d2a9858cc67"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-config-scratch-cleanup.json",
+      "bytes": 125,
+      "sha256": "3af8230aca03e889ea1fdd06f6234d69b7abdffc731609f628a95caf39a86cfd"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-download-cleanup.json",
+      "bytes": 344,
+      "sha256": "61a9167ad4d4422978102441eafacb151343ab61f580ab5dab30474f1b51fab8"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-download-inventory.json",
+      "bytes": 901,
+      "sha256": "e646f039e2f49e143ae6e5c5cbdcb3b1ce2f1d72dc7b1faaf07b5afbd585b982"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-engine-intermediates.json",
+      "bytes": 24209,
+      "sha256": "d7fbad2f7686be74fd607dfa937a0d7b785151dfb37776085d02b50e4c46bd60"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-final-source-check.json",
+      "bytes": 4463,
+      "sha256": "0c21a91906de6d3675061a34eec03c9d4108313e45985755b819f36daa77e1e9"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-build-progress.json",
+      "bytes": 469,
+      "sha256": "4e972a8048f2ad3aac9542c716084029e98d887d0bedf201930684e2ccd19c1a"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-harness-rerun.json",
+      "bytes": 1223,
+      "sha256": "ca7dc824ea8d1cd066e50d66584eed8691b55b0091a6529c57dab3a88e9ce29a"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-harness-stage.json",
+      "bytes": 577,
+      "sha256": "116f93778de062100b5c7f1a071f9ea64348e3fe3780e05f2c6e9448f7005618"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-navigation-negatives-build.log",
+      "bytes": 310,
+      "sha256": "c086d3c8c705bfb24a04561a5246615e88a2477caee5f75bb7a09ea56e96e10f"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-navigation-negatives.json",
+      "bytes": 242,
+      "sha256": "9711241cf3a589073ec1894cfbbeaf367d8b7e31a708c11309fec710ccdd153b"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-spacecraft-contracts.json",
+      "bytes": 746,
+      "sha256": "a7a32c1a3fd87d5df0badc50e4626ecce523b01dcefa08018ef1fc917365ac1d"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-spacecraft-error.txt",
+      "bytes": 208,
+      "sha256": "0098c2d45d3d1c95e96d89934978d23a5435e54ce40b8d9c3b958057d82a2a99"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-spacecraft_control-build.log",
+      "bytes": 19378,
+      "sha256": "bda07f404403d836fac1b845dd344d4a9e23d027e4f598296c0f06cf47ef1eb3"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native-test-launch-status.json",
+      "bytes": 63,
+      "sha256": "ee00ca87ab5bbd36b871a81fb5fa88be569ab8edc1a958a3f94ab79d0252a59b"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native2-spacecraft_control-build.log",
+      "bytes": 232,
+      "sha256": "1add14acac3a42dbb09704e5e492964dcc88752701bac1295a780c77b0cfe7b4"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-native2-spacecraft_flight-build.log",
+      "bytes": 19384,
+      "sha256": "08c35e69cc59a5a8738a6d0271c90d115fb5d1d60eff40b8f3714d481da6c7e5"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-portable-collision-build.log",
+      "bytes": 292,
+      "sha256": "71c08d4a3d54e2377be3156bb1b7f8189f5936993e69951e476a86eff1a1fe6e"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-postbuild-headroom.json",
+      "bytes": 8926,
+      "sha256": "f147c6e485f546396ca4e2f896d0a79472fd42ca09cdf16c4a4ebe877ac3d309"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-space-diagnosis.json",
+      "bytes": 6796,
+      "sha256": "c4f06802e47f19b1a133b420ecb18f3de966a8d9a788b76b3ea5d3e3ef919875"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/m78-streaming-fixture-presence.json",
+      "bytes": 241,
+      "sha256": "63fd2306a3600b1d4faa3da699612b43a78fafeea65cd1ba71cd25bd6885fd6a"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-character_motor.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-character_motor.stdout.log",
+      "bytes": 1908,
+      "sha256": "5fecde969b1644c3eb8b0ba4fb4c01dfdf4fcf6601769b8a56f1f2938ad03b99"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-collision_geometry.stderr.log",
+      "bytes": 22,
+      "sha256": "c60019d86be3767b366740f57fca5aa8e4fe9970c04e9b05d18018589e94af30"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-collision_geometry.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-graphics.json",
+      "bytes": 433,
+      "sha256": "e76c00f65804c627dc34e8b814a8c6f2104bd8066518db8034eb243a801d4947"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-joint.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-joint.stdout.log",
+      "bytes": 1468,
+      "sha256": "8a2911c8af5c85f7212f2e0128ad0676fa96e1c03865b54af2e21c9008a14c52"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-navigation_dependency.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-navigation_dependency.stdout.log",
+      "bytes": 1378,
+      "sha256": "c54c71dca80668295abdd6b6bae48538dcb69ed721bbd9032b70326b4c1cb7cb"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-physical_animation.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-physical_animation.stdout.log",
+      "bytes": 7519,
+      "sha256": "cb1f02420b4336f33568a4ecd5fb84b770bd283fbe8561db6be0c98231e079ef"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-physical_balance_controller.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-physical_balance_controller.stdout.log",
+      "bytes": 1698,
+      "sha256": "6a6c36a4e2bb751c7d5b00136aecc6bff3cd778c3a47e3c65373e50a5d70ab3a"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-physical_balance_foundation.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-physical_balance_foundation.stdout.log",
+      "bytes": 1946,
+      "sha256": "d380fba36637be069184ac3d56e4fd61ce9f93cf3225dc0ebe4170bf07e50a54"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-prefab.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-prefab.stdout.log",
+      "bytes": 1957,
+      "sha256": "e5e11db9b793528b7caaba6e59a85e05f77e0724644732545e6627f0438696a6"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-rigid_motion.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-rigid_motion.stdout.log",
+      "bytes": 84,
+      "sha256": "b6e52f1239548f4f87938231096bddd97462d6113d2b2a97d709961581ddf114"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-streaming.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-streaming.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-test-summary-corrected.json",
+      "bytes": 1064,
+      "sha256": "046081b1764d9c1b65ae6d3dfca16205b77e1377e416964b778f62f86bb3370b"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native-test-summary.json",
+      "bytes": 944,
+      "sha256": "eeb8b7e9d29f1a690c1d266f1a4191adef40b838a6c14195ffc0cb4972ef7a8f"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-collision_geometry.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-collision_geometry.stdout.log",
+      "bytes": 2555,
+      "sha256": "356081efb579e9d857b14ed93a606406f54bacd0844f00e12c7a354bc8b91251"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-scalability.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-scalability.stdout.log",
+      "bytes": 5875,
+      "sha256": "01fed677a6b2e328a5cbbc9a6f4e584fb2d336dfaa7327748bcac73dcf008bc6"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-spacecraft_control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-spacecraft_control.stdout.log",
+      "bytes": 4144,
+      "sha256": "9ab3cf76442a859d7aebf7d0aa7bc5bb48cf1bef6303ac2c782d00ab7f6b03a8"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-spacecraft_flight.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-spacecraft_flight.stdout.log",
+      "bytes": 2214,
+      "sha256": "74008e3cf8e075989efb46bec33e7c1dd1a8dca95d42b3ed6ec2791ba2a724fb"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-streaming.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native2-streaming.stdout.log",
+      "bytes": 4312,
+      "sha256": "fb74382baa65bb4f2f459ae35f3838aae1c03f12809a9f150d355b81bd3c3c47"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native3-navigation_dependency.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-followup/native-final/native3-navigation_dependency.stdout.log",
+      "bytes": 1796,
+      "sha256": "2b1a3cd857cf7b45f2c24fa093e31f95740fdaebbe1d7b84179a16d94a4222d6"
+    }
+  ],
+  "excludedBinaryDuplicates": [
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-2.part",
+      "sha256": "17ac8ccab7bc8d22c0389174c924d2dc3373241c21e9e403aec1764b4e73ed12",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-7.part",
+      "sha256": "9f003e41b7da90990e95f52cf96e3662a7d3bcdf90381909305ef777dda2839d",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-0.part",
+      "sha256": "e7ec73ebe2080e3b355258b22d75a112fffd828963e30361c5e7c223c6fae746",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-3.part",
+      "sha256": "1060bd9c5cef509927e18155d770269bdbb33a67cac6a52d76f77481cd8b223e",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-6.part",
+      "sha256": "dc89c4495ca285ef519529e2988807a4545ed66cd67fb3e1aa63d5f1336e1a87",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-8.part",
+      "sha256": "fcb98a2d57f144fc9c69d9f01c0119150259604de424e94b162ed76bfdb44ded",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-5.part",
+      "sha256": "db76c014c9910bb15e77d278844e369bda2619d10244ff54532a5d858adb2263",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-1.part",
+      "sha256": "3df2195f69a9d8e46b4319327c96111c1b10de8bb3ca08ec6fdefc86a23e5841",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    },
+    {
+      "path": ".cache/windows-vm-transfer/reports/m78-old-test-4.part",
+      "sha256": "7b0ed0ba140a5228259ed31da2ff281cc321a241297466345b8ecf1a663b9a9e",
+      "reason": "Redundant binary archive chunk excluded from documentation; original and verified assembled archive remain in owned cache"
+    }
+  ]
+}

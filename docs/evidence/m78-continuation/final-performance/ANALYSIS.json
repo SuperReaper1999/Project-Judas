@@ -1,0 +1,2117 @@
+{
+  "utc": "2026-10-11T18:51:18.145174+00:00",
+  "scope": "Read-only analysis of the root completed combined implicit-midpoint benchmark; no simulation/build",
+  "cases": {
+    "box-1": {
+      "rootRunExactSummary": {
+        "case": "box-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 0,
+        "medianMs": 0.150699,
+        "p95Ms": 0.249508,
+        "maxMs": 2.761254,
+        "first120MaxMs": 2.761254,
+        "contactRows": 13801,
+        "ccdIterations": 997,
+        "ccdLimits": 1,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 13
+      },
+      "originalCSV": {
+        "medianMsCSV": 0.154795,
+        "p95MsCSV": 0.234744,
+        "maxMsCSV": 4.31234,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 0.14452788555555557,
+              "contacts": 11.488888888888889,
+              "ccd_queries": 1.3366666666666667,
+              "ccd_iterations": 1.758888888888889,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 236.78555555555556,
+              "broadphase_ms": 0.006914786666666666,
+              "narrowphase_ms": 0.043957626666666666,
+              "solver_ms": 0.06300271888888889,
+              "sleeping": 3.9433333333333334
+            },
+            "solverShareOfSummedWall": 0.4359208511679987
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 0.6100297608695652,
+              "contacts": 10.695652173913043,
+              "ccd_queries": 12.434782608695652,
+              "ccd_iterations": 20.369565217391305,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 1298.2826086956522,
+              "broadphase_ms": 0.009875239130434782,
+              "narrowphase_ms": 0.0769205,
+              "solver_ms": 0.4789435652173913,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.7851150811637165
+          },
+          "over16_67Ms": {
+            "steps": 0
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 0.30202076666666666,
+              "contacts": 7.225,
+              "ccd_queries": 5.783333333333333,
+              "ccd_iterations": 8.95,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 599.5666666666667,
+              "broadphase_ms": 0.008718558333333333,
+              "narrowphase_ms": 0.044571316666666666,
+              "solver_ms": 0.21282325833333332,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.7046643205439627
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.04708298,
+              "contacts": 1.7733333333333334,
+              "ccd_queries": 0.09333333333333334,
+              "ccd_iterations": 0.09333333333333334,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 25.666666666666668,
+              "broadphase_ms": 0.00362168,
+              "narrowphase_ms": 0.007257113333333333,
+              "solver_ms": 0.010131586666666666,
+              "sleeping": 11.83
+            },
+            "solverShareOfSummedWall": 0.21518575643824303
+          }
+        },
+        "top10": [
+          {
+            "step": 74.0,
+            "wall_ms": 4.31234,
+            "contacts": 3.0,
+            "ccd_queries": 93.0,
+            "ccd_iterations": 221.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 12320.0,
+            "broadphase_ms": 0.010246,
+            "narrowphase_ms": 0.075546,
+            "solver_ms": 4.15863,
+            "sleeping": 0.0
+          },
+          {
+            "step": 73.0,
+            "wall_ms": 2.60259,
+            "contacts": 4.0,
+            "ccd_queries": 56.0,
+            "ccd_iterations": 132.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 6843.0,
+            "broadphase_ms": 0.010247,
+            "narrowphase_ms": 0.091449,
+            "solver_ms": 2.44457,
+            "sleeping": 0.0
+          },
+          {
+            "step": 72.0,
+            "wall_ms": 1.7177,
+            "contacts": 3.0,
+            "ccd_queries": 45.0,
+            "ccd_iterations": 81.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 4202.0,
+            "broadphase_ms": 0.012702,
+            "narrowphase_ms": 0.096399,
+            "solver_ms": 1.55066,
+            "sleeping": 0.0
+          },
+          {
+            "step": 75.0,
+            "wall_ms": 1.49248,
+            "contacts": 9.0,
+            "ccd_queries": 34.0,
+            "ccd_iterations": 60.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 3646.0,
+            "broadphase_ms": 0.009907,
+            "narrowphase_ms": 0.07675,
+            "solver_ms": 1.36797,
+            "sleeping": 0.0
+          },
+          {
+            "step": 79.0,
+            "wall_ms": 1.21978,
+            "contacts": 13.0,
+            "ccd_queries": 27.0,
+            "ccd_iterations": 33.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2846.0,
+            "broadphase_ms": 0.009213,
+            "narrowphase_ms": 0.083251,
+            "solver_ms": 1.07303,
+            "sleeping": 0.0
+          },
+          {
+            "step": 91.0,
+            "wall_ms": 0.889123,
+            "contacts": 14.0,
+            "ccd_queries": 15.0,
+            "ccd_iterations": 26.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2354.0,
+            "broadphase_ms": 0.009663,
+            "narrowphase_ms": 0.080087,
+            "solver_ms": 0.763594,
+            "sleeping": 0.0
+          },
+          {
+            "step": 92.0,
+            "wall_ms": 0.876014,
+            "contacts": 15.0,
+            "ccd_queries": 15.0,
+            "ccd_iterations": 30.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2251.0,
+            "broadphase_ms": 0.009654,
+            "narrowphase_ms": 0.078554,
+            "solver_ms": 0.75175,
+            "sleeping": 0.0
+          },
+          {
+            "step": 66.0,
+            "wall_ms": 0.840673,
+            "contacts": 6.0,
+            "ccd_queries": 22.0,
+            "ccd_iterations": 33.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 1839.0,
+            "broadphase_ms": 0.010811,
+            "narrowphase_ms": 0.060422,
+            "solver_ms": 0.729916,
+            "sleeping": 0.0
+          },
+          {
+            "step": 59.0,
+            "wall_ms": 0.695943,
+            "contacts": 0.0,
+            "ccd_queries": 22.0,
+            "ccd_iterations": 22.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 1415.0,
+            "broadphase_ms": 0.009911,
+            "narrowphase_ms": 0.042362,
+            "solver_ms": 0.603402,
+            "sleeping": 0.0
+          },
+          {
+            "step": 71.0,
+            "wall_ms": 0.681107,
+            "contacts": 8.0,
+            "ccd_queries": 12.0,
+            "ccd_iterations": 18.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 981.0,
+            "broadphase_ms": 0.023206,
+            "narrowphase_ms": 0.112123,
+            "solver_ms": 0.466884,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": 0.22305782153876536,
+          "ccd_queries": 0.9568003998245586,
+          "ccd_iterations": 0.9551088379588604,
+          "ccd_limit": null,
+          "sampling_fallback": null,
+          "geometry_predicates": 0.9883108414670991,
+          "broadphase_ms": 0.372933387147214,
+          "narrowphase_ms": 0.39806691137172406,
+          "solver_ms": 0.9819596759720691,
+          "sleeping": -0.35743796576368786
+        }
+      },
+      "finalCSV": {
+        "medianMsCSV": 0.150699,
+        "p95MsCSV": 0.249508,
+        "maxMsCSV": 2.76125,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 0.17259596666666666,
+              "contacts": 15.334444444444445,
+              "ccd_queries": 0.66,
+              "ccd_iterations": 1.1077777777777778,
+              "ccd_limit": 0.0011111111111111111,
+              "sampling_fallback": 0.0011111111111111111,
+              "geometry_predicates": 283.1311111111111,
+              "broadphase_ms": 0.008734988888888889,
+              "narrowphase_ms": 0.05921064777777778,
+              "solver_ms": 0.07232832777777777,
+              "sleeping": 0.8666666666666667
+            },
+            "solverShareOfSummedWall": 0.41906151791753604
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 0.6362644565217391,
+              "contacts": 8.934782608695652,
+              "ccd_queries": 11.08695652173913,
+              "ccd_iterations": 19.434782608695652,
+              "ccd_limit": 0.021739130434782608,
+              "sampling_fallback": 0.021739130434782608,
+              "geometry_predicates": 1162.7391304347825,
+              "broadphase_ms": 0.012776760869565218,
+              "narrowphase_ms": 0.0934449347826087,
+              "solver_ms": 0.4819761304347826,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.7575091229668822
+          },
+          "over16_67Ms": {
+            "steps": 0
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 0.3339795,
+              "contacts": 7.3,
+              "ccd_queries": 4.916666666666667,
+              "ccd_iterations": 8.275,
+              "ccd_limit": 0.008333333333333333,
+              "sampling_fallback": 0.008333333333333333,
+              "geometry_predicates": 542.4666666666667,
+              "broadphase_ms": 0.011463266666666666,
+              "narrowphase_ms": 0.055601125,
+              "solver_ms": 0.22325100833333333,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.6684572206777163
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.13012657,
+              "contacts": 14.46,
+              "ccd_queries": 0.0,
+              "ccd_iterations": 0.0,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 209.67,
+              "broadphase_ms": 0.00759572,
+              "narrowphase_ms": 0.05077296666666667,
+              "solver_ms": 0.04261371333333333,
+              "sleeping": 2.6
+            },
+            "solverShareOfSummedWall": 0.3274789563217822
+          }
+        },
+        "top10": [
+          {
+            "step": 74.0,
+            "wall_ms": 2.76125,
+            "contacts": 8.0,
+            "ccd_queries": 51.0,
+            "ccd_iterations": 182.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 8642.0,
+            "broadphase_ms": 0.00937,
+            "narrowphase_ms": 0.07662,
+            "solver_ms": 2.63997,
+            "sleeping": 0.0
+          },
+          {
+            "step": 81.0,
+            "wall_ms": 2.64072,
+            "contacts": 8.0,
+            "ccd_queries": 35.0,
+            "ccd_iterations": 82.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 4860.0,
+            "broadphase_ms": 0.01294,
+            "narrowphase_ms": 0.195096,
+            "solver_ms": 2.37615,
+            "sleeping": 0.0
+          },
+          {
+            "step": 66.0,
+            "wall_ms": 1.36513,
+            "contacts": 6.0,
+            "ccd_queries": 29.0,
+            "ccd_iterations": 42.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2288.0,
+            "broadphase_ms": 0.011209,
+            "narrowphase_ms": 0.110036,
+            "solver_ms": 1.20233,
+            "sleeping": 0.0
+          },
+          {
+            "step": 59.0,
+            "wall_ms": 1.094,
+            "contacts": 0.0,
+            "ccd_queries": 22.0,
+            "ccd_iterations": 26.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 1262.0,
+            "broadphase_ms": 0.015649,
+            "narrowphase_ms": 0.074355,
+            "solver_ms": 0.950683,
+            "sleeping": 0.0
+          },
+          {
+            "step": 82.0,
+            "wall_ms": 1.06441,
+            "contacts": 15.0,
+            "ccd_queries": 18.0,
+            "ccd_iterations": 39.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2446.0,
+            "broadphase_ms": 0.009754,
+            "narrowphase_ms": 0.091259,
+            "solver_ms": 0.923125,
+            "sleeping": 0.0
+          },
+          {
+            "step": 64.0,
+            "wall_ms": 0.996004,
+            "contacts": 4.0,
+            "ccd_queries": 20.0,
+            "ccd_iterations": 19.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 1295.0,
+            "broadphase_ms": 0.015128,
+            "narrowphase_ms": 0.09606,
+            "solver_ms": 0.828585,
+            "sleeping": 0.0
+          },
+          {
+            "step": 85.0,
+            "wall_ms": 0.886985,
+            "contacts": 10.0,
+            "ccd_queries": 16.0,
+            "ccd_iterations": 31.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2127.0,
+            "broadphase_ms": 0.013028,
+            "narrowphase_ms": 0.076841,
+            "solver_ms": 0.760118,
+            "sleeping": 0.0
+          },
+          {
+            "step": 75.0,
+            "wall_ms": 0.863699,
+            "contacts": 8.0,
+            "ccd_queries": 24.0,
+            "ccd_iterations": 41.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2174.0,
+            "broadphase_ms": 0.009195,
+            "narrowphase_ms": 0.074428,
+            "solver_ms": 0.745103,
+            "sleeping": 0.0
+          },
+          {
+            "step": 72.0,
+            "wall_ms": 0.832121,
+            "contacts": 6.0,
+            "ccd_queries": 23.0,
+            "ccd_iterations": 45.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 2215.0,
+            "broadphase_ms": 0.009193,
+            "narrowphase_ms": 0.071781,
+            "solver_ms": 0.706822,
+            "sleeping": 0.0
+          },
+          {
+            "step": 37.0,
+            "wall_ms": 0.733134,
+            "contacts": 0.0,
+            "ccd_queries": 7.0,
+            "ccd_iterations": 12.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 671.0,
+            "broadphase_ms": 0.013732,
+            "narrowphase_ms": 0.038746,
+            "solver_ms": 0.629699,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": -0.03745336933366654,
+          "ccd_queries": 0.9272161839386072,
+          "ccd_iterations": 0.9031181730550122,
+          "ccd_limit": 0.5342363020408156,
+          "sampling_fallback": 0.5342363020408156,
+          "geometry_predicates": 0.9325785740086155,
+          "broadphase_ms": 0.32214432003051247,
+          "narrowphase_ms": 0.42507693239763256,
+          "solver_ms": 0.9869243059769822,
+          "sleeping": -0.22967193820575757
+        }
+      },
+      "rawInputSHA256": {
+        ".cache/m78-followup/concave-final-data/box-1.csv": "7348e1c6584a9fe4eeef5156a5d1e77997bbf9ce00ec390066f38935655de9b2",
+        ".cache/m78-continuation/midpoint-final-concave-data/box-1.csv": "51c313cc11b73301fe7faef0b3caee7c73775fa669c449dfd352c6e6e3522f4a"
+      },
+      "finalProfile": {
+        "frames": 120,
+        "spikes": 0,
+        "diagnostics": {
+          "dropped_events": 0,
+          "exhausted_labels": 0,
+          "exhausted_nodes": 0,
+          "exhausted_threads": 0,
+          "incomplete_scopes": 0,
+          "open_scopes": 7,
+          "truncated_records": 0,
+          "gpu_dropped": 0,
+          "nested_frames": 0
+        },
+        "limits": {
+          "threads": 32,
+          "labels": 2048,
+          "nodes": 4096,
+          "events_per_lane": 4096,
+          "events_per_frame": 2048,
+          "history_frames": 120,
+          "spikes": 8
+        }
+      }
+    },
+    "box-4": {
+      "rootRunExactSummary": {
+        "case": "box-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 0,
+        "medianMs": 0.620515,
+        "p95Ms": 0.951407,
+        "maxMs": 12.062577,
+        "first120MaxMs": 12.062577,
+        "contactRows": 55204,
+        "ccdIterations": 3988,
+        "ccdLimits": 4,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 52
+      },
+      "originalCSV": {
+        "medianMsCSV": 0.636415,
+        "p95MsCSV": 0.855523,
+        "maxMsCSV": 17.9601,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 0.5923891722222222,
+              "contacts": 45.955555555555556,
+              "ccd_queries": 5.346666666666667,
+              "ccd_iterations": 7.035555555555556,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 947.1422222222222,
+              "broadphase_ms": 0.04096781,
+              "narrowphase_ms": 0.17015938555555554,
+              "solver_ms": 0.24826118111111112,
+              "sleeping": 15.773333333333333
+            },
+            "solverShareOfSummedWall": 0.41908460308248374
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 2.3276240217391306,
+              "contacts": 43.82608695652174,
+              "ccd_queries": 50.869565217391305,
+              "ccd_iterations": 83.56521739130434,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 5293.130434782609,
+              "broadphase_ms": 0.052240434782608695,
+              "narrowphase_ms": 0.28573015217391307,
+              "solver_ms": 1.8377004782608695,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.7895177490425602
+          },
+          "over16_67Ms": {
+            "steps": 1,
+            "mean": {
+              "wall_ms": 17.9601,
+              "contacts": 12.0,
+              "ccd_queries": 372.0,
+              "ccd_iterations": 884.0,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 49280.0,
+              "broadphase_ms": 0.13673,
+              "narrowphase_ms": 0.34661,
+              "solver_ms": 17.3126,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.963947862205667
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 1.1687573666666666,
+              "contacts": 28.9,
+              "ccd_queries": 23.133333333333333,
+              "ccd_iterations": 35.8,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 2398.266666666667,
+              "broadphase_ms": 0.04330281666666667,
+              "narrowphase_ms": 0.17128590833333332,
+              "solver_ms": 0.8193871333333334,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.7010754812782499
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.23915564,
+              "contacts": 7.093333333333334,
+              "ccd_queries": 0.37333333333333335,
+              "ccd_iterations": 0.37333333333333335,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 102.66666666666667,
+              "broadphase_ms": 0.03186795333333333,
+              "narrowphase_ms": 0.029954513333333332,
+              "solver_ms": 0.04560089666666667,
+              "sleeping": 47.32
+            },
+            "solverShareOfSummedWall": 0.1906745609957878
+          }
+        },
+        "top10": [
+          {
+            "step": 74.0,
+            "wall_ms": 17.9601,
+            "contacts": 12.0,
+            "ccd_queries": 372.0,
+            "ccd_iterations": 884.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 49280.0,
+            "broadphase_ms": 0.13673,
+            "narrowphase_ms": 0.34661,
+            "solver_ms": 17.3126,
+            "sleeping": 0.0
+          },
+          {
+            "step": 73.0,
+            "wall_ms": 9.2667,
+            "contacts": 16.0,
+            "ccd_queries": 224.0,
+            "ccd_iterations": 528.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 27372.0,
+            "broadphase_ms": 0.045619,
+            "narrowphase_ms": 0.339391,
+            "solver_ms": 8.73609,
+            "sleeping": 0.0
+          },
+          {
+            "step": 72.0,
+            "wall_ms": 6.58358,
+            "contacts": 12.0,
+            "ccd_queries": 180.0,
+            "ccd_iterations": 324.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 16808.0,
+            "broadphase_ms": 0.067243,
+            "narrowphase_ms": 0.262549,
+            "solver_ms": 6.10405,
+            "sleeping": 0.0
+          },
+          {
+            "step": 75.0,
+            "wall_ms": 5.40451,
+            "contacts": 36.0,
+            "ccd_queries": 136.0,
+            "ccd_iterations": 240.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 14584.0,
+            "broadphase_ms": 0.046948,
+            "narrowphase_ms": 0.313137,
+            "solver_ms": 4.89377,
+            "sleeping": 0.0
+          },
+          {
+            "step": 79.0,
+            "wall_ms": 4.85573,
+            "contacts": 52.0,
+            "ccd_queries": 108.0,
+            "ccd_iterations": 132.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 11384.0,
+            "broadphase_ms": 0.055479,
+            "narrowphase_ms": 0.327873,
+            "solver_ms": 4.33198,
+            "sleeping": 0.0
+          },
+          {
+            "step": 91.0,
+            "wall_ms": 3.6992,
+            "contacts": 56.0,
+            "ccd_queries": 60.0,
+            "ccd_iterations": 104.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 9416.0,
+            "broadphase_ms": 0.045917,
+            "narrowphase_ms": 0.416357,
+            "solver_ms": 3.10556,
+            "sleeping": 0.0
+          },
+          {
+            "step": 92.0,
+            "wall_ms": 3.48197,
+            "contacts": 60.0,
+            "ccd_queries": 60.0,
+            "ccd_iterations": 120.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 9004.0,
+            "broadphase_ms": 0.045392,
+            "narrowphase_ms": 0.306498,
+            "solver_ms": 2.99759,
+            "sleeping": 0.0
+          },
+          {
+            "step": 66.0,
+            "wall_ms": 3.46468,
+            "contacts": 24.0,
+            "ccd_queries": 88.0,
+            "ccd_iterations": 132.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 7356.0,
+            "broadphase_ms": 0.044991,
+            "narrowphase_ms": 0.245038,
+            "solver_ms": 3.03262,
+            "sleeping": 0.0
+          },
+          {
+            "step": 59.0,
+            "wall_ms": 2.6546,
+            "contacts": 0.0,
+            "ccd_queries": 88.0,
+            "ccd_iterations": 88.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 5660.0,
+            "broadphase_ms": 0.043438,
+            "narrowphase_ms": 0.190196,
+            "solver_ms": 2.2799,
+            "sleeping": 0.0
+          },
+          {
+            "step": 57.0,
+            "wall_ms": 2.62589,
+            "contacts": 0.0,
+            "ccd_queries": 80.0,
+            "ccd_iterations": 88.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 4860.0,
+            "broadphase_ms": 0.043013,
+            "narrowphase_ms": 0.160796,
+            "solver_ms": 2.2878,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": 0.21105276141303456,
+          "ccd_queries": 0.9563986552549435,
+          "ccd_iterations": 0.9611739329977038,
+          "ccd_limit": null,
+          "sampling_fallback": null,
+          "geometry_predicates": 0.9937970129157665,
+          "broadphase_ms": 0.4589485924045609,
+          "narrowphase_ms": 0.3847088658760999,
+          "solver_ms": 0.9854962750046224,
+          "sleeping": -0.3335393481121578
+        }
+      },
+      "finalCSV": {
+        "medianMsCSV": 0.620515,
+        "p95MsCSV": 0.951407,
+        "maxMsCSV": 12.0626,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 0.6801652433333333,
+              "contacts": 61.33777777777778,
+              "ccd_queries": 2.64,
+              "ccd_iterations": 4.431111111111111,
+              "ccd_limit": 0.0044444444444444444,
+              "sampling_fallback": 0.0044444444444444444,
+              "geometry_predicates": 1132.5311111111112,
+              "broadphase_ms": 0.04402622,
+              "narrowphase_ms": 0.22690694555555554,
+              "solver_ms": 0.27818144222222224,
+              "sleeping": 3.466666666666667
+            },
+            "solverShareOfSummedWall": 0.40899096939872875
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 2.2408298260869564,
+              "contacts": 43.130434782608695,
+              "ccd_queries": 41.391304347826086,
+              "ccd_iterations": 74.26086956521739,
+              "ccd_limit": 0.08695652173913043,
+              "sampling_fallback": 0.08695652173913043,
+              "geometry_predicates": 4597.434782608696,
+              "broadphase_ms": 0.053949152173913044,
+              "narrowphase_ms": 0.309307152173913,
+              "solver_ms": 1.7176109782608695,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.7665066567148668
+          },
+          "over16_67Ms": {
+            "steps": 0
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 1.1169948666666667,
+              "contacts": 29.2,
+              "ccd_queries": 19.666666666666668,
+              "ccd_iterations": 33.1,
+              "ccd_limit": 0.03333333333333333,
+              "sampling_fallback": 0.03333333333333333,
+              "geometry_predicates": 2169.9166666666665,
+              "broadphase_ms": 0.04101845,
+              "narrowphase_ms": 0.17076488333333334,
+              "solver_ms": 0.7721940333333334,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.6913138604098628
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.57728741,
+              "contacts": 57.84,
+              "ccd_queries": 0.0,
+              "ccd_iterations": 0.0,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 838.68,
+              "broadphase_ms": 0.04518021,
+              "narrowphase_ms": 0.21097005333333332,
+              "solver_ms": 0.18528359,
+              "sleeping": 10.4
+            },
+            "solverShareOfSummedWall": 0.32095553582226916
+          }
+        },
+        "top10": [
+          {
+            "step": 74.0,
+            "wall_ms": 12.0626,
+            "contacts": 32.0,
+            "ccd_queries": 204.0,
+            "ccd_iterations": 728.0,
+            "ccd_limit": 4.0,
+            "sampling_fallback": 4.0,
+            "geometry_predicates": 34568.0,
+            "broadphase_ms": 0.045951,
+            "narrowphase_ms": 0.288185,
+            "solver_ms": 11.5667,
+            "sleeping": 0.0
+          },
+          {
+            "step": 81.0,
+            "wall_ms": 7.69659,
+            "contacts": 32.0,
+            "ccd_queries": 140.0,
+            "ccd_iterations": 328.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 19440.0,
+            "broadphase_ms": 0.044624,
+            "narrowphase_ms": 0.349166,
+            "solver_ms": 7.17562,
+            "sleeping": 0.0
+          },
+          {
+            "step": 82.0,
+            "wall_ms": 4.55658,
+            "contacts": 60.0,
+            "ccd_queries": 72.0,
+            "ccd_iterations": 156.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 9784.0,
+            "broadphase_ms": 0.059281,
+            "narrowphase_ms": 0.338213,
+            "solver_ms": 4.018,
+            "sleeping": 0.0
+          },
+          {
+            "step": 66.0,
+            "wall_ms": 3.88418,
+            "contacts": 24.0,
+            "ccd_queries": 116.0,
+            "ccd_iterations": 168.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 9152.0,
+            "broadphase_ms": 0.045168,
+            "narrowphase_ms": 0.222468,
+            "solver_ms": 3.48617,
+            "sleeping": 0.0
+          },
+          {
+            "step": 75.0,
+            "wall_ms": 3.63394,
+            "contacts": 32.0,
+            "ccd_queries": 96.0,
+            "ccd_iterations": 164.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 8696.0,
+            "broadphase_ms": 0.041775,
+            "narrowphase_ms": 0.284904,
+            "solver_ms": 3.1724,
+            "sleeping": 0.0
+          },
+          {
+            "step": 85.0,
+            "wall_ms": 3.52794,
+            "contacts": 40.0,
+            "ccd_queries": 64.0,
+            "ccd_iterations": 124.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 8508.0,
+            "broadphase_ms": 0.042122,
+            "narrowphase_ms": 0.291749,
+            "solver_ms": 3.06788,
+            "sleeping": 0.0
+          },
+          {
+            "step": 86.0,
+            "wall_ms": 3.41143,
+            "contacts": 60.0,
+            "ccd_queries": 36.0,
+            "ccd_iterations": 84.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 5444.0,
+            "broadphase_ms": 0.043211,
+            "narrowphase_ms": 0.286141,
+            "solver_ms": 2.9521,
+            "sleeping": 0.0
+          },
+          {
+            "step": 72.0,
+            "wall_ms": 3.38912,
+            "contacts": 24.0,
+            "ccd_queries": 92.0,
+            "ccd_iterations": 180.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 8860.0,
+            "broadphase_ms": 0.042628,
+            "narrowphase_ms": 0.270672,
+            "solver_ms": 2.9386,
+            "sleeping": 0.0
+          },
+          {
+            "step": 70.0,
+            "wall_ms": 3.35472,
+            "contacts": 32.0,
+            "ccd_queries": 48.0,
+            "ccd_iterations": 84.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 4264.0,
+            "broadphase_ms": 0.060931,
+            "narrowphase_ms": 0.261664,
+            "solver_ms": 2.78498,
+            "sleeping": 0.0
+          },
+          {
+            "step": 59.0,
+            "wall_ms": 2.795,
+            "contacts": 0.0,
+            "ccd_queries": 88.0,
+            "ccd_iterations": 104.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 5048.0,
+            "broadphase_ms": 0.043938,
+            "narrowphase_ms": 0.140258,
+            "solver_ms": 2.47064,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": 0.04897070230795367,
+          "ccd_queries": 0.8950258537930262,
+          "ccd_iterations": 0.9457007899020003,
+          "ccd_limit": 0.6511544104107476,
+          "sampling_fallback": 0.6511544104107476,
+          "geometry_predicates": 0.9791312700269411,
+          "broadphase_ms": 0.22241894606636073,
+          "narrowphase_ms": 0.3142620466084291,
+          "solver_ms": 0.9857228605024579,
+          "sleeping": -0.22035995631731653
+        }
+      },
+      "rawInputSHA256": {
+        ".cache/m78-followup/concave-final-data/box-4.csv": "c5cc070a7257c5317bd66bedb6876bb2861cd756089c32f6236a149b1e0d0768",
+        ".cache/m78-continuation/midpoint-final-concave-data/box-4.csv": "1906f13204ff35ff5966aa71d5552ff4043a6539905ac5ecd1e3d95e36ce7e08"
+      },
+      "finalProfile": {
+        "frames": 120,
+        "spikes": 0,
+        "diagnostics": {
+          "dropped_events": 0,
+          "exhausted_labels": 0,
+          "exhausted_nodes": 0,
+          "exhausted_threads": 0,
+          "incomplete_scopes": 0,
+          "open_scopes": 7,
+          "truncated_records": 0,
+          "gpu_dropped": 0,
+          "nested_frames": 0
+        },
+        "limits": {
+          "threads": 32,
+          "labels": 2048,
+          "nodes": 4096,
+          "events_per_lane": 4096,
+          "events_per_frame": 2048,
+          "history_frames": 120,
+          "spikes": 8
+        }
+      }
+    },
+    "mesh-1": {
+      "rootRunExactSummary": {
+        "case": "mesh-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 8192,
+        "medianMs": 0.285024,
+        "p95Ms": 0.521348,
+        "maxMs": 10.250855,
+        "first120MaxMs": 10.250855,
+        "contactRows": 15677,
+        "ccdIterations": 2574,
+        "ccdLimits": 5,
+        "minimumBoneCenterY": 0.0489002839,
+        "sleeping": 0
+      },
+      "originalCSV": {
+        "medianMsCSV": 0.331528,
+        "p95MsCSV": 12.2331,
+        "maxMsCSV": 25.8412,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 3.0819984566666667,
+              "contacts": 11.573333333333334,
+              "ccd_queries": 18.702222222222222,
+              "ccd_iterations": 47.59444444444444,
+              "ccd_limit": 0.023333333333333334,
+              "sampling_fallback": 0.023333333333333334,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.007948906666666667,
+              "narrowphase_ms": 0.15077231666666666,
+              "solver_ms": 2.8849949544444446,
+              "sleeping": 4.261111111111111
+            },
+            "solverShareOfSummedWall": 0.9360792988730788
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 15.786002173913044,
+              "contacts": 11.695652173913043,
+              "ccd_queries": 91.84782608695652,
+              "ccd_iterations": 248.67391304347825,
+              "ccd_limit": 0.1956521739130435,
+              "sampling_fallback": 0.1956521739130435,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.013365369565217392,
+              "narrowphase_ms": 0.31401378260869567,
+              "solver_ms": 15.394576739130434,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.9752042708172526
+          },
+          "over16_67Ms": {
+            "steps": 15,
+            "mean": {
+              "wall_ms": 19.330986666666668,
+              "contacts": 11.8,
+              "ccd_queries": 109.66666666666667,
+              "ccd_iterations": 301.93333333333334,
+              "ccd_limit": 0.2,
+              "sampling_fallback": 0.2,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.013771133333333333,
+              "narrowphase_ms": 0.2518624,
+              "solver_ms": 18.998373333333333,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.9827937735890702
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 1.6153255666666666,
+              "contacts": 6.666666666666667,
+              "ccd_queries": 11.166666666666666,
+              "ccd_iterations": 25.408333333333335,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.009261433333333333,
+              "narrowphase_ms": 0.1382058,
+              "solver_ms": 1.4273686583333334,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.8836414700466885
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.040467086666666666,
+              "contacts": 0.6,
+              "ccd_queries": 0.02,
+              "ccd_iterations": 0.02,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.003130613333333333,
+              "narrowphase_ms": 0.00511149,
+              "solver_ms": 0.0067263566666666665,
+              "sleeping": 12.783333333333333
+            },
+            "solverShareOfSummedWall": 0.1662179618234605
+          }
+        },
+        "top10": [
+          {
+            "step": 237.0,
+            "wall_ms": 25.8412,
+            "contacts": 10.0,
+            "ccd_queries": 154.0,
+            "ccd_iterations": 421.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.013229,
+            "narrowphase_ms": 0.242248,
+            "solver_ms": 25.5173,
+            "sleeping": 0.0
+          },
+          {
+            "step": 213.0,
+            "wall_ms": 22.2491,
+            "contacts": 14.0,
+            "ccd_queries": 87.0,
+            "ccd_iterations": 237.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.01695,
+            "narrowphase_ms": 0.267599,
+            "solver_ms": 21.8633,
+            "sleeping": 0.0
+          },
+          {
+            "step": 142.0,
+            "wall_ms": 21.5435,
+            "contacts": 14.0,
+            "ccd_queries": 123.0,
+            "ccd_iterations": 340.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.01247,
+            "narrowphase_ms": 0.253852,
+            "solver_ms": 21.2198,
+            "sleeping": 0.0
+          },
+          {
+            "step": 239.0,
+            "wall_ms": 21.1728,
+            "contacts": 12.0,
+            "ccd_queries": 148.0,
+            "ccd_iterations": 331.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.012665,
+            "narrowphase_ms": 0.231986,
+            "solver_ms": 20.8579,
+            "sleeping": 0.0
+          },
+          {
+            "step": 193.0,
+            "wall_ms": 19.6331,
+            "contacts": 13.0,
+            "ccd_queries": 132.0,
+            "ccd_iterations": 392.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.012513,
+            "narrowphase_ms": 0.261183,
+            "solver_ms": 19.2931,
+            "sleeping": 0.0
+          },
+          {
+            "step": 149.0,
+            "wall_ms": 19.5172,
+            "contacts": 9.0,
+            "ccd_queries": 117.0,
+            "ccd_iterations": 329.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.01178,
+            "narrowphase_ms": 0.232171,
+            "solver_ms": 19.2229,
+            "sleeping": 0.0
+          },
+          {
+            "step": 200.0,
+            "wall_ms": 19.074,
+            "contacts": 12.0,
+            "ccd_queries": 130.0,
+            "ccd_iterations": 319.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.026408,
+            "narrowphase_ms": 0.285872,
+            "solver_ms": 18.6669,
+            "sleeping": 0.0
+          },
+          {
+            "step": 178.0,
+            "wall_ms": 18.9905,
+            "contacts": 15.0,
+            "ccd_queries": 101.0,
+            "ccd_iterations": 269.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.011986,
+            "narrowphase_ms": 0.230732,
+            "solver_ms": 18.688,
+            "sleeping": 0.0
+          },
+          {
+            "step": 175.0,
+            "wall_ms": 18.371,
+            "contacts": 12.0,
+            "ccd_queries": 84.0,
+            "ccd_iterations": 330.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.013271,
+            "narrowphase_ms": 0.230743,
+            "solver_ms": 18.07,
+            "sleeping": 0.0
+          },
+          {
+            "step": 225.0,
+            "wall_ms": 17.768,
+            "contacts": 15.0,
+            "ccd_queries": 76.0,
+            "ccd_iterations": 195.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.012701,
+            "narrowphase_ms": 0.237604,
+            "solver_ms": 17.4319,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": 0.13938315329564258,
+          "ccd_queries": 0.9705046086482865,
+          "ccd_iterations": 0.9682902855105362,
+          "ccd_limit": 0.3285492796986118,
+          "sampling_fallback": 0.3285492796986118,
+          "geometry_predicates": null,
+          "broadphase_ms": 0.6542278692720325,
+          "narrowphase_ms": 0.4745917310342465,
+          "solver_ms": 0.9994400246060663,
+          "sleeping": -0.4719017161908396
+        }
+      },
+      "finalCSV": {
+        "medianMsCSV": 0.285024,
+        "p95MsCSV": 0.521348,
+        "maxMsCSV": 10.2509,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 0.3659491111111111,
+              "contacts": 17.41888888888889,
+              "ccd_queries": 1.1733333333333333,
+              "ccd_iterations": 2.86,
+              "ccd_limit": 0.005555555555555556,
+              "sampling_fallback": 0.005555555555555556,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.008470037777777778,
+              "narrowphase_ms": 0.19271145222222222,
+              "solver_ms": 0.13232308333333334,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.36158875459915196
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 1.7907570217391304,
+              "contacts": 9.91304347826087,
+              "ccd_queries": 20.608695652173914,
+              "ccd_iterations": 51.78260869565217,
+              "ccd_limit": 0.10869565217391304,
+              "sampling_fallback": 0.10869565217391304,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.010205978260869565,
+              "narrowphase_ms": 0.20285041304347826,
+              "solver_ms": 1.5354509565217391,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.8574312080767689
+          },
+          "over16_67Ms": {
+            "steps": 0
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 0.7926523416666666,
+              "contacts": 7.141666666666667,
+              "ccd_queries": 8.8,
+              "ccd_iterations": 21.45,
+              "ccd_limit": 0.041666666666666664,
+              "sampling_fallback": 0.041666666666666664,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.008357966666666666,
+              "narrowphase_ms": 0.11686805833333333,
+              "solver_ms": 0.6342208,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.8001248046103778
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.29545017,
+              "contacts": 19.0,
+              "ccd_queries": 0.0,
+              "ccd_iterations": 0.0,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.008177453333333333,
+              "narrowphase_ms": 0.20168453333333333,
+              "solver_ms": 0.054429986666666666,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.18422729852098804
+          }
+        },
+        "top10": [
+          {
+            "step": 85.0,
+            "wall_ms": 10.2509,
+            "contacts": 2.0,
+            "ccd_queries": 106.0,
+            "ccd_iterations": 353.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.01469,
+            "narrowphase_ms": 0.214723,
+            "solver_ms": 9.97019,
+            "sleeping": 0.0
+          },
+          {
+            "step": 86.0,
+            "wall_ms": 6.2121,
+            "contacts": 10.0,
+            "ccd_queries": 63.0,
+            "ccd_iterations": 164.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.011859,
+            "narrowphase_ms": 0.39924,
+            "solver_ms": 5.72376,
+            "sleeping": 0.0
+          },
+          {
+            "step": 87.0,
+            "wall_ms": 6.00842,
+            "contacts": 6.0,
+            "ccd_queries": 70.0,
+            "ccd_iterations": 174.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.009841,
+            "narrowphase_ms": 0.234937,
+            "solver_ms": 5.72256,
+            "sleeping": 0.0
+          },
+          {
+            "step": 95.0,
+            "wall_ms": 3.0257,
+            "contacts": 17.0,
+            "ccd_queries": 25.0,
+            "ccd_iterations": 67.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.010103,
+            "narrowphase_ms": 0.216359,
+            "solver_ms": 2.75999,
+            "sleeping": 0.0
+          },
+          {
+            "step": 92.0,
+            "wall_ms": 2.80379,
+            "contacts": 13.0,
+            "ccd_queries": 14.0,
+            "ccd_iterations": 109.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.009435,
+            "narrowphase_ms": 0.231396,
+            "solver_ms": 2.5284,
+            "sleeping": 0.0
+          },
+          {
+            "step": 94.0,
+            "wall_ms": 2.5987,
+            "contacts": 20.0,
+            "ccd_queries": 23.0,
+            "ccd_iterations": 60.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.009444,
+            "narrowphase_ms": 0.252795,
+            "solver_ms": 2.30131,
+            "sleeping": 0.0
+          },
+          {
+            "step": 88.0,
+            "wall_ms": 2.53077,
+            "contacts": 11.0,
+            "ccd_queries": 27.0,
+            "ccd_iterations": 61.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.009192,
+            "narrowphase_ms": 0.23265,
+            "solver_ms": 2.25303,
+            "sleeping": 0.0
+          },
+          {
+            "step": 80.0,
+            "wall_ms": 2.35637,
+            "contacts": 11.0,
+            "ccd_queries": 38.0,
+            "ccd_iterations": 80.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.009057,
+            "narrowphase_ms": 0.206844,
+            "solver_ms": 2.10515,
+            "sleeping": 0.0
+          },
+          {
+            "step": 83.0,
+            "wall_ms": 2.27782,
+            "contacts": 10.0,
+            "ccd_queries": 38.0,
+            "ccd_iterations": 64.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.016297,
+            "narrowphase_ms": 0.245534,
+            "solver_ms": 1.97317,
+            "sleeping": 0.0
+          },
+          {
+            "step": 96.0,
+            "wall_ms": 2.21278,
+            "contacts": 15.0,
+            "ccd_queries": 20.0,
+            "ccd_iterations": 42.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.010015,
+            "narrowphase_ms": 0.264193,
+            "solver_ms": 1.8983,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": -0.17542289760064955,
+          "ccd_queries": 0.9450313993863916,
+          "ccd_iterations": 0.9737876774154787,
+          "ccd_limit": 0.5008954899513206,
+          "sampling_fallback": 0.5008954899513206,
+          "geometry_predicates": null,
+          "broadphase_ms": 0.20838760857715163,
+          "narrowphase_ms": 0.1974010103018255,
+          "solver_ms": 0.9941593036332034,
+          "sleeping": null
+        }
+      },
+      "rawInputSHA256": {
+        ".cache/m78-followup/concave-final-data/mesh-1.csv": "1418085f8db632a44eb22c62dd27cc12da1f7de103fce4b3a750e9843d1d760f",
+        ".cache/m78-continuation/midpoint-final-concave-data/mesh-1.csv": "dad835a0a4e6fd3dfbce21f5f68cd62a672b89563b9e18c91925731a370f6bae"
+      },
+      "finalProfile": {
+        "frames": 120,
+        "spikes": 0,
+        "diagnostics": {
+          "dropped_events": 0,
+          "exhausted_labels": 0,
+          "exhausted_nodes": 0,
+          "exhausted_threads": 0,
+          "incomplete_scopes": 0,
+          "open_scopes": 7,
+          "truncated_records": 0,
+          "gpu_dropped": 0,
+          "nested_frames": 0
+        },
+        "limits": {
+          "threads": 32,
+          "labels": 2048,
+          "nodes": 4096,
+          "events_per_lane": 4096,
+          "events_per_frame": 2048,
+          "history_frames": 120,
+          "spikes": 8
+        }
+      }
+    },
+    "mesh-4": {
+      "rootRunExactSummary": {
+        "case": "mesh-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 8192,
+        "medianMs": 1.058026,
+        "p95Ms": 5.498837,
+        "maxMs": 26.653463,
+        "first120MaxMs": 26.653463,
+        "contactRows": 56576,
+        "ccdIterations": 19163,
+        "ccdLimits": 7,
+        "minimumBoneCenterY": 0.0447216108,
+        "sleeping": 26
+      },
+      "originalCSV": {
+        "medianMsCSV": 1.04069,
+        "p95MsCSV": 18.875,
+        "maxMsCSV": 33.7938,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 5.356795387777778,
+              "contacts": 51.04,
+              "ccd_queries": 32.89222222222222,
+              "ccd_iterations": 76.87777777777778,
+              "ccd_limit": 0.03111111111111111,
+              "sampling_fallback": 0.03111111111111111,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.04178176,
+              "narrowphase_ms": 0.6611119422222222,
+              "solver_ms": 4.509660318888889,
+              "sleeping": 11.974444444444444
+            },
+            "solverShareOfSummedWall": 0.8418578632251407
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 23.338991304347825,
+              "contacts": 53.69565217391305,
+              "ccd_queries": 159.30434782608697,
+              "ccd_iterations": 384.6521739130435,
+              "ccd_limit": 0.15217391304347827,
+              "sampling_fallback": 0.15217391304347827,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.05076736956521739,
+              "narrowphase_ms": 0.9912029782608696,
+              "solver_ms": 22.11269347826087,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.9474571197145736
+          },
+          "over16_67Ms": {
+            "steps": 78,
+            "mean": {
+              "wall_ms": 21.05566923076923,
+              "contacts": 56.23076923076923,
+              "ccd_queries": 139.60256410256412,
+              "ccd_iterations": 339.2564102564103,
+              "ccd_limit": 0.15384615384615385,
+              "sampling_fallback": 0.15384615384615385,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.05085374358974359,
+              "narrowphase_ms": 0.9921737435897436,
+              "solver_ms": 19.82979871794872,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.941779551180016
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 7.243162258333333,
+              "contacts": 23.791666666666668,
+              "ccd_queries": 64.6,
+              "ccd_iterations": 139.78333333333333,
+              "ccd_limit": 0.03333333333333333,
+              "sampling_fallback": 0.03333333333333333,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.0423382,
+              "narrowphase_ms": 0.5237870916666667,
+              "solver_ms": 6.528919458333333,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.9013907497131854
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.7448684033333334,
+              "contacts": 37.92,
+              "ccd_queries": 0.02,
+              "ccd_iterations": 0.02,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.036144866666666664,
+              "narrowphase_ms": 0.45044100666666664,
+              "solver_ms": 0.12955462333333334,
+              "sleeping": 26.346666666666668
+            },
+            "solverShareOfSummedWall": 0.17392954615012288
+          }
+        },
+        "top10": [
+          {
+            "step": 237.0,
+            "wall_ms": 33.7938,
+            "contacts": 57.0,
+            "ccd_queries": 208.0,
+            "ccd_iterations": 502.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.068697,
+            "narrowphase_ms": 0.973429,
+            "solver_ms": 32.5139,
+            "sleeping": 0.0
+          },
+          {
+            "step": 175.0,
+            "wall_ms": 30.1097,
+            "contacts": 58.0,
+            "ccd_queries": 165.0,
+            "ccd_iterations": 543.0,
+            "ccd_limit": 2.0,
+            "sampling_fallback": 2.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.048888,
+            "narrowphase_ms": 0.973863,
+            "solver_ms": 28.9097,
+            "sleeping": 0.0
+          },
+          {
+            "step": 239.0,
+            "wall_ms": 28.9166,
+            "contacts": 59.0,
+            "ccd_queries": 197.0,
+            "ccd_iterations": 435.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.05004,
+            "narrowphase_ms": 0.915079,
+            "solver_ms": 27.7737,
+            "sleeping": 0.0
+          },
+          {
+            "step": 79.0,
+            "wall_ms": 28.1327,
+            "contacts": 17.0,
+            "ccd_queries": 303.0,
+            "ccd_iterations": 648.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.044255,
+            "narrowphase_ms": 0.904454,
+            "solver_ms": 27.0277,
+            "sleeping": 0.0
+          },
+          {
+            "step": 96.0,
+            "wall_ms": 27.7601,
+            "contacts": 51.0,
+            "ccd_queries": 187.0,
+            "ccd_iterations": 489.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.047522,
+            "narrowphase_ms": 1.0447,
+            "solver_ms": 26.4923,
+            "sleeping": 0.0
+          },
+          {
+            "step": 85.0,
+            "wall_ms": 27.493,
+            "contacts": 31.0,
+            "ccd_queries": 222.0,
+            "ccd_iterations": 574.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.044655,
+            "narrowphase_ms": 0.961515,
+            "solver_ms": 26.3153,
+            "sleeping": 0.0
+          },
+          {
+            "step": 149.0,
+            "wall_ms": 27.0885,
+            "contacts": 64.0,
+            "ccd_queries": 166.0,
+            "ccd_iterations": 428.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.06114,
+            "narrowphase_ms": 0.967428,
+            "solver_ms": 25.8283,
+            "sleeping": 0.0
+          },
+          {
+            "step": 94.0,
+            "wall_ms": 26.6452,
+            "contacts": 49.0,
+            "ccd_queries": 165.0,
+            "ccd_iterations": 436.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.048506,
+            "narrowphase_ms": 1.02914,
+            "solver_ms": 25.3711,
+            "sleeping": 0.0
+          },
+          {
+            "step": 178.0,
+            "wall_ms": 26.2051,
+            "contacts": 66.0,
+            "ccd_queries": 148.0,
+            "ccd_iterations": 365.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.048792,
+            "narrowphase_ms": 0.926878,
+            "solver_ms": 25.0543,
+            "sleeping": 0.0
+          },
+          {
+            "step": 92.0,
+            "wall_ms": 26.0008,
+            "contacts": 49.0,
+            "ccd_queries": 189.0,
+            "ccd_iterations": 510.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.049378,
+            "narrowphase_ms": 0.987265,
+            "solver_ms": 24.7877,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": 0.351712414283629,
+          "ccd_queries": 0.9600663734727193,
+          "ccd_iterations": 0.9692884081167213,
+          "ccd_limit": 0.2971908807230858,
+          "sampling_fallback": 0.2971908807230858,
+          "geometry_predicates": null,
+          "broadphase_ms": 0.6738848737049448,
+          "narrowphase_ms": 0.7517317208230031,
+          "solver_ms": 0.9996010367207722,
+          "sleeping": -0.6650151593278232
+        }
+      },
+      "finalCSV": {
+        "medianMsCSV": 1.05803,
+        "p95MsCSV": 5.49884,
+        "maxMsCSV": 26.6535,
+        "groups": {
+          "all": {
+            "steps": 900,
+            "mean": {
+              "wall_ms": 1.7753044066666666,
+              "contacts": 62.86222222222222,
+              "ccd_queries": 9.867777777777778,
+              "ccd_iterations": 21.29222222222222,
+              "ccd_limit": 0.0077777777777777776,
+              "sampling_fallback": 0.0077777777777777776,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.04105105444444444,
+              "narrowphase_ms": 0.6704381777777778,
+              "solver_ms": 0.9341113422222223,
+              "sleeping": 9.62
+            },
+            "solverShareOfSummedWall": 0.5261696747410891
+          },
+          "p95_tail": {
+            "steps": 46,
+            "mean": {
+              "wall_ms": 12.920821739130435,
+              "contacts": 49.93478260869565,
+              "ccd_queries": 128.17391304347825,
+              "ccd_iterations": 309.2173913043478,
+              "ccd_limit": 0.13043478260869565,
+              "sampling_fallback": 0.13043478260869565,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.049271347826086956,
+              "narrowphase_ms": 0.9693114130434782,
+              "solver_ms": 11.729822391304348,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.9078232505739808
+          },
+          "over16_67Ms": {
+            "steps": 11,
+            "mean": {
+              "wall_ms": 20.2881,
+              "contacts": 42.45454545454545,
+              "ccd_queries": 194.54545454545453,
+              "ccd_iterations": 486.6363636363636,
+              "ccd_limit": 0.09090909090909091,
+              "sampling_fallback": 0.09090909090909091,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.05350636363636364,
+              "narrowphase_ms": 1.0200527272727273,
+              "solver_ms": 19.032481818181818,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.938110607606519
+          },
+          "first120": {
+            "steps": 120,
+            "mean": {
+              "wall_ms": 5.6907854,
+              "contacts": 23.816666666666666,
+              "ccd_queries": 59.666666666666664,
+              "ccd_iterations": 136.475,
+              "ccd_limit": 0.05,
+              "sampling_fallback": 0.05,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.042507125,
+              "narrowphase_ms": 0.51386175,
+              "solver_ms": 4.988755941666667,
+              "sleeping": 0.0
+            },
+            "solverShareOfSummedWall": 0.8766375097656409
+          },
+          "last300": {
+            "steps": 300,
+            "mean": {
+              "wall_ms": 0.7992335166666666,
+              "contacts": 48.88666666666666,
+              "ccd_queries": 0.30333333333333334,
+              "ccd_iterations": 0.30333333333333334,
+              "ccd_limit": 0.0,
+              "sampling_fallback": 0.0,
+              "geometry_predicates": 0.0,
+              "broadphase_ms": 0.03785005,
+              "narrowphase_ms": 0.4909578866666667,
+              "solver_ms": 0.14510116,
+              "sleeping": 22.1
+            },
+            "solverShareOfSummedWall": 0.18155039418913255
+          }
+        },
+        "top10": [
+          {
+            "step": 85.0,
+            "wall_ms": 26.6535,
+            "contacts": 24.0,
+            "ccd_queries": 285.0,
+            "ccd_iterations": 830.0,
+            "ccd_limit": 1.0,
+            "sampling_fallback": 1.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.054326,
+            "narrowphase_ms": 0.902546,
+            "solver_ms": 25.5307,
+            "sleeping": 0.0
+          },
+          {
+            "step": 89.0,
+            "wall_ms": 24.9392,
+            "contacts": 40.0,
+            "ccd_queries": 252.0,
+            "ccd_iterations": 577.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.051889,
+            "narrowphase_ms": 0.998236,
+            "solver_ms": 23.7014,
+            "sleeping": 0.0
+          },
+          {
+            "step": 94.0,
+            "wall_ms": 20.8404,
+            "contacts": 46.0,
+            "ccd_queries": 225.0,
+            "ccd_iterations": 504.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.046123,
+            "narrowphase_ms": 0.952358,
+            "solver_ms": 19.6825,
+            "sleeping": 0.0
+          },
+          {
+            "step": 100.0,
+            "wall_ms": 20.1121,
+            "contacts": 53.0,
+            "ccd_queries": 116.0,
+            "ccd_iterations": 314.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.101101,
+            "narrowphase_ms": 1.44448,
+            "solver_ms": 18.3555,
+            "sleeping": 0.0
+          },
+          {
+            "step": 90.0,
+            "wall_ms": 19.5316,
+            "contacts": 37.0,
+            "ccd_queries": 200.0,
+            "ccd_iterations": 464.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.053199,
+            "narrowphase_ms": 0.95138,
+            "solver_ms": 18.3383,
+            "sleeping": 0.0
+          },
+          {
+            "step": 103.0,
+            "wall_ms": 19.4477,
+            "contacts": 57.0,
+            "ccd_queries": 146.0,
+            "ccd_iterations": 396.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.04771,
+            "narrowphase_ms": 0.977808,
+            "solver_ms": 18.2173,
+            "sleeping": 0.0
+          },
+          {
+            "step": 95.0,
+            "wall_ms": 19.3411,
+            "contacts": 44.0,
+            "ccd_queries": 193.0,
+            "ccd_iterations": 457.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.047016,
+            "narrowphase_ms": 0.929662,
+            "solver_ms": 18.2046,
+            "sleeping": 0.0
+          },
+          {
+            "step": 86.0,
+            "wall_ms": 18.6629,
+            "contacts": 34.0,
+            "ccd_queries": 197.0,
+            "ccd_iterations": 499.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.045976,
+            "narrowphase_ms": 0.91679,
+            "solver_ms": 17.537,
+            "sleeping": 0.0
+          },
+          {
+            "step": 87.0,
+            "wall_ms": 18.4366,
+            "contacts": 41.0,
+            "ccd_queries": 199.0,
+            "ccd_iterations": 479.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.045821,
+            "narrowphase_ms": 1.06189,
+            "solver_ms": 17.1305,
+            "sleeping": 0.0
+          },
+          {
+            "step": 102.0,
+            "wall_ms": 18.3024,
+            "contacts": 47.0,
+            "ccd_queries": 172.0,
+            "ccd_iterations": 434.0,
+            "ccd_limit": 0.0,
+            "sampling_fallback": 0.0,
+            "geometry_predicates": 0.0,
+            "broadphase_ms": 0.049046,
+            "narrowphase_ms": 1.11282,
+            "solver_ms": 16.9591,
+            "sleeping": 0.0
+          }
+        ],
+        "correlationWithWall": {
+          "contacts": -0.0502188207583507,
+          "ccd_queries": 0.9589091387721402,
+          "ccd_iterations": 0.972555456597768,
+          "ccd_limit": 0.3403983179060425,
+          "sampling_fallback": 0.3403983179060425,
+          "geometry_predicates": null,
+          "broadphase_ms": 0.3683472949505386,
+          "narrowphase_ms": 0.37492008517689807,
+          "solver_ms": 0.9963479094248628,
+          "sleeping": -0.2989763983487794
+        }
+      },
+      "rawInputSHA256": {
+        ".cache/m78-followup/concave-final-data/mesh-4.csv": "344109ebcc8b6e86dc8210a6f634c35820987a156a6e551db433bfb600c1f75e",
+        ".cache/m78-continuation/midpoint-final-concave-data/mesh-4.csv": "854093dfd4c6f795a1ce16e3554c6ea0dd05284baefcea343364dfd695abd8bc"
+      },
+      "finalProfile": {
+        "frames": 120,
+        "spikes": 0,
+        "diagnostics": {
+          "dropped_events": 0,
+          "exhausted_labels": 0,
+          "exhausted_nodes": 0,
+          "exhausted_threads": 0,
+          "incomplete_scopes": 0,
+          "open_scopes": 7,
+          "truncated_records": 0,
+          "gpu_dropped": 0,
+          "nested_frames": 0
+        },
+        "limits": {
+          "threads": 32,
+          "labels": 2048,
+          "nodes": 4096,
+          "events_per_lane": 4096,
+          "events_per_frame": 2048,
+          "history_frames": 120,
+          "spikes": 8
+        }
+      }
+    }
+  },
+  "receiptSHA256": {
+    "docs/evidence/m78-continuation/midpoint-final-concave.log": "4ddfd61242d15568019cb3eb68a7a2f33b5c7c79ca5e373f3e39579baa12f812",
+    "docs/evidence/m78-continuation/midpoint-final-concave.json": "f7463f28342d1bf0b5b20c41cb2ccce0b068e3904a970ded1ce6e94bb14bf89c",
+    "docs/evidence/m78-continuation/midpoint-final-concave-build.json": "e08852c831dccf019246d0a4afc469c65a3d16e873758e2c1b32f3607f218c28"
+  },
+  "calculatorSHA256": "9f5ea5727f55be5f6ba1ce4f9b9a3247a3e518f79c05e6a3d6473a5f61a92565",
+  "limitations": [
+    "CSV timing fields use original truncated precision; exact aggregate timings are copied from root stdout.",
+    "Final profiles retain last 120 frames and have no retained spikes; first-impact expensive steps are absent from scoped history.",
+    "Early-step attribution is therefore based on CSV solver/broadphase/contact timers and CCD counts, not an invented final phase decomposition.",
+    "Different legitimate trajectory from the original and the earlier predictor-only combined run; do not claim physical-counter parity for those corrections.",
+    "Isolation-only 14.963051 ms p95 establishes Boolean-work attribution separately.",
+    "Sleeping counts are measured, not forced; final mesh-4 has 26/52 sleeping and mesh-1 0/13.",
+    "Final source/Windows acceptance remains the root investigation responsibility."
+  ]
+}

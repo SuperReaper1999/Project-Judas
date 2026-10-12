@@ -1,0 +1,163 @@
+﻿{
+    "namedScratchTotals":  [
+                               {
+                                   "name":  "combined-v1",
+                                   "bytes":  1821710,
+                                   "fileCount":  42
+                               },
+                               {
+                                   "name":  "combined-v2",
+                                   "bytes":  127270123,
+                                   "fileCount":  1648
+                               },
+                               {
+                                   "name":  "diagnostic-warm-v1",
+                                   "bytes":  78281876,
+                                   "fileCount":  353
+                               }
+                           ],
+    "scope":  "Only read-only inventory; no deletion. Actual current library/package/results/source remain protected.",
+    "largestOwnedFiles":  [
+                              {
+                                  "bytes":  66869102,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\judas_engine.lib"
+                              },
+                              {
+                                  "bytes":  66840496,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib"
+                              },
+                              {
+                                  "bytes":  10314752,
+                                  "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_runtime.exe"
+                              },
+                              {
+                                  "bytes":  9530880,
+                                  "path":  "C:\\JudasValidation\\Build\\Release\\m78_diagnostic-warm-v1_warm_observer.exe"
+                              },
+                              {
+                                  "bytes":  9528832,
+                                  "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_state_observer.exe"
+                              },
+                              {
+                                  "bytes":  9499648,
+                                  "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_drive_observer.exe"
+                              },
+                              {
+                                  "bytes":  8870400,
+                                  "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_concave.exe"
+                              },
+                              {
+                                  "bytes":  8098304,
+                                  "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_flu001.exe"
+                              },
+                              {
+                                  "bytes":  5220653,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-runtime-archive.zip"
+                              },
+                              {
+                                  "bytes":  4506135,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-concave-archive.zip"
+                              },
+                              {
+                                  "bytes":  3024672,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\warm_observer-0.obj"
+                              },
+                              {
+                                  "bytes":  3023236,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\state_observer-0.obj"
+                              },
+                              {
+                                  "bytes":  2653106,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\drive_observer-0.obj"
+                              },
+                              {
+                                  "bytes":  1806294,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\concave\\mesh-4-profile.json"
+                              },
+                              {
+                                  "bytes":  1692067,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\concave\\box-4-profile.json"
+                              },
+                              {
+                                  "bytes":  1406860,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\PhysicsWorld.obj"
+                              },
+                              {
+                                  "bytes":  1392761,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\PhysicsWorld.obj"
+                              },
+                              {
+                                  "bytes":  990264,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\concave\\mesh-1-profile.json"
+                              },
+                              {
+                                  "bytes":  985418,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\concave\\box-1-profile.json"
+                              },
+                              {
+                                  "bytes":  799680,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\navigation-inputs.zip"
+                              },
+                              {
+                                  "bytes":  799680,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v1\\navigation-inputs.zip"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-recovery\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-radial\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-regions\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-cookbook\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-step\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-blocked-recovery\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-cold-recovery\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-cold-stand\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-fault\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\state-original-baseline\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-cold-step\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-denied\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\balance-low-grip\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              },
+                              {
+                                  "bytes":  759720,
+                                  "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-warm-v1\\warm-on\\project\\Assets\\fonts\\DejaVuSans.ttf"
+                              }
+                          ],
+    "freeBytes":  11534336
+}

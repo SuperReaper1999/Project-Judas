@@ -1,0 +1,169 @@
+﻿{
+    "exitCode":  0,
+    "source":  [
+                   {
+                       "sha256":  "fcc2bb0604c4e78cf19d489c05a82be8d7d596868c0099cdadd1a003766ea11a",
+                       "path":  "CMakeLists.txt"
+                   },
+                   {
+                       "sha256":  "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a",
+                       "path":  "src/CollisionGeometry.cpp"
+                   },
+                   {
+                       "sha256":  "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+                       "path":  "src/PhysicsWorld.cpp"
+                   },
+                   {
+                       "sha256":  "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6",
+                       "path":  "src/PhysicsWorld.h"
+                   },
+                   {
+                       "sha256":  "d2cd051026a5d943ade664dcafff953029fda967460cc1faf25cbaf45a0b9cd3",
+                       "path":  "src/Prefab.cpp"
+                   },
+                   {
+                       "sha256":  "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+                       "path":  "src/RigidBody.cpp"
+                   },
+                   {
+                       "sha256":  "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b",
+                       "path":  "src/RigidBody.h"
+                   },
+                   {
+                       "sha256":  "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497",
+                       "path":  "src/RigidMotion.h"
+                   },
+                   {
+                       "sha256":  "9f77a6e123d96ee6e6caa65f5b254be0d2406d20164951524e3ded98f3025043",
+                       "path":  "src/editor/TerrainTools.cpp"
+                   },
+                   {
+                       "sha256":  "e34a836f86fd1b40e49c49129f9e184c1dcfae8654a92c92c6a63ba43f9585b6",
+                       "path":  "src/editor/TerrainTools.h"
+                   },
+                   {
+                       "sha256":  "b1e818ce3531938f8a96cd2562956d107d976643078b3112c3de022d913dc7d0",
+                       "path":  "tests/CollisionGeometryTests.cpp"
+                   },
+                   {
+                       "sha256":  "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b",
+                       "path":  "tests/PrefabTests.cpp"
+                   },
+                   {
+                       "sha256":  "38692f953ff456b40c05eb7856728aa698bd82c8fdc3f646a5a402a462a0742c",
+                       "path":  "tests/RigidMotionTests.cpp"
+                   },
+                   {
+                       "sha256":  "b790389689ed90f4e65ce67aa2a66bb7b69cefef1c137235a7e0310aec21fba5",
+                       "path":  "tests/ScalabilityTests.cpp"
+                   },
+                   {
+                       "sha256":  "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b",
+                       "path":  "tests/WorldStreamingTests.cpp"
+                   },
+                   {
+                       "sha256":  "eba675d2fce315d13927f31ee9ea0936bb0dc139d2c863530590ff157f680f75",
+                       "path":  "tools/NavigationBake.cpp"
+                   },
+                   {
+                       "sha256":  "4a06d2e44893761d1088b397c830f693e744574e5df555510cf04bc3579828dd",
+                       "path":  "src/authoring/NavigationDependencies.h"
+                   },
+                   {
+                       "sha256":  "5666758985926e221ee87f0120698cd6ee1a4e0b2bd2600d4f776224ee949120",
+                       "path":  "src/authoring/NavigationDependencies.cpp"
+                   },
+                   {
+                       "sha256":  "05ef0e617660479fc1f411d4137556f8c2fb261a24ad0efd39eedb5967cc39e3",
+                       "path":  "tests/NavigationDependencyTests.cpp"
+                   }
+               ],
+    "executables":  [
+                        {
+                            "sha256":  "0e3ab4eedc9ddc4f37e26536a9af01ebb15d88539b379dc0fc557d0992ff196e",
+                            "name":  "judas.exe",
+                            "bytes":  10301952
+                        },
+                        {
+                            "sha256":  "61e5eafe728d892561e82b82aaa527ed7c2351fbc9a4e299f9c7a48d09312be3",
+                            "name":  "judas_balance_lab_tests.exe",
+                            "bytes":  9467392
+                        },
+                        {
+                            "sha256":  "97c87ce426db35dc6d0d2150ae2bc81d70d2dd2ed9aca8c825e4174617536a80",
+                            "name":  "judas_character_motor_tests.exe",
+                            "bytes":  7683072
+                        },
+                        {
+                            "sha256":  "99bbfbc8b0ac18b7d9d31b8058bcaa45ece3771501065471717e47d1328e07b9",
+                            "name":  "judas_collision_geometry_tests.exe",
+                            "bytes":  5287424
+                        },
+                        {
+                            "sha256":  "12b08ed177e9dd44326db497f90560e87f2b48e838f54d20f796a212d11d1e66",
+                            "name":  "judas_editor.exe",
+                            "bytes":  13112832
+                        },
+                        {
+                            "sha256":  "2b27ce19c51d574ff50640f0e31aa9e7bd900167a69375897402b870a7e59e14",
+                            "name":  "judas_export.exe",
+                            "bytes":  8138752
+                        },
+                        {
+                            "sha256":  "2ef8f76430ffb69b8ba36b47f9018a677e125848c6fe40d13cb6d4087cfbd9a4",
+                            "name":  "judas_joint_tests.exe",
+                            "bytes":  443904
+                        },
+                        {
+                            "sha256":  "fb9cc09d985e51205de6f8a7b008b5b8a91d8b86c160de379853e777676089aa",
+                            "name":  "judas_navigation_bake.exe",
+                            "bytes":  7819776
+                        },
+                        {
+                            "sha256":  "83e37e375f1e49c7d747f94cf9ac4d43d5216800dbb96e85c68db07949444146",
+                            "name":  "judas_navigation_dependency_tests.exe",
+                            "bytes":  7889920
+                        },
+                        {
+                            "sha256":  "245432a8ecfc3fe5f8a00c234933fe2bf398edd2176d14acca871d24b2112ddf",
+                            "name":  "judas_physical_animation_tests.exe",
+                            "bytes":  7512064
+                        },
+                        {
+                            "sha256":  "4eea568accf8b22050d67bb5b1305394e7bbd399a8861b0bf652c4c4f219ea3f",
+                            "name":  "judas_physical_balance_controller_tests.exe",
+                            "bytes":  591360
+                        },
+                        {
+                            "sha256":  "b2f12f5962806303db7f1c10ee9ea68b362e2b739191a5b47f769babeb13a9e2",
+                            "name":  "judas_physical_balance_foundation_tests.exe",
+                            "bytes":  7385600
+                        },
+                        {
+                            "sha256":  "b6cf0de5e00a2eea9c416690e4450f0798cb8fe6500bdddcc66348d8051e237b",
+                            "name":  "judas_prefab_tests.exe",
+                            "bytes":  7492096
+                        },
+                        {
+                            "sha256":  "bfa0aa9b6a28829c73e6917231b4a170c5fa3e82965974f3eb1a47d2950a4895",
+                            "name":  "judas_profiler_tests.exe",
+                            "bytes":  125952
+                        },
+                        {
+                            "sha256":  "17b2dbf2df8dc656a4d32886545c15b177bdb573c3d33fbf50574ae4de562107",
+                            "name":  "judas_rigid_motion_tests.exe",
+                            "bytes":  455680
+                        },
+                        {
+                            "sha256":  "47b1bd135249828bb8ee0e8764107c222fa2291f03a936329b7257cbe9b71e66",
+                            "name":  "judas_scalability_tests.exe",
+                            "bytes":  8004608
+                        },
+                        {
+                            "sha256":  "81d9c91a13b18ba70887c76f93edab888427bd9256ff932fd0db04e441756dbd",
+                            "name":  "judas_streaming_tests.exe",
+                            "bytes":  8033280
+                        }
+                    ],
+    "freeBytes":  167710720
+}

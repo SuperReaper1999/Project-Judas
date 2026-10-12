@@ -1,0 +1,21 @@
+﻿{
+    "mode":  "controller",
+    "seconds":  6.9043326,
+    "sourceBundleSHA256":  "b380317ed504dd3236a416b50653766a004b78ad4e3a404ee7ca54fc4aa74690",
+    "case":  "controller",
+    "files":  [
+
+              ],
+    "executableSHA256":  "c4fea07840a06768213ebf2ab81b429df9c32fe022dbfc17731bd1c0c4688c3d",
+    "scope":  "Copied-only diagnostic new-capture continuation including actual completed observation publication. Original fixtures/inputs/gains/60Hz/thresholds unchanged; no production edits and final archive untouched.",
+    "library":  {
+                    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                    "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+                    "bytes":  66840496
+                },
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "freeBytes":  69906432
+}

@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  2883584,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-balance_lab.exe",
+                        "sha256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+                        "name":  "m78-closure-balance_lab.exe",
+                        "bytes":  9508352
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\balance_lab-0.obj",
+                        "sha256":  "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff",
+                        "name":  "balance_lab-0.obj",
+                        "bytes":  2230400
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance_lab-link.log",
+                        "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                        "name":  "m78-closure-balance_lab-link.log",
+                        "bytes":  33930
+                    }
+                ],
+    "freeAfter":  14663680
+}

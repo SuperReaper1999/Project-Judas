@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# M78 numerical evidence includes native Windows receipts and exact save inputs.
+# Preserve recorded bytes instead of normalizing line endings during checkpointing.
+docs/evidence/m78*/** -text

@@ -1,0 +1,19 @@
+﻿{
+    "tools":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\v6\\windows_direct_case.ps1",
+                      "sha256":  "60d62a2242f7378beeadcfcde95b2996d69371bd8be8df30850af6ff4cde64c6",
+                      "parserErrors":  [
+
+                                       ]
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\v6\\windows_direct_run.ps1",
+                      "sha256":  "27a8c54d6002953291c285bda49cc5df5499e3c76ce20f200aa95162377d3540",
+                      "parserErrors":  [
+
+                                       ]
+                  }
+              ],
+    "scope":  "Validation-tooling only: Record effective environment and preserve successful empty linker log. No runtime/source change."
+}

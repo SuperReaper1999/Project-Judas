@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "geometry",
+  "archiveSHA256": "b7a0114cff6b646523b19a183a2e298158f7d7c1e90f404f7eaa0906d4c09bc1",
+  "archiveBytes": 2565145,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_geometry.exe",
+      "sha256": "73467462c3b0273628380bb37fb2614d5d1afdd055f8093a4518b178fd59c0a2",
+      "name": "m78_combined-v2_geometry.exe",
+      "bytes": 5304832
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\geometry-0.obj",
+      "sha256": "cef55eb1c74608b51318b86e3b9cc4f3745b6a321a00870420e5ec7f87419690",
+      "name": "geometry-0.obj",
+      "bytes": 640460
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "judas_uniform_gravity_scene_tests",
+  "source": "tests/UniformGravitySceneTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_uniform_gravity_scene_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_uniform_gravity_scene_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "fdd98fa26c8f3cd5896f45854127dadaef2f3f2d4fca982217e555e9b14b40e0",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_uniform_gravity_scene_tests.log",
+  "logSHA256": "032948c8bb55ea80e97eed61ae6839c60ab2636e36635c574d76fdd1b1778576",
+  "seconds": 0.38908607799930905
+}

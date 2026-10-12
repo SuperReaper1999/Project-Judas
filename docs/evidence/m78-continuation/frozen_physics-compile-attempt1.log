@@ -1,0 +1,79 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/PhysicsCastGeometry.h:3,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.cpp:6:
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:17:8: error: redefinition of ‘struct PhysicsQueryFilter’
+   17 | struct PhysicsQueryFilter {
+      |        ^~~~~~~~~~~~~~~~~~
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.cpp:2:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:17:8: note: previous definition of ‘struct PhysicsQueryFilter’
+   17 | struct PhysicsQueryFilter {
+      |        ^~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:27:8: error: redefinition of ‘struct PhysicsCastHit’
+   27 | struct PhysicsCastHit {
+      |        ^~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:27:8: note: previous definition of ‘struct PhysicsCastHit’
+   27 | struct PhysicsCastHit {
+      |        ^~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:36:8: error: redefinition of ‘struct PhysicsClosestPoint’
+   36 | struct PhysicsClosestPoint {
+      |        ^~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:36:8: note: previous definition of ‘struct PhysicsClosestPoint’
+   36 | struct PhysicsClosestPoint {
+      |        ^~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:41:8: error: redefinition of ‘struct PhysicsCastStats’
+   41 | struct PhysicsCastStats { unsigned broadphaseCandidates=0, filteredCandidates=0, primitivesTested=0; };
+      |        ^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:41:8: note: previous definition of ‘struct PhysicsCastStats’
+   41 | struct PhysicsCastStats { unsigned broadphaseCandidates=0, filteredCandidates=0, primitivesTested=0; };
+      |        ^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:43:8: error: redefinition of ‘struct BodyTransform’
+   43 | struct BodyTransform {
+      |        ^~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:43:8: note: previous definition of ‘struct BodyTransform’
+   43 | struct BodyTransform {
+      |        ^~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:50:12: error: multiple definition of ‘enum class BodyMotionType’
+   50 | enum class BodyMotionType { Static, Dynamic, Kinematic };
+      |            ^~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:50:12: note: previous definition here
+   50 | enum class BodyMotionType { Static, Dynamic, Kinematic };
+      |            ^~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:51:12: error: multiple definition of ‘enum class KinematicControl’
+   51 | enum class KinematicControl { Stopped, Target, Velocity };
+      |            ^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:51:12: note: previous definition here
+   51 | enum class KinematicControl { Stopped, Target, Velocity };
+      |            ^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:52:8: error: redefinition of ‘struct KinematicMotionState’
+   52 | struct KinematicMotionState {
+      |        ^~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:52:8: note: previous definition of ‘struct KinematicMotionState’
+   52 | struct KinematicMotionState {
+      |        ^~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:64:8: error: redefinition of ‘struct BodyBox’
+   64 | struct BodyBox {
+      |        ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:64:8: note: previous definition of ‘struct BodyBox’
+   64 | struct BodyBox {
+      |        ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:75:8: error: redefinition of ‘struct ShapeSweepHit’
+   75 | struct ShapeSweepHit {
+      |        ^~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:75:8: note: previous definition of ‘struct ShapeSweepHit’
+   75 | struct ShapeSweepHit {
+      |        ^~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h:106:7: error: redefinition of ‘class PhysicsWorld’
+  106 | class PhysicsWorld {
+      |       ^~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.h:106:7: note: previous definition of ‘class PhysicsWorld’
+  106 | class PhysicsWorld {
+      |       ^~~~~~~~~~~~
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.cpp:30:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/RigidBody.h:23:8: error: redefinition of ‘struct RigidBody’
+   23 | struct RigidBody {
+      |        ^~~~~~~~~
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Narrowphase.h:10,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/CollisionGeometry.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/frozen_physics/PhysicsWorld.cpp:4:
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.h:23:8: note: previous definition of ‘struct RigidBody’
+   23 | struct RigidBody {
+      |        ^~~~~~~~~

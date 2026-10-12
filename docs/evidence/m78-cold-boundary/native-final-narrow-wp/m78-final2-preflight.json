@@ -1,0 +1,15 @@
+﻿{
+    "currentArchiveExists":  true,
+    "scope":  "Read-only narrow native follow-up preflight",
+    "freeBytes":  71454720,
+    "final2ScratchExists":  false,
+    "ownedProcesses":  [
+                           {
+                               "ProcessId":  6424,
+                               "Name":  "vctip.exe",
+                               "ExecutablePath":  "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\VCTIP.EXE",
+                               "CommandLine":  "\"C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\VCTIP.EXE\""
+                           }
+                       ],
+    "vmFunctionalOnly":  true
+}

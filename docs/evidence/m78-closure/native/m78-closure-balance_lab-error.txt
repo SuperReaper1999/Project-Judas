@@ -1,0 +1,9 @@
+Copy-Item : There is not enough space on the disk.
+
+At C:\JudasValidation\m78-closure-case.ps1:20 char:294
++ ... st|Out-Null;Copy-Item "$($r.copyExactColdFrom)\project","$($r.copyExa ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (lab.judasui:FileInfo) [Copy-Item], IOException
+    + FullyQualifiedErrorId : CopyDirectoryInfoItemIOError,Microsoft.PowerShell.Commands.CopyItemCommand
+ 
+

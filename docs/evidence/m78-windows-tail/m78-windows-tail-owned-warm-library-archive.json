@@ -1,0 +1,105 @@
+﻿{
+    "freeBytes":  53665792,
+    "scope":  "Read-only bounded streaming of exact owned diagnostic library; no guest temporary parts or deletion",
+    "source":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\judas_engine.lib",
+    "sha256":  "7196087eae852aa049a51168f03006e53adee6c818eece27a91e480dc7097c5e",
+    "parts":  [
+                  {
+                      "offset":  0,
+                      "sha256":  "2bb7cf9b474ab3ddc92f2f2efa48257a317715571f317b0cdfc7ed449511d562",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-0.bin"
+                  },
+                  {
+                      "offset":  4194304,
+                      "sha256":  "16160f02ffce32314108a958690fe8cc249d97ea2fa4b6c8c95d7d7295b1cd34",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-1.bin"
+                  },
+                  {
+                      "offset":  8388608,
+                      "sha256":  "f7cd73cca23fc23f6795a0780bacad09cdc4e412b795643aec6c04a4c319d700",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-2.bin"
+                  },
+                  {
+                      "offset":  12582912,
+                      "sha256":  "41c2676d6dacf58a8fec94e122f042aa8d4719b95406cf22f6bf7d15c640bee8",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-3.bin"
+                  },
+                  {
+                      "offset":  16777216,
+                      "sha256":  "249c430967bc3d38e4c456fc692cab2dfbb17f9cb91f0a1cb1384123c181fa38",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-4.bin"
+                  },
+                  {
+                      "offset":  20971520,
+                      "sha256":  "87a193e3feeaa956df88fb35412f53e6d00f7580bf27414cdb47eb1147a5735d",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-5.bin"
+                  },
+                  {
+                      "offset":  25165824,
+                      "sha256":  "e6afd768b497d6f4f09135ba024fbc9288780aec4b93e2ac6b48ba4518a10a87",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-6.bin"
+                  },
+                  {
+                      "offset":  29360128,
+                      "sha256":  "c9859ccbb9f3663577acacb8e08d48d08428fe27b1d3aee6256d68d10b9196f8",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-7.bin"
+                  },
+                  {
+                      "offset":  33554432,
+                      "sha256":  "40a51c975f820c7a1c6591d21d6fddcbc09c3c8690441385b0c943c4548b7fc9",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-8.bin"
+                  },
+                  {
+                      "offset":  37748736,
+                      "sha256":  "aa468c28ae881f2d706fbf09a8674b92ec28f69c3ace69b3214b0a35c4414cce",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-9.bin"
+                  },
+                  {
+                      "offset":  41943040,
+                      "sha256":  "a4e73504278272b476a848bd9c1db3c0b418eb1dd1cfa2f327e3a5b5dee32002",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-10.bin"
+                  },
+                  {
+                      "offset":  46137344,
+                      "sha256":  "b70703ec6788843ef779a46e16af21004424e73c3716e6c924381e0007ad7fa7",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-11.bin"
+                  },
+                  {
+                      "offset":  50331648,
+                      "sha256":  "068506a20c685ea26d8a1981832c6d8d2dcb01dae07f3041f2823c0d8eb5de95",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-12.bin"
+                  },
+                  {
+                      "offset":  54525952,
+                      "sha256":  "9d0acb5df0b7028f0682a049d39af1d6cf7d066aeb27941a1d5dbc9214fd700b",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-13.bin"
+                  },
+                  {
+                      "offset":  58720256,
+                      "sha256":  "1140b51224df5271079b424735961d25087427547715c65380eecaa5c695f4a3",
+                      "bytes":  4194304,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-14.bin"
+                  },
+                  {
+                      "offset":  62914560,
+                      "sha256":  "6f97241c8b607c553adb2e7198de93caeaa5a2ae5f46f1ea2cd9cd7605cc6789",
+                      "bytes":  3954542,
+                      "reportName":  "m78-windows-tail-owned-warm-library-archive-part-15.bin"
+                  }
+              ],
+    "bytes":  66869102
+}

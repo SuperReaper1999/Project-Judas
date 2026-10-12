@@ -1,0 +1,5 @@
+FAIL fresh-process load completed
+FAIL fresh-process load completed
+PASS normal application exit
+FAIL fresh-process restore observed
+SUMMARY 4 checks 3 failures

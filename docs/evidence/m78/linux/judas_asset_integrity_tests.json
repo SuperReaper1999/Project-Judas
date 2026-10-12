@@ -1,0 +1,26 @@
+{
+  "id": "judas_asset_integrity_tests",
+  "source": "tests/AssetIntegrityTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_integrity_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "8c17b890a941e4563c058ec7d9462ec1f9a21d8a57f31205cbc911e8784251ec",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 67,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_asset_integrity_tests.log",
+  "logSHA256": "6c01681d996970d86a63b7eb9523db9cfebfa80fd10d0e9863bb74de06501b04",
+  "seconds": 0.14183153500016488
+}

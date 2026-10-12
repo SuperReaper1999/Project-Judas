@@ -1,0 +1,341 @@
+{
+  "scope": "Focused reruns on unchanged combined candidate; retained exact native cold failure remains a failure. No production-fluid tests/thresholds or full-suite rerun.",
+  "results": [
+    {
+      "name": "controller",
+      "utc": "2026-10-11T23:00:07.987314+00:00",
+      "command": [
+        ".cache/m78-followup/release/judas_physical_balance_controller_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 2.8174266799978795,
+      "executableSHA256": "62829b5b07934227080e44252926bbf0ed692c42ab57202c4c19ca09152e4912",
+      "logSHA256": "3ae721971c11f39f834f82506bcb39e8c6aa9043dc3a7be293d061979aeedd58",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "motion",
+      "utc": "2026-10-11T23:00:08.033101+00:00",
+      "command": [
+        ".cache/m78-followup/release/judas_rigid_motion_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.03386727200268069,
+      "executableSHA256": "588751cee68a0de8ea7fd9a157386cb65bbf281716e9aa13e0170969bfb1ccc2",
+      "logSHA256": "d9f968cc8b1bbb021f6b469c8e27314acdcdf2f72c8a2667fc6d8e43877c6cc5",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "physical_balance_foundation",
+      "utc": "2026-10-11T23:00:08.272799+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_physical_balance_foundation_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.018256524999742396,
+      "executableSHA256": "8679899dcde3d870bdd91c40ffcb44144ba6cf1bd5ae722946abb48e505e9d8e",
+      "logSHA256": "22ac0c93103ff0faa2ba81a2e85fdd669b8d20029fa2721f095e3c8e04dc0144",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "physical_animation",
+      "utc": "2026-10-11T23:00:08.713620+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_physical_animation_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.07301913400442572,
+      "executableSHA256": "dfba29b1f02f795e84069b759f013891e8b91f9c8e24907f65f95790eb54a356",
+      "logSHA256": "723361e89434065106ed53b66ac5d7429839b56e9c734deb423a55843fd075da",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "joint",
+      "utc": "2026-10-11T23:00:08.900167+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_joint_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.04259736699896166,
+      "executableSHA256": "509d86e5860c0d6a849d9979046d34ef0241bb96e06b0bbc56649657500cd1ea",
+      "logSHA256": "b709fb895d5689f3db74b972e885ed1b1ef66ee3d857c4fb76f860fb708d640e",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "ragdoll",
+      "utc": "2026-10-11T23:00:09.506778+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_ragdoll_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.37742006599728484,
+      "executableSHA256": "ee59b2a5cf8aee9da18b765d420a42dfd37b08ed245a20ea599f8146f85b9a4a",
+      "logSHA256": "d326b7dd1efeddd41bdf119b84bb0027e4c63aebbe331b38786240ea9db26426",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "contact_lifecycle",
+      "utc": "2026-10-11T23:00:09.977206+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_contact_lifecycle_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.08301971100445371,
+      "executableSHA256": "f7c8947cc47fb07c7fe11a54f4b9fa6961d5744ce40abea6df4fb02423ad8934",
+      "logSHA256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "impact_timing",
+      "utc": "2026-10-11T23:00:10.182144+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_impact_timing_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.016992689001199324,
+      "executableSHA256": "5aa103e46d0c51a83300958d9e6e69c9422de87cfe2db98701773e23d9fd8e11",
+      "logSHA256": "4915e4a212d5cf950e8b561a5cbb3ffe7b0690b3815cd6ca867b6b1582bc6d8b",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "gravity_selection",
+      "utc": "2026-10-11T23:00:10.773398+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_gravity_selection_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/gravity"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.335787773001357,
+      "executableSHA256": "1063474ab82356e4a69ae97ba4976c0d4b5f45bf52abd273d8ff379a241bf7c5",
+      "logSHA256": "1b3f8808be76f6c55f25c03c1366dffc77f63dac1ead29dfa58017fb431a16c5",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "world_persistence",
+      "utc": "2026-10-11T23:00:11.237597+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_world_persistence_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.08074785400094697,
+      "executableSHA256": "adb13c3beac3010cdb81ad77a1ca21b05190ce1d5dbd73a5ed07513a447bc0de",
+      "logSHA256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "prefab",
+      "utc": "2026-10-11T23:00:11.745333+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_prefab_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.10701965600310359,
+      "executableSHA256": "b116c83ca46734333fee10f8f8b07f5659899f45b1c962ccc29b5f1e36b2be39",
+      "logSHA256": "e22374ace6936a5af6ac825275d8139a75e54ee66994e52e0c0c5aa835da8cfd",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "streaming",
+      "utc": "2026-10-11T23:00:12.645884+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_streaming_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.5086091560006025,
+      "executableSHA256": "46e4415e01fc4672af52dca29fd944d597665aeb5e1831425241388059cc0677",
+      "logSHA256": "9cac5417cd474950cabf090a27879f469556adfc99201e39159357c15a6de16f",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "navigation",
+      "utc": "2026-10-11T23:00:14.030519+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_navigation_dependency_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/navigation/landscape_fork.judasproj",
+        "Imports/landscape.judasterrain"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.9027405529996031,
+      "executableSHA256": "527b1725bca1ac8945ffe67b988f70d820fddcd34c78983d95933e30d863d16b",
+      "logSHA256": "c016fc212493ef925aafa2ebec1e1d6ce4fb15630ec04ebceb091f4ecff70884",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "application-step",
+      "utc": "2026-10-11T23:00:16.031228+00:00",
+      "command": [
+        ".cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/midpoint-final-step",
+        "step-trace"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 1.6300359759989078,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "f56b6a55b709b690e7f0f32a55724d3bb391b9254e1fdbe465a659b5c1938555",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "balance_lifecycle",
+      "utc": "2026-10-11T23:00:18.233919+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-lifecycle",
+        "lifecycle"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 1.9102461639995454,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "fff6cd930a17c8fee75eefc6998a99ac66f4bf17dbd1e2111b865dd42b32bfe1",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "balance_radial",
+      "utc": "2026-10-11T23:00:20.427568+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-radial",
+        "radial"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 1.77657770299993,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "3ed99c0da1d96415c46ab90b041c5b985dbf0b753f6d06d6a8a543ea909f5aa7",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "balance_cold-stand_write",
+      "utc": "2026-10-11T23:00:22.740991+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-cold-stand",
+        "cold-stand-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 2.0290401610036497,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "1088188939b44e4e9acf52f2941923aed02cf7ced3500673a27da04c04a8aa1b",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "balance_cold-stand_read",
+      "utc": "2026-10-11T23:00:24.270035+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-cold-stand",
+        "cold-stand-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 1.2451525650030817,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "805ae21292c83d669df676c68a8d99726f92645ea49b18ea2f3ed56f6759d108",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "balance_cold-recovery_write",
+      "utc": "2026-10-11T23:00:25.618102+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-cold-recovery",
+        "cold-recovery-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 1.0736728839983698,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "6fa8e55b1658a41fd75bd024c4cbb1948feb0de7fc4759c7ea63cc099bd79e77",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "balance_cold-recovery_read",
+      "utc": "2026-10-11T23:00:27.181738+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-cold-recovery",
+        "cold-recovery-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 1.2994650030013872,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "a7459c9e2c5bb796e108ea08eeb713561d678fed359e02783bef4d62478d190a",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "character_application",
+      "utc": "2026-10-11T23:00:30.089793+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/character"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 2.5570010360024753,
+      "executableSHA256": "75934adfcf7cbdc6a186850546779dc06de34937554c079a144303fa96f1b0f9",
+      "logSHA256": "bccc0b264f21207ad3b77bc6b51bb134992e1d29ea02c0690777e82bdad7269a",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "character_cold_write",
+      "utc": "2026-10-11T23:00:30.641435+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/character-cold",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.2575462060049176,
+      "executableSHA256": "75934adfcf7cbdc6a186850546779dc06de34937554c079a144303fa96f1b0f9",
+      "logSHA256": "17d41578258c4bdbd9efbc694cf42f231dba7cdcfea6222b4d633e39dbfe79ea",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "character_cold_read",
+      "utc": "2026-10-11T23:00:31.101206+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/character-cold",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "seconds": 0.20475086700025713,
+      "executableSHA256": "75934adfcf7cbdc6a186850546779dc06de34937554c079a144303fa96f1b0f9",
+      "logSHA256": "b26df6a9405a26e05dfc4905b87e39ea1990d644c4f8b4a6a362310a3434f22e",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    },
+    {
+      "name": "exact-native-cold-read",
+      "utc": "2026-10-11T23:00:32.620122+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/exact-native-snapshot",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "seconds": 1.38135011200211,
+      "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+      "logSHA256": "0a62295cae4d1d2855aced825f3bcbdc9de74b3bfc8aa06fa81dc8ed68250378",
+      "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+    }
+  ]
+}

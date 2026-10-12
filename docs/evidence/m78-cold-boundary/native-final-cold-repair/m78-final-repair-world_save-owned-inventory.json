@@ -1,0 +1,40 @@
+﻿[
+    {
+        "actualBytes":  7826432,
+        "attributes":  "Archive",
+        "processes":  [
+
+                      ],
+        "actualSHA256":  "48324de10c1bdaedbdfceb7462fcade8975e8ccdeaea33e0a8a3604f139fb206",
+        "expected":  {
+                         "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-world_save.exe",
+                         "sha256":  "48324de10c1bdaedbdfceb7462fcade8975e8ccdeaea33e0a8a3604f139fb206",
+                         "name":  "m78-final-repair-world_save.exe",
+                         "bytes":  7826432
+                     },
+        "exists":  true
+    },
+    {
+        "actualBytes":  202093,
+        "attributes":  "Archive",
+        "processes":  [
+
+                      ],
+        "actualSHA256":  "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322",
+        "expected":  {
+                         "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\world_save-0.obj",
+                         "sha256":  "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322",
+                         "name":  "world_save-0.obj",
+                         "bytes":  202093
+                     },
+        "exists":  true
+    },
+    {
+        "errors":  [
+
+                   ],
+        "free":  87359488,
+        "compressionLoaded":  false,
+        "recoveryZIPExists":  false
+    }
+]

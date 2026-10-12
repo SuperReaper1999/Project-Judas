@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_production_fluid_tests",
+    "--case",
+    "rotated_half",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/fluid-final"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:12:05.380390+00:00",
+  "seconds": 8.681743797002127,
+  "exitCode": 1,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "bece4804c38786427049d19507c7a6d90d7aee5bea9bdc4b7ecb0cc259edd2df",
+  "logSHA256": "59fae8bff49e64ed723633dd004416b94a6dbc3671b7d43114e2878d3dd8d811",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

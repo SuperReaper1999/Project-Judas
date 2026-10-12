@@ -1,0 +1,18 @@
+Second rig recovery: root 1.2568 up 1.0000 speed 0.0000 contacts 4/4, reason measured supported physical standing
+Second rig recovery: root 1.2566 up 1.0000 speed 0.0000 contacts 4/4, reason measured supported physical standing
+First planned foot 0, actual loads 1.95977592 / 1.96412122 N s
+FAIL actual step extends measured physical recovery envelope
+FAIL post-step physical standing settles before success
+Step comparison: lift 0.7877 m, stance travel 1.2833 m, landings 1, denied root 0.1779 m, allowed root 0.1496 m
+Moving support: root travel 0.29830 m, relative speed 0.00007 m/s, height 1.39820 m, supports 4/4
+Slope: height 1.39839 up 0.99999 speed 0.00000 contacts 4/4
+Radial: height 1.39651 up 0.99999 speed 0.00695 contacts 1/1
+Radial status 2 settled 1.00000 root speed 0.00420
+Dynamic support over frictionless bed: peak 0.0222224128 m/s
+Free-flight effort=0 interval=1 residual: linear 2.54712891e-08 kg m/s, angular 1.28678479e-07 kg m2/s, peak 12.1815081 rad/s
+Free-flight effort=0 interval=30 residual: linear 9.94991183e-07 kg m/s, angular 4.47474213e-06 kg m2/s, peak 12.1815081 rad/s
+Free-flight effort=0 interval=240 residual: linear 7.35036019e-06 kg m/s, angular 3.26292029e-05 kg m2/s, peak 12.1815081 rad/s
+Free-flight effort=1 interval=1 residual: linear 9.90283233e-09 kg m/s, angular 4.86877774e-08 kg m2/s, peak 0.0612132736 rad/s
+Free-flight effort=1 interval=30 residual: linear 2.55095696e-08 kg m/s, angular 4.42353709e-08 kg m2/s, peak 0.0612132736 rad/s
+Free-flight effort=1 interval=240 residual: linear 2.44451712e-06 kg m/s, angular 1.16664196e-05 kg m2/s, peak 10.1521816 rad/s
+Physical balance controller development: 119 checks, 2 failures

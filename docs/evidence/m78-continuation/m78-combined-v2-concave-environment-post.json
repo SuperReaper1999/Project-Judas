@@ -1,0 +1,780 @@
+﻿{
+    "processes":  [
+                      {
+                          "cpuSeconds":  0.1875,
+                          "workingSetBytes":  7159808,
+                          "name":  "AggregatorHost",
+                          "id":  3384
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  14155776,
+                          "name":  "conhost",
+                          "id":  6332
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  14176256,
+                          "name":  "conhost",
+                          "id":  9052
+                      },
+                      {
+                          "cpuSeconds":  1.71875,
+                          "workingSetBytes":  5644288,
+                          "name":  "csrss",
+                          "id":  496
+                      },
+                      {
+                          "cpuSeconds":  0.3125,
+                          "workingSetBytes":  5648384,
+                          "name":  "csrss",
+                          "id":  592
+                      },
+                      {
+                          "cpuSeconds":  0.3125,
+                          "workingSetBytes":  15810560,
+                          "name":  "ctfmon",
+                          "id":  1360
+                      },
+                      {
+                          "cpuSeconds":  0.578125,
+                          "workingSetBytes":  53432320,
+                          "name":  "dwm",
+                          "id":  1128
+                      },
+                      {
+                          "cpuSeconds":  6.6875,
+                          "workingSetBytes":  144760832,
+                          "name":  "explorer",
+                          "id":  4332
+                      },
+                      {
+                          "cpuSeconds":  0.140625,
+                          "workingSetBytes":  4751360,
+                          "name":  "fontdrvhost",
+                          "id":  876
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  4464640,
+                          "name":  "fontdrvhost",
+                          "id":  884
+                      },
+                      {
+                          "cpuSeconds":  2.40625,
+                          "workingSetBytes":  20041728,
+                          "name":  "lsass",
+                          "id":  740
+                      },
+                      {
+                          "cpuSeconds":  1.734375,
+                          "workingSetBytes":  103243776,
+                          "name":  "M365Copilot",
+                          "id":  8180
+                      },
+                      {
+                          "cpuSeconds":  6.734375,
+                          "workingSetBytes":  94318592,
+                          "name":  "Memory Compression",
+                          "id":  1704
+                      },
+                      {
+                          "cpuSeconds":  0.0625,
+                          "workingSetBytes":  4075520,
+                          "name":  "MicrosoftEdgeUpdate",
+                          "id":  9100
+                      },
+                      {
+                          "cpuSeconds":  5.734375,
+                          "workingSetBytes":  42192896,
+                          "name":  "MoUsoCoreWorker",
+                          "id":  3496
+                      },
+                      {
+                          "cpuSeconds":  1.46875,
+                          "workingSetBytes":  99545088,
+                          "name":  "msedge",
+                          "id":  7276
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  10727424,
+                          "name":  "msedge",
+                          "id":  7308
+                      },
+                      {
+                          "cpuSeconds":  0.234375,
+                          "workingSetBytes":  35840000,
+                          "name":  "msedge",
+                          "id":  7532
+                      },
+                      {
+                          "cpuSeconds":  0.125,
+                          "workingSetBytes":  24780800,
+                          "name":  "msedge",
+                          "id":  7540
+                      },
+                      {
+                          "cpuSeconds":  0.0625,
+                          "workingSetBytes":  18563072,
+                          "name":  "msedge",
+                          "id":  7560
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  10235904,
+                          "name":  "msedgewebview2",
+                          "id":  604
+                      },
+                      {
+                          "cpuSeconds":  0.90625,
+                          "workingSetBytes":  57344,
+                          "name":  "msedgewebview2",
+                          "id":  1948
+                      },
+                      {
+                          "cpuSeconds":  0.390625,
+                          "workingSetBytes":  4132864,
+                          "name":  "msedgewebview2",
+                          "id":  2288
+                      },
+                      {
+                          "cpuSeconds":  0.234375,
+                          "workingSetBytes":  31428608,
+                          "name":  "msedgewebview2",
+                          "id":  2476
+                      },
+                      {
+                          "cpuSeconds":  1.578125,
+                          "workingSetBytes":  84885504,
+                          "name":  "msedgewebview2",
+                          "id":  4020
+                      },
+                      {
+                          "cpuSeconds":  0.171875,
+                          "workingSetBytes":  17137664,
+                          "name":  "msedgewebview2",
+                          "id":  4488
+                      },
+                      {
+                          "cpuSeconds":  1.328125,
+                          "workingSetBytes":  7208960,
+                          "name":  "msedgewebview2",
+                          "id":  4724
+                      },
+                      {
+                          "cpuSeconds":  0.21875,
+                          "workingSetBytes":  33656832,
+                          "name":  "msedgewebview2",
+                          "id":  4792
+                      },
+                      {
+                          "cpuSeconds":  0.15625,
+                          "workingSetBytes":  45056,
+                          "name":  "msedgewebview2",
+                          "id":  6652
+                      },
+                      {
+                          "cpuSeconds":  0.9375,
+                          "workingSetBytes":  55656448,
+                          "name":  "msedgewebview2",
+                          "id":  6876
+                      },
+                      {
+                          "cpuSeconds":  1.03125,
+                          "workingSetBytes":  569344,
+                          "name":  "msedgewebview2",
+                          "id":  8344
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  7102464,
+                          "name":  "msedgewebview2",
+                          "id":  9084
+                      },
+                      {
+                          "cpuSeconds":  164.9375,
+                          "workingSetBytes":  291708928,
+                          "name":  "MsMpEng",
+                          "id":  2960
+                      },
+                      {
+                          "cpuSeconds":  0.09375,
+                          "workingSetBytes":  3817472,
+                          "name":  "MusNotification",
+                          "id":  6828
+                      },
+                      {
+                          "cpuSeconds":  0.140625,
+                          "workingSetBytes":  9023488,
+                          "name":  "MusNotificationUx",
+                          "id":  2056
+                      },
+                      {
+                          "cpuSeconds":  0.125,
+                          "workingSetBytes":  184320,
+                          "name":  "MusNotifyIcon",
+                          "id":  2736
+                      },
+                      {
+                          "cpuSeconds":  0.09375,
+                          "workingSetBytes":  13070336,
+                          "name":  "NisSrv",
+                          "id":  6760
+                      },
+                      {
+                          "cpuSeconds":  3.3125,
+                          "workingSetBytes":  77615104,
+                          "name":  "OneDrive",
+                          "id":  7008
+                      },
+                      {
+                          "cpuSeconds":  0.671875,
+                          "workingSetBytes":  5402624,
+                          "name":  "OneDrive.Sync.Service",
+                          "id":  4308
+                      },
+                      {
+                          "cpuSeconds":  0.625,
+                          "workingSetBytes":  38895616,
+                          "name":  "powershell",
+                          "id":  3380
+                      },
+                      {
+                          "cpuSeconds":  2.578125,
+                          "workingSetBytes":  81149952,
+                          "name":  "powershell",
+                          "id":  8756
+                      },
+                      {
+                          "cpuSeconds":  0.296875,
+                          "workingSetBytes":  14348288,
+                          "name":  "qemu-ga",
+                          "id":  2916
+                      },
+                      {
+                          "cpuSeconds":  1.296875,
+                          "workingSetBytes":  79937536,
+                          "name":  "Registry",
+                          "id":  108
+                      },
+                      {
+                          "cpuSeconds":  0.421875,
+                          "workingSetBytes":  16429056,
+                          "name":  "RuntimeBroker",
+                          "id":  1260
+                      },
+                      {
+                          "cpuSeconds":  2.359375,
+                          "workingSetBytes":  28839936,
+                          "name":  "RuntimeBroker",
+                          "id":  5220
+                      },
+                      {
+                          "cpuSeconds":  0.5,
+                          "workingSetBytes":  31821824,
+                          "name":  "RuntimeBroker",
+                          "id":  5784
+                      },
+                      {
+                          "cpuSeconds":  0.0625,
+                          "workingSetBytes":  16539648,
+                          "name":  "RuntimeBroker",
+                          "id":  6628
+                      },
+                      {
+                          "cpuSeconds":  0.15625,
+                          "workingSetBytes":  21725184,
+                          "name":  "RuntimeBroker",
+                          "id":  7024
+                      },
+                      {
+                          "cpuSeconds":  1.171875,
+                          "workingSetBytes":  50204672,
+                          "name":  "SearchApp",
+                          "id":  1900
+                      },
+                      {
+                          "cpuSeconds":  2.9375,
+                          "workingSetBytes":  86618112,
+                          "name":  "SearchApp",
+                          "id":  5544
+                      },
+                      {
+                          "cpuSeconds":  7.28125,
+                          "workingSetBytes":  36536320,
+                          "name":  "SearchIndexer",
+                          "id":  3580
+                      },
+                      {
+                          "cpuSeconds":  0.8125,
+                          "workingSetBytes":  17203200,
+                          "name":  "SecurityHealthService",
+                          "id":  6892
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  9838592,
+                          "name":  "SecurityHealthSystray",
+                          "id":  6860
+                      },
+                      {
+                          "cpuSeconds":  1.453125,
+                          "workingSetBytes":  10084352,
+                          "name":  "services",
+                          "id":  716
+                      },
+                      {
+                          "cpuSeconds":  0.328125,
+                          "workingSetBytes":  50728960,
+                          "name":  "ShellExperienceHost",
+                          "id":  5484
+                      },
+                      {
+                          "cpuSeconds":  1.515625,
+                          "workingSetBytes":  27402240,
+                          "name":  "sihost",
+                          "id":  3752
+                      },
+                      {
+                          "cpuSeconds":  0.203125,
+                          "workingSetBytes":  1175552,
+                          "name":  "smss",
+                          "id":  396
+                      },
+                      {
+                          "cpuSeconds":  0.140625,
+                          "workingSetBytes":  16248832,
+                          "name":  "spoolsv",
+                          "id":  2456
+                      },
+                      {
+                          "cpuSeconds":  0.890625,
+                          "workingSetBytes":  63401984,
+                          "name":  "StartMenuExperienceHost",
+                          "id":  5044
+                      },
+                      {
+                          "cpuSeconds":  0.171875,
+                          "workingSetBytes":  10874880,
+                          "name":  "svchost",
+                          "id":  380
+                      },
+                      {
+                          "cpuSeconds":  0.046875,
+                          "workingSetBytes":  5767168,
+                          "name":  "svchost",
+                          "id":  460
+                      },
+                      {
+                          "cpuSeconds":  2.0625,
+                          "workingSetBytes":  27291648,
+                          "name":  "svchost",
+                          "id":  856
+                      },
+                      {
+                          "cpuSeconds":  4.28125,
+                          "workingSetBytes":  14647296,
+                          "name":  "svchost",
+                          "id":  972
+                      },
+                      {
+                          "cpuSeconds":  0.046875,
+                          "workingSetBytes":  10391552,
+                          "name":  "svchost",
+                          "id":  988
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  12685312,
+                          "name":  "svchost",
+                          "id":  1028
+                      },
+                      {
+                          "cpuSeconds":  1.765625,
+                          "workingSetBytes":  19329024,
+                          "name":  "svchost",
+                          "id":  1096
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  12124160,
+                          "name":  "svchost",
+                          "id":  1160
+                      },
+                      {
+                          "cpuSeconds":  0.109375,
+                          "workingSetBytes":  8667136,
+                          "name":  "svchost",
+                          "id":  1216
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  6668288,
+                          "name":  "svchost",
+                          "id":  1344
+                      },
+                      {
+                          "cpuSeconds":  0.28125,
+                          "workingSetBytes":  8015872,
+                          "name":  "svchost",
+                          "id":  1368
+                      },
+                      {
+                          "cpuSeconds":  0.1875,
+                          "workingSetBytes":  14716928,
+                          "name":  "svchost",
+                          "id":  1444
+                      },
+                      {
+                          "cpuSeconds":  0.0625,
+                          "workingSetBytes":  8261632,
+                          "name":  "svchost",
+                          "id":  1456
+                      },
+                      {
+                          "cpuSeconds":  48.234375,
+                          "workingSetBytes":  105422848,
+                          "name":  "svchost",
+                          "id":  1480
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  6320128,
+                          "name":  "svchost",
+                          "id":  1500
+                      },
+                      {
+                          "cpuSeconds":  1.3125,
+                          "workingSetBytes":  16953344,
+                          "name":  "svchost",
+                          "id":  1560
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  11644928,
+                          "name":  "svchost",
+                          "id":  1724
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  8503296,
+                          "name":  "svchost",
+                          "id":  1736
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  7712768,
+                          "name":  "svchost",
+                          "id":  1752
+                      },
+                      {
+                          "cpuSeconds":  0.125,
+                          "workingSetBytes":  8294400,
+                          "name":  "svchost",
+                          "id":  1868
+                      },
+                      {
+                          "cpuSeconds":  0.046875,
+                          "workingSetBytes":  7495680,
+                          "name":  "svchost",
+                          "id":  1888
+                      },
+                      {
+                          "cpuSeconds":  0.359375,
+                          "workingSetBytes":  10559488,
+                          "name":  "svchost",
+                          "id":  2012
+                      },
+                      {
+                          "cpuSeconds":  0.3125,
+                          "workingSetBytes":  10174464,
+                          "name":  "svchost",
+                          "id":  2076
+                      },
+                      {
+                          "cpuSeconds":  0.125,
+                          "workingSetBytes":  14110720,
+                          "name":  "svchost",
+                          "id":  2092
+                      },
+                      {
+                          "cpuSeconds":  0.21875,
+                          "workingSetBytes":  7946240,
+                          "name":  "svchost",
+                          "id":  2176
+                      },
+                      {
+                          "cpuSeconds":  3.9375,
+                          "workingSetBytes":  16568320,
+                          "name":  "svchost",
+                          "id":  2232
+                      },
+                      {
+                          "cpuSeconds":  0.3125,
+                          "workingSetBytes":  8212480,
+                          "name":  "svchost",
+                          "id":  2248
+                      },
+                      {
+                          "cpuSeconds":  0.09375,
+                          "workingSetBytes":  10031104,
+                          "name":  "svchost",
+                          "id":  2260
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  11407360,
+                          "name":  "svchost",
+                          "id":  2268
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  13152256,
+                          "name":  "svchost",
+                          "id":  2324
+                      },
+                      {
+                          "cpuSeconds":  1.09375,
+                          "workingSetBytes":  18702336,
+                          "name":  "svchost",
+                          "id":  2500
+                      },
+                      {
+                          "cpuSeconds":  0,
+                          "workingSetBytes":  8577024,
+                          "name":  "svchost",
+                          "id":  2556
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  8593408,
+                          "name":  "svchost",
+                          "id":  2608
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  5926912,
+                          "name":  "svchost",
+                          "id":  2692
+                      },
+                      {
+                          "cpuSeconds":  5.1875,
+                          "workingSetBytes":  44879872,
+                          "name":  "svchost",
+                          "id":  2788
+                      },
+                      {
+                          "cpuSeconds":  2.03125,
+                          "workingSetBytes":  17596416,
+                          "name":  "svchost",
+                          "id":  2796
+                      },
+                      {
+                          "cpuSeconds":  1.921875,
+                          "workingSetBytes":  19120128,
+                          "name":  "svchost",
+                          "id":  2804
+                      },
+                      {
+                          "cpuSeconds":  1.078125,
+                          "workingSetBytes":  25022464,
+                          "name":  "svchost",
+                          "id":  2812
+                      },
+                      {
+                          "cpuSeconds":  0.09375,
+                          "workingSetBytes":  9707520,
+                          "name":  "svchost",
+                          "id":  2888
+                      },
+                      {
+                          "cpuSeconds":  0.125,
+                          "workingSetBytes":  11304960,
+                          "name":  "svchost",
+                          "id":  2944
+                      },
+                      {
+                          "cpuSeconds":  0.1875,
+                          "workingSetBytes":  20799488,
+                          "name":  "svchost",
+                          "id":  2988
+                      },
+                      {
+                          "cpuSeconds":  0,
+                          "workingSetBytes":  6103040,
+                          "name":  "svchost",
+                          "id":  3000
+                      },
+                      {
+                          "cpuSeconds":  0.640625,
+                          "workingSetBytes":  15585280,
+                          "name":  "svchost",
+                          "id":  3364
+                      },
+                      {
+                          "cpuSeconds":  0.140625,
+                          "workingSetBytes":  17395712,
+                          "name":  "svchost",
+                          "id":  3740
+                      },
+                      {
+                          "cpuSeconds":  0.046875,
+                          "workingSetBytes":  9027584,
+                          "name":  "svchost",
+                          "id":  3860
+                      },
+                      {
+                          "cpuSeconds":  0.09375,
+                          "workingSetBytes":  12881920,
+                          "name":  "svchost",
+                          "id":  3924
+                      },
+                      {
+                          "cpuSeconds":  1.125,
+                          "workingSetBytes":  38412288,
+                          "name":  "svchost",
+                          "id":  4060
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  16748544,
+                          "name":  "svchost",
+                          "id":  4300
+                      },
+                      {
+                          "cpuSeconds":  0.625,
+                          "workingSetBytes":  12447744,
+                          "name":  "svchost",
+                          "id":  4512
+                      },
+                      {
+                          "cpuSeconds":  0.53125,
+                          "workingSetBytes":  17842176,
+                          "name":  "svchost",
+                          "id":  4700
+                      },
+                      {
+                          "cpuSeconds":  0.078125,
+                          "workingSetBytes":  17899520,
+                          "name":  "svchost",
+                          "id":  4756
+                      },
+                      {
+                          "cpuSeconds":  0.546875,
+                          "workingSetBytes":  26148864,
+                          "name":  "svchost",
+                          "id":  5080
+                      },
+                      {
+                          "cpuSeconds":  3.03125,
+                          "workingSetBytes":  26578944,
+                          "name":  "svchost",
+                          "id":  5736
+                      },
+                      {
+                          "cpuSeconds":  0.296875,
+                          "workingSetBytes":  17461248,
+                          "name":  "svchost",
+                          "id":  6204
+                      },
+                      {
+                          "cpuSeconds":  3.25,
+                          "workingSetBytes":  14426112,
+                          "name":  "svchost",
+                          "id":  6316
+                      },
+                      {
+                          "cpuSeconds":  0.140625,
+                          "workingSetBytes":  9674752,
+                          "name":  "svchost",
+                          "id":  7320
+                      },
+                      {
+                          "cpuSeconds":  0,
+                          "workingSetBytes":  9478144,
+                          "name":  "svchost",
+                          "id":  7660
+                      },
+                      {
+                          "cpuSeconds":  0.015625,
+                          "workingSetBytes":  6377472,
+                          "name":  "svchost",
+                          "id":  8104
+                      },
+                      {
+                          "cpuSeconds":  0.046875,
+                          "workingSetBytes":  13557760,
+                          "name":  "svchost",
+                          "id":  8528
+                      },
+                      {
+                          "cpuSeconds":  0.109375,
+                          "workingSetBytes":  11530240,
+                          "name":  "svchost",
+                          "id":  8548
+                      },
+                      {
+                          "cpuSeconds":  0.328125,
+                          "workingSetBytes":  25333760,
+                          "name":  "svchost",
+                          "id":  8596
+                      },
+                      {
+                          "cpuSeconds":  0.03125,
+                          "workingSetBytes":  8216576,
+                          "name":  "svchost",
+                          "id":  8676
+                      },
+                      {
+                          "cpuSeconds":  110.234375,
+                          "workingSetBytes":  151552,
+                          "name":  "System",
+                          "id":  4
+                      },
+                      {
+                          "cpuSeconds":  0.28125,
+                          "workingSetBytes":  16146432,
+                          "name":  "taskhostw",
+                          "id":  2672
+                      },
+                      {
+                          "cpuSeconds":  1,
+                          "workingSetBytes":  52555776,
+                          "name":  "vctip",
+                          "id":  5068
+                      },
+                      {
+                          "cpuSeconds":  0.0625,
+                          "workingSetBytes":  7282688,
+                          "name":  "wininit",
+                          "id":  576
+                      },
+                      {
+                          "cpuSeconds":  0.21875,
+                          "workingSetBytes":  11771904,
+                          "name":  "winlogon",
+                          "id":  676
+                      },
+                      {
+                          "cpuSeconds":  0.28125,
+                          "workingSetBytes":  13406208,
+                          "name":  "WmiPrvSE",
+                          "id":  7404
+                      }
+                  ],
+    "stage":  "post",
+    "freeVirtualKiB":  4279564,
+    "cpu":  [
+                {
+                    "loadPercent":  16,
+                    "name":  "Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz",
+                    "cores":  4,
+                    "logical":  4
+                }
+            ],
+    "utc":  "2026-10-11T19:37:37.2568606Z",
+    "scope":  "Environment only, no process or VM configuration changes. Cumulative CPU snapshots bound background work over the interval; no instantaneous idle guarantee fabricated.",
+    "freeBytes":  345063424,
+    "freePhysicalKiB":  3366268
+}

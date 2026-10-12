@@ -1,0 +1,6 @@
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$base='http://192.168.122.1:8872';$p='C:\JudasValidation\M78Results\common.json';$z='C:\JudasValidation\m78-closure-common.json.gz';$r='C:\JudasValidation\m78-closure-common-archive.json'
+if(Test-Path $z){throw 'Preserve existing archival output'};if((Get-Item $p).Length -ne 22619770){throw 'Original report byte count changed'}
+$before=(Get-FileHash $p).Hash.ToLower();$in=[IO.File]::OpenRead($p);$out=[IO.File]::Create($z);$gzip=[IO.Compression.GZipStream]::new($out,[IO.Compression.CompressionMode]::Compress);try{$in.CopyTo($gzip)}finally{$gzip.Dispose();$out.Dispose();$in.Dispose()};if((Get-FileHash $p).Hash.ToLower() -ne $before){throw 'Original changed during lossless archival'}
+if((Get-Item $z).Length -gt 16MB){throw 'Archive exceeds transfer bound; preserve source'}
+@{scope='Lossless archive only, no source removal until exact independent host decompression verification';source=$p;sourceBytes=(Get-Item $p).Length;sourceSHA256=$before;archive=$z;archiveBytes=(Get-Item $z).Length;archiveSHA256=(Get-FileHash $z).Hash.ToLower()}|ConvertTo-Json|Set-Content $r -Encoding UTF8
+Invoke-WebRequest -UseBasicParsing "$base/m78-closure-common.json.gz" -Method Post -InFile $z|Out-Null;Invoke-WebRequest -UseBasicParsing "$base/m78-closure-common-archive.json" -Method Post -InFile $r|Out-Null

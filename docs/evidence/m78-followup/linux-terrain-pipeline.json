@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_terrain_pipeline_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/terrain-controls-final"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:12:03.961759+00:00",
+  "seconds": 0.2649510190021829,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "2efb2a44092d5114ed1753814645a2f1c73bdaceeade756ef088aaa340cf111c",
+  "logSHA256": "b1198dc269d3961a44372344cb4c3ccc6dc453a9f43cb1739694c277a9506a92",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

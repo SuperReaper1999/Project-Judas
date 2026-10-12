@@ -1,0 +1,15 @@
+{
+  "name": "character_cold_write",
+  "utc": "2026-10-11T23:00:30.641435+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_character_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/character-cold",
+    "cold-write"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.2575462060049176,
+  "executableSHA256": "75934adfcf7cbdc6a186850546779dc06de34937554c079a144303fa96f1b0f9",
+  "logSHA256": "17d41578258c4bdbd9efbc694cf42f231dba7cdcfea6222b4d633e39dbfe79ea",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

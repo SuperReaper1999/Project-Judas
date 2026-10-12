@@ -1,0 +1,473 @@
+{
+  "scope": "Independent source/math review only; no production changes, builds or test execution by reviewer. New report records existing bounded observer evidence.",
+  "findings": {
+    "coldFirstBoundary": "Actual fresh restoration omits14angular actuator rows and skips first controller preparation; source36rows/restoration22rows.",
+    "warmTopology": "Real seed-dependent predictive row selection demonstrated separately, not first M77 boundary because no limits active.",
+    "qpMath": "Signs, current inertia/Jacobian, gamma, box bounds and accumulated impulse replay reviewed correct.",
+    "causalRepair": "Selective NEW-capture continuation proposal independently reviewed and signed off for final combined validation: proper Linux original write24/0/read13/0, controller119/0, focused40/0, exact first returned contact samples for12 bodies. Old a106 remains13/1; no old-snapshot repair established.",
+    "diagnosticCorrections": "Corrected actual root identity and unbounded margin JSON; numerical QP conclusions unchanged.",
+    "nativePairedBoundary": "Exact native paired pre-Prepare physical fields match; 36/36/22 rows distinguish initial guesses from missing first drive commands.",
+    "laterFailure": "Owned failure-only observer tags actual touchdown deadline after one landing; valid matching support and lifted=true, error 0.696397 m vs unchanged 0.2 m; ordinary step 15/0.",
+    "feedback": "Common post-IK correction cancels free relative targets, but grounded ankle override retains feedback; authored fractions ignored in step path are 1/1 in exact fixture.",
+    "referenceGeometry": "Exact native implied post-common-rotation reference endpoints differ by 0.317811/0.279047 m. Not actual displacement or a first-boundary cause proof.",
+    "rejectedDiagnostics": "First-publication split, independent better-converged QP and coherent world-foot IK do not repair unchanged physical continuation; no production repair retained.",
+    "staleObservation": "Some unchanged application Standing counts can accept stale observations after failed status. Current physical state/status must qualify interpretation, not alter test thresholds.",
+    "rejectedPivot": "Reference-root same-C pivot translation plus coherent IK also loses the accepted corrective envelope and fails exact cold continuation; not retained.",
+    "computationalClosure": "Exact-guarded captured first commands+seeds replay genuinely passes 14/0/current standing on Linux, with or without normal Prepare. It is causal diagnostic evidence, not general production reconstruction or cache-persistence justification.",
+    "oldArchiveGap": "Previous finite-pass dual state and commands are not uniquely determined by current saved physical fields. Selective future continuation-state persistence needs a separate validated contract and cannot recover omitted data in the unchanged old archive; no safe old-snapshot repair established.",
+    "passiveSeedIsolation": "Commands-only fails; seeds-only passes with original restored waiting phase. Disabled first drives do not use their impulses and later enabling clears them, isolating effective intervention to passive warm[12].",
+    "commandHysteresis": "PhysicsWorld SetJointAngularDrive intentionally retains previous target within quaternion dot deadband. The 0.000595620 rad mismatch lies inside it; not attributed to float ULP noise.",
+    "newCaptureRepairAssessment": "Versioned, guarded passive articulation history is defensible to test after causal seed isolation. It cannot recover omitted old a106 history. Native repetitions and unchanged fresh cold-write/read remain required.",
+    "newCaptureCounterexample": "Copied WorldPersistence passive12-only new Linux capture write passes 24/0; fresh read fails 13/1 with Failed status/current root y=0.248508. Passive history alone is not generally sufficient.",
+    "actuatorPersistenceAssessment": "Actual latched drive commands are semantic actuator state and cannot be uniquely rebuilt from history. They must be reconstructed after balance Configure, before publication; drive impulses remain a separately justified numerical field.",
+    "commandAndPublicationSplit": "Copied full passive+latched command history still fails first waiting phase. With normal Prepare, no-drive-impulses fails; with drive impulses succeeds with current physical supported standing. Publication state still needs legitimate reconstruction.",
+    "observationAssessment": "Completed contact observations are readonly authoritative output, separate from solver caches and M42 pairs. A bounded validated publication snapshot, including genuine completed-empty epoch, is legitimate to test; old unavailable guard must not be blindly bypassed.",
+    "actualPublicationPrototype": "Copied real completed-observation publication passes unchanged controller119/0 and new capture24/0/read13/0; old a106 remains13/1. Saved completion epoch546 includes real foot-foot row, not invented global zero.",
+    "publicationRetentionGuards": "Reader-equivalent capture filtering; after all physical participants; portable body/context validation; solver/dt guard; companion layout consistency; no diagnostic dispatch; direct first returned sample parity still required.",
+    "properProposal": "Articulation4 defers mapped joint history and actual latched commands until physical/balance reconstruction; contacts2 independently restores actual readonly completed publication. Exact body/settings context checks and timestep/invalidation guards reviewed. No production edit by reviewer.",
+    "proposalGuardReview": "Near-unit stored target guard and omitted-readable-contact unavailable-publication demotion implemented and reviewed. Corrected focused guard40/0 passes; initial29/3 remains preserved separately.",
+    "readerParity": "Actual ReadBodyContactSample source/restored before first Prepare is bitwise equal for12 alive bodies by durable entity ID, including two directional views of genuine pad/pad load0.19666458666324615. No invented loads.",
+    "signoff": "Reviewed owned proper source is safe to apply for final combined Linux/native Windows tests, not a claim those final reruns already passed. No production edits/build/test runs by reviewer.",
+    "reviewedProposalSourceSHA256": {
+      "PhysicsWorld.cpp": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff",
+      "PhysicsWorld.h": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9",
+      "PhysicalBalance.cpp": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+      "WorldPersistence.cpp": "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+      "WorldPersistence.h": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c"
+    },
+    "sourceApplication": "Initial five-source application matched the independently reviewed proper continuation proposal exactly. Prior source hashes retained; a later separately reviewed WP-only real-body/proxy correction is recorded below. Applied by owning agent, not this reviewer.",
+    "documentationReview": "Authorized narrow edits in ARCHITECTURE/M77/JudasJS saves distinguish frozen stages, compatible completed publication and legacy/unavailable reacquisition. Original a106 gap remains clear. No source/test/runtime edit by reviewer.",
+    "inventoryProbeReview": "Read-only source review found no substantive preservation/allowlist defect. Capture only after final source/report/result freeze; optional later verification metadata is explicitly excluded and should be identified separately.",
+    "fixtureExactness": "Independently compared all seven first post-solve native source/guarded replay body states by joint-ordinal remapping and all12 final new source/restored observer bodies by durable ID. Recorded fields match exactly; no universal determinism claim.",
+    "combinedStatusAtDocReview": "Root-reported final Linux continuation49/0 and affected M77 pass; Character Lab cold14/3 under investigation and native final pending. Mechanism/source signoff does not certify the unresolved combined candidate.",
+    "partialAnchorCapture": "Existing slotless GetEntityState cached-state capture plus SetEntityState ResetBody loses actual prescribed static pose/velocities; strict continuation context detects the mismatch. Copied actual37-body observer fields independently equal; unchanged M70 10/0+14/0 and M77 24/0+13/0 receipts read. Guarded real-body Full fidelity/motor exclusion plus follow-up probes pending before acceptance.",
+    "partialAnchorGuard": "Broad RuntimeBody includes CharacterMotor observation capsule at root+rotation*offset, not authoritative root/motor velocity. Retain original motor and Coarse/Dormant state paths; apply actual PW override only to eligible real body. Old lost static data not retroactively reconstructible.",
+    "finalSourceVerdict": "Selective new-capture continuation plus separately guarded WP-only real-body and derived motor-query reconstruction signed off for application/final combined checks. Old a10613/1 remains explicit; no retroactive repair or completed-final-rerun claim.",
+    "staticMotorFinalProposal": "WP39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb; Full real-body capture/read excludes motor proxies; Motors recreates derived offset query geometry and enabled/filter/tags before later continuation. New49-check proof original49/10, static-only49/8, final49/0; copied unchanged M70 10/0+14/0, M77 24/0+13/0.",
+    "newProbeQuaternionQualification": "Initial49/2 preserved. Cached entity quaternion differs by normal setter renormalization, componentL2 measured1.248e-7 and normalized rotation about2.036e-8rad. Only this NEW cached-entity assertion uses<2e-7; exact motor/proxy quaternion checks and all historical acceptance checks unchanged.",
+    "staticMotorSourceApplication": "Owning agent applied WP39ae0eb and appended new tests2c37b796 exactly as reviewed. Reviewer independently checked both against frozen approved identity before updating current WP fingerprint; prior81e continuation source fingerprint retained. Root reports actual unit98/0/worldsave27/0, final affected matrix still owned by root."
+  },
+  "reviewed": [
+    {
+      "path": "docs/evidence/m78-cold-boundary/independent-review.md",
+      "bytes": 38162,
+      "sha256": "4feffed7f3fde947abfa6b13d3b4c20d12b9f052d8944f1b9a99c51f68d08819"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-source-joint-boundary.jsonl",
+      "bytes": 11624900,
+      "sha256": "aaaf74dfcc3e089d60870829a2289ea9e5e6eb793106cf65cda6eb5d1326fe78"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-native-restore-joint-boundary.jsonl",
+      "bytes": 10385082,
+      "sha256": "a648471768bb6be963bbb63d35fda6873fdfa0e361332e29e6f3c449c945cb7b"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-source-first-qp.json",
+      "bytes": 21463,
+      "sha256": "97be1c81dca021cbfc292397f9cfe7d3c7c59b2395d804fc34b0263bb7a578c8"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-native-restore-first-qp.json",
+      "bytes": 6288,
+      "sha256": "4763e2973c4a626b516b5ea7a3009be0921054382d6dbf073e6848811a54cb03"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_boundary_journal.py",
+      "bytes": 9293,
+      "sha256": "9b605301f876477935cea7246e2c80fbf12a1e751fd41382f74d621159d2cb79"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/analyze_row_qp.py",
+      "bytes": 8975,
+      "sha256": "9b1bf79e46d09dc60a12341bc4af787f9b42013816b129e77e6f46f9c2c3f103"
+    },
+    {
+      "path": "src/JointSolver.cpp",
+      "bytes": 8237,
+      "sha256": "72e43f81cb8c773a8029528fc0ac290b41966614a405a468c93cc45132726444"
+    },
+    {
+      "path": "src/ContactSolver.cpp",
+      "bytes": 15058,
+      "sha256": "17f5b0f8772a75896f438ebc9759b9df1cf5166cfdd471650929baead46b03e2"
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "bytes": 193586,
+      "sha256": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff",
+      "priorReviewedSHA256": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+      "priorReviewedBytes": 181934,
+      "sourceTransition": "Applied source exactly matches independently reviewed proper proposal; prior hash retained."
+    },
+    {
+      "path": "src/PhysicalBalance.cpp",
+      "bytes": 39307,
+      "sha256": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+      "priorReviewedSHA256": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+      "priorReviewedBytes": 39133,
+      "sourceTransition": "Applied source exactly matches independently reviewed proper proposal; prior hash retained."
+    },
+    {
+      "path": "src/WorldPersistence.cpp",
+      "bytes": 46848,
+      "sha256": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb",
+      "priorReviewedSHA256": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+      "priorReviewedBytes": 42002,
+      "sourceTransition": "Later source exactly matches separately independently reviewed Full real-body/private motor-proxy reconstruction proposal; original pre-repair and initial continuation-repair hashes both retained.",
+      "priorContinuationRepairSHA256": "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+      "priorContinuationRepairBytes": 45340
+    },
+    {
+      "path": "src/Simulation.cpp",
+      "bytes": 10874,
+      "sha256": "699d97408cc80d090fd775b4193f62835c734a1a72adab9985e48ce18f41ce9c"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-first-boundary-comparison.json",
+      "bytes": 16640,
+      "sha256": "b2bab3e8bba4bad683869cb327ecca051520a1a0a7c8e905eb7b95c9680f90bd"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-source-first-qp.json",
+      "bytes": 21476,
+      "sha256": "1db6823eabe1ff3cfcda8b059e396bdf243a5f8aa8f60f83876577c7142513e2"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-seed-off-first-qp.json",
+      "bytes": 21614,
+      "sha256": "2f26a22f9c5297e941cdc59669214f72b68be22dec865dd7f789f2e37ead4746"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-restored-first-qp.json",
+      "bytes": 16860,
+      "sha256": "b4dbae09def376ba5f8c83011d7e804943d0ac5aab881f18903aca1f3c2fd42f"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/balance-target-feedback-analysis.json",
+      "bytes": 10034,
+      "sha256": "bcd742ad98b6f4a7574ef9b2e1b8bbc3f18f0cccbbfc2f5edf9c194d186ee603"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/analyze_balance_target_feedback.py",
+      "bytes": 12761,
+      "sha256": "27155a31b81e402432c8150b2fb04533adcdecddf794e7acacb42ab1b7ae2fa0"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_balance_failure_observer.py",
+      "bytes": 7946,
+      "sha256": "cc46f69da292df1697cfa27000b146c37ada69ef272aab64c7d5dcb5b7c836a5"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/target-feedback-linux-physical-before-save.json",
+      "bytes": 35652,
+      "sha256": "e206344a58b9078e98453a95d095bd665125e79bd38b899980567b07ff2a1b52"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/target-feedback-linux-trace.jsonl",
+      "bytes": 608287,
+      "sha256": "4bf26f8b589269aa43c3f533c00e62416926d37b2d4566dac6ee8fcf537d9d00"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/failure-observer/failure.jsonl",
+      "bytes": 8282,
+      "sha256": "8c67b1b8d993eba29a60eef72db10ec8eab1289536f299409b19c0d2eaa3c607"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/failure-observer/RESULTS.json",
+      "bytes": 4444,
+      "sha256": "9b28acc8f6b67586ab2616d5a557fd419893501365111aac6418348a604a67c4"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/failure-observer/exact-native-cold-read.log",
+      "bytes": 982,
+      "sha256": "0a62295cae4d1d2855aced825f3bcbdc9de74b3bfc8aa06fa81dc8ed68250378"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/failure-observer/ordinary-step.log",
+      "bytes": 1750,
+      "sha256": "f56b6a55b709b690e7f0f32a55724d3bb391b9254e1fdbe465a659b5c1938555"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/coherent-ik-pivot/RESULTS.json",
+      "bytes": 7576,
+      "sha256": "e14d6231866fd17b29aa89382857ffedfd07789bfb1c4119e63f50dcad18e0dc"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/coherent-ik-pivot/controller.log",
+      "bytes": 1728,
+      "sha256": "a9c795cd62160b46566c288c8c877ff144737bfc7193b992ecaf9432b1f133b9"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/coherent-ik-pivot/ordinary-step.log",
+      "bytes": 1768,
+      "sha256": "a5ab8687c8836cc57c63869912e9b418e1db44a500f88dfce6b87fd9ccaaae64"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/coherent-ik-pivot/exact-native-cold-read.log",
+      "bytes": 982,
+      "sha256": "325bb5c64944fefc6a9b6111e18af6a3c748d9a2a33b70630301165de41cbbd3"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-isolation.json",
+      "bytes": 11182,
+      "sha256": "f3a11e6f97acc39bbc71f0dc7d0dddf98cbdbcd2349e84e9e545470a2d02204e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_first_boundary_closure.py",
+      "bytes": 4692,
+      "sha256": "98dc738deb6d799bdcf058dfdf4d2149c3511ea948a77eb491271b6f84a3eb5d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-commands-seeds-physical-final.json",
+      "bytes": 35698,
+      "sha256": "1f7c70b6a94e62fcfec42ddae30a300f698b56cd41d49a370ed938449d80312f"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-commands-seeds-normal-prepare-physical-final.json",
+      "bytes": 35806,
+      "sha256": "f92fb43102a11a978122bd809f73ec11a0b2a7d0b748d5c4602448a068fd2447"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-split-isolation.json",
+      "bytes": 12718,
+      "sha256": "8dd727f3ba528777f3a17478e4a7e994167adb7a14211f4939a0c260f6ceede9"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-split-seeds-physical-final.json",
+      "bytes": 35814,
+      "sha256": "ea871dbbdc176cc71c852f4d00eb906511da398d96c647f0b767a62f13bc92ff"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-split-seeds-joint-boundary.jsonl",
+      "bytes": 778644,
+      "sha256": "cc84dff05e59c7f4b92d45efec079c54048b3ed2114adb1ff8c4f35386a67211"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-first-closure-split-seeds-normal-prepare-physical-final.json",
+      "bytes": 35826,
+      "sha256": "3224fc41e58a2a0f36e9f83091542872859c323fc68465a7a82bb5690fa5c6e3"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/first-boundary-closure-split-command-comparison.json",
+      "bytes": 37286,
+      "sha256": "bab099a16c66199cf3a78c17bdea7000a52f1ae738e15e68c6f42b9692c33bfa"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_first_boundary_closure_split.py",
+      "bytes": 2859,
+      "sha256": "4cf1183266848c48f9e861fe3458ab756b20c28629d3a755d0122ce739bd1e8c"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-passive-cold-write.log",
+      "bytes": 1607,
+      "sha256": "8a082f152346484e0199855434449c2394b8c44af8829c55f2a93c1c63f82231"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-passive-cold-read.log",
+      "bytes": 983,
+      "sha256": "cfc5e2f334dc2f1ee5f578fd2638e1adef9501d8daa24139ea8d1c2dd1a0afef"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_new_capture_passive_history.py",
+      "bytes": 3074,
+      "sha256": "7414c8b651f255067e60d3239131e1378f668d05f6fb7b62c97cd618b6f05383"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-command-no-impulses-normal-cold-read-observer.log",
+      "bytes": 23681,
+      "sha256": "9edd34baf1ba7e406d4bd1a90956597e3b21429abfccf40afd8c75bf1cd72499"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-command-with-impulses-normal-cold-read-observer.log",
+      "bytes": 23895,
+      "sha256": "93cb4b8b8cbb94df2bbe9a6bdf81e43bf86093f2f9706253206c9e9af2590e2a"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-new-capture-command-no-impulses-normal-cold-read-physical-final.json",
+      "bytes": 35060,
+      "sha256": "32bc7d279ba689148484bc2eefe2e53693deda63367e3f9700b0e694449d8d44"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-new-capture-command-with-impulses-normal-cold-read-physical-final.json",
+      "bytes": 35775,
+      "sha256": "08c1af15b278553b9c15fb864f5f22e13bd34c9aff0477a9b3a7a948582099cc"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-new-capture-command-with-impulses-original-cold-write-diagnostic-uninterrupted-trace.jsonl",
+      "bytes": 608287,
+      "sha256": "4bf26f8b589269aa43c3f533c00e62416926d37b2d4566dac6ee8fcf537d9d00"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-publication-saved-observations.json",
+      "bytes": 1137,
+      "sha256": "760a00457da772b5d4f1e03992e5c470b6036d633b0527716ee093405a1f489d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-new-capture-publication-isolation.json",
+      "bytes": 11207,
+      "sha256": "729351e1c08abd226cdf0af748aacb03b3aeef1c73f77f5501007cf81eb2c873"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-publication-cold-read.log",
+      "bytes": 964,
+      "sha256": "80708001018eadf6565733a04a1546a93b89143e569dd8a448b82824f2806b7d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-publication-cold-write.log",
+      "bytes": 1607,
+      "sha256": "8a082f152346484e0199855434449c2394b8c44af8829c55f2a93c1c63f82231"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-publication-controller.log",
+      "bytes": 1563,
+      "sha256": "3ae721971c11f39f834f82506bcb39e8c6aa9043dc3a7be293d061979aeedd58"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/new-capture-publication-legacy-a106.log",
+      "bytes": 982,
+      "sha256": "0a62295cae4d1d2855aced825f3bcbdc9de74b3bfc8aa06fa81dc8ed68250378"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_new_capture_publication.py",
+      "bytes": 9709,
+      "sha256": "26c1aad8ff3a53a76088693d1e8c559ff08160870dd346f5b4e4d907dfdd6058"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/proposed-continuation-cold-write.log",
+      "bytes": 1607,
+      "sha256": "8a082f152346484e0199855434449c2394b8c44af8829c55f2a93c1c63f82231"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/proposed-continuation-cold-read.log",
+      "bytes": 964,
+      "sha256": "80708001018eadf6565733a04a1546a93b89143e569dd8a448b82824f2806b7d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/proposed-continuation-original-controller.log",
+      "bytes": 1563,
+      "sha256": "3ae721971c11f39f834f82506bcb39e8c6aa9043dc3a7be293d061979aeedd58"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/proposed-continuation-legacy-a106.log",
+      "bytes": 982,
+      "sha256": "0a62295cae4d1d2855aced825f3bcbdc9de74b3bfc8aa06fa81dc8ed68250378"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/proposed-continuation-focused-unit.log",
+      "bytes": 162,
+      "sha256": "eb1ebb27c1c30a995da0507bcfc5314c8972e231a63511d4291a14c4c712932d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/prepare_proposed_continuation.py",
+      "bytes": 22286,
+      "sha256": "871efe211d7c3e6edd0c4f4a073e0bea082dcbd720b5325b37ea3554d3d84f59"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-reviewed-continuation-isolation.json",
+      "bytes": 13572,
+      "sha256": "6c572f737c5b6fc9676c37004bb7c2c4b0d26cf29073d7ee77e6a064b4dd05cc"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/reviewed-continuation-focused-unit.log",
+      "bytes": 29,
+      "sha256": "85d2260495d0ce4a0b9bf2403c746c45bc15e898ff3fe9b8a76c3844120fcce4"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/reviewed-continuation-cold-write.log",
+      "bytes": 1607,
+      "sha256": "8a082f152346484e0199855434449c2394b8c44af8829c55f2a93c1c63f82231"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/reviewed-continuation-cold-read.log",
+      "bytes": 964,
+      "sha256": "80708001018eadf6565733a04a1546a93b89143e569dd8a448b82824f2806b7d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/reviewed-first-returned-contact-sample-parity.json",
+      "bytes": 3336,
+      "sha256": "26142e3b6e1c9982f8cbf250bcc30931c9e063c2957e24b0bc4c933930a5ae94"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-reviewed-samples-cold-write-physical-before-save.json",
+      "bytes": 37723,
+      "sha256": "6dae424fb3df703310bf644445fed4a23b809995fbc4e6725ad3098f7cff4388"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-reviewed-samples-cold-read-physical-immediately-restored.json",
+      "bytes": 37746,
+      "sha256": "fb905e1913327fa3a97d63433bb15d72a610ef69b04e17cc24a159e76d1b3af4"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/probes/build_run_reviewed_continuation.py",
+      "bytes": 3935,
+      "sha256": "d1e54f7a77ffb853bb52224557cd545f303cb8ab44753e97e6270f8b6fa9d5d7"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "bytes": 31637,
+      "sha256": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9"
+    },
+    {
+      "path": "src/WorldPersistence.h",
+      "bytes": 1871,
+      "sha256": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/FINAL_PROPOSAL_IDENTITY.json",
+      "bytes": 716,
+      "sha256": "6c848a4bfe74457e69a148533e8a3054b9c6c832ddb6eac8e52f559a7abef515"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/PROPOSED.patch",
+      "bytes": 5689,
+      "sha256": "26534e25786c067c363cd14ac789ffa100e82e8b364099e180bb68fda374a7b3"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/GUARDS_V2_RECEIPT.json",
+      "bytes": 6520,
+      "sha256": "38174bba36794a0252822b5ee15db9315565368e2e3885c82b5c6c38ed21b86e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/CACHED_ENTITY_QUATERNION_ROUNDING.json",
+      "bytes": 1705,
+      "sha256": "bf90a0c80fa87b4b4ac5266addd511def245cc86d95fd6364cfac6483d1a76b2"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/PERMANENT_TESTS.patch",
+      "bytes": 9984,
+      "sha256": "270317b9b9c90ff33ae6ce3e5cf0b03a72e218bf6cc20c3422368b1312e37222"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/guard-v2-original.log",
+      "bytes": 695,
+      "sha256": "99e0c1a3e109391e10f51defc5db1fabc7db1d74d96c3fd2f7d2446a6c5ec8e9"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/guard-v2-static-only.log",
+      "bytes": 579,
+      "sha256": "902e2f175748b630084af66b5256ece0062a2f9010588183ba008d36d856b285"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-final-proposal/guard-v2-corrected.log",
+      "bytes": 29,
+      "sha256": "0ce0c3feee48fd8e4c0bbafdcd0137b8c378eb374e1efa6f1ec5c87740892783"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-motor-reconstruction/PARITY.json",
+      "bytes": 498,
+      "sha256": "92d14efc790395f4861b851d45661f60d549a7c7307c573fdf7b18c83f69d52d"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-motor-reconstruction/actual-before-capture.json",
+      "bytes": 15873,
+      "sha256": "9009237b122eedeb4b0cc3c526e6bf8c8763826ed575f5b6625cbb472eda429e"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/static-anchor-motor-reconstruction/actual-immediately-restored.json",
+      "bytes": 15873,
+      "sha256": "e90acf8beee621e2641e3d392bd172e3b7af2219d37a4e1bbc15e7bea4bf8808"
+    }
+  ]
+}

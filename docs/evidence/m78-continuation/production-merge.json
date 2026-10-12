@@ -1,0 +1,11 @@
+{
+  "before": {
+    "src/PhysicsWorld.cpp": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+    "src/RigidMotion.h": "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497"
+  },
+  "after": {
+    "src/PhysicsWorld.cpp": "adcd0dcb7a49f918cd4db2143ce6040a606bc5f7b02d333fb83e34ac5381de82",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+  },
+  "source": "right_observations_v2 plus exact accepted-witness Boolean path; explicit authored reset invalidation and range guard"
+}

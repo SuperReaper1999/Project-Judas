@@ -1,0 +1,51 @@
+{
+  "scope": "Measured 9-significant-digit float output from ROOT_QUATERNION_NORMALIZATION.log; ordinary SetEntityState invokes SetRuntimeTransform normalization. This new guard fixture uses component L2 <2e-7 only for cached entity orientation, retaining exact actual motor/proxy comparisons. No original acceptance threshold changed.",
+  "fixtureInitialChecks": 49,
+  "fixtureInitialFailures": 2,
+  "rows": [
+    {
+      "enabled": true,
+      "sourceCachedQuaternion_wxyz": [
+        0.939372718,
+        0.0916432887,
+        0.183286577,
+        0.274929851
+      ],
+      "restoredCachedQuaternion_wxyz": [
+        0.939372838,
+        0.0916432962,
+        0.183286592,
+        0.274929881
+      ],
+      "maxComponentDifference": 1.200000000478596e-07,
+      "componentL2Difference": 1.2482487736922792e-07,
+      "normalizedDoubleRotationDifferenceRadians": 2.0355789806218644e-08,
+      "positionExactlyEqual": true,
+      "velocityExactlyEqual": true,
+      "motorQuaternionExactlyEqual": true,
+      "proxyQuaternionExactlyEqual": true
+    },
+    {
+      "enabled": false,
+      "sourceCachedQuaternion_wxyz": [
+        0.939372838,
+        0.0916432962,
+        0.183286592,
+        0.274929881
+      ],
+      "restoredCachedQuaternion_wxyz": [
+        0.939372718,
+        0.0916432887,
+        0.183286577,
+        0.274929851
+      ],
+      "maxComponentDifference": 1.200000000478596e-07,
+      "componentL2Difference": 1.2482487736922792e-07,
+      "normalizedDoubleRotationDifferenceRadians": 2.0355789806218644e-08,
+      "positionExactlyEqual": true,
+      "velocityExactlyEqual": true,
+      "motorQuaternionExactlyEqual": true,
+      "proxyQuaternionExactlyEqual": true
+    }
+  ]
+}

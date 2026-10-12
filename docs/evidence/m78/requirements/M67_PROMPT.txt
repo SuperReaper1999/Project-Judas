@@ -1,0 +1,503 @@
+# M67 — Judas learns to build worlds
+## Combined editor productivity and supported content-authoring milestone
+
+Starting checkpoint:
+b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859
+
+Expected baseline: accepted M66, HEAD = main = origin/main, worktree clean.
+
+This explicitly combines the previously planned M67 (editor/world-building) and
+M68 (human/code-first authoring formats and interfaces) into ONE M67. Implement
+both together, give the operator one complete candidate, and stop for review.
+Do not create a separate M68, renumber M69/M70, or start their work.
+
+JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
+
+The goal is not another collection of controls. A developer must be able to build,
+edit and maintain a substantial level and its UI inside Judas, or through supported
+text/CLI workflows, without reverse-engineering C++ serializers, writing an external
+park generator, or breaking references whenever content changes.
+
+Do not commit, push, merge or tag before operator acceptance.
+
+## 1. Establish the actual starting point; do not rebuild solved features
+
+Read the current editor/document/command, authoring-tool, project/scene/UI,
+asset/import, prefab, streaming and save contracts before designing changes.
+Use current implementation and accepted handoffs to establish existing behaviour.
+Historical audits supply requirements and reproductions, not current API truth.
+
+Relevant evidence:
+- SKATE_GAME_ENGINE_AUDIT.md: C-01/C-02/C-03/C-06/C-09 and actual park-authoring work.
+- JOURNAL.md: J05/J06, J12/J13 and the external generator/mapping workflow.
+- REPORT.md (Rooftop Run): E7 and the time spent learning positional serializers.
+- LATEST_ENGINE_FOLLOWUP.md: clean physical sources versus malformed artist geometry.
+- SPACE_REPORT.md: S2, S6, S8 and offline specialist-asset workflow S9.
+- docs/POST_M65_CONSUMER_REVIEW.md: partial authoring closures and remaining gaps.
+- docs/POST_M65_CONSUMER_REPAIRS.md: accepted corrections and remaining boundaries.
+- docs/MODEL_IMPORT.md and docs/evidence/m66/REPORT.md: what M66 actually delivers.
+
+Already delivered; extend and integrate rather than introduce parallel replacements:
+- M65: multi-selection, mixed-value batch editing, grouping, component copy/paste,
+  undo, typed entity references, skeleton pickers and serializer-backed JSON authoring.
+- M65 repairs: reference safety without hot-path VM construction, correct capsule
+  queries, indexed script membership, shared harness service boundaries and resumable
+  streaming work. Imported-rig settling uses explicitly authored resistance.
+- M66: original multipart 65-bone character import, separate motions, normal materials,
+  stable subassets, transactional reimport, and source-location collision diagnostics.
+- M61 saves, M58 Unicode/localization and M56 diagnostics remain established services.
+
+Make a short coverage table: existing and adequate / partial / missing, linked to
+current code and the relevant consumer requirement. This is the first work stage,
+not a separate audit milestone or an excuse to stop before implementation.
+
+Verify the starting state. If the operator supplies a later accepted integration
+hash, use it. Otherwise stop on unexplained divergence; never reset another worker's
+changes. Claude's test-hygiene issues/PR remain separate work: do not duplicate,
+merge or resolve that branch without authorization. Leave his workspaces, source
+assets and processes alone. Do not reopen accepted fluid or solver work incidentally.
+
+## 2. One document model and one editing path
+
+Editor widgets, viewport tools, source editing and shipped CLI operations must
+converge on the same validated documents, references and command semantics.
+
+Use the existing command/undo and serializer infrastructure. Extend the smallest
+shared document/property description needed; do not create a second scene database,
+entity-ID scheme, generic scripting language or parallel JSON-to-runtime engine.
+
+Every meaningful authoring operation must have a defined result:
+- Validate before publishing. An invalid batch must not leave half of its edits live.
+- One user action is one coherent undo transaction, including dependent reference
+  remaps and authored prefab overrides. Redo must reproduce the same identities.
+- Continuous dragging creates one undo action on release, not hundreds of entries.
+- Cancellation restores the pre-action document. Selection changes are not edits.
+- Dirty state, validation errors, generated products and unsaved source are distinct.
+- Play uses a runtime instance; Stop must not leak simulation changes into authored
+  content. No new implicit 'save runtime back into the scene' behaviour.
+
+Cross-file operations need staging and recoverable publication. Do not promise
+filesystem-wide atomicity from several independent renames. Validate all affected
+outputs, keep a recovery path, and prevent a partially published set becoming the
+editor's active project. Never overwrite an external edit unnoticed.
+
+## 3. Productive hierarchy, selection and everyday level editing
+
+Turn M65's initial facilities into a coherent workflow, not duplicate checkboxes.
+
+Hierarchy and selection:
+- Search/filter by name, component/type, tag and useful asset/reference identity;
+  show matching descendants with enough ancestor context to find them.
+- Reliable range/add/toggle selection and viewport selection; selecting a hierarchy
+  parent and child must not apply a world transform twice.
+- Distinguish organizational folders/groups from transform parenting. Organizing a
+  level must not unexpectedly move bodies or change gravity/reference relationships.
+- Reparent with an explicit preserve-world/local policy, cycle checks and clear
+  diagnostics when the current transform/scale contract cannot represent the result.
+- Keep stable selection across sorting/filtering; identify inactive streamed content
+  by qualified authored identity, not by a recycled live handle.
+
+Transforms and properties:
+- Shared-pivot versus individual-origin transforms, local/world axes, numerical
+  entry, translation/rotation/scale snapping, alignment and distribution.
+- Clear mixed values and explicit set-versus-offset semantics. Apply only edited
+  fields; do not fill untouched mixed values from the first selected object.
+- Add/remove/copy/paste common components with compatibility preview and undo.
+  Explain why a field/action is unavailable instead of silently skipping objects.
+- Supported surface placement/snapping should use normal collision/query geometry
+  and an explicit orientation policy. Do not equate the hit normal with gravity.
+- Batch rename, duplicate, delete and reference inspection must preserve/remap the
+  right identities and show affected dependencies before destructive changes.
+
+Preserve physics scale restrictions. Provide explicit bake/convert paths where
+already supported; do not silently normalize a transform or scale a collider in a
+way the runtime does not actually support.
+
+## 4. Build geometry and repeated content without an external generator
+
+Provide a deliberately small, reusable set of authoring tools:
+- Linear and radial arrays of entities/prefabs.
+- Editable paths supporting straight segments and smooth curves, with spacing-based
+  placement, orientation/twist control and stable local frames.
+- Generic profile extrusion/sweep and arc-based construction sufficient to make a
+  bank, curved ramp, quarter-pipe, ledge or corridor section.
+- Preview, parameter editing, validation, apply/cancel and coherent undo.
+
+These are offline/editor content tools, not native skateboard or parkour systems.
+Recipes produce ordinary meshes, collision sources and entity/prefab instances.
+Do not start a full CAD modeller, terrain editor, arbitrary CSG engine or runtime
+procedural-world framework.
+
+Keep the editable recipe. Re-editing a radius/width/path/spacing should not require
+starting again or manually rebuilding thirty objects. Stable recipe-element IDs
+must preserve surviving instances, overrides and references through regeneration;
+changing array order is not permission to rename every entity. Explain removal of
+referenced elements and allow an explicit bake/detach operation when appropriate.
+
+Generated topology must pass M64's actual cooking checks. Closed-source options
+must have coherent winding/caps and no generator-created T-junctions or internal
+barriers. Decorative render detail need not become collision detail. Allow a clean
+lower-resolution physical proxy from the same recipe, with visible accuracy limits.
+Do not relax the cooker to make bad output pass.
+
+The shipped editor and CLI use the same recipe evaluator. Routine previews should
+cache unchanged work and schedule expensive generation/cooking through existing
+jobs. Stale preview results must not overwrite newer parameters or a different
+project. An accepted preview must match the committed/cooked result.
+
+## 5. Imported assets, physical authoring and practical skeleton tools
+
+Put M66 into the normal world-building loop:
+- Browse/search assets by useful type/status, inspect dependencies and users, locate
+  source/import recipe, place multipart models, and create/reuse prefabs.
+- Show imported defaults, authored remaps and instance overrides distinctly; provide
+  reset/apply/revert operations with clear scope and undo.
+- Reimport must retain M66 stable subassets and last-good recovery. Do not re-solve
+  import mathematics, reduce the rig or introduce an external DCC prerequisite.
+- Expose collision source/selection, supported proxies, cook/rebuild and stale status
+  beside the model. Link located face/vertex errors to the actual preview geometry.
+
+Skeleton/physics authoring must work with a real multipart imported character:
+- Search/select joints, show hierarchy and local axes, and inspect sockets/IK targets.
+- Author and batch-edit ragdoll mappings, bodies, joint frames and limits without
+  typing every full joint path or calculating Euler frames in a private Python tool.
+- Provide a previewable, explicitly accepted fit-to-selected-bones/chain helper for
+  supported body shapes and anchors. Limits, resistance and mappings remain editable;
+  geometry-based guesses are not an automatic proof of anatomical correctness.
+- Preserve unmapped bones and existing valid mappings, including accepted physical
+  resistance. Non-humanoid names must work; no hidden Mixamo-specific engine branch.
+
+Make existing navigation, liquid, cloth/deformable and fracture asset references,
+source/cook controls and validation reachable through ordinary inspectors. Where
+an existing cooker has only a CLI entry point, expose that shared service rather
+than a second cook implementation. Do not add fracture/remeshing algorithms or
+promise automatic repair of arbitrary malformed art. Authoring offline-cooked data
+is legitimate; needing an undocumented private script to do it is the problem.
+
+## 6. A first-class named authoring format, not another disposable converter
+
+The M68 half is REQUIRED, not an optional documentation appendix.
+
+Provide a documented, versioned, named-field authoring representation for at least:
+- Project settings, registries, input maps and export scene selection.
+- Scenes: hierarchy, components, typed references and existing component settings.
+- Prefabs and their supported overrides/reference remapping.
+- Runtime UI documents: elements, layout, style, localization and event-facing IDs.
+- Existing world manifests and the authoring recipes introduced here, through the
+  same validated reference/document conventions.
+
+Prefer extending the existing JSON authoring path. Do not add YAML or invent a DSL
+merely for appearance. Each file declares its document kind and authoring schema
+version. This version is separate from canonical scene fingerprint schema 5,
+save-format versions and runtime/cooked-asset versions.
+
+A developer must be able to create/open a named document in the editor, edit it in
+text, return to the editor, and save/export it without losing settings or references.
+A write-only 'JSON generates positional text; editor later edits a different truth'
+pipeline does NOT satisfy this milestone.
+
+Choose and document one authoritative editable representation per document.
+Cooked/positional runtime products may remain for compatibility or loading speed,
+but must be clearly derived when used that way. Do not allow two independently
+editable files to silently overwrite each other. Preserve legacy readers and
+lossless handling of existing assets; migrate only explicitly selected working
+copies, never historical evidence or all existing projects behind the operator's back.
+
+Named forms need complete round-trip coverage of current fields in the supported
+document families, not just the three settings used by the new demo. Build a coverage
+matrix from actual serializers/components. A still-unsupported field must block a
+lossless conversion with a precise message; never drop it and call conversion successful.
+
+## 7. Format semantics, identity and compatibility
+
+Document types, defaults, required fields, units, reference forms and ordering.
+Use invariant numeric parsing/writing regardless of process/user locale; support
+normal Unicode names/text. Reject non-finite transforms and malformed bounded data.
+
+References keep existing stable project/asset/entity/subasset identities. Friendly
+paths/names are for discovery; renaming a display label must not retarget a reference.
+Cross-region references retain existing qualified identity, remap and pin semantics.
+Do not reconstruct a JS VM per inspector or dependency check.
+
+Make diffs useful:
+- Deterministic formatting/property order; omit no meaningful state accidentally.
+- Preserve semantically ordered arrays such as script slots and pose layers.
+- Whitespace/property-order changes must not change normalized authored meaning.
+- Unknown versions/types and duplicate keys receive explicit diagnostics. Optional
+  extension data needs a documented preserve-or-reject policy; no silent loss.
+- Preserve existing canonical fingerprints for unchanged legacy state. Source-file
+  provenance hashes may change with text; do not confuse those with semantic identity.
+- Continue M61 compatibility checks. A new text format does not authorize loading
+  incompatible game saves or rewriting their fingerprints to make them pass.
+
+Provide explicit migrations for versions introduced by this work and examples of
+reading existing content, writing named content and converting back where supported.
+Use semantic/round-trip comparison to show identity and behaviour are preserved.
+A formatting-only round trip must not regenerate all asset IDs or dirty the project
+perpetually. References into unsupported transform/topology changes must be reported,
+not guessed.
+
+## 8. Supported CLI and source editing
+
+Extend the existing authoring executable rather than inventing a separate toolchain.
+Provide documented operations equivalent to:
+- Create/inspect supported documents and templates.
+- Validate with diagnostics and nonzero status for invalid input.
+- Convert legacy/named forms, with dry-run and explicit overwrite policy.
+- Apply bounded batch/property/reference edits through the normal validators.
+- Generate recipes and invoke existing import/cook services.
+- Show a semantic diff and dependency/affected-reference summary where useful.
+- Validate/build a project for normal export.
+
+Exact commands are your choice; document actual commands, not hypothetical examples.
+No network service, Blender or handwritten positional-file emitter should be required
+for the supported ordinary workflows. Small automation scripts may orchestrate these
+shipped tools; they must not secretly replace missing engine authoring functionality.
+
+Offer a source view/edit workflow for the named documents. Syntax/semantic errors
+should identify file, line/column where available and a field path/entity/element.
+Distinguish unknown property, wrong type, unresolved reference, duplicate ID, invalid
+geometry and stale cooked data. Show actionable context instead of 'invalid settings'.
+
+External edits: detect divergence from the loaded version, present a diff/reload or
+conflict choice, retain dirty work, and publish valid changes coherently. Invalid
+external edits must not destroy the last-good document/runtime asset. Do not promise
+arbitrary live gameplay hot reload; restart/reload policies may remain explicit.
+
+## 9. Runtime UI authoring must be genuinely usable
+
+Bring the M41/M58 UI workflow into the shared document/command system:
+- Visual hierarchy/canvas preview, element selection, anchors/offsets/sizing,
+  containers/padding, alignment, clipping and localization-aware text preview.
+- Useful element duplication, copy/paste, batch styling, preview sizes and undo.
+- Inspect effective layout and inherited/container-driven values so a developer can
+  understand why an element ended up there. Identify controls owned by a layout parent.
+- Editor measurement/preview and runtime must use the same shaping/layout semantics;
+  preserve RTL, fallback, wrapping, baselines and exposure-independent text.
+- Direct text editing and visual editing must agree on the same element IDs and
+  properties. No separate editor-only layout that changes on export.
+
+Close Void S6 with safe runtime layout access for existing UI elements: scripts must
+be able to move/size supported elements or update appropriate anchors/offsets through
+a documented API, without rebuilding the entire document. Runtime-only changes are
+transient unless explicitly captured through existing game-state policy.
+
+Layout changes must invalidate the correct caches and keep drawing, clipping,
+hit-testing and focus geometry consistent. Batch updates should not trigger a full
+layout rebuild for every property write. Do not add rich text, a browser engine,
+IME, a new widget framework or a gameplay HUD system.
+
+## 10. Close the small authoring-to-runtime seams exposed by Void
+
+These three practical capabilities belong in this combined milestone. First check
+whether M66/current source already supplies any part; do not add duplicate APIs.
+
+A. Camera projection and overlay placement (Void S2, complementing S6)
+- Author and control near/far clipping for script-owned views and applicable camera
+  components. Preserve existing defaults. Validate finite values and near < far.
+- The same projection must drive rendering, culling, view rays and any viewport
+  projection query; do not fix only the matrix in one render pass.
+- Supply/reuse a generic world-to-viewport projection helper so normal scripts can
+  position UI markers; return meaningful behind/outside/depth information.
+- Demonstrate an object beyond the old 500 m cap with a suitable configured view,
+  and an indicator following it in first/third-person cameras and on window resize.
+- Explain depth-precision tradeoffs; no claim of infinite viewing distance, live
+  origin rebasing, new shadow algorithms or an orbital/space-camera framework.
+
+B. Runtime UI placement is the safe layout interface specified above, not a native
+TargetMarker feature. The game decides what to label, hide or clamp to the screen.
+
+C. Prefab construction data (Void S8)
+- Allow bounded, validated per-instance initial properties/state and relevant
+  existing transform/body initialization through the normal spawn path.
+- Validate and apply these before start/first simulation observes the new instance.
+  Specify ordering with resource readiness and script lifecycle explicitly.
+- Resolve permitted entity references safely; keep independent instances isolated.
+  Failed initialization must not publish a partly configured live hierarchy.
+- Respect M61 restore: loading is not a second fresh spawn that reapplies defaults
+  or calls start twice. Preserve ordinary existing spawn behaviour without options.
+- Demonstrate independent debris-like instances with different initial motion/data
+  without a module-global pending-initialization map. No DebrisManager native feature.
+
+Any public addition gets the normal JudasJS declarations, reference, inventory,
+machine/live coverage and executed cookbook update. Document coordinate spaces,
+validation, lifetime, snapshot/mutation and phase semantics; do not expose raw pointers.
+
+## 11. Editor coherence and visual usability
+
+Do a deliberate usability pass on the surfaces this milestone joins together.
+This is part of acceptance, not permission to spend weeks replacing ImGui.
+
+Use a compact, consistent desktop-tool layout: clear hierarchy and selection,
+readable typography, consistent units/labels, meaningful spacing and predictable
+inspector groups. Do not bury useful content under huge padding, repeated rounded
+cards or a marketing-dashboard design. Use existing editor docking/panel mechanisms.
+
+Provide discoverable commands/shortcuts, useful tooltips and disabled-state reasons,
+clear unsaved/error/progress states, and readable object/asset names. Text fields
+and modal dialogs must not leak shortcuts into gameplay or delete selected objects
+while the user is typing. Test pause, Play/Stop and pointer capture deliberately.
+
+Editor-only preferences/layout are user state, not gameplay data or scene/save
+fingerprint noise. A developer should be able to spend time building a level without
+needing a terminal to discover what a button did or why an operation failed.
+
+## 12. Integration proof: build content, do not merely test widgets
+
+Create a current authoring/workflow project and retain its editable sources/recipes.
+Use project-owned copies where existing consumer material helps; do not modify
+Claude's originals or restricted source assets. Keep restricted originals and
+cooked derivatives local/ignored according to their actual licences. Supply clean
+redistributable fixtures for repository tests.
+
+Required end-to-end tasks:
+1. Starting from a minimal project, construct a compact course with several hundred
+   placed/repeated objects, an arc/profile ramp, stairs/ledge, rail-like placements
+   along a path, and a room/corridor. Use shipped editor/CLI tools, not a private
+   generator writing positional scene records. Keep enough editable variety to
+   expose batch, hierarchy and regeneration problems.
+2. Change the ramp profile and array/path settings, preserve surviving references/
+   overrides, undo/redo, then cook and traverse actual collision. Validate the
+   generated geometry using normal M64 queries/contact paths.
+3. Place the original M66 multipart character or approved equivalent, author a socket,
+   limb target and a small ragdoll mapping through the supported tools, and inspect
+   it using the real pose/physics runtime. Preserve physics-authoring intent.
+4. Build a localized HUD/menu visually, amend it and the project's input configuration
+   through named text/CLI, reopen in the editor, then edit again visually. Both
+   directions preserve IDs, layout, references and behaviour.
+5. Introduce a deliberate syntax/reference/geometry error in a copy; inspect a useful
+   diagnostic and last-good recovery. Fix it without reconstructing the project.
+6. Exercise camera range, projected screen-space UI and per-instance spawn data in
+   an ordinary script-driven scene, including pause/resume and save/load.
+7. Author an ordinary two-region composition using M59 facilities, cross/revisit it
+   with a referenced traveller, save, exit completely, reopen/load and continue.
+8. Export the final project through normal M38 tooling; move it away from the repo
+   and raw source files, run from another CWD, and confirm the edited result matches.
+
+Also run the existing Three Games project as a consumer regression workload.
+Small copied examples may remove the specific UI/prefab/camera workarounds. Do not
+rewrite all three games, improve their AI or alter controller tuning to flatter M67.
+
+Report which creation/editing steps genuinely exercised editor widgets, shared
+editor command services, or shipped CLI. API round trips alone are not proof the
+human-facing tools are usable. If GUI automation is unavailable, state that and
+provide the operator a short reproducible workflow; never claim imaginary clicks.
+
+## 13. Responsiveness, jobs and lifecycle
+
+Use M56 to measure editor work, not just game FPS. Record selection/filter latency,
+batch edit/undo, path/array regeneration, cooking, layout preview and source reload
+on a stated document size. Include warmed median/p95/max and one cold run.
+
+Typing or selecting should not repeatedly parse/copy the complete project, rebuild
+JS runtimes, reimport unchanged models or synchronously cook every collider. Use
+existing dependency/revision tracking and bounded caches/jobs; do not build another
+scheduler. Keep responsive progress and cancellation for substantial operations.
+
+Job results identify the source revision and project/document generation. Closing a
+project or undoing a recipe cannot let stale results recreate deleted content. All
+Renderer work stays on its proper boundary; worker parsing/cooking must not call
+raw graphics or mutate the live RuntimeWorld.
+
+Do not hide delays by shrinking the test level or calling all stalls 'background'.
+Conversely, do not reopen accepted M66 import algorithms or turn this into M69's
+remaining whole-world/streaming optimization project. Report their costs separately.
+
+## 14. Focused proof and one final candidate gate
+
+Write focused regressions as each coherent feature lands. Required coverage:
+
+DOCUMENTS / FORMATS
+- Legacy and named project/scene/prefab/UI/input round trips covering current fields;
+  locale-invariant numbers, Unicode text, defaults and meaningful ordering.
+- Stable IDs/subasset references, qualified references, prefab overrides and old
+  canonical fingerprint compatibility. Formatting changes do not alter semantics.
+- Invalid types/versions, duplicate IDs/keys, cycles, missing references and failed
+  migration preserve last-good state; valid conversions are genuinely reversible
+  where advertised, without silently discarded fields.
+- Editor -> source -> CLI -> editor -> export exercises the SAME normalized data.
+
+EDITING / GENERATION
+- Mixed values, parent/child selection, shared/individual pivots, local/world edits,
+  organizational grouping, reference-aware duplication and coherent undo/redo.
+- Atomic rejection of incompatible batches; cancellation of previews and stale jobs.
+- Arrays and paths preserve surviving element identity/overrides through regeneration.
+- Extrusions/arcs produce valid physical sources; real corners remain real and internal
+  joins do not acquire barriers. Arbitrarily oriented authoring frames work.
+- Imported material overrides and M66 subassets survive authoring/reimport operations.
+- Skeleton picks/mappings resolve the actual multipart rig; batch frames/limits undo
+  without replacing bodies/identity incorrectly or silently changing resistance.
+
+UI / PUBLIC APIS
+- Preview/runtime layout agrees under resize, clipping, RTL/fallback and localization.
+  Runtime positioning keeps pointer/focus geometry synchronized.
+- Camera clipping, view rays and viewport projection use consistent actual matrices;
+  test near/far, behind-camera points, resize and applicable secondary-camera paths.
+- Prefab options are visible in the first callback, independent across instances,
+  validated before publication, and not erroneously reapplied after cold restore.
+- Current JudasJS declarations/reference/inventory and real VM coverage pass; examples
+  use actual public APIs and normal assets rather than private test dispatch.
+
+LIFECYCLE / PRODUCT
+- External-edit conflicts, project switch during work, source reload, Play/Stop,
+  region unload/adoption/revisit, and a separate-process M61 save/load.
+- Deterministic normalized build outputs from the same inputs/settings, correct
+  stale detection, no source paths accidentally embedded in runtime dependencies.
+- Moved/source-hidden export runs normally; legacy projects remain loadable and
+  are not automatically migrated or rewritten.
+
+At candidate completion: freeze final runtime source and run one clean Release
+build, the actual production suite once, affected async/resource checks, focused
+M67 tests, JudasJS checks, editor workflow, Three Games regression, cold save/load,
+and moved export. Discover the correct current runner/fixture arguments; do not
+hardcode an old suite count or treat argument errors as algorithm failures.
+
+Tests write only to fresh isolated output directories and user-data namespaces;
+never regenerate protected evidence or overwrite the operator's real saves. New
+validation must be rerunnable. Do not pull in Claude's separate hygiene fixes simply
+to make this runner convenient.
+
+Use independent expected outcomes/negative controls, not just serialize through a
+function and compare against the same function. Narrow late fixes get affected
+reruns. If source changes during the broad gate, preserve that fact, identify which
+results no longer cover final bytes, and rerun the necessary scope honestly. Do not
+regenerate expected fingerprints to hide a mismatch or claim an unchanged full-suite
+pass on a different implementation.
+
+## 15. Boundaries and final handoff
+
+This is a large but coherent authoring milestone. Do not expand it into:
+- A new physics engine, collision algorithm rewrite, new liquid/cloth/fracture solver.
+- General retargeting, full-body IK, active physical animation, balance or locomotion.
+- Arbitrary topology repair, a full DCC/CAD package, terrain sculpting or general CSG.
+- A replacement UI runtime, shader graph, cloud collaboration, plugin marketplace,
+  language server, browser editor or arbitrary gameplay hot reload.
+- Comprehensive import/streaming performance research or speculative runtime features.
+- Native game semantics, a redesign of the three games, or unrelated issue cleanup.
+
+Preserve protected research/history, existing accepted projects and physics/fluid
+behaviour. Update CURRENT docs to explain new authoring paths and supersession;
+never rewrite old reports as though they described M67 all along.
+
+Deliver a concise report containing:
+- What M65/M66 was reused, what changed, and closure of each targeted consumer pain.
+- One authoring source-of-truth/format/version/migration policy with coverage matrix.
+- Editor, CLI, recipe and source-edit workflows, actual commands and examples.
+- Identity, undo, prefab, reimport, reference and publication guarantees/limitations.
+- UI/camera/prefab public additions and synchronized JudasJS coverage.
+- Demonstrations executed, performance results and clearly unexercised human tasks.
+- Validation initial results, preserved failures, affected follow-ups and final hashes.
+- Project/package/docs/evidence paths, exact changed files and Git status.
+
+Provide ONE combined human review checklist: build/change/undo a level, modify it
+through text and return to the editor, author a character attachment/mapping, inspect
+UI in another locale/size, test the runtime seams, save/reload and run the moved
+package. Include exact controls and locations; do not ask for another review between
+the editor and authoring-format halves.
+
+No commit/push/tag before acceptance. Suggested later commit:
+Add M67 integrated world building and supported content authoring
+
+Then stop for operator review. Do not start later milestones.
+
+Milestone 67 — Judas learns to build worlds.

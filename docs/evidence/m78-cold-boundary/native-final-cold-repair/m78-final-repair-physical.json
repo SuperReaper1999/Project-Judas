@@ -1,0 +1,18 @@
+﻿{
+    "seconds":  0.8330301,
+    "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+    "case":  "physical",
+    "expectedSaveSHA256":  null,
+    "run":  "physical",
+    "executableSHA256":  "96e4ff7873015b2f03f05a13796338cb0bdd60b5085f5cf2a564239ba7a06dec",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "files":  [
+
+              ],
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "freeBytes":  88121344,
+    "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

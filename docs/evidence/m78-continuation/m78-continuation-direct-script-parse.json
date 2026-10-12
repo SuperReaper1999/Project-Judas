@@ -1,0 +1,22 @@
+﻿{
+    "scope":  "Only native PowerShell parser verification and staging; no compilation or library mutation",
+    "rows":  [
+                 {
+                     "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\windows_direct_library.ps1",
+                     "sha256":  "961c2e4566faa367581dd6d4a2c85c15371e31398d11a3386fc09ead114e601a",
+                     "name":  "windows_direct_library.ps1",
+                     "parseErrors":  [
+
+                                     ]
+                 },
+                 {
+                     "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\windows_direct_case.ps1",
+                     "sha256":  "c4b66b6c14b2f02916dfb4446227f171ac703558b141a79300dde3e317bc0cc7",
+                     "name":  "windows_direct_case.ps1",
+                     "parseErrors":  [
+
+                                     ]
+                 }
+             ],
+    "freeBytes":  329940992
+}

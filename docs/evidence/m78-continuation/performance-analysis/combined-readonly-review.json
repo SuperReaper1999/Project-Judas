@@ -1,0 +1,568 @@
+{
+  "utc": "2026-10-11T18:29:36.642787+00:00",
+  "purpose": "Read-only independent combined production integration review; no simulation/build/source edits",
+  "sourceSHA256": {
+    "src/CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0",
+    "src/CollisionGeometry.h": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198",
+    "src/PhysicsWorld.cpp": "adcd0dcb7a49f918cd4db2143ce6040a606bc5f7b02d333fb83e34ac5381de82",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+  },
+  "preservation": [
+    {
+      "manifest": "docs/evidence/m78-followup/FINAL_FINGERPRINTS.json",
+      "manifestSHA256": "38892f9979dc8eadf91c6a397c7f86ae60678bce83e48b5927aafac7f4c829e5",
+      "filesChecked": 439,
+      "mismatches": [
+        {
+          "path": "src/CollisionGeometry.cpp",
+          "recorded": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a",
+          "actual": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+        },
+        {
+          "path": "src/PhysicsWorld.cpp",
+          "recorded": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+          "actual": "adcd0dcb7a49f918cd4db2143ce6040a606bc5f7b02d333fb83e34ac5381de82"
+        },
+        {
+          "path": "src/RigidMotion.h",
+          "recorded": "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497",
+          "actual": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+        },
+        {
+          "path": "tests/CollisionGeometryTests.cpp",
+          "recorded": "9792433d5f8dc8626f4bf2724b431215639b25c5d7174fd36c3bc231ce298b59",
+          "actual": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2"
+        },
+        {
+          "path": "tests/RigidMotionTests.cpp",
+          "recorded": "38692f953ff456b40c05eb7856728aa698bd82c8fdc3f646a5a402a462a0742c",
+          "actual": "9732e00803e8521f8b371bdf71eb6ecdec7c06ff288d059041c2f0b11c3e7b60"
+        }
+      ],
+      "historicalArtifactMismatches": []
+    },
+    {
+      "manifest": "docs/evidence/m78/FINAL_FINGERPRINTS.json",
+      "manifestSHA256": "fe4d7221e165d26cf79836a62f4fe000eff8700661d06b1e21b0ffc938cb0e27",
+      "filesChecked": 600,
+      "mismatches": [],
+      "historicalArtifactMismatches": []
+    }
+  ],
+  "cases": {
+    "box-1": {
+      "oldCSV": ".cache/m78-followup/concave-final-data/box-1.csv",
+      "oldSHA256": "7348e1c6584a9fe4eeef5156a5d1e77997bbf9ce00ec390066f38935655de9b2",
+      "combinedCSV": ".cache/m78-continuation/concave-combined-data/box-1.csv",
+      "combinedSHA256": "c87c493128cf33ea7c43eaf236d0c4953b05f90b1bd74b13c9929e148095b4ae",
+      "old": {
+        "steps": 900,
+        "medianMsCSV": 0.154795,
+        "p95MsCSV": 0.234744,
+        "maxMsCSV": 4.31234,
+        "over16_67Ms": 0,
+        "sum": {
+          "contacts": 10340.0,
+          "ccd_queries": 1203.0,
+          "ccd_iterations": 1583.0,
+          "ccd_limit": 0.0,
+          "sampling_fallback": 0.0,
+          "geometry_predicates": 213107.0,
+          "sleeping": 3549.0
+        },
+        "top3": [
+          {
+            "step": "74",
+            "wall_ms": "4.31234",
+            "contacts": "3",
+            "ccd_queries": "93",
+            "ccd_iterations": "221",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "12320",
+            "broadphase_ms": "0.010246",
+            "narrowphase_ms": "0.075546",
+            "solver_ms": "4.15863",
+            "sleeping": "0"
+          },
+          {
+            "step": "73",
+            "wall_ms": "2.60259",
+            "contacts": "4",
+            "ccd_queries": "56",
+            "ccd_iterations": "132",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "6843",
+            "broadphase_ms": "0.010247",
+            "narrowphase_ms": "0.091449",
+            "solver_ms": "2.44457",
+            "sleeping": "0"
+          },
+          {
+            "step": "72",
+            "wall_ms": "1.7177",
+            "contacts": "3",
+            "ccd_queries": "45",
+            "ccd_iterations": "81",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "4202",
+            "broadphase_ms": "0.012702",
+            "narrowphase_ms": "0.096399",
+            "solver_ms": "1.55066",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "combined": {
+        "steps": 900,
+        "medianMsCSV": 0.156434,
+        "p95MsCSV": 0.27621,
+        "maxMsCSV": 1.68293,
+        "over16_67Ms": 0,
+        "sum": {
+          "contacts": 15675.0,
+          "ccd_queries": 1399.0,
+          "ccd_iterations": 1712.0,
+          "ccd_limit": 0.0,
+          "sampling_fallback": 0.0,
+          "geometry_predicates": 277514.0,
+          "sleeping": 0.0
+        },
+        "top3": [
+          {
+            "step": "74",
+            "wall_ms": "1.68293",
+            "contacts": "9",
+            "ccd_queries": "42",
+            "ccd_iterations": "89",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "4700",
+            "broadphase_ms": "0.009256",
+            "narrowphase_ms": "0.088491",
+            "solver_ms": "1.54063",
+            "sleeping": "0"
+          },
+          {
+            "step": "80",
+            "wall_ms": "1.27875",
+            "contacts": "11",
+            "ccd_queries": "25",
+            "ccd_iterations": "55",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "3220",
+            "broadphase_ms": "0.009669",
+            "narrowphase_ms": "0.086633",
+            "solver_ms": "1.14662",
+            "sleeping": "0"
+          },
+          {
+            "step": "78",
+            "wall_ms": "1.21503",
+            "contacts": "8",
+            "ccd_queries": "31",
+            "ccd_iterations": "67",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "3506",
+            "broadphase_ms": "0.009348",
+            "narrowphase_ms": "0.081719",
+            "solver_ms": "1.08935",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "stepsWithChangedPhysicalCounters": 406
+    },
+    "box-4": {
+      "oldCSV": ".cache/m78-followup/concave-final-data/box-4.csv",
+      "oldSHA256": "c5cc070a7257c5317bd66bedb6876bb2861cd756089c32f6236a149b1e0d0768",
+      "combinedCSV": ".cache/m78-continuation/concave-combined-data/box-4.csv",
+      "combinedSHA256": "b9d85e0c2fe63e59cf2a2ae84c1862b3fa554ac9e1b540da357d908c70f3e928",
+      "old": {
+        "steps": 900,
+        "medianMsCSV": 0.636415,
+        "p95MsCSV": 0.855523,
+        "maxMsCSV": 17.9601,
+        "over16_67Ms": 1,
+        "sum": {
+          "contacts": 41360.0,
+          "ccd_queries": 4812.0,
+          "ccd_iterations": 6332.0,
+          "ccd_limit": 0.0,
+          "sampling_fallback": 0.0,
+          "geometry_predicates": 852428.0,
+          "sleeping": 14196.0
+        },
+        "top3": [
+          {
+            "step": "74",
+            "wall_ms": "17.9601",
+            "contacts": "12",
+            "ccd_queries": "372",
+            "ccd_iterations": "884",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "49280",
+            "broadphase_ms": "0.13673",
+            "narrowphase_ms": "0.34661",
+            "solver_ms": "17.3126",
+            "sleeping": "0"
+          },
+          {
+            "step": "73",
+            "wall_ms": "9.2667",
+            "contacts": "16",
+            "ccd_queries": "224",
+            "ccd_iterations": "528",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "27372",
+            "broadphase_ms": "0.045619",
+            "narrowphase_ms": "0.339391",
+            "solver_ms": "8.73609",
+            "sleeping": "0"
+          },
+          {
+            "step": "72",
+            "wall_ms": "6.58358",
+            "contacts": "12",
+            "ccd_queries": "180",
+            "ccd_iterations": "324",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "16808",
+            "broadphase_ms": "0.067243",
+            "narrowphase_ms": "0.262549",
+            "solver_ms": "6.10405",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "combined": {
+        "steps": 900,
+        "medianMsCSV": 0.676218,
+        "p95MsCSV": 1.30068,
+        "maxMsCSV": 8.2146,
+        "over16_67Ms": 0,
+        "sum": {
+          "contacts": 62700.0,
+          "ccd_queries": 5596.0,
+          "ccd_iterations": 6848.0,
+          "ccd_limit": 0.0,
+          "sampling_fallback": 0.0,
+          "geometry_predicates": 1110056.0,
+          "sleeping": 0.0
+        },
+        "top3": [
+          {
+            "step": "74",
+            "wall_ms": "8.2146",
+            "contacts": "36",
+            "ccd_queries": "168",
+            "ccd_iterations": "356",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "18800",
+            "broadphase_ms": "0.051581",
+            "narrowphase_ms": "0.553868",
+            "solver_ms": "7.44253",
+            "sleeping": "0"
+          },
+          {
+            "step": "80",
+            "wall_ms": "5.96394",
+            "contacts": "44",
+            "ccd_queries": "100",
+            "ccd_iterations": "220",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "12880",
+            "broadphase_ms": "0.049853",
+            "narrowphase_ms": "0.360646",
+            "solver_ms": "5.40323",
+            "sleeping": "0"
+          },
+          {
+            "step": "78",
+            "wall_ms": "5.25207",
+            "contacts": "32",
+            "ccd_queries": "124",
+            "ccd_iterations": "268",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "14024",
+            "broadphase_ms": "0.057362",
+            "narrowphase_ms": "0.330849",
+            "solver_ms": "4.7252",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "stepsWithChangedPhysicalCounters": 406
+    },
+    "mesh-1": {
+      "oldCSV": ".cache/m78-followup/concave-final-data/mesh-1.csv",
+      "oldSHA256": "1418085f8db632a44eb22c62dd27cc12da1f7de103fce4b3a750e9843d1d760f",
+      "combinedCSV": ".cache/m78-continuation/concave-combined-data/mesh-1.csv",
+      "combinedSHA256": "e55246fb28f58ab577e2663db7bd09ee0c0ea866272c20e371e2ef99a37ec091",
+      "old": {
+        "steps": 900,
+        "medianMsCSV": 0.331528,
+        "p95MsCSV": 12.2331,
+        "maxMsCSV": 25.8412,
+        "over16_67Ms": 15,
+        "sum": {
+          "contacts": 10416.0,
+          "ccd_queries": 16832.0,
+          "ccd_iterations": 42835.0,
+          "ccd_limit": 21.0,
+          "sampling_fallback": 21.0,
+          "geometry_predicates": 0.0,
+          "sleeping": 3835.0
+        },
+        "top3": [
+          {
+            "step": "237",
+            "wall_ms": "25.8412",
+            "contacts": "10",
+            "ccd_queries": "154",
+            "ccd_iterations": "421",
+            "ccd_limit": "1",
+            "sampling_fallback": "1",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.013229",
+            "narrowphase_ms": "0.242248",
+            "solver_ms": "25.5173",
+            "sleeping": "0"
+          },
+          {
+            "step": "213",
+            "wall_ms": "22.2491",
+            "contacts": "14",
+            "ccd_queries": "87",
+            "ccd_iterations": "237",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.01695",
+            "narrowphase_ms": "0.267599",
+            "solver_ms": "21.8633",
+            "sleeping": "0"
+          },
+          {
+            "step": "142",
+            "wall_ms": "21.5435",
+            "contacts": "14",
+            "ccd_queries": "123",
+            "ccd_iterations": "340",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.01247",
+            "narrowphase_ms": "0.253852",
+            "solver_ms": "21.2198",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "combined": {
+        "steps": 900,
+        "medianMsCSV": 0.066939,
+        "p95MsCSV": 0.407533,
+        "maxMsCSV": 4.75221,
+        "over16_67Ms": 0,
+        "sum": {
+          "contacts": 9133.0,
+          "ccd_queries": 1066.0,
+          "ccd_iterations": 1821.0,
+          "ccd_limit": 0.0,
+          "sampling_fallback": 0.0,
+          "geometry_predicates": 0.0,
+          "sleeping": 5954.0
+        },
+        "top3": [
+          {
+            "step": "73",
+            "wall_ms": "4.75221",
+            "contacts": "8",
+            "ccd_queries": "52",
+            "ccd_iterations": "141",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.009692",
+            "narrowphase_ms": "0.228745",
+            "solver_ms": "4.46974",
+            "sleeping": "0"
+          },
+          {
+            "step": "81",
+            "wall_ms": "3.8776",
+            "contacts": "6",
+            "ccd_queries": "43",
+            "ccd_iterations": "143",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.009608",
+            "narrowphase_ms": "0.222271",
+            "solver_ms": "3.5995",
+            "sleeping": "0"
+          },
+          {
+            "step": "88",
+            "wall_ms": "3.44106",
+            "contacts": "12",
+            "ccd_queries": "43",
+            "ccd_iterations": "79",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.010618",
+            "narrowphase_ms": "0.219819",
+            "solver_ms": "3.15798",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "stepsWithChangedPhysicalCounters": 556
+    },
+    "mesh-4": {
+      "oldCSV": ".cache/m78-followup/concave-final-data/mesh-4.csv",
+      "oldSHA256": "344109ebcc8b6e86dc8210a6f634c35820987a156a6e551db433bfb600c1f75e",
+      "combinedCSV": ".cache/m78-continuation/concave-combined-data/mesh-4.csv",
+      "combinedSHA256": "92cb101ea72464d87be66123b9e62d9b1933af7136840f0fe7fef57013a5312d",
+      "old": {
+        "steps": 900,
+        "medianMsCSV": 1.04069,
+        "p95MsCSV": 18.875,
+        "maxMsCSV": 33.7938,
+        "over16_67Ms": 78,
+        "sum": {
+          "contacts": 45936.0,
+          "ccd_queries": 29603.0,
+          "ccd_iterations": 69190.0,
+          "ccd_limit": 28.0,
+          "sampling_fallback": 28.0,
+          "geometry_predicates": 0.0,
+          "sleeping": 10777.0
+        },
+        "top3": [
+          {
+            "step": "237",
+            "wall_ms": "33.7938",
+            "contacts": "57",
+            "ccd_queries": "208",
+            "ccd_iterations": "502",
+            "ccd_limit": "1",
+            "sampling_fallback": "1",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.068697",
+            "narrowphase_ms": "0.973429",
+            "solver_ms": "32.5139",
+            "sleeping": "0"
+          },
+          {
+            "step": "175",
+            "wall_ms": "30.1097",
+            "contacts": "58",
+            "ccd_queries": "165",
+            "ccd_iterations": "543",
+            "ccd_limit": "2",
+            "sampling_fallback": "2",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.048888",
+            "narrowphase_ms": "0.973863",
+            "solver_ms": "28.9097",
+            "sleeping": "0"
+          },
+          {
+            "step": "239",
+            "wall_ms": "28.9166",
+            "contacts": "59",
+            "ccd_queries": "197",
+            "ccd_iterations": "435",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.05004",
+            "narrowphase_ms": "0.915079",
+            "solver_ms": "27.7737",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "combined": {
+        "steps": 900,
+        "medianMsCSV": 0.734328,
+        "p95MsCSV": 3.29741,
+        "maxMsCSV": 23.3417,
+        "over16_67Ms": 3,
+        "sum": {
+          "contacts": 48984.0,
+          "ccd_queries": 7677.0,
+          "ccd_iterations": 14252.0,
+          "ccd_limit": 1.0,
+          "sampling_fallback": 1.0,
+          "geometry_predicates": 0.0,
+          "sleeping": 14508.0
+        },
+        "top3": [
+          {
+            "step": "85",
+            "wall_ms": "23.3417",
+            "contacts": "39",
+            "ccd_queries": "235",
+            "ccd_iterations": "637",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.049335",
+            "narrowphase_ms": "0.947214",
+            "solver_ms": "22.1394",
+            "sleeping": "0"
+          },
+          {
+            "step": "88",
+            "wall_ms": "18.3423",
+            "contacts": "40",
+            "ccd_queries": "212",
+            "ccd_iterations": "488",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.047783",
+            "narrowphase_ms": "0.8495",
+            "solver_ms": "17.2728",
+            "sleeping": "0"
+          },
+          {
+            "step": "86",
+            "wall_ms": "17.0085",
+            "contacts": "44",
+            "ccd_queries": "178",
+            "ccd_iterations": "406",
+            "ccd_limit": "0",
+            "sampling_fallback": "0",
+            "geometry_predicates": "0",
+            "broadphase_ms": "0.058801",
+            "narrowphase_ms": "0.881334",
+            "solver_ms": "15.8484",
+            "sleeping": "0"
+          }
+        ]
+      },
+      "stepsWithChangedPhysicalCounters": 855
+    }
+  },
+  "receiptSHA256": {
+    "docs/evidence/m78-continuation/combined-concave.json": "d5329c26a9b04f57c41bfc64eebfe7244d3a665802aa35acab82ef2148db4460",
+    "docs/evidence/m78-continuation/combined-concave-probe-build.json": "deec494582186cc91550cbcb1feb102fe219e2f9739010ae3126ddb29b63338d",
+    "docs/evidence/m78-continuation/combined-concave.log": "b26cfb9c3c2d25bc11ba1fb16ec8a2ff903d535445403ced0ab3ec4c273dad53",
+    "docs/evidence/m78-continuation/contact-existence-parity-corrected.log": "1346f9ab2aa71a3d6690827429250c272114e259d23c969296dc1df6e546a395"
+  }
+}

@@ -1,0 +1,1812 @@
+{
+  "tasks": [
+    {
+      "id": "judas_scene_tests",
+      "source": "tests/SceneTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_lifecycle_tests",
+      "source": "tests/LifecycleTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_lifecycle_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_project_tests",
+      "source": "tests/ProjectTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_job_tests",
+      "source": "tests/JobTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_job_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physics_tests",
+      "source": "tests/PhysicsPrimitiveTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_rigid_contact_tests",
+      "source": "tests/RigidContactTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_broadphase_tests",
+      "source": "tests/BroadphaseTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_broadphase_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_collision_tests",
+      "source": "tests/CollisionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_celestial_gravity_tests",
+      "source": "tests/CelestialGravityTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_celestial_gravity_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_asset_tests",
+      "source": "tests/AssetTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_step_climb_tests",
+      "source": "tests/StepClimbTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_step_climb_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_pilot_attachment_tests",
+      "source": "tests/PilotAttachmentTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pilot_attachment_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_pilot_dismount_tests",
+      "source": "tests/PilotDismountTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pilot_dismount_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_spacecraft_control_tests",
+      "source": "tests/SpacecraftControlTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_spacecraft_control_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_spacecraft_flight_tests",
+      "source": "tests/SpacecraftFlightTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_spacecraft_flight_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_reference_frame_tests",
+      "source": "tests/ReferenceFrameTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_reference_frame_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_ui_tests",
+      "source": "tests/UITests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ui_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_lighting_tests",
+      "source": "tests/LightingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_lighting_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_shadow_tests",
+      "source": "tests/ShadowTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_shadow_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_interactable_tests",
+      "source": "tests/InteractableTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_interactable_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_player_view_tests",
+      "source": "tests/PlayerViewTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_player_view_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_object_manipulation_tests",
+      "source": "tests/ObjectManipulationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_object_manipulation_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_player_curved_locomotion_tests",
+      "source": "tests/PlayerCurvedLocomotionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_player_curved_locomotion_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_world_coordinates_tests",
+      "source": "tests/WorldCoordinatesTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_coordinates_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_compound_body_tests",
+      "source": "tests/CompoundBodyTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_compound_body_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_world_tests",
+      "source": "tests/FluidWorldTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_world_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_rigid_coupling_tests",
+      "source": "tests/FluidRigidCouplingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_rigid_coupling_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_surface_tests",
+      "source": "tests/FluidSurfaceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_surface_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_terrain_physics_tests",
+      "source": "tests/TerrainPhysicsTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_physics_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_terrain_fluid_tests",
+      "source": "tests/TerrainFluidTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_fluid_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_atmosphere_tests",
+      "source": "tests/AtmosphereTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_atmosphere_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_atmospheric_flight_tests",
+      "source": "tests/AtmosphericFlightTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_atmospheric_flight_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_combustion_tests",
+      "source": "tests/CombustionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_combustion_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_scene_fingerprint_tests",
+      "source": "tests/SceneFingerprintTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_fingerprint_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_world_state_tests",
+      "source": "tests/WorldStateTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_state_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_async_application_tests",
+      "source": "tests/AsyncApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_async_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_async_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_uniform_gravity_scene_tests",
+      "source": "tests/UniformGravitySceneTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_uniform_gravity_scene_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_uniform_gravity_scene_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_gravity_selection_tests",
+      "source": "tests/GravitySelectionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_gravity_selection_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_gravity_selection_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_contact_geometry_tests",
+      "source": "tests/ContactGeometryProbe.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_geometry_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft4/geometry/fixtures.txt"
+      ],
+      "adapter": "read-only accepted geometry fixture",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_contact_lifecycle_tests",
+      "source": "tests/ContactLifecycleTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_contact_cache_tests",
+      "source": "tests/ContactCacheTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_cache_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_contact_storage_tests",
+      "source": "tests/ContactStorageTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_storage_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_rigid_motion_tests",
+      "source": "tests/RigidMotionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_impact_solver_tests",
+      "source": "tests/ImpactSolverTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_solver_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_impact_timing_tests",
+      "source": "tests/ImpactTimingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_project_application_tests",
+      "source": "tests/ProjectApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_application_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_lifecycle_integration_tests",
+      "source": "tests/LifecycleIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_lifecycle_integration_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_lifecycle_integration_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_asset_integrity_tests",
+      "source": "tests/AssetIntegrityTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_integrity_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_coarse_celestial_tests",
+      "source": "tests/CoarseCelestialTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_coarse_celestial_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_orbital_integrity_tests",
+      "source": "tests/OrbitalIntegrityTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_orbital_integrity_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_orbital_integrity_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_spacecraft_frame_integration_tests",
+      "source": "tests/SpacecraftFrameIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_spacecraft_frame_integration_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_spacecraft_frame_integration_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_thermal_accounting_tests",
+      "source": "tests/ThermalAccountingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_thermal_accounting_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_thermal_accounting_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_combustion_integration_tests",
+      "source": "tests/CombustionIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_combustion_integration_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_combustion_integration_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_player_swimming_tests",
+      "source": "tests/PlayerSwimmingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_player_swimming_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_metadata_tests",
+      "source": "tests/FluidMetadataTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_metadata_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_hydrostatics_tests",
+      "source": "tests/FluidHydrostaticsTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_hydrostatics_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_production_fluid_tests",
+      "source": "tests/ProductionFluidTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_production_fluid_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_production_fluid_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_container_integration_tests",
+      "source": "tests/FluidContainerIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_container_integration_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_fluid_container_integration_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_player_fluid_integration_tests",
+      "source": "tests/PlayerFluidIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_player_fluid_integration_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_player_fluid_integration_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_cavity_impact_tests",
+      "source": "tests/FluidCavityImpactTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_cavity_impact_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_smoothing_budget_tests",
+      "source": "tests/FluidSmoothingBudgetTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_smoothing_budget_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_boundary_contact_tests",
+      "source": "tests/FluidBoundaryContactTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_boundary_contact_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_particle_contact_batch_tests",
+      "source": "tests/ParticleContactBatchTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_particle_contact_batch_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_render_camera_tests",
+      "source": "tests/RenderCameraTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_render_camera_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_render_camera_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_audio_tests",
+      "source": "tests/AudioTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_input_tests",
+      "source": "tests/InputTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_input_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_prefab_tests",
+      "source": "tests/PrefabTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_prefab_application_tests",
+      "source": "tests/PrefabApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_application_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_visual_particle_tests",
+      "source": "tests/VisualParticleTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_visual_particle_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_visual_particle_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_particle_application_tests",
+      "source": "tests/ParticleApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_particle_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_particle_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_export_tests",
+      "source": "tests/ExportTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_package_application_tests",
+      "source": "tests/PackageApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_package_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_package_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_classification_tests",
+      "source": "tests/ClassificationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_classification_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_classification_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_script_tests",
+      "source": "tests/ScriptTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_script_application_tests",
+      "source": "tests/ScriptApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_script_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_runtime_ui_tests",
+      "source": "tests/RuntimeUITests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_ui_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_runtime_ui_application_tests",
+      "source": "tests/RuntimeUIApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_ui_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_touch_event_tests",
+      "source": "tests/TouchEventTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_touch_event_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_touch_event_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_touch_application_tests",
+      "source": "tests/TouchApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_touch_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_touch_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_scene_transition_tests",
+      "source": "tests/SceneTransitionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_transition_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_scene_transition_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physics_cast_tests",
+      "source": "tests/PhysicsCastTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_cast_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physics_cast_application_tests",
+      "source": "tests/PhysicsCastApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_cast_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_physics_cast_application_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_joint_tests",
+      "source": "tests/JointTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_joint_authoring_tests",
+      "source": "tests/JointAuthoringTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_authoring_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_joint_application_tests",
+      "source": "tests/JointApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_joint_application_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_skeletal_animation_tests",
+      "source": "tests/SkeletalAnimationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_skeletal_animation_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_skeletal_animation_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_animation_application_tests",
+      "source": "tests/AnimationApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_animation_application_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_pose_composition_tests",
+      "source": "tests/PoseCompositionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pose_composition_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_pose_composition_application_tests",
+      "source": "tests/PoseCompositionApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pose_composition_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_pose_composition_application_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_ragdoll_tests",
+      "source": "tests/RagdollTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_ragdoll_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_ragdoll_application_tests",
+      "source": "tests/RagdollApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_ragdoll_application_tests"
+      ],
+      "adapter": "existing argc==3 output path; test assertions unchanged",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fluid_demo_integration_tests",
+      "source": "tests/FluidDemoIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_demo_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_fluid_demo_integration_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_character_motor_tests",
+      "source": "tests/CharacterMotorTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_character_motor_application_tests",
+      "source": "tests/CharacterMotorApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_character_motor_application_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judasjs_examples_tests",
+      "source": "tests/JudasJSExamplesTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judasjs_examples_tests"
+      ],
+      "adapter": "all existing public cookbook examples",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_boundary_migration_tests",
+      "source": "tests/BoundaryMigrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_boundary_migration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_boundary_migration_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_shooter_game_tests",
+      "source": "tests/ShooterGameTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_shooter_game_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_shooter_application_tests",
+      "source": "tests/ShooterApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_shooter_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_shooter_application_tests"
+      ],
+      "adapter": "ordinary project and isolated result root",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_script_presentation_tests",
+      "source": "tests/ScriptPresentationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_presentation_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_script_presentation_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_navigation_tests",
+      "source": "tests/NavigationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_navigation_game_tests",
+      "source": "tests/NavigationGameTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_game_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_liquid_tests",
+      "source": "tests/LiquidTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_liquid_application_tests",
+      "source": "tests/LiquidApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_application_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_liquid_surface_tests",
+      "source": "tests/LiquidSurfaceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_liquid_surface_application_tests",
+      "source": "tests/LiquidSurfaceApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_application_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_liquid_surface_refill_tests",
+      "source": "tests/LiquidSurfaceRefillTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_refill_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_liquid_surface_loop_tests",
+      "source": "tests/LiquidSurfaceLoopTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_loop_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_liquid_surface_loop_tests/view.png"
+      ],
+      "adapter": "ordinary surface scene and owned capture",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_profiler_tests",
+      "source": "tests/PerformanceProfilerTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_profiler_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_profiler_script_tests",
+      "source": "tests/ProfilerScriptTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_profiler_script_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_profiler_application_tests",
+      "source": "tests/ProfilerApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_profiler_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_profiler_application_tests"
+      ],
+      "adapter": "existing explicit output option",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_material_tests",
+      "source": "tests/MaterialTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_material_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/material_lab/Assets/environment/studio.judasenv"
+      ],
+      "adapter": "normal material pixels plus existing environment asset",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_material_application_tests",
+      "source": "tests/MaterialApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_material_application_tests"
+      ],
+      "adapter": "inspected owned output path; full existing modes",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_text_localization_tests",
+      "source": "tests/TextLocalizationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_text_localization_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_text_localization_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_text_render_tests",
+      "source": "tests/TextRenderTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_text_render_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_text_render_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_localization_application_tests",
+      "source": "tests/LocalizationApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_localization_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_localization_application_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_streaming_tests",
+      "source": "tests/WorldStreamingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_streaming_application_tests",
+      "source": "tests/StreamingApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_streaming_application_tests"
+      ],
+      "adapter": "ordinary project and isolated result root",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_streaming_performance_tests",
+      "source": "tests/StreamingPerformanceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_performance_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_streaming_performance_tests"
+      ],
+      "adapter": "inspected owned output path; full existing modes",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_streaming_revisit_tests",
+      "source": "tests/StreamingRevisitTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_revisit_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_streaming_revisit_tests"
+      ],
+      "adapter": "ordinary project and isolated result root",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_audio_acoustics_tests",
+      "source": "tests/AudioAcousticsTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_acoustics_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/audio-fixtures"
+      ],
+      "adapter": "fresh generated known codec fixtures required before execution",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_audio_world_tests",
+      "source": "tests/AudioWorldTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_world_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_audio_application_tests",
+      "source": "tests/AudioApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/audio_lab/audio_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_audio_application_tests"
+      ],
+      "adapter": "ordinary project and isolated result root",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_save_storage_tests",
+      "source": "tests/SaveStorageTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_save_storage_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_world_persistence_tests",
+      "source": "tests/WorldPersistenceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_persistence_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_save_application_tests",
+      "source": "tests/SaveApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/save_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_save_application_tests"
+      ],
+      "adapter": "existing save application writes in isolated user data; fresh-process reads scheduled separately",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_save_streaming_tests",
+      "source": "tests/SaveStreamingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_save_streaming_tests"
+      ],
+      "adapter": "existing save application writes in isolated user data; fresh-process reads scheduled separately",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_save_performance_tests",
+      "source": "tests/SavePerformanceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_performance_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/save_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_save_performance_tests"
+      ],
+      "adapter": "existing save application writes in isolated user data; fresh-process reads scheduled separately",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_deformable_tests",
+      "source": "tests/DeformableTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_deformable_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_deformable_performance_tests",
+      "source": "tests/DeformablePerformanceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_deformable_performance_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_deformable_application_tests",
+      "source": "tests/DeformableApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_deformable_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/deformable_lab/deformable_lab.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_deformable_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fracture_tests",
+      "source": "tests/FractureTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fracture_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fracture_application_tests",
+      "source": "tests/FractureApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fracture_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/fracture_lab/fracture_lab.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_fracture_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_fracture_performance_tests",
+      "source": "tests/FracturePerformanceTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fracture_performance_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_collision_geometry_tests",
+      "source": "tests/CollisionGeometryTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_geometry_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_collision_application_tests",
+      "source": "tests/CollisionApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/collision_lab/collision_lab.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_collision_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_developer_integration_tests",
+      "source": "tests/DeveloperIntegrationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_developer_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_developer_integration_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_developer_application_tests",
+      "source": "tests/DeveloperApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_developer_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/m65_integration/m65_integration.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_developer_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_developer_authoring_tests",
+      "source": "tests/DeveloperAuthoringTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_developer_authoring_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_developer_authoring_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_consumer_authoring_tests",
+      "source": "tests/ConsumerAuthoringTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_consumer_authoring_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/post_m65_consumers",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_consumer_authoring_tests"
+      ],
+      "adapter": "read-only consumer source and owned output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_post_consumer_query_tests",
+      "source": "tests/PostConsumerQueryTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_query_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_post_consumer_metadata_tests",
+      "source": "tests/PostConsumerMetadataTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_metadata_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_post_consumer_ragdoll_tests",
+      "source": "tests/PostConsumerRagdollTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_ragdoll_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_model_import_tests",
+      "source": "tests/ModelImportTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/originals/Skateboarder.fbx",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_model_import_tests"
+      ],
+      "adapter": "existing original FBX, output isolated",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_model_reimport_tests",
+      "source": "tests/ModelReimportTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_reimport_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_model_reimport_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_model_runtime_tests",
+      "source": "tests/ModelRuntimeTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_runtime_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_model_runtime_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_model_application_tests",
+      "source": "tests/ModelApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/import_lab/import_lab.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_model_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_world_building_tests",
+      "source": "tests/WorldBuildingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_building_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_world_building_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_world_authoring_runtime_tests",
+      "source": "tests/WorldAuthoringRuntimeTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_runtime_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_world_authoring_runtime_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_world_authoring_application_tests",
+      "source": "tests/WorldAuthoringApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_authoring_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/world_workshop/world_workshop.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_world_authoring_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_scalability_tests",
+      "source": "tests/ScalabilityTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scalability_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_scalability_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_scalability_pipeline_tests",
+      "source": "tests/ScalabilityPipelineTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scalability_pipeline_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_scalability_pipeline_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "adapter": "fresh output and normal runtime",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_resource_handoff_tests",
+      "source": "tests/ResourceHandoffTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_resource_handoff_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_paired_input_tests",
+      "source": "tests/PairedInputTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_paired_input_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_paired_input_script_tests",
+      "source": "tests/PairedInputScriptTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_paired_input_script_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_paired_input_script_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physics_batch_script_tests",
+      "source": "tests/PhysicsBatchScriptTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_batch_script_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_physics_batch_script_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_windows_readiness_tests",
+      "source": "tests/WindowsReadinessTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_windows_readiness_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_terrain_authoring_tests",
+      "source": "tests/TerrainAuthoringTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_authoring_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_terrain_authoring_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_terrain_pipeline_tests",
+      "source": "tests/TerrainPipelineTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_pipeline_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_terrain_pipeline_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_terrain_application_tests",
+      "source": "tests/TerrainApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/terrain_lab/terrain_lab.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_terrain_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_multi_target_ik_tests",
+      "source": "tests/MultiTargetIKTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_multi_target_ik_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physical_animation_tests",
+      "source": "tests/PhysicalAnimationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physical_balance_foundation_tests",
+      "source": "tests/PhysicalBalanceFoundationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_foundation_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_physical_balance_controller_tests",
+      "source": "tests/PhysicalBalanceControllerTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_balance_lab_tests",
+      "source": "tests/BalanceLabTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_balance_lab_tests",
+        "standing"
+      ],
+      "adapter": "standing mode only; other modes separate",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_character_lab_tests",
+      "source": "tests/CharacterLabTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_character_lab_tests"
+      ],
+      "adapter": "fresh project output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_kinematic_tests",
+      "source": "tests/KinematicTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_kinematic_lab_tests",
+      "source": "tests/KinematicLabTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_lab_tests"
+      ],
+      "adapter": "inspected defaults: read-only source / owned temporary output",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_editor_navigation_tests",
+      "source": "tests/EditorNavigationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_navigation_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_editor_picking_tests",
+      "source": "tests/EditorPickingTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_picking_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_editor_picking_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_editor_workspace_tests",
+      "source": "tests/EditorWorkspaceLayoutTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_workspace_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_editor_widget_tests",
+      "source": "tests/EditorWidgetTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_widget_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_runtime_render_tests",
+      "source": "tests/RuntimeRenderTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_render_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_runtime_render_application_tests",
+      "source": "tests/RuntimeRenderApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_render_application_tests"
+      ],
+      "adapter": "inspected owned output path; full existing modes",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_runtime_render_authoring_tests",
+      "source": "tests/RuntimeRenderAuthoringTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_authoring_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_render_authoring_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_runtime_render_retained_region_tests",
+      "source": "tests/RuntimeRenderRetainedRegionTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_retained_region_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_render_retained_region_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_signal_tests",
+      "source": "tests/SignalTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_signal_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_signal_application_tests",
+      "source": "tests/SignalApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_signal_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/signals_lab/signals_lab.judasproj"
+      ],
+      "adapter": "ordinary signal project with isolated saves and callback fault cases",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_animation_retarget_tests",
+      "source": "tests/AnimationRetargetTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_animation_retarget_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_animation_retarget_cook_tests",
+      "source": "tests/AnimationRetargetCookTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_cook_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_animation_retarget_cook_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_retarget_editor_tests",
+      "source": "tests/RetargetEditorTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_editor_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_retarget_editor_tests"
+      ],
+      "adapter": "inspected output positional argument",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_retarget_application_tests",
+      "source": "tests/RetargetApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/retarget_lab/retarget_lab.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_retarget_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_retarget_lab_tests",
+      "source": "tests/RetargetLabTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/retarget_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_retarget_lab_tests/result.json"
+      ],
+      "adapter": "read-only existing lab and owned result",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_mod_content_tests",
+      "source": "tests/ModContentTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_content_tests"
+      ],
+      "adapter": "explicit no-argument main",
+      "timeoutSeconds": 300
+    },
+    {
+      "id": "judas_mod_application_tests",
+      "source": "tests/ModApplicationTests.cpp",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/modding_lab/modding_lab.judasproj",
+        "zero",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_mod_application_tests"
+      ],
+      "adapter": "ordinary project and inspected application probe mode",
+      "timeoutSeconds": 300
+    }
+  ],
+  "deferred": [],
+  "scope": "Existing suites only; each suite requires assertion review before capability evidence classification."
+}

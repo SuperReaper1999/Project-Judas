@@ -1,0 +1,8 @@
+ConvertFrom-Json : Invalid JSON primitive: ï.
+At C:\JudasValidation\m78-closure-mixed-pair.ps1:4 char:192
++ ... osure-mixed_endpoint_v2-build.json").Content|ConvertFrom-Json;Invoke- ...
++                                                  ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [ConvertFrom-Json], ArgumentException
+    + FullyQualifiedErrorId : System.ArgumentException,Microsoft.PowerShell.Commands.ConvertFromJsonCommand
+ 
+

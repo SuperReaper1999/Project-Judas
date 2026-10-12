@@ -1,0 +1,16 @@
+{
+  "scope": "WP warning-only identifier rename: rawCOFFnotidentical; no binaryidentity inference from normalized sections. Linux separatelyprovedrawobjectidentity.",
+  "oldRawSHA256": "62f77a00ef60073823d3376b45d978ea52210b6d3f3268c0d05fb993eac34078",
+  "newRawSHA256": "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+  "oldBytes": 1276524,
+  "newBytes": 1276496,
+  "oldSections": 3635,
+  "newSections": 3635,
+  "sectionSequenceRawIdentical": false,
+  "rawTextSectionsIdentical": true,
+  "warningC4456Present": false,
+  "retainedWarnings": [
+    "C4244 SceneObjectId to float",
+    "C4244 EntityId to float"
+  ]
+}

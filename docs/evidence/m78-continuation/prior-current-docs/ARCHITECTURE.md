@@ -1,0 +1,9640 @@
+# Architecture
+
+## Current checkpoint and M78 corrective follow-up
+
+M77 is checkpointed at `9e77b2226edcf217ab789fe4f0fea42a3415a72d`, **NOT HUMAN VALIDATED**. The [M78 frozen audit](M78.md) describes that exact baseline; its read-only statements are historical audit scope, not the current working tree. [M78 corrections](M78_FOLLOWUP.md) are an uncommitted candidate with separate evidence and remaining gates. Physical Windows hardware acceptance remains outstanding.
+
+## M77 physical balance (checkpointed; human review pending)
+
+[M77](M77.md) adds explicit two-chain physical balance, bounded corrective steps
+and rest-reference get-up tasks. Configuration is default-off and does not activate
+physics. Actual per-body gravity, COM/motion and solved contacts feed bounded paired
+M45 joint drives; normal PhysicsWorld integrates once. The root and feet remain
+fully dynamic and unpinned. A planned foothold/reference is never physical support.
+M77 owns mapped posture while opted in; M70/shared IK cannot also command those
+actuators. Clips/layers continue for unmapped joints and later visual return; actual
+physical pose publishes through M47, interpolation and normal skinning/sockets.
+Modern saves retain semantic task history and real bodies, reacquiring observations
+on resume. Whole-articulation region ownership is retained; individual-bone adoption
+is refused. This is a bounded mechanical-rig capability, not universal humanoid
+recovery, a gait generator or a motor root servo. Candidate/platform/human status
+and inherited numerical limitations are recorded in M77; no acceptance is implied.
+
+The M78 angular candidate adds gyroscopic momentum transport with a midpoint drift predictor to the normal rigid-body path; free-body momentum-vector and energy convergence are checked separately. Contact/constraint integration is still approximate. Mesh contact witnesses use per-point geometric separation, and conservative CCD advancement can use the complete mesh enclosure. These are generic physics corrections, not balance-fixture retuning. Candidate timing/settling limits remain explicit in the follow-up.
+
+The combined M78 candidate exposes an M77 corrective-step regression: the unchanged impulse case lands its first step but loses support during a later step and falls. Linux and native Windows checks reproduce it; no controller/rig retuning conceals it. This candidate is not fully passing; see the follow-up for the bounded investigation proposal.
+
+Terrain cooking now reports dependent saved-scene navigation freshness across registered owned scenes and explicitly published kit scenes. Rebuild is explicit, uses the existing baker/publication transaction, and preserves immutable kit inputs. Private unpublished base scenes cannot be inferred. Appearance-only changes do not invalidate geometry bakes.
+
+## M75 author-time local terrain
+
+[M75](M75.md) adds finite local height/paint source, shared CPU brushes and guarded cooking into ordinary mesh/texture/static collision assets. Renderer owns GPU publication; runtime uses existing geometry, motor, navigation, region and save paths. Local +Y is an authoring axis, not world up or a gravity field. RadialTerrain remains unchanged; this is no planet sculptor or runtime excavation. Source is separate from immutable cooked content; Play/export reject stale cooks. Linux human acceptance was recorded on 2026-10-10, including the terrain UI activation follow-up; native Windows VM checks passed, with physical Windows GPU/input acceptance still outstanding. M74 is checkpointed at `fccbf84164cb430f78651af64cddb68afeac442a`, provisionally with human review pending.
+
+
+This document explains the technical decisions behind Project Judas and how
+they relate to the engine's long-term purpose. It is meant to be readable by
+someone with no prior context on this project. It is updated in place as
+milestones land, rather than kept as a per-milestone snapshot — see
+"Milestone history" below for how to recover an earlier milestone exactly.
+
+## Platform acceptance boundaries
+
+The operator reports that the earlier Windows update was validated and pushed.
+That historical acceptance is distinct from native Windows evidence for later
+M70/M71 changes and the human-accepted Linux M72 checkpoint. M72 has native Windows 10 VM execution evidence recorded on 2026-10-09;
+Windows hardware and operator acceptance remain outstanding. [WINDOWS.md](WINDOWS.md) retains native build,
+package and acceptance instructions. Historical platform statements below
+describe the evidence available at their original milestones.
+
+## Current reference and historical capability overview
+
+Historical accepted baseline before the M77 checkpoint: `ab3dfbab13585680a9e6cc92fa318c8d95012979`
+(post-M76 housekeeping/demo game). M76 human validation remains pending.
+Historical Lastlight UI/wall-pursuit checkpoint:
+`b7d7f4142b243cd57d9998f4952857e67e5d84a8`. M73 owned signals were accepted and checkpointed at
+`18650ba23c23eaaab0542d6e0055e33cc14d1049`; subsequent Lastlight work is project
+content plus the accepted generic imported UI-image UV correction.
+[M72](M72.md) received operator desktop acceptance on 2026-10-09. The optional
+gravity-selection follow-up is checkpointed at
+`df0c301f688e62e4baa59a837beb05d42aa75e3c`; Windows VM results at
+`f1609af0dac863257a0f200cb74ea8a504f9e644` remain distinct from hardware acceptance.
+[M74](M74.md) is a provisionally checkpointed **authoring-only retargeting candidate**, with human validation pending:
+explicit reusable full-hierarchy mappings and calibrated reference frames bake
+ordinary target-local clips through M66 recipes. The target retains its geometry,
+rest/bind data and native clips. Runtime pose composition, IK, physical authority,
+skinning and root-motion semantics are unchanged; there is no runtime retargeter
+or new JudasJS binding. Profiles/source rigs are authoring dependencies rather than
+runtime demands. Human motion acceptance is outstanding.
+M70's accepted Linux checkpoint is
+`fb31f0244c9f41f74c439afd99855e3707937edd`. M67 remains provisionally checkpointed;
+proper human authoring validation is deferred. M68 and M69 are checkpointed,
+not awaiting review. M69 controller acceptance uses synthetic SDL and real-VM
+evidence because the operator has no controller; hardware feel is untested.
+
+M66 supplies the [commodity multipart import/cook pipeline](MODEL_IMPORT.md).
+The provisional M67 candidate joins editor commands, persistent recipes and schema-1 named
+project/scene/prefab/UI/input/world documents through existing validators. Renderer
+still owns graphics; recipes run on the existing job pool. Named documents are
+loaded/saved directly in the normal files; canonical fingerprint schema remains 5.
+M67 also supplies camera clipping/projection, transient UI layout mutation and
+bounded prefab initialization through normal public JS/runtime paths.
+See [world building](M67_WORLD_BUILDING.md) and [format/identity policy](NAMED_AUTHORING.md).
+
+**Current reading guide:** Judas owns engine primitives; project JavaScript owns
+game behaviour. Current projects use CharacterMotor + logical input + JS rather
+than native player gameplay. Skeleton poses are resolved from contributions;
+navigation is advisory; collision/query geometry is independent of render meshes.
+Renderer owns raw GL, RuntimeWorld owns simulation instances, and the shared
+ResourceManager supports both immutable CPU resources and Renderer-backed assets.
+
+Modern M61 save slots preserve supported world/session state; the legacy M29
+delta path has a separate, narrower contract. M54 owns conserved liquid quantity
+and M55 optionally evolves its dynamic surface. The accepted legacy PBF path and
+protected P1-C/P1-C-M/P1-PF research remain separate. Neither liquid model is a
+claim of final fluid fidelity. The legacy fluid demo's 20 Hz repair cadence and
+deferred quality work are recorded in [FLUID_DEMO.md](FLUID_DEMO.md).
+
+Current implementation limits remain explicit in subsystem references: fixed
+M23 origin (no live rebasing), static-only concave collision, bounded geometric
+queries/solves and local navigation surfaces. Motor contact observations now use
+the normal M65 physics event path. Historical
+accounts below retain what was true at their checkpoints; their exclusions do
+not override later completed work. Current JS usage starts at [JUDASJS.md](JUDASJS.md).
+
+**M65 accepted:** [developer integration](M65_INTEGRATION.md) adds motor contact events, resolved skeleton consumers/limb IK, island sleeping, runtime physics access and bulk/code-first authoring. See the accepted consumer repair record for the measured follow-ups.
+
+**M66 accepted:** the shared
+[model import service](MODEL_IMPORT.md) adds original FBX/multipart content,
+stable reimport, source diagnostics and size-aware eight-weight skinning.
+
+### Current ownership and timing guide
+
+| Responsibility | Current owner / contract |
+| --- | --- |
+| Authored identity and defaults | Project/AssetDatabase and normal scene/prefab/named serializers; canonical fingerprint schema remains 5 with conditional extensions. M68 export retains default all-assets inclusion and optionally computes selected-scene closure plus explicit runtime assets. |
+| World instances and lifecycle | RuntimeWorld owns live entity/component state; SceneSession replaces a world, M59 residency adds/removes regions, and M61 stages coherent durable restoration. Root-world settings retain appearance ownership across additive publication. |
+| Game policy | Trusted project QuickJS owns logical input interpretation, trajectories, transitions and game rules. Safe public handles reacquire native state; no raw ECS/GL/physics pointer API is implied. |
+| Authoritative fixed work | Simulation runs navigation, script intent, opted-in M70 motor/reference/physical-drive preparation, ordinary physics and final pose consumers once per fixed interval. M71 prescribed rigid motion publishes inside that ordinary rigid step. See the current fixed ordering below. |
+| Pose consumers | Clip/layer and IK reference resolve before physical contribution. Final joints, sockets, skinning and presented reads share resolved samples; M66 skin palettes are size-aware and use eight influences. |
+| Resource work | Shared ResourceManager/job workers decode immutable CPU content; Renderer owns graphics upload/delete and context-thread use. IDs/generations and durable selections are separate from disposable GPU caches. |
+| Presentation | After fixed catch-up, presentationUpdate samples interpolation, then audio and render submission consume that world. Cameras do not integrate simulation. Auxiliary cameras retain authored size/cadence/mask and reuse main-focused shadow maps. |
+| M72 visual state | Validated root appearance and isolated entity/material runtime patches feed one rendered sample. Render hiding preserves simulation. Modern saves/region state retain values and IDs, then rebuild resources. |
+
+Current authoring starts at [Editor guide](EDITOR_GUIDE.md),
+[named documents](NAMED_AUTHORING.md), [model import](MODEL_IMPORT.md),
+[JudasJS](JUDASJS.md) and [M72 design/review](M72.md). The sections below retain the
+original reasoning, measured failures and evidence; later accepted sections and
+this current guide determine modern capability and ownership.
+
+### Historical foundation through M43 and later legacy-fluid repair notes
+
+Checkpoint for the M43 foundation: `6f199eff9378270d7291a9dd8605fcfde5760569`.
+The legacy-fluid demo optimization notes also record the later accepted repair;
+they do not describe the separate M54/M55 conserved-liquid path.
+FTFT stabilization is complete within its documented approximations. The M33–M43
+sections below describe completed capabilities. Earlier milestone accounts retain
+their original evidence and exclusions; those exclusions are not current limits
+where later accepted work explicitly supersedes them.
+
+**Judas is a game engine.** Everything a player meets in the default
+launch — the terrain planet, its lake and atmosphere, the spacecraft, the
+combustible blocks, the classic planets and plank — is the engine's
+technology demonstration: authored scene content, loaded from files under
+`assets/scenes/`, that exercises engine capabilities. The engine must stay
+able to serve a small conventional flat-terrain game as well as a
+planetary/universe-scale one; nothing below privileges the demonstration.
+
+As of the Milestone 32 rigid-body checkpoint `PhysicsWorld` finds contact
+candidates with a dynamic AABB tree (no all-pairs pass), solves contacts
+with accumulated, warm-started impulses and Coulomb-disc friction, clips
+box-box contacts to the real overlap polygon, and generates speculative
+contacts so a body placed touching is supported from its first step.
+FTFT4A repairs primitive geometry and signed gaps. FTFT4 closes the measured
+impact-timing/energy defects using actual-time isolated impacts, deliberately
+inelastic coupled events, and an anchored motion ledger. Rotating-graze CCD
+has an explicit finite sampling resolution; see the current results below.
+
+FTFT9 provides the authorized **approximate production hybrid**:
+particle/PBF flow, sampled analytic hydrostatics and drag, explicit body-local
+fluid cavities, and custom-controller swimming. Its current validation status is
+in `docs/FTFT.md` and `docs/STABILIZATION_STATUS.md`; required behavioural gates
+pass, including the final clean Release gate, while optional strict diagnostics
+and numerical limitations remain explicit.
+The ordinary `projects/fluid_demo/` project demonstrates a flat pool and an
+oblique radial-gravity basin with swimming, thrown props and actual particle
+transport in empty cavities. Fluid neighbour adjacency reuses flat scratch
+storage; kernel constants and conservative solid bounds are prepared once.
+Dry hydrostatic queries reject impossible particle-height intervals along the
+query's own up direction before column/solid work. Presentation caches the held
+fluid state's mesh by revision and scales extraction grid spacing with authored
+fluid resolution. These optimizations do not change PBF equations, wet-column
+reconstruction or finite-mass cavity exchange; see `docs/FLUID_DEMO.md`.
+Particles use actual resolved rigid paths. Physical solid exclusion takes priority
+over numerical skin clearance; the query-only player samples interior liquid
+without pretending to displace it. FTFT9 is checkpointed at `1b3a134`; the final
+verification is recorded in `docs/evidence/stabilization/final-gate/`. Exterior particle collision
+has no second rigid reaction, so exact exterior liquid/solid momentum conservation
+is not claimed. The historical M24–M32 accounts below describe their original
+checkpoints, including the now-superseded light-body reaction cutoff. The protected
+P1-C/P1-C-M/P1-PF high-fidelity prototypes remain research; full original M32 is not
+retroactively earned by the production approximation.
+
+As of Milestone 31 expensive independent work runs on a bounded **job
+system** (`src/JobSystem.h`) and the resource path is asynchronous: file
+reads and decodes happen on workers, GPU upload happens only in
+`ResourceManager::Pump` on the GL thread, requests never block (a
+placeholder draws until the asset is Ready), demand is reference-counted,
+stale completions are rejected by generation, and resident bytes are
+budgeted with least-recently-used eviction. PhysicsWorld, the session and
+the editor UI are NOT threaded. See "Milestone 31" at the end of this
+document.
+
+As of Milestone 30 a game is a **project** (`.judasproj`: a root
+directory, its Assets/Scenes/Saves folders, a startup scene), assets have
+**stable ids** carried in `.judasmeta` sidecars and are referenced by id
+from scenes (format version 3), a single **ResourceManager** turns project
+assets into GPU resources, and the editor can make a small game with
+projects, an asset browser, viewport gizmos, a component-editor registry,
+a debug visualisation layer and a profiler. The technology demonstration
+is an ordinary project (`judas_tech_demo.judasproj`); `projects/tiny_game`
+is a small flat game. See "Milestone 30" at the end of this document.
+
+As of Milestone 29 an entity may exist without being fully simulated:
+every dynamic body is a persistent entity at Full, Coarse or Dormant
+fidelity with an explicit lifecycle (Active / Unloaded / Destroyed), a
+scene-chosen policy decides when managed entities change fidelity, and
+runtime changes persist as deltas over the unchanged baseline scene. See
+"Milestone 29" at the end of this document.
+
+As of Milestone 28 the engine has a first-class **Scene** (authored data),
+a deterministic versioned **scene file format** (`.judas`), a **RuntimeWorld**
+that instantiates a scene into every engine system, and a separate
+**editor executable** (`judas_editor`) that creates, inspects, edits, saves
+and plays scenes with an explicit Edit/Play boundary. The `judas` runtime
+loads a scene file and plays it; `Application.cpp` is orchestration only.
+See "Milestone 28" at the end of this document for the boundaries, the
+format, the responsibility split and the limits.
+
+The demonstration content itself is the accepted M25–M27 state: the
+terrain planet with real collision, an M24 fluid lake, an M26 bounded
+hydrostatic gas atmosphere with density-dependent aerodynamic force on the
+spacecraft, and M27's finite combustible coatings on three ship-carried
+rigid blocks (radiant heater, sampled oxidizer, thermal exchange, fuel
+consumption, reaction heat; flame/smoke shapes are presentation only). See
+"Milestone 26" and "Milestone 27" for the models and numerical limits.
+The earlier two-planet demonstration described below is
+`assets/scenes/classic.judas` (`JUDAS_CLASSIC_DEMO=1` still selects it).
+
+## Milestone history
+
+The early milestones below have Git tags; later checkpoints, including M33–M64,
+are commits without milestone tags. Recover their recorded commits rather than
+preserving parallel runtime code:
+
+- `milestone-1` — window creation, a single 2D box, keyboard movement.
+- `milestone-2` — 3D rendering, perspective, depth testing, a free-flight
+  camera, three static cubes.
+- `milestone-3` — Jolt Physics integration, `GravityField`/`FaithfulGravity`,
+  fixed-timestep simulation, a dynamic cube falling onto a static floor.
+- `milestone-4` — a player standing on a flat floor, driven by Jolt's
+  `CharacterVirtual`; WASD/mouse/jump; the Milestone 3 cube retained
+  alongside it.
+- `milestone-5` — the player rebuilt as fully Judas-owned (no more
+  `CharacterVirtual`); `RadicalGravity` added; a spherical demo world;
+  the headless test harness added as permanent infrastructure.
+- `milestone-6` — diagnosed and fixed the locomotion judder discovered
+  during Milestone 5's human validation via presentation-only
+  interpolation (`GetPresentedPosition`/`GetPresentedOrientation`), added
+  `REALTIME` mode to the test harness to make the diagnosis possible; no
+  demo scene changes.
+- `milestone-7a` — sphere enlarged 8m to 20m; four ordinary Jolt dynamic
+  bodies sharing the player's gravity (`DynamicBody`,
+  `PrepareDynamicBodiesForStep`); minimal player-to-object push. Followed
+  by an un-tagged bugfix (commit `f8e48ac`, "Bugfix #1") for a real
+  move-and-slide contact-normal bug — see "Contact normal correctness and
+  the 'already touching' case" — found during this milestone's own human
+  validation; bugfixes between milestones aren't tagged the way milestones
+  are.
+- `milestone-7b` — a second, simultaneous `FaithfulGravity` platform
+  alongside the sphere, with `GravityResolver` (falloff-weighted vector
+  blending) resolving which field governed a consumer at a given position.
+  Passed its own human validation at the time; later shown by Milestone
+  7-Final's own validation to be built on an assumption (continuous field
+  blending as the model for "gravity context") that doesn't generalize —
+  see "Gravity context ownership."
+- `milestone-7final` — two independent planets, a connecting plank, full
+  round-trip traversal. Reached only after TWO complete gravity-model
+  redesigns failed the operator's own interactive validation (not just
+  automated checks) — see "Gravity context ownership" for the full,
+  honest retrospective on why `GravityResolver` and the first
+  `GravityContextMap` design both passed every harness check while still
+  feeling physically wrong to a human standing on the plank. The second
+  failure prompted a further decision unrelated to gravity semantics
+  themselves: Jolt Physics was removed entirely and replaced with a
+  Judas-owned rigid-body/collision/contact stack — see "Physics
+  ownership." Both prior attempts' commits remain in git history
+  (untagged, since neither passed human validation) for anyone who wants
+  to see exactly what was tried and rejected.
+- `milestone-8` — a controllable flying primitive (an ordinary dynamic
+  box resting on the plank) that the player can take input authority over
+  with `F` and fly around in 3D, then hand back. Found and fixed a real
+  bug in how a grounded player inherits a moving support's velocity — see
+  "Milestone 8" for the full story, including why the straightforward
+  velocity-carry approach wasn't enough on its own.
+- `milestone-9` — static model loading (OBJ via tinyobjloader), texture
+  loading (PNG via stb_image) and mapping, and basic ambient + one
+  directional light, added to the existing OpenGL 3.3 renderer without a
+  graphics-API change, a render-graph, or PBR. One imported model
+  (`assets/models/beacon.obj`) with a real texture demonstrates the new
+  capability; the existing box/sphere primitives were migrated onto the
+  same generalized mesh/lighting path rather than kept on a separate
+  flat-color-only shader — see "Milestone 9" for the full design and why.
+- `milestone-10` — smooth ground acceleration/deceleration (replacing
+  instant grounded velocity), modest momentum-preserving air control, and
+  automatic step-up/step-down (`src/StepClimb.*`) — walking into a short
+  obstruction (a stair riser, the flying primitive's own edge) climbs it
+  without jumping, expressed purely via `PhysicsWorld::SweepPlayerShape`
+  queries relative to the player's own local gravity frame. A small
+  staircase and one ramp were added to Planet A to demonstrate and test
+  it. See "Milestone 10" for the full design, the real edge-case bug found
+  while building the step-up sweep sequence, and why moving-support
+  behavior from Milestone 8 needed no changes at all.
+- `milestone-11` — the Milestone 8 flying primitive upgraded to full
+  6-degree-of-freedom spacecraft control (translation along all three of
+  its own local axes, plus independent pitch/yaw/roll — never gravity or
+  a fixed world axis) and a new secured-pilot attachment
+  (`src/PilotAttachment.*`): an explicit, authoritative kinematic
+  relationship that keeps the piloting player rigidly glued to the
+  spacecraft's own pose through arbitrary rotation, including upside
+  down — a genuinely new capability, not an extension of Milestone 8's
+  ordinary moving-support carry, which remains exactly what runs whenever
+  nobody is piloting the spacecraft. Releasing control hands the player
+  the spacecraft's own real point velocity (linear plus the rotational
+  contribution at the player's own offset) rather than resetting it. The
+  spacecraft now renders as an imported model (`assets/models/plane.obj`)
+  through the Milestone 9 mesh path instead of a plain box. See
+  "Milestone 11" for the full design, the two new headless test suites
+  (`judas_pilot_attachment_tests`, `judas_spacecraft_control_tests`), and
+  why the acquisition/release logic had to be factored into shared
+  functions (`src/PilotControl.*`) rather than copy-pasted a third time.
+- `milestone-12` — the spacecraft's controls replaced with genuine
+  force/torque-driven inertia: `ApplyFlyingPrimitiveControl` now calls two
+  new generic `PhysicsWorld` methods, `ApplyForce`/`ApplyTorque` (adding to
+  `RigidBody`'s existing force/torque accumulator), instead of overwriting
+  linear/angular velocity outright. Uncovered a real architectural gap
+  while implementing this: `PhysicsWorld::Step` had never actually called
+  `RigidBody.h`'s own `IntegrateRigidBody` — every consumer through
+  Milestone 11 either wrote velocity directly or used
+  `ApplyLinearAcceleration` (gravity only), so the force/torque
+  accumulator, `ApplyForce`/`ApplyTorque`, and the real 3x3 inverse
+  inertia tensor had been exercised only by the standalone physics/
+  collision test suites since Milestone 7-Final, never by the live
+  simulation. `Step` now calls the real integrator, closing that gap
+  instead of adding a second one. Also found and fixed, mid-milestone: the
+  spacecraft's initial control-force magnitude (a "comfortable-looking"
+  320N) turned out to be physically incapable of lifting the spacecraft
+  off the plank at all — less than the ~785N needed just to counter this
+  demo's own gravity — a real bug caught by interactive validation, not
+  the unit tests (which never touch a resting contact); fixed by raising
+  it to 1200N with the actual arithmetic documented, not re-guessed. See
+  "Milestone 12" for the full design, the measured evidence for every
+  required inertial behavior (coasting, orientation/velocity independence,
+  counter-thrust, perpendicular thrust, mass response, rotational inertia
+  via the real tensor, gravity composition), and the two rewritten/
+  extended standalone test suites.
+- `milestone-13` — a Judas-owned UI system: a persistent top-left HUD
+  panel showing five live telemetry values, and a pause menu (root screen
+  + one nested Options screen) reachable with `Escape`, navigable by
+  keyboard or mouse. New screen-space UI rendering primitives
+  (`Renderer::BeginUIFrame`/`DrawUIRect`/`DrawUIText`/`EndUIFrame`) sit
+  behind the same raw-GL boundary every other draw call already respects;
+  a new CPU-side font loader (`src/FontLoader.*`, `stb_truetype`) bakes
+  DejaVu Sans into one GPU atlas. `src/UIWidgets.*`/`src/UIStack.h` are
+  the generic screen/button/navigation-stack primitives; `src/PauseMenu.*`
+  is the one concrete menu built from them; `src/HUD.*` is the HUD, fed a
+  plain `HUDViewData` struct so it never depends on a concrete gameplay
+  type. Pausing freezes the fixed-step simulation completely (see
+  "Milestone 13, Pause policy") and gameplay input is suppressed via one
+  boundary in `Application::Run`, not scattered `if (menuOpen)` checks.
+  See "Milestone 13" for the full design, the input-ownership boundary,
+  and the new standalone `judas_ui_tests` suite.
+- `milestone-14` — dynamic lighting: a toggleable (`T`) player torch and a
+  small fixed spacecraft light rig (one headlight spotlight, two wingtip
+  point nav lights), both built fresh every render frame from their
+  owner's own PRESENTED transform, on top of the existing Milestone 9
+  ambient/directional "sun." A new `src/Light.h` (`DynamicLight`,
+  `LightKind::Point`/`Spot`) is the entire Judas-owned light
+  representation; `Renderer::SetDynamicLights` uploads up to
+  `kMaxDynamicLights` (5) of them to a small fixed-size uniform array
+  added to the existing Milestone 9 lit-mesh shader (not a second
+  rendering path). `src/LightTransforms.*` factors the "attach a light to
+  a moving/rotating owner" and "player torch follows free look" math into
+  pure, directly-testable functions; `src/LightAttenuation.*` mirrors the
+  fragment shader's own smooth-windowed-inverse-square attenuation and
+  smoothstep spotlight-cone formulas for the same reason. See "Milestone
+  14" for the full design, the attenuation/cone derivations, and the new
+  standalone `judas_lighting_tests` suite.
+- `milestone-15` — real-time shadows for the directional "sun," the
+  player torch, and the spacecraft headlight, via standard shadow mapping
+  added to the SAME Milestone 9/14 lit-mesh shader (a
+  `vLightSpaceMatrix[3]`/three light-space varyings, a 3x3 PCF shadow-
+  sampling function, applied to the directional term and to any dynamic
+  light with `DynamicLight::shadowMapIndex` set — see src/Light.h).
+  `Renderer::BeginShadowPass`/`EndShadowPass` render the SAME scene-
+  drawing calls the color pass uses, depth-only, into one of three
+  dedicated FBO/depth-texture pairs (`kShadowMapCount = 3`, created once
+  in `Init`, reused every frame — never a render graph or a generalized
+  shadow scheduler). `src/ShadowTransforms.*` builds each light's view/
+  projection matrix (a directional frustum recentered on the player every
+  frame; a perspective frustum per spotlight, sized from its own cone/
+  range) as pure, directly-testable free functions. Point/navigation
+  lights do not cast shadows. Post-validation bugfix: the torch's own
+  shadow pass rendered the player's own body, which sits essentially at
+  the torch's own light position, making it fully self-shadow the torch's
+  entire cone — fixed by excluding the player model from only the torch's
+  own shadow pass. See "Milestone 15" for the full design, the bias/PCF
+  strategy, and the new standalone `judas_shadow_tests` suite.
+- `milestone-16` (accepted) — the
+  first reusable environmental-interaction system: a single
+  `Interactable` interface (`src/Interactable.h`) `PlayerController`/
+  `Application.cpp` understand, never a concrete `Door`/`LightSwitch` by
+  name. `src/InteractionSystem.*`'s `SelectInteractable` is a pure,
+  testable free function picking the closest in-range, roughly-faced
+  candidate. `src/Door.*`: a real, physically-collidable hinged door — a
+  STATIC `PhysicsWorld` body whose pose is driven directly every fixed
+  step via `PhysicsWorld::ResetBody` (no joint/constraint system needed),
+  swinging about its own authored hinge edge via
+  `src/HingeTransform.*`'s pure rotate-about-a-pivot math — never
+  assuming world +Y is the hinge axis. `src/LightSwitch.*`: the second,
+  deliberately simple non-door interactable — a small lever (no physics
+  body at all) toggling one Milestone 14 point light on/off, proving the
+  abstraction isn't secretly `DoorManager`. `G` triggers the currently-
+  selected interactable (not `E` — `E` is already the spacecraft's own
+  "ascend" control, a real conflict caught during implementation, see
+  "Milestone 16" below), obeying the same drain-always/act-when-allowed
+  input-ownership boundary `T` (Milestone 14) already established. See
+  "Milestone 16" for the full design and the new standalone
+  `judas_interactable_tests` suite.
+
+Each milestone's demo content has been replaced (not extended) by the next;
+check out a tag to see or run an earlier milestone as it was.
+
+## Diagnosis
+
+**Symptom (reported by the operator during Milestone 5 interactive
+validation):** ordinary continuous locomotion around the spherical world
+looked visibly jumpy/jerky, even though the underlying gameplay (walking,
+collision, jumping, orientation) was functionally correct.
+
+The brief for this milestone was explicit that this could be either of two
+different bugs — a genuinely unstable simulation, or a stable simulation
+being presented badly — and insisted on measuring before touching anything.
+Two measurements, both taken with `src/TestHarness.h/.cpp` (see
+"Automated testing" below for the `REALTIME` mode added specifically for
+the second one):
+
+**1. Is the authoritative fixed-step simulation itself smooth?** Walked in
+a straight line at constant input, logging every single fixed step
+(`LOG_EVERY 1`, no rendering involved at all). Across 150 consecutive
+steps, the per-step position delta was `0.06667m ± 0.00004m` — a relative
+standard deviation of about `0.06%`, and exactly `kMoveSpeed *
+kFixedTimestep = 4.0 * (1/60) = 0.0667m`. **The authoritative simulation
+was already producing a essentially perfectly uniform sequence of states.**
+No repeated penetration correction, no oscillating shape sweeps, no
+support-transition instability, no orientation snapping — none of the
+"simulation is actually broken" candidates listed in the brief were
+present.
+
+**2. Is that smooth state being presented smoothly?** Added a real-time
+diagnostic mode to the harness (`REALTIME <n>`) that mirrors
+`Application::Run`'s own interactive accumulator loop exactly — same
+`SimulationTiming` constants, same clamp/accumulate/catch-up-cap shape —
+so it reproduces the true render-frame-to-fixed-step relationship
+headlessly, logging one row per *rendered frame* (not per fixed step):
+how many fixed steps ran that frame, and the position that would have been
+handed to the renderer. Walking at the same constant input, over 289
+render frames:
+
+| | min | max | mean | relative stddev |
+|---|---|---|---|---|
+| fixed steps per rendered frame | 0 | 2 | ~0.96 | — |
+| per-frame position delta (old: direct presentation) | `0.000m` | `0.180m` | `0.071m` | `21%` |
+| implied instantaneous speed | `0.0 m/s` | `10.4 m/s` | `4.14 m/s` | `21%` |
+
+The render loop was running at roughly 58–59Hz against a 60Hz fixed
+timestep — close, but not an exact integer ratio (as is true of the
+overwhelming majority of real monitors: 59.94Hz, 75Hz, 144Hz, 165Hz, and
+even nominal "60Hz" displays with vsync-delivery jitter all fail to divide
+evenly into a 60Hz simulation). Most frames got exactly one new fixed step,
+but some got zero (the same authoritative position rendered twice in a
+row — a visible freeze) and some got two (a render frame showing double a
+normal step's worth of motion — a visible lurch). **Root cause: not
+simulation instability. The fixed-step state was correct at every step;
+directly presenting "whatever the latest fixed step happened to compute"
+on render frames whose timing doesn't line up 1:1 with the fixed rate
+produces temporal aliasing — the classic consequence of a fixed-timestep
+simulation rendered without interpolation.**
+
+**Why the chosen fix (presentation-only interpolation — see "Simulation/
+presentation boundary" below) addresses this and nothing else needed to
+change:** since the authoritative sequence of states was already smooth,
+correct, evenly-spaced ground truth, the only thing missing was a way to
+ask "what does the world look like at this render frame's actual moment in
+time, which usually falls *between* two fixed steps?" instead of snapping
+to whichever fixed step happened to have completed most recently.
+Interpolating between the previous and current authoritative
+position/orientation, weighted by how far into the next (not yet
+simulated) step real time has progressed, answers exactly that question —
+without touching gravity, collision, support, velocity, or any gameplay
+decision, all of which remain driven by the untouched fixed-step states.
+Interpolation was not assumed up front; it's what two rounds of measurement
+pointed at.
+
+**After the fix**, the same real-time measurement:
+
+| | min | max | mean | relative stddev |
+|---|---|---|---|---|
+| per-frame position delta (new: presented/interpolated) | `0.065m` | `0.113m` | `0.071m` | `11%` |
+| implied instantaneous speed | `4.0 m/s` | `6.5 m/s` | `4.14 m/s` | `11%` |
+
+Freeze frames (`0.0 m/s`) and double-step lurches (`~10 m/s`, over 2.5×
+target speed) are both gone. The remaining ~11% relative variation
+correlates with genuine render-frame delivery jitter (this environment's
+frame interval itself varies roughly 16.3–18.5ms) rather than being
+decoupled from real elapsed time the way the original quantization
+artifact was — proportional motion that tracks real elapsed time reads as
+smooth; motion that randomly alternates between "nothing happened" and
+"twice as much happened" does not. See "Human visual validation" for the
+operator's judgment on whether this reads as smooth in practice.
+
+## Language: C++
+
+**Historical initial language rationale.** The middleware possibilities below
+were considered at project start. Current rigid physics and rendering are Judas
+implementations; this is not a claim that Jolt/PhysX/Vulkan are integrated.
+
+The long-term engine needs tight control over large-world coordinate math,
+and integrates physics middleware (rigidbody dynamics, collision detection)
+and possibly a low-level graphics API like Vulkan. The mature options in
+that space (Jolt Physics, PhysX, Vulkan itself) are C or C++ libraries with
+the most direct, lowest-overhead integration path in C++. Choosing C++ now
+avoids introducing an interop layer later for problems we already know
+we'll have.
+
+C# was considered and is workable (e.g. via Silk.NET), but it buys nothing
+here and adds friction for physics/graphics integration. There was no
+technical reason to prefer it.
+
+## Dependencies
+
+**Historical initial dependency rationale.** The SDL paragraph below predates
+M35's logical gamepad integration; SDL controller support is now used. Current
+dependencies also include the pinned libraries described with audio, scripting,
+animation, navigation and text, plus the offline M64 QuickHull cooker. See those
+subsystem sections and their dependency provenance files for current scope.
+
+**SDL2** — window creation, OS event handling, keyboard/mouse state, and
+OpenGL context creation. A solved, commodity problem; SDL2 is mature,
+widely shipped, and its scope (window/input/context, plus audio/controller
+support not yet used) matches this engine's needs without pulling in
+anything unnecessary.
+
+**GLM** (added in Milestone 2) — header-only C++ `vec3`/`mat4`/`quat` math
+matching GLSL's own conventions. MIT-licensed. Installed via the system
+package manager (`libglm-dev`).
+
+**stb_image_write** (added in Milestone 5, `third_party/stb_image_write.h`)
+— a single-header, dependency-free PNG/BMP/TGA/JPG/HDR writer, public
+domain/MIT dual-licensed. Used only by the opt-in test harness (see
+"Automated testing") to save screenshots; the normal game never calls it.
+Vendored directly (one file, ~1700 lines, no transitive dependencies)
+rather than fetched via CMake — writing an image file from raw pixels is
+as commodity a problem as they come, and a package manager or
+`FetchContent` step would add process for a single self-contained header.
+
+## Physics ownership
+
+**Historical M7-Final account.** The ownership decision remains current; the
+geometry/solver inventory below records that checkpoint. M32/FTFT supersede its
+early contact/broadphase implementation, M64 extends physical geometry, and
+M49/M51 separate generic character motion from project-owned gameplay.
+
+**Milestone 3 through the first attempt at Milestone 7-Final used [Jolt
+Physics](https://github.com/jrouwe/JoltPhysics) (pinned `v5.6.0`, MIT
+license, fetched via CMake `FetchContent`)** for rigid-body dynamics,
+collision detection, contact resolution, and constraint solving — a
+solved, extremely hard problem that every shipped physics-using game
+either licenses or spends years building, and Project Judas had no
+evidence it needed to re-derive any of that.
+
+**Milestone 7-Final removes Jolt entirely.** Not because middleware is
+expensive or immature — the operator's own words: "I do not care" about
+implementation cost, this "is not a question of whether doing so is more
+expensive, more difficult, less mature, or duplicates middleware
+functionality. The decision is made." The evidence that triggered it:
+Milestone 7-Final's two-planet-plus-plank demonstration failed the
+operator's interactive validation *twice* under two different gravity-
+context designs (see "Gravity context ownership"), and while diagnosing
+the second failure, the operator concluded the deeper problem was
+architectural — every previous gravity design had been built as "Judas
+logic wrapped around a conventional Y-up-shaped physics engine," which
+made it too easy for a subsystem (support detection, contact response,
+character movement) to quietly assume a fixed axis existed somewhere
+underneath, even while `PlayerController` itself stayed scrupulously
+axis-agnostic. The fix wasn't another gravity-resolution redesign; it was
+making "no global up or down" a property of the physics layer itself, not
+just of Judas's logic sitting on top of it.
+
+**What Judas owned at M7-Final** (`src/RigidBody.*`, `src/Contacts.*`,
+`src/ContactSolver.*`, `src/PhysicsWorld.cpp`): rigid-body state (position,
+free-quaternion orientation, linear/angular velocity, inverse mass, full
+3x3 inverse inertia tensor), force/gravity accumulation, semi-implicit
+Euler integration, collision detection (sphere/box narrowphase, a proper
+multi-point manifold for box-vs-box — see "Locomotion" for why a single
+point wasn't enough), contact resolution (sequential impulses for the
+normal and Coulomb-friction constraints, plus penetration-proportional
+positional correction), and the player's own capsule sweep query (a
+substep-sampled march with bisection refinement — see "Player/controller
+ownership"). None of it assumes a world-space up axis: every operation is
+expressed in terms of the shapes' and bodies' own positions/orientations,
+verified by dedicated tests that rigidly rotate an entire scenario
+(bodies, gravity, and all) and confirm the result rotates identically —
+see "Automated testing."
+
+**Why this is still "ownership," not "reinventing everything":** (Superseded
+in part by Milestone 32, which replaced the all-pairs broadphase with a
+dynamic AABB tree and the vertex-inside manifold with face clipping — see
+"Milestone 32." The reasoning below is kept as the M7-Final record.) The
+brute-force nature of this stack is deliberate, not a placeholder for
+missing ambition. Broadphase is all-pairs (this demo's body count is in
+the low teens — a spatial structure would be unused machinery, not a
+correctness requirement); box-vs-box uses a vertex-inside-the-other-box
+manifold rather than full Sutherland-Hodgman clipping; the player's sweep
+is substep-sampled rather than closed-form continuous collision detection.
+Each simplification is documented at its own definition, not hidden — see
+"Remaining limitations." The goal was the smallest COMPLETE stack Project
+Judas's own bodies need, built and verified bottom-up (state → integration
+→ collision → contacts → resolution → the player's query surface), not a
+feature-complete general physics engine.
+
+`PhysicsWorld.h`'s public API — `BodyHandle`, `BodyTransform`,
+`ShapeSweepHit`, `CreateStaticBox`/`CreateStaticSphere`/`CreateDynamicBox`/
+`CreateDynamicSphere`, `ApplyLinearAcceleration`, `Step`, `GetTransform`,
+`CreatePlayerShape`/`DestroyPlayerShape`/`SweepPlayerShape` — is completely
+unchanged by this migration. Every consumer (`PlayerController`,
+`DynamicBody`, `Application`, `TestHarness`) needed zero changes beyond the
+demo content itself; the interface was already physics-middleware-agnostic
+by construction (law: `PhysicsWorld.h` never exposes a concrete engine
+type), so replacing what's behind it was exactly as contained as the
+interface always promised.
+
+## Player/controller ownership
+
+**Historical M5–M7 controller boundary; retained as legacy compatibility.**
+The modern boundary is CharacterMotor-owned collision-aware motion with JS-owned
+input policy, locomotion/jump/swimming behaviour and separate camera policy.
+See M49 and M51 below; the following preserves why the original controller was
+made Judas-owned, not a prescription for current C++ gameplay.
+
+Milestone 4 built the player on Jolt's `CharacterVirtual` — a reasonable,
+purpose-built choice *for that milestone*, but one where Jolt itself
+decided what "grounded" meant, drove the character's movement resolution,
+and held the character's velocity as its own state. Milestone 5 moves all
+of that to Judas. This section documents the resulting boundary; see
+"CharacterVirtual removal" below for the before/after mapping the milestone
+brief specifically asked for.
+
+**Judas (`PlayerController`, `src/PlayerController.h/.cpp`) now owns:**
+
+- the player's entire state — position, velocity, and orientation are
+  plain `glm` fields on `PlayerController`, not a Jolt body or character
+  controller of any kind;
+- desired locomotion (turning WASD + look direction into a velocity);
+- gravity response (integrating a sampled `GravityField` acceleration into
+  vertical velocity, exactly as `PhysicsWorld::ApplyLinearAcceleration`
+  does for ordinary bodies);
+- local up/down (see "Orientation" below);
+- jump behavior (when it's allowed, and in which direction);
+- support interpretation (turning a raw geometry query into "am I
+  grounded?" — see "Support");
+- how movement intent is resolved against collision (a small move-and-slide
+  loop it runs itself — see "Locomotion").
+
+**The physics engine (via `PhysicsWorld`) now owns only:** the underlying
+shape-query math — "if this capsule moved this far in this direction, what
+would it hit, and what's the surface normal there?" That's it.
+`PhysicsWorld` exposes exactly this as `SweepPlayerShape` (see
+`PhysicsWorld.h`), plus `CreatePlayerShape`/`DestroyPlayerShape` to manage
+the capsule shape itself. The player capsule is **never added to the world
+as a body** — it has no handle, no mass, no activation state, and never
+appears in the contact-resolution pass. It exists purely as a shape
+(radius + half-height) that `SweepPlayerShape` samples at several points
+along a displacement (see "Physics ownership") on demand, whenever
+`PlayerController` wants an answer.
+
+As before, no concrete physics-engine type appears in `PhysicsWorld.h` —
+`ShapeSweepHit` (the query result) is plain `glm` data. This held true
+across the Milestone 7-Final physics migration specifically because it was
+already true: the interface never named Jolt, so replacing what
+implements it required no change here.
+
+### Why `CharacterVirtual` was right for Milestone 4 but isn't the player architecture now
+
+`CharacterVirtual` earned its place in Milestone 4 honestly: it is Jolt's
+own purpose-built, battle-tested answer to "move a character and resolve
+its collisions," and using it there avoided reinventing sweep-and-slide
+resolution for a milestone that wasn't testing that. What it does *not*
+do is leave "what counts as gravity," "what counts as up," or "what counts
+as support" as decisions outside itself — those were baked into Jolt's own
+class, which Milestone 5's purpose (proving Judas, not Jolt, owns player
+semantics under changing gravity) specifically requires moving out.
+
+A dynamic rigid body (the other Jolt option) was rejected again for the
+same reason as Milestone 4: ordinary rigid-body dynamics (friction/
+restitution/torque from glancing contacts) are the wrong tool for
+player locomotion, producing unpredictable sliding and orientation drift.
+
+The replacement is not a general character-controller library — it is the
+minimum needed to satisfy this milestone: one shape, one query function
+(`SweepPlayerShape`), and a bounded (4-iteration) move-and-slide loop
+inside `PlayerController::FixedUpdate`. Nothing about stairs, ledges,
+multiple character shapes, or crouching was built, because nothing in this
+milestone needed it.
+
+## Ownership boundary
+
+The foundational rule from Milestone 3, conceptually unchanged even though
+Milestone 7-Final moved *who* sits on the physics side of it:
+
+```
+Judas owns gravity, reference frames, and world/large-world coordinates.
+
+The physics engine owns collision detection, contact generation,
+rigid-body integration, and constraint solving — nothing more.
+```
+
+**Milestone 7-B kept this boundary exactly where it was** — `GravityResolver`
+was a pure addition entirely inside Judas's own existing half of the split,
+nothing that touched collision, contact, or rigid-body integration; Jolt
+did precisely what it always had.
+
+**Milestone 7-Final moved who implements the physics side, not the split
+itself.** The physics engine still owns exactly the same things (collision
+detection, contact generation, rigid-body integration, constraint solving)
+— it's now Judas's own code instead of Jolt's, but the boundary between
+"gravity/reference-frame logic" and "collision/contact solving" is
+unchanged; see "Physics ownership" for why the *implementer* changed and
+"Gravity context ownership" for why gravity semantics were re-derived at
+the same time (a related but logically separate decision — the operator
+was explicit that middleware replacement and gravity-context redesign are
+two different questions, addressed together only because evidence for both
+surfaced in the same investigation). No physics middleware computes
+gravity of its own; Judas still samples a `GravityField` and hands the
+result to the physics layer as an applied acceleration, exactly as before.
+
+### Gravity: one interface, interchangeable implementations
+
+**Current gravity-selection follow-up (after M72):** optional per-entity gravity intent
+selects an existing authored GravityField independently of its zone, or provides
+an explicit world-space uniform acceleration. Absence preserves spatial routing.
+Local-gravity consumers share `RuntimeWorld::SampleEntityGravity`; sources are
+stable entity identities resolved at sampling, never durable pointers. This does
+not change support, attachment, camera ownership, liquid equilibrium or pairwise
+celestial forces. [Design, lifecycle, consumers and limits](GRAVITY_SELECTION.md).
+Root and streamed box gravity zones now share oriented bounds; the reproduced
+initial-load inconsistency and regression proof are retained with this follow-up.
+
+**Current extension:** M54 added optional `GravityField::Equilibrium` descriptors
+for conservative liquid geometry. Acceleration still comes from `Sample`; both
+capabilities use the same authoritative field/zone selection. This supplements
+the historical acceleration contract below without adding a separate gravity model.
+
+`GravityField` (`src/GravityField.h`) is an abstract interface — a single
+pure-virtual method, `Sample(worldPosition) -> acceleration` — and is
+Judas's *only* contract for gravity. Everything that needs gravity talks to
+a `GravityField&` and stays completely agnostic about which concrete
+implementation is behind it: neither `PlayerController` nor `PhysicsWorld`
+nor `Renderer` has ever heard of `FaithfulGravity` or `RadicalGravity` by
+name.
+
+Milestone 5 adds the second canonical implementation:
+
+```
+GravityField (interface)
+    |
+    +-- FaithfulGravity   (uniform/constant-direction; Milestone 3)
+    |
+    +-- RadicalGravity    (radial, constant-magnitude; Milestone 5)
+```
+
+**`RadicalGravity`** (`src/RadicalGravity.h/.cpp`) supplies acceleration
+directed toward a configured center point, at a configured constant
+magnitude:
+
+```cpp
+towardCenter = center - worldPosition
+direction = normalize(towardCenter)
+acceleration = direction * magnitude
+```
+
+This is deliberately not physically realistic — no inverse-square falloff,
+no gravitational mass, no orbital mechanics. Milestone 5 tests that gravity
+*direction* can change and everything downstream still works; it is not an
+astrophysics milestone. `magnitude` is explicit per-instance configuration
+(the demo uses `9.81`, comparable to `FaithfulGravity`'s constant, per the
+brief), not a universal constant.
+
+`Application::Run` (the composition root) is the one place that constructs
+a concrete gravity implementation and binds it to a `GravityField&` — for
+this milestone's demo, a `RadicalGravity` centered on the demo sphere. This
+is a direct, deliberate test of the interface built in the Milestone 3
+follow-up correction: swapping which concrete class gets constructed there
+is the *entire* change needed to move the whole demo from flat, constant
+gravity to radial gravity around a sphere. `PlayerController`, `PhysicsWorld`,
+and `Renderer` needed zero changes to support this — only `Application.cpp`
+and the two gravity implementation files changed for this to work, exactly
+as the interface promised. `FaithfulGravity` itself is untouched and still
+compiled into the binary — it simply isn't the implementation the composition
+root selects for this milestone's active demo.
+
+Concretely:
+
+- Judas's own physics engine has no built-in gravity of its own to
+  disable — unlike Jolt (which defaulted to a global `(0,-9.81,0)` and had
+  to be explicitly zeroed in `PhysicsWorld::Init` through the first
+  Milestone 7-Final attempt), `RigidBody`/`PhysicsWorld` never apply any
+  acceleration a caller didn't hand them. There is nothing to turn off
+  because nothing was ever built in.
+- Every fixed step, `PlayerController::FixedUpdate` samples the active
+  `GravityField` at the player's own current position and integrates the
+  result into its own vertical velocity — the same
+  `velocity += acceleration * dt` pattern `PhysicsWorld::ApplyLinearAcceleration`
+  uses for ordinary bodies, just computed inside `PlayerController` since
+  the player has no physics-engine body for `PhysicsWorld` to apply it to.
+
+## Multiple gravity consumers
+
+Through Milestone 6, the player was `GravityField`'s only real consumer.
+Milestone 7-A proves the interface was never player-specific: the four
+dynamic test objects (see "Physics test world") sample the exact same
+`GravityField&` the player does, each from its own current position, every
+fixed step:
+
+```
+active GravityField
+         |
+         +------ player        (samples inside PlayerController::FixedUpdate)
+         |
+         +------ dynamic cube A
+         +------ dynamic cube B    (all sampled the same way, from
+         +------ dynamic sphere A   src/DynamicBody.cpp's
+         +------ dynamic sphere B   PrepareDynamicBodiesForStep)
+```
+
+`PrepareDynamicBodiesForStep` (`src/DynamicBody.h/.cpp`) is the entire
+mechanism — a small free function, not a framework:
+
+```cpp
+for (DynamicBody& body : bodies) {
+    body.SnapshotPrevious();                                  // presentation history (see below)
+    const glm::vec3 acceleration = gravity.Sample(body.GetPosition());
+    physics.ApplyLinearAcceleration(body.Handle(), acceleration, fixedDeltaTime);
+}
+```
+
+called once per fixed step, before `PhysicsWorld::Step`, from both
+`Application::Run` and `TestHarness.cpp`'s two modes. A `DynamicBody`
+itself never sees a `GravityField`, a `RadicalGravity`, a sphere center, or
+a radius — it hands `PrepareDynamicBodiesForStep` its current position and
+receives an acceleration back, exactly the shape of knowledge
+`PlayerController` has always had. With `RadicalGravity` active, this was
+verified directly with the test harness: four objects spawned at
+deliberately different locations around the sphere fall along four
+different straight lines, each toward the sphere's center from its own
+starting point (confirmed by each object's logged velocity direction
+matching `normalize(center - position)` for its own position, not a shared
+direction) — see "Automated testing."
+
+`ApplyLinearAcceleration` already existed (added in Milestone 3, unused by
+the active demo since Milestone 5) and needed no changes — it was already
+exactly the right shape for this.
+
+## Gravity context ownership
+
+Through Milestone 7-A, gravity selection happened once, at composition
+time: `Application::Run` constructed exactly one concrete `GravityField`
+and bound it to the `GravityField&` every consumer holds. Milestone 7-B
+needed something more — two genuinely, simultaneously active environments,
+and a consumer that could move between them at runtime — and Milestone
+7-Final needed the same thing again, twice as hard (two planets instead of
+one planet plus a directionless platform). Its own human validation
+rejected TWO different designs before landing on the one this repository
+now ships. Both failures are recorded in full below, not summarized away —
+the reasoning behind *why* they failed is the actual content of this
+section, and the project's own standing rule ("a numerically smooth wrong
+physical model is still wrong; the harness is not authoritative over human
+validation") only means something if the record shows exactly how that
+happened twice.
+
+### Design 1 (Milestone 7-B): `GravityResolver` — falloff-weighted vector blending
+
+`GravityResolver` treated "which gravity governs a consumer" as a
+continuous force-summation problem: every registered zone within its own
+falloff radius of a position contributed, weighted by distance
+(smoothstep, full weight at an inner radius to zero at an outer one), with
+direction combined via spherical interpolation and magnitude via a
+weighted-average-times-combined-weight formula. This passed Milestone
+7-B's own human validation, and worked correctly for a sphere-plus-
+directionless-platform pair specifically because `FaithfulGravity`'s raw
+direction never varies with position — blending it with a radial source
+could only ever rotate the result toward straight down, never introduce
+genuine sideways contamination. One of the two "sources" being blended
+contributed zero extra directional complexity, so the failure mode below
+had no way to manifest.
+
+Milestone 7-Final's two-radial-source case exposed the real defect
+immediately: a position beside the connecting plank — nowhere near either
+planet's actual domain — got an artificial pull toward the line connecting
+the two planet centers, purely because it happened to sit within both
+planets' (necessarily generous) falloff radii. `GravityResolver` was
+answering "how do nearby sources sum" when the actual question was "which
+source, if any, has any relationship to this position at all" — a
+field-summation model standing in for an ownership model. This failed the
+operator's own interactive validation ("the gravity switching
+implementation is fundamentally flawed... the player appears to be able to
+walk radially around the plank") despite passing every harness check M7-B's
+own validation had run, because that validation only ever sampled along the
+intended travel corridor, never the width around it. Neither the vector
+math nor the harness sampling was wrong on its own terms; the MODEL the
+math implemented was wrong, and the validation never looked at the
+dimension that would have shown it.
+
+### Design 2 (Milestone 7-Final, first attempt): `GravityContextMap` with explicit blended transitions
+
+The replacement fixed the off-path contamination specifically:
+`GravityRegion`s gave each planet an explicit, BOUNDED domain (a
+`GravityVolume`, e.g. a sphere around its own center), and a
+`GravityTransition` gave the plank's crossing an explicit, bounded extent
+inside which exactly two named fields blended by a locally-defined
+progress fraction — never sampling or blending anything outside that
+bounded pair. A position beside the plank, outside the transition's own
+extent, now correctly got exactly one planet's own unmodified field, or
+zero in genuinely unclaimed space — verified directly with a full-volume
+`SAMPLE_GRAVITY` sweep (not just the centerline) before this design was
+shown to the operator at all.
+
+It failed anyway, on retest: standing on the plank's OWN surface, near its
+edges, still tilted noticeably (~18-20 degrees) toward the planets' shared
+axis. The off-path bug was gone; the on-path one wasn't, because the
+transition still computed the plank's gravity by blending the two
+planets' raw radial math together — exactly what `GravityResolver` had
+always done, just correctly SCOPED to a bounded region instead of an
+unbounded falloff. Both designs shared the same deeper mistake, stated
+precisely: neither ever represented "the plank's own intended local
+physics" as a first-class thing. Both derived gravity on the plank from
+the two planets' math, never by asking what a body resting on a flat
+surface should coherently experience. A numerically smooth, provably
+continuous, harness-clean interpolation is still the wrong physical claim
+if the claim itself — "gravity here is some blend of two unrelated
+sources" — doesn't correspond to what "being on a flat plank" should mean.
+
+### Design 3 (the current one): pure ownership routing, no blending anywhere
+
+The insight that broke the cycle: `PlayerController` already has machinery
+(architectural law #14 — rate-capped `UpdateFrameOrientation`, continuous
+airborne velocity integration) specifically built to turn a SUDDEN change
+in sampled gravity into a smooth, gradual takeover. That machinery doesn't
+care whether the raw `GravityField::Sample` sequence is continuous or has
+a single instantaneous jump between two fixed steps — a rate cap bounds
+how fast the player's own frame can rotate regardless of *why* the target
+moved, and velocity integration is inherently continuous even when the
+acceleration driving it isn't. Blending was never necessary to keep a
+takeover smooth; it was solving a problem the consumer side already
+solved, while failing to solve the real one.
+
+So: `GravityContextMap` (`src/GravityContextMap.h/.cpp`, rewritten a
+second time — the transition/blending machinery from Design 2 is deleted
+outright, not kept alongside this) does pure containment-based ROUTING,
+nothing else. It holds an ordered list of regions, each `{GravityField&,
+GravityVolume&}`; `Sample(position)` returns the FIRST region's field's
+own raw, completely unblended value whose volume contains that position,
+or exactly the zero vector if none does:
+
+```cpp
+for (region : regions)
+    if (region.volume->Contains(position))
+        return region.field->Sample(position);   // raw, unblended
+return glm::vec3(0.0f);                            // unclaimed space
+```
+
+No transitions, no progress fractions, no weighted blending of any kind —
+the mechanism `GravityResolver` and Design 2's `GravityContextMap` both
+had is gone entirely, not merely unused.
+
+**Every named context is now coherent on its own terms:**
+
+- Planet A and Planet B: `RadicalGravity` centered on themselves, each
+  owning a `SphericalVolume` around its own center, generous enough to
+  cover its own surface plus a jump's worth of margin, but well short of
+  reaching the other planet's own region (regions of the SAME kind must
+  never overlap each other — see below).
+- The plank: the existing, UNMODIFIED `FaithfulGravity` — its hardcoded
+  `(0,-9.81,0)` already matches the plank's own flat, axis-aligned surface
+  exactly, with no new gravity implementation needed. Its own `BoxVolume`
+  region is padded a little beyond the plank's actual collision box, so a
+  jump arc a little above or beside the plank's own surface is still
+  claimed by it rather than falling into unclaimed space.
+
+**Overlap is resolved by registration order, deliberately, not
+accidentally.** The plank's own region is registered BEFORE either
+planet's, so it wins wherever its (padded) box geometrically overlaps a
+planet's sphere — which it does, near the plank's own ends, since the
+plank sits close enough to each planet's surface to be walkable without a
+large jump. This is the ONE place overlap is allowed and intentional: a
+more specific region (the plank) taking priority over a more general one
+(an entire planet) it happens to reach into. Two regions of the SAME
+specificity (planet vs. planet) must never overlap each other — there is
+no principled tie-break for that case, so the composition root
+(`Application.cpp`) is responsible for keeping their radii apart, the same
+category of care falloff-tuning used to require, just a different shape
+of it.
+
+**Verified by sweeping the full volume — not just the corridor, and not
+just the centerline within it, the mistake BOTH prior validation passes
+made:** along the plank, across its full width (the specific dimension
+that exposed both prior failures), above and below it, around both
+planets, and at both region boundaries. The plank now reads EXACTLY
+`(0,-9.81,0)` everywhere inside its region — not merely "close to
+vertical," not "less tilted than before" — because it is no longer
+computed from anything BUT `FaithfulGravity`'s own constant. Beside the
+plank, outside its region: exactly the nearer planet's own field, or
+exactly zero. See "Automated testing" for the dedicated tests that check
+this as a standing regression, not just a one-time sweep.
+
+**No per-consumer state, and why that's not assumed to be permanently
+true:** position-only resolution is sufficient for M7-Final's own static
+environments — there is no evidence here that a consumer's gravity context
+needs memory of where it was a moment ago. This is NOT documented as a
+permanent law: a future requirement (moving reference frames, for one)
+may produce evidence that contextual membership can't always be derived
+from world position alone, and per-consumer context state is not
+inherently wrong when that evidence exists — it just isn't justified yet.
+
+## Support
+
+**Gravity direction and supporting-surface normal are different concepts,
+even though they coincide on today's sphere almost everywhere.** This
+distinction is deliberately kept as two separately-computed values, never
+collapsed into one:
+
+- **Support/grounded state comes only from an actual geometry query.**
+  Every fixed step, `PlayerController::FixedUpdate` sweeps the player's
+  capsule a short distance (`kGroundProbeDistance`, `0.15m`) opposite the
+  *current* local up via `PhysicsWorld::SweepPlayerShape`, and treats the
+  player as grounded only if that sweep hits something whose normal is
+  within a walkable-slope threshold
+  (`dot(normal, localUp) > 0.643`, ≈50°, matching Milestone 4's original
+  choice, unchanged by the Milestone 7-Final physics migration).
+  Nothing anywhere in `PlayerController` compares the player's position or
+  distance to the sphere's known center or radius — `Application.cpp` knows
+  there's a sphere; `PlayerController` only ever knows "a shape query says
+  I am/am not supported, and here's the normal it found."
+- **Jump direction comes only from the active `GravityField`**, resampled
+  fresh every fixed step (`localUp = -normalize(gravity.Sample(position))`),
+  never from the ground-probe's contact normal. On this milestone's sphere,
+  "away from gravity" and "the surface's contact normal" point the same way
+  almost everywhere (both point radially outward from the center) — that's
+  a property of a sphere with gravity centered on that same sphere, not an
+  engine law. The two are computed through entirely separate calls
+  (`ComputeLocalUp` from `GravityField::Sample`; `groundHit.normal` from
+  `SweepPlayerShape`) specifically so a future surface where they disagree
+  (an overhang, a wall, uneven terrain under radial gravity) is handled
+  correctly by construction rather than by coincidence.
+
+**Neither the plank nor the second planet needed any changes here.**
+Landing on either is exactly the same mechanism as landing on Planet A — a
+real `PhysicsWorld::SweepPlayerShape` hit against a real static body,
+gated by the same slope threshold — not a gravity-region event of any
+kind. `PlayerController` never asks "which `GravityContextMap` region am I
+in"; grounding and gravity context remain governed by entirely independent
+code paths at every point during a crossing. There is no code anywhere
+that snaps the player onto the plank or a planet once a gravity-context
+boundary is crossed — landing happens if and only if the move-and-slide
+loop's own collision query says it does.
+
+## Orientation
+
+There is no universal world up. Per the active `GravityField`:
+
+```
+localUp = -normalize(gravity.Sample(playerPosition))
+```
+
+`PlayerController` keeps one persistent quaternion, `m_frameOrientation`,
+whose local `+Y` axis is defined to be "the player's current up" —
+`m_frameOrientation * (0, 1, 0)` — and updates it once per fixed step by
+applying the *minimal* rotation that takes its current up axis to the newly
+sampled `localUp` (`RotationBetweenUnitVectors`, a small shortest-arc
+quaternion helper local to this file). This is applied as a rotation
+*composed onto* the existing orientation, not a reset — so the player's
+accumulated facing direction (which way it's been walking/turning) carries
+through smoothly as it walks around the sphere and `localUp` continuously
+changes, the same way a small-planet platformer character's whole body
+reorients as it walks over the horizon. `+Y` here is a **local body-space
+axis convention** (every 3D object needs *some* axis to call "its own up"
+in local space) — it is not a claim about world space, and is exactly
+mirrored by `m_frameOrientation` mapping that local axis onto whatever
+`localUp` currently is in world space.
+
+### Bounding the reorientation rate (Milestone 7-B)
+
+`UpdateFrameOrientation` used to apply the *entire* rotation from current
+up to `localUp` in one fixed step, every step, unconditionally. Through
+Milestone 7-A this was always imperceptibly smooth, because a single
+`GravityField`'s direction only ever changes as a continuous function of
+position — a normal jump's brief arc barely moves `localUp` at all. That
+assumption silently breaks once a *resolved* gravity direction can change
+quickly — originally reproduced near the edge of Milestone 7-B's
+`GravityResolver` zone falloff, where the blended direction was most
+sensitive to position; the current `GravityContextMap` (see "Gravity
+context ownership") makes the point sharper still, since crossing a region
+boundary is now a genuine, instantaneous jump in the raw sampled value
+between two fixed steps, not even a fast continuous sweep. This law is
+exactly what makes that acceptable rather than jarring. Reproduced directly
+and severely before this fix existed (under the original `GravityResolver`
+design):
+a scripted transition run showed `m_frameOrientation`'s up jump by **85
+degrees in a single `1/60s` fixed step** — a hard snap, not the "smooth
+takeover" the brief requires, and the specific failure "do not hard-snap
+from radial local up to `FaithfulGravity` local up" explicitly warns
+against.
+
+The fix bounds the rotation itself rather than trying to detect or
+distrust the *sample* that produced it:
+
+```cpp
+delta = RotationBetweenUnitVectors(currentUp, localUp);
+maxRadiansThisStep = radians(kMaxReorientationDegreesPerSecond) * fixedDeltaTime;
+if (angle(delta) > maxRadiansThisStep)
+    delta = angleAxis(maxRadiansThisStep, axis(delta));   // same axis, capped angle
+m_frameOrientation = normalize(delta * m_frameOrientation);
+```
+
+`kMaxReorientationDegreesPerSecond` (`120`, `PlayerController.cpp`) is a
+deliberate choice, not a magnitude threshold: it bounds *how fast the
+player's own sense of up can physically change*, independent of why the
+target moved, which needs no assumption about any concrete `GravityField`'s
+typical magnitude — a threshold on the sampled gravity's own magnitude was
+considered and rejected specifically because it would embed knowledge of a
+concrete implementation's scale into code that must stay
+implementation-agnostic (see "Gravity context ownership"). `120`/s is generous
+against ordinary gameplay (walking the sphere at full speed turns `localUp`
+at roughly `11`/s, so the cap is never felt there) while still meaningfully
+bounding a transition-region swing. Verified directly: the same scripted
+transition that showed an 85-degree single-step snap before this fix now
+shows a maximum single-step change of `2.14` degrees — matching
+`120°/s * 1/60s = 2°` almost exactly — with the reorientation spread
+smoothly across roughly a second of real transition time instead.
+
+Mouse-driven yaw/pitch (`m_yaw`, `m_pitch`) are kept as separate scalars,
+applied on top of `m_frameOrientation` only at the point of use (building
+the look direction for the camera, and the tangent-plane forward/right
+vectors for movement) — never folded into `m_frameOrientation` itself. This
+keeps the two update frequencies (gravity realignment every *fixed* step;
+mouse look every *render* frame) from fighting over the same piece of
+state, and is why "mouse look must remain usable while local up changes":
+yaw/pitch are always relative to whatever the current frame is, so they
+never need to know what that frame currently equals.
+
+The player's rendered box uses `m_frameOrientation` directly (no yaw/pitch)
+— see "Player visual representation."
+
+## Locomotion
+
+**Movement** (`W`/`Up`, `S`/`Down`, `A`/`Left`, `D`/`Right`) direction is
+computed each fixed step by `PlayerController::ComputeInputDirection`
+(renamed from `ComputeTangentVelocity` in Milestone 10 — see "Milestone
+10" below): the look direction (frame orientation + yaw, pitch excluded so
+looking up/down doesn't tilt movement off the surface) is projected onto
+the tangent plane perpendicular to `localUp`, giving forward/right vectors
+that lie *along the curved surface* rather than a permanently fixed world
+XZ plane. Walking speed is a constant **4 m/s**. As of Milestone 7-B, this
+input-driven direction applies **only while grounded** — see "Velocity
+continuity while airborne" below for why. As of Milestone 10, reaching
+that speed (and stopping, and reversing) is a smooth acceleration/
+deceleration, not an instant snap — see "Milestone 10, Ground acceleration
+and deceleration."
+
+**Jumping** (`Space`) preserves the Milestone 4 rule exactly: direction is
+`-normalize(gravity.Sample(position))` (never a hard-coded axis, never
+derived from the sphere), magnitude a constant **5 m/s**, permitted only
+when this step's own support query says grounded (see "Support"). No
+double jump, coyote time, jump buffering beyond the input latch described
+below, variable height, or wall jumping — a jump attempted while airborne
+is discarded, not queued for the next landing.
+
+### Velocity continuity while airborne (Milestone 7-B)
+
+Before this milestone, `FixedUpdate` computed velocity the same way every
+step, grounded or not: the tangential component came fresh from
+`ComputeTangentVelocity` (i.e., from *current* WASD input, zero if nothing
+is held), and only the component along the *current* `localUp` carried
+over from the previous step. On the ground this is exactly the desired
+instant, responsive control. In the air, it has a real consequence once
+`localUp` itself can rotate substantially mid-flight (Milestone 7-B's
+whole point): whatever part of the player's existing velocity has become
+*tangential* to the newly-rotated `localUp` gets silently discarded and
+replaced by (typically zero) fresh WASD input — not gravity decelerating
+the player, but the engine actively erasing momentum every single step.
+This is exactly the class of bug the brief's "velocity continuity"
+requirement forbids ("do not zero velocity merely because gravity
+ownership changes"), just arrived at implicitly rather than by an obvious
+`velocity = newDirection * value` line.
+
+Through Milestone 7-A this was invisible: a normal jump's brief arc barely
+rotates `localUp` at all, so recomputing "fresh" tangential velocity every
+step produced almost the same value as carrying it over would have.
+Reproduced directly once it mattered: a scripted jump-and-coast through the
+gravity transition (WASD released, so tangential velocity recomputed to
+exactly zero every step) showed the player's outward speed collapse from
+`5 m/s` toward zero over the course of the transition — far faster than
+`RadicalGravity`'s own deceleration alone would produce — because the
+"outward" component of velocity became "tangential" relative to the
+rotating `localUp` and was thrown away each step, not merely decelerated.
+
+Fixed by splitting the two cases instead of sharing one formula:
+
+```cpp
+if (isGrounded) {
+    // unchanged: instant WASD-driven horizontal control, plus the small
+    // per-step gravity nudge that keeps a grounded player glued to a
+    // curved surface (see "Contact normal correctness"); a jump overrides
+    // vertical speed outright.
+    m_velocity = ComputeTangentVelocity(window, localUp) + localUp * verticalSpeed;
+} else {
+    // ordinary integration of the FULL velocity vector — not just its
+    // localUp-aligned component — and WASD is not consulted at all.
+    m_velocity += acceleration * fixedDeltaTime;
+}
+```
+
+Through Milestone 9, WASD held or released while airborne had no effect at
+all — the player wasn't given "air control," just protected from having
+existing momentum erased. Verified directly at the time: the same
+jump-and-coast scenario that used to lose its outward momentum carried it
+through the full transition and landed on the platform; a full regression
+pass (push, object-to-object collision, a 60-second sustained walk,
+determinism, 15-second stability) confirmed no other behavior changed —
+see "Automated testing."
+
+**Milestone 10 adds a small, capped nudge on top of this unchanged
+foundation** — see "Milestone 10, Air control" below for the exact
+formula. It is deliberately additive (`m_velocity +=`, never a
+reassignment) so everything above still holds character-for-character:
+this milestone's own regression pass re-ran the identical jump-and-coast
+scenario and confirmed momentum still carries through a gravity-context
+transition exactly as it always has.
+
+**Collision-aware movement**: `PlayerController` never writes `m_position`
+directly from a desired velocity. Each fixed step, the desired displacement
+(`velocity * fixedDeltaTime`) is resolved by a small move-and-slide loop
+(up to 4 iterations): sweep the capsule along the remaining displacement
+via `PhysicsWorld::SweepPlayerShape`; if nothing is hit, apply the full
+displacement and stop; if something is hit *and there's genuine clearance
+left* (`hit.distance >= 0.02m`, the skin margin), advance up to just short
+of it; if there's *not* — the capsule is already at or inside the intended
+skin-margin clearance from whatever it hit — move straight back out along
+the contact normal to restore exactly that margin instead. Either way,
+remove the component of the *remaining* displacement that points into the
+hit surface (an ordinary vector projection against the contact normal —
+"slide"), and repeat with what's left. This is Judas's own resolution of
+the conceptual pipeline the brief described (desired displacement → shape
+query → allowable movement → contact information → Judas's interpretation
+→ resulting position) — not a general physics solver, just enough
+iterations to handle "hit one surface, then slide into a second" without
+visibly sticking.
+
+### Contact normal correctness and the "already touching" case (historical: Jolt-backed implementation, Milestones 5 through the first Milestone 7-Final attempt)
+
+Fixed in Milestone 7-A, after human validation surfaced a visible ground
+vibration while walking that traced back to here. `SweepPlayerShape`
+(`PhysicsWorld.cpp`) previously derived the contact normal from Jolt's raw
+`mPenetrationAxis` by flipping its sign based on
+`dot(normal, displacement)` — reasoning that a contact normal should
+oppose the direction of travel. That happens to agree with Jolt's own
+convention for an ordinary in-flight hit (`mFraction > 0`, moving toward a
+surface not yet touched), which is why it went unnoticed through
+Milestones 5–7-A's earlier validation passes — but travel direction has no
+necessary relationship to the true normal for a hit already at
+`mFraction == 0` (shapes already touching at the start of the sweep),
+which a grounded step's own small inward gravity nudge (see "Simulation
+timing") produces routinely by design, eroding the skin margin toward zero
+over many steps. There, the old heuristic could and did pick the wrong
+sign — confirmed directly with a debug-instrumented harness run: the same
+already-touching hit alternated between a correct outward normal and one
+pointing straight into the sphere, iteration to iteration, within a single
+fixed step. Jolt documents its own unconditionally-correct convention —
+`-mPenetrationAxis.Normalized()` — which is what `SweepPlayerShape` uses
+now, dropping the travel-direction heuristic entirely (kept only as a
+last-resort fallback for the fully degenerate case where Jolt returns no
+penetration axis at all).
+
+That alone fixed the normal's reliability but not the underlying erosion:
+with the skin margin already at exactly zero and no mechanism to restore
+it (the move-and-slide loop only ever clamped closer-than-margin travel to
+"do nothing," never corrected it), the capsule could and — reproduced
+directly with a 60-second scripted walk — did reach a permanent, total
+lockup: a correct-but-immovable state where every iteration's already-zero
+distance produced a tangential "leftover" too close to perpendicular to
+the (now-correct) normal to ever redirect movement again. The margin-
+restoration change above (moving back out along the normal when
+`hit.distance < kSkinMargin`, rather than merely refusing to move closer)
+closes that gap. Verified with the same 60-second harness script: zero
+frozen steps (previously ~85% of a 3600-step run), and the radial
+distance-from-center — logged at full precision specifically to check for
+this — settles into a stable, bounded ~`1.2mm` oscillation band rather
+than eroding unboundedly toward (and getting stuck at) zero clearance.
+
+### Contact normal correctness under Judas's own physics (Milestone 7-Final)
+
+`SweepPlayerShape`'s current implementation (see "Physics ownership")
+never derives a contact normal from travel direction at all.
+`CapsuleDistanceToSphere`/`CapsuleDistanceToBox` (`src/Contacts.cpp`)
+compute the normal directly from closest-point geometry — the vector from
+the other shape's own surface point to the capsule's own closest
+segment point — unconditionally, identically for an already-touching hit
+and an in-flight one. There was never a travel-direction heuristic to get
+right or wrong in the first place; the substep-sampled sweep this
+implementation uses never needed one. The margin-restoration fix from
+Milestone 7-A (moving back out along the normal when `hit.distance <
+kSkinMargin`) carried over completely unchanged, since it lives in
+`PlayerController`'s own move-and-slide loop, not in `SweepPlayerShape`.
+
+Milestone 7-Final's own traversal testing under the new engine showed
+markedly fewer grounded-flag transitions than the equivalent Jolt-backed
+run (6 total across a full round-trip walk, versus over 150 previously,
+all clustered in a brief window right at the flat-plank-to-curved-sphere
+geometric seam) — recorded here as an observation, not a claim that the
+~1.2mm residual oscillation documented above is now solved: no dedicated
+investigation was done into why, and the current implementation's own
+approximations (substep-sampled sweep resolution, single/multi-point
+contact manifolds — see "Physics ownership") are new enough that this may
+simply reflect different numerical behavior rather than a genuine
+improvement. See "Remaining limitations."
+
+**Reset** (`R`) restores the player entirely from data `PlayerController`
+already holds (`Reset()`): spawn position, zero velocity, identity frame
+orientation (which the very next fixed step immediately realigns to
+whatever gravity says at the spawn point, so this is not a visible
+discontinuity), spawn yaw, zero pitch, and clears any pending jump request.
+There is no physics-side state to reset separately — unlike Milestone 4's
+Jolt-backed player, all state lives in `PlayerController` itself. Demo
+`Reset` logic is allowed to know the spawn point is "above the sphere";
+`PlayerController`'s own code does not know a sphere exists.
+
+### Reset and discontinuities
+
+Added this milestone, alongside presentation interpolation, because the
+two interact if not handled deliberately: `Reset()` also sets
+`m_previousPosition = m_position` and `m_previousOrientation =
+m_frameOrientation` — i.e. it synchronizes presentation history to the
+same reset pose, not just the authoritative one. With both interpolation
+endpoints identical, `GetPresentedPosition`/`GetPresentedOrientation`
+return exactly the reset pose *regardless of `alpha`* — so the very next
+render presents the reset position directly, never a blended "slide"
+across the world from wherever the player was a moment before. Verified
+directly with the harness: a `REALTIME` run holding forward movement and
+triggering `R` mid-walk shows the presented position jump straight from
+mid-walk coordinates to (within floating point) the exact spawn point on
+the very next logged frame, with no intermediate values between the two —
+a genuine teleport presented as a teleport, not smoothed into apparent
+high-speed travel.
+
+Tuning values (`src/PlayerController.cpp`, anonymous namespace): capsule
+radius `0.3m`, capsule cylinder half-height `0.6m` (total capsule height
+`1.8m`), eye height `0.7m` above the capsule center, move speed `4 m/s`,
+jump speed `5 m/s`. All explicit, chosen for a readable demonstration, not
+tuned for feel.
+
+## Milestone 10
+
+The existing player controller, taken from a minimal architectural test
+harness to something deliberately pleasant and robust to play — smooth
+ground acceleration/deceleration, modest air control, and automatic
+step-up/step-down — while preserving everything already established:
+gravity direction != support normal, no universal up or down, Milestone
+8's moving-support behavior, Milestone 9's rendering. `PlayerController`
+was not replaced and no generic character-controller framework was built;
+every addition here is a small, explicit piece of `FixedUpdate` or one new
+pair of free functions.
+
+### Ground acceleration and deceleration
+
+Replaces the instant "snap to desired tangential velocity"
+`PlayerController` used from Milestone 4 through Milestone 9 with a small
+clamped-delta model — the standard, simplest way to get smooth accel/decel
+with *deliberate* (not merely friction-shaped) direction changes:
+
+```cpp
+previousTangentVelocity = (previousVelocity - previousGroundVelocity) minus its localUp component;
+desiredTangentVelocity = ComputeInputDirection(...) * kMoveSpeed;   // zero if nothing held
+
+velocityDelta = desiredTangentVelocity - previousTangentVelocity;
+rate = (no input, or input opposes current motion) ? kGroundDeceleration : kGroundAcceleration;
+maxDelta = rate * fixedDeltaTime;
+
+newTangentVelocity = length(velocityDelta) <= maxDelta
+    ? desiredTangentVelocity
+    : previousTangentVelocity + normalize(velocityDelta) * maxDelta;
+```
+
+`kGroundAcceleration` (`20 m/s²`, reaches the `4 m/s` walk speed from rest
+in `0.2s`) and `kGroundDeceleration` (`28 m/s²`, stops in about `0.14s`)
+are deliberately different: stopping/reversing reads as snappier than
+speeding up, matching most conventional character controllers, and it's
+*why* direction reversal reads as deliberate rather than an accidental
+consequence of friction — reversing needs a velocity delta of up to
+`2 * kMoveSpeed`, capped by the same (higher) deceleration rate an
+ordinary stop uses, so a full reversal takes measurably longer than
+accelerating from a standstill: the player visibly "brakes, then goes the
+other way," not a physics-model side effect. Verified directly: holding
+`W` then immediately holding `S` shows the logged tangential velocity
+decelerating through zero and continuing into the reverse direction at a
+constant measured rate of `~28 m/s²`, matching `kGroundDeceleration`
+exactly, across the *entire* reversal — the same rate, not two different
+regimes glued together.
+
+`previousTangentVelocity` deliberately excludes `previousGroundVelocity`
+(Milestone 8's moving-support carry, see "Milestone 8") — standing still
+on a fast-moving support still reads as zero input-driven velocity to
+accelerate away from, exactly as before this milestone; only the player's
+*own* motion relative to whatever it's standing on is ever smoothed.
+Jumping is untouched: `verticalSpeed` is still set to `kJumpSpeed`
+instantly the moment a jump is taken, only ordinary horizontal ground
+movement is now smoothed.
+
+### Air control
+
+A small, capped, strictly additive nudge on top of the unchanged Milestone
+7-B airborne integration (see "Velocity continuity while airborne" above):
+
+```cpp
+m_velocity += acceleration * fixedDeltaTime;   // unchanged — full momentum integration
+
+if (inputEnabled) {
+    desiredDirection = ComputeInputDirection(...);
+    if (desiredDirection is non-zero) {
+        tangentVelocity = m_velocity minus its localUp component;
+        speedInDesiredDirection = dot(tangentVelocity, desiredDirection);
+        if (speedInDesiredDirection < kMoveSpeed) {
+            accelAmount = min(kAirAcceleration * fixedDeltaTime, kMoveSpeed - speedInDesiredDirection);
+            m_velocity += desiredDirection * accelAmount;
+        }
+    }
+}
+```
+
+`kAirAcceleration` (`8 m/s²`) never reduces existing velocity and never
+pushes the tangential speed *in the input direction* past `kMoveSpeed` —
+a fast jump-and-coast that's already carrying more speed than that (from
+ground momentum at launch, or a moving support's own contribution) is left
+completely alone; this only ever helps a player who wants to *steer*
+modestly while airborne, never a way to accelerate indefinitely by holding
+a direction key in the air. The classic bounded "air-accelerate" shape,
+deliberately not a second ground-style acceleration model. Verified
+directly: jumping from a standstill and holding a direction shows
+tangential speed climbing at exactly `kAirAcceleration`'s own rate every
+step while airborne, asymptotically approaching (never exceeding)
+`kMoveSpeed`.
+
+### Step-up / step-down (the main architectural test)
+
+`src/StepClimb.h/.cpp` — two small free functions, `TryStepMove` and
+`TryStepDown`, deliberately NOT a class or a general "character
+controller" abstraction. `PlayerController::FixedUpdate` is still the only
+place that decides *when* to call them and what to do with the result;
+both are expressed purely in terms of `PhysicsWorld::SweepPlayerShape`
+queries relative to a caller-supplied `localUp` — **never** a
+`position.y` comparison, a world-height check, a teleport onto known
+geometry, or any check for what kind of object is being climbed. Neither
+function knows the flying primitive, a planet, or a staircase exists; they
+only ever see collision geometry through the same query every other piece
+of movement code already uses.
+
+**`TryStepMove`** (called once per grounded fixed step, before the
+ordinary move-and-slide loop, using the player's full remaining
+displacement for that step) is the standard "step up, move forward, step
+back down" three-sweep pattern:
+
+1. A flat sweep from the current position. If unobstructed, or blocked by
+   something *already walkable* (a slope — see below), there's nothing to
+   step over; return false and let the unchanged move-and-slide loop
+   handle it.
+2. Sweep up by up to `kMaxStepHeight` (`0.55m` — chosen to comfortably
+   clear the flying primitive's own edge, a `0.5m`-tall box, per the
+   brief's explicit "the existing flying primitive's low edge should also
+   become naturally boardable"; a low ceiling right above the player
+   correctly limits how far this sweep can actually rise).
+3. Sweep forward by the same displacement from the raised position. If
+   this makes no more progress than the flat sweep already did, stepping
+   didn't help; return false — this is what correctly rejects a wall
+   taller than `kMaxStepHeight` (the up-sweep clears alongside it, but the
+   forward sweep from up there is blocked exactly as much as before).
+4. Sweep back down by up to `kMaxStepHeight` to reacquire a *walkable*
+   floor (same `kMinGroundDot` threshold `PlayerController` already uses
+   for ordinary grounding). Landing in open air, or on something too
+   steep, means it wasn't a real step; return false.
+
+Only returns true (and moves the player) when all four succeed — a pure
+addition with provably zero effect on flat ground or slopes, since both
+cases are explicitly declined at step 1.
+
+**A real bug, worth knowing before touching this again.** The very first
+version returned false on a genuinely climbable step, every time: a flat
+sweep from a position *already resting exactly on the ground* immediately
+reports that same ground as an "already touching" hit at distance `0`
+(see `SweepPlayerShape`'s own `t=0` check) — **regardless of the sweep's
+own direction** — since it's the single closest body from that exact
+point. Every flat/up/forward sweep in step 1–3 above would therefore only
+ever see the floor the player was already standing on, never a wall ahead.
+Fixed by lifting the query origin by `skinMargin` before any of these
+sweeps — the same margin-restore idiom the ordinary move-and-slide loop
+already discovers iteratively, just applied once up front instead. A
+second, subtler bug surfaced only once real geometry (the flying
+primitive) was tested interactively: the down-sweep in step 4 often lands
+right at the *front edge* of the step just climbed (a forward sweep that
+"just barely" clears an obstruction very often stops right at its lip),
+where a box's closest-point-on-OBB calculation blends the top face's and
+front face's normals together — reading as just barely too steep to count
+as walkable (observed: `dot ≈ 0.619` against a `0.643` threshold) even
+though the surface is a perfectly ordinary flat top. Fixed with a small
+forward look-ahead on the down-probe's own origin only (`kDownProbeLookAhead`,
+`8cm`, capped at half the step's own forward travel so a tiny step isn't
+disproportionately nudged) — the same category of small, deliberate
+approximation `kSkinMargin` already is throughout this engine's move-and-
+slide code, not a new kind of imprecision.
+
+**`TryStepDown`** is the smaller, symmetric half: reaches further than
+`PlayerController`'s own ordinary ground probe (`kGroundProbeDistance`,
+`0.15m` — enough to keep catching a surface while standing still or
+walking on it, but shorter than a real stair's riser height) — up to
+`kMaxStepHeight` along `-localUp` — so walking off a short step or ledge
+doesn't produce an intermediate free-fall frame before landing on the
+lower surface. Only attempted as a fallback, when the ordinary probe finds
+nothing *and* the player was grounded a moment ago *and* isn't mid-jump
+(`wasAscending`) — a genuine drop taller than `kMaxStepHeight` still
+free-falls exactly as it always has; verified directly in the interactive
+demo by walking off the FAR edge of the staircase's top step (a `~1.2m`
+drop, deliberately built taller than `kMaxStepHeight` by stacking four
+risers), which correctly free-falls rather than being caught. Also fills
+`outHitBody` — the moving-support carry (`groundVelocity`) and the flying
+primitive's own take-control gating both need to know *what* the player
+landed on, not just where.
+
+**No world-axis assumption — verified, not just argued by inspection.**
+`tests/StepClimbTests.cpp` (a fourth standalone, headless test executable
+— no window, no GL, a real `PhysicsWorld`, same `judas_physics_tests`/
+`judas_collision_tests` spirit) extends this project's signature
+rotate-the-scenario technique to the step-climb primitives directly: build
+a small staircase scenario, call `TryStepMove`/`TryStepDown`, record the
+result; rebuild the *identical* scenario (every body's position **and**
+orientation) rotated by an arbitrary quaternion, call the same function
+with the same displacement/`localUp` rotated the same way, and confirm the
+rotated-back result matches the unrotated reference exactly. Both
+functions pass this for both a successful step and the boundary rejection
+cases (too tall to climb, nothing to step over, too far to catch on the
+way down).
+
+### Demonstration: staircase and ramp
+
+`Application.cpp`'s `SpawnStepTestGeometry` adds a small four-riser
+staircase and one `25`-degree ramp to Planet A, both a short, reliably
+walkable distance from the player's own spawn point but at a bearing
+measurably off the sphere's exact pole (`~21`/`~26` degrees respectively)
+— deliberately NOT at the pole itself, where local radial "up" happens to
+exactly coincide with world `+Y` and would silently hide any accidental
+world-Y assumption in the step-climb code, and deliberately not placed far
+off the pole either, since an easy, short, reliably-aimable walk from
+spawn matters for a human tester actually finding and trying these (the
+much more demanding rotation-invariance claim is what
+`tests/StepClimbTests.cpp` exists to prove rigorously instead).
+
+Each stair riser is `0.3m` (comfortably under `kMaxStepHeight`), built as
+a "stacked pillar" (each step is a full box from the planet's own surface
+up to its own top, not a separate floating riser+tread) so there's no gap
+between consecutive steps and no ambiguity about what's underneath one.
+Both pieces use `RotationAligningUpTo` — a small demo-authoring helper
+(the shortest-arc rotation from world `+Y` to an arbitrary target
+direction, the same shape as `PlayerController.cpp`'s own
+`RotationBetweenUnitVectors` but deliberately not shared with it — one is
+Judas's own runtime gravity-orientation logic, the other is
+composition-root placement math for hand-authored static geometry) — so
+each piece's own local "up" matches the actual radial direction at its
+bearing, the same way a real object resting on a sphere would need to.
+
+This required a small `PhysicsWorld` API addition: `CreateStaticBox`
+gained an overload taking an explicit `glm::quat` orientation (the
+original 4-argument overload is unchanged, and still exactly equivalent
+to passing an identity rotation to the new one) — every static box before
+this milestone (planets are spheres; the plank, and every dynamic cube,
+were always axis-aligned) never needed one.
+
+Verified directly in the interactive demo (not just the unit tests above):
+walking straight into the staircase climbs all four risers with the
+player's radial distance from the planet's center rising continuously
+(each riser producing at most a one-frame "not grounded" transition,
+imperceptible at 60Hz — `TryStepMove` moves the player in the same fixed
+step the obstruction is detected, but that step's OWN grounded flag was
+already decided earlier from the pre-step position, so the very next
+step's ground probe is what re-confirms support at the new height);
+walking off the staircase's far edge afterward correctly free-falls (a
+genuine `~1.2m` drop, taller than `kMaxStepHeight`); walking into the
+flying primitive's own low edge climbs onto it the same way, with no
+special-casing anywhere in `PlayerController`/`StepClimb.cpp` — it's
+simply one more `0.5m`-ish obstruction under `kMaxStepHeight`.
+
+### Why Milestone 8's moving-support behavior needed no changes
+
+The moving-support velocity carry (`groundVelocity`, `m_lastGroundVelocity`,
+the direct position-carry in `FixedUpdate` — see "Milestone 8") sits
+*upstream* of everything this milestone added: `groundVelocity` is
+computed once per step from whatever the player is standing on, then (a)
+excluded from the tangential velocity the new acceleration model smooths
+(so a moving support's own motion is never something the player
+"decelerates out of"), and (b) already fully applied as a direct position
+carry before `TryStepMove` is ever attempted. `TryStepMove` itself is only
+ever attempted while grounded and not mid-jump, using the player's own
+already-computed `remaining` displacement — it has no idea a support might
+be moving, and doesn't need to: by the time it runs, any moving-support
+motion has already been folded in. Verified directly: the full Milestone 8
+scripted scenario (board the primitive by walking onto it with no jump —
+now possible for the first time, see above — ascend, hover, yaw, release
+control mid-descent, land) still produces the same qualitative behavior
+end to end; the *exact* logged numbers differ from Milestone 8/9's own
+runs (expected and correct — grounded velocity is no longer instant, so
+approach timing shifts slightly), but boarding, riding, releasing control,
+jumping from, and landing back on the primitive all still work.
+
+## Milestone 11
+
+Upgrades the Milestone 8 flying primitive into a controllable spacecraft
+with full 6-degree-of-freedom translation and independent pitch/yaw/roll,
+and adds the milestone's central new capability: an explicit,
+authoritative attachment that physically secures the piloting player to
+the spacecraft through arbitrary rotation, including upside down. This is
+NOT a general reference-frame system, a vehicle framework, or artificial
+gravity — see "What was deliberately not built" at the end of this
+section.
+
+### Repurposing, not replacing
+
+The spacecraft is still the exact same `DynamicBody` Milestone 8 created —
+same box collider, same spawn position on the plank, same gravity/
+collision/presentation/reset mechanism every other dynamic body shares.
+`FlyingPrimitiveControl` (`src/FlyingPrimitiveControl.h`) is still "one
+handle, one bool"; only `ApplyFlyingPrimitiveControl`'s own body grew, from
+a 2-axis-translation-plus-yaw controller into a full 6DOF one. Nothing
+about the underlying object's identity changed — the brief was explicit
+that this had to be a repurposing, not a second competing flight path, and
+the diff for this milestone reflects that: `FlyingPrimitiveControl.cpp` is
+rewritten, not duplicated.
+
+### The spacecraft's mesh: `assets/models/plane.obj`
+
+A small, deliberately boxy aircraft — a fuselage, wings, a vertical tail
+fin (placed off the fuselage's own top/bottom symmetry specifically so a
+180-degree roll is visually unambiguous, not invisible), and a horizontal
+tailplane — four hand-placed rectangular prisms, flat-shaded with one
+explicit per-face normal each, same authoring style as `beacon.obj`
+(Milestone 9): no shared/averaged vertex normals, no material file,
+loaded through the exact same `LoadObjMesh`/`Renderer::CreateMesh` path.
+Original content authored for this project, same public-domain/
+CC0-equivalent provenance as every other hand-authored asset here.
+Untextured — it draws through `Renderer::DrawMesh` with an invalid
+`TextureHandle`, which resolves to the existing 1x1 white fallback (see
+"Milestone 9, Textures"), tinted by the same `kFlyingPrimitiveColor` the
+old `DrawBox` call used, so it costs nothing new in the texture/asset
+system.
+
+Authored directly at the spacecraft's own physics-box footprint
+(`kFlyingPrimitiveHalfExtents`, 2.0 x 0.25 x 3.0) with the same forward
+convention every other forward vector in this engine already uses
+(`orientation * (0,0,-1)`) — so it renders correctly at scale 1 with an
+identity model-to-body transform, no separate correction needed. (The
+brief explicitly anticipated a mismatch here; there wasn't one, because
+the mesh was authored against the collider's own dimensions from the
+start rather than imported from an existing model with its own
+conventions.)
+
+### Full local-space flight controls
+
+Every control axis — all three translation directions and all three
+rotation axes — is derived from the spacecraft's own CURRENT orientation,
+never gravity and never a fixed world direction:
+
+```
+worldForward = shipOrientation * (0, 0, -1)
+worldRight   = shipOrientation * (1, 0, 0)
+worldUp      = shipOrientation * (0, 1, 0)   // a body-axis convention, NOT gravity-derived
+```
+
+Through Milestone 8/10, the primitive's vertical control ("ascend/
+descend") was gravity-relative — the same `ComputeLocalUp`-shaped fallback
+`PlayerController` uses. Milestone 11 deliberately breaks that coupling:
+`ApplyFlyingPrimitiveControl` no longer takes a `GravityField` parameter
+at all. "Local up" for the spacecraft is now a pure body-axis concept, so
+after a 180-degree roll, holding "ascend" moves the spacecraft toward
+where its own roof now points, not toward whatever "away from gravity"
+still means. Gravity remains a completely independent input to the same
+body, applied every step by the unchanged `PrepareDynamicBodiesForStep`;
+`ApplyFlyingPrimitiveControl` only ever OVERRIDES what that contributed
+that step (by unconditionally calling `SetLinearVelocity` — a zero
+`desiredDirection` while nothing is held commands exactly zero velocity,
+canceling gravity outright, the same "boring controls" idiom Milestone 8
+already established) — it never changes what gravity IS, and never reads
+gravity to decide anything.
+
+Translation reuses the existing `Action` enum (`MoveForward`/
+`MoveBackward`/`StrafeLeft`/`StrafeRight`/`MoveUp`/`MoveDown` — W/S/A/D/
+E/Q) exactly as Milestone 8 did, with one meaningful difference: A/D now
+mean an actual strafe again, not yaw (Milestone 8 repurposed them as yaw
+since the primitive had no independent yaw control yet). Rotation gets
+six brand-new `Action` values (`PitchUp`/`PitchDown`/`YawLeft`/`YawRight`/
+`RollLeft`/`RollRight`, mapped to I/K/J/L/U/O — see `src/Window.h`), each
+commanding a fixed-rate angular velocity about the spacecraft's own
+right/up/forward axis respectively:
+
+```
+angularVelocity = worldRight * pitchRate + worldUp * yawRate + worldForward * rollRate
+```
+
+This is an ordinary commanded angular velocity vector — the same
+"assemble world-space axis contributions, hand the sum to
+`SetAngularVelocity`" idiom Milestone 8's single yaw axis already used,
+just with three independent rates instead of one. There is no Euler-angle
+state anywhere: only the spacecraft's current quaternion orientation
+(read fresh via `PhysicsWorld::GetTransform` every step) and this step's
+commanded rate. Sign conventions (verified by
+`judas_spacecraft_control_tests`, "Section D"): `PitchUp` rotates the nose
+toward the spacecraft's own local up; `YawLeft` turns the nose toward the
+spacecraft's own local -right (the ordinary sense of "turning left");
+`RollRight` banks the local right axis downward. All three are direct
+velocity commands via `PhysicsWorld::SetAngularVelocity`/
+`SetLinearVelocity` and ordinary ensuing rigid-body integration — not
+teleporting the body's transform, matching every other piece of directly-
+commanded motion in this engine.
+
+**Why mouse look was deliberately excluded from spacecraft attitude:** the
+brief explicitly called out a specific bug risk — if mouse deltas drove
+both the spacecraft's own orientation AND the player's independent free
+look (still active while piloting, anchored to the spacecraft's presented
+pose — see "Camera and presentation" below), the same input would be
+applied twice, doubling the effective turn rate and coupling two
+conceptually separate things (where the camera looks vs. which way the
+ship is pointed). Rather than carefully threading a "only apply this once"
+flag through both consumers, Milestone 11 avoids the whole class of bug by
+keeping attitude control entirely keyboard-driven and leaving mouse
+deltas meaning exactly what they always have: free look, camera-only,
+never fed into any physics body's orientation. This also makes the
+spacecraft's own attitude fully scriptable and deterministic for the
+`JUDAS_TEST_SCRIPT` harness (`HOLD I/K/J/L/U/O`), which a mouse-driven
+rate would not be.
+
+**Flight policy, stated explicitly (per the brief's own requirement):**
+releasing a translation key commands exactly zero velocity along that
+axis immediately — there is no coast, no momentum preserved from input
+alone (though real physical momentum from gravity/collision impulses
+before `ApplyFlyingPrimitiveControl` overrides it is, naturally,
+overwritten the same way it always was). Active control (any translation
+key held) fully overrides whatever gravity contributed that same step, so
+holding nothing keeps the spacecraft motionless against gravity — matching
+Milestone 8's original "boring controls are correct" behavior exactly.
+Releasing ALL control (pressing `F`) leaves the spacecraft's THEN-CURRENT
+velocity in place; the very next step it receives, it is an ordinary
+ungoverned dynamic body again, gravity applies uninterrupted, and it falls/
+drifts/rests exactly like any other object here. Translation speed
+(`kFlightSpeed`, 8 m/s) and attitude rate (`kAttitudeRateRadiansPerSecond`,
+~74.5°/s) are fixed constants, each axis independently capped at that
+rate, and diagonal/combined input is normalized before scaling — no
+combined-input speed boost from holding two translation keys at once. This
+is direct velocity control, explicitly not a realistic force/thrust flight
+model, exactly as Milestone 8 already documented for its own simpler
+version of the same idiom.
+
+### The secured-pilot attachment (`src/PilotAttachment.h`)
+
+This is the milestone's central new capability, and the reason ordinary
+Milestone 8 moving-support carry is not sufficient here: standing on a
+moving/rotating support (the existing mechanism —
+`PlayerController::FixedUpdate`'s grounded branch, `groundVelocity`,
+`m_lastGroundVelocity`) works by resolving the player's own capsule
+against the support's collision geometry every step via the ordinary
+move-and-slide sweep. That is fundamentally a *contact* relationship —
+gravity keeps the player pressed against the support's surface, and the
+sweep keeps finding it there. It has no way to keep a player "attached" to
+a surface that has rotated to face away from gravity, or upside down: the
+instant the support's own surface normal no longer opposes gravity, there
+is nothing left holding the player against it, exactly as ordinary contact
+physics should behave for anything that ISN'T explicitly secured. Piloting
+a spacecraft that can roll upside down needs a genuinely different
+relationship — not "resting on," but "bolted to."
+
+`PilotAttachment` is a tiny struct (`attached: bool`,
+`localOffset: vec3`, `localOrientation: quat`) plus three free functions,
+the same "small free functions, not a class or a character-controller
+abstraction" shape `src/StepClimb.h` already established for a smaller
+problem:
+
+```
+BeginPilotAttachment(attachment, shipTransform, playerPosition, playerOrientation)
+    // captures the player's CURRENT pose relative to the spacecraft's
+    // CURRENT transform — called once, at the instant control is acquired
+    localOffset      = inverse(shipRotation) * (playerPosition - shipPosition)
+    localOrientation = inverse(shipRotation) * playerOrientation
+
+ApplyPilotAttachment(attachment, shipTransform, outPosition, outOrientation)
+    // reconstructs a world pose from the spacecraft's CURRENT transform
+    // and the stored local pose — called every fixed step while attached
+    outPosition    = shipPosition + shipRotation * localOffset
+    outOrientation = normalize(shipRotation * localOrientation)
+```
+
+The critical property, verified directly by
+`judas_pilot_attachment_tests` ("Section D: repeated rotations accumulate
+zero attachment drift"): `ApplyPilotAttachment` is a PURE function of the
+spacecraft's current transform and the two fields captured once at
+acquisition — never an incremental update, never accumulated frame over
+frame. A long flight with hundreds of rotations produces EXACTLY zero
+attachment drift by construction, because there is nothing to drift: the
+player's world pose is recomputed fresh from scratch every step, the same
+way `PlayerController`'s own orientation is recomputed fresh from gravity
+every step rather than integrated incrementally from itself.
+
+`PlayerController::FixedUpdateAttached(newPosition, newOrientation)` is
+called INSTEAD OF the ordinary `FixedUpdate` for any step the player is
+attached (see `src/PilotControl.h` below for exactly when). It snapshots
+presentation history exactly like `FixedUpdate` always has, then
+overwrites `m_position`/`m_frameOrientation` directly from the
+attachment's own computation — no gravity sampling, no support probe, no
+move-and-slide. This matters: ordinary grounding and locomotion **must
+not fight the secured pose** (the brief's own words) — if
+`FixedUpdate`'s ordinary ground probe ran while attached, it could find
+nothing walkable (the spacecraft might be upside down) and report
+`isGrounded = false`, or worse, find some unrelated piece of world
+geometry and silently reground the player there, fighting the attachment
+every step. Skipping ordinary locomotion outright while attached is the
+smallest mechanism that avoids that class of bug entirely, rather than
+threading an "ignore this" flag through several of `FixedUpdate`'s
+existing checks. Support/velocity/jump bookkeeping is reset to a neutral
+state each attached step (never grounded, zero ground-carry velocity, no
+buffered jump) specifically so the very first ordinary `FixedUpdate` after
+release starts clean — never a stale reference to a support the player
+is no longer touching.
+
+`m_velocity` reads exactly zero for the entire duration of piloting — see
+`PlayerController::GetVelocity`'s own updated doc comment. There is no
+independent "player velocity" concept while secured; the spacecraft's own
+velocity is separately queryable via `PhysicsWorld::GetLinearVelocity`. A
+meaningful value is written back exactly once, at the instant of release
+(`PlayerController::SetVelocityAfterRelease` — the only place outside
+`FixedUpdate`/`FixedUpdateAttached` that ever writes `m_velocity`
+directly), so the very next ordinary `FixedUpdate` call integrates gravity
+and collision on top of a real starting velocity, exactly as it would for
+any other newly-airborne player.
+
+### Acquisition, release, and detachment velocity (`src/PilotControl.h`)
+
+Acquisition is gated on the player's own current support state exactly as
+Milestone 8 required — `F` from anywhere else is a no-op — but now also
+captures the attachment:
+
+```
+if F pressed and player is grounded on the spacecraft's own handle:
+    shipTransform = physics.GetTransform(spacecraftHandle)   // its REAL, resolved transform
+    BeginPilotAttachment(attachment, shipTransform, player.GetPosition(), player.GetOrientation())
+    control.controlled = true
+```
+
+Release is always available, in any orientation, support state, or
+gravity context — the brief was explicit that this must never be
+conditional. It computes the player's inherited world-space velocity
+BEFORE clearing the attachment, using ordinary rigid-body point velocity:
+
+```
+r = playerPosition - shipPosition
+releaseVelocity = shipLinearVelocity + cross(shipAngularVelocity, r)
+```
+
+This is the exact same `v + omega x r` formula `PlayerController`'s own
+Milestone 8 moving-support carry already uses for a rotating support (see
+"Milestone 8" below) — a spinning spacecraft imparts real tangential
+velocity to a player standing off-center from it, and dropping that
+angular contribution (releasing with only the spacecraft's CENTER velocity)
+would be exactly the kind of silent momentum loss this engine's own
+"velocity continuity" law (#14) already forbids elsewhere. Verified
+directly by `judas_pilot_attachment_tests` ("Sections F/G/H") with a
+non-zero offset and non-zero angular velocity, confirming the angular
+term is neither dropped nor double-counted.
+
+**Gravity-side dismount clearance:** rigid attachment intentionally carries
+the player through the world while the spacecraft rotates, including through
+terrain. That is correct while piloting, but it could leave a player released
+inside the plank or on the craft's gravity-opposed underside, where the
+ordinary player sweep cannot reliably depenetrate a starting overlap. On
+release, `HandlePilotToggleRequest` now samples local gameplay gravity and
+uses `PhysicsWorld::GetBodySupportDistance` plus the player's capsule support
+radius to place the player just beyond the spacecraft's gravity-facing hull
+plane when needed. A pilot already on that side is not moved. Release velocity
+still comes from the original attached point (`v + omega x r`), so this
+clearance correction does not add artificial angular speed. If gravity is
+zero, Judas does not invent an exit direction and preserves the current
+position. `judas_pilot_dismount_tests` checks upright no-op release, an
+inverted craft, zero-gravity behavior, and rotate-the-universe equivalence.
+
+Both `Application::Run`'s interactive loop and BOTH `JUDAS_TEST_SCRIPT`
+harness modes now call two small shared functions
+(`HandlePilotToggleRequest`, `AdvancePlayerForPiloting` —
+`src/PilotControl.h/.cpp`) instead of each carrying its own copy of this
+logic. Milestone 8's original toggle-only version of this was small
+enough to tolerate being duplicated three times; Milestone 11's
+acquisition (capturing an attachment from real physics state) and
+per-step handling (attached vs. ordinary `FixedUpdate`) are not — three
+independently-maintained copies is exactly the kind of drift risk that
+produces "it works in the harness but not interactively" bugs, so this
+was factored out instead. `AdvancePlayerForPiloting`'s attached/
+not-attached branch also fully subsumes the old always-present
+`inputEnabled` parameter on `FixedUpdate`: Milestone 11 only ever disables
+player input WHILE attached, so there is no longer a separate flag to keep
+in sync with `control.controlled`.
+
+### Camera and presentation
+
+Camera anchoring is unchanged from Milestone 8: while controlled, the
+SAME camera (`PlayerController::GetViewMatrix`'s anchor-pose overload) is
+built from the spacecraft's own presented pose instead of the player's,
+using identical offset/look math either way — no cockpit camera, no
+separate camera system. `glm::lookAt` with an arbitrary up vector handles
+upside-down/rolled orientations correctly with no special-casing; the only
+real risk this milestone had to avoid was mouse deltas double-driving both
+the free-look camera and the spacecraft's own attitude (see "Full
+local-space flight controls" above for why that risk was designed out
+entirely rather than patched around).
+
+Rendering the pilot itself needed one new piece: `ApplyPilotAttachment`
+is reused UNCHANGED for presentation, not just simulation. A
+`BodyTransform` is just a position+rotation pair, and the spacecraft's own
+PRESENTED (interpolated) transform is exactly that — so the same function
+that drives the player's authoritative pose each fixed step also computes
+its rendered pose each frame, from the spacecraft's presented pose instead
+of its authoritative one:
+
+```
+shipPresented = { dynamicBody.GetPresentedPosition(alpha), dynamicBody.GetPresentedOrientation(alpha) }
+ApplyPilotAttachment(attachment, shipPresented, playerRenderPosition, playerRenderOrientation)
+```
+
+This was a deliberate choice over interpolating the player's own
+authoritative before/after snapshots independently (which `GetPresentedPosition`/
+`GetPresentedOrientation` would otherwise do, and which remains exactly
+what happens while NOT attached): applying the attachment to the SAME
+presented spacecraft pose used for the camera and the spacecraft's own
+mesh guarantees the rendered pilot, the rendered spacecraft, and the
+camera all agree on one coherent in-between pose every frame, with no
+possibility of visible relative separation during rapid rotation — the
+brief's own suggested approach, and the smaller mechanism (one function
+reused, not two separate interpolation paths that have to be kept
+consistent by hand).
+
+### Attachment, support, and collision
+
+While attached, the spacecraft's own collision stays fully active — a
+piloted spacecraft still collides with the planets, the plank, and every
+other body exactly as an unpiloted one does (`PhysicsWorld::Step` makes no
+distinction). Attachment is a relationship between the PLAYER's
+authoritative pose and the spacecraft's; it grants the spacecraft no new
+license to pass through anything, and grants the player no new collision
+behavior of its own (the player was never a physics-engine body to begin
+with — see "Player/controller ownership" — so there was nothing to
+disable). Ordinary grounding/support are simply never evaluated for the
+player while attached (see `FixedUpdateAttached` above) rather than
+disabled via a flag on an otherwise-running system — there is no
+`grounded = true` fakery anywhere in this path, and no derivation of
+gravity from the spacecraft's own surface normal; gravity continues to
+come from the unmodified `GravityContextMap`, sampled at the spacecraft's
+own position, exactly as it always has.
+
+### What was deliberately not built
+
+A general moving-reference-frame system, nested physics worlds, or
+anything that would let OTHER code treat "attached to a moving body" as a
+reusable primitive — `PilotAttachment` models exactly the one relationship
+this milestone needs (one player, one spacecraft, captured/released by
+one input), the same restraint `FlyingPrimitiveControl` already showed for
+"one handle, one bool." No spacecraft interior, artificial/spacecraft-local
+gravity, or automatic alignment to gravity — the spacecraft's own local
+axes exist purely because it has an orientation, in zero gravity exactly
+as much as anywhere else, never because "zero gravity has an up." No
+multiple controllable spacecraft or generalized possession framework — one
+`FlyingPrimitiveControl`, one `PilotAttachment`, exactly as before. No
+thruster/fuel/reaction-wheel/aerodynamics model or orbital mechanics —
+translation and rotation remain direct velocity/angular-velocity commands,
+explicitly documented as "boring controls," the same category Milestone 8
+already established. No mesh collision or automatic collider generation
+from `plane.obj` — the spacecraft's collision remains the same simple box
+it always was; render mesh and collision shape stay separate concepts,
+consistent with Milestone 9's own beacon (which has no collider at all).
+No gamepad support or rebindable controls — six new fixed keyboard
+bindings, same as every previous milestone's input additions.
+
+
+
+Added in Milestone 7-A, unchanged in mechanism through the Milestone
+7-Final physics migration. The player is still not a physics-engine body
+(see "Player/controller ownership") — `SweepPlayerShape` is a read-only
+query, never something the contact solver resolves — so contact with a
+dynamic test object would otherwise never move it: the object would simply
+act as one more static-feeling obstacle the player slides along. This is
+the genuine limitation the brief anticipated ("if player-to-dynamic-body
+interaction exposes a genuine limitation in the existing player
+collision/query boundary, make the smallest correction necessary and
+document it").
+
+**The correction** lives entirely inside `PlayerController::FixedUpdate`'s
+existing move-and-slide loop, at the point it already has a `ShapeSweepHit`
+from this step's movement sweep:
+
+```cpp
+if (physics.IsDynamicBody(hit.hitBody)) {
+    const glm::vec3 pushDirection = -hit.normal;
+    const float playerSpeedIntoObject = glm::dot(m_velocity, pushDirection);
+    if (playerSpeedIntoObject > objectSpeedIntoObject)  // never slows the object down
+        physics.SetLinearVelocity(hit.hitBody, objectVelocity + pushDirection *
+                                       (playerSpeedIntoObject - objectSpeedIntoObject));
+}
+```
+
+Only the component of the player's velocity *along the contact normal* is
+transferred, and only when it exceeds the object's own velocity along that
+same axis — so the player can shove an object but never slow one down or
+overwrite its motion along other axes (falling, rolling from an earlier
+hit). This is deliberately not a general impulse/momentum system: it seeds
+one velocity value and hands control straight back to the physics engine,
+which owns everything that happens to the object from that point on
+(further integration, friction, contact with the world or another
+object). Static
+world geometry (`physics.IsDynamicBody` is false for it) is unaffected —
+`hit.hitBody` and `PhysicsWorld::IsDynamicBody`/`GetLinearVelocity`/
+`SetLinearVelocity` were the only additions `PhysicsWorld` needed (see
+`PhysicsWorld.h`).
+
+**A consequence worth recording plainly**: because only the along-normal
+component transfers, the player can only push an object in roughly the
+direction the contact normal already allows — nudging an object sideways
+by approaching from an angle and turning mid-push does not work well,
+since a face's normal doesn't rotate just because the player's own
+movement direction changes. This was discovered directly while devising a
+harness scenario for object-to-object collision (see "Automated testing")
+and is recorded here rather than "fixed," since a fuller push/carry system
+is explicitly out of scope for this milestone (no grabbing, no carrying —
+see "Deliberately Not Implemented").
+
+Verified with the harness: holding forward from spawn, the player reaches
+CubeA within ~40 fixed steps and its velocity jumps from a small falling
+speed to several m/s in the push direction; player and cube then travel
+together (roughly constant ~1m separation) for hundreds of further steps
+as the player keeps walking, confirming sustained contact rather than a
+single nudge — see "Automated testing."
+
+## Milestone 12
+
+Replaces the spacecraft's Milestone 8-11 directly-commanded velocity/
+angular-velocity control with genuine force/torque-driven Newtonian
+inertia: input changes motion by applying force or torque; releasing
+input does not remove motion; where the spacecraft points and where it
+travels are independent physical facts. This is ordinary rigid-body
+mechanics expressed through the physics system Judas already owned — not
+a new integrator, not a new gravity model, not a new attachment
+mechanism.
+
+### What this uncovered: `PhysicsWorld::Step` never called `IntegrateRigidBody`
+
+Before touching any control code, this milestone required inspecting
+`RigidBody`'s force/torque accumulator carefully (per the brief's own
+explicit requirement) — and the inspection turned up something worth
+recording plainly. `src/RigidBody.h/.cpp` has owned a complete, tested
+force/torque-driven integrator (`IntegrateRigidBody`: force → linear
+acceleration via `F * inverseMass` → velocity → position; torque → angular
+acceleration via the REAL 3x3 world-space inverse inertia tensor →
+angular velocity → orientation; then clears both accumulators) since
+Milestone 7-Final. The standalone `judas_physics_tests`/
+`judas_collision_tests` suites have exercised it directly against bare
+`RigidBody` structs ever since. But `PhysicsWorld::Step` — the function
+the LIVE simulation actually calls every fixed step — never called it.
+Instead, `Step` reimplemented just the position/orientation half of that
+same integration inline, trusting that velocity/angular velocity had
+already been fully decided by the caller before `Step` ran: gravity via
+`ApplyLinearAcceleration` (direct `velocity += acceleration * dt`, mass-
+independent, exactly right for gravity, and unaffected by this milestone),
+or, for the Milestone 8-11 flying primitive specifically, `SetLinearVelocity`/
+`SetAngularVelocity` overwriting velocity outright. Nothing on any LIVE
+body ever called `ApplyForce`/`ApplyTorque` (`RigidBody`'s own accumulator-
+writing methods) before this milestone, so the accumulator sat permanently
+at zero, contributing nothing, on every real body in the running game —
+correct by omission, but genuinely dead code on the live path.
+
+This was not a hidden bug to "fix" so much as an unused capability to
+finally connect: `PhysicsWorld::Step`'s inline integration loop is
+replaced with a direct call to `IntegrateRigidBody` (one line, see
+`src/PhysicsWorld.cpp`). This is behaviorally IDENTICAL for every body
+that never has `ApplyForce`/`ApplyTorque` called on it — the accumulator
+stays exactly zero, contributing zero to velocity, and the position/
+orientation math is the same formula that was inlined before — so every
+existing dynamic body (planets' cubes/spheres, anything not the
+spacecraft) is unaffected. It is the smallest change that lets a new
+force/torque-driven consumer exist at all, reusing the exact integrator
+the test suites have verified for four milestones, rather than building a
+second, spacecraft-specific one (which the brief explicitly forbids — see
+"Physics ownership" below).
+
+Two new generic `PhysicsWorld` methods make force/torque available to any
+future caller, not just the spacecraft:
+
+```
+void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3& force);
+void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque);
+```
+
+Both are thin wrappers over `RigidBody::ApplyForce`/`ApplyTorque` (a no-op
+on a static or unknown handle) — the same "generic rigid-body operation,
+not a spacecraft-only mechanism" shape `GetLinearVelocity`/
+`SetLinearVelocity` already established. Nothing here is spacecraft-
+specific; the spacecraft is simply the first LIVE caller.
+
+### Fixed-step force application order
+
+Within one `PhysicsWorld::Step` call, the order is: (1) any force/torque
+already sitting in the accumulator (gravity's own contribution already
+sits directly in `linearVelocity`, having been applied via
+`ApplyLinearAcceleration` by the caller BEFORE `Step` — see
+`Application.cpp`'s fixed-step loop) integrates into velocity/angular
+velocity via `IntegrateRigidBody`, and the accumulator clears; (2)
+position/orientation integrate from that resulting velocity; (3) contact
+resolution runs. `ApplyFlyingPrimitiveControl` is called once per fixed
+step, between `PrepareDynamicBodiesForStep` (gravity) and `PhysicsWorld::Step`
+— the same position it occupied in Milestone 8-11 — so held input
+contributes force/torque for every fixed step it remains held, and
+nothing here is sensitive to render-frame delivery: a control held for N
+fixed steps always contributes force N times, regardless of how those N
+steps were distributed across render frames (unchanged fixed-step/
+render-frame separation — see "Simulation timing"). Releasing a key
+simply means the NEXT call contributes nothing for that axis; it does not
+need to "undo" anything, since nothing persisted past the step that
+consumed it.
+
+### Local-space force and torque
+
+Unchanged from Milestone 11's own axis derivation — translation and
+rotation axes still come entirely from the spacecraft's own current
+orientation, never gravity, never a fixed world axis:
+
+```
+worldForce  = (localForceDirection derived from held W/S/A/D/Q/E) * kControlForceMagnitude
+worldTorque = right * pitchTorque + up * yawTorque + forward * rollTorque
+```
+
+where `right`/`up`/`forward` are `shipOrientation * (1,0,0)`/`(0,1,0)`/
+`(0,0,-1)`, read fresh from `PhysicsWorld::GetTransform` every step. The
+semantic change is entirely in what happens to these vectors next:
+Milestone 11 handed a velocity/angular-velocity vector straight to
+`SetLinearVelocity`/`SetAngularVelocity` (overwriting whatever was there);
+Milestone 12 hands a force/torque vector to `PhysicsWorld::ApplyForce`/
+`ApplyTorque` (adding to whatever the accumulator already holds that
+step, then let `IntegrateRigidBody` turn it into a velocity CHANGE). A
+zero direction (nothing held) is now a harmless no-op — it does NOT zero
+existing velocity, unlike Milestone 11's unconditional `SetLinearVelocity`
+call.
+
+### Why orientation and velocity are independent
+
+This is a direct, structural consequence of the change above, not a
+separate mechanism to build: `RigidBody.position` and `RigidBody.linearVelocity`
+are integrated purely from `linearVelocity` and `forceAccumulator`, with
+no reference anywhere to `RigidBody.orientation`. Rotating the spacecraft
+changes `orientation`, which changes what `right`/`up`/`forward` evaluate
+to on the NEXT call to `ApplyFlyingPrimitiveControl` — i.e., which
+direction FUTURE force/torque will point — but it cannot retroactively
+touch `linearVelocity`, because nothing in the integration path reads
+orientation to decide velocity. This is exactly why there is no
+`velocity = shipForward * speed` anywhere in this milestone's code: that
+line is precisely the bug the brief warns against, and the architecture
+makes it structurally awkward to write by accident, not just prohibited
+by convention.
+
+### Composing with gravity, contact, and no automatic braking
+
+Gravity remains completely unchanged — `PrepareDynamicBodiesForStep`
+still samples `GravityContextMap` and calls `ApplyLinearAcceleration` on
+the spacecraft exactly like every other dynamic body, before `ApplyFlyingPrimitiveControl`
+runs. Because gravity writes directly into `linearVelocity` and control
+force writes into the accumulator (consumed by the SAME `Step` call), the
+two compose additively within one integration pass — gravity is never
+overridden, and control never needs to "fight" gravity by first reading
+and canceling it. Contact resolution (unmodified — see "Physics
+ownership") runs after integration, so a spacecraft that collides with
+the plank, a planet, or a dynamic object gets exactly the same contact
+response any other dynamic body gets; nothing in the control path
+special-cases collision, and nothing resets velocity after a contact to
+restore what the operator was commanding. There is no braking code, no
+linear/angular damping, no speed cap, and no attitude-hold/auto-level
+ANYWHERE in this milestone's new code — slowing down or stopping rotation
+is entirely an emergent consequence of applying counter-force/counter-
+torque, verified directly (see "Automated testing" below).
+
+### A real force-magnitude bug, caught by interactive validation
+
+The unit test suites (below) all pass with ANY positive force magnitude —
+they measure `F/m` and its consequences symbolically relative to whatever
+constant is chosen, so they cannot by themselves catch a magnitude that's
+simply too small for THIS demo's actual gravity/friction. Interactive
+validation did catch it: an initial choice of 320N (deliberately picked to
+land in the same order of magnitude as Milestone 11's old 8 m/s flight
+speed) turned out to be physically incapable of lifting the spacecraft off
+the plank at all. This demo's gravity is `9.81 m/s^2`; the spacecraft's
+real mass is `80kg` (unchanged since Milestone 8); countering gravity
+alone while hovering needs `mass * g = 784.8N` of upward force — MORE than
+320N could ever provide, meaning `F/m - g` was permanently negative and
+the spacecraft could never leave the ground under its own thrust, in any
+amount of held time. A second, related effect compounded it: while
+resting on the plank, the plank's own friction (`0.8` coefficient against
+a normal force of ~`785N`, giving up to `~628N` of available grip) was
+enough to fully cancel 320N of horizontal thrust too, via the existing
+`ContactSolver`'s ordinary Coulomb friction clamp (see "Physics
+ownership," unmodified by this milestone) — so even sideways motion while
+resting was blocked. Neither of these is a bug in the physics; both are
+the CORRECT consequence of choosing a force too small relative to this
+demo's real gravity and friction. The fix was arithmetic, not code:
+`kControlForceMagnitude` raised to `1200N`, giving a nominal `15 m/s^2` in
+free space, a net `~5.2 m/s^2` climb straight up against gravity with real
+margin, and enough margin over the plank's `~628N` friction ceiling to
+still slide horizontally while resting if needed (measured directly:
+`~572N` of net forward force once resting friction is subtracted, giving
+`~7.15 m/s^2` — reduced from the free-space `15 m/s^2` by friction, as
+expected, not eliminated). See "Remaining limitations" for a related,
+NOT-fixed finding about torque and resting friction.
+
+### Rotational inertia and the real inverse inertia tensor
+
+`ApplyTorque` feeds `RigidBody.torqueAccumulator`; `IntegrateRigidBody`
+turns it into angular velocity via `InverseInertiaWorld() * torqueAccumulator`
+— the SAME per-body 3x3 tensor `SolidBoxInverseInertia` already computes
+from the spacecraft's real mass and box half-extents (`src/RigidBody.cpp`,
+unchanged since Milestone 7-Final), rotated into world space from whatever
+the spacecraft's CURRENT orientation is. `ApplyFlyingPrimitiveControl`
+applies one shared torque magnitude (`kControlTorqueMagnitude = 450 N*m`)
+about whichever local axis (pitch/yaw/roll) is held; the differing
+response per axis is NOT chosen by this milestone's code at all — it falls
+directly out of the box's own real, physically unequal moments of inertia
+about its three axes (halfExtents `2.0 x 0.25 x 3.0` — a wide, flat shape,
+so its three axes resist rotation very differently). Measured directly
+(`judas_spacecraft_control_tests`, "Section I"): identical 450 N*m torque
+held for 0.5s produces measurably different angular speeds about each of
+the three axes, matching `torque * inverseInertiaComponent * t` to within
+2% for each axis independently — this is the real tensor operating, not a
+scalar approximation or a per-axis constant chosen by hand.
+
+### Automated evidence
+
+Two standalone suites carry the numeric proof (`tests/SpacecraftControlTests.cpp`,
+`tests/PilotAttachmentTests.cpp` — the first substantially rewritten for
+this milestone, per the brief's own instruction not to preserve assertions
+encoding the OLD direct-velocity semantics; the second unchanged, since
+`PilotAttachment` is agnostic to how the spacecraft's velocity was
+produced). `SpacecraftControlTests.cpp` now calls `PhysicsWorld::Step`
+after every `ApplyFlyingPrimitiveControl` call and reads back the
+resulting velocity/angular velocity/position — exercising the real
+control → force/torque → accumulator → integration → velocity pipeline
+end to end, not just the control layer's own intent. Twelve sections
+cover: sustained thrust matching `F/m*t` (not an instant speed); coasting
+after release (velocity unchanged within 1% after 2 full seconds with no
+input); a 180-degree orientation change NOT rotating existing linear
+velocity; counter-thrust monotonically decelerating, crossing zero, and
+reversing; perpendicular thrust preserving the original velocity
+component while adding a new one (vector sum, not replacement); F/m mass
+response (a 20kg and an 80kg body under identical force reach a 4:1 speed
+ratio); angular coasting after releasing torque; counter-torque reversing
+angular velocity; the real inverse-inertia-tensor axis dependence
+described above; gravity and thrust composing additively (measured
+separately and combined, combined equals the sum within 2%); a complete
+no-op while `controlled` is false; and a rotate-the-whole-scenario
+equivalence check (position, linear velocity, angular velocity, AND
+orientation all compared after rotating the entire scenario by an
+arbitrary quaternion and rotating the result back) — the same technique
+this suite already applied to Milestone 11's direct-velocity control,
+now re-verified against force/torque-driven control instead.
+
+### Pilot attachment and release under inertial motion
+
+`src/PilotAttachment.h/.cpp` (Milestone 11) needed ZERO code changes for
+this milestone — it is a pure function of the spacecraft's CURRENT
+transform/velocity, regardless of how that state was produced (directly
+commanded, as before, or force/torque-integrated, as now). Verified
+directly via `JUDAS_TEST_SCRIPT` interactive validation rather than
+re-deriving it symbolically a second time: boarding, ascending under real
+thrust, coasting, yawing under real torque, and applying a second burst of
+thrust at the new orientation all left the player's distance from the
+spacecraft's own position EXACTLY constant (`1.5557` to four decimal
+places, unchanged across hundreds of fixed steps of genuine acceleration
+and rotation) — the attachment does not care that the spacecraft is now
+accelerating and tumbling under real force/torque instead of holding a
+commanded rate. Release still uses `ComputePilotReleaseVelocity`'s
+unmodified `v + omega x r` formula, now handing the player REAL,
+unbounded inertial velocity (previously capped at Milestone 8-11's fixed
+`kFlightSpeed`) — observed directly reaching several tens of m/s during
+validation, inherited coherently with no clamping, no double-counting,
+and ordinary M10 gravity/collision resuming immediately afterward
+(confirmed by a subsequent free-fall and landing in the same validation
+run).
+
+### Zero gravity, confirmed via the real gravity context, not a special mode
+
+No boolean "zero-gravity flight mode" exists anywhere in this milestone.
+Flying the spacecraft far enough from either planet or the plank (past
+`GravityContextMap`'s registered regions — see "Gravity context
+ownership") naturally left `GravityField::Sample` returning zero, exactly
+the way any other consumer's "unclaimed space" already worked before this
+milestone. Observed directly: once past the plank's gravity region, the
+spacecraft's vertical velocity component (built up by earlier thrust)
+stayed EXACTLY constant for the remainder of a multi-second validation
+run with no further vertical thrust applied — the real `GravityContextMap`
+returning zero is doing 100% of the work; nothing about this milestone's
+control code even knows it happened.
+
+### What was deliberately not built
+
+No orbital mechanics, inverse-square gravity, or any change to
+`RadicalGravity`/`GravityContextMap` — gravity is exactly what it was
+before this milestone, used through the same `ApplyLinearAcceleration`
+seam. No aerodynamic drag, lift, fuel, individual thrusters, reaction
+wheels, or engine model — one net local-space force and one net
+local-space torque per fixed step is the entire control surface, exactly
+as the brief specified. No new reference-frame system, spacecraft
+interior, or generalized attachment framework — `PilotAttachment` is
+unchanged and still models exactly one relationship. No parallel
+spacecraft-specific integrator — `IntegrateRigidBody` (already owned,
+already tested) is the only integration path force/torque ever passes
+through. No automatic braking, damping, speed cap, or stabilization of any
+kind.
+
+### Post-validation bugfix: a grounded player never fully settling ("vibrating")
+
+Human validation caught a real regression right at the "jump -> land ->
+release input -> settle" check: a player standing on ordinary stationary
+ground (no spacecraft involved at all) never came fully to rest — instead
+it entered a small, continuous, visibly periodic vertical oscillation.
+Diagnosed, root-caused, and fixed as part of this same milestone before
+requesting validation again; recorded here in full because the diagnosis
+process itself is worth knowing before touching this code again.
+
+**First finding: it was not actually new to this milestone.** Direct A/B
+comparison against the `milestone-11` tag (stashing every M12 change,
+rebuilding, running the identical scripted repro) reproduced the exact
+same oscillation, byte-for-byte, with zero M12 code involved — the
+`PlayerController` is not a `RigidBody` and never touches
+`IntegrateRigidBody`/`ApplyForce`/`ApplyTorque` at all, so M12's own
+integration change could not have been the direct cause. The bug is a
+latent flaw in the move-and-slide loop's own skin-margin restoration,
+present since Milestone 7-A: that restoration only fires when
+`SweepPlayerShape` actually reports a hit for THAT step's `remaining`
+displacement, and while merely standing still, `remaining` is nothing but
+the tiny per-step gravity "glue" nudge (a few millimeters) — too small to
+reach the surface at all for several consecutive steps. Clearance erodes
+silently and unchecked until it finally reaches exactly zero, at which
+point the reactive restoration fires and snaps the FULL `kSkinMargin`
+(`0.02m`) back in one visible jump — repeating indefinitely. Walking
+mostly hid this (a real WASD displacement usually reaches the surface and
+gets corrected almost every step), but it was always there for a
+motionless grounded player.
+
+**The fix**: `PlayerController::FixedUpdate` now, immediately after
+establishing this step's `groundHit` (the same probe already used for the
+grounded/support decision — no new geometry query), nudges `m_position`
+along `localUp` so clearance reads back exactly `kSkinMargin` every
+grounded step — expressed entirely in terms of `localUp` and the
+support's own real geometry, so it holds under arbitrary orientation and
+local gravity (verified directly against a genuinely tilted local up,
+~10-25 degrees off world +Y, mid-slope on the sphere, not just the flat
+plank). It never touches `m_velocity` — tangential (WASD) momentum and the
+vertical glue speed are both left completely alone; only the resulting
+POSITION is corrected, the same category of fix the move-and-slide loop's
+own existing skin-margin restoration already is, just applied reliably
+instead of only when incidentally triggered.
+
+**A genuine second-order regression this exposed, and its own fix.** An
+early version of this correction applied unconditionally on every grounded
+step and broke walking onto the flying primitive/spacecraft: making
+clearance perfectly deterministic removed small step-to-step position
+variance the OLD, buggy code had incidentally relied on. That variance
+turned out to be load-bearing for one specific existing interaction —
+walking directly at the pushable spacecraft at exactly a shallow closing
+distance, where `TryStepMove`'s own `kMinStepImprovement` margin
+(`src/StepClimb.cpp`) could reject a genuinely-clear step by a hair, fall
+back to ordinary sliding, nudge the spacecraft a little further away via
+the existing Milestone 7-A player-push mechanic, and recreate the
+identical "just barely blocked" distance on the very next step — with zero
+jitter left to ever break out of it, this repeated forever (observed
+directly: the spacecraft drifting away under sustained contact, boarding
+never completing, sometimes cascading into visible tumbling from
+off-center contact impulses). Two changes resolved it, at two different
+levels:
+- `TryStepMove` now treats a raised-and-forward sweep that reaches the
+  FULL requested displacement completely unobstructed as an unconditional
+  success, regardless of how close the flat sweep happened to get on its
+  own — `kMinStepImprovement` still guards the case where the forward
+  sweep is ALSO blocked (protecting against floating-point noise, its
+  original purpose), just not the case where it's genuinely, completely
+  clear. Verified harmless to every existing static-step scenario
+  (`judas_step_climb_tests` unchanged and still passing): a static
+  obstruction's distance only ever shrinks step over step as the player
+  keeps closing in, so it was never stuck in the exact equilibrium a
+  pushable object can create.
+- The clearance-settle fix itself is gated on **no horizontal input held
+  that step** (`hasHorizontalInput`, computed the same way the grounded
+  branch's own tangential-velocity code already does), matching the
+  reported bug's own exact circumstances — release input, then settle —
+  rather than firing unconditionally on every grounded step. Ordinary
+  walking/approach continues to rely on the existing reactive skin-margin
+  restoration, completely unchanged from Milestone 7-A through 11.
+
+All four required regression checks pass cleanly with both fixes in
+place: flat ground, a real jump-and-land, a genuinely tilted local-gravity
+slope (all settle to a fixed position with zero measurable drift across
+hundreds of logged fixed steps), and boarding the spacecraft by walking
+into it (again reaches the same `19.3979` height Milestone 10/11 always
+did, spacecraft remaining stationary throughout the approach). All six
+standalone suites and the full staircase/plank/ramp/Planet-B traversal
+were re-verified after both fixes, unaffected.
+
+## Milestone 13
+
+Judas's first UI system: a persistent gameplay HUD and interactive pause
+menus, built as a genuinely new rendering/input capability rather than a
+third-party UI library dropped into the engine. This milestone touches
+`Renderer` (a new screen-space overlay draw path), adds a small family of
+new files (`src/FontLoader.*`, `src/UIWidgets.*`, `src/UIStack.h`,
+`src/PauseMenu.*`, `src/HUD.*`), and adds a narrow amount of new `Window`
+input surface — nothing about the 3D renderer, physics, gravity, player
+controller, spacecraft, or asset system changed.
+
+### Text rendering: a second, dedicated draw path, not a repurposed one
+
+`Renderer`'s existing `DrawMesh`/`DrawBox`/`DrawSphere` path (Milestone 9)
+was deliberately NOT reused for UI, even though it already supports
+textured, tinted quads. That path is built for the 3D scene: a
+view/projection matrix, per-fragment lighting against a world-space light
+direction, and (until this milestone) depth testing always on. Every one
+of those is actively wrong for a screen-space HUD panel or menu button —
+lighting a flat UI rectangle makes no sense, and depth-testing it against
+the 3D scene would make it disappear behind whatever's in front of the
+camera. Rather than adding uniform toggles to bypass lighting/projection
+for "UI mode," a second, much smaller shader
+(`kUIVertexShaderSource`/`kUIFragmentShaderSource` in `Renderer.cpp`) was
+written from scratch: it takes a position and size already in **pixels**
+and converts straight to clip space using only the window's own pixel
+dimensions (`uScreenSize`) — no separate orthographic projection matrix
+needed, no lighting terms at all, one `uColor` for tint/alpha and one
+`uUVOffset`/`uUVScale` pair so the same shader draws both a solid panel
+(sampling the existing 1x1 white fallback texture — see Milestone 9) and
+a font-atlas glyph (sampling a sub-rectangle of the atlas) without a
+shader variant for each.
+
+A single shared unit quad (`m_uiQuadVao`/`m_uiQuadVbo`, six non-indexed
+vertices in `[0,1]x[0,1]`) is reused for every `DrawUIRect` call and every
+glyph `DrawUIText` draws — the same "one shared mesh, transform entirely
+via uniforms" shape `DrawBox`/`DrawSphere` already use with
+`m_cubeMesh`/`m_sphereMesh`, just with pixel-space position/size uniforms
+instead of a full model matrix. No batching: a HUD/menu frame issues on
+the order of a few dozen draw calls (one per glyph, one per panel/button
+background), the same brute-force-is-fine-at-this-scale reasoning already
+documented for the physics broadphase — a text-heavy UI with hundreds of
+glyphs per frame would need real batching, this one doesn't.
+
+`BeginUIFrame`/`EndUIFrame` bracket every UI draw call each frame:
+`BeginUIFrame` disables depth testing (UI always draws on top, in call
+order — there is no 3D occlusion concept for it) and enables standard
+alpha blending (`GL_SRC_ALPHA`/`GL_ONE_MINUS_SRC_ALPHA`, see the two new
+`gl_core33.h` entries, `glDisable`/`glBlendFunc` — the first GL state this
+engine has ever needed to turn OFF at runtime rather than set once at
+`Init` and leave alone); `EndUIFrame` restores both, so the next frame's
+3D draws behave exactly as they did before Milestone 13 existed. Verified
+directly: the M1-12 regression script (jump/land/settle, full traversal)
+produces byte-identical fixed-step telemetry with these changes present,
+and the 3D scene screenshot from `judas_asset_tests`'s own regression run
+is unaffected in shape/lighting.
+
+### Font loading: `stb_truetype` + DejaVu Sans, baked once
+
+`src/FontLoader.h/.cpp` is the text-rendering sibling of
+`src/ModelLoader.*`/`src/TextureLoader.*` — same split: it produces plain
+CPU data (`FontAtlasData`: an RGBA `TextureData` atlas bitmap plus a
+95-entry `FontGlyph` table for printable ASCII 32-126, plus font-wide
+ascent/line-height metrics), and `Renderer::LoadFont` is the only place
+that uploads it (through the SAME `Renderer::CreateTexture` every other
+texture already goes through — the atlas is just another RGBA texture to
+that call, so no new GPU-upload code was needed for it).
+
+Uses `stb_truetype.h` (public domain, vendored at
+`third_party/stb_truetype.h`), the same vendoring reasoning already
+applied to `stb_image`/`stb_image_write`/`tiny_obj_loader`: text
+rasterization is a solved commodity problem, not something Judas needs to
+own. `stbtt_BakeFontBitmap` (the simple, single-call baking API, not the
+more configurable packing API) bakes all 95 glyphs into one 512x512
+single-channel coverage bitmap at a fixed pixel height (48px); `LoadFont`
+converts that to RGBA (`r=g=b=255`, `a=coverage`) so it can go through the
+ordinary texture upload path, and copies each `stbtt_bakedchar`'s fields
+into a plain `FontGlyph` (atlas UV rect, pixel size, baseline offset,
+advance) — nothing outside `FontLoader.cpp` needs to know `stb_truetype`'s
+own types exist, matching `MeshData`/`TextureData`'s "plain CPU data only"
+convention. `LoadFontAtlas`'s own return-value check (`stbtt_BakeFontBitmap`
+returns a non-positive value if the glyphs didn't fit) means a future
+change that doesn't fit the fixed 512x512 atlas fails loudly at startup
+rather than silently truncating glyphs.
+
+The demo font is DejaVu Sans (`assets/fonts/DejaVuSans.ttf`), chosen
+because it was already installed on the development machine under a
+permissive, redistribution-friendly license (the Bitstream Vera License —
+full text vendored alongside it at `assets/fonts/DejaVuSans-LICENSE.txt`)
+and needed no separate download/attribution search. One font, one bake, at
+one pixel height (48px) — both the HUD's small telemetry text and the
+menu's larger title/button text are drawn from the SAME atlas at different
+`scale` values passed to `DrawUIText` (0.4 and 0.5/0.75 respectively, see
+`src/HUD.cpp`/`src/UIWidgets.cpp`), not separate font assets. No Unicode,
+no bold/italic styles, no fallback glyph for out-of-range characters
+(silently advances by a space-width instead of drawing nothing) — none of
+that is needed for this milestone's plain-ASCII HUD/menu text.
+
+`DrawUIText` is deliberately single-line only — a caller that needs
+multiple lines (both `HUD::Draw` and `UIMenuScreen`'s title/button layout)
+calls it once per line at its own computed Y offset, using
+`Renderer::GetUITextLineHeight` to space them. This keeps the one
+low-level text primitive simple, per this milestone's own "minimum
+reusable capability" instruction, rather than teaching it about
+line-wrapping or multi-line alignment nothing here currently needs.
+
+### UI capability: screens, buttons, a navigation stack — not a framework
+
+`src/UIWidgets.h/.cpp` defines exactly two things: `UIButton` (a label, an
+activation callback taking a `UIStack&`, and a computed screen-space rect)
+and `UIMenuScreen` (a title plus a vertical column of buttons, with
+`Layout`/`Draw`/`MoveFocus`/`Activate`/`HandleMouseMove`/`HandleMouseClick`).
+There is no generic widget tree, no scrolling, no text input field, no
+theming system, no anchor-enum layout engine — a `UIMenuScreen` always
+lays its buttons out as a single centered column under a title, recomputed
+every call from the CURRENT window size (the same "recompute from current
+size every frame rather than react to a resize event" approach
+`Renderer::SetCamera`'s aspect-ratio recomputation already established —
+see "3D rendering pipeline" — reused here for the exact same reason: it's
+cheap for a handful of buttons and needs no separate resize-event
+plumbing, which is what makes the menu "resize-safe" without extra
+machinery). One button's own text can be rewritten in place
+(`SetButtonLabel`) — the mechanism the HUD-visibility toggle button uses
+to show its own current state ("Show HUD: On"/"Off") without either
+`UIMenuScreen` or `UIButton` knowing what "HUD visibility" is.
+
+`src/UIStack.h` is the entire "screen open/close/back stack" concept this
+milestone's required navigation flow needs — `Push`/`Pop`/`Clear`/
+`IsOpen`/`Top`. Deliberately non-owning: it holds raw pointers into
+`UIMenuScreen`s that already exist as long-lived members of whoever
+composes a menu (here, `PauseMenu` owns exactly two: the pause root screen
+and the options screen, constructed once), the same "handle, not
+ownership" shape `PhysicsWorld::BodyHandle`/`Renderer::MeshHandle` already
+establish elsewhere in this engine.
+
+`src/PauseMenu.h/.cpp` is the ONE place that knows what a "pause menu"
+actually is — the generic primitives above stay completely agnostic to it.
+It owns: the navigation stack itself; whether the HUD should currently
+draw (`m_hudVisible` — the options screen's one real, non-invented
+setting, chosen specifically because "toggle the HUD this milestone just
+built" is genuine, present functionality, unlike a fabricated settings
+menu with nothing real to configure); and a `m_quitRequested` flag, read
+by `Application::Run` exactly like `Window::ShouldClose()` already is
+(`while (!window.ShouldClose() && !pauseMenu.QuitRequested())`), rather
+than `PauseMenu` reaching into `Window`/SDL itself to close anything.
+`HandleBackRequest` is the single contextual action bound to `Escape`:
+closed -> open (push the pause root); on the nested Options screen -> pop
+back to the root; on the root itself -> close entirely (resume) — one
+action serving the whole required
+`gameplay -> pause -> nested -> back -> resume -> gameplay` flow, rather
+than the caller having to choose between separate open/close/back calls.
+
+### The HUD: plain view data in, five live lines out
+
+`src/HUD.h` defines `HUDViewData` — five plain fields
+(`grounded`, `gravityMagnitude`, `controllingSpacecraft`, `pilotAttached`,
+`spacecraftLinearSpeed`) — and `HUD::Draw(renderer, windowWidth,
+windowHeight, data)`. `HUD.cpp`/`HUD.h` never include
+`PlayerController.h`, `GravityContextMap.h`, `PilotAttachment.h`,
+`FlyingPrimitiveControl.h`, or `PhysicsWorld.h` — `Application.cpp` (the
+composition root) is the only place that reads those each frame and fills
+in the struct:
+
+```cpp
+hudData.grounded = player.IsGrounded();
+hudData.gravityMagnitude = glm::length(gravity.Sample(player.GetPosition()));
+hudData.controllingSpacecraft = flyingPrimitiveControl.controlled;
+hudData.pilotAttached = pilotAttachment.attached;
+hudData.spacecraftLinearSpeed =
+    glm::length(physicsWorld.GetLinearVelocity(flyingPrimitiveControl.handle));
+```
+
+This is the same "gameplay hands Judas's rendering layer plain data, never
+a live reference to itself" shape `DrawBox`/`DrawMesh`'s
+position/rotation/color parameters already use for the 3D world — the HUD
+is presentation/control infrastructure reading gameplay state, never
+authoritative gameplay state itself, exactly as this milestone's brief
+requires. No health, inventory, quests, or ammunition were invented to
+give the HUD more to show — the five candidates listed in the brief
+(grounded/airborne, gravity magnitude, player-vs-spacecraft control, pilot
+attachment, spacecraft speed) are exactly the five drawn, and every one of
+them is something Judas already computes for other reasons.
+
+The panel itself: a small translucent dark rectangle, sized to fit its own
+longest line (measured via `Renderer::MeasureUIText` before drawing the
+background, so the panel never clips or over-pads its text), anchored to
+a fixed pixel margin from the window's top-left corner — the one anchor
+this milestone's single HUD panel needed; a general anchor-enum layout
+system was judged unnecessary scope for one panel in one corner.
+
+### Input ownership: one boundary, not scattered checks
+
+Every UI-related input decision lives in ONE place: a block at the very
+top of `Application::Run`'s interactive loop body, executed before any
+gameplay system sees that frame's input at all. It:
+
+1. Consumes `Window::ConsumeUIBackRequest()` (Escape) and calls
+   `pauseMenu.HandleBackRequest()` unconditionally — the menu itself
+   decides what "back" means given its own current state.
+2. Consumes the four other new edge-triggered UI requests (navigate
+   up/down, activate, click) and — ONLY if `pauseMenu.IsOpen()` — routes
+   them into `PauseMenu::NavigateUp`/`NavigateDown`/`Activate`/
+   `HandleMouseMove`/`HandleMouseClick`. `Window::GetMousePosition`
+   (real cursor position in window-client pixels, unlike
+   `GetMouseDelta`, which reads zero while the mouse isn't captured — see
+   below) drives continuous hover tracking every frame the menu is open.
+3. On an open/closed TRANSITION (tracked via a local `wasPauseMenuOpen`,
+   not re-asserted every frame — re-calling `SDL_SetRelativeMouseMode`
+   with an unchanged value every frame would fight SDL's own internal
+   motion accumulator for no benefit), calls
+   `window.SetMouseCaptured(!pauseMenu.IsOpen())`: opening the menu
+   releases the cursor to an absolute, clickable position; closing it
+   recaptures for mouse-look, exactly restoring Milestone 1-12 gameplay
+   feel the instant the menu closes.
+4. Gates an entire block — `player.UpdateFrameInput` (mouse look, jump
+   latching), `Window::ConsumeResetRequest`/`ConsumeControlToggleRequest`
+   handling, and the whole fixed-step physics accumulator loop — behind
+   `if (!pauseMenu.IsOpen())`.
+
+That fourth point is what satisfies this milestone's explicit "don't
+scatter `if (menuOpen)` checks throughout gameplay systems" instruction:
+`PlayerController`, `FlyingPrimitiveControl`, `PilotControl`, and
+`PhysicsWorld` were not modified at all for Milestone 13, and none of them
+know a menu exists. The boundary is entirely in `Application::Run` — the
+composition root simply doesn't call those systems this frame, rather
+than calling them with an added "is the menu open" parameter threaded
+through every one of them.
+
+**`Window`'s Milestone 13 additions**, all in the same edge-triggered
+"consume once, then clear" shape `ConsumeJumpRequest`/`ConsumeResetRequest`
+already established: `ConsumeUIBackRequest` (Escape — see below for why
+this superseded Escape's old meaning), `ConsumeUINavigateUpRequest`/
+`ConsumeUINavigateDownRequest` (Up/Down arrow keys — safe to reuse the
+existing `MoveForward`/`MoveBackward` arrow-key aliases from
+`Window::IsActionActive`, since gameplay's own continuous Action polling
+is never consulted while the menu owns input, per point 4 above),
+`ConsumeUIActivateRequest` (Enter/Return), and `ConsumeUIClickRequest`
+(left mouse button, reporting the click's own cursor position). Plus two
+plain accessors with no edge-triggering: `GetMousePosition` (absolute
+cursor position, any time) and `SetMouseCaptured` (explicit relative-
+mouse-mode control, called only from `Application::Run`'s transition
+logic above — not bound to any key of `Window`'s own).
+
+**Escape's meaning changed.** Through Milestone 12, Escape toggled mouse
+capture directly (a standalone debug feature: "release the cursor without
+closing the application"). As of Milestone 13, Escape drives
+`ConsumeUIBackRequest` instead, and mouse capture is driven entirely by
+whether the pause menu is open (see point 3 above) — the old standalone
+toggle would now fight that: releasing the cursor with the old behavior
+while gameplay still owned input had no menu to interact with anyway, and
+the pause menu now provides a strictly more useful way to get an
+interactable cursor. Superseded, not preserved alongside the new
+behavior — see architectural-law-style precedent for this in Milestone
+11/12's own "superseded, not kept as a parallel path" notes.
+
+No `JUDAS_TEST_SCRIPT` scripting was added for UI interaction (no
+`PAUSE`/`UI_CLICK`/etc. directive) — `Window`'s new Consume* methods all
+return `false` in test-input mode (see their own doc comments), a
+deliberate, documented gap: this milestone's own brief states human
+validation is authoritative for UI appearance and interaction, and the
+navigation/input-ownership LOGIC (as opposed to real keyboard/mouse
+plumbing) is covered instead by the standalone `judas_ui_tests` executable
+— see "Automated testing" below.
+
+### Pause policy: the world freezes completely, not just "ignores input"
+
+The brief required this milestone to "deliberately define what happens to
+fixed-step simulation" while paused and document the choice. Chosen
+policy: **while the pause menu is open, the fixed-step simulation does not
+advance at all** — no `PhysicsWorld::Step`, no gravity sampling, no
+`PlayerController::FixedUpdate`, and critically, the leftover
+`physicsAccumulator` (render-frame time not yet consumed by a fixed step —
+see "Simulation/presentation boundary") is never even accumulated toward
+while paused, so resuming picks up exactly where it left off: no
+catch-up burst of steps, no backlog silently dropped by the existing
+`kMaxPhysicsStepsPerFrame` cap firing on resume. The world is frozen, not
+merely deaf to input.
+
+The alternative — keep simulating behind the menu, just don't accept
+input — was rejected for two reasons. First, it doesn't match the brief's
+own literal requirement ("gameplay input suppressed while menus own
+input") as directly: a player standing still would keep drifting under
+gravity/friction while unable to react, which reads as suppressed
+CONTROL, not suppressed GAMEPLAY. Second, and more concretely: the
+spacecraft's own Milestone 12 inertia means an unpiloted-by-input-but-
+still-simulating spacecraft would keep coasting (or, if freshly released
+mid-rotation, keep tumbling) toward whatever it was already headed for
+while its pilot is stuck in a menu with no way to react — a stranger,
+harder-to-reason-about state than simply freezing everything. A full
+freeze also composes trivially with every existing system: presentation
+interpolation (`presentationAlpha`) simply stops changing while paused (no
+new fixed-step state to interpolate toward), so the render frame drawn
+behind the dimmed menu overlay is whatever the world looked like the
+instant it paused, held steady — exactly the visual a player expects from
+"paused."
+
+### Automated evidence
+
+`judas_ui_tests` (new standalone executable, `tests/UITests.cpp`) —
+pure CPU logic, no window, no GL context, no font loaded — verifies:
+`UIStack` push/pop/clear/`IsOpen`/`Top` semantics (Section A);
+`UIMenuScreen` focus navigation (wrapping both directions), layout at
+multiple window sizes without degenerating, and mouse hit-testing
+including a deliberate miss (Section B); the exact required
+`PauseMenu` flow, `gameplay -> pause -> nested -> back -> resume ->
+gameplay` (Section C); that the Resume button closes the menu entirely
+even when reached from the nested screen, not just via repeated `Escape`
+(Section D); that Quit sets a flag rather than acting itself (Section E);
+that the HUD-visibility toggle flips correctly, on repeated activation,
+AND persists across navigating away from and back to the options screen
+(Section F — this is real state, not per-screen UI scratch state); and
+the exact `!pauseMenu.IsOpen()` boolean `Application::Run`'s real loop
+gates gameplay input on, transitioning correctly across open/close
+(Section G, "the input-ownership boundary, expressed as a tiny simulated
+tick" — the actual condition the real loop branches on, verified
+independent of any window/input plumbing); plus that `HUDViewData` is
+exactly the plain, independently-constructible struct it claims to be
+(Section H). This suite links `Renderer.cpp`/the GLAD loader/
+`FontLoader.cpp` (since `UIMenuScreen::Draw`/`HUD::Draw` reference
+`Renderer`'s UI methods at compile time — the same reasoning
+`judas_spacecraft_control_tests` already applies to linking `Window.cpp`
+without ever calling `Init`) but never calls `Draw` itself, since
+`Renderer`'s GL function pointers are unresolved (`nullptr`) without a
+real GL context — calling them would crash, not merely produce wrong
+output.
+
+Beyond the new suite: the full M1-12 regression walk (spawn, staircase,
+plank crossing, spacecraft boarding, jump-land-settle under both flat and
+tilted local gravity) was re-run via `JUDAS_TEST_SCRIPT` after every
+Milestone 13 change and produces byte-identical fixed-step telemetry to
+pre-Milestone-13 runs — expected, since no gameplay/physics file was
+touched, but verified rather than assumed. All five prior standalone
+suites (`judas_physics_tests`, `judas_collision_tests`, `judas_asset_tests`,
+`judas_step_climb_tests`, `judas_pilot_attachment_tests`) plus
+`judas_spacecraft_control_tests` remain green on a clean rebuild with zero
+compiler warnings (`-Wall -Wextra`).
+
+Appearance and real keyboard/mouse interaction (crispness of the font at
+its baked size, button hover/click feel, resize behavior with a real
+window, pause/resume while walking AND while piloting the spacecraft) were
+additionally verified via a small standalone offscreen-rendering harness
+(constructing a real hidden-but-genuine GL context via `Window::Init(...,
+visible=false)`, exactly like `TestHarness.h` already does, then calling
+the exact same `Renderer`/`PauseMenu`/`HUD` draw calls `Application::Run`
+does and capturing the result via the existing `Renderer::CaptureFrame`) —
+confirmed text renders crisply, the pause-root and nested options screens
+both render and composite correctly, and focus highlighting/button
+backgrounds/panel translucency all work as designed, before handing the
+build to the operator for the real interactive validation this milestone's
+brief requires for appearance/interaction specifically.
+
+### What was deliberately not built
+
+Per this milestone's brief: inventory, quests, dialogue, crafting,
+health/damage, save/load, key rebinding, controller support, a UI
+animation framework, an editor, HTML/browser UI, generic data
+binding/reflection, a localization framework, and gameplay systems
+invented solely to give the HUD/menu something to show. Also not built,
+judged genuinely out of this milestone's scope rather than merely
+deferred: a general anchor-enum/layout engine (the HUD needed exactly one
+anchor point; `UIMenuScreen` needed exactly one column layout); glyph
+batching (fine at this milestone's few-dozen-draws-per-frame UI, would
+matter for a much busier one); `JUDAS_TEST_SCRIPT` scripting for UI
+interaction (human validation covers it directly, per the brief); mouse-
+wheel/scroll support (nothing in this menu scrolls); a themeable/
+multi-style UI (one visual style, shared by both screens); Unicode or
+multi-font text; and any generalized "secure/attach a widget to X"
+concept beyond the one pause-menu/HUD pairing this milestone needed.
+
+## Milestone 14
+
+Dynamic lighting: a toggleable player torch and spacecraft-mounted
+lights, both genuinely moving and rotating with their owners, extending
+the existing Milestone 9 lit-mesh shader rather than replacing it or
+adding a second rendering path.
+
+### Judas-owned light representation (`src/Light.h`)
+
+```cpp
+enum class LightKind { Point, Spot };
+
+struct DynamicLight {
+    LightKind kind = LightKind::Point;
+    glm::vec3 position{0.0f};                  // world space
+    glm::vec3 direction{0.0f, 0.0f, -1.0f};     // world space, normalized; spot only
+    glm::vec3 color{1.0f};                      // already intensity-scaled
+    float range = 10.0f;                        // world units
+    float innerConeDegrees = 15.0f;              // spot only
+    float outerConeDegrees = 25.0f;              // spot only
+};
+constexpr int kMaxDynamicLights = 5;
+```
+
+Plain data only — no gameplay object, no GL resource, no owner reference.
+The existing Milestone 9 directional light (the "sun") is NOT represented
+here; it stays exactly what it was (`Renderer::SetLighting`'s
+`direction`/`lightColor`/`ambientColor`, completely unchanged) — a single
+always-on world-space direction with no position and no falloff.
+`DynamicLight` covers the two NEW kinds this milestone adds. `Renderer`
+never reaches into `PlayerController`, `FlyingPrimitiveControl`,
+`PilotAttachment`, or any physics body to build one — by the time a light
+reaches `Renderer::SetDynamicLights`, it is already plain world-space
+data for the current frame; `Application.cpp` (the composition root) is
+the only place that knows a light is "the torch" or "the headlight."
+
+### Renderer changes: extending M9's shader, not replacing it
+
+`Renderer`'s existing lit-mesh vertex/fragment shader
+(`kVertexShaderSource`/`kFragmentShaderSource` in `Renderer.cpp`) gained:
+
+- a `vWorldPos` varying (the fragment's own world-space position,
+  `vec3(uModel * vec4(aLocalPos, 1.0))`, computed once per vertex) — the
+  one genuinely new piece of data the M9 shader never needed, since a
+  directional light's contribution doesn't depend on fragment position at
+  all, but a point/spot light's distance and angle both do;
+- a fixed-size uniform array of dynamic lights (`uDynamicLightPosition[5]`,
+  `...Direction[5]`, `...Color[5]`, `...Range[5]`, `...InnerCos[5]`,
+  `...OuterCos[5]`, `...IsSpot[5]`, plus `uLightCount` bounding the loop)
+  — GLSL struct-array uniforms are addressed by one location PER FIELD
+  PER ARRAY SLOT (`glGetUniformLocation(program, "uDynamicLightPosition[2]")`,
+  etc.), fetched once in `Init`, reused every `SetDynamicLights` call;
+- a `for (int i = 0; i < uLightCount; ++i)` loop in the fragment shader,
+  computing each light's diffuse/attenuation/cone contribution and adding
+  it to the existing `ambient + directional*diffuse` sum — strictly
+  additive, never a replacement (see "Combining lights" below).
+
+No second shader program, no second draw call, no second vertex/index
+buffer format — every mesh already drawn through `DrawMesh`/`DrawBox`/
+`DrawSphere` automatically receives dynamic lighting the instant
+`SetDynamicLights` is called with a non-empty list; a mesh drawn with zero
+dynamic lights active (`uLightCount == 0`, the state at `Init` and
+whenever nothing is currently lit) behaves byte-identically to Milestone
+9-13, since the loop simply doesn't execute. Two new GL entry points were
+needed (`glDisable`/`glBlendFunc` already existed as of Milestone 13;
+this milestone added `glUniform1f`, since no prior milestone had a
+scalar-float uniform array to set) — `src/gl_core33.h/.cpp`'s own
+"re-evaluated and kept small each time" policy (see docs/ARCHITECTURE.md,
+"Milestone 9") still holds: one new function for one new genuine need.
+
+### Coordinate space
+
+All lighting math happens in WORLD space: `vWorldPos` and every dynamic
+light's `position`/`direction` are world-space values; `vWorldNormal` is
+already world-space as of Milestone 9 (`uNormalMatrix = transpose(
+inverse(mat3(uModel)))`, computed once per draw call on the CPU). No
+view-space or model-space vector is ever mixed into a lighting
+computation — the one coordinate-space bug class M14's own brief warned
+about (mixing model-space normals with world-space light positions, or
+view-space directions with either) structurally cannot occur here, since
+nothing in this shader ever computes a view-space vector at all; `uView`/
+`uProjection` are used exclusively for `gl_Position`, never for lighting.
+
+### Dynamic means dynamic: presented transforms, rebuilt every frame
+
+`Application.cpp`'s new `BuildDynamicLights` function (in its own
+anonymous namespace, alongside `SpawnStepTestGeometry` et al.) is called
+once per RENDER frame — not once per fixed step, and never cached across
+frames — immediately before `drawScene`, using that exact frame's own
+`presentationAlpha`:
+
+```cpp
+renderer.SetDynamicLights(
+    BuildDynamicLights(player, torchOn, dynamicBodies[flyingPrimitiveBodyIndex], presentationAlpha));
+```
+
+It reads the player's and spacecraft's PRESENTED position/orientation
+(`GetPresentedPosition`/`GetPresentedOrientation`, `alpha` interpolated
+exactly like every DrawMesh call already uses — see "Simulation/
+presentation boundary") — never the raw authoritative simulation
+transform — so a light visually tracks precisely what's actually drawn
+that frame, with zero lag or jitter relative to its owner, and (this
+milestone's own explicit constraint) never feeds anything back into
+authoritative state: `BuildDynamicLights` returns a plain
+`std::vector<DynamicLight>` and touches no physics/gameplay state at all.
+
+### Player torch (`src/LightTransforms.h`, `PlayerController::GetTorchTransform`)
+
+`T` toggles a boolean (`torchOn`, owned by `Application::Run`'s own local
+scope — see "Light ownership and lifetime" below). While on, one
+`LightKind::Spot` is built every frame from
+`PlayerController::GetTorchTransform(presentationAlpha, outPosition,
+outDirection)`:
+
+```cpp
+void ComputeTorchTransform(basePosition, baseOrientation, yawDegrees, pitchDegrees, eyeHeight,
+                            outPosition, outDirection) {
+    localUp = baseOrientation * (0,1,0);
+    lookOrientation = baseOrientation * angleAxis(yawDegrees, (0,1,0)) * angleAxis(pitchDegrees, (1,0,0));
+    outDirection = normalize(lookOrientation * (0,0,-1));
+    outPosition = basePosition + localUp * eyeHeight;
+}
+```
+
+This is the EXACT SAME yaw/pitch composition `BuildViewMatrix`/
+`GetLookDirection` already use for the camera's own `front` vector and
+`GetLookDirection`'s own return value (see "Camera" below) — the torch is
+carried at the player's own eye position (`kEyeHeightAboveCenter` above
+the presented capsule center) rather than the third-person camera
+position behind it, so it visually originates from the player, not from
+empty space. `basePosition`/`baseOrientation` are the player's PRESENTED
+transform; `yawDegrees`/`pitchDegrees` are the same free-look state that
+already updates every render frame in `UpdateFrameInput`, independent of
+presentation interpolation (mouse look is already as responsive as
+rendering itself — see "Input responsiveness"). Never derives from
+gravity, never assumes a world axis: `baseOrientation` may be any
+quaternion, verified directly by `tests/LightingTests.cpp`'s rotate-the-
+universe check (Section C) — the torch works identically on Planet A, on
+the plank, on Planet B, and under a rotated local-gravity test pose,
+because the formula never reads gravity or world position at all, only
+the player's own current frame.
+
+The actual geometry (`ComputeTorchTransform`) was factored out of
+`PlayerController.cpp` into `src/LightTransforms.h/.cpp` — a pure,
+stateless free function — specifically so it's directly unit-testable
+with hand-crafted (including rotated) poses without needing a live
+`PlayerController` driven through gravity/input to exercise it (see
+"Automated evidence" below). `PlayerController::GetTorchTransform` is now
+a thin wrapper calling it with the player's own presented state.
+
+### Torch spotlight cone
+
+`kTorchInnerConeDegrees = 18`, `kTorchOuterConeDegrees = 28` (see
+`Application.cpp`) — full brightness inside an 18-degree half-angle core,
+smoothly fading to zero by 28 degrees, chosen by direct interactive
+tuning against this demo's own geometry scale (a person-sized player,
+~20m-radius planets) to read as an ordinary handheld flashlight rather
+than a laser (too narrow) or a floodlight (too wide). `kTorchRange = 35`
+world units. See "Point-light attenuation" below for the exact
+attenuation/cone formulas these feed.
+
+### Spacecraft lights (`Application.cpp`'s `kShip*` constants)
+
+Three lights, defined entirely in the spacecraft's own LOCAL space
+(relative to its `kFlyingPrimitiveHalfExtents(2.0, 0.25, 3.0)` box
+collider), transformed into world space every frame via
+`src/LightTransforms.h`'s other two free functions:
+
+```cpp
+glm::vec3 TransformLocalLightPosition(ownerPosition, ownerOrientation, localOffset) {
+    return ownerPosition + ownerOrientation * localOffset;
+}
+glm::vec3 TransformLocalLightDirection(ownerOrientation, localDirection) {
+    return glm::normalize(ownerOrientation * localDirection);
+}
+```
+
+Exactly the formula this milestone's own brief specifies
+(`worldPosition = shipPresentedPosition + shipPresentedOrientation *
+localLightOffset`). One forward-facing headlight spotlight at the nose
+(local offset `(0, 0, -3)`, local direction `(0, 0, -1)` — matching
+`FlyingPrimitiveControl.cpp`'s own "forward = local -Z" convention
+exactly, so the headlight always points out of whichever direction
+`W` actually thrusts the ship); two wingtip point "navigation" lights at
+local `(-2, 0, 0)` and `(2, 0, 0)` (the box collider's own X half-extent)
+— red to port (left), green to starboard (right), the traditional
+aviation convention, purely decorative, not a gameplay signal.
+`shipPosition`/`shipOrientation` are read from
+`dynamicBodies[flyingPrimitiveBodyIndex].GetPresentedPosition/
+Orientation(presentationAlpha)` — the SAME presented pose that frame's
+`DrawMesh` call for the spacecraft's own model already uses, so the
+lights are guaranteed to visually agree with wherever the rendered ship
+model actually is, never a separately-timed snapshot.
+
+**This works identically whether the spacecraft is being piloted,
+coasting under Milestone 12 inertia with no input at all, or tumbling
+after a release mid-rotation** — `BuildDynamicLights` only ever reads the
+spacecraft's own current presented transform, never
+`flyingPrimitiveControl.controlled` or anything about who (if anyone) is
+driving it. Rolling the spacecraft 90 degrees, 180 degrees, or any
+combined pitch/yaw/roll simply changes what `shipOrientation` IS that
+frame — there is no special-case code anywhere for "what if the ship is
+upside down" or "what if nothing is controlling it right now." Verified
+directly: `tests/LightingTests.cpp` Section B/C construct hand-crafted
+ship poses (a 90-degree yaw, and `kArbitraryRotation` — an arbitrary
+combined-axis quaternion also used by `judas_physics_tests`/
+`judas_collision_tests`/`judas_pilot_attachment_tests`/
+`judas_step_climb_tests`/`judas_spacecraft_control_tests`) and confirm
+both the light position and direction transform exactly as the formula
+above predicts, with no privileged axis.
+
+### Spacecraft lighting is independent of gravity
+
+`BuildDynamicLights` never samples a `GravityField`, never reads
+`GravityContextMap`, and never reads the spacecraft's own gravity-derived
+acceleration — the ship's lights are a pure function of
+`(shipPosition, shipOrientation)`, full stop. Whichever of Planet A's
+radial gravity, Planet B's radial gravity, the plank's uniform gravity,
+or unclaimed (zero-gravity) space the spacecraft currently occupies has
+zero effect on where its lights point or how bright they are — exactly
+the same "gravity direction and [X] are separate concepts, never
+conflate them" pattern this project's architectural laws already
+establish for supporting-surface contact normals (law #5) and pilot
+attachment (law #21); M14 extends it to light attachment.
+
+### Point-light attenuation
+
+```glsl
+float rangeFraction = clamp(distance / range, 0.0, 1.0);
+float windowed = clamp(1.0 - rangeFraction^4, 0.0, 1.0);
+float attenuation = (windowed * windowed) / (distance * distance + 1.0);
+```
+
+A smooth-windowed inverse-square falloff — genuinely inverse-square close
+to the light (the `distance^2` denominator), smoothly reaches EXACTLY
+zero at `range` (the `windowed` term, not a hard cliff), and stays finite
+as `distance` approaches 0 (the `+ 1.0` in the denominator prevents a
+`1/0` singularity directly under a light). Based on the general shape
+popularized by Brian Karis, "Real Shading in Unreal Engine 4" (SIGGRAPH
+2013 course notes), "Punctual Lights" — M14 does not claim the same exact
+coefficients or any photometric correctness (no lumens, no physical
+units anywhere in this engine); it borrows the qualitative idea (smoothly
+windowed inverse-square, not a hard cutoff or an unbounded one) because
+it reads as physically sensible without requiring HDR/tone-mapping
+infrastructure this milestone explicitly does not add. `range` itself is
+a per-light, per-demo tuning value (35 for the torch, 45 for the
+headlight, 12 for the small wingtip nav lights — see the `k*Range`
+constants in `Application.cpp`), not a physical or engine-level constant.
+Color values already have "intensity" folded directly into them (e.g. the
+torch's `kTorchColor = (3.0, 2.9, 2.6)`, component values intentionally
+above 1.0) rather than keeping a separate intensity scalar multiplied in
+later — one fewer moving part for a system that isn't claiming physical
+units anyway; final `FragColor` is implicitly clamped by the existing
+non-HDR 8-bit-per-channel framebuffer, exactly as Milestone 9's
+directional light already was.
+
+### Spotlight cone
+
+```glsl
+float cosAngle = dot(-lightDir, light.direction);  // lightDir points fragment->light
+float spotFactor = smoothstep(outerCos, innerCos, cosAngle);
+```
+
+`innerCos`/`outerCos` are computed ONCE PER LIGHT PER FRAME on the CPU
+(`Renderer::SetDynamicLights`, `std::cos(glm::radians(...))`) rather than
+once per fragment on the GPU — trivial cost either way at this light
+count, but free to do the trig just once. `smoothstep` is GLSL's own
+built-in smooth Hermite interpolation (`3t^2 - 2t^3`): full strength
+(`1.0`) at/inside the inner cone, zero at/outside the outer cone, a
+smooth S-curve between — never the harsh binary edge a plain `if
+(angle < coneAngle)` would produce. `SetDynamicLights` clamps
+`innerConeDegrees` to never exceed `outerConeDegrees` before converting
+to cosines, so a misconfigured light (inner > outer) can't silently
+invert `smoothstep`'s required `edge0 <= edge1` ordering.
+
+### Combining lights
+
+Every mesh's final lighting is a single accumulating sum in the fragment
+shader: `ambient + directional*diffuse`, then `+= dynamicLight*diffuse*
+attenuation*spotFactor` for each of up to `uLightCount` active dynamic
+lights, in a plain loop — genuinely additive, never a mode switch. The
+torch does not disable or dim the directional "sun"; the spacecraft's
+lights do not globally change how anything else in the scene is lit;
+turning the torch off or leaving the spacecraft simply removes that
+light's own term from the sum, exactly as if it had never been in the
+list that frame. All light colors are non-negative by construction (no
+subtractive/negative-intensity light exists anywhere in this milestone),
+`attenuation`/`spotFactor` are both `clamp`ed into `[0, 1]` in their own
+formulas above, and the final `FragColor` is implicitly clamped to `[0,
+1]` by the 8-bit framebuffer — no NaN or negative-color path exists in
+this shader for any input this milestone produces (verified directly by
+the offscreen-rendering spot-check in "Automated evidence" below, which
+produced no visible artifacts across every light combination tried).
+
+### UI remains unlit
+
+Milestone 13's screen-space UI shader (`kUIVertexShaderSource`/
+`kUIFragmentShaderSource`, `Renderer::BeginUIFrame`/`DrawUIRect`/
+`DrawUIText`/`EndUIFrame`) is a COMPLETELY SEPARATE shader program from
+the 3D lit-mesh shader this milestone extended — see "Milestone 13, Text
+rendering," for why they were already split before M14 existed. `Renderer
+::SetDynamicLights` sets uniforms only on `m_shaderProgram` (the 3D
+shader); `m_uiShaderProgram` was not touched by this milestone at all, has
+no lighting uniforms, and samples its bound texture directly with no
+diffuse/ambient/attenuation term anywhere in its fragment shader. The
+pause menu and HUD read exactly as bright/readable while every dynamic
+light (including the torch, pointed directly at the camera) is active as
+they do with none active — verified via the same offscreen-rendering
+spot-check.
+
+### Light ownership and lifetime
+
+- **Static configuration** (colors, ranges, cone angles, local offsets)
+  lives as plain `constexpr`/`const` values in `Application.cpp`,
+  alongside every other demo-tuning constant (`kFlyingPrimitiveMass`,
+  `kLightDirection`, etc.) — composition-root data, not engine state.
+- **Runtime state**: `torchOn` (a single bool) is a local variable inside
+  `Application::Run`'s interactive-loop scope, the same category
+  `wasPauseMenuOpen`/`physicsAccumulator` already are — not a member of
+  `PlayerController` (the torch is presentation state a light-building
+  step reads, not something the player's own simulation needs to know
+  about) and not a GL resource of any kind.
+- **The per-frame light LIST** (`std::vector<DynamicLight>`) is built
+  fresh every render frame by `BuildDynamicLights`, handed to
+  `Renderer::SetDynamicLights`, and not retained past that call — `
+  Renderer` copies the values it needs into its own uniform state and
+  the CPU-side vector is discarded immediately after.
+- **GPU-facing light data** (the uniform array itself) is owned entirely
+  by `Renderer` — no gameplay object owns a GL resource of any kind, the
+  same rule Milestone 9's mesh/texture handles already established.
+
+No generalized "light resource manager," light registry, or light
+handle/lifetime system was built — lights are cheap, frame-rebuilt plain
+data, not a GPU resource with an allocate/free lifecycle the way a mesh
+or texture is (see "Light limits" below for why this stayed simple).
+
+### Light limits
+
+`kMaxDynamicLights = 5` (see `src/Light.h`) — enough for one player torch
+plus the three-light spacecraft rig, with one slot of headroom, sized for
+a fixed-length GLSL uniform array. No clustered/tiled/deferred lighting,
+no light culling, no bindless resources, no render graph — those solve a
+scale problem (hundreds to thousands of simultaneous lights) this
+milestone's tiny demo does not have; a fixed, small uniform array,
+looped over unconditionally up to `uLightCount`, is the entire mechanism.
+Raising this limit later (a future milestone with more simultaneous
+lights) means raising one constant and one shader array size, not a
+rendering-architecture change — see "Milestone 14, deliberately NOT
+implemented" below for the full list of scale-solving techniques this
+milestone explicitly did not need.
+
+### Input ownership
+
+`T` (torch toggle) is gameplay input, obeying the exact input-ownership
+boundary Milestone 13 established (`docs/ARCHITECTURE.md`, "Milestone 13,
+Input ownership") — `PlayerController`, `FlyingPrimitiveControl`,
+`PilotControl`, and `PhysicsWorld` needed zero changes for this milestone,
+same as M13's own boundary claim. One added subtlety this milestone's own
+brief specifically called out: `Window::ConsumeTorchToggleRequest()` is
+now drained EVERY render frame, unconditionally — including while the
+pause menu owns input — exactly like the existing UI Consume* requests
+already are (see `Application::Run`'s own comment), rather than only
+being consumed inside the `!pauseMenu.IsOpen()`-gated block the way
+`ConsumeResetRequest`/`ConsumeControlToggleRequest` are. If it were only
+drained inside that gated block, a `T` press while the menu was open
+would sit as a pending SDL-level flag and fire immediately the instant
+the menu closed — a real "stale input" bug, not a hypothetical one (the
+same latent shape exists for `R`/`F` as of Milestone 13, left alone since
+this milestone's brief scoped the fix to the torch specifically). The
+drained boolean is then only ACTED ON (`torchOn = !torchOn`) inside the
+`!pauseMenu.IsOpen()` gate, so the request is discarded, not deferred,
+while a menu is open. Verified directly:
+`tests/LightingTests.cpp`'s Section F mirrors `tests/UITests.cpp`'s own
+Section G pattern exactly, constructing a real `PauseMenu` and confirming
+a toggle request during `IsOpen()` changes nothing, and that gameplay
+control is "fully restored," not merely "no longer blocked," the instant
+the menu closes.
+
+### Reset behavior
+
+`R` (world reset) does not reset `torchOn` — the torch is treated as
+persistent player-tool state (matching Milestone 13's own precedent: the
+HUD-visibility toggle also survives `R` and pause/resume). Every light's
+actual WORLD position/direction still resets coherently regardless,
+because `BuildDynamicLights` derives them fresh every frame from the
+player's/spacecraft's own (now-reset) presented transforms — there is no
+separate "light state" to desynchronize from a reset pose in the first
+place.
+
+### Automated evidence
+
+`judas_lighting_tests` (new standalone executable, `tests/LightingTests.cpp`)
+— pure CPU geometry/arithmetic and pause-state logic, no window, no GL
+context, no font — verifies: the player torch's transform at identity
+orientation and under free-look yaw/pitch (Section A); spacecraft light
+attachment under both a simple 90-degree yaw and an arbitrary combined-
+axis rotation (Section B); rotate-the-whole-scenario invariance for BOTH
+the torch and the spacecraft lights (Section C, using the same
+`kArbitraryRotation` convention every other rotate-the-universe suite in
+this project already uses); that distance attenuation strictly decreases,
+stays finite at zero distance, and reaches exactly zero at (and beyond)
+the configured range (Section D); that the spotlight cone factor is 1.0
+at/inside the inner edge, exactly 0.0 at/outside the outer edge, strictly
+monotonic between them, and genuinely fractional partway through (a
+smooth transition, not a binary edge) (Section E); and the torch's exact
+input-ownership boundary, mirroring `tests/UITests.cpp`'s own Section G
+(Section F). `src/LightAttenuation.h/.cpp` deliberately MIRRORS (does not
+share code with — GLSL and C++ can't share a function body) the fragment
+shader's own attenuation/cone formulas, the same "kept as a separate copy
+on purpose so a future change that isn't mirrored makes tests fail
+visibly" pattern `tests/SpacecraftControlTests.cpp` already established
+for its own mirrored production constants — this suite verifies the
+INTENDED formula's mathematical properties, not the compiled GLSL
+directly (there is no headless way to execute a fragment shader and read
+back per-fragment values without a real GL context, which this project's
+test suites have deliberately avoided requiring since Milestone 5).
+
+Beyond the new suite: all 7 prior standalone suites (`judas_physics_tests`
+through `judas_ui_tests`) remain green on a clean rebuild with zero
+compiler warnings; the full M1-13 `JUDAS_TEST_SCRIPT` regression walk
+(spawn, staircase, plank crossing, jump-land-settle) was re-run and
+produces BYTE-IDENTICAL fixed-step telemetry AND identical screenshot
+output to pre-Milestone-14 runs — expected, since `TestHarness.cpp`'s own
+render path never calls `SetDynamicLights` at all (dynamic lighting is an
+interactive-loop-only concern, the same scoping decision Milestone 13
+made for its own UI overlay), but verified rather than assumed.
+
+Actual GLSL shader correctness — does the real, compiled fragment shader
+actually produce the attenuation/cone shape `LightAttenuation.cpp`
+documents as the intended formula — was additionally spot-checked via a
+standalone offscreen-rendering harness (a real, if hidden, GL context via
+`Window::Init(..., visible=false)`, exactly like `TestHarness.h` already
+uses, constructing a real `Renderer` and calling `SetDynamicLights`/
+`DrawBox`/`DrawSphere` directly, then reading the result back via the
+existing `Renderer::CaptureFrame`): confirmed a spotlight produces a
+soft-edged, non-binary illuminated pool on a lit surface with a visibly
+brighter core; confirmed a point light's brightness visibly falls off
+with distance and does not affect geometry outside its range; confirmed
+multiple simultaneous lights (ambient + directional + one spot + one
+point) combine with no visible artifacts, no black holes, no blown-out
+saturation beyond the framebuffer's own implicit clamp. This is
+evidence, not proof of "looks good" in this demo's real scene at its
+real scale — human interactive validation remains authoritative for
+that, per this milestone's own brief.
+
+### What was deliberately not built
+
+Per this milestone's brief: shadows, shadow maps, cascaded shadows, ray
+tracing, PBR, HDR, tone mapping, bloom, global illumination, ambient
+occlusion, reflection probes, image-based lighting, volumetric
+lighting/fog, lens flare, emissive materials (beyond ordinary tinted
+geometry — no separate emissive shader term exists), a day/night cycle,
+atmospheric scattering, light baking/lightmaps, clustered/Forward+/
+deferred lighting, a render graph, Vulkan, editor lighting tools,
+gameplay light queries, a battery/inventory-item torch, AI vision, or
+multiple rendering backends. **Shadows specifically: objects behind other
+objects may still receive torch/spacecraft light if they fall within the
+light's mathematical volume** — accepted and documented honestly per the
+brief's own instruction, not treated as a bug. Also not built, judged
+genuinely out of this milestone's scope: a light resource-manager/handle-
+lifetime system (lights are cheap frame-rebuilt data, not a GPU
+resource — see "Light ownership and lifetime"); more than
+`kMaxDynamicLights` (5) simultaneous lights (see "Light limits"); any
+`JUDAS_TEST_SCRIPT` scripting for the torch toggle (the input-ownership
+boundary is covered by `judas_lighting_tests`' pure-logic Section F,
+appearance/interaction by human validation, the same split Milestone 13
+established); battery drain, a torch pickup/inventory item, a hand/arm
+model, animation, or a volumetric/projected flashlight texture (M14's
+torch is a light source, not a gameplay system); and photometric
+accuracy of any kind — this engine's light "color" values are tuned,
+demo-specific numbers with intensity folded in, not calibrated real-world
+units.
+
+## Milestone 15
+
+Real-time shadows for the three lights Milestone 15's brief actually
+requires: the existing directional "sun," the player torch, and the
+spacecraft headlight. Standard shadow mapping, extending the existing
+Milestone 9/14 lit-mesh shader — no second rendering path, no render
+graph, no deferred/clustered/Forward+ architecture.
+
+### Technique: one depth texture per shadow-casting light, sampled back in the main pass
+
+Three shadow slots (`src/Light.h`: `kDirectionalShadowSlot = 0`,
+`kTorchShadowSlot = 1`, `kShipHeadlightShadowSlot = 2`,
+`kShadowMapCount = 3`), each with its own dedicated 1024x1024 depth
+texture and framebuffer object, created ONCE in `Renderer::Init` and
+reused every frame (never allocated/freed per-light or per-draw — see
+"Resource ownership" below). Each frame, BEFORE the normal color pass:
+
+```cpp
+renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadowMatrix);
+drawScene(renderer, presentationAlpha);   // the SAME lambda the color pass uses
+renderer.EndShadowPass();
+// ...same for the torch (if on) and the ship headlight (always)...
+
+renderer.BeginFrame(window.Width(), window.Height());
+renderer.SetCamera(view, projection);
+renderer.SetDynamicLights(lights);
+drawScene(renderer, presentationAlpha);   // now the REAL color pass
+renderer.EndFrame();
+```
+
+`BeginShadowPass` binds that slot's FBO, sets the viewport to the shadow
+map's own resolution, clears its depth buffer, and switches the active
+shader to a second, minimal depth-only program
+(`kShadowVertexShaderSource`/`kShadowFragmentShaderSource`) — position
+only, no normal/UV attributes read, no color output at all (the FBO has
+no color attachment: `glDrawBuffer(GL_NONE)`/`glReadBuffer(GL_NONE)` at
+creation time tell GL not to expect one). `DrawMesh` itself is
+UNCHANGED in its public signature — every existing `DrawBox`/`DrawSphere`/
+`DrawMesh` call site in `drawScene` needed zero edits — it simply checks
+`m_shadowPassActive` internally and routes to the depth-only path instead
+of the lit path while a shadow pass is active. This is why the SAME
+`drawScene` lambda `Application::Run` already had (built once, back in
+Milestone 3, extended incrementally every milestone since) can be reused
+verbatim for all four passes (three shadow passes plus the color pass) a
+frame now issues — nothing about "what geometry exists in the scene" is
+duplicated or re-expressed for shadow rendering.
+
+`BeginShadowPass` also CACHES its `lightViewProjection` argument
+(`m_shadowLightSpaceMatrix[slot]`). Every subsequent NORMAL-mode `DrawMesh`
+call this same frame (i.e. every draw in the color pass) uploads all
+three cached matrices as `uLightSpaceMatrix[3]` and binds all three depth
+textures to texture units 1/2/3 (unit 0 stays the ordinary diffuse/white-
+fallback texture — see "Coordinate space and multi-texture binding"
+below) — so the color pass needs no separate "apply this frame's shadow
+data" call; it automatically uses whatever this frame's own shadow passes
+most recently produced.
+
+### Directional-light shadows: a single recentered frustum, not cascades
+
+```cpp
+glm::mat4 ComputeDirectionalShadowMatrix(focusPosition, lightDirectionToLight, halfExtent, shadowDistance) {
+    eye = focusPosition + normalize(lightDirectionToLight) * shadowDistance;
+    view = lookAt(eye, focusPosition, ChooseShadowUpHint(lightDirectionToLight));
+    projection = ortho(-halfExtent, halfExtent, -halfExtent, halfExtent, 0.1, shadowDistance * 2);
+    return projection * view;
+}
+```
+
+`focusPosition` is the player's own PRESENTED position, recomputed fresh
+every render frame (`Application.cpp`: `ComputeDirectionalShadowMatrix(
+player.GetPresentedPosition(presentationAlpha), kLightDirection,
+kDirShadowHalfExtent, kDirShadowDistance)`, with `kDirShadowHalfExtent =
+25m` and `kDirShadowDistance = 40m`) — the shadow frustum follows the
+player around the world rather than trying to cover the entire two-planet-
+plus-plank demo at once. This is a deliberate, honestly-scoped choice:
+cascaded shadow maps (multiple frustums at different resolutions/
+distances, blended near their boundaries) are the conventional fix for
+"one frustum can't cover a whole large world at useful resolution," but
+this milestone's own brief explicitly excludes them (see "Deliberately
+NOT implemented") — a single 25m-half-extent frustum recentered on the
+player every frame is a hard practical limit (shadows near the player are
+correct; shadows far from the player, e.g. on the OTHER planet while
+standing on this one, simply aren't computed that frame, since nothing
+there is in the frustum) but is honest, simple, and entirely sufficient
+for what a player can actually see clearly at once in this demo's own
+scale. `ChooseShadowUpHint` (`src/ShadowTransforms.cpp`) picks an
+"up" reference for `glm::lookAt`'s own basis-construction requirement —
+see "Coordinate space" below for why this is NOT a world-up assumption of
+the kind this project's gravity-related laws forbid.
+
+### Spotlight shadows: one perspective frustum per light, sized from its own cone/range
+
+```cpp
+glm::mat4 ComputeSpotShadowMatrix(lightPosition, lightDirection, outerConeDegrees, range) {
+    view = lookAt(lightPosition, lightPosition + normalize(lightDirection), ChooseShadowUpHint(lightDirection));
+    fovy = clamp(outerConeDegrees * 2 + 4, 10, 170);  // degrees; +4 margin, see below
+    projection = perspective(radians(fovy), 1.0, 0.1, max(range, 1.0));
+    return projection * view;
+}
+```
+
+Built fresh every frame directly from whichever `DynamicLight` the torch/
+headlight's own `position`/`direction`/`outerConeDegrees`/`range` currently
+are (`Application::Run` finds the light(s) in this frame's own
+`BuildDynamicLights` result whose `shadowMapIndex` is set, and builds each
+one's shadow matrix from THAT light's own current values — never a
+separately-tracked "shadow-caster" concept with its own transform logic).
+This is exactly how the shadow correctly follows the player's look
+direction (the torch) or the spacecraft's translation/pitch/yaw/roll/
+inertial motion (the headlight) with zero special-casing: the shadow
+matrix has no memory of its own, it's rebuilt from the SAME presented
+transform Milestone 14 already computes for the light's ordinary lighting
+contribution. The `+4` degree FOV margin (`kSpotFovMarginDegrees`,
+`src/ShadowTransforms.cpp`) keeps the shadow frustum slightly WIDER than
+the light's own illuminated cone — a frustum exactly as wide as the cone
+would let points right at the cone's own edge fall just outside the
+shadow map's coverage, which `ComputeShadowFactor` (see below) treats as
+"no occluder data, fully lit," incorrectly un-shadowing the cone's own
+rim.
+
+### Coordinate space and multi-texture binding
+
+All shadow math happens in the SAME world space Milestone 14's lighting
+already uses (`vWorldPos`, see that milestone's own "Coordinate space"
+section) — `uLightSpaceMatrix[slot] * vec4(vWorldPos, 1.0)`, computed
+once per vertex for all three slots unconditionally (`vDirLightSpacePos`/
+`vTorchLightSpacePos`/`vShipLightSpacePos`, three FIXED varyings — see
+below for why not a dynamically-indexed one) and consumed in the fragment
+shader. No view-space vector is ever involved in a shadow computation.
+
+`ChooseShadowUpHint` (`src/ShadowTransforms.cpp`) picks world +Y as its
+default "up" reference for building a camera-style basis via
+`glm::lookAt`, falling back to world +X only when the light direction is
+itself nearly parallel to +Y (the one case where +Y would make a
+near-singular basis) — a PURE GRAPHICS UTILITY, the exact same problem
+`glm::lookAt`'s own `up` parameter always poses for ANY camera, shadow or
+otherwise. This is NOT the kind of "+Y" this project's architectural laws
+forbid: those laws are about GRAVITY/local-up semantics (a supporting
+surface's normal, a player's sense of "which way is up," a spacecraft's
+attitude) never assuming a fixed world direction. Choosing a reference
+vector to disambiguate a camera's roll around its own forward axis has no
+relationship to gravity at all — the same category of "+Y used only to
+build a perpendicular reference, not to encode a real direction" already
+established by `Application.cpp`'s own `RotationAligningUpTo` (used since
+Milestone 10 to orient static step/ramp geometry). Verified directly,
+not just asserted: `tests/ShadowTests.cpp`'s rotate-the-universe checks
+confirm that rotating an entire scenario (light position/direction plus
+the point being tested) by an arbitrary quaternion leaves the resulting
+shadow-space DEPTH and OFF-AXIS RADIUS unchanged — the two quantities
+shadow comparison and spotlight-cone coverage actually depend on (see
+that test file's own comment on why exact NDC x/y equality is NOT the
+right invariant here: `ChooseShadowUpHint`'s fixed-+Y reference means a
+rotated scenario's camera basis differs from "the original basis,
+rotated" by an extra ROLL around the light's own forward axis — a real,
+but harmless, degree of freedom shadow mapping never depends on, since it
+never produces an image a person views "the right way up").
+
+Texture units: unit 0 is the ordinary diffuse/white-fallback texture
+(unchanged since Milestone 9); units 1/2/3 are the directional/torch/ship
+shadow maps respectively, all bound simultaneously via `glActiveTexture`
+(this milestone's first use of multiple simultaneously-bound textures —
+every prior milestone only ever needed one bound texture at a time).
+`DrawMesh` restores the active unit to `GL_TEXTURE0` before returning, so
+every other texture-touching call in this engine (UI draws, texture
+creation/upload) keeps working exactly as it did before, under the same
+"unit 0 is the default" assumption they've always made.
+
+### Shadow sampling: 3x3 PCF plus a slope-scaled bias
+
+```glsl
+float ComputeShadowFactor(vec4 lightSpacePos, sampler2D shadowMap, float ndotl) {
+    vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
+    projCoords = projCoords * 0.5 + 0.5;
+    if (outside [0,1] on x/y, or projCoords.z > 1.0) return 1.0;  // no data there -> fully lit
+    bias = max(0.006 * (1.0 - ndotl), 0.0015);
+    currentDepth = projCoords.z - bias;
+    // 3x3 tap loop, one texel apart, averaging (currentDepth <= sampledDepth ? 1 : 0)
+    return average of 9 taps;
+}
+```
+
+A 3x3 percentage-closer filter (9 texel taps, `GL_NEAREST` filtering on
+the depth texture itself — see "Resource ownership" for why NOT
+`GL_LINEAR`) — the minimal sensible soft-shadow technique this milestone's
+brief explicitly allows ("soft-shadow filtering beyond a minimal sensible
+technique" is what's excluded; a basic PCF kernel IS that minimal
+technique, not beyond it). Produces a visibly soft, non-aliased shadow
+edge rather than a single-tap hard-edged one — confirmed directly in the
+offscreen-rendering spot-check (see "Automated evidence").
+
+The bias is SLOPE-SCALED (`0.006 * (1 - ndotl)`, clamped to a `0.0015`
+floor): a surface facing nearly straight at the light (`ndotl` near 1)
+needs almost no bias to avoid self-shadowing acne, while a surface at a
+grazing angle (`ndotl` near 0) needs more, since the same depth-buffer
+quantization step covers a much larger surface-space distance at a
+shallow angle — the standard, well-understood reason a FIXED bias either
+acne's on grazing surfaces or peter-pans badly on head-on ones. This is a
+constant baked into the shader, not a per-light tunable — sufficient for
+this milestone's own demo geometry (flat/curved primitives at ordinary
+scale), not claimed to be universally correct for arbitrarily
+thin/detailed future geometry.
+
+A fragment whose projected shadow coordinate falls outside `[0, 1]` on
+X/Y, or beyond the shadow frustum's own far plane on Z, is treated as
+FULLY LIT (`return 1.0`) — there is no occluder DATA there (the point is
+simply outside whichever light's bounded frustum this milestone chose),
+which is different from "verified no occluder exists," but is the
+honest, documented limitation this choice implies (see "What was
+deliberately not built" below) rather than a guess in either direction.
+
+### Which lights cast shadows
+
+The directional "sun" (always) and the two spotlights — the player torch
+(only while `torchOn`) and the spacecraft headlight (always, matching
+Milestone 14's own "the spacecraft always has its lights on"). Point/
+navigation lights (the two wingtip lights) do NOT cast shadows — per this
+milestone's own explicit brief ("Point/navigation lights do NOT require
+shadows for this milestone... Do not implement cubemap point-light
+shadows"). `DynamicLight::shadowMapIndex` (`src/Light.h`, default `-1`)
+is how `Application.cpp`'s `BuildDynamicLights` marks exactly the torch
+and headlight entries with their own slot (`kTorchShadowSlot`/
+`kShipHeadlightShadowSlot`) while leaving the two nav lights at `-1` (no
+shadow) — the fragment shader's per-dynamic-light loop only applies
+`ComputeShadowFactor` when `uDynamicLightShadowIndex[i]` is `1` or `2`.
+
+### Resource ownership and lifetime
+
+- **GPU resources** (3 depth textures, 3 FBOs, 1 depth-only shader
+  program) are owned entirely by `Renderer`, created once in `Init`,
+  destroyed once in `Shutdown` — no gameplay object owns a GL resource of
+  any kind, the same rule Milestone 9's mesh/texture handles and
+  Milestone 13's font atlas already established. Reused every frame, at a
+  fixed resolution (`kShadowMapResolution = 1024`, all three slots alike)
+  — never reallocated per-light or per-draw. `GL_NEAREST` filtering (not
+  the `GL_LINEAR` every OTHER texture in this engine uses) is deliberate:
+  this engine does its own multi-tap PCF filtering on raw depth VALUES,
+  and linearly filtering depth before a comparison would blend
+  incomparable values together, producing wrong (not just softer) results
+  — unlike ordinary color filtering, where blending is exactly what's
+  wanted.
+- **Light-space matrices** (`m_shadowLightSpaceMatrix[3]`) are Renderer-
+  owned CPU-side state, cached by `BeginShadowPass` and consumed by every
+  subsequent normal-mode `DrawMesh` call that same frame — see "Technique"
+  above.
+- **Which lights cast shadows this frame** is decided entirely by
+  `Application.cpp`'s `BuildDynamicLights` (via `shadowMapIndex`) — the
+  SAME "composition root decides, Renderer just consumes plain data" split
+  Milestone 14 already established for dynamic lights generally; `Renderer`
+  never reaches into `PlayerController`/`FlyingPrimitiveControl` to decide
+  this for itself.
+- No shadow resource is ever created or destroyed outside `Renderer::Init`/
+  `Shutdown` — there is no per-frame allocation, no generalized "shadow
+  caster registry," and (per this milestone's own explicit scope) no
+  mechanism for MORE than these three fixed slots; a future milestone
+  needing a fourth shadow-casting light would add a fourth named slot
+  (`kMaxDynamicLights`/`kShadowMapCount`-style constant increase), not a
+  dynamically-sized shadow-caster list.
+
+### Automated evidence
+
+`judas_shadow_tests` (new standalone executable, `tests/ShadowTests.cpp`)
+— pure CPU matrix math, no window, no GL context — verifies: both
+`ComputeDirectionalShadowMatrix` and `ComputeSpotShadowMatrix` produce
+finite matrices for typical configurations, and that a point exactly at
+the frustum's own focus/axis projects to NDC (0, 0) as expected (Section
+A); finite matrices at deliberately extreme configurations — a light
+direction exactly parallel to world +Y or -Y (`ChooseShadowUpHint`'s own
+fallback branch), a 1-degree and an 89-degree spotlight cone, and a
+near-zero range/shadow-distance (Section D); rotate-the-whole-scenario
+invariance for both the directional and spotlight matrices, using the
+same `kArbitraryRotation` convention every other rotate-the-universe
+suite in this project already uses, checking the roll-independent
+depth/off-axis-radius invariant explained above rather than exact NDC
+equality (Section C — this is the automated evidence that spotlight
+shadows genuinely follow an arbitrarily pitched/yawed/rolled light, per
+this milestone's own explicit requirement); and that moving a spotlight
+toward a fixed world point changes that point's projected shadow-space
+depth while keeping it centered on-axis, confirming the transform
+genuinely tracks the light's CURRENT pose rather than a cached one
+(Section B).
+
+Beyond the new suite: all 8 prior standalone suites remain green on a
+clean rebuild with zero compiler warnings; the full M1-14
+`JUDAS_TEST_SCRIPT` regression walk produces byte-identical fixed-step
+telemetry to pre-Milestone-15 runs (shadows never touch physics/gameplay
+state) and a visually unchanged rendered scene — `TestHarness.cpp`'s own
+render path never calls `BeginShadowPass` at all (shadows remain an
+interactive-loop-only concern, the same scoping Milestone 13/14 already
+established for UI/dynamic lighting), and `Renderer::Init` seeds every
+shadow slot's light-space matrix with a deliberately degenerate "always
+out of shadow-map range" placeholder matrix specifically so this default
+(never-touched-by-a-real-BeginShadowPass) state can never accidentally
+shadow anything near the world origin before a real shadow pass has ever
+run.
+
+Actual GLSL shadow-mapping correctness — does the real, compiled shader
+produce a correctly-shaped, correctly-positioned, soft-edged shadow, not
+just a mathematically well-formed transform — was additionally spot-
+checked via the same standalone offscreen-rendering harness pattern
+Milestone 13/14 already established (a real, if hidden, GL context via
+`Window::Init(..., visible=false)`, a real `Renderer`, calling
+`BeginShadowPass`/`drawScene`/`EndShadowPass` for a directional and a
+spot light, then the ordinary color pass, then `CaptureFrame`): confirmed
+a box occluder casts a crisp, correctly-shaped, soft-edged shadow onto
+the ground plane beneath it; confirmed a sphere both casts and receives
+shadow correctly (a curved receiving surface, not just a flat one);
+confirmed the spotlight's own illuminated cone is visible as a soft pool
+of light with the shadow correctly darkening the occluded region within
+it; confirmed no visible acne on the unoccluded ground plane. This is
+evidence, not proof that this demo's REAL scene at its real scale reads
+correctly to a human — interactive validation remains authoritative for
+that, per this milestone's own brief.
+
+### Post-validation bugfix: the torch appeared to do nothing
+
+Human validation reported "the player's torch doesn't work" — turning it
+on produced no visible illumination at all. Root cause: the player torch
+is carried at the player's own presented EYE position
+(`kEyeHeightAboveCenter = 0.7m` above the capsule's center — see
+`PlayerController::GetTorchTransform`), which sits INSIDE the player's own
+rendered body box (`GetRenderHalfExtents`'s Y half-extent is `0.9m` —
+`kCapsuleHalfHeight + kCapsuleRadius` — so the eye point at `0.7m` is well
+within the box's own vertical extent, not above it). The `drawScene`
+lambda always draws the player's own box (so the third-person camera can
+see it), and — before this fix — every shadow pass, including the torch's
+OWN shadow pass, rendered the exact same scene via that same lambda. With
+an occluder (the player's own body) sitting essentially AT the light's
+own position, it self-shadowed almost the entire cone, so the torch's
+light contribution was computed correctly but its `ComputeShadowFactor`
+result was ~0 (fully shadowed) for nearly every fragment it should have
+lit — a real, reproducible bug, not a perception issue: confirmed directly
+with a minimal repro (a player-sized box at the light's own position, a
+wall 5m ahead) that rendered the wall completely dark with the player box
+included in the torch's shadow pass, and correctly lit (a soft-edged
+illuminated pool) with it excluded — see the two captured screenshots
+from that repro.
+
+**Fix**: `drawScene` gained a third parameter, `includePlayerModel` (a
+`bool`, defaulting to `true` so `RunTestHarness`'s own
+`std::function<void(Renderer&, float)>` — which never runs a shadow pass
+at all — keeps working with zero changes, invoking the lambda through its
+default exactly as it always has). Every call site was made explicit:
+`true` for the directional shadow pass, the color pass, and the
+spacecraft headlight's own shadow pass (a person genuinely CAN cast a
+shadow from the sun, or block their own spacecraft's headlight by
+standing in front of it — those self-relationships are correct and
+intentional); `false` — and ONLY `false` — for the torch's own shadow
+pass specifically, since the torch's light source sits essentially inside
+the very geometry that would otherwise self-shadow it. This is not a
+general "exclude the player from shadows" rule — the player still
+correctly casts a directional shadow and correctly blocks the
+spacecraft's headlight; it is a narrow, specifically-diagnosed exclusion
+for exactly the one light/geometry pair where self-occlusion at
+essentially zero distance was never physically meaningful in the first
+place (no real flashlight is meaningfully "shadowed" by the hand holding
+it, at the lens itself). Verified: the same offscreen repro now shows the
+wall correctly lit; the full standalone-suite regression (all 9 suites)
+and the `JUDAS_TEST_SCRIPT` M1-14 regression walk (byte-identical
+telemetry) both remain green after the fix, confirming it touches only
+which geometry is submitted to one specific shadow pass, nothing about
+physics, gameplay, or any other rendering path.
+
+### What was deliberately not built
+
+Per this milestone's brief: cascaded shadow maps, point-light/cubemap
+shadows, ray-traced shadows, soft-shadow filtering beyond the minimal 3x3
+PCF actually implemented, contact shadows, screen-space shadows, baked
+shadows/lightmaps, PBR, HDR, a render graph, deferred rendering,
+Forward+, Vulkan, or any atmosphere/day-night system. **Honest,
+documented limitations, not oversights**: the directional shadow frustum
+is a single frustum recentered on the player, not cascades — shadows far
+from the player (e.g. on the far planet while standing on the near one)
+are simply not computed that render frame; a fragment outside a light's
+own bounded shadow frustum is treated as fully lit, which is "no data,"
+not "verified unoccluded" — an occluder just outside a spotlight's own
+(cone-sized-plus-margin) frustum could in principle fail to shadow
+something at the very edge of that frustum; and the bias/PCF constants
+are tuned for this demo's own geometry scale, not derived to be
+universally correct for arbitrarily thin or highly detailed future
+geometry. Also not built, judged genuinely out of this milestone's
+scope: a generalized shadow-caster registry or scheduler supporting more
+than the three fixed named slots (`kShadowMapCount = 3`) this milestone's
+brief scoped exactly to; per-light configurable shadow-map resolution
+(all three slots share one fixed 1024x1024 size); and any
+`JUDAS_TEST_SCRIPT` scripting or GL-context-requiring headless test for
+actual shadow-map pixel correctness — covered instead by the mirrored/
+pure-math `judas_shadow_tests` suite plus the one-time offscreen-
+rendering spot-check and human visual validation, the same evidence
+split Milestone 13/14 already established for GL-dependent correctness
+claims.
+
+## Milestone 16
+
+The first reusable environmental-interaction system: a door and one
+non-door interactable, sharing a single generic interface and selection
+path — not a `DoorManager`, not a gameplay-ability framework.
+
+### The `Interactable` interface
+
+```cpp
+class Interactable {
+public:
+    virtual glm::vec3 GetInteractionPoint() const = 0;
+    virtual float GetInteractionRadius() const = 0;
+    virtual std::string GetPromptText() const = 0;
+    virtual bool CanInteract() const = 0;
+    virtual void Interact() = 0;
+};
+```
+
+The ENTIRE Judas-owned interaction concept (`src/Interactable.h`).
+`PlayerController` never appears in this milestone's diff at all — per
+the brief's own "do not hard-code door logic into PlayerController"
+requirement, player/controller code doesn't need to change because it
+never needed to know about interaction in the first place; `Application.cpp`
+(the composition root) is the only place that owns a list of concrete
+`Interactable*`s (`{&door, &lightSwitch}`) and the only place that knows
+what a `Door` or `LightSwitch` actually is. No event bus, no reflection,
+no scripting language, no entity-component system, no prefab system — an
+`Interactable` is just an ordinary virtual interface, the smallest thing
+that could satisfy "player discovers X -> HUD gets a prompt -> input ->
+X acts."
+
+### Selection: a pure, testable free function
+
+```cpp
+Interactable* SelectInteractable(const glm::vec3& playerPosition, const glm::vec3& lookDirection,
+                                  const std::vector<Interactable*>& candidates);
+```
+
+(`src/InteractionSystem.h/.cpp`.) For each candidate: reject if farther
+than that candidate's OWN `GetInteractionRadius()`; reject if the
+direction toward it is more than ~60 degrees off the player's look
+direction (`kFacingCosineThreshold = 0.5`, i.e. `cos(60°)`) — a simple,
+"physically/spatially meaningful" detection (per the brief's own
+instruction) without needing a real raycast/line-of-sight query, which
+this engine has never needed for anything else either. Among everything
+that qualifies, the CLOSEST wins. Returns `nullptr` when nothing
+qualifies — this IS the entire "stop offering interaction when it is no
+longer valid" mechanism: there is no separate "currently targeting X"
+state to explicitly clear, `Application::Run` just gets `nullptr` back
+the next time selection runs and the HUD prompt goes away on its own.
+Called once per RENDER FRAME (not once per fixed step) from the player's
+current AUTHORITATIVE position/look direction — a gameplay decision, not
+a rendering one, computed unconditionally (harmless, read-only) even
+while the pause menu is open, so the HUD's last valid prompt stays
+visible (though inert) behind a dimmed, paused world rather than
+flickering away and back.
+
+### The door: a kinematically-driven static body, not a new joint system
+
+`src/Door.h/.cpp`. Real collision in both states, real visible motion
+between them — achieved with ZERO new physics capability. The door is an
+ordinary STATIC `PhysicsWorld` body (`CreateStaticBox`); every fixed step,
+`Door::FixedUpdate` computes its current swing angle and calls
+`PhysicsWorld::ResetBody(handle, position, orientation)` to write that
+pose directly. This works cleanly because of a fact already true about
+this engine's physics broadphase (see `docs/ARCHITECTURE.md`, "Physics
+ownership"): `PhysicsWorld`'s collision queries are brute-force and read
+every body's `position`/`orientation` LIVE, with no cached/baked
+broadphase structure to go stale when a "static" body's transform
+changes — so `ResetBody` (which already existed, added for `R`-triggered
+resets) is a complete, correct, zero-new-code kinematic pose driver. No
+joint/constraint system was built, because the door provided no evidence
+one was actually required — the brief's own explicit instruction.
+
+Hinge rotation (`src/HingeTransform.h/.cpp`, shared by both the door and
+the light switch's own lever):
+
+```cpp
+void ComputeHingeTransform(baseCenter, baseOrientation, pivotWorld, hingeAxisWorld, angleRadians,
+                            outPosition, outOrientation) {
+    swing = angleAxis(angleRadians, hingeAxisWorld);
+    outOrientation = swing * baseOrientation;
+    outPosition = pivotWorld + swing * (baseCenter - pivotWorld);
+}
+```
+
+The standard "rotate a point around an arbitrary pivot" formula. Every
+input here is WORLD-space, but derived from the door's own AUTHORED
+orientation, never a fixed world axis: `hingeAxisWorld =
+normalize(baseOrientation * localHingeAxis)`, computed once at
+construction from the door's own closed-pose orientation (itself built
+via the same `RotationAligningUpTo` convention Milestone 10's staircase/
+ramp already established, aligning the door's local "up" to whatever the
+local radial direction is at its own authored bearing on the curved
+planet). `localHingeAxis` defaults to the door's own local `(0,1,0)` —
+its own "up," not world +Y, satisfying the brief's "do not assume world Y
+is the hinge/up axis" literally: at the door's own bearing, local up is
+whatever the planet's own radial direction is there, which is NOT world
++Y except by coincidence at the exact pole. Verified directly, not just
+asserted: `tests/InteractableTests.cpp`'s Section A rotates an entire
+hinge scenario (base pose, pivot, axis) by an arbitrary quaternion and
+confirms the swung result rotates identically — the standard rotate-the-
+universe technique this project uses everywhere a "no world axis"
+claim needs checking.
+
+Presentation: the door interpolates its own swing ANGLE (a single float,
+`glm::mix`, no `slerp` needed) between the previous and current fixed
+step — the exact same `docs/ARCHITECTURE.md`, "Simulation/presentation
+boundary" law every other moving object in this engine already obeys,
+just with a scalar interpolation target instead of a full position/
+orientation pair, since the door's entire authoritative state beyond its
+fixed closed-pose IS that one angle. `Door::Draw` derives a full
+position/orientation from the interpolated angle and calls
+`Renderer::DrawBox` — called from the SAME shared `drawScene` lambda
+every shadow pass and the color pass already use (see "Milestone 15"),
+so the door renders, collides, and casts/receives shadows coherently at
+its current pose with zero special-case code for any of the three.
+
+### The second interactable: a lever, no physics body at all
+
+`src/LightSwitch.h/.cpp`. Deliberately as different from the door as
+possible while still using the exact same `Interactable` path: no
+`PhysicsWorld` body whatsoever (the same "models are visual, not
+automatically physical" precedent Milestone 9's beacon already
+established), and its action is "toggle a `DynamicLight`," not "block/
+unblock a doorway." Reuses `src/HingeTransform.h` for its own small
+visible lever animation (a decorative touch, not a requirement — the
+brief's own "simple movable/rotating environmental object" example),
+proving that shared code path is genuinely about hinge GEOMETRY, not
+door-specific logic.
+
+`Application.cpp`'s `BuildDynamicLights` (Milestone 14) reads
+`lightSwitch.IsLampOn()`/`GetLampPosition()`/`GetLampColor()`/
+`GetLampRange()` and adds one more ordinary `LightKind::Point` light to
+that frame's list only while the lamp is on — no shadow map (point
+lights never cast shadows, unchanged since Milestone 15), no new
+`Renderer` capability of any kind. `LightSwitch` itself never touches
+`Light.h`/`Renderer` GPU state — it only exposes plain data, the exact
+ownership split every M14 light source already uses.
+
+### HUD prompt (Milestone 13 integration)
+
+`HUDViewData` gained one field: `std::string interactPrompt` (empty =
+nothing to show). `HUD.cpp` never includes `Interactable.h`, `Door.h`, or
+`LightSwitch.h` — `Application.cpp` calls
+`interactTarget ? interactTarget->GetPromptText() : std::string()` and
+hands the HUD a plain string, exactly the same "gameplay hands Judas's
+rendering layer plain data, never a live reference to itself" shape
+every other `HUDViewData` field already uses. Drawn as a small panel
+centered near the bottom of the screen (the conventional "prompt near
+the crosshair" placement) — a separate layout block from the existing
+top-left telemetry panel, deliberately not sharing sizing logic with it.
+
+### Input ownership
+
+`G` is the interaction key. `E` was the first choice — the conventional
+"interact" binding in most games — but a check against every existing
+key binding (not just a mental list) found it already bound to
+`Action::MoveUp`, the spacecraft's own "ascend" control (Milestone 8);
+`G` was used instead specifically to avoid a real, if narrow, conflict
+(a player piloting the spacecraft near an interactable while pressing
+`E` to ascend would also fire an interact request) rather than special-
+casing interaction to ignore input while piloting. Follows the EXACT
+`T` (Milestone 14)/torch pattern, including the lesson learned there:
+`Window::ConsumeInteractRequest()` is drained EVERY render frame,
+unconditionally — even while the pause menu owns input — so a press
+during pause can never sit as a stale SDL-level flag and fire the instant
+the menu closes. Whether the drained request is actually ACTED ON
+(`interactTarget->Interact()`) is gated behind `!pauseMenu.IsOpen()`, like
+every other piece of gameplay input. This means menus cannot trigger
+world interactions, per the brief's own explicit requirement, using the
+SAME boundary Milestone 13/14/15 already established rather than a new
+mechanism.
+
+### Physics/presentation coherence
+
+The door's collision, its rendered pose, and its shadow-casting pose are
+ALWAYS the same pose — there is exactly one source of truth
+(`Door::FixedUpdate`'s authoritative angle, written to `PhysicsWorld` via
+`ResetBody` and read back — presentation-interpolated — by `Door::Draw`),
+never three separately-maintained values that could drift apart. Gravity,
+support, spacecraft behavior, UI/input ownership, lighting, and shadows
+are all unmodified by this milestone — the door and switch are ordinary
+consumers of each, not special cases requiring changes to any of them.
+
+### Automated evidence
+
+`judas_interactable_tests` (new standalone executable,
+`tests/InteractableTests.cpp`) — a real `PhysicsWorld` (no window/GL
+needed, unchanged since Milestone 5) for the door's own physics
+coherence checks; pure CPU math for everything else. Verifies:
+`ComputeHingeTransform` at zero angle (reproduces the closed pose
+exactly) and at a hand-computed 90-degree swing, plus rotate-the-universe
+invariance (Section A); `SelectInteractable`'s range/facing logic, that
+the CLOSEST of multiple qualifying candidates wins regardless of list
+order, and that an empty or all-out-of-range candidate list safely
+selects nothing (Section B); the door's full open/close animation
+reaching EXACTLY its authored open angle after the expected number of
+fixed steps (not overshooting), its prompt text changing with state, and
+— critically — that its live `PhysicsWorld` collision body's transform
+matches exactly what `Door` itself computes as its current pose at a
+given angle, the actual mechanism that keeps a moving door's collision
+correct (Section D/E); that the door's own interaction point moves as it
+swings rather than staying fixed to its closed pose (Section D); the
+light switch toggling its lamp and its own lever angle through the exact
+same generic `Interactable`/`SelectInteractable` path the door test
+above uses, not a parallel mechanism (Section F); and the interact key's
+input-ownership gating, mirroring `judas_lighting_tests`' own Section F
+pattern exactly (Section G).
+
+Beyond the new suite: all 9 prior standalone suites remain green on a
+clean rebuild with zero compiler warnings; the full M1-15
+`JUDAS_TEST_SCRIPT` regression walk produces byte-identical fixed-step
+telemetry to pre-Milestone-16 runs (the door/switch are constructed
+before the test-harness/interactive branch point and are drawn by the
+shared `drawScene` lambda either way, but `TestHarness.cpp`'s own render
+path never calls `Door::FixedUpdate`/`LightSwitch::FixedUpdate` or reads
+any interaction input, so they simply sit in their closed/off pose as
+inert, correctly-collidable geometry during a harness run — a visual
+addition to harness screenshots, not a behavioral or numeric regression).
+Actual on-screen appearance and interaction (does the prompt read
+clearly, does the door visibly swing, does walking into a closed door
+actually block movement, does the second interactable's effect read as
+obviously connected to it) was additionally spot-checked via the same
+offscreen-rendering harness pattern Milestone 13/14/15 already
+established — confirmed the door renders and casts a correctly-shaped
+shadow at a mid-swing angle, the lever visibly rotates to its toggled
+position, and the lamp's point light renders and illuminates the ground
+around it exactly like any other Milestone 14 point light. Human
+interactive validation remains authoritative for the full approach ->
+prompt -> interact -> door-blocks-when-closed sequence, per this
+milestone's own brief.
+
+### What was deliberately not built
+
+Per this milestone's brief: keys/locks, inventory requirements, automatic
+doors, quests, dialogue, scripted sequences, an animation system, a
+generic joint/constraint framework (the door needed none — see "The
+door" above), save/load persistence, interaction trees, networking, or
+editor tooling. Also not built, judged genuinely out of scope: a generic
+event bus, reflection, a scripting language, an entity-component system,
+or a prefab system (per the brief's own explicit exclusion list) — the
+`Interactable` interface plus two ordinary C++ classes owned by
+`Application.cpp` was judged sufficient for "one door, one non-door
+interactable," and nothing here evidences a need for more; and a "which
+interactable is highlighted" visual outline/highlight effect — the HUD
+prompt alone (per the brief's own required validation checklist) is what
+signals a valid target, no additional render-pass or outline shader was
+added for this milestone.
+
+## Milestone 17
+
+### Player camera modes
+
+`V` toggles an application-owned `PlayerViewMode` between third person and
+first person. `Window` drains the edge-triggered request every frame; the
+application applies it only when the pause menu does not own input. A press
+during pause therefore cannot toggle the view on resume.
+
+Both player camera modes use the same presented player position and
+orientation, yaw, pitch, and player-local +Y basis. First person places the
+camera at `presentedPosition + presentedOrientation * (0, eyeHeight, 0)`.
+Third person preserves the existing eye-relative follow distance and local-up
+height offset. Mouse look remains render-frame responsive. The camera does
+not add another orientation or alter player simulation state. The camera eye
+and look direction share the transform used by the player torch. Interaction
+selection continues to use `PlayerController`'s look direction and is
+independent of view mode.
+
+The player's box is suppressed in first person in both color and shadow
+passes. Its collision shape, dimensions, and simulation remain active. While
+piloting, the existing spacecraft-anchored camera and visible attached player
+are preserved regardless of the selected player view; releasing control
+resumes the selected player camera mode.
+
+`judas_player_view_tests` covers the eye transform, arbitrary orientation,
+rotate-the-universe equivalence, torch/camera agreement, preserved
+third-person offsets, view-mode transitions, and paused-input gating. Camera
+feel and traversal remain subject to interactive human validation.
+
+## Milestone 18 — object manipulation
+
+`ObjectManipulation` is a small Judas-owned boundary separate from both
+`PlayerController` and `PhysicsWorld`. The composition root supplies an
+explicit whitelist containing only the six ordinary dynamic demo objects;
+the spacecraft and every static body are excluded. `PickupInteractable`
+adapts an eligible body to the existing M16 targeting interface, so normal
+range/facing selection and `G` input are reused. Interaction selection also
+skips candidates whose `CanInteract()` is false.
+
+While held, the body remains in `PhysicsWorld` as a dynamic body. Each fixed
+step adds a capped spring-damper force toward a target computed from the
+player's local-up eye offset and current look direction. Gravity, collision,
+and presentation interpolation continue through their existing paths; no
+transform is teleported and no collision is disabled. `G` drops by clearing
+the held reference and preserving the body's current linear/angular motion.
+`H` throws by adding a mass-scaled linear impulse along the player's full
+current look vector. The prompt shows drop/throw controls while carrying.
+
+Reset clears held state before restoring spawn poses. Taking spacecraft
+control drops any held object, and M18 manipulation input is ignored while
+piloting. The spacecraft camera and controls are otherwise unchanged. The
+carry target uses the player's authoritative fixed-step pose; the carried
+body follows through forces and is rendered through its ordinary
+interpolated pose. This is intentionally a bounded carry spring, not a
+general constraint/attachment system. `G` and `H` requests are drained
+while menus own input and only acted on during gameplay.
+
+`judas_object_manipulation_tests` checks the eligibility whitelist, dynamic
+body requirement, shared range/facing target selection, orientation-aware
+carry target and rotate-the-universe equivalence, force-driven body motion,
+drop velocity preservation, and mass-scaled throw impulse direction. M18 was
+human-validated before acceptance; M19's interaction checks include carried
+object traversal and spacecraft transitions.
+
+## Milestone 19 — stable curved-surface locomotion
+
+The first measured issue was authoritative support-clearance variation. On an
+isolated radius-20 sphere it cycled from near zero to about 20 mm while
+walking; grounded state did not chatter. A flat control also varied, over a
+smaller measured range (0.8–14.6 mm). The grounded support-probe correction
+was gated off while horizontal input was held, leaving the move-and-slide
+path to restore the margin only after contact. `PlayerController::FixedUpdate`
+now applies the existing probe-based correction each grounded step along
+sampled local up. The step-down result reports the margin it already applied,
+so the settle does not add it twice. This stabilized the measured clearance,
+but operator validation showed that it did not fix the visible camera/world
+wobble.
+
+The actual view-frame defect was in `RotationBetweenUnitVectors`: its
+`dot > 0.9999` shortcut treated changes under about 0.81 degrees as zero.
+At normal walking speed on the demo sphere, gravity changes local up by
+roughly 0.19 degrees per fixed step. The frame therefore ignored several
+successive changes, then rotated by roughly 0.9 degrees at once. Since the
+view up and orientation come from that frame, the entire camera/world image
+jerked together. The helper now derives the small rotation from cross-product
+magnitude and dot product, retaining a float-precision zero guard and the
+existing opposite-vector case. The isolated walk's maximum frame rotation is
+now about 0.183 degrees per step rather than 0.918 degrees, and clearance
+stays within 17.275–17.387 mm. Automated tests passed and the operator
+validated the visible curved-surface smoothness and required gameplay cases.
+
+`judas_player_curved_locomotion_tests` exercises long sphere traversal with
+two direction changes, a flat control, a fully rotated sphere scenario with
+matching initial look basis, stable clearance, grounded continuity, local-up
+tracking, per-step frame changes, post-traversal stillness, jump/landing,
+first- and third-person camera-position continuity, and presented torch
+placement. The old angular cutoff would fail its frame-rotation and repeated-
+zero-step checks. Sphere/plank transitions, M10 steps/slopes, carried-object
+traversal, spacecraft behavior, and actual visual smoothness were included in
+the operator's acceptance validation.
+
+## Milestone 8
+
+The milestone's own scope statement, verbatim in spirit: "walk onto it →
+press `F` → take control → fly it around → press `F` again → return
+control to the player. That is the milestone." Deliberately small — no
+vehicle framework, no reference frames, no possession system for multiple
+objects, one box that flies.
+
+### The flying primitive
+
+One more ordinary `DynamicBody` (`src/Application.cpp`'s
+`kFlyingPrimitive*` constants), appended to the same `dynamicBodies` list
+every other test object lives in — it gets identical gravity sampling
+(`PrepareDynamicBodiesForStep`), identical collision resolution
+(`PhysicsWorld::Step`), identical presentation interpolation, and identical
+`R`-triggered reset for free, with zero new code for any of that. What
+makes it "the flying primitive" is entirely external to `DynamicBody`
+itself: a separate `FlyingPrimitiveControl` (`src/FlyingPrimitiveControl.h`)
+holding just its `BodyHandle` and a `controlled` bool.
+
+**Placement was evidence-driven, not aesthetic.** The primitive rests on
+the plank, near its midpoint, rather than on either planet's own curved
+surface, for two reasons found while building this milestone:
+
+1. Box-vs-sphere contact (`src/Contacts.cpp`'s `SphereVsBox`) only ever
+   produces a single contact point — the same "a box needs more than one
+   contact point to rest flat without rocking" limitation already
+   documented for box-vs-box before `BoxVsBoxManifold` existed (see law
+   #15's bug note). A flat box this size resting on a curved sphere via
+   one contact point would be genuinely unstable. The plank is a static
+   box, so resting on it gets the real multi-point `BoxVsBoxManifold` and
+   settles flat, the same mechanism every dynamic cube in
+   `kDynamicObjectSpawns` already relies on.
+2. Placing it too close to either planet's own end of the plank let the
+   primitive's far corner geometrically overlap that planet's own
+   collision sphere as well as the plank underneath it, producing an
+   extra, unwanted contact that pushed the primitive noticeably higher
+   than the plank's own surface — reproduced directly and confirmed by
+   isolating the plank contact alone (settles at exactly plank-top +
+   half-height) versus the full scene (settled almost 0.35m higher). The
+   plank's own midpoint is far enough from both planets' spheres that
+   neither ever engages.
+
+### Control ownership
+
+`Window::ConsumeControlToggleRequest()` (`F`, edge-triggered, same shape as
+`ConsumeResetRequest`/`ConsumeJumpRequest`) is checked once per fixed step
+in both `Application::Run` and `TestHarness.cpp`, using the identical
+gating rule in both places:
+
+```cpp
+if (flyingPrimitiveControl.controlled) {
+    flyingPrimitiveControl.controlled = false;          // always allowed
+} else if (player.IsGrounded() &&
+           player.GetSupportBodyHandle().id == flyingPrimitiveControl.handle.id) {
+    flyingPrimitiveControl.controlled = true;            // only from standing on it
+}
+```
+
+`PlayerController::GetSupportBodyHandle()` (new this milestone) exposes
+the ground probe's `hitBody` — the same value `SweepPlayerShape` has
+always returned, just now readable by a caller outside `PlayerController`,
+following the identical "meaningful only when grounded" convention
+`ShapeSweepHit::hitBody` already uses. `PlayerController` still has no
+idea what a "flying primitive" is; it only ever answers "what body, if
+any, am I standing on."
+
+**While controlled**, `ApplyFlyingPrimitiveControl`
+(`src/FlyingPrimitiveControl.cpp`) runs once per fixed step, positioned
+deliberately AFTER `PrepareDynamicBodiesForStep` (so the primitive has
+already received ordinary gravity, exactly like every other dynamic body)
+and BEFORE `PhysicsWorld::Step` (so the commanded velocity below is what
+actually gets integrated and checked for collisions that step):
+
+```cpp
+physics.SetLinearVelocity(control.handle, desiredDirection * kFlightSpeed);
+physics.SetAngularVelocity(control.handle, up * yawRate);
+```
+
+Direct velocity commands, not force/thrust accumulation — the same
+"Judas commands the value outright, physics obeys" idiom
+`PlayerController`'s own grounded WASD control has always used (see
+"Locomotion"). `PhysicsWorld::GetAngularVelocity`/`SetAngularVelocity`
+(new this milestone, mirroring the existing linear-velocity pair) are the
+only additions to the physics engine's own public surface — ordinary
+rigid-body angular velocity access, not a vehicle-specific mechanism.
+
+**Controls** (see root `README.md` for the player-facing table): W/S
+translate along the primitive's own current forward axis; Q/E translate
+along local "up" — computed the same way every other consumer in this
+engine computes its own local up, `-normalize(gravity.Sample(position))`
+at the primitive's own position (see "Orientation"), with the same
+degenerate-safe fallback to the primitive's own body-space `+Y` in
+unclaimed (zero-gravity) space that `PlayerController::ComputeLocalUp`
+already uses — never a hard-coded world axis, consistent with every other
+"up" in this engine. A/D yaw the primitive about that same local-up axis
+(reusing the `StrafeLeft`/`StrafeRight` actions' physical keys for a
+different meaning while the primitive, not the player, has control).
+Mouse look is unaffected by any of this — see "Camera" below.
+
+When control is released, nothing extra happens: `ApplyFlyingPrimitiveControl`
+simply stops running, so the primitive keeps whatever velocity it last had
+and ordinary gravity (`PrepareDynamicBodiesForStep`) and collision resolve
+it exactly like any other dynamic body from that point on — no special
+"letting go" logic exists because none was needed.
+
+### The moving-support bug, and why velocity-carry alone wasn't enough
+
+This is the "most important technical test" the milestone brief called
+out, and it genuinely found a real, non-obvious bug in existing code, not
+just new code written for this milestone.
+
+**First attempt**: while grounded, add the supporting body's own
+point-velocity (`v + ω × r`, ordinary rigid-body kinematics — a
+translating support contributes `v`, a rotating one adds the rotational
+component at the player's own position) into `m_velocity`, exactly the
+same way gravity or WASD contribute to it, and let the existing
+move-and-slide loop's displacement (`remaining = m_velocity * fixedDeltaTime`)
+carry the player along with it.
+
+This broke in two distinct ways, found by scripting the primitive's own
+ascent and watching the player's logged position instead of assuming the
+math was right:
+
+1. **The player fell off partway through the very first ascent.** Traced
+   to `wasAscending` — the check that stops a jump's own probe from
+   immediately re-grounding the player (`docs/ARCHITECTURE.md`'s existing
+   "Locomotion" section) — which compares `m_velocity` against `localUp`
+   in absolute world terms. Once a moving support's velocity is folded
+   into `m_velocity`, standing on a support that's accelerating upward
+   makes the player look exactly like it just jumped, permanently failing
+   `wasAscending` and disqualifying grounding the instant the support
+   moved — even though the player never launched itself anywhere. Fixed
+   by tracking `m_lastGroundVelocity` (the carried support velocity as of
+   the *previous* grounded step) and comparing `m_velocity -
+   m_lastGroundVelocity` instead — ascension is now judged relative to
+   whatever the player was standing on, not in absolute world terms. A
+   real jump still behaves exactly as it always has (support velocity is
+   zero for static ground, so the subtraction is a no-op).
+2. **Even with that fixed, the player visibly lagged the primitive and
+   eventually lost contact anyway.** The move-and-slide loop's
+   skin-margin clamping (`kSkinMargin`, 0.02m per step — see "Locomotion")
+   is tuned for gravity's own small per-step glue nudge on static ground,
+   not a support translating several centimeters a step under direct
+   velocity control. Relying on repeated small margin corrections to
+   reconstruct a fast support's actual per-step displacement is exactly
+   the kind of discretization mismatch that produces drift, and it did.
+
+**The fix that actually held up**: carry the player by the support's own
+per-step displacement directly, as an exact position offset, rather than
+relying on the sweep to reconstruct it from velocity:
+
+```cpp
+m_position += groundVelocity * fixedDeltaTime;                    // exact carry, once
+...
+glm::vec3 remaining = (m_velocity - groundVelocity) * fixedDeltaTime;  // player's OWN motion only
+```
+
+`groundVelocity` is added into `m_velocity` for state/continuity purposes
+(so `GetVelocity()` and next step's airborne integration correctly reflect
+momentum imparted by the support — "preserve physically appropriate
+inherited motion" when the player leaves it), but it is explicitly
+subtracted back out of what the move-and-slide sweep resolves, so the
+support's own translation is never double-counted. On ordinary static
+ground or while airborne, `groundVelocity` is exactly zero, so this is a
+no-op — every milestone before this one is unaffected, verified by
+rerunning a full spawn-to-Planet-B-and-back traversal script afterward
+(see "Automated testing").
+
+**What this actually demonstrates, verified directly** (see "Automated
+testing" for the exact harness scripts): the player rides the primitive
+coherently through a full ascent, a hover, a yaw turn (correctly swinging
+the player around at its own offset from the primitive's center — the `ω
+× r` term earning its keep, not just the translational `v` term), and a
+release-mid-descent, landing back on the plank exactly where the
+primitive itself settles — never snapped, never left behind, never
+teleported. `wasAscending`'s fix means an ordinary jump off a *stationary*
+primitive still works exactly as it always has (verified with a plain
+jump-and-land test independent of any control-toggle activity).
+
+### Camera
+
+`PlayerController::GetViewMatrix` gained a second overload,
+`GetViewMatrix(const glm::vec3& anchorPosition, const glm::quat&
+anchorOrientation)`, built from the exact same shared helper
+(`BuildViewMatrix`) the original `GetViewMatrix(float presentationAlpha)`
+now also calls — same fixed offset/eye-height/look composition, same
+player-controlled `m_yaw`/`m_pitch` free look, just anchored to an
+external pose instead of the player's own presented one. While
+`flyingPrimitiveControl.controlled` is true, `Application::Run` passes the
+primitive's own presented position/orientation as that anchor instead of
+the player's; mouse look keeps working identically either way, since it
+was never anchor-specific to begin with. No second camera system, no
+cinematic smoothing — "keep the existing camera architecture intact as
+practical," satisfied by extracting one shared helper rather than writing
+a new one.
+
+### What was deliberately not built
+
+No thrust/fuel/engine simulation (`SetLinearVelocity`/`SetAngularVelocity`
+are commanded directly, kinematic-style); no possession framework for
+multiple controllable objects (`FlyingPrimitiveControl` is one handle and
+one bool, not a registry); no vehicle-physics abstraction; no new gravity
+semantics (the primitive samples the exact same `GravityContextMap` every
+other body does); no stair-climbing or auto-step mechanism (boarding the
+primitive from the plank needs a short hop, the same as any other
+milestone's low platform — verified working directly, not a limitation
+requiring a fix); no artificial gravity or gravity cancellation (the
+primitive's own vertical control is a direct velocity command, not a
+change to what gravity is or does). See "Deliberately Not Implemented" for
+the complete list.
+
+## Physics test world
+
+Milestone 7-Final replaces the single sphere with TWO independent static
+spheres ("Planet A" and "Planet B," `kPlanetARadius`/`kPlanetBRadius = 20m`
+each, centers `55m` apart — a genuine `15m` surface-to-surface gap, so the
+two worlds read as visibly, physically distinct bodies, not one world
+wearing two names) plus one flat static plank connecting them
+(`kPlankCenter`/`kPlankHalfExtents`). All three are still small,
+hand-authored test geometry, not planets as an engine subsystem (see
+"Deliberately Not Implemented").
+
+This geometry, like the single sphere's before it, is **demo/composition-
+root knowledge only** — `Application.cpp`'s anonymous namespace is the only
+place any of it is named. `PlayerController`, `DynamicBody`, `GravityField`,
+and `PhysicsWorld` remain exactly as ignorant of it as they always were;
+nothing about this milestone required loosening that boundary, even though
+it's now backed by Judas's own physics engine rather than Jolt's.
+
+**The plank's placement is a real physics-and-geometry problem, not an
+aesthetic choice, and its exact numbers were derived, not guessed.**
+Positioned near "pole height" (`y=18`, vs. each planet's own radius of
+`20`) rather than directly between the two planet centers at their own
+height — the latter was considered and rejected without needing to build
+it: gravity toward Planet A and gravity toward Planet B would point in
+roughly OPPOSITE horizontal directions on the direct line between the
+centers (back toward whichever planet is nearer), which no placement could
+turn into a direction pointing down through the plank rather than sideways
+along it. Near pole height, both planets' pulls stay predominantly
+vertical across the plank's own footprint. (As of Design 3 in "Gravity
+context ownership," the plank's own gravity is `FaithfulGravity`'s
+constant regardless of position, so this placement no longer controls the
+plank's own tilt at all — it still matters for keeping the plank within
+an easy walk/jump of each planet's actual surface.) The plank's ends sit
+close enough to each planet's own surface (a real but modest ~1m gap/step,
+well inside normal walk/jump range) that no deliberate gravity-weakening
+trick (unlike Milestone 7-B's platform — see "Gravity context ownership")
+is needed anywhere to make the crossing possible.
+
+**Dynamic bodies, spread across all three regions** (`kDynamicObjectSpawns`,
+`Application.cpp`): six bodies, two per region (Planet A, the plank, Planet
+B) — the minimum arrangement that exercises all three gravity contexts
+simultaneously and proves the architecture isn't secretly player-specific
+or region-specific. Planet-relative spawns use the same demo-only helper
+Milestone 7-A introduced, `PointAboveSphere(center, radius, direction,
+heightAboveSurface)`; plank spawns are literal positions above its surface.
+None of their resting positions are scripted or hand-aligned to gravity —
+they fall and settle exactly like every other body here, verified directly
+(see "Automated testing").
+
+Exact coordinates are demo-authoring detail, not architecture — see
+`Application.cpp` if the literal numbers matter. Nothing about this
+arrangement is procedural, spawned at runtime, or editable; all six bodies
+are created once in `Application::Run` (via `SpawnDynamicObjects`) and
+destroyed once at shutdown, exactly like the two static spheres and the
+plank already are.
+
+## Dynamic bodies
+
+**Representation** (`src/DynamicBody.h/.cpp`): a `DynamicBody` is the
+minimum shared state Milestone 7-A's cubes and spheres both need — a
+`BodyHandle`, a `Visual` (shape kind, half-extents or radius, and color,
+for `Renderer` only), and the same previous/current pose pair
+`PlayerController` uses for presentation (see below). It is deliberately
+**not** an entity/component: it has no update-dispatch, no type registry,
+no behavior of its own beyond snapshotting a pose and reading one back —
+see "Deliberately Not Implemented" for why nothing more general was built
+for four test objects.
+
+**How gravity reaches a body**: see "Multiple gravity consumers" —
+`PrepareDynamicBodiesForStep` samples the active `GravityField` at each
+body's own position and calls the existing (Milestone 3)
+`PhysicsWorld::ApplyLinearAcceleration`, exactly as `PlayerController`
+does for itself.
+
+**How the physics engine owns the rest**: once gravity is handed over,
+`DynamicBody` (and everything above it) steps back completely.
+`PhysicsWorld::Step` — Judas's own rigid-body integration, friction,
+restitution, and contact resolution (see "Physics ownership") — decides the
+body's resulting position **and orientation**. Nothing in this engine ever
+writes a dynamic body's orientation directly or aligns it to local
+gravity/up; a cube settles however contact with the world leaves it, and a
+sphere is free to roll. This mirrors "Support" above (gravity direction and
+contact response stay separately computed) applied to a body Judas doesn't
+move itself at all.
+
+**Transforms reaching rendering**: after `PhysicsWorld::Step`,
+`SyncDynamicBodiesFromPhysics` (a second small free function alongside
+`PrepareDynamicBodiesForStep`) reads each body's fresh
+`PhysicsWorld::GetTransform` — the same query `PhysicsWorld` has exposed
+since Milestone 3, previously unused by the active demo. `Application`'s
+`drawScene` then draws each body via `Renderer::DrawBox`/`DrawSphere` at
+its *presented* (interpolated) transform — see "Simulation/presentation
+boundary."
+
+## Simulation timing
+
+The fixed timestep and catch-up bounds below remain current. The example and
+player-input account record the legacy loop; current fixed-system ordering is
+described under M28's later-status note, and M52 adds the script presentation phase.
+
+Physics is stepped on a **fixed timestep of 1/60 second**
+(`SimulationTiming::kFixedTimestep`, `src/SimulationTiming.h`, added this
+milestone), unchanged in value since Milestone 3 — only pulled out of
+`Application.cpp`'s own anonymous namespace into a tiny shared header so
+the test harness's real-time diagnostic mode (see "Automated testing")
+mirrors the interactive loop's timing behavior by construction rather than
+by two files' literals happening to agree. `Application::Run` uses the
+same accumulator as before:
+
+```
+accumulator += (clamped) render-frame delta time
+while accumulator >= fixedTimestep and steps-this-frame < cap:
+    physicsWorld.Step(fixedTimestep)          // advances any ordinary dynamic bodies
+    player.FixedUpdate(..., fixedTimestep)    // gravity, support, movement, jump
+    accumulator -= fixedTimestep
+```
+
+The same two guards against an unbounded catch-up backlog remain: the
+render-frame delta fed into the accumulator is clamped to `0.25s`
+(`kMaxFrameDeltaTime`), and a hard cap (`kMaxPhysicsStepsPerFrame`, `8`) on
+fixed steps per render frame, past which the remaining accumulated time is
+dropped rather than carried forward.
+
+### Player input vs. the fixed step
+
+Unchanged in mechanism from Milestone 4: mouse look and the jump key are
+read from `Window` at **render-frame** frequency
+(`PlayerController::UpdateFrameInput`), while movement/jumping/support are
+only ever resolved inside a fixed step (`PlayerController::FixedUpdate`).
+The same one-shot latch prevents a `Space` tap from being lost on a render
+frame that completes zero fixed steps:
+
+```
+Window::ConsumeJumpRequest()       — one-shot: true on the render frame the
+                                      key transitioned down, then clears
+        |
+        v
+PlayerController::UpdateFrameInput — drains it into m_jumpRequested, which
+                                      persists across render frames if needed
+        |
+        v
+PlayerController::FixedUpdate      — consumes m_jumpRequested unconditionally
+                                      (grounded: jumps; airborne: discards —
+                                      never buffered until a later landing)
+```
+
+## Simulation/presentation boundary
+
+Added this milestone, in direct response to "Diagnosis" above. The rule:
+
+```
+Authoritative state (m_position, m_frameOrientation, m_velocity,
+m_lastGrounded, ...) is updated ONLY by PlayerController::FixedUpdate, at
+the fixed 1/60s rate, exactly as before this milestone.
+
+Presentation state is derived FROM authoritative state, purely for
+rendering, and is never read back by FixedUpdate, gravity sampling,
+collision queries, support/grounded logic, or jump logic.
+```
+
+**What may be interpolated:** the player's position and orientation, for
+display only (`PlayerController::GetPresentedPosition`/
+`GetPresentedOrientation`, and everything downstream of them —
+`GetViewMatrix`, the box passed to `Renderer::DrawBox`).
+
+**What must never be interpolated, and isn't:** authoritative position
+velocity, grounded/support state, contact/collision results, gravity
+sampling position, jump state, or any gameplay decision. `FixedUpdate`'s
+body is unchanged except for one addition — snapshotting the pre-step pose
+as the interpolation baseline (see below) — verified directly: the exact
+same fixed-step-mode harness script that produced Milestone 5's evidence
+produces **byte-for-byte identical CSV output** before and after this
+milestone's changes.
+
+### Mechanism
+
+`PlayerController` keeps two poses:
+
+```cpp
+glm::vec3 m_position;           // authoritative: end of the most recent fixed step
+glm::quat m_frameOrientation;   // authoritative: end of the most recent fixed step
+glm::vec3 m_previousPosition;   // presentation only: end of the step BEFORE that
+glm::quat m_previousOrientation;// presentation only: end of the step BEFORE that
+```
+
+`FixedUpdate` snapshots `m_previousPosition`/`m_previousOrientation` from
+the current `m_position`/`m_frameOrientation` at the very top, before
+anything else that step changes them — so after `FixedUpdate` returns, the
+two pairs hold exactly the two endpoints a render between now and the next
+fixed step needs to blend between.
+
+`GetPresentedPosition(alpha)`/`GetPresentedOrientation(alpha)` blend
+between them:
+
+```cpp
+position    = glm::mix  (m_previousPosition,    m_position,          clamp(alpha, 0, 1));
+orientation = glm::slerp(m_previousOrientation,  m_frameOrientation,  clamp(alpha, 0, 1));
+```
+
+Position uses ordinary linear interpolation (`glm::mix`); orientation uses
+spherical linear interpolation (`glm::slerp`) rather than a naive
+per-component lerp, because quaternion components don't blend linearly
+without renormalization artifacts — `slerp` is the mathematically correct
+interpolation for unit quaternions and is what GLM provides for exactly
+this. Verified directly: presented "up" vectors stayed within `6.4e-5` of
+unit length across a 300-frame run spanning a large reorientation — `slerp`
+is doing its job.
+
+`alpha` is computed once per render frame in `Application::Run`, right
+after the fixed-step `while` loop, as
+`physicsAccumulator / SimulationTiming::kFixedTimestep` — literally "how
+far real time has progressed into a fixed step that hasn't been simulated
+yet," the standard interpolation factor for this technique. It's clamped
+to `[0, 1]` defensively inside `GetPresentedPosition`/`GetPresentedOrientation`
+themselves, so even a pathological accumulator value can't produce an
+out-of-range blend or extrapolate past `m_position`.
+
+### Catch-up frames
+
+When a stall forces the `kMaxPhysicsStepsPerFrame` cap to fire,
+`Application::Run` resets `physicsAccumulator` to `0.0` (unchanged
+behavior from Milestone 3) — which makes `alpha = 0.0` for that one frame,
+i.e. that frame presents exactly `m_previousPosition`/`m_previousOrientation`
+(one fixed step "behind" `m_position`) rather than anything invalid. This
+was exercised directly, not just reasoned about: a 12-second combined
+walk/turn/jump harness run naturally hit the catch-up cap twice
+(`stepsThisFrame == 8`) with `alpha` staying in `[0, 1]` throughout and no
+NaN/Inf anywhere in the log. No scheduler redesign was needed or attempted.
+
+### Extended to dynamic bodies (Milestone 7-A)
+
+Milestone 6 predicted exactly this extension without building it ahead of
+need (see the git history of this section). Milestone 7-A's dynamic cubes
+and spheres are the second consumer, and needed exactly the shape already
+anticipated: `DynamicBody` (`src/DynamicBody.h/.cpp`) keeps its own
+`m_previousPosition`/`m_previousOrientation` alongside its current pose,
+and `GetPresentedPosition(alpha)`/`GetPresentedOrientation(alpha)` blend
+them with the identical `glm::mix`/`glm::slerp` pair `PlayerController`
+uses, driven by the identical per-frame `alpha` (`Application::drawScene`
+passes the same value to every body's presented-position call that it
+passes to the player's).
+
+**One real difference from the player, worth recording precisely**: for
+the player, snapshot-and-integrate both happen inside one Judas-owned
+method (`PlayerController::FixedUpdate`), so the snapshot naturally comes
+first in that same function. A dynamic body's actual motion happens inside
+`PhysicsWorld::Step` — the physics engine's own integration and contact
+resolution, called from `Application`/`TestHarness`, not from inside some
+Judas-owned per-body update — so `DynamicBody::SnapshotPrevious()` has to
+be called from the *outside*,
+immediately before `PhysicsWorld::Step`, rather than at the top of some
+Judas-owned per-body update. `PrepareDynamicBodiesForStep` does exactly
+that (snapshot, then sample gravity, then hand it to
+`ApplyLinearAcceleration`) for every body, once, right before
+`PhysicsWorld::Step` — see "Multiple gravity consumers." The authoritative
+rule is otherwise identical and just as absolute: `SyncDynamicBodiesFromPhysics`
+only ever *reads* `PhysicsWorld::GetTransform` after `Step`, never writes
+back, and nothing gravity/collision-related ever reads a presented value —
+verified the same way as the player: the fixed-step-mode CSV output (now
+carrying per-body columns — see "Automated testing") is unaffected by
+whether anything downstream chooses to interpolate for rendering, because
+presentation is purely a read-side view over state that was already
+final.
+
+The static sphere still needs none of this — it never moves, so it still
+has no "previous state" to blend from, and `Renderer::DrawSphere` still
+just takes the fixed `kSphereCenter`/`kSphereRadius` it always has.
+
+## 3D rendering pipeline
+
+**Historical M3–M9 pipeline description.** Matrix conventions remain useful;
+the single-shader account below predates current materials/HDR, imported skin
+palettes and auxiliary targets. See M57/M66/M72 and [Materials](MATERIALS.md).
+
+`Renderer::DrawBox`/`Renderer::DrawSphere`/`Renderer::DrawMesh` implement
+the conventional model → world → view → clip-space pipeline via matrices,
+computed with GLM and uploaded as uniforms to one shader (`src/Renderer.cpp`)
+— the model/view/projection composition itself is unchanged since Milestone
+3; as of Milestone 9 the shader also computes per-fragment lighting and
+samples a texture (see "Milestone 9" below for the full shader and why
+DrawBox/DrawSphere now funnel through the same `DrawMesh` a textured model
+uses):
+
+```glsl
+gl_Position = uProjection * uView * uModel * vec4(aLocalPos, 1.0);
+```
+
+**`DrawSphere`** (new in Milestone 5) draws a second, separate mesh: a
+conventional UV sphere (16 latitude × 24 longitude segments), generated
+once at `Renderer::Init` time via `Renderer::CreateMesh` — like the
+existing cube mesh, non-indexed (`glDrawArrays`), since neither built-in
+primitive needs vertex-sharing compaction at this vertex count (see
+"Milestone 9, Mesh representation," for the indexed/non-indexed
+distinction an imported model actually uses). Its model matrix is
+`translate * scale(radius)` — no rotation parameter, since a sphere looks
+identical under any (single-axis) rotation.
+
+Each demo planet is drawn with the exact position and radius its static
+sphere shape was created with (`Application.cpp`'s `kPlanetACenter`/
+`kPlanetARadius`, `kPlanetBCenter`/`kPlanetBRadius`) — there is no
+physics-driven transform to read back for a static body a game never
+queries, so this is one place in the renderer that isn't reading a
+`PhysicsWorld::GetTransform` result, simply because nothing in this
+milestone ever needs a planet's transform to change. Same reasoning for
+the plank.
+
+### Coordinate conventions (current, local to this renderer/physics setup)
+
+- World space is a conventional right-handed 3D space in engine-defined
+  "world units," used directly as Judas's own physics engine's simulation
+  space.
+- `+Y` is used as a **local body-space** axis convention by
+  `PlayerController` (see "Orientation") and as `FaithfulGravity`'s
+  constant test direction — **neither is an engine-wide law**. Nothing in
+  `PhysicsWorld` or `Renderer` treats world `+Y` as special; `RadicalGravity`
+  demonstrates this directly by pointing in a continuously different world
+  direction depending on where it's sampled.
+- At this milestone there was no distinction between absolute large-world
+  coordinates and local rendering/physics coordinates. M23 subsequently
+  introduced a fixed double-precision absolute origin with local float
+  simulation; it did not introduce live origin rebasing.
+
+### Player visual representation
+
+Unchanged reasoning from Milestone 4: the player is rendered as an
+axis-aligned box sized to the capsule's bounding dimensions
+(`PlayerController::GetRenderHalfExtents`), not a faithful capsule mesh —
+primitive geometry is explicitly sufficient for this milestone's purpose.
+Its position and orientation come from
+`PlayerController::GetPresentedPosition`/`GetPresentedOrientation` (see
+"Simulation/presentation boundary") rather than the authoritative state
+directly, as of this milestone — so the box visibly reorients smoothly as
+the player walks around the sphere, matching the physical capsule's own
+up-alignment (interpolated for display; the capsule shape itself is
+radially symmetric and wouldn't visually change in physics regardless).
+
+## Milestone 9
+
+Three deliberately conventional rendering capabilities: static model
+loading, textures, and basic lighting. The milestone's own framing,
+verbatim in spirit: "I launch Judas. There is a real model. It has a real
+texture. A light shines on the bastard. It looks correct. Everything else
+still works."
+
+### Model loading
+
+**Format/importer: OBJ, via [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader)
+(single-header, MIT license, vendored as `third_party/tiny_obj_loader.h`).**
+Chosen over glTF/FBX/a custom parser for a simple reason: OBJ is the
+smallest format that still cleanly carries exactly what this milestone
+needs (vertex positions, normals, UVs, triangle topology) and *structurally
+cannot* carry what this milestone explicitly excludes — it has no bones,
+skinning, animation clips, cameras, lights, or scene-hierarchy concept to
+accidentally import. A glTF/FBX importer would pull in a real JSON/binary
+parser and (for glTF) an additional PBR-material vocabulary Judas has no
+use for yet — solving a bigger problem than M9 actually has. tinyobjloader
+specifically (over hand-writing an OBJ parser): OBJ's text grammar looks
+trivial until edge cases (relative vs. absolute vertex indices, n-gon
+faces, multiple `usemtl` groups, comments, tabs vs. spaces) — a solved,
+widely-used, single-header MIT dependency here is the same "prefer a
+commodity library over reinventing decoding" call this project already
+made for image I/O (`stb_image_write.h`, now joined by `stb_image.h` — see
+below).
+
+**Ownership boundary**: `src/ModelLoader.h/.cpp` is the *only* file that
+knows tinyobjloader exists. `LoadObjMesh(path, outMesh, outError)` takes a
+file path and returns a Judas-owned `MeshData` (`src/MeshData.h`) — plain
+`std::vector<MeshVertex>` plus an index list, no tinyobjloader type
+anywhere in the returned data or in the function's own signature. Nothing
+above this call (`Application`, `Renderer`) ever needs to know an OBJ file
+or tinyobjloader was involved. This is pure CPU-side work — no OpenGL
+context is touched or required, which is why `tests/AssetTests.cpp` can
+call it directly, headlessly, with no window (see "Automated testing").
+
+**Deliberately unsupported** (by choice, not by tinyobjloader's own
+limitation): multiple objects/groups in one file are flattened into a
+single `MeshData` (Judas has no scene-hierarchy concept to import into);
+`.mtl` material references are read by tinyobjloader internally but
+entirely ignored by `LoadObjMesh` — texture binding is Judas's own
+explicit, separate step (see "Textures" below), never driven by a file's
+own material assignment; no bones/skinning/animation/morph
+targets/cameras/lights, because OBJ itself has none of these to import in
+the first place.
+
+### Mesh representation
+
+`src/MeshData.h`: `MeshVertex { position, normal, uv }` (three `glm`
+vectors, nothing else — no tangent/bitangent, since no normal mapping
+exists to need them; no per-vertex color or bone weight) plus
+`MeshData { vertices, indices }`. An empty `indices` means "draw
+non-indexed" (`glDrawArrays`) — both built-in primitives (cube, sphere)
+use this; a non-empty `indices` means "draw indexed" (`glDrawElements`) —
+every imported model uses this (see `ModelLoader.cpp`; the index buffer
+isn't deduplication-compacted, since `beacon.obj` is small enough that
+vertex-sharing bookkeeping isn't worth it yet — documented there as a
+known, deliberate simplification).
+
+**CPU/GPU ownership, made explicit**: `MeshData` is a CPU-only,
+transient value — a model importer produces one, hands it to
+`Renderer::CreateMesh(const MeshData&)`, and the `MeshData` itself is not
+retained past that call. `Renderer::CreateMesh` uploads a VAO/VBO (and an
+EBO if indexed) and returns an opaque `MeshHandle` — the same
+`{id, kInvalidId, IsValid()}` shape `PhysicsWorld::BodyHandle` already
+established, not a raw `GLuint` a caller could touch directly. From that
+point on, **Renderer owns the GPU resource**; the caller (`Application`)
+owns only the handle, and is responsible for calling
+`Renderer::DestroyMesh(handle)` when done with it (mirroring
+`PhysicsWorld::DestroyBody`'s own explicit-destroy convention) —
+`Renderer::Shutdown()` is also a safety net that frees anything still
+alive, so a missed explicit destroy call leaks nothing, it just isn't the
+primary/documented cleanup path.
+
+**How meshes reach the renderer**: `Renderer::DrawMesh(mesh, position,
+rotation, scale, texture, tintColor)` is the one generalized draw call —
+`DrawBox`/`DrawSphere` (unchanged signatures since Milestone 3/5) are now
+thin wrappers over it using two mesh handles created once in
+`Renderer::Init` (`m_cubeMesh`, `m_sphereMesh`). This was a deliberate
+choice, not a forced one — the milestone brief explicitly allowed keeping
+primitives on a separate path, but unifying was simpler in practice: one
+shader, one vertex layout, one draw function, and it's what let "existing
+primitive geometry that participates in lighting must also have suitable
+normals" (a hard M9 requirement) fall out for free rather than needing a
+second lighting path maintained in parallel. See "Renderer evolution"
+below for the GPU-resource-table mechanics.
+
+### Textures
+
+**Loader: [stb_image](https://github.com/nothings/stb) (`third_party/stb_image.h`,
+public domain / MIT dual license — the read-side sibling of the already-
+vendored `stb_image_write.h`, same reasoning: image decoding is a solved
+commodity problem).** `src/TextureLoader.h/.cpp` is the only file that
+knows stb_image exists; `LoadTextureFromFile(path, outTexture, outError)`
+returns a Judas-owned `TextureData` (`src/TextureData.h`: width, height,
+and a `std::vector<std::uint8_t>` of pixels) — always decoded to 4
+channels (RGBA) regardless of the source file's own channel count
+(`stbi_load`'s `desired_channels` parameter), so there is exactly one GPU
+upload format to support, not a matrix of them.
+
+**GPU representation / lifetime**: the same ownership split as meshes.
+`Renderer::CreateTexture(const TextureData&)` uploads a `GL_TEXTURE_2D`
+(linear filtering both ways, mipmapped minification via
+`glGenerateMipmap`, `GL_REPEAT` wrapping — ordinary, sufficient defaults
+for one UV-mapped demo texture, not yet exercised enough to need
+per-texture control) and returns a `TextureHandle`; Renderer owns the GPU
+texture object from that point on, the caller owns only the handle, and
+`Renderer::DestroyTexture(handle)` is the explicit release (with
+`Shutdown()` as the same safety net described above).
+
+**A texture with no real content**: `Renderer::Init` also creates a 1x1
+opaque white `TextureData` and keeps its handle (`m_whiteTexture`) as the
+fallback `DrawMesh` substitutes whenever a caller passes an invalid
+`TextureHandle` — every pre-Milestone-9 solid-color `DrawBox`/`DrawSphere`
+call does exactly this. Since the fragment shader always samples a
+texture and multiplies it into the result (see "Lighting" below), a 1x1
+white pixel makes `texColor * tintColor` reduce to exactly `tintColor`,
+reproducing every existing primitive's appearance unchanged rather than
+needing an `if (hasTexture)` branch in the shader.
+
+**UV convention and the vertical-flip handling**: OpenGL's texture `v=0`
+is the *bottom* of the texture, while an ordinary image file's row 0 is
+its *top* — the classic source of an upside-down or otherwise wrong-
+looking texture. `TextureLoader.cpp` calls
+`stbi_set_flip_vertically_on_load(true)` before decoding, so the pixel
+data `TextureData` hands to the GPU already has row 0 = the bottom of the
+image as authored — UV `(0,0)` then samples the bottom-left of the image
+exactly as a human looking at the file would expect, and `beacon.obj`'s
+own UVs were authored against that same convention (see the model file's
+own header comment, and `assets/textures/beacon.png`'s generation notes,
+for the worked example: a 2x2 colored-quadrant test texture specifically
+designed to make a quadrant-swap or an axis flip immediately, visibly
+obvious).
+
+### Lighting
+
+**Model**: ambient + Lambertian (N·L) diffuse, computed per-fragment.
+Nothing more — no specular term (the brief allowed one "if it naturally
+fits"; it didn't add anything this milestone's flat-shaded, mostly-diffuse
+demo geometry needed, so it was left out rather than added to look more
+complete), no multiple lights, no attenuation (a directional light has no
+distance to attenuate over by definition).
+
+```glsl
+vec3 normal = normalize(vWorldNormal);
+float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
+vec3 lighting = uAmbientColor + uLightColor * diffuseFactor;
+FragColor = vec4(lighting, 1.0) * texture(uTexture, vUV) * uColor;
+```
+
+**Coordinate space**: world space, throughout. `uLightDirection` is a
+plain world-space unit vector, set once via `Renderer::SetLighting`
+(`Application.cpp`'s `kLightDirection`, a fixed, arbitrary direction
+picked only to rake visibly across the demo scene) and read by the
+fragment shader unmodified — **the shader never reads gravity, local up, a
+support normal, or world `+Y`; `uLightDirection` is not derived from
+anything Judas-specific, it is exactly the vector `SetLighting` was
+called with.** This is verifiable by inspection, not just by claim: grep
+`src/Renderer.cpp`'s `SetLighting`/`DrawMesh` and the shader source itself
+— neither references `GravityField`, `PlayerController`, or any other
+gravity/orientation concept at all. `uLightDirection`'s own documented
+convention: it points FROM a lit surface TOWARD the light (i.e., already
+negated from "the direction the light travels"), so the shader's `dot`
+call needs no sign flip.
+
+**Normal handling**: `vWorldNormal = uNormalMatrix * aLocalNormal`, where
+`uNormalMatrix = transpose(inverse(mat3(uModel)))` is computed on the CPU
+once per `DrawMesh` call (`glm::inverseTranspose`, the standard correction
+so normals stay perpendicular to their surface under non-uniform scale —
+`DrawBox`'s `halfExtents` are rarely a uniform scale — not just rotation;
+a plain `mat3(uModel)` would be wrong the moment a box's local axes scale
+unevenly). Every mesh supplies real per-vertex normals: the built-in cube
+is flat-shaded (one constant normal per face, matching its genuinely sharp
+edges — see `BuildCubeMeshData`); the built-in sphere's normal at any
+point is simply that point itself (a unit sphere's own outward normal,
+requiring no separate computation); `beacon.obj` is flat-shaded per face
+by construction (each face's three vertices are authored as distinct `v`/
+`vn` combinations — see the model file itself), matching a low-poly
+pyramid's genuinely flat faces.
+
+**Light representation**: `Renderer::SetLighting(direction, lightColor,
+ambientColor)` — three plain `glm::vec3` values, called once per frame
+alongside `SetCamera` (this demo's light is fixed and never actually
+changes frame to frame, but nothing about the API assumes that, the same
+way `SetCamera` doesn't assume the camera is static). No `Light` class, no
+light-list/management structure — one directional light is one function
+call with three vectors, and building anything more general than that had
+no requirement behind it yet.
+
+**"No global up" verification actually performed**: every side face of
+`beacon.obj` has a known, hand-computed world-space normal (see the model
+file's own header comment); with the demo's fixed `kLightDirection`, the
+expected diffuse response for each face was computed independently
+(`dot(faceNormal, lightDirection)`) and cross-checked against an actual
+rendered screenshot taken via the test harness's `SCREENSHOT` directive —
+the two brightly-lit faces (front/`+Z` and right/`+X`, dot ≈ 0.71/0.76)
+and the visibly dark ones (back/`-Z`, dot ≈ 0.0; the base/`-Y`, dot ≈
+−0.80, never visible in practice) matched exactly. Since the shader
+formula is symmetric in `N` and `L` with no axis singled out anywhere,
+this is a general property of the implementation, not a coincidence of
+this one example — the same reasoning this project has used for its
+physics rotate-the-scenario tests, applied here by direct computation
+rather than a compiled test (see "Automated testing" for why this stayed
+a one-off verification rather than a new permanent test executable: the
+formula is two lines of symmetric vector math with nothing left to
+regress).
+
+**Limitations, recorded honestly**: no shadows (a face on the wrong side
+of an object with respect to the light is unlit but never occluded by
+another object — not needed for shape readability at this milestone's
+scale); no per-texture filtering/wrapping control (every texture gets the
+same linear/mipmapped/repeat defaults — fine for one demo texture, would
+need real per-texture parameters for anything requiring, say, clamped
+edges); the built-in cube's UV mapping is a fixed placeholder pattern, not
+a considered box unwrap (see "Mesh representation" — untextured today, so
+uncorrected).
+
+### Renderer evolution
+
+**What changed from the old `DrawBox`/`DrawSphere` path**: the vertex
+format grew from position-only (12 bytes/vertex) to position+normal+uv (32
+bytes/vertex, interleaved in one VBO); the shader grew from
+"transform + flat uniform color" to "transform + normal-matrix lighting +
+texture sample + tint," (see "Lighting" above for the exact shader); a
+generalized `CreateMesh`/`DestroyMesh`/`CreateTexture`/`DestroyTexture`/
+`DrawMesh` resource-table API was added (`std::vector<GpuMesh>`/
+`std::vector<GpuTexture>` inside `Renderer`, addressed by opaque handles —
+the same handle-into-a-vector convention `PhysicsWorld` already
+established for bodies); indexed drawing (`glDrawElements`) exists for the
+first time, alongside the original non-indexed (`glDrawArrays`) path,
+selected per-mesh by whether it has an index buffer.
+
+**What remained deliberately unchanged**: the renderer boundary itself —
+`Renderer` is still the *only* file that calls raw `gl*` functions;
+`ModelLoader`/`TextureLoader` are pure CPU-side and never touch OpenGL;
+`Application`/gameplay code still never sees a `GLuint`, only opaque
+`MeshHandle`/`TextureHandle` values. `BeginFrame`/`SetCamera`/`EndFrame`/
+`CaptureFrame` are untouched. `DrawBox`/`DrawSphere`'s public signatures
+are byte-identical to Milestone 3/5 — every existing call site in
+`Application.cpp`/`TestHarness.cpp` needed zero changes. The
+model→world→view→clip-space matrix composition itself is unchanged.
+
+**Historical at M9: the hand-written GL loader (`src/gl_core33.h/.cpp`) was extended, not
+replaced** — the explicit re-evaluation this file's own comment calls for
+whenever new GL surface is needed. Ten functions were added (texture
+creation/binding/upload/parameters/mipmap/deletion, indexed drawing, and
+three more uniform setters) on top of the ~31 already there. The evidence
+this milestone actually produced: the added surface is a flat, easily
+enumerable list of ordinary entry points (no framebuffers, no compute, no
+extension-querying machinery, nothing requiring the loader itself to grow
+new *kinds* of logic beyond "resolve one more function pointer by name")
+— genuinely still "small and clear" by the loader's own stated bar, not
+merely declared so. At the time, replacing it with a generated glad loader
+was considered and rejected because the actual GL surface was still small
+enough to read in one sitting. This records the M9 decision only; the
+infrastructure migration below supersedes it.
+
+### Assets
+
+`assets/models/beacon.obj` and `assets/textures/beacon.png` — both
+**original content authored for this project**, not derived from any
+external asset: the model is a hand-authored low-poly square pyramid (five
+flat-shaded faces: four sides plus a base — see the file's own header
+comment for exact vertex/normal/UV authoring, including why each side
+face's UVs land in a distinct quadrant of the texture), and the texture is
+a programmatically generated 256x256 four-quadrant color grid (red/green/
+blue/yellow, each with a thin border and one asymmetric white marker
+square) built specifically to make UV-mapping/quadrant/orientation errors
+immediately, visibly obvious — generated with the same already-vendored
+`stb_image_write.h` this project's screenshot tooling uses, via a
+throwaway generator program (not itself part of the build). **License:
+public domain / CC0-equivalent** — original, trivial content with no
+provenance concerns for this MIT-licensed public repository; no Asset
+Store, commercial, or restrictively-licensed content was used or
+considered.
+
+**Historical M9 path contract — superseded by M30 project-relative assets and
+M38 executable-relative packaged startup.** The following records the original setup:
+
+**Location and reproducibility**: `assets/models/`, `assets/textures/`,
+loaded via paths relative to the process's current working directory
+(`Application.cpp`'s `kBeaconModelPath`/`kBeaconTexturePath` —
+`"assets/models/beacon.obj"`, `"assets/textures/beacon.png"`, no absolute
+or machine-specific path anywhere). This engine has no asset-root/working-
+directory abstraction to resolve paths through instead (see "Deliberately
+Not Implemented" — no virtual filesystem, no asset database), so `judas`
+(and `judas_asset_tests`) must be run with the repository root as the
+current working directory — exactly how the existing `./build/judas`
+instructions in `README.md` already show running it, so a fresh clone
+following the documented build/run steps works with no additional setup.
+A missing or unreadable asset fails `Application::Run` cleanly with a
+`std::fprintf(stderr, ...)` message naming the exact path (see
+`LoadObjMesh`/`LoadTextureFromFile`'s own `outError` contract) and a
+non-zero exit code — never a silent black/garbage render, never a crash
+from unchecked missing data.
+
+## Depth handling
+
+Unchanged since Milestone 2: `Renderer::Init` enables depth testing once at
+startup, a 24-bit depth buffer is requested at context creation, and
+`BeginFrame` clears both the color and depth buffers every frame.
+
+## Projection handling
+
+Unchanged in mechanism: `PlayerController::GetProjectionMatrix(aspectRatio)`
+rebuilds the perspective projection every frame from the window's current
+width/height, so resizing is handled automatically with no dedicated
+resize-event code path.
+
+## Camera and look controls
+
+Unchanged in shape from Milestone 4/5: `PlayerController::GetViewMatrix`
+computes a fixed **third-person** offset — an eye point `0.7m` above the
+player's capsule center, then a camera position `4m` behind that eye point
+along the current look direction plus `1m` extra height along `localUp`,
+looking in that same direction. `glm::lookAt`'s up vector is the player's
+current `localUp`, not a fixed world `+Y` — this is what keeps the camera
+from rolling incorrectly or flipping as the player walks over the sphere's
+horizon.
+
+**New this milestone:** `GetViewMatrix` now takes a `presentationAlpha`
+parameter and builds `eyePosition`/`localUp`/`front`/`cameraPosition` from
+`GetPresentedPosition`/`GetPresentedOrientation` (see "Simulation/
+presentation boundary") instead of the raw authoritative pose directly.
+This was necessary, not optional: a camera rigidly attached to discrete
+fixed-step player state judders even when the world itself is stationary
+and the simulation is correct, exactly as the milestone brief predicted —
+diagnosing the player's own visible motion (see "Diagnosis") and fixing
+only the player box while leaving the camera reading raw authoritative
+state would have "fixed" the box while leaving the exact same aliasing
+visible in every frame *anyway*, since the whole screen is composed
+through the camera. Camera and player box are always given the *same*
+`presentationAlpha` value each frame (`Application::Run` computes it once
+and passes it to both), so they move in visual lockstep — there is no
+scenario where the box is smooth but the world behind it isn't, or vice
+versa.
+
+**What did *not* change, deliberately:** mouse look (`m_yaw`/`m_pitch`) is
+still read and applied every render frame in `UpdateFrameInput`/
+`GetViewMatrix`, completely unaffected by `presentationAlpha` — it was
+already at full render-frequency responsiveness before this milestone, so
+there was nothing to fix there, and interpolating it would only have added
+latency to look input for no benefit. This is the "camera look can safely
+remain partially render-frequency-driven while physical orientation
+remains fixed-step authoritative" split the brief asked to preserve where
+it made sense; here it did.
+
+No spring-arm system, cinematic smoothing, camera lag, multiple camera
+modes, or configurable camera effects were added — the fix is exactly
+"read the same presentation state the player box reads," not a new camera
+system. No free-fly debug mode exists (unchanged reasoning from Milestone
+4: it would need a mode switch, which is more camera-system scope than any
+milestone so far calls for).
+
+## Main loop structure
+
+**Historical native demonstration loop.** The pseudocode below describes its
+original checkpoint. Current project lifecycle, fixed work and presentation use
+SceneSession/RuntimeWorld, Simulation and WorldPresentation as described in the
+current ownership guide and fixed-step ordering.
+
+`Application::Run()` (`src/Application.cpp`) owns the loop:
+
+```
+Init Window, load GL functions, Init Renderer
+Init PhysicsWorld (Judas's own physics engine -- nothing to zero, no built-in gravity exists)
+Construct RadicalGravity for each planet, FaithfulGravity for the plank, bound via GravityContextMap
+Create the two static planet spheres and the static plank box
+Create PlayerController, Spawn() it (creates its capsule shape via PhysicsWorld — no body)
+dynamicBodies = SpawnDynamicObjects(physicsWorld)   // 6 bodies across Planet A/plank/Planet B
+dynamicBodies.push_back(the flying primitive)        // Milestone 8: one more ordinary DynamicBody
+flyingPrimitiveControl = {handle, controlled=false}  // Milestone 8: see "Milestone 8"
+
+while (!window.ShouldClose()):
+    window.PollEvents()              // close request, Escape toggle, R/Space/F one-shot flags
+    frameDeltaTime = measured elapsed time since last frame, clamped
+
+    player.UpdateFrameInput(window)  // mouse look + latch jump request; every frame
+
+    if window.ConsumeResetRequest():
+        player.Reset()
+        for body in dynamicBodies: body.ResetToSpawn(physicsWorld)
+        flyingPrimitiveControl.controlled = false
+
+    if window.ConsumeControlToggleRequest():         // Milestone 8: see "Milestone 8"
+        if flyingPrimitiveControl.controlled:
+            flyingPrimitiveControl.controlled = false
+        elif player.IsGrounded() and player.GetSupportBodyHandle() == flyingPrimitiveControl.handle:
+            flyingPrimitiveControl.controlled = true
+
+    accumulator += frameDeltaTime
+    while accumulator >= fixedTimestep and steps < cap:
+        PrepareDynamicBodiesForStep(dynamicBodies, gravity, physicsWorld, fixedTimestep)
+            // snapshot presentation history, sample gravity per body,
+            // ApplyLinearAcceleration — see "Multiple gravity consumers"
+        ApplyFlyingPrimitiveControl(flyingPrimitiveControl, window, physicsWorld, gravity)
+            // Milestone 8: no-op unless controlled; overrides the primitive's
+            // velocity from input if it is — see "Milestone 8"
+        physicsWorld.Step(fixedTimestep)   // Judas's own engine: broadphase, narrowphase,
+                                            // contact resolution, dynamic-body integration
+        player.FixedUpdate(window, physicsWorld, gravity, fixedTimestep, !flyingPrimitiveControl.controlled)
+                                            // see "Locomotion" and "Milestone 8"; may also push
+                                            // a dynamic body it swept into — see "Player-to-object
+                                            // interaction" — or be carried by one it's standing on
+        SyncDynamicBodiesFromPhysics(dynamicBodies, physicsWorld)
+        accumulator -= fixedTimestep
+
+    alpha = accumulator / fixedTimestep   // presentation interpolation factor; see
+                                           // "Simulation/presentation boundary"
+
+    renderer.BeginFrame(...)
+    // Milestone 8: camera anchors to the flying primitive's own presented pose while
+    // controlled, the player's own otherwise — same GetViewMatrix math either way, see
+    // "Milestone 8," "Camera"
+    view = flyingPrimitiveControl.controlled
+        ? player.GetViewMatrix(flyingPrimitiveBody.GetPresentedPosition(alpha),
+                                flyingPrimitiveBody.GetPresentedOrientation(alpha))
+        : player.GetViewMatrix(alpha)
+    renderer.SetCamera(view, player.GetProjectionMatrix(aspectRatio))
+    renderer.DrawSphere(planetACenter, planetARadius, planetAColor)
+    renderer.DrawSphere(planetBCenter, planetBRadius, planetBColor)
+    renderer.DrawBox(plankCenter, identity, plankHalfExtents, plankColor)
+    renderer.DrawBox(player.GetPresentedPosition(alpha), player.GetPresentedOrientation(alpha),
+                      player.GetRenderHalfExtents(), playerColor)
+    for body in dynamicBodies:   // includes the flying primitive — drawn the same as any other box
+        renderer.DrawBox/DrawSphere(body.GetPresentedPosition(alpha),
+                                     body.GetPresentedOrientation(alpha), ..., body visual)
+    renderer.EndFrame()
+    window.SwapBuffers()
+
+player.Destroy(physicsWorld)
+for body in dynamicBodies: physicsWorld.DestroyBody(body.Handle())
+physicsWorld.DestroyBody(planetABody); physicsWorld.DestroyBody(planetBBody)
+physicsWorld.DestroyBody(plankBody); physicsWorld.Shutdown()
+renderer.Shutdown()
+// Window's destructor tears down the GL context, the window, and SDL itself.
+```
+
+The engine-level split, updated for this milestone:
+
+- `Window` — window/input.
+- `Renderer` — graphics: sphere and box geometry, drawn once per player/
+  dynamic body per frame.
+- `PhysicsWorld` — Judas's own physics engine (see "Physics ownership"):
+  rigid-body state/integration, collision/contact resolution for the two
+  static planets, the static plank, and the dynamic test objects, plus the
+  player's collision-query surface (`CreatePlayerShape`/`SweepPlayerShape`/
+  `DestroyPlayerShape`) and a few generic per-body queries
+  (`IsDynamicBody`, `GetLinearVelocity`/`SetLinearVelocity` — see
+  "Player-to-object interaction").
+- `GravityField` / `FaithfulGravity` / `RadicalGravity` — Judas's gravity
+  interface and its two canonical implementations, unchanged since
+  Milestones 3/5 despite everything built on top of them since — see
+  "Multiple gravity consumers."
+- `GravityContextMap` — routes a position to exactly one of the above by
+  ownership, never blending — see "Gravity context ownership."
+- `PlayerController` — owns the player's entire state and behavior
+  (position, velocity, orientation, locomotion, support, jumping, camera)
+  — see "Player/controller ownership."
+- `DynamicBody` — the minimum shared representation for a gravity-affected,
+  presentation-interpolated test object; see "Dynamic bodies."
+- `Application` — wires the above together, owns the loop, and is the only
+  place that knows either planet's radius/center, the plank's geometry, or
+  the test objects' spawn arrangement.
+
+## Input handling (historical physical bindings; superseded by M35)
+
+M35's current logical input boundary is documented below; these physical-key
+descriptions record the earlier adapters. M41 owns authored modal UI input and
+M43 project reset queues a genuine scene reload, not a player-only reset.
+
+Unchanged since Milestone 4: the `Action` enum (`MoveForward`/
+`MoveBackward`/`StrafeLeft`/`StrafeRight`, bound to `W`/`Up`, `S`/`Down`,
+`A`/`Left`, `D`/`Right`) describes locomotion intent relative to the
+player's current look direction; `Escape` toggles mouse capture; `R`
+(`ConsumeResetRequest`) and `Space` (`ConsumeJumpRequest`) are discrete,
+edge-triggered one-shot requests, not continuously-polled actions.
+`R` now resets only the player (there is no cube in this milestone's active
+demo to also reset). Milestone 8 added `MoveUp`/`MoveDown` (Q/E) and `F`
+(`ConsumeControlToggleRequest`, also edge-triggered/one-shot) for the
+flying primitive. Milestone 11 adds six more — `PitchUp`/`PitchDown`/
+`YawLeft`/`YawRight`/`RollLeft`/`RollRight`, bound to I/K/J/L/U/O — for the
+spacecraft's attitude control (see "Milestone 11"); like `MoveUp`/
+`MoveDown`, the player itself never consults any of these, and they share
+no scancode with any existing binding, including the arrow-key aliases.
+
+## Frame timing
+
+Unchanged since Milestone 1 (measured via `SDL_GetPerformanceCounter`,
+clamped to 0.25s). Physics timing remains separate — see "Simulation
+timing."
+
+## CharacterVirtual removal
+
+What `CharacterVirtual` previously provided (Milestone 4): collision-aware
+movement resolution (sweep against the world and stop/slide on contact),
+ground/support detection (`GetGroundState()`, `GetGroundNormal()`), slope
+classification (its own `mUp`/`mMaxSlopeAngle` settings), and ownership of
+the character's velocity as its own internal state.
+
+What Judas now owns instead (Milestone 5), in `PlayerController`: the
+player's position, velocity, and orientation as plain data; the decision of
+what velocity the player should have each step (gravity integration,
+WASD-driven tangent movement, jump); the interpretation of "grounded" from
+a raw geometry query; and the move-and-slide iteration itself.
+
+The low-level facility that replaced `CharacterVirtual`:
+`PhysicsWorld::SweepPlayerShape` — a single function answering "how far can
+this shape move, and what does it touch?" `PlayerController` calls it
+twice per fixed step (once for the ground probe, up to four times for
+move-and-slide) and makes every interpretive decision about the results
+itself. Through Milestone 7-Final's first attempt, this wrapped Jolt's own
+`JPH::NarrowPhaseQuery::CastShape`; as of the physics-ownership migration
+(see "Physics ownership") it's Judas's own substep-sampled march instead —
+the *answer* `SweepPlayerShape` gives `PlayerController` is unchanged in
+shape (a hit flag, a distance, a normal, a body handle), so nothing above
+this one function needed to know the underlying mechanism changed.
+
+**Remaining `CharacterVirtual` (or any third-party character-controller)
+dependency: none, and has been none since Milestone 5.** `grep -rn
+CharacterVirtual src/` finds exactly one hit, a comment in
+`PlayerController.h` contrasting this milestone's architecture with
+Milestone 4's for a reader's benefit — no include, no type, no call. As of
+Milestone 7-Final, this is stronger still: no third-party physics
+middleware of any kind is linked into this repository at all.
+
+## Universal-up audit
+
+Every `+Y`/world-up-shaped assumption touched by this milestone's changed
+files, reported honestly rather than selectively:
+
+- **`PlayerController`'s local body-space `+Y`** (`m_frameOrientation *
+  (0,1,0)` in several places, and the axis used to build
+  `RotationBetweenUnitVectors`'s fallback for the 180°-apart case): this is
+  the local-space "which way is my own model's up" convention every 3D
+  object needs *some* fixed answer to — not a world-space assumption. It is
+  exactly what `m_frameOrientation` exists to map onto the real,
+  continuously-changing world `localUp`. Removing it isn't meaningful: some
+  local axis has to represent "up" in the player's own body space.
+- **`PlayerController::ComputeTangentVelocity`'s yaw rotation axis**
+  (`glm::angleAxis(yaw, (0,1,0))`, applied to `m_frameOrientation`, not to
+  world space directly): rotates *within* the current local frame, so it
+  correctly turns the player relative to whatever `localUp` currently is —
+  not a hard-coded world axis.
+- **The arbitrary perpendicular-axis pick used only for the 180°-apart edge
+  case in `RotationBetweenUnitVectors`**: never triggered by this
+  milestone's gradual gravity changes (it would require gravity to reverse
+  completely within a single 1/60s step), but present as a defensive
+  fallback so the function never returns a NaN rotation. It's an arbitrary
+  perpendicular choice, not an "up" assumption.
+- **Not present, checked for explicitly**: no `player.y <= floorHeight`-style
+  height comparison; no `distance(player, sphereCenter) <= radius +
+  margin`-style grounding; no reference to the sphere's center/radius/any
+  demo-specific geometry anywhere in `PlayerController.h/.cpp` or
+  `PhysicsWorld.h` (confirmed by `grep`); no capsule axis permanently fixed
+  to world `+Y` (the capsule shape itself is created once and never
+  rotated in the physics engine's own frame — `PlayerController` supplies
+  its *current* `m_frameOrientation` to every `SweepPlayerShape` call, so
+  the query itself always uses the up-to-date orientation).
+- **`Renderer`'s model-space `+Y`** (cube/sphere mesh vertices, `DrawBox`'s
+  scale/rotate/translate order): ordinary modeling-space convention,
+  transformed by whatever rotation the caller supplies — not a world-up
+  assumption, unrelated to gravity or locomotion, out of this audit's scope
+  because it isn't a gravity-aware code path.
+- **Milestone 11: `ApplyFlyingPrimitiveControl`'s `worldRight`/`worldUp` and
+  `PilotAttachment`'s `localOffset`/`localOrientation`** are both
+  local-body-space conventions of the same kind as `PlayerController`'s own
+  `m_frameOrientation * (0,1,0)` above — a fixed answer to "which way is
+  THIS object's own up/right," always transformed by that object's current
+  orientation, never a world-space assumption. `ApplyFlyingPrimitiveControl`
+  no longer takes a `GravityField` parameter at all (see "Milestone 11"),
+  so there is no gravity-derived "up" left in it to audit. Verified
+  directly, not just by inspection: `judas_spacecraft_control_tests` and
+  `judas_pilot_attachment_tests` both include a rotate-the-whole-scenario
+  equivalence check against an arbitrary, unaligned quaternion.
+
+## Automated testing
+
+**Historical M5 validation circumstances.** This retained account describes the
+tools and evidence available then. Current milestone records include focused
+native, real-VM, editor, resource, package and rendered checks; their exact scope
+does not imply full-suite, human visual or cross-platform acceptance.
+
+Claude Code (the AI agent developing this engine alongside its human
+maintainer) has no way to see Judas's real window or send it keyboard/mouse
+input in this environment — there is no desktop-control tool available, and
+the window's pixels aren't reachable through the usual screen-capture route
+under a Wayland session either. Milestone 5's validation split accordingly:
+Claude verified the build, the architecture, and gravity's own behavior in
+isolation, but every claim about how the player actually behaves on screen
+had to wait on the human operator.
+
+`src/TestHarness.h/.cpp` closes most of that gap, permanently, for every
+milestone after this one — it is developer/automation tooling, not part of
+the game itself, and the normal interactive loop never touches it.
+
+**What it does:** when the `JUDAS_TEST_SCRIPT` environment variable is set
+to a script file's path, `Application::Run` creates the window *hidden*
+(`Window::Init`'s `visible` parameter — a real GL context, just not shown
+on screen) and hands off to `RunTestHarness` instead of the interactive
+loop, driving `Window`'s input from the script
+(`Window::SetTestActionState`/`QueueTestMouseDelta`/`RequestTestJump`/
+`RequestTestReset`, all gated behind `SetTestInputMode(true)` so they touch
+nothing in the normal SDL input path) instead of a real keyboard/mouse. Two
+modes, chosen by whether the script contains a `REALTIME` directive:
+
+- **Fixed-step mode** (default): runs a fixed number of physics steps as
+  fast as possible — no real-time pacing, no vsync wait. One logged row is
+  one fixed step. What Milestone 5 used to verify gameplay/physics logic
+  in isolation.
+- **Real-time mode** (`REALTIME <renderFrameCount>`, added in Milestone 6):
+  mirrors `Application::Run`'s own interactive accumulator loop exactly
+  (same `SimulationTiming` constants), so it reproduces the true
+  render-frame-to-fixed-step relationship headlessly. One logged row is one
+  *rendered frame*, including how many fixed steps ran that frame, the raw
+  authoritative position/orientation, and the presented (interpolated)
+  position/orientation — see "Diagnosis" for what this mode was built to
+  find. In this mode `HOLD`/`LOOK`/`TAP` step numbers mean render-frame
+  index rather than fixed-step index.
+
+Both modes print one CSV line per logged row to stdout, and, at any
+step/frame the script names, render the actual scene (through a
+`drawScene` callback `Application` supplies, since the harness itself has
+no idea what a "sphere" or a "player box" is) and write it to a PNG via
+`Renderer::CaptureFrame` + the vendored `stb_image_write.h` (public
+domain/MIT, `third_party/stb_image_write.h` — writing images is a solved
+commodity problem, and this single dependency-free header was preferred
+over inventing a PNG encoder or adding a fetched dependency for something
+this small).
+
+The script format (one directive per line, `#` for comments) is
+deliberately minimal — `STEPS`, `LOG_EVERY`, `REALTIME`, `HOLD <key>
+<from> <to>`, `LOOK <dx> <dy> <atStep>`, `TAP <SPACE|R> <atStep>`,
+`SCREENSHOT <atStep> <file>` — exactly the primitives needed to script a
+walk/jump/look sequence and measure its timing, not a general
+input-recording or automation language.
+
+**It already found a real bug the first time it was used.** Milestone 5's
+initial jump implementation set the player's vertical velocity to
+`kJumpSpeed` on a grounded step, but the very next fixed step's ground
+probe (`kGroundProbeDistance = 0.15m`) reached further than that single
+step's outward travel at jump speed (`kJumpSpeed * fixedDeltaTime ≈
+0.083m`), so the probe immediately "found" the surface again and the
+grounded logic reset vertical speed back to zero — the jump collapsed into
+a barely-visible ~0.08m hop instead of a real arc. The state log made this
+unambiguous in a way a screenshot alone would not have (a 0.08m hop and a
+1.3m jump can look similar from some camera angles): `grounded` never
+dropped to `0` after the tap, and the distance-from-surface for the next
+several logged steps was far smaller than a 5 m/s launch should produce.
+The fix — a ground hit only counts as support if the player wasn't already
+moving away from the surface as of last step's velocity
+(`PlayerController::FixedUpdate`'s `wasAscending` check) — is the standard
+solution to this class of bug in any step-based character controller. This
+matched what the operator had independently noticed by hand, but the
+harness found and pinpointed it first, without anyone needing to watch the
+window.
+
+**Milestone 6's real-time mode repeated the trick at the presentation
+layer.** The fixed-step mode alone couldn't have diagnosed Milestone 6's
+judder at all — it has no concept of "render frame," only fixed steps —
+which is exactly why `REALTIME` was added rather than trying to squeeze
+this diagnosis out of the existing mode. With it, one measurement
+(per-render-frame position deltas, and the distribution of fixed steps per
+frame) was enough to distinguish "the simulation itself is unstable" from
+"stable simulation, presented badly" conclusively — see "Diagnosis" for
+the full numbers. The lesson generalizes: when a new milestone's problem
+needs a shape of evidence the harness can't currently produce, extend it
+narrowly for that evidence rather than trying to force existing modes to
+answer a question they weren't built for — but don't add measurement
+capability nothing has asked for yet either.
+
+**What it deliberately is not:** a general test framework, a CI system, a
+replacement for the operator's own interactive pass, or a visual-diffing
+tool. It has no assertions of its own — reading the CSV output and looking
+at the PNGs is still a human (or Claude) judgment call, the same as
+reading any other diagnostic log. Extending it (new script directives,
+automatic pass/fail checks against expected values) should wait until a
+specific future milestone actually needs that, not be built speculatively
+now.
+
+**Milestone 7-A: per-body columns, no new directives.** Both CSV modes now
+append six columns per dynamic body, in spawn order (`obj0PosX..Z,
+obj0VelX..Z`, `obj1...`, …), reading authoritative position and linear
+velocity straight from the physics engine — no presented/interpolated
+columns for bodies, unlike the
+player's real-time row, since the automated checks below only ever need
+ground truth. `RunTestHarness`, `RunFixedStepMode`, and `RunRealtimeMode`
+all take the same `std::vector<DynamicBody>&` `Application` already built,
+and drive it through the identical `PrepareDynamicBodiesForStep` →
+`PhysicsWorld::Step` → `SyncDynamicBodiesFromPhysics` sequence the real
+game loop uses, including on `TAP R` (resetting every body via
+`DynamicBody::ResetToSpawn`, not just the player). No new script
+directives were needed — `STEPS`/`LOG_EVERY`/`HOLD`/`TAP`/`REALTIME`
+already covered everything this milestone needed to demonstrate.
+
+What this evidence actually showed, run against the real build:
+
+- **Per-body gravity direction.** A 360-step run with no player input
+  showed all four objects converging toward the sphere's center along
+  straight lines from their own distinct starting positions — each
+  object's very first logged velocity direction matched
+  `normalize(sphereCenter - itsOwnPosition)` for its own position, not a
+  shared direction, confirming each body is sampling `GravityField` at its
+  own position rather than sharing one player-derived value.
+- **World collision, no tunneling.** The same run showed all four objects
+  settle to within centimeters of `sphereRadius + (halfExtent or radius)`
+  and stay there — never below it (tunneling) and never sinking further —
+  across the whole run.
+- **Determinism.** Running the same fixed-step script twice produced
+  byte-for-byte identical CSV output both times.
+- **Long-run stability.** A 900-step (15 simulated second) run with all
+  four bodies active logged zero non-finite (NaN/Inf) values across every
+  position/velocity column.
+- **Player-to-object push.** A 400-step run holding forward from spawn
+  showed Cube A's velocity jump from its small falling speed to several
+  m/s in the push direction around step 40 (first contact), with player
+  and cube then maintaining roughly constant ~1m separation for hundreds
+  of further steps — sustained pushing, not one nudge.
+- **Object-to-object collision.** With Cube A's spawn placed close enough
+  to Sphere A (see "Physics test world"), the same no-player 360-step run
+  showed Sphere A jump from exactly zero velocity to a sustained ~1 m/s
+  roll the moment Cube A's fall reached it, then continue rolling (slowly
+  decaying — ordinary Jolt angular damping on a smooth sphere, not a bug)
+  for hundreds of further steps, still exactly on the sphere's surface
+  throughout — a real cube↔sphere collision Jolt resolved, needing no
+  player or engine involvement to trigger.
+- **Reset.** A run that let everything fall/settle for 200 steps, then
+  issued `TAP R 200`, showed every body's logged position and velocity at
+  step 200 match its step-0 (spawn) values exactly, including a body
+  (Sphere A) that had picked up real velocity from the object-to-object
+  collision above moments earlier.
+- **Presentation non-interference.** Structurally guaranteed the same way
+  as the player (see "Simulation/presentation boundary") — confirmed
+  running the `REALTIME` mode with dynamic bodies and player movement both
+  active produced no crash, no non-finite values, and authoritative body
+  columns unaffected by the presence of the player's own presented
+  columns in the same row.
+
+Attempting to steer Cube A sideways into Sphere A via the player (rather
+than via spawn placement) is also what surfaced the push mechanism's
+along-normal-only limitation recorded in "Player-to-object interaction" —
+a case of the harness earning its keep as a design tool, not just a
+verification one.
+
+**Milestone 7-B: `SAMPLE_GRAVITY <x> <y> <z>`, and testing the boundary,
+not just the endpoints.** A new directive, printed once before the main
+step/frame loop (independent of player/step state, since it only needs
+`gravity.Sample(point)`): `sample,posX,posY,posZ,gravX,gravY,gravZ,gravMag`
+per requested point. Existing per-step CSV rows (both modes) also gained
+`gravX,gravY,gravZ` columns — the effective gravity sampled at the
+player's own position that row — so a transition can be inspected without
+a separate pass. Added specifically because the brief required testing the
+transition *region*, not merely confirming the two endpoints separately;
+neither addition needed any change to `RunFixedStepMode`/`RunRealtimeMode`'s
+core loop.
+
+This was used far more as a *design* tool than a verification one — nearly
+every wrong turn in this milestone was caught by a `SAMPLE_GRAVITY` sweep
+or a scripted transition run before it reached the interactive build:
+
+- **The magnitude hard-cliff.** A `SAMPLE_GRAVITY` line sweep straight from
+  the sphere surface, through the transition region, to the platform first
+  suggested the transition was working (direction rotated smoothly) — but
+  a closer look showed *magnitude* pinned at exactly `9.81` for the entire
+  sphere zone's radius, then an instant drop to exactly `0.0` just past
+  it. That's what led to the weighted-average-times-combined-weight fix in
+  `GravityResolver::Sample` — see "Gravity context ownership."
+- **The uniform-fade regression.** A scripted plain standing jump at the
+  player's spawn point (nowhere near the platform) — a "does existing
+  behavior still work" sanity check, not a transition test — showed the
+  player break through into near-zero gravity and never land again. This
+  is what proved a `RadicalGravity` zone centered on the sphere's own true
+  center weakens gravity identically everywhere on the sphere, not just
+  near the departure point, and led to the offset-falloff-center design —
+  see "Gravity context ownership" (this whole design was later replaced;
+  see that section for why).
+- **The orientation snap.** A full scripted transition run (walk to the
+  departure point, stop, jump, coast) logged a `85`-degree change in the
+  player's local-up between two *consecutive* fixed steps — found by
+  computing the angle between consecutive logged `up` vectors across an
+  entire run, not by eyeballing individual rows. Led directly to the
+  rotation-rate cap in `UpdateFrameOrientation` — see "Orientation."
+- **The momentum erasure.** Comparing a hand-derived expected trajectory
+  (a simple point-mass simulation of the same `GravityResolver` algorithm,
+  built specifically to cross-check the engine) against the actual logged
+  velocity showed the player's outward speed collapsing far faster than
+  gravity's own deceleration could explain — which is what surfaced the
+  velocity-continuity bug in `PlayerController::FixedUpdate` — see
+  "Velocity continuity while airborne."
+
+**Full transition, both directions, logged and inspected end to end** (not
+sampled at isolated points): a scripted run walks the player from spawn to
+the departure point (`HOLD D`), stops, jumps (`TAP SPACE`), and lets
+`REALTIME`-equivalent fixed-step logging run through the entire crossing.
+Confirmed from the logs: authoritative position/velocity/orientation/grav
+columns are finite throughout; per-step orientation change never exceeds
+`~2.14°` (matching the rate cap); the player lands on the platform's real
+collision geometry (`grounded` flips to `1` there, not from any special
+casing); the reverse direction (walk off the platform's edge, fall, land
+back on the sphere) was verified the same way, ending with the player at
+exactly the sphere's normal standing distance and continuing ordinary
+locomotion. See "Validation report" (delivered separately to the operator)
+for the specific numbers.
+
+**Milestone 7-Final: repeating the centerline-only mistake, then not
+repeating it.** The first attempt at this milestone's own gravity design
+was validated the same way M7-B's had been — a `SAMPLE_GRAVITY` sweep
+along the intended travel path — and passed, then failed human validation
+anyway, because the actual defect (sideways contamination off the plank's
+own centerline) lived in a dimension that sweep never sampled. The second,
+corrected validation practice swept the FULL spatial volume before ever
+showing a build to the operator again: along the plank, across its full
+width (not just the center), above and below its surface, around both
+planets, and at both region boundaries. This is what caught the second
+design's own on-surface tilt before it needed a third human-validation
+cycle to find it, and it's what confirmed the final design reads exactly
+`(0,-9.81,0)` everywhere on the plank, not merely "closer to vertical than
+before."
+
+**Two new standalone unit-test executables, `judas_physics_tests` and
+`judas_collision_tests` (`tests/*.cpp`), added alongside the gameplay
+harness — not a replacement for it.** These test the physics PRIMITIVES in
+isolation (rigid-body integration, gravity application, narrowphase
+contact generation, contact resolution, gravity-context routing) with no
+window, no GL context, and no `Application`/`TestHarness` machinery at
+all — a different layer than `JUDAS_TEST_SCRIPT` gameplay scripts, which
+still exist and still matter (see "Automated testing" above), but can't
+exercise "does rotating an entire scenario rigidly produce a rigidly
+rotated result" as a single fast, deterministic, headless check. Both
+build as their own CMake targets and run in well under a second:
+
+- `judas_physics_tests` — uniform gravity in 7 directions (`±X, ±Y, ±Z`,
+  one arbitrary), each checked against a common reference by rotating the
+  whole scenario and rotating the result back; a full two-body scenario
+  (different masses, non-origin starting positions) rotated the same way;
+  static bodies verified immovable under force from any of 7 directions;
+  radial gravity verified to produce identical fall distance from 6
+  starting directions around a sphere.
+- `judas_collision_tests` — a box settles to the same resting gap on an
+  axis-aligned vs. an arbitrarily-rotated plane; friction decelerates
+  identically under rotation; bounce restitution matches under rotation; a
+  two-box stack under non-`-Y` gravity settles bounded and finite; three
+  bodies simultaneously on Planet A / the plank / Planet B each fall
+  toward only their own target (zero contamination); unclaimed space
+  returns exactly zero gravity and a body there coasts unchanged (no
+  invented axis); a full sweep from deep in Planet A's region through the
+  plank's into Planet B's matches exactly one field's raw output at every
+  point, with no magnitude cliff anywhere.
+
+The rotate-the-scenario technique used throughout both suites (build a
+reference result, then rebuild the identical scenario rotated by an
+arbitrary quaternion, run identical logic, rotate the result back, compare)
+is the single most direct test of "no global up or down" this project has
+written: if rotating the entire universe changes the physics outcome, a
+hidden axis assumption exists somewhere in the code under test. All of
+these currently pass; a future regression in any of them is exactly the
+signal that a change quietly reintroduced a world-axis assumption.
+
+**Milestone 8: `Q`/`E` added to `HOLD`, `F` added to `TAP`, a `controlled`
+CSV column.** `ParseHoldKey` now accepts `Q`/`E` (the flying primitive's
+vertical control — the player itself never consults these two actions);
+`TapEvent` gained a `TapKind` enum (`Jump`/`Reset`/`ControlToggle`) in
+place of its old jump-or-reset bool, so `TAP F <step>` can script the same
+`F` gating `Application::Run` uses. Both harness runners now take a
+`FlyingPrimitiveControl&` alongside `dynamicBodies` (the primitive's own
+physics state is already covered generically by its entry in that list —
+see "Milestone 8"), call `ApplyFlyingPrimitiveControl` in the identical
+position the real loop does, and pass `player.FixedUpdate` the same
+`!controlled` `inputEnabled` flag. This is exactly what made diagnosing
+and fixing the moving-support bug above possible without ever touching the
+real window — every scripted scenario in "Milestone 8" (board it, take
+control, ascend, yaw, release mid-descent, land) was built and verified
+this way before being shown to the operator.
+
+**Milestone 9: a third standalone test executable, `judas_asset_tests`
+(`tests/AssetTests.cpp`), plus a direct rendered-output check via the
+existing `SCREENSHOT` directive — no changes to the gameplay harness
+itself.** `judas_asset_tests` follows the exact pattern
+`judas_physics_tests`/`judas_collision_tests` already established: no
+window, no GL context, a plain `main()` with `Check(condition,
+description)` calls, exit code 0/1. It calls `LoadObjMesh`/
+`LoadTextureFromFile` directly against the real committed demo assets and
+checks exactly what the brief asked for: non-zero vertex/index counts, a
+whole number of triangles, every normal unit-length, real (non-zero) UV
+data present, decoded texture dimensions/channel count sensible, decoded
+pixel data actually varies (not a blank buffer), and — for both loaders —
+that a missing file fails with `false` plus a message naming the
+offending path rather than a crash or partial/garbage output. Model/
+texture loading needs no GL context (see "Milestone 9, Model loading" and
+"Textures"), which is exactly what makes this possible headlessly, the
+same reason the physics/collision suites don't need a window either.
+
+Separately, rendered *shading* (not loading) was verified using the
+existing `SCREENSHOT` directive plus a hand-computed cross-check (see
+"Milestone 9, Lighting," for the exact dot-product table and how it
+matched the captured image) rather than a new permanent pixel-comparison
+test — the brief's own framing ("automated tests cannot establish final
+correctness... if practical, include...") was read as calling for real
+verification, not necessarily a new maintained test suite for a two-line,
+symmetric shading formula with nothing axis-dependent left to regress.
+
+**Milestone 10: a fourth standalone test executable, `judas_step_climb_tests`
+(`tests/StepClimbTests.cpp`), extending the rotate-the-scenario technique
+to gameplay-level movement code for the first time.** Same shape as the
+other three (no window, no GL context, plain `Check`/exit-code), but a real
+`PhysicsWorld` with a handful of static bodies — `TryStepMove`/
+`TryStepDown` (`src/StepClimb.h`) need genuine collision geometry to sweep
+against, which `PhysicsWorld::Init()` provides with no GL dependency at
+all. Covers: a riser within `kMaxStepHeight` succeeds; one taller fails
+(stays a wall); an unobstructed flat sweep needs no stepping; a drop within
+reach is caught, one beyond it is correctly left to free-fall; and, for
+both functions, the full rotate-the-whole-scenario check (every body's
+position AND orientation rotated by an arbitrary quaternion, the resulting
+position rotated back and compared to the unrotated reference) — this is
+the first time this project's signature "no global up" verification
+technique has been applied above the pure-physics-primitive layer, to
+code that decides how the PLAYER moves, not just how a rigid body responds
+to a force.
+
+Ground acceleration/deceleration, air control, and the interactive
+staircase/ramp/flying-primitive-boarding demonstrations were verified via
+`JUDAS_TEST_SCRIPT` gameplay scripts instead (the same category M8's
+moving-support carry was) — logged velocity curves confirmed the exact
+acceleration/deceleration/air-control rates match their own constants
+step-for-step, and logged radial-distance-from-planet-center traces
+confirmed the staircase climbs smoothly, the far edge correctly free-falls
+(too tall to catch), and the flying primitive boards by walking alone.
+
+**Milestone 11: two more standalone test executables,
+`judas_pilot_attachment_tests` and `judas_spacecraft_control_tests`.**
+`judas_pilot_attachment_tests` (`tests/PilotAttachmentTests.cpp`) needs
+only the `BodyTransform` struct from `src/PhysicsWorld.h` (a header
+dependency, not a running `PhysicsWorld`) and `src/PilotAttachment.cpp`
+itself — pure CPU math against hand-crafted transforms. Covers: an
+immediate begin/apply round trip reproduces the original pose; a pure ship
+translation carries the attachment rigidly; a 180-degree roll about the
+ship's own forward axis correctly inverts the player's offset in the two
+axes perpendicular to the roll while leaving the along-axis component
+unchanged, and the attachment is never silently cleared by it; 500
+incremental ship rotations preserve the world-space offset length and a
+unit-length orientation exactly (verifying `ApplyPilotAttachment` recomputes
+fresh from the stored local pose rather than accumulating error
+incrementally); the rotate-the-whole-scenario equivalence check (this
+project's fourth application of that technique, after `StepClimbTests`);
+and the release-velocity formula (`v + omega x r`) against hand-computed
+expected values for pure translation, pure rotation at a non-zero offset,
+and combined motion — confirming the angular contribution is neither
+dropped nor double-counted.
+
+`judas_spacecraft_control_tests` (`tests/SpacecraftControlTests.cpp`) uses
+a real `PhysicsWorld` (one dynamic box, orientation set directly via
+`ResetBody`) and a real `Window` constructed WITHOUT calling `Init` — safe
+because `Window::IsActionActive`/etc. check `m_testInputMode` and return
+before ever touching real SDL state, so `SetTestInputMode(true)` plus
+`SetTestActionState` alone is enough to drive `ApplyFlyingPrimitiveControl`
+deterministically with no window, no GL context, and no real keyboard.
+As originally written for Milestone 11, this suite read
+`PhysicsWorld::GetLinearVelocity`/`GetAngularVelocity` straight back after
+a single `ApplyFlyingPrimitiveControl` call, since that function commanded
+velocity directly with no integration needed. **Milestone 12 rewrote this
+suite substantially** — per the brief's own explicit instruction not to
+preserve assertions encoding the OLD direct-velocity/angular-velocity
+semantics — since Milestone 12 deliberately replaced that control model
+with force/torque; see "Milestone 12, Automated evidence" for the current
+twelve sections this file covers (sustained-thrust acceleration, coasting,
+orientation/velocity independence, counter-thrust, perpendicular thrust,
+F/m mass response, angular coasting, counter-torque, real-inertia-tensor
+axis dependence, gravity/thrust composition, the no-op case, and rotate-
+the-scenario equivalence for force/torque). Every test in this file now
+calls `PhysicsWorld::Step` after `ApplyFlyingPrimitiveControl` and reads
+back the resulting state, exercising the real integration pipeline rather
+than the control layer's intent in isolation.
+
+Full 6DOF flight, the secured-pilot attachment through translation and
+rotation (including a deliberate upside-down roll while attached), release
+under various conditions, and reboarding were additionally verified via
+interactive `JUDAS_TEST_SCRIPT` gameplay scripts — the same category
+Milestone 10's staircase/ramp/boarding demonstrations were. Logged the
+player's distance from the spacecraft's own position remaining constant
+(matching the attachment's own guarantee) through a translate-then-roll
+sequence; confirmed `FixedUpdateAttached` reports `grounded = 0` for the
+entire attached duration (never fighting the attachment with a stray
+support probe); and confirmed a release mid-flight hands the player
+exactly the spacecraft's own current velocity (logged player velocity at
+the release step matched the spacecraft's own logged velocity to four
+decimal places), after which ordinary gravity integration, collision, and
+landing resumed with no snapping or double-counted motion.
+
+**Milestone 13** added `judas_ui_tests` (`tests/UITests.cpp`) — headless
+CPU-only coverage of `UIStack`/`UIMenuScreen`/`PauseMenu`/`HUDViewData`
+(navigation flow, focus wrapping, hit-testing, the HUD-toggle's persistent
+state, and the exact boolean `Application::Run`'s real loop gates gameplay
+input on) — see "Milestone 13, Automated evidence" for the full section
+breakdown. UI appearance/interaction itself is human-validated, per that
+milestone's own brief; no `JUDAS_TEST_SCRIPT` directive was added for UI.
+
+**Milestone 14** added `judas_lighting_tests` (`tests/LightingTests.cpp`)
+— headless CPU-only coverage of the torch/spacecraft-light transform math
+(`src/LightTransforms.*`), the mirrored attenuation/spotlight-cone
+formulas (`src/LightAttenuation.*`), and the torch's input-ownership
+gating (mirroring `judas_ui_tests`' own Section G) — see "Milestone 14,
+Automated evidence" for the full section breakdown and why actual GLSL
+shader correctness was verified by a one-time offscreen-rendering
+spot-check plus human visual validation instead of a headless GPU-readback
+test.
+
+**Milestone 15** added `judas_shadow_tests` (`tests/ShadowTests.cpp`) —
+headless CPU-only coverage of the shadow light-view/projection transform
+math (`src/ShadowTransforms.*`): finite-matrix checks at typical and
+deliberately extreme configurations, and rotate-the-whole-scenario
+invariance for both the directional and spotlight shadow matrices — see
+"Milestone 15, Automated evidence" for the full section breakdown and why
+actual GLSL shadow-sampling correctness was verified by a one-time
+offscreen-rendering spot-check plus human visual validation instead.
+
+**Milestone 16** added `judas_interactable_tests`
+(`tests/InteractableTests.cpp`) — hinge-rotation math (including rotate-
+the-universe invariance), `SelectInteractable`'s range/facing/closest-
+wins logic, the door's full open/close animation AND its live
+`PhysicsWorld` collision-transform coherence (a real `PhysicsWorld`, no
+window/GL needed), the light switch using the exact same interaction path
+as the door, and the interact key's input-ownership gating — see
+"Milestone 16, Automated evidence" for the full section breakdown.
+
+## Remaining limitations (historical milestone accounts; later repairs noted below)
+
+Recorded honestly rather than left implicit — these are known, deliberately
+deferred, not oversights:
+
+- **Fixed (was: ground vibration while walking/pushing).** What first
+  looked like straight-line-sweep-on-a-curve drift turned out, once
+  instrumented directly, to be a real bug: `SweepPlayerShape`'s contact
+  normal used a travel-direction-based sign heuristic that Jolt's own docs
+  don't call for, and which is specifically wrong for an already-touching
+  (`mFraction == 0`) hit — a state a grounded step's own small inward
+  gravity nudge reaches routinely. Combined with the move-and-slide loop
+  never correcting *back out* when already inside the skin margin (only
+  ever refusing to move closer), this produced a visible oscillation in
+  ordinary walking and, in one reproduced case, a complete permanent
+  lockup after enough sustained straight-line walking. Both are fixed —
+  see "Locomotion," "Contact normal correctness and the 'already touching'
+  case" — verified via a 60-second scripted walk that previously froze
+  solid partway through (zero frozen steps afterward) and via full-
+  precision radial-distance logging (a stable, bounded ~`1.2mm`
+  oscillation band once settled, rather than unbounded erosion toward,
+  and lockup at, zero clearance). Not related to dynamic bodies, gravity,
+  or anything else Milestone 7-A added directly — the bug predates this
+  milestone (present since Milestone 5) but was invisible on the small 8m
+  sphere; the 20m sphere's room for sustained fast straight-line walking
+  is what first made it noticeable, and what let a 60-second scripted walk
+  reproduce the full lockup for diagnosis.
+- **Residual ~1.2mm steady-state radial oscillation while walking**, after
+  the fix above. Not evaluated for further reduction — small enough that
+  it wasn't the operator's concern, and chasing it further would require
+  evidence it's still visually significant, which hasn't been shown.
+- **Residual small motion jitter tracking genuine render-frame timing
+  variance.** After the fix, presented per-frame motion still varies by
+  about `±11%` of its mean in this environment's own test conditions (down
+  from `±21%`, with the qualitative freeze/lurch artifacts eliminated
+  entirely — see "Diagnosis"). This tracks real, unavoidable jitter in when
+  frames are actually delivered (this environment's own frame interval
+  varies roughly `16.3`–`18.5ms` frame to frame) rather than being
+  decoupled from it the way the original bug was. No further smoothing was
+  applied on top of correct interpolation to chase this down further — a
+  render loop cannot present motion more smoothly than its own frame
+  delivery is spaced, and papering over that with additional smoothing
+  would just be adding latency for a difference this milestone's
+  diagnostics couldn't demonstrate is visible.
+- **Presentation always lags authoritative simulation by up to one fixed
+  step (~16.7ms).** This is the standard, accepted cost of this
+  interpolation technique (render `previous → current`, never extrapolate
+  past `current`) — not a bug, and not something this milestone attempts
+  to hide or avoid. At 1/60s this is far below the latency budget that
+  would make input feel disconnected, which is why the brief's "preserve
+  input responsiveness" requirement is satisfied by construction, not by
+  measurement here.
+- **The player-to-object push only transfers velocity along the contact
+  normal.** (Milestone 7-A — see "Player-to-object interaction".) A
+  player approaching from one angle and changing direction mid-push does
+  not steer the object sideways the way a full impulse/momentum transfer
+  would. Discovered while devising an object-to-object collision test
+  scenario, recorded rather than fixed, since a fuller push/carry system
+  is explicitly out of this milestone's scope.
+- **Dynamic-body rolling decay is now untested territory.** (Was:
+  Milestone 7-A, under Jolt's own default angular damping — a sphere set
+  rolling kept rolling for several real seconds, decaying gradually.)
+  Judas's own `RigidBody`/`IntegrateRigidBody` (Milestone 7-Final) applies
+  no angular damping at all — nothing was added, because no evidence yet
+  shows this demo's dynamic bodies need it. A sphere set rolling by this
+  engine may keep rolling considerably longer than the old Jolt-backed
+  build did, or indefinitely on a level enough surface. Not evaluated
+  further without evidence it's visually objectionable; if it becomes one,
+  a small velocity-proportional damping term in `IntegrateRigidBody` is
+  the obvious, contained fix.
+- **The rotation-rate cap (`kMaxReorientationDegreesPerSecond`, `120°/s`)
+  is a fixed constant, not derived from anything about the active gravity
+  configuration.** It was sized against Milestone 7-B's demonstration
+  (fast enough to be imperceptible during ordinary sphere walking, slow
+  enough to visibly smooth a ~90-degree reorientation over roughly a
+  second) and never revisited for Milestone 7-Final's own crossings, which
+  turned out to need the same order of magnitude of correction (max
+  observed: `2.0°`/step, matching the cap almost exactly) without further
+  tuning. A future scenario needing a much faster legitimate reorientation
+  would need this revisited.
+- **Box-vs-box contact uses a vertex-inside-the-other-box manifold, not
+  full Sutherland-Hodgman face clipping.** (Milestone 7-Final — see
+  "Physics ownership.") Correctly finds all four corners of a box resting
+  flat on a larger surface (verified: settles without rocking, see
+  `tests/CollisionTests.cpp`), but an edge-on-edge contact between two
+  similarly-sized boxes falls back to a single approximated point rather
+  than a true 1-2 point edge manifold. Not evaluated further without
+  evidence this demo's boxes ever rest edge-to-edge in practice.
+- **The player's sweep query is substep-sampled (24 steps + bisection
+  refinement), not closed-form continuous collision detection.**
+  (Milestone 7-Final.) Correct and precise at this engine's actual
+  per-step displacement scale (centimeters, not meters), but a
+  hypothetical much faster-moving shape could tunnel between substeps in
+  principle. Not a concern for this demo's walking-speed player and
+  slow-moving dynamic bodies; would need revisiting for anything moving
+  meaningfully faster.
+- **Broadphase is brute-force all-pairs.** (Milestone 7-Final; resolved by
+  Milestone 32's dynamic AABB tree — see "Milestone 32.") Exactly
+  right at this demo's body count (low teens) — a spatial structure would
+  be unused machinery, not a correctness requirement — but doesn't scale
+  past a few dozen bodies without becoming the actual bottleneck. Left
+  alone until a future milestone's body count gives real evidence it's
+  needed.
+- **Boarding the flying primitive from the plank needs a short hop, not a
+  flush walk-on.** (Milestone 8.) The primitive's own thickness (a
+  `0.25m` half-height box) sits enough above the plank's surface that the
+  player's move-and-slide loop treats its front face as an ordinary wall
+  when approached at plank height — there is no auto-step mechanism (see
+  "Deliberately Not Implemented," unchanged since Milestone 4). Verified
+  working as an ordinary jump-onto-a-low-platform interaction, not a
+  defect; not evaluated further without evidence a flush approach is
+  actually needed.
+- **Moving-support carry approximates a rotating support's contact point
+  using the player's own capsule center**, not the capsule's actual
+  contact point on the support (which `ShapeSweepHit` doesn't currently
+  carry). Accurate enough at this demo's capsule size and rotation rates
+  (verified directly — see "Milestone 8"), but a much larger capsule or a
+  much faster-spinning support would need a real contact-point field
+  threaded through `ShapeSweepHit` to stay accurate.
+- **No shadows.** (Milestone 9.) A face on the far side of an object from
+  the light shades dark via its own normal, but nothing occludes light
+  reaching a DIFFERENT object behind it — two objects can be lit as if
+  nothing were between them. Not needed for this milestone's "make shape
+  readable via one directional light" purpose; explicitly out of scope
+  (see "Deliberately Not Implemented").
+- **The built-in cube's UV mapping is a fixed placeholder pattern, not a
+  considered box unwrap.** (Milestone 9.) Every existing box (planets'
+  plank, dynamic cubes, the flying primitive, the player) draws with the
+  1x1 white fallback texture, so its UVs are currently unobserved by
+  anything. Would need real per-face unwrapping before a box could be
+  textured for real.
+- **One texture unit, one set of filter/wrap parameters for every
+  texture.** (Milestone 9.) `Renderer::CreateTexture` always uses linear
+  filtering, mipmapped minification, and repeat wrapping — sufficient for
+  this milestone's one texture, but there is no per-texture override yet
+  (e.g. clamped edges for a UI-style texture, nearest-neighbor for a
+  pixel-art one) if a future need arises.
+- **`ModelLoader`'s index buffer is not deduplication-compacted** —
+  `beacon.obj`'s 18 vertex-instances are emitted with sequential,
+  1-to-1 indices rather than merging vertices that share an identical
+  position/normal/UV combination. Correct and adequate at this asset's
+  size; would be real wasted GPU memory/bandwidth for a much larger
+  imported model.
+- **`TryStepMove` attempts stepping exactly once per fixed step, using the
+  player's full remaining displacement, not the iterative multi-surface
+  handling the ordinary move-and-slide loop has.** (Milestone 10.) A
+  step encountered at a diagonal, alongside a second unrelated wall in the
+  same step, isn't specially handled — it either fully succeeds (using the
+  complete displacement) or fully fails and falls back to ordinary
+  sliding, never a partial resolution. Adequate for this demo's geometry
+  (a straightforward staircase, a single ramp, the flying primitive's own
+  edge); a much more geometrically complex step scenario might need a
+  real multi-attempt version.
+- **Moving-support velocity carry (Milestone 8) still approximates the
+  contact point using the player's own capsule center**, unchanged by this
+  milestone — see law #16's own note. Stepping onto or off a ROTATING
+  support was not re-tested at the exact moment a step-up/step-down also
+  fires in the same step; both mechanisms are independently correct and
+  compose the same way any two independently-verified pieces of
+  `FixedUpdate` do, but that specific combination wasn't a dedicated test
+  scenario this milestone.
+- **The staircase and ramp are placed only ~20-26 degrees off Planet A's
+  pole**, not at an extreme bearing, so the interactive demo itself is
+  only modest evidence against a world-Y assumption — deliberately
+  favoring a short, reliably-aimable walk for a human tester over a
+  dramatic rotation (see "Milestone 10, Demonstration" for why). The far
+  more rigorous claim — genuinely arbitrary rotation — is proven instead
+  by `tests/StepClimbTests.cpp`'s rotate-the-scenario checks, which do use
+  an arbitrary, unaligned quaternion.
+- **The spacecraft's collider is still the same simple, non-cubic box it
+  was in Milestone 8** (2.0 x 0.25 x 3.0 half-extents), now rotating
+  through arbitrary attitudes rather than staying roughly level. Observed
+  directly while validating this milestone: a sustained roll can bring a
+  corner of that box close enough to nearby static geometry to trigger the
+  contact solver's ordinary positional correction (see "Physics
+  ownership"/`ContactSolver.cpp`'s `kPositionalCorrectionPercent`), nudging
+  the spacecraft's position slightly even with zero commanded linear
+  velocity — correct, intentional contact-resolution behavior (the same
+  mechanism keeps any two overlapping bodies from interpenetrating
+  anywhere else in this engine), not a bug in the attachment or flight
+  controls, but worth naming: a spacecraft flown very close to world
+  geometry while rotating can pick up small unintended positional nudges
+  from ordinary collision response, the same as any other rotating box in
+  this engine would.
+- **The secured-pilot attachment models exactly one relationship (one
+  player, one spacecraft) with no smoothing or interpolation of the
+  attachment itself** — `ApplyPilotAttachment` is an exact, rigid
+  transform, by design (see "Milestone 11"). A spacecraft whose own
+  per-step rotation is extremely large would carry the attached player
+  through that same large rotation in one step, exactly as a rigidly
+  bolted object should. **Milestone 12 update:** since angular velocity is
+  no longer capped at a fixed commanded rate (torque accelerates it
+  without bound, the same "no speed cap" law that applies to translation —
+  see "Milestone 12"), sustained one-directional torque over a long enough
+  held duration COULD eventually reach a per-step rotation large enough
+  for this to matter in principle; not observed or specifically stress-
+  tested at extreme angular velocities during this milestone's own
+  validation (ordinary piloting never approached that regime).
+- **Reboarding after release requires the same ordinary support-gated
+  walk/step onto the spacecraft as the first boarding** — there is no
+  quick-reboard, auto-magnetize, or reduced gating the second time; every
+  boarding goes through the identical `HandlePilotToggleRequest` check.
+  Deliberate, not an oversight: a separate "already familiar with this
+  spacecraft" fast path would be exactly the kind of special-casing the
+  brief's "no generic possession framework" constraint rules out.
+- **Milestone 12: rotating in place while still resting flat on the plank
+  is realistically stiff, well beyond what free-flight torque alone
+  overcomes.** Measured directly: `kControlTorqueMagnitude` (450 N*m,
+  tuned for good free-flight responsiveness — see "Milestone 12") produces
+  no measurable net rotation at all while the spacecraft is still resting
+  on the plank under this demo's gravity/friction (`0.8` coefficient); the
+  static-friction torque threshold empirically sits somewhere between
+  ~2500 and ~3000 N*m for this geometry, well past what free-flight
+  responsiveness calls for. Deliberately NOT fixed by inflating the torque
+  constant — doing so would make rotation feel unrealistically twitchy
+  once genuinely airborne, where the real inverse inertia tensor (not
+  friction) is the only thing governing response, exactly as verified in
+  "Automated evidence" above. The practical consequence is simply that a
+  pilot wanting to turn in place should ascend (which DOES work at this
+  force magnitude, with real margin — see "Milestone 12, A real force-
+  magnitude bug") before attempting to rotate; once clear of any contact,
+  full torque responsiveness is immediate. This is real, physically
+  correct emergent behavior from the existing, unmodified `ContactSolver`
+  (see "Physics ownership") — not a defect this milestone introduced or
+  is responsible for correcting.
+- **Milestone 12: a hard, fast landing impact can remove noticeably more
+  horizontal velocity than a single-iteration Coulomb friction clamp alone
+  would predict.** Measured directly while validating this milestone (and
+  reproduced independently with a plain falling box under only
+  `ApplyLinearAcceleration` gravity — no spacecraft, no control code
+  involved at all): a body striking a static surface with both a large
+  closing (normal) speed and a large tangential (horizontal) speed can
+  lose the large majority of its horizontal velocity in that single
+  contact step — e.g. a measured `15 m/s` horizontal component dropping to
+  `~6 m/s` in one step of a hard vertical impact. This is a genuine,
+  PRE-EXISTING characteristic of `ContactSolver.cpp`'s sequential-impulse
+  solver running `kSolverIterations = 4` passes per step (each iteration's
+  friction clamp is computed against that iteration's own normal impulse,
+  so a hard impact's friction budget compounds across iterations rather
+  than being computed once) — present since Milestone 7-Final, entirely
+  unrelated to and unmodified by this milestone's own changes (confirmed
+  by reproducing it with zero spacecraft/control code in the call path at
+  all). It was never visible before this milestone because Milestone
+  8-11's directly-commanded spacecraft velocity was always small and never
+  produced a genuinely hard, fast impact; Milestone 12's real, unbounded
+  inertial velocities are the first thing in this project capable of
+  reaching speeds where it's observable. Per the brief's own instruction
+  ("choose sensible test-force magnitudes... document the tested range
+  honestly... make the smallest justified correction" only for "an actual
+  collision/tunnelling problem"): this is not tunnelling, a crash, or a
+  NaN — the solver still produces a stable, physically-plausible (if
+  imperfectly damped) result — so it is recorded here as measured, honest
+  evidence rather than "fixed" by redesigning the existing, out-of-scope
+  contact solver (see "Preserve the current architecture" / "Physics
+  ownership" — redesigning the solver is explicitly not this milestone's
+  mandate). A pilot flying at high speed near solid geometry should expect
+  a hard collision to cost more speed than gentle Coulomb friction alone
+  would suggest.
+- **HISTORICAL / superseded by completed M58: Milestone 13 UI font atlas is a fixed 512x512 bake at one pixel
+  height (48px), covering only printable ASCII (32-126).** Sufficient for
+  this milestone's HUD telemetry and menu labels; a future UI needing
+  Unicode, multiple font weights/styles, or much larger on-screen text
+  would need either a bigger/multiple atlas or `stb_truetype`'s more
+  configurable packing API (`stbtt_PackBegin`/`PackFontRange`) instead of
+  the simple `stbtt_BakeFontBitmap` call used here.
+- **HISTORICAL / superseded by completed M41/M58: Milestone 13 `DrawUIText` draws exactly one line; there is no
+  wrapping, multi-line layout, or text alignment beyond what callers
+  compute themselves** (`HUD`/`UIMenuScreen` each call it once per line at
+  a manually computed Y offset). A future UI screen with paragraph-length
+  text would need line-wrapping added to a caller, or to `DrawUIText`
+  itself.
+- **Milestone 13: no glyph/quad batching — one GL draw call per character
+  and per panel.** Fine at this milestone's few-dozen-draws-per-frame HUD/
+  menu; a much busier UI (a scrolling log, a large inventory grid) would
+  need real batching (a single VBO upload per frame, indexed by glyph)
+  before this brute-force approach would show a real cost.
+- **Milestone 14 (superseded by Milestone 15): "no shadows of any kind"
+  was true through M14 only.** As of Milestone 15, the directional light,
+  the player torch, and the spacecraft headlight all cast real shadows —
+  see the M15-specific bullets immediately below for what's still
+  honestly unresolved even with shadows now present (point/nav lights
+  still cast none; the directional shadow frustum is bounded, not
+  world-covering; a fragment outside a light's own shadow frustum is
+  treated as unshadowed, not verified unoccluded).
+- **Milestone 15: point/navigation lights still cast no shadows.** Only
+  the directional "sun," the player torch, and the spacecraft headlight
+  do (see "Milestone 15, Which lights cast shadows") — an object lit
+  solely by a wingtip nav light still has no occluder check applied to
+  that light's own contribution. Cubemap point-light shadows were
+  explicitly excluded from this milestone's scope.
+- **Milestone 15: the directional shadow frustum is a single frustum
+  recentered on the player, not cascaded shadow maps.** Shadows far from
+  the player's own current position (e.g. on the far planet while
+  standing on the near one, or generally more than ~25m from the player)
+  are simply not computed that render frame — an accepted, explicitly
+  documented limitation (see "Milestone 15, Directional-light shadows"),
+  not an oversight. A future milestone needing world-scale directional
+  shadow coverage would need real cascaded shadow maps, not a bigger
+  single frustum (which would only trade near-player shadow resolution
+  for far coverage, at this engine's fixed 1024x1024 shadow-map size).
+- **Milestone 15: a fragment outside a shadow-casting light's own bounded
+  frustum is treated as fully lit ("no occluder data"), not "verified
+  unoccluded."** An occluder positioned just outside a spotlight's own
+  (cone-sized-plus-small-margin) shadow frustum could in principle fail
+  to shadow something right at that frustum's own edge. Accepted, not
+  fixed, for this milestone's own demo scale.
+- **Milestone 14 (headroom now fully used as of Milestone 16): a fixed
+  maximum of 5 simultaneous dynamic lights** (`kMaxDynamicLights`,
+  `src/Light.h`), enforced by silent truncation in
+  `Renderer::SetDynamicLights` — this demo can now reach exactly that
+  cap (1 torch + 3 spacecraft lights + 1 light-switch lamp = 5, with zero
+  slots of headroom left); a scene needing meaningfully more would need
+  either a larger fixed array or a real light-culling scheme (see
+  "Milestone 14, Light limits" for why neither was built speculatively).
+- **Milestone 14: no photometric accuracy.** Light "color" values are
+  tuned, demo-specific numbers with intensity folded directly in (e.g.
+  `kTorchColor`'s components exceed 1.0) — not lumens, not any calibrated
+  real-world unit. A future milestone wanting physically-based light units
+  would need a genuinely different (HDR-aware, exposure-aware) pipeline,
+  not a reinterpretation of these same numbers.
+- **Milestone 16: the facing-cone/range interaction detection is not a
+  real line-of-sight check.** `SelectInteractable` (`src/
+  InteractionSystem.cpp`) only tests distance and angle, never occlusion
+  — an interactable technically "behind" a wall from the player's
+  position but within range/facing-cone would still be selectable. Not
+  an issue for this demo's own geometry (nothing occludes the door/switch
+  from their own approach angles), but an honest, documented limitation,
+  not a guarantee.
+- **Milestone 16: the door is driven kinematically (via `PhysicsWorld::
+  ResetBody`), not simulated as a real constrained rigid body.** It
+  cannot be pushed, jammed, or physically resisted by anything in the
+  world — its open/closed angle is purely a function of its own
+  interaction state, immune to collision response. Sufficient for "a
+  door that opens and closes and blocks the player when shut," not a
+  physically-simulated hinge joint.
+
+## FUTURE CONSTRAINTS PRESERVED (historical design notes)
+
+This section explains only how the current design avoids *unnecessarily*
+blocking requirements that were future work when these notes were written.
+Later milestone notes identify fulfilled parts; this is not a current feature backlog.
+
+- **Multiple/composite gravity sources, true planetary systems** — the
+  `GravityField` interface and its two current implementations
+  (`FaithfulGravity`, `RadicalGravity`) already prove that a consumer
+  needs zero changes when the concrete gravity implementation changes. A
+  future composite field is a third implementation, not a rework of the
+  interface or its consumers.
+- **No universal up, confirmed under an actually-changing gravity
+  direction** — Milestone 3/4 only asserted this was possible; Milestone 5
+  demonstrates it: `PlayerController` visibly reorients as `RadicalGravity`'s
+  sampled direction changes continuously while walking around the sphere,
+  using no hard-coded axis for that reorientation.
+- **Reference-frame-aware physics integration** — M22 now provides reusable
+  position/direction/velocity conversions for translating and rotating
+  frames, and the live HUD demonstrates relative motion using the celestial
+  bodies and spacecraft. `PhysicsWorld` still integrates all bodies in one
+  authoritative world coordinate system; no body is simulated in local
+  coordinates and no force is changed by choosing a frame. Extending physics
+  itself to use local coordinates would require separate evidence and design.
+- **Large-world coordinates and rebasing** — historically, Milestone 7-B
+  could use Jolt's optional double-precision build, an option removed by
+  Milestone 7-Final's own single-precision physics. M23 subsequently
+  implemented a fixed double-precision absolute origin with local float
+  simulation. This supports compact scenes at large absolute coordinates;
+  it does not provide live origin rebasing. Continuous travel requiring
+  origin shifts remains a future capability.
+- **Terrain, many collision objects, raycasts/shape queries, constraints**
+  — Milestone 5 was evidence this was practical under Jolt (the player's
+  entire support/movement system built from exactly one query primitive,
+  `CastShape`, used twice differently); Milestone 7-Final's own
+  `PhysicsWorld::SweepPlayerShape` preserves the same one-primitive shape,
+  now backed by Judas's own substep-sampled sweep instead. Terrain
+  collision or more query types are a matter of adding narrowphase pair
+  functions to `src/Contacts.*` (sphere/box exist; a heightfield or mesh
+  type would be new work, not new architecture) through the same
+  `PhysicsWorld` boundary.
+- **Interpolated presentation for future dynamic/simulated objects** —
+  **fulfilled in Milestone 7-A**, not merely still-preserved: the
+  Milestone 6 presentation boundary (previous/current pose kept per
+  object, blended by one shared per-frame `alpha`) now has a real second
+  consumer (`DynamicBody`, four of them) reusing the identical shape
+  without rework, exactly as predicted — see "Simulation/presentation
+  boundary," "Extended to dynamic bodies." Still no generic multi-object
+  *framework* beyond `DynamicBody` itself and the two small free
+  functions that drive it; a future object type (a moving platform, a
+  thrown item) is expected to reuse `DynamicBody` or the same pattern
+  directly, not a new abstraction layer.
+- **Many simultaneous dynamic objects, object-to-object interaction** —
+  Milestone 7-A was evidence this was practical under Jolt; Milestone
+  7-Final's own engine repeats the proof with six bodies across three
+  regions, sharing one `GravityContextMap` and colliding with the world
+  and each other, needing no new physics architecture. The limit now
+  worth naming honestly: `PhysicsWorld::Step`'s broadphase is brute-force
+  all-pairs (see "Physics ownership," "Remaining limitations") — correct
+  and fast enough at this demo's body count, but the thing that would need
+  raising (a spatial structure, not a constant) for meaningfully more
+  bodies than this milestone actually uses.
+
+## DELIBERATELY NOT IMPLEMENTED (historical milestone scope)
+
+Explicitly deferred at the milestones described below, not forgotten. Later
+accepted work supplies audio (M34), controller/logical input (M35), prefabs (M36),
+export (M38), scripting (M40) and authored runtime UI (M41), among other additions.
+Unimplemented portions remain subject to their current documented scope.
+
+- Gravity-source registration, sphere-of-influence systems, or any
+  generalized multi-source gravity FRAMEWORK — Milestone 7-Final's two
+  planets are two hand-wired `RadicalGravity` instances in
+  `Application.cpp`, not a registration system. **Gravity blending
+  specifically was tried, twice (`GravityResolver`, then a first
+  `GravityContextMap` design) and REMOVED, not merely never attempted** —
+  see "Gravity context ownership" for why continuous field-blending turned
+  out to be the wrong model for "which gravity governs a consumer," not
+  just an unbuilt nice-to-have.
+- Inverse-square/realistic gravity, gravitational mass, orbital mechanics,
+  celestial simulation — `RadicalGravity` is constant-magnitude by design
+- Planets as an engine subsystem, planetary rotation, spherical terrain,
+  terrain chunks, LOD, procedural terrain, oceans, atmosphere, Terrain-ML —
+  the Milestone 5 sphere exists to prove architecture, not as the start of
+  a planet system
+- Nested reference-frame hierarchies and live floating-origin travel.
+  M23 later added fixed-origin astronomical placement with local float
+  physics; this was not implemented at the milestone described here.
+- A general gameplay/entity framework, ECS, or scene graph — one
+  `PlayerController` for one player is enough
+- Character physics beyond the move-and-slide loop this milestone needed:
+  no ragdolls, no skeletal physics, no complex constraint systems,
+  vehicles, or destructible physics
+- Stair-climbing, ledge grabs, or any locomotion beyond walking/jumping on
+  a convex surface — not intrinsically required by this milestone
+- Sprinting, crouching, stamina, acceleration curves, movement states,
+  character models, skeletal animation, or any animation system
+- Double jump, coyote time, jump buffering beyond the render-frame-to-
+  fixed-step input latch, variable jump height, air dashing, wall jumping
+- Cinematic cameras, camera collision, camera shake/smoothing frameworks,
+  multiple gameplay camera modes, or a free-fly debug camera
+- Any physics-debug-drawing (of any kind, from any engine)
+- Lighting, shadows, textures, materials, model loading
+- Audio, networking, NPCs, AI, inventory, weapons, health, interaction
+  systems
+- Editors, scripting, UI frameworks
+- Vulkan (unchanged reasoning from Milestones 1–2)
+- Gameplay of any kind
+- Controller input (the `Action` boundary exists for this, but only
+  keyboard + mouse are wired up)
+- A generated OpenGL loader (glad/GLEW) — the GL surface didn't grow this
+  milestone; `DrawSphere` reuses the exact same GL calls `DrawBox` already
+  used
+- **Milestone 7-A additions:** an entity/component system, scene graph, or
+  prefab architecture merely because several test objects now exist —
+  `DynamicBody` is a plain struct-like class with two free functions
+  driving it, not a framework (see "Dynamic bodies"); runtime object
+  spawning, a spawn/placement UI, or any object-authoring tool — all four
+  bodies are created once in `Application::Run` and destroyed once at
+  shutdown; grabbing, carrying, throwing, or any interaction beyond
+  walking into an object (see "Player-to-object interaction"); gravity
+  volumes, multiple simultaneous gravity *sources*, or gravity priority
+  systems (Milestone 7-A proves multiple gravity *consumers* of one
+  source, a different axis from multiple sources — see "Multiple gravity
+  consumers"); a moving-platform or attached-rider system; object health,
+  destructibility, or pooling/lifecycle management beyond create-once/
+  destroy-once
+- A physics material/property system beyond per-body friction/restitution —
+  each planet/plank/dynamic body gets explicit, sensible values; the
+  player, having no physics-engine body, has none to configure
+- **Milestone 7-B additions (historical — this design was later replaced;
+  see "Gravity context ownership"):** a general arbitrary gravity-volume
+  editor, gravity scripting, or a "priority"/layering system for gravity
+  sources — `GravityResolver` was exactly two zones, each a point and two
+  radii, sized by hand for that milestone's two environments; a third
+  gravity implementation, or any mode-switching added to
+  `FaithfulGravity`/`RadicalGravity` themselves — both remained exactly
+  what they were, and neither ever heard of the other or of
+  `GravityResolver`; a directional/cone-shaped or otherwise new zone
+  *shape* — the offset-falloff-center technique reused the existing
+  point-and-radius zone unchanged, just placed cleverly; a mutable global
+  "current gravity" variable or mode switch of any kind — every
+  `GravityResolver::Sample` call re-evaluated every zone independently for
+  the position it was asked about; scene loading, world streaming, or
+  swapping one environment out for another — both the sphere and the
+  platform existed simultaneously for the entire run; moving Milestone
+  7-A's dynamic bodies into the transition (not required, not attempted);
+  a generalized "air control" system — the velocity-continuity fix
+  specifically does *not* let WASD affect
+  airborne velocity, only prevents existing momentum from being erased;
+  any animation/rotation-smoothing system independent of authoritative
+  orientation — the reorientation rate cap lives in `FixedUpdate`, is
+  itself authoritative state, and the Milestone 6 presentation boundary
+  remains strictly downstream of it, never a substitute for it
+- **Milestone 7-Final additions:** a feature-complete general physics
+  engine imitating Jolt — broadphase is brute-force all-pairs, box-vs-box
+  uses a vertex-inside manifold rather than full clipping, the player's
+  sweep is substep-sampled rather than closed-form continuous collision
+  detection, and none of that was treated as a gap to fill beyond this
+  demo's own needs (see "Physics ownership," "Remaining limitations");
+  sleeping/waking (no evidence any body in this demo needs to stop being
+  simulated when at rest — the body count is small enough that always
+  stepping every body has no measured cost); a general constraint solver
+  beyond contact resolution (no joints, hinges, or springs anywhere in
+  this milestone); per-consumer gravity-context state or hysteresis — see
+  "Gravity context ownership" for why position-only resolution is
+  sufficient for THIS milestone's static environments, explicitly NOT
+  documented as a permanent law; large-world/double-precision coordinates
+  — Judas's own physics math is single-precision `glm`, a genuine
+  capability this migration removed rather than preserved (see "FUTURE
+  CONSTRAINTS PRESERVED"); any third gravity-field implementation or
+  change to `FaithfulGravity`/`RadicalGravity` themselves — the plank's
+  entire solution was reusing `FaithfulGravity` completely unmodified
+- **Milestone 8 additions:** spacecraft architecture, moving reference
+  frames as a generalized engine system, orbital mechanics, aerodynamics —
+  none of this milestone's flying-primitive work touches reference frames
+  or orbital anything at all, it is a directly-commanded rigid body;
+  a vehicle framework or vehicle components (seats, engines/thrusters as a
+  simulation system, fuel, docking) — `FlyingPrimitiveControl` is a
+  `BodyHandle` and a bool, not a component system; multiple controllable
+  vehicles or a general possession framework — one primitive, one control
+  struct, gated by one comparison; model loading, textures, materials, or
+  any visual improvement to the primitive beyond an ordinary box (the same
+  `DynamicBody`/`Renderer::DrawBox` path every other test object already
+  uses); a generalized "moving platform" or "attached rider" framework —
+  the moving-support fix (see "Milestone 8") lives entirely inside
+  `PlayerController::FixedUpdate`'s existing grounded branch, not a new
+  subsystem; artificial gravity, gravity generators, or any change to
+  gravity semantics — the primitive samples the same `GravityContextMap`
+  every other body does, unmodified; realistic flight dynamics (lift,
+  drag, engines) — translation and rotation are direct velocity commands,
+  explicitly documented as "boring controls," not a flight model
+- **Milestone 9 additions:** Vulkan or any second graphics backend — the
+  existing OpenGL 3.3 path was extended, not replaced (see "Milestone 9,
+  Renderer evolution"); PBR, a metallic/roughness workflow, normal/
+  parallax mapping, emission maps — the material concept here is exactly
+  "a mesh, an optional texture, a tint color," nothing closer to a real
+  material system than that; shadows of any kind (shadow maps, cascaded,
+  or otherwise), point/spot/area lights, multiple-light management, HDR,
+  tone mapping, bloom, SSAO, SSR, global illumination, deferred/forward+/
+  clustered rendering, compute or GPU-driven rendering, a render graph —
+  one directional light plus ambient, computed directly in one forward
+  shader, is the entire lighting system this milestone builds; an
+  instancing framework or occlusion culling — this demo's object count
+  gives no evidence either is needed; skeletal animation, an animation
+  system, or model scene-hierarchy importing — OBJ has none of this to
+  import and `LoadObjMesh` doesn't invent any; mesh collision or automatic
+  collider generation from a render mesh — the beacon has no physics body
+  at all (see "Milestone 9, Assets" / law: render mesh != collision mesh);
+  an asset database, GUID system, content-addressable store, or virtual
+  filesystem — two files, two relative paths, nothing to look up by
+  anything other than a literal path; hot reload — assets are loaded once
+  at startup, exactly like every other piece of this demo's fixed
+  geometry; an editor, a material graph, or a shader graph — one hand-
+  written GLSL shader pair, not authored or edited at runtime by anything
+- **Milestone 10 additions:** mantling, ledge grabbing, climbing, ladders,
+  wall running, sliding, prone, swimming, parkour — `TryStepMove` is
+  exactly "walk into a short obstruction and rise onto it," nothing else
+  about traversal changed; double jump, variable jump height, coyote time
+  beyond the existing single-frame input latch — jumping is untouched from
+  Milestone 4/7-B; stamina, weight classes, or any configurable character
+  stat — `kMoveSpeed`, `kGroundAcceleration`/`kGroundDeceleration`,
+  `kAirAcceleration`, `kMaxStepHeight` are fixed constants, not per-player
+  or per-character data; animation, IK, footsteps — this milestone is
+  entirely about `m_position`/`m_velocity`, the player still renders as
+  the same plain box it always has; controller/gamepad support or
+  configurable keybinds — `Window`'s `Action` enum and its fixed key
+  bindings are unchanged; character models — none exist to add to; a
+  movement-state framework (walking/running/crouching/etc. as named
+  states) — grounded vs. airborne remains the only distinction
+  `FixedUpdate` makes, exactly as before; a generic character-controller
+  library or reusable framework — `StepClimb.h`'s two free functions are
+  the entire new surface, deliberately not a class hierarchy or plugin
+  system for future movement abilities
+- **Milestone 11 additions:** general moving reference frames, nested
+  physics worlds, or a reusable "attach to a moving body" primitive other
+  code can call — `PilotAttachment` models exactly the one player/one
+  spacecraft relationship this milestone needs; spacecraft interiors,
+  artificial/spacecraft-local gravity, or automatic alignment to gravity —
+  the spacecraft's own local axes exist purely because it has an
+  orientation, gravity itself is never touched by control ownership;
+  multiple controllable spacecraft or a generalized possession framework —
+  one `FlyingPrimitiveControl`, one `PilotAttachment`, unchanged in shape
+  from Milestone 8's "one handle, one bool"; a thruster/fuel/reaction-wheel/
+  aerodynamics model, realistic flight dynamics, or orbital mechanics —
+  translation and rotation remain direct velocity/angular-velocity
+  commands, explicitly "boring controls," the same category Milestone 8
+  already established (**historical note: this specific claim — direct
+  velocity/angular-velocity commands — is deliberately SUPERSEDED by
+  Milestone 12, which replaces them with genuine force/torque-driven
+  inertia; the rest of this bullet, no thruster/fuel/reaction-wheel model
+  and no realistic aerodynamics/orbital mechanics, remains true of
+  Milestone 12 as well — see "Milestone 12 additions" below**); mesh
+  collision or automatic collider generation from `plane.obj` — the
+  spacecraft's collision remains the same simple box it always was;
+  gamepad support or rebindable controls — six new fixed keyboard bindings
+  (I/K/J/L/U/O), same fixed-binding approach every previous milestone's
+  input additions used; a cockpit camera, cinematic camera, or any new
+  camera system — Milestone 8's existing anchor-pose `GetViewMatrix`
+  overload is reused completely unchanged; renderer/API migration or any
+  expansion of the asset system beyond one more OBJ mesh loaded through
+  the exact same Milestone 9 path.
+- **Milestone 12 additions:** orbital mechanics, inverse-square gravity,
+  realistic celestial simulation, or any change to `RadicalGravity`/
+  `GravityContextMap` — gravity is exactly what it was before this
+  milestone; generalized moving reference frames, spacecraft interiors,
+  artificial gravity, multiple spacecraft, docking, or any expansion of
+  `PilotAttachment`'s scope — it needed zero code changes this milestone;
+  autopilot, flight assistance, velocity matching, attitude hold, auto-
+  level, automatic braking, drag, or aerodynamics of any kind — no
+  stabilization exists anywhere in the new control path, verified directly
+  (see "Milestone 12, Automated evidence"); fuel, individual thrusters,
+  RCS, reaction wheels, engine systems, heat, or structural simulation —
+  one net local-space force and one net local-space torque per fixed step
+  is the entire control surface; relativistic mechanics; a generic
+  vehicle framework or generic force-component framework — `ApplyForce`/
+  `ApplyTorque` are two plain `PhysicsWorld` methods, not a component
+  system; a new physics integrator — `IntegrateRigidBody` (already owned
+  since Milestone 7-Final) is the only integration path force/torque ever
+  passes through; mesh collision or any renderer change beyond what
+  Milestone 9/11 already established; terrain, atmosphere, UI, audio, or
+  networking.
+- **Milestone 13 additions:** inventory, quests, dialogue, crafting,
+  health/damage systems, save/load, key rebinding, controller support, a
+  UI animation framework, an in-game editor, HTML/browser-based UI,
+  generic data binding/reflection, a localization framework, or any
+  gameplay system invented solely to give the HUD/menu something to
+  display; a general anchor-enum/multi-point layout engine — the HUD
+  needed exactly one anchor, `UIMenuScreen` exactly one column layout;
+  glyph/quad batching — fine at this milestone's few-dozen-draws-per-frame
+  scale (see "Remaining limitations"); `JUDAS_TEST_SCRIPT` scripting for
+  UI interaction — human validation covers it directly, per this
+  milestone's own brief; Unicode, multiple font weights/styles, or
+  line-wrapping text layout; mouse-wheel/scroll support; a themeable or
+  multi-style UI — one visual style, shared by the HUD panel and both menu
+  screens; and any generalized "attach/secure a UI widget to X" concept
+  beyond the one HUD + pause-menu pairing this milestone needed.
+- **Milestone 14 additions (basic shadows superseded by Milestone 15 —
+  see that milestone's own bullet below for what M15 actually added and
+  what's still excluded):** ray tracing, PBR, HDR, tone mapping, bloom,
+  global illumination, ambient occlusion, reflection probes, image-based
+  lighting, volumetric lighting/fog, lens flare, emissive materials
+  beyond ordinary tinted geometry, a day/night cycle, atmospheric
+  scattering, light baking/lightmaps, clustered/Forward+/deferred
+  lighting, a render graph, Vulkan, editor lighting tools, gameplay light
+  queries (no system anywhere asks "is this point lit"), a battery or
+  inventory torch item, AI vision, or multiple rendering backends; a
+  light resource-manager/handle-lifetime system — lights are cheap,
+  frame-rebuilt plain data, never a GPU resource with an allocate/free
+  lifecycle; more than `kMaxDynamicLights` (5) simultaneous lights, or
+  any light-culling scheme to support more; any `JUDAS_TEST_SCRIPT`
+  scripting for the torch toggle — its input-ownership boundary is
+  covered by `judas_lighting_tests`' own pure-logic section, appearance/
+  interaction by human validation; and photometric accuracy of any kind —
+  every light "color" value in this milestone is a tuned, demo-specific
+  number with intensity folded in, not a calibrated real-world unit.
+- **Milestone 15 additions:** cascaded shadow maps, point-light/cubemap
+  shadows, ray-traced shadows, soft-shadow filtering beyond the minimal
+  3x3 PCF actually implemented, contact shadows, screen-space shadows,
+  baked shadows/lightmaps, PBR, HDR, a render graph, deferred rendering,
+  Forward+, Vulkan, or any atmosphere/day-night system; a generalized
+  shadow-caster registry/scheduler supporting more than the three fixed
+  named slots (`kShadowMapCount = 3`) this milestone's brief scoped
+  exactly to; per-light configurable shadow-map resolution (all three
+  slots share one fixed 1024x1024 size); and any `JUDAS_TEST_SCRIPT`
+  scripting or GL-context-requiring headless test for actual shadow-map
+  pixel correctness — covered instead by the mirrored/pure-math
+  `judas_shadow_tests` suite plus a one-time offscreen-rendering spot-
+  check and human visual validation.
+- **Milestone 16 additions:** keys/locks, inventory requirements,
+  automatic doors, quests, dialogue, scripted sequences, an animation
+  system, a generic joint/constraint framework (the door needed none),
+  save/load persistence, interaction trees, networking, editor tooling,
+  a generic event bus, reflection, a scripting language, an entity-
+  component system, or a prefab system; a real line-of-sight/occlusion
+  check for interaction detection (range + facing cone only — see
+  "Remaining limitations"); a visual highlight/outline effect for the
+  currently-selected interactable (the HUD prompt alone signals a valid
+  target); more than two interactables' worth of demonstrated variety
+  (one door, one non-door — proving the abstraction generalizes, not
+  building out a catalog of interactable kinds); and cubemap/point-light
+  shadows for the light switch's own lamp (unchanged since Milestone 15
+  — point lights still cast none).
+
+## Milestone 20 — Newtonian two-body demonstration (accepted)
+
+The interactive composition root creates two additional dynamic sphere bodies
+in the gravity map's unclaimed space. They are not the M7 walkable planets:
+those remain static, continue to use their existing `RadicalGravity` fields,
+and the plank remains governed by `FaithfulGravity`. `CelestialGravity`
+(`src/CelestialGravity.*`) is a distinct, Judas-owned force producer. Given a
+selected list of massive dynamic `BodyHandle`s, it visits each pair once and
+accumulates equal-and-opposite forces into the ordinary `PhysicsWorld` force
+accumulators. It does not know about orbit states, trajectories, or gravity
+contexts. At exact coincident centers its point-mass force is undefined, so
+the helper returns zero; ordinary shape collision handling remains
+responsible for finite-size contact.
+
+The gravitational constant is `G = 6.67430e-11 m^3 kg^-1 s^-2`. The demo
+uses two `1e14 kg` spheres of radius `3 m`, with center separation `30 m`.
+Their center of mass begins at `(0, 23, 115) m`. Initial relative position
+and tangential velocity are the analytical circular two-body solution;
+both vectors are authored through one non-axis-aligned quaternion frame. The
+relative circular speed is `sqrt(G * (mA + mB) / separation)`; each equal
+mass receives half that speed in opposite directions. These masses and
+radii are an intentionally compact, abstract demonstration scale, not a
+claim about plausible planetary density. The project uses its existing
+metre/second/kilogram conventions and SI `G`.
+
+After initialization, every fixed step performs the existing 60 Hz sequence:
+sample local gameplay gravity for ordinary consumers (the orbital pair is
+outside every registered region and receives zero), accumulate celestial
+pair forces and any held operator thrust, then call `PhysicsWorld::Step`.
+That is the existing semi-implicit Euler integration path in
+`IntegrateRigidBody`; no orbital-specific integrator was introduced. The
+interactive pair is excluded from the M1–M19 gameplay harness so those
+established scripts retain their exact scene and CSV expectations. The
+standalone headless M20 suite exercises the same `CelestialGravity`,
+`PhysicsWorld`, and integrator used by the interactive demo.
+
+The cyan body accepts continuous forces of `2e14 N`: `P` applies its current
+barycentric prograde direction, `M` retrograde, and `N` radially outward.
+Position, velocity, and mass of both bodies are queried each fixed step to
+recompute the barycentre and thrust direction. These keys apply force only;
+they do not set velocity, move a body, or select a new trajectory. The force
+is applied to one body, so total system momentum changes as expected under an
+external thrust. `R` restores both spawn positions and analytical initial
+velocities. Menu pause freezes the world and the thruster is only sampled by
+the gameplay-owned simulation loop.
+
+**Measured five-revolution accuracy at the demo parameters and `dt=1/60 s`:**
+the analytical period is `8.93602 s`; the first measured return is `8.95000
+s` (`0.157%` error). Relative center separation ranged from `29.82599 m` to
+`30.17795 m` (within `0.59%` of the initial separation). Maximum relative
+energy error was `1.38e-4` (`0.0138%`), angular-momentum error `5.99e-6`
+(`0.000599%`), total momentum error `0` at the reported float resolution,
+and barycentre drift `0.000061 m` for the actual demo offset. A second run at
+`dt=1/120 s` reduced maximum energy error to `4.98e-5`. For an unequal-mass
+`1:2` run at `80 m` separation, barycentric orbital radii follow the inverse
+mass ratio within the test tolerance. Rotate-the-universe comparison after
+five periods measured maximum final position discrepancy `0.00550 m` and
+velocity discrepancy `0.00389 m/s` after rotating results back.
+
+These are measurements of the selected bounded demonstration, not general
+accuracy guarantees for arbitrary masses, separations, near-collisions, or
+long integrations. The state and force calculations remain single precision;
+large offsets can reduce relative position precision. Semi-implicit Euler
+has bounded but timestep-dependent orbital error, and exact point-mass
+coincidence is singular. There is no softening, adaptive timestep, orbital
+prediction, or N-body acceleration structure. Collision behavior uses the
+existing sphere contact path if the operator drives the bodies together.
+The isolated M20 two-body demonstration and its metrics use only the two
+massive bodies. At M20 the spacecraft was not in that pair list; Milestone
+21 extends the live list to include it as a low-mass participant (details
+below). The live spacecraft still receives the existing local gameplay
+gravity sample in registered regions as well as celestial attraction.
+
+`judas_celestial_gravity_tests` checks inverse-square force magnitude and
+direction, finite nonzero-separation evaluation, equal-and-opposite
+acceleration via momentum, equal/unequal barycentric motion, analytical
+period and radius bounds, momentum, angular momentum, energy and barycentre
+error over five revolutions, timestep convergence, impulse perturbation,
+escape, and rotate-the-universe equivalence. Automated validation passes;
+operator acceptance of the visible orbit and the three runtime thrust
+directions completed; Milestone 20 was accepted.
+
+### OpenGL loader (infrastructure maintenance)
+
+The graphics baseline remains OpenGL 3.3 Core and GLSL 330. The former
+hand-written `gl_core33.*` entry-point table has been replaced by the vendored
+GLAD 2.0.8 C loader generated for OpenGL 3.3 Core with no extensions. After
+`Window::Init` creates the SDL OpenGL context, `Application` passes
+`SDL_GL_GetProcAddress` to `gladLoadGL` and requires the 3.3 capability before
+renderer initialization. No newer OpenGL API is enabled or used. Generation
+provenance, exact upstream revision, generated files, and license notices are
+recorded in `third_party/glad/README.md` and `third_party/glad/LICENSE`.
+
+## Milestone 21 — celestial spacecraft flight and SAS (accepted)
+
+### Celestial gravity participation
+
+The interactive composition root's `CelestialGravity` participant list now
+contains the two M20 massive spheres and the existing 80 kg spacecraft body.
+The same pairwise Newtonian force calculation applies to all selected dynamic
+bodies, so the spacecraft receives attraction from both masses and applies
+equal-and-opposite reaction forces back to them. No orbit target, orbit radius,
+mode, or trajectory state was added. The M20 standalone two-body metrics remain
+based on the original isolated pair, while `judas_spacecraft_flight_tests`
+checks a low-mass spacecraft trajectory using the same force producer and
+`PhysicsWorld` integrator.
+
+The spacecraft continues to receive the normal `GravityField::Sample()`
+acceleration through `PrepareDynamicBodiesForStep`, as every dynamic body does;
+celestial force is accumulated separately before the same `PhysicsWorld::Step`.
+Thus local gameplay gravity and celestial gravitation are distinct sources
+that compose when both apply. The massive M20 pair occupies unclaimed space,
+where the local gameplay gravity map returns zero. The old walkable planets,
+plank, player, and M11/M12 controls remain otherwise unchanged. Existing
+collisions still apply to the spacecraft; collision/crash trajectories remain
+unprotected by orbital code.
+
+The ship's existing thrust controls remain body-local and force-driven. The
+pilot can build tangential speed, release thrust and let mutual gravitation bend
+the inertial trajectory; prograde, retrograde, radial, and off-axis forces
+change that trajectory through the ordinary force accumulator. Sufficient
+thrust can make specific orbital energy positive and the body continues to
+escape after thrust ends. Ship attitude and travel direction remain independent.
+
+### SAS attitude hold
+
+`X` toggles SAS only while the player controls the spacecraft. The edge request
+is drained every render frame before pause gating, so pressing it while a menu
+owns input cannot toggle on resume. SAS state belongs to
+`FlyingPrimitiveControl` and continues applying torque after pilot release;
+`R` resets the ship and disables SAS. The HUD reports SAS on its own dedicated
+line, separately from pilot attachment status.
+
+On activation, SAS captures the current authoritative orientation as target
+`q_t`. Each fixed step it computes the shortest world-space rotation vector
+`e` from the current orientation to `q_t`, reads world angular velocity `w`,
+and commands angular acceleration `alpha = 25 e - 10 w` (gains in `s^-2` and
+`s^-1`). It converts that command to world-space torque using the body's
+current world inertia tensor, `tau = I_world alpha`, then calls
+`PhysicsWorld::ApplyTorque`. This keeps response comparable across the ship's
+unequal principal inertia axes while retaining ordinary torque integration.
+Rotational pilot keys are suppressed while SAS is enabled so zero-rate hold
+is not continually opposed by M12 manual torque; translation controls remain
+available. Disable SAS to restore raw M12 rotation input and torque-free
+angular coast. The controller does not apply force or write any linear or
+angular velocity directly. It does not model gyroscopic terms or
+contact-aware control.
+
+**Historical controller formulation:** the preceding SAS law does not explicitly compensate gyroscopic torque. The M78 rigid-body correction transports angular momentum during free drift; it does not add that compensation to this historical SAS controller. Its affected regressions and remaining numerical bounds are separate from this historical M18 evidence.
+
+`judas_spacecraft_flight_tests` checks source acceleration magnitude/direction,
+one-period unpowered curved flight, rotate-the-universe equivalence, prograde,
+retrograde and radial thrust energy changes, thrust-driven escape, SAS-off
+angular coast, counter-torque settling and attitude hold after a disturbance,
+SAS independence from an unpowered orbital trajectory, high-rate three-axis
+settling, rotation-key suppression, zero SAS contribution to linear velocity,
+and one-shot toggle-request draining. Automated tests and
+the existing gameplay harness pass. The operator validated orbit flight,
+thrust perturbations, SAS behavior, and pilot release/reboarding; M21 is
+accepted.
+
+In the one-source circular reference test (`M=1e14 kg`, spacecraft mass
+`80 kg`, center separation `30 m`, `dt=1/60 s`), the analytical period is
+`12.6374 s`; the sampled run lasts `12.6500 s` and center separation ranges
+from `29.8768 m` to `30.1254 m`. This measures the selected test setup only;
+the live binary field, thrust-driven transfers, collisions, and SAS feel are
+not general accuracy guarantees.
+
+## Milestone 22 — classical reference frames (accepted)
+
+`ReferenceFrame` (`src/ReferenceFrame.h/.cpp`) is the smallest explicit
+description of a moving coordinate frame: origin position and orientation,
+plus linear and angular velocity, all expressed in world coordinates. The
+frame owns no object or physics body, and creating one does not change the
+authoritative world-space integration in `PhysicsWorld`.
+
+The world coordinate system remains Judas's chosen computational frame, not
+a physically privileged state of rest. A displayed world speed describes
+motion in that coordinate system; relative speed describes motion against the
+selected moving frame.
+
+Positions include frame translation and rotation; directions are rotated
+without translation. A frame-relative velocity is the derivative of position
+coordinates in that moving frame. For a world point `P`, conversions first
+remove/add its actual frame-point velocity:
+
+```text
+r = P - frame.originPosition
+framePointVelocity = frame.linearVelocity + cross(frame.angularVelocity, r)
+velocityInFrame = inverse(frame.orientation) * (velocityInWorld - framePointVelocity)
+```
+
+The inverse conversion adds that point velocity and rotates the frame-relative
+velocity into world coordinates. `angularVelocity` is a world-space vector;
+the cross product is evaluated at the point's world-space offset from the
+frame origin, and `linearVelocity` is the velocity of the frame origin. Thus
+offsets in a rotating frame are not treated as if they had only the origin's
+translational velocity.
+
+The composition root constructs frames from current `PhysicsWorld` body state.
+The interactive HUD shows spacecraft world speed, orbiting body A world speed,
+spacecraft speed relative to body A at the spacecraft's position, pilot world
+speed, and pilot speed relative to the spacecraft. For an attached pilot, the
+pilot's world point velocity is reconstructed from the ship frame and zero
+local velocity; the relative readout is consequently zero even while the ship
+and pilot have substantial world velocity. When free, the player's actual
+velocity is used.
+The celestial frame uses body A's actual pose and velocities, including its
+angular velocity.
+
+The reference-frame conversions and live readouts do not change M20
+gravitation, M21 thrust or SAS, or the M11 attached-pilot motion. A separate
+release-safety correction samples local gravity when control ends and, if a
+rolled craft left the player below its hull, moves the player to its clear
+gravity-facing side. It uses the current collision shape and leaves the
+inherited velocity tied to the original attachment point. Gravity,
+support/contact, attachment, and reference frames remain separate concepts.
+There is no hierarchy, world rebasing, relative-force simulation, orbit
+alteration, or privileged physical notion of rest.
+
+An ascending release has one extra sequencing case: `PhysicsWorld::Step`
+advances dynamic bodies before `PlayerController::FixedUpdate`, while the
+newly detached player still starts at the previous attached pose. Release
+seeds the previous-support velocity with the inherited point velocity, so
+the craft's upward motion is not mistaken for a player jump before the
+ground probe can reacquire the hull. Support probes compare against dynamic
+bodies at the start-of-step pose; when grounded on a dynamic body, the
+player's supported point is then carried through that body's previous-to-
+current transform exactly once. Relative movement sweeps run at the
+current pose when grounded and compare both trajectories over the fixed-step
+interval when airborne. The ascent check also has a small velocity epsilon
+so rotated-frame floating-point noise does not make a supported player
+falsely airborne.
+
+`judas_reference_frame_tests` checks identity and translated frames, arbitrary
+rotation, position/direction/velocity round trips, matching and differing
+velocities, rotating-frame point speed and co-motion, live spacecraft data
+relative to a moving celestial body, attached-pilot co-motion and release
+point velocity, finite results for valid inputs, and rotate-the-universe
+equivalence. `judas_pilot_dismount_tests` checks release clearance for an
+upright and inverted craft, zero-gravity preservation, and rotated-world
+equivalence. `judas_player_curved_locomotion_tests` also releases a player
+from a rising spacecraft, checks inherited motion and grounded support,
+walks on the hull while it coasts, and repeats the case under a rigid
+universe rotation. All existing M1–M22 suites and the gameplay harness pass;
+M22 remains accepted.
+
+## Milestone 23 — no privileged physical origin (accepted)
+
+### Diagnosis and coordinate boundary
+
+The pre-M23 simulation used `glm::vec3` for every world position. This is
+adequate for the small authored demo but cannot represent local motion after
+a large *direct* translation. A probe using the real `PhysicsWorld::Step`
+gave a free body's measured displacement after 60 steps at `1/60 s`, with
+constant `0.04 m/s` velocity:
+
+| Starting X coordinate | Measured displacement | Error against 0.04 m |
+|---:|---:|---:|
+| `0 m` | `0.040000003 m` | `0.000000004 m` |
+| `1,000 m` | `0.040283203 m` | `0.000283204 m` |
+| `3,000 m` | `0.043945313 m` | `0.003945313 m` |
+| `10,000 m` | `0.058593750 m` | `0.018593751 m` |
+| `100,000 m` and above | `0 m` | `-0.04 m` |
+
+This is float position quantization, not a force, gravity, or collision law
+that attracts things toward `(0,0,0)`. `float` spacing at one million metres
+is `0.0625 m`, enough to erase a centimetre movement altogether. Merely
+subtracting large float positions inside individual consumers would be too
+late: both operands would already have lost the nearby detail.
+
+`WorldCoordinates` (`src/WorldCoordinates.h`) is the narrow M23 boundary:
+
+```text
+absolute position (double) = scene origin (double) + local position (float)
+local position (float) = float(absolute position - scene origin)  // subtract in double
+```
+
+The whole active demo is authored in local coordinates. Its chosen absolute
+origin is immutable during a run; `JUDAS_WORLD_OFFSET=far` selects
+`(1e9, -2e9, 3e9) m`, and `JUDAS_WORLD_OFFSET=x,y,z` accepts a custom
+absolute translation. The default is zero. The HUD reports the chosen
+origin and the player's current absolute position; the terminal reports
+the origin at startup. Thus the complete scene has a real large-scale location as
+the pair `(origin, local coordinate)`, while its *relative* positions stay
+small. Changing the origin between launches translates every object,
+gravity volume, camera, reference frame, and light by the same amount in
+absolute space; it never injects a velocity, force, or collision correction.
+`R` restores the same local initial state at the selected absolute origin.
+
+All existing engine `glm::vec3` parameters called "world-space" mean
+coordinates in this active local simulation frame. `ReferenceFrame` still
+expresses motion relative to that frame, not against an absolute zero.
+`PhysicsWorld`, `GravityField`, `PlayerController`, `CelestialGravity`,
+spacecraft control, interactions, and object manipulation need only relative
+local geometry and their existing laws; they have not been taught about the
+large absolute origin. Renderer model/view/light/shadow matrices likewise
+consume only local positions, keeping the GPU float path precise and OpenGL
+3.3 unchanged. No rendering coordinate is fed back into physics.
+
+### Validation and limits
+
+The new `judas_world_coordinates_tests` directly shifts representative
+float physics, orbit and player scenarios by `(32,-48,16) m`, to catch a
+hidden physical use of zero at a scale where float still has sufficient
+resolution. It then creates the same scenarios from double absolute
+positions at the billion-metre origin and checks local results: rigid-body
+integration/contact, radial gravity, two-body orbit, thrusting ship and
+SAS, curved player walking/jumping/landing, both cameras and torch,
+pickup/carry/throw, moving reference-frame transforms, and a directional
+shadow matrix. A combined arbitrary rotation and large translation gives
+final orbit-body differences of `0.000054/0.000066 m` and ship position
+difference `0.000321 m` after rotation back in the focused 900-step run.
+The same `0.04 m/s` body moved `0.039997101 m` over one second in both
+near and far represented scenes. At the far origin, a centimetre-scale
+global/local round trip had `2.12e-7 m` error; directly narrowing the
+absolute position to float erased that centimetre entirely.
+
+The clean M23 build emitted no compiler warnings; all 18 standalone suites
+passed. The gameplay harness completed the same 420-step walk/jump/reset script
+near and far. Its state rows were byte-identical; the sole text difference
+was the requested screenshot filename. The two rendered PNG files were
+byte-identical. These checks establish equivalence for the tested scene.
+The operator also validated visible smoothness and normal gameplay at the
+far placement.
+
+The M23 validation scene spans roughly 150 m. The probe above
+shows why local float coordinates must stay near their chosen origin:
+at 1 km, this particular 4 cm traversal already accrued about 0.28 mm
+error, and by 3 km about 3.95 mm. M23 does **not** implement automatic
+rebasing or travel across arbitrarily many kilometres in one local
+frame. Later resource streaming does not change this coordinate contract.
+The tested absolute placement reaches coordinates of
+`3e9 m`; no claim is made for arbitrary absolute magnitudes. A future
+scene that moves far from its selected local origin will need a measured,
+atomic coordinate shift across its simulation and presentation state.
+There is no such shift in the current M23 demo, so no mid-run rebase
+continuity is claimed.
+
+### Current coordinate scope and future travel
+
+A compact game can use a very large absolute scene origin without enabling
+planetary systems. Its authoritative physics remains in one fixed local
+float frame. FTFT5 verifies that existing boundary; it does not add an
+origin-shift operation. Live rebasing is a future capability,
+requiring a coordinated shift of simulation and presentation state before
+continuous long-distance travel can be claimed. Historical M23 acceptance
+and its explicit exclusion of runtime rebasing remain unchanged.
+
+## Milestone 24 — bounded dynamic liquid (operator accepted)
+
+### Method and ownership
+
+The requirement is a small liquid volume that can leave one *moving* open
+rigid container, travel through space, and enter another under arbitrary or
+zero gravity. A stiff force-based SPH pressure law would require careful
+small-timestep tuning for this 60 Hz interactive case; a 3D Eulerian grid or
+FLIP/PIC would require moving-wall cut cells and a larger bounded domain just
+to represent two hand-carried cups. Judas instead uses a bounded CPU particle
+solver with position-based density constraints. Its particles carry position,
+previous position, velocity, and fixed mass; a spatial hash supplies nearby
+particles for a Poly6 density estimate, and iterative pressure corrections
+oppose *over-density*. This is an approximate incompressible-liquid method,
+not an exact Navier–Stokes solution. The fixed step is split into three fluid
+substeps with two density iterations each; the default collision radius is
+`0.018 m`, density smoothing radius `0.105 m`, rest density `1000 kg/m³`, and
+XSPH-style numerical velocity smoothing coefficient `0.15`. No particle is
+created or destroyed during stepping.
+
+`FluidWorld` owns the fluid distribution and samples the same
+`GravityField::Sample(position)` abstraction as the player and dynamic bodies.
+There is no gravity constant or world-down direction inside the solver. With
+zero supplied acceleration and no moving solid contact, one particle retains
+its original velocity. A rigid rotation of the entire gravity/solid/fluid
+scenario produces the rotated result; `WorldCoordinates` keeps the active
+simulation local even when the absolute M23 scene origin is billions of metres
+away. The solver does not use camera or presentation state.
+
+### Ordinary solid geometry and moving-wall coupling
+
+`PhysicsWorld::CreateDynamicCompoundBoxes` creates one rigid body from child
+box primitives, with one pose, mass, inertia, velocity, collision response,
+and reset history. The two demo cups each supply a bottom and four walls, no
+lid. The new compound path participates in existing rigid contacts and player
+sweeps; it is not a fluid/container class. `GetBodyBoxes` and
+`GetPreviousBodyBoxes` expose the same child collision geometry to the fluid
+solver, preserving rigid-body ownership of shapes. Cup bodies are explicitly
+eligible in the existing M18 pickup/interaction whitelist; other static or
+celestial bodies remain ineligible. A held cup follows M18's physical carry
+force and an optional look-relative attitude target applied as *torque* through
+its world inertia tensor. That optional torque is used for compound held
+bodies; earlier single-shape carried objects retain their established motion.
+
+Each fluid substep interpolates a solid child's *actual* previous/current
+transform, including rotation, and sweeps the particle relative to the box
+or sphere. Projection keeps particles out of solid volume; wall point
+velocity contributes to contact response. The fluid step returns
+equal-and-opposite point impulses, applied through
+`PhysicsWorld::ApplyImpulseAtPoint` to dynamic rigid bodies. Rigid bodies
+advance before the fluid step, so the reaction changes their velocity for the
+next fixed step; that one-step splitting is a numerical approximation, not an
+unmodelled `cup.waterAmount`. A water particle can cross a rim because there
+is no lid collider, and only actual acceleration/contact changes its path.
+Static objects ignore returned impulses. The water has mass and its reaction
+on a moving cup is measurable; M24 does not add buoyancy or hydrodynamic
+gameplay for other rigid bodies.
+
+### Demonstration and presentation
+
+The live scene has a static table near Planet A's player spawn and two
+identical open cups, each a `120 kg` dynamic compound body. Cup A starts with
+`5×5×5 = 125` water particles at `0.05 m` spacing. Each particle has
+`0.125 kg` mass, so total simulated water mass is `15.625 kg`; Cup B starts
+empty. The cups' positions and local frame are authored from a bearing on
+Planet A for a convenient starting arrangement, but neither solver nor
+collision code knows that bearing. `R` restores both bodies and the initial
+particle distribution. The M18 `G` interaction picks up/drops a targeted cup,
+`H` throws it, and mouse look physically tips a held cup. There is no pour
+key or transfer operation.
+
+For operator gravity checks, `JUDAS_FLUID_GRAVITY=rotated` inserts a bounded
+station region with a constant acceleration rotated 50 degrees from the
+station's local down. `JUDAS_FLUID_GRAVITY=zero` gives that same region exactly
+zero acceleration; `normal` (or unset) uses the existing radial Planet A
+context. This is composition-root demo configuration through
+`GravityContextMap`, registered before the broader planet region. The player,
+cups, and water all sample the same selected field where they occupy that
+region. Crossing its boundary follows the map's existing explicit context
+semantics; outside the region the usual Planet A gravity applies. The field
+does not pretend that a cup's bottom defines gravity.
+
+`BuildFluidSurface` constructs a lit marching-tetrahedra isosurface from
+**presented** particle positions on a `0.05 m` sampling grid. A reusable GPU
+mesh receives new vertices each frame; the surface never feeds back into
+fluid dynamics. Cup walls are drawn as translucent ordinary boxes after the
+opaque scene, while their bottom remains opaque. The wall geometry still
+casts its ordinary shadows. The fluid receives scene lighting/shadows but is
+omitted from shadow-map depth passes to keep this small changing mesh cheap.
+The surface smoothing and translucency are visual approximations; only
+particle mass/momentum, pressure correction, and geometric contact are
+authoritative. GLAD/OpenGL 3.3 and GLSL 330 are unchanged.
+
+### Measurements, validation, and limits
+
+Focused headless suites cover gravity/zero gravity, rotated and billion-metre
+translated worlds, density response, exact mass retention, interpolation,
+stationary/moving/rotating wall and sphere contact, equal-and-opposite point
+impulses, compound rigid collisions, and the presentation surface. The
+eight-particle pressure-cluster rotation check measured at most `0.000004 m`
+position and `0.000008 m/s` velocity difference after 30 fixed steps,
+against `0.001 m` and `0.002 m/s` test tolerances. The
+geometry-only two-cup test requires at least 80 particles to enter Cup B and
+at least 70 of those *same* particles to leave after B is tipped. Coupled
+rigid/fluid checks keep water in a grounded moving cup, measure reaction
+impulse/velocity, and verify that force/torque-driven cup motion moves water
+even in zero gravity. A separate end-to-end rigid-coupling test carries and
+tips two dynamic compound cups through M18's force and torque law: all 125
+tracked particles crossed A's geometric open rim, 98 were later inside B,
+and those same 98 left after B was acquired, lifted and tipped with the
+current smoothing setting. Neither cup pose was teleported or driven by a
+prescribed pour animation. The operator accepted the live first-person view;
+the automated pour checks establish the force-driven transfer path.
+
+On this host in an optimized build, short unattended runs of the normal,
+rotated, and zero-gravity 125-particle scenes measured approximately
+`3.1–3.9 ms` per fluid fixed step (including gathering world colliders and
+applying reaction impulses), `2.7–3.9 ms` per presentation surface
+build/upload, and `16.8–22.5 ms` for scene shadow/color CPU submission at
+1024×768. The observed full-frame wall interval was `26.3–34.2 ms` in these
+runs; it includes the existing renderer and this display environment, so it
+is not a portable GPU benchmark. At the normal-gravity diagnostic
+sample, fluid mass remained `15.625 kg`; mean/max *positive* density error
+was about `0.15–0.39/1.65–4.46%` across measured samples. A separate optimized
+245-particle, 11-box coupling
+fixture took about `4.45 ms/step`; the same fixture in an unoptimized Debug
+build took about `36 ms/step`, so interactive validation should use the
+documented optimized build. The mesh extractor alone took about `4 ms` at
+245 particles on a `0.055 m` grid; its cost rises with particle count and
+grid resolution. There is no particle deletion, so numerical fluid mass
+error is zero by construction, but momentum/energy are not exactly conserved:
+pressure projection, collision correction and numerical velocity smoothing
+exchange or dissipate them. Free-flight zero-gravity momentum is tested;
+no claim of exact multi-particle or coupled rigid/fluid conservation is made.
+
+The initial `0.015` smoothing setting left an untouched cup's water in
+persistent numerical motion: the matching real-cup fixture measured around
+`0.5–1.1 J` at 3–10 s, and freezing cup geometry did not remove it. Raising
+the solver's resolution-specific smoothing to `0.15` reduced the grounded
+cup to millijoule-scale energy in the same fixture while the strict real-body
+two-cup test still poured 98/125 particles into B and poured those same 98
+out. The live station measured roughly `0.002–0.006 J` after 3–9 s with
+the same setting. This is numerical damping, not a measured real-world
+water viscosity or a guarantee that an arbitrary larger volume will settle
+at the same rate. On the curved Planet A station, a cup can creep a few
+centimetres over ten seconds while resting on the tangent table; an *empty*
+cup creeps similarly under radial gravity. Changing cup mass or contact
+friction did not remove that existing rigid-contact effect, so it is not
+attributed to fluid pressure.
+
+Thin solids and extreme wall speeds can exceed the current swept-collision
+and substep resolution; a cup crushed into other geometry can also make
+projection ambiguous. The bounded particle count yields coarse small-scale
+spray and a smooth visual isosurface rather than physically resolved droplets
+or surface tension. The live fluid collider list covers rigid boxes and
+spheres in the demonstration, including the cups, table, planets, and
+dynamic objects; it does not include the separately simulated player capsule
+or the remote M16 door. Translucent cup walls are not depth sorted, so
+overlapping walls can look different from different viewpoints. Fluid
+outside the cups remains simulated; it is not deleted, but this milestone
+does not implement drainage, cleanup, oceans, or arbitrary fluid quantities.
+`JUDAS_FLUID_PREVIEW=1` with the existing
+`JUDAS_TEST_SCRIPT` harness captures the M24 starting arrangement without
+changing the default M1–M23 harness scene; the fluid solver's dynamic pour
+is validated by the dedicated suites and interactive operator run.
+
+## Milestone 25 — radial terrain and environmental fluid (accepted)
+
+### Scope and scene selection
+
+The default interactive launch begins at a new static terrain planet with an
+`80 m` base radius, centred at local simulation position `(300,0,0) m`.
+This is four times the radius of the accepted `20 m` walkable demo spheres,
+large enough for a local patch to read as hills and basins while remaining
+inside Judas's current float local-scene and fixed-mesh budget. The existing
+two-planet, plank, spacecraft, interaction and M24 cup demonstration remain
+available with `JUDAS_CLASSIC_DEMO=1`. The permanent scripted gameplay
+harness keeps the accepted classic scene unless `JUDAS_TERRAIN_PREVIEW=1` is
+set. No prior milestone's demo physics is replaced by a different engine.
+The terrain view starts in first person and renders the new nearby terrain,
+player, water and an orange `2,000 kg` dynamic box near spawn. That box uses
+ordinary rigid collision and M18 pickup/throw, providing a solid object to
+disturb the water. Distant classic bodies keep their established simulation
+when terrain is selected but are not submitted in its rendering path; the
+classic launch exposes their accepted visual scene and controls.
+
+`JUDAS_TERRAIN_ROTATED=1` applies a rigid 47-degree authored-body rotation
+to the terrain, initial water and nearby player/object placements. The
+terrain's gravity remains an independent `RadicalGravity` field centred at
+that planet: body orientation changes the hills' positions and their support
+normals, but does not change what gravity *means*. `JUDAS_WORLD_OFFSET=far`
+changes only M23's double-precision absolute origin. The terrain body,
+gravity centre, fluid particles, player and camera continue using the same
+small local float coordinates, so the far scene is a translation rather
+than a new physical law. Numerical M25 rotate/translate comparisons and
+far-origin render comparisons pass; the operator accepted the live scene.
+
+### One surface for appearance and physical contact
+
+`src/TerrainDemo.cpp` authors deterministic elevation as a smooth function
+of a **planet-local unit radial direction**, with broad hills, two Gaussian
+depressions and a shallower connecting low channel near the model's +Y
+pole. That +Y is a mesh-authoring convention and rotates with the entire
+planet; it is not a world-space down direction or a gravity rule.
+`RadialTerrain` forms each surface point as `direction * (80 m + elevation)`
+in the body-local frame. The body's ordinary position/orientation transform
+places it in simulation space. Its `Sample` operation returns a positive-
+outside, locally Euclidean signed-clearance estimate, a projected surface
+point and a continuous *geometric* outward normal from the radial-height
+gradient. On slopes that normal differs from the radial gravity direction.
+The special case at the mathematically undefined exact centre uses a finite
+model-local fallback; ordinary contact occurs near the surface.
+
+`PhysicsWorld::CreateStaticTerrain` stores the shared immutable surface as
+an ordinary static collision shape. The same surface supplies player capsule
+sweep clearance/normal (nine samples along its segment), dynamic-sphere
+contact, and box contacts sampled at corners and face centres. Existing
+`ContactSolver` impulses and positional correction resolve those contacts;
+`PlayerController` and `StepClimb` have no terrain-name branch. Their support
+test still compares the **contact** normal to gravity-derived local up, so
+steep terrain can be unwalkable while gravity continues pointing radially.
+M19's skin-clearance and continuously updated local-frame rules remain the
+player's movement policy. A fast or very small obstacle can exceed this
+bounded contact sampling; M25 is not a general triangle-mesh collision or
+planetary terrain engine.
+
+`RadialTerrain::BuildMesh(96,128)` samples the same elevation/normal
+function into an indexed full-sphere mesh, with static ring density
+concentrated in the traversable polar patch. It contains 12,257 vertices
+and 24,320 triangles. `Renderer::DrawMesh` draws the mesh through the
+existing OpenGL 3.3 lighting and shadow paths. Finite triangles approximate
+the continuous collision surface; the mesh is not a second authoritative
+height function. At a `0.25 m` sample grid, actual ray/triangle intersections
+versus analytic collision heights differed by at most `0.01196 m` (RMS
+`0.00268 m`) in the basin patch, and `0.03793 m` (RMS `0.00712 m`) across
+the wider tested traversal. This is measured agreement at this mesh
+resolution, not mathematical identity. Local tessellation is densest where
+player and fluid interact; the distant hemisphere is coarser.
+The permanent terrain suite also checks repeatable elevation, neighboring
+height/normal continuity, finite vertices, valid indices and outward winding
+across more than 1,000 nondegenerate production-mesh triangles.
+There is no streaming, runtime LOD, terrain editor or arbitrary planet size.
+
+### Fluid on the terrain
+
+The terrain scene uses the existing `FluidWorld` particle solver, not a
+`LakeVolume` or water-height equation. At its coarser environmental
+resolution, particle spacing is `0.5 m`, rest density remains
+`1000 kg/m³`, and each particle has mass `125 kg` (represented volume
+`0.125 m³`). Collision radius, density-kernel radius and per-iteration
+density-correction cap are scaled tenfold from the accepted cup settings
+to `0.18 m`, `1.05 m` and `0.25 m`; fixed-step frequency, three fluid
+substeps, two density iterations and numerical velocity smoothing remain
+the M24 method. Initial state is 125 particles, `15,625 kg` or
+`15.625 m³`, positioned above the first authored depression. Every fixed
+step they sample the same local gravity map as the player and rigid bodies.
+The terrain is passed to `FluidWorld` as static collision geometry, queried
+from its real pose and `RadialTerrain::Sample`; particle projections and
+swept-path checks keep matter outside the solid. The water surface displayed
+by `FluidSurface` is rebuilt from interpolated particle positions with a
+`0.40 m` presentation grid. It never drives the particles.
+
+Holding `B` adds one new `125 kg` particle per 60 Hz fixed step from an
+authored source above the first depression until the scene reaches 200
+particles (`25,000 kg` total). This is an explicit external mass source
+used to disturb/fill the basin; each emitted element thereafter obeys the
+same solver and terrain collision. It is not a basin-fill command or a
+transfer between containers. `R` restores the 125 original particles.
+Fluid stepping itself neither creates nor deletes elements, so total mass
+for a given particle count remains `125 kg × count`. The intended overflow
+route is the geometric low channel toward the second, deeper depression;
+the amount and timing of actual flow are measured from particle state,
+not inferred from the authored terrain names or mesh appearance. In a
+focused 200-particle headless run with all water seeded at the start,
+49 particles occupied the second basin after six seconds. No container or
+basin transfer command moved them. A separate end-to-end fluid test mirrors
+the live reset and `B` input schedule: 125 particles settle for two seconds,
+then one particle is emitted per fixed step for 75 steps from the same
+`2.8 m`-clearance source. At eight seconds, 44 particles occupied Basin B
+versus five in an otherwise identical no-`B` control. All 44 were tracked
+through the geometric low saddle. The emitted run ended with exactly 200
+particles (`25,000 kg`), minimum particle-centre terrain clearance
+`0.180 m`, and finite state; reset reconstructed the original 125 positions
+and `15,625 kg` exactly. This establishes the live emission law at the
+solver boundary without claiming what any particular interactive camera
+frame will look like.
+
+A coupled fixture settles the actual 125-particle lake for two seconds,
+clones an identical no-box water control, then throws a `0.9 m`-sided,
+`2,000 kg` Judas rigid box through the water at M18's `8 m/s` throw speed.
+Fluid contact uses the box's actual previous/current poses, and returned
+impulses enter `PhysicsWorld::ApplyImpulseAtPoint` as in the interactive
+loop. Across 325 box-water contacts the box received
+`-10,983 kg·m/s` along travel and ended at `2.913 m/s`; its fastest measured
+speed was `8.124 m/s`. The measured body momentum change differed from
+summed applied impulses by at most `0.0027 kg·m/s`. Relative to the
+identical no-box fluid control, combined box/fluid mechanical energy
+(including box rotation) fell by about `55.82 kJ` rather than growing;
+water remained finite and at
+least `0.180 m` clear of terrain. This checks two-way coupling at the
+authored mass, shape and speed; it does not imply exact conservation in the
+presence of terrain contact and solver damping.
+
+On this host, the focused headless terrain/fluid fixture measured about
+`4.86 ms` per fixed fluid step at 125 particles and `8.10 ms` at 200.
+Separately, a 480-step optimized headless terrain walk measured
+`0.441 ms` per `PlayerController::FixedUpdate`, including terrain sweep
+queries but excluding diagnostic sampling and rendering.
+Fluid particle mass stayed exactly `125 kg × count`, including deliberate
+`B` emission. The measured
+rotated/translated scenario's largest position discrepancy after rotating
+back was `0.0123 m`. These are measured bounds for the test case, not
+proof of exact fluid invariance at every resolution.
+
+An unattended interactive 125-particle run on this host, after limiting the
+terrain view's rendering submission to its nearby scene, averaged
+`4.865 ms` for solver/collider work per fixed step, `5.517 ms` for the
+presentation surface build/upload per frame, `20.330 ms` for scene CPU
+submission, and `39.879 ms` full wall time per frame. The latter includes
+this host's software/display path and is not a portable GPU benchmark.
+The particle cap and coarse presentation grid bound this demonstration's
+cost; they do not make the solver scalable to oceans.
+
+The authored box is deliberately dense: `2,000 kg / 0.9³ m³ ≈
+2,743 kg/m³`. The same settled 125-particle experiment with an `80 kg`
+box exposed a mass-ratio limit in this coarse fluid/rigid coupling: it
+reached about `115 m/s` and gained about `543 kJ` of mechanical energy over
+its no-box fluid control. In `FluidWorld`, the solid's motion is supplied
+for the whole fixed step before the water's reaction impulses update the
+body, so a light body can receive an excessive delayed response. M25's
+heavy ordinary box demonstrates physically coherent disturbance at the
+tested resolution; the current solver is not validated for throwing light
+bodies into this environmental volume. This limit is documented rather
+than hidden by a force cap or a presentation-only effect.
+
+M25 currently demonstrates a bounded local patch, not ocean-scale fluid.
+The finite particle spacing cannot resolve spray, a thin shoreline or a
+perfect equipotential free surface. The signed-clearance estimate and
+finite player/rigid/fluid collision samples are local approximations;
+extreme speeds and shapes narrower than the sampling interval can exceed
+them. The player capsule is not passed to the fluid solver as a moving solid;
+the ordinary dynamic box supplies the demonstrated solid-water disturbance.
+Fluid mass retention during stepping is exact by particle identity,
+while pressure projection, wall contact and numerical smoothing do not
+promise exact energy or momentum conservation. Terrain traversal,
+basin occupancy, overflow, timing and rotated/far equivalence have focused
+automated measurements as above. A clean Release build has no compiler
+warnings; all 24 standalone suites pass. Both the classic and terrain
+420-step gameplay harness scenarios produce byte-identical local telemetry
+at the origin and the M23 far offset. The terrain harness's two rendered
+screenshots are byte-identical as well. An optional interactive
+`JUDAS_TERRAIN_SCREENSHOT=/path/image.png` captures the presented terrain
+view after 600 fixed simulation steps (reset restarts that count); it is
+readback only. Operator visual acceptance was granted after these checks.
+
+## Milestone 26 — a finite planetary atmosphere (accepted)
+
+### Why this gas model
+
+The M25 planet is an `80 m`-reference-radius terrain body, not a smooth
+collision sphere. M26 needs gas properties at arbitrary points from terrain
+level through vacuum, including when the whole scene is rotated or placed at
+the M23 far absolute origin. Reusing M24's bounded position-based particle
+liquid was rejected for this domain: its density projection deliberately
+resists compression, its 125–200 particles only resolve a local cup/lake,
+and sparse particles in a thin upper atmosphere would make sampled drag
+noisy. A compressible particle gas or three-dimensional grid could evolve
+wakes and wind, but either would introduce a planet-scale transport solver,
+new boundary conditions and substantially more state/cost than the current
+spacecraft/atmosphere interaction demonstrates. No shared `FluidFramework`
+abstraction is justified by the two distinct numerical problems.
+
+`AtmosphereField` is therefore a prescribed **hydrostatic polytropic gas
+continuum**. It owns no particles or grid cells. Gas mass is spatial mass
+density `ρ` in `kg/m³`; pressure `P` is in pascals; the gas velocity at a
+world point is the planet frame's point velocity. A finite integral of `ρ`
+defines the atmosphere's mass, but the field does not evolve local gas
+momentum or temperature. This is an equilibrium-reservoir approximation,
+not a claim that the air is dynamically simulated like M24 water.
+
+### Pressure, gravity, terrain and frames
+
+The authored demonstration uses reference radius `R = 80 m`, top radius
+`Rₜ = 110 m`, gravitational parameter `μ = 62,784 m³/s²` (giving
+`9.81 m/s²` at `R`), polytropic exponent `γ = 1.4`, and reference density
+`ρ₀ = 0.05 kg/m³`. For radial distance `r` from the terrain body's actual
+centre, define
+
+```text
+q(r) = (1/r − 1/Rₜ) / (1/R − 1/Rₜ)
+ρ(r) = ρ₀ q(r)^[1/(γ − 1)]
+P(r) = P₀ q(r)^[γ/(γ − 1)]
+P₀ = [(γ − 1)/γ] ρ₀ μ (1/R − 1/Rₜ) = 3.057662 Pa
+```
+
+These relations apply to exposed gas below `Rₜ`; at or above `Rₜ`, density
+and pressure are zero. With this `γ`, both approach zero smoothly at the
+top. They obey the equation of state `P = Kρ^γ` and hydrostatic balance
+`dP/dr = −ρμ/r²` under the same inverse-square source used for the
+spacecraft's terrain-planet attraction. At `r = 90 m`, the model gives
+`ρ = 0.013516 kg/m³`, `P = 0.489820 Pa`; at `r = 100 m`,
+`ρ = 0.001836 kg/m³`, `P = 0.029942 Pa`. These are deliberately scaled
+toy-planet values, not Earth sea-level conditions. A focused finite-
+difference test measured maximum relative hydrostatic-gradient error
+`0.015%` at its sampled radii. The analytic profile is time-independent,
+so it begins in equilibrium instead of numerically settling.
+At `r = 105 m`, `ρ = 0.000287 kg/m³` and `P = 0.002231 Pa`; by `109 m`
+they are about `0.00000468 kg/m³` and `0.000007 Pa`. Numerical radial
+integration above a *smooth* `80 m` reference sphere gives about
+`33,160 kg` of gas. The actual terrain mask changes that integral slightly;
+this is a reference mass estimate, not an evolved gas-mass measurement.
+
+Altitude here means radial **potential**, not world `Y` or the distance
+above an individual hill. Using each hill's local clearance as the
+pressure coordinate would produce tangential pressure gradients despite
+the gravity force being radial. The `RadialTerrain` query excludes gas from
+solid hill/valley interiors; exposed valleys can therefore hold denser
+gas than exposed peaks, while the planet need not become a smooth sphere.
+`ReferenceFrame` supplies the centre and rotation for terrain-local
+samples and the world gas velocity `Vplanet + ω × (point − centre)`.
+Moving the planet and spacecraft together at the same world velocity
+therefore creates no artificial airspeed. M23 far placement changes the
+double-precision absolute origin, leaving these local physical samples
+unchanged.
+
+The terrain planet remains static as M25 requires. In the terrain scene,
+the low-mass spacecraft is a Newtonian test body: its force accumulator
+receives `m(−μ r⃗ / |r⃗|³)` from
+`CelestialGravity::AccelerationFromPointMass` before the ordinary Judas
+fixed-step integration. The gas model stores the matching `μ` for its
+pressure profile but does not supply the ship's gravitational force.
+The ship is excluded from the local `RadicalGravity` application there,
+so gravity is not counted twice. The player, props and water retain their
+accepted local gameplay-gravity behaviour. The earlier M20 two-body
+mutual-gravity demonstration remains distinct. Holding the terrain
+planet fixed omits its physically tiny recoil from the `80 kg` ship; M26
+does not turn the walkable terrain into a moving reference-frame world.
+
+### Aerodynamics, presentation and measured flight
+
+`AerodynamicDrag` samples density and gas velocity at the existing
+spacecraft box's centre. It subtracts gas point velocity from the body's
+point velocity and computes the box's actual projected area in that
+relative-flow direction. Its three principal face areas are `2`, `3` and
+`24 m²` for the current `4 × 0.5 × 6 m` collision box. With `Cᴅ = 1`,
+the applied force is
+
+```text
+Fdrag = −½ ρ Cᴅ A |vrelative| vrelative
+```
+
+This force enters `PhysicsWorld::ApplyForce`; neither `AtmosphereField`
+nor the aerodynamic helper writes spacecraft velocity or an orbit state.
+It fades continuously with density and is zero in vacuum. The centred,
+symmetric box model applies drag through the centre of mass, so it does
+not manufacture an aerodynamic torque. M21 SAS still contributes its own
+ordinary corrective torque while linear drag acts. There is no lift,
+buoyancy, surface-pressure integration or per-face rotational airflow in
+this minimal model.
+
+A fixed-step comparison launched the actual Judas rigid-body spacecraft
+on a shallow Newtonian pass, with an otherwise identical gravity-only
+control. It crossed into gas and back into vacuum. Peak measured drag was
+`1.55 N`; the dragged run's specific orbital energy fell from
+`−272.843` to `−275.797 J/kg`, and its post-pass osculating apoapsis was
+`127.903 m` versus `130.269 m` in the gravity-only run. The path was never
+assigned a new orbit: gravity and aerodynamic force changed its integrated
+position and velocity. Rotating/translating the pass and converting the
+result back agreed within the focused test's documented tolerances.
+
+The interactive terrain scene uses the same physical field and offers
+`JUDAS_ATMOSPHERIC_PASS=1` as an initial `130 m` apoapsis / `100 m`
+periapsis spacecraft trajectory for watching entry and exit; it is
+initial state, not a path controller.
+`JUDAS_ATMOSPHERE_DIAGNOSTICS=1` prints atmosphere/drag evaluation time,
+full fixed-step time, local density/pressure, relative airspeed and force.
+An unattended Release run of the authored orbital-pass scene on this host
+averaged `0.0014 ms` for planetary force plus gas/drag evaluation and
+`5.13 ms` for a full fixed step by its 4,200th step; the latter includes
+the M25 water and terrain work, not rendering. An isolated optimized loop
+sampled the analytic gas field 100,000 times in `7.95–10.23 ms` across
+two runs (about `0.08–0.10 µs/sample`, without a terrain lookup). These are host- and
+scene-specific CPU timings, not GPU benchmarks. In that live pass the
+ship started outside gas with specific energy about `−272.974 J/kg`,
+re-entered atmosphere, and first exited to vacuum with a logged
+`−284.597 J/kg` at `121.20 m` radius. Later passes lost more energy,
+demonstrating orbit decay from the exposed broad-side geometry; the
+controlled headless comparison above isolates the drag contribution.
+The same launch with `JUDAS_TERRAIN_ROTATED=1` and
+`JUDAS_WORLD_OFFSET=far` also exited at `121.20 m`, logging
+`−284.595 J/kg` at the corresponding sample (a `0.002 J/kg`
+discrepancy from finite float integration after rotation); the HUD's
+absolute origin changed while local gas and flight remained equivalent.
+The HUD exposes atmosphere and spacecraft force values through view data.
+Two faint transparent spheres inside the profile's extent are a visual
+haze cue only; they do not define gas density, collision or a drag trigger.
+OpenGL 3.3 and the existing GLAD loader remain unchanged.
+
+There were 26 passing standalone suites at M26 acceptance, including focused
+gas-profile and atmospheric-flight tests and the classic/terrain regressions.
+The operator accepted the interactive atmosphere; commit `b225be7` is tagged
+`milestone-26`.
+The atmospheric-flight suite also runs manual torque, SAS and drag together:
+SAS removes angular velocity while the measured drag alone accounts for
+the linear velocity change; matched attitudes yield the same gravity/drag
+trajectory whether SAS is enabled or disabled. A separate fixture checks
+that the ship receives only its celestial pull while a nearby ordinary
+body still receives local gameplay gravity.
+
+The terrain scene now places the M12 `80 kg` ship near the M25 lake. That
+exposes an existing fluid/rigid mass-ratio limit which the accepted M25
+`2,000 kg` prop did not: in a measured nose-down entry, returning the
+coarse `125 kg`-particle lake's delayed reaction impulses drove the ship
+to `205 m/s` and `151 rad/s` by step 60, versus `2.66 m/s` in a dry
+control, injecting roughly `5.6 MJ`. The M26 composition root therefore
+keeps the ship's real collision box in `FluidWorld` so it displaces water,
+but does **not** return lake reaction impulses to that one light body in
+the terrain scene. All other M24/M25 fluid/rigid reactions remain enabled.
+In the same 120-step encounter, the one-way ship trace matched the dry
+control, water remained finite and outside terrain, and its `15,625 kg`
+mass was unchanged. Water moved up to `2.198 m` relative to its no-ship
+control. The missing reaction means the ship–water pair does **not** conserve
+momentum or energy (water gained about `13.75 kJ` relative to the control),
+and the ship has no water buoyancy. This is an explicit bounded limitation,
+not a claim of physically complete hydrodynamics; a coupled light-body
+fluid solver is outside M26's atmosphere work. A focused
+`judas_terrain_fluid_tests` fixture exercises the one-way encounter with
+the real `80 kg`, `4 × 0.5 × 6 m` ship: water contact begins at step 30,
+the ship follows its dry control exactly, all `15,625 kg` of water remains
+finite/outside the terrain, and particles move up to `1.461 m` relative
+to a no-ship lake.
+
+The analytic atmosphere cannot develop wakes, weather, local wind from a
+passing craft or gas momentum back-reaction. Its hydrostatic radial profile
+is exact for a nonaccelerating, nonspinning planet; `ReferenceFrame` gives
+correct relative gas velocity under translation/rotation, but sustained
+planet spin or frame acceleration would need centrifugal/inertial pressure
+adjustment or a dynamic gas solver. The aerodynamic box coefficient is a
+deliberately simple engineering approximation, not validated transonic
+or hypersonic aircraft physics. These limits are explicit rather than
+hidden behind a trigger or a direct velocity edit.
+
+## FTFT8 — current thermal accounting
+
+The existing M27 coating remains finite-fuel, temperature- and oxidizer-driven.
+`StepPlayedWorld` invokes the same `CombustionWorld` for an authored atmosphere
+or an explicit null/vacuum sample, so ordinary thermal scenes do not require
+planetary setup. The scripted harness now calls that shared step as well; the
+M27 historical statement below about its older harness is superseded.
+
+The old final 1 K temperature floor could introduce unreported energy. It is
+replaced by a shared passive-conductance stability limit: `s_i=min(1,C_i /
+(2 dt sum G_i))`, reciprocal edges use `min(s_i,s_j)`, and reservoir edges use
+`s_i`. Passive temperatures are convex combinations with self weight at least
+one half; actual pair exchange stays equal and opposite. External heater and
+chemical heat remain separate. Diagnostics expose reduced exchange and actual
+transferred watts. No post-temperature floor supplies heat. See
+[FTFT8 method](evidence/stabilization/ftft8/METHOD.md) for equations and scope.
+
+The gas profile is an open reservoir, smoke is presentation, rigid carrier
+mass and exposed heat capacity stay fixed, and radiation has no occlusion.
+The limiter favors stable coarse steps over exact stiff transfer rates. It
+does not make arbitrary source power or temperatures representable in float.
+
+## Milestone 27 — finite thermal combustion (accepted)
+
+### Authoritative state and atmospheric oxidizer
+
+`CombustionWorld` attaches a `CombustibleMaterial` and `ThermalBodyState` to
+an ordinary `PhysicsWorld` body handle. The carrier remains a colliding,
+pickable rigid body. Thermal state includes temperature, previous-step
+temperature for presentation, remaining fuel mass, actual burn rate, heat
+output and local oxygen supply. There is no authoritative `isOnFire` bit:
+reaction requires sufficient temperature, sampled oxidizer and fuel.
+
+The prescribed M26 polytrope now samples an oxidizer mass fraction of
+`0.21` and an effective temperature with `300 K` at its `80 m` reference
+radius. With M26's profile fraction `q(r)`, `T(r) = 300q(r) K` and
+`R_specific = P_ref/(rho_ref × 300 K)`, so `P = rho R_specific T` holds
+alongside the unchanged `P = K rho^1.4`. At the authored A block's terrain
+position (`r ≈ 81.34 m`), gas sampling gives density
+`0.04278886 kg/m³`, oxidizer `0.00898566 kg/m³`, pressure `2.45864 Pa`
+and temperature `281.88 K`. Vacuum or terrain solid has no gas or
+oxidizer sample. This is a prescribed, nonreactive reservoir: combustion
+does not deplete local oxygen, heat gas cells or launch simulated product
+parcels. Its effective gas constant is about `0.203844 J/(kg K)`, not an
+Earth-air molecular calibration.
+
+The demonstration uses three ordinary `5 kg` cubes, each `0.5 m` wide,
+resting on the M25 spacecraft hull. Each has a finite `0.12 kg`
+combustible coating, `150 J/K` exposed-layer heat capacity, `550 K`
+ignition threshold, `80 K` activation interval, at most `0.003 kg/s`
+fuel rate, `16 MJ/kg` chemical heat release, and `1.5 m²` effective
+exchange area. With `0.75` retained heat fraction, three quarters of
+released power enter that coating's thermal energy. The remaining quarter
+is reported as heat to the prescribed gas reservoir but does not evolve
+it. The fixed `5 kg` rigid mass/inertia neglects up to `0.12 kg` of lost
+coating (`2.4%` of carrier mass), a bounded approximation rather than
+conserved rigid mass after burning. Remaining fuel is stored in double
+precision so oxygen-limited burn steps in very thin gas cannot release
+chemical heat while rounding away the corresponding mass loss.
+
+### Fixed-step heat and reaction law
+
+Every thermal step reads current physical body pose/velocity and M26 gas
+before changing thermal state. Holding `C` while gameplay owns input
+powers an `18 kW` isotropic point radiator at the player's local
+eye/look-relative point. A body's intercepted fraction is
+`min(1, A/(4πd²))`; fractions are normalized if several bodies would
+intercept more than the source emits. This is external power integrated
+as `ΔT = P_net Δt/C`, with no target handle or `Ignite` command. Releasing
+`C`, opening a menu or piloting removes heater input; `R` restores thermal
+and body state, while a still-held `C` can power the heater again on later
+gameplay steps.
+
+Body pairs exchange reciprocal Stefan–Boltzmann power using the effective
+view area `min(A_i, A_j, A_i A_j/(4πd²))`, further bounded by each body's
+total exposed area when several receivers compete. The pair contribution
+is `epsilon σ A_view (T_i⁴ − T_j⁴)`, applied with opposite signs from the
+same pre-step temperatures. Surfaces also radiate and convect toward the
+local gas temperature. Convection scales with gas density and
+`|v_body − v_gas|`, not raw world speed; a shared frame velocity is not
+wind. The demo emissivity is `0.8`, with reference convection coefficient
+`8 W/(m² K)` at reference gas density. Vacuum removes convective cooling
+but leaves radiation to the modeled cold surroundings.
+
+For each demo body, with `a = clamp((T_previous − 550 K)/80 K, 0, 1)`, the
+nonnegative fuel rate is the minimum of:
+
+```text
+0.003 a kg/s                                 (thermal activation)
+[rho_oxidizer A (0.5 + 0.2 |v_body-v_gas|)]/3 (oxygen supply)
+remainingFuel / fixedDeltaTime               (finite material)
+```
+
+The oxygen requirement is `3 kg oxidizer/kg fuel`. The `0.5 m/s` term
+represents effective mixing at rest; the relative-flow term is an oxygen
+transport approximation, not resolved reactive CFD. The isolated focused
+ignition test uses its own `400 K` test material to check the generic law;
+`550 K` is the authored demo coating, not a universal engine threshold.
+Reaction heat joins
+heater, pairwise radiation and environmental cooling in the same thermal
+energy balance. In vacuum the oxygen term is zero. Returning a formerly
+burning body to air permits only the rate justified by its *current*
+temperature and remaining fuel.
+At `109.1 m` radius, a hot `0.12 kg` coating consumed just
+`3.14 × 10⁻⁹ kg` on its first thin-air step, below half a float unit in
+the last place at that mass. Over `10,000` steps it lost `3.14 × 10⁻⁵ kg`;
+integrated chemical heat and the energy implied by actual fuel loss both
+measured `502.417 J` within `0.01 J`.
+
+### Demo, presentation and measured evidence
+
+The first two blocks begin `0.55 m` centre-to-centre (`0.05 m` gap), with
+a third several metres away. They use ordinary M18 pickup and ship
+contact. A focused real-physics cargo fixture lifted an off-centre
+burning block on the `80 kg` ship under `1200 N` thrust with the existing
+M21 SAS enabled. It crossed the `110 m` gas top at step `188`; after 20
+vacuum steps the ship/cargo radii were `116.290/116.789 m`, the largest
+support gap was `0.0257 m`, and fuel reaction had stopped. A second run
+with all three *actual authored offsets* crossed the gas top together at
+step `224`. No thermal teleport or fire-specific motion was used. In the
+control with SAS off, the off-centre first block fell away and remained
+near `86.8 m` radius after 600 steps while the ship escaped. SAS applies
+real corrective torque, not a hidden cargo attachment: live ascent calls
+for board `F`, SAS `X`, then local-up thrust `E`. This headless fixture
+uses the live `0.12 kg` coating and `550 K` ignition threshold; its first
+block starts at `650 K` to isolate physical transport and vacuum extinction
+from the separate heater-aiming test. Operator handling of the live
+arrangement remains to be judged.
+
+`FirePresentation` turns each burning body's presented pose, measured burn
+rate/temperature, local gravity and gas-relative flow into at most 13
+translucent spheres. Approximate visual buoyancy tends opposite supplied
+gravity; at zero gravity and no relative airflow, paired body-local
+lobes form a symmetric halo. These are visual flame/smoke shapes, not
+authoritative hot gas. They transfer no heat, consume no fuel, cast no
+new shadows and contain no independent looping animation. The existing
+OpenGL 3.3 transparent pass draws them after solid geometry. The HUD
+receives plain heater/player-local oxidizer and per-block temperature/fuel/rate data;
+`R` restores body and thermal state. `JUDAS_FIRE_DIAGNOSTICS=1` prints
+thermal timing and body values every 600 fixed steps. The older scripted
+gameplay harness remains an M1–M26 regression, not a live M27 thermal
+loop; the focused thermal suite and interactive run cover M27.
+
+In a **stationary-body thermal calibration probe at the exact authored
+terrain positions**, the `18 kW` heater `0.35 m` behind A raised A to
+`700 K` by `4.50 s`; then it was removed. B, `0.55 m` from A, ignited
+at `12.95 s`. At `10 s`, A was `769.4 K` with `0.10601 kg` fuel and B
+was `521.5 K`. At `30 s`, A was `849.6 K` with `0.06108 kg`, and B
+was `850.7 K` with `0.08331 kg`. At `60 s`, A had used all fuel and
+cooled to `649.4 K`, while B was `804.4 K` with `0.01512 kg`.
+A third block roughly `4.22 m` away remained around `315 K` and unlit.
+With the same `4.50 s` heater exposure but A's emissivity set to zero,
+B peaked at `340 K` and did not ignite. This causal control shows that
+A's radiative heat, rather than the heater alone, ignites B.
+Near the burn plateau, `0.002246 kg/s` fuel produced about `35.94 kW`
+chemical power: `26.96 kW` entered the exposed solid layer and
+`8.99 kW` was reported to the unevolved gas reservoir. The thermal core
+averaged about `0.58 µs/fixed step` on this host, excluding live physics,
+fluid and rendering. The earlier `580 K` authored threshold, checked at
+these same terrain positions, left B unignited after `60 s` (it peaked
+around `569 K`); changing the *demo material* to `550 K` is supported by
+this measured environment. These are calibrated fixture results, not a
+promise that a moving arrangement ignites on the same schedule. An unattended
+live terrain run with no heater engaged reported `0.00521`, `0.00458`
+and `0.00430 ms/thermal step` at steps `600`, `1200`, and `1800`,
+including physical pose and gas samples. At step `600`, A/B/far were
+`284.7/286.2/295.1 K`, each retaining its initial `0.12 kg` fuel with
+zero reaction. Real rigid contact settled A/B centre distance from the
+authored `0.55 m` to `0.510/0.505/0.501 m` at steps
+`600/1200/1800`; A's sampled oxidizer density was
+`0.00937/0.00962/0.00987 kg/m³` at those points. The moving bodies
+remained near each other but did not ignite without heat. These numbers
+exclude the rest of the fixed step and rendering. The focused
+`judas_combustion_tests` covers fuel/heat/spread, vacuum, relative motion,
+real body transport, and rotate/translate/zero-g visual equivalence.
+The operator accepted the live visual and handling behaviour after these
+automated checks.
+
+The model does not claim local oxygen depletion, gas heating, product
+momentum feedback, true smoke dynamics, water extinguishing, or a closed
+material/gas energy budget. Radiation uses distance and effective area
+without visibility/occlusion queries, so intervening solids do not block
+thermal exchange in this bounded open-block demonstration. Heat-transfer
+areas, oxygen transport and coating properties are effective demo
+parameters, not laboratory wood
+chemistry. The M25 lake's `125 kg` particle resolution also exceeds the
+stable two-way contact mass ratio for these `5 kg` blocks: their actual box
+geometry still blocks/displaces fluid, but delayed lake reaction impulses
+are not returned to them, as with the M26 `80 kg` ship. This is an explicit
+one-way coarse-fluid limitation, not a buoyancy or extinguishing model.
+
+## Milestone 28 — Judas learns to be an editor (accepted)
+
+### Identity, restated
+
+Judas is a game engine. The two demonstrations — the classic
+planets-and-plank abuse chamber and the terrain/lake/atmosphere/fire
+planet — are scene content used to validate engine capability. Before M28
+that content was compiled into `Application.cpp` as ~1,000 lines of
+constants and placement arithmetic; authoring a world meant editing C++.
+M28 is the milestone where that stops.
+
+### The engine / runtime / editor boundary
+
+```
+            judas_engine (static library, src/)
+                 ▲                     ▲
+                 │                     │
+        judas (src/main.cpp,      judas_editor (src/editor/,
+        src/Application.cpp,      third_party/imgui)
+        RuntimeOptions,
+        RuntimeDiagnostics,
+        TestHarness)
+```
+
+- `judas_engine` holds every engine capability plus the M28 scene layer
+  and the shared play loop. It includes nothing from `src/editor/` or
+  `third_party/imgui/`, and `judas` does not link ImGui. The dependency
+  direction is engine ← runtime and engine ← editor, never the reverse.
+- The runtime-only sources are exactly the things a shipped game would not
+  carry: option/environment parsing, the opt-in diagnostic printers, and
+  the scripted harness.
+- The editor is another consumer of engine capabilities. It never becomes
+  authoritative physics: in Play it drives the same `InteractivePlay`
+  frame the runtime drives, over a `RuntimeWorld` it built from the
+  authored scene.
+
+### Scene representation (`src/Scene.h`)
+
+A `Scene` is authored data only: `SceneSettings` (name, M23 world origin,
+sun direction/colour, ambient, fluid scale) and an ordered list of
+`SceneObject`s. Each object has a never-reused `SceneObjectId` (a 64-bit
+counter persisted in the file), a name, a `SceneTransform` (position,
+quaternion, scale — scale affects mesh rendering only, never a collider),
+and any of these optional components:
+
+| Component | Engine capability it selects |
+|-----------|------------------------------|
+| `render` | box / sphere / mesh (asset path + optional texture) / compound / terrain, colour, alpha, secondary colour/alpha for compound walls |
+| `body` | static or dynamic rigid body: box, sphere, compound boxes or terrain surface (by identifier); mass, friction, restitution, initial velocity, pickable flag |
+| `gravity` | a bounded gravity context at the object: radial (`RadicalGravity`) or uniform along the normalized object rotation's local −Y; `FaithfulGravity` only when the computed float acceleration is exactly `(0, -9.81f, 0)`, otherwise `UniformGravity`; sphere or box region |
+| `light` | a standalone point or spot dynamic light (spot faces local −Z) |
+| `door` | the M16 hinged door (panel from the render box; hinge at the transform) |
+| `light-switch` | the M16 lever plus its lamp (offset in the object's frame) |
+| `vehicle` | the pilotable rigid body (M8/M11/M12/M21): local or celestial gravity source, headlight/navigation lights, drag coefficient, start-attached pilot |
+| `celestial` | Newtonian participant: a dynamic body joins the pairwise set by its mass; a static body is a point-mass source (µ) for celestial-gravity vehicles; optional M20 operator thrust |
+| `atmosphere` | the M26 hydrostatic gas around a static celestial object |
+| `combustible` | the M27 coating on a dynamic body |
+| `fluid-volume` | an authored particle lattice (spacing, counts) with an optional held-key emitter and cap |
+| `player-start` | spawn position, yaw and view mode (at most one per scene) |
+
+Order matters and is authored: gravity regions are registered with
+`GravityContextMap` in scene order, so an earlier object wins where two
+regions overlap (the plank precedes the planets exactly as the old
+composition root registered it). The hierarchy panel's Move up/down edits
+that order.
+
+For `gravity uniform g`, serialized `rotation w x y z` components and `g`
+are binary32 inputs. `RuntimeWorld::Build` normalizes the quaternion and
+rotates `(0, -g, 0)` once. Constructor selection preserves that entire
+computed acceleration: it has no angular tolerance that snaps small
+rotations to world down. FTFT3 removed such a tolerance after reproducing
+its loss of transverse acceleration at exactly `9.81f`. The independent
+[scene-construction evidence](evidence/ftft3/README.md) covers adjacent float
+magnitudes, small/arbitrary rotations, round-trips and ordinary free-body
+fixed steps. Its near/far cases use the existing fixed double origin;
+they do not establish live rebasing.
+
+This is not an ECS. The component set is the closed list of capabilities
+the engine has today; adding a new engine capability means adding a struct
+here, a block in the serializer, and a branch in `RuntimeWorld::Build`.
+No registry, no dynamic component types, no scripting.
+
+### Scene file format (`.judas`, version 1)
+
+Line-oriented UTF-8 text, `#` comments, quoted strings with `\\"` and `\\\\`
+escapes. Structure:
+
+```
+JudasScene 1
+settings
+  name "<string>"
+  world-origin <x> <y> <z>          (doubles, metres)
+  sun-direction <x> <y> <z>
+  sun-color <r> <g> <b>
+  ambient <r> <g> <b>
+  fluid-scale <f>
+  next-id <n>                        (the next object id to hand out)
+end
+
+object <id> "<name>"
+  position <x> <y> <z>
+  rotation <w> <x> <y> <z>
+  scale <x> <y> <z>
+  render <box|sphere|compound|mesh|terrain>
+  render.half-extents <x> <y> <z>
+  render.radius <r>
+  render.color <r> <g> <b>
+  render.alpha <a>
+  render.secondary-color <r> <g> <b>
+  render.secondary-alpha <a>
+  render.mesh "<path>"            (version 1–2; version 3 (M30) writes
+  render.texture "<path>"          render.mesh-asset "<id>" / render.texture-asset "<id>")
+  body <static|dynamic> <box|sphere|compound|terrain>
+  body.half-extents / body.radius / body.terrain "<id>" / body.mass /
+  body.friction / body.restitution / body.initial-velocity <x> <y> <z> /
+  body.pickable <true|false> / body.compound-count <n> /
+  body.compound-box <cx> <cy> <cz> <hx> <hy> <hz>   (n lines)
+  gravity <radial|uniform> <magnitude>
+  gravity.region sphere <r>   |   gravity.region box <x> <y> <z>
+  light <point|spot> ; light.color ; light.range ; light.cone <inner> <outer>
+  door ; door.hinge-axis ; door.open-angle ; door.angular-speed
+  light-switch ; light-switch.hinge-axis ; .toggle-angle ; .angular-speed ;
+                 .lamp-offset ; .lamp-color ; .lamp-range
+  vehicle <local|celestial> ; vehicle.headlight ; .navigation-lights ;
+                 .drag-coefficient ; .initial-pilot-attached
+  celestial ; celestial.gravitational-parameter ; celestial.operator-thrust
+  atmosphere ; atmosphere.reference-radius ; .top-radius ; .reference-density ;
+                 .polytropic-exponent ; .oxidizer-fraction ; .reference-temperature
+  combustible ; combustible.heat-capacity ; .fuel-mass ; .ignition-temperature ;
+                 .max-fuel-rate ; .radiative-area ; .retained-heat
+  fluid-volume ; fluid-volume.spacing ; .count <x> <y> <z> ; .emitter ;
+                 .emitter-offset ; .max-particles
+  player-start <third-person|first-person> ; player-start.yaw
+end
+```
+
+Rules that keep the format honest:
+
+- **Explicit identity.** The first line is the format name and version; a
+  different version is refused rather than guessed at.
+- **Deterministic.** Objects are written in scene order and keys in a fixed
+  order; floats are printed as the shortest decimal that parses back to
+  the identical `float` (so `9.81`, not `9.81000042`, but bit-exact), and
+  doubles likewise. Saving the same scene twice is byte-identical, and
+  `judas_scene_tests` proves save → load → save is too.
+- **Strict loading.** A component's header key introduces it and every one
+  of its fields is then required; an unknown key, a misplaced
+  `component.field` without its header, a duplicate key or id, a
+  non-finite number, a missing transform field, a truncated block, a
+  second `player-start`, or a component whose prerequisites are absent (a
+  vehicle without a dynamic box body, an atmosphere without a static
+  celestial µ, a compound render without a compound body) fails with the
+  line number, and the caller's `Scene` is left untouched. Nothing is
+  defaulted silently: the writer emits every field precisely so the reader
+  can demand every field.
+- **Assets by path/identifier.** Meshes and textures are referenced by
+  working-directory-relative paths, terrain surfaces by identifier
+  (`src/TerrainLibrary.h`, currently `m25-radial`). No runtime pointer, GPU
+  handle or physics handle is ever serialized.
+
+A hand-rolled format was chosen over vendoring a JSON library: the data is
+flat and small, the strictness rules above are easier to state and test
+directly, and the repository's dependency policy has been "single-header
+vendored, or nothing" throughout. `SceneSerialization.cpp` is 790 lines
+including its parser and every validation message.
+
+### Authored vs runtime state
+
+| Authored (`Scene`, the file) | Runtime (`RuntimeWorld`, `GameSession`) |
+|------------------------------|-----------------------------------------|
+| object ids, names, transforms | `BodyHandle`s, `MeshHandle`s, indices into the dynamic-body list |
+| component parameters | current poses/velocities read back from `PhysicsWorld` |
+| initial velocity | integrated velocity |
+| fluid lattice description | particle positions, emitted count |
+| combustible material | temperatures, remaining fuel, burn rates |
+| door/switch hinge parameters | current angle, open/lamp state |
+| player start | `PlayerController`, pilot attachment, held object, torch, view mode |
+
+`RuntimeWorld::Build` reads a `Scene` exactly once and never writes it.
+`RestoreAuthoredState()` is the R-key reset: every dynamic body back to its
+authored pose and initial velocity, particles re-laid, thermal state reset,
+emitter count zeroed. Play → Stop in the editor is stronger still: the
+runtime world is destroyed and rebuilt from the untouched scene, which
+`judas_scene_tests` Section E verifies by serializing the scene before and
+after and comparing bytes.
+
+### Runtime instantiation (`src/RuntimeWorld.h`)
+
+**Historical M28 construction account.** FTFT9 superseded the light-body particle
+reaction cutoff described below. Static compounds and M64 collision resources are
+now supported. M51 restricts native vehicle/door/player gameplay to explicit legacy
+compatibility; ordinary project game behaviour belongs to JS.
+
+`Build` walks the objects in order and, per component, creates the engine
+state and records only what stepping and drawing need to reach it again.
+Two rules that used to be name-based in `Application.cpp` are now
+mass/component rules the same objects satisfy:
+
+- **Fluid reaction coupling.** M25 documented that a 125 kg lake particle
+  cannot return its delayed reaction impulse stably to the 80 kg ship or
+  the 5 kg fuel blocks, while the 2,000 kg block and the 120 kg cups (with
+  0.125 kg cup water) are fine. The former code skipped the ship and the
+  three blocks by handle; `StepPlayedWorld` now skips any dynamic body
+  lighter than four particle masses. Every accepted case falls on the same
+  side of that line as before; the body still displaces water either way.
+- **Vehicle gravity.** The terrain scene's ship was excluded from local
+  gravity contexts and given the planet's point-mass field; the classic
+  ship sampled local contexts and joined pairwise Newtonian gravity. That
+  is the `vehicle` component's `local` / `celestial` choice, and the
+  static `celestial` component's µ is the source.
+
+Limits of M28 instantiation, all reported as errors rather than
+approximated: one vehicle and one atmosphere per scene; static compound
+bodies are not supported (no engine primitive exists); an unknown terrain
+identifier or missing mesh/texture fails the whole build with the object
+id and name.
+
+FTFT7 also ensures a Local vehicle carrying an explicit `celestial` component
+is registered exactly once. Operator-force handles are rebuilt from live entity
+definitions across creation, destruction and fidelity reconstruction. A dynamic
+celestial pair exchanges mutual force;
+a deliberately static point-mass source remains an external anchored source.
+The normal fixed-step integrator has finite timestep error, not exact orbital
+energy conservation. See [executed FTFT7 evidence](evidence/stabilization/ftft7/README.md).
+
+### Fixed-step ordering (`src/Simulation.h`)
+
+**Current ordering:** navigation → liquid BeginStep → JS fixedUpdate → opted-in
+M70 CharacterMotors/reference pose/physical-drive preparation → conserved liquid
+update/loading → ordinary gravity/forces and enabled legacy adapters → rigid
+physics/legacy fluid coupling → combustion/coarse integration → legacy
+observer/player → remaining CharacterMotors → dynamic-body sync → animation →
+ragdolls → sockets → deformables/fracture →
+visual particles → simulation clock/contact and fracture events → fidelity policy.
+The world advances once;
+render cameras do not step it. M52's presentationUpdate runs after catch-up.
+The sequence below is the historical M28 path, not the current system inventory.
+
+`StepPlayedWorld` is the M7-Final..M27 interactive step, verbatim in order:
+dynamic bodies sample local gravity → Full/Full and cross-fidelity celestial forces → vehicle
+point-mass gravity and aerodynamic drag → M20 operator thrust → carried
+object forces/torque → vehicle pilot forces → door/switch animation →
+`PhysicsWorld::Step` → combustion → fluid emission and solve with the
+coupling rule above → Coarse local acceleration/drift → player (attached or walking) → presentation sync.
+Both the interactive loop and both harness modes call this one function;
+nothing is approximated harness-side any more.
+
+### Presentation (`src/WorldPresentation.h`)
+
+`DrawWorldGeometry` (opaque, shadow-pass safe), `DrawWorldTransparents`
+(compound walls, atmosphere shells, fire, heater tip), `BuildWorldLights`
+(torch, vehicle rig scaled to the body's half-extents, switch lamps,
+standalone scene lights) and `RenderWorldFrame` (the M15 directional +
+spot shadow passes, then the colour pass) are the former `drawScene`,
+`drawTransparentCupWalls`, `drawAtmosphereHaze`, `drawFire`,
+`BuildDynamicLights` lambdas/functions, now over a `RuntimeWorld`. The
+editor's edit mode uses `DrawAuthoredScene`, which draws straight from the
+`Scene` (no physics, no runtime instance) through the same
+`RenderAssetCache`; an authored fluid volume shows as its lattice bounds.
+
+### `Application.cpp` responsibility split
+
+What it owned at M27 (2,404 lines) and where each responsibility went:
+
+| Responsibility | Now |
+|----------------|-----|
+| env-var demo mode selection, world offset parsing | `RuntimeOptions` (78 lines; maps the old switches to scene files) |
+| window, GLAD, renderer, font startup/shutdown | `EngineHost` (47) |
+| asset loading (beacon, plane, terrain mesh, fluid mesh) | `RenderAssetCache` (path/identifier → handle) |
+| ~1,000 lines of demo constants and placement math | `assets/scenes/*.judas` (authored once from those constants; no C++ copy remains) |
+| gravity region wiring | `RuntimeWorld::Build` from `gravity` components, in scene order |
+| body creation for planets, plank, stairs, ramp, door, switch, props, ship, orbital bodies, cups, fire blocks, terrain | `RuntimeWorld::Build` from `body`/`door`/`light-switch`/... components |
+| fluid lattice + emitter, atmosphere, combustion setup | `RuntimeWorld` (`fluid-volume`, `atmosphere`, `combustible`) |
+| player spawn, pilot control, SAS, pickup, interaction, torch, view mode | `GameSession` (152) |
+| the fixed-step ordering | `Simulation.cpp` (203) |
+| `drawScene` + transparent passes + lights + shadow passes | `WorldPresentation.cpp` (395) |
+| HUD data assembly | `GameplayHud.cpp` (118; labels from object names) |
+| pause-menu input boundary, accumulator, presentation alpha, per-frame render | `InteractivePlay` (154; shared with the editor) |
+| the three diagnostic printers and live telemetry | `RuntimeDiagnostics` (125, runtime-only) |
+| test-harness hookup | unchanged in shape, now over `GameSession` |
+| reset (`R`) | `GameSession::ResetToAuthoredState` → `RuntimeWorld::RestoreAuthoredState` |
+
+What remains in `Application.cpp` (116 lines) and why: parse options, load
+the scene file (before any engine system exists, so a bad file exits
+cleanly), build the world, begin play, and run the loop that pumps events,
+calls `InteractivePlay::Frame`, feeds the diagnostics, writes the optional
+settled screenshot and swaps buffers — or hands the session to the
+harness. That is orchestration; every line references a boundary, none
+implements one. No new file is a relocated god object: the largest new
+engine file is `SceneSerialization.cpp` (the format), then
+`RuntimeWorld.cpp` (467 lines, one `Build` walk plus reset/teardown).
+
+### The editor (`src/editor/`)
+
+- `EditorDocument` — the authored `Scene`, its path, dirty flag, selection,
+  and snapshot undo/redo (`BeginEdit`/`CommitEdit` around every panel
+  change; a whole-`Scene` copy per committed edit, capped at 200). Scenes
+  are tens of objects, so one mechanism covers property edits, creation,
+  deletion, reordering, component add/remove and settings, with nothing
+  to keep in sync per property.
+- `EditorCamera` — a free-flying camera with no gravity, collision or
+  privileged up; right-drag look, WASD/QE, Shift boost; pixel → world ray
+  for selection picking (bounding spheres: cheap, and enough to click a
+  light or an empty).
+- `EditorPanels` — the Dear ImGui menu bar, Hierarchy, Inspector (name,
+  transform with rotation shown as degrees, every component's fields, Add
+  component / Remove), Scene settings, Assets (models/textures found on
+  disk, terrain identifiers), status bar, and generic object creation.
+  The panels know engine components, not demonstrations.
+- `EditorApplication` — brings up `EngineHost`, adds the ImGui SDL2/GL3
+  backends through `Window::SetEventHook`, tells the engine when the UI
+  claims keyboard/mouse (`Window::SetInputClaimed`, so a text field never
+  walks a player or flies the camera), draws edit mode or runs
+  `InteractivePlay::Frame` in play mode, and handles requests.
+
+Edit → Play → Stop: Play builds a `RuntimeWorld` from the document's
+`Scene` and begins the same `InteractivePlay` the runtime uses; the mouse
+is captured and the normal Judas controls apply. `Escape` opens the M13
+pause menu, which frees the mouse so the editor panels are usable while
+the world is frozen; the inspector is read-only during play. Stop ends the
+session and destroys the world. Nothing ever writes runtime state into the
+`Scene`, so "restored" is structural, not a copy-back. Keys pressed while
+editing are drained on Play so an `F` (focus) cannot fire as a pilot
+toggle on the first played frame.
+
+Dear ImGui v1.91.9b (MIT) is vendored under `third_party/imgui/` (core plus
+the SDL2 and OpenGL 3 backends only; provenance in its README). It was
+chosen as the smallest UI dependency that fits an SDL/OpenGL immediate-mode
+loop; writing a widget toolkit to prove Judas has an editor was not the
+milestone.
+
+### Automated evidence
+
+- `judas_scene_tests` (Sections A–G): save/load equivalence and
+  byte-identical resave; ids surviving deletion and reload with the
+  counter persisted; create/delete/modify/reorder; nine malformed-input
+  cases each failing with a message and leaving the output untouched; edit
+  → play (180 + 30 fixed steps with a sideways velocity injected) → stop →
+  scene bytes identical, then a second play starting from authored state
+  and an in-run reset restoring it; a file saved by the editor
+  representation loading through the runtime path; every shipped scene
+  loading, instantiating headlessly and round-tripping; unknown terrain id
+  failing instantiation with the id in the message.
+- All 27 pre-existing suites pass unchanged.
+- Gameplay harness (420-step walk/look/jump/reset script, Xvfb): on the
+  classic scene, the player columns and the six original object columns
+  are byte-identical between the M27 build and the M28 scene-driven build;
+  the spacecraft column differs only because the harness now includes the
+  orbital bodies the interactive classic scene always had (the ship joins
+  their pairwise gravity exactly as in interactive M27 play). On the
+  terrain scene the player columns are identical for the first 60 steps,
+  then diverge because the M27 harness had placed the ship at the plank
+  position while the interactive scene (and now the harness) puts it on
+  the terrain where the walk path meets its deck. Both scenes are
+  byte-identical at the origin and at the M23 far offset.
+- Editor (`JUDAS_EDITOR_AUTOTEST=<prefix>`, developer hook): renders the
+  edit view with all panels, enters Play, runs 120 frames, screenshots
+  both, stops, and reports the authored scene IDENTICAL, on the classic
+  scene, the terrain scene and an empty scene, under Xvfb.
+- A clean configure against Ubuntu 24.04's stock `libglm-dev` 0.9.9.8
+  succeeds (the pre-M28 `glm::glm-header-only` reference failed there);
+  a Release build of every target has zero warnings under `-Wall -Wextra`.
+
+The operator validated the editor and accepted M28 (commit `57e69a0`).
+
+### Known content differences from M27
+
+- The terrain scene file contains only the terrain demonstration. At M27
+  the terrain launch also created the classic planets, plank, stairs,
+  door and props 300 m away (never drawn, still simulated). They are not
+  in `terrain.judas`; open `classic.judas` for them.
+- The harness steps the full played scene. Pre-M28 harness runs skipped
+  fluid, doors, combustion, celestial gravity, orbital bodies and cups.
+
+### Deliberately not implemented
+
+Object parenting/hierarchy transforms (the "hierarchy" panel is an ordered
+flat list); viewport gizmos (inspector numeric editing is the transform
+workflow); an OS file dialog (Open/Save As take a path); asset
+import/database/streaming (the asset panel lists files on disk); more than
+one vehicle or atmosphere per scene; static compound bodies; applying
+runtime state back to the scene after Play; prefabs, scripting, ECS,
+docking layouts, terrain/material/animation editors. Each is a future
+milestone if a brief asks for it, not an oversight.
+
+
+## Milestone 29 — Judas learns that existing does not mean being fully simulated (accepted)
+
+### The law
+
+> Existence is not the same thing as active simulation.
+
+Through M28 every dynamic body in a scene was a live `PhysicsWorld` body
+from load to shutdown. A universe-scale game cannot work that way, and a
+tiny flat game must not be made to care. M29 gives the engine one explicit
+representation of "how real is this entity right now", one lifecycle, one
+policy boundary, and one persistence model — and keeps all of it optional.
+
+### Persistent identity
+
+`EntityId` is the scene object id (`src/EntityLifecycle.h`). Authored
+entities keep the id their scene file gives them; entities created at
+runtime take ids from `kRuntimeEntityIdBase` (2^62) upward so they can
+never collide with any baseline id, whatever the baseline's own counter
+does when it is edited later. Four things that were easy to confuse are
+now four things:
+
+| Concept | Type | Lifetime |
+|---------|------|----------|
+| scene object id | `SceneObjectId` | authored; the file's identity |
+| persistent entity id | `EntityId` (same value for authored entities) | the whole life of the entity, across unload and restart |
+| physics body handle | `BodyHandle` | one incarnation at Full fidelity; generation-checked so a stale handle never reaches a reused slot |
+| render resource handle | `MeshHandle`/`TextureHandle` | the asset cache's; never world truth |
+
+`RuntimeWorld` keeps one `EntityRecord` per dynamic entity, in slot order
+parallel to its `DynamicBody` presentation slots. A slot outlives its
+body: unloading destroys the `PhysicsWorld` body and leaves the slot bound
+to nothing; reconstruction binds a new body to the same slot. Harness CSV
+columns, vehicle/combustible indices and pick-up targets therefore keep
+their positions; nothing is duplicated.
+
+### Fidelity
+
+```
+Full     live PhysicsWorld body: contacts, gravity, forces, interactions
+Coarse   no body; EntityPhysicalState advanced by CoarseSimulation
+Dormant  no body; no per-step work; state retained exactly
+```
+
+`SimulationFidelity` is the engine's own state, held on the record, and
+the ONLY place any system asks "how is this entity being simulated". No
+subsystem has an `if (farAway)`; presentation draws Full and Coarse
+entities from their slot poses and skips Dormant ones, the fluid solver
+collides with live bodies only, `CelestialGravity` pairs live celestial
+bodies. `ApplyCoarseCelestialForces` evaluates each pair involving an Active
+Coarse celestial once from start-of-step geometry, distributes the same force
+with opposite signs, and includes automatically participating Local vehicles.
+Full bodies accumulate force before the rigid step; Coarse records receive the
+reciprocal velocity kick before their later drift. FTFT7 repaired the earlier
+post-step/omitted reactions; its pre-fix evidence is retained separately.
+
+**Coarse semantics** (`src/CoarseSimulation.h`) are deliberately modest
+and honest:
+
+- *Settled* (captured when the entity left Full below 5 cm/s and 0.05
+  rad/s): frozen. It is assumed to remain supported by whatever static
+  geometry it rested on. A nonzero mutual celestial force invalidates that
+  assumption and wakes a Coarse celestial into Inertial motion.
+- *Inertial*: the same symplectic Euler update as `IntegrateRigidBody`,
+  driven by the same accelerations a live body gets — the scene's gravity
+  contexts and, for celestial participants, pairwise Newtonian gravity —
+  and **no contacts**. Static point-mass sources are selected only by
+  Celestial-mode vehicles, which require Full fidelity; ordinary Coarse
+  bodies do not gain an extra unselected gravity source on demotion. This is real
+  reduced physics over exactly the state reconstruction needs; the
+  measured coarse arc of a thrown crate matches the live integrator to
+  2 mm, and a zero-g sphere's full/coarse/full run matches an all-full run
+  to 1 mm after 240 steps. Its limit is stated, not hidden: an inertial
+  coarse entity passes through solid geometry. A policy that lets an
+  entity go coarse while heading into terrain has chosen that; the demo
+  keeps its inertial coarse entities in free space.
+
+**Dormant semantics:** time does not pass for a dormant entity. Its state
+is exactly what it was when it went dormant, and `dormantSinceSeconds`
+records when. M29 does not extrapolate on wake; a future subsystem that
+can advance a dormant entity over elapsed time (an orbit, for instance)
+would do so at promotion, explicitly, and that is documented as the next
+step rather than faked now.
+
+**Capability limits** are explicit (`RuntimeWorld::EntityRequiresFull`):
+an entity with a `vehicle` or `combustible` component, or a compound
+body, has no reduced representation and stays Full while active — asking
+it to reduce fails with a message. Fluid, atmosphere, the player and doors
+are not entities in this sense at all; they are Full-only systems. No fake
+coarse water or fire exists.
+
+### Lifecycle
+
+```
+instantiate ─► Active (Full) ─► reduce ─► Active (Coarse) ─► unload ─► Unloaded (Dormant)
+                    ▲                          │                             │
+                    └────── reconstruct ◄──────┴──────── reconstruct ◄───────┘
+   any of the above ─► destroy ─► Destroyed (permanent; survives world rebuild via the delta)
+```
+
+`RuntimeWorld::SetEntityFidelity`, `DestroyEntity` and `CreateEntity` are
+the operations; `RestoreAuthoredState` (the R key) returns every surviving
+entity to its definition at Full and leaves destroyed ones destroyed.
+Reconstruction hands the new body the retained pose and both velocities
+and snaps presentation history, so nothing interpolates across the
+transition and no impulse is applied. `Application.cpp` tracks none of
+this; `GameSession` refreshes its handle-keyed lists (pick-up eligibility,
+interaction targets, a held object that left Full) whenever
+`RuntimeWorld::EntityVersion()` changes.
+
+**Contact on reconstruction.** A settled entity reconstructed on the
+geometry it rested on re-establishes contact quietly: the lifecycle suite
+compares a crate that went Full → Coarse → Full against an identical crate
+that never transitioned and finds their next sixty steps identical to
+1e-4 m. Overlap on reconstruction elsewhere is resolved by the ordinary
+positional correction, the same behaviour any overlapping pair gets.
+
+### Policy versus capability
+
+`FidelityPolicy` (`src/FidelityPolicy.h`) is an interface: given an
+entity's id, current fidelity, position and velocity, and a context (a
+focus point, the simulation time), return the desired fidelity. The world
+evaluates it once per fixed step for entities that are managed, not
+pinned by gameplay (held, supporting the player, the vehicle), not forced
+by the debug override, and not Full-only, and applies the transitions.
+The engine never assumes distance is why fidelity changes;
+`DistanceFidelityPolicy` (Full within `r_full`, Coarse within `r_coarse`,
+Dormant beyond, 10% hysteresis) is the one shipped policy and the scene's
+`fidelity-policy distance <full> <coarse>` setting installs it. A game
+can install any `FidelityPolicy` through `RuntimeWorld::SetFidelityPolicy`
+(the tests install an "everything dormant" one). At load, managed
+entities the policy would not simulate fully are never given a body at
+all.
+
+### Persistence: baseline + deltas (`src/WorldState.h`)
+
+```
+baseline scene file (authored; never rewritten by gameplay)
+  + saves/<scene>.judasstate   (deltas)
+  = the world
+```
+
+The current `.judasstate` format is version 2 (FTFT1; M29 originally wrote
+version 1 without verifiable baseline identity):
+
+```
+JudasWorldState 2
+compatibility 5 sha256 <64 lowercase hex digits>
+baseline "<scene name>"
+next-runtime-id <n>
+
+entity <id> moved            entity <id> destroyed        entity <id> created
+  position x y z                                            position/rotation/velocities
+  rotation w x y z                                          object <id> "<name>" ... end   (scene grammar)
+  linear-velocity x y z                                   end
+  angular-velocity x y z
+end
+
+door <id> true|false
+light-switch <id> true|false
+```
+
+The core M29 delta records cover an authored entity whose physical state differs
+from its definition beyond the settling tolerances (1 cm, 2 cm/s, ~2.5°),
+a destroyed entity, a runtime-created entity with its full definition, and
+door/switch states. Fidelity is not stored — a delta says what the world
+*is*, and the policy decides again on load. Nothing transient is stored.
+Records are written sorted by id with the scene format's shortest-exact
+floats, so a delta round-trips byte-identically. Loading validates every
+record against the world (ids exist, created ids are runtime-range and
+unused, definitions parse through the scene grammar) before applying any,
+so a bad file never half-modifies the live world. `CaptureWorldState` /
+`ApplyWorldState` are the engine operations; `F6`/`F7` and the editor's
+World menu are the demo's controls; `JUDAS_WORLD_STATE` selects the path.
+M40 additionally supports the optional versioned bounded script-state records
+documented below; this format example omits that extension.
+
+FTFT1 computes the baseline fingerprint once from the authored `Scene` on a
+successful `RuntimeWorld::Build`, before gameplay can mutate runtime state.
+Canonical schema 5 (M36 adds hierarchy and prefab provenance/override metadata;
+M34 added audio emitter/listener metadata; M33 added camera configuration and stable texture references;
+FTFT9's schema 2 added cavity, player-fluid and update-rate settings)
+includes scene-format version, all serialized authored
+settings/components, stable IDs, allocator state, names, and object order
+(which controls gravity-region priority). It encodes finite IEEE numbers and
+integers in a fixed byte order, normalizes signed zero, and length-prefixes
+strings. Unserialized inactive settings are excluded so scene round-trips keep
+the same identity. File location, whitespace, timestamps, runtime handles and
+runtime states are absent. SHA-256 uses no `std::hash` or locale-sensitive text.
+Asset references enter as stable IDs. M36 fingerprints the effective prefab-resolved
+scene; M40/M41 additionally hash registered project script/UI contents under their
+documented conditions. Other external asset bytes and engine revisions remain
+outside this scene-compatibility scheme.
+
+Loading first parses into temporary data, checks format/fingerprint versions,
+compares the fingerprint, and preflights every reference, state, identity counter,
+created definition/asset reference and supported lifecycle operation. Only then
+are deltas applied on the authoritative thread. Parser/validation rejection
+leaves body handles, lifecycle records, counters, resources and source files
+unchanged. A runtime-created then destroyed entity needs no tombstone against
+the authored baseline; its consumed identity remains recorded by the counter.
+Editor Play and standalone both use `ApplyWorldStateFileIfPresent` before
+starting the session. Existing unreadable files are errors, not missing saves.
+Version-1 saves cannot be verified and are rejected; save requests also refuse
+to overwrite legacy, malformed or incompatible files. No migration is attempted.
+These guarantees concern validation failures, not process failure or out-of-memory
+exceptions during commit, nor crash-safe disk replacement.
+
+Scene serialization (M28) and world-state persistence (M29) remain two
+formats with two jobs: the first is what was authored, the second is what
+happened to it. See `docs/FTFT.md` for executed FTFT1 evidence.
+
+### Editor integration
+
+While playing, the Inspector's "Runtime entity (M29)" section shows the
+selected object's persistent id, whether it is authored or
+runtime-created, lifecycle, fidelity (and whether forced), managed/
+Full-only status, coarse motion kind and coarse step count,
+reconstructions, live pose and velocity, and Force Full / Coarse /
+Dormant / Clear buttons that set the debug override. The Hierarchy is
+shown while Play is paused (Escape) with each entity's fidelity tag. The
+Scene panel edits the policy and radii; the Body panel has the `Managed`
+flag. The World menu saves/deletes the delta. The editor's authored Scene
+is never written by any of this; `judas_scene_tests` and the editor
+autotest still report the scene byte-identical after Play/Stop.
+
+### Scene format changes (version 2)
+
+`settings` gained `fidelity-policy none | distance <full> <coarse>`;
+`body` gained `body.managed true|false`. Both are required fields like
+every other (the format's strictness rule), so the version is 2 and the
+shipped scenes were regenerated. Everything else is unchanged.
+
+### PhysicsWorld change
+
+`DestroyBody` now frees the body's slot for reuse and the world iterates a
+sorted list of live slots instead of every slot ever allocated, so a
+world whose entities were unloaded pays for the bodies that exist. Handles
+carry a generation in their upper 12 bits; `Get` rejects a handle whose
+generation does not match the slot's current occupant, so a consumer
+holding a handle to an unloaded entity can never reach the body that
+later reused its slot. Iteration order for a world that never destroys a
+body is the same as before, which is why the classic harness stays
+byte-identical to M27.
+
+### Measured evidence
+
+`judas_lifecycle_tests` Section J, 1,500 managed 5 kg crates on a flat
+ground (this container, Release):
+
+| | physics bodies | Full / Coarse / Dormant | ms per fixed step |
+|---|---|---|---|
+| everything Full | 1,501 | 1,500 / 0 / 0 | 341 |
+| distance policy 12 m / 20 m | 20 | 19 / 41 / 1,440 | 1.1 |
+
+Promoting all 1,500 to Full: 0.65 ms (0.4 µs each); the policy re-demoted
+1,478 in the following step. Capturing and serializing a delta with 300
+moved crates (56 KB): 4.0 ms; parsing and applying it to a rebuilt world:
+0.8 ms (the suite prints the exact numbers of each run). Load time is
+~2 ms either way at this size and is printed, not asserted. The
+1,501-body step is dominated by the solver's O(n²) pair loop; M29 removes
+the work rather than optimising it, which is the point.
+
+Other evidence in the suite: identity and handle invalidation across
+full → coarse → dormant → full (Section A); exact state preservation and
+impulse-free reconstruction against an untransitioned reference (B);
+unload versus destroy and permanent destruction across the R reset (C);
+Full-only capability errors (D); coarse inertial evolution matching the
+live integrator in zero g and under uniform gravity (E); the distance
+policy, pins, forced overrides, policy-free explicit commands and a
+game-supplied policy (F); baseline + delta reproduction across a
+destroyed-and-rebuilt world with the baseline bytes unchanged (G);
+validation-before-apply and malformed input (H); byte-identical deltas at
+the origin and the M23 far offset, and unchanged relative velocity to a
+rotating frame across demotion (I). All 28 earlier suites pass; the
+classic 420-step harness is byte-identical to the M27 build and both
+scenes are byte-identical near/far origin.
+
+### Known engine limitation exposed by M29 (pre-existing)
+
+**Historical M29 finding — superseded solver mechanism:** M32 introduced
+accumulated impulses and FTFT4 subsequently stabilized contact geometry/timing.
+The measured creep below records the old solver, not a current open repair.
+
+A box resting on static geometry creeps at roughly 5 mm/s with a small
+persistent spin. This is not M29's: the M27 build's harness shows the
+classic plank cube drifting 4.5 cm over its first 240 steps, and the M29
+build reproduces M27 byte for byte. The cause is in `ContactSolver.cpp`:
+friction at a contact is capped by the normal impulse computed at that
+contact in that iteration, and once the first of a box's four contacts
+has cancelled the step's normal velocity the remaining three apply no
+friction, so friction acts at one vertex and produces torque. Fixing it
+properly means accumulated per-manifold impulses — a solver change that
+would alter every accepted milestone's numbers — so it is recorded here
+for a future physics milestone rather than patched inside M29. Its M29
+consequences are stated honestly: a Full entity left resting long enough
+eventually crosses the 1 cm "moved" threshold and earns a delta; a Settled
+coarse or a Dormant entity does not creep at all (it is frozen). The
+lifecycle suite therefore measures reconstruction against an
+untransitioned reference rather than against absolute stillness, and its
+bit-exact "untouched" check uses an entity nothing acts on.
+
+### Deliberately not implemented
+
+Planetary terrain LOD or streaming, procedural planets, universe sectors,
+asynchronous asset streaming, a job system, networking, AI/fluid/fire/
+render LOD, dormant-time extrapolation on wake, a save-game UI or
+migration framework, cloud or database persistence. Each will consume the
+lifecycle, fidelity and delta boundaries established here when a brief
+asks for it.
+
+## Milestone 30 — Judas learns to actually make games with itself (accepted)
+
+### The gate
+
+Through M29 the engine could load, play, edit and persist scenes, but
+everything it played still lived in one repository layout: scene files
+under `assets/scenes`, meshes by working-directory path, the runtime
+choosing a scene by environment variable, the editor able to edit but not
+to create a game. M30 asks one question and answers it with automated
+evidence: **can a small game be made and run using Judas without touching
+engine source?** The answer is `projects/tiny_game` — a project created the
+way the editor's New project creates one, with a scene the editor could
+have authored, launched by `judas projects/tiny_game/tiny_game.judasproj`
+and by the editor's Run project, and covered by `judas_project_tests`.
+
+### Projects (`src/Project.h`)
+
+A project is a directory holding one `.judasproj` file:
+
+```
+JudasProject 1
+name "Tiny Game"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+```
+
+The format is the scene format's sibling: line-oriented, quoted strings,
+strict (unknown version, unknown/missing/duplicate key, absolute or
+`..` directory, startup scene outside the project all fail with a
+message; nothing is defaulted silently), deterministic (serialize → parse
+→ serialize is byte-identical). Every path in project and scene data is
+relative to the **project root** — the directory the file is in — never
+to the process's working directory. `Project::FindProjectFileFor` walks
+up from a scene path (or the working directory) to the nearest directory
+holding exactly one `.judasproj`; two candidates in one directory is
+"none" rather than a guess.
+
+The runtime (`src/RuntimeOptions.cpp`) launches a project:
+`judas <game.judasproj>` plays its startup scene; `judas <scene.judas>`
+plays that scene inside its enclosing project; bare `judas` uses the
+project enclosing the working directory. The pre-M28 environment switches
+(`JUDAS_CLASSIC_DEMO`, `JUDAS_FLUID_GRAVITY`, `JUDAS_ATMOSPHERIC_PASS`,
+`JUDAS_TERRAIN_ROTATED`, the `JUDAS_TEST_SCRIPT` default) still select
+demonstration scenes — from the project's scenes directory, and only for
+the no-argument form, so an explicit project launch always starts the
+startup scene and a project without a `classic.judas` is never asked for
+one. World-state deltas (M29) go to `<saves-dir>/<scene stem>.judasstate`.
+
+**The technology demonstration is an ordinary project.**
+`judas_tech_demo.judasproj` at the repository root points its assets-dir
+at `assets`, its scenes-dir at `assets/scenes` and its startup scene at
+`terrain.judas`. No engine code knows it exists: `grep -ri techdemo src`
+finds nothing but the project's display name in a comment. The tiny game
+is the same kind of thing with the default `Assets/Scenes/Saves` layout.
+
+**Historical M30 engine-data contract; extended by M38/M58.** The one file the engine itself needed
+— the UI font — is engine data, not project content, and is resolved by
+`src/EnginePaths.h` (`$JUDAS_ENGINE_ROOT`, the executable's directory and
+its parent, then the working directory). A project does not ship a font;
+a build tree anywhere under the repository finds it from any working
+directory. Current projects may register and export their own font assets and
+localization catalogs; the packaged DejaVu font remains the engine fallback.
+
+### Stable asset identity (`src/AssetDatabase.h`)
+
+Scenes referenced meshes and textures by path through M29; a rename broke
+every scene that used the file. M30 gives every asset a stable
+**AssetId** — 32 lowercase hex digits, minted at import — recorded in a
+sidecar beside the file:
+
+```
+Assets/models/beacon.obj.judasmeta
+    JudasAssetMeta 1
+    id "0b3ac0e5c8b04d1e9f7a2c6d5e4f3a21"
+    type mesh                      (mesh | texture | font)
+    source "assets/models/beacon.obj"   (provenance, informational)
+```
+
+Sidecar metadata was chosen over a central manifest because it is the
+form that survives what people actually do to asset folders: the sidecar
+moves with the file under any tool, a copied folder stays consistent, a
+deleted file leaves a sidecar that *says* the asset is missing. The scene
+format's mesh render fields became `render.mesh-asset "<id>"` and
+`render.texture-asset "<id>"` — **format version 3**; the nine shipped
+scenes were regenerated with fixed, hand-chosen ids for the three demo
+assets (and the font), so their diff is exactly the version line and the
+two renamed keys.
+
+`AssetDatabase::Scan` walks the assets directory and holds id → current
+path. It *reports* rather than guesses: a duplicate id (the first holder
+stays usable, the second is a problem), a corrupt sidecar, a sidecar whose
+file is gone (`missing`), and every loadable file without a sidecar
+(`untracked`, not referenceable until imported or tracked). `Import`
+validates the source with the engine's own loader for its type
+(`LoadObjMesh`, `LoadTextureFromFile`, a TrueType/OpenType header check),
+copies it into the assets directory, writes the sidecar and registers
+it; an unsupported extension, an undecodable file or an existing
+destination is refused with nothing half-written. `Move` renames or moves
+the file *and* its sidecar (same extension required; either rename
+failing undoes the other). `Track` adopts an untracked file in place,
+optionally with a fixed id (how the demo tree's ids were assigned).
+
+FTFT6 hardens these identity operations: containment is checked by normalized
+path components, not a string prefix; existing destination metadata (including
+an orphaned or malformed sidecar) is never overwritten by Import, Move or
+Track. A missing asset's identity remains reserved until the operator resolves
+its metadata. These are ordinary single-process filesystem operations, not a
+crash-safe multi-file transaction or a filesystem security sandbox.
+
+[FTFT6 integration evidence](evidence/stabilization/ftft6/README.md) drives an
+ordinary tiny project's real editor loop through authoring, asset failure and
+recovery, Play/Stop and mixed lifecycle persistence, then opens the same startup
+scene through the normal asynchronous standalone application. This automated
+offscreen GL coverage does not claim human visual validation.
+
+The automated evidence (`judas_project_tests`, section B): import a real
+mesh, write a scene that refers to its id, move the asset to a new
+directory under a new name, rescan from scratch, and the same id resolves
+at the new path while the saved scene text contains the id and no file
+name. No filename heuristics exist to fall back on.
+
+### The resource manager boundary (`src/ResourceManager.h`)
+
+**Historical synchronous M30 contract.** M31 replaces synchronous interactive
+loading with worker decode/main-thread publication. Later CPU resources (audio,
+fonts/catalogs, navigation, liquids, deformables and M64 collision data) do not
+require a GPU upload or a Renderer just to load. The following retains the original
+mesh/texture contract and its headless limitations.
+
+`ResourceManager` replaces M28's `RenderAssetCache` (path → handle) and is
+the *only* path on which a project asset becomes a GPU resource:
+
+| state | meaning |
+|-------|---------|
+| Unloaded | never requested, or released |
+| request → load → **Ready** | first `GetMesh(id)`/`GetTexture(id)` resolves the id through the AssetDatabase, decodes with the engine loader, uploads through `Renderer`; a valid handle is returned |
+| cached | every further request is a hit: no disk, no GPU |
+| **Failed** | unknown id, missing file, type mismatch or undecodable data is remembered with its message; requests return an invalid handle and do not retry |
+| released | `Release(id)` destroys the GPU resource; the next request loads again (a new handle — the old one is invalid) |
+| reloaded | `Invalidate(id)` = release + forget the failure, so a re-imported or moved file is picked up on the next request; `ReleaseAll` on shutdown |
+
+Terrain surfaces (engine-constructed, `TerrainLibrary`) are keyed by
+identifier as before. Everything is synchronous; there is no background
+thread and no streaming. GL is touched only inside `Renderer`; `Scene`
+holds ids, `RuntimeWorld` holds handles it asked for, nothing authored
+ever holds a handle. A null `Renderer` (tests, the CLI) makes every
+request an honest Failed with "no renderer", which is what the headless
+suite checks along with hit/miss/failed counting and the release/
+invalidate transitions. `EngineHost` owns the `AssetDatabase` and the
+`ResourceManager`; `OpenProjectAssets` rescans for a project and releases
+every resource of the previous one.
+
+### The editor
+
+**Component editor registry** (`src/editor/ComponentEditors.h`). The
+inspector, the Add component… menu and the hierarchy's indicator letters
+all iterate one static table: name, indicator letter, has/add/remove on a
+`SceneObject`, and the draw function for the fields. Adding a component
+type to the editor is one table entry. This is a table over the fixed
+component set in `src/Scene.h`, not reflection and not a dynamic
+component model — the data model is unchanged.
+
+**Gizmos** (`src/editor/GizmoMath.h`, headless-testable). Translate,
+rotate and scale handles at the selection, in world or local space (scale
+always local, since `SceneTransform::scale` is per local axis), drawn
+through the renderer's debug-line path on top of the scene. Picking is
+ray-versus-segment for arrows and ray-versus-ring for rotation; a drag
+captures the press ray's axis parameter (or plane hit for rotation) and
+each frame applies the delta to the transform captured at the press, so
+snapping (`Ctrl`: 0.5 m, 15°, 0.25) rounds the delta and never the
+absolute value. One `BeginEdit` at the press and one `CommitEdit` at the
+release make the whole drag a single undo step; entering Play cancels a
+drag in progress. The suite checks axis directions in both spaces, pick
+hits and misses, exact translate/rotate/scale results from constructed
+rays, snapping, and undo/redo of a ten-frame drag.
+
+**Hierarchy**: inline rename (double-click), duplicate (`Ctrl+D`; a copy
+under a new id inserted right after the original, without the player
+start since a scene has at most one), reorder, delete, component
+indicator letters, `(!)` for a mesh whose asset does not resolve, M29
+fidelity tags while playing. **Asset Browser**: a table of every tracked
+asset (type, path, MISSING/ok, id), import by path, rename/move, remove,
+track, problems, and drag sources whose payload is the asset id — dropped
+on the viewport a mesh becomes a new object where the mouse ray crosses
+the plane through the camera focus; dropped on an inspector Mesh/Texture
+field it is assigned if the type matches. **Project settings**: name,
+startup scene (a combo of the project's scene files), the scene list
+(double-click opens), Save project, Run project. **Run project** spawns
+the `judas` binary beside the editor's own on the project file
+(`posix_spawn`, `JUDAS_ENGINE_ROOT` passed on, the editor's automation
+variable stripped) — the game as a player starts it, separate from the
+editor's Play, which instantiates the current scene in-process.
+
+**Input ownership** is unchanged from M28 and checked again: ImGui's
+capture flags gate the engine's own key/mouse reading, the camera flies
+only while the right button is held over the viewport, gizmo hotkeys
+(`W`/`E`/`R`/`X`) are ignored while flying so they cannot fight the fly
+keys, and `Window::ClearPendingRequests` drains edge-triggered keys before
+the first played frame.
+
+### Debug visualisation layer (`src/DebugDraw.h`, `src/WorldDebugView.h`)
+
+`DebugLineList` is plain world-space line geometry (boxes, spheres,
+circles, capsules, arrows, axes) with no GL in it; `Renderer::
+DrawDebugLines` is the one place it is drawn — a third small shader
+(per-vertex colour, no lighting) with a streamed VBO, depth-tested for
+the world overlay and depth-free for the gizmo. `WorldDebugView` builds a
+list from engine truth every frame a category is on and nothing is
+retained between frames. The categories, and what they honestly show:
+physics shapes as created (static bodies, live dynamic bodies, compound
+children, terrain as its bounding sphere); the player's sweep capsule with
+a green/red support ring and look arrow; the last fixed step's resolved
+contact points and normals (`PhysicsWorld::LastStepContacts`, the final
+solver iteration, so a resting box reports its four manifold points) plus
+the support-body tether; gravity sampled at every live body and the
+player, and the authored regions' volumes; frame axes; this frame's
+dynamic lights as range spheres and spot cones; interactables' ranges with
+the current target highlighted and a tether to the held object; a marker
+per persistent entity coloured by fidelity; terrain normals *sampled* on
+rings around the player (not every vertex); fluid particle markers capped
+at 6,000; atmosphere reference and top radii. The authored (Edit-mode)
+counterpart draws collision shapes, regions, lights, the player start
+capsule and fluid lattice bounds from the Scene.
+
+### Profiler (`DrawProfilerPanel`)
+
+**Historical M30 panel.** M56 adds integrated bounded CPU/GPU profiling, including
+a separate `Rigid physics` scope inside PhysicsWorld::Step. The earlier assertion
+below that rigid-step time was not separated records the original panel only.
+
+Every number is produced by the code doing the work and labelled with what
+it counts: frame wall time (rolling average) and the FPS it implies; fixed
+steps this frame and the wall time of the last `StepPlayedWorld` (always
+measured now, one clock read per step); live and dynamic `PhysicsWorld`
+bodies; last-step contact points; M29 lifecycle counts; `RenderStats` —
+draw calls and triangles counted *at the draw call* (shadow passes
+included), shadow passes, dynamic lights after truncation, debug lines;
+fluid particles, the fluid solve time when the opt-in measurement is on
+("not measured" otherwise), the surface rebuild and scene submission
+times; resource counts and hit/miss/failed. Physics time *inside* the step
+is not separated from the step (there is no timer around
+`PhysicsWorld::Step` alone) and is not claimed.
+
+### M29 integration
+
+Nothing in M29 changed shape. `body.managed` is a checkbox with a
+one-line explanation when off; the fidelity policy stays in the Scene
+panel; the runtime-entity block, Force buttons and hierarchy tags are as
+in M29; deltas are never written into the authored scene (section H of
+the suite plays the tiny game, moves a body, and checks both the in-memory
+scene and the file are byte-identical). The tiny game sets no policy and
+manages nothing, and the suite checks every one of its entities stays
+Full: a simple project stays simple.
+
+### Scene format changes (version 3)
+
+`render.mesh "<path>"` → `render.mesh-asset "<id>"`, `render.texture
+"<path>"` → `render.texture-asset "<id>"`. Nothing else changed. Version
+1 and 2 files are refused with the usual message; the shipped scenes and
+`tools/SceneAuthor.cpp` (now the `judas_scene_author` target, run as
+`judas_scene_author assets/scenes projects/tiny_game/Scenes`; regeneration
+is byte-identical) carry the fixed ids.
+
+### Automated evidence
+
+`judas_project_tests` (30th suite, headless): A project format (round trip,
+seven strictness failures, CreateNew, second-project refusal, ancestor
+search, path helpers); B asset identity (id validity/minting, import of
+real mesh and texture, refusal of unsupported/undecodable/existing,
+scene-by-id, move + rescan resolving the same id, missing detection,
+untracked/track with a fixed id, duplicate-id and corrupt-sidecar
+problems); C resource manager (Unloaded → Failed with message, remembered
+failure as a hit, Invalidate, reload, type mismatch, unknown id, empty id
+no-op, ReleaseAll); D the tiny game (project → startup scene → runtime,
+no exotic systems, three boxes at rest, player grounded, all Full);
+E the technology-demonstration project (four tracked assets, the fixed
+ids, all ten mesh/texture references across nine scenes resolve, every
+scene instantiates, the startup scene is the terrain demonstration);
+F gizmo mathematics and undo/redo; G every component type through
+save/load; H Edit/Play separation on the tiny game. All 29 earlier suites
+pass unchanged (the scene suite expects version 3). The classic harness
+(`JUDAS_TEST_SCRIPT`, near and far origin) is byte-identical to the M29
+run, which was byte-identical to M27; the terrain harness is byte-identical
+to the M28 reference at both origins.
+
+The editor automation hook (`JUDAS_EDITOR_AUTOTEST=<prefix>`, optionally
+`JUDAS_EDITOR_AUTOTEST_RUN=1`) now also selects the first object, enables
+every debug category and the profiler, duplicates and undoes (printing
+whether the scene changed and whether undo restored it exactly), prints
+draw-call/triangle/debug-line counts for the edit frame and the step,
+body, contact, draw-call, shadow-pass, light and particle counts plus
+resource statistics for the play frame, optionally launches Run project,
+then stops and verifies the authored scene is IDENTICAL. Under Xvfb it
+ran on `classic.judas`, `terrain.judas` and the tiny game project, from
+the repository root and from an unrelated working directory with
+`JUDAS_ENGINE_ROOT` set, and with Run project the spawned runtime inherited
+`JUDAS_TEST_SCRIPT` and produced the tiny game's harness CSV on its startup
+scene before exiting.
+
+### Limitations (documented, not hidden)
+
+**Historical M30 limits:** M31/FTFT2 supersede synchronous resource loading;
+M36 supplies parent-local hierarchies; M32/FTFT4 replace the old creep mechanism.
+M38 export and M40 scripting also supersede their exclusions in the scope list
+below; M56 adds isolated physics profiling and M64 adds physical collider cooking.
+Other remaining limits are not claimed fixed by those milestones.
+
+- **Picking is a bounding sphere per object.** A long thin plank picks as
+  a large ball; overlapping spheres pick the nearer centre. Precise
+  mesh/box picking is not implemented; the gizmo handles themselves are
+  picked exactly.
+  **Historical M30 limitation; superseded by the M71 editor follow-up:**
+  current viewport picking uses visible primitive geometry and mesh triangles
+  after hierarchy resolution, with secondary pivot proxies for empty objects.
+- **No OS file dialog.** Open/Save/Import/New project take path fields.
+- **No object parenting.** `SceneObject` transforms are world-space and
+  the runtime's gravity-region priority, entity ids and deltas all key on
+  flat scene order; a transform hierarchy would change what "position"
+  means for every consumer and for M29's persisted state, so it is not
+  bolted onto the hierarchy panel as a display-only tree.
+- **Synchronous loading only.** Every request loads on the calling
+  thread; there is no streaming, cooking or dependency graph.
+- **Physics time inside a step is not isolated** in the profiler; the
+  whole `StepPlayedWorld` is.
+- **Run project** uses `posix_spawn` (Linux/macOS); on other platforms the
+  status line says what command to run instead.
+- The **resting-creep solver artefact** documented under M29 is unchanged.
+
+### Deliberately not implemented
+
+Object parenting / transform hierarchies, a reflection or dynamic
+component system, an asset cooking pipeline, asynchronous or streamed
+loading, an OS file dialog, mesh-precise picking, multi-select, prefab or
+scene-instancing systems, a scripting language, a build/export step that
+packages a project, per-project engine settings, a project template
+library beyond the one starter scene. Each has a boundary here to attach
+to (`Project`, `AssetDatabase`, `ResourceManager`, the component registry,
+`DebugLineList`) when a brief asks for it.
+
+## Milestone 31 — Judas learns it doesn't have to wait (accepted)
+
+### The purpose
+
+> Expensive independent work must no longer require the simulation/render
+> thread to stop and wait for it.
+
+Not "make everything multithreaded": M31 adds one general background job
+system and, on it, asynchronous file IO and resource streaming — the
+infrastructure future procedural worlds, terrain streaming and large
+asset sets will consume. Those systems are not built here.
+
+### Thread ownership law
+
+- The authoritative fixed step (`StepPlayedWorld`) stays on the thread
+  that owns the session. **PhysicsWorld is not thread-safe** and is not
+  made so; no worker ever touches it, a GameSession, a RuntimeWorld or a
+  Scene.
+- **Renderer is the sole owner of raw OpenGL** and GL work stays on the
+  thread owning the context. The only code that creates or destroys a GPU
+  mesh/texture from an asset is `ResourceManager::Pump`/`Release`/
+  `EvictToFit`/`Shutdown`, on the thread that constructed the manager
+  (`OwnerThread()`).
+- The editor UI stays on its thread.
+- **Background jobs produce data.** A resource load job owns a `LoadTask`
+  (path, decoded `MeshData`/`TextureData`, error, stage) and nothing
+  else; the result is installed into engine state only at the deliberate
+  handoff — `Pump`, once per frame, after `PollEvents` and before the
+  frame that draws it. There are no mutexes in PhysicsWorld, GameSession,
+  RuntimeWorld, Renderer or the editor; the one mutex in M31 is the job
+  queue's.
+
+### Job system (`src/JobSystem.h`)
+
+A bounded pool: `workerCount` 0 derives `hardware_concurrency - 1` (at
+least 1, at most 16), leaving a core for the simulation/render thread.
+Never one OS thread per job, never a detached thread; workers block on a
+condition variable, and the main thread never spins — it polls state or
+consumes results at its frame boundary (`Wait`/`WaitAll` exist for tests,
+tools and shutdown).
+
+Lifecycle: Queued → Running → Completed | Failed (the callable threw or
+called `SetError`) | Cancelled (`Cancel` before it started removes it from
+the queue; a running job sees `CancelRequested()` and may `ReportCancelled`).
+Records of finished jobs stay queryable until `Forget` or until 4,096
+finished records exist, when the oldest are dropped; a finished job
+releases its callable (and everything it captured) immediately.
+
+Priority: High/Normal/Low queues; a worker takes the highest non-empty
+queue, except that after four consecutive higher takes while a lower
+queue waits it takes one lower job — preferred, not starved. `Stats()`
+reports workers, queued, running, submitted/completed/failed/cancelled and
+worker busy time (utilization = busy / (workers × elapsed)).
+
+Shutdown (destructor or `Shutdown()`): submissions refused, every queued
+job Cancelled without running, running jobs flagged and waited for,
+workers joined. Deterministic; never returns with a worker alive. No
+dependencies, work stealing, fibers or task graphs — none proved
+necessary.
+
+### Asynchronous file IO (`src/AsyncFile.h`)
+
+`ReadFileAsync(jobs, path, priority)` returns a shared `FileReadRequest`
+whose status is Pending → Succeeded (`Bytes()`) | Failed (`Error()`:
+"file not found", "could not open", "read error") | Cancelled. The job
+captures its own shared reference: the caller may drop the request before
+completion and the worker never touches freed memory (the suite checks
+the request is freed once the read finishes and nobody holds it). Reads
+go in 1 MiB chunks with a cancellation check between chunks; a queued
+read cancelled by `Cancel` or by shutdown never starts and resolves to
+Cancelled. No virtual filesystem, archive or memory mapping.
+
+### ResourceManager state transitions (`src/ResourceManager.h`)
+
+```
+Unloaded --Request/Get--> Queued --worker starts--> Loading --decode done--> CpuReady --Pump (GL thread)--> Ready
+    ^                        |                          |                                                  |
+    |                        +-- resolve error ---------+--> Failed (remembered; Invalidate to retry)      |
+    |                        +-- last ReleaseRef / Release / shutdown --> Cancelled                        |
+    +---------------- Release / Invalidate / eviction (generation++) ------------------------------------+
+```
+
+- **Workers** read the file (`ReadWholeFile`) and decode it
+  (`ParseObjMesh`, `DecodeTextureFromMemory` — the M9 loaders over bytes in
+  memory; the file-path loaders are unchanged and used by blocking mode
+  and the AssetDatabase's import validation).
+- **The GL thread** (`Pump`) uploads at most two finished decodes per call
+  (a multi-megabyte mesh upload costs milliseconds, so a burst of
+  completions is spread over frames), moves the rest to CpuReady, discards
+  stale or cancelled completions, forgets their jobs, then enforces the
+  budget.
+- **Non-blocking requests:** `RequestMesh/RequestTexture` start (or join)
+  a load and return the state; `GetMesh/GetTexture` return a valid handle
+  only when Ready and `"loading"` otherwise; `TryGetMesh/TryGetTexture`
+  never start a load. `RuntimeWorld::Build` requests (and references) every
+  mesh render's assets and fails only for an id unknown to the
+  AssetDatabase or of the wrong type; a missing or undecodable file shows
+  as a placeholder and reads Failed. Presentation resolves handles from
+  the manager every frame — a grey placeholder box of the object's scale
+  while loading, magenta when failed — so the real mesh appears the frame
+  it becomes Ready with no scene reload, and no stale handle ever lives in
+  `RuntimeWorld` (its `StaticRenderable`/`DynamicVisual` no longer carry
+  handles).
+- **Coalescing:** a second request for an in-flight id is a hit that joins
+  it; the suite decodes one texture once for fifty requests.
+- **Stale protection:** every entry has a generation; `Release`,
+  `Invalidate`, `ReleaseAll` and eviction bump it. `Pump` compares the
+  task's generation with the entry's and discards a mismatch
+  (`staleDiscarded`), so a late worker cannot resurrect a released,
+  invalidated or superseded resource; a re-request after a release loads
+  the new generation exactly once.
+- **Demand:** `AddRef/ReleaseRef` count consumers. A built RuntimeWorld
+  references its assets for its lifetime (released in `Destroy`); the
+  editor references the open scene's assets (`RefreshAssetDemand`, following
+  every edit). The last `ReleaseRef` of a Queued/Loading/CpuReady entry
+  cancels/discards that task (running reads stop at their next chunk;
+  decoded data awaiting upload is discarded) and the entry reads Cancelled; the next request loads again.
+- **Blocking mode** (`SetBlockingMode`, or `JUDAS_RESOURCE_MODE=blocking`
+  for the runtime and editor; always on for the scripted harness so its
+  screenshots are deterministic) keeps the M30 synchronous contract: the
+  whole load on the caller, no job.
+- **Terrain meshes** (engine-constructed, `TerrainLibrary`) are still built
+  synchronously by identifier; they are not assets.
+
+FTFT2 validation uses `judas_async_application_tests`, compiled with the same
+`Application.cpp` as the runtime. Optional observers control scheduling at real
+read/decode boundaries, inject SDL events and inspect the normal frame loop;
+they do not replace IO, decoding, pumping, rendering or simulation. Actual GPU
+buffer/pixel readback checks content, while operation traces check worker/GL
+thread ownership and teardown order. `Pump(0)` is used to establish a CPU-ready
+window; normal frames retain the default two-upload budget. Project replacement
+still synchronously drains old tasks before rescanning. This proves safe
+handoff, not non-blocking project closure or interruption inside a decoder.
+See [FTFT2 evidence](evidence/ftft2/README.md); the scripted application harness
+still forces blocking loads and does not prove integrated async behavior.
+
+### Memory accounting and eviction
+
+Resident bytes are estimated from decoded data at upload: a mesh is
+`vertices × sizeof(MeshVertex) + indices × 4`; a texture is `width × height ×
+4` plus a third for the mipmap chain. `SetBudgetBytes` (default 256 MB)
+sets the budget; when resident bytes exceed it, `Pump` evicts Ready
+resources with zero references, least recently used first (a use is a
+`Get*`/`TryGet*`/`Request*` hit), destroying the GPU object on the GL
+thread and bumping the generation. A referenced resource is never evicted
+even when the budget cannot be met — the manager stays over budget rather
+than destroy something in use. Eviction never touches the AssetDatabase;
+an evicted asset is Unloaded and loads again normally. This is a small,
+correct policy, not a residency optimizer.
+
+### Shutdown order
+
+`EngineHost::Init` brings up window/GL context → GLAD → Renderer (+font)
+→ JobSystem → ResourceManager; `Shutdown` runs `ResourceManager::Shutdown`
+(cancel in-flight loads, wait for their jobs, discard decoded data,
+destroy GPU objects — on this thread, while the context exists) →
+`JobSystem::Shutdown` (cancel queued, join workers) → `Renderer::Shutdown`
+→ window. Closing a project (`OpenProjectAssets`) is `ReleaseAll`: cancel,
+wait, discard, then rescan. A ResourceManager destroyed with loads
+outstanding leaves no job behind (the suite checks); a `LoadTask` is owned
+jointly by the entry and the job, so neither side ever dereferences the
+other after it is gone. No GL call happens after the context is torn down
+because the manager is gone before the renderer is.
+
+### Editor integration
+
+Profiler: workers, queued, running, completed/failed/cancelled of
+submitted, worker utilization since start; resources ready/loading/failed,
+resident versus budget (and peak), hits/loads/uploads/evictions/cancelled/
+stale. Asset Browser: per asset **loading** / **ready n KB** / **FAILED**
+(hover for the reason) / unloaded, from the live manager. Nothing else
+became a task manager.
+
+### M29/M30 boundaries preserved
+
+M29 (fidelity/lifecycle), M30 (project/AssetDatabase/ResourceManager) and
+M31 (scheduling, IO, residency) stay separate: a Dormant entity does not
+evict its mesh, an evicted mesh does not destroy its entity (the entity
+draws a placeholder until the asset returns), and no reference count is
+derived from fidelity. Future world streaming may connect them; M31 does
+not.
+
+### Measured evidence
+
+`judas_resource_stress` (`tools/ResourceStress.cpp`): a temporary project
+with 24 sphere OBJ meshes (160×160 segments, 51,200 triangles each) and 16
+1024×1024 PNG textures — 137.5 MB of real files, decoded by the real
+loaders — while the tiny-game scene plays through the ordinary
+`InteractivePlay` frame in a hidden real-GL window. This machine (software
+GL under Xvfb, 4 cores → 3 workers):
+
+| phase | frames | frame avg | p99 | worst | frames > 33 ms | fixed steps (expected) | queue max / avg | worker util | jobs |
+|---|---|---|---|---|---|---|---|---|---|
+| baseline, no loads | 120 | 3.99 ms | 6.35 | 15.6 | 0 | 28 (29) | 0 / 0 | 0% | 0 |
+| **async load, 40 assets** | 32 | 17.8 ms | 29.6 | 29.6 (pump 19.6) | **0** | 34 (34) | 37 / 20.1 | 86.8% | 40 |
+| cancel + release | 1 | 20.0 ms | | 20.0 | 0 | 1 (1) | 9 | | |
+| evict + reload | 9 | 13.6 ms | 18.9 | 18.9 | 0 | 8 (7) | 3 / 0.8 | ~100% | 7 |
+| **blocking load, 40 assets** | 40 | 43.8 ms | 67.8 | 67.8 | **27** | 105 (105) | 0 | 0% | 0 |
+
+Asynchronously all 40 assets were Ready 0.57 s after the requests
+(per-asset request→Ready latency 80 / 367 / 621 ms min/avg/max, 40 GPU
+uploads, 211.9 MB resident); the same 40 loads on the main thread took
+1.75 s with 27 of 40 frames over 33 ms. Dropped demand cancelled 20 loads
+and 8 late completions were discarded as stale; halving the budget
+evicted 4 unreferenced meshes (106.4 → 85.3 MB) while every referenced
+texture survived, and the evicted meshes were Ready again 0.11 s after
+re-request. Fixed-step continuity held in every phase (no catch-up-cap
+saturation). The claim demonstrated is exactly the milestone's: the work
+is not free (1.48 s of worker CPU during the async phase), but the
+simulation/render thread no longer waits for the entire operation. The
+remaining async frame cost is the GPU upload itself (pump max 19.6 ms for
+two multi-megabyte meshes under software GL), which is main-thread work by
+the ownership law.
+
+`judas_job_tests` (31st suite): job execution, failure (throw and
+`SetError`), cancellation (queued and running), shutdown under load (fifty
+queued never run, two running waited for, no worker survives), priority
+preference and non-starvation under a continuous High stream, 2,000 jobs
+across priorities on workers only; async reads valid/missing/cancelled/
+200 simultaneous/shutdown with 100 outstanding/dropped caller reference;
+resources: non-blocking request, decode on a worker (thread id recorded),
+Ready only after `Pump` on the owner thread, coalescing (50 → 1), unknown
+id, type mismatch, corrupt file Failed with the parser's message and not
+retried, recovery after repair + `Invalidate`, missing file, stale
+completion after `Release` discarded, release + re-request loading once,
+dropped demand cancelling, budget eviction of the LRU unreferenced entry,
+referenced entry surviving an unmeetable budget, database untouched,
+evicted entry reloading, blocking mode on the caller, destruction with
+loads outstanding. The residency/eviction cases run headlessly through
+`SetHeadlessResidency`, a test seam under which a successful decode counts
+its bytes without a GPU object; the GL path is exercised by the stress
+tool and the editor autotest (uploads counted, resident bytes reported).
+All 30 earlier suites pass unchanged; the classic (near/far) and terrain
+(near/far) harness runs are byte-identical to their references, and the
+editor autotests report the authored scene IDENTICAL after Play/Stop.
+
+### Known limitations
+
+- Asynchronous loading is per whole file; there is no streaming within a
+  file, no partial mesh, no mip streaming.
+- `Pump` uploads at most two resources per frame; a burst of very large
+  meshes takes several frames to appear, and the upload cost itself is on
+  the GL thread.
+- `stb_image`'s failure-reason string is a global; two workers failing at
+  once may report each other's reason (the failure itself is correct).
+- Closing a project or shutting down waits for running decodes to reach
+  their next cancellation check (the end of the current file chunk or the
+  decode in progress), typically tens of milliseconds.
+- The budget counts estimated bytes, not driver-reported GPU memory; the
+  terrain mesh and the fluid surface mesh are outside it.
+- Worker utilization is measured as busy time inside job callables; it
+  does not distinguish IO wait from CPU.
+- The stress tool needs a display (Xvfb suffices) because it exercises the
+  real GL upload path.
+
+### Deliberately not implemented
+
+Multithreaded PhysicsWorld stepping, parallel contact solving, a parallel
+PlayerController, procedural planets, Terrain-ML/WMP integration,
+planetary terrain LOD, world/chunk streaming, universe sectors, AI jobs,
+networking, render-command multithreading, Vulkan/DirectX, an asset
+compression/cooking pipeline, a package/archive filesystem, a shader
+compilation pipeline, a coroutine/fiber framework, job dependencies/work
+stealing/task graphs, and arbitrary cross-thread mutation of engine
+objects. Each may consume the job system, the async IO contract and the
+residency boundary when a brief asks for it.
+
+## Milestone 32 — rigid-body portion extracted (historical checkpoint)
+
+### Status, stated plainly
+
+**Later status:** the rigid checkpoint was accepted at `48385a7`; FTFT4 closes
+its measured geometry/timing defects and FTFT9 supplies accepted approximate
+production fluid coupling. The original full M32 scope is not
+retroactively claimed complete. The pending/deferred state and M31 behaviour
+below describe that original split, not current production.
+
+The Milestone 32 brief ("Judas learns why shit floats") asked for two
+things: a real rigid-body broadphase and accumulated-impulse contact
+solver, and general liquid/solid interaction — displaced-volume buoyancy
+with float/sink/neutral behaviour, two-way liquid/body coupling without
+the M26 one-way exception, the player as a liquid obstacle with a
+configurable density, and swimming. **Only the rigid-body half is
+complete.** It has been extracted into this checkpoint on its own.
+**Liquid/solid coupling is deferred** to a later milestone: the particle
+liquid architecture did not satisfy the required physics (below), and
+none of that work is production behaviour. Milestone 32 as originally
+scoped is not complete and is not claimed to be.
+
+Everything liquid- and player-related is exactly Milestone 31 behaviour:
+`FluidWorld`, the M26 rule that withholds the liquid's reaction from
+bodies lighter than four particle masses, `PlayerController`, scene
+format version 3 and every shipped scene (regenerated byte-identical).
+
+### Broadphase (`src/Broadphase.h`)
+
+The M7-Final all-pairs loop is gone; no production path tests every pair.
+`PhysicsWorld` keeps every body in a `DynamicAabbTree` (see the header for
+why a tree rather than a grid or sweep-and-prune): fat bounds with a 0.1 m
+margin, surface-area-heuristic insertion, AVL-style rebalancing. A dynamic
+body's tight bound covers its previous and current fixed-step pose (the
+player's sweep interpolates between them; a turning body adds its bounding
+sphere at both), and a proxy is reinserted only when that bound escapes
+its fat box. Candidate pairs (at least one movable body) are sorted, so the
+narrowphase visits them in the same order the old loop did. The player's
+capsule sweep queries the tree for the bodies its swept box can reach.
+
+New queries: `LastStepStats()` (bodies, possible/candidate/colliding pairs,
+contact points, reinsertions, tree height, broadphase/narrowphase/solver
+milliseconds — shown in the editor profiler, with a "Broadphase bounds"
+debug view), `QueryBodiesInAabb`, `GetBodyBroadphaseBounds`, and, for
+tests, `FindCollidingPairs`, `AliveBodies`, `GetBodyShape`. The
+narrowphase (per-primitive contact generation) moved unchanged into
+`src/Narrowphase.h` so the step and the tests share it.
+
+### Contact solver (`src/ContactSolver.h`)
+
+A sequential-impulse solver with accumulated impulses: the normal impulse
+is accumulated per contact and clamped at zero as a total; friction is a
+vector accumulated in the tangent plane and clamped to the Coulomb disc of
+that contact's accumulated normal impulse (no tangent basis, so nothing
+depends on how the world is rotated); converged impulses warm-start the
+next step through a contact cache keyed by body slot and generation,
+primitive pair and the anchor in body A's frame (within 0.05 m, normals
+within dot 0.9). 10 velocity iterations, then positions from the solved
+velocities, then 4 iterations of direct penetration removal (20 % per
+iteration beyond 5 mm of slop). The step order changed to make that
+possible: velocity from forces → broadphase → narrowphase → velocity solve
+→ position integration → penetration removal → proxy refresh. Box-box
+contacts now clip the incident face against the reference face's side
+planes (Sutherland–Hodgman) and keep up to four points, so an offset box
+on a box is supported at the corners of the real overlap polygon.
+
+### Speculative contacts
+
+Detection runs on start-of-step poses after velocity integration. The
+original checkpoint excluded exact equality in several narrowphase tests
+and collapsed sufficiently small gaps using a coordinate-dependent gamma8
+expression. FTFT4A supersedes that geometry rule: exact touching is closed
+contact, and a reliably positive represented separation stays positive.
+
+- **Reach remains a candidate policy.** The existing pair reach is
+  `(|v_A − v_B| + |ω_A|·R_A + |ω_B|·R_B) · dt`. Proxy expansion and the
+  dynamic AABB tree remain in use. SAT-axis proximity is not a claim of
+  exact Euclidean distance, nor of continuous collision detection.
+- **Primitive geometry.** Sphere, box and compound-child calculations use
+  binary64 parent-relative coordinates and the proper rotation
+  `R(q)/dot(q,q)` for the actual stored nonzero quaternion. Sign predicates
+  use operation-specific outward intervals with exact expansion fallback.
+  An interval containing zero is uncertainty, not permission to snap a
+  gap to zero. Arithmetic outside the supported fallback range is reported
+  unresolved. Conservative bounds round outward on float conversion.
+- **Anchors.** Clipping and physical anchors remain local and precise.
+  Warm-start matching and the solver consume these anchors; float world
+  contact points are debug outputs. Surface witnesses are recorded
+  separately from the common impulse application midpoint.
+- **Historical FTFT4A solver policy.** At that checkpoint, non-bouncing
+  separated contacts permitted closure at `−gap/dt`, while reachable
+  contacts above the speed threshold received restitution immediately.
+  The FTFT4B stabilization work below replaces this timing for new impacts;
+  it retains the persistent accumulated-impulse solver.
+- **Terrain remains approximate.** Its specialized surface samples and
+  box sample points are retained; primitive exact predicates do not certify
+  terrain geometry. No global gap collapse is applied to that path.
+
+Mechanism and executed evidence are in
+[FTFT4A evidence](evidence/ftft4/README.md). Stored float input quantization
+and the existing fixed-origin architecture remain limitations; this repair
+cannot recover a gap erased before narrowphase receives its inputs.
+
+### FTFT4A-P: reuse of equivalent geometry calculations
+
+The performance pass retains the repaired sign predicates, signed gaps and
+local anchors. Body-local caches hold the immutable shape radius, exact-key
+parent quaternion preparation and prepared child-bound terms. Translated
+bounds preserve the original interval addition order and have separate
+previous/current pose keys. ResetBody, including moving static doors, slot
+reuse and post-solve penetration correction still refresh the real proxies.
+
+Box SAT's interval filter reuses nine cross-body dot products and the exact
+identities of the proper homogeneous quaternion matrix. Its unchanged exact
+polynomial remains the fallback. Numerical gap/sign disagreement triggers
+exact numerator reconstruction or an explicit unresolved result. Solver
+body rotations/inertia are shared only within the appropriate solve phase;
+post-integration rotations come from freshly keyed parent preparation.
+
+The bounded storage pass clears every frame key/value each step but reuses
+hash-node storage through a solver-owned C++17 pool. Rotating compound bounds
+invalidate contents without discarding child-vector capacity. Slot/generation
+replacement resets the complete body; no live child/frame element pointer
+survives container growth. Retained storage follows high-water simultaneous
+demand and is released at world teardown, with actual upstream bytes and
+allocations exposed in diagnostics. See [whole-workload allocation evidence](evidence/ftft4/allocation/RESULTS.md).
+
+Cache preparation is part of the real creation/update paths. Whole-step and
+outer-fixture timings, including moving-static ResetBody work, are reported
+in [FTFT4A-P evidence](evidence/ftft4/performance/RESULTS.md). The original
+slow-correct results remain historical evidence, not current performance
+acceptance. Those geometry/storage passes did not change impact timing.
+The stabilization policy accepts their cost only if the current paired gate
+passes: at most 15 ms median whole crate step and at most 10% additional cost
+versus `c43af4c`. The historical approximately 4 ms result used less-robust
+geometry. Exhaustive-oracle wall time is separate from production step cost.
+
+### FTFT4B stabilization: pragmatic impact timing — CLOSED with approximations
+
+The source-matched validation is recorded in
+[FTFT4 results](evidence/stabilization/ftft4/RESULTS.md). The authorized policy
+retains the existing accumulated-impulse/warm-start solver for persistent
+support, stacks and friction. New separated impacts use event-time geometry
+and a step-local motion ledger after one force/torque velocity update.
+Only affected trajectories restart after impulses; remaining physical time
+must be consumed. Anchored rotation preserves an unaffected body's original
+no-impact endpoint without globally subdividing its quaternion integration.
+
+A genuinely isolated closing contact uses its authored restitution and
+Coulomb friction. A connected multi-contact event, induced contact, impact
+into persistent support or mixed-restitution island uses **zero normal
+restitution**. This is a deliberate game-engine approximation, not a general
+simultaneous-impact material law. The accepted `ImpactSolver` uses the same
+contact geometry and existing impulse machinery. A tentative energy-budget
+failure restores pre-impact velocities and retries with zero restitution
+and zero impact friction, counting `impactSafetyFallback`; persistent
+friction resumes normally. Prescribed moving-boundary work is external.
+
+The existing 0.5 m/s restitution threshold captures low-speed contacts.
+The authorized event safety policy captures connected contacts inelastically
+after 16 events for a body/island, consumes the remaining time, and reports
+`impactEventCapFallback`. It must not freeze a separated body or discard
+elapsed time. Ledger segments must drive swept bounds and player queries,
+including out-and-back motion. `ResetBody` remains a discontinuous reset,
+not an inferred continuous kinematic trajectory.
+
+The immutable [baseline](evidence/ftft4b/baseline/RESULTS.md) records the
+old zero-gravity stop at a 0.999987 mm gap, premature rebound, missed induced
+chain collision and coupled-impact energy creation. Its failures are not
+rewritten as passing evidence. The previous PLUS/Poisson policy is rejected:
+[its preserved counterexample](evidence/ftft4b/implementation/RESULTS.md)
+adds 6.590445 J with exact momentum closure. The new response policy supersedes
+that attempted law while retaining compatible motion-ledger work.
+
+See [the concise current method and gates](evidence/stabilization/ftft4/METHOD.md).
+The actual-engine witnesses, rigid/geometry/lifecycle/terrain regressions,
+43 production suites and protected integrations pass. Seven paired runs give
+14.266 ms median whole crate step (+1.13% versus c43). Active rotating compound
+work remains materially more expensive (6.279 versus 1.227 ms in the measured
+32-body workload); this is not a broad speedup. Pair-local sampling after
+64 advancement iterations or an uncertified proximity gap is an explicit
+finite-resolution CCD approximation. Brief between-sample grazes can be missed;
+positive gaps alone never receive impact impulses.
+
+### Original rigid checkpoint evidence (historical)
+
+The following records the original checkpoint, not FTFT4A acceptance.
+Current results and measured limitations are linked above.
+
+- 33/33 suites pass. New: `judas_broadphase_tests` (A dynamic tree against
+  brute-force overlap; B–E broadphase + narrowphase against all-pairs +
+  narrowphase — randomised, moving, destroyed and reused slots, rotated and
+  translated scenes: 0 missed, 0 spurious; F the player sweep identical to
+  a sweep against every body, 300/300; G a 1,500-crate floor) and
+  `judas_rigid_contact_tests` (A resting box, B five-box stack, C resting
+  sphere, D incline friction, E moving platform, F restitution, G 40-body
+  pile energy, H momentum; each also in a universe rotated 53° and offset
+  137 m).
+- The same rigid-contact cases on the M31 physics: 14 failures — resting
+  boxes drift 1.8–38 mm/s, the stack's top drifts 1.06 m with a 2.8 m
+  height error, a box creeps 0.58 m down a slope it should hold, a box on
+  a moving platform slips 7.7 mm. This checkpoint: 0 failures — resting
+  drift 0, stack height error 10 mm, no creep, platform drift 14–25 µm.
+- 1,500 crates at Full: about 4 ms per `PhysicsWorld::Step` (3.9–4.8 ms
+  across runs; typically broadphase 0.4 ms, narrowphase 1.2 ms, solver
+  2.3 ms; 1,500 candidate pairs of 1,125,750 possible), against 455.6 ms
+  for M31 on the same machine. The
+  M29 lifecycle measurement keeps its original "under a quarter of the
+  all-Full time" threshold (ratio ≈ 0.2).
+- The M29 world-state delta after the promote-all/step/demote cycle is 300
+  records, as in M31 (1,500 before speculative contacts).
+- Harness: classic and terrain are identical at near and far origins; with
+  the dynamic bodies removed both scenes, lake included, are byte-identical
+  to M31 near and far. With them, trajectories differ only through the
+  dynamic bodies, which now rest and collide under the new solver.
+  Editor autotests report the authored scene IDENTICAL after Play/Stop.
+
+### Historical M32 liquid/solid coupling: what was tried, and why it was deferred
+
+FTFT9 later adopted the documented approximate production hybrid described at
+the top of this document. These failures remain evidence; P1-C/P1-C-M/P1-PF
+remain separate protected research, not the production implementation.
+
+Displaced-volume buoyancy gave correct float/sink behaviour and
+density-ratio immersion, but the particle liquid (PBF) also supports a
+body through particle contacts, and that support is the same pressure the
+buoyancy force represents. Every way of assigning its reaction broke a
+core case: given to the body it double-counts buoyancy; routed through the
+liquid's momentum budget it made dense bodies float; left unaccounted it
+leaked momentum and neutral bodies drifted. Deriving buoyancy from the
+particle pressure instead behaved as a load-bearing cushion (floaters rode
+above the surface, dense bodies were held mid-water, at every resolution
+tried); impact-only coupling broke containers and swimming; explicit
+container cavities fixed containers but not neutral buoyancy; and finer
+particles did not fix neutral buoyancy while costing ~205 ms per fluid step
+at 0.2 m spacing for a 4.8 m pool. The research code, variants and logs
+are kept by the developer outside the repository; none of it is in this
+checkpoint. A later milestone should start from a different coupling
+architecture (for example analytic rigid-body hydrostatics against a
+resolved liquid surface, or a dedicated pressure solve), not from these
+variants.
+
+## M33 — authored render cameras (accepted checkpoint `bd22935`)
+
+[Camera-to-surface ownership and authoring](M33.md) extends the existing scene,
+RuntimeWorld and Renderer boundary. Optional cameras own presentation-only runtime
+records; Renderer owns their framebuffer, colour texture and depth attachment.
+Generated textures use normal TextureHandles/material draws, not AssetDatabase IDs.
+The ordinary shadow/geometry/transparency paths view the same world at one
+presentation alpha; simulation is never stepped per camera. Targets are lazy,
+render-frame cadence is authored, and active-target feedback uses a counted safe
+fallback. Play/Stop releases generated resources and retains authored state.
+This is nonrecursive render-to-texture, not portals or reflected clipping.
+Current auxiliary rendering shares the main-focused directional/legacy spot shadow
+maps rather than building a shadow set around each camera. Resolution, cadence,
+render mask and target feedback remain independently authored. Modern M57 targets
+store scene-linear radiance without exposure/output conversion. Shared draw paths
+do not promise identical pixel quality or independent auxiliary shadow coverage.
+
+## M34 audio boundary
+
+EngineHost owns AudioSystem (miniaudio 0.11.23 under MIT-0), independently of Renderer.
+AssetDatabase recognizes audio IDs; ResourceManager asynchronously reads/decodes
+WAV/MP3/FLAC and installs immutable whole PCM clips. AudioSystem owns voices and
+the lazy output device. RuntimeWorld owns authored emitter/listener bindings and
+releases voices on Play/Stop, disable/destruction and world teardown. InteractivePlay
+updates positions once per main frame using presented entity poses and full listener
+orientation, optionally from the active view; secondary render cameras do not tick audio.
+No gameplay-specific sounds are implied. The original M34 scope was buffered;
+M60 adds bounded streaming and environmental acoustics through this same ownership.
+M34 introduced
+authored schema 4 with audio fields; M36 superseded it with current schema 5.
+Earlier-schema save fingerprints are incompatible.
+See [M34](M34.md) for exact settings, lifecycle, limits and listening acceptance.
+
+## M35 current input boundary
+
+Window adapts SDL physical events/controllers into InputSystem. ProjectSettings
+owns the named InputMap; editor Play and standalone use the same map. Logical
+queries are non-consuming; fixed-step edge snapshots latch zero-step-frame input.
+Compatibility Action/Consume adapters now resolve named data rather than physical
+key switches. Scene fingerprint schema remains unchanged. See `docs/M35.md`.
+
+## Milestone 36: prefabs
+
+Prefab assets reuse scene object blocks and stable AssetIds. Scene parent transforms
+are local; RuntimeWorld resolves linked source data, explicit overrides and world
+poses before ordinary component construction. Runtime spawning reuses that same
+construction loop. Provenance stays in authored/persistence bookkeeping, never
+selects a physical law. Body-free children follow parent presentation; bodies
+remain independent unless explicitly attached. Canonical fingerprint schema 5
+includes effective source-derived components and hierarchy/link metadata. Older
+saved fingerprints are rejected. See `docs/M36.md` for authoring, runtime creation
+capabilities and limitations.
+
+## M37 visibility and visual emitters
+
+Renderer caches mesh-local bounds and tests their transformed world AABBs
+against the actual per-pass clip frustum. Ordinary mesh draws and visual
+billboard emitter draws share `VisualBounds`/`Frustum`; camera, shadow and
+render-target passes own independent visibility. Culling never changes simulation.
+RuntimeWorld owns deterministic bounded visual particle pools updated once by
+Simulation, not once per camera. Renderer lazily owns billboard GPU resources.
+Particle components reuse scene/prefab authoring and an optional tagged canonical
+fingerprint extension; particle-free baseline fingerprints remain unchanged.
+See `docs/M37.md` for transparency, timing, persistence and scope limits.
+
+## M38 standalone export
+
+`ProjectExporter` is shared by the editor Project settings Export command and
+`judas_export`. It validates normal project assets/scenes/prefabs, copies the
+Release standalone executable and registered runtime content into sibling staging,
+then replaces a complete package. AssetDatabase remains the runtime manifest;
+`GamePackage` version 1 records only the relative startup project and save namespace.
+Packaged startup/engine data resolution is executable-relative and independent of
+CWD/development overrides. The runtime-only Project save-directory override points
+at Linux user data; authored serialization and baseline fingerprints are unchanged.
+The original M38 policy included all registered assets for runtime ID loading,
+which remains the conservative default. Accepted M68 also supports opt-in
+selected-scene dependency closure plus explicit project runtime assets;
+[M68 packaging](SCALABILITY.md#export-policy-and-inclusion-report) defines current inclusion.
+There is no editor runtime dependency. System SDL2/graphics/audio/C++ libraries remain platform
+requirements. See `docs/M38.md` for layout, replacement guarantees and limits.
+
+## M39 classification
+
+Project owns independent stable tag/collision/render registries (64 lifetime IDs
+per registry). Entity tags are multi-valued; bodies have one collision layer and
+bilateral masks; explicit broadphase/capsule queries have their own filter.
+Renderer applies each camera's mask before its M37 frustum; simulation is unchanged.
+Normal scene/prefab property serialization carries assignments and the optional
+canonical fingerprint extension covers nondefault effective authored values.
+Default legacy behaviour is preserved. See `docs/M39.md` for APIs and limits.
+
+## M40 — project JavaScript behaviours
+
+`RuntimeWorld` owns one main-thread `ScriptSystem`/QuickJS-NG session. Ordered
+scene script slots reference normal registered assets; defaults and authored
+properties are separate from bounded runtime JSON state. Both editor Play and
+standalone use the existing frame/fixed boundaries. Native wrappers resolve
+stable string IDs afresh, and use the current generation-checked body handle.
+No Renderer/PhysicsWorld/SDL object crosses the JavaScript boundary. Ordinary
+prefab creation, resource/audio, query and particle paths remain authoritative.
+Game rules in `projects/script_demo/Assets/scripts` are JavaScript content.
+
+The inspector uses an execution-budgeted no-world metadata context. Exceptions
+fault only one instance. Scripts are trusted project code, not a malicious-code
+sandbox or hard realtime scheduling system. No Node/browser/OS modules are added.
+M29 gains an optional versioned script-state extension; script-free fingerprints
+and saves retain their previous bytes. Scripted baselines strictly include all
+registered project JavaScript content. See [SCRIPTING.md](SCRIPTING.md) for APIs,
+limits, scheduling, persistence and the operator demo.
+
+## M41 — authored runtime UI
+
+RuntimeWorld owns document instances; projects register `.judasui` hierarchy assets.
+Renderer's existing screen-space pass draws panels/text/images with rectangular
+clipping. Layout/focus/input run before gameplay; modal documents preserve the
+existing fixed-step pause boundary. Script `uiUpdate/onUI` can operate while paused,
+while ordinary frame/fixed gameplay callbacks remain paused. Handles validate live
+document IDs; source is never rewritten by runtime. UI menus/HUD behaviour lives
+in project JS. M51 retains the no-document engine-menu fallback only when
+`legacy-gameplay` is enabled; scripted projects do not acquire a fallback game menu.
+See [RUNTIME_UI.md](RUNTIME_UI.md) for authoring, scaling, APIs and limits.
+
+### M42 contact event ownership
+PhysicsWorld aggregates actual contact/TOI observations and discrete sensor overlaps into deterministic generation-keyed pair transitions. Sensors share geometry/filtering but never enter response solves. RuntimeWorld dispatches entity-safe snapshots at the ordinary fixed-step boundary; JavaScript owns reactions. See [COLLISION_EVENTS.md](COLLISION_EVENTS.md) for scope and callback semantics.
+
+### M43 — project session and scene replacement
+
+`SceneSession` owns the registered project scene paths, pending first-wins request
+and bounded detached JSON session store. Each `RuntimeWorld` exposes that session
+to M40 without owning transition orchestration. Application/editor Play consume
+requests only after `InteractivePlay::Frame` returns. They validate an unstarted
+candidate, stop/release the outgoing world and begin a fresh ordinary world using
+the same session. No scene-local entities or JS heap objects survive. Existing M38
+scene-directory packaging and FTFT1 baseline identity remain authoritative.
+See `docs/SCENE_TRANSITIONS.md` for the API and synchronous-loading limits.
+
+## M44 — explicit runtime geometry queries (accepted)
+
+`PhysicsWorld` exposes nearest ray, sphere, capsule and fixed-orientation box
+casts. Existing tree candidates and M39 filters feed resolved sphere/box/
+compound geometry; M64 adds cooked hulls and static triangle surfaces to the
+same path, plus nearest-surface inspection. Robust signed contact geometry
+supplies box witnesses.
+M40's `physics` module returns safe entity hit snapshots or null. Queries are
+read-only, distinct from player locomotion sweeps and M42 contact events:
+**Judas answers geometric questions; JavaScript decides why they matter.**
+Ray/sphere/capsule terrain casts use the real radial surface with a documented
+finite-resolution approximation; box-versus-terrain is unsupported, explicitly.
+`world.viewRay` exposes the last completed active view for project aiming, not
+simulation authority. Details and limits: `PHYSICS_QUERIES.md`; focused demo:
+`projects/query_demo`; executed evidence: `docs/evidence/m44`.
+
+## Milestone 45 — rigid-body joints
+
+PhysicsWorld owns fixed, hinge, ball/socket and slider constraints. Body-local frames/anchors feed a shared accumulated impulse solver alternating with contact rows; joints do not overwrite poses. Hinge/slider limits, bounded motors and implicit spring/damping operate along their free coordinate. Coupled impact islands include passive joint rows under the existing inelastic island policy. Safe joint handles, ordinary scene references, prefab remapping, editor settings and `physics.joint(owner)` JavaScript controls expose the primitive without game-specific meaning. See [JOINTS.md](JOINTS.md). The compact `projects/joint_demo` physical door is body + hinge + JS; historical M16 remains preserved. Tagged joint fingerprint content extends canonical schema 5 without changing no-joint baselines. At M45, runtime motor settings and impulse caches were transient. M61 slots now
+preserve runtime joint settings; solver caches rebuild on load.
+
+
+## Milestone 46 — skeletons, poses and visual clip playback (accepted)
+
+Judas owns `Skeleton` and `SkeletalPose`. Immutable mesh resources share rest
+hierarchy, skin palette, inverse binds and named clips imported with pinned MIT
+cgltf 1.15. The existing worker decode/main-thread GPU handoff also loads GLB
+and embedded-buffer glTF. Clip sampling produces joint-local pose data; the
+RuntimeWorld instance owns the final resolved pose and skin matrices. Playback
+is one producer, not the owner of bone transforms. `SetFinalPose` allows another
+producer to provide a pose at the resolution boundary; since M47 this enters
+the resolver as an external contribution. The original M46 scope had no blending,
+IK or physical bone mapping. Fixed-step visual playback updates once, and all
+cameras consume the same result. Renderer alone owns the optional skin stream
+and colour/shadow GPU skinning. Ordinary collision geometry remains separate.
+Scene animation settings, generic prefab overrides, editor controls and
+`entity.animation` JS playback use existing ownership and asset identity.
+Tagged animation settings extend canonical fingerprint schema 5; scenes with
+no animation retain their existing fingerprint. See [ANIMATION.md](ANIMATION.md)
+for supported import limits and the focused demo.
+
+## M47 — resolved pose composition (accepted)
+
+M46's single-player scope is extended by per-instance clip mixing, interrupted
+crossfades, ordered masked layers and additive local TRS contributions relative
+to an explicit rest/sample reference. Shared immutable assets and independent
+samplers remain unchanged. RuntimeWorld owns separate source/final poses; copied,
+validated external contributions participate in the same deterministic resolver.
+No producer owns the final skeleton and Renderer still consumes only its palette.
+See [POSE_COMPOSITION.md](POSE_COMPOSITION.md). No state machine, blend tree or IK.
+
+## M48 — passive articulated skeletons (accepted)
+
+An authored joint-key mapping creates ordinary PhysicsWorld bodies and M45 passive
+constraints. Current resolved pose/recent motion initializes entry. Physical
+transforms become an M47 contribution, preserving hierarchy and ordinary skinning.
+The collider-free owner reference follows physical-root translation; its basis is
+fixed and mapped bones carry physical rotation. On exit, captured pose fades to
+animation after physics resources are released. Early generation-keyed pair
+suppression handles authored self-collision policy; query filtering is unchanged.
+Transient internal bodies are not independent save entities. No motors, recovery
+or M49 control is implemented. See [RAGDOLLS.md](RAGDOLLS.md) for scale, lifetime,
+persistence and supported-shape limits. Protected research remains separate.
+
+## M49 — scriptable character motor (accepted)
+
+Judas owns collision-aware character motion; JavaScript owns character behaviour.
+The per-entity CharacterMotor generalizes the historical capsule/motion-ledger
+query and shares sweep/slide and step primitives with legacy locomotion. Scripts
+supply world velocity and one-step acceleration at fixed boundaries; motors sample
+the existing GravityField, resolve motion after the ordinary rigid step, and report
+actual displacement, velocity and generation-safe support. Support uses actual
+body transforms/point velocity and bounded collision-aware carry, not parenting.
+Finite configurable impulses replace unlimited legacy velocity seeding for motors.
+Input, camera, gameplay states, skeleton/pose and ragdoll authority stay separate.
+Motor settings serialize through scenes/prefabs with a conditional schema-5
+fingerprint extension; motor-free authored hashes remain unchanged. The
+legacy entity-state saves restore position/velocity; support was transient under
+that contract. M61 slots also retain motor support/motion state and reconstruct
+generation-safe supporting identities. The current
+character project uses JS movement/launch and existing liquid-field queries for
+swimming; production fluid mechanics and protected evidence remain unchanged.
+Legacy scenes retain their compatibility controller. See
+[M49 detailed contract and limitations](M49_CHARACTER_MOTOR.md).
+
+## M50 — current JudasJS developer reference
+
+[JUDASJS.md](JUDASJS.md) is the current public JavaScript reference. Declarations,
+source/runtime API inventory and copyable examples are developer tooling; they do
+not change the VM or engine semantics. The focused drift check compares the actual
+registered module, type surface and real-VM enumeration. Type-only interfaces are
+not runtime exports; native dispatcher details and behavioural-validation limits
+are explicit inventory exceptions. M38 runtime packages do not bundle this whole
+documentation tree; developers obtain the offline reference/types from the matching
+engine checkout. Historical milestone records/evidence retain their original scope.
+
+## M51 — explicit engine/game execution boundary (accepted)
+
+The reviewed source audit found that a script-owned main camera only bypassed
+legacy locomotion; other historical GameSession controls still ran. Project
+format 1 now has optional `legacy-gameplay "true|false"`: missing preserves old
+projects, while Create New Project writes false. The setting is applied before
+world construction in editor, standalone and scene replacement. In scripted
+worlds, GameSession's player is a diagnostic observer without a collision shape;
+legacy gameplay dispatch, fallback menus, camera policy and showcase controls
+are inactive even when no script view exists. Historical adapters remain
+explicitly available for old scenes/tests, not the recommended new-project path.
+
+Ordinary project JS composes CharacterMotor, physics queries/tags, bodies/joints,
+forces/torques, UI, cameras and scene operations. New public primitives are only
+readonly body mass/world inertia snapshots and pointer-capture intent. Modal UI
+and SDL still own device reconciliation; Renderer still owns raw GL; normal
+physics/gravity/fluid/pose/resource paths remain authoritative. Scripted execution
+mode domain-separates the effective authored baseline; legacy fingerprints and
+canonical scene schema 5 are unchanged. Export carries normal project settings.
+
+Details, exact compatibility scope and limitations:
+[M51 engine/game boundary](M51_ENGINE_BOUNDARY.md). The accepted production fluid
+repair, current fluid project and protected historical/research evidence are
+unchanged. M51 and its final content-only radial gravity-zone correction were
+human-accepted and checkpointed at `73698d1`.
+
+## M52 — project game composition and script presentation
+
+Spring Range is an ordinary project: JS composes logical input, CharacterMotor,
+views, queries, hit-point impulses, hinged spring targets, score, UI, audio and
+particles. Weapon/target/score rules do not become engine C++ systems. The generic
+body operation `Entity.applyImpulseAtPoint(impulse, point)` uses normal world-space
+rigid-body impulse semantics; M53 later extends the project with advisory navigation.
+
+Human testing exposed camera/model jitter because scripts followed fixed poses
+while Renderer displayed interpolated poses. `presentationUpdate(dt, alpha)` now
+runs after fixed-step catch-up, before view/audio/draw; readonly
+`Entity.presentedTransform` exposes the same existing interpolation. Shooter and
+spacecraft cameras use that phase. `Entity.transform`, queries and physical intent
+remain authoritative, not presentation-driven. See [M52](M52_SHOOTER_GAME.md) and
+[JudasJS lifecycle](judasjs/lifecycle.md). M52 was accepted at `3c52b13`.
+
+## M53 — world-owned navigation (accepted)
+
+Navigation surfaces carry explicit local frames and registered tiled `.judasnav`
+assets. RecastNavigation v1.6.0 provides editor/tool baking from authoritative
+collision geometry; standalone uses Detour/TileCache and advisory avoidance only.
+Immutable CPU resources load through ResourceManager, while RuntimeWorld owns
+mutable mesh/query/cache/agent/link state. Stable project profiles and navigation
+areas remain distinct from gravity, tags, collision layers and render layers.
+Source/settings fingerprints reject stale bakes; baked content contributes to
+conditional schema-5 authored identity and normal M38 export.
+
+Navigation proposes routes/corners/velocity; CharacterMotor resolves motion;
+project JavaScript chooses destinations and special link traversal. Multiple local
+surface frames can connect through explicit links, without claiming continuous
+whole-planet navigation. Dynamic blockers carve incremental cache tiles independently
+of physical colliders. Expanded Spring Range composes these primitives through
+ordinary chase/health/score scripts, not a native Enemy/AI system. See
+[NAVIGATION.md](NAVIGATION.md) and the [public API](judasjs/navigation.md).
+
+## M54 — conserved implicit liquid foundation
+
+Accepted M54 foundation alongside preserved production PBF. Its original scope
+had no dynamic waves/free-surface solver; optional M55 surfaces extend it. RuntimeWorld owns double-volume reservoir/container/detached ledgers. Quantity is authoritative; surface geometry is downstream and owns no duplicate mass. Paired bounded transactions, generation-safe handles and fixed-step opening/connection/parcel updates keep accounting separate from geometric tolerance.
+
+Static physical tetrahedral basins bake adaptive monotonic capacity assets; runtime inversion is O(log N). Optional GravityField conservative equilibrium descriptors use the existing zone resolver: arbitrary uniform planes and the actual constant-magnitude radial equipotentials. Modest vented rotating containers clip their cavity against locally sampled gravity; authored openings drive real scoop/spill transport. Existing M44 queries constrain ballistic parcels; unsupported landings retain owned volume. Box/compound hydrostatic interaction is opt-in; M54-owned bodies are excluded from legacy PBF loading. No new swimming policy, particle-bulk fill, world-Y fallback or origin rebasing.
+
+Normal assets/resources/editor/scene/prefab/export and JudasJS integrate this path. Fingerprint schema remains 5; relevant physical and baked bytes contribute without machine paths. The legacy saved-delta format does not persist this liquid ledger. M61 modern
+slots persist owner quantities, parcels, connections and M55 cell/flow state;
+ordinary scene reload still reconstructs authored initial quantities. Dry body mass/inertia are not automatically rewritten by contained water. Current authoring, gravity/geometry error bounds, limitations and human lab/radial checks: [LIQUID_RESERVOIRS.md](LIQUID_RESERVOIRS.md).
+
+## M55 — optional dynamic liquid surfaces (accepted)
+
+M54 LiquidSystem remains the quantity owner. Optional CPU finite-volume surface cells partition each reservoir's same double-precision volume; shared face discharges are paired transfers, not additional ledger quantities. Physical tetrahedral storage and apertures, supported uniform/radial equilibrium descriptors, bounded semi-implicit pressure/continuity resolution and real collider union exclusion produce the occupied surface. Containers keep the vented M54 lip/cavity model; actual water transfers to conserved parcels and receiver cells. One normal PhysicsWorld hydrostatic/drag loading path remains.
+
+Authoritative liquid samples drive project-JS CharacterMotor swimming. Presented samples and Renderer caps/step bands use the same previous/current interpolation. Per-camera optical paths clip attenuation to actual water intervals, leaving sky/HUD independent. New opted-in basin data uses JudasBasin2; non-opted M54 assets/fingerprints remain valid. See [method, authoring and limitations](LIQUID_SURFACES.md) and [JudasJS liquid API](judasjs/liquid.md). M55 acceptance and measurements, including the preserved drain/refill failure
+and corrected wet/dry follow-up, are recorded in M55 evidence; no P1 prototype is promoted to production.
+
+## M56 — integrated diagnostic profiling (accepted)
+
+`PerformanceProfiler` is process-owned observability, independent of RuntimeWorld,
+Renderer and gameplay. Native RAII scopes write bounded per-thread lanes with
+interned parent-path identity; completed owned snapshots retain outer-frame,
+fixed-step, worker, counter and lifecycle observations. Enable/freeze/clear affect
+capture only. Timings never enter authored fingerprints, saves or simulation.
+
+Standalone/editor outer loops own frame boundaries, including waits; nested Play
+owns no duplicate frame. Worker jobs retain absolute monotonic intervals/source
+frame, not fabricated main-thread time. Renderer exclusively owns asynchronous
+coarse GPU timestamp pairs. Pending/unavailable results are not CPU substitutions.
+
+Editor **View → Profiler** consumes completed history/spikes; collection and UI
+visibility are independent. Exported runtime capture defaults off, opt-in through
+`JUDAS_PROFILE`; bounded JSON reports use caller-selected writable paths.
+`profiler.scope` / `profiler.counter` add exception-safe, bounded project annotations.
+The liquid scopes distinguish storage rebuilding, solve, loading and presentation
+without changing M54/M55 behaviour. See [profiler guide](PROFILER.md) and M56 evidence.
+
+## M57 optional materials and environment lighting
+
+Reusable `.judasmat` definitions and isolated instance overrides, core glTF primitive slots, PBR/unlit/legacy models and baked `.judasenv` resources use AssetDatabase/async ResourceManager and Renderer-owned GL3.3 lifetime. Opted-in scenes accumulate linear HDR, apply exposure/Reinhard/sRGB once, then display-stage UI. Modern secondary targets carry scene-linear radiance. Physics, liquid simulation and resolved skeletal poses remain independent of material policy. M66 supersedes the original import restrictions; M72 extends public sun/environment controls, render gates and whole/slot/stable-part material patches through these existing owners. See [Materials](MATERIALS.md) for exact shading, colour/import/pass contracts and [JudasJS material API](judasjs/materials.md). M57 is human-accepted and checkpointed at `ba16c2c`; historical milestone evidence is preserved.
+
+## M58 — shared Unicode text and project localization
+
+Judas owns the shared text layout/rendering and localization primitives; projects
+own font/catalog assets and JS owns language policy. UTF-8 text uses pinned
+FreeType 2.13.3, HarfBuzz 10.4.0 and ICU4C 76.1 (Unicode 16.0 / CLDR 46.0).
+RuntimeUI measurement and Renderer consume one immutable layout with bidi,
+script/font fallback, wrapping and real glyph metrics. Renderer alone owns bounded
+on-demand glyph atlases and consecutive-page batching; the old ASCII font bake is
+historical test infrastructure, not the current runtime text contract.
+
+Registered `.judasloc` catalogs and project font/locale settings use normal
+AssetDatabase, asynchronous ResourceManager and export paths. Complete validated
+locale chains publish together. Missing keys and the brief unpublished-catalog
+startup window return visible `[key]` fallbacks without throwing; invalid message
+arguments remain errors. Horizontal outline text is supported, not rich text,
+text entry/IME, colour emoji or automatic translation. See [M58](M58.md),
+[text/localization API](judasjs/localization.md) and dependency provenance there.
+M58 was accepted at `6fb90d5`; PR #1 preserved the non-throwing startup fallback.
+
+## M59 — additive composition and region residency
+
+Optional project `.judasworld` manifests describe stable source identities, oriented
+placements/bounds, dependencies and budgets. One RuntimeWorld/PhysicsWorld/gravity
+router/navigation service/QuickJS VM remains authoritative. JobSystem prepares
+immutable descriptors; private incremental registration and atomic publication run
+at the outer boundary. Teardown releases ordinary registrations/resources.
+
+Judas owns residency/lifetime; project JavaScript owns loading UI, travel gates and
+destinations. M43 replacement/reload retains its separate whole-world meaning.
+Session/root view/input/environment/locale/HUD remain selected explicitly; region
+completion does not replace them. Region gravity order follows declared priority
+and stable IDs before root fallback, never worker completion.
+
+Fresh runtime identities remap local/qualified references. Supports, physical/nav/
+gravity dependencies and unsuspendable liquid/articulation state pin with reasons.
+Supported JSON/physical session records and tombstones survive ordinary eviction;
+retention pressure blocks rather than silently resetting unique content. Composed
+legacy delta disk saves remain disabled/rejected. M61 slots support composed
+resident/retained state and qualified references. Fixed double origin/local floats remain M23: no
+live rebasing. Legacy single-scene canonical schema 5 is unchanged. See
+[M59 coverage, budgets and limitations](M59_WORLD_STREAMING.md) and
+[JudasJS streaming API](judasjs/streaming.md). M59 is human-accepted and checkpointed
+at `7ad5301`; the original revisit failure and fixes remain in its evidence.
+
+
+## Milestone 60 — Streaming audio and environmental acoustics
+
+M34 buffered playback remains supported; its whole-clip description is historical
+for the buffered policy, rather than the only current loading path. M60 adds
+bounded incremental WAV/MP3/FLAC decode using the existing JobSystem, independent
+per-voice cursors, generation-safe seek/prefill, safe starvation and asynchronous
+decoder retirement after mixer-graph detachment. EngineHost still owns one
+miniaudio 0.11.23 service independent of Renderer. Worlds/regions own bindings,
+not devices. Shutdown drains detached jobs before destroying their scheduler.
+
+Optional Doppler uses presented world poses and consistent-frame point velocities,
+including angular offsets, with backend Doppler disabled. Bounded resident
+PhysicsWorld rays supply smoothed real gain/low-pass obstruction. Authored oriented
+`.judasreverb` zones deterministically select listener-weighted settings for one
+shared bounded Verblib processor; dry is submitted once. Authored groups/master
+provide sample-clock gain fades, mute and pause; JS chooses gameplay policy.
+
+M59 root music retains its cursor; local streams retire on removal; adopted
+emitters retain voice identity. Suspended region sounds still restart on revisit.
+Composed asset hashing now uses bounded incremental reads with unchanged SHA-256
+digests. Canonical schema stays 5 with ordinary conditional authored fields.
+No decoder pointers, buffers, tails or playback cursors become persistence state.
+See [M60 contracts and limits](M60_AUDIO.md) and the [current JudasJS audio API](judasjs/audio.md).
+
+## M61 — project-scoped save slots and world reconstruction
+
+Judas owns durable storage, coherent snapshots and native reconstruction; projects
+choose save policy and contribute bounded script/session data. The legacy M29
+`.judasstate` delta path remains separate. Historical session-only and composed-
+world disk-save restrictions above do not describe the modern M61 slot contract.
+
+`SceneSession` owns one lazy `SaveService` across world replacement. Requests
+from ordinary JudasJS queue until an outer frame boundary after fixed updates,
+events and presentation. Partial region installation/unload defers capture. Owner-
+thread participants produce immutable records; existing JobSystem workers encode,
+read/write and synchronize files without accessing live worlds or VMs.
+
+The bounded explicit little-endian envelope separates container, participant and
+game-data versions from strict project/content compatibility. Stable full-width
+entity and M59 qualified identities remap to fresh world/generation-aware native
+handles. Adopted identity, retained changes and tombstones survive process exit;
+unvisited baseline regions remain unloaded. M54 quantities and M55 partitions/flows
+are restored once. Animation contributors, active articulation, motors/supports,
+constraints, navigation intent and persistent M60 playback have explicit records.
+Derived broadphase, render/font resources, corridors and audio decoder/DSP state
+are rebuilt. Contact history prevents replaying enter events on touching pairs.
+
+Load validates and builds a non-ticking private world using normal RuntimeWorld
+construction, prepares required resources and seeks audio quietly, then publishes
+once. Saved plain script state is installed before the new `restore` callback;
+`start` remains new-game policy. Arbitrary post-publication gameplay side effects
+are not transactionally reversible. Input edges clear; machine master/device
+preferences are not overwritten.
+
+Linux XDG storage uses a stable local/export namespace and separate editor slots.
+Opaque IDs, descriptor-relative no-symlink access and exclusive process locking
+protect the directory. Same-filesystem temporary writes use checked file sync,
+rename and directory sync, with a validated previous-good generation. A failure
+after publication reports uncertain durability rather than claiming no change.
+No universal hardware/network-filesystem power-loss guarantee is made.
+
+See [participation, limits and human review](M61_SAVES.md), the
+[`saves` reference](judasjs/saves.md) and [M61 evidence](evidence/m61/RESULTS.md).
+No fluid/audio/navigation algorithms, cloud service or VM checkpointing introduced.
+
+
+## M62 — cloth and volumetric deformables (accepted)
+
+RuntimeWorld owns CPU-authoritative deformable instances. Shared immutable
+`.judasdeform` assets separate simulation nodes/topology/rest data, boundary contact
+geometry and stored render bindings. Cloth membrane/shear/bend constraints and
+volumetric tetrahedral strain/volume constraints use XPBD at the ordinary fixed
+cadence with bounded substeps/iterations. Optional bounded isochoric plastic rest
+flow belongs to each instance. Nodes are not Entities or RigidBodies.
+
+PhysicsWorld supplies authoritative geometry/tree candidates and finite rigid-body
+reaction at one coupling boundary; it is not advanced a second time. Surface
+vertex/face and edge/edge contact use accelerated candidates and explicit topology
+exclusions. Bone pins consume the existing final resolved authoritative pose after
+animation/ragdoll. Dynamic body pins exchange finite reaction; static/world/bone
+anchors prescribe motion. Gravity is selected at node positions; owner placement
+is not applied twice to simulated world-frame nodes. Renderer maps/interpolates
+stored bindings and owns normal indexed mesh/material/shadow/camera/culling GL.
+
+Normal scene/prefab/resource/editor/export infrastructure carries the component.
+JudasJS exposes a safe Deformable facade, not raw native nodes or a project solver.
+M61 includes required conditional deformation state; M59 retains independent region
+state once and pins cross-region targets while attachments use them. GPU/contact
+caches rebuild. The ordinary Deformable Lab is content, not native dispatch.
+The original M62 contact envelope was sampled primitives; M64 extends that same
+sampled seam to cooked meshes/hulls and oriented compound children. Current
+limits still include sampled rigid contact, discrete EE contact, approximate
+cloth bending/materials, bounded non-inverted solids and unit owner scale. No
+terrain/general mesh collision expansion, CharacterMotor/event expansion, cloth
+wetting, fluid change, IK, fracture/tearing or M63 work was introduced.
+
+See [M62 implementation/limits](M62_DEFORMABLES.md),
+[JudasJS contract](judasjs/deformables.md) and [combined evidence](evidence/m62/RESULTS.md).
+
+## M63 — structural fracture and physical fragments (accepted)
+
+An optional bounded material partition extends M62 `.judasdeform` assets. One
+RuntimeWorld family graph owns irreversible interfaces, connected components and
+material tombstones. Soft cells use M62 XPBD cohesive traction and retain current
+plastic state; rigid cells are ordinary M45-connected PhysicsWorld bodies. Solved
+tensile/shear demand drives failure, separately from stiffness/yield and explicit
+project cuts. Publication occurs at the authoritative fixed boundary before JS
+notifications. The logical owner has no duplicate collider/mass; Renderer consumes
+mapped final geometry and revealed interiors. Normal rigid queries, motor contacts,
+M42 events and audio see the surviving physical cells.
+
+M61 persists topology/plastic state and owned joint history; M59 exposes live-family
+pins and ordinary adoption/tombstones. Navigation remains an advisory consumer of
+project-updated obstacles. Liquid-bearing fracture is explicitly unsupported. No
+fluid solver, general mesh-collision system or second destruction solver was added.
+See [M63 contracts, authoring and limitations](M63_FRACTURE.md),
+[Fracture JS API](judasjs/fracture.md), and [checkpoint evidence](evidence/m63/RESULTS.md).
+
+## M64 — cooked collision geometry and geometric inspection (accepted)
+
+Immutable `.judascollision` CPU resources add static concave triangle surfaces and
+static/dynamic convex hulls to the existing PhysicsWorld. Local BVHs select mesh
+features; normal contact/manifold/impact/joint solvers own response. Physical edge
+adjacency distinguishes internal joins from actual boundaries. Compound children
+have independent local rotations/positions and stable keys within one body.
+Hull volume/COM/inertia use closed geometry; authored pivots and joint frames remain
+explicitly distinct from simulated COM. Dynamic concavity and mesh volume sensors
+are rejected. Positive source scale can be cooked; extended rigid instances require
+unit scale. No automatic decomposition or new universal CCD guarantee.
+
+Casts, CharacterMotor, navigation extraction, audio obstruction and sampled M62
+contacts consume the same physical geometry. `Entity.collider` provides bounded
+value metadata; `physics.closestPoint` returns nearest surface with separate
+containment and safe entity/feature data. Cooking/assignment/preview use normal
+editor/assets/resources; streaming, cold saves and export retain cooked identities.
+Canonical scene fingerprint schema remains 5 with conditional collision content.
+M54/M55 cavity authority and liquid algorithms remain unchanged; unsupported
+hull/mixed/open-mesh fluid loading is rejected, not replaced with AABB buoyancy.
+See [M64 coverage, workflow and limitations](M64_COLLISION.md) and
+[JudasJS geometry queries](judasjs/physics.md).
+
+## M65 — developer integration (accepted)
+
+CharacterMotor remains a massless sweep/slide motion primitive. Departure tests
+relative motion against current support separation, not an uphill gravity component.
+Query capsules and observed sweeps join the ordinary M42 filtered pair lifecycle;
+sensors use endpoint geometry and do not promise full crossing CCD.
+
+Resolved skeleton reads, visual sockets and a bounded two-bone IK producer consume
+M47 final poses. Stable keys/references use normal prefab, stream and save contracts.
+IK composes before physical pose authority; no solver writes GPU matrices or drives
+physical limbs. Visual sockets reject physical motion ownership and cycles.
+
+PhysicsWorld contact/joint islands can sleep after bounded settling. Sleeping retains
+spatial/query/event identity and wakes through meaningful loads, geometry, gravity
+and constraint changes. Normal force/impulse paths remain authoritative; shared static
+floors do not couple unrelated islands. M61 stores an optional version-1 sleep chunk;
+old saves reconstruct awake. Streamed animated state remains honestly pinned when
+it cannot be losslessly suspended; adoption requires the complete referenced assembly.
+
+Public gravity samples use the existing resolver. Shared physical-material resources
+supply existing friction/restitution laws; runtime joints use M45 and normal ownership.
+Editor batch operations use existing undo snapshots. Named developer authoring calls
+the normal scene/UI/input serializers. The harness runs actual InputSystem, scripts,
+presentation and UI, including paused captures. Canonical fingerprint schema stays 5;
+new content is conditional, so unchanged legacy content retains its identity.
+See [M65 workflow/limits](M65_INTEGRATION.md), [authoring](CONTENT_AUTHORING.md),
+[harness](TEST_HARNESS.md) and [current proof/closure table](evidence/m65/REPORT.md).
+
+## M66 — source normalization and ordinary model resources (accepted)
+
+Editor and CLI share authoring-only pinned ufbx/cgltf/tinyobj ingestion and
+transactional named recipes. Sources/dependencies normalize once into version-1
+`.judasmodel` assets through the existing AssetDatabase/ResourceManager. The player
+loads cooked data without ufbx. Multiple mesh/skin/material parts retain separate
+bindings under a complete skeleton, with evaluated affine rest data and eight
+weights. Renderer alone owns GL3.3 texture-buffer palette delivery in all passes.
+No source parser, clip, preview or physics subsystem owns the final pose.
+
+Stable hierarchy/part/material keys and content hashes preserve identity on
+compatible reordering. Missing/ambiguous/deleted required bindings stop reimport;
+failed/cancelled staging keeps the accepted generation. Changed source forbids
+stale export; modern saved-world compatibility follows ordinary content identity.
+Selected clip root motion is queryable data, never automatic entity movement.
+Collision sources remain separate; diagnostics retain real source geometry, and
+explicit derived cleanup reruns strict validation.
+
+Streaming can suspend ordinary animated regions through the existing instance
+pose serializer; active articulations/return transitions remain pinned. Only
+retained animation records require streaming participant version 3; older records
+remain readable. Canonical fingerprint schema remains 5. See [model import](MODEL_IMPORT.md) for actual bounds, recipes, shader/material approximations,
+source rights and unsupported deformations, and [M66 evidence](evidence/m66/REPORT.md)
+for the candidate's numerical, actual-GL and lifecycle results.
+
+## M68–M69 — bounded work and input/query composition (accepted)
+
+M68 reduces measured runtime/authoring/import overhead, bounds resource admission
+and stages GPU publication under a soft budget. Export supports conservative all-assets
+or explicit dependency closure and emits an inclusion report. Cache receipts remain
+content-verified; indivisible work can exceed soft budgets. See [Scalability](SCALABILITY.md).
+
+M69 adds paired raw/controller input, named circular vector bindings and bounded
+ordered observations. Ray, sphere and capsule query batches share one filter and
+return ordered ordinary hits/nulls using existing authoritative geometry. They do
+not add gameplay recognition or a new query solver. See [M69](M69.md),
+[input](judasjs/input.md) and [physics](judasjs/physics.md).
+
+Documentation alignment needs a better repeatable maintenance process; the
+[current follow-up and checkpoint checklist](DOCUMENTATION_MAINTENANCE.md) records it.
+
+
+## M70 — shared target posing and partial physical animation
+
+An opted-in instance has distinct clip/layer reference, IK-resolved reference and
+final physical pose. A bounded simultaneous damped least-squares solve reconciles
+explicit contact frames through declared skeletal root translation and mapped
+joint rotations. Bone lengths, immutable resources, entity/motor motion and
+root-motion tracks remain separate. Existing limb IK precedes the shared solve;
+physical contributions resolve last. Unreachable targets report individual
+residuals rather than stretching bones or moving the entity.
+
+Partial physical regions use ordinary ragdoll bodies and M45 constraints, with
+non-colliding/query-excluded prescribed boundaries. The CharacterMotor may retain
+root authority. Bounded implicit proportional/damping torques act on dynamic
+bodies, with opposite reaction on dynamic parents. Full active/passive modes
+require explicit motor handoff and do not pin the root. Physics remains the
+actual collision-pose authority; optional visual influence is an approximation.
+
+New targets, references and drives are sampled at fixed boundaries. Opted-in
+motors move before this phase; legacy consumers retain their existing timing.
+Final/presented joint reads, sockets and skinning share the same pose sample.
+M61 saves retain mode/pending requests and fresh mapped body references, using an
+articulation version-3 extension only where needed. Disposable numerical/motion
+history is rebuilt without inventing a preceding step. Old schema-5 content
+fingerprints remain unchanged when the optional new settings are absent.
+
+See [M70 ownership, bounds and human review](M70.md) and the
+[public IK/physical-animation reference](judasjs/animation-ragdolls.md).
+Linux human review was accepted at checkpoint
+`fb31f0244c9f41f74c439afd99855e3707937edd`; Windows M70 validation remains outstanding.
+
+## M71 — prescribed rigid-body authority and scene-view panning (accepted)
+
+Ordinary rigid bodies explicitly select static, dynamic or kinematic authority.
+Kinematic target/velocity commands publish at the next rigid fixed step and use
+the existing step-local motion ledger, broadphase, narrowphase, continuous impacts
+and contact solver. Infinite response mass does not prevent prescribed motion;
+it means contacts cannot change that trajectory. Dynamic neighbours receive
+ordinary impulses and friction, with externally supplied work. Static/kinematic
+obstacles do not automatically stop the commanded path. Concave meshes and terrain
+remain static-only. Transform placement remains a teleport that retires motion.
+
+Target motion uses linear COM translation and a shortest quaternion arc; continuous
+angular-velocity commands support full turns. Rotational point/support velocity is
+measured about the physical COM. Ordinary CharacterMotor support carry and departure
+use that same contract. Legacy M70 animated-boundary placement is not reinterpreted.
+Runtime authority changes preserve safe body identity and reject incompatible owners
+or active joint participation. Modern saves and region snapshots retain physical
+state and durable commands while reconstructing disposable history. Default content
+keeps schema-5 fingerprints; optional angular initial state is an explicit extension.
+
+The existing scene camera had RMB look/fly and F framing but no pan. MMB drag now
+translates camera and focus together in its view plane, scaled by focus distance
+and viewport height. Viewport ownership, cancellation and Play/Stop preserve editing
+gestures. No new orbit/projection controller is added.
+The human-review follow-up adds viewport-only mouse-wheel dolly around a stable
+focus point and replaces oversized sphere selection proxies with visible
+primitive/mesh intersections. Nested transforms and original child IDs are
+preserved. Editor CPU mesh picking is cached and separate from runtime physics.
+
+The subsequent operator-requested editor polish gives Edit mode its own central
+render target/projection, resizable hierarchy/inspector/assets layout, per-user
+preferences and unsaved-scene replacement/close confirmation. It retains the normal
+full-window runtime path for Play. Shared inspector controls use readable stacked
+labels and gesture-level Undo. Local reference/file links use the OS default
+handler. See the current [editor guide](EDITOR_GUIDE.md) and
+[hand-authoring guide](judasjs/getting-started.md); no game policy is added.
+
+See [M71 phases, commands and validation](M71.md) and
+[public prescribed-motion API](judasjs/entities.md#kinematic-motion-m71).
+The combined engine/editor work is accepted at
+`02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3`. Original candidate receipts remain
+preserved in the M71 evidence record; they do not certify later M72 changes.
+
+## M72 — runtime lighting, render visibility and instance materials (human accepted)
+
+Authored root settings → validated RuntimeWorld appearance → one render-sample
+snapshot → normal direct lighting, supported shadows and environment resolve is
+the lighting path. Sun direction is world-space toward the light, independent of
+gravity; enabled/intensity/linear colour and ambient/environment/background controls
+extend the existing appearance API. Exposure remains a separate display operation.
+Reset restores root authored settings, including after durable restoration;
+additive regions do not replace the root's lighting owner.
+
+Each entity has a local render gate; its optional Render component and imported
+parts retain independent gates. Supported geometry/depth/shadow submissions combine
+them without changing physics, scripts, audio or resolved skeletal work. Children
+do not inherit the entity gate. Authored and runtime material state are separate:
+whole-instance/numeric/stable-part authoring resolves first, then isolated runtime
+patches resolve whole → numeric → stable part. Reset removes the selected runtime
+patch including assignment. Shared material/model/texture source data stays immutable.
+
+Material batches validate factors, alpha mode/cutoff, normal/AO strength,
+double-sided state and registered texture selections before publication. Ordinary
+opaque/mask/blend submission determines real opacity, depth and shadow behaviour;
+object-origin transparency sorting retains its existing intersection limits.
+ResourceManager resolves selected IDs asynchronously with source-map fallback and
+generation-safe retirement; Renderer owns graphics lifetime. Durable state stores
+values/IDs rather than GL handles, and obsolete requests cannot replace newer state.
+
+M33 auxiliary views retain resolution/cadence/mask, target ownership and feedback
+protection, share ordinary supported draw paths and main-focused shadow maps, and
+store modern radiance without display resolve. M72 adds no independent auxiliary
+shadow coverage or feature-parity requirement. Project JS owns transition timing,
+sun trajectories and hiding/material policy; no native day/night system is introduced.
+
+See [M72 ownership, authoring, lifecycle and review](M72.md),
+[appearance/material API](judasjs/materials.md) and
+[render-visibility API](judasjs/entities.md#render-visibility-m72).
+M72 was initially checkpointed without human validation. The operator accepted
+the desktop Render Control Lab on 2026-10-09; M72 is now human validated on Linux.
+Original automated evidence retains its scope. At this initial handoff native Windows
+M72 validation was outstanding; the later Windows 10 VM follow-up is recorded in
+[WINDOWS.md](WINDOWS.md). Windows hardware/operator acceptance remains outstanding.
+
+## M73 candidate — owned JudasJS signals
+
+Optional `signals` and `onSignal` add project-named world-local broadcasts and
+entity-targeted messages. This is routing/lifetime infrastructure; JS defines
+meaning. One lazy ScriptSystem store indexes subscriptions by exact channel and
+target, binds tokens to script-instance generations, snapshots bounded plain-data
+payloads, captures recipient identities on acceptance and revalidates at delivery.
+No unused-feature per-entity scan, retained behaviour closure, extra world or save
+participant is introduced.
+
+Fixed messages drain after completed contact/fracture publication. Explicit UI
+messages drain after UI input before gameplay, also while paused/zero-step. Each
+lane freezes FIFO work and bounds delivery; handlers cannot recursively extend the
+batch. Retiring/faulting slots release subscriptions without relying on destroy.
+Streaming shares the VM; compatible adoption preserves instances, suspension retires
+reservations and revisit registers fresh subscriptions. Save capture never flushes
+or persists queues/tokens; modern restore registers through restore while preserving
+saved facts. Existing observations retain their ordering and are not rebroadcast.
+
+See [M73](M73.md) and [signals reference](judasjs/signals.md) for exact limits,
+returns/errors, ownership and execution evidence. This is an uncommitted candidate,
+not operator acceptance or a networking/durable delivery promise.
+
+## M76 candidate — game-owned optional mod contracts
+
+The accepted foundation includes M74 baked retarget authoring and M75 reusable
+height-patch source editing/cooking. M74 human motion/editor review remains deferred;
+M75 is operator accepted. M73's candidate wording above records its original
+handoff; owned signals are now part of accepted main.
+
+M76 is uncommitted, with human review pending. Modding is OFF by default. An
+immutable project/export contract publishes references, permitted whole-resource
+replacements, bounded extension descriptors and registry/version policy. Explicit
+selected packages resolve once to a frozen effective AssetDatabase, reused by
+ResourceManager, one QuickJS VM, ordinary scene/prefab/region construction, physics,
+navigation and modern saves. Base IDs/installation bytes remain unchanged.
+
+Owner-qualified IDs are assigned before cook/bake, never patched into opaque
+products or JS strings. Curated kits and kit-bound ordinary projects reuse M75
+brushes, source freshness, model cooking and navigation fingerprints. Shared
+validation is used by editor, CLI install/package and runtime before activation.
+Install/list/inspect never evaluate scripts; executable enable trusts exact bytes.
+Trusted scripts retain normal world capabilities: content policy is not a hostile
+code sandbox. No new native game concepts or script lifecycle is introduced.
+
+Versioned user-data storage and resource/session leases retain immutable bytes
+while worlds/jobs use them. Changes apply at fresh session boundaries. Nonempty
+loadouts extend strict modern save context with exact mod/contract/resolution
+identity; empty/unmodded v2 semantics remain. See [modding guide](MODDING.md),
+[catalog API](judasjs/mods.md) and [M76 evidence](M76.md).

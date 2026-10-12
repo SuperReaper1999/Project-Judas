@@ -1,0 +1,1984 @@
+[
+  {
+    "milestone": 1,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "6507644678e7424b2d87351e3ad6e08c762a4b2e\tAdd Milestone 1: window, box render, keyboard movement"
+    ],
+    "historicalTag": {
+      "name": "milestone-1",
+      "checkpoint": "6507644678e7424b2d87351e3ad6e08c762a4b2e"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 2,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "1da6cf4eed1ce453411a7cead6153dd81f6120f0\tAdd Milestone 2: 3D rendering, perspective, depth, free-fly camera"
+    ],
+    "historicalTag": {
+      "name": "milestone-2",
+      "checkpoint": "1da6cf4eed1ce453411a7cead6153dd81f6120f0"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 3,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "09f7dc60977a60e9f091ad951a3eafc4c40841eb\tAdd Milestone 3: Jolt physics, Judas-owned gravity, fixed timestep"
+    ],
+    "historicalTag": {
+      "name": "milestone-3",
+      "checkpoint": "09f7dc60977a60e9f091ad951a3eafc4c40841eb"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Historical Jolt ownership superseded at M7-Final; docs/ARCHITECTURE.md:552-560. Current native physics/motor is not that middleware."
+  },
+  {
+    "milestone": 4,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 671,
+        "heading": "### Why `CharacterVirtual` was right for Milestone 4 but isn't the player architecture now"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "c2b17e6b6ee7d062002cca6945eeec54fa580339\tAdd Milestone 4: a walking, jumping player via Jolt CharacterVirtual"
+    ],
+    "historicalTag": {
+      "name": "milestone-4",
+      "checkpoint": "c2b17e6b6ee7d062002cca6945eeec54fa580339"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Historical Jolt ownership superseded at M7-Final; docs/ARCHITECTURE.md:552-560. Current native physics/motor is not that middleware."
+  },
+  {
+    "milestone": 5,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "4aecda82c6fca6bd011929a0d8cc345fb92868cc\tAdd Milestone 5: Judas-owned player, radial gravity on a sphere"
+    ],
+    "historicalTag": {
+      "name": "milestone-5",
+      "checkpoint": "bdeed29bb2bb98402660f2be9a6c00515d746eec"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 6,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "eedd4625b7d73b6a43ca53f51218ca9244af1b20\tAdd Milestone 6: diagnose and fix locomotion judder via presentation interpolation"
+    ],
+    "historicalTag": {
+      "name": "milestone-6",
+      "checkpoint": "eedd4625b7d73b6a43ca53f51218ca9244af1b20"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 7,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 869,
+        "heading": "### Design 1 (Milestone 7-B): `GravityResolver` \u2014 falloff-weighted vector blending"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 902,
+        "heading": "### Design 2 (Milestone 7-Final, first attempt): `GravityContextMap` with explicit blended transitions"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1079,
+        "heading": "### Bounding the reorientation rate (Milestone 7-B)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1166,
+        "heading": "### Velocity continuity while airborne (Milestone 7-B)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1247,
+        "heading": "### Contact normal correctness and the \"already touching\" case (historical: Jolt-backed implementation, Milestones 5 through the first Milestone 7-Final attempt)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1288,
+        "heading": "### Contact normal correctness under Judas's own physics (Milestone 7-Final)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 4434,
+        "heading": "### Extended to dynamic bodies (Milestone 7-A)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "bb15189e4880fc3517430b4ccc01a9307b4f838e\tAlign documentation and comments with Judas-owned physics (M7-Final)",
+      "f8e3ecde14f00a49a04c9e2fec89998fa887b1df\tAdd Milestone 7-Final: two-planet gravity demo on a Judas-owned physics engine",
+      "f3c13327f367fcf1bd59826152f1c9ca99bf38af\tAdd Milestone 7-B: gravity-context transitions between sphere and platform",
+      "e32d90345f51a1893dd7e1f71dfb7ec9017aee37\tAdd Milestone 7-A: multiple dynamic bodies sharing Judas-owned gravity"
+    ],
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 8,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1586,
+        "heading": "### Why Milestone 8's moving-support behavior needed no changes"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3993,
+        "heading": "## Milestone 8"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "bb23b67437df57645ccbc5d6e93495875410d559\tAdd Milestone 8: Judas Learns to Ride"
+    ],
+    "historicalTag": {
+      "name": "milestone-8",
+      "checkpoint": "bb23b67437df57645ccbc5d6e93495875410d559"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 9,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 2812,
+        "heading": "### Renderer changes: extending M9's shader, not replacing it"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 4541,
+        "heading": "## Milestone 9"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "932d407a0a108109ccc70853a96cc19f83fec364\tAdd Milestone 9: Judas Learns to Look Presentable"
+    ],
+    "historicalTag": {
+      "name": "milestone-9",
+      "checkpoint": "932d407a0a108109ccc70853a96cc19f83fec364"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 10,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1349,
+        "heading": "## Milestone 10"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "00c1cac08c9f8e31e30360726c46fa05033e463b\tAdd Milestone 10: Judas Learns to Move Properly"
+    ],
+    "historicalTag": {
+      "name": "milestone-10",
+      "checkpoint": "00c1cac08c9f8e31e30360726c46fa05033e463b"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 11,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 1608,
+        "heading": "## Milestone 11"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "a936b61c5b5cccea8eca2babea2a11583d8e4b2d\tAdd Milestone 11: Judas Learns to Fly Properly"
+    ],
+    "historicalTag": {
+      "name": "milestone-11",
+      "checkpoint": "a936b61c5b5cccea8eca2babea2a11583d8e4b2d"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 12,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 2038,
+        "heading": "## Milestone 12"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "0e3e2d764ba6cd7ec3458d284348219645eb305b\tAdd Milestone 12: Judas Learns Inertia"
+    ],
+    "historicalTag": {
+      "name": "milestone-12",
+      "checkpoint": "0e3e2d764ba6cd7ec3458d284348219645eb305b"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 13,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 2407,
+        "heading": "## Milestone 13"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3781,
+        "heading": "### HUD prompt (Milestone 13 integration)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "c46c70a28beb7f45393fb50cc49c8d0af244f4af\tAdd Milestone 13: Judas Learns UI"
+    ],
+    "historicalTag": {
+      "name": "milestone-13",
+      "checkpoint": "c46c70a28beb7f45393fb50cc49c8d0af244f4af"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 14,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 2776,
+        "heading": "## Milestone 14"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "f00962d0ba62902ed1f84e4f221d26e812ba95da\tAdd Milestone 14: Judas Learns Dynamic Lighting"
+    ],
+    "historicalTag": {
+      "name": "milestone-14",
+      "checkpoint": "f00962d0ba62902ed1f84e4f221d26e812ba95da"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 15,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3249,
+        "heading": "## Milestone 15"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "2c9390094ed39467c7adf518924abdb46bae136d\tAdd Milestone 15: Judas Learns Shadows"
+    ],
+    "historicalTag": {
+      "name": "milestone-15",
+      "checkpoint": "2c9390094ed39467c7adf518924abdb46bae136d"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 16,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3640,
+        "heading": "## Milestone 16"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "11e71c212a42b31cecb23b9df2f51726efc5f202\tAdd Milestone 16: Judas Learns Doors and Environment Interactables"
+    ],
+    "historicalTag": {
+      "name": "milestone-16",
+      "checkpoint": "11e71c212a42b31cecb23b9df2f51726efc5f202"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 17,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3891,
+        "heading": "## Milestone 17"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "aba52d8f8e5a779c55c640d1cee8f1967e035c35\tAdd Milestone 17 first-person player view"
+    ],
+    "historicalTag": {
+      "name": "milestone-17",
+      "checkpoint": "aba52d8f8e5a779c55c640d1cee8f1967e035c35"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 18,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3921,
+        "heading": "## Milestone 18 \u2014 object manipulation"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [],
+    "historicalTag": {
+      "name": "milestone-18",
+      "checkpoint": "0c8c765529e839cb35710b148ac5b5c3eef6fec3"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 19,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3956,
+        "heading": "## Milestone 19 \u2014 stable curved-surface locomotion"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [],
+    "historicalTag": {
+      "name": "milestone-19",
+      "checkpoint": "172e08257bc0decc184df3c0cffbf2a9c2487742"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 20,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6247,
+        "heading": "## Milestone 20 \u2014 Newtonian two-body demonstration (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [],
+    "historicalTag": {
+      "name": "milestone-20",
+      "checkpoint": "9d6a370b8e8df0c07a7b9b9312f5bbc358326187"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 21,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6340,
+        "heading": "## Milestone 21 \u2014 celestial spacecraft flight and SAS (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [],
+    "historicalTag": {
+      "name": "milestone-21",
+      "checkpoint": "d0ee2d9388c46fc059b8ce59c802c2357e1c6f54"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 22,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6413,
+        "heading": "## Milestone 22 \u2014 classical reference frames (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "33aab59a4d908b70ba300278b68d2ab9bed492a2\tComplete Milestone 22 reference frames"
+    ],
+    "historicalTag": {
+      "name": "milestone-22",
+      "checkpoint": "33aab59a4d908b70ba300278b68d2ab9bed492a2"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 23,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6492,
+        "heading": "## Milestone 23 \u2014 no privileged physical origin (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "b12059e469262e7f3186766ccd6f5c2a4cec120a\tComplete Milestone 23 world origin independence"
+    ],
+    "historicalTag": {
+      "name": "milestone-23",
+      "checkpoint": "b12059e469262e7f3186766ccd6f5c2a4cec120a"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Fixed-origin double/local-float representation retained. Live origin rebasing is absent, not a delivered M23 claim. docs/ARCHITECTURE.md:88."
+  },
+  {
+    "milestone": 24,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6594,
+        "heading": "## Milestone 24 \u2014 bounded dynamic liquid (operator accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "ebe1c2b5a849e8ff533ecbe96624c7a82f24b95f\tComplete Milestone 24 fluid dynamics"
+    ],
+    "historicalTag": {
+      "name": "milestone-24",
+      "checkpoint": "ebe1c2b5a849e8ff533ecbe96624c7a82f24b95f"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Historical environments/fluids/foundation records remain protected; current approximate PBF and M54/M55 liquid are separate from P1 conservative research. Original scope adjudication is incomplete, not erased."
+  },
+  {
+    "milestone": 25,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6760,
+        "heading": "## Milestone 25 \u2014 radial terrain and environmental fluid (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "3c17f9bed41d9eefdb0c72c44c7d1493fc746fc7\tComplete Milestone 25 radial terrain and lakes"
+    ],
+    "historicalTag": {
+      "name": "milestone-25",
+      "checkpoint": "3c17f9bed41d9eefdb0c72c44c7d1493fc746fc7"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Historical environments/fluids/foundation records remain protected; current approximate PBF and M54/M55 liquid are separate from P1 conservative research. Original scope adjudication is incomplete, not erased."
+  },
+  {
+    "milestone": 26,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 6949,
+        "heading": "## Milestone 26 \u2014 a finite planetary atmosphere (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "b225be7f1746bf9276664de0bf112dc6534f9d8a\tComplete Milestone 26 planetary atmosphere"
+    ],
+    "historicalTag": {
+      "name": "milestone-26",
+      "checkpoint": "b225be7f1746bf9276664de0bf112dc6534f9d8a"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Historical environments/fluids/foundation records remain protected; current approximate PBF and M54/M55 liquid are separate from P1 conservative research. Original scope adjudication is incomplete, not erased."
+  },
+  {
+    "milestone": 27,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 7158,
+        "heading": "## Milestone 27 \u2014 finite thermal combustion (accepted)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 7692,
+        "heading": "### Known content differences from M27"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "0d6b3676ece35e6440868cb542a27485310e150b\tComplete Milestone 27 finite combustion"
+    ],
+    "historicalTag": {
+      "name": "milestone-27",
+      "checkpoint": "0d6b3676ece35e6440868cb542a27485310e150b"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 28,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 7327,
+        "heading": "## Milestone 28 \u2014 Judas learns to be an editor (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "57e69a07f4f87034695b709c9faddab3707269d8\tAdd Milestone 28: Judas learns to be an editor"
+    ],
+    "historicalTag": {
+      "name": "milestone-28",
+      "checkpoint": "57e69a07f4f87034695b709c9faddab3707269d8"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 29,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 7713,
+        "heading": "## Milestone 29 \u2014 Judas learns that existing does not mean being fully simulated (accepted)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 7990,
+        "heading": "### Known engine limitation exposed by M29 (pre-existing)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8268,
+        "heading": "### M29 integration"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8537,
+        "heading": "### M29/M30 boundaries preserved"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "5011186bf4e2008476b746c68311711b8eac581e\tAdd Milestone 29: existing does not mean being fully simulated"
+    ],
+    "historicalTag": {
+      "name": "milestone-29",
+      "checkpoint": "5011186bf4e2008476b746c68311711b8eac581e"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 30,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8023,
+        "heading": "## Milestone 30 \u2014 Judas learns to actually make games with itself (accepted)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8537,
+        "heading": "### M29/M30 boundaries preserved"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "fadb7e16964f127b3423daf71d1ef445e12eeb83\tAdd Milestone 30: Judas learns to actually make games with itself"
+    ],
+    "historicalTag": {
+      "name": "milestone-30",
+      "checkpoint": "fadb7e16964f127b3423daf71d1ef445e12eeb83"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 31,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8364,
+        "heading": "## Milestone 31 \u2014 Judas learns it doesn't have to wait (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "f8d87a6f9c5e453aad5cdf17cb445b3007384111\tAdd Milestone 31: Judas learns it doesn't have to wait"
+    ],
+    "historicalTag": {
+      "name": "milestone-31",
+      "checkpoint": "f8d87a6f9c5e453aad5cdf17cb445b3007384111"
+    },
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 32,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8631,
+        "heading": "## Milestone 32 \u2014 rigid-body portion extracted (historical checkpoint)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8848,
+        "heading": "### Historical M32 liquid/solid coupling: what was tried, and why it was deferred"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "48385a78afb2930744f2b87ad6aa55452f18ae18\tAdd Milestone 32 rigid-body checkpoint: broadphase and contact solver"
+    ],
+    "featureIds": [],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Historical environments/fluids/foundation records remain protected; current approximate PBF and M54/M55 liquid are separate from P1 conservative research. Original scope adjudication is incomplete, not erased."
+  },
+  {
+    "milestone": 33,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8873,
+        "heading": "## M33 \u2014 authored render cameras (accepted checkpoint `bd22935`)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "bd22935fe4954c994178e5b854b87d42fcecfee2\tAdd M33 authored camera render targets and scene texture sources"
+    ],
+    "featureIds": [
+      "F.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 34,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8890,
+        "heading": "## M34 audio boundary"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "615900164a3ccb7412d2d3a8a2dda8608a1b5f07\tAdd M34 engine audio assets emitters and listeners"
+    ],
+    "featureIds": [
+      "H.01"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 35,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 5008,
+        "heading": "## Input handling (historical physical bindings; superseded by M35)"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8906,
+        "heading": "## M35 current input boundary"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "feba69f7dedcad21f6c89f2fbf304d7695dd03e7\tAdd M35 project input actions axes and rebinding"
+    ],
+    "featureIds": [
+      "H.05"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 36,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8914,
+        "heading": "## Milestone 36: prefabs"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "2098949f003e1b8e5588ce8651260db26e7ba04a\tAdd M36 prefab assets instances overrides and runtime spawning"
+    ],
+    "featureIds": [
+      "A.05"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 37,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8926,
+        "heading": "## M37 visibility and visual emitters"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "d1136c4b1049e043b40abf24fdaeed722cfc99ed\tAdd M37 frustum culling and visual particle emitters"
+    ],
+    "featureIds": [
+      "F.05",
+      "F.07"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 38,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8938,
+        "heading": "## M38 standalone export"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "3b71abf23081e840e5b195f7f588a37613399cae\tAdd M38 standalone project export packaging"
+    ],
+    "featureIds": [
+      "J.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 39,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8955,
+        "heading": "## M39 classification"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "4697675c8878ddf101d7df6a3f451a5119a6f57b\tAdd M39 project tags layers masks and filtered queries"
+    ],
+    "featureIds": [
+      "C.06"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 40,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8965,
+        "heading": "## M40 \u2014 project JavaScript behaviours"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "66b161fa21475716b361cefcdf87b34e3556bd8c\tAdd M40 JavaScript gameplay scripting"
+    ],
+    "featureIds": [
+      "H.06",
+      "H.07"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 41,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8984,
+        "heading": "## M41 \u2014 authored runtime UI"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "01d4a920fff3c407cbda702d8da2a62972dd224f\tAdd M41 authored scriptable runtime UI"
+    ],
+    "featureIds": [
+      "H.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 42,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8996,
+        "heading": "### M42 contact event ownership"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "ed6e8fc342b3dfd9982ea7a07ad54314f9ff9926\tAdd M42 collision and trigger events"
+    ],
+    "featureIds": [
+      "C.05"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 43,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 119,
+        "heading": "### Historical foundation through M43 and later legacy-fluid repair notes"
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 8999,
+        "heading": "### M43 \u2014 project session and scene replacement"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "6258e7a00a8783b912ee98fa706eabb7c729fe4a\tRefresh architecture documentation through M43",
+      "6f199eff9378270d7291a9dd8605fcfde5760569\tAdd M43 runtime scene transitions and session state"
+    ],
+    "featureIds": [
+      "A.01",
+      "I.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 44,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9010,
+        "heading": "## M44 \u2014 explicit runtime geometry queries (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "fa2c281c399a848033768f253e277742625078eb\tAdd M44 runtime raycasts and shape casts"
+    ],
+    "featureIds": [
+      "C.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 45,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9026,
+        "heading": "## Milestone 45 \u2014 rigid-body joints"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "9254d2e16154e268b0018f156b7c2ed035acaf43\tAdd M45 rigid-body joints and constraints"
+    ],
+    "featureIds": [
+      "C.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 46,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9032,
+        "heading": "## Milestone 46 \u2014 skeletons, poses and visual clip playback (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "4c2ee4631ec36f29160c5c5a9a6b5c6c24039956\tAdd M46 skeletal animation and skinned mesh playback"
+    ],
+    "featureIds": [
+      "D.02",
+      "D.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 47,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9051,
+        "heading": "## M47 \u2014 resolved pose composition (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "fc6f44f233e82214c6400c05e695fa71774727db\tAdd M47 pose composition and M48 articulated ragdolls"
+    ],
+    "featureIds": [
+      "D.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 48,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9061,
+        "heading": "## M48 \u2014 passive articulated skeletons (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "fc6f44f233e82214c6400c05e695fa71774727db\tAdd M47 pose composition and M48 articulated ragdolls"
+    ],
+    "featureIds": [
+      "D.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 49,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9074,
+        "heading": "## M49 \u2014 scriptable character motor (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "19613298a55a2095cc856a7462f5c0babe4c1b17\tAdd M49 scriptable character motor"
+    ],
+    "featureIds": [
+      "D.01"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 50,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9095,
+        "heading": "## M50 \u2014 current JudasJS developer reference"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [],
+    "featureIds": [
+      "H.06",
+      "K.05"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 51,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9106,
+        "heading": "## M51 \u2014 explicit engine/game execution boundary (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [],
+    "featureIds": [
+      "A.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 52,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9132,
+        "heading": "## M52 \u2014 project game composition and script presentation"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "3c52b13765a0721fa6a1fea0038505326359326b\tAdd M52 JudasJS shooter game"
+    ],
+    "featureIds": [
+      "D.01",
+      "C.04",
+      "C.08",
+      "H.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 53,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9148,
+        "heading": "## M53 \u2014 world-owned navigation (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "16f7d59fa3289e7e7c43aaeb7e88471be6fe348f\tAdd M53 navigation and navmesh system"
+    ],
+    "featureIds": [
+      "G.05",
+      "G.06",
+      "G.07",
+      "G.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 54,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9167,
+        "heading": "## M54 \u2014 conserved implicit liquid foundation"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "d9ebc8c7a987047b1d4175ed5d5de7da8dea472d\tAdd M54 conserved liquid reservoirs and containers"
+    ],
+    "featureIds": [
+      "E.02",
+      "E.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 55,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9178,
+        "heading": "## M55 \u2014 optional dynamic liquid surfaces (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m55/research/M55_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "7b1e5ea1eab46456bead72b0dcdc7b7fdc9b36fd\tAdd M55 dynamic liquid surfaces"
+    ],
+    "featureIds": [
+      "E.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m55/research/M55_PROMPT.txt": "cc7dc5281e4857e4f5727ae260471e9acd42f24cc85f7ba6c6ceaf31d2ee70bd"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 56,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9185,
+        "heading": "## M56 \u2014 integrated diagnostic profiling (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M56_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "a428d98f3e57a7bc087f165f0d135368f3b4ffab\tAdd M56 integrated performance profiling and diagnostics"
+    ],
+    "featureIds": [
+      "K.01"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M56_PROMPT.txt": "ad209bb3d9fe23c78d27dcf87874c58c2cd531d94d3a9be8e8e17173f4d791ed"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 57,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9205,
+        "heading": "## M57 optional materials and environment lighting"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M57_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "ba16c2c52c60194a95ff161d55b93ff874863b77\tAdd M57 PBR materials and environment lighting"
+    ],
+    "featureIds": [
+      "F.01",
+      "F.02",
+      "F.06"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M57_PROMPT.txt": "6c8b03d798b53f142f6de44440b1e8dbd48a61ea0eeb9464a6ec59edb932994a"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 58,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9209,
+        "heading": "## M58 \u2014 shared Unicode text and project localization"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M58_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "6fb90d56562651d027a8740cc8d17bb655d9b8b0\tAdd M58 Unicode text shaping and localization"
+    ],
+    "featureIds": [
+      "H.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M58_PROMPT.txt": "738682345561b22a80ff06db46f2a3f85baa78bd1e5bd6897cbce42045f1c737"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 59,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9228,
+        "heading": "## M59 \u2014 additive composition and region residency"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M59_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "7ad5301647a81f93ed1f1d1484ea27aea1c48023\tAdd M59 additive scenes and asynchronous world streaming"
+    ],
+    "featureIds": [
+      "I.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M59_PROMPT.txt": "f152e68cb94bbb16446e52ec5aa22737fb7e59caacbda156df07cbe167d74e46"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 60,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9254,
+        "heading": "## Milestone 60 \u2014 Streaming audio and environmental acoustics"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M60_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "a9c6cd780b8c93db6355b791c6fdb34afec7cf53\tAdd M60 streaming audio and environmental acoustics"
+    ],
+    "featureIds": [
+      "H.01",
+      "H.02"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M60_PROMPT.txt": "7770c3d8693371f51a6c096b8128c56259c347c715b4dce8eef88c409ef9840a"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 61,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9278,
+        "heading": "## M61 \u2014 project-scoped save slots and world reconstruction"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M61_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "8025bde5750c0dd34188ea1399f6529468c2465c\tAdd M61 game save slots and world persistence"
+    ],
+    "featureIds": [
+      "I.01",
+      "I.03"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M61_PROMPT.txt": "33aab4165e5545128bb1f92a2d5b3d435ec8b88b335932df6b23e1df39be8cda"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 62,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9320,
+        "heading": "## M62 \u2014 cloth and volumetric deformables (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M62_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "29845bbdb911d2129a2d2b995fed22a1448594e7\tAdd M62 cloth and volumetric deformables"
+    ],
+    "featureIds": [
+      "E.07",
+      "E.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M62_PROMPT.txt": "2632fb7aa1908c692e27c47eaa3f6820beff28abd5bbd20b6fcfd66d8f69cfc6"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 63,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9353,
+        "heading": "## M63 \u2014 structural fracture and physical fragments (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M63_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "b5676438ed12d9cb3d05c634eaf5f578d7216ada\tAdd M63 structural fracture and physical fragments"
+    ],
+    "featureIds": [
+      "E.09"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M63_PROMPT.txt": "237842f34722880a362cdc173f3278e6b5320f1e2f3bfb0886edadffe7e62b47"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 64,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9372,
+        "heading": "## M64 \u2014 cooked collision geometry and geometric inspection (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M64_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "e452751ee98f6c1900a9f6b8dad3fe6bcdecb27b\tAdd M64 mesh and convex collision with geometric queries"
+    ],
+    "featureIds": [
+      "C.01",
+      "C.02",
+      "C.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M64_PROMPT.txt": "489b265e10d359c8586dbf53c40597bb2bcacd131b1eae5cce088a0f8f5804a0"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 65,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9395,
+        "heading": "## M65 \u2014 developer integration (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M65_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "3e5147a4ed97102200da91b4181c97b2a98942ba\tFix post-M65 consumer regressions and scalability",
+      "26e6f089fde0f39d68659882f6204da3a453473e\tReview post-M65 consumer games and add combined project",
+      "51c18c249432e09910dabc41e670bf960db8050c\tAdd M65 gameplay integration and developer workflow improvements"
+    ],
+    "featureIds": [
+      "D.01",
+      "D.04",
+      "D.05",
+      "B.04",
+      "C.06",
+      "C.08",
+      "J.01"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M65_PROMPT.txt": "fe0c04a78d9a5e7d541df4609d1bd0dbf6cafb69fc0c54734f9326562d8776d9"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records.",
+    "primaryCheckpoint": "51c18c249432e09910dabc41e670bf960db8050c"
+  },
+  {
+    "milestone": 66,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9423,
+        "heading": "## M66 \u2014 source normalization and ordinary model resources (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M66_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "b27ce3d4493526980d7cd16b9ba7b002e64b2966\tCorrect stale documentation found in the M66/M67 docs review",
+      "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859\tAdd M66 professional model import and reliable reimport"
+    ],
+    "featureIds": [
+      "D.02",
+      "J.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M66_PROMPT.txt": "a259539caaa2334ab581b70b703e5f8e0f8446509ff43ddb8442f1eb45ff9451"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records.",
+    "primaryCheckpoint": "b9a8cf3b8d8cd3786272480a8abe6cbe9fffe859"
+  },
+  {
+    "milestone": 67,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M67_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "b27ce3d4493526980d7cd16b9ba7b002e64b2966\tCorrect stale documentation found in the M66/M67 docs review",
+      "6d4dd5fddf8e01b50387ace11876d8ee84c4f950\tFix world.sweepCapsule in script-owned worlds; usage for M67 tests and scene_author",
+      "5c80a68f8e3259a030baf8a667fedffaa59176c5\tAdd M67 integrated world building and supported content authoring (provisional)"
+    ],
+    "featureIds": [
+      "J.01",
+      "J.03",
+      "J.05"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M67_PROMPT.txt": "531fb7f73f93e09e8cdd4f495a91c481ae7be9e209e71795b6825adaa6680e3d"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records.",
+    "primaryCheckpoint": "5c80a68f8e3259a030baf8a667fedffaa59176c5"
+  },
+  {
+    "milestone": 68,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9448,
+        "heading": "## M68\u2013M69 \u2014 bounded work and input/query composition (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "c042797c755df68b45e36aa917c4ca72818b9bcd\tAdd M68 evidence-driven scalability and content-pipeline improvements"
+    ],
+    "featureIds": [
+      "I.04",
+      "I.06",
+      "A.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 69,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9448,
+        "heading": "## M68\u2013M69 \u2014 bounded work and input/query composition (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M69_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "8ddec3b97d66815de4174d6e103be77e74b7eb0f\tAdd M69 paired stick input and batched physics queries"
+    ],
+    "featureIds": [
+      "C.04",
+      "H.05"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M69_PROMPT.txt": "9f10d57edcd359efcf639c04b20561b8db2c16a083f974c36842326a8a30a7e8"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 70,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9465,
+        "heading": "## M70 \u2014 shared target posing and partial physical animation"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M70_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "fb31f0244c9f41f74c439afd99855e3707937edd\tAdd M70 multi-target full-body IK and partial physical animation"
+    ],
+    "featureIds": [
+      "D.06",
+      "D.07",
+      "D.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M70_PROMPT.txt": "b5d7eda5648429c2a97dc9e91012c092229541d9fafcbe24f40d676e2eba17ae"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 71,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9495,
+        "heading": "## M71 \u2014 prescribed rigid-body authority and scene-view panning (accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M71_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3\tAdd M71 kinematic rigid bodies and scene-view navigation improvements"
+    ],
+    "featureIds": [
+      "C.10",
+      "J.02"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M71_PROMPT.txt": "490a3ee5bc23a1f58afb8a00cd0fdbbfdfcbc0c4a85c6b359b2e09081be34915"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 72,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9538,
+        "heading": "## M72 \u2014 runtime lighting, render visibility and instance materials (human accepted)"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M72_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "0f3694bb7142dc38a59abbd7365a113b673bae5e\tAdd M72 runtime lighting, environment and per-instance render controls"
+    ],
+    "featureIds": [
+      "F.02",
+      "F.03",
+      "F.06"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M72_PROMPT.txt": "cbb22882a8222afcd3b999d49c21ae95c66a0a2a6ac61054f9b584e8a9fb00f0"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 73,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9579,
+        "heading": "## M73 candidate \u2014 owned JudasJS signals"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "18650ba23c23eaaab0542d6e0055e33cc14d1049\tAdd M73 lifetime-safe JudasJS signals and queued script messaging"
+    ],
+    "featureIds": [
+      "H.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 74,
+    "architectureAccounts": [],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "fccbf84164cb430f78651af64cddb68afeac442a\tAdd M74 editor-time animation retargeting and reusable bake profiles"
+    ],
+    "featureIds": [
+      "D.09"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 75,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 19,
+        "heading": "## M75 author-time local terrain"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "38d345883a541d4eb2faa43c321e940d223fce09\tAdd M75 reusable terrain authoring, sculpting, painting and cooking"
+    ],
+    "featureIds": [
+      "G.02",
+      "G.03",
+      "G.04"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 76,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 9602,
+        "heading": "## M76 candidate \u2014 game-owned optional mod contracts"
+      }
+    ],
+    "availableOriginalBriefs": [
+      "docs/evidence/m78/requirements/M76_PROMPT.txt"
+    ],
+    "status": "partially reconciled; claim-level completeness unverified",
+    "missingOriginalBrief": false,
+    "checkpointCandidates": [
+      "88cb0cce18117c157d1316ead06cdd6f9f060530\tAdd M76 local mod packages, game-owned contracts and terrain-capable modding kits"
+    ],
+    "featureIds": [
+      "J.06",
+      "J.07",
+      "J.08"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original text retained; not every sentence has an independent current semantic proof. Current sampled cases and limits are linked, with uncovered claims remaining explicit gaps.",
+    "briefHashes": {
+      "docs/evidence/m78/requirements/M76_PROMPT.txt": "fc97035953aab290e65ebc94cc55de87c85eb347ba6a0aed73d8ad014cebc1d2"
+    },
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  },
+  {
+    "milestone": 77,
+    "architectureAccounts": [
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "line": 3,
+        "heading": "## M77 physical-balance candidate (uncommitted; human review pending)"
+      }
+    ],
+    "availableOriginalBriefs": [],
+    "status": "partially reconciled; original-brief gap",
+    "missingOriginalBrief": true,
+    "checkpointCandidates": [
+      "9e77b2226edcf217ab789fe4f0fea42a3415a72d\tAdd M77 physical balance and recovery"
+    ],
+    "featureIds": [
+      "D.10"
+    ],
+    "comparison": "Frozen current source/API/tests are linked in the register. No statement that every original authorized requirement is fulfilled. Historical checkpoint candidates are discovery hints, not acceptance or unique milestone hashes.",
+    "requirementGap": "Original brief unavailable; do not infer original promise from later narrowing.",
+    "briefHashes": {},
+    "supersession": "Retained current mechanism or later extension; exact historical scope changes not fully adjudicated. See current feature IDs and architecture heading records."
+  }
+]

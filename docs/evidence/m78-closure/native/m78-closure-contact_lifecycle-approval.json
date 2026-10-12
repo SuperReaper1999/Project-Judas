@@ -1,0 +1,31 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "contact_lifecycle",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-contact_lifecycle.exe",
+      "sha256": "e15e154feecde62cb957b5d682505a18f7267f25a9d126b4bb6f6d55e4d790a9",
+      "name": "m78-closure-contact_lifecycle.exe",
+      "bytes": 8167936
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\contact_lifecycle-0.obj",
+      "sha256": "f1ea07e996d67c90467debafd4246b4d670cdb8dad9b037f145857c389d83f55",
+      "name": "contact_lifecycle-0.obj",
+      "bytes": 246170
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-contact_lifecycle.map",
+      "sha256": "a8855db007cdc663495d47631801c43f34d29ca12d23c4594260f73e0ee5d5ae",
+      "name": "m78-closure-contact_lifecycle.map",
+      "bytes": 3075899
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-contact_lifecycle-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-closure-contact_lifecycle-link.log",
+      "bytes": 33930
+    }
+  ]
+}

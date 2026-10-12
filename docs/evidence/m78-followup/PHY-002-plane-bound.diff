@@ -1,0 +1,31 @@
+diff --git a/src/PhysicsWorld.cpp b/src/PhysicsWorld.cpp
+index 8d758f3a..5a3998f9 100644
+--- a/src/PhysicsWorld.cpp
++++ b/src/PhysicsWorld.cpp
+@@ -449,7 +449,7 @@ struct PhysicsWorld::Impl {
+         auto support=[&](unsigned slot,int part) {
+             Support result;const auto& body=bodies[slot];const auto& sample=ImpactPoseAt(slot,time);const auto& pose=sample.pose;
+             const auto child=PrimitiveAt(body.shape,pose,part,&*sample.orientation);
+-            if(child.shape.type!=ShapeType::Box && child.shape.type!=ShapeType::Sphere&&child.shape.type!=ShapeType::ConvexHull) return result;
++            if(child.shape.type!=ShapeType::Box && child.shape.type!=ShapeType::Sphere&&child.shape.type!=ShapeType::ConvexHull&&child.shape.type!=ShapeType::TriangleMesh) return result;
+             const auto& rotation=sample.orientation->rotation;
+             const glm::dvec3 omega(body.HasMotion()?pose.angularVelocity:glm::vec3(0));
+             const double w2=glm::dot(omega,omega);
+@@ -463,6 +463,17 @@ struct PhysicsWorld::Impl {
+             };
+             if(child.shape.type==ShapeType::Sphere) {vertex(glm::dvec3(child.parentLocalCenter));result.radius=child.shape.radius;}
+             else if(child.shape.type==ShapeType::ConvexHull){const auto r=ContactRotation(child.childRotation);for(auto p:child.shape.asset->vertices)vertex(glm::dvec3(child.parentLocalCenter)+r*p);}
++            else if(child.shape.type==ShapeType::TriangleMesh){
++                // The asset-space AABB encloses every mesh vertex. Its eight
++                // transformed corners therefore certify a separating plane for
++                // the entire mesh, including faces outside the current query.
++                // This is only an advancement bound, never contact geometry.
++                // If this larger enclosure crosses the plane we return zero
++                // below and retain the original conservative/sampling search.
++                const auto r=ContactRotation(child.childRotation);
++                const auto lo=child.shape.asset->minimum,hi=child.shape.asset->maximum;
++                for(int k=0;k<8;++k)vertex(glm::dvec3(child.parentLocalCenter)+r*glm::dvec3(k&1?hi.x:lo.x,k&2?hi.y:lo.y,k&4?hi.z:lo.z));
++            }
+             else {const auto childRotation=ContactRotation(child.childRotation);for(int k=0;k<8;++k) vertex(glm::dvec3(child.parentLocalCenter)+childRotation*glm::dvec3(child.shape.halfExtents)*
+                 glm::dvec3(k&1?1:-1,k&2?1:-1,k&4?1:-1));}
+             return result;

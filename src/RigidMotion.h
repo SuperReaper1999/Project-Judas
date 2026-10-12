@@ -11,7 +11,8 @@ struct RigidMotionSegment {
     unsigned int owner = 0;
     double begin = 0, end = 0;
     float inverseMass = 0;
-    glm::vec3 position{0}, linearVelocity{0}, angularVelocity{0};
+    glm::mat3 inverseInertiaLocal{0};
+    glm::vec3 position{0}, linearVelocity{0}, angularVelocity{0},driftAngularVelocity{0};
     glm::quat orientation{1,0,0,0};
     glm::vec3 endPosition{0};
     glm::quat endOrientation{1,0,0,0};
@@ -19,7 +20,7 @@ struct RigidMotionSegment {
     RigidBody Evaluate(double time) const {
         if (time < begin || time > end) throw std::out_of_range("motion segment time");
         RigidBody result;
-        result.inverseMass = inverseMass;
+        result.inverseMass = inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
         result.position = position; result.orientation = orientation;
         result.linearVelocity = linearVelocity; result.angularVelocity = angularVelocity;
         // Keep the integrator's arithmetic for represented movement, but an
@@ -30,17 +31,19 @@ struct RigidMotionSegment {
         if (prescribed || !result.IsStatic()) {
             const float elapsed = static_cast<float>(time - begin);
             result.position += result.linearVelocity * elapsed;
-            const glm::quat omega(0.0f, angularVelocity.x, angularVelocity.y, angularVelocity.z);
+            const glm::quat omega(0.0f, driftAngularVelocity.x, driftAngularVelocity.y, driftAngularVelocity.z);
             // Prescribed angular velocity is the actual constant world rate.
-            // Existing dynamic integration keeps its accepted Euler expression.
-            const float speed=glm::length(angularVelocity);
+            // Dynamic drift uses the midpoint angular predictor fixed at the
+            // segment anchor; observations never re-evaluate the predictor.
+            const float speed=glm::length(driftAngularVelocity);
             const glm::quat advanced = prescribed
-                ? (speed>0 && elapsed!=0 ? glm::angleAxis(speed*elapsed,angularVelocity/speed)*orientation : orientation)
+                ? (speed>0 && elapsed!=0 ? glm::angleAxis(speed*elapsed,driftAngularVelocity/speed)*orientation : orientation)
                 : orientation + (omega * orientation) * (0.5f * elapsed);
             const auto same = [](float a, float b) { return std::memcmp(&a, &b, sizeof(float)) == 0; };
             if (!same(advanced.w, orientation.w) || !same(advanced.x, orientation.x) ||
                 !same(advanced.y, orientation.y) || !same(advanced.z, orientation.z))
                 result.orientation = glm::normalize(advanced);
+            if(!prescribed)result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
         }
         return result;
     }
@@ -68,6 +71,15 @@ public:
             return segment->Evaluate(time);
         throw std::out_of_range("motion ledger time");
     }
+    // Physical solver state is the right limit after impulses at a shared time.
+    RigidBody EvaluateAfterEvents(double time) const {
+        auto it=std::upper_bound(segments.begin(),segments.end(),time,
+            [](double query,const RigidMotionSegment& s){return query<s.begin;});
+        if(it==segments.begin())throw std::out_of_range("motion ledger time");
+        --it;
+        if(time>=it->begin && time<=it->end)return it->Evaluate(time);
+        throw std::out_of_range("motion ledger time");
+    }
     void ChangeVelocity(const RigidBody& body, double time) {
         if (segments.empty()) throw std::logic_error("motion ledger not started");
         auto& previous = segments.back();
@@ -84,8 +96,9 @@ public:
 private:
     void Append(unsigned int owner, const RigidBody& body, double begin, double end,bool prescribed=false) {
         RigidMotionSegment s;
-        s.inverseMass=body.inverseMass; s.prescribed=prescribed; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
+        s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
+        s.driftAngularVelocity=prescribed?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
         const auto pose=s.Evaluate(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
         segments.push_back(s);
     }

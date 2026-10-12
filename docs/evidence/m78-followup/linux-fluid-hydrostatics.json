@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_fluid_hydrostatics_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:59.445623+00:00",
+  "seconds": 0.26466932900075335,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "2c53696a20455542210adeedf4724298a85597ed2baf3cbac4f8b6fe4462b420",
+  "logSHA256": "84a94802c251bdeb634f79c0d7d911940f8fdba8532c4654f379706de68de6f1",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

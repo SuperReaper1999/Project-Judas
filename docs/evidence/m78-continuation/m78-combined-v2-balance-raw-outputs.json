@@ -1,0 +1,77 @@
+﻿{
+    "scope":  "Exact saved failure and successful cold-pair raw artifacts; authored project fixture copies excluded",
+    "files":  [
+                  {
+                      "path":  "balance-step-llvmpipe\\step-trace-state.json",
+                      "sha256":  "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2",
+                      "bytes":  365
+                  },
+                  {
+                      "path":  "balance-step-llvmpipe\\step-trace.jsonl",
+                      "sha256":  "838e760220e2bd1f6f6b5bd26cdcfdc3b14a4a303bbb0941458bf1a1670e4d18",
+                      "bytes":  612109
+                  },
+                  {
+                      "path":  "balance-cold-step\\cold-read-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "bytes":  365
+                  },
+                  {
+                      "path":  "balance-cold-step\\cold-write-state.json",
+                      "sha256":  "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+                      "bytes":  364
+                  },
+                  {
+                      "path":  "balance-cold-step\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0
+                  },
+                  {
+                      "path":  "balance-cold-step\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "bytes":  52557
+                  },
+                  {
+                      "path":  "balance-cold-stand\\cold-stand-read-state.json",
+                      "sha256":  "6ee068f35d63225761576284d53d6edd7c94b66293a946a812f616f2ef0bae8d",
+                      "bytes":  183
+                  },
+                  {
+                      "path":  "balance-cold-stand\\cold-stand-write-state.json",
+                      "sha256":  "cf7bbc6ab1d2283d80820383a8da55912e43eb2a35c9bcf97921784ce50355be",
+                      "bytes":  182
+                  },
+                  {
+                      "path":  "balance-cold-stand\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0
+                  },
+                  {
+                      "path":  "balance-cold-stand\\slots\\m77.save",
+                      "sha256":  "5caa4266e733b3c35ed704088127ef3ae63e6c994df479c6b908bdcbb7c54dbf",
+                      "bytes":  52444
+                  },
+                  {
+                      "path":  "balance-cold-recovery\\cold-recovery-read-state.json",
+                      "sha256":  "8b719f6737f7b62af5536c642b830d74d1c69556ee468bf5335d2faa81bb49d8",
+                      "bytes":  183
+                  },
+                  {
+                      "path":  "balance-cold-recovery\\cold-recovery-write-state.json",
+                      "sha256":  "b05d43cfd2c2d0e220edd6f59ed13526c34db6fb1a353592e1b58c1d26457e7f",
+                      "bytes":  183
+                  },
+                  {
+                      "path":  "balance-cold-recovery\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0
+                  },
+                  {
+                      "path":  "balance-cold-recovery\\slots\\m77.save",
+                      "sha256":  "cec3ac2d8cc4440422273db0afa9ecb5ef8b966e517de9c71343f203d889c48b",
+                      "bytes":  52945
+                  }
+              ],
+    "archiveSHA256":  "82705f55a5eb334f567c79a78e4b34b7deb395f79415ce34f2abaa3d79a01f5a",
+    "archiveBytes":  115793
+}

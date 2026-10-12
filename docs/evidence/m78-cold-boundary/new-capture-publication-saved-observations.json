@@ -1,0 +1,37 @@
+{
+  "scope": "Read-only exact decoding of copied prototype newly generated save, not invented controller observation. Actual completed PhysicsWorld ledger and epoch/dt, including non-foot record. No contact solver warm cache data.",
+  "saveSHA256": "43202a3895f0eb7cc4c76176b5b78d3db33edeb646a670e7df58e1259ab08221",
+  "participantCount": 14,
+  "companionVersion": 4,
+  "commandCount": 6,
+  "completedReady": true,
+  "completedEpoch": 546,
+  "completedDt": 0.01666666753590107,
+  "completedObservations": [
+    {
+      "idA": 4611686018427387907,
+      "idB": 4611686018427387910,
+      "partA": 0,
+      "partB": 0,
+      "localAnchorA": [
+        0.34999987976234703,
+        -0.004432633917185708,
+        0.3799999907241433
+      ],
+      "derivedLocalAnchorB": [
+        -0.35002559248478604,
+        -0.12330722804746726,
+        0.29333687624079263
+      ],
+      "normal": [
+        -0.9980431795120239,
+        0.0241999514400959,
+        -0.0576554536819458
+      ],
+      "normalImpulse": 0.19666458666324615,
+      "separation": -2.2873210525631293e-07,
+      "originalRevisionA": 3,
+      "originalRevisionB": 3
+    }
+  ]
+}

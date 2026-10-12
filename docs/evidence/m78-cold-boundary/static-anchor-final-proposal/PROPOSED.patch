@@ -1,0 +1,39 @@
+--- a/src/WorldPersistence.cpp
++++ b/src/WorldPersistence.cpp
+@@ -44,11 +44,19 @@
+  if(a.reading){w.m_nextRuntimeId=next;w.m_simulationTime=time;}
+  auto n=count(a,objects.size());a.Require(!a.reading||n==w.ScriptObjects().size(),"incomplete saved entity records");std::set<EntityId> seen;
+  for(uint32_t i=0;i<n;++i){EntityId id=0;EntityPhysicalState state;bool hasState=false,authored=true,transient=false;SimulationFidelity fidelity=SimulationFidelity::Full;CoarseMotion coarse=CoarseMotion::Settled;double dormant=-1;bool forced=false;SimulationFidelity forcedValue=SimulationFidelity::Full;
+-  if(!a.reading){id=objects.at(i).id;hasState=w.GetEntityState(id,state);if(auto* e=w.FindEntity(id)){authored=e->authored;transient=e->transient;fidelity=e->fidelity;coarse=e->coarseMotion;dormant=e->dormantSinceSeconds;forced=e->forcedFidelity.has_value();if(forced)forcedValue=*e->forcedFidelity;}}
++  if(!a.reading){id=objects.at(i).id;hasState=w.GetEntityState(id,state);
++   // Full rigid bodies can be prescribed directly (including slotless static
++   // articulation anchors). Reduced state and motor query proxies do not own it.
++   if(auto* record=w.FindEntity(id);record&&record->fidelity==SimulationFidelity::Full&&objects.at(i).body&&!objects.at(i).characterMotor)
++    if(auto body=w.RuntimeBody(id);body.IsValid()){
++     const auto pose=w.Physics().GetTransform(body);state.position=pose.position;state.rotation=pose.rotation;
++     state.linearVelocity=w.Physics().GetLinearVelocity(body);state.angularVelocity=w.Physics().GetAngularVelocity(body);hasState=true;
++    }
++   if(auto* e=w.FindEntity(id)){authored=e->authored;transient=e->transient;fidelity=e->fidelity;coarse=e->coarseMotion;dormant=e->dormantSinceSeconds;forced=e->forcedFidelity.has_value();if(forced)forcedValue=*e->forcedFidelity;}}
+   a(id,hasState,authored,transient,fidelity,coarse,dormant,forced,forcedValue);physical(a,state);bool bodyPresent=!a.reading&&w.RuntimeBody(id).IsValid();a(bodyPresent);a.Require(seen.insert(id).second&&w.RuntimeDefinition(id),"unknown/duplicate saved entity");
+   a.Require(int(fidelity)>=0&&int(fidelity)<=2&&int(coarse)>=0&&int(coarse)<=1,"invalid saved fidelity");
+   if(a.reading&&hasState)a.Require(w.SetEntityState(id,state),"cannot restore physical state");
+-  if(bodyPresent){auto handle=w.RuntimeBody(id);a.Require(handle.IsValid(),"saved force body missing");w.Physics().PersistBodyForces(a,handle);}
++  if(bodyPresent){auto handle=w.RuntimeBody(id);a.Require(handle.IsValid(),"saved force body missing");if(a.reading&&hasState&&fidelity==SimulationFidelity::Full&&w.RuntimeDefinition(id)->body&&!w.RuntimeDefinition(id)->characterMotor){w.Physics().SetLinearVelocity(handle,state.linearVelocity);w.Physics().SetAngularVelocity(handle,state.angularVelocity);}w.Physics().PersistBodyForces(a,handle);}
+   if(a.reading){if(auto* e=w.FindEntity(id)){e->authored=authored;e->transient=transient;e->coarseMotion=coarse;e->dormantSinceSeconds=dormant;if(forced){a.Require(int(forcedValue)>=0&&int(forcedValue)<=2,"invalid saved forced fidelity");e->forcedFidelity=forcedValue;}if(fidelity!=SimulationFidelity::Full){std::string error;a.Require(w.SetEntityFidelity(id,fidelity,&error),"cannot restore entity fidelity");}}}
+  }
+  bool view=bool(w.view);a(view);if(view){RuntimeWorld::RuntimeView v;if(!a.reading)v=*w.view;transform(a,v.pose);a(v.fov);if(a.reading)a.Require(w.SetRuntimeView(v.pose,v.fov),"invalid saved view");}
+@@ -58,7 +66,13 @@
+  for(uint32_t i=0;i<n;++i){EntityId id=0,support=0;std::vector<EntityId> ignored;CharacterMotor* motor=nullptr;
+   if(!a.reading){auto it=w.m_characters.begin();std::advance(it,i);id=it->first;motor=&it->second.motor;support=w.EntityIdOfBody(motor->result.support);for(auto b:motor->filter.ignoredBodies){auto entity=w.EntityIdOfBody(b);a.Require(entity!=0,"motor has unowned ignored body");ignored.push_back(entity);}}
+   a(id,support,ignored);if(a.reading)motor=w.RuntimeCharacter(id);a.Require(motor&&seen.insert(id).second,"unknown/duplicate motor");motor->Persist(a);
+-  if(a.reading){motor->result.support=support?w.RuntimeBody(support):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto body=w.RuntimeBody(e);a.Require(body.IsValid(),"missing ignored body reference");motor->filter.ignoredBodies.push_back(body);}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
++  if(a.reading){
++   // Reconstruct the derived query capsule before resumed scripts can query it;
++   // this neither advances the motor nor substitutes proxy velocity for root motion.
++   auto body=motor->observationBody;a.Require(body.IsValid(),"missing restored motor observation body");
++   w.Physics().ResetBody(body,motor->position+motor->orientation*motor->settings.offset,motor->orientation);
++   a.Require(w.Physics().SetBodyEnabled(body,motor->settings.enabled)&&w.Physics().SetCollisionFilter(body,motor->settings.collisionLayer,motor->settings.collisionMask)&&w.Physics().SetBodyTags(body,w.TagsOf(id)),"invalid restored motor observation settings");
++   motor->result.support=support?w.RuntimeBody(support):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto body=w.RuntimeBody(e);a.Require(body.IsValid(),"missing ignored body reference");motor->filter.ignoredBodies.push_back(body);}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
+  }
+ }
+ // Identical instance payload for durable saves and bounded region suspension.

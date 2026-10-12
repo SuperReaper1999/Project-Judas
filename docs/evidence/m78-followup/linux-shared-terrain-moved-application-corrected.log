@@ -1,0 +1,5 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+cannot read font assets/fonts/DejaVuSans.ttf (engine font assets/fonts/DejaVuSans.ttf; set JUDAS_ENGINE_ROOT to the repository root)
+FAIL both real dependent scenes and reload complete normally
+1 checks 1 failures

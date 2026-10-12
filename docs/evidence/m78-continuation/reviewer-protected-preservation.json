@@ -1,0 +1,61 @@
+{
+  "utc": "2026-10-11T18:50:38.432960+00:00",
+  "scope": "Read-only historical/protected artifact preservation review, not final candidate fingerprints",
+  "protectedFilesChecked": 35323,
+  "protectedBytesRead": 1910079101,
+  "missing": [],
+  "changed": [],
+  "manifestReviews": [
+    {
+      "manifest": "docs/evidence/m78/FINAL_FINGERPRINTS.json",
+      "manifestSHA256": "fe4d7221e165d26cf79836a62f4fe000eff8700661d06b1e21b0ffc938cb0e27",
+      "checked": 600,
+      "mismatches": [],
+      "historicalArtifactMismatches": []
+    },
+    {
+      "manifest": "docs/evidence/m78-followup/FINAL_FINGERPRINTS.json",
+      "manifestSHA256": "38892f9979dc8eadf91c6a397c7f86ae60678bce83e48b5927aafac7f4c829e5",
+      "checked": 439,
+      "mismatches": [
+        {
+          "path": "src/CollisionGeometry.cpp",
+          "recorded": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a",
+          "actual": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+        },
+        {
+          "path": "src/PhysicsWorld.cpp",
+          "recorded": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+          "actual": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad"
+        },
+        {
+          "path": "src/RigidBody.cpp",
+          "recorded": "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+          "actual": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b"
+        },
+        {
+          "path": "src/RigidBody.h",
+          "recorded": "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b",
+          "actual": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df"
+        },
+        {
+          "path": "src/RigidMotion.h",
+          "recorded": "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497",
+          "actual": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+        },
+        {
+          "path": "tests/CollisionGeometryTests.cpp",
+          "recorded": "9792433d5f8dc8626f4bf2724b431215639b25c5d7174fd36c3bc231ce298b59",
+          "actual": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2"
+        },
+        {
+          "path": "tests/RigidMotionTests.cpp",
+          "recorded": "38692f953ff456b40c05eb7856728aa698bd82c8fdc3f646a5a402a462a0742c",
+          "actual": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a"
+        }
+      ],
+      "historicalArtifactMismatches": []
+    }
+  ],
+  "seconds": 23.94625506099692
+}

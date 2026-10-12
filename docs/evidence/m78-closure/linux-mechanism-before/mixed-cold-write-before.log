@@ -1,0 +1,7 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+FAIL normal immutable assets and world publish: authored scene fingerprint: object 1000: stable ID must precede NextId

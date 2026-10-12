@@ -1,0 +1,47 @@
+PASS ordinary owned project
+PASS project-owned query classification
+PASS project saved
+PASS authored motor scene
+PASS ordinary world
+PASS normal region request
+PASS region reaches atomic active publication
+PASS initial publication motor exists
+PASS initial publication query pose is derived from authoritative root plus rotated offset
+PASS initial publication authored enabled state is visible before callbacks
+FAIL initial publication authored physical filter is visible before callbacks
+FAIL initial publication filtered cast reflects real capsule geometry and tag
+PASS initial disabled publication motor exists
+PASS initial disabled publication query pose is derived from authoritative root plus rotated offset
+FAIL initial disabled publication authored enabled state is visible before callbacks
+FAIL initial disabled publication authored physical filter is visible before callbacks
+PASS initial disabled publication filtered cast reflects real capsule geometry and tag
+PASS ordinary zero-dt synchronization motor exists
+PASS ordinary zero-dt synchronization query pose is derived from authoritative root plus rotated offset
+PASS ordinary zero-dt synchronization authored enabled state is visible before callbacks
+PASS ordinary zero-dt synchronization authored physical filter is visible before callbacks
+PASS ordinary zero-dt synchronization filtered cast reflects real capsule geometry and tag
+PASS normal motor root and velocity edit
+PASS release own demand
+PASS ordinary retained suspension
+PASS old entity/body do not alias after retirement
+PASS normal region request
+PASS region reaches atomic active publication
+PASS revisit has fresh runtime identity
+PASS revisit preserves authoritative root and velocity
+PASS retained revisit before first callback motor exists
+PASS retained revisit before first callback query pose is derived from authoritative root plus rotated offset
+FAIL retained revisit before first callback authored enabled state is visible before callbacks
+FAIL retained revisit before first callback authored physical filter is visible before callbacks
+FAIL retained revisit before first callback filtered cast reflects real capsule geometry and tag
+PASS retained disabled revisit motor exists
+PASS retained disabled revisit query pose is derived from authoritative root plus rotated offset
+PASS retained disabled revisit authored enabled state is visible before callbacks
+FAIL retained disabled revisit authored physical filter is visible before callbacks
+PASS retained disabled revisit filtered cast reflects real capsule geometry and tag
+PASS publication/revisit did not advance simulation
+PASS revisit ordinary zero-dt synchronization motor exists
+PASS revisit ordinary zero-dt synchronization query pose is derived from authoritative root plus rotated offset
+PASS revisit ordinary zero-dt synchronization authored enabled state is visible before callbacks
+PASS revisit ordinary zero-dt synchronization authored physical filter is visible before callbacks
+PASS revisit ordinary zero-dt synchronization filtered cast reflects real capsule geometry and tag
+SUMMARY 46 checks 8 failures

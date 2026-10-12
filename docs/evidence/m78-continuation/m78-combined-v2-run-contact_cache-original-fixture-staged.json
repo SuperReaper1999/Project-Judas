@@ -1,0 +1,21 @@
+﻿{
+    "seconds":  0.1399157,
+    "freeBytes":  490180608,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_contact_cache.exe",
+    "case":  "contact_cache",
+    "label":  "combined-v2",
+    "run":  "contact_cache-original-fixture-staged",
+    "executableSHA256":  "97c0523cce421b84197439b63a1c73afcaec49830b82a24716d414ecba2cbc62",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "scope":  "Fresh native execution of a verified final candidate executable; no recompile",
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+}

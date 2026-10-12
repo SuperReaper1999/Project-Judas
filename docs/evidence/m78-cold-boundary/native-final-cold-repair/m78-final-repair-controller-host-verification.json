@@ -1,0 +1,24 @@
+{
+  "scope": "Fresh native final case, all generated member bytes independently host SHA/size verified before exact guest cleanup",
+  "hostVerified": true,
+  "case": "controller",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-final-repair-controller.exe",
+      "sha256": "6a52511a6d38a926a351d4c3551f25ac687e7d25d6477b9a22f076b31cf749dd",
+      "name": "m78-final-repair-controller.exe",
+      "bytes": 602624
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\controller-0.obj",
+      "sha256": "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7",
+      "name": "controller-0.obj",
+      "bytes": 169808
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-controller-generated.zip",
+      "bytes": 339095,
+      "sha256": "5fb73085da32dbe1c6ff78c839daf8c7a3c807c942e488f2eb18485235b56cd2"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "entityOmission": {
+    "current": "const auto* e=w.FindEntity(o.id);if(e&&e->transient){bool articulated=false;for(auto& [_,r]:w.m_ragdolls)for(auto& b:r.bodies)articulated|=b.entity==o.id;if(!articulated)continue;}",
+    "HEAD": "const auto* e=w.FindEntity(o.id);if(e&&e->transient){bool articulated=false;for(auto& [_,r]:w.m_ragdolls)for(auto& b:r.bodies)articulated|=b.entity==o.id;if(!articulated)continue;}",
+    "identical": true
+  },
+  "sleepSelection": {
+    "current": "for(auto h:w.Physics().AliveBodies())if(w.Physics().IsDynamicBody(h)&&w.EntityIdOfBody(h))sleepBodies.push_back(h);",
+    "HEAD": "for(auto h:w.Physics().AliveBodies())if(w.Physics().IsDynamicBody(h)&&w.EntityIdOfBody(h))sleepBodies.push_back(h);",
+    "identical": true
+  },
+  "sleepRestoreGuard": {
+    "current": "sleeping.Require(w.Physics().IsDynamicBody(h)&&seen.insert(id).second,\"saved sleep body unavailable/duplicate\");",
+    "HEAD": "sleeping.Require(w.Physics().IsDynamicBody(h)&&seen.insert(id).second,\"saved sleep body unavailable/duplicate\");",
+    "identical": true
+  }
+}

@@ -1,0 +1,22 @@
+﻿{
+    "seconds":  0.6902494,
+    "freeBytes":  453742592,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+    "case":  "character_lab",
+    "label":  "combined-v2",
+    "run":  "character_lab-cold-read",
+    "executableSHA256":  "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "scope":  "Fresh native execution of a verified final candidate executable; no recompile",
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\character-cold",
+                      "cold-read"
+                  ],
+    "exitCode":  0,
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+}

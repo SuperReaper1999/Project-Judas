@@ -1,0 +1,174 @@
+{
+  "scope": "Diagnostic-only new articulationv4 passive12 capture plus explicit authoritative angular commands companion, restored after PhysicalBalance Configure and before sleep. Optional companionv2 includes actual drive impulse history, versusv1 excludes it. No reactions or completed observations are saved. Existing versions1\u20133 remain unchanged; original a106 lacks fields and is not reconstructed. No production/timestep-contract edit.",
+  "sourceSHA256": {
+    "src/WorldPersistence.cpp": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+    "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f"
+  },
+  "overlaySHA256": {
+    "PhysicsWorld.cpp": "cf2a72097360a3d8b79658628f1c1f44de565bccf4f408fefbf4df0b9fd81797",
+    "WorldPersistence.cpp": "4a68cd0f1f1cce86f19a7c793384422a974a2c2c6b156448698d0856bc6e76ee"
+  },
+  "steps": [
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/WorldPersistence.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/WorldPersistence.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 10.825243079001666
+    },
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/PhysicsWorld.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/PhysicsWorld.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 12.135373279001215
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_balance_lab_tests.dir/tests/BalanceLabTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/original-fixture",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.6722198530042078
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/original-fixture",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/commands-no-impulses",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.2280359549986315,
+      "includeDriveImpulses": false,
+      "saveSHA256": "38d8b2e4668eac8ca8e98cc1f70751e41d7bc94d4a0eb3cc918e9c7af288537f"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/original-fixture",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/commands-no-impulses",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 2.4804042049945565,
+      "includeDriveImpulses": false,
+      "saveSHA256": "38d8b2e4668eac8ca8e98cc1f70751e41d7bc94d4a0eb3cc918e9c7af288537f"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/original-fixture",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/commands-with-impulses",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.1798592060004012,
+      "includeDriveImpulses": true,
+      "saveSHA256": "1c417db2d4f4969fb591e81e6e059ba3991dc053c94d34d3d0e77a1ae3a6af25"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/original-fixture",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/commands-with-impulses",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.7004261030015186,
+      "includeDriveImpulses": true,
+      "saveSHA256": "1c417db2d4f4969fb591e81e6e059ba3991dc053c94d34d3d0e77a1ae3a6af25"
+    }
+  ],
+  "archiveSHA256": "74274a7cd7ff9c7578ffaf1d27a64bcd370f4dc8a7e445269f2b93171e62b8f0",
+  "exeSHA256": "4b5b3a6b13431091c3564d4389b28c557e8f2dd8638c57e787651e46c880ca01"
+}

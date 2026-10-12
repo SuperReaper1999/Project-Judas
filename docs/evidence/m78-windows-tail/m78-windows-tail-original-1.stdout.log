@@ -1,0 +1,5 @@
+{"case":"box-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":0,"medianMs":0.3432,"p95Ms":0.4996,"maxMs":7.8091,"first120MaxMs":7.8091,"contactRows":13801,"ccdIterations":997,"ccdLimits":1,"minimumBoneCenterY":0.0493287928,"sleeping":13}
+{"case":"box-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":0,"medianMs":1.3652,"p95Ms":2.1793,"maxMs":32.5905,"first120MaxMs":32.5905,"contactRows":55204,"ccdIterations":3988,"ccdLimits":4,"minimumBoneCenterY":0.0493287928,"sleeping":52}
+{"case":"mesh-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":8192,"medianMs":0.5519,"p95Ms":0.9465,"maxMs":21.9227,"first120MaxMs":21.9227,"contactRows":15677,"ccdIterations":2574,"ccdLimits":5,"minimumBoneCenterY":0.0489002839,"sleeping":0}
+{"case":"mesh-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":8192,"medianMs":2.5076,"p95Ms":11.6577,"maxMs":72.2031,"first120MaxMs":72.2031,"contactRows":56576,"ccdIterations":19163,"ccdLimits":7,"minimumBoneCenterY":0.0447216108,"sleeping":26}
+observer_sanity=1

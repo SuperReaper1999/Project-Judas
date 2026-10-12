@@ -1,0 +1,128 @@
+﻿{
+    "scope":  "Native VM focused checks, not hardware acceptance",
+    "rows":  [
+                 {
+                     "seconds":  0.32275529999999997,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  84,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "rigid_motion",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_rigid_motion_tests.exe",
+                     "sha256":  "17b2dbf2df8dc656a4d32886545c15b177bdb573c3d33fbf50574ae4de562107"
+                 },
+                 {
+                     "seconds":  0.2041276,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  1468,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "joint",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_joint_tests.exe",
+                     "sha256":  "2ef8f76430ffb69b8ba36b47f9018a677e125848c6fe40d13cb6d4087cfbd9a4"
+                 },
+                 {
+                     "seconds":  0.20622069999999998,
+                     "exitCode":  1,
+                     "stderrBytes":  22,
+                     "stdoutBytes":  0,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "collision_geometry",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_collision_geometry_tests.exe",
+                     "sha256":  "99bbfbc8b0ac18b7d9d31b8058bcaa45ece3771501065471717e47d1328e07b9"
+                 },
+                 {
+                     "seconds":  0.4182382,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  1957,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "prefab",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_prefab_tests.exe",
+                     "sha256":  "b6cf0de5e00a2eea9c416690e4450f0798cb8fe6500bdddcc66348d8051e237b"
+                 },
+                 {
+                     "seconds":  0.23979999999999999,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  1946,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "physical_balance_foundation",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_physical_balance_foundation_tests.exe",
+                     "sha256":  "b2f12f5962806303db7f1c10ee9ea68b362e2b739191a5b47f769babeb13a9e2"
+                 },
+                 {
+                     "seconds":  6.6468465,
+                     "exitCode":  1,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  1698,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "physical_balance_controller",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_physical_balance_controller_tests.exe",
+                     "sha256":  "4eea568accf8b22050d67bb5b1305394e7bbd399a8861b0bf652c4c4f219ea3f"
+                 },
+                 {
+                     "seconds":  0.4036361,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  7519,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "physical_animation",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_physical_animation_tests.exe",
+                     "sha256":  "245432a8ecfc3fe5f8a00c234933fe2bf398edd2176d14acca871d24b2112ddf"
+                 },
+                 {
+                     "seconds":  1.0229512,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  1908,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "character_motor",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_character_motor_tests.exe",
+                     "sha256":  "97c87ce426db35dc6d0d2150ae2bc81d70d2dd2ed9aca8c825e4174617536a80"
+                 },
+                 {
+                     "seconds":  9.318985,
+                     "exitCode":  -1073740791,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  0,
+                     "arguments":  [
+
+                                   ],
+                     "case":  "streaming",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_streaming_tests.exe",
+                     "sha256":  "81d9c91a13b18ba70887c76f93edab888427bd9256ff932fd0db04e441756dbd"
+                 },
+                 {
+                     "seconds":  2.6191649999999997,
+                     "exitCode":  0,
+                     "stderrBytes":  0,
+                     "stdoutBytes":  1378,
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78DependencyFixture\\landscape_fork.judasproj",
+                                       "Imports/landscape.judasterrain"
+                                   ],
+                     "case":  "navigation_dependency",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_navigation_dependency_tests.exe",
+                     "sha256":  "83e37e375f1e49c7d747f94cf9ac4d43d5216800dbb96e85c68db07949444146"
+                 }
+             ],
+    "cwd":  "C:\\JudasValidation\\Source",
+    "freeBytes":  84172800
+}

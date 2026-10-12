@@ -1,0 +1,53 @@
+JudasScene 3
+settings
+  name ""
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 3
+end
+
+object 1 "shared physical floor"
+  prefab.asset "85c6736eb3860b10c578d8bc50c41e36"
+  prefab.root 1
+  prefab.source 1
+  prefab.ids "1 \"1\" \"1\""
+  prefab.overrides "0"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static box
+  body.half-extents 8 0.25 8
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "owned navigation surface"
+  nav.surface.asset "b2d6d534ac536002dc1218c6de71c06a"
+  nav.surface.cellHeight "0.100000001"
+  nav.surface.cellSize "0.200000003"
+  nav.surface.enabled "1"
+  nav.surface.halfExtents "10 3 10"
+  nav.surface.includeDynamic "0"
+  nav.surface.minRegion "8"
+  nav.surface.profile "0"
+  nav.surface.simplification "1.29999995"
+  nav.surface.sources "18446744073709551615"
+  nav.surface.tileSize "32"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

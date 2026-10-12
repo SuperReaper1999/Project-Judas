@@ -1,0 +1,13 @@
+{
+  "scope": "Read-only host observation after the final timing run; does not prove exact per-step scheduling cause or invalidate the preserved raw result",
+  "observedCompilerCPUPercent": [83.6, 80.9, 80.2, 78.9, 70.8, 68.3, 66.3, 63.4],
+  "loadAverage": [14.49, 14.55, 10.16],
+  "cpuPressureSomeAvg10Percent": 45.81,
+  "cpuPressureSomeAvg60Percent": 48.96,
+  "cpuPressureSomeAvg300Percent": 46.43,
+  "nativeValidationCPULaunchAuthorized": false,
+  "processMutation": "none; no external process stopped or reprioritized",
+  "originalRawP95Ms": 17.700774,
+  "originalRawMaximumMs": 95.307776,
+  "classification": "Observed raw Linux p95 miss under substantial unrelated host compilation; further bounded CPU/wall observation required before attributing to solver"
+}

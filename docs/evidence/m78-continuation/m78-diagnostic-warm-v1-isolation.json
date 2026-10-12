@@ -1,0 +1,152 @@
+﻿{
+    "diagnosticArchiveSHA256":  "7196087eae852aa049a51168f03006e53adee6c818eece27a91e480dc7097c5e",
+    "baselineArchiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "freeBytes":  255832064,
+    "offSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "scope":  "Copied numerical mechanism isolation only. Original saved boundary/input/timestep/acceptance unchanged. ON retains source warm seeds; OFF suppresses only first next completed-solve seeds; actual commands, clocks, geometry eligibility/completed observations remain. No production edits or retained runtime change.",
+    "files":  [
+                  {
+                      "sha256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-actual-drive-sidecar.json",
+                      "bytes":  5482
+                  },
+                  {
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-cold-write-state.json",
+                      "bytes":  365
+                  },
+                  {
+                      "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-diagnostic-uninterrupted-trace.jsonl",
+                      "bytes":  610874
+                  },
+                  {
+                      "sha256":  "2574d25aa8c22d13c4444a9995f078fbd166d456f512f7c6a1be1ec0d1b98942",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-before-save.json",
+                      "bytes":  37167
+                  },
+                  {
+                      "sha256":  "b789d0c97a96795e766ae4545087ebde1ef1095ab6ab53749aa5055cb2f23d20",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-1.json",
+                      "bytes":  37210
+                  },
+                  {
+                      "sha256":  "deaa55e847d79b1dab273b093df565d8a38a2e7848de88df6fdb1b5ebe2b7001",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-10.json",
+                      "bytes":  37100
+                  },
+                  {
+                      "sha256":  "e10abea80545ccb5d0b5481ecd6e93bc6f63e63229f348d7293b4a61d72ef07f",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-2.json",
+                      "bytes":  37276
+                  },
+                  {
+                      "sha256":  "953587ce5fc7b4bf0ae6cb87f2e7eda4f9174471176b9ae1ef11e21fb28b32f6",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-3.json",
+                      "bytes":  37247
+                  },
+                  {
+                      "sha256":  "730395b7237d12afb78e77b93d1c453f5bc2fafafc041cc0729c03a3906050bb",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-4.json",
+                      "bytes":  37224
+                  },
+                  {
+                      "sha256":  "df8fcec6dce59fda958b0531ae6ac4872fd8c9719cd5638a74f7ef5287673988",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-5.json",
+                      "bytes":  37151
+                  },
+                  {
+                      "sha256":  "45b234a1aebb706326c1c5ccde60fc20ef92a3cf0e97c532ecb5da6da992ecb5",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-6.json",
+                      "bytes":  37235
+                  },
+                  {
+                      "sha256":  "28c500cf02473647c8b3d2d4c79e4b4ceaca49209404ed6c8d2ed64bb237a60d",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-7.json",
+                      "bytes":  37150
+                  },
+                  {
+                      "sha256":  "c080294470b24461d69a6c87a4d665837c972040af009cd787302bd2d4e80614",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-8.json",
+                      "bytes":  37165
+                  },
+                  {
+                      "sha256":  "79569c6078987c150500df182a045badcf1f63a94014de77a42d5ecd15fef635",
+                      "name":  "m78-diagnostic-warm-v1-warm-on-physical-step-9.json",
+                      "bytes":  37184
+                  },
+                  {
+                      "sha256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-actual-drive-sidecar.json",
+                      "bytes":  5482
+                  },
+                  {
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-cold-write-state.json",
+                      "bytes":  365
+                  },
+                  {
+                      "sha256":  "afc05f8c9d83d3cb1dfffee9aa1a1003fa439dde059663dc372b264afcd3eb74",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-diagnostic-uninterrupted-trace.jsonl",
+                      "bytes":  607466
+                  },
+                  {
+                      "sha256":  "2574d25aa8c22d13c4444a9995f078fbd166d456f512f7c6a1be1ec0d1b98942",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-before-save.json",
+                      "bytes":  37167
+                  },
+                  {
+                      "sha256":  "ed745930bc11219b21d067ff4948bbabe10377e9c54fade7419ce0c5738a912e",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-1.json",
+                      "bytes":  37187
+                  },
+                  {
+                      "sha256":  "e8126ca049ff5dcdc569e807195ea2f021dc6c1e8ebc15b7d6c8f760ae4f66f6",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-10.json",
+                      "bytes":  37080
+                  },
+                  {
+                      "sha256":  "32284bec7537c00f091c73c6650d7571d91d39912e2d1b19046e980b1587af40",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-2.json",
+                      "bytes":  37263
+                  },
+                  {
+                      "sha256":  "a6103e86e08874b8f9dff7292eb2ea2b7a8595191fb462cc3d3d3c9652ea3913",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-3.json",
+                      "bytes":  37202
+                  },
+                  {
+                      "sha256":  "91fdc6d2dfe02da4860b6847ff137cf3cb306122c3410c95ef38f639db069531",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-4.json",
+                      "bytes":  37170
+                  },
+                  {
+                      "sha256":  "3888a6b7cfa42b32dc3b177ff11ef1753127fda78cbe1881195f8a6fcec3eeb3",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-5.json",
+                      "bytes":  37155
+                  },
+                  {
+                      "sha256":  "5cd3733c0d58cd412a911c9cf0f70bf9dd3e3a74b87682b177b249e2cfd62a6e",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-6.json",
+                      "bytes":  37189
+                  },
+                  {
+                      "sha256":  "5057619cd6fc8ce971c7b9589ae4d5a9de2024151ba7d35ba104376c4ab209f9",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-7.json",
+                      "bytes":  37222
+                  },
+                  {
+                      "sha256":  "b943245e8427036492990ea5b13a51f29e479c1860b826b89f4b6ea81d94b0c6",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-8.json",
+                      "bytes":  37134
+                  },
+                  {
+                      "sha256":  "d04ab00bfe61c44e81575bfed46cc36b6c2c54278fa50d830450e2cdde34c9bd",
+                      "name":  "m78-diagnostic-warm-v1-warm-off-physical-step-9.json",
+                      "bytes":  37178
+                  }
+              ],
+    "sameSaveBytes":  true,
+    "sourceSHA256":  "840c0362135f5c7ece3757914bd6b67050774e4942abbfba53ba3aa1a788a44c",
+    "onSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_physical_balance_foundation_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:56.935619+00:00",
+  "seconds": 0.06431703600173933,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "c29513fe5a07af134566248957105fdd5fa52e51aa112b038a4c124e5901d092",
+  "logSHA256": "22ac0c93103ff0faa2ba81a2e85fdd669b8d20029fa2721f095e3c8e04dc0144",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

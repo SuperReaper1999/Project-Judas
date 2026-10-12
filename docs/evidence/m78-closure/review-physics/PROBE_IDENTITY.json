@@ -1,0 +1,18 @@
+{
+  "status": "read-only source hypothesis; no execution yet",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "fixture_contract": "Original BalanceLab test controls, cadence and standing thresholds unchanged; added one distant scriptless M70 motor only in this copied diagnostic",
+  "sha256": {
+    "src/PhysicsWorld.cpp": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff",
+    "src/PhysicsWorld.h": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9",
+    "src/WorldCharacter.cpp": "381194ab8c9440e588d54a66a3594e77856924dc661ce77937174602e804817a",
+    "src/Simulation.cpp": "699d97408cc80d090fd775b4193f62835c734a1a72adab9985e48ce18f41ce9c",
+    "src/PhysicalBalance.cpp": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+    "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+    "tests/PhysicsContinuationTests.cpp": "2c37b796a0a4e78935b1009b500e15063c9730414389e785812f341544117f69"
+  },
+  "probe_sha256": {
+    "docs/evidence/m78-closure/review-physics/MixedBalanceLabProbe.cpp": "4052aae1e62bb0e83ff25e68d50b006658c5860a62bbc2d6bf75ea6e1414c0c1",
+    "docs/evidence/m78-closure/review-physics/RestoredPublicationIsolationProbe.cpp": "996b49bc87dc1ed1f94c682faf214f3844e0edb938a5d2a9e74bdf41cac0b013"
+  }
+}

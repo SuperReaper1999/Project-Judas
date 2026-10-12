@@ -1,0 +1,25 @@
+Section A: directional shadow matrix construction
+  OK   a typical directional shadow matrix has no NaN/Inf entries
+  OK   the focus point itself projects to NDC x = 0 (frustum center)
+  OK   the focus point itself projects to NDC y = 0 (frustum center)
+Section A: spotlight shadow matrix construction
+  OK   a typical spotlight shadow matrix has no NaN/Inf entries
+  OK   a point straight ahead of the spotlight projects near NDC x = 0
+  OK   a point straight ahead of the spotlight projects near NDC y = 0
+  OK   a point within range projects within the valid depth range
+Section D: finite matrices at edge-case light configurations
+  OK   directional matrix stays finite when the light direction is exactly world +Y
+  OK   spotlight matrix stays finite when the light direction is exactly world -Y
+  OK   spotlight matrix stays finite at a very narrow (1 degree) outer cone
+  OK   spotlight matrix stays finite at a very wide (89 degree) outer cone
+  OK   spotlight matrix stays finite at a near-zero range
+  OK   directional matrix stays finite at a near-zero shadow distance
+Section C: directional shadow matrix rotate-the-universe invariance
+  OK   rotating the whole scenario (focus, light direction, and the test point) leaves the point's depth and off-axis radius unchanged — no hidden world-axis dependency beyond an expected, harmless roll (see CheckClipSpaceInvariantUnderRoll's own comment)
+Section C: spotlight shadow matrix rotate-the-universe invariance
+  OK   rotating the whole scenario leaves the spotlight shadow-space depth/off-axis-radius unchanged — this is what makes the torch/headlight shadow follow arbitrary pitch/yaw/roll correctly (see docs/ARCHITECTURE.md, 'Milestone 15, Spotlight shadows')
+Section B: spotlight shadow transform follows the light's own current pose
+  OK   the fixed world point stays centered (NDC x=y=0) as the light moves directly toward it along its own forward axis
+  OK   moving the light changes the SAME world point's projected depth — the shadow transform genuinely tracks the light's current position, not a cached/stale one
+
+ALL TESTS PASSED

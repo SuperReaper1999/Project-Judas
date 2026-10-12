@@ -1,0 +1,29 @@
+﻿{
+    "archiveSHA256":  "f66bc0d7d0fbc8b72549edc2cfc80fad9253eb7ea8ddf1897cd91a2b65158953",
+    "case":  "gravity",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_gravity.exe",
+                      "sha256":  "a1e4895b219b2ec8c5592d363d13b995175dd8fd0739162b57e4567797319417",
+                      "name":  "m78_combined-v2_gravity.exe",
+                      "bytes":  9238016
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\gravity-0.obj",
+                      "sha256":  "657521ac6cd732f24b725c8aa0c095c2466cfe737407d9ff8c149197f23da950",
+                      "name":  "gravity-0.obj",
+                      "bytes":  951028
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\gravity-1.obj",
+                      "sha256":  "f3c6b36f176a3ba8abaf3ae06755c3cff961c5f6849dabd638fb70db6ccad5a8",
+                      "name":  "gravity-1.obj",
+                      "bytes":  712178
+                  }
+              ],
+    "freeBytes":  474746880,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  4873484,
+    "archiveName":  "m78-combined-v2-gravity-archive.zip"
+}

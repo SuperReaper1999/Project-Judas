@@ -1,0 +1,10 @@
+{
+  "scope": "Validation-tool header closure correction only; first failed narrow MSVC build preserved",
+  "allOriginalFrozenFilesUnchanged": true,
+  "oldFiles": 36,
+  "newFiles": 218,
+  "newManifestSHA256": "4d281e54997c03b997f177a08b5497c218f5d047fb1c46a6f42fc5e78032d517",
+  "sourceZIPBytes": 460251,
+  "sourceZIPSHA256": "52e8092aee491c12d7367432634df53dbb4457ac5317dfb1980a96df41a9a5ac",
+  "originalFailure": "MSVC C2011 from original and isolated PhysicsWorld/RigidBody header copies reached through unstaged peer headers; no archive constructed"
+}

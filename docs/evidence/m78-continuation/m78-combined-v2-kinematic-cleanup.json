@@ -1,0 +1,19 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_kinematic.exe",
+                      "sha256":  "936600cc1ca1b891b99e769a1c46b2be42c16d0ebd0d8080e567922b6251161e",
+                      "name":  "m78_combined-v2_kinematic.exe",
+                      "bytes":  609280
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\kinematic-0.obj",
+                      "sha256":  "f76cb9a08da41368c479b3c84b5613f095b0892eed4aa1bdca9964a8dd18e736",
+                      "name":  "kinematic-0.obj",
+                      "bytes":  202380
+                  }
+              ],
+    "archiveSHA256":  "55170e4246aa810d2a46fde5270b51064515fd6269cfee03b210109f1af9cce4",
+    "freeBytes":  488747008
+}

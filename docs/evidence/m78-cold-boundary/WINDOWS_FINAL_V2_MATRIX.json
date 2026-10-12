@@ -1,0 +1,1956 @@
+{
+  "scope": "Final combined M78 native Windows functional evidence. No Windows performance certification; VM-only softwareGL and no physical hardware/controller validation. Source/test/input/threshold identities retained; preserved failures are not passes.",
+  "finalNativeArchive": {
+    "archive": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+    "sourceBundleSHA256": "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+    "units": [
+      {
+        "objectSHA256": "62f77a00ef60073823d3376b45d978ea52210b6d3f3268c0d05fb993eac34078",
+        "source": "src/WorldPersistence.cpp",
+        "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\\WorldPersistence.cpp\"",
+        "object": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj",
+        "sourceSHA256": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb",
+        "removedOriginalMember": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\WorldPersistence.obj",
+        "bytes": 1276524
+      }
+    ],
+    "freeBytes": 17321984,
+    "scope": "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "baseline": {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib",
+      "bytes": 67015480,
+      "sha256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+    },
+    "archiveBytes": 67019246,
+    "memberCount": 138,
+    "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+  },
+  "sourceBundleSHA256": "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+  "finalWPsha256": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb",
+  "priorNativeArchive": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+  "focusedExecutions": [
+    {
+      "run": "controller",
+      "case": "controller",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-controller.json",
+      "receiptSHA256": "0f9567ba0a4711b72d1dbc1554f0e631defbc988d13b72942cbf6e0024f11153",
+      "executableSHA256": "6a52511a6d38a926a351d4c3551f25ac687e7d25d6477b9a22f076b31cf749dd",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 6.852057299999999,
+      "stdoutSHA256": "98a46c4bd826d8bd3bf3320ffa5c280398bcfb2499318c4d3c5106887680c7ea",
+      "summary": null,
+      "lastLines": [
+        "Free-flight effort=1 interval=1 residual: linear 9.90283233e-09 kg m/s, angular 4.86877774e-08 kg m2/s, peak 0.0612132736 rad/s",
+        "Free-flight effort=1 interval=30 residual: linear 2.04943884e-08 kg m/s, angular 1.16857791e-07 kg m2/s, peak 0.0612132736 rad/s",
+        "Free-flight effort=1 interval=240 residual: linear 1.80656218e-06 kg m/s, angular 1.34173024e-05 kg m2/s, peak 10.1522894 rad/s",
+        "Physical balance controller development: 119 checks, 0 failures"
+      ]
+    },
+    {
+      "run": "motion",
+      "case": "motion",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-motion.json",
+      "receiptSHA256": "7ea81f596b02798ff5acd274aac597a3665b99825471e018a496b5b5a1b330cc",
+      "executableSHA256": "c0aa8fad146fa41033e07fc37b8b5226b3a34656392bc7b952bcbf4d7f18febb",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 0.14256539999999998,
+      "stdoutSHA256": "3978bbdaba554d4506400f0d64541bf28b15be90a7d1d9c56cbe2cfa009c944d",
+      "summary": null,
+      "lastLines": [
+        "FREE hz=120 energy_relative=9.15372e-07 orientation_error_rad=0.00078325",
+        "FREE hz=240 energy_relative=1.41384e-06 orientation_error_rad=0.000193171",
+        "FREE hz=480 energy_relative=1.81562e-06 orientation_error_rad=4.60076e-05",
+        "Rigid motion checks 10239 PASS"
+      ]
+    },
+    {
+      "run": "foundation",
+      "case": "foundation",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-foundation.json",
+      "receiptSHA256": "2df7b5d0067291eb68c87512141efd44ec92b62c26c5ed2d23614ae763ecd54c",
+      "executableSHA256": "f86cf780473c532c8bc61013d3ebefe44730f6648a81acc3ac9ff91f5d764d9d",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 0.8213792999999999,
+      "stdoutSHA256": "d380fba36637be069184ac3d56e4fd61ce9f93cf3225dc0ebe4170bf07e50a54",
+      "summary": null,
+      "lastLines": [
+        "PASS replacement inherits no old support",
+        "PASS maximal 17-participant save retains every native record",
+        "PASS eighteenth save participant still rejects instead of dropping state",
+        "Physical balance foundations: 34 checks, 0 failures"
+      ]
+    },
+    {
+      "run": "physical",
+      "case": "physical",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-physical.json",
+      "receiptSHA256": "b6c6bee2dac6100c284237c650bb455f9e8c84c471f178b4f349a724412d842e",
+      "executableSHA256": "96e4ff7873015b2f03f05a13796338cb0bdd60b5085f5cf2a564239ba7a06dec",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 0.8330301,
+      "stdoutSHA256": "cb1f02420b4336f33568a4ecd5fb84b770bd283fbe8561db6be0c98231e079ef",
+      "summary": [
+        "64",
+        "0"
+      ],
+      "lastLines": [
+        "PASS unreachable reference saturates at ordinary authored hinge limit",
+        "PASS collider-free non-motor physical root uses the same authoritative presentation seam",
+        "OBSERVATIONS impact_error_rad=0.0958873853 returned_error_rad=0.0153903291 presentation_difference_m=0",
+        "SUMMARY 64 checks 0 failures"
+      ]
+    },
+    {
+      "run": "joints",
+      "case": "joints",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-joints.json",
+      "receiptSHA256": "3e507ff225fac410cfd108e6f77297e71fa5c783233a82722257dd4f087f1a87",
+      "executableSHA256": "cbbe99fb1c04479c8fbb836eb1c6a288dc4e9abc078313ac01548b4e6625e8ea",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 0.197351,
+      "stdoutSHA256": "5ca5de190404ad3c081c2476707c8e7748461be5ab1aea0ec4bf160f632b827e",
+      "summary": [
+        "29",
+        "0"
+      ],
+      "lastLines": [
+        "PASS long dynamic slider pair conserves momentum, stays on axis and bounded",
+        "PASS violated limit engaged at 0.067 m: rebound 0.500 m/s, recovered 1",
+        "PASS violated limit engaged at 0.300 m: rebound 0.500 m/s, recovered 1",
+        "SUMMARY 29 checks 0 failures"
+      ]
+    },
+    {
+      "run": "contact_lifecycle",
+      "case": "contact_lifecycle",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-contact_lifecycle.json",
+      "receiptSHA256": "f3760169e81e4970ac0212510076f5d05ff456e17ae554f4983f66f8ba6bb5d9",
+      "executableSHA256": "98890a675db1fd803d182dc9221f95b1beeebc079325a9a7416ce040299454a5",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 0.8834088,
+      "stdoutSHA256": "b5a902be42e66a28c3c6930263ae8e58ab8f4e1a622da7e28ae1408b4ce7f0cf",
+      "summary": null,
+      "lastLines": [
+        "  OK   incoming connected-body impact cannot erase the other load-bearing stance observations",
+        "  OK   compound primitive TOI rows retain valid observation mapping",
+        "  OK   distinct compound support primitives retain independent actual solved rows",
+        "FTFT4A contact lifecycle: 30 fixtures, 90 fixed steps, 6 convenience contacts, 1076 checks, 0 failures"
+      ]
+    },
+    {
+      "run": "impact-timing",
+      "case": "impact_timing",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-impact-timing.json",
+      "receiptSHA256": "56c3557b0c882b51d91273c339a603b4566da277ce95799cde7f35c172a2fb58",
+      "executableSHA256": "ef84f0ef33c80227604e43790340dc226d83d4060543694b40a5f8e04cb15606",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 0.1420091,
+      "stdoutSHA256": "8c30f3255c877aeeafa406172cd83d202b8af2fde514dfc1c553a59dbf57fc07",
+      "summary": null,
+      "lastLines": [
+        "{\"kind\":\"case\",\"name\":\"anchored_rotation\",\"case\":87,\"pass\":true,\"contacts\":1,\"impactEvents\":1,\"impactSafetyFallback\":0,\"impactEventCapFallback\":0,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":0,\"impactSamplingTests\":0,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0}",
+        "{\"kind\":\"case\",\"name\":\"anchored_rotation\",\"case\":88,\"pass\":true,\"contacts\":1,\"impactEvents\":1,\"impactSafetyFallback\":0,\"impactEventCapFallback\":0,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":0,\"impactSamplingTests\":0,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0}",
+        "{\"kind\":\"case\",\"name\":\"anchored_rotation\",\"case\":89,\"pass\":true,\"contacts\":1,\"impactEvents\":1,\"impactSafetyFallback\":0,\"impactEventCapFallback\":0,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":0,\"impactSamplingTests\":0,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0}",
+        "{\"kind\":\"summary\",\"cases\":89,\"checks\":3197,\"failures\":0,\"pass\":true,\"impactEvents\":113,\"impactSafetyFallback\":0,\"impactEventCapFallback\":1,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":1,\"impactSamplingTests\":2,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0.00073126155065617905}"
+      ]
+    },
+    {
+      "run": "gravity",
+      "case": "gravity",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-gravity.json",
+      "receiptSHA256": "24e85eac3bcd6771be416013000f26aa3b24472184b7f55c9993c3f7b496bcbc",
+      "executableSHA256": "8b6e899f89284ae9abfddcc6255d5211bc01dbee5c936b79ee8710e5b0cabfe1",
+      "archiveSHA256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+      "scope": "Earlier proper3554 native core evidence retained because final follow-up changes only WorldPersistence; exact physics/PB/test source unchanged",
+      "seconds": 1.4994318,
+      "stdoutSHA256": "37e15631dc088024b4d145aa6280b7ae813093f69587574e718d3ecf54d84a89",
+      "summary": [
+        "70",
+        "0"
+      ],
+      "lastLines": [
+        "PERF uniform ns_per_sample 27.165 checksum 20000.000",
+        "PERF field ns_per_sample 82.640 checksum 195687.812",
+        "PASS Stop clears motor and selection world",
+        "SUMMARY 70 checks 0 failures"
+      ]
+    },
+    {
+      "run": "world_save",
+      "case": "world_save",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-world_save.json",
+      "receiptSHA256": "57853d187f854d7533fb5fe44933c1a6ae8da17e3d824636c823409e9115df81",
+      "executableSHA256": "5dbe010ea76aa34880b5168a8d68da3fa979062c645229aceb8a6c2f5af37646",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 0.7411183,
+      "stdoutSHA256": "1b3d53077092d9b988558addfc4a9c60fe9db1781f7775cbede21b7918b81b35",
+      "summary": [
+        "27",
+        "0"
+      ],
+      "lastLines": [
+        "PASS boot motor/navigation state reconstructs without motion or missing records",
+        "PASS moving and rotating support resumes without doubled carrier motion or false landing",
+        "PASS resting body and spring hinge remain stable over first three resumed steps",
+        "SUMMARY 27 checks 0 failures"
+      ]
+    },
+    {
+      "run": "streaming",
+      "case": "streaming",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-streaming.json",
+      "receiptSHA256": "8587e68ba1b52111c22971337b6f2544c2b190c812aec1a8a89dd1132ece7931",
+      "executableSHA256": "3ad7a3c98e4722351fb7d9900ed7ceb0416ddc7d1e16afc2d2875c9ab416ef5a",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 7.7685914,
+      "stdoutSHA256": "13147ae67ed35ecb381a516f9b30657aa8487653129be5278916b33eed545e4e",
+      "summary": [
+        "82",
+        "0"
+      ],
+      "lastLines": [
+        "PASS oversized prepared particle storage fails cleanly instead of changing quality",
+        "PASS unrepresentable fixed-frame placement fails before entity registration",
+        "M59_INACTIVE 100000 single-scene early returns 0.309400 ms",
+        "M59 82 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-step-trace",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-step-trace.json",
+      "receiptSHA256": "2fe7fbcf476d129057b4d6a6a66e540bb4a9cfca19b25ebfdac28b9f09515cba",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 4.2752981,
+      "stdoutSHA256": "a2742446b4dcd52fadc626e85416a37d61ff5f3235345d68016ae57e804ba384",
+      "summary": [
+        "15",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 15 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-standing",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-standing.json",
+      "receiptSHA256": "e9c8ac70e4ed3dceac625e47e5a6e94f1b97f53ac0590fc3dda3fff06ecbbbce",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 3.1895175,
+      "stdoutSHA256": "a2742446b4dcd52fadc626e85416a37d61ff5f3235345d68016ae57e804ba384",
+      "summary": [
+        "15",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 15 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-supports",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-supports.json",
+      "receiptSHA256": "2a5df40014235655a7fec1b4155e37576249619f67f970eb89596d2107cfcbe5",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.2530772999999997,
+      "stdoutSHA256": "d34c1a9976b679f5115cd58a6745e196f1cf9f871167ab1699a2ea33a2efddfc",
+      "summary": [
+        "14",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 14 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-variants",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-variants.json",
+      "receiptSHA256": "4db1c5d173dc00640be863bf51652356eed172b2e2d420b0b7cb5ddfbea57d4f",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 6.9652559,
+      "stdoutSHA256": "dd8662bb7fc439073d3909c76b515e984f412eb2dbf38f4f4248b0ec8f7d6727",
+      "summary": [
+        "17",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 17 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-recovery",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-recovery.json",
+      "receiptSHA256": "dae0d80eece8d88e233435886f677c36ad830a48fd7a09360009581f76a9847a",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 4.0510820999999995,
+      "stdoutSHA256": "f2f0096d34a3aa0790e30d29fa5937f165d172187cecd36ca7b7f42f4aab6daa",
+      "summary": [
+        "16",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 16 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-radial",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-radial.json",
+      "receiptSHA256": "deb7c5d4fee7d6ec69ec45c75ef64b52de852c1a96c6f46772741abe0f841431",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.6677592,
+      "stdoutSHA256": "9850557c32b9d7dba65da5c2f4f1bb17b02865ea4f01f1573351eddca07c4d0c",
+      "summary": [
+        "18",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 18 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-lifecycle",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-lifecycle.json",
+      "receiptSHA256": "677557364ecd53d3a624a0d8c5dcca502bfefd900dc89cef4ad1413a9e6e316f",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.7566405,
+      "stdoutSHA256": "589048c28e08a865fd2658f40fffa51984177704f8ad590dec40e28fcb051ae4",
+      "summary": [
+        "26",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 26 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-cold-stand-write",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-stand-write.json",
+      "receiptSHA256": "c2125e17a873e2b78e91134a9a808953f51193c605fc49193c946525a908960a",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.524657,
+      "stdoutSHA256": "d38134cfce805e77320c4adc225423749f45d660ba4a1253d42ccaf3dd3d5765",
+      "summary": [
+        "23",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 23 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-cold-stand-read",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-stand-read.json",
+      "receiptSHA256": "330851e49828826f648d53203f06a4cdacc390ea511662e8aa9c96122f38ba5c",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.7556336,
+      "stdoutSHA256": "06876e456bdd046c42a1a625e1eac886a8f99c8f94efcfe6764df3e7a9877f3b",
+      "summary": [
+        "13",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-cold-recovery-write",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-recovery-write.json",
+      "receiptSHA256": "5baec55825e9f27825ee92927718dd904456ca04d612b10c2f4c857d48b4ff6c",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.0666311,
+      "stdoutSHA256": "1f3fe5eda57e61d54540f6c38866059cacc1d749c310f451b4448a8dd091bc8c",
+      "summary": [
+        "21",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 21 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-cold-recovery-read",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-recovery-read.json",
+      "receiptSHA256": "9be37dc936668532bfd0337ce3b647aa990796c225c77203cc5b6ca95edfd1de",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.3312063,
+      "stdoutSHA256": "ac723930606ba650db404a43083e538f81951ea95a39f690eb6c4805272b690d",
+      "summary": [
+        "13",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-exact-cold-read",
+      "case": "balance_lab",
+      "status": "FAIL_PRESERVED_LEGACY",
+      "exitCode": 1,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-exact-cold-read.json",
+      "receiptSHA256": "299a1f0cc956a348f8db01f234af6b5bd9808f5325fe680ac03616624eda05e9",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.6692507,
+      "stdoutSHA256": "da0f1ac740f80f3e756a32d9634139904a042bfa3207a653c5ed2ee9e830d9b2",
+      "summary": [
+        "13",
+        "1"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 13 checks 1 failures"
+      ]
+    },
+    {
+      "run": "balance-new-cold-write",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-new-cold-write.json",
+      "receiptSHA256": "f7c4644292d454ae618f3441f76ef2ba78742bdebd1544ff0d823a87d83ac4fb",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.7141669999999998,
+      "stdoutSHA256": "2a40d9c4e57ce05644785d1faf3fbaa9852ca6ca728f185b8a4dc25cc55745b2",
+      "summary": [
+        "24",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 24 checks 0 failures"
+      ]
+    },
+    {
+      "run": "balance-new-cold-read",
+      "case": "balance_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-new-cold-read.json",
+      "receiptSHA256": "3e2e08f8026ca8f472bf93c893c49fb05f4a50e197b9801cb3a00004edc92a02",
+      "executableSHA256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 2.4252161,
+      "stdoutSHA256": "ab9db0df106ce6cb5b5b94e643836d66cb419d9b8ba07fbb1c7c980b498ab8be",
+      "summary": [
+        "13",
+        "0"
+      ],
+      "lastLines": [
+        "PASS ordinary lab callback health matches deliberate fault policy",
+        "PASS real final pose/skinning and diagnostic rendering path executes",
+        "PASS Stop destroys the owned runtime world",
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "run": "character-baseline",
+      "case": "character_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-character-baseline.json",
+      "receiptSHA256": "c9fe6b497f7bf36eb304042a74ce7585c1076ebf37fa2d495d8b9c57f52d51d5",
+      "executableSHA256": "c8b0f9179d49ebd0c9b74be2f5bfd55df33363289560f0f57930cea5f3cd5dbd",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 7.6520942,
+      "stdoutSHA256": "d332d9b8ab12ce79f554ba2cddbbf59b8bffc47a7aa698a0927899fd95f08a00",
+      "summary": [
+        "98",
+        "0"
+      ],
+      "lastLines": [
+        "PASS owner destruction inside contact callback retires the articulation safely",
+        "PASS destroySelf owner callback preserves VM lifetime",
+        "PASS ordinary prefab property overrides include owner contact subscription",
+        "SUMMARY 98 checks 0 failures"
+      ]
+    },
+    {
+      "run": "character-cold-write",
+      "case": "character_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-character-cold-write.json",
+      "receiptSHA256": "694a9ef2de453ed7827d5fa1445eeb6c5002926d17c1174488bae5641d03c02e",
+      "executableSHA256": "c8b0f9179d49ebd0c9b74be2f5bfd55df33363289560f0f57930cea5f3cd5dbd",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 1.2597874999999998,
+      "stdoutSHA256": "9306df96b863e4d6bfa9e312a05903540e73f687752a293276ece6323e8d2fcb",
+      "summary": [
+        "10",
+        "0"
+      ],
+      "lastLines": [
+        "PASS canonical authored fingerprint for cold slot",
+        "PASS M61 atomic storage commits multi-target/partial/layer/script participants: ",
+        "PASS writer actual project callbacks safe",
+        "SUMMARY 10 checks 0 failures"
+      ]
+    },
+    {
+      "run": "character-cold-read",
+      "case": "character_lab",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-character-cold-read.json",
+      "receiptSHA256": "1112d19c1c9db7c5732cfaa7a3cf82039b982cf3f27c3fdd07e8ba235cb41dbb",
+      "executableSHA256": "c8b0f9179d49ebd0c9b74be2f5bfd55df33363289560f0f57930cea5f3cd5dbd",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 1.0828904,
+      "stdoutSHA256": "563a482d62d65cd44d49b71e8a411380f5d75378c7f326d3e221fe56afc5090a",
+      "summary": [
+        "14",
+        "0"
+      ],
+      "lastLines": [
+        "PASS fresh restore advances without replaying default initialization or hidden/layer toggles",
+        "PASS first resumed steps preserve physical authority and finite final pose",
+        "PASS fresh process restore callbacks safe",
+        "SUMMARY 14 checks 0 failures"
+      ]
+    },
+    {
+      "run": "physics-continuation",
+      "case": "physics_continuation",
+      "status": "PASS",
+      "exitCode": 0,
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-physics-continuation.json",
+      "receiptSHA256": "b4210eb410fdafa36f12feb458604781e84c18800cdec41d11789c9077313fa0",
+      "executableSHA256": "588674fe9e72343a970b80a15335d059f357782f92603f5bccb1483973130a89",
+      "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "scope": "Fresh execution on final71a native archive",
+      "seconds": 0.8407169,
+      "stdoutSHA256": "5c1445b7d66adf0ac9b43b0bcf147fdbe3749eb6109b540e747ba6fc03ce5600",
+      "summary": [
+        "98",
+        "0"
+      ],
+      "lastLines": [
+        "SUMMARY 98 checks 0 failures"
+      ]
+    }
+  ],
+  "counts": {
+    "focusedExecutions": 28,
+    "passed": 27,
+    "preservedLegacyFailures": 1,
+    "additionalObserverExecutionsPassed": 2,
+    "editorSmokePassed": true,
+    "movedPackageSmokePassed": true
+  },
+  "actualCurrentEndpoint": {
+    "scope": "Fresh final71a exact new capture comparison; physical bodies/current History/completed contacts, no cached Standing observation; no engine substitutions or replay",
+    "sourceBundleSHA256": "52f7755bec8455b76f257730177dc87bdb4ff23e15487f0189d2f44a5704678c",
+    "observerSHA256": "715dd4ae56bc5a8b9556379d95bb5b6e8f4402fd4a60515b69ba039f0b918e13",
+    "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "savedSHA256": "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+    "sourceAndRestoredEndpointExactlyEqual": true,
+    "source": {
+      "actualBodies": [
+        {
+          "angularVelocity": [
+            3.292842976065913e-08,
+            8.695094493305078e-07,
+            -9.022873825870192e-08
+          ],
+          "entity": 4611686018427387904,
+          "linearVelocity": [
+            -1.2522417591753765e-06,
+            -1.5259905694620102e-06,
+            -7.83685649707877e-09
+          ],
+          "mass": 10.0,
+          "position": [
+            3.0794835090637207,
+            1.3608317375183105,
+            0.3413323163986206
+          ],
+          "rotation": [
+            0.9993501305580139,
+            0.00788373127579689,
+            0.024501388892531395,
+            -0.025234591215848923
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            2.234584854932109e-07,
+            8.17520344753575e-08,
+            1.8787855537993892e-07
+          ],
+          "entity": 4611686018427387905,
+          "linearVelocity": [
+            2.819836481648963e-06,
+            -4.0936379264167044e-07,
+            2.0242869425146637e-07
+          ],
+          "mass": 3.0,
+          "position": [
+            2.649472236633301,
+            0.831983208656311,
+            0.34694623947143555
+          ],
+          "rotation": [
+            0.9990810751914978,
+            0.023147178813815117,
+            0.015208611264824867,
+            -0.03270970657467842
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            6.187221970321843e-07,
+            1.355906107392002e-07,
+            1.6353580178929406e-07
+          ],
+          "entity": 4611686018427387906,
+          "linearVelocity": [
+            -5.414930228653247e-07,
+            2.7376589173400134e-07,
+            3.7746508496638853e-07
+          ],
+          "mass": 2.0,
+          "position": [
+            2.6221206188201904,
+            0.47458478808403015,
+            0.2161441445350647
+          ],
+          "rotation": [
+            0.9460864663124084,
+            0.32189926505088806,
+            0.004691634327173233,
+            -0.0357661172747612
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            4.6132935693776744e-08,
+            4.4776373897548183e-07,
+            3.751511457039669e-08
+          ],
+          "entity": 4611686018427387907,
+          "linearVelocity": [
+            5.468942845254787e-07,
+            -1.6631886978757393e-08,
+            1.8145502167499217e-07
+          ],
+          "mass": 2.0,
+          "position": [
+            2.607257843017578,
+            0.11779075860977173,
+            0.15772022306919098
+          ],
+          "rotation": [
+            0.9997944235801697,
+            0.0002744933881331235,
+            0.020231075584888458,
+            0.0013673234498128295
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            5.726760150537302e-07,
+            -8.033045340027911e-10,
+            -5.0169489895779407e-08
+          ],
+          "entity": 4611686018427387908,
+          "linearVelocity": [
+            8.503191679665179e-07,
+            -1.8910908750058297e-07,
+            -3.4351285194134107e-07
+          ],
+          "mass": 3.0,
+          "position": [
+            3.4592835903167725,
+            0.8169545531272888,
+            0.4144890308380127
+          ],
+          "rotation": [
+            0.9672551155090332,
+            -0.2531184256076813,
+            0.01683150976896286,
+            -0.008080217987298965
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            -2.1429887908652745e-07,
+            6.748888949914544e-07,
+            -8.99535166354326e-08
+          ],
+          "entity": 4611686018427387909,
+          "linearVelocity": [
+            -1.4782091284359922e-06,
+            -4.204635928317657e-08,
+            -2.728849892719154e-07
+          ],
+          "mass": 2.0,
+          "position": [
+            3.454334259033203,
+            0.4471075236797333,
+            0.554511547088623
+          ],
+          "rotation": [
+            0.9942402243614197,
+            -0.1055358499288559,
+            0.01543293334543705,
+            -0.010507788509130478
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            1.8291093084599197e-08,
+            8.709668009032612e-08,
+            -2.8849632371930056e-07
+          ],
+          "entity": 4611686018427387910,
+          "linearVelocity": [
+            2.725381875734456e-07,
+            -2.439142221533075e-08,
+            -1.846088792945011e-08
+          ],
+          "mass": 2.0,
+          "position": [
+            3.4533793926239014,
+            0.11837038397789001,
+            0.6741696000099182
+          ],
+          "rotation": [
+            0.9999483227729797,
+            0.001861313940025866,
+            0.00999856274574995,
+            -0.00018067844212055206
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        }
+      ],
+      "actualRelativeComSpeed": 7.136183626244019e-07,
+      "actualRootHeightAboveCurrentSupport": 1.3618701696395874,
+      "actualUpright": 0.9986021518707275,
+      "currentPhysicalStanding": true,
+      "gravityUp": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "landings": 1,
+      "massWeightedCom": [
+        3.0581369400024414,
+        0.8696181774139404,
+        0.37094664573669434
+      ],
+      "massWeightedVelocity": [
+        -1.6302044514304725e-07,
+        -6.947470865270589e-07,
+        1.3969749801390208e-09
+      ],
+      "owned": true,
+      "owner": 12,
+      "progress": 2,
+      "reason": "measured supported physical standing",
+      "rootAngularVelocity": [
+        3.292842976065913e-08,
+        8.695094493305078e-07,
+        -9.022873825870192e-08
+      ],
+      "rootEntity": 4611686018427387904,
+      "rootLinearVelocity": [
+        -1.2522417591753765e-06,
+        -1.5259905694620102e-06,
+        -7.83685649707877e-09
+      ],
+      "rootPosition": [
+        3.0794835090637207,
+        1.3608317375183105,
+        0.3413323163986206
+      ],
+      "rootRotation": [
+        0.9993501305580139,
+        0.00788373127579689,
+        0.024501388892531395,
+        -0.025234591215848923
+      ],
+      "sampledGravity": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ],
+      "standingHeight": 1.4199999570846558,
+      "standingSpeed": 0.1599999964237213,
+      "standingTolerance": 0.18000000715255737,
+      "supportFeet": 2,
+      "supports": [
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.6053428053855896,
+              "otherEntity": 1,
+              "point": [
+                2.242499589920044,
+                -0.0014910200843587518,
+                -0.2078825831413269
+              ],
+              "separation": -0.0029820401687175035,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.4574187099933624,
+              "otherEntity": 1,
+              "point": [
+                2.273245096206665,
+                -0.001678568427450955,
+                0.5514951944351196
+              ],
+              "separation": -0.00335713685490191,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.7774601578712463,
+              "otherEntity": 1,
+              "point": [
+                2.9419240951538086,
+                -0.0005302035133354366,
+                -0.23619972169399261
+              ],
+              "separation": -0.0010604070266708732,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.28993886709213257,
+              "otherEntity": 1,
+              "point": [
+                2.9726696014404297,
+                -0.0007177518564276397,
+                0.5231780409812927
+              ],
+              "separation": -0.0014355037128552794,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387907,
+          "load": 2.1301605701446533,
+          "point": [
+            2.6037604808807373,
+            -0.0010753663955256343,
+            0.044352419674396515
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.5247249603271484,
+              "otherEntity": 1,
+              "point": [
+                3.0958032608032227,
+                -4.9718299123924226e-05,
+                0.3008008301258087
+              ],
+              "separation": -9.943659824784845e-05,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.006269380915910006,
+              "otherEntity": 1,
+              "point": [
+                3.110999822616577,
+                -0.0014656163984909654,
+                1.0606435537338257
+              ],
+              "separation": -0.0029312327969819307,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.16441352665424347,
+              "otherEntity": 1,
+              "point": [
+                3.795663356781006,
+                -0.00016315765969920903,
+                0.28680309653282166
+              ],
+              "separation": -0.00032631531939841807,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 1.098433256149292,
+              "otherEntity": 1,
+              "point": [
+                3.8108599185943604,
+                -0.0015790556790307164,
+                1.0466458797454834
+              ],
+              "separation": -0.003158111358061433,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387910,
+          "load": 1.7938411235809326,
+          "point": [
+            3.5978565216064453,
+            -0.0010015320731326938,
+            0.7588810920715332
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "restored": {
+      "actualBodies": [
+        {
+          "angularVelocity": [
+            3.292842976065913e-08,
+            8.695094493305078e-07,
+            -9.022873825870192e-08
+          ],
+          "entity": 4611686018427387904,
+          "linearVelocity": [
+            -1.2522417591753765e-06,
+            -1.5259905694620102e-06,
+            -7.83685649707877e-09
+          ],
+          "mass": 10.0,
+          "position": [
+            3.0794835090637207,
+            1.3608317375183105,
+            0.3413323163986206
+          ],
+          "rotation": [
+            0.9993501305580139,
+            0.00788373127579689,
+            0.024501388892531395,
+            -0.025234591215848923
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            2.234584854932109e-07,
+            8.17520344753575e-08,
+            1.8787855537993892e-07
+          ],
+          "entity": 4611686018427387905,
+          "linearVelocity": [
+            2.819836481648963e-06,
+            -4.0936379264167044e-07,
+            2.0242869425146637e-07
+          ],
+          "mass": 3.0,
+          "position": [
+            2.649472236633301,
+            0.831983208656311,
+            0.34694623947143555
+          ],
+          "rotation": [
+            0.9990810751914978,
+            0.023147178813815117,
+            0.015208611264824867,
+            -0.03270970657467842
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            6.187221970321843e-07,
+            1.355906107392002e-07,
+            1.6353580178929406e-07
+          ],
+          "entity": 4611686018427387906,
+          "linearVelocity": [
+            -5.414930228653247e-07,
+            2.7376589173400134e-07,
+            3.7746508496638853e-07
+          ],
+          "mass": 2.0,
+          "position": [
+            2.6221206188201904,
+            0.47458478808403015,
+            0.2161441445350647
+          ],
+          "rotation": [
+            0.9460864663124084,
+            0.32189926505088806,
+            0.004691634327173233,
+            -0.0357661172747612
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            4.6132935693776744e-08,
+            4.4776373897548183e-07,
+            3.751511457039669e-08
+          ],
+          "entity": 4611686018427387907,
+          "linearVelocity": [
+            5.468942845254787e-07,
+            -1.6631886978757393e-08,
+            1.8145502167499217e-07
+          ],
+          "mass": 2.0,
+          "position": [
+            2.607257843017578,
+            0.11779075860977173,
+            0.15772022306919098
+          ],
+          "rotation": [
+            0.9997944235801697,
+            0.0002744933881331235,
+            0.020231075584888458,
+            0.0013673234498128295
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            5.726760150537302e-07,
+            -8.033045340027911e-10,
+            -5.0169489895779407e-08
+          ],
+          "entity": 4611686018427387908,
+          "linearVelocity": [
+            8.503191679665179e-07,
+            -1.8910908750058297e-07,
+            -3.4351285194134107e-07
+          ],
+          "mass": 3.0,
+          "position": [
+            3.4592835903167725,
+            0.8169545531272888,
+            0.4144890308380127
+          ],
+          "rotation": [
+            0.9672551155090332,
+            -0.2531184256076813,
+            0.01683150976896286,
+            -0.008080217987298965
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            -2.1429887908652745e-07,
+            6.748888949914544e-07,
+            -8.99535166354326e-08
+          ],
+          "entity": 4611686018427387909,
+          "linearVelocity": [
+            -1.4782091284359922e-06,
+            -4.204635928317657e-08,
+            -2.728849892719154e-07
+          ],
+          "mass": 2.0,
+          "position": [
+            3.454334259033203,
+            0.4471075236797333,
+            0.554511547088623
+          ],
+          "rotation": [
+            0.9942402243614197,
+            -0.1055358499288559,
+            0.01543293334543705,
+            -0.010507788509130478
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            1.8291093084599197e-08,
+            8.709668009032612e-08,
+            -2.8849632371930056e-07
+          ],
+          "entity": 4611686018427387910,
+          "linearVelocity": [
+            2.725381875734456e-07,
+            -2.439142221533075e-08,
+            -1.846088792945011e-08
+          ],
+          "mass": 2.0,
+          "position": [
+            3.4533793926239014,
+            0.11837038397789001,
+            0.6741696000099182
+          ],
+          "rotation": [
+            0.9999483227729797,
+            0.001861313940025866,
+            0.00999856274574995,
+            -0.00018067844212055206
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        }
+      ],
+      "actualRelativeComSpeed": 7.136183626244019e-07,
+      "actualRootHeightAboveCurrentSupport": 1.3618701696395874,
+      "actualUpright": 0.9986021518707275,
+      "currentPhysicalStanding": true,
+      "gravityUp": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "landings": 1,
+      "massWeightedCom": [
+        3.0581369400024414,
+        0.8696181774139404,
+        0.37094664573669434
+      ],
+      "massWeightedVelocity": [
+        -1.6302044514304725e-07,
+        -6.947470865270589e-07,
+        1.3969749801390208e-09
+      ],
+      "owned": true,
+      "owner": 12,
+      "progress": 2,
+      "reason": "measured supported physical standing",
+      "rootAngularVelocity": [
+        3.292842976065913e-08,
+        8.695094493305078e-07,
+        -9.022873825870192e-08
+      ],
+      "rootEntity": 4611686018427387904,
+      "rootLinearVelocity": [
+        -1.2522417591753765e-06,
+        -1.5259905694620102e-06,
+        -7.83685649707877e-09
+      ],
+      "rootPosition": [
+        3.0794835090637207,
+        1.3608317375183105,
+        0.3413323163986206
+      ],
+      "rootRotation": [
+        0.9993501305580139,
+        0.00788373127579689,
+        0.024501388892531395,
+        -0.025234591215848923
+      ],
+      "sampledGravity": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ],
+      "standingHeight": 1.4199999570846558,
+      "standingSpeed": 0.1599999964237213,
+      "standingTolerance": 0.18000000715255737,
+      "supportFeet": 2,
+      "supports": [
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.6053428053855896,
+              "otherEntity": 1,
+              "point": [
+                2.242499589920044,
+                -0.0014910200843587518,
+                -0.2078825831413269
+              ],
+              "separation": -0.0029820401687175035,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.4574187099933624,
+              "otherEntity": 1,
+              "point": [
+                2.273245096206665,
+                -0.001678568427450955,
+                0.5514951944351196
+              ],
+              "separation": -0.00335713685490191,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.7774601578712463,
+              "otherEntity": 1,
+              "point": [
+                2.9419240951538086,
+                -0.0005302035133354366,
+                -0.23619972169399261
+              ],
+              "separation": -0.0010604070266708732,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.28993886709213257,
+              "otherEntity": 1,
+              "point": [
+                2.9726696014404297,
+                -0.0007177518564276397,
+                0.5231780409812927
+              ],
+              "separation": -0.0014355037128552794,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387907,
+          "load": 2.1301605701446533,
+          "point": [
+            2.6037604808807373,
+            -0.0010753663955256343,
+            0.044352419674396515
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.5247249603271484,
+              "otherEntity": 1,
+              "point": [
+                3.0958032608032227,
+                -4.9718299123924226e-05,
+                0.3008008301258087
+              ],
+              "separation": -9.943659824784845e-05,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.006269380915910006,
+              "otherEntity": 1,
+              "point": [
+                3.110999822616577,
+                -0.0014656163984909654,
+                1.0606435537338257
+              ],
+              "separation": -0.0029312327969819307,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.16441352665424347,
+              "otherEntity": 1,
+              "point": [
+                3.795663356781006,
+                -0.00016315765969920903,
+                0.28680309653282166
+              ],
+              "separation": -0.00032631531939841807,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 1.098433256149292,
+              "otherEntity": 1,
+              "point": [
+                3.8108599185943604,
+                -0.0015790556790307164,
+                1.0466458797454834
+              ],
+              "separation": -0.003158111358061433,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387910,
+          "load": 1.7938411235809326,
+          "point": [
+            3.5978565216064453,
+            -0.0010015320731326938,
+            0.7588810920715332
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    }
+  },
+  "observerReceipt": "docs/evidence/m78-cold-boundary/final-current-standing/m78-final-current-standing.json",
+  "editorReceipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-editor-smoke.json",
+  "movedPackageReceipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-moved-package-recovery2.json",
+  "movedPackage": {
+    "archiveSHA256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "seconds": 3.2872303,
+    "exitCode": 0,
+    "exporterSHA256": "497e725e8e40535ba4aab4026684f5e195c3a2aaf047645d16efe596cd416260",
+    "harnessSHA256": "6f975418b9e6f0a2af2644c509bc98115be2407db0e8f0afae88d092e149ef1d",
+    "arguments": [],
+    "exportExitCode": 0,
+    "cwd": "C:\\Windows\\Temp",
+    "freeBytes": 8814592,
+    "packageFiles": [
+      {
+        "path": "concrt140.dll",
+        "sha256": "2405355f0a58067b258f8df33c327e3a3d716eaac5a3a5aebb757842d85bd376",
+        "bytes": 324208
+      },
+      {
+        "path": "DEPENDENCIES.json",
+        "sha256": "d2332c06ed41ddedf96d2a83fccea0f5813ec19d1fbebb71126d1485247f26b7",
+        "bytes": 3786
+      },
+      {
+        "path": "game-icon.png",
+        "sha256": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+        "bytes": 577211
+      },
+      {
+        "path": "game.judasproj",
+        "sha256": "25d73ff138a738d18474ac49fe9c346ab0a7f13a41ee5e8612d39441b0fc4054",
+        "bytes": 1874
+      },
+      {
+        "path": "icudt76.dll",
+        "sha256": "d1079dad8c06c9c82b322ab6b462747dc47611df2b2a9dc54a17a546595e8619",
+        "bytes": 31855104
+      },
+      {
+        "path": "icuin76.dll",
+        "sha256": "292b7271f4519ac6827b9fc04c34b8c5dca67b96497d2b78b4f717b30a6d6aee",
+        "bytes": 3537408
+      },
+      {
+        "path": "icuuc76.dll",
+        "sha256": "63ed718aae95ddf7bc61c0170f5f80ae10a2aa74ec2529d596b0523b40d6a759",
+        "bytes": 2540032
+      },
+      {
+        "path": "judas-package.txt",
+        "sha256": "2a47d101e745a7ab20a81ccd7a302c6ddc452fca3513949b5cd4f7316bc35e26",
+        "bytes": 115
+      },
+      {
+        "path": "judas.exe",
+        "sha256": "740b77d3435cf2b3f3067dc7175df46cca5caf642e6d9d88e2487cf4ab413b23",
+        "bytes": 10344448
+      },
+      {
+        "path": "libgallium_wgl.dll",
+        "sha256": "53e49adf87590d5b0cab8553b1e98084812040cc1fca8c487695b17b7af3702e",
+        "bytes": 61868032
+      },
+      {
+        "path": "msvcp140.dll",
+        "sha256": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+        "bytes": 557728
+      },
+      {
+        "path": "msvcp140_1.dll",
+        "sha256": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+        "bytes": 35952
+      },
+      {
+        "path": "msvcp140_2.dll",
+        "sha256": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+        "bytes": 280200
+      },
+      {
+        "path": "msvcp140_atomic_wait.dll",
+        "sha256": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+        "bytes": 50304
+      },
+      {
+        "path": "msvcp140_codecvt_ids.dll",
+        "sha256": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+        "bytes": 31872
+      },
+      {
+        "path": "opengl32.dll",
+        "sha256": "75b295fc80df0eaa8f1264c28663f6932c8b72d36513eb092556608858b7f5e0",
+        "bytes": 139264
+      },
+      {
+        "path": "RUNTIME_REQUIREMENTS.txt",
+        "sha256": "c14429f8737bdfc16871a8f4e9d9bbea28006cc53fa2e26103d8efce0de772d1",
+        "bytes": 505
+      },
+      {
+        "path": "vcruntime140.dll",
+        "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+        "bytes": 124544
+      },
+      {
+        "path": "vcruntime140_1.dll",
+        "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+        "bytes": 49792
+      },
+      {
+        "path": "Assets\\LICENSE.txt",
+        "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+        "bytes": 184
+      },
+      {
+        "path": "Assets\\fonts\\DejaVuSans.ttf",
+        "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "bytes": 759720
+      },
+      {
+        "path": "Assets\\fonts\\DejaVuSans.ttf.judasmeta",
+        "sha256": "960e17099b23455def727ee0caefe8cc058cae28a788ff7ae21ba8c2c7abe612",
+        "bytes": 102
+      },
+      {
+        "path": "Assets\\fonts\\LICENSE.txt",
+        "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "bytes": 3859
+      },
+      {
+        "path": "Assets\\models\\anchor.judasmodel",
+        "sha256": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0",
+        "bytes": 34818
+      },
+      {
+        "path": "Assets\\models\\anchor.judasmodel.judasmeta",
+        "sha256": "9c3877eacfdab9eaf074484b7a6096f9d42127d8dee6dfd4ee27cd4f7ed26706",
+        "bytes": 106
+      },
+      {
+        "path": "Assets\\models\\receiver.judasmodel",
+        "sha256": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e",
+        "bytes": 34652
+      },
+      {
+        "path": "Assets\\models\\receiver.judasmodel.judasmeta",
+        "sha256": "61e3a4b1d54da2eab92583d39185a2a845e65741cbba9d2ed1b94c3f45ac5737",
+        "bytes": 108
+      },
+      {
+        "path": "Assets\\models\\stride.judasmodel",
+        "sha256": "fa6741ac4795b3faee8db92871f417ca7ae99154078319a9bb0fbdba2f0c4876",
+        "bytes": 34742
+      },
+      {
+        "path": "Assets\\models\\stride.judasmodel.judasmeta",
+        "sha256": "a3880cc1fa45b38880a9c2780856210bf9978644217a0a770af77d17470f9676",
+        "bytes": 106
+      },
+      {
+        "path": "Assets\\prefabs\\anchor.judasprefab",
+        "sha256": "8fd1953cf1145cadc587491976e338a8db0008ce239a0163847a4c322e74c93b",
+        "bytes": 18213
+      },
+      {
+        "path": "Assets\\prefabs\\anchor.judasprefab.judasmeta",
+        "sha256": "d9c07bf7ffac556c4ae104e142e1f8884a354d1a86f46f9762d290135a36f672",
+        "bytes": 110
+      },
+      {
+        "path": "Assets\\scripts\\lab.js",
+        "sha256": "c98db0d35f6587a6427ef6d11ab4e306e5f61e69c8fdc9cf99d7a0b413929e5d",
+        "bytes": 8894
+      },
+      {
+        "path": "Assets\\scripts\\lab.js.judasmeta",
+        "sha256": "3139147dbbfc708dd4b0afaf494ec699913bb0280453751cdcbc9772a6c55d40",
+        "bytes": 98
+      },
+      {
+        "path": "Assets\\ui\\lab.judasui",
+        "sha256": "81a50aa26b288a3a91169239760c8375f98fd657040deb8717c37f2610cfd52c",
+        "bytes": 9832
+      },
+      {
+        "path": "Assets\\ui\\lab.judasui.judasmeta",
+        "sha256": "b8c473fdb9692ca3279046d7e171dc253b9d16b31895dbab9c520b3729dff26c",
+        "bytes": 94
+      },
+      {
+        "path": "engine\\assets\\fonts\\DejaVuSans.ttf",
+        "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "bytes": 759720
+      },
+      {
+        "path": "engine\\licenses\\DejaVuSans.txt",
+        "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "bytes": 3859
+      },
+      {
+        "path": "engine\\licenses\\GLM.txt",
+        "sha256": "62d2d642c7d054d4fb4c9b42faad617d6c88fcd91e317f8035aa9f277cc159c3",
+        "bytes": 2865
+      },
+      {
+        "path": "engine\\licenses\\Judas.txt",
+        "sha256": "26682b82940cdcaf8293c0f52c6948bafa77ae8365f9be7389e4422e447a44c3",
+        "bytes": 1063
+      },
+      {
+        "path": "engine\\licenses\\SDL2.txt",
+        "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127",
+        "bytes": 884
+      },
+      {
+        "path": "engine\\third_party\\RUNTIME_NOTICES.txt",
+        "sha256": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536",
+        "bytes": 59157
+      },
+      {
+        "path": "Scenes\\radial.judas",
+        "sha256": "906c91c3efefdf5d718013f0b231d3c3f8e1af9a1d0d513e84c1ed5836ff9587",
+        "bytes": 76092
+      },
+      {
+        "path": "Scenes\\recovery.judas",
+        "sha256": "87677ca212617907ea9e3f69ac280f1e22e2fa405de0694d099f85e8f7303018",
+        "bytes": 77663
+      },
+      {
+        "path": "Scenes\\standing.judas",
+        "sha256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+        "bytes": 75978
+      },
+      {
+        "path": "Scenes\\supports.judas",
+        "sha256": "a1f6b3d2836449f1cd1e956da00f29a19e43787aa40239c0088296c51a217d48",
+        "bytes": 84661
+      }
+    ],
+    "runtimeSHA256": "740b77d3435cf2b3f3067dc7175df46cca5caf642e6d9d88e2487cf4ab413b23",
+    "scope": "Fresh ordinary export via unchanged exporter, final new runtime/engine, package moved and launched noargs from unrelated cwd with deliberately unavailable engine root. Original1720frame four-scene save/load/pause/reload harness. VM software GL functional-only, not GPU/hardware validation.",
+    "movedPath": "C:\\JudasValidation\\M78Final2RepairMovedPackage",
+    "exporterObjectSHA256": "1dae240f9f828d5d8fdcedc3cf0e40e538cf8502b227bce43c49a0b7380a8a5e",
+    "vmGLAdapters": [
+      {
+        "path": "opengl32.dll",
+        "sha256": "75b295fc80df0eaa8f1264c28663f6932c8b72d36513eb092556608858b7f5e0",
+        "source": "C:\\JudasValidation\\Build\\Release\\opengl32.dll",
+        "bytes": 139264,
+        "storage": "NTFS hardlink to unchanged VM-only GL adapter to bound guest disk; ordinary package files, no symlinks or runtime source lookup"
+      },
+      {
+        "path": "libgallium_wgl.dll",
+        "sha256": "53e49adf87590d5b0cab8553b1e98084812040cc1fca8c487695b17b7af3702e",
+        "source": "C:\\JudasValidation\\Build\\Release\\libgallium_wgl.dll",
+        "bytes": 61868032,
+        "storage": "NTFS hardlink to unchanged VM-only GL adapter to bound guest disk; ordinary package files, no symlinks or runtime source lookup"
+      }
+    ],
+    "exporterSourceSHA256": "b239ce606c4c69b2d808b1e0d44d6ca2458979e2c965d8f916d47360d09266b6"
+  },
+  "hashOnlyHostBinaryInventory": [
+    {
+      "role": "archive",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final2-repair/judas_engine.lib",
+      "bytes": 67019246,
+      "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+    },
+    {
+      "role": "runtime",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final2-repair/m78-final2-repair-runtime.exe",
+      "bytes": 10344448,
+      "sha256": "740b77d3435cf2b3f3067dc7175df46cca5caf642e6d9d88e2487cf4ab413b23"
+    },
+    {
+      "role": "editor",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final2-repair/m78-final2-repair-editor.exe",
+      "bytes": 13187072,
+      "sha256": "d47f99bb93ba7f87089a4139fe320138d1fa30ff76702885b498a5ed260e2f5b"
+    },
+    {
+      "role": "BalanceLab",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final2-repair/m78-final2-repair-balance_lab.exe",
+      "bytes": 9509376,
+      "sha256": "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c"
+    },
+    {
+      "role": "actualEndpointObserver",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final2-repair/m78-final-current-standing.exe",
+      "bytes": 9569280,
+      "sha256": "a1542e52ac91f14c171e3504ced5c5cd05306d3bce074567b03adc5d016bc508"
+    },
+    {
+      "role": "controller",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final-repair/m78-final-repair-controller.exe",
+      "bytes": 602624,
+      "sha256": "6a52511a6d38a926a351d4c3551f25ac687e7d25d6477b9a22f076b31cf749dd"
+    },
+    {
+      "role": "rigidMotion",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/final-repair/m78-final-repair-motion.exe",
+      "bytes": 480768,
+      "sha256": "c0aa8fad146fa41033e07fc37b8b5226b3a34656392bc7b952bcbf4d7f18febb"
+    },
+    {
+      "role": "originalConcave",
+      "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-vm-transfer/reports/m78-final2-preserved-m78_combined-v2_concave.exe",
+      "bytes": 8870400,
+      "sha256": "bd10e97e8998af0ca8eeb3214bfa791cd266d2b7c816c918141a77457e89d903"
+    }
+  ],
+  "remainingFailures": [
+    {
+      "id": "M77_LEGACY_COLD_a106",
+      "status": "FAIL",
+      "checks": 13,
+      "failures": 1,
+      "reason": "Original immutable old capture lacks bounded physical continuation state; unchanged input/threshold native cold read still fails. New captures pass, including independent actual current-state equality.",
+      "receipt": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-exact-cold-read.json"
+    },
+    {
+      "id": "FLU-001",
+      "status": "UNRESOLVED_FAILED_OVERALL",
+      "reason": "Unchanged Linux731/1 at0.558701396m/s still fails original0.5m/s4-second check. Preserved Windows731/0 at0.419123590m/s differs numerically; this does not close overall failure. Fluid untouched.",
+      "nativeReceipt": "docs/evidence/m78-continuation/m78-combined-v2-flu001.json"
+    }
+  ],
+  "preservedCorrectedFailure": {
+    "M70firstRepair": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-character-cold-read.json",
+    "outcome": "14checks3failures; no overwrite. Final generic actual-body-state/noMotor/Full guard rerun14/0."
+  },
+  "toolingRecovery": "Two export attempts stopped before export because bounded75MiBheadroomgate failed; raw errors retained. Exact obsolete generated files losslessly archived/hashverified before retirement; third attempt produced actual ordinary export/moved-package smoke. No source/raw/save/package deletion or VM resource changes.",
+  "warningScope": "Native final WP compile reports one C4456 local-body shadow warning in the narrow correction and two existing C4244 warnings in the unchanged legacy script-slot seen-pair path. Final read-only endpoint observer reports C4100 unused snapshot parameter. No zero-warning native clean full-build claim.",
+  "retainedOtherSubsystemEvidence": "Earlier unchanged prefab/navigation/scalability/spacecraft receipts remain separate in docs/evidence/m78-continuation and WINDOWS_SUPPLEMENTAL_SCOPE; older firstcandidate binaries are explicitly not final-combined reruns."
+}

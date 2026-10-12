@@ -1,0 +1,20 @@
+﻿{
+    "seconds":  1.0330013,
+    "freeBytes":  74211328,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+    "case":  "character_lab",
+    "expectedSaveSHA256":  null,
+    "run":  "character-cold-write",
+    "executableSHA256":  "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "scope":  "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+    "arguments":  [
+                      "C:\\JudasValidation\\M78NativeFunctionalResults\\character-cold",
+                      "cold-write"
+                  ],
+    "exitCode":  0,
+    "environment":  {
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source"
+                    }
+}

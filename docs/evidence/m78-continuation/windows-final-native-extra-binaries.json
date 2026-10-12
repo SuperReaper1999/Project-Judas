@@ -1,0 +1,19 @@
+{
+  "scope": "Additional exact native controller/motion executable bytes independently verified from retained host archives; no guest or source change.",
+  "executables": [
+    {
+      "case": "controller",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/native-final-binaries/m78_combined-v2_controller.exe",
+      "bytes": 602624,
+      "sha256": "b91ccbd4e0949bf4124db59d021cbda5afbf24d80af1a384445132af3900eef1",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+    },
+    {
+      "case": "motion",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/native-final-binaries/m78_combined-v2_motion.exe",
+      "bytes": 480768,
+      "sha256": "c9e207b6eb30583d3317880e571772e818484dfd34359ab57a6691c291471a67",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+PASS static-to-kinematic keeps ordinary collider
+PASS pose request does not teleport to endpoint
+PUSHER commanded=0 filtered=0 actual=-2 crate=0 velocity=0 events=0 contacts=0
+PASS prescribed endpoint / stationary control
+PASS fast crossing drives real impulse, static/filter controls do not
+PASS static-to-kinematic keeps ordinary collider
+PASS pose request accepted before timeline publication
+PASS pose request does not teleport to endpoint
+PUSHER commanded=1 filtered=0 actual=2 crate=2.4000001 velocity=239.999985 events=1 contacts=1
+PASS prescribed endpoint / stationary control
+PASS fast crossing drives real impulse, static/filter controls do not
+PASS crossing has continuous impact evidence
+PASS one owner contact event for TOI pair
+PASS static-to-kinematic keeps ordinary collider
+PASS pose request accepted before timeline publication
+PASS pose request does not teleport to endpoint
+PUSHER commanded=1 filtered=1 actual=2 crate=0 velocity=0 events=0 contacts=0
+PASS prescribed endpoint / stationary control
+PASS fast crossing drives real impulse, static/filter controls do not
+PASS static authority cannot accept prescribed commands
+PASS legacy static pose stays stationary when velocity data is written
+PASS ordinary convex fixture cooks
+PASS sphere/compound/convex supports prescribed authority
+PASS supported moving shape crosses into normal dynamic response
+PASS sphere/compound/convex supports prescribed authority
+PASS supported moving shape crosses into normal dynamic response
+PASS sphere/compound/convex supports prescribed authority
+PASS supported moving shape crosses into normal dynamic response
+PASS static concave fixture cooks
+PASS concave/query-only unsupported transitions reject atomically
+PASS static-to-kinematic keeps ordinary collider
+PASS pose target crosses quaternion wrap through shortest constant-angular arc
+PASS wrapped target reaches requested attitude
+PASS static-to-kinematic keeps ordinary collider
+PASS full-turn spin commanded without quaternion wrapping
+ROTATION full_turn speed=235.461044 impact_events=1 actual_angle=6.28318548
+PASS rotation generates contact between equivalent endpoint attitudes
+PASS continuous spin reaches represented full-turn endpoint
+PASS static-to-kinematic keeps ordinary collider
+PASS dynamic crate settles before prescribed impact
+PASS moving prescribed collider wakes sleeping dynamic neighbour
+PASS static-to-kinematic keeps ordinary collider
+PASS last complete write replaces target rather than composing commands
+PASS stop clears durable velocity
+PASS invalid full requests rejected
+PASS invalid request retains coherent earlier command
+PASS completed target without a new command holds
+PASS bounded multi-step target advances on fixed timeline
+PASS stop cancels remaining target interval
+PASS explicit placement retires motion rather than replaying displacement
+PASS unusable transition mass rejects without changing authority or queued intent
+PASS safe dynamic authority transition retains native identity
+PASS default authority transition clears prescribed launch and commands
+PASS explicit preserve-velocity handoff accepted
+PASS preserved prescribed velocity advances with infinite response mass
+PASS forces gravity and impulses do not own prescribed trajectory
+PASS removed slot cannot receive stale pending command
+PASS slot reuse does not inherit old prescribed state
+PASS static-to-kinematic keeps ordinary collider
+PASS sign-equivalent unchanged target preserves represented rotation anchor
+PASS sub-ULP angular motion does not alternate normalization states
+PASS static-to-kinematic keeps ordinary collider
+PASS unusable saved velocity rejects without live mutation
+PASS unusable tiny saved target interval rejects without live mutation
+PASS queued velocity leaves previous authoritative point velocity intact
+PASS point velocity measures about compound COM rather than authored pivot
+PASS world COM velocity and angular pose describe one consistent trajectory
+PASS prescribed motion exports normal value-owned motion ledger
+PASS passive motion sampling retains COM offset and exact prescribed rotation
+PASS static-to-kinematic keeps ordinary collider
+DYNAMIC_RIDER drift=-0.0120229721 velocity=0.500000119 support_impulse=19.6199856
+PASS dynamic rider travels through normal contact/friction
+PASS static-to-kinematic keeps ordinary collider
+PASS motor acquires ordinary prescribed support
+PASS support velocity command accepted
+SUPPORT walking=0 drift_max=0 velocity_error=0 displacement=0.522014797
+PASS translation/lift/rotation carry plus relative walk once
+PASS support reports rotational material-point velocity
+RELEASE velocity_error=0 displacement_error=5.83397579e-08 supported=0
+PASS jump inherits support once and leaves free movement
+PASS support stop after dismount does not glue departing rider
+PASS static-to-kinematic keeps ordinary collider
+PASS motor acquires ordinary prescribed support
+PASS support velocity command accepted
+SUPPORT walking=0 drift_max=0 velocity_error=0 displacement=0.298877001
+PASS translation/lift/rotation carry plus relative walk once
+PASS support reports rotational material-point velocity
+RELEASE velocity_error=0 displacement_error=1.63446447e-08 supported=0
+PASS jump inherits support once and leaves free movement
+PASS support stop after dismount does not glue departing rider
+PASS static-to-kinematic keeps ordinary collider
+PASS motor acquires ordinary prescribed support
+PASS support velocity command accepted
+SUPPORT walking=1 drift_max=0 velocity_error=0.0026666522 displacement=0.491292924
+PASS translation/lift/rotation carry plus relative walk once
+PASS support reports rotational material-point velocity
+RELEASE velocity_error=0 displacement_error=5.67591272e-08 supported=0
+PASS jump inherits support once and leaves free movement
+PASS support stop after dismount does not glue departing rider
+PASS static-to-kinematic keeps ordinary collider
+PASS motor acquires ordinary prescribed support
+PASS support velocity command accepted
+SUPPORT walking=1 drift_max=3.58867482e-07 velocity_error=0.00266663777 displacement=0.491292447
+PASS translation/lift/rotation carry plus relative walk once
+PASS support reports rotational material-point velocity
+RELEASE velocity_error=0 displacement_error=5.45281225e-08 supported=0
+PASS jump inherits support once and leaves free movement
+PASS support stop after dismount does not glue departing rider
+PASS large absolute origin retains small local motion coordinates
+SUMMARY 96 checks 0 failures

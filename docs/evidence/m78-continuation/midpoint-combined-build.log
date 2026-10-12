@@ -1,0 +1,34 @@
+[  0%] Built target judas_app_icon
+[ 16%] Built target freetype
+[ 22%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.cpp: In function ‘glm::vec3 AngularDriftGenerator(const glm::mat3&, const glm::quat&, const glm::vec3&, float)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.cpp:60:13: error: ‘runtime_error’ is not a member of ‘std’
+   60 |  throw std::runtime_error("angular midpoint did not converge");
+      |             ^~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.cpp:2:1: note: ‘std::runtime_error’ is defined in header ‘<stdexcept>’; this is probably fixable by adding ‘#include <stdexcept>’
+    1 | #include "RigidBody.h"
+  +++ |+#include <stdexcept>
+    2 | 
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.cpp:61:1: warning: control reaches end of non-void function [-Wreturn-type]
+   61 | }
+      | ^
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:1899: CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1082: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:8872: CMakeFiles/judas_physical_balance_controller_tests.dir/rule] Error 2
+gmake: *** [Makefile:2776: judas_physical_balance_controller_tests] Error 2

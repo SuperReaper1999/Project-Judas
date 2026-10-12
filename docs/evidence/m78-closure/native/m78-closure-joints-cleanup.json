@@ -1,0 +1,31 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  10387456,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-joints.exe",
+                        "sha256":  "174eeccfe1a0e2237b528e7f7014384def0038c2d45ae363ee3a8632ccecb22a",
+                        "name":  "m78-closure-joints.exe",
+                        "bytes":  4237312
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\joints-0.obj",
+                        "sha256":  "e7b1e48541cb161eb8e1b3431c20c084f84702815fa1a43c96373d9ebe5c28c8",
+                        "name":  "joints-0.obj",
+                        "bytes":  32859
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-joints.map",
+                        "sha256":  "bdc5d4ed3f8cd95b9c91158402c1154ef6194731386678e672ae45cf12eb050f",
+                        "name":  "m78-closure-joints.map",
+                        "bytes":  3519172
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-joints-link.log",
+                        "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                        "name":  "m78-closure-joints-link.log",
+                        "bytes":  33930
+                    }
+                ],
+    "freeAfter":  18223104
+}

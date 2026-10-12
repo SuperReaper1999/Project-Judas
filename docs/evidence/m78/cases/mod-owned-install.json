@@ -1,0 +1,26 @@
+{
+  "case": "mod-owned-install",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+    "install",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/hill-map.judasmod"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:12:52.810547+00:00",
+  "explicitEnvironment": [],
+  "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 0.11427317400011816,
+  "log": "docs/evidence/m78/cases/mod-owned-install.log",
+  "logSHA256": "ed4ff7e823b9f502a3869a86d1fa41679c841880ac5796b0e8d1268cd99666b7"
+}

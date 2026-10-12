@@ -1,0 +1,28 @@
+{
+  "scope": "WP passive12 prototype plus passive JS/fixture observer. Same original M77 input/gains/dt/thresholds; instrumentation adds actual full-state snapshots and source uninterrupted continuation. No production edits.",
+  "steps": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-passive-history/passive-journal",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-passive-history/observed-capture",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.5867180460045347,
+      "saveSHA256": "7f1757520df7e34ccdda12dd9ce4e8af93642aed5b34593a530f4f90ffcce432"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-passive-history/passive-journal",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-passive-history/observed-capture",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.362544796000293,
+      "saveSHA256": "7f1757520df7e34ccdda12dd9ce4e8af93642aed5b34593a530f4f90ffcce432"
+    }
+  ],
+  "archiveSHA256": "636ad12e055aa99c967661e9e323218bd85ffbb0110a9b3b2dc07df24f61db6f",
+  "fixtureSHA256": "65d681645fc149f6668ae3abcfacd18b424bba0f9106f29b468ddd45495eb180",
+  "journalSourceSHA256": "8d20f18a9f39ddf84360669eb2da5bba7f9ae0fd6c3e0590842af54453e01404"
+}

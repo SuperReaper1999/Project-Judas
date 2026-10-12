@@ -1,0 +1,43 @@
+﻿{
+    "archive":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib",
+    "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+    "units":  [
+                  {
+                      "objectSHA256":  "fc0bbc98176fe2317021091ea4e759715e00873a2e8eeced959ab8ffc01eeacb",
+                      "source":  "src/PhysicsWorld.cpp",
+                      "compilerResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source\\src\\PhysicsWorld.cpp\"",
+                      "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj",
+                      "sourceSHA256":  "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff",
+                      "removedOriginalMember":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\PhysicsWorld.obj",
+                      "bytes":  1494120
+                  },
+                  {
+                      "objectSHA256":  "e69bb8befc7e57ff336ffec69c708000118c43f2b67cccb202d276aaa0fe198d",
+                      "source":  "src/WorldPersistence.cpp",
+                      "compilerResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source\\src\\WorldPersistence.cpp\"",
+                      "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\WorldPersistence.obj",
+                      "sourceSHA256":  "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+                      "removedOriginalMember":  "judas_engine.dir\\Release\\WorldPersistence.obj",
+                      "bytes":  1272989
+                  },
+                  {
+                      "objectSHA256":  "b6dc75e92ee23328bec1ec93d74a110ca829c6d089b44c86b4027e9b9cebb840",
+                      "source":  "src/PhysicalBalance.cpp",
+                      "compilerResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicalBalance.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\source\\src\\PhysicalBalance.cpp\"",
+                      "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicalBalance.obj",
+                      "sourceSHA256":  "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+                      "removedOriginalMember":  "judas_engine.dir\\Release\\PhysicalBalance.obj",
+                      "bytes":  1462385
+                  }
+              ],
+    "freeBytes":  32305152,
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "baseline":  {
+                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                     "bytes":  66840496,
+                     "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+                 },
+    "archiveBytes":  67015480,
+    "memberCount":  138,
+    "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

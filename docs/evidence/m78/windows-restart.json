@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-11T15:06:44.245263+00:00",
+  "authorization": "Operator authorized restarting unresponsive VM on 2026-10-11",
+  "before": [
+    1,
+    1
+  ],
+  "configurationChanged": false,
+  "action": "ACPI reboot request",
+  "interruptedGuestPID": 6764,
+  "results": "unconfirmed; no native pass inferred"
+}

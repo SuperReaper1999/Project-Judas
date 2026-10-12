@@ -1,0 +1,4 @@
+Renderer fragment texture units: 32 (material path uses 12)
+script asset=d70ba9898147657090d0db9ac3137b87 entity=90 slot=1 fixedUpdate: Error: M77 deliberate game-slot fault
+    at fixedUpdate (Assets/scripts/lab.js:48:83)
+

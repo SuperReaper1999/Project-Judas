@@ -1,0 +1,5 @@
+{"hz": 60, "y": 1.7526159900433713, "velocity": 0.6089758409579117, "existingSpeedThreshold": 0.5, "passes": false}
+{"hz": 120, "y": 1.7525442349220577, "velocity": 0.6090152605607236, "existingSpeedThreshold": 0.5, "passes": false}
+{"hz": 240, "y": 1.7525828372462657, "velocity": 0.6089842918156644, "existingSpeedThreshold": 0.5, "passes": false}
+{"hz": 480, "y": 1.7525743760954933, "velocity": 0.6089819165777315, "existingSpeedThreshold": 0.5, "passes": false}
+{"hz": 9600, "y": 1.7525739975548695, "velocity": 0.6089828356737546, "existingSpeedThreshold": 0.5, "passes": false}

@@ -1,0 +1,29 @@
+{
+  "id": "judas_mod_application_tests",
+  "source": "tests/ModApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/modding_lab/modding_lab.judasproj",
+    "zero",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_mod_application_tests"
+  ],
+  "adapter": "ordinary project and inspected application probe mode",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 5,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_mod_application_tests.log",
+  "logSHA256": "366cd69b09c8c51760a680a397930dc1ff0618f95ef3a2149f6c510e6505e5f1",
+  "seconds": 5.908461673001511
+}

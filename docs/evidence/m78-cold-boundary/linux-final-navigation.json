@@ -1,0 +1,15 @@
+{
+  "name": "navigation",
+  "utc": "2026-10-11T23:00:14.030519+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_navigation_dependency_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/navigation/landscape_fork.judasproj",
+    "Imports/landscape.judasterrain"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.9027405529996031,
+  "executableSHA256": "527b1725bca1ac8945ffe67b988f70d820fddcd34c78983d95933e30d863d16b",
+  "logSHA256": "c016fc212493ef925aafa2ebec1e1d6ce4fb15630ec04ebceb091f4ecff70884",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

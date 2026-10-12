@@ -1,0 +1,257 @@
+{
+  "scope": "Selected actual Application save/streaming and signal lifetime routes; unchanged original fixtures.",
+  "archiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+  "sourceSHA256": {
+    "src/PhysicsWorld.cpp": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+    "src/PhysicsWorld.h": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9",
+    "src/WorldPersistence.cpp": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+    "src/WorldPersistence.h": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c",
+    "src/PhysicalBalance.cpp": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+    "tests/PhysicsContinuationTests.cpp": "8dbbc7da8a66fb12484c53fac054ce84fc5c1c5aab4d1b0efb0183fa5bfc1572"
+  },
+  "binaries": {
+    "judas_save_streaming_tests": {
+      "path": ".cache/m78-closure/selected-applications-v2/judas_save_streaming_tests",
+      "sha256": "002f452c14ce65a49f56a69e2f846f959bccfa70dabec1472e57ca77da918146",
+      "fixtureSourceSHA256": "36a28ff57f5f91720119afeaf2a28f62ea5fd633b6fbd930f8905ca5dc331f8d"
+    },
+    "judas_signal_application_tests": {
+      "path": ".cache/m78-closure/selected-applications-v2/judas_signal_application_tests",
+      "sha256": "e2857b0879935a98a659dbd466df84ffafc50b3f5eb7436a0d1285c006c57b75",
+      "fixtureSourceSHA256": "2dfa65dc6ba3b740ec56fd030bd53acf9931626cbfb8bb378f5c34f7721478fd"
+    }
+  },
+  "results": [
+    {
+      "name": "judas_save_streaming_tests-driver-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/tests/SaveStreamingTests.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_save_streaming_tests.o"
+      ],
+      "exitCode": 0,
+      "seconds": 4.967160931999388,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "judas_save_streaming_tests-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_save_streaming_tests.o",
+        "CMakeFiles/judas.dir/src/Application.cpp.o",
+        "CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o",
+        "CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o",
+        "CMakeFiles/judas.dir/src/TestHarness.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7957282409988693,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "judas_signal_application_tests-driver-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/tests/SignalApplicationTests.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_signal_application_tests.o"
+      ],
+      "exitCode": 0,
+      "seconds": 8.33208469300007,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "judas_signal_application_tests-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_signal_application_tests.o",
+        "CMakeFiles/judas.dir/src/Application.cpp.o",
+        "CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o",
+        "CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o",
+        "CMakeFiles/judas.dir/src/TestHarness.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_signal_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.8719777989972499,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": []
+    },
+    {
+      "name": "save-streaming-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/save-case"
+      ],
+      "exitCode": 0,
+      "seconds": 5.37279326999851,
+      "logSHA256": "b575a0010da7f6133fe745cab330f0eda33da8ee66d525c30afa0ce6ff509486",
+      "summary": [
+        "SUMMARY write checks=11 failures=0 frames=110"
+      ]
+    },
+    {
+      "name": "save-streaming-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/save-case"
+      ],
+      "exitCode": 0,
+      "seconds": 6.300142159998359,
+      "logSHA256": "8411395ae9a2030f62fac0ebfca153c01bd9c23126f9a2952d779dc64c1778c3",
+      "summary": [
+        "SUMMARY read checks=19 failures=0 frames=91"
+      ]
+    },
+    {
+      "name": "save-streaming-read-b",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read-b",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/save-case"
+      ],
+      "exitCode": 0,
+      "seconds": 5.128441331995418,
+      "logSHA256": "602debcee8d93673b7b411a194c89cf93eb70d6ed1313ab92923ae89ee84a366",
+      "summary": [
+        "SUMMARY read-b checks=19 failures=0 frames=89"
+      ]
+    },
+    {
+      "name": "signals",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_signal_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/signals_lab/signals_lab.judasproj"
+      ],
+      "exitCode": 0,
+      "seconds": 3.3578034070014837,
+      "logSHA256": "d99bfe78a51c703fb40d8e92bc837f1567ae0301032afe7caa34150502de260c",
+      "summary": [
+        "SUMMARY 17 checks 0 failures"
+      ]
+    },
+    {
+      "name": "signals-load",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/selected-applications-v2/judas_signal_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/signals_lab/signals_lab.judasproj",
+        "load"
+      ],
+      "exitCode": 0,
+      "seconds": 1.7131968809990212,
+      "logSHA256": "64ac2fb07ea7bf2a6c97a66aa49aab7882c94c34e0aded3a9c7cd1012decd273",
+      "summary": [
+        "SUMMARY 6 checks 0 failures"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_quickjs
+[ 27%] Built target freetype
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_fluid_cavity_impact_tests.dir/tests/FluidCavityImpactTests.cpp.o
+[100%] Linking CXX executable judas_fluid_cavity_impact_tests
+[100%] Built target judas_fluid_cavity_impact_tests
+[  0%] Built target judas_profiler
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/tests/FluidRigidCouplingTests.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/FluidWorld.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ObjectManipulation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/DynamicBody.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/CollisionAsset.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/CollisionGeometry.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/third_party/quickhull/QuickHull.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/JointSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/PhysicsCastGeometry.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ImpactSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RigidBody.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RigidBodyGravity.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Contacts.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ContactSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RadialTerrain.cpp.o
+[100%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Broadphase.cpp.o
+[100%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Narrowphase.cpp.o
+[100%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/PhysicsWorld.cpp.o
+[100%] Linking CXX executable judas_fluid_rigid_coupling_tests
+[100%] Built target judas_fluid_rigid_coupling_tests

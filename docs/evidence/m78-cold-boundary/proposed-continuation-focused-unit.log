@@ -1,0 +1,4 @@
+FAIL source exposes actual solved contact load
+FAIL observation from a different physical boundary rejects
+FAIL truncated save field
+SUMMARY 29 checks 3 failures

@@ -1,0 +1,19 @@
+﻿{
+    "seconds":  0.1786732,
+    "freeBytes":  104349696,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_joints.exe",
+    "case":  "joints",
+    "expectedSaveSHA256":  null,
+    "run":  "joints",
+    "executableSHA256":  "87708a10fc270b89c62bcbb61a8fd335786efe90c7c6c5b54faf5c3baa291d8c",
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "scope":  "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "environment":  {
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source"
+                    }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "judas_pose_composition_application_tests",
+  "source": "tests/PoseCompositionApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_pose_composition_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_pose_composition_application_tests"
+  ],
+  "adapter": "existing argc==3 output path; test assertions unchanged",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "0dd0ad428967c87e49a5746c0d51a76fecf3c759ee1012cd7a96d4a4751b38cf",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 6,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_pose_composition_application_tests.log",
+  "logSHA256": "84772e87f68c646e447dd0805de0f27ee55e1c8993bc304e625a9ed3667e2d63",
+  "seconds": 1.307917838999856
+}

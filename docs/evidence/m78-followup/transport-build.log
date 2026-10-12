@@ -1,0 +1,41 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 21%] Built target freetype
+[ 26%] Built target judas_quickjs
+[ 36%] Built target judas_navigation_backend
+[ 36%] Built target judas_glad
+[ 36%] Built target judas_profiler
+[ 36%] Built target judas_audio_backend
+[ 36%] Built target harfbuzz
+[ 36%] Built target judas_materials
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+[ 36%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 42%] Linking CXX static library libjudas_engine.a
+[ 94%] Built target judas_engine
+[100%] Linking CXX executable judas_joint_tests
+[100%] Built target judas_joint_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 22%] Built target freetype
+[ 38%] Built target judas_navigation_backend
+[ 38%] Built target judas_quickjs
+[ 38%] Built target judas_glad
+[ 38%] Built target judas_profiler
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_collision_geometry_tests.dir/tests/CollisionGeometryTests.cpp.o
+[100%] Linking CXX executable judas_collision_geometry_tests
+[100%] Built target judas_collision_geometry_tests
+gmake: *** No rule to make target 'judas_world_streaming_tests'.  Stop.

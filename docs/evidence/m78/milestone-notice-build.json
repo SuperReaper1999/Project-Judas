@@ -1,0 +1,18 @@
+{
+  "command": [
+    "c++",
+    "-O3",
+    "-DNDEBUG",
+    "-fno-access-control",
+    "-I/home/conner/Documents/GitHub/Project-Judas/src",
+    "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/milestone_notice.cpp",
+    "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_editor.dir/src/editor/EditorMilestoneNotice.cpp.o",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_imgui.a",
+    "-lSDL2",
+    "-pthread",
+    "-o",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/milestone_notice"
+  ],
+  "exitCode": 0,
+  "entry": "Unchanged native private Query via audit-only compiler access flag; no actual remote request or UI interaction"
+}

@@ -1,0 +1,220 @@
+{
+  "scope": "Read-only analysis of once-rerun unchanged combined candidate. Same-workload counters equal prior final run; timing variation is not a new optimization. Native VM results are not acceptance platform.",
+  "cases": {
+    "box-1": {
+      "stdout": {
+        "case": "box-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 0,
+        "medianMs": 0.157953,
+        "p95Ms": 0.274214,
+        "maxMs": 3.216226,
+        "first120MaxMs": 3.216226,
+        "contactRows": 13801,
+        "ccdIterations": 997,
+        "ccdLimits": 1,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 13
+      },
+      "csvMilliseconds": {
+        "median": 0.157953,
+        "p95": 0.274214,
+        "max": 3.21623
+      },
+      "over16_67": 0,
+      "slowestStep": {
+        "step": 0.0,
+        "wall_ms": 3.21623,
+        "contacts": 0.0,
+        "ccd_queries": 0.0,
+        "ccd_iterations": 0.0,
+        "ccd_limit": 0.0,
+        "sampling_fallback": 0.0,
+        "geometry_predicates": 0.0,
+        "broadphase_ms": 0.016515,
+        "narrowphase_ms": 0.001388,
+        "solver_ms": 0.668846,
+        "sleeping": 0.0
+      },
+      "solverShareP95Tail": 0.6903901542044228,
+      "rawSHA256": "6379f5b472767017d3f13a2a304fcd29b1842f3c3fb9572f60b8492b32fa8f28"
+    },
+    "box-4": {
+      "stdout": {
+        "case": "box-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 0,
+        "medianMs": 0.62784,
+        "p95Ms": 0.9965,
+        "maxMs": 11.365257,
+        "first120MaxMs": 11.365257,
+        "contactRows": 55204,
+        "ccdIterations": 3988,
+        "ccdLimits": 4,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 52
+      },
+      "csvMilliseconds": {
+        "median": 0.62784,
+        "p95": 0.9965,
+        "max": 11.3653
+      },
+      "over16_67": 0,
+      "slowestStep": {
+        "step": 74.0,
+        "wall_ms": 11.3653,
+        "contacts": 32.0,
+        "ccd_queries": 204.0,
+        "ccd_iterations": 728.0,
+        "ccd_limit": 4.0,
+        "sampling_fallback": 4.0,
+        "geometry_predicates": 34568.0,
+        "broadphase_ms": 0.064736,
+        "narrowphase_ms": 0.329371,
+        "solver_ms": 10.792,
+        "sleeping": 0.0
+      },
+      "solverShareP95Tail": 0.7502375167868971,
+      "rawSHA256": "1c88addebe3bfed1bbae067c1424bcba54ba0b0fdf2d4296bb57754e6fa9c925"
+    },
+    "mesh-1": {
+      "stdout": {
+        "case": "mesh-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 8192,
+        "medianMs": 0.28623,
+        "p95Ms": 0.531058,
+        "maxMs": 10.391191,
+        "first120MaxMs": 10.391191,
+        "contactRows": 15677,
+        "ccdIterations": 2574,
+        "ccdLimits": 5,
+        "minimumBoneCenterY": 0.0489002839,
+        "sleeping": 0
+      },
+      "csvMilliseconds": {
+        "median": 0.28623,
+        "p95": 0.531058,
+        "max": 10.3912
+      },
+      "over16_67": 0,
+      "slowestStep": {
+        "step": 85.0,
+        "wall_ms": 10.3912,
+        "contacts": 2.0,
+        "ccd_queries": 106.0,
+        "ccd_iterations": 353.0,
+        "ccd_limit": 1.0,
+        "sampling_fallback": 1.0,
+        "geometry_predicates": 0.0,
+        "broadphase_ms": 0.011122,
+        "narrowphase_ms": 0.215487,
+        "solver_ms": 10.0844,
+        "sleeping": 0.0
+      },
+      "solverShareP95Tail": 0.855818864748903,
+      "rawSHA256": "17f403c44dc77be7ffe93fd364e852540b462ffeec49b28da4563b0fd948b1f7"
+    },
+    "mesh-4": {
+      "stdout": {
+        "case": "mesh-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 8192,
+        "medianMs": 1.047226,
+        "p95Ms": 5.716964,
+        "maxMs": 27.660999,
+        "first120MaxMs": 27.660999,
+        "contactRows": 56576,
+        "ccdIterations": 19163,
+        "ccdLimits": 7,
+        "minimumBoneCenterY": 0.0447216108,
+        "sleeping": 26
+      },
+      "csvMilliseconds": {
+        "median": 1.04723,
+        "p95": 5.71696,
+        "max": 27.661
+      },
+      "over16_67": 11,
+      "slowestStep": {
+        "step": 85.0,
+        "wall_ms": 27.661,
+        "contacts": 24.0,
+        "ccd_queries": 285.0,
+        "ccd_iterations": 830.0,
+        "ccd_limit": 1.0,
+        "sampling_fallback": 1.0,
+        "geometry_predicates": 0.0,
+        "broadphase_ms": 0.055069,
+        "narrowphase_ms": 0.898457,
+        "solver_ms": 26.5349,
+        "sleeping": 0.0
+      },
+      "solverShareP95Tail": 0.9059351666859605,
+      "rawSHA256": "40138086c03430d4dae17b252ea252bf1c9cf7e3f03ffceb6057e13c45c8d4c7"
+    }
+  },
+  "physicalAggregateParityPreviousFinalRun": {
+    "box-1": {
+      "steps": true,
+      "hz": true,
+      "rigBodies": true,
+      "meshTriangles": true,
+      "contactRows": true,
+      "ccdIterations": true,
+      "ccdLimits": true,
+      "minimumBoneCenterY": true,
+      "sleeping": true
+    },
+    "box-4": {
+      "steps": true,
+      "hz": true,
+      "rigBodies": true,
+      "meshTriangles": true,
+      "contactRows": true,
+      "ccdIterations": true,
+      "ccdLimits": true,
+      "minimumBoneCenterY": true,
+      "sleeping": true
+    },
+    "mesh-1": {
+      "steps": true,
+      "hz": true,
+      "rigBodies": true,
+      "meshTriangles": true,
+      "contactRows": true,
+      "ccdIterations": true,
+      "ccdLimits": true,
+      "minimumBoneCenterY": true,
+      "sleeping": true
+    },
+    "mesh-4": {
+      "steps": true,
+      "hz": true,
+      "rigBodies": true,
+      "meshTriangles": true,
+      "contactRows": true,
+      "ccdIterations": true,
+      "ccdLimits": true,
+      "minimumBoneCenterY": true,
+      "sleeping": true
+    }
+  },
+  "linuxP95GateMilliseconds": 16.67,
+  "linuxFourMeshP95Pass": true,
+  "originalFailedP95Milliseconds": 18.875046,
+  "priorCombinedP95Milliseconds": 5.498837,
+  "limitations": [
+    "Full combined angular/collision trajectory differs from original failed candidate; Boolean paired isolation, not this repeated timing, establishes optimization alone.",
+    "Remaining long steps/partial mesh sleeping persist.",
+    "CSV contains truncated timing precision; stdout values retained exactly."
+  ]
+}

@@ -1,0 +1,356 @@
+{
+  "planned": 50,
+  "completed": 50,
+  "results": [
+    {
+      "name": "midpoint-final-contact_lifecycle",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-contact_lifecycle.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-collision_geometry",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-collision_geometry.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-physical_balance_foundation",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-physical_balance_foundation.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-physical_animation",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-physical_animation.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-joint",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-joint.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-ragdoll",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-ragdoll.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-contact_cache",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-contact_cache.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-contact_storage",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-contact_storage.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-rigid_contact",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-rigid_contact.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-impact_solver",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-impact_solver.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-impact_timing",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-impact_timing.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-kinematic",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-kinematic.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-world_persistence",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-world_persistence.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-character_motor",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-character_motor.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-spacecraft_control",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-spacecraft_control.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-spacecraft_flight",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-spacecraft_flight.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-prefab",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-prefab.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-streaming",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-streaming.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-gravity_selection",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-gravity_selection.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-uniform_gravity",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-uniform_gravity.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-lifecycle",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-lifecycle.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-touch_events",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-touch_events.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-character_application",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-character_application.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-character_cold_write",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-character_cold_write.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-character_cold_read",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-character_cold_read.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-scalability",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-scalability.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-navigation",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-navigation.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_variants",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_variants.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_recovery",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_recovery.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_lifecycle",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_lifecycle.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_regions",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_regions.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_radial",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_radial.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_denied",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_denied.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_blocked-recovery",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_blocked-recovery.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_low-grip",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_low-grip.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_fault",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_fault.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cookbook",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cookbook.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cold_write",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cold_write.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cold_read",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cold_read.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cold-stand_write",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cold-stand_write.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cold-stand_read",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cold-stand_read.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cold-recovery_write",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cold-recovery_write.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-balance_cold-recovery_read",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-balance_cold-recovery_read.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-kinematic_application",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-kinematic_application.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-kinematic_cold_write",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-kinematic_cold_write.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-kinematic_cold_read",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-kinematic_cold_read.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-kinematic_streaming",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-kinematic_streaming.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-cavity_impact",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-cavity_impact.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-fluid_rigid_coupling",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "receipt": "midpoint-final-fluid_rigid_coupling.json",
+      "matchesExpectation": true
+    },
+    {
+      "name": "midpoint-final-fluid_original_failure",
+      "expectedExit": 1,
+      "actualExit": 1,
+      "receipt": "midpoint-final-fluid_original_failure.json",
+      "matchesExpectation": true
+    }
+  ]
+}

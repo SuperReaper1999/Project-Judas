@@ -1,0 +1,53 @@
+{
+  "utc": "2026-10-11T23:02:55.177648+00:00",
+  "scope": "Once repeated unchanged final candidate on Linux host; original mesh/four13body/48joints/8192tri/900steps60Hz preserved. Linux16.67msp95gate; no VM acceptance.",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/midpoint-final-concave",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/linux-performance/cases"
+  ],
+  "exitCode": 0,
+  "seconds": 7.628482168998744,
+  "executableSHA256": "f64e83bdae6f86f340f63b314148dd03c3337c61a97769fc3a7cd0dbfaf03a92",
+  "sourceSHA256": {
+    "src/RigidBody.cpp": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b",
+    "src/RigidBody.h": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+    "src/CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+  },
+  "previousReceiptSHA256": "f7463f28342d1bf0b5b20c41cb2ccce0b068e3904a970ded1ce6e94bb14bf89c",
+  "files": {
+    "box-4.csv": {
+      "sha256": "1c88addebe3bfed1bbae067c1424bcba54ba0b0fdf2d4296bb57754e6fa9c925",
+      "bytes": 51551
+    },
+    "box-1-profile.json": {
+      "sha256": "2c8c705c3074e01a0cde74d513fefe1d1d03c0162f7a62c417382aecff1a7ef5",
+      "bytes": 990706
+    },
+    "box-1.csv": {
+      "sha256": "6379f5b472767017d3f13a2a304fcd29b1842f3c3fb9572f60b8492b32fa8f28",
+      "bytes": 50720
+    },
+    "mesh-1.csv": {
+      "sha256": "17f403c44dc77be7ffe93fd364e852540b462ffeec49b28da4563b0fd948b1f7",
+      "bytes": 49101
+    },
+    "box-4-profile.json": {
+      "sha256": "29c6f0b63946ad20bc60a8f8333a5a428a01efd3b442e97786c563154bd89dc4",
+      "bytes": 1703582
+    },
+    "mesh-4-profile.json": {
+      "sha256": "dca0c74a0466dc01891a2aaf262aa3d41626a6b83dcd7dc5e4ed20c6d975c022",
+      "bytes": 1704805
+    },
+    "mesh-4.csv": {
+      "sha256": "40138086c03430d4dae17b252ea252bf1c9cf7e3f03ffceb6057e13c45c8d4c7",
+      "bytes": 49183
+    },
+    "mesh-1-profile.json": {
+      "sha256": "4bcf7c724a04b7c77295426ba9ad044990d97f92dc4b76472834b4ef866299f1",
+      "bytes": 996245
+    }
+  }
+}

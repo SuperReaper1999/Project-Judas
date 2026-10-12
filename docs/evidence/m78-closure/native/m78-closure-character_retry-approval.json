@@ -1,0 +1,25 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "character_retry",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-character_retry.exe",
+      "sha256": "b6dd82bdf8cbfb0959affcd42a5f3c280e25bb2005ea2a4d61588317f024f9c7",
+      "name": "m78-closure-character_retry.exe",
+      "bytes": 9199104
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\character_lab-0.obj",
+      "sha256": "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09",
+      "name": "character_lab-0.obj",
+      "bytes": 2208781
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-character_retry-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-closure-character_retry-link.log",
+      "bytes": 33930
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "reason": "Add conservative query-only joint-endpoint negative control; no original assertions changed.",
+  "v1_sha256": "996b49bc87dc1ed1f94c682faf214f3844e0edb938a5d2a9e74bdf41cac0b013",
+  "v2_sha256": "31f2b92cbc1c5b500e79c284cab8b4c704b10357076bf348f5167bcfe686b5ac",
+  "status": "not compiled or executed by reviewer"
+}

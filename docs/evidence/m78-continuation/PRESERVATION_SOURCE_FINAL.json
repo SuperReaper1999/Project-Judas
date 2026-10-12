@@ -1,0 +1,57 @@
+{
+  "baselineFiles": 38386,
+  "verifiedFiles": 38386,
+  "changedTracked": [
+    "CMakeLists.txt",
+    "docs/ARCHITECTURE.md",
+    "docs/M77.md",
+    "src/CollisionGeometry.cpp",
+    "src/CollisionGeometry.h",
+    "src/PhysicsWorld.cpp",
+    "src/PhysicsWorld.h",
+    "src/Prefab.cpp",
+    "src/RigidBody.cpp",
+    "src/RigidBody.h",
+    "src/RigidMotion.h",
+    "src/editor/TerrainTools.cpp",
+    "src/editor/TerrainTools.h",
+    "tests/CollisionGeometryTests.cpp",
+    "tests/ContactLifecycleTests.cpp",
+    "tests/PrefabTests.cpp",
+    "tests/RigidMotionTests.cpp",
+    "tests/ScalabilityTests.cpp",
+    "tests/SpacecraftControlTests.cpp",
+    "tests/SpacecraftFlightTests.cpp",
+    "tests/WorldStreamingTests.cpp",
+    "tools/NavigationBake.cpp"
+  ],
+  "unexpectedChanges": [],
+  "missing": [],
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "indexDiff": "",
+  "originalAudit": {
+    "count": 600,
+    "manifestSHA256": "fe4d7221e165d26cf79836a62f4fe000eff8700661d06b1e21b0ffc938cb0e27",
+    "differences": []
+  },
+  "priorCandidate": {
+    "count": 439,
+    "manifestSHA256": "38892f9979dc8eadf91c6a397c7f86ae60678bce83e48b5927aafac7f4c829e5",
+    "differences": [
+      "docs/ARCHITECTURE.md",
+      "docs/M77.md",
+      "docs/M78_FOLLOWUP.md",
+      "src/CollisionGeometry.cpp",
+      "src/PhysicsWorld.cpp",
+      "src/RigidBody.cpp",
+      "src/RigidBody.h",
+      "src/RigidMotion.h",
+      "tests/CollisionGeometryTests.cpp",
+      "tests/RigidMotionTests.cpp"
+    ]
+  },
+  "localOnlyInputs": {
+    "count": 7,
+    "differences": []
+  }
+}

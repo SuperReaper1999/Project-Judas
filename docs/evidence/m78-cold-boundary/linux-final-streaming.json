@@ -1,0 +1,13 @@
+{
+  "name": "streaming",
+  "utc": "2026-10-11T23:00:12.645884+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_streaming_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.5086091560006025,
+  "executableSHA256": "46e4415e01fc4672af52dca29fd944d597665aeb5e1831425241388059cc0677",
+  "logSHA256": "9cac5417cd474950cabf090a27879f469556adfc99201e39159357c15a6de16f",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

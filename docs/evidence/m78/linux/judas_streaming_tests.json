@@ -1,0 +1,26 @@
+{
+  "id": "judas_streaming_tests",
+  "source": "tests/WorldStreamingTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "c443c36df65ebb257aa1c99ff1e693553427584ab939816933c8f293cc2e7d28",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 71,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_streaming_tests.log",
+  "logSHA256": "7a1b0007bfa0e40397969beebc6bcbd0344a45c1d4f413dc23b87c50f51c4f3e",
+  "seconds": 0.7331010580001021
+}

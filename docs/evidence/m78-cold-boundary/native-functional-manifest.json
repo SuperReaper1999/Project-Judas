@@ -1,0 +1,356 @@
+{
+  "scope": "Fresh same-final-archive native functional reruns after passive boundary investigation. Exact accepted inputs/60Hz/thresholds retained; previous failures untouched. VM timings descriptive only, not performance or hardware acceptance. No compile or source changes.",
+  "libraryPath": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+  "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+  "cases": [
+    {
+      "id": "controller",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_controller.exe",
+      "sha256": "b91ccbd4e0949bf4124db59d021cbda5afbf24d80af1a384445132af3900eef1",
+      "bytes": 602624,
+      "downloadName": "m78-native-functional-controller.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalBalanceControllerTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalBalanceControllerTests.cpp",
+          "sourceSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+          "objectSHA256": "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7"
+        }
+      ],
+      "runs": [
+        {
+          "id": "controller",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_motion.exe",
+      "sha256": "c9e207b6eb30583d3317880e571772e818484dfd34359ab57a6691c291471a67",
+      "bytes": 480768,
+      "downloadName": "m78-native-functional-motion.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\motion-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\motion-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\RigidMotionTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\RigidMotionTests.cpp",
+          "sourceSHA256": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a",
+          "objectSHA256": "19a7be4a5c937b9bb1c2efc0f8a1c562adea037ee004458f1ed7fad18f55a6a1"
+        }
+      ],
+      "runs": [
+        {
+          "id": "motion",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "foundation",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_foundation.exe",
+      "sha256": "ba74d6e59d95bcea45bf983c602f6076b4bec1f38bb49fb0fd1a426cf824b161",
+      "bytes": 7396352,
+      "downloadName": "m78-native-functional-foundation.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\foundation-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\foundation-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalBalanceFoundationTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalBalanceFoundationTests.cpp",
+          "sourceSHA256": "a2d04c35b5e4b3fb6885935918c153da0c744b25976594bfd19317600ad22abf",
+          "objectSHA256": "eca39443345ae73ae082d21d8eb9457dd0feb9bc8de25326759a082ebdbd20b1"
+        }
+      ],
+      "runs": [
+        {
+          "id": "foundation",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "physical",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_physical.exe",
+      "sha256": "e72fb4113333db3989546420873502dcc0358ad4ae0a7c0311e33f5d4c0c7b0f",
+      "bytes": 7522304,
+      "downloadName": "m78-native-functional-physical.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\physical-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\physical-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalAnimationTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PhysicalAnimationTests.cpp",
+          "sourceSHA256": "9c98d9431d8e5fb29c1bbe340a23b30f100e6bbcecf99cde79fbb93f4f080b67",
+          "objectSHA256": "52aabd12bf9d30785233709e4ca5062dc96e0c5f2240cab2a2d62c8c6d0b7fe0"
+        }
+      ],
+      "runs": [
+        {
+          "id": "physical",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "joints",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_joints.exe",
+      "sha256": "87708a10fc270b89c62bcbb61a8fd335786efe90c7c6c5b54faf5c3baa291d8c",
+      "bytes": 455168,
+      "downloadName": "m78-native-functional-joints.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\joints-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\joints-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\JointTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\JointTests.cpp",
+          "sourceSHA256": "6945998bb13c7a39917aec261c8d30b75af8ef232e5835196f4d7f0876f73558",
+          "objectSHA256": "e7b1e48541cb161eb8e1b3431c20c084f84702815fa1a43c96373d9ebe5c28c8"
+        }
+      ],
+      "runs": [
+        {
+          "id": "joints",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "contact_lifecycle",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_contact_lifecycle.exe",
+      "sha256": "880264c00aeee97186bed2124750d34fc41fef8bbdf6a13887826879f9d8b8a0",
+      "bytes": 8167936,
+      "downloadName": "m78-native-functional-contact_lifecycle.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\contact_lifecycle-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\contact_lifecycle-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\ContactLifecycleTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\ContactLifecycleTests.cpp",
+          "sourceSHA256": "59bf3711105a68444c8a3ff5f8c9ecf8617e43dfb732cbc4574f921a70067014",
+          "objectSHA256": "f1ea07e996d67c90467debafd4246b4d670cdb8dad9b037f145857c389d83f55"
+        }
+      ],
+      "runs": [
+        {
+          "id": "contact_lifecycle",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "impact_timing",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_impact_timing.exe",
+      "sha256": "05a5e5417ca877214e6e1a77d764b0384b545d5439c134777394bd1e1f213fde",
+      "bytes": 507904,
+      "downloadName": "m78-native-functional-impact_timing.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\impact_timing-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\impact_timing-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\ImpactTimingTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\ImpactTimingTests.cpp",
+          "sourceSHA256": "b95394745ba8a9f5c7d43a516ebc82f16f16fcf9d499afd92296a8120e6e92ed",
+          "objectSHA256": "cfad8fec8b02fa2211c00b3ab303efe984b56be6695bccc382f13a5ffeef028f"
+        }
+      ],
+      "runs": [
+        {
+          "id": "impact-timing",
+          "arguments": [
+            "all"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gravity",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_gravity.exe",
+      "sha256": "a1e4895b219b2ec8c5592d363d13b995175dd8fd0739162b57e4567797319417",
+      "bytes": 9238016,
+      "downloadName": "m78-native-functional-gravity.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\gravity-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\gravity-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\GravitySelectionTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\GravitySelectionTests.cpp",
+          "sourceSHA256": "027e92ccf8dd3cead1133ef0e2983eb34472c8500a6af5bfdac422bfdfd587e9",
+          "objectSHA256": "657521ac6cd732f24b725c8aa0c095c2466cfe737407d9ff8c149197f23da950"
+        },
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\gravity-1.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\gravity-1.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp\"",
+          "source": "C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp",
+          "sourceSHA256": "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b",
+          "objectSHA256": "f3c6b36f176a3ba8abaf3ae06755c3cff961c5f6849dabd638fb70db6ccad5a8"
+        }
+      ],
+      "runs": [
+        {
+          "id": "gravity",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "world_save",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_world_save.exe",
+      "sha256": "60360e4d448a68bc7fcbc9f4ea8107c2089f4372726bebec6e3777e70cae0b58",
+      "bytes": 7797760,
+      "downloadName": "m78-native-functional-world_save.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\world_save-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\world_save-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\WorldPersistenceTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\WorldPersistenceTests.cpp",
+          "sourceSHA256": "b51c36f46c6bb69aa9bb84ffbaa87c222ab5e3b709a354974b0d84c2ce0a6853",
+          "objectSHA256": "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322"
+        }
+      ],
+      "runs": [
+        {
+          "id": "world_save",
+          "arguments": []
+        }
+      ]
+    },
+    {
+      "id": "balance_lab",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+      "sha256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "bytes": 9480192,
+      "downloadName": "m78-native-functional-balance_lab.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\BalanceLabTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\BalanceLabTests.cpp",
+          "sourceSHA256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+          "objectSHA256": "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff"
+        }
+      ],
+      "runs": [
+        {
+          "id": "balance-step-trace",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-step-trace",
+            "step-trace"
+          ]
+        },
+        {
+          "id": "balance-standing",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-standing",
+            "standing"
+          ]
+        },
+        {
+          "id": "balance-supports",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-supports",
+            "supports"
+          ]
+        },
+        {
+          "id": "balance-variants",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-variants",
+            "variants"
+          ]
+        },
+        {
+          "id": "balance-recovery",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-recovery",
+            "recovery"
+          ]
+        },
+        {
+          "id": "balance-radial",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-radial",
+            "radial"
+          ]
+        },
+        {
+          "id": "balance-lifecycle",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-lifecycle",
+            "lifecycle"
+          ]
+        },
+        {
+          "id": "balance-cold-stand-write",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-stand",
+            "cold-stand-write"
+          ]
+        },
+        {
+          "id": "balance-cold-stand-read",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-stand",
+            "cold-stand-read"
+          ]
+        },
+        {
+          "id": "balance-cold-recovery-write",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-recovery",
+            "cold-recovery-write"
+          ]
+        },
+        {
+          "id": "balance-cold-recovery-read",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-cold-recovery",
+            "cold-recovery-read"
+          ]
+        },
+        {
+          "id": "balance-exact-cold-read",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-exact-cold",
+            "cold-read"
+          ],
+          "copyExactColdFrom": "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source",
+          "expectedSaveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+        }
+      ]
+    },
+    {
+      "id": "character_lab",
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+      "sha256": "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+      "bytes": 9170944,
+      "downloadName": "m78-native-functional-character_lab.exe",
+      "compiles": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\character_lab-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\character_lab-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\CharacterLabTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\CharacterLabTests.cpp",
+          "sourceSHA256": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+          "objectSHA256": "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09"
+        }
+      ],
+      "runs": [
+        {
+          "id": "character-baseline",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\character"
+          ]
+        },
+        {
+          "id": "character-cold-write",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\character-cold",
+            "cold-write"
+          ]
+        },
+        {
+          "id": "character-cold-read",
+          "arguments": [
+            "C:\\JudasValidation\\M78NativeFunctionalResults\\character-cold",
+            "cold-read"
+          ]
+        }
+      ]
+    }
+  ]
+}

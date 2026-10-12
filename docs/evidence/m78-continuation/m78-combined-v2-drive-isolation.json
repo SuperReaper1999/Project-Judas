@@ -1,0 +1,20 @@
+﻿{
+    "participantIdentityGuard":  "Overlay function checks every ORIGINAL participant version/payload SHA before applying commands; mismatch throws and stops overlay",
+    "scope":  "Copied original failed native snapshot, actual command sidecar only, identical copied original acceptance; no warm impulse restoration or engine change",
+    "freeBytes":  469069824,
+    "copies":  [
+                   {
+                       "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\drives-original-baseline",
+                       "originalSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                       "sidecarSHA256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9"
+                   },
+                   {
+                       "path":  "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\drives-original-overlay",
+                       "originalSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                       "sidecarSHA256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9"
+                   }
+               ],
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "originalSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "originalAfterSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+}

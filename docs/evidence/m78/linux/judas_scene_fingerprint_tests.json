@@ -1,0 +1,26 @@
+{
+  "id": "judas_scene_fingerprint_tests",
+  "source": "tests/SceneFingerprintTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_fingerprint_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "35ee2050af70c9fdcd6fafe9e218996847447b7aba213e571afbc3ffba4d24c8",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 140,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_scene_fingerprint_tests.log",
+  "logSHA256": "1bf6652eb89a8f601f57d8a98202a5ddfe3920229bf8f8786be5ca27719acd16",
+  "seconds": 0.16501637600049435
+}

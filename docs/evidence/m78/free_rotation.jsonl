@@ -1,0 +1,9 @@
+{"shape":"sphere","hz":60,"seconds":2,"initialAngularMomentum":1.12249724279,"maximumAngularMomentumError":8.55277693035e-14,"relativeError":7.61941909903e-14,"quaternionNormError":1.19209289551e-07}
+{"shape":"sphere","hz":120,"seconds":2,"initialAngularMomentum":1.12249724279,"maximumAngularMomentumError":1.53246825237e-13,"relativeError":1.36523119518e-13,"quaternionNormError":1.19209289551e-07}
+{"shape":"sphere","hz":240,"seconds":2,"initialAngularMomentum":1.12249724279,"maximumAngularMomentumError":1.78899513759e-13,"relativeError":1.59376350282e-13,"quaternionNormError":1.19209289551e-07}
+{"shape":"sphere","hz":480,"seconds":2,"initialAngularMomentum":1.12249724279,"maximumAngularMomentumError":6.05396746192e-13,"relativeError":5.39330274598e-13,"quaternionNormError":1.19209289551e-07}
+{"shape":"triaxial-box","hz":60,"seconds":2,"initialAngularMomentum":2.18414733362,"maximumAngularMomentumError":2.1908618728,"relativeError":1.00307421531,"quaternionNormError":1.19209289551e-07}
+{"shape":"triaxial-box","hz":120,"seconds":2,"initialAngularMomentum":2.18414733362,"maximumAngularMomentumError":2.19101201395,"relativeError":1.00314295662,"quaternionNormError":1.19209289551e-07}
+{"shape":"triaxial-box","hz":240,"seconds":2,"initialAngularMomentum":2.18414733362,"maximumAngularMomentumError":2.19101149884,"relativeError":1.00314272078,"quaternionNormError":1.19209289551e-07}
+{"shape":"triaxial-box","hz":480,"seconds":2,"initialAngularMomentum":2.18414733362,"maximumAngularMomentumError":2.19102700864,"relativeError":1.00314982186,"quaternionNormError":1.19209289551e-07}
+{"observerControlsPass":true}

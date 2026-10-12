@@ -1,0 +1,24 @@
+{
+  "scope": "Fresh native final case, all generated member bytes independently host SHA/size verified before exact guest cleanup",
+  "hostVerified": true,
+  "case": "physics_continuation",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-physics_continuation.exe",
+      "sha256": "588674fe9e72343a970b80a15335d059f357782f92603f5bccb1483973130a89",
+      "name": "m78-final2-repair-physics_continuation.exe",
+      "bytes": 7869440
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\physics_continuation-0.obj",
+      "sha256": "d634c999d8958b0152481f9a0b3b281be8d54213a345f1b6fc6484cd02f82c57",
+      "name": "physics_continuation-0.obj",
+      "bytes": 366660
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\m78-final2-repair-physics_continuation-generated.zip",
+      "bytes": 3663449,
+      "sha256": "d9e4a6464dc34558e83e5530ee7c8c7edf460f3b5d531a3de6ee43c117e7932e"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+$root='C:\JudasValidation';$paths=@("$root\vcpkg\downloads\tools\git-2.7.4-windows.partial.2180");$rows=@();foreach($path in $paths){$files=Get-ChildItem -LiteralPath $path -Recurse -File -ErrorAction SilentlyContinue;$rows+=@{path=$path;files=$files.Count;bytes=($files|Measure-Object -Property Length -Sum).Sum}}
+$cache=Get-Content "$root\Build\CMakeCache.txt"|Where-Object {$_ -match '^(VCPKG|CMAKE_TOOLCHAIN_FILE|SDL2_DIR|JUDAS|ZLIB)'}
+@{free=(Get-PSDrive C).Free;generated=$rows;cache=$cache;recentDownloads=(Get-ChildItem "$root\vcpkg\downloads" -File|Sort-Object LastWriteTime -Descending|Select-Object -First 8 Name,Length,LastWriteTime)}|ConvertTo-Json -Depth 5 -Compress

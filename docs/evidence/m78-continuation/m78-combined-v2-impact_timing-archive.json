@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "9a76aa22f623e9bcb01fb69780d05a0e6ead49c7f4f0708438b37f9f94e76dc1",
+    "case":  "impact_timing",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_impact_timing.exe",
+                      "sha256":  "05a5e5417ca877214e6e1a77d764b0384b545d5439c134777394bd1e1f213fde",
+                      "name":  "m78_combined-v2_impact_timing.exe",
+                      "bytes":  507904
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\impact_timing-0.obj",
+                      "sha256":  "cfad8fec8b02fa2211c00b3ab303efe984b56be6695bccc382f13a5ffeef028f",
+                      "name":  "impact_timing-0.obj",
+                      "bytes":  204002
+                  }
+              ],
+    "freeBytes":  489660416,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  298337,
+    "archiveName":  "m78-combined-v2-impact_timing-archive.zip"
+}

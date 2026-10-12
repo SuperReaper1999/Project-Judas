@@ -1,0 +1,196 @@
+﻿{
+    "inputs":  [
+                   {
+                       "sha256":  "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+                       "bytes":  21534,
+                       "relative":  "tests\\PhysicalBalanceControllerTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "38692f953ff456b40c05eb7856728aa698bd82c8fdc3f646a5a402a462a0742c",
+                       "bytes":  9392,
+                       "relative":  "tests\\RigidMotionTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "cce028e849cd241d6bcc7bf445ff54cf8c5ca5ca3ccea2719f3553c67567f520",
+                       "bytes":  15615,
+                       "relative":  "tests\\ContactLifecycleTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "9792433d5f8dc8626f4bf2724b431215639b25c5d7174fd36c3bc231ce298b59",
+                       "bytes":  30402,
+                       "relative":  "tests\\CollisionGeometryTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b",
+                       "bytes":  8709,
+                       "relative":  "tests\\PrefabTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b",
+                       "bytes":  27558,
+                       "relative":  "tests\\WorldStreamingTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "b790389689ed90f4e65ce67aa2a66bb7b69cefef1c137235a7e0310aec21fba5",
+                       "bytes":  7659,
+                       "relative":  "tests\\ScalabilityTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+                       "bytes":  27911,
+                       "relative":  "tests\\BalanceLabTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+                       "bytes":  35497,
+                       "relative":  "tests\\CharacterLabTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "sha256":  "38aecede76bbd6c2bebed3303bf941b872f116046025ca327288a0aff3489a0b",
+                       "bytes":  5084,
+                       "relative":  "tests\\NavigationDependencyTests.cpp",
+                       "exists":  true
+                   },
+                   {
+                       "bytes":  1350457,
+                       "files":  40,
+                       "relative":  "projects\\balance_lab",
+                       "exists":  true
+                   },
+                   {
+                       "bytes":  1536648,
+                       "files":  40,
+                       "relative":  "projects\\character_lab",
+                       "exists":  true
+                   },
+                   {
+                       "bytes":  7266,
+                       "files":  1,
+                       "relative":  "projects\\ragdoll_demo",
+                       "exists":  true
+                   },
+                   {
+                       "exists":  false,
+                       "relative":  "projects\\post_m65_consumers\\post_m65_consumers.judasproj"
+                   },
+                   {
+                       "exists":  false,
+                       "relative":  "projects\\post_m65_consumers\\Scenes\\skate\\park.judas"
+                   },
+                   {
+                       "exists":  false,
+                       "relative":  "projects\\post_m65_consumers\\Assets\\skate\\models\\rider.glb"
+                   },
+                   {
+                       "exists":  false,
+                       "relative":  "projects\\post_m65_consumers\\Assets\\skate\\models\\rider.glb.judasmeta"
+                   },
+                   {
+                       "exists":  false,
+                       "relative":  "projects\\animation_demo\\Assets\\bend_bar.glb"
+                   },
+                   {
+                       "exists":  false,
+                       "relative":  "docs\\evidence\\ftft3\\fixtures"
+                   }
+               ],
+    "scope":  "Read-only final-native recipe and fixture presence inventory; no compilation, cleanup or source replacement",
+    "freeBytes":  338219008,
+    "recipes":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_navigation_dependency_tests.dir\\Release\\judas_na.89E4956E.tlog\\CL.command.1.tlog",
+                        "sha256":  "fb7bc2704468b0c2a9782ce543690c679667bf4f70851456fb1d7462f688cdc4",
+                        "target":  "judas_navigation_dependency_tests",
+                        "bytes":  3364
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_navigation_dependency_tests.dir\\Release\\judas_na.89E4956E.tlog\\link.command.1.tlog",
+                        "sha256":  "0312897cd9fbaf829b356b1f677155622c438240642095f43c1d225487352b68",
+                        "target":  "judas_navigation_dependency_tests",
+                        "bytes":  2982
+                    }
+                ],
+    "libraries":  [
+                      {
+                          "sha256":  "8f6a6e44b439fdfa8c82a9151015022abb5739c802ac854f86372a57d2399092",
+                          "name":  "judas_engine.lib",
+                          "bytes":  66779688,
+                          "exists":  true
+                      },
+                      {
+                          "sha256":  "0796b868e43c5733ffd2b1b82e0dd68d39e9d73b037cc9a1a6ed1250ae0d36b6",
+                          "name":  "judas_world_authoring.lib",
+                          "bytes":  10809686,
+                          "exists":  true
+                      },
+                      {
+                          "sha256":  "c9de4d56316c7edd76561053bcd0806661dd85a0a13bf44b5d0ae49ca3482bdf",
+                          "name":  "judas_navigation_baker.lib",
+                          "bytes":  467012,
+                          "exists":  true
+                      }
+                  ],
+    "dlls":  [
+                 {
+                     "bytes":  324208,
+                     "name":  "concrt140.dll"
+                 },
+                 {
+                     "bytes":  31855104,
+                     "name":  "icudt76.dll"
+                 },
+                 {
+                     "bytes":  3537408,
+                     "name":  "icuin76.dll"
+                 },
+                 {
+                     "bytes":  2540032,
+                     "name":  "icuuc76.dll"
+                 },
+                 {
+                     "bytes":  61868032,
+                     "name":  "libgallium_wgl.dll"
+                 },
+                 {
+                     "bytes":  557728,
+                     "name":  "msvcp140.dll"
+                 },
+                 {
+                     "bytes":  35952,
+                     "name":  "msvcp140_1.dll"
+                 },
+                 {
+                     "bytes":  280200,
+                     "name":  "msvcp140_2.dll"
+                 },
+                 {
+                     "bytes":  50304,
+                     "name":  "msvcp140_atomic_wait.dll"
+                 },
+                 {
+                     "bytes":  31872,
+                     "name":  "msvcp140_codecvt_ids.dll"
+                 },
+                 {
+                     "bytes":  139264,
+                     "name":  "opengl32.dll"
+                 },
+                 {
+                     "bytes":  124544,
+                     "name":  "vcruntime140.dll"
+                 },
+                 {
+                     "bytes":  49792,
+                     "name":  "vcruntime140_1.dll"
+                 }
+             ]
+}

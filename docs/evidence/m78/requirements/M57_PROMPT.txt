@@ -1,0 +1,368 @@
+# M57 — Judas learns to look good
+
+Starting checkpoint:
+a428d98f3e57a7bc087f165f0d135368f3b4ffab
+
+M56 is accepted and pushed. HEAD/main/origin/main should match that checkpoint.
+The worktree is NOT expected to be completely clean: the operator's existing
+uncommitted docs/ROADMAP.md edit must be preserved byte-for-byte and left unstaged.
+Check repository state first. Do not discard, overwrite or absorb unrelated work.
+Read only roadmap content relevant to the authorized M57 scope, not later milestones.
+
+Implement a reusable material/PBR foundation, not a new renderer or an art-only
+reskin. The deliverable is materials + lighting + correct colour handling that
+ordinary projects can author, script, import and export. Spring Range proves the
+result in a real game; a small material lab makes errors easy to diagnose.
+
+Judas owns rendering/material primitives. Projects own art and presentation policy.
+JavaScript decides why appearance changes. Physics and gameplay remain authoritative.
+
+No commit, push or tag before operator review. No work beyond M57.
+
+## 1. Establish the integration boundary
+
+Inspect the actual Renderer, material/texture loaders, cgltf import, skinning,
+M33 camera targets, M55 optical pass, UI and M56 instrumentation before editing.
+Reuse their real paths; do not implement a separate PBR demo rendering pipeline.
+Record a small baseline capture/profile, not another full baseline test campaign.
+
+Keep the existing OpenGL 3.3 baseline and Renderer ownership of raw GL/GPU lifetime.
+Do not replace Judas with Filament, introduce Vulkan, upgrade GL for convenience,
+or build a render graph/shader compiler as a prerequisite.
+
+Provide explicit PBR and unlit material models, retaining a documented legacy
+compatibility path for existing content. PBR must not be the only permitted style.
+Old scenes must load without bulk conversion or silently reinterpreted colour and
+light values. New material resources and HDR/environment work are optional; simple
+legacy/unlit projects must not pay for unused environment processing.
+
+## 2. Material assets and instance overrides
+
+Add normal reusable material assets, following existing asset naming/identity
+conventions (for example .judasmat). Required PBR properties:
+
+- base-colour factor and texture;
+- metallic and roughness factors plus metallic/roughness texture;
+- tangent-space normal texture and strength;
+- occlusion texture/strength;
+- emissive colour/texture and authored intensity;
+- opaque, alpha-cutout and ordinary alpha-blended modes;
+- alpha cutoff and double-sided state;
+- practical UV tiling/offset and existing sampler settings.
+
+Support imported primitive/submesh material slots: do not collapse a multi-material
+mesh to its first material. The representation must serve ordinary static meshes,
+existing primitives and skinned meshes, not only one importer or demonstration.
+
+Separate shared material definitions/resources from per-renderable overrides.
+Changing one instance's tint, roughness or emission must not mutate every instance
+sharing the asset. Clearing an override restores the shared value. Material-source
+editing intentionally updates its users through the normal resource workflow.
+
+Use deterministic defaults for missing optional maps. Invalid references/parameters
+report actionable errors and use an explicit fallback where appropriate. Do not
+silently overwrite good assets when an import fails.
+
+## 3. Physically based shading, bounded to a useful core
+
+Implement a documented metallic/roughness microfacet model: GGX specular with
+consistent Fresnel, visibility and diffuse treatment. Follow primary references
+below rather than combining unrelated shader fragments. Numerical safeguards,
+including the zero-roughness treatment, must be explicit and finite.
+
+Use the existing directional, point and spot lights and their shadow information.
+Keep their supported counts and compatibility semantics; do not make clustered
+lighting or a new shadow system part of M57. State the lighting/intensity convention
+honestly instead of claiming photometric units the implementation does not use.
+
+Metal, rough plastic, painted surfaces and unlit content must behave differently
+because of material parameters, not object names. Do not double-add legacy ambient
+lighting on top of image-based lighting. Occlusion must not simply darken all direct
+light and emission. Emissive material does not automatically illuminate neighbours;
+that would require a separate lighting capability.
+
+## 4. Colour, HDR and display output
+
+Make texture interpretation explicit: colour images and numerical data maps are
+not interchangeable. Follow glTF's channel/colour conventions for imported assets:
+base-colour/emissive RGB are sRGB; normal/occlusion/metallic-roughness data are linear;
+roughness uses G and metallic uses B. Alpha is not gamma-corrected. Document factor,
+colour-picker and texture semantics. [R1]
+
+The same source image used in different colour/data roles must not poison a shared
+texture cache. Cache/resource identity must include relevant interpretation or use
+an equally correct mechanism. Preserve filtering, mipmaps, wrap and UV orientation.
+
+For the modern path, accumulate lighting in a linear floating-point colour target,
+then apply manual exposure and one documented tone mapper, followed by the output
+transfer function exactly once. SDR output is sufficient; HDR here means internal
+lighting range, not an HDR-monitor implementation. Khronos PBR Neutral is a suitable
+small candidate; another documented operator is acceptable. [R3]
+
+Keep authored UI/debug colours legible and independent of world exposure. Compose
+UI at the appropriate display stage with consistent blending/encoding; avoid double
+sRGB conversions. Preserve a clear legacy presentation policy rather than globally
+changing every old scene's brightness.
+
+No auto-exposure, bloom or colour-grading framework is required. Tone mapping is
+here to complete the material pipeline, not to start a post-effects milestone.
+
+## 5. Environment lighting and background
+
+Provide one authored environment-light selection per world/scene, independent of
+whether its background is visible. Include environment orientation and intensity;
+these are authored transforms, not gravity-derived world-up assumptions.
+
+Implement diffuse environment lighting and roughness-dependent specular image-based
+lighting using a standard prefiltered representation and BRDF integration lookup,
+or an equivalent demonstrated formulation. A sharp skybox sampled for every
+roughness is not sufficient. A constant ambient term is not the whole feature. [R2]
+
+Support a practical HDR environment input, preferably Radiance .hdr through existing
+decoding machinery where possible. A simple generated/redistributable environment
+is sufficient for the demo. Do not introduce a large external rendering dependency
+merely to preprocess it.
+
+Precompute and cache derived environment data through an editor/import/bake path.
+Use content/settings/version identity, normal asset lifetime and exported derived
+data. No per-frame convolution or mandatory rebake on every standalone launch.
+Report preprocessing cost separately from game startup and steady-state rendering.
+Provide an explicit fallback when no environment is assigned.
+
+This is a static authored lighting environment, not dynamic scene reflection capture,
+local reflection probes, global illumination, weather or atmospheric scattering.
+
+## 6. Import, tangents and deformation
+
+Extend the existing pinned cgltf path for core metallic/roughness material data,
+textures, samplers and per-primitive assignments within the geometry/container
+formats Judas actually supports. Preserve embedded resources and stable references
+through import/reimport/export. Required unsupported extensions must fail clearly;
+optional ignored features must be reported, not advertised as fully supported.
+
+Consume imported tangents and generate missing tangents where normal mapping needs
+them. Prefer a pinned commodity generator such as MikkTSpace rather than inventing
+a new tangent convention. Preserve its license/provenance if adopted. [R4]
+
+Account for UV seams, mirrored UV handedness, existing image flips and degenerate
+UVs. Missing/degenerate tangent data needs a safe documented fallback, not NaNs.
+Apply normals/tangents correctly through supported skin and instance transforms,
+including normal-matrix handling for nonuniform instance scale. Do not redesign
+animation or change resolved skeletal poses to fix lighting.
+
+Prove the normal-map path on both a rotated static mesh and a moving skinned mesh.
+Read presented transforms/poses for rendering, not mismatched fixed-step poses.
+
+## 7. Make the existing render passes agree
+
+Integrate materials into the ordinary main/editor, secondary-camera and shadow
+paths. Alpha cutouts must affect shadow silhouettes, not cast solid rectangles.
+Define blended-material depth writes, sorting and shadow policy. Basic per-camera
+transparent ordering is enough; intersecting transparent surfaces may remain a
+documented limitation. Alpha blending is not physically refractive glass.
+
+M33 targets require explicit colour/output semantics. Distinguish scene-linear
+radiance from display-referred camera images; do not unknowingly tone-map or decode
+the same content twice. Preserve cadence, feedback protection and per-camera masks.
+Demonstrate an actual camera texture consumed by an ordinary material.
+
+Preserve M37 culling, M39 masks, skinning and animated bounds. Environment/background
+rotation must not alter physical gravity or camera orientation.
+
+Trace M55 underwater attenuation's actual compositing stage. Integrate it with the
+new colour pipeline without double attenuation/tone mapping, covering cameras on
+opposite sides of the surface. Keep its accepted boundary queries and interpolated
+surface timing. Do not change liquid simulation or add a new water-wave shader.
+Existing particles and UI must still render in their correct phases.
+
+## 8. Authoring and JudasJS
+
+Provide practical material creation, editing, slot assignment and override/revert
+controls in the editor. Include a small preview or clear in-scene preview. Shared
+asset edits and per-entity overrides must be visibly distinguishable. Reuse existing
+undo/edit transactions where applicable; do not build a node editor.
+
+Expose a small safe JS surface for assigning a registered material to a slot,
+reading/updating supported instance parameters, and clearing overrides. Expose useful
+existing/new exposure and environment settings through the same ordinary authoring
+and scripting boundaries where runtime control is warranted.
+
+No raw shader locations, GLuints or privileged demo dispatcher calls. Match current
+handle/lifecycle conventions. Updates must not trigger shader recompilation or GPU
+resource recreation every frame. Define what survives disable/reload and what is
+transient. Do not invent disk persistence for runtime overrides in this milestone.
+
+Update judas.d.ts, current reference, inventory/manifest, live-VM/drift coverage and
+a small executed material example. Names/signatures must come from the implemented
+API; no phantom convenience methods. Appearance-driven game rules remain JS.
+
+## 9. Assets, lifecycle and compatibility
+
+Use AssetDatabase and the existing async ResourceManager. CPU workers prepare data;
+Renderer/context-thread operations own GPU installation and destruction. Materials
+retain dependent textures/environment resources safely through cancellation, reload,
+eviction, entity destruction and world shutdown.
+
+Integrate scene/prefab serialization, per-instance overrides and runtime spawning.
+Use the existing authored-content fingerprint policy, including relevant material
+and derived-asset dependencies. Preserve old fingerprints when the new optional
+content is absent where the current policy permits it. Do not bump schemas or relax
+save checks merely because M57 exists.
+
+M38 must export registered source/derived resources needed by runtime assignments,
+not just textures found on the startup frame. Moved packages must work offline,
+without repository paths, import tools or writable installation directories.
+Preserve dependency and asset licenses. Verify actual texture/uniform limits on the
+existing GL baseline; do not assume unlimited slots alongside shadows and IBL.
+
+## 10. The visual proof
+
+Provide two complementary consumers, not dozens of standalone demos.
+
+A. Material lab: a compact ordinary project/scene with comparable metal/dielectric
+surfaces across roughness, a readable normal map, emission, alpha cutout/blend,
+a multi-material mesh, two instances sharing a material, a skinned example and an
+M33 camera screen. Use neutral direct/environment lighting and clear labels. A
+rotated/nonuniformly scaled static example should expose tangent/normal errors.
+Show a JS per-instance change without altering its neighbour.
+
+B. Spring Range: make the existing game visibly better using authored materials,
+textures and lighting. Give its plates, supports, floor/walls and characters a
+coherent, readable appearance rather than making everything chrome. Keep shooting,
+score/rearming, enemy navigation, physics, camera behaviour and controls unchanged.
+Keep collision/navigation source geometry intact; this is not a new level-design
+or gameplay milestone. Normal project presentation changes are authorized.
+
+Prefer original procedural or small clearly redistributable art. Do not spend the
+milestone asset-shopping, generating commercial-quality characters or concealing
+shader faults with flattering lighting. Make before/after captures from comparable
+views. The material lab checks mechanisms; Spring Range checks whether this actually
+looks better while playing. Human acceptance decides the latter.
+
+Also run a focused M55 optical compatibility check. Do not re-author the accepted
+liquid demo or improve its physics during a rendering task.
+
+## 11. Focused correctness and integration checks
+
+Use a compact set of known-input fixtures and real GL readback. A CPU copy of a
+shader formula alone does not prove the GPU path. Deterministic render checks should
+use tolerances where appropriate, not demand identical pixels across all drivers.
+
+Cover these distinct risks, grouping assertions rather than building a huge matrix:
+
+- Material serialization/import, submesh assignments, missing-resource fallback,
+  shared-resource lifetime and isolated instance overrides.
+- Known colour/data texture values through the actual shader path; ensure exposure
+  changes world lighting without unintentionally changing UI colours.
+- Metal/dielectric and roughness response under controlled lighting; finite output
+  at parameter boundaries; normal-map orientation on static and skinned geometry.
+- Alpha-mask shadow consistency; documented blended depth/sort behaviour.
+- Environment rotation and roughness-dependent reflection, with sensible behaviour
+  when environment lighting is disabled or absent.
+- Main/secondary-camera output semantics, masks, feedback protection and resize.
+- M55 above/below-water compositing with the new pipeline and presentation timing.
+- Real JS material operations, safe stale handles, prefab spawn, Play/Stop/reload,
+  unchanged authored data after play, and moved export with all dependencies.
+
+Use a few independent analytic/colour expectations or primary reference comparisons
+so expected results do not simply repeat the production shader's mistakes. Record
+actual commands, what each check establishes and its limits.
+
+During implementation run affected checks only. At candidate completion execute
+one clean Release build, one production-suite run, affected async/resource tests,
+M57 checks, JudasJS type/drift/live enumeration, editor Play/Stop, Spring Range
+regression and moved-package smoke. Check M56 GPU timing across the changed passes.
+Do not run the entire production set repeatedly. Narrow late fixes get affected
+reruns; refresh fingerprints only for the genuinely tested final state and preserve
+original failures. This is not permission to rewrite historical expected evidence.
+
+## 12. Use M56 to measure the cost
+
+Use the integrated profiler instead of rebuilding a bespoke timing subsystem.
+Compare the legacy baseline, PBR direct lighting, and PBR plus environment/HDR under
+comparable views, resolution, workload and profiler settings. Separate shader/import/
+environment preprocessing and first-frame stalls from warmed game performance.
+
+Report CPU active work versus waits, asynchronous GPU pass time where available,
+median/p95/max frame intervals, draws, texture/target dimensions, known GPU/resource
+bytes and any shader/texture-unit limits. Label software/offscreen measurements;
+include a practical native desktop run on the current development hardware.
+
+Do not terminate Minecraft or other operator workloads. Note concurrent load and
+do not turn noise into a claimed speedup. A meaningful rendering improvement may
+cost more; measure the tradeoff honestly. Do not lower game simulation cadence,
+remove enemies or disable physics to claim faster rendering.
+
+Keep environment/target resolution configurable and modest for the reported 4 GB
+GPU class. Do not optimize speculatively, but fix clear repeated allocations,
+per-frame preprocessing or rendering regressions before handoff.
+
+## 13. Scope boundary
+
+Required: reusable materials/overrides, metallic-roughness PBR, correct textures and
+normals, environment lighting, minimal HDR/exposure/tone mapping, current-pass
+integration, editor/JS/assets/export, and visible improvement in Spring Range.
+
+Not required: full glTF extension coverage; shader graphs or arbitrary project GLSL;
+clearcoat/transmission/subsurface/anisotropic materials; ray tracing; GI; real-time
+reflection probes; deferred/clustered rendering; new light/shadow architecture;
+LOD/instancing/occlusion systems; bloom/SSAO/SSR/TAA/motion blur; an AA redesign;
+volumetric skies/weather; fluid changes; animation/AI changes; Unicode; world
+streaming; audio expansion; save migration; new graphics APIs.
+
+If a genuine architecture conflict or repeated failure prevents this scoped design,
+report the concrete problem instead of silently dropping a core feature or expanding
+into one of those systems. Routine resolved defects need no extra review round-trip.
+
+## 14. Handoff and stopping condition
+
+Preserve protected FTFT/P1 research, historical M33–M56 evidence and failures, accepted
+physics/navigation/liquid behaviour, unrelated projects and the operator's existing
+docs/ROADMAP.md edit. Record its bytes before/after; leave it unchanged and unstaged.
+Current architecture/API documentation and authorized material/game presentation
+assets may be updated. Do not revise old milestone reports as if PBR always existed.
+
+Provide one concise human checklist:
+1. Compare Spring Range appearance and play it in both camera modes.
+2. Confirm targets, enemies, score, pause and restart still work.
+3. Inspect material differences, normal maps, cutouts/shadows and reflections.
+4. Edit a shared material, override one instance, and revert that override.
+5. Check the skinned example, camera screen and exposure/UI behaviour.
+6. Check the liquid demo's waterline/underwater view without physics changes.
+7. Reload/Stop and test the moved exported game; inspect M56 performance.
+
+Report architecture, material/import coverage, colour/pass ordering, environment
+processing, compatibility policy, JS API, editor workflow, executed checks,
+performance, known limitations, demo/docs/evidence paths and exact changed files.
+Include final-source/asset fingerprints, proposed commit and honest Git status:
+the operator's roadmap change remains a separate uncommitted edit.
+
+Leave the exact candidate uncommitted for human visual/gameplay review. Do not
+claim visual acceptance from screenshots or GL assertions. Do not begin M58.
+
+Suggested commit after approval:
+Add M57 PBR materials and environment lighting
+
+## Implementation references
+
+Use these for the relevant algorithms/contracts, not as a requirement to port every
+feature they describe. Current Judas source determines integration. Pin any borrowed
+code/dependency and preserve its actual license; reference documentation is not a
+blanket code license. No long new research programme is necessary.
+
+[R1] Khronos glTF 2.0 specification: materials, texture roles, tangents, alpha, skins.
+https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
+
+[R2] Filament's rendering explanation: material model, IBL and colour pipeline.
+https://google.github.io/filament/main/filament.html
+Reference only: do not embed/replace Judas with Filament.
+
+[R3] Khronos tone-mapping implementations, including PBR Neutral.
+https://github.com/KhronosGroup/ToneMapping
+
+[R4] MikkTSpace reference implementation for tangent-space generation.
+https://github.com/mmikk/MikkTSpace
+
+Then stop for operator review.
+
+Milestone 57 — Judas learns to look good.

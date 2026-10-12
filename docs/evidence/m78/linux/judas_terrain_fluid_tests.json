@@ -1,0 +1,26 @@
+{
+  "id": "judas_terrain_fluid_tests",
+  "source": "tests/TerrainFluidTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_fluid_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "0a21e67f457f0c7385131a47614b1e7f07ef0521e68d953bb72fbed26a53cb0c",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 31,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_terrain_fluid_tests.log",
+  "logSHA256": "0c6719d0df466e04da15940d8bae1ed66d46989ae064c336ba6da9792be00d34",
+  "seconds": 28.47402062600122
+}

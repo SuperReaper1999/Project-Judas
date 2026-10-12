@@ -1,0 +1,8 @@
+FRAMES 120
+FRAME_SECONDS 0.016666667
+ACTION pause 1 20 21
+EXPECT_PAUSED 1 22
+SCREENSHOT 23 /home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-shipped-paused.png
+ACTION pause 1 60 61
+EXPECT_PAUSED 0 62
+SCREENSHOT 80 /home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-shipped-resumed.png

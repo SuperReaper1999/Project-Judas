@@ -1,0 +1,8 @@
+{
+  "exitCode": 0,
+  "buildDirectory": ".cache/m78-followup/release",
+  "configuration": "Release",
+  "log": "docs/evidence/m78-followup/clean-release-build.log",
+  "warnings": 2,
+  "scope": "One clean affected-target pass, not all 184 targets; compile sources reused only pinned third-party fetched sources, no prior compiled outputs."
+}

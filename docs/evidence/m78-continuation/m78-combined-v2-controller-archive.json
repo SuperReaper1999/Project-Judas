@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "89012cd764e7f8eceef1a0cefc6b873b5bd9f56ad9c3a2e4ef240d4274f5afe1",
+    "case":  "controller",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_controller.exe",
+                      "sha256":  "b91ccbd4e0949bf4124db59d021cbda5afbf24d80af1a384445132af3900eef1",
+                      "name":  "m78_combined-v2_controller.exe",
+                      "bytes":  602624
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\controller-0.obj",
+                      "sha256":  "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7",
+                      "name":  "controller-0.obj",
+                      "bytes":  169808
+                  }
+              ],
+    "freeBytes":  1041592320,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  338758,
+    "archiveName":  "m78-combined-v2-controller-archive.zip"
+}

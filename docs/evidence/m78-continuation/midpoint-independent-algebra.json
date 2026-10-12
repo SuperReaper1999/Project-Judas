@@ -1,0 +1,153 @@
+{
+  "scope": "Independent body-frame scalar algebra at logged actual application states; no gains/fixture/controller changes",
+  "caveat": "Same input comparisons show exact full-horizon invariants; neither anchored constant generator exactly preserves energy at a shortened TOI time",
+  "cases": [
+    {
+      "observedVariant": "consumed_explicit",
+      "originalObservedRecord": {
+        "step": 807,
+        "owner": 10,
+        "begin": 0,
+        "end": 0.004770837025716902,
+        "E0": 2.215324215356528,
+        "delta": -0.011948170177599415,
+        "relative": -0.005393418306347773,
+        "castDelta": -0.011948138411459919,
+        "omega": [
+          11.1988239,
+          -14.1264534,
+          3.77690315
+        ],
+        "q0": [
+          0.883347094,
+          0.220617443,
+          -0.120480202,
+          0.395614028
+        ],
+        "inverseI": [
+          33.4075699,
+          153.061218,
+          33.4075699
+        ],
+        "generator": [
+          11.8495007,
+          -13.5010881,
+          4.18659925
+        ]
+      },
+      "anchorHorizon": 0.01666666753590107,
+      "consumedDuration": 0.004770837025716902,
+      "midpointNewtonUpdates": 1,
+      "normalizedResidual": 7.244452352912232e-17,
+      "midpointEquationEndpointMatchesCayley": 1.8542187859371787e-16,
+      "midpointEnergyIdentityRelative": -2.0046240065857983e-16,
+      "midpointMomentumNormIdentityRelative": -2.914625666767985e-16,
+      "explicit": {
+        "fullHorizonEnergyDelta": -0.00016649885076924775,
+        "consumedDurationEnergyDelta": -0.011948125167785761
+      },
+      "implicit": {
+        "fullHorizonEnergyDelta": 0.0,
+        "consumedDurationEnergyDelta": -0.011812421733667033
+      }
+    },
+    {
+      "observedVariant": "consumed_explicit",
+      "originalObservedRecord": {
+        "step": 558,
+        "owner": 11,
+        "begin": 0,
+        "end": 0.00427712150849402,
+        "E0": 3.2455323058453853,
+        "delta": -0.0003947406870903336,
+        "relative": -0.00012162586900749178,
+        "castDelta": -0.0003946458121077967,
+        "omega": [
+          -2.56020999,
+          4.26953459,
+          3.87880588
+        ],
+        "q0": [
+          0.958685577,
+          0.267405659,
+          0.0950642526,
+          0.0194656439
+        ],
+        "inverseI": [
+          9.4458437,
+          5.62008238,
+          10.9569035
+        ],
+        "generator": [
+          -2.51809883,
+          4.21969795,
+          3.96251297
+        ]
+      },
+      "anchorHorizon": 0.01666666753590107,
+      "consumedDuration": 0.00427712150849402,
+      "midpointNewtonUpdates": 2,
+      "normalizedResidual": 1.0538510304587449e-15,
+      "midpointEquationEndpointMatchesCayley": 2.1062288819005396e-15,
+      "midpointEnergyIdentityRelative": 6.841546586742149e-16,
+      "midpointMomentumNormIdentityRelative": 4.065490638235734e-16,
+      "explicit": {
+        "fullHorizonEnergyDelta": 1.15692482918206e-05,
+        "consumedDurationEnergyDelta": -0.0003947287508334618
+      },
+      "implicit": {
+        "fullHorizonEnergyDelta": 4.440892098500626e-16,
+        "consumedDurationEnergyDelta": -0.00039564524701729553
+      }
+    },
+    {
+      "observedVariant": "consumed_implicit",
+      "originalObservedRecord": {
+        "step": 561,
+        "owner": 8,
+        "begin": 0,
+        "end": 0.0003857800184052674,
+        "E0": 4.244512479348635,
+        "delta": -7.137764127396196e-05,
+        "relative": -1.6816452212414182e-05,
+        "castDelta": -7.168371423027509e-05,
+        "omega": [
+          1.7838347,
+          -4.96742725,
+          -4.8427887
+        ],
+        "q0": [
+          0.966330945,
+          0.223279789,
+          -0.126207158,
+          -0.0205520783
+        ],
+        "inverseI": [
+          9.4458437,
+          5.62008238,
+          10.9569035
+        ],
+        "generator": [
+          1.87936604,
+          -4.9982543,
+          -4.77106762
+        ]
+      },
+      "anchorHorizon": 0.01666666753590107,
+      "consumedDuration": 0.0003857800184052674,
+      "midpointNewtonUpdates": 2,
+      "normalizedResidual": 3.719533951488638e-15,
+      "midpointEquationEndpointMatchesCayley": 7.422244484311397e-15,
+      "midpointEnergyIdentityRelative": 4.185066834183215e-16,
+      "midpointMomentumNormIdentityRelative": 1.530490106158291e-16,
+      "explicit": {
+        "fullHorizonEnergyDelta": 2.878286768925875e-06,
+        "consumedDurationEnergyDelta": -7.171548360052071e-05
+      },
+      "implicit": {
+        "fullHorizonEnergyDelta": 8.881784197001252e-16,
+        "consumedDurationEnergyDelta": -7.136453138567589e-05
+      }
+    }
+  ]
+}

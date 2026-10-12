@@ -1,0 +1,1249 @@
+{
+  "scope": "Unchanged existing authored projects/fixtures and exact original rider mesh for final native checks; no production edits and no build",
+  "archiveName": "m78-continuation-immutable-test-inputs-v1.zip",
+  "archiveSHA256": "17adc7fbf0a0f9eea6b6e28a4e518559ee1d252e45fea29f6bb7a8205c898074",
+  "archiveBytes": 12226766,
+  "unpackedBytes": 16338823,
+  "files": [
+    {
+      "path": "projects/balance_lab/balance_lab.judasproj",
+      "bytes": 10611,
+      "sha256": "8d9bca3703e157c55326180ede9cb731edc5760dd9964570169833b1022e91fa"
+    },
+    {
+      "path": "projects/balance_lab/README.md",
+      "bytes": 3401,
+      "sha256": "74410e7315c6e66d3741f4487d582a01fa955ee9c755bc891810829bba4c4eb0"
+    },
+    {
+      "path": "projects/balance_lab/Authoring/template-render-body.json",
+      "bytes": 2134,
+      "sha256": "7dae9d355b8a57c5460ea8a32bd73fe231accea6f637977fb4a2257f40984426"
+    },
+    {
+      "path": "projects/balance_lab/Authoring/template-render-animation-motor.json",
+      "bytes": 2344,
+      "sha256": "b08834c822079d1ad61af48d763d3a38e82b73b7208bead036a5b9518cea71af"
+    },
+    {
+      "path": "projects/balance_lab/Authoring/template-empty.json",
+      "bytes": 950,
+      "sha256": "47e741f42967e13b1f7b97350a2b817247b33714e7b2c33355a9cbc51cf50966"
+    },
+    {
+      "path": "projects/balance_lab/Authoring/profiles.json",
+      "bytes": 3608,
+      "sha256": "81ba2dc1302cc3cd3a6be173969003b61036f8024f7e7cda2d4a3867d33d9f89"
+    },
+    {
+      "path": "projects/balance_lab/Authoring/template-gravity.json",
+      "bytes": 1225,
+      "sha256": "8c52b3b91a9494f3685849dbdb3088ccb272522f85a095a901ad722deff36e95"
+    },
+    {
+      "path": "projects/balance_lab/Assets/LICENSE.txt",
+      "bytes": 184,
+      "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10"
+    },
+    {
+      "path": "projects/balance_lab/Imports/stride.judasimport",
+      "bytes": 346,
+      "sha256": "2b264225fbecec48e5fe0d59ad114d4901321f5c3f17f5903c3d216ed95f6be3"
+    },
+    {
+      "path": "projects/balance_lab/Imports/anchor.judasimport",
+      "bytes": 346,
+      "sha256": "1200622260fae5caa448ef4c5d14bd78feb19daeb015a3220883540e6fefd96b"
+    },
+    {
+      "path": "projects/balance_lab/Imports/receiver.judasimport",
+      "bytes": 350,
+      "sha256": "eb748f2632665d47dfd5b1652660b2e2a70f2f9acf1ea6802cd7b4f6d59e7814"
+    },
+    {
+      "path": "projects/balance_lab/Scenes/supports.judas",
+      "bytes": 84661,
+      "sha256": "a1f6b3d2836449f1cd1e956da00f29a19e43787aa40239c0088296c51a217d48"
+    },
+    {
+      "path": "projects/balance_lab/Scenes/standing.judas",
+      "bytes": 75978,
+      "sha256": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2"
+    },
+    {
+      "path": "projects/balance_lab/Scenes/recovery.judas",
+      "bytes": 77663,
+      "sha256": "87677ca212617907ea9e3f69ac280f1e22e2fa405de0694d099f85e8f7303018"
+    },
+    {
+      "path": "projects/balance_lab/Scenes/radial.judas",
+      "bytes": 76092,
+      "sha256": "906c91c3efefdf5d718013f0b231d3c3f8e1af9a1d0d513e84c1ed5836ff9587"
+    },
+    {
+      "path": "projects/balance_lab/Sources/anchor.gltf",
+      "bytes": 16166,
+      "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6"
+    },
+    {
+      "path": "projects/balance_lab/Sources/LICENSE.txt",
+      "bytes": 184,
+      "sha256": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10"
+    },
+    {
+      "path": "projects/balance_lab/Sources/receiver.gltf",
+      "bytes": 16136,
+      "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb"
+    },
+    {
+      "path": "projects/balance_lab/Sources/stride.gltf",
+      "bytes": 16123,
+      "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e"
+    },
+    {
+      "path": "projects/balance_lab/Sources/ef577ba3b3430811e4d8e6b80f7bbf3e/stride.gltf",
+      "bytes": 16123,
+      "sha256": "bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e"
+    },
+    {
+      "path": "projects/balance_lab/Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf",
+      "bytes": 16136,
+      "sha256": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb"
+    },
+    {
+      "path": "projects/balance_lab/Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf",
+      "bytes": 16166,
+      "sha256": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6"
+    },
+    {
+      "path": "projects/balance_lab/.cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+      "bytes": 144,
+      "sha256": "10c99372e6ba009cfc42950ae5f2d6f02a76f2a6eb0f9daaa33b2c2607ae7003"
+    },
+    {
+      "path": "projects/balance_lab/.cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+      "bytes": 144,
+      "sha256": "fb9cb5878f5218bb6b7ae65f9d978060bfe582d9c571d99cae4a4a8b0b28fe2e"
+    },
+    {
+      "path": "projects/balance_lab/.cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+      "bytes": 33279,
+      "sha256": "d7c333ee7c9c9cb949194008e0509dd84466b27b3e5786ccdbb2015119f1604c"
+    },
+    {
+      "path": "projects/balance_lab/.cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+      "bytes": 33339,
+      "sha256": "2a5487b447aa5552383d56ba6bbdfb51ad0eab8fc8f0bbe52cf1500ed76f4103"
+    },
+    {
+      "path": "projects/balance_lab/.cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+      "bytes": 144,
+      "sha256": "103e0aa6ce8e4a08634bc75b361eba6433167eaa14076989ef4893015a3c27e1"
+    },
+    {
+      "path": "projects/balance_lab/.cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.judasmodel",
+      "bytes": 33383,
+      "sha256": "09bc2c3237eaced91e053a1a3975a5522a9756aab06e63b4c0953f3d720fe84b"
+    },
+    {
+      "path": "projects/balance_lab/Assets/ui/lab.judasui.judasmeta",
+      "bytes": 159,
+      "sha256": "034e38b6456720e1828068209c776e540b6a5e2a8fc4b7b5586f02d45ba18a31"
+    },
+    {
+      "path": "projects/balance_lab/Assets/ui/lab.judasui",
+      "bytes": 9832,
+      "sha256": "81a50aa26b288a3a91169239760c8375f98fd657040deb8717c37f2610cfd52c"
+    },
+    {
+      "path": "projects/balance_lab/Assets/scripts/lab.js.judasmeta",
+      "bytes": 163,
+      "sha256": "180b7c22069997ac97cca74f485f6138d1bd070b329a59593d3839c06aa46662"
+    },
+    {
+      "path": "projects/balance_lab/Assets/scripts/lab.js",
+      "bytes": 8894,
+      "sha256": "c98db0d35f6587a6427ef6d11ab4e306e5f61e69c8fdc9cf99d7a0b413929e5d"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/stride.judasmodel.import-report.json",
+      "bytes": 2624,
+      "sha256": "b6288bd8e5e941cb90d5e4546d7986b85b707bc47e9558b72066e4364b14771b"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/receiver.judasmodel",
+      "bytes": 34652,
+      "sha256": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/anchor.judasmodel.import-report.json",
+      "bytes": 2688,
+      "sha256": "0e8ad80d708d4dce594ebdbc422b59c5f160e02ccd4cf40ccbab82aa42834b04"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/stride.judasmodel",
+      "bytes": 34742,
+      "sha256": "fa6741ac4795b3faee8db92871f417ca7ae99154078319a9bb0fbdba2f0c4876"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/anchor.judasmodel.judasmeta",
+      "bytes": 88,
+      "sha256": "b5a139bdeb42968c80f92e9b7d9fe5222c8037a0d5b23666071fc3d037675117"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/stride.judasmodel.judasmeta",
+      "bytes": 88,
+      "sha256": "408e4a42573f1cbd4ee92587258c5f521f6c50e99520c8d28bbe3964c9b8e625"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/anchor.judasmodel",
+      "bytes": 34818,
+      "sha256": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/receiver.judasmodel.import-report.json",
+      "bytes": 2560,
+      "sha256": "44fb2ffd2630ba8f11c92050be185f018b2f9c3407ab60fdcd6534a31e1be1ed"
+    },
+    {
+      "path": "projects/balance_lab/Assets/models/receiver.judasmodel.judasmeta",
+      "bytes": 88,
+      "sha256": "13263195d801c15b64422ded80d2c41b73488c872c9191eea322081caf8e5ff9"
+    },
+    {
+      "path": "projects/balance_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "bytes": 167,
+      "sha256": "4fc9a1adec88a69847c26bda7c323aad59eccd15c3cc2fd21103b8ae80129416"
+    },
+    {
+      "path": "projects/balance_lab/Assets/fonts/LICENSE.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "projects/balance_lab/Assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "projects/balance_lab/Assets/prefabs/anchor.judasprefab.judasmeta",
+      "bytes": 175,
+      "sha256": "2fbd09618a59ad245deab178d59a78a16145be53525337da48a9d62997772427"
+    },
+    {
+      "path": "projects/balance_lab/Assets/prefabs/anchor.judasprefab",
+      "bytes": 18213,
+      "sha256": "8fd1953cf1145cadc587491976e338a8db0008ce239a0163847a4c322e74c93b"
+    },
+    {
+      "path": "projects/character_lab/ASSET_PROVENANCE.md",
+      "bytes": 1745,
+      "sha256": "6c5b4447c63e66bf2946f41603bc1fd7f051194a99774a1c8decb0bd8db1fc0b"
+    },
+    {
+      "path": "projects/character_lab/README.md",
+      "bytes": 5790,
+      "sha256": "a2c5236bec7763468e103991906ed75396bf4b9f86cdf3cde45f99741c1f585c"
+    },
+    {
+      "path": "projects/character_lab/character_lab.judasproj",
+      "bytes": 18075,
+      "sha256": "4afaa26320eb22671fc7b9ebb8361300155ae46066d2d13513d78d71b3f6f750"
+    },
+    {
+      "path": "projects/character_lab/Authoring/template-render-body.json",
+      "bytes": 2145,
+      "sha256": "21f2ef9b47ef416b38222881c40d84e7ab74d6a92a20223469464c19d078296f"
+    },
+    {
+      "path": "projects/character_lab/Authoring/joint-names.json",
+      "bytes": 3429,
+      "sha256": "9367ab0fb515d2dbaf7e5e9085e14971da60b76d57d663c6b8e1c8bfccfc39fc"
+    },
+    {
+      "path": "projects/character_lab/Authoring/template-render-animation-motor.json",
+      "bytes": 2375,
+      "sha256": "02122606a4b99c0ee607791cbb50e8712a489c5a91e5a748012dcefcfbb49a69"
+    },
+    {
+      "path": "projects/character_lab/Authoring/template-empty.json",
+      "bytes": 959,
+      "sha256": "22e543af2032d36c868e8a570e8ba42e6aef763a5d028d3737e7c89c54194286"
+    },
+    {
+      "path": "projects/character_lab/Authoring/template-gravity.json",
+      "bytes": 1239,
+      "sha256": "33b8c3305fc5990247c16df299ed27c18da7c4c7c6774d5dcb1c852f889a86c4"
+    },
+    {
+      "path": "projects/character_lab/Authoring/template-body.json",
+      "bytes": 1632,
+      "sha256": "ef6f2b3ebd60c57e19e0c9381c6b301bc4a4cd0749d34e5facc9f0eca64a6788"
+    },
+    {
+      "path": "projects/character_lab/Authoring/template-render.json",
+      "bytes": 1491,
+      "sha256": "d833b17a5e0c3cc307a225a79213ec5a05255a99a89e3c74a41d507d95317459"
+    },
+    {
+      "path": "projects/character_lab/Assets/LICENSE.txt",
+      "bytes": 274,
+      "sha256": "ea9c9bcd2a01ef484b1c5b34b35fe0baef08c01334232cbc2d66d6039ca5b2e1"
+    },
+    {
+      "path": "projects/character_lab/Imports/alternate.judasimport",
+      "bytes": 352,
+      "sha256": "c736ed8b4231ad040ee8052ee6597739d9c38ae282ca0c7aa6cb3e1bf2a3220f"
+    },
+    {
+      "path": "projects/character_lab/Imports/figure.judasimport",
+      "bytes": 346,
+      "sha256": "5bc6f271bd2fe3a507a2f5e764c9d183532b66ce5054bcf2148915955ecb7ff2"
+    },
+    {
+      "path": "projects/character_lab/Scenes/wall.judas",
+      "bytes": 73346,
+      "sha256": "7d12eaeac91576d3d87118d50c261ff88d0024844b1a6f2e527deab3a1a8738b"
+    },
+    {
+      "path": "projects/character_lab/Scenes/board.judas",
+      "bytes": 70970,
+      "sha256": "1d4bad2c9362ef7ef250548a777e37a9a91e2737ad84972529d723c3d9ab193a"
+    },
+    {
+      "path": "projects/character_lab/Scenes/physical.judas",
+      "bytes": 65005,
+      "sha256": "163e2812ef44c7f1e56a87fbbbe9001bdd5ddfaa34156906798325055ff1ba90"
+    },
+    {
+      "path": "projects/character_lab/Sources/alternate.gltf",
+      "bytes": 55699,
+      "sha256": "c1e2d723c62bf67d25bc2ea35f5b94431dec9435a6ec0cd45739c228deba5399"
+    },
+    {
+      "path": "projects/character_lab/Sources/LICENSE.txt",
+      "bytes": 274,
+      "sha256": "ea9c9bcd2a01ef484b1c5b34b35fe0baef08c01334232cbc2d66d6039ca5b2e1"
+    },
+    {
+      "path": "projects/character_lab/Sources/figure.gltf",
+      "bytes": 55978,
+      "sha256": "a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815"
+    },
+    {
+      "path": "projects/character_lab/Sources/5d4fe060b94398efc188e440c03ab97e/figure.gltf",
+      "bytes": 55978,
+      "sha256": "a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815"
+    },
+    {
+      "path": "projects/character_lab/Sources/fa0e0b57d96a452e42b333e98b1ba00f/alternate.gltf",
+      "bytes": 55699,
+      "sha256": "c1e2d723c62bf67d25bc2ea35f5b94431dec9435a6ec0cd45739c228deba5399"
+    },
+    {
+      "path": "projects/character_lab/.cache/model-import/c1e2d723c62bf67d25bc2ea35f5b94431dec9435a6ec0cd45739c228deba5399-57eec3dd7f91c09913167693e8dd9c5e3d716b077717333434da637450408605.judasmodel",
+      "bytes": 107095,
+      "sha256": "f80d334e5ceafdbfa770be39e5cdaf5217e45ecf458b74348ce83444d8eb7034"
+    },
+    {
+      "path": "projects/character_lab/.cache/model-import/a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815-57eec3dd7f91c09913167693e8dd9c5e3d716b077717333434da637450408605.judasmodel",
+      "bytes": 109893,
+      "sha256": "c33e558015e51d25fe0e5ede3c5a55e1bf5f17382dec4abe36ee936c033f2e76"
+    },
+    {
+      "path": "projects/character_lab/.cache/model-import/a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815-57eec3dd7f91c09913167693e8dd9c5e3d716b077717333434da637450408605.json",
+      "bytes": 145,
+      "sha256": "7849bd070e768e9f40f5e552d99cfff6f3691c3eaa0e0eedfe13136664eeb4e9"
+    },
+    {
+      "path": "projects/character_lab/.cache/model-import/c1e2d723c62bf67d25bc2ea35f5b94431dec9435a6ec0cd45739c228deba5399-57eec3dd7f91c09913167693e8dd9c5e3d716b077717333434da637450408605.json",
+      "bytes": 145,
+      "sha256": "0f1e337a1a69b00f00d0a4006f35891b4a1374eaf0a2145fabfa3bcb11061825"
+    },
+    {
+      "path": "projects/character_lab/Assets/ui/lab.judasui.judasmeta",
+      "bytes": 161,
+      "sha256": "a82c3cb548c463c3391daefca44af7315c915bd036539ef5e111a5eb4750864b"
+    },
+    {
+      "path": "projects/character_lab/Assets/ui/lab.judasui",
+      "bytes": 9763,
+      "sha256": "ff255162ab5022648d4a0fd955370860c46778d4bfd301700fa105629fba870e"
+    },
+    {
+      "path": "projects/character_lab/Assets/scripts/lab.js.judasmeta",
+      "bytes": 165,
+      "sha256": "34de8958d3c918293c203fe19a8ad4ff5458659b76456546a1816c5043fa8f4e"
+    },
+    {
+      "path": "projects/character_lab/Assets/scripts/math.js",
+      "bytes": 1382,
+      "sha256": "3976300eb5aaf6323585b263ec601a3b095185ca3c3e284476155ce37fc69d9d"
+    },
+    {
+      "path": "projects/character_lab/Assets/scripts/lab.js",
+      "bytes": 10295,
+      "sha256": "46a7315a36628f442108b751086462c63af8fb54445576853ea5ced2c3731ade"
+    },
+    {
+      "path": "projects/character_lab/Assets/scripts/mapping.js.judasmeta",
+      "bytes": 169,
+      "sha256": "76875be31689db01d441a792931bc0f86b14129df6bcfb603464a86f43fdad6e"
+    },
+    {
+      "path": "projects/character_lab/Assets/scripts/math.js.judasmeta",
+      "bytes": 166,
+      "sha256": "f1a7b89cc202348b6c4283d863c58aaed0d6b0ed8486ee28c6b2a72f7878dcc8"
+    },
+    {
+      "path": "projects/character_lab/Assets/scripts/mapping.js",
+      "bytes": 1409,
+      "sha256": "4db1947b17d4ee7aaf7fdffcf02fb0e21f0a2e38bd58908a2a3d81e544b70e4d"
+    },
+    {
+      "path": "projects/character_lab/Assets/models/alternate.judasmodel.import-report.json",
+      "bytes": 8602,
+      "sha256": "1550fe972c49fa7e0a3b344a974e7e0ce72f56107ddd6f101a2a02d18ea5080a"
+    },
+    {
+      "path": "projects/character_lab/Assets/models/figure.judasmodel.judasmeta",
+      "bytes": 88,
+      "sha256": "ca94c941529921f6892cb505884918492e39c2e7892d0603847490cb2a206b82"
+    },
+    {
+      "path": "projects/character_lab/Assets/models/alternate.judasmodel.judasmeta",
+      "bytes": 88,
+      "sha256": "0d446dd2d77b807730a7d3705897506ef652faadc382f6ab6d9c333937776cb6"
+    },
+    {
+      "path": "projects/character_lab/Assets/models/figure.judasmodel",
+      "bytes": 116282,
+      "sha256": "472e7c930db3037d6184d0bb68e8c952204083ee9b1d882cb806f803f77d4c24"
+    },
+    {
+      "path": "projects/character_lab/Assets/models/alternate.judasmodel",
+      "bytes": 111070,
+      "sha256": "c760d854b8cad7749d99ee817e6685f369f65c54ae7fbbc3b8fecb8e785e4c57"
+    },
+    {
+      "path": "projects/character_lab/Assets/models/figure.judasmodel.import-report.json",
+      "bytes": 13436,
+      "sha256": "f991a08d0f51c9fa2e708f121e4ab602f3027bef8b1235d53fdc09e53869f944"
+    },
+    {
+      "path": "projects/character_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "bytes": 169,
+      "sha256": "43b77d877a08aec4f03ff724c309885939a129507ec565a66b184919ced445a7"
+    },
+    {
+      "path": "projects/character_lab/Assets/fonts/LICENSE.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "projects/character_lab/Assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "projects/character_lab/Assets/prefabs/figure.judasprefab.judasmeta",
+      "bytes": 177,
+      "sha256": "3784c844d17a1c0eb3eaf79d7e4697cb82c608c74be21a417d8283a0026df979"
+    },
+    {
+      "path": "projects/character_lab/Assets/prefabs/figure.judasprefab",
+      "bytes": 26846,
+      "sha256": "f5daaa36ba38d4ab4bf84bb246e91d0c0f3ec78f11b6bbbfe00f3838e07efe60"
+    },
+    {
+      "path": "projects/ragdoll_demo/ragdoll_demo.judasproj",
+      "bytes": 2563,
+      "sha256": "4612f61722c5a54b0019732dc3777bc4ee675bc14594c5cb97817648ea757ccb"
+    },
+    {
+      "path": "projects/ragdoll_demo/Scenes/main.judas",
+      "bytes": 7266,
+      "sha256": "d1ce4efb6d995cc5bfad86e9b65ae323ace30732e7da69f1525ecfe4c6b27ba2"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/ui/menu.judasui.judasmeta",
+      "bytes": 73,
+      "sha256": "575e70409e2c55031393b925b8c52e0c850b0156f79e7ec2a0214870c85b7f3d"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/ui/menu.judasui",
+      "bytes": 4666,
+      "sha256": "4ee902343ae9a41bf4ec9b61fe5a6d10e2d6b2b71a8f1dd1e8a17137c22dea9c"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/textures/particle_soft.png.judasmeta",
+      "bytes": 111,
+      "sha256": "edd3e79e0c7e6844747412084400c8e2d77b38133e1e3ad4c3a3ea8f5b2de961"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/textures/particle_soft.png",
+      "bytes": 2409,
+      "sha256": "2d31ad50a230c0f42782b8158e4f3eb1d74529db12c4e623a50364273122cdbd"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/scripts/animation.js.judasmeta",
+      "bytes": 77,
+      "sha256": "ff972a2b17981e34ea15ea6c20f69fd6e9ceccf7037fc8e9fb2657ac0ec10bf4"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/scripts/animation.js",
+      "bytes": 2710,
+      "sha256": "ad16886b58af174f594e61097c93237d20a1b509801cc87d55b3eba2aacc3e6c"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/models/bend_bar.glb",
+      "bytes": 11584,
+      "sha256": "fd77ce6c97d5d8a161aba400390bdce8e9a7fe00929f56b2e4b8191fb975c5e3"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/models/LICENSE.txt",
+      "bytes": 155,
+      "sha256": "342115d48e10283d29856cc6610f686828f23854684e507d0f618b00e7023502"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/models/bend_bar.glb.judasmeta",
+      "bytes": 75,
+      "sha256": "4cda42e7081ad28d9109459f9a6f944b682797247f4e0d36807c87ae12d428d1"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "bytes": 75,
+      "sha256": "29fe690b9c2063cf2e3ffd87575ebbea1121caefaa53d4b9d033e754dbf1a2e9"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/fonts/LICENSE.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/prefabs/bar.judasprefab",
+      "bytes": 3186,
+      "sha256": "7a3bf4f2d669e69612740f9fdb8d6b82cfcac6a00ee3a83e85848a38ef02049b"
+    },
+    {
+      "path": "projects/ragdoll_demo/Assets/prefabs/bar.judasprefab.judasmeta",
+      "bytes": 77,
+      "sha256": "1d0c15f65c81c163a4a02e70d8f19dd78815b7df30997ff73ceed6facc658822"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_default_q_far.judas",
+      "bytes": 1149,
+      "sha256": "f662ba6200c28960815802228fd579eaf68a056e9879e15f2ebe94e17739b47a"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_quarter_minus_q_far.judas",
+      "bytes": 1157,
+      "sha256": "0f632c72996a71ab80da3f377fab371d807abe35727eef15eaf3a982e941c3bd"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_3_7_minus_q_far.judas",
+      "bytes": 1176,
+      "sha256": "15f42c0008ee9c080eda15d1c1a3780ae0e95db6538ba99415b21278c0cc5805"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_reverse_minus_q_far.judas",
+      "bytes": 1150,
+      "sha256": "3bb0441f65fb767c4e98fb3df2db96d9bb1dfab1ab9c9550b7b209540dd62ac4"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_default_q_near.judas",
+      "bytes": 1122,
+      "sha256": "f00e3b580b7a21c549eb5121d35d51a2e770dfafb0d189bf6012333b2c830b97"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/manifest.tsv",
+      "bytes": 73789,
+      "sha256": "4c84ebb7b9789db569172438165e022488312529f72d9dda1417d5b9c75fa7b2"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_3_7_minus_q_near.judas",
+      "bytes": 1108,
+      "sha256": "056d0b599eccdfa66f4d0ad04a3aaaaaf16151f16427ac08e5f9921a4c67dfa7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_below_default_q_far.judas",
+      "bytes": 1150,
+      "sha256": "b36928ac3cda290927c364b0c513b0ee75c32438b6db11e9a6e22fa495ae5e75"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_zero_q_near.judas",
+      "bytes": 1133,
+      "sha256": "82e4773f0d3af7c0a1f68ed03a68f3677cbb1694d1d056a6077288ea4a59d45c"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_quarter_minus_q_far.judas",
+      "bytes": 1133,
+      "sha256": "51d8dfed2bd298e3e5c43f12dbf17f3886f39c28d454d668b897cc09d669a563"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_next_minus_q_far.judas",
+      "bytes": 1156,
+      "sha256": "f8f48990fb98444a04f7ac0e2e32cbc8e2a5932c84421876f8ef7dd4b3454249"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_zero_minus_q_far.judas",
+      "bytes": 1168,
+      "sha256": "469325f554d7f34d997e9353f19167900cce3869356249e4cba68105ac00705d"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_zero_minus_q_far.judas",
+      "bytes": 1127,
+      "sha256": "996af399db409214bff9980e976600108cfba33196dae3fbe18ae15ea34de9e8"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_reverse_minus_q_near.judas",
+      "bytes": 1123,
+      "sha256": "3fe0f7c7b07853a555e1c654b5ca55f021cd5bcdba6b9d4e312578fba046727c"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_above_default_minus_q_near.judas",
+      "bytes": 1130,
+      "sha256": "9d7d12337aeb3a5e49aa115a7fe1521cbfcb786d065c9fba06cdf44ed492f485"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_double_default_minus_q_near.judas",
+      "bytes": 1131,
+      "sha256": "bb60acc4e09f6c9756e8495ea3219c8cded27298ab7fd95a338a87b6f9fcf56b"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_next_q_near.judas",
+      "bytes": 1099,
+      "sha256": "46501c2be635ac0b6ee39cdc4b5f27429d3b379677b1d46b2458cb816327b073"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_double_default_q_far.judas",
+      "bytes": 1151,
+      "sha256": "90b4cd04880036ee006adc0d2182c9c170956c333fb65d863b96754f738bc268"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_nonunit_q_far.judas",
+      "bytes": 1170,
+      "sha256": "21e9252a42be64fdeb7260fd97bad315f789bb067611b6978675eca88067ace7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_quarter_minus_q_far.judas",
+      "bytes": 1157,
+      "sha256": "4463d4ea37be8367899827f2748458e7bb6a6aa402803c02d9f1c2715fb9114c"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_below_default_minus_q_far.judas",
+      "bytes": 1160,
+      "sha256": "3fa24caf47bd1b6f22bbcb7233ac941afce6c77be11c21ebd0cef8242be6bb3b"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_quarter_minus_q_near.judas",
+      "bytes": 1130,
+      "sha256": "cabb31fc5f98ca2c9479e8476418d885168bbd489caa512806fefc00e10eab36"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_above_default_minus_q_far.judas",
+      "bytes": 1157,
+      "sha256": "7b4f833551142c171a9ed8cb3b54b80f71625cb683db337a27ba37f117767df7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_below_default_minus_q_near.judas",
+      "bytes": 1133,
+      "sha256": "af02a69753de413ff36a846366c14e960453f628ef2afa9ddb4dedf589a4bcf0"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_3_7_minus_q_far.judas",
+      "bytes": 1135,
+      "sha256": "4d5d7dea31eb2e8345766559a0af1f1b2e9cdeaf484f3b73851440cfbf417009"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_previous_q_near.judas",
+      "bytes": 1103,
+      "sha256": "9ca3f03bb3967bf8777f5fda655b86e539730e5b88049da2f2476f7dde14e606"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_half_default_q_far.judas",
+      "bytes": 1152,
+      "sha256": "7da5912bf2aa285ac0ce32cfff696907c004d1725de41e7c027b777085ea2fb4"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_below_default_q_near.judas",
+      "bytes": 1126,
+      "sha256": "63ec0c09a26870db818d21769d854da7a24f5995cf5bb4cd0906887ae6c995d0"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_17_25_q_far.judas",
+      "bytes": 1122,
+      "sha256": "c02cc4c248fa8fea21a1fd5c04dd2798a6c3b3af607d244dcb3165f8fad03361"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_reverse_q_near.judas",
+      "bytes": 1113,
+      "sha256": "046db08fcdbd71ed35a0c95e659b3855f759aa60e84c93bb4020311e94df525c"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_half_default_q_far.judas",
+      "bytes": 1152,
+      "sha256": "8e427d46fc18d87a9ef576ccd42c603ed542811cee05077fd826ca992f45b046"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_y_yaw_q_near.judas",
+      "bytes": 1116,
+      "sha256": "db32e1b17b1be910920e431b75fd0917e2fbec1d27a553cddff3b78b87e89b39"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_default_minus_q_near.judas",
+      "bytes": 1112,
+      "sha256": "0767c46d68cf86715ce81b663c9c98ac38c96bfd186e2e500a74460ec48af4c3"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_above_default_q_near.judas",
+      "bytes": 1126,
+      "sha256": "f98114e375999b942856929f7387857d306f73e24b8ffea4ac0441155ef8ea32"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_default_minus_q_far.judas",
+      "bytes": 1139,
+      "sha256": "b526358d9e1566330de3cb37fe992003de78165a4e0390e2617e379b638f9ce4"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_nonunit_minus_q_near.judas",
+      "bytes": 1151,
+      "sha256": "3ea266282287a94459c822b51595faef3aa7f5ee5576017522737409b1093609"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_half_default_minus_q_near.judas",
+      "bytes": 1132,
+      "sha256": "02750a1e8ea3b188e2096ee55cc8f464c0cf7f1ca4de7975e1083d3312bb0eec"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_half_default_minus_q_near.judas",
+      "bytes": 1129,
+      "sha256": "4c2d90a7f95de9b12e06b59ddeb96e9e343396f59b774d511a4c0eb7f100cde1"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_previous_q_far.judas",
+      "bytes": 1150,
+      "sha256": "6be771a1906ab94217f85ad129bfc9e22b678760fa822d9537daab1604b5e2b7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_y_yaw_q_far.judas",
+      "bytes": 1143,
+      "sha256": "a04b66b0718a64a2e75c14d5e9a26b54541c9fdfd9d728ac3940873bbaf4fde1"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_below_default_q_near.judas",
+      "bytes": 1123,
+      "sha256": "8b06c18ae5ba437de02a238905cf2cafb32c7cfc78f63924f09313f9d698f7c5"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_double_default_q_near.judas",
+      "bytes": 1124,
+      "sha256": "1ec241d4d283a90d5620a4b9aa5c4cf0a413981b68777f6824cadaa5ab7d0ff6"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_next_q_far.judas",
+      "bytes": 1126,
+      "sha256": "18430a467db6229efb57a7ad7375241302ba0d547e79201d569567d4ab4942c1"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_3_7_minus_q_near.judas",
+      "bytes": 1149,
+      "sha256": "89b7443aa401cd1697605332a46ebadfc3171067dc353e4c043b3a268ab0e05e"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_zero_minus_q_near.judas",
+      "bytes": 1100,
+      "sha256": "542653810584e222ca8885a91caca9826f31c807f90267c73b6ccc74b808c784"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_half_default_minus_q_far.judas",
+      "bytes": 1156,
+      "sha256": "92e91fff46ad181536e08160c9c0793a3e45c94937d4fc6f53b92f76115cdcc2"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_below_default_minus_q_near.judas",
+      "bytes": 1133,
+      "sha256": "7ff07500a7215c4d94c4d8fcf6dc30e8bd5cacbccab471d8a99ea3b4178dc8df"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_reverse_minus_q_near.judas",
+      "bytes": 1123,
+      "sha256": "7c86f3b6463b4c94c9cc48e07243ceeabed37d925a01339caca5c4dabcb9a98f"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_below_default_q_far.judas",
+      "bytes": 1153,
+      "sha256": "168b57ea1a75c1d596352d1690ce3d5e049328021fa67529c7df6af6dd57f277"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_reverse_q_far.judas",
+      "bytes": 1140,
+      "sha256": "ee6022479c7de54de2dd6b9b6607cfd0202153f1de575e37d3f9a5a7b31d02d2"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_below_default_minus_q_far.judas",
+      "bytes": 1157,
+      "sha256": "cdc0da249b751c2bf20483938bb5c6d17bd832479c4f5ccc80172e9ff8d0de35"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_default_minus_q_near.judas",
+      "bytes": 1153,
+      "sha256": "afcfc6db05a3b2b90487ac12b3265cb45aa77a5ed21a37356fa6edcbbf42cf16"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_default_q_far.judas",
+      "bytes": 1172,
+      "sha256": "7077d8fc70d53566fe8fdfa283e52d699e6acda5681456e94ec3b5d228ac13c7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_double_default_q_far.judas",
+      "bytes": 1154,
+      "sha256": "9b7caeb5e271fc23ae2c08af7cece33bbbd24f71afcc45bb9d12d62de2846839"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_previous_q_near.judas",
+      "bytes": 1123,
+      "sha256": "4addb5dac981dc5ff74a570a6044bd087994b5fb0096ddfc4c53f4f50e9b2848"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_double_default_minus_q_near.judas",
+      "bytes": 1131,
+      "sha256": "4b2148160f40315506192fdbb9394589178ed5ea22d5824436ec99675dd917cb"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_above_default_minus_q_far.judas",
+      "bytes": 1157,
+      "sha256": "10a3150c836328ef08b404435ae7cee39d4cd69af1912cdd76832355c2ffac8e"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_above_default_q_far.judas",
+      "bytes": 1150,
+      "sha256": "e8f24f3b6676f2be91dc2b5daa670c284a698acf22ae5f6fc6f3c234d81a2c01"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_below_default_minus_q_near.judas",
+      "bytes": 1130,
+      "sha256": "9fd6d86dbbab54a252779745e69d2a997d43645ece6c07213dd1d18bdcba7322"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_above_default_q_far.judas",
+      "bytes": 1150,
+      "sha256": "4759255bd2e49a8cc3c022d9d664ac0340449c7b56f7356980e1d9c8f2f2618b"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_double_default_minus_q_far.judas",
+      "bytes": 1158,
+      "sha256": "fd32b051f2509449fb56666fa93cd061c8fb9d7c2c2f0056a20236c5a0f1d9a1"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_half_default_minus_q_near.judas",
+      "bytes": 1129,
+      "sha256": "e57b781118017e6e150a3e2f58f29d4a511fa5d44584621ca42e10226016ef5d"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_double_default_q_near.judas",
+      "bytes": 1127,
+      "sha256": "cdb1a57daf05136738acbba2f6546d6e8dcb1405c0a1bee88e97f5b222b24c8f"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_below_default_q_far.judas",
+      "bytes": 1153,
+      "sha256": "7b923695c231104d9c2a9a5654e93cfa57c3489e6b965d82b986796195b7a323"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_above_default_minus_q_far.judas",
+      "bytes": 1160,
+      "sha256": "d64036d7f0a3048473f4722ed52685edbaac7c4b3800412893b01ebb4e83131a"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_reverse_minus_q_far.judas",
+      "bytes": 1150,
+      "sha256": "387a5e2b7e7bc437d4c43c6f8ac05ed4b6419b67d44890c9e8b66a751006e2bb"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_next_minus_q_far.judas",
+      "bytes": 1136,
+      "sha256": "af2428d944943cee00ea484820cd0e5eb77c222b183e66e58ea8e1e783e9ceca"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_half_default_q_far.judas",
+      "bytes": 1149,
+      "sha256": "6389ea1eb4431f91edc731fccdef17517b62ebe270ad000134e3e1358e63c2cc"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_below_default_q_far.judas",
+      "bytes": 1150,
+      "sha256": "3d950599fb00b5528b4bc0da1b9a38178411ea67e897dcf3d29c7a52f6053351"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_default_q_far.judas",
+      "bytes": 1129,
+      "sha256": "f3adb8c6c951f5085b9bbcbe257626866c8a2d93b217b864b2b9194754bd59ec"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_quarter_q_far.judas",
+      "bytes": 1147,
+      "sha256": "4f2b58395051d0840eb17cc4f97a42b1bd7a00281605db531e42a3696e9d90ac"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_zero_q_far.judas",
+      "bytes": 1117,
+      "sha256": "3c8a6046245492b93e1c373c3652082a18e4f576c62ef0177d377eb2c3507a3e"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_quarter_minus_q_near.judas",
+      "bytes": 1130,
+      "sha256": "106420878195d4df6445ceb9f75ee6fd951e3dc02e0fc25f79a79d4f19ad70f0"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_zero_q_near.judas",
+      "bytes": 1090,
+      "sha256": "2530057b39a9789ccd9d7fad87e3505f3d43ef8041192569185761a7c093ebaa"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_above_default_q_far.judas",
+      "bytes": 1153,
+      "sha256": "d67d977685dd2be1d26e597d2c4bf19c486c8a190a12cf5599bd516cbcc39515"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_3_7_q_near.judas",
+      "bytes": 1141,
+      "sha256": "d22d1f10bee9f77ebb20536775e81bd15520616a00077fc5690d0c5e10c0a507"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_quarter_q_far.judas",
+      "bytes": 1147,
+      "sha256": "1ebb875f89febd97cc577b38444661e3df1247e89c34923205d862a37897d287"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_17_25_q_near.judas",
+      "bytes": 1095,
+      "sha256": "abd4e7285010574fe3998f67a2d3b4a424fa2efae2472fd852686c4196ebb52f"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_y_yaw_minus_q_near.judas",
+      "bytes": 1126,
+      "sha256": "dc88081baf59cfdf778072e7d6311338cb8bec04089d211439a111fedf7b6671"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_double_default_minus_q_far.judas",
+      "bytes": 1158,
+      "sha256": "5a27a27552b8627397dbb8cafebabea867cb1c29548216c5e67fdcb62b1c8a17"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_above_default_q_near.judas",
+      "bytes": 1123,
+      "sha256": "b036b55f915019b4ee3892f178e2a15d67bf64675ff90bfdf7b921de09e2d960"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_above_default_q_far.judas",
+      "bytes": 1153,
+      "sha256": "c6db7819d87c38d8006efb3e676377cd48d47d8bcb379a1b14571d60a1736d6a"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_zero_minus_q_near.judas",
+      "bytes": 1141,
+      "sha256": "3ccd5c510d7138e505aa25f23ed8f1ef55a7869862be995694b7cf69ace8d086"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_nonunit_minus_q_far.judas",
+      "bytes": 1178,
+      "sha256": "e75530626f7b0788b7ffaa4208c8ec0715fbcaed4027cba95a1c94577f99b518"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_above_default_minus_q_near.judas",
+      "bytes": 1133,
+      "sha256": "fa2eaf3fe503bdf70e0a908921f3f6eb901345e5c1def731282f548a7b94ea0f"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_double_default_minus_q_near.judas",
+      "bytes": 1134,
+      "sha256": "604a303f037ddb2951148fd51b6e58d32b59f50eb83bbf0b0f49b8f0331bae2b"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_above_default_minus_q_near.judas",
+      "bytes": 1130,
+      "sha256": "56d4c7b79110a3874e425cb8fdc7a1c812f7765136267ea5a006cb73b1b45b90"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_y_yaw_minus_q_far.judas",
+      "bytes": 1153,
+      "sha256": "3289e99e9c4c4d145fa31e219ec0db75fcca70ac1240791f25a7c58710600e4c"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_below_default_minus_q_far.judas",
+      "bytes": 1160,
+      "sha256": "e2f5668daddbba9c0838b7fb772a2409565c3199028cc9389c5fa4985e39e835"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_3_7_q_far.judas",
+      "bytes": 1168,
+      "sha256": "39f8e36bac36ab11a1024e8ba46ed0e90cff4ec605239f850ca8269583949093"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_above_default_q_near.judas",
+      "bytes": 1123,
+      "sha256": "fa77f0c8deaba6eea17d24fad56301aa19d108bbd4135b7fe70e2deb0769b2e0"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_double_default_minus_q_near.judas",
+      "bytes": 1134,
+      "sha256": "bf7f17513674eaf4b8d610c4cb8ac411a08939d8053cfd18f315d4ef763f3371"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_below_default_q_near.judas",
+      "bytes": 1123,
+      "sha256": "4600193703baee879f321fbfd6db8197bf3d94475758b7d67a03ba5bea04df35"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_17_25_minus_q_far.judas",
+      "bytes": 1132,
+      "sha256": "51323f060fce2fc46b06f3d17cd857b3465db38f75dbc12318b587e675a2ff41"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_quarter_minus_q_near.judas",
+      "bytes": 1106,
+      "sha256": "3843c71275029e039aeec880ae9d76dfdc449d8496b24df371ae2c2dca30edd3"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_double_default_q_near.judas",
+      "bytes": 1124,
+      "sha256": "f2ec0279a805bbf884a03332e3a22c20e8a3dc9a47d32d4c28f1097bc1dd3340"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_next_q_far.judas",
+      "bytes": 1146,
+      "sha256": "982f4373689cf54e80434f244d09fb3ec9051142bf6e2323cc002277eb010625"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_above_default_minus_q_far.judas",
+      "bytes": 1160,
+      "sha256": "2e3afddba5d7e6a116f1d46df9aa3cdbe7509e368ec0b9d313c77e9f93fde3b5"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_3_7_q_near.judas",
+      "bytes": 1098,
+      "sha256": "67f2fc408b822bb20f6092d7f25479335b5f1224ec1d9190df8e63ebafe5bed1"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_nonunit_q_near.judas",
+      "bytes": 1143,
+      "sha256": "e9b3868120b94e1b778f99206a893cca46190f67241eed9e180e74f9c777dba4"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_half_default_minus_q_far.judas",
+      "bytes": 1156,
+      "sha256": "e81d3f593c06ac429004686014434df0cf5269c6f9020fdfa4e0c2aaad41573f"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_default_minus_q_far.judas",
+      "bytes": 1159,
+      "sha256": "1163f37a811877cffaab8a5b512c1a73be402f9c8e8fa97fe9b3d6b8c191e79e"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_3_7_q_far.judas",
+      "bytes": 1125,
+      "sha256": "832798f3f1034f4a79a8c3308c042353e2d0c0c618cf612e7299d077b256ec24"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_previous_minus_q_far.judas",
+      "bytes": 1160,
+      "sha256": "20cd1d5486554209a650d4f1319320fa8808c5c7d732ededb8695e8d5b64ab2a"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_quarter_q_far.judas",
+      "bytes": 1123,
+      "sha256": "8bce38dbd279b31a7b45b36ba59ebea408275bc477a7ce0931d1ff6056f4b0c7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_quarter_q_near.judas",
+      "bytes": 1120,
+      "sha256": "4d8828683b8c1d985b7f3b5309683a0c97a0bda3dea830613b134f6b42c43e52"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_quarter_q_near.judas",
+      "bytes": 1120,
+      "sha256": "6d5f71d572fa0670d1f4f4676aa5194b0a15be8fedbfab1a5ff4945fca872ffc"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_half_default_q_near.judas",
+      "bytes": 1122,
+      "sha256": "460ceec32b3f514fe37d15dce3590efa644c0e017519ee5f9d121a58623cf7b8"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_x_reverse_q_far.judas",
+      "bytes": 1140,
+      "sha256": "3ab021f7ff9796a0e13b6cdeabda5b9f00610cbdac66f007b062e05f06ec080c"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_double_default_q_near.judas",
+      "bytes": 1127,
+      "sha256": "9168907e8f30afaa637cd569a890a35883fcb2decb826bd41ed7ca4e1220987d"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_next_minus_q_near.judas",
+      "bytes": 1109,
+      "sha256": "0bdeae86e57a251769eedf5d1ce9c75ab5b15189244b980909c89a8419d65ace"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_double_default_minus_q_far.judas",
+      "bytes": 1161,
+      "sha256": "1fa5d73689c52306ed7d45ee4529482941fcca59e011313d6401bdc8d28351bb"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_above_default_q_near.judas",
+      "bytes": 1126,
+      "sha256": "8a30f5aa1a0fd7cdefe4c24ffbae5265a0436bdcda2dd249de81d0ca038ac16e"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_half_default_q_near.judas",
+      "bytes": 1125,
+      "sha256": "bb447c2c2b3232e127dd733943a70124404ef6b03049f9e1c49c7297ee505266"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_previous_q_far.judas",
+      "bytes": 1130,
+      "sha256": "00abd8332d50f679e22804ef0285cecc31f9cd29e22d603b998a67d8ce6231e0"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_default_minus_q_far.judas",
+      "bytes": 1180,
+      "sha256": "5feb223384f26eff6672c4507b0dcbdb74a97fef8b7ce2c88da9e7f3ee82b260"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_double_default_q_far.judas",
+      "bytes": 1154,
+      "sha256": "28b3f8c1b0b91ab3c278787256db7a68874094bddcb23488d8838dca106b1c54"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_double_default_minus_q_far.judas",
+      "bytes": 1161,
+      "sha256": "60709f74e87a6b04065e576c2c888d8640b2504eed9e720c3b427e2c28659305"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_above_default_minus_q_near.judas",
+      "bytes": 1133,
+      "sha256": "081bda14e3018570aa79836df0dba5940ceb3cb8d2ca2184d0f0310725cf34a7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_next_q_near.judas",
+      "bytes": 1119,
+      "sha256": "7aa450bd2fc30e6c9092a85141758728191a5f4956e74a82fc154b93f35d1c42"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_previous_minus_q_near.judas",
+      "bytes": 1133,
+      "sha256": "548933a9759f1150a10579115accef075edfc09e8d294ea5ec68659e70aaad89"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_below_default_q_near.judas",
+      "bytes": 1126,
+      "sha256": "527f42702f6f86d2265a24eedbfa21fe77a51e28ab2ec2215223e1af36fb7161"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_default_q_near.judas",
+      "bytes": 1102,
+      "sha256": "b89bb7f7146fccfe00b3556a92a9d9d3268f766ae548d0bdda5b22fcaf05e073"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_quarter_q_near.judas",
+      "bytes": 1096,
+      "sha256": "92fb42a168a6914db3c3e8b8e97ffb0242ed8d65874c130133493a653193126e"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_zero_q_far.judas",
+      "bytes": 1160,
+      "sha256": "760a9fa64a0cdd4088953b5352a1e75e3415a16433be567796ffd98825a60ef7"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_double_default_q_far.judas",
+      "bytes": 1151,
+      "sha256": "8ae1cebaa16711b0c6c6b7a743d385d59b127ef594866e2c86ca67b167234a48"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_below_default_minus_q_near.judas",
+      "bytes": 1130,
+      "sha256": "7724cd0473ce54e18894b6074d72abb7641a132036132752610d5d4648983dac"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_negative_half_default_q_near.judas",
+      "bytes": 1125,
+      "sha256": "043573a167f8f60a1460af7c553ac97427033946588c6c54a73ef4819eca2635"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_negative_below_default_minus_q_far.judas",
+      "bytes": 1157,
+      "sha256": "68f8fd2f9439ada4d531af09fc0e7afd02b41d941a03269095a4eb99a86a38ab"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_next_minus_q_near.judas",
+      "bytes": 1129,
+      "sha256": "506fdeb951df15413532e9404936644becb886e1a7fdc0021cd3728366aba485"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_previous_minus_q_near.judas",
+      "bytes": 1113,
+      "sha256": "495b39dea852a54f3d3176dad9f327144b55f2026f6774b390f08dfe815bd2a1"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/axis_z_reverse_q_near.judas",
+      "bytes": 1113,
+      "sha256": "8f119a88d8ffdab2dd053404777620d615a46fdddd6ac8cd10d317df07d9cbe2"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_17_25_minus_q_near.judas",
+      "bytes": 1105,
+      "sha256": "670a82fcf2236ace2b2953ef23a82ea60bbea3638e1c6d2afa5ff1a70912ecd5"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/x_positive_half_default_minus_q_far.judas",
+      "bytes": 1159,
+      "sha256": "0b2e1972ffbfbd9b3ae9d96d46c1e889a10316b5fce28ca69a650ac12e1a6df9"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/identity_previous_minus_q_far.judas",
+      "bytes": 1140,
+      "sha256": "ffae6df60f975ff97f89d072d620f9d20deb1b2412ca2c9f3b385bfa8cddb397"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/arbitrary_default_q_near.judas",
+      "bytes": 1145,
+      "sha256": "f5c6fe7e54124a85a7acf75d20c2294ae79189d819939dad885422796be08ecf"
+    },
+    {
+      "path": "docs/evidence/ftft3/fixtures/z_positive_half_default_minus_q_near.judas",
+      "bytes": 1132,
+      "sha256": "bb79bf84b7de296f9414d1b7b7b2946b84974db76aba8e388d8df855b51f2d1b"
+    },
+    {
+      "path": "projects/post_m65_consumers/post_m65_consumers.judasproj",
+      "bytes": 4702,
+      "sha256": "8a1e8b2b2468257cb706a4c158759c9fb4076d645877d57c14df3e961dfede67"
+    },
+    {
+      "path": "projects/post_m65_consumers/Scenes/skate/park.judas",
+      "bytes": 45523,
+      "sha256": "fedd4a0f32f9ff559056ade9d7b8a8efd3a6d295112c1250f189f80d569b17d1"
+    },
+    {
+      "path": "projects/post_m65_consumers/Assets/skate/models/rider.glb",
+      "bytes": 12045128,
+      "sha256": "029081c3e79d9063a3f44a78e5cc9387bd9b632400509c5d6cfe35c1f59a9af8"
+    },
+    {
+      "path": "projects/post_m65_consumers/Assets/skate/models/rider.glb.judasmeta",
+      "bytes": 75,
+      "sha256": "70d70ed3224711712f82c07778ce9991537f3e896f517027c05d980db4a22946"
+    },
+    {
+      "path": "projects/animation_demo/Assets/models/bend_bar.glb",
+      "bytes": 11536,
+      "sha256": "7ee5816c58f7ad07ba92358b6759c874bd931b1443ae604bb61c13a0ae3d6383"
+    }
+  ]
+}

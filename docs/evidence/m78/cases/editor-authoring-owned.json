@@ -1,0 +1,27 @@
+{
+  "case": "editor-authoring-owned",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-base/modding_lab.judasproj"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:12:43.664379+00:00",
+  "explicitEnvironment": [
+    "JUDAS_EDITOR_AUTOTEST=/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-owned",
+    "JUDAS_EDITOR_AUTOTEST_AUTHORING=1"
+  ],
+  "executableSHA256": "ad315ef0ffc459dd0df0eceb156e6555054d96582a1867206e2107060c56ae00",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 3.98927079600071,
+  "log": "docs/evidence/m78/cases/editor-authoring-owned.log",
+  "logSHA256": "11b9155c1f969075fb0f2d352988ee3404699de6c4fcbeef49adf7fc161492b9"
+}

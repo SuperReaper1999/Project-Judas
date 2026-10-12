@@ -1,0 +1,43 @@
+{
+  "scope": "Archive only; removal requires independent host SHA proof",
+  "archiveName": "m78-new-publication-generated.zip",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-balance_lab.exe",
+      "sha256": "4d65e46d189bbd558f49a171377f6db0d2a292fd188446274084e482c1919e16",
+      "name": "m78-native-new-publication-balance_lab.exe",
+      "bytes": 9497600,
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/new-publication/m78-native-new-publication-balance_lab.exe"
+    },
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-controller.exe",
+      "sha256": "c4fea07840a06768213ebf2ab81b429df9c32fe022dbfc17731bd1c0c4688c3d",
+      "name": "m78-native-new-publication-controller.exe",
+      "bytes": 4385280,
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/new-publication/m78-native-new-publication-controller.exe"
+    },
+    {
+      "path": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj",
+      "sha256": "c6fc5855a923cc3f8e768ec3baf7609d53ccb240008c02f332678a0768d47053",
+      "name": "PhysicsWorld.obj",
+      "bytes": 1443399,
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/new-publication/PhysicsWorld.obj"
+    },
+    {
+      "path": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj",
+      "sha256": "875529ce9aa1abf1617f36e9efd0dc9f949c95c8fc00ec9eb11c81ed2771d24c",
+      "name": "WorldPersistence.obj",
+      "bytes": 1250794,
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/new-publication/WorldPersistence.obj"
+    },
+    {
+      "path": "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj",
+      "sha256": "6477dd5d359f09625c98b6e12721bcebb6e7ef98fb044bbae4a2f55f177c0051",
+      "name": "PhysicalBalance.obj",
+      "bytes": 1462368,
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/new-publication/PhysicalBalance.obj"
+    }
+  ],
+  "archiveSHA256": "cf54d4aefaa98d1836cb7b76e89487eda93b323d9da26102d1f83f83317e862b",
+  "archiveBytes": 7395548
+}

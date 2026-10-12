@@ -1,0 +1,8 @@
+{
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "branch": "main",
+  "status": "?? POST_M73_REPORT.txt\n?? docs/M78.md\n?? docs/evidence/m78-followup/\n?? docs/evidence/m78/\n",
+  "originalAuditManifestSHA256": "fe4d7221e165d26cf79836a62f4fe000eff8700661d06b1e21b0ffc938cb0e27",
+  "originalAuditFilesVerified": 600,
+  "indexDiff": ""
+}

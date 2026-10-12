@@ -1,0 +1,102 @@
+{
+  "scope": "Older first-candidate MSBuild supplemental outputs are not counted as fresh final combined validation. Prior exact final-archive direct tests remain valid because frozen source/archive is unchanged.",
+  "nativeIdentityReceiptSHA256": "b254d52f5cc0913a02509061ab33adc0fd043763d12efa4461b7a211adf3ee08",
+  "nativeIdentityReceipt": "native-functional/m78-native-supplemental-identity.json",
+  "olderMSBuildReceiptPaths": [
+    "native-functional/m78-native-spacecraft-contracts.json",
+    "native-functional/m78-native-navigation-negatives.json",
+    "native-functional/m78-native-harness-rerun.json"
+  ],
+  "preservedToolingError": "native-functional/m78-native-spacecraft-error.txt",
+  "retainedExactFinalArchivePasses": [
+    {
+      "case": "spacecraft_control",
+      "exitCode": 0,
+      "status": "PASS",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "executableSHA256": "dcb928fd726981df1134245ab3257952c7160202b0bbcbcca7a7ff71e1166861",
+      "sourceIdentities": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\spacecraft_control-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\spacecraft_control-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\SpacecraftControlTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\SpacecraftControlTests.cpp",
+          "sourceSHA256": "548ceaafed42b5caba9781108b21c527be30d60afe3a74e606919c96845b5198",
+          "objectSHA256": "3ef1f11b3186d218ad5a945a1144998f1e54918fbb303ba3e59254b476b17def"
+        }
+      ]
+    },
+    {
+      "case": "spacecraft_flight",
+      "exitCode": 0,
+      "status": "PASS",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "executableSHA256": "b8f08f172b0160d8929ac08f06ae8ec90e25228ebc7ec297e011b0200fd914c1",
+      "sourceIdentities": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\spacecraft_flight-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\spacecraft_flight-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\SpacecraftFlightTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\SpacecraftFlightTests.cpp",
+          "sourceSHA256": "85b0139c79ec4a2a5e691cd191ea0738c949d35ce76a49f11ae9478a48b1c472",
+          "objectSHA256": "30f584f9c6e682c3c4a5792e4c08286e8f2a00937b7c938e4965779e83be4354"
+        }
+      ]
+    },
+    {
+      "case": "prefab",
+      "exitCode": 0,
+      "status": "PASS",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "executableSHA256": "918fdcbfa2472b4f5d0188ad126241dc1553db690ebf73e9b43768b24a34906e",
+      "sourceIdentities": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\prefab-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\prefab-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PrefabTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\PrefabTests.cpp",
+          "sourceSHA256": "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b",
+          "objectSHA256": "c5bbad76bf062d751159503adbc9ad8889080bf8fc33a9e35793e9a45cd6d50b"
+        },
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\prefab-1.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\prefab-1.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp\"",
+          "source": "C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp",
+          "sourceSHA256": "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b",
+          "objectSHA256": "63c209542448dd083cce4c5c64704b44727e7ede9788446c5ad70c1499368484"
+        }
+      ]
+    },
+    {
+      "case": "streaming",
+      "exitCode": 0,
+      "status": "PASS",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "executableSHA256": "39bd078d75131c449e11d5f49c106438724f87c89c4c7af9a5647756acf7d61e",
+      "sourceIdentities": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\streaming-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\streaming-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\WorldStreamingTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\WorldStreamingTests.cpp",
+          "sourceSHA256": "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b",
+          "objectSHA256": "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a"
+        }
+      ]
+    },
+    {
+      "case": "nav_dependency",
+      "exitCode": 0,
+      "status": "PASS",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "executableSHA256": "65109f02e3d7c1033bb9f511168f9bf9d11bf3ce83de7e99465b367a5aa12940",
+      "sourceIdentities": [
+        {
+          "object": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\nav_dependency-0.obj",
+          "compilerResponse": "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\nav_dependency-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\NavigationDependencyTests.cpp\"",
+          "source": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\tests\\NavigationDependencyTests.cpp",
+          "sourceSHA256": "38aecede76bbd6c2bebed3303bf941b872f116046025ca327288a0aff3489a0b",
+          "objectSHA256": "f5024b51f34aaf289a6488591f778fa8f05f73dc0a467b32a5d4ef2a53cfd4b5"
+        }
+      ]
+    }
+  ],
+  "sourceMatrix": "../m78-continuation/WINDOWS_FINAL_MATRIX.json",
+  "sourceMatrixSHA256": "19cad112406ee9941f3c1c81ede4eed1808ac3117308a8c626277fb8bdd66166"
+}

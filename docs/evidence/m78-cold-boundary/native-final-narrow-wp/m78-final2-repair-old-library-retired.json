@@ -1,0 +1,8 @@
+﻿{
+    "removed":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib",
+    "scope":  "Only redundant previous guest3554 archive removed after two independently verified full host copies; no source/raw evidence/save/package removal",
+    "freeBefore":  17313792,
+    "newSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "freeAfter":  84332544,
+    "removedSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

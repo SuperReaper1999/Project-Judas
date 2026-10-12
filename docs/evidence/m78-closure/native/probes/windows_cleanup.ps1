@@ -1,0 +1,6 @@
+param([string]$ApprovalName='')
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$base='http://192.168.122.1:8872';$out='C:\JudasValidation\M78ClosureResults'
+if($ApprovalName -notmatch '^m78-closure-[a-z0-9_]+-approval\.json$'){throw 'Named independent host verification required'}
+$m=(Invoke-WebRequest -UseBasicParsing "$base/$ApprovalName").Content|ConvertFrom-Json;if(!$m.hostVerified){throw 'Missing host verification'}
+foreach($f in $m.files){if((Get-Item $f.path).Length -ne $f.bytes -or (Get-FileHash $f.path).Hash.ToLower() -ne $f.sha256){throw 'Owned retirement identity mismatch'};if($f.path -match '\.exe$' -and @(Get-Process|Where-Object {$_.Path -eq $f.path}).Count){throw 'Owned artifact is running'}}
+$before=(Get-PSDrive C).Free;foreach($f in $m.files){Remove-Item -LiteralPath $f.path};$rp="$out\m78-closure-$($m.case)-cleanup.json";@{scope='Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged';removed=$m.files;freeBefore=$before;freeAfter=(Get-PSDrive C).Free}|ConvertTo-Json -Depth 5|Set-Content $rp -Encoding UTF8;Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($rp))" -Method Post -InFile $rp|Out-Null

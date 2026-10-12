@@ -1,0 +1,26 @@
+{
+  "id": "judas_player_curved_locomotion_tests",
+  "source": "tests/PlayerCurvedLocomotionTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_player_curved_locomotion_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "7486b7e1cec2a4e946cf86741f4f5d3970d175b76e57a45e859d0f2f8b7ae13b",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 52,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_player_curved_locomotion_tests.log",
+  "logSHA256": "28ba81fa151d3f64bbac6705d9a79c62e53798899695a0b7fc36f73f51c262d5",
+  "seconds": 0.12311575899911986
+}

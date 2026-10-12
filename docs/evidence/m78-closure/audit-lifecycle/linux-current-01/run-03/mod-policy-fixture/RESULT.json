@@ -1,0 +1,122 @@
+{
+  "checks": [
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary project",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "base behavior asset",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "scripted base prefab",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "base prefab identity",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary linked scene",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "requesting authored scene contains no direct script slot",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "serialize ordinary data scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "encode immutable data-only package",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "decode actual package",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "manifest/import policy resolves without executable trust",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "data-only linked prefab accepts the explicitly published behavior/schema without evaluating its constructor",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "effective mod content: unpublished base behaviour in resolved prefab: consumer"
+      },
+      "name": "published prefab cannot conceal an unpublished resolved behavior",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "current base prefab has genuine incompatible authored property",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "effective mod content: invalid schema/default/value for speed"
+      },
+      "name": "resolved indirect slot is checked against the published property schema",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "failed candidates do not alter the prior effective view asset ownership mapping",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "valid authored follow-up",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "correctly typed follow-up resolves through the same policy",
+      "passed": true
+    }
+  ],
+  "contract": "Data-only composition must inspect actual resolved prefab slots and published schemas, without requiring VM execution or treating a published prefab as executable permission",
+  "failures": 0,
+  "scope": "Standalone M78 lifecycle audit; original fixtures and source unchanged."
+}

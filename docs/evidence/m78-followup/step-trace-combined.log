@@ -1,0 +1,40 @@
+step=0 progress=1 swing=0 last=-1 landings=0 rootY=1.41937470 upright=0.99992639 speed=1.20833337 contacts=4/4 reason=measured supported physical standing
+step=20 progress=1 swing=0 last=-1 landings=0 rootY=1.52508259 upright=0.97454906 speed=0.89341348 contacts=0/2 reason=measured supported physical standing
+step=40 progress=1 swing=0 last=-1 landings=0 rootY=1.43107724 upright=0.95257390 speed=0.73936939 contacts=1/1 reason=measured supported physical standing
+step=52 progress=1 swing=-1 last=0 landings=1 rootY=1.44329488 upright=0.97657830 speed=0.77694702 contacts=1/1 reason=measured supported physical standing
+step=60 progress=1 swing=-1 last=0 landings=1 rootY=1.42935884 upright=0.97298062 speed=0.49026015 contacts=1/2 reason=measured supported physical standing
+step=80 progress=1 swing=-1 last=0 landings=1 rootY=1.41321564 upright=0.99953157 speed=0.50336266 contacts=0/2 reason=measured supported physical standing
+step=100 progress=1 swing=-1 last=0 landings=1 rootY=1.42870367 upright=0.99313635 speed=0.29709312 contacts=0/2 reason=measured supported physical standing
+step=120 progress=1 swing=-1 last=0 landings=1 rootY=1.48177207 upright=0.98043221 speed=0.94805372 contacts=0/2 reason=measured supported physical standing
+step=132 progress=1 swing=0 last=0 landings=1 rootY=1.49581909 upright=0.98022252 speed=1.27170277 contacts=1/2 reason=measured supported physical standing
+step=140 progress=1 swing=0 last=0 landings=1 rootY=1.46882510 upright=0.99787933 speed=0.86497718 contacts=2/0 reason=measured supported physical standing
+step=160 progress=1 swing=0 last=0 landings=1 rootY=1.44214344 upright=0.99249530 speed=0.63990653 contacts=2/0 reason=measured supported physical standing
+step=180 progress=1 swing=0 last=0 landings=1 rootY=1.19048142 upright=0.96458310 speed=1.82228482 contacts=0/0 reason=measured supported physical standing
+step=200 progress=1 swing=0 last=0 landings=1 rootY=0.95266736 upright=0.71876311 speed=1.27940893 contacts=0/2 reason=measured supported physical standing
+step=220 progress=1 swing=0 last=0 landings=1 rootY=1.19915450 upright=0.66475117 speed=1.64667118 contacts=0/0 reason=measured supported physical standing
+step=240 progress=1 swing=0 last=0 landings=1 rootY=1.02016819 upright=0.74353611 speed=1.41366279 contacts=0/1 reason=measured supported physical standing
+step=260 progress=1 swing=0 last=0 landings=1 rootY=0.75828183 upright=0.35578555 speed=1.12552345 contacts=0/2 reason=measured supported physical standing
+step=280 progress=1 swing=0 last=0 landings=1 rootY=0.39343292 upright=-0.29177213 speed=1.14837658 contacts=0/0 reason=measured supported physical standing
+step=300 progress=1 swing=0 last=0 landings=1 rootY=0.42896077 upright=-0.42719126 speed=0.35590428 contacts=0/0 reason=measured supported physical standing
+step=314 progress=3 swing=-1 last=-1 landings=1 rootY=0.38522273 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=320 progress=3 swing=-1 last=-1 landings=1 rootY=0.38549405 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=340 progress=3 swing=-1 last=-1 landings=1 rootY=0.36354777 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=360 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948177 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=380 progress=3 swing=-1 last=-1 landings=1 rootY=0.14973886 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=400 progress=3 swing=-1 last=-1 landings=1 rootY=0.14965361 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=420 progress=3 swing=-1 last=-1 landings=1 rootY=0.14947927 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=440 progress=3 swing=-1 last=-1 landings=1 rootY=0.14949122 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=460 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948972 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=480 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=500 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=520 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=540 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=560 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=580 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=600 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=620 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=640 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=660 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=680 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+step=700 progress=3 swing=-1 last=-1 landings=1 rootY=0.14948943 upright=-0.27533376 speed=0.54457158 contacts=0/0 reason=corrective step lost support, reach or physical touchdown
+Independent copied free-drift peak energy error relative 3.54011769e-05 absolute 5.63337152e-05 J at step 331; not global constraint energy accounting

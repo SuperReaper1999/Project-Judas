@@ -1,0 +1,22 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=3.00044,1.41779,0.00201355 height=1.41834 up=0.999929 speed=0.000280377 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+POST IMPULSE {"effort":true,"elapsed":8.800000458955765,"impulseBody":"4611686018427387904","impulseVelocity":{"x":7.379595626844093e-05,"y":-2.9028489734628238e-05,"z":2.89951229095459},"pitch":-0.12,"pushAngle":0,"pushes":1,"refusal":"","selected":2,"spawned":[],"stepping":false,"yaw":0}
+ACTOR 12 status=1 root=3.00032,1.42148,0.0752182 height=1.41968 up=0.999303 speed=1.2317 supports=3/3 landings=0 reason=measured supported physical standing
+ACTOR 12 status=1 root=2.95083,0.177316,0.738522 height=0 up=-0.0704901 speed=0.146896 supports=0/0 landings=0 reason=measured supported physical standing
+PASS same public impulse with stepping denied exceeds standing envelope
+PASS cancel releases actuators and preserves physical articulation
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 15 checks 0 failures

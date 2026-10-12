@@ -1,0 +1,24 @@
+{
+  "case": "balance-recovery",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-recovery",
+    "recovery"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T14:51:20.886826+00:00",
+  "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 2.018484611999156,
+  "log": "docs/evidence/m78/cases/balance-recovery.log",
+  "logSHA256": "c053b4b677e3cccfb08eae6c65ad8563c3fd31b96135b978cafc814835bfd343"
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_scalability_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/scalability-final"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:59.997109+00:00",
+  "seconds": 3.7719635469984496,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "53b79adbe8d469cd6c55d332875ee43e59ad4e3cf4a0e3e709a4f321a6ab8b2e",
+  "logSHA256": "64086729a571d40bff66ad166d78df6fad4dff283d0239b7ff230b31b2918cc1",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

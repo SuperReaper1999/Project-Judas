@@ -1,0 +1,34 @@
+{
+  "status": "PREPARED_NOT_COMPILED_NOT_EXECUTED",
+  "scope": "Read-only current-source review plus standalone fixtures; no production/CMake/original fixture edits",
+  "tracedFiles": {
+    "docs/evidence/m78/CAPABILITIES.json": "0d98103722b080a30723b1da59cf738718fa9bd81d3b867d1ba3d159a6e2ea62",
+    "docs/evidence/m78/REQUIREMENT_CROSSWALK.json": "bbecc6c6fa7ec19e470565da3df4df5f7b4aace46ecd9a88e6848bdd403ca658",
+    "docs/evidence/m78/INTERACTIONS.json": "c8a7e3e08d2aedc3791e4e0a6c53ec47719655181479d855d09534f7c76360d5",
+    "docs/evidence/m78/requirements/M59_PROMPT.txt": "f152e68cb94bbb16446e52ec5aa22737fb7e59caacbda156df07cbe167d74e46",
+    "docs/evidence/m78/requirements/M67_PROMPT.txt": "531fb7f73f93e09e8cdd4f495a91c481ae7be9e209e71795b6825adaa6680e3d",
+    "docs/evidence/m78/requirements/M76_PROMPT.txt": "fc97035953aab290e65ebc94cc55de87c85eb347ba6a0aed73d8ad014cebc1d2",
+    "src/WorldStreaming.cpp": "a32013d53298df434fe46dff94e4b769b8465fe0a9a1dc003d8c17b65c762154",
+    "src/WorldRegions.cpp": "84a9025c0e99a4f76646f36c45b4f56e2af3a3472782c254f564619f9660236f",
+    "src/WorldCharacter.cpp": "381194ab8c9440e588d54a66a3594e77856924dc661ce77937174602e804817a",
+    "src/WorldScripts.cpp": "3dbb2075270ef0700ce831c08a1e50109a173586651b7e97618e17c971d4688a",
+    "src/Prefab.cpp": "d2cd051026a5d943ade664dcafff953029fda967460cc1faf25cbaf45a0b9cd3",
+    "src/modding/ModContent.cpp": "ee54d86c46881b09475d2e367975f1538eee4b140fa25ba88e443b229bb221a1",
+    "src/modding/ModRuntime.cpp": "81e4b8bf77a56cfd91722a23a7126fbacb41e2761c6fde13260785b8f482b06c",
+    "src/authoring/NavigationDependencies.cpp": "5666758985926e221ee87f0120698cd6ee1a4e0b2bd2600d4f776224ee949120",
+    "src/ProjectExporter.cpp": "8bd8496c376c5d45ffe16d8a1c7ed90a6978e349f89521aac397383bf996d53f",
+    "tests/WorldStreamingTests.cpp": "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b",
+    "tests/NavigationDependencyTests.cpp": "38aecede76bbd6c2bebed3303bf941b872f116046025ca327288a0aff3489a0b",
+    "tests/ModContentTests.cpp": "98a1c70c28280fe8dce19372516e35c93a054a1eea97bc1e423d2141627a7585",
+    "tests/ModApplicationTests.cpp": "35fb9e9402e26ebdf1147fdf01ab07f7286636e7e44389b18524505709486aed",
+    "tests/ExportTests.cpp": "8dfc252b0c315e00c3d366cc43b0324e6b723f6aaca6a71869d11aff6a2a4fe8"
+  },
+  "probeFiles": {
+    "docs/evidence/m78-closure/audit-lifecycle/FixtureSupport.h": "714699e833fc9468bbe3940e602b6a2e87c0d204527ce414e4dfa88d3efda5f4",
+    "docs/evidence/m78-closure/audit-lifecycle/AUDIT_PLAN.md": "19ff277706de66926223f93f96e1b078e97a2451e45c55e7ac0e0317809f9064",
+    "docs/evidence/m78-closure/audit-lifecycle/StreamingMotorPublication.cpp": "28894bde1452e15ac35fcd814671e15411ce242363697719cb9a8bc5fe3e7c3d",
+    "docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp": "7450a4c27ed66178c1b646fda86cc895c6d7d14557fd47f9bf7eca2c1201d1f1",
+    "docs/evidence/m78-closure/audit-lifecycle/NavigationInputRace.cpp": "2339cd6140e7ea812f40c4431f43127f9a84a2e57835acc3518fdae9e20ac579",
+    "docs/evidence/m78-closure/audit-lifecycle/run_prepared.py": "d8d7b056c58d04aa7955cdfc84c6ff30caf0107c103de21008d6b97b2dc728ee"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "judas_spacecraft_frame_integration_tests",
+  "source": "tests/SpacecraftFrameIntegrationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_spacecraft_frame_integration_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_spacecraft_frame_integration_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "69df69f606c7a938a4800a8d2eae05c77033922ce1f3d0f142e84aab56f5bda9",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 228,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_spacecraft_frame_integration_tests.log",
+  "logSHA256": "c4d538a942f9f2cff31255125becd1f054599ab135ad2a3ad66708a0ebde5726",
+  "seconds": 0.16220068199982052
+}

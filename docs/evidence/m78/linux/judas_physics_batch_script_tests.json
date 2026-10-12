@@ -1,0 +1,27 @@
+{
+  "id": "judas_physics_batch_script_tests",
+  "source": "tests/PhysicsBatchScriptTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_batch_script_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_physics_batch_script_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "5ea56ac2f7dbb46c82032334bbd342931c8d49d1ae78bc8d95c9611ac5c7a23e",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 19,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_physics_batch_script_tests.log",
+  "logSHA256": "eb9a4a286cebf2028597fa13ddb5a8e9a5347ea3ea2b21e6218d683d047332dd",
+  "seconds": 0.2523711699996056
+}

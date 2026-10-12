@@ -1,0 +1,177 @@
+{
+  "scope": "Original supplied M77 prompt reconciled against current source and original bounded evidence; not an expanded feature implementation or full acceptance certificate",
+  "promptSHA256": "e2ba1ffe8d9b8db4019ec120d425cbcda41ce03746003bb0943286e53802622b",
+  "frozenCheckpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "rows": [
+    {
+      "section": "1",
+      "requirement": "Foundation inspection and reuse",
+      "status": "SUPPORTED, bounded",
+      "evidence": "PhysicalBalance.cpp; WorldPhysicalBalance.cpp; original foundation/controller tests and M77 development record",
+      "limits": "Uses existing M45 articulation and M47/M70 ownership; no replacement physics world."
+    },
+    {
+      "section": "2A",
+      "requirement": "Contact-aware standing and bounded disturbances",
+      "status": "SUPPORTED IN DOCUMENTED MECHANICAL ENVELOPE",
+      "evidence": "PhysicalBalanceControllerTests: standing, off, frictionless, perturbation controls",
+      "limits": "Not general imported humanoid balance; human M77 acceptance remains pending."
+    },
+    {
+      "section": "2B,6",
+      "requirement": "Actual corrective foot repositioning and denied comparison",
+      "status": "REGRESSED ON CURRENT COMBINED CANDIDATE; historical M77 fixture passed",
+      "evidence": "linux-balance-controller.log; native-physical_balance_controller.stdout.log; step-trace-combined.log",
+      "limits": "The unchanged 29 N s perturbation still lifts and lands a foot but does not regain physical standing. A second corrective step loses its stance support. Do not retune the fixture or claim candidate success."
+    },
+    {
+      "section": "2C,7",
+      "requirement": "Settled face-up and face-down recovery with variation",
+      "status": "SUPPORTED FOR TWO AUTHORED MECHANICAL RIGS",
+      "evidence": "PhysicalBalanceControllerTests::Recovery; BalanceLabTests fallen variants; original M77 final receipts",
+      "limits": "Dynamic root elevation, support and standing dwell; does not establish recovery on slender-foot Skate or arbitrary anatomy."
+    },
+    {
+      "section": "2,8",
+      "requirement": "Modest uneven ground, slope, rotated gravity and radial surface",
+      "status": "SUPPORTED IN RECORDED FIXTURE ENVELOPE",
+      "evidence": "PhysicalBalanceControllerTests support variants; BalanceLabTests variants/radial",
+      "limits": "Finite authored supports and contact policy; beyond that envelope untested, not implicitly supported."
+    },
+    {
+      "section": "3",
+      "requirement": "Dynamic root/feet; no hidden root wrench, foot pin or motor capsule",
+      "status": "IMPLEMENTED; FOCUSED STRUCTURAL/NEGATIVE PROOF",
+      "evidence": "PhysicalBalance.cpp paired bounded drives; fixture effort-off/ceiling controls",
+      "limits": "No claim of exact global joint/contact conservation."
+    },
+    {
+      "section": "4",
+      "requirement": "Mass COM, inertia, support load, moving-point velocities",
+      "status": "IMPLEMENTED AND FOCUSED-TESTED",
+      "evidence": "PhysicalBalance observation; PhysicalBalanceFoundationTests",
+      "limits": "Support regions/contacts are bounded sampled approximations, not exact wrench cones."
+    },
+    {
+      "section": "4",
+      "requirement": "Declared recovery supports beyond feet",
+      "status": "BOUNDED IMPLEMENTATION",
+      "evidence": "Authored patch mapping and support observations",
+      "limits": "No universal hand/knee planner is implemented or promised by the bounded current profile."
+    },
+    {
+      "section": "5",
+      "requirement": "Bounded paired actuator effort and observable failure",
+      "status": "SUPPORTED, bounded",
+      "evidence": "M45 angular drives; PhysicalBalanceControllerTests effort-off, frictionless, zero gravity",
+      "limits": "Gyroscopic transport was inherited FAILED at frozen M77; PHY-001 working correction has independent proof. Contact residuals remain approximate."
+    },
+    {
+      "section": "6",
+      "requirement": "Reach/clearance/planted foot planning is not support",
+      "status": "IMPLEMENTED AND FOCUSED-TESTED",
+      "evidence": "Controller real-contact gates; blocked/denied step application cases",
+      "limits": "Candidate queries do not move bodies. Unexpected terrain/support combinations remain untested."
+    },
+    {
+      "section": "7",
+      "requirement": "No timer-only recovery success; blocked/cancelled tasks preserve physics",
+      "status": "SUPPORTED, bounded",
+      "evidence": "Actual-standing dwell; low-ceiling/effort-off/cancel tests",
+      "limits": "No arbitrary tangled-ragdoll recovery or commercial get-up capability."
+    },
+    {
+      "section": "7",
+      "requirement": "Optional collision-checked CharacterMotor return/refusal",
+      "status": "IMPLEMENTED; APPLICATION PROOF",
+      "evidence": "WorldPhysicalBalance/character authority checks; BalanceLabTests motor-return variants",
+      "limits": "No automatically enabled motor, root teleport servo or double support inheritance."
+    },
+    {
+      "section": "8",
+      "requirement": "Modest translating/rotating support and dynamic reactions",
+      "status": "SUPPORTED, bounded",
+      "evidence": "PhysicalBalanceControllerTests::Supports and finite-mass support control",
+      "limits": "Not independently conflicting supports or all lightweight rocking objects."
+    },
+    {
+      "section": "8",
+      "requirement": "Zero/missing/discontinuous gravity or absent support degrade safely",
+      "status": "IMPLEMENTED; PARTIAL NEGATIVE COVERAGE",
+      "evidence": "Controller zero gravity/missing ground/stale body tests",
+      "limits": "Every discontinuity/contact topology combination is not covered."
+    },
+    {
+      "section": "9",
+      "requirement": "One fixed-step physics integration, task API, default-off ownership",
+      "status": "IMPLEMENTED AND FOCUSED-TESTED",
+      "evidence": "Simulation; WorldPhysicalBalance; JudasJS animation-ragdolls API; M77 lifecycle tests",
+      "limits": "No motor/clip/IK concurrent actuator ownership."
+    },
+    {
+      "section": "10",
+      "requirement": "Scene/prefab/editor settings and pickers; default-off compatibility",
+      "status": "IMPLEMENTED; AUTOMATED AUTHORING COVERAGE",
+      "evidence": "M77 settings serialization/fingerprint; editor component; foundation/prefab coverage",
+      "limits": "Manual M77 editor/physical interaction validation remains pending."
+    },
+    {
+      "section": "10",
+      "requirement": "Save/load standing and in-progress step/recovery",
+      "status": "PARTLY RECHECKED ON CURRENT CANDIDATE; STEP PATH REGRESSED",
+      "evidence": "Original M77 cold-save receipts; linux-lab-cold-recovery-write/read (21/13 checks); current REG-001 step trace",
+      "limits": "Recovery save/load passed; original stepping save/load passes cannot certify the changed candidate while corrective stepping regresses. No stale observation handles are serialized."
+    },
+    {
+      "section": "10",
+      "requirement": "Destroy/disable/support loss/slot reuse/scene transitions/streaming",
+      "status": "IMPLEMENTED; BOUNDED LIFETIME COVERAGE",
+      "evidence": "linux-lab-lifecycle (26 checks), linux-lab-regions (24 checks); controller stale mapped-body tests; original streaming cases",
+      "limits": "Individual bone adoption remains refused; no exhaustive state-space coverage."
+    },
+    {
+      "section": "11",
+      "requirement": "One ordinary lab with two materially different rigs and mixed controls",
+      "status": "IMPLEMENTED",
+      "evidence": "projects/balance_lab; BalanceLabTests fixtures and original final receipts",
+      "limits": "Heavy-foot mechanical rigs are disclosed; imported anatomy is not a cosmetic validation substitute."
+    },
+    {
+      "section": "12",
+      "requirement": "Independent conservation and negative controls",
+      "status": "PARTLY SUPPORTED; INHERITED FAILURE CORRECTED IN WORKING CANDIDATE",
+      "evidence": "PHY-001 free-body vector/energy tests; original M77 seven-body paired-effort audit",
+      "limits": "Free-body angular vector error is distinct from constraint residuals. No exact conservative multibody certification."
+    },
+    {
+      "section": "13",
+      "requirement": "Interactive triangle-mesh articulation performance",
+      "status": "FAILED AT FROZEN M77; IMPROVED BUT TARGET NOT MET",
+      "evidence": "PHY-002 same 13-body/8192-triangle original and corrected observations",
+      "limits": "Four-rig p95 remains above predeclared 16.67 ms; one rig still physically moving at step 900. Not closed."
+    },
+    {
+      "section": "14",
+      "requirement": "Linux and native Windows VM validation",
+      "status": "ORIGINAL RECEIPTS BOUNDED; CORRECTED CANDIDATE IN PROGRESS",
+      "evidence": "Original final platform receipts; fresh follow-up build/test receipts",
+      "limits": "Physical Windows GPU/audio/input and human M77 testing remain outstanding."
+    },
+    {
+      "section": "15",
+      "requirement": "Preserve other work and prepare audit artifacts",
+      "status": "PRESERVED; HASH VERIFICATION REQUIRED AT HANDOFF",
+      "evidence": "Frozen M78 600-artifact manifest; original tracked baseline; follow-up separate directory",
+      "limits": "No retrospective edits to protected research/evidence or consumer projects."
+    },
+    {
+      "section": "16",
+      "requirement": "Accurate handoff, limits and human checklist",
+      "status": "DOCUMENTATION CORRECTION IN PROGRESS",
+      "evidence": "M77 current doc; M78_FOLLOWUP and this reconciliation",
+      "limits": "Original M77 prompt is now available; frozen audit missing-brief statements retain their historical context."
+    }
+  ],
+  "missingHistoricalBriefs": "Other absent originals recorded in frozen REQUIREMENT_CROSSWALK remain unavailable; later summaries are not substituted for them.",
+  "newFeatureWork": "No substantial new M77 capability added. Broader humanoid recovery, broad contact conservation and tighter articulated impact performance need separate bounded proposals if desired."
+}

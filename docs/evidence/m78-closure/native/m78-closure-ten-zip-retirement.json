@@ -1,0 +1,77 @@
+﻿{
+    "scope":  "Exactly ten root-approved newly generated duplicate ZIP archives only; original historical ZIPs/packages untouched",
+    "freeBefore":  14090240,
+    "freeAfter":  18718720,
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed-cold-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-mixed-cold-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed-endpoint-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-mixed-endpoint-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed-endpoint-pair-v2-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-mixed-endpoint-pair-v2-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-step-trace-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-balance-step-trace-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-radial-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-balance-radial-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-lifecycle-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-balance-lifecycle-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-cold-stand-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-balance-cold-stand-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-cold-recovery-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-balance-cold-recovery-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-ordinary-actual-stand-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-ordinary-actual-stand-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-ordinary-actual-recovery-project.zip",
+                      "bytes":  459519,
+                      "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78",
+                      "hostArchive":  ".cache/m78-closure/native-original-raw/m78-closure-ordinary-actual-recovery-project.zip",
+                      "memberVerificationReceipt":  "m78-closure-completed-project-approval-v2.json"
+                  }
+              ]
+}

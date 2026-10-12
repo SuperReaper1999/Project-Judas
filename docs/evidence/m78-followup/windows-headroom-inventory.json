@@ -1,0 +1,21 @@
+{
+  "free": 342016000,
+  "disposableUnchangedTestExecutables": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\judas_physical_balance_controller_tests.exe",
+      "bytes": 587264,
+      "sha256": "01a8baf713987fdb09467880a14886b6bb91f80f5def2bb1378476a5c2344ad7"
+    },
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\judas_physical_balance_foundation_tests.exe",
+      "bytes": 7380992,
+      "sha256": "c1e3e6bbbd914f0e7e392a0b5663be33924078a916207f2b376fa454a218e2a1"
+    },
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\judas_profiler_tests.exe",
+      "bytes": 125952,
+      "sha256": "bfa0aa9b6a28829c73e6917231b4a170c5fa3e82965974f3eb1a47d2950a4895"
+    }
+  ],
+  "bytes": 8094208
+}

@@ -1,0 +1,24 @@
+{
+  "case": "balance-cold-step-read",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-step",
+    "cold-step-read"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T14:51:42.163002+00:00",
+  "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 1.216682010999648,
+  "log": "docs/evidence/m78/cases/balance-cold-step-read.log",
+  "logSHA256": "dc2df4bf24d7086a255d9d054b575a0a8e9036b2b8068b27604aa35d85d32fa9"
+}

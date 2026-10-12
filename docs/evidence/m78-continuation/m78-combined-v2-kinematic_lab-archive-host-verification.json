@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "kinematic_lab",
+  "archiveSHA256": "a178f7521c8b19f57cf791787573ef6256a21a0d5df68f402673b60020de779c",
+  "archiveBytes": 4089099,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_kinematic_lab.exe",
+      "sha256": "dd4e57d6332a3184430ec57a1680a814b1f6e641a9303d5d096fae28fc17da15",
+      "name": "m78_combined-v2_kinematic_lab.exe",
+      "bytes": 8267264
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\kinematic_lab-0.obj",
+      "sha256": "96f3a309f1a5351a20619fba718a039ba8c5e3ba13d40d990f2a699549394851",
+      "name": "kinematic_lab-0.obj",
+      "bytes": 1984122
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "judas_model_import_tests",
+  "source": "tests/ModelImportTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/originals/Skateboarder.fbx",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_model_import_tests"
+  ],
+  "adapter": "existing original FBX, output isolated",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "3b359ac96b7d0d7d0541028c97a76cee6fa56f3fe1ac46e13e61765ee27417b8",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 30,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_model_import_tests.log",
+  "logSHA256": "208e5bc38df5d21afe8bd2f564b3308dedbe7359b1d9aa1fbad533432dace892",
+  "seconds": 9.695127265000338
+}

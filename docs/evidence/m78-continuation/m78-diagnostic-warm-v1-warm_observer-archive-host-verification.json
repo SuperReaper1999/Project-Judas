@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "diagnostic-warm-v1",
+  "case": "warm_observer",
+  "archiveSHA256": "f06898a361d68f80bc4222e7f16af0424229b0e5f438bf3d7f76f9b0a88bf73b",
+  "archiveBytes": 5110068,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_diagnostic-warm-v1_warm_observer.exe",
+      "sha256": "d34dc90c7cc03d743b2de91ef1aa6c0e498d41623695f6eaf25a8f1969c98c49",
+      "name": "m78_diagnostic-warm-v1_warm_observer.exe",
+      "bytes": 9530880
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\warm_observer-0.obj",
+      "sha256": "7987f9cf0aa02362fe8067c1a46efb327028b2f689cb38a49f2c86e43998d03c",
+      "name": "warm_observer-0.obj",
+      "bytes": 3024672
+    }
+  ]
+}

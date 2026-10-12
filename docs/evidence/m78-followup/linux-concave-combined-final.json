@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".cache/m78-followup/concave_final",
+    ".cache/m78-followup/concave-final-data"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:21:58.092172+00:00",
+  "seconds": 12.389954851001676,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "e6bcb8fb89a04ddf0c8e78a09a33b95a8f2e9eabd478fe78da01ca0210e5f80a",
+  "logSHA256": "efcab8f7f25c9ccac1271d56ca282a4246e8d5b3b2f5d130dada6ee9cb27e03d",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

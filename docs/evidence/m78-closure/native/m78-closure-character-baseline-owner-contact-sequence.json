@@ -1,0 +1,13 @@
+{
+  "body": "4611686018427387904",
+  "enter": 1,
+  "exit": 1,
+  "exitBodyValid": true,
+  "exitJoint": "OriginHelper/Pivot",
+  "exitOtherValid": true,
+  "fixed": true,
+  "joint": "OriginHelper/Pivot",
+  "safe": true,
+  "stay": 1,
+  "subscribed": true
+}

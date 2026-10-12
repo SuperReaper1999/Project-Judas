@@ -1,0 +1,28 @@
+{
+  "id": "judas_runtime_ui_application_tests",
+  "source": "tests/RuntimeUIApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_ui_application_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "525838d0f00a102323f78d333e5e90a6c96475d2f3c749a690642da5b6d0c6d5",
+  "exitCode": 1,
+  "status": "failed",
+  "passingLines": 13,
+  "failingLines": 1,
+  "log": "docs/evidence/m78/linux/judas_runtime_ui_application_tests.log",
+  "logSHA256": "4a3ea563477f0b06353aaf84b5396038fab6dc48809fb1b38613061616b80d2d",
+  "seconds": 1.4338974050006073
+}

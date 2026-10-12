@@ -1,0 +1,12 @@
+{
+  "scope": "Host recipe preparation only; diagnostic event-right variant; no native build initiated",
+  "manifest": ".cache/windows-vm-transfer/m78-continuation-direct-recipe-preparation-only.json",
+  "label": "recipe-preparation-only",
+  "cases": [
+    "event",
+    "balance",
+    "gravity",
+    "lifecycle"
+  ],
+  "sourceArchiveBytes": 47609
+}

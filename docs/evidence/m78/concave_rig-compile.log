@@ -1,0 +1,13 @@
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/concave_rig.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/concave_rig.cpp:17:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   17 |  if(argc!=2)return 2;namespace fs=std::filesystem;fs::path out=argv[1];fs::create_directories(out);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/concave_rig.cpp:17:22: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   17 |  if(argc!=2)return 2;namespace fs=std::filesystem;fs::path out=argv[1];fs::create_directories(out);
+      |                      ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/concave_rig.cpp:35:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   35 |   if(!floor.IsValid())return 7;for(auto id:owners)if(!world.EnterRagdoll(id,error)){std::cerr<<error;return 8;}
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/concave_rig.cpp:35:32: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   35 |   if(!floor.IsValid())return 7;for(auto id:owners)if(!world.EnterRagdoll(id,error)){std::cerr<<error;return 8;}
+      |                                ^~~

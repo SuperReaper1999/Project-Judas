@@ -1,0 +1,19 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_ragdoll.exe",
+                      "sha256":  "ccf9d9cc245ff91199430d0a0d53f691b4ef3b4c076d8a4221a4c695f05c9d5a",
+                      "name":  "m78_combined-v2_ragdoll.exe",
+                      "bytes":  8840192
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\ragdoll-0.obj",
+                      "sha256":  "a0cb147f894c384c30acd8d674890f1d66dd5f73198b5d476d1cc97083ecf8ee",
+                      "name":  "ragdoll-0.obj",
+                      "bytes":  509723
+                  }
+              ],
+    "archiveSHA256":  "2608de5183aed378ad7023a515b76497176720f2c86112fa5e23d8effb4a3d7d",
+    "freeBytes":  492756992
+}

@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "c84503070686843246809c414dddf891dc3abe629e5860dd1f902aa14801b565",
+    "case":  "nav_dependency",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_nav_dependency.exe",
+                      "sha256":  "65109f02e3d7c1033bb9f511168f9bf9d11bf3ce83de7e99465b367a5aa12940",
+                      "name":  "m78_combined-v2_nav_dependency.exe",
+                      "bytes":  7891456
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\nav_dependency-0.obj",
+                      "sha256":  "f5024b51f34aaf289a6488591f778fa8f05f73dc0a467b32a5d4ef2a53cfd4b5",
+                      "name":  "nav_dependency-0.obj",
+                      "bytes":  204845
+                  }
+              ],
+    "freeBytes":  452141056,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  3617314,
+    "archiveName":  "m78-combined-v2-nav_dependency-archive.zip"
+}

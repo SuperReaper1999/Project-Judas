@@ -1,0 +1,185 @@
+[
+  {
+    "id": "DOC-001",
+    "layer": "documentation",
+    "severity": "low",
+    "claim": "Current status labels agree with checkpointed state",
+    "observed": [
+      "docs/ARCHITECTURE.md:3 labels M77 uncommitted",
+      "docs/M70.md:3 labels accepted M70 candidate uncommitted",
+      "docs/DOCUMENTATION_MAINTENANCE.md:3-4 labels M72 candidate uncommitted"
+    ],
+    "expected": "Current labels identify completed checkpoints while keeping human/hardware status distinct",
+    "reproduction": "Read indicated passages and compare git log and current milestone status records",
+    "cause": "stale current-status prose",
+    "scope": "source inspection; no product behavioural failure",
+    "proposedBoundary": "later documentation-only status alignment; do not edit during frozen audit"
+  },
+  {
+    "id": "REQ-001",
+    "layer": "requirements availability",
+    "severity": "coverage gap",
+    "claim": "Original M77 requirements available for independent requirements-versus-envelope adjudication",
+    "observed": "Referenced original attachment path is absent; no original M77 prompt found in .cache/m77, current attachment tree or Documents/M77*. Current docs/evidence remain available.",
+    "expected": "Recover original authorized brief before declaring intended scope fully satisfied",
+    "reproduction": "See requirements crosswalk and absent attachment path from user history",
+    "cause": "unavailable original artifact at known locations; no inference of deletion mechanism",
+    "proposedBoundary": "recover original brief; current M77 docs are derivative evidence, not a substitute"
+  },
+  {
+    "id": "PHY-001",
+    "layer": "engine physics",
+    "severity": "moderate - inherited mathematical limitation",
+    "status": "reproduced on frozen baseline; no fix authorized",
+    "claim": "General torque-free asymmetric rigid-body motion under Newtonian angular-momentum conservation",
+    "expected": "World vector L=R I_body R^T omega constant for isolated body with zero applied torque/contact; used as independent analytic criterion, not retroactively invented accepted suite tolerance",
+    "actual": "3kg box half extents(.2,.5,.9)m, omega(1,2,3)rad/s, two seconds: peak vector residual~2.191kg m2/s (~100.3% of initial magnitude) at 60/120/240/480Hz. Isotropic sphere control relative error <2.6e-7 via PhysicsWorld; zero contact rows and no translation. This is vector error, not a 100% change in scalar magnitude/energy.",
+    "mechanism": "src/RigidBody.cpp::IntegrateRigidBodyVelocity uses I_world^-1*tau only; no -I_world^-1*(omega cross I_world omega) term or equivalent angular-momentum transport. PhysicsWorld::Step calls this unchanged integration.",
+    "known": "M77 already discloses missing gyroscopic transport, but its articulated residual does not quantify this unconstrained anisotropic case.",
+    "reproduction": "probes/free_rotation.cpp and probes/free_rotation_world.cpp; command/exit/binary/library identity in free_rotation_world-receipt.json",
+    "platform": "Linux; native Windows not yet executed",
+    "frequency": "all four tested cadences; deterministic sampled input",
+    "confidence": "high for mechanism and observed envelope; wider gameplay impact not quantified",
+    "oracle": "Analytic isolated-body angular momentum; sphere/zero-contact/stationary-COM controls; timestep refinement",
+    "evidence": [
+      "free_rotation.jsonl",
+      "free_rotation_world.jsonl",
+      "free_rotation_world-receipt.json"
+    ],
+    "proposedBoundary": "Separate generic rigid integration improvement and affected contact/constraint tests, requiring operator authorization. Do not retune M77 as a workaround."
+  },
+  {
+    "id": "OBS-001",
+    "layer": "audit observer",
+    "severity": "not a product defect",
+    "status": "corrected with first version retained",
+    "actual": "Initial free-rotation observer used nonexistent glm::dmat3_cast; compile failed. Replaced only observer expression with templated glm::mat3_cast. Initial shell subsequently attempted absent binary; its outer exit was misleading and supplies no product evidence.",
+    "evidence": [
+      "free_rotation-build.log",
+      "probes/free_rotation-first-invalid-observer.cpp",
+      "free_rotation-corrected-build.log"
+    ],
+    "scope": "No baseline/source/assertion/tolerance modification"
+  },
+  {
+    "id": "PHY-002",
+    "layer": "engine physics performance",
+    "severity": "high",
+    "status": "reproduced; no correction authorized",
+    "claim": "Current articulated bodies remain practical on ordinary static triangle-mesh collision geometry",
+    "expected": "Paired plane geometry controls with identical rig/configuration; no universal real-time threshold asserted",
+    "actual": "13-body rig, 8192-triangle planar floor: median 23.906608 ms, p95 58.560454 ms, maximum 105.096739 ms; four rigs: median 170.128834 ms, p95 258.706529 ms, maximum 338.867168 ms. Matching box controls: median 0.034266/0.232256 ms, maxima 6.705254/25.388343 ms. 900 fixed steps at 60 Hz per case. Mesh cases finish with zero sleeping bones; box controls all sleep.",
+    "mechanism": "Current CCD path reports 1,016,265/5,493,415 search iterations and 4,909/25,202 search-limit exhaustions on mesh cases. Counters establish expensive bounded search envelope; exact cause of repeated searches and non-sleep is unresolved. No per-function timing claim.",
+    "oracle": "Real CookCollision grid and normal RuntimeWorld/PhysicsWorld; contact and finite-position checks; equivalent floor plane, one/four instances. Scripts removed to isolate physics. This is not a duplicate of old artist-halfpipe workloads.",
+    "evidence": [
+      "probes/concave_rig.cpp",
+      "concave_rig-build.json",
+      "cases/concave-current-rig.json",
+      "cases/concave-current-rig.log",
+      "performance/mesh-1.csv",
+      "performance/mesh-4.csv",
+      "performance/box-1.csv",
+      "performance/box-4.csv"
+    ],
+    "platform": "Linux Release CPU fixed-step cost, not rendered FPS; Windows unexecuted",
+    "confidence": "high observed differential; moderate attribution to repeated CCD work; root cause unresolved",
+    "proposedBoundary": "Separate generic triangle-mesh CCD/contact investigation. Do not alter M77 effort or force sleep to hide this."
+  },
+  {
+    "id": "FLU-001",
+    "layer": "legacy production PBF",
+    "severity": "moderate acceptance regression",
+    "status": "failed repeatably",
+    "claim": "Accepted rotated half-immersion body fixture settles within declared speed bound",
+    "expected": "abs(final vertical velocity)<0.5 m/s after fixture interval; independent immersion within 0.1 of 0.5",
+    "actual": "Final velocity 0.558701396 m/s, mean immersion 0.4888964, independent 0.5276835. Flat corresponding control 0.44297 m/s. Rotated repeat identical; mass and finite-state checks pass.",
+    "cause": "Unresolved; do not infer conserved-reservoir ledger failure. This is legacy PBF/exterior support, not M54/M55.",
+    "evidence": [
+      "linux/judas_production_fluid_tests.log",
+      "cases/fluid-rotated-repeat.log"
+    ],
+    "proposedBoundary": "Investigate rotating-fluid/body support fixture independently, retaining accepted tolerance; no solver change during audit."
+  },
+  {
+    "id": "TST-001",
+    "layer": "test fixture and memory envelope",
+    "severity": "moderate fixture drift; measured memory limit",
+    "status": "adjudicated with paired budgets",
+    "claim": "Scalability fixture expects four 100-object regions to all retire into default retained budget",
+    "actual": "SceneObject sizeof 4248; retained estimate 12970 bytes/object. 4x100=5,188,000 bytes exceeds 4,194,304-byte default. Three retire (3,891,000 bytes); fourth correctly pins with retained session byte budget. At 16 MiB all retire. 4x10 retires at both budgets.",
+    "cause": "Test expectation no longer fits current component-heavy snapshot size; not a demonstrated unbounded streaming deadlock. Per-object storage overhead remains material.",
+    "evidence": [
+      "linux/judas_scalability_tests.log",
+      "cases/scalability-unload-repeat.log",
+      "cases/region-retirement-minimal.log",
+      "probes/region_retire.cpp"
+    ],
+    "proposedBoundary": "Later reconcile test budget/required semantics and review memory footprint; do not weaken assertions during audit."
+  },
+  {
+    "id": "ENV-001",
+    "layer": "Windows environment",
+    "severity": "platform coverage blocker",
+    "status": "partially recovered",
+    "actual": "Guest agent stopped responding and screen capture was black. Operator authorized restart; unchanged VM configuration, ACPI reboot requested. Five fresh native tests completed exit zero and their logs recovered. No product crash inferred. C: free about 128 MiB after attempt; broader Windows builds/package/hardware checks outstanding.",
+    "evidence": [
+      "windows-restart.json",
+      "WINDOWS_COMMON.json",
+      "windows-owned-space-inventory.json",
+      "windows-environment-source-probe.json"
+    ],
+    "proposedBoundary": "Retain unexecuted Windows breadth/hardware cases; no VM resizing/security changes or source/package cleanup."
+  },
+  {
+    "id": "OBS-002",
+    "layer": "audit prerequisites",
+    "severity": "not engine defects",
+    "status": "corrected receipts retained",
+    "actual": "Initial frozen-tree script/UI exports lacked runtime binary; storage output guard required m61-storage prefix; model reimport required local FBX; cookbook imported model required license-restricted ignored cooked assets. Corrected isolated prerequisites pass. Private inputs remain local and are not redistributed. Initial relative executable/TypeScript path and mod filename observer errors retained.",
+    "evidence": [
+      "OBSERVER_RUNTIME_PREREQUISITE.json",
+      "LOCAL_ONLY_INPUTS.json",
+      "FOLLOWUP_PLAN.json",
+      "api-static.log",
+      "api-live.log",
+      "cases/mod-owned-package.log",
+      "cases/mod-owned-package-corrected.log"
+    ],
+    "proposedBoundary": "Document local fixture/licensing requirements separately from engine API correctness."
+  },
+  {
+    "id": "WORK-001",
+    "layer": "authoring workflow / observer assumptions",
+    "severity": "low usability limit",
+    "status": "correct guard and workflow limitation reproduced; fresh second bake publishes successfully",
+    "actual": "Editor terrain sculpt/paint/cook and active scene nav rebake pass. Kit replacement references a second region scene sharing terrain. Packaging correctly rejects stale region navigation. Active-scene rebake is not whole-project dependency recook. Initial addition-only probe incorrectly expected replacement sculpted heights, so four failures reflect wrong observer fixture, not missing M76 primitives.",
+    "expected": "All consumers of edited geometry must be freshly baked before package publication. No stale geometry accepted.",
+    "evidence": [
+      "cases/editor-terrain-package.log",
+      "cases/mod-moved-probe.log",
+      "cases/mod-region-rebake-corrected.log",
+      "cases/mod-editor-package-all-bakes-corrected.log",
+      "cases/mod-source-hidden-correct-startup.log"
+    ],
+    "proposedBoundary": "Document whole-project freshness workflow, later consider targeted dependency UI; no product fix during audit."
+  },
+  {
+    "id": "PERF-001",
+    "layer": "engine scene construction",
+    "severity": "moderate - scales poorly at startup",
+    "status": "reproduced; source mechanism traced; no fix authorized",
+    "claim": "Inert entities do not create unexplained script cost or disproportionate scene build cost",
+    "actual": "Fixed 1000-step median with zero scripts: 0 objects 0.001522 ms; 6400 inert 0.001520 ms. With eight scripts: 0.037659 vs 0.039853 ms. But 6400 inert startup is about 2.0-2.2 seconds. Independent phase probe repeated three times: ResolvePrefabs 1844-1854 ms, FlattenHierarchy 142-146 ms, entire Build 2020-2032 ms; no prefabs, bodies or scripts.",
+    "cause": "ResolvePrefabs always stable_sorts all objects; comparator computes original rank with a linear scan twice per comparison, even when there are no prefab expansions. FlattenHierarchy also invokes linear Scene::Find once per object. This is a current startup path, not the formerly reported per-fixed-step inert/entity slowdown.",
+    "oracle": "Separate direct phase measurements, one frozen binary, 400/800/1600/3200/6400 objects, three repeats, unchanged ownership/content. Fresh output observed full-size preservation. Scalability --measure-baseline is observational with assertions disabled and supplies no acceptance pass.",
+    "evidence": [
+      "probes/inert_startup.cpp",
+      "inert_startup-build.json",
+      "cases/inert-startup-phase-controls.log",
+      "performance/inert-entities-observation.json",
+      "cases/scalability-observational-no-acceptance.json"
+    ],
+    "platform": "Linux only",
+    "proposedBoundary": "Later optimize generic source-order lookup/flatten identity lookup with semantic/order invariance proofs; no special game path or M78 implementation change."
+  }
+]

@@ -28,6 +28,13 @@ if (result?.state === 'failed') console.log(result.error);
 | `reference(entity)` | Stable opaque reference string, or `null` for destroyed entity. Full-width IDs never go through Number. |
 | `resolve(key)` | Fresh Entity or `null` if absent/unloaded/destroyed; never loads a region from a getter. |
 
+**Current known defect (M78 audit, LIF-002):** excluding a legally eligible simple
+dynamic actor omits its scene entity but retains a sleep record. Full restoration
+then fails with `saved sleep body unavailable/duplicate`. The normal non-excluded
+control passes. This pre-existing defect is recorded, not repaired, in the
+[measured reproduction](../evidence/m78-closure/audit-lifecycle/save-exclusion/MEASURED_RESULT.md).
+Do not infer successful dynamic-body exclusion from capture success alone.
+
 Slot IDs are 1–64 ASCII letters/digits/underscore/hyphen, not paths. Names are
 independent bounded Unicode strings. Metadata and script/session data must use
 bounded plain JSON values, not wrappers, functions or closures. One operation is
@@ -95,7 +102,8 @@ for supported contact, scale and attachment semantics.
 
 Modern slots also retain motor support/motion state and remap the supporting
 identity to fresh bodies. Runtime joint limits/motor/spring settings persist;
-native handles and solver caches rebuild. These guarantees belong to explicit
+native handles and most solver caches rebuild. The current M78 corrective candidate
+also retains a guarded joint continuation context; see below. These guarantees belong to explicit
 modern slot save/load, not ordinary reload or the legacy `.judasstate` path.
 Composed projects use the same service with qualified resident/retained region
 records; the legacy delta restriction does not disable modern slot saves.
@@ -118,7 +126,8 @@ region settings in ordinary entity definitions. The skeletal participant preserv
 playback/mixer/layers and source/final poses. Physical authority, pending mode
 requests and the mapped articulation are separate participants. Load reconstructs
 joint/body mappings and safe handles; solve timings, saturation observations,
-previous motion samples and numerical caches are not serialized gameplay state.
+previous motion samples and general numerical caches are not serialized gameplay state.
+The bounded joint continuation exception below is numerical state, not script state.
 Use `restore` to reacquire wrappers and let the next fixed solve publish diagnostics.
 
 Kinematic bodies retain current motion authority/physical state plus durable target
@@ -126,3 +135,29 @@ or velocity commands, including the target's remaining duration. Save/load does 
 reapply authored initial velocity over a captured command. The legacy pose-delta
 `.judasstate` save rejects changed authority/kinematic intent; use modern slots.
 [Kinematic reference](entities.md#kinematic-motion-m71) · [Pose/physical reference](animation-ragdolls.md).
+
+## Joint continuation — current M78 corrective candidate
+
+New joint-bearing modern slots pair articulation participant version 4 with
+contact participant version 2. They retain actual latched angular-drive commands,
+the selected finite-pass joint impulse history, and a separate completed contact
+observation with its real epoch/timestep. Safe native handles reconstruct from
+existing identities; no contact impulse is replayed and no enter callback is
+invented. A changed timestep discards numerical guesses. Changed physical context
+invalidates or rejects continuation; malformed/newer/missing paired data rejects
+the private restoration before publication. No new JavaScript method is required.
+
+If excluding a transient body omits an otherwise eligible positive completed
+contact, the snapshot records that publication as unavailable. It does not
+present the remaining subset as complete or empty; the native controller keeps
+its ordinary first-sample wait. A genuinely completed empty publication remains
+distinct from an unpublished one.
+
+An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. This disk-save reconstruction guarantee does not establish immediate query initialization on streamed-region activation/revisit; the separate gap is recorded in the [final combined handoff](../M78_FINAL.md).
+
+This is not a promise of universal bitwise trajectories or persistence of every
+cache. Old articulation/contact versions remain readable through their previous
+cold-start path. An older in-progress save that omitted this context can still
+fail to continue its original bounded physical task. The original M77 failure is
+preserved, separately from passing new captures. See the
+[mechanism and compatibility report](../M78_COLD_CONTINUATION.md).

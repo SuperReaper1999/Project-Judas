@@ -1,0 +1,11 @@
+﻿{
+    "scope":  "Only exact generated link maps independently preserved and SHA-verified on host (also losslessly gzip evidence) removed; all copied diagnostic source/objects/executables/results and production library untouched",
+    "maps":  [
+                 {
+                     "path":  "C:\\JudasValidation\\M78FirstBoundarySplitResults\\m78-native-first-split-seeds-normal-prepare.map",
+                     "bytes":  14840449,
+                     "sha256":  "10106f98563460e99a515a2f4c128c2bae82a82e49a15c4d7c02af421f329880"
+                 }
+             ],
+    "freeBytes":  30052352
+}

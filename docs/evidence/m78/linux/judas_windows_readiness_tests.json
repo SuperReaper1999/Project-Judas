@@ -1,0 +1,26 @@
+{
+  "id": "judas_windows_readiness_tests",
+  "source": "tests/WindowsReadinessTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_windows_readiness_tests"
+  ],
+  "adapter": "inspected defaults: read-only source / owned temporary output",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "2bb2bc477677da2c4b1cf4a192a5c309bc8bba559d9b389769d9b0996f5b58f9",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 14,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_windows_readiness_tests.log",
+  "logSHA256": "d30ac57f0373f0d56ec5bfefda3674da89f254140560439912b91946774c6957",
+  "seconds": 0.1802635910007666
+}

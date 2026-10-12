@@ -1,0 +1,13 @@
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$root='C:\JudasValidation';$base='http://192.168.122.1:8872';$out="$root\M78FollowupResults";New-Item -ItemType Directory $out -Force|Out-Null
+function Upload($p){Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($p))" -Method Post -InFile $p|Out-Null}
+try{
+ if((Get-PSDrive C).Free -lt 200MB){throw 'Insufficient incremental build headroom; retained reserve required'}
+ Invoke-WebRequest -UseBasicParsing "$base/m78-followup-source.json" -OutFile "$out\source.json";$manifest=Get-Content "$out\source.json" -Raw|ConvertFrom-Json
+ Invoke-WebRequest -UseBasicParsing "$base/m78-followup-source.zip" -OutFile "$out\source.zip";if((Get-FileHash "$out\source.zip").Hash.ToLower() -ne $manifest.archiveSHA256){throw 'Source archive mismatch'}
+ Expand-Archive -LiteralPath "$out\source.zip" -DestinationPath "$root\Source" -Force;$proof=@();foreach($row in $manifest.files){$path=Join-Path "$root\Source" $row.path;$actual=(Get-FileHash -LiteralPath $path).Hash.ToLower();if($actual -ne $row.sha256){throw "Source mismatch $($row.path)"};(Get-Item -LiteralPath $path).LastWriteTime=Get-Date;$proof+=@{path=$row.path;sha256=$actual}}
+ Import-Module "$root\VS2022\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";Enter-VsDevShell -VsInstallPath "$root\VS2022" -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64';$cmake="$root\VS2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe";$ErrorActionPreference='Continue'
+ & $cmake -S "$root\Source" -B "$root\Build" 2>&1|Tee-Object -FilePath "$out\m78-candidate-configure.log";if($LASTEXITCODE -ne 0){throw 'Configure failed'}
+ & $cmake --build "$root\Build" --config Release --target judas_rigid_motion_tests judas_joint_tests judas_collision_geometry_tests judas_prefab_tests judas_streaming_tests judas_scalability_tests judas_physical_balance_controller_tests judas_physical_balance_foundation_tests judas_physical_animation_tests judas_character_motor_tests judas_navigation_dependency_tests judas_navigation_bake --parallel 1 2>&1|Tee-Object -FilePath "$out\m78-candidate-build.log";$code=$LASTEXITCODE
+ $bins=@();Get-ChildItem -LiteralPath "$root\Build\Release" -Filter *.exe|ForEach-Object {$bins+=@{name=$_.Name;sha256=(Get-FileHash $_.FullName).Hash.ToLower();bytes=$_.Length}}
+ @{exitCode=$code;source=$proof;executables=$bins;freeBytes=(Get-PSDrive C).Free}|ConvertTo-Json -Depth 8|Set-Content "$out\m78-candidate-build.json" -Encoding UTF8;Upload "$out\m78-candidate-build.json";Upload "$out\m78-candidate-build.log";Upload "$out\m78-candidate-configure.log";exit $code
+}catch{$_|Out-String|Set-Content "$out\m78-candidate-build-failure.log";Upload "$out\m78-candidate-build-failure.log";exit 1}

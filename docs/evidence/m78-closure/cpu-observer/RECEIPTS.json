@@ -1,0 +1,131 @@
+{
+  "scope": "Bounded timing diagnosis: exact original four workloads plus observational thread-CPU clock; serial prior/final archives.",
+  "sourceSHA256": "cbf43606ee2db01e38d2bf16480d02ea7fefab8e68d471fbba67d17901aa1e55",
+  "results": [
+    {
+      "name": "compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/probes/concave_cpu_observer.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/observer.o"
+      ],
+      "exitCode": 0,
+      "seconds": 11.004188524995698,
+      "logSHA256": "482a461a9ade8f05593419797dd8226b597c96cbdb0865560bded9add78611be"
+    },
+    {
+      "name": "prior-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/prior",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 1.1673054109996883,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "prior-run",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/prior",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/cpu-observer/prior"
+      ],
+      "exitCode": 0,
+      "seconds": 8.763241458000266,
+      "logSHA256": "0629f19781d0a0c6328a3ebc15786e61410fe4d84e6241eb9eb1dc0893e615ce"
+    },
+    {
+      "name": "final-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/final",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.8398112450013286,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "final-run",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/cpu-observer/final",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/cpu-observer/final"
+      ],
+      "exitCode": 0,
+      "seconds": 7.6997653569997055,
+      "logSHA256": "1dc077b4210feaa14ac4478588bc9ec219d6af72c13a5584b13fb86b3ef5a557"
+    }
+  ]
+}

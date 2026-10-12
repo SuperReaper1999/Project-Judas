@@ -1,0 +1,71 @@
+diff --git a/src/CollisionGeometry.cpp b/src/CollisionGeometry.cpp
+index d90cced9..81e6a18d 100644
+--- a/src/CollisionGeometry.cpp
++++ b/src/CollisionGeometry.cpp
+@@ -163,7 +163,19 @@ ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,dou
+  if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule){M r=PrimitiveRotation(a);V center=PrimitiveCenter(a);double half=a.shape.type==ShapeType::Capsule?a.shape.halfHeight:0;auto d=SegmentGeometry(center-r[1]*half,center+r[1]*half,a.shape.radius,b,margin);if(d.valid&&d.gap<=margin)out.Add(make(a,b,d.queryPoint-d.normal*double(a.shape.radius),d.point,d.normal,d.gap));return out;}
+  if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
+  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
+- V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](Poly pb){auto s=sat(pa,pb);if(s.gap>margin)return;for(auto [x,y]:witnesses(pa,pb,s))contacts.push_back(make(a,b,x+origin,y+origin,s.normal,s.gap));};
++ V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](Poly pb){
++  auto s=sat(pa,pb);if(s.gap>margin)return;
++  // SAT gives the deepest feature separation, not the depth of every point
++  // clipped from an inclined incident face. Each face witness has its own
++  // signed plane gap; assigning the deepest gap to all points manufactures
++  // penetrations (and support impulses) at corners still above the surface.
++  bool faceWitness=false;
++  for(auto n:pb.normals)faceWitness|=!s.edge&&glm::dot(n,s.normal)>1-1e-6;
++  for(auto [x,y]:witnesses(pa,pb,s)){
++   const double gap=faceWitness?glm::dot(s.normal,x-y):s.gap;
++   if(gap<=margin)contacts.push_back(make(a,b,x+origin,y+origin,s.normal,gap));
++  }
++ };
+  if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box)test(poly(b,origin));
+  else if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;Poly pb=triangle(b,i,origin);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!b.shape.asset->twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,*b.shape.asset,i);}test(std::move(pb));}}
+  else throw std::invalid_argument("unsupported cooked contact target");
+diff --git a/src/PhysicsWorld.cpp b/src/PhysicsWorld.cpp
+index 8d758f3a..5a3998f9 100644
+--- a/src/PhysicsWorld.cpp
++++ b/src/PhysicsWorld.cpp
+@@ -449,7 +449,7 @@ struct PhysicsWorld::Impl {
+         auto support=[&](unsigned slot,int part) {
+             Support result;const auto& body=bodies[slot];const auto& sample=ImpactPoseAt(slot,time);const auto& pose=sample.pose;
+             const auto child=PrimitiveAt(body.shape,pose,part,&*sample.orientation);
+-            if(child.shape.type!=ShapeType::Box && child.shape.type!=ShapeType::Sphere&&child.shape.type!=ShapeType::ConvexHull) return result;
++            if(child.shape.type!=ShapeType::Box && child.shape.type!=ShapeType::Sphere&&child.shape.type!=ShapeType::ConvexHull&&child.shape.type!=ShapeType::TriangleMesh) return result;
+             const auto& rotation=sample.orientation->rotation;
+             const glm::dvec3 omega(body.HasMotion()?pose.angularVelocity:glm::vec3(0));
+             const double w2=glm::dot(omega,omega);
+@@ -463,6 +463,17 @@ struct PhysicsWorld::Impl {
+             };
+             if(child.shape.type==ShapeType::Sphere) {vertex(glm::dvec3(child.parentLocalCenter));result.radius=child.shape.radius;}
+             else if(child.shape.type==ShapeType::ConvexHull){const auto r=ContactRotation(child.childRotation);for(auto p:child.shape.asset->vertices)vertex(glm::dvec3(child.parentLocalCenter)+r*p);}
++            else if(child.shape.type==ShapeType::TriangleMesh){
++                // The asset-space AABB encloses every mesh vertex. Its eight
++                // transformed corners therefore certify a separating plane for
++                // the entire mesh, including faces outside the current query.
++                // This is only an advancement bound, never contact geometry.
++                // If this larger enclosure crosses the plane we return zero
++                // below and retain the original conservative/sampling search.
++                const auto r=ContactRotation(child.childRotation);
++                const auto lo=child.shape.asset->minimum,hi=child.shape.asset->maximum;
++                for(int k=0;k<8;++k)vertex(glm::dvec3(child.parentLocalCenter)+r*glm::dvec3(k&1?hi.x:lo.x,k&2?hi.y:lo.y,k&4?hi.z:lo.z));
++            }
+             else {const auto childRotation=ContactRotation(child.childRotation);for(int k=0;k<8;++k) vertex(glm::dvec3(child.parentLocalCenter)+childRotation*glm::dvec3(child.shape.halfExtents)*
+                 glm::dvec3(k&1?1:-1,k&2?1:-1,k&4?1:-1));}
+             return result;
+diff --git a/tests/CollisionGeometryTests.cpp b/tests/CollisionGeometryTests.cpp
+index a953994b..8f5eb8c9 100644
+--- a/tests/CollisionGeometryTests.cpp
++++ b/tests/CollisionGeometryTests.cpp
+@@ -29,6 +29,10 @@ int main(){try{
+  auto touchingRay=world.Raycast({5,-3,5},{1,0,0},0);require(touchingRay.hit&&touchingRay.initialOverlap&&touchingRay.distance==0,"zero distance tangent ray detects existing mesh touch");
+  auto dynamic=world.CreateShape(hull,{{5,-2.1f,0},{1,0,0,0}},true,2,.5,0);world.ApplyLinearAcceleration(dynamic,{0,-9.8,0},1.f/60);world.Step(1.f/60);require(world.LastStepContactCount()>0,"dynamic hull contact mesh");
+ 
++ // Tilted face contacts must report their own witness depths, not one SAT
++ // minimum copied onto every corner. Verify geometry independently of solver.
++ PrimitivePose tilted,flatSheet;tilted.shape=Shape::Box({.4,.2,.3});tilted.parentPosition={0,.23,0};tilted.parentOrientation=glm::angleAxis(.3f,glm::vec3(0,0,1));flatSheet.shape=mesh;
++ for(double margin:{0.,.2}){auto contact=CookedContacts(tilted,flatSheet,margin);require(contact.count>0,"inclined box real mesh contacts exist");for(int i=0;i<contact.count;++i){auto& c=contact.points[i];auto wa=glm::dvec3(tilted.parentPosition)+glm::dmat3(glm::mat3_cast(tilted.parentOrientation))*c.localWitnessA;auto wb=c.localWitnessB;require(std::abs(c.signedSeparation-glm::dot(c.preciseNormal,wa-wb))<1e-9,"each clipped contact uses its actual witness plane gap");require(c.signedSeparation<=margin,"above-margin tilted witnesses are excluded");}}
+  require(asset.polygons.size()==6&&asset.edges.size()==12,"cooked cube has six full contact faces, twelve physical edges");
+  CollisionAsset failed;auto malformed=cube();malformed.indices[0]=999;require(!CookCollision(malformed,settings,failed,error),"out of range source diagnosed");malformed=cube();malformed.vertices[0].position.x=INFINITY;require(!CookCollision(malformed,settings,failed,error),"nonfinite source rejected");
+  auto mirrored=settings;mirrored.transform[0][0]=-1;require(!CookCollision(cube(),mirrored,failed,error),"mirrored cook rejected");auto sheared=settings;sheared.transform[1][0]=.2;require(!CookCollision(cube(),sheared,failed,error),"sheared cook rejected");

@@ -1,0 +1,248 @@
+﻿{
+    "scope":  "Only exact newly built owned editor executable/objects independently archived and freshly verified removed; all sources, compiler responses/logs, screenshots, final production library and moved package retained",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_editor.exe",
+                      "sha256":  "5b9a4d31976fbd7820901dbadee14e6f85667e5ac6264024d96ce82206033085",
+                      "bytes":  13157888,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "16d1f300229faf267f93b537733ccf3e8eb8fe98912da72f738be31a87269fdc",
+                                        "bytes":  4194304,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-0-part-0.bin"
+                                    },
+                                    {
+                                        "offset":  4194304,
+                                        "sha256":  "d8e9eaba7cec89a21f5bd2bb057917c5df4dea6c303b194c574dc7a367c63908",
+                                        "bytes":  4194304,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-0-part-1.bin"
+                                    },
+                                    {
+                                        "offset":  8388608,
+                                        "sha256":  "94e3be1363c937da1c1bb3f6337c9a9ecd716a53e5e542738073b452cc35e955",
+                                        "bytes":  4194304,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-0-part-2.bin"
+                                    },
+                                    {
+                                        "offset":  12582912,
+                                        "sha256":  "d247ef0700bdd3f80cb223ddb4374f83d48ea1b8379c86f4ef07288e26f5af8b",
+                                        "bytes":  574976,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-0-part-3.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/m78_combined-v2_editor.exe"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorMain.obj",
+                      "sha256":  "99877d6036625007ba5a12da8b336f7b733f0f0af0fa073e861c806f296acfa0",
+                      "bytes":  5639,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "99877d6036625007ba5a12da8b336f7b733f0f0af0fa073e861c806f296acfa0",
+                                        "bytes":  5639,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-1-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorMain.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorMilestoneNotice.obj",
+                      "sha256":  "2600f00a94f079f01bcdaaf0ca3f762a050ce7242be9edd73ca24953408769a0",
+                      "bytes":  1476924,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "2600f00a94f079f01bcdaaf0ca3f762a050ce7242be9edd73ca24953408769a0",
+                                        "bytes":  1476924,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-2-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorMilestoneNotice.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorApplication.obj",
+                      "sha256":  "5d2357b7ccb6ce48a16952e49f9fae8fb1a49c374a7cb092f898a595e3ee0c7a",
+                      "bytes":  3489899,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "5d2357b7ccb6ce48a16952e49f9fae8fb1a49c374a7cb092f898a595e3ee0c7a",
+                                        "bytes":  3489899,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-3-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorApplication.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorCamera.obj",
+                      "sha256":  "548662a4c71c802ba3f6707ba8bdab4c7cce6624b687aa96dd09818b7cd5cf52",
+                      "bytes":  18462,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "548662a4c71c802ba3f6707ba8bdab4c7cce6624b687aa96dd09818b7cd5cf52",
+                                        "bytes":  18462,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-4-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorCamera.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorPicking.obj",
+                      "sha256":  "911cdc4fa3eb13d9f2963adfd3417c45ffb7624565437dfad7dea9f6f1f714ba",
+                      "bytes":  264555,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "911cdc4fa3eb13d9f2963adfd3417c45ffb7624565437dfad7dea9f6f1f714ba",
+                                        "bytes":  264555,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-5-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorPicking.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorHistory.obj",
+                      "sha256":  "0894db2dbe0b21249c24e0c8c240d763de978d5636865f2d956e22c8c0e070ec",
+                      "bytes":  712162,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "0894db2dbe0b21249c24e0c8c240d763de978d5636865f2d956e22c8c0e070ec",
+                                        "bytes":  712162,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-6-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorHistory.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorPanels.obj",
+                      "sha256":  "3da219c81b5ca07fe491b7d821909a3c148ade72ac0ba9a558b6d1898574069f",
+                      "bytes":  3014494,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "3da219c81b5ca07fe491b7d821909a3c148ade72ac0ba9a558b6d1898574069f",
+                                        "bytes":  3014494,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-7-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorPanels.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\RetargetPanel.obj",
+                      "sha256":  "3f38eca0d801212c35699b1a48c16167b9b9214130987208dc6898908b384093",
+                      "bytes":  2193899,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "3f38eca0d801212c35699b1a48c16167b9b9214130987208dc6898908b384093",
+                                        "bytes":  2193899,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-8-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/RetargetPanel.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\WorldTools.obj",
+                      "sha256":  "35479d6829be9138708fadc4860b19c1b9c300b72fb9b1ff67e448eb0961fb5c",
+                      "bytes":  1577394,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "35479d6829be9138708fadc4860b19c1b9c300b72fb9b1ff67e448eb0961fb5c",
+                                        "bytes":  1577394,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-9-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/WorldTools.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\TerrainTools.obj",
+                      "sha256":  "5e10bbc2fe2dbcce7bbc6f73506438a06e36b23283d15a72888546c233afa4bb",
+                      "bytes":  1397138,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "5e10bbc2fe2dbcce7bbc6f73506438a06e36b23283d15a72888546c233afa4bb",
+                                        "bytes":  1397138,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-10-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/TerrainTools.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\ModTools.obj",
+                      "sha256":  "e8f8e68e25e90f2c1dca5feac265a850c217b18b68a1161c70f9677ffe380db3",
+                      "bytes":  482103,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "e8f8e68e25e90f2c1dca5feac265a850c217b18b68a1161c70f9677ffe380db3",
+                                        "bytes":  482103,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-11-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/ModTools.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\ProfilerView.obj",
+                      "sha256":  "a7e70fa667d0f8a31a71824058547ad58fb5e0551db63a3be5286342d5010412",
+                      "bytes":  101445,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "a7e70fa667d0f8a31a71824058547ad58fb5e0551db63a3be5286342d5010412",
+                                        "bytes":  101445,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-12-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/ProfilerView.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\EditorWidgets.obj",
+                      "sha256":  "3f0184966c6fe1d9deec200ec1c589071315e38d424f642dca341d72b2e38f59",
+                      "bytes":  52948,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "3f0184966c6fe1d9deec200ec1c589071315e38d424f642dca341d72b2e38f59",
+                                        "bytes":  52948,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-13-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/EditorWidgets.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\ComponentEditors.obj",
+                      "sha256":  "72bab989f8c3a68de5c829e0f77eef21f2a9ec73379c6de0cb8b6bc59c872cee",
+                      "bytes":  1437795,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "72bab989f8c3a68de5c829e0f77eef21f2a9ec73379c6de0cb8b6bc59c872cee",
+                                        "bytes":  1437795,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-14-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/ComponentEditors.obj"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeEditorBuild\\GizmoMath.obj",
+                      "sha256":  "c6aa0cfb384fbda122d70eccd0d8289409d0e5e5a73f95ed13a46e70d18b2fc8",
+                      "bytes":  23060,
+                      "parts":  [
+                                    {
+                                        "offset":  0,
+                                        "sha256":  "c6aa0cfb384fbda122d70eccd0d8289409d0e5e5a73f95ed13a46e70d18b2fc8",
+                                        "bytes":  23060,
+                                        "reportName":  "m78-native-final-editor-artifact-archive-file-15-part-0.bin"
+                                    }
+                                ],
+                      "hostPath":  "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/editor/GizmoMath.obj"
+                  }
+              ],
+    "freeBytes":  77496320
+}

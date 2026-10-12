@@ -1,0 +1,32 @@
+{
+  "scope": "Independently SHA/byte-verified exact final native executable bytes outside tracked repository; guest library baseline remains untouched.",
+  "executables": [
+    {
+      "case": "balance_lab",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/native-final-binaries/m78_combined-v2_balance_lab.exe",
+      "bytes": 9480192,
+      "sha256": "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "hostArchiveReceipt": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-vm-transfer/reports/m78-combined-v2-balance_lab-archive.json",
+      "hostArchiveBytesSHA256": "8afe23a30053b6028009872ccf164b85e5a4bacdb1b58ed654bbf12f85f96c90"
+    },
+    {
+      "case": "runtime",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/native-final-binaries/m78_combined-v2_runtime.exe",
+      "bytes": 10314752,
+      "sha256": "ea39694571f4e8dbf0322cd6f5c216cd97437104c4a7432af4100b2c1ac326bf",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "hostArchiveReceipt": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-vm-transfer/reports/m78-combined-v2-runtime-archive.json",
+      "hostArchiveBytesSHA256": "dd564c839f7deb52b07c2d3df054172fd1d67340e71f9a057c52815c89ab396b"
+    },
+    {
+      "case": "concave",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/native-final-binaries/m78_combined-v2_concave.exe",
+      "bytes": 8870400,
+      "sha256": "bd10e97e8998af0ca8eeb3214bfa791cd266d2b7c816c918141a77457e89d903",
+      "archiveSHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+      "hostArchiveReceipt": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-vm-transfer/reports/m78-combined-v2-concave-archive.json",
+      "hostArchiveBytesSHA256": "58dd2dda1e9488e06e071e68f70eedb9dcf4e4819471aa698849af668b07bf7c"
+    }
+  ]
+}

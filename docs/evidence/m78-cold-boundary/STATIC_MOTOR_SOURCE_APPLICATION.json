@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-12T00:20:52.875557+00:00",
+  "scope": "Reviewed generic actual-static-body persistence and derived private motor query reconstruction. New focused guard fixture appended; original M70/M77 fixtures unchanged.",
+  "application": [
+    {
+      "path": "src/WorldPersistence.cpp",
+      "beforeSHA256": "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+      "finalSHA256": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb"
+    },
+    {
+      "path": "tests/PhysicsContinuationTests.cpp",
+      "beforeSHA256": "e75c09f8167918ee29460555574c9269076f27388a2af46b7b56f22fd1368246",
+      "finalSHA256": "2c37b796a0a4e78935b1009b500e15063c9730414389e785812f341544117f69"
+    }
+  ],
+  "review": "independent reviewer approved49/0 proof and exact hashes",
+  "originalFixtures": {
+    "tests/CharacterLabTests.cpp": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+    "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+    "tests/PhysicalBalanceControllerTests.cpp": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772"
+  }
+}

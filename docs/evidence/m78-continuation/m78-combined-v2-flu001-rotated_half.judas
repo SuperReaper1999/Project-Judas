@@ -1,0 +1,1724 @@
+JudasScene 3
+settings
+  name "rotated_half"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 4
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 141
+end
+
+object 1 "observer"
+  position -11.676678 27.206165 28.696337
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start third-person
+  player-start.yaw 0
+  player-start.density 950
+  player-start.fluid-drag 2
+  player-start.swim-acceleration 4
+end
+
+object 2 "field"
+  position 0 0 0
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 500 500 500
+end
+
+object 3 "boundary"
+  position 0.063810766 -0.07677685 -0.0057881493
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  body static box
+  body.half-extents 1.1 0.1 1.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 4 "boundary"
+  position -1.7250702 0.5519161 -0.42369914
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  body static box
+  body.half-extents 0.1 1.5 1.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 5 "boundary"
+  position -0.1892525 1.7513891 0.5973437
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  body static box
+  body.half-extents 0.1 1.5 1.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 6 "boundary"
+  position -0.5999129 1.521868 -0.88545036
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  body static box
+  body.half-extents 1 1.499 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 7 "boundary"
+  position -1.31441 0.78143734 1.0590949
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  body static box
+  body.half-extents 1 1.499 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 8 "body"
+  position -0.44667533 0.5374379 0.040517054
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  body static box
+  body.half-extents 0.3 0.3 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 108.000015
+  body.friction 0
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 9 "liquid"
+  position 0.22848351 0.37968028 -0.7897076
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 10 "liquid"
+  position 0.16352922 0.3123684 -0.6129308
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 11 "liquid"
+  position 0.09857496 0.24505654 -0.43615395
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 12 "liquid"
+  position 0.03362066 0.17774466 -0.25937712
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 13 "liquid"
+  position -0.031333636 0.110432774 -0.082600236
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 14 "liquid"
+  position -0.09628791 0.0431209 0.09417659
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 15 "liquid"
+  position -0.16124222 -0.024190992 0.27095348
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 16 "liquid"
+  position -0.22619647 -0.09150284 0.44773024
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 17 "liquid"
+  position -0.29115078 -0.15881476 0.6245071
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 18 "liquid"
+  position -0.35610503 -0.22612661 0.8012839
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 19 "liquid"
+  position 0.10086198 0.533234 -0.7781313
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 20 "liquid"
+  position 0.035907693 0.46592212 -0.6013545
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 21 "liquid"
+  position -0.02904658 0.39861023 -0.42457765
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 22 "liquid"
+  position -0.09400086 0.33129835 -0.24780083
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 23 "liquid"
+  position -0.15895517 0.26398647 -0.07102394
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 24 "liquid"
+  position -0.22390945 0.19667459 0.105752885
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 25 "liquid"
+  position -0.28886375 0.1293627 0.28252977
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 26 "liquid"
+  position -0.353818 0.062050834 0.45930654
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 27 "liquid"
+  position -0.4187723 -0.0052610636 0.6360834
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 28 "liquid"
+  position -0.4837265 -0.07257289 0.81286025
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 29 "liquid"
+  position -0.026759543 0.68678766 -0.766555
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 30 "liquid"
+  position -0.09171382 0.6194758 -0.5897782
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 31 "liquid"
+  position -0.1566681 0.5521639 -0.41300136
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 32 "liquid"
+  position -0.7102917 0.10320157 -0.5611018
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 33 "liquid"
+  position 0.26704693 0.8665025 0.08865273
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 34 "liquid"
+  position -0.7752459 0.035889685 -0.3843249
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 35 "liquid"
+  position 0.20209262 0.79919064 0.26542962
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 36 "liquid"
+  position -0.84020025 -0.031422198 -0.20754808
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 37 "liquid"
+  position 0.13713837 0.73187876 0.44220644
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 38 "liquid"
+  position -0.90515447 -0.09873414 -0.030771166
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 39 "liquid"
+  position 0.072184086 0.6645669 0.6189833
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 40 "liquid"
+  position -0.4814395 0.21560454 0.47088286
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 41 "liquid"
+  position -0.5463938 0.14829263 0.6476597
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 42 "liquid"
+  position -0.6113481 0.08098078 0.82443655
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 43 "liquid"
+  position -0.15438107 0.8403413 -0.7549787
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 44 "liquid"
+  position -0.21933535 0.77302945 -0.5782019
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 45 "liquid"
+  position -0.2842896 0.70571756 -0.40142506
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 46 "liquid"
+  position -0.8379132 0.25675523 -0.5495255
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 47 "liquid"
+  position 0.1394254 1.0200562 0.100229025
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 48 "liquid"
+  position -0.90286744 0.18944335 -0.37274858
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 49 "liquid"
+  position 0.074471116 0.95274436 0.2770059
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 50 "liquid"
+  position -0.9678218 0.12213147 -0.19597176
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 51 "liquid"
+  position 0.009516835 0.8854325 0.45378274
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 52 "liquid"
+  position -1.032776 0.054819524 -0.019194871
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 53 "liquid"
+  position -0.055437446 0.8181206 0.6305596
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 54 "liquid"
+  position -0.60906106 0.3691582 0.48245913
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 55 "liquid"
+  position -0.67401534 0.30184633 0.659236
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 56 "liquid"
+  position -0.7389696 0.23453444 0.83601284
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 57 "liquid"
+  position -0.28200263 0.99389505 -0.7434024
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 58 "liquid"
+  position -0.3469569 0.9265832 -0.5666256
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 59 "liquid"
+  position -0.4119112 0.8592713 -0.38984874
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 60 "liquid"
+  position -0.96553475 0.41030896 -0.53794914
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 61 "liquid"
+  position 0.011803865 1.17361 0.11180535
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 62 "liquid"
+  position -1.030489 0.34299707 -0.3611723
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 63 "liquid"
+  position -0.053150475 1.1062981 0.28858224
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 64 "liquid"
+  position -1.0954432 0.2756852 -0.18439543
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 65 "liquid"
+  position -0.118104696 1.0389862 0.4653591
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 66 "liquid"
+  position -1.1603976 0.20837325 -0.0076185465
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 67 "liquid"
+  position -0.1830591 0.9716743 0.642136
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 3 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 68 "liquid"
+  position -0.7366826 0.52271193 0.49403545
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 69 "liquid"
+  position -0.80163693 0.45540005 0.67081237
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 70 "liquid"
+  position -0.86659116 0.38808817 0.84758914
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 71 "liquid"
+  position -0.40962416 1.1474488 -0.73182607
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 72 "liquid"
+  position -0.47457844 1.0801369 -0.5550493
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 73 "liquid"
+  position -0.5395327 1.012825 -0.37827244
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 74 "liquid"
+  position -0.60448694 0.9455131 -0.2014956
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 75 "liquid"
+  position -0.6694413 0.87820125 -0.024718732
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 76 "liquid"
+  position -0.7343955 0.81088936 0.15205811
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 77 "liquid"
+  position -0.79934984 0.7435775 0.328835
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 78 "liquid"
+  position -0.86430407 0.6762656 0.5056118
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 79 "liquid"
+  position -0.92925835 0.6089537 0.68238866
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 80 "liquid"
+  position -0.99421275 0.54164183 0.85916543
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 81 "liquid"
+  position -0.5372457 1.3010025 -0.7202498
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 82 "liquid"
+  position -0.6022 1.2336906 -0.543473
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 83 "liquid"
+  position -0.66715425 1.1663787 -0.36669612
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 84 "liquid"
+  position -0.73210853 1.0990669 -0.1899193
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 85 "liquid"
+  position -0.7970628 1.031755 -0.013142422
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 86 "liquid"
+  position -0.8620171 0.9644431 0.16363442
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 87 "liquid"
+  position -0.9269714 0.8971312 0.3404113
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 88 "liquid"
+  position -0.99192566 0.8298193 0.5171881
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 89 "liquid"
+  position -1.0568799 0.76250744 0.69396496
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 90 "liquid"
+  position -1.1218343 0.69519556 0.8707417
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 91 "liquid"
+  position -0.66486716 1.4545561 -0.7086735
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 92 "liquid"
+  position -0.72982144 1.3872442 -0.5318967
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 93 "liquid"
+  position -0.7947757 1.3199323 -0.35511985
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 94 "liquid"
+  position -0.85973 1.2526205 -0.17834301
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 95 "liquid"
+  position -0.9246843 1.1853086 -0.0015661418
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 96 "liquid"
+  position -0.98963857 1.1179967 0.1752107
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 97 "liquid"
+  position -1.054593 1.0506848 0.35198757
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 98 "liquid"
+  position -1.1195472 0.9833729 0.52876437
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 99 "liquid"
+  position -1.1845014 0.91606104 0.70554125
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 100 "liquid"
+  position -1.2494557 0.8487492 0.882318
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 101 "liquid"
+  position -0.7924888 1.6081098 -0.6970972
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 102 "liquid"
+  position -0.8574431 1.540798 -0.52032036
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 103 "liquid"
+  position -0.9223974 1.4734861 -0.34354353
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 104 "liquid"
+  position -0.9873516 1.4061742 -0.1667667
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 105 "liquid"
+  position -1.0523059 1.3388623 0.010010168
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 106 "liquid"
+  position -1.1172602 1.2715504 0.186787
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 107 "liquid"
+  position -1.1822145 1.2042385 0.3635639
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 108 "liquid"
+  position -1.2471688 1.1369267 0.54034066
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 109 "liquid"
+  position -1.312123 1.0696148 0.71711755
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 110 "liquid"
+  position -1.3770773 1.0023029 0.8938943
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 111 "liquid"
+  position -0.9201102 1.7616634 -0.6855209
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 112 "liquid"
+  position -0.9850645 1.6943516 -0.5087441
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 113 "liquid"
+  position -1.0500188 1.6270397 -0.33196723
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 114 "liquid"
+  position -1.1149731 1.5597278 -0.15519042
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 115 "liquid"
+  position -1.1799273 1.4924159 0.021586478
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 116 "liquid"
+  position -1.2448816 1.425104 0.19836327
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 117 "liquid"
+  position -1.3098359 1.3577921 0.3751402
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 118 "liquid"
+  position -1.3747902 1.2904804 0.55191696
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 119 "liquid"
+  position -1.4397446 1.2231684 0.72869384
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 120 "liquid"
+  position -1.5046986 1.1558566 0.9054706
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 121 "liquid"
+  position -1.0477319 1.9152173 -0.6739446
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 122 "liquid"
+  position -1.1126862 1.8479054 -0.49716777
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 123 "liquid"
+  position -1.1776404 1.7805935 -0.32039094
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 124 "liquid"
+  position -1.2425947 1.7132816 -0.14361411
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 125 "liquid"
+  position -1.3075491 1.6459697 0.033162743
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 126 "liquid"
+  position -1.3725033 1.5786579 0.2099396
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 127 "liquid"
+  position -1.4374576 1.511346 0.38671649
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 128 "liquid"
+  position -1.5024118 1.4440341 0.56349325
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 129 "liquid"
+  position -1.5673661 1.3767223 0.74027014
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 130 "liquid"
+  position -1.6323204 1.3094103 0.9170469
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 131 "liquid"
+  position -1.1753532 2.068771 -0.6623683
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 132 "liquid"
+  position -1.2403076 2.001459 -0.48559147
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 133 "liquid"
+  position -1.3052617 1.9341471 -0.30881464
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 134 "liquid"
+  position -1.370216 1.8668352 -0.13203779
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 135 "liquid"
+  position -1.4351704 1.7995234 0.044739068
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 136 "liquid"
+  position -1.5001247 1.7322115 0.2215159
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 137 "liquid"
+  position -1.5650789 1.6648996 0.3982928
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 138 "liquid"
+  position -1.6300331 1.5975877 0.57506955
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 139 "liquid"
+  position -1.6949874 1.5302758 0.75184643
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end
+
+object 140 "liquid"
+  position -1.7599418 1.4629639 0.9286232
+  rotation 0.9151163 0.10775704 -0.21551408 0.3232711
+  scale 1 1 1
+  fluid-volume 
+  fluid-volume.spacing 0.2
+  fluid-volume.count 10 1 1
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 0
+end

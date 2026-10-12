@@ -1,0 +1,26 @@
+{
+  "id": "judas_fluid_cavity_impact_tests",
+  "source": "tests/FluidCavityImpactTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_fluid_cavity_impact_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "3997a5ff7adf65abb60fffd0047dccfb8df2d3df7dcb1215478dc1958ba3881f",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_fluid_cavity_impact_tests.log",
+  "logSHA256": "f8f4904011213c774bdcfa1a327ace7f50e27ddd65e4586fce5ed960452232fb",
+  "seconds": 0.2280451370006631
+}

@@ -1,0 +1,32 @@
+﻿{
+    "archive":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\judas_engine.lib",
+    "units":  [
+                  {
+                      "objectSHA256":  "255ed05476f41b1e083eb877176fa3058b1f464bd2c9cd78b5c76232578d334c",
+                      "commandResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\src\\PhysicsWorld.cpp\"",
+                      "source":  "src/PhysicsWorld.cpp",
+                      "object":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\PhysicsWorld.obj",
+                      "sourceSHA256":  "062b3049583501749262a8114b53c47f24bed30329516275158e47cb137fa67e",
+                      "exitCode":  0
+                  },
+                  {
+                      "objectSHA256":  "28b745bcb303fddb2e5c160511642873a1f4b40e2cd16f99ee78161e5f7ff05d",
+                      "commandResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\JointSolver.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\src\\JointSolver.cpp\"",
+                      "source":  "src/JointSolver.cpp",
+                      "object":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\JointSolver.obj",
+                      "sourceSHA256":  "e7b03d6e489d7dde3e7e386fc1874d1bd74817b1b02b65655f505e0ee76fb6b8",
+                      "exitCode":  0
+                  }
+              ],
+    "label":  "diagnostic-warm-v1",
+    "freeBytes":  273965056,
+    "scope":  "Read-only isolated single-step warm-seed diagnostic; never a replacement for the frozen production archive or its accepted inputs.",
+    "baseline":  {
+                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                     "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+                     "bytes":  66840496
+                 },
+    "archiveBytes":  66869102,
+    "memberCount":  138,
+    "archiveSHA256":  "7196087eae852aa049a51168f03006e53adee6c818eece27a91e480dc7097c5e"
+}

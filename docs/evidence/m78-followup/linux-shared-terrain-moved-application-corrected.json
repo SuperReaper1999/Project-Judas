@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/dependency_application_corrected",
+    "/tmp/judas-m78-followup-terrain-review/game.judasproj",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/shared-terrain-application",
+    "3.25"
+  ],
+  "cwd": "/tmp",
+  "utc": "2026-10-11T17:19:27.904212+00:00",
+  "seconds": 0.6155538139973942,
+  "exitCode": 1,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "6381b74067129151526415ac0a67e1cac57ebc3c88dc58fa572954bbbcd41693",
+  "logSHA256": "bd3c1460c24f63c8bfc1502048c08f88cce15fa43dcddc76405b0e5eb226e03c",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

@@ -1,0 +1,31 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  8163328,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-gravity.map",
+                        "sha256":  "1aaaea4e60dade7727d6660eb7332b6aa356d7d2746e809ef8b12b7e3ae09491",
+                        "name":  "m78-closure-gravity-first-failed.map",
+                        "bytes":  7994937
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-exact-cold-final-project.zip",
+                        "name":  "m78-closure-balance-exact-cold-final-project.zip",
+                        "bytes":  459519,
+                        "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance-new-cold-final-project.zip",
+                        "name":  "m78-closure-balance-new-cold-final-project.zip",
+                        "bytes":  459519,
+                        "sha256":  "774e9008084c951d2d2b46443d1632535bd1bbb182c6c8eb09b186f185a1dc78"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\m78-closure-common.json.gz",
+                        "name":  "m78-closure-common.json.gz",
+                        "bytes":  1413343,
+                        "sha256":  "090363551ba76b3ca796c57bdbaca3ba7aabfa40c8a9d5dd93fcbae3aa17d57e"
+                    }
+                ],
+    "freeAfter":  18501632
+}

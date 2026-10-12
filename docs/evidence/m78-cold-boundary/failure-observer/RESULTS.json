@@ -1,0 +1,109 @@
+{
+  "scope": "Read-only failure instrumentation in isolated source copy; production unchanged.",
+  "records": [
+    {
+      "name": "compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/PhysicalBalance.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/PhysicalBalance.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 9.335476683001616
+    },
+    {
+      "name": "archive",
+      "command": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/PhysicalBalance.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 0.174366427003406
+    },
+    {
+      "name": "link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_balance_lab_tests.dir/tests/BalanceLabTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7252137570030754
+    },
+    {
+      "name": "exact-native-cold-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/exact-native",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.4324021959982929
+    },
+    {
+      "name": "ordinary-step",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/ordinary-step",
+        "step-trace"
+      ],
+      "exitCode": 0,
+      "seconds": 1.784656386997085
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "reason": "Original observer clone insertion failed authored NextId validation; use normal Scene::InsertObject for the additional fixture object only. Original failed probe and its identity are preserved.",
+  "previous_sha256": "4052aae1e62bb0e83ff25e68d50b006658c5860a62bbc2d6bf75ea6e1414c0c1",
+  "v2_sha256": "a8b35ecb936a2fc18644f75593cbe14348fb2698b15dd61bae0145cd4a227498",
+  "original_acceptance_unchanged": true,
+  "cadence_hz": 60,
+  "resumed_steps": 720,
+  "validation": "not compiled or executed by reviewer"
+}

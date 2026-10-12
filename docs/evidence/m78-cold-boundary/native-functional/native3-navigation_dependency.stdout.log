@@ -1,0 +1,39 @@
+PASS open ordinary owned project with published kit
+PASS open owned terrain
+PASS discover shared terrain dependents
+PASS initial owned navigation is fresh
+PASS initial owned navigation is fresh
+PASS two independently authored scenes share geometry
+PASS save genuine terrain sculpt
+PASS publish changed geometry through normal cook
+PASS inspect all dependents after cook
+PASS both scenes report stale bake
+PASS both scenes report stale bake
+PASS late invalid surface preserves last-good batch
+PASS failed batch remains inspectable
+PASS failed batch publishes neither dependent scene
+PASS failed batch publishes neither dependent scene
+PASS cancel after actual bounded bake preserves last-good batch
+PASS post-bake cancellation remains inspectable
+PASS post-bake cancellation publishes neither scene
+PASS post-bake cancellation publishes neither scene
+PASS cancel preserves all last-good bakes
+PASS cancelled batch remains inspectable
+PASS cancel did not publish scene or navigation
+PASS cancel did not publish scene or navigation
+PASS explicit first-scene-only rebuild
+PASS inspect partly rebuilt project
+PASS deliberately unrepaired second scene stays stale
+PASS load deliberately unrepaired scene
+PASS normal package validation rejects stale second-scene bake
+PASS integrated stale-owned-scenes rebuild
+PASS recheck batch
+PASS every owned dependent scene fresh
+PASS every owned dependent scene fresh
+PASS normal package scene validation accepts refreshed dependent
+PASS normal package scene validation accepts refreshed dependent
+PASS appearance-only cook does not change geometry
+PASS inspect appearance-only cook
+PASS appearance-only cook retains fresh navigation
+PASS appearance-only cook retains fresh navigation
+38 navigation dependency checks passed

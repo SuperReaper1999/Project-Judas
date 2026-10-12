@@ -333,6 +333,15 @@ public:
     glm::vec3 GetCenterOfMass(BodyHandle handle) const;
     bool SetMassDistribution(BodyHandle,float,const glm::mat3&);
     void PersistJointSolverState(SaveArchive&,JointHandle);
+    // Versioned, bounded continuation of the existing iterative joint solve.
+    // This is native save state, not a scripting API or contact warm cache.
+    void PersistJointContinuation(SaveArchive&,JointHandle);
+    void PersistCompletedContactObservations(SaveArchive&,
+        const std::function<uint64_t(BodyHandle)>& identity,
+        const std::function<BodyHandle(uint64_t)>& resolve,
+        const std::function<bool(BodyHandle)>& include = {});
+    bool HasRestoredCompletedContactObservations(float fixedDeltaTime) const;
+
     void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
                              const glm::vec3& worldPoint);
 
@@ -472,10 +481,10 @@ public:
     struct BodyMotionSegment {
         double begin = 0, end = 0;
         BodyTransform start, endPose;
-        glm::vec3 linearVelocity{0}, angularVelocity{0};
+        glm::vec3 linearVelocity{0}, angularVelocity{0}; // angular pose generator, not transported endpoint velocity
         bool movable = false;
         glm::vec3 pivotOffset{0}; // COM-relative authored pivot, value owned
-        bool prescribed = false; // exponential rotation; dynamic Euler unchanged
+        bool prescribed = false; // exponential prescribed rotation; anchored dynamic Cayley drift
     };
     std::vector<BodyMotionSegment> GetBodyMotionSegments(BodyHandle handle) const;
     // Uses the authoritative anchored position integrator, never restarts

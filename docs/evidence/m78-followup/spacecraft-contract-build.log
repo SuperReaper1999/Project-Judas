@@ -1,0 +1,10 @@
+[  0%] Built target judas_profiler
+[  0%] Built target judas_app_icon
+[ 50%] Building CXX object CMakeFiles/judas_spacecraft_control_tests.dir/tests/SpacecraftControlTests.cpp.o
+[ 50%] Linking CXX executable judas_spacecraft_control_tests
+[100%] Built target judas_spacecraft_control_tests
+[  0%] Built target judas_profiler
+[  0%] Built target judas_app_icon
+[  0%] Building CXX object CMakeFiles/judas_spacecraft_flight_tests.dir/tests/SpacecraftFlightTests.cpp.o
+[  0%] Linking CXX executable judas_spacecraft_flight_tests
+[100%] Built target judas_spacecraft_flight_tests

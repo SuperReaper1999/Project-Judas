@@ -1,0 +1,100 @@
+FTFT9 METADATA PASS explicit canonical schema 5; authored scene grammar stays version 3
+FTFT9 METADATA PASS serialize cavity and fluid parameters
+FTFT9 METADATA PASS load cavity and fluid parameters: 
+FTFT9 METADATA PASS all authored parameters round-trip exactly
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS round-trip baseline compatibility unchanged
+FTFT9 METADATA PASS second serialization is byte-identical
+FTFT9 METADATA PASS older authored scene remains readable
+FTFT9 METADATA PASS omitted authored fields use documented defaults
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS omitted/explicit defaults have same schema-4 identity
+FTFT9 METADATA PASS writer emits explicit default: fluid-update-rate-hz
+FTFT9 METADATA PASS writer emits explicit default: fluid-hydrostatic-drag-rate
+FTFT9 METADATA PASS writer emits explicit default: body.fluid-cavity-count
+FTFT9 METADATA PASS writer emits explicit default: player-start.density
+FTFT9 METADATA PASS writer emits explicit default: player-start.fluid-drag
+FTFT9 METADATA PASS writer emits explicit default: player-start.swim-acceleration
+FTFT9 METADATA PASS hostile line located: body.fluid-cavity 
+FTFT9 METADATA PASS invalid cavity 0 0 0 0 .2 .3 rejected with error
+FTFT9 METADATA PASS invalid cavity 0 0 0 0 .2 .3 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: body.fluid-cavity 
+FTFT9 METADATA PASS invalid cavity 0 0 0 -.1 .2 .3 rejected with error
+FTFT9 METADATA PASS invalid cavity 0 0 0 -.1 .2 .3 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: body.fluid-cavity 
+FTFT9 METADATA PASS invalid cavity nan 0 0 .1 .2 .3 rejected with error
+FTFT9 METADATA PASS invalid cavity nan 0 0 .1 .2 .3 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: body.fluid-cavity 
+FTFT9 METADATA PASS invalid cavity 0 0 0 .1 inf .3 rejected with error
+FTFT9 METADATA PASS invalid cavity 0 0 0 .1 inf .3 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: body.fluid-cavity 
+FTFT9 METADATA PASS invalid cavity 0 0 0 .1 .2 rejected with error
+FTFT9 METADATA PASS invalid cavity 0 0 0 .1 .2 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: body.fluid-cavity 
+FTFT9 METADATA PASS invalid cavity 0 0 0 .1 .2 .3 4 rejected with error
+FTFT9 METADATA PASS invalid cavity 0 0 0 .1 .2 .3 4 load leaves destination unchanged
+FTFT9 METADATA PASS hostile mutation located: body.fluid-cavity-count 2
+FTFT9 METADATA PASS cavity count mismatch rejected with error
+FTFT9 METADATA PASS cavity count mismatch load leaves destination unchanged
+FTFT9 METADATA PASS hostile mutation located: body.fluid-cavity-count 2
+FTFT9 METADATA PASS negative cavity count rejected with error
+FTFT9 METADATA PASS negative cavity count load leaves destination unchanged
+FTFT9 METADATA PASS hostile mutation located: settings
+
+FTFT9 METADATA PASS cavity line misplaced in settings rejected with error
+FTFT9 METADATA PASS cavity line misplaced in settings load leaves destination unchanged
+FTFT9 METADATA PASS hostile mutation located: body dynamic box
+
+FTFT9 METADATA PASS cavity count requires a body header rejected with error
+FTFT9 METADATA PASS cavity count requires a body header load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: fluid-update-rate-hz 
+FTFT9 METADATA PASS invalid fluid-update-rate-hz=0 rejected with error
+FTFT9 METADATA PASS invalid fluid-update-rate-hz=0 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: fluid-update-rate-hz 
+FTFT9 METADATA PASS invalid fluid-update-rate-hz=nan rejected with error
+FTFT9 METADATA PASS invalid fluid-update-rate-hz=nan load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: fluid-hydrostatic-drag-rate 
+FTFT9 METADATA PASS invalid fluid-hydrostatic-drag-rate=-1 rejected with error
+FTFT9 METADATA PASS invalid fluid-hydrostatic-drag-rate=-1 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: fluid-hydrostatic-drag-rate 
+FTFT9 METADATA PASS invalid fluid-hydrostatic-drag-rate=inf rejected with error
+FTFT9 METADATA PASS invalid fluid-hydrostatic-drag-rate=inf load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: player-start.density 
+FTFT9 METADATA PASS invalid player-start.density=0 rejected with error
+FTFT9 METADATA PASS invalid player-start.density=0 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: player-start.density 
+FTFT9 METADATA PASS invalid player-start.density=-1 rejected with error
+FTFT9 METADATA PASS invalid player-start.density=-1 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: player-start.density 
+FTFT9 METADATA PASS invalid player-start.density=nan rejected with error
+FTFT9 METADATA PASS invalid player-start.density=nan load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: player-start.fluid-drag 
+FTFT9 METADATA PASS invalid player-start.fluid-drag=-1 rejected with error
+FTFT9 METADATA PASS invalid player-start.fluid-drag=-1 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: player-start.swim-acceleration 
+FTFT9 METADATA PASS invalid player-start.swim-acceleration=-1 rejected with error
+FTFT9 METADATA PASS invalid player-start.swim-acceleration=-1 load leaves destination unchanged
+FTFT9 METADATA PASS hostile line located: player-start.swim-acceleration 
+FTFT9 METADATA PASS invalid player-start.swim-acceleration=inf rejected with error
+FTFT9 METADATA PASS invalid player-start.swim-acceleration=inf load leaves destination unchanged
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS cavity-center edit changes identity/equality
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS cavity ordering is strict authored identity
+FTFT9 METADATA PASS negative cavity extent in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS infinite cavity center in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS zero player density in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS negative player drag in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS negative swim acceleration in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS zero fluid rate in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS negative hydrostatic drag in-memory baseline rejected without digest mutation
+FTFT9 METADATA PASS fingerprint valid authored scene: 
+FTFT9 METADATA PASS zero drag/propulsion is a valid configured choice
+FTFT9 METADATA PASS shipped classic scene loads
+FTFT9 METADATA PASS shipped resolved cup has explicit cavity
+FTFT9 METADATA PASS shipped resolved cup has explicit cavity
+FTFT9 METADATA SUMMARY checks=97 failures=0

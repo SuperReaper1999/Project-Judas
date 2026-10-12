@@ -1,0 +1,89 @@
+{
+  "scope": "Passive observer over newly saved command-history prototype, including explicitly isolated normal-first-Prepare diagnostic. No production change, current original fixture assertions retained.",
+  "steps": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observer-original",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observed-with-impulses-original",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.5095476399947074,
+      "saveSHA256": "1c417db2d4f4969fb591e81e6e059ba3991dc053c94d34d3d0e77a1ae3a6af25",
+      "phase": "original",
+      "impulses": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observer-original",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observed-with-impulses-original",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.2945910739945248,
+      "saveSHA256": "1c417db2d4f4969fb591e81e6e059ba3991dc053c94d34d3d0e77a1ae3a6af25",
+      "phase": "original",
+      "impulses": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observer-normal",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observed-with-impulses-normal",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.5341790089951246,
+      "saveSHA256": "1c417db2d4f4969fb591e81e6e059ba3991dc053c94d34d3d0e77a1ae3a6af25",
+      "phase": "normal",
+      "impulses": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observer-normal",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observed-with-impulses-normal",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.3193334259995027,
+      "saveSHA256": "1c417db2d4f4969fb591e81e6e059ba3991dc053c94d34d3d0e77a1ae3a6af25",
+      "phase": "normal",
+      "impulses": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observer-normal",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observed-no-impulses-normal",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.5230011049934546,
+      "saveSHA256": "38d8b2e4668eac8ca8e98cc1f70751e41d7bc94d4a0eb3cc918e9c7af288537f",
+      "phase": "normal",
+      "impulses": false
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observer-normal",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/new-capture-command-history/observed-no-impulses-normal",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.385728253000707,
+      "saveSHA256": "38d8b2e4668eac8ca8e98cc1f70751e41d7bc94d4a0eb3cc918e9c7af288537f",
+      "phase": "normal",
+      "impulses": false
+    }
+  ],
+  "sourceIDENTITY": {
+    "scope": "Diagnostic-only new articulationv4 passive12 capture plus explicit authoritative angular commands companion, restored after PhysicalBalance Configure and before sleep. Optional companionv2 includes actual drive impulse history, versusv1 excludes it. No reactions or completed observations are saved. Existing versions1\u20133 remain unchanged; original a106 lacks fields and is not reconstructed. No production/timestep-contract edit.",
+    "sourceSHA256": {
+      "src/WorldPersistence.cpp": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+      "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+      "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f"
+    },
+    "overlaySHA256": {
+      "PhysicsWorld.cpp": "cf2a72097360a3d8b79658628f1c1f44de565bccf4f408fefbf4df0b9fd81797",
+      "WorldPersistence.cpp": "4a68cd0f1f1cce86f19a7c793384422a974a2c2c6b156448698d0856bc6e76ee"
+    }
+  }
+}

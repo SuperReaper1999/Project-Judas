@@ -1,0 +1,7 @@
+﻿{
+    "scope":  "Copy exact unchanged protected historical test input to previously missing guest path; no host evidence modification",
+    "path":  "C:\\JudasValidation\\Source\\docs\\evidence\\ftft4\\geometry\\fixtures.txt",
+    "sha256":  "dcbcb9bf038f11662a2e6c388cc21cc4bdcbfe6807c54a282bb6dea87d7b57ce",
+    "bytes":  180569,
+    "originalFailure":  "contact_cache 7882 checks/2 missing-fixture failures"
+}

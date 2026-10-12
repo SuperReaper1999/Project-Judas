@@ -1,0 +1,20 @@
+﻿{
+    "scope":  "Only exact completed copied observer executable scratch independently archived and freshly verified removed; fixture/PB objects, all source/results/recipes and final production archive untouched",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-native-first-split-commands-normal-prepare.exe",
+                      "sha256":  "aa3c1f3cb1d333a8f37d29b446d509406be894eab240c456331b4ccf3fe1c6d9",
+                      "bytes":  9589248,
+                      "reportName":  "m78-split-archive-commands-normal-prepare.exe",
+                      "hostPath":  ".cache/m78-cold-boundary/native-binaries/split/m78-split-archive-commands-normal-prepare.exe"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-native-first-split-seeds-normal-prepare.exe",
+                      "sha256":  "10750536909b2c6e4ed0106cb6b543ab926a55b18695f227811293cb632af1bf",
+                      "bytes":  9589248,
+                      "reportName":  "m78-split-archive-seeds-normal-prepare.exe",
+                      "hostPath":  ".cache/m78-cold-boundary/native-binaries/split/m78-split-archive-seeds-normal-prepare.exe"
+                  }
+              ],
+    "freeBytes":  49205248
+}

@@ -1,0 +1,1200 @@
+{
+  "scope": "Case-scoped final native Windows functional closure only; not comprehensive M78 certification or Windows hardware/performance certification. No full suite, runtime/source edits, commits, pushes or VM configuration changes.",
+  "cases": [
+    {
+      "id": "balance_lab",
+      "actualBuildId": "balance_lab",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-balance_lab-build.json",
+      "executedRuns": [
+        {
+          "run": "balance-step-trace",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 15,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-radial",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 18,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-radial.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-lifecycle",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 26,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-lifecycle.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-stand-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 23,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-stand-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-recovery-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 21,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-recovery-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Original M77 step/radial/lifecycle plus fresh ordinary standing/recovery cold pairs. Original standing() reads cached controller observation; separate actual body/current-contact witnesses below strengthen endpoint scope.",
+      "executableSHA256": "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "character_lab",
+      "actualBuildId": "character_retry",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-character_retry-build.json",
+      "executedRuns": [
+        {
+          "run": "character-baseline",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 98,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-character-baseline.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "character-cold-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 10,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-character-cold-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "character-cold-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 14,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-character-cold-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Original M70 CharacterLab baseline98, fresh cold writer10/read14: restored partial/full authority and finite pose. Not exact full articulated cold-trajectory parity; static-anchor/motor actual round-trip is independently checked by physics_continuation.",
+      "executableSHA256": "b6dd82bdf8cbfb0959affcd42a5f3c280e25bb2005ea2a4d61588317f024f9c7",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": true
+    },
+    {
+      "id": "contact_lifecycle",
+      "actualBuildId": "contact_lifecycle",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-build.json",
+      "executedRuns": [
+        {
+          "run": "contact_lifecycle",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 1076,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "e15e154feecde62cb957b5d682505a18f7267f25a9d126b4bb6f6d55e4d790a9",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "controller",
+      "actualBuildId": "controller",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-controller-build.json",
+      "executedRuns": [
+        {
+          "run": "controller",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 119,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-controller.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "58d4b53702dfc8c81276fc514ba0e3c4f6946b6dd2c4d0e7b93b683336621fd5",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "editor_v3",
+      "actualBuildId": "editor_v3",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+      "executedRuns": [
+        {
+          "run": "editor-smoke",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": null,
+          "failures": null,
+          "stdout": null,
+          "status": "passed_exit_only"
+        }
+      ],
+      "scope": "Actual final-source editor edit/duplicate/undo/Play-Stop/save smoke with exact frozen unchanged editor objects and current physics/persistence replacements. Native softwareGL functional only.",
+      "executableSHA256": "339eecca6e058e11f65c0cef0021c26701277e7fe5c1386938074be70c4355bc",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "gravity",
+      "actualBuildId": "gravity_retry",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-build.json",
+      "executedRuns": [
+        {
+          "run": "gravity-final",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 70,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-gravity-final.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "b8542f27c7bd89dd1e53c26cb4a0abe44ae1619ad51ad50b561a8bcccc23b8a2",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "impact_timing",
+      "actualBuildId": "impact_timing",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-impact_timing-build.json",
+      "executedRuns": [
+        {
+          "run": "impact-timing",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 3197,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-impact-timing.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "a4bcf9a38284c3fa7d3a620da13ec5d4dd5ebbb800e1527816706a4e97273d8c",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "joints",
+      "actualBuildId": "joints",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-joints-build.json",
+      "executedRuns": [
+        {
+          "run": "joints",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 29,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-joints.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "174eeccfe1a0e2237b528e7f7014384def0038c2d45ae363ee3a8632ccecb22a",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "mixed_balance",
+      "actualBuildId": "mixed_balance",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-build.json",
+      "executedRuns": [
+        {
+          "run": "mixed-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "mixed-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Original M77 public driver with one distant independently updated ordinary motor. Real cold writer/read unchanged settings/timestep/endpoint acceptance.",
+      "executableSHA256": "5504135087cb9250e363c849cfba6aa764451cf84581cbd9380d5e368c67e215",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "mixed_physical_endpoint",
+      "actualBuildId": "mixed_endpoint_pair_v2",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair_v2-build.json",
+      "executedRuns": [
+        {
+          "run": "m78-closure-mixed-endpoint-pair-v2-cold-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "m78-closure-mixed-endpoint-pair-v2-cold-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Same exact compiled actual-body observer reused; uninterrupted continuation versus fresh process from same save. All durable physical records and current contacts compared exactly after excluding only fresh native handles and canonical ordering. No thresholds added.",
+      "executableSHA256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+      "linkReplacedMembersNotExtracted": null,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "mixed_endpoint_v2",
+      "actualBuildId": "mixed_endpoint_v2",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-build.json",
+      "executedRuns": [
+        {
+          "run": "mixed-endpoint-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "mixed-endpoint-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual-body observer initial cold pair passed fixture checks. Writer lacked observer-only continue-write environment, so this pair alone has no uninterrupted endpoint equality claim; later proper paired observation below is authoritative for equality.",
+      "executableSHA256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "motion",
+      "actualBuildId": "motion",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-motion-build.json",
+      "executedRuns": [
+        {
+          "run": "motion",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 10239,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-motion.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "9841be826f8d4b9610737de5222e8d9110d71e9b4b41ecbe39f2eebabbf6de9f",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "ordinary_physical_endpoint",
+      "actualBuildId": "ordinary_actual_endpoints",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-ordinary_actual_endpoints-build.json",
+      "executedRuns": [
+        {
+          "run": "m78-closure-ordinary-actual-stand",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "m78-closure-ordinary-actual-recovery",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Same final actual-body observer reads byte-exact copies of fresh ordinary standing/recovery snapshots, derives actual physical standing from body pose/current contacts, independent of cached observation. Does not assert uninterrupted trajectory equality.",
+      "executableSHA256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+      "linkReplacedMembersNotExtracted": null,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "physical",
+      "actualBuildId": "physical",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-physical-build.json",
+      "executedRuns": [
+        {
+          "run": "physical",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 64,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-physical.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "7590de88af533209e962c1ca51c486b09884042e607a5cfe7bfd87a1ac610a1b",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "physics_continuation",
+      "actualBuildId": "physics_continuation",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-build.json",
+      "executedRuns": [
+        {
+          "run": "physics-continuation",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 112,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-physics-continuation.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "112 actual joint continuation, completed contact publication, independent query isolation, malformed/newer/missing context rejection, real moving static-anchor pose/velocities, reduced states and offset motor reconstruction checks. Direct physics/world mechanisms, not a full CharacterLab cold trajectory oracle.",
+      "executableSHA256": "6d6281f1ec3c8678512c7386aadfc3b2e37df4377fd0a80cca6423ad8b6ea5aa",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "publication_isolation",
+      "actualBuildId": "publication_isolation",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-build.json",
+      "executedRuns": [
+        {
+          "run": "publication-isolation",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 8,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-publication-isolation.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Direct restored-contact publication isolation across an independent CharacterMotor query/update, including the first resumed production boundary.",
+      "executableSHA256": "f31ea220a1a2c47027d91eec2226c31e6236ab369db1ca4f67036bcf6b1a4dd6",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "legacy_and_new_cold",
+      "actualBuildId": "remaining_m77",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-remaining_m77-build.json",
+      "executedRuns": [
+        {
+          "run": "m78-closure-final-balance-exact-cold-read",
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "checks": 13,
+          "failures": 1,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read.stdout.log",
+          "status": "failed"
+        },
+        {
+          "run": "m78-closure-final-balance-new-cold-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 24,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "m78-closure-final-balance-new-cold-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Original legacy a106 snapshot read remains failing13/1; new-format fresh corrective writer/read24/0+13/0 passes. Legacy expectedExit=1 is preserved evidence, not a pass.",
+      "executableSHA256": "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+      "linkReplacedMembersNotExtracted": null,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "runtime",
+      "actualBuildId": "runtime",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+      "executedRuns": [],
+      "scope": "Final runtime compiled/linked and byte archived. Linking alone is not behavioural validation; moved-package smoke is separate.",
+      "executableSHA256": "46b5c697c740c651250c35d0a5a73cabdbae3c0209663f06d88927d4c5a282b9",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": true
+    },
+    {
+      "id": "signal_application_final",
+      "actualBuildId": "signal_application_final",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+      "executedRuns": [
+        {
+          "run": "signals-write",
+          "exitCode": 1,
+          "expectedExitCode": 0,
+          "checks": 10,
+          "failures": 1,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-signals-write.stdout.log",
+          "status": "failed"
+        },
+        {
+          "run": "signals-read",
+          "exitCode": 1,
+          "expectedExitCode": 0,
+          "checks": 4,
+          "failures": 3,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-signals-read.stdout.log",
+          "status": "failed"
+        }
+      ],
+      "scope": "Same final-source driver ran against stale historical guest lab.js without valid guard. Actual write10/1, read4/3 retained as stale verification-content failure; no current engine defect inferred. Exact current project copied separately and rerun without recompilation.",
+      "executableSHA256": "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": true
+    },
+    {
+      "id": "streaming",
+      "actualBuildId": "streaming",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-streaming-build.json",
+      "executedRuns": [
+        {
+          "run": "streaming",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 82,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-streaming.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "4f4ef6794b3d5afd28a3176573301f675cb55b9684830c3412172571955ce36c",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "world_save",
+      "actualBuildId": "world_save",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-world_save-build.json",
+      "executedRuns": [
+        {
+          "run": "world_save",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 27,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-world_save.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executableSHA256": "7217f55a64547d6dfb491aed1134c27c6c9e9ea1676669d4073c2dffe72f829f",
+      "linkReplacedMembersNotExtracted": true,
+      "mapOmittedOnlyForStorage": false
+    },
+    {
+      "id": "signal_application",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-current-signals.json",
+      "executedRuns": [
+        {
+          "run": "current-signals-write",
+          "exitCode": 0,
+          "checks": 17,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-current-signals-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "current-signals-read",
+          "exitCode": 0,
+          "checks": 6,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-current-signals-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "scope": "Byte-exact ordinary current project copied to new closure-only directory. Historical guest project untouched; prior stale-fixture failure retained. Same already compiled final-source driver reused. No runtime or test changes. Actual fixed/UI lane, modal/zero-step pause, safe repeated deletion, adopted region/subscription lifecycle and fresh-process save restoration. No controller hardware or OS focus claim.",
+      "executableSHA256": "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+      "currentProjectManifest": "docs/evidence/m78-closure/native/CURRENT_SIGNALS_INPUTS.json"
+    },
+    {
+      "id": "moved_runtime",
+      "receipt": "docs/evidence/m78-closure/native/m78-closure-moved-package-v2.json",
+      "executedRuns": [
+        {
+          "run": "moved-package-v2",
+          "exitCode": 0,
+          "checks": null,
+          "failures": null,
+          "status": "passed_exit_only"
+        }
+      ],
+      "scope": "Actual final closure runtime in byte-verified previously exported ordinary package content. NEW package tree moved and launched without arguments from unrelated cwd, unavailable engine root; original1720frame four-scene/save/load/pause/reload harness. This is final-runtime moved-package smoke, not a fresh export-generator invocation. Unchanged package files use NTFS hardlinks only to bound existing disk; original package untouched. VM softwareGL functional only.",
+      "executableSHA256": "46b5c697c740c651250c35d0a5a73cabdbae3c0209663f06d88927d4c5a282b9"
+    }
+  ],
+  "exactEngineIdentity": {
+    "scope": "Verified final production source freeze, lossless host native archive/objects and all present generated executables/objects at final closure. Explicit current objects precede unchanged frozen archive; old PW/WP members are not extracted. No full rebuild/archive identity substitution or cross-platform bit-parity claim.",
+    "productionSources": [
+      {
+        "path": "src/PhysicsWorld.cpp",
+        "bytes": 193973,
+        "sha256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193"
+      },
+      {
+        "path": "src/PhysicsWorld.h",
+        "bytes": 31637,
+        "sha256": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9"
+      },
+      {
+        "path": "src/WorldPersistence.cpp",
+        "bytes": 46869,
+        "sha256": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4"
+      },
+      {
+        "path": "src/WorldPersistence.h",
+        "bytes": 1871,
+        "sha256": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c"
+      },
+      {
+        "path": "src/PhysicalBalance.cpp",
+        "bytes": 39307,
+        "sha256": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32"
+      },
+      {
+        "path": "tests/PhysicsContinuationTests.cpp",
+        "bytes": 26468,
+        "sha256": "8dbbc7da8a66fb12484c53fac054ce84fc5c1c5aab4d1b0efb0183fa5bfc1572"
+      }
+    ],
+    "archive": {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+      "sha256": "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+      "bytes": 67019246,
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/final2-repair/judas_engine.lib"
+    },
+    "replacementObjects": [
+      {
+        "source": "src/PhysicsWorld.cpp",
+        "sourceSHA256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/PhysicsWorld.obj",
+        "bytes": 1495011,
+        "sha256": "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1"
+      },
+      {
+        "source": "src/WorldPersistence.cpp",
+        "sourceSHA256": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/WorldPersistence.obj",
+        "bytes": 1276496,
+        "sha256": "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb"
+      }
+    ],
+    "generatedFilesVerified": [
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-balance_lab-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-balance_lab.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/balance_lab/m78-closure-balance_lab.exe",
+        "bytes": 9508352,
+        "sha256": "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-balance_lab-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\balance_lab-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/balance_lab/balance_lab-0.obj",
+        "bytes": 2230400,
+        "sha256": "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-character_retry-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-character_retry.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/character_retry/m78-closure-character_retry.exe",
+        "bytes": 9199104,
+        "sha256": "b6dd82bdf8cbfb0959affcd42a5f3c280e25bb2005ea2a4d61588317f024f9c7"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-character_retry-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\character_lab-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/character_retry/character_lab-0.obj",
+        "bytes": 2208781,
+        "sha256": "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-contact_lifecycle.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/contact_lifecycle/m78-closure-contact_lifecycle.exe",
+        "bytes": 8167936,
+        "sha256": "e15e154feecde62cb957b5d682505a18f7267f25a9d126b4bb6f6d55e4d790a9"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\contact_lifecycle-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/contact_lifecycle/contact_lifecycle-0.obj",
+        "bytes": 246170,
+        "sha256": "f1ea07e996d67c90467debafd4246b4d670cdb8dad9b037f145857c389d83f55"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-controller-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-controller.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/controller/m78-closure-controller.exe",
+        "bytes": 4384768,
+        "sha256": "58d4b53702dfc8c81276fc514ba0e3c4f6946b6dd2c4d0e7b93b683336621fd5"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-controller-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\controller-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/controller/controller-0.obj",
+        "bytes": 169808,
+        "sha256": "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-editor_v3.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/m78-closure-editor_v3.exe",
+        "bytes": 13184512,
+        "sha256": "339eecca6e058e11f65c0cef0021c26701277e7fe5c1386938074be70c4355bc"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorMain.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorMain.obj",
+        "bytes": 5639,
+        "sha256": "99877d6036625007ba5a12da8b336f7b733f0f0af0fa073e861c806f296acfa0"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorMilestoneNotice.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorMilestoneNotice.obj",
+        "bytes": 1476924,
+        "sha256": "2600f00a94f079f01bcdaaf0ca3f762a050ce7242be9edd73ca24953408769a0"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorApplication.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorApplication.obj",
+        "bytes": 3489899,
+        "sha256": "5d2357b7ccb6ce48a16952e49f9fae8fb1a49c374a7cb092f898a595e3ee0c7a"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorCamera.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorCamera.obj",
+        "bytes": 18462,
+        "sha256": "548662a4c71c802ba3f6707ba8bdab4c7cce6624b687aa96dd09818b7cd5cf52"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorPicking.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorPicking.obj",
+        "bytes": 264555,
+        "sha256": "911cdc4fa3eb13d9f2963adfd3417c45ffb7624565437dfad7dea9f6f1f714ba"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorHistory.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorHistory.obj",
+        "bytes": 712162,
+        "sha256": "0894db2dbe0b21249c24e0c8c240d763de978d5636865f2d956e22c8c0e070ec"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorPanels.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorPanels.obj",
+        "bytes": 3014494,
+        "sha256": "3da219c81b5ca07fe491b7d821909a3c148ade72ac0ba9a558b6d1898574069f"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\RetargetPanel.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/RetargetPanel.obj",
+        "bytes": 2193899,
+        "sha256": "3f38eca0d801212c35699b1a48c16167b9b9214130987208dc6898908b384093"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\WorldTools.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/WorldTools.obj",
+        "bytes": 1577394,
+        "sha256": "35479d6829be9138708fadc4860b19c1b9c300b72fb9b1ff67e448eb0961fb5c"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\TerrainTools.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/TerrainTools.obj",
+        "bytes": 1397138,
+        "sha256": "5e10bbc2fe2dbcce7bbc6f73506438a06e36b23283d15a72888546c233afa4bb"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\ModTools.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/ModTools.obj",
+        "bytes": 482103,
+        "sha256": "e8f8e68e25e90f2c1dca5feac265a850c217b18b68a1161c70f9677ffe380db3"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\ProfilerView.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/ProfilerView.obj",
+        "bytes": 101445,
+        "sha256": "a7e70fa667d0f8a31a71824058547ad58fb5e0551db63a3be5286342d5010412"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\EditorWidgets.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/EditorWidgets.obj",
+        "bytes": 52948,
+        "sha256": "3f0184966c6fe1d9deec200ec1c589071315e38d424f642dca341d72b2e38f59"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\ComponentEditors.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/ComponentEditors.obj",
+        "bytes": 1437795,
+        "sha256": "72bab989f8c3a68de5c829e0f77eef21f2a9ec73379c6de0cb8b6bc59c872cee"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureEditor\\GizmoMath.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/editor_v3/GizmoMath.obj",
+        "bytes": 23060,
+        "sha256": "c6aa0cfb384fbda122d70eccd0d8289409d0e5e5a73f95ed13a46e70d18b2fc8"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-gravity_retry.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/gravity_retry/m78-closure-gravity_retry.exe",
+        "bytes": 9264128,
+        "sha256": "b8542f27c7bd89dd1e53c26cb4a0abe44ae1619ad51ad50b561a8bcccc23b8a2"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\gravity-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/gravity_retry/gravity-0.obj",
+        "bytes": 951028,
+        "sha256": "657521ac6cd732f24b725c8aa0c095c2466cfe737407d9ff8c149197f23da950"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\gravity-1.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/gravity_retry/gravity-1.obj",
+        "bytes": 712178,
+        "sha256": "f3c6b36f176a3ba8abaf3ae06755c3cff961c5f6849dabd638fb70db6ccad5a8"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-impact_timing-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-impact_timing.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/impact_timing/m78-closure-impact_timing.exe",
+        "bytes": 4290560,
+        "sha256": "a4bcf9a38284c3fa7d3a620da13ec5d4dd5ebbb800e1527816706a4e97273d8c"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-impact_timing-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\impact_timing-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/impact_timing/impact_timing-0.obj",
+        "bytes": 204002,
+        "sha256": "cfad8fec8b02fa2211c00b3ab303efe984b56be6695bccc382f13a5ffeef028f"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-joints-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-joints.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/joints/m78-closure-joints.exe",
+        "bytes": 4237312,
+        "sha256": "174eeccfe1a0e2237b528e7f7014384def0038c2d45ae363ee3a8632ccecb22a"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-joints-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\joints-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/joints/joints-0.obj",
+        "bytes": 32859,
+        "sha256": "e7b1e48541cb161eb8e1b3431c20c084f84702815fa1a43c96373d9ebe5c28c8"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-mixed_balance.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/mixed_balance/m78-closure-mixed_balance.exe",
+        "bytes": 9509888,
+        "sha256": "5504135087cb9250e363c849cfba6aa764451cf84581cbd9380d5e368c67e215"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\mixed_balance-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/mixed_balance/mixed_balance-0.obj",
+        "bytes": 2239742,
+        "sha256": "27b654c3c65fa81bbda64e5b5b64264a36446b0b6ed26c4b65d301b9015b54cb"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair_v2-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-mixed_endpoint_pair_v2.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/mixed_endpoint_pair_v2/m78-closure-mixed_endpoint_pair_v2.exe",
+        "bytes": 9569792,
+        "sha256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-mixed_endpoint_v2.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/mixed_endpoint_v2/m78-closure-mixed_endpoint_v2.exe",
+        "bytes": 9569792,
+        "sha256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\mixed_endpoint_v2-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/mixed_endpoint_v2/mixed_endpoint_v2-0.obj",
+        "bytes": 2930638,
+        "sha256": "a7cf1e9849785d503e61e753c31c6924b4afe29d3bea3ba64051031a1dd46692"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-motion-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-motion.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/motion/m78-closure-motion.exe",
+        "bytes": 4262400,
+        "sha256": "9841be826f8d4b9610737de5222e8d9110d71e9b4b41ecbe39f2eebabbf6de9f"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-motion-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\motion-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/motion/motion-0.obj",
+        "bytes": 149039,
+        "sha256": "19a7be4a5c937b9bb1c2efc0f8a1c562adea037ee004458f1ed7fad18f55a6a1"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-ordinary_actual_endpoints-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-ordinary_actual_endpoints.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/ordinary_actual_endpoints/m78-closure-ordinary_actual_endpoints.exe",
+        "bytes": 9569792,
+        "sha256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-physical-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-physical.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/physical/m78-closure-physical.exe",
+        "bytes": 7523840,
+        "sha256": "7590de88af533209e962c1ca51c486b09884042e607a5cfe7bfd87a1ac610a1b"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-physical-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\physical-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/physical/physical-0.obj",
+        "bytes": 536260,
+        "sha256": "52aabd12bf9d30785233709e4ca5062dc96e0c5f2240cab2a2d62c8c6d0b7fe0"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-physics_continuation.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/physics_continuation/m78-closure-physics_continuation.exe",
+        "bytes": 7872512,
+        "sha256": "6d6281f1ec3c8678512c7386aadfc3b2e37df4377fd0a80cca6423ad8b6ea5aa"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\physics_continuation-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/physics_continuation/physics_continuation-0.obj",
+        "bytes": 377108,
+        "sha256": "cfb90fc353410b43b6f571d5abae880a377cf2e254eca93b127c9e4aca44cae2"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-publication_isolation.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/publication_isolation/m78-closure-publication_isolation.exe",
+        "bytes": 4269056,
+        "sha256": "f31ea220a1a2c47027d91eec2226c31e6236ab369db1ca4f67036bcf6b1a4dd6"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\publication_isolation-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/publication_isolation/publication_isolation-0.obj",
+        "bytes": 68601,
+        "sha256": "aae4b575c1e71d0ef6deb6f662003dc73b27d79c5ed98f35f50d4bb342e965ee"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-remaining_m77-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-remaining_m77.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/remaining_m77/m78-closure-remaining_m77.exe",
+        "bytes": 9508352,
+        "sha256": "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-runtime.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/runtime/m78-closure-runtime.exe",
+        "bytes": 10340864,
+        "sha256": "46b5c697c740c651250c35d0a5a73cabdbae3c0209663f06d88927d4c5a282b9"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\runtime-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/runtime/runtime-0.obj",
+        "bytes": 21878,
+        "sha256": "ff7de32197f0f5b55546d93bd45cb0fd99effdc8b2ae8a440987f1e6e8c13674"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\runtime-1.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/runtime/runtime-1.obj",
+        "bytes": 295887,
+        "sha256": "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\runtime-2.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/runtime/runtime-2.obj",
+        "bytes": 229861,
+        "sha256": "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\runtime-3.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/runtime/runtime-3.obj",
+        "bytes": 20401,
+        "sha256": "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\runtime-4.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/runtime/runtime-4.obj",
+        "bytes": 340964,
+        "sha256": "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-signal_application_final.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/signal_application_final/m78-closure-signal_application_final.exe",
+        "bytes": 10359296,
+        "sha256": "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/signal_application_final/signal_application_final-0.obj",
+        "bytes": 1050371,
+        "sha256": "ac9de85b291a3fb67a87ad3330e8231fa478322af8f3434ee7c4fbc1046bc920"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-1.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/signal_application_final/signal_application_final-1.obj",
+        "bytes": 295887,
+        "sha256": "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-2.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/signal_application_final/signal_application_final-2.obj",
+        "bytes": 229861,
+        "sha256": "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-3.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/signal_application_final/signal_application_final-3.obj",
+        "bytes": 20401,
+        "sha256": "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-4.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/signal_application_final/signal_application_final-4.obj",
+        "bytes": 340964,
+        "sha256": "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-streaming-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-streaming.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/streaming/m78-closure-streaming.exe",
+        "bytes": 8039936,
+        "sha256": "4f4ef6794b3d5afd28a3176573301f675cb55b9684830c3412172571955ce36c"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-streaming-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\streaming-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/streaming/streaming-0.obj",
+        "bytes": 1100935,
+        "sha256": "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-world_save-build.json",
+        "guestPath": "C:\\JudasValidation\\Build\\Release\\m78-closure-world_save.exe",
+        "hostPath": ".cache/m78-closure/native-binaries/world_save/m78-closure-world_save.exe",
+        "bytes": 7826944,
+        "sha256": "7217f55a64547d6dfb491aed1134c27c6c9e9ea1676669d4073c2dffe72f829f"
+      },
+      {
+        "receipt": "docs/evidence/m78-closure/native/m78-closure-world_save-build.json",
+        "guestPath": "C:\\JudasValidation\\M78ClosureBuild\\objects\\world_save-0.obj",
+        "hostPath": ".cache/m78-closure/native-binaries/world_save/world_save-0.obj",
+        "bytes": 202093,
+        "sha256": "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322"
+      }
+    ],
+    "receipt": "docs/evidence/m78-closure/native/FINAL_BINARY_IDENTITY.json"
+  },
+  "physicalEndpointComparisons": [
+    {
+      "path": "docs/evidence/m78-closure/native/ACTUAL_ENDPOINT_BY_ENTITY.json",
+      "scope": "All13durablebodies and16completedcontacts exact within native cold/uninterrupted pair after fresh native handle exclusion; raw record inequality preserved."
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/ORDINARY_ACTUAL_ENDPOINTS.json",
+      "scope": "Actual current physical standing for ordinary standing and corrective recovery cold reads; no uninterrupted parity claim."
+    }
+  ],
+  "outstandingScopes": [
+    {
+      "scope": "SaveStreaming Application write/read/read-b on final native source",
+      "status": "not_executed",
+      "reason": "Bounded isolated guest storage and sequential closure budget; lower-level streaming82 and world-save27 reran, plus actual signal region/save/reload route17+6, but they are not substitutes for this distinct fixture."
+    },
+    {
+      "scope": "New closure NavigationInputRace, ResolvedPrefabModPolicy and StreamingMotorPublication audit observers",
+      "status": "not_executed_native",
+      "reason": "Linux-only new audit observations; native historical narrower suites are not promoted to this behavioural coverage."
+    },
+    {
+      "scope": "New closure tiny save-exclusion audit probe",
+      "status": "not_executed_native",
+      "reason": "Separate newly selected Linux audit contract; not silently covered by another fixture."
+    },
+    {
+      "scope": "Fresh final-source export generator invocation",
+      "status": "not_executed_native",
+      "reason": "Final native runtime tested in byte-verified previously exported ordinary content; prior export receipt retained separately."
+    },
+    {
+      "scope": "Full M70 cold articulated trajectory equality",
+      "status": "not_demonstrated",
+      "reason": "CharacterLab pair validates authority/finite pose; actual static anchor/motor reconstruction is tested directly, not every M70 body over a resumed trajectory."
+    },
+    {
+      "scope": "FLU-001 legacy PBF settling correction",
+      "status": "deferred_unchanged",
+      "reason": "Original failures and separate settling-contract issue retained; no fluid implementation/threshold/research modifications or new fluid acceptance claim."
+    },
+    {
+      "scope": "Windows physical GPU/hardware and performance acceptance",
+      "status": "outstanding",
+      "reason": "Unchanged native Windows10 VM/softwareGL is functional validation only; historical timing diagnostic remains, Linux host is performance reference."
+    }
+  ],
+  "toolingFailures": [
+    {
+      "id": "editor-link-storage",
+      "result": "first LNK1106 disk full and duplicated PW/WP LNK4042 preserved; duplication corrected only in verification response before successful fresh link",
+      "evidence": "m78-closure-editor-link.log"
+    },
+    {
+      "id": "editor-preflight",
+      "result": "conservative storage preflight declined before second editor link; no runtime failure",
+      "evidence": "m78-closure-editor_v2-error.txt"
+    },
+    {
+      "id": "editor-cleanup-pattern",
+      "result": "editor passed, cleanup name regex did not accept digit3; archival cleanup repaired without simulation rerun"
+    },
+    {
+      "id": "publication-artifact-sharing",
+      "result": "fixture8/0; upload sharing lock corrected by disposed process and bounded artifact transfer retry, no simulation rerun"
+    },
+    {
+      "id": "observer-include",
+      "result": "first observer compile lacked nlohmann include path; fixed verification recipe only, same unmodified observer"
+    },
+    {
+      "id": "observer-metadata-BOM",
+      "result": "first paired observation JSON decode rejected before simulation; corrected file download decoding, original failure retained"
+    },
+    {
+      "id": "partial-M77-matrix",
+      "result": "first seven actual M77 runs passed, storage blocked legacy fixture copy before test; remaining runs used same exact executable and new namespace"
+    },
+    {
+      "id": "empty-archive-helper",
+      "result": "zero disk created empty helper and wrapper exited0; empty helper retained as tooling failure, later wrappers stop on errors; no pass claimed"
+    },
+    {
+      "id": "single-item-archive-shape",
+      "result": "host post-result archival parser normalized PowerShell single-item object to list; no test rerun"
+    },
+    {
+      "id": "gravity-link-storage",
+      "result": "first LNK1106 before execution; failed MAP archived, link-only same-object retry passed70/0"
+    },
+    {
+      "id": "character-link-storage",
+      "result": "first LNK1106 before execution; failed MAP archived, link-only same-object retry with diagnostic MAP omitted passed98/0+10/0+14/0"
+    },
+    {
+      "id": "stale-signals-fixture",
+      "result": "actual old guest project failure write10/1/read4/3 preserved; lab.js missing previously accepted valid guard; exact current copied project passes17/0+6/0 with same binary"
+    },
+    {
+      "id": "moved-package-preflight",
+      "result": "first conservative 4MiB storage reserve declined before any package creation/launch; second receipt, if present, uses approved 2MiB tooling reserve and unchanged runtime/harness",
+      "evidence": "m78-closure-moved-package-error.txt"
+    }
+  ],
+  "inheritedPriorSourceReceipts": [
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp",
+      "scope": "Prior-source native matrix/export evidence retained. Not relabeled as a new final-source execution."
+    }
+  ],
+  "warningReview": "docs/evidence/m78-closure/native/WP_WARNING_REVIEW.json",
+  "vmConfiguration": "Windows10,4vCPU,6GiB,existing40GBdisk unchanged; GALLIUM_DRIVER=llvmpipe; native functional only.",
+  "movedContentIdentity": "docs/evidence/m78-closure/native/MOVED_CONTENT_IDENTITY.json",
+  "movedPackagePending": false
+}

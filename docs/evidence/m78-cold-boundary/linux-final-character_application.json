@@ -1,0 +1,14 @@
+{
+  "name": "character_application",
+  "utc": "2026-10-11T23:00:30.089793+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_character_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/character"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 2.5570010360024753,
+  "executableSHA256": "75934adfcf7cbdc6a186850546779dc06de34937554c079a144303fa96f1b0f9",
+  "logSHA256": "bccc0b264f21207ad3b77bc6b51bb134992e1d29ea02c0690777e82bdad7269a",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

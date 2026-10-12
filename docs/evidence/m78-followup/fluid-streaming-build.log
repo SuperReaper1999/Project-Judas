@@ -1,0 +1,28 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 21%] Built target freetype
+[ 26%] Built target judas_quickjs
+[ 36%] Built target judas_navigation_backend
+[ 36%] Built target judas_glad
+[ 36%] Built target judas_profiler
+[ 36%] Built target judas_audio_backend
+[ 36%] Built target harfbuzz
+[ 36%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_streaming_tests.dir/tests/WorldStreamingTests.cpp.o
+[100%] Linking CXX executable judas_streaming_tests
+[100%] Built target judas_streaming_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 21%] Built target freetype
+[ 26%] Built target judas_quickjs
+[ 36%] Built target judas_navigation_backend
+[ 36%] Built target judas_glad
+[ 36%] Built target judas_audio_backend
+[ 36%] Built target judas_profiler
+[ 36%] Built target harfbuzz
+[ 36%] Built target judas_materials
+[ 94%] Built target judas_engine
+[ 94%] Building CXX object CMakeFiles/judas_production_fluid_tests.dir/tests/ProductionFluidTests.cpp.o
+[100%] Linking CXX executable judas_production_fluid_tests
+[100%] Built target judas_production_fluid_tests

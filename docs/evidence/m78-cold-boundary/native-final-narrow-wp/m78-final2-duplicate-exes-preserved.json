@@ -1,0 +1,18 @@
+﻿{
+    "scope":  "Read-only lossless archive of owned old generated executable copies; no cleanup by this receipt",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_concave.exe",
+                      "sha256":  "bd10e97e8998af0ca8eeb3214bfa791cd266d2b7c816c918141a77457e89d903",
+                      "bytes":  8870400,
+                      "reportName":  "m78-final2-preserved-m78_combined-v2_concave.exe"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_flu001.exe",
+                      "sha256":  "763badfda1145d7034c815f89c8ce35974ece95427b439b4f0a18306db62e278",
+                      "bytes":  8098304,
+                      "reportName":  "m78-final2-preserved-m78_combined-v2_flu001.exe"
+                  }
+              ],
+    "freeBytes":  71438336
+}

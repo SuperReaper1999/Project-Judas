@@ -1,0 +1,26 @@
+{
+  "id": "judas_profiler_tests",
+  "source": "tests/PerformanceProfilerTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_profiler_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "721ccc88a18bf73c05bf3d57d85369a9a21d1c895cbb2f463e113adbb35116af",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 27,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_profiler_tests.log",
+  "logSHA256": "2f743f5c0c10edbee9892a3ab0b950a5f17f51bce92952aa00c01f0358c6f425",
+  "seconds": 0.06708810400050425
+}

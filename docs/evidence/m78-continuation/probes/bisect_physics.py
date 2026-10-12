@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""Isolated archive/object bisect; no product or fixture mutation."""
+import pathlib,shlex,subprocess,json,hashlib,shutil,time,os
+r=pathlib.Path.cwd();b=r/'.cache/m78-followup/release';out=r/'.cache/m78-continuation/variants';ev=r/'docs/evidence/m78-continuation';out.mkdir(parents=True,exist_ok=True)
+h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+flags={}
+for line in (b/'CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines():
+ if ' = ' in line:
+  k,v=line.split(' = ',1);flags[k]=shlex.split(v)
+files=['RigidBody.cpp','RigidBody.h','RigidMotion.h','PhysicsWorld.cpp','PhysicsWorld.h','CollisionGeometry.cpp']
+current={n:(r/'src'/n).read_text() for n in files}
+def right_source(sources):
+ s=sources['RigidMotion.h'];at=s.index('    void ChangeVelocity(')
+ s=s[:at]+'''    // Physical solver state is the right limit after impulses at a shared time.
+    RigidBody EvaluateAfterEvents(double time) const {
+        auto it=std::upper_bound(segments.begin(),segments.end(),time,
+            [](double query,const RigidMotionSegment& s){return query<s.begin;});
+        if(it==segments.begin())throw std::out_of_range("motion ledger time");
+        --it;return it->Evaluate(time);
+    }
+'''+s[at:];sources['RigidMotion.h']=s
+ s=sources['PhysicsWorld.cpp'].replace('const auto sampled=b.motion.Evaluate(time);','const auto sampled=b.motion.EvaluateAfterEvents(time);').replace('if(b.isKinematic){pose.linearVelocity=sampled.linearVelocity;pose.angularVelocity=sampled.angularVelocity;}','pose.linearVelocity=sampled.linearVelocity;pose.angularVelocity=sampled.angularVelocity;').replace('const auto pose=body.motion.Evaluate(dt);','const auto pose=body.motion.EvaluateAfterEvents(dt);')
+ # Select the same post-event anchored drift for conservative CCD bounds.
+ s=s.replace('const auto it=std::lower_bound(segments.begin(),segments.end(),time,[](const auto& segment,double t){return segment.end<t;});\n        return it==segments.end()?body.rigidBody.angularVelocity:it->driftAngularVelocity;','auto it=std::upper_bound(segments.begin(),segments.end(),time,[](double t,const auto& segment){return t<segment.begin;});\n        return it==segments.begin()?body.rigidBody.angularVelocity:(--it)->driftAngularVelocity;')
+ s=s.replace('const auto segment=std::lower_bound(segments.begin(),segments.end(),time,[](const auto& s,double t){return s.end<t;});\n            const double elapsed=body.isDynamic && segment!=segments.end() ? time-segment->begin : 0;','auto segment=std::upper_bound(segments.begin(),segments.end(),time,[](double t,const auto& s){return t<s.begin;});\n            const double elapsed=body.isDynamic && segment!=segments.begin() ? time-(--segment)->begin : 0;')
+ sources['PhysicsWorld.cpp']=s
+for name in ['frozen_physics','candidate','no_gyro','event_transport_left','event_transport_right']:
+ folder=out/name;folder.mkdir(exist_ok=True);sources=dict(current);changed=[]
+ if name=='frozen_physics':
+  for n in files:sources[n]=subprocess.check_output(['git','show','HEAD:src/'+n],text=True)
+  changed=['RigidBody.cpp','PhysicsWorld.cpp','CollisionGeometry.cpp']
+ elif name=='no_gyro':
+  s=sources['RigidBody.cpp'];begin=s.index('glm::vec3 TransportAngularVelocity(');end=s.index('void IntegrateRigidBody(',begin)
+  sources['RigidBody.cpp']=s[:begin]+'''glm::vec3 TransportAngularVelocity(const glm::mat3&,const glm::quat&,const glm::quat&,const glm::vec3& velocity){return velocity;}
+glm::vec3 AngularDriftGenerator(const glm::mat3&,const glm::quat&,const glm::vec3& velocity,float){return velocity;}
+
+'''+s[end:];changed=['RigidBody.cpp']
+ elif name=='event_transport_left':
+  sources['PhysicsWorld.cpp']=sources['PhysicsWorld.cpp'].replace('if(b.isKinematic){pose.linearVelocity=sampled.linearVelocity;pose.angularVelocity=sampled.angularVelocity;}','pose.linearVelocity=sampled.linearVelocity;pose.angularVelocity=sampled.angularVelocity;');changed=['PhysicsWorld.cpp']
+ elif name=='event_transport_right':right_source(sources);changed=['PhysicsWorld.cpp']
+ for header in (r/'src').rglob('*'):
+  if header.is_file() and header.suffix in ['.h','.hpp']:
+   destination=folder/header.relative_to(r/'src');destination.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(header,destination)
+ for n,s in sources.items():(folder/n).write_text(s)
+ archive=folder/'libjudas_engine.a';shutil.copy2(b/'libjudas_engine.a',archive);records=[]
+ for n in changed:
+  obj=folder/(n+'.o');cmd=['c++',*flags.get('CXX_DEFINES',[]),'-I'+str(folder),*flags.get('CXX_INCLUDES',[]),*flags.get('CXX_FLAGS',[]),'-c',str(folder/n),'-o',str(obj)]
+  with (ev/(name+'-compile.log')).open('ab') as log:code=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT).returncode
+  records.append({'command':cmd,'exit':code});assert code==0,(name,n)
+  subprocess.run(['ar','r',str(archive),str(obj)],check=True)
+ subprocess.run(['ranlib',str(archive)],check=True)
+ target='judas_physical_balance_controller_tests';link=shlex.split((b/'CMakeFiles'/ (target+'.dir')/'link.txt').read_text());link=[str(archive) if x=='libjudas_engine.a' else str(folder/'controller') if x==target else x for x in link if not x.startswith('-Wl,--dependency-file')]
+ subprocess.run(link,cwd=b,check=True)
+ start=time.perf_counter()
+ with (ev/(name+'-controller.log')).open('wb') as log:code=subprocess.run([str(folder/'controller')],cwd=r,stdout=log,stderr=subprocess.STDOUT).returncode
+ (ev/(name+'-bisect.json')).write_text(json.dumps({'name':name,'source':{n:h(folder/n) for n in files},'builds':records,'engineSHA256':h(archive),'exeSHA256':h(folder/'controller'),'exitCode':code,'seconds':time.perf_counter()-start,'fixtureSHA256':h(r/'tests/PhysicalBalanceControllerTests.cpp'),'scope':'Diagnostic variant only; no production/fixture changes'},indent=2)+'\n')
+ print(name,code,flush=True)

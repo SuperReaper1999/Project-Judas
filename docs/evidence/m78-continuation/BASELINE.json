@@ -1,0 +1,8 @@
+{
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "previousCandidateManifestSHA256": "38892f9979dc8eadf91c6a397c7f86ae60678bce83e48b5927aafac7f4c829e5",
+  "previousCandidateFilesVerified": 439,
+  "previousManifestMismatches": [],
+  "indexDiff": "",
+  "task": "Continue M78; bisect unchanged stepping failure, profile four-rig tail, combined Linux/native Windows proof; fluid untouched"
+}

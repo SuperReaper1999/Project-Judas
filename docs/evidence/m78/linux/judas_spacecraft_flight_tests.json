@@ -1,0 +1,26 @@
+{
+  "id": "judas_spacecraft_flight_tests",
+  "source": "tests/SpacecraftFlightTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_spacecraft_flight_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "baa1e32148f4b7835596396f1f4892410839559e46bb1f3e4a0a562d50e715e2",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 31,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_spacecraft_flight_tests.log",
+  "logSHA256": "caffb7d027922a47901df29f89d3862cdc95bf02fe53faf172ae0c79f746c65a",
+  "seconds": 0.04040794399952574
+}

@@ -1,0 +1,28 @@
+{
+  "id": "judas_liquid_surface_loop_tests",
+  "source": "tests/LiquidSurfaceLoopTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_loop_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_liquid_surface_loop_tests/view.png"
+  ],
+  "adapter": "ordinary surface scene and owned capture",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "841c480305e70a1d19c413618e08d6f839d2bae89bf7797925f83970ee60994e",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_liquid_surface_loop_tests.log",
+  "logSHA256": "60002620a97f77ede80f90c7d039ac50adf7003ee00442df15b813b6c99cde29",
+  "seconds": 5.049139728998853
+}

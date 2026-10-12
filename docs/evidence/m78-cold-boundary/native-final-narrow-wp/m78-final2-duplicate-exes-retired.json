@@ -1,0 +1,9 @@
+﻿{
+    "scope":  "Only two old generated exe copies removed after independent fullhostSHAverification; sources/rawwitnesses/fixtures/saves/packages/libraries untouched",
+    "freeBefore":  71401472,
+    "freeAfter":  88375296,
+    "removed":  [
+                    "m78_combined-v2_concave.exe",
+                    "m78_combined-v2_flu001.exe"
+                ]
+}

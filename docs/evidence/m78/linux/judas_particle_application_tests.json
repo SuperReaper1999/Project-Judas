@@ -1,0 +1,28 @@
+{
+  "id": "judas_particle_application_tests",
+  "source": "tests/ParticleApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_particle_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_particle_application_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "7d4eee3cda5633dc368ca8fc17511f73cfdfe82bc192445f1a5cbb66629495f1",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 11,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_particle_application_tests.log",
+  "logSHA256": "378bb753f179f1aa1f7e725a733b02d73978d077b48ce58e6686ed7b72b83e38",
+  "seconds": 4.267795718000343
+}

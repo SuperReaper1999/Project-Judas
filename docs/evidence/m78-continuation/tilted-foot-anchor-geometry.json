@@ -1,0 +1,78 @@
+{
+  "purpose": "Independent rigid-transform anchor geometry; diagnoses a reference mismatch, not a new success threshold or proof of controller repair",
+  "rule": "world joint anchor = foot origin + foot rotation * local anchor; original fixture pivot offset is zero",
+  "same_existing_setting": "plantedOrientationWeight = 0 means existing ankle drive selects the observed contacting foot orientation",
+  "example": {
+    "foot_rotation_axis": [
+      1,
+      0,
+      0
+    ],
+    "foot_rotation_radians": 0.6,
+    "ankle_anchor_local_m": [
+      0,
+      0.15,
+      0
+    ],
+    "original_upright_offset_m": [
+      0,
+      0.15,
+      0
+    ],
+    "actual_rigid_anchor_offset_m": [
+      0.0,
+      0.12380034223645174,
+      0.0846963710092553
+    ],
+    "old_reference_error_m": 0.08865606199840187,
+    "consistent_reference_error_m": 0.0
+  },
+  "arbitrary_setup_rotation": {
+    "axis": [
+      1,
+      2,
+      3
+    ],
+    "radians": 0.9,
+    "old_upright_offset_m": [
+      -0.08610045738793672,
+      0.10945821088614262,
+      0.05572801187188383
+    ],
+    "physical_offset_m": [
+      -0.02873142349381806,
+      0.08634329662522941,
+      0.11924487591467622
+    ],
+    "same_error_m": 0.08865606199840187
+  },
+  "contact_offset_geometry": {
+    "local_m": [
+      0,
+      -0.12,
+      0
+    ],
+    "physical_offset_m": [
+      0.0,
+      -0.0990402737891614,
+      -0.06775709680740424
+    ],
+    "upright_m": [
+      0,
+      -0.12,
+      0
+    ],
+    "error_m": 0.0709248495987215,
+    "note": "Recorded only. Overlay does not change touchdown acceptance or root-height policy."
+  },
+  "production_files": {
+    "src/PhysicalBalance.cpp": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+    "src/PhysicalBalance.h": "c711ebe2424edd0af7023d891328f558000652574102484499b527c09aee6274",
+    "tests/PhysicalBalanceControllerTests.cpp": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772"
+  },
+  "limitations": [
+    "This is an illustrative tilted pose, not the measured exact failing touchdown angle.",
+    "Preserved motor orientation feedback is a deliberate existing policy, not a proposal to set it to 1.",
+    "The existing common balance correction acts on leg orientations after IK and remains unchanged in the isolated overlay."
+  ]
+}

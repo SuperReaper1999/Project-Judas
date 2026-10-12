@@ -1,0 +1,18 @@
+PASS ordinary project
+PASS base behavior asset
+PASS scripted base prefab
+PASS base prefab identity
+PASS ordinary linked scene
+PASS requesting authored scene contains no direct script slot
+PASS serialize ordinary data scene
+PASS encode immutable data-only package
+PASS decode actual package
+PASS manifest/import policy resolves without executable trust
+PASS data-only linked prefab accepts the explicitly published behavior/schema without evaluating its constructor
+PASS published prefab cannot conceal an unpublished resolved behavior
+PASS current base prefab has genuine incompatible authored property
+PASS resolved indirect slot is checked against the published property schema
+PASS failed candidates do not alter the prior effective view asset ownership mapping
+PASS valid authored follow-up
+PASS correctly typed follow-up resolves through the same policy
+SUMMARY 17 checks 0 failures

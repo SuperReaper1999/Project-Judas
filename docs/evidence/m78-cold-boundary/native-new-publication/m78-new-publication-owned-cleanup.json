@@ -1,0 +1,58 @@
+﻿{
+    "scope":  "Only completed, independently host hash/size verified generated diagnostic objects, executables, maps and metadata/archive. Original test objects/final lib/source/results/saves untouched.",
+    "freeBefore":  30953472,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-balance_lab.exe",
+                        "bytes":  9497600,
+                        "sha256":  "4d65e46d189bbd558f49a171377f6db0d2a292fd188446274084e482c1919e16"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-native-new-publication-controller.exe",
+                        "bytes":  4385280,
+                        "sha256":  "c4fea07840a06768213ebf2ab81b429df9c32fe022dbfc17731bd1c0c4688c3d"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicsWorld.obj",
+                        "bytes":  1443399,
+                        "sha256":  "c6fc5855a923cc3f8e768ec3baf7609d53ccb240008c02f332678a0768d47053"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublication\\objects\\WorldPersistence.obj",
+                        "bytes":  1250794,
+                        "sha256":  "875529ce9aa1abf1617f36e9efd0dc9f949c95c8fc00ec9eb11c81ed2771d24c"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublication\\objects\\PhysicalBalance.obj",
+                        "bytes":  1462368,
+                        "sha256":  "6477dd5d359f09625c98b6e12721bcebb6e7ef98fb044bbae4a2f55f177c0051"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\m78-native-new-publication-balance_lab.map",
+                        "bytes":  14287213,
+                        "sha256":  "ad6beb8cd29476e4f53441906077db92a1a3631ce02309209bbd5fe3f449c9cb"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\m78-native-new-publication-controller.map",
+                        "bytes":  3653199,
+                        "sha256":  "94c7e9bbf71152b78581ad2ad618f2da7dec62a9d560a603f98d412f24288a63"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\m78-native-new-publication-proof.json",
+                        "bytes":  29590502,
+                        "sha256":  "20492ad444610bf2943350a9c70b860357144ea7a0ed7ce87bd4c69ab7002253"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublication\\m78-new-publication-generated.zip",
+                        "bytes":  7395548,
+                        "sha256":  "cf54d4aefaa98d1836cb7b76e89487eda93b323d9da26102d1f83f83317e862b"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\m78-new-publication-expanded-powershell-metadata.zip",
+                        "bytes":  1723475,
+                        "sha256":  "bcbfa82fb46cf4228d0a4cc5014447f4b69dd37f16cefefff252e9876c77b9cb"
+                    }
+                ],
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "freeAfter":  105664512
+}

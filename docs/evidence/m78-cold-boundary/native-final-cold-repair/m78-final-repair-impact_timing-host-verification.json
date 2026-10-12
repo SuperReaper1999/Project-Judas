@@ -1,0 +1,24 @@
+{
+  "scope": "Fresh native final case, all generated member bytes independently host SHA/size verified before exact guest cleanup",
+  "hostVerified": true,
+  "case": "impact_timing",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-final-repair-impact_timing.exe",
+      "sha256": "ef84f0ef33c80227604e43790340dc226d83d4060543694b40a5f8e04cb15606",
+      "name": "m78-final-repair-impact_timing.exe",
+      "bytes": 507904
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\impact_timing-0.obj",
+      "sha256": "cfad8fec8b02fa2211c00b3ab303efe984b56be6695bccc382f13a5ffeef028f",
+      "name": "impact_timing-0.obj",
+      "bytes": 204002
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-impact_timing-generated.zip",
+      "bytes": 298486,
+      "sha256": "f234cffb16c10f29fa5c331568983ada303f14cf7ffe04c1b2db01c2bf0da284"
+    }
+  ]
+}

@@ -1,0 +1,332 @@
+{
+  "scope": "Algebraic analysis of actual target receipts; no runtime or test execution and no proposed controller repair",
+  "firstContactFreeBoundary": {
+    "tick": 0,
+    "contacts": [
+      0,
+      0
+    ],
+    "correctionRadians": 0.24528656646440808,
+    "correction": [
+      0.9924887346038669,
+      -0.12233132946328307,
+      0.0,
+      0.0010758792501108449
+    ],
+    "joints": [
+      {
+        "jointOrdinal": 0,
+        "bodyA": 6,
+        "bodyB": 5,
+        "angularDifferenceRadians": 2.779620676602233e-17,
+        "actualTarget": [
+          0.996474027633667,
+          0.08362583816051483,
+          0.000568490824662149,
+          -0.0067736199125647545
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9964740276336669,
+          0.08362583816051482,
+          0.000568490824662148,
+          -0.006773619912564754
+        ]
+      },
+      {
+        "jointOrdinal": 1,
+        "bodyA": 7,
+        "bodyB": 6,
+        "angularDifferenceRadians": 1.1108412553870842e-16,
+        "actualTarget": [
+          0.9695813655853271,
+          -0.2447691708803177,
+          -4.321918822824955e-08,
+          -4.2852479964494705e-07
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9695813655853274,
+          -0.2447691708803177,
+          -4.321918822759903e-08,
+          -4.2852479964321233e-07
+        ]
+      },
+      {
+        "jointOrdinal": 2,
+        "bodyA": 8,
+        "bodyB": 7,
+        "angularDifferenceRadians": 3.496448587923011e-18,
+        "actualTarget": [
+          0.9866317510604858,
+          0.1628241091966629,
+          0.00110685417894274,
+          0.006707147695124149
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9866317510604858,
+          0.1628241091966629,
+          0.00110685417894274,
+          0.00670714769512415
+        ]
+      },
+      {
+        "jointOrdinal": 3,
+        "bodyA": 9,
+        "bodyB": 5,
+        "angularDifferenceRadians": 1.1106295590959475e-16,
+        "actualTarget": [
+          -0.9001833200454712,
+          -0.4352664053440094,
+          -0.006355894263833761,
+          0.013144687749445438
+        ],
+        "removedCommonCorrectionTarget": [
+          -0.9001833200454713,
+          -0.4352664053440095,
+          -0.006355894263833761,
+          0.013144687749445438
+        ]
+      },
+      {
+        "jointOrdinal": 4,
+        "bodyA": 10,
+        "bodyB": 9,
+        "angularDifferenceRadians": 1.1109004448661727e-16,
+        "actualTarget": [
+          -0.7428759932518005,
+          0.6694290637969971,
+          5.820766091346741e-09,
+          5.541369318962097e-08
+        ],
+        "removedCommonCorrectionTarget": [
+          -0.7428759932518004,
+          0.6694290637969971,
+          5.820766090479379e-09,
+          5.541369318788625e-08
+        ]
+      },
+      {
+        "jointOrdinal": 5,
+        "bodyA": 11,
+        "bodyB": 10,
+        "angularDifferenceRadians": 1.11161158810079e-16,
+        "actualTarget": [
+          0.9600256681442261,
+          0.279535174369812,
+          0.004058910068124533,
+          0.013939954340457916
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9600256681442262,
+          0.2795351743698121,
+          0.00405891006812453,
+          0.013939954340457918
+        ]
+      }
+    ]
+  },
+  "firstContactingStanceBoundary": {
+    "platform": "Linux separate continuation, not a native before/after comparison",
+    "tick": 2,
+    "contacts": [
+      1,
+      0
+    ],
+    "inferredCorrection": [
+      0.9968948365656344,
+      -0.07615275463256771,
+      9.693696279988381e-06,
+      0.02004689782062082
+    ],
+    "inferredCorrectionRadians": 0.15765757906648498,
+    "inferenceAssumptions": "Identity rest orientations; same fixed uniform-up/yaw reference; initial ramp complete; no post-step blend; stance ankle weight zero",
+    "joints": [
+      {
+        "jointOrdinal": 0,
+        "groundedAnkleOverride": false,
+        "angularDifferenceRadians": 8.359332479544506e-17,
+        "actualTarget": [
+          0.9970519542694092,
+          0.07642506062984467,
+          0.0005226045614108443,
+          -0.006818011868745089
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9970519542694093,
+          0.07642506062984471,
+          0.0005226045614108435,
+          -0.006818011868745092
+        ]
+      },
+      {
+        "jointOrdinal": 1,
+        "groundedAnkleOverride": false,
+        "angularDifferenceRadians": 5.580556371566261e-17,
+        "actualTarget": [
+          0.969336748123169,
+          -0.24573644995689392,
+          6.228220605919432e-09,
+          6.763731619230384e-08
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9693367481231691,
+          -0.24573644995689398,
+          6.22822060472681e-09,
+          6.763731618970176e-08
+        ]
+      },
+      {
+        "jointOrdinal": 2,
+        "groundedAnkleOverride": true,
+        "angularDifferenceRadians": 0.15765757906648492,
+        "actualTarget": [
+          0.9923543334007263,
+          -0.099855437874794,
+          0.06769604235887527,
+          0.02605874091386795
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9978584042529668,
+          -0.024686709531936465,
+          0.06042376367300358,
+          0.004212887828498974
+        ]
+      },
+      {
+        "jointOrdinal": 3,
+        "groundedAnkleOverride": false,
+        "angularDifferenceRadians": 1.1144166854419979e-16,
+        "actualTarget": [
+          -0.8925842642784119,
+          -0.45064297318458557,
+          -0.0065968893468379974,
+          0.01306669507175684
+        ],
+        "removedCommonCorrectionTarget": [
+          -0.8925842642784118,
+          -0.4506429731845855,
+          -0.0065968893468379974,
+          0.013066695071756835
+        ]
+      },
+      {
+        "jointOrdinal": 4,
+        "groundedAnkleOverride": false,
+        "angularDifferenceRadians": 1.0971244146852714e-17,
+        "actualTarget": [
+          -0.7358327507972717,
+          0.6771633625030518,
+          -3.3527612686157227e-08,
+          -2.598389983177185e-07
+        ],
+        "removedCommonCorrectionTarget": [
+          -0.735832750797272,
+          0.6771633625030519,
+          -3.35276126844225e-08,
+          -2.598389983229227e-07
+        ]
+      },
+      {
+        "jointOrdinal": 5,
+        "groundedAnkleOverride": false,
+        "angularDifferenceRadians": 7.758499251835026e-18,
+        "actualTarget": [
+          0.9619516730308533,
+          0.27282750606536865,
+          0.00399393355473876,
+          0.014081853441894054
+        ],
+        "removedCommonCorrectionTarget": [
+          0.9619516730308532,
+          0.2728275060653686,
+          0.003993933554738762,
+          0.01408185344189405
+        ]
+      }
+    ]
+  },
+  "firstNativeReferenceGeometry": {
+    "rootReferencePosition": [
+      2.9842082288327236,
+      1.4178556203842163,
+      0.07927116333778811
+    ],
+    "correctionRadians": 0.24528656646440808,
+    "footReferenceErrors": [
+      {
+        "foot": 0,
+        "originalReferenceFootWorld": [
+          2.5953168869018555,
+          0.11902973055839539,
+          0.09891437739133835
+        ],
+        "postCommonRotationImpliedFootWorld": [
+          2.598086384031487,
+          0.1618458245197849,
+          0.4138161340500373
+        ],
+        "difference": [
+          0.002769497129631482,
+          0.04281609396138952,
+          0.31490175665869896
+        ],
+        "distanceMeters": 0.3178112716113071
+      },
+      {
+        "foot": 1,
+        "originalReferenceFootWorld": [
+          3.404983153381158,
+          0.28921548393007,
+          0.23958028415145452
+        ],
+        "postCommonRotationImpliedFootWorld": [
+          3.4073503009490826,
+          0.36282384935595746,
+          0.5087334525857203
+        ],
+        "difference": [
+          0.0023671475679245546,
+          0.07360836542588745,
+          0.26915316843426584
+        ],
+        "distanceMeters": 0.2790469905347191
+      }
+    ],
+    "meaning": "The post-IK all-orientation correction rotates the implied reference skeleton endpoint around its root away from the fixed authored world foothold. This is reference geometry, not an actual observed displacement or new physics command.",
+    "preservedAcceptanceTouchdownToleranceMeters": 0.20000000298023224
+  },
+  "authoredPolicy": {
+    "legLeanFraction": 1.0,
+    "trunkLeanFraction": 1.0,
+    "effect": "SwingReferences overwrites earlier fractional desired poses, and step phase applies full common correction. Reapplying the authored fractions would be identical for this exact 1/1 fixture and cannot explain its failure."
+  },
+  "inputs": [
+    {
+      "path": "docs/evidence/m78-cold-boundary/m78-diagnostic-boundary-v1-source-physical-before-save.json",
+      "sha256": "2574d25aa8c22d13c4444a9995f078fbd166d456f512f7c6a1be1ec0d1b98942"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/m78-diagnostic-boundary-v1-source-joint-boundary.jsonl",
+      "sha256": "a5a5dd995c54edf2ed146e0acd1c1a5b86f94586343ebba1cacaea60f3db97e9"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/m78-diagnostic-boundary-v1-source-diagnostic-uninterrupted-trace.jsonl",
+      "sha256": "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/m78-diagnostic-boundary-v1-source-m77.save",
+      "sha256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/target-feedback-linux-physical-before-save.json",
+      "sha256": "e206344a58b9078e98453a95d095bd665125e79bd38b899980567b07ff2a1b52"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/target-feedback-linux-trace.jsonl",
+      "sha256": "4bf26f8b589269aa43c3f533c00e62416926d37b2d4566dac6ee8fcf537d9d00"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-source-joint-boundary.jsonl",
+      "sha256": "aaaf74dfcc3e089d60870829a2289ea9e5e6eb793106cf65cda6eb5d1326fe78"
+    }
+  ]
+}

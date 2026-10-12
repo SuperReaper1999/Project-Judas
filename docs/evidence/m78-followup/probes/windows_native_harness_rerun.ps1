@@ -1,0 +1,11 @@
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$root='C:\JudasValidation';$out="$root\M78FollowupResults";$base='http://192.168.122.1:8872';function Upload($p){Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($p))" -Method Post -InFile $p|Out-Null}
+try{
+ if((Get-PSDrive C).Free -lt 64MB){throw 'Insufficient small-test reserve'}
+ Import-Module "$root\VS2022\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";Enter-VsDevShell -VsInstallPath "$root\VS2022" -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64';$ErrorActionPreference='Continue'
+ & "$root\VS2022\MSBuild\Current\Bin\MSBuild.exe" "$root\Build\judas_collision_geometry_tests.vcxproj" /p:Configuration=Release /p:Platform=x64 /p:BuildProjectReferences=false /m:1 /verbosity:minimal /nologo 2>&1|Tee-Object -FilePath "$out\m78-portable-collision-build.log";$buildCode=$LASTEXITCODE;Upload "$out\m78-portable-collision-build.log";if($buildCode -ne 0){throw 'Portable test build failed'}
+ $rows=@();$env:TEMP="$out\temp";$env:TMP=$env:TEMP;New-Item -ItemType Directory $env:TEMP -Force|Out-Null
+ foreach($name in @('collision_geometry','streaming','scalability')){
+  $exe="$root\Build\Release\judas_${name}_tests.exe";$stdout="$out\native2-$name.stdout.log";$stderr="$out\native2-$name.stderr.log";if(Test-Path $stdout){throw 'Preserve existing rerun'};$options=@{FilePath=$exe;WorkingDirectory="$root\Source";PassThru=$true;RedirectStandardOutput=$stdout;RedirectStandardError=$stderr};if($name -eq 'scalability'){$options.ArgumentList=@("$out\scalability")};$watch=[Diagnostics.Stopwatch]::StartNew();$p=Start-Process @options;[void]$p.Handle;if(!$p.WaitForExit(180000)){Stop-Process -Id $p.Id -Force;$code='timeout'}else{$p.Refresh();$code=$p.ExitCode};$rows+=@{case=$name;exitCode=$code;seconds=$watch.Elapsed.TotalSeconds;exe=$exe;sha256=(Get-FileHash $exe).Hash.ToLower()};Upload $stdout;Upload $stderr
+ }
+ @{buildExit=$buildCode;rows=$rows;freeBytes=(Get-PSDrive C).Free}|ConvertTo-Json -Depth 4|Set-Content "$out\m78-native-harness-rerun.json" -Encoding UTF8;Upload "$out\m78-native-harness-rerun.json"
+}catch{[string]$_.Exception.Message|Set-Content "$out\m78-native-harness-rerun-error.txt";Upload "$out\m78-native-harness-rerun-error.txt";exit 1}

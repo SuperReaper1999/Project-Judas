@@ -1,0 +1,1972 @@
+[
+  {
+    "target": "judas_scene_tests",
+    "cmakeSources": [
+      "tests/SceneTests.cpp"
+    ],
+    "source": "tests/SceneTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_lifecycle_tests",
+    "cmakeSources": [
+      "tests/LifecycleTests.cpp"
+    ],
+    "source": "tests/LifecycleTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_project_tests",
+    "cmakeSources": [
+      "tests/ProjectTests.cpp",
+      "src/editor/GizmoMath.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/ProjectTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_job_tests",
+    "cmakeSources": [
+      "tests/JobTests.cpp"
+    ],
+    "source": "tests/JobTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physics_tests",
+    "cmakeSources": [
+      "tests/PhysicsPrimitiveTests.cpp",
+      "${JUDAS_TEST_SUPPORT_SOURCES}"
+    ],
+    "source": "tests/PhysicsPrimitiveTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_rigid_contact_tests",
+    "cmakeSources": [
+      "tests/RigidContactTests.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/RigidContactTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_broadphase_tests",
+    "cmakeSources": [
+      "tests/BroadphaseTests.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/BroadphaseTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_collision_tests",
+    "cmakeSources": [
+      "tests/CollisionTests.cpp",
+      "${JUDAS_TEST_SUPPORT_SOURCES}"
+    ],
+    "source": "tests/CollisionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_celestial_gravity_tests",
+    "cmakeSources": [
+      "tests/CelestialGravityTests.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp",
+      "src/CelestialGravity.cpp"
+    ],
+    "source": "tests/CelestialGravityTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_asset_tests",
+    "cmakeSources": [
+      "tests/AssetTests.cpp"
+    ],
+    "source": "tests/AssetTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_step_climb_tests",
+    "cmakeSources": [
+      "tests/StepClimbTests.cpp",
+      "src/StepClimb.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/StepClimbTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_pilot_attachment_tests",
+    "cmakeSources": [
+      "tests/PilotAttachmentTests.cpp",
+      "src/PilotAttachment.cpp"
+    ],
+    "source": "tests/PilotAttachmentTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_pilot_dismount_tests",
+    "cmakeSources": [
+      "tests/PilotDismountTests.cpp",
+      "src/PilotAttachment.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/PilotDismountTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_spacecraft_control_tests",
+    "cmakeSources": [
+      "tests/SpacecraftControlTests.cpp",
+      "src/FlyingPrimitiveControl.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/SpacecraftControlTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_spacecraft_flight_tests",
+    "cmakeSources": [
+      "tests/SpacecraftFlightTests.cpp",
+      "src/FlyingPrimitiveControl.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp",
+      "src/CelestialGravity.cpp"
+    ],
+    "source": "tests/SpacecraftFlightTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_reference_frame_tests",
+    "cmakeSources": [
+      "tests/ReferenceFrameTests.cpp",
+      "src/ReferenceFrame.cpp",
+      "src/PilotAttachment.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/ReferenceFrameTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_ui_tests",
+    "cmakeSources": [
+      "tests/UITests.cpp",
+      "src/UIWidgets.cpp",
+      "src/PauseMenu.cpp",
+      "src/HUD.cpp",
+      "src/Renderer.cpp",
+      "src/SkeletalAnimation.cpp",
+      "src/FontLoader.cpp"
+    ],
+    "source": "tests/UITests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_lighting_tests",
+    "cmakeSources": [
+      "tests/LightingTests.cpp",
+      "src/LightTransforms.cpp",
+      "src/LightAttenuation.cpp",
+      "src/PauseMenu.cpp",
+      "src/UIWidgets.cpp",
+      "src/HUD.cpp",
+      "src/Renderer.cpp",
+      "src/SkeletalAnimation.cpp",
+      "src/FontLoader.cpp"
+    ],
+    "source": "tests/LightingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_shadow_tests",
+    "cmakeSources": [
+      "tests/ShadowTests.cpp",
+      "src/ShadowTransforms.cpp"
+    ],
+    "source": "tests/ShadowTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_interactable_tests",
+    "cmakeSources": [
+      "tests/InteractableTests.cpp",
+      "src/HingeTransform.cpp",
+      "src/InteractionSystem.cpp",
+      "src/Door.cpp",
+      "src/LightSwitch.cpp",
+      "src/PauseMenu.cpp",
+      "src/UIWidgets.cpp",
+      "src/HUD.cpp",
+      "src/Renderer.cpp",
+      "src/SkeletalAnimation.cpp",
+      "src/FontLoader.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/InteractableTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_player_view_tests",
+    "cmakeSources": [
+      "tests/PlayerViewTests.cpp",
+      "src/PlayerView.cpp",
+      "src/LightTransforms.cpp"
+    ],
+    "source": "tests/PlayerViewTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_object_manipulation_tests",
+    "cmakeSources": [
+      "tests/ObjectManipulationTests.cpp",
+      "src/ObjectManipulation.cpp",
+      "src/InteractionSystem.cpp",
+      "src/DynamicBody.cpp",
+      "${JUDAS_TEST_SUPPORT_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/ObjectManipulationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_player_curved_locomotion_tests",
+    "cmakeSources": [
+      "tests/PlayerCurvedLocomotionTests.cpp",
+      "src/CharacterMotor.cpp",
+      "src/PlayerController.cpp",
+      "src/PlayerView.cpp",
+      "src/LightTransforms.cpp",
+      "src/PilotControl.cpp",
+      "src/PilotAttachment.cpp",
+      "src/FlyingPrimitiveControl.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "src/StepClimb.cpp",
+      "src/PhysicsWorld.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/RadicalGravity.cpp"
+    ],
+    "source": "tests/PlayerCurvedLocomotionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_world_coordinates_tests",
+    "cmakeSources": [
+      "tests/WorldCoordinatesTests.cpp",
+      "src/CelestialGravity.cpp",
+      "src/DynamicBody.cpp",
+      "src/FlyingPrimitiveControl.cpp",
+      "src/InteractionSystem.cpp",
+      "src/ObjectManipulation.cpp",
+      "src/CharacterMotor.cpp",
+      "src/PlayerController.cpp",
+      "src/PlayerView.cpp",
+      "src/LightTransforms.cpp",
+      "src/ReferenceFrame.cpp",
+      "src/ShadowTransforms.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "src/StepClimb.cpp",
+      "src/PhysicsWorld.cpp",
+      "${JUDAS_TEST_SUPPORT_SOURCES}"
+    ],
+    "source": "tests/WorldCoordinatesTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_compound_body_tests",
+    "cmakeSources": [
+      "tests/CompoundBodyTests.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/CompoundBodyTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_world_tests",
+    "cmakeSources": [
+      "tests/FluidWorldTests.cpp",
+      "src/FluidWorld.cpp",
+      "${JUDAS_TEST_SUPPORT_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/FluidWorldTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_rigid_coupling_tests",
+    "cmakeSources": [
+      "tests/FluidRigidCouplingTests.cpp",
+      "src/FluidWorld.cpp",
+      "src/ObjectManipulation.cpp",
+      "src/DynamicBody.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/FluidRigidCouplingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_surface_tests",
+    "cmakeSources": [
+      "tests/FluidSurfaceTests.cpp",
+      "src/FluidSurface.cpp"
+    ],
+    "source": "tests/FluidSurfaceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_terrain_physics_tests",
+    "cmakeSources": [
+      "tests/TerrainPhysicsTests.cpp",
+      "src/TerrainDemo.cpp",
+      "src/CharacterMotor.cpp",
+      "src/PlayerController.cpp",
+      "src/PlayerView.cpp",
+      "src/LightTransforms.cpp",
+      "src/StepClimb.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp",
+      "src/RadicalGravity.cpp"
+    ],
+    "source": "tests/TerrainPhysicsTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_terrain_fluid_tests",
+    "cmakeSources": [
+      "tests/TerrainFluidTests.cpp",
+      "src/TerrainDemo.cpp",
+      "src/FluidWorld.cpp",
+      "${JUDAS_TEST_SUPPORT_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/TerrainFluidTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_atmosphere_tests",
+    "cmakeSources": [
+      "tests/AtmosphereTests.cpp",
+      "src/AtmosphereField.cpp",
+      "src/ReferenceFrame.cpp",
+      "src/TerrainDemo.cpp",
+      "src/RadialTerrain.cpp"
+    ],
+    "source": "tests/AtmosphereTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_atmospheric_flight_tests",
+    "cmakeSources": [
+      "tests/AtmosphericFlightTests.cpp",
+      "src/AtmosphereField.cpp",
+      "src/AerodynamicDrag.cpp",
+      "src/ReferenceFrame.cpp",
+      "src/CelestialGravity.cpp",
+      "src/DynamicBody.cpp",
+      "src/FlyingPrimitiveControl.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/AtmosphericFlightTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_combustion_tests",
+    "cmakeSources": [
+      "tests/CombustionTests.cpp",
+      "src/CombustionWorld.cpp",
+      "src/FirePresentation.cpp",
+      "src/AtmosphereField.cpp",
+      "src/TerrainDemo.cpp",
+      "src/ReferenceFrame.cpp",
+      "src/CelestialGravity.cpp",
+      "src/RadicalGravity.cpp",
+      "src/FlyingPrimitiveControl.cpp",
+      "src/Window.cpp",
+      "src/InputSystem.cpp",
+      "${JUDAS_PHYSICS_SOURCES}",
+      "src/PhysicsWorld.cpp"
+    ],
+    "source": "tests/CombustionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_scene_fingerprint_tests",
+    "cmakeSources": [
+      "tests/SceneFingerprintTests.cpp"
+    ],
+    "source": "tests/SceneFingerprintTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_world_state_tests",
+    "cmakeSources": [
+      "tests/WorldStateTests.cpp"
+    ],
+    "source": "tests/WorldStateTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_async_application_tests",
+    "cmakeSources": [
+      "tests/AsyncApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/AsyncApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_uniform_gravity_scene_tests",
+    "cmakeSources": [
+      "tests/UniformGravitySceneTests.cpp"
+    ],
+    "source": "tests/UniformGravitySceneTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_gravity_selection_tests",
+    "cmakeSources": [
+      "tests/GravitySelectionTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/GravitySelectionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_contact_geometry_tests",
+    "cmakeSources": [
+      "tests/ContactGeometryProbe.cpp"
+    ],
+    "source": "tests/ContactGeometryProbe.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_contact_lifecycle_tests",
+    "cmakeSources": [
+      "tests/ContactLifecycleTests.cpp"
+    ],
+    "source": "tests/ContactLifecycleTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_contact_cache_tests",
+    "cmakeSources": [
+      "tests/ContactCacheTests.cpp"
+    ],
+    "source": "tests/ContactCacheTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_contact_storage_tests",
+    "cmakeSources": [
+      "tests/ContactStorageTests.cpp"
+    ],
+    "source": "tests/ContactStorageTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_rigid_motion_tests",
+    "cmakeSources": [
+      "tests/RigidMotionTests.cpp"
+    ],
+    "source": "tests/RigidMotionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_impact_solver_tests",
+    "cmakeSources": [
+      "tests/ImpactSolverTests.cpp"
+    ],
+    "source": "tests/ImpactSolverTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_impact_timing_tests",
+    "cmakeSources": [
+      "tests/ImpactTimingTests.cpp"
+    ],
+    "source": "tests/ImpactTimingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_project_application_tests",
+    "cmakeSources": [
+      "tests/ProjectApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ProjectApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_lifecycle_integration_tests",
+    "cmakeSources": [
+      "tests/LifecycleIntegrationTests.cpp"
+    ],
+    "source": "tests/LifecycleIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_asset_integrity_tests",
+    "cmakeSources": [
+      "tests/AssetIntegrityTests.cpp"
+    ],
+    "source": "tests/AssetIntegrityTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_coarse_celestial_tests",
+    "cmakeSources": [
+      "tests/CoarseCelestialTests.cpp"
+    ],
+    "source": "tests/CoarseCelestialTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_orbital_integrity_tests",
+    "cmakeSources": [
+      "tests/OrbitalIntegrityTests.cpp"
+    ],
+    "source": "tests/OrbitalIntegrityTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_spacecraft_frame_integration_tests",
+    "cmakeSources": [
+      "tests/SpacecraftFrameIntegrationTests.cpp"
+    ],
+    "source": "tests/SpacecraftFrameIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_thermal_accounting_tests",
+    "cmakeSources": [
+      "tests/ThermalAccountingTests.cpp"
+    ],
+    "source": "tests/ThermalAccountingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_combustion_integration_tests",
+    "cmakeSources": [
+      "tests/CombustionIntegrationTests.cpp"
+    ],
+    "source": "tests/CombustionIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_player_swimming_tests",
+    "cmakeSources": [
+      "tests/PlayerSwimmingTests.cpp"
+    ],
+    "source": "tests/PlayerSwimmingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_metadata_tests",
+    "cmakeSources": [
+      "tests/FluidMetadataTests.cpp"
+    ],
+    "source": "tests/FluidMetadataTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_hydrostatics_tests",
+    "cmakeSources": [
+      "tests/FluidHydrostaticsTests.cpp"
+    ],
+    "source": "tests/FluidHydrostaticsTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_production_fluid_tests",
+    "cmakeSources": [
+      "tests/ProductionFluidTests.cpp"
+    ],
+    "source": "tests/ProductionFluidTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_container_integration_tests",
+    "cmakeSources": [
+      "tests/FluidContainerIntegrationTests.cpp"
+    ],
+    "source": "tests/FluidContainerIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_player_fluid_integration_tests",
+    "cmakeSources": [
+      "tests/PlayerFluidIntegrationTests.cpp"
+    ],
+    "source": "tests/PlayerFluidIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_cavity_impact_tests",
+    "cmakeSources": [
+      "tests/FluidCavityImpactTests.cpp"
+    ],
+    "source": "tests/FluidCavityImpactTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_smoothing_budget_tests",
+    "cmakeSources": [
+      "tests/FluidSmoothingBudgetTests.cpp"
+    ],
+    "source": "tests/FluidSmoothingBudgetTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_boundary_contact_tests",
+    "cmakeSources": [
+      "tests/FluidBoundaryContactTests.cpp"
+    ],
+    "source": "tests/FluidBoundaryContactTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_particle_contact_batch_tests",
+    "cmakeSources": [
+      "tests/ParticleContactBatchTests.cpp"
+    ],
+    "source": "tests/ParticleContactBatchTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_render_camera_tests",
+    "cmakeSources": [
+      "tests/RenderCameraTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/RenderCameraTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_audio_tests",
+    "cmakeSources": [
+      "tests/AudioTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/AudioTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_input_tests",
+    "cmakeSources": [
+      "tests/InputTests.cpp"
+    ],
+    "source": "tests/InputTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_prefab_tests",
+    "cmakeSources": [
+      "tests/PrefabTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/PrefabTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_prefab_application_tests",
+    "cmakeSources": [
+      "tests/PrefabApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/PrefabApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_visual_particle_tests",
+    "cmakeSources": [
+      "tests/VisualParticleTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/VisualParticleTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_particle_application_tests",
+    "cmakeSources": [
+      "tests/ParticleApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ParticleApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_export_tests",
+    "cmakeSources": [
+      "tests/ExportTests.cpp"
+    ],
+    "source": "tests/ExportTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_package_application_tests",
+    "cmakeSources": [
+      "tests/PackageApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/PackageApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_classification_tests",
+    "cmakeSources": [
+      "tests/ClassificationTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/ClassificationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_script_tests",
+    "cmakeSources": [
+      "tests/ScriptTests.cpp"
+    ],
+    "source": "tests/ScriptTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_script_application_tests",
+    "cmakeSources": [
+      "tests/ScriptApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ScriptApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_runtime_ui_tests",
+    "cmakeSources": [
+      "tests/RuntimeUITests.cpp"
+    ],
+    "source": "tests/RuntimeUITests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_runtime_ui_application_tests",
+    "cmakeSources": [
+      "tests/RuntimeUIApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/RuntimeUIApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_touch_event_tests",
+    "cmakeSources": [
+      "tests/TouchEventTests.cpp"
+    ],
+    "source": "tests/TouchEventTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_touch_application_tests",
+    "cmakeSources": [
+      "tests/TouchApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/TouchApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_scene_transition_tests",
+    "cmakeSources": [
+      "tests/SceneTransitionTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/SceneTransitionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physics_cast_tests",
+    "cmakeSources": [
+      "tests/PhysicsCastTests.cpp"
+    ],
+    "source": "tests/PhysicsCastTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physics_cast_application_tests",
+    "cmakeSources": [
+      "tests/PhysicsCastApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/PhysicsCastApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_joint_tests",
+    "cmakeSources": [
+      "tests/JointTests.cpp"
+    ],
+    "source": "tests/JointTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_joint_authoring_tests",
+    "cmakeSources": [
+      "tests/JointAuthoringTests.cpp"
+    ],
+    "source": "tests/JointAuthoringTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_joint_application_tests",
+    "cmakeSources": [
+      "tests/JointApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/JointApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_skeletal_animation_tests",
+    "cmakeSources": [
+      "tests/SkeletalAnimationTests.cpp"
+    ],
+    "source": "tests/SkeletalAnimationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_animation_application_tests",
+    "cmakeSources": [
+      "tests/AnimationApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/AnimationApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_pose_composition_tests",
+    "cmakeSources": [
+      "tests/PoseCompositionTests.cpp"
+    ],
+    "source": "tests/PoseCompositionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_pose_composition_application_tests",
+    "cmakeSources": [
+      "tests/PoseCompositionApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/PoseCompositionApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_ragdoll_tests",
+    "cmakeSources": [
+      "tests/RagdollTests.cpp"
+    ],
+    "source": "tests/RagdollTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_ragdoll_application_tests",
+    "cmakeSources": [
+      "tests/RagdollApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/RagdollApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fluid_demo_integration_tests",
+    "cmakeSources": [
+      "tests/FluidDemoIntegrationTests.cpp"
+    ],
+    "source": "tests/FluidDemoIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_character_motor_tests",
+    "cmakeSources": [
+      "tests/CharacterMotorTests.cpp"
+    ],
+    "source": "tests/CharacterMotorTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_character_motor_application_tests",
+    "cmakeSources": [
+      "tests/CharacterMotorApplicationTests.cpp"
+    ],
+    "source": "tests/CharacterMotorApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judasjs_examples_tests",
+    "cmakeSources": [
+      "tests/JudasJSExamplesTests.cpp"
+    ],
+    "source": "tests/JudasJSExamplesTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_boundary_migration_tests",
+    "cmakeSources": [
+      "tests/BoundaryMigrationTests.cpp"
+    ],
+    "source": "tests/BoundaryMigrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_shooter_game_tests",
+    "cmakeSources": [
+      "tests/ShooterGameTests.cpp"
+    ],
+    "source": "tests/ShooterGameTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_shooter_application_tests",
+    "cmakeSources": [
+      "tests/ShooterApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ShooterApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_script_presentation_tests",
+    "cmakeSources": [
+      "tests/ScriptPresentationTests.cpp"
+    ],
+    "source": "tests/ScriptPresentationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_navigation_tests",
+    "cmakeSources": [
+      "tests/NavigationTests.cpp"
+    ],
+    "source": "tests/NavigationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_navigation_game_tests",
+    "cmakeSources": [
+      "tests/NavigationGameTests.cpp"
+    ],
+    "source": "tests/NavigationGameTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_liquid_tests",
+    "cmakeSources": [
+      "tests/LiquidTests.cpp"
+    ],
+    "source": "tests/LiquidTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_liquid_application_tests",
+    "cmakeSources": [
+      "tests/LiquidApplicationTests.cpp"
+    ],
+    "source": "tests/LiquidApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_liquid_surface_tests",
+    "cmakeSources": [
+      "tests/LiquidSurfaceTests.cpp"
+    ],
+    "source": "tests/LiquidSurfaceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_liquid_surface_application_tests",
+    "cmakeSources": [
+      "tests/LiquidSurfaceApplicationTests.cpp"
+    ],
+    "source": "tests/LiquidSurfaceApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_liquid_surface_refill_tests",
+    "cmakeSources": [
+      "tests/LiquidSurfaceRefillTests.cpp"
+    ],
+    "source": "tests/LiquidSurfaceRefillTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_liquid_surface_loop_tests",
+    "cmakeSources": [
+      "tests/LiquidSurfaceLoopTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/LiquidSurfaceLoopTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_profiler_tests",
+    "cmakeSources": [
+      "tests/PerformanceProfilerTests.cpp"
+    ],
+    "source": "tests/PerformanceProfilerTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_profiler_script_tests",
+    "cmakeSources": [
+      "tests/ProfilerScriptTests.cpp"
+    ],
+    "source": "tests/ProfilerScriptTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_profiler_application_tests",
+    "cmakeSources": [
+      "tests/ProfilerApplicationTests.cpp",
+      "src/editor/ProfilerView.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ProfilerApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_material_tests",
+    "cmakeSources": [
+      "tests/MaterialTests.cpp"
+    ],
+    "source": "tests/MaterialTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_material_application_tests",
+    "cmakeSources": [
+      "tests/MaterialApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/TestHarness.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/RuntimeOptions.cpp"
+    ],
+    "source": "tests/MaterialApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_text_localization_tests",
+    "cmakeSources": [
+      "tests/TextLocalizationTests.cpp"
+    ],
+    "source": "tests/TextLocalizationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_text_render_tests",
+    "cmakeSources": [
+      "tests/TextRenderTests.cpp"
+    ],
+    "source": "tests/TextRenderTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_localization_application_tests",
+    "cmakeSources": [
+      "tests/LocalizationApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/TestHarness.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/RuntimeOptions.cpp"
+    ],
+    "source": "tests/LocalizationApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_streaming_tests",
+    "cmakeSources": [
+      "tests/WorldStreamingTests.cpp"
+    ],
+    "source": "tests/WorldStreamingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_streaming_application_tests",
+    "cmakeSources": [
+      "tests/StreamingApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/StreamingApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_streaming_performance_tests",
+    "cmakeSources": [
+      "tests/StreamingPerformanceTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/StreamingPerformanceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_streaming_revisit_tests",
+    "cmakeSources": [
+      "tests/StreamingRevisitTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/StreamingRevisitTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_audio_acoustics_tests",
+    "cmakeSources": [
+      "tests/AudioAcousticsTests.cpp"
+    ],
+    "source": "tests/AudioAcousticsTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_audio_world_tests",
+    "cmakeSources": [
+      "tests/AudioWorldTests.cpp"
+    ],
+    "source": "tests/AudioWorldTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_audio_application_tests",
+    "cmakeSources": [
+      "tests/AudioApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/AudioApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_save_storage_tests",
+    "cmakeSources": [
+      "tests/SaveStorageTests.cpp"
+    ],
+    "source": "tests/SaveStorageTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_world_persistence_tests",
+    "cmakeSources": [
+      "tests/WorldPersistenceTests.cpp"
+    ],
+    "source": "tests/WorldPersistenceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_save_application_tests",
+    "cmakeSources": [
+      "tests/SaveApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/SaveApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_save_streaming_tests",
+    "cmakeSources": [
+      "tests/SaveStreamingTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/SaveStreamingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_save_performance_tests",
+    "cmakeSources": [
+      "tests/SavePerformanceTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/SavePerformanceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_deformable_tests",
+    "cmakeSources": [
+      "tests/DeformableTests.cpp"
+    ],
+    "source": "tests/DeformableTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_deformable_performance_tests",
+    "cmakeSources": [
+      "tests/DeformablePerformanceTests.cpp"
+    ],
+    "source": "tests/DeformablePerformanceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_deformable_application_tests",
+    "cmakeSources": [
+      "tests/DeformableApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/DeformableApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fracture_tests",
+    "cmakeSources": [
+      "tests/FractureTests.cpp"
+    ],
+    "source": "tests/FractureTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fracture_application_tests",
+    "cmakeSources": [
+      "tests/FractureApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/FractureApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_fracture_performance_tests",
+    "cmakeSources": [
+      "tests/FracturePerformanceTests.cpp"
+    ],
+    "source": "tests/FracturePerformanceTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_collision_geometry_tests",
+    "cmakeSources": [
+      "tests/CollisionGeometryTests.cpp"
+    ],
+    "source": "tests/CollisionGeometryTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_collision_application_tests",
+    "cmakeSources": [
+      "tests/CollisionApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/CollisionApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_developer_integration_tests",
+    "cmakeSources": [
+      "tests/DeveloperIntegrationTests.cpp"
+    ],
+    "source": "tests/DeveloperIntegrationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_developer_application_tests",
+    "cmakeSources": [
+      "tests/DeveloperApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/DeveloperApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_developer_authoring_tests",
+    "cmakeSources": [
+      "tests/DeveloperAuthoringTests.cpp",
+      "tools/StructuredAuthor.cpp"
+    ],
+    "source": "tests/DeveloperAuthoringTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_consumer_authoring_tests",
+    "cmakeSources": [
+      "tests/ConsumerAuthoringTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/ConsumerAuthoringTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_post_consumer_query_tests",
+    "cmakeSources": [
+      "tests/PostConsumerQueryTests.cpp"
+    ],
+    "source": "tests/PostConsumerQueryTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_post_consumer_metadata_tests",
+    "cmakeSources": [
+      "tests/PostConsumerMetadataTests.cpp"
+    ],
+    "source": "tests/PostConsumerMetadataTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_post_consumer_ragdoll_tests",
+    "cmakeSources": [
+      "tests/PostConsumerRagdollTests.cpp"
+    ],
+    "source": "tests/PostConsumerRagdollTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_model_import_tests",
+    "cmakeSources": [
+      "tests/ModelImportTests.cpp"
+    ],
+    "source": "tests/ModelImportTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_model_reimport_tests",
+    "cmakeSources": [
+      "tests/ModelReimportTests.cpp"
+    ],
+    "source": "tests/ModelReimportTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_model_runtime_tests",
+    "cmakeSources": [
+      "tests/ModelRuntimeTests.cpp"
+    ],
+    "source": "tests/ModelRuntimeTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_model_application_tests",
+    "cmakeSources": [
+      "tests/ModelApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ModelApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_world_building_tests",
+    "cmakeSources": [
+      "tests/WorldBuildingTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/WorldBuildingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_world_authoring_runtime_tests",
+    "cmakeSources": [
+      "tests/WorldAuthoringRuntimeTests.cpp"
+    ],
+    "source": "tests/WorldAuthoringRuntimeTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_world_authoring_application_tests",
+    "cmakeSources": [
+      "tests/WorldAuthoringApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/WorldAuthoringApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_scalability_tests",
+    "cmakeSources": [
+      "tests/ScalabilityTests.cpp"
+    ],
+    "source": "tests/ScalabilityTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_scalability_pipeline_tests",
+    "cmakeSources": [
+      "tests/ScalabilityPipelineTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/ScalabilityPipelineTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_resource_handoff_tests",
+    "cmakeSources": [
+      "tests/ResourceHandoffTests.cpp"
+    ],
+    "source": "tests/ResourceHandoffTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_paired_input_tests",
+    "cmakeSources": [
+      "tests/PairedInputTests.cpp",
+      "tools/StructuredAuthor.cpp"
+    ],
+    "source": "tests/PairedInputTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_paired_input_script_tests",
+    "cmakeSources": [
+      "tests/PairedInputScriptTests.cpp"
+    ],
+    "source": "tests/PairedInputScriptTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physics_batch_script_tests",
+    "cmakeSources": [
+      "tests/PhysicsBatchScriptTests.cpp"
+    ],
+    "source": "tests/PhysicsBatchScriptTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_windows_readiness_tests",
+    "cmakeSources": [
+      "tests/WindowsReadinessTests.cpp"
+    ],
+    "source": "tests/WindowsReadinessTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_terrain_authoring_tests",
+    "cmakeSources": [
+      "tests/TerrainAuthoringTests.cpp"
+    ],
+    "source": "tests/TerrainAuthoringTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_terrain_pipeline_tests",
+    "cmakeSources": [
+      "tests/TerrainPipelineTests.cpp"
+    ],
+    "source": "tests/TerrainPipelineTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_terrain_application_tests",
+    "cmakeSources": [
+      "tests/TerrainApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/TerrainApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_multi_target_ik_tests",
+    "cmakeSources": [
+      "tests/MultiTargetIKTests.cpp"
+    ],
+    "source": "tests/MultiTargetIKTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physical_animation_tests",
+    "cmakeSources": [
+      "tests/PhysicalAnimationTests.cpp"
+    ],
+    "source": "tests/PhysicalAnimationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physical_balance_foundation_tests",
+    "cmakeSources": [
+      "tests/PhysicalBalanceFoundationTests.cpp"
+    ],
+    "source": "tests/PhysicalBalanceFoundationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_physical_balance_controller_tests",
+    "cmakeSources": [
+      "tests/PhysicalBalanceControllerTests.cpp"
+    ],
+    "source": "tests/PhysicalBalanceControllerTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_balance_lab_tests",
+    "cmakeSources": [
+      "tests/BalanceLabTests.cpp"
+    ],
+    "source": "tests/BalanceLabTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_character_lab_tests",
+    "cmakeSources": [
+      "tests/CharacterLabTests.cpp"
+    ],
+    "source": "tests/CharacterLabTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_kinematic_tests",
+    "cmakeSources": [
+      "tests/KinematicTests.cpp"
+    ],
+    "source": "tests/KinematicTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_kinematic_lab_tests",
+    "cmakeSources": [
+      "tests/KinematicLabTests.cpp"
+    ],
+    "source": "tests/KinematicLabTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_editor_navigation_tests",
+    "cmakeSources": [
+      "tests/EditorNavigationTests.cpp",
+      "src/editor/EditorCamera.cpp"
+    ],
+    "source": "tests/EditorNavigationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_editor_picking_tests",
+    "cmakeSources": [
+      "tests/EditorPickingTests.cpp",
+      "src/editor/EditorPicking.cpp"
+    ],
+    "source": "tests/EditorPickingTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_editor_workspace_tests",
+    "cmakeSources": [
+      "tests/EditorWorkspaceLayoutTests.cpp"
+    ],
+    "source": "tests/EditorWorkspaceLayoutTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_editor_widget_tests",
+    "cmakeSources": [
+      "tests/EditorWidgetTests.cpp",
+      "src/editor/EditorWidgets.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/EditorWidgetTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_runtime_render_tests",
+    "cmakeSources": [
+      "tests/RuntimeRenderTests.cpp"
+    ],
+    "source": "tests/RuntimeRenderTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_runtime_render_application_tests",
+    "cmakeSources": [
+      "tests/RuntimeRenderApplicationTests.cpp",
+      "src/editor/EditorHistory.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/RuntimeRenderApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_runtime_render_authoring_tests",
+    "cmakeSources": [
+      "tests/RuntimeRenderAuthoringTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "source": "tests/RuntimeRenderAuthoringTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_runtime_render_retained_region_tests",
+    "cmakeSources": [
+      "tests/RuntimeRenderRetainedRegionTests.cpp"
+    ],
+    "source": "tests/RuntimeRenderRetainedRegionTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_signal_tests",
+    "cmakeSources": [
+      "tests/SignalTests.cpp"
+    ],
+    "source": "tests/SignalTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_signal_application_tests",
+    "cmakeSources": [
+      "tests/SignalApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/SignalApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_animation_retarget_tests",
+    "cmakeSources": [
+      "tests/AnimationRetargetTests.cpp"
+    ],
+    "source": "tests/AnimationRetargetTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_animation_retarget_cook_tests",
+    "cmakeSources": [
+      "tests/AnimationRetargetCookTests.cpp"
+    ],
+    "source": "tests/AnimationRetargetCookTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_retarget_editor_tests",
+    "cmakeSources": [
+      "tests/RetargetEditorTests.cpp"
+    ],
+    "source": "tests/RetargetEditorTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_retarget_application_tests",
+    "cmakeSources": [
+      "tests/RetargetApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/RetargetApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_retarget_lab_tests",
+    "cmakeSources": [
+      "tests/RetargetLabTests.cpp"
+    ],
+    "source": "tests/RetargetLabTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_mod_content_tests",
+    "cmakeSources": [
+      "tests/ModContentTests.cpp"
+    ],
+    "source": "tests/ModContentTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  },
+  {
+    "target": "judas_mod_application_tests",
+    "cmakeSources": [
+      "tests/ModApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "source": "tests/ModApplicationTests.cpp",
+    "status": "discovered-not-executed",
+    "limitations": "Target discovery is not capability coverage or behavioural proof."
+  }
+]

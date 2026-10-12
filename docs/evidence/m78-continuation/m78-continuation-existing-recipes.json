@@ -1,0 +1,172 @@
+﻿{
+    "scope":  "Read-only existing compiler/link recipes and engine archive identity; no compilation, extraction, VM cleanup or source changes",
+    "recipes":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_engine.vcxproj",
+                        "sha256":  "c12c318f9e10f2c0f8a0cd62a2e0639a521feb2f388c517839e9727d8bf5ac96",
+                        "target":  "judas_engine",
+                        "bytes":  118323,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_engine.dir\\Release\\judas_engine.tlog\\CL.command.1.tlog",
+                        "sha256":  "578972ebe18044dadb750b732994b7c58da5abcd808a987f8c33fc8b8e1a6738",
+                        "target":  "judas_engine",
+                        "bytes":  453254,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_rigid_motion_tests.vcxproj",
+                        "sha256":  "428151bb268ed4ec42cee813bd93bb1a24c75f34dfbdd4a6d5e9601b00ad3838",
+                        "target":  "judas_rigid_motion_tests",
+                        "bytes":  116935,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_rigid_motion_tests.dir\\Release\\judas_ri.83E04F56.tlog\\CL.command.1.tlog",
+                        "sha256":  "be76b3e1696a2a0c472ca3d0621d34840a8f3b9f41f7de971616f3716641ba13",
+                        "target":  "judas_rigid_motion_tests",
+                        "bytes":  3208,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_rigid_motion_tests.dir\\Release\\judas_ri.83E04F56.tlog\\link.command.1.tlog",
+                        "sha256":  "e1adb4364dfe13897d485e7e5c63c22442e7580d4e1a3d726bb8d07d358c20cc",
+                        "target":  "judas_rigid_motion_tests",
+                        "bytes":  2772,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_balance_controller_tests.vcxproj",
+                        "sha256":  "45f0e4438a56a9066c10cda7df7367bf753b9b6d79792331928f9da93857322f",
+                        "target":  "judas_physical_balance_controller_tests",
+                        "bytes":  117320,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_balance_controller_tests.dir\\Release\\judas_ph.3630190E.tlog\\CL.command.1.tlog",
+                        "sha256":  "4794b3698bc57a7308c500a6506171ca44d990716f1153fc2d4c5167fdea5cdb",
+                        "target":  "judas_physical_balance_controller_tests",
+                        "bytes":  3324,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_balance_controller_tests.dir\\Release\\judas_ph.3630190E.tlog\\link.command.1.tlog",
+                        "sha256":  "0ed19cccdcd769f10c7c0ea2cd67349f2bc8ce1931d4e2870a5b606e4f1c1586",
+                        "target":  "judas_physical_balance_controller_tests",
+                        "bytes":  2924,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_balance_foundation_tests.vcxproj",
+                        "sha256":  "5448f09dd1ef2863586779f0956e70b9a15a9c7eedc8c6a1adec856f76771d92",
+                        "target":  "judas_physical_balance_foundation_tests",
+                        "bytes":  117320,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_balance_foundation_tests.dir\\Release\\judas_ph.DD66AAC5.tlog\\CL.command.1.tlog",
+                        "sha256":  "654890d153a1adca8f5872b40f552ac11c5bd9ca24c6815c88187fd3f1c64dbd",
+                        "target":  "judas_physical_balance_foundation_tests",
+                        "bytes":  3324,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_balance_foundation_tests.dir\\Release\\judas_ph.DD66AAC5.tlog\\link.command.1.tlog",
+                        "sha256":  "00349f4e48d437b764fdd20518ecbe132a4d115b455ddf42f926b5a3182e1abb",
+                        "target":  "judas_physical_balance_foundation_tests",
+                        "bytes":  2924,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_animation_tests.vcxproj",
+                        "sha256":  "5995d07d6c4ff2482a758e6848cc808571e8e69b66cd91ef1832ab73379d872d",
+                        "target":  "judas_physical_animation_tests",
+                        "bytes":  117123,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_animation_tests.dir\\Release\\judas_ph.2670023C.tlog\\CL.command.1.tlog",
+                        "sha256":  "f3acfc654c7ee3b4a573e310e43405c7714ee900feba2c10f007abaeef18fd7e",
+                        "target":  "judas_physical_animation_tests",
+                        "bytes":  3256,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_physical_animation_tests.dir\\Release\\judas_ph.2670023C.tlog\\link.command.1.tlog",
+                        "sha256":  "75c2a38315ee94c7cf0693a1178bd6d0ce0b8bbc668bedc0fd27aa2786620557",
+                        "target":  "judas_physical_animation_tests",
+                        "bytes":  2802,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_balance_lab_tests.vcxproj",
+                        "sha256":  "909bbcfd6af405eec49faaf9638924dc5737215b95f0b9b2f4ee5294aff18b7e",
+                        "target":  "judas_balance_lab_tests",
+                        "bytes":  116969,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_balance_lab_tests.dir\\Release\\judas_ba.7692FFC9.tlog\\CL.command.1.tlog",
+                        "sha256":  "f6e9adf7bba6546e94b5418b2dccdc2cfcdd838d1e85a41a223755750695f36c",
+                        "target":  "judas_balance_lab_tests",
+                        "bytes":  3200,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_balance_lab_tests.dir\\Release\\judas_ba.7692FFC9.tlog\\link.command.1.tlog",
+                        "sha256":  "3707cd97d312485afe9e91235ebac163e05bd3f46c0a7984fb68779c4902e511",
+                        "target":  "judas_balance_lab_tests",
+                        "bytes":  2704,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas.vcxproj",
+                        "sha256":  "4c4b336d1f10afac7c321f81fdfb6398921c9ba22a2d8a654b4eb85276494beb",
+                        "target":  "judas",
+                        "bytes":  118029,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas.dir\\Release\\judas.tlog\\CL.command.1.tlog",
+                        "sha256":  "166fd01647434b06c9ae82875a74dab6fef0d718bdbb0f51900ae60ede82ebbd",
+                        "target":  "judas",
+                        "bytes":  15964,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas.dir\\Release\\judas.tlog\\link.command.1.tlog",
+                        "sha256":  "138bff21f4f75cbabeca68c7992134feffb666852a922f62d8c0693ed93e08d4",
+                        "target":  "judas",
+                        "bytes":  3506,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_export.vcxproj",
+                        "sha256":  "b88b743b087d83858a125aaef149b959b1f8dd0cbb9eb3c9d06dbb35dbf3d24e",
+                        "target":  "judas_export",
+                        "bytes":  117552,
+                        "kind":  "project"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_export.dir\\Release\\judas_export.tlog\\CL.command.1.tlog",
+                        "sha256":  "c66b9e4f6a3287fc7719927ccfd06be194d1c5f35528076b4d861c5eb2a49c29",
+                        "target":  "judas_export",
+                        "bytes":  3128,
+                        "kind":  "command-recipe"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_export.dir\\Release\\judas_export.tlog\\link.command.1.tlog",
+                        "sha256":  "6776b53de295846b3cc9901a370d70d799292dfb0f9a1259167cc827613c8b3f",
+                        "target":  "judas_export",
+                        "bytes":  2808,
+                        "kind":  "command-recipe"
+                    }
+                ],
+    "engineArchive":  {
+                          "path":  "C:\\JudasValidation\\Build\\Release\\judas_engine.lib",
+                          "sha256":  "8f6a6e44b439fdfa8c82a9151015022abb5739c802ac854f86372a57d2399092",
+                          "bytes":  66779688
+                      },
+    "freeBytes":  328560640
+}

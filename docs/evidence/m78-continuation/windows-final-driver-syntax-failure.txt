@@ -1,0 +1,3 @@
+Host driver preparation error, no guest operation launched:
+SyntaxError: unterminated string literal at windows_execute_final_remaining.py:10
+Cause: generator emitted an actual newline inside a single-quoted source-extraction marker. Narrow tool-only correction uses escaped newline; production/source/test inputs unaffected.

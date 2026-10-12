@@ -1,0 +1,21 @@
+CASE combined PASS stored_J=-2892.1234130859375 chemical_J=4500.0001555308672 gas_J=1199.9999761184024 heater_J=121.66511597972978 environment_J=-6313.8165371769182 residual_J=0.027828698785924644 allowed_round_J=25.466856361869002 max_step_residual_J=0.015292252542128182 max_independent_power_relative=3.3889273772446396e-07
+CASE registration_reversed PASS stored_J=-2892.1234130859375 chemical_J=4500.0001555308672 gas_J=1199.9999761184024 heater_J=121.66511597972978 environment_J=-6313.8165371769182 residual_J=0.027828698785924644 allowed_round_J=25.466856361869002 max_step_residual_J=0.015292252542128182 max_independent_power_relative=3.3889273772446396e-07
+CASE rotated_translated PASS stored_J=-2892.1234130859375 chemical_J=4500.0001555308745 gas_J=1199.9999745925227 heater_J=121.66510072093911 environment_J=-6313.8165961775721 residual_J=0.02790143234324205 allowed_round_J=25.466856362081835 max_step_residual_J=0.015290746365860031 max_independent_power_relative=4.2886049955274146e-07
+CASE common_boost PASS stored_J=-2892.1234130859375 chemical_J=4500.0001555308672 gas_J=1199.9999761184024 heater_J=121.66511597972978 environment_J=-6313.8165371769182 residual_J=0.027828698785924644 allowed_round_J=25.466856361869002 max_step_residual_J=0.015292252542128182 max_independent_power_relative=2.8609581481268588e-07
+CASE below_ignition PASS final_T=300 fuel=0.10000000149011612
+CASE zero_oxidizer PASS final_T=332.998566 fuel=0.10000000149011612
+CASE vacuum PASS final_T=410 fuel=0.10000000149011612
+CASE cooling_extinction PASS final_T=333.001465 fuel=0.099983493843817786
+CASE heater_normalization PASS stored_J=1.666259765625 input_J=1.666666753590107
+STIFF FIRST stiff_vacuum_cooling oldA_K=1500 oldB_K=0 nextA_K=750 nextB_K=0 stored_J=-750 actual_external_J=-749.99997401137807 residual_J=-2.5988621928263456e-05
+CASE stiff_vacuum_cooling PASS finite_bounded=1 worst_energy_residual_J=2.5988621928263456e-05 incident_withheld_J=4034.3786655560289
+STIFF FIRST stiff_reservoir_heating oldA_K=100 oldB_K=0 nextA_K=199.99998474121094 nextB_K=0 stored_J=0.99999982506037099 actual_external_J=0.99999979784089987 residual_J=2.7219471121497918e-08
+CASE stiff_reservoir_heating PASS finite_bounded=1 worst_energy_residual_J=1.5258792889955605e-07 incident_withheld_J=664.66652607461185
+STIFF FIRST stiff_pair oldA_K=1500 oldB_K=100 nextA_K=800 nextB_K=107 stored_J=0 actual_external_J=0 residual_J=0
+CASE stiff_pair PASS finite_bounded=1 worst_energy_residual_J=0.0003814697265625 incident_withheld_J=4124.7578614273725
+STIFF FIRST stiff_pair_reversed oldA_K=1500 oldB_K=100 nextA_K=800 nextB_K=107 stored_J=0 actual_external_J=0 residual_J=0
+CASE stiff_pair_reversed PASS finite_bounded=1 worst_energy_residual_J=0.0003814697265625 incident_withheld_J=4124.7578614273725
+CASE three_body_stiff PASS worst_energy_residual_J=0.0028887933787018483
+CASE three_body_stiff_reversed PASS worst_energy_residual_J=0.0028887933787018483
+CASE zero_input_positive_temperature PASS initial_K=0.5 final_K=0.5 unexplained_J=0
+FTFT8 thermal accounting: 16 cases, 1826 steps, 20856 checks, 0 failures

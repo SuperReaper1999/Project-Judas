@@ -1,0 +1,13 @@
+{
+  "sourceBytes": 22619770,
+  "scope": "Lossless archive only, no source removal until exact independent host decompression verification",
+  "source": "C:\\JudasValidation\\M78Results\\common.json",
+  "archive": "C:\\JudasValidation\\m78-closure-common.json.gz",
+  "sourceSHA256": "9b9ce63d4f72d46c775269ada553f5a1517febe962f6c51a665a41d17c910ce1",
+  "archiveSHA256": "090363551ba76b3ca796c57bdbaca3ba7aabfa40c8a9d5dd93fcbae3aa17d57e",
+  "archiveBytes": 1413343,
+  "hostVerified": true,
+  "hostRawPath": ".cache/m78-closure/native-original-raw/common.json",
+  "hostGzipPath": ".cache/m78-closure/native-original-raw/m78-closure-common.json.gz",
+  "verification": "Exact decompressed original22619770bytes andSHA verified; source retirement authorized only by this identity"
+}

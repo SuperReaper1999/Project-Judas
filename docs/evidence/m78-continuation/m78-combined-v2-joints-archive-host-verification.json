@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "joints",
+  "archiveSHA256": "af7b49fe70e225853aeb4c88a5835c6664e2519445496a6eafd40bb69a0fe0c3",
+  "archiveBytes": 230105,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_joints.exe",
+      "sha256": "87708a10fc270b89c62bcbb61a8fd335786efe90c7c6c5b54faf5c3baa291d8c",
+      "name": "m78_combined-v2_joints.exe",
+      "bytes": 455168
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\joints-0.obj",
+      "sha256": "e7b1e48541cb161eb8e1b3431c20c084f84702815fa1a43c96373d9ebe5c28c8",
+      "name": "joints-0.obj",
+      "bytes": 32859
+    }
+  ]
+}

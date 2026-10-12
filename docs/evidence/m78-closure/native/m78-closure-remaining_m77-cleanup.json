@@ -1,0 +1,13 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  3047424,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-remaining_m77.exe",
+                        "sha256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+                        "name":  "m78-closure-remaining_m77.exe",
+                        "bytes":  9508352
+                    }
+                ],
+    "freeAfter":  12558336
+}

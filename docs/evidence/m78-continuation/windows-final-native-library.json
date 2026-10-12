@@ -1,0 +1,45 @@
+{
+  "hostVerified": true,
+  "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/native-final-binaries/judas_engine.lib",
+  "bytes": 66840496,
+  "sha256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+  "guestSource": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+  "parts": [
+    {
+      "offset": 0,
+      "path": "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-final-library-part-0.bin",
+      "sha256": "e3fca43a43f2ca74058a6dd5b7aa4c2d5a05f75754614e2095824a8c0570fc4c",
+      "name": "m78-combined-v2-final-library-part-0.bin",
+      "bytes": 15728640
+    },
+    {
+      "offset": 15728640,
+      "path": "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-final-library-part-1.bin",
+      "sha256": "e6746d404835ff9e36993072e34664538acd8b7ebba48f664c30a0290f2d85f0",
+      "name": "m78-combined-v2-final-library-part-1.bin",
+      "bytes": 15728640
+    },
+    {
+      "offset": 31457280,
+      "path": "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-final-library-part-2.bin",
+      "sha256": "7f0359c7311a2f35cd1a24bffc201492e5d690d01280701323c3a8f193eb9829",
+      "name": "m78-combined-v2-final-library-part-2.bin",
+      "bytes": 15728640
+    },
+    {
+      "offset": 47185920,
+      "path": "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-final-library-part-3.bin",
+      "sha256": "1e8d4080af52f5a25c9ff0e2600e3e0bfec40916a0e8a8de46ccbbd524a05c88",
+      "name": "m78-combined-v2-final-library-part-3.bin",
+      "bytes": 15728640
+    },
+    {
+      "offset": 62914560,
+      "path": "C:\\JudasValidation\\M78ContinuationResults\\m78-combined-v2-final-library-part-4.bin",
+      "sha256": "acdac7789f957008f71d44b070d0857843eae147a2626442bb0f9f24e350f299",
+      "name": "m78-combined-v2-final-library-part-4.bin",
+      "bytes": 3925936
+    }
+  ],
+  "scope": "Independent full host byte-count/SHA verification; no source/library replacement or expected-value change."
+}

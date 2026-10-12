@@ -1,0 +1,573 @@
+{
+  "utc": "2026-10-11T18:49:38.992321+00:00",
+  "purpose": "Independent read-only endpoint versus dense-output algebra review; not final-source fingerprints",
+  "equations": [
+    "m_mid = m0 + (h/2) * (m_mid cross I^-1 m_mid)",
+    "omega_mid = I^-1 m_mid",
+    "Q(t) = rotation(axis=omega_mid/|omega_mid|, angle=2 atan(t |omega_mid|/2))",
+    "m(t) = Q(t)^T m0; E(t) = (1/2) m(t)^T I^-1 m(t)"
+  ],
+  "assumptions": [
+    "Positive diagonal body inertia; initial orientation identity; no external torque/impulse.",
+    "Double precision idealized algebra. Production quaternion/velocity storage is binary32.",
+    "Same fixed generator at every interior fraction, matching the anchored dense-output policy.",
+    "This is not an actual contact simulation, nor a replacement for root CCD regression results."
+  ],
+  "sourceSHA256": {
+    "src/RigidBody.cpp": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b",
+    "src/RigidBody.h": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad"
+  },
+  "calculatorSHA256": "b3a929cad96badafab4525df3ad216d47a2e03d1cac6674ee4a30b8cdac3ce11",
+  "cases": [
+    {
+      "inertiaDiagonal": [
+        1.06,
+        0.85,
+        0.29
+      ],
+      "initialBodyAngularVelocity": [
+        1,
+        2,
+        3
+      ],
+      "refinement": [
+        {
+          "h": 0.016666666666666666,
+          "newtonIterations": 2,
+          "residualNorm": 5.2025111535690585e-14,
+          "initialEnergy": 3.5349999999999997,
+          "fixedGenerator": [
+            1.026213412328081,
+            1.9766644559748203,
+            3.012240825029942
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.00013049182595069593
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0001745614048530586
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.00013134686627953914
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 8.793845739605201e-16
+            }
+          ]
+        },
+        {
+          "h": 0.008333333333333333,
+          "newtonIterations": 2,
+          "residualNorm": 3.1353687190686686e-16,
+          "initialEnergy": 3.5349999999999997,
+          "fixedGenerator": [
+            1.0131582396281498,
+            1.9885042266896358,
+            3.006078744005449
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -3.2463291198888615e-05
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -4.335778675609509e-05
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -3.257319591222443e-05
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        },
+        {
+          "h": 0.004166666666666667,
+          "newtonIterations": 2,
+          "residualNorm": 1.140514724479927e-16,
+          "initialEnergy": 3.5349999999999997,
+          "fixedGenerator": [
+            1.0065915842765711,
+            1.9942951621323188,
+            3.0030284666136553
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -8.095258795034793e-06
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -1.0802967101356326e-05
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -8.10918043850507e-06
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 1.2562636770864572e-16
+            }
+          ]
+        },
+        {
+          "h": 0.0020833333333333333,
+          "newtonIterations": 2,
+          "residualNorm": 9.853806800286419e-17,
+          "initialEnergy": 3.5349999999999997,
+          "fixedGenerator": [
+            1.0032988565644207,
+            1.997158348024513,
+            3.001511446854381
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -2.021207160653726e-06
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -2.6961110115798327e-06
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -2.0229586634469124e-06
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        }
+      ],
+      "successiveHalfStepErrorRatios": [
+        0.24838128905179577,
+        0.24915863815022066,
+        0.2495713433433795
+      ]
+    },
+    {
+      "inertiaDiagonal": [
+        1,
+        2,
+        3
+      ],
+      "initialBodyAngularVelocity": [
+        2,
+        5,
+        10
+      ],
+      "refinement": [
+        {
+          "h": 0.016666666666666666,
+          "newtonIterations": 3,
+          "residualNorm": 9.945640348601413e-16,
+          "initialEnergy": 177.0,
+          "fixedGenerator": [
+            1.5733903101988922,
+            5.1308218396862255,
+            9.97757559620578
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.00046708200882128584
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0006140705588762624
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.000453402588575667
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        },
+        {
+          "h": 0.008333333333333333,
+          "newtonIterations": 2,
+          "residualNorm": 1.1757742806197118e-12,
+          "initialEnergy": 177.0,
+          "fixedGenerator": [
+            1.7888315360738476,
+            5.0744406786127065,
+            9.987392611786383
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.00011978012569466431
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.00015855225760588905
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.00011800858141532702
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 3.0509179614557973e-15
+            }
+          ]
+        },
+        {
+          "h": 0.004166666666666667,
+          "newtonIterations": 2,
+          "residualNorm": 1.1304960112321237e-14,
+          "initialEnergy": 177.0,
+          "fixedGenerator": [
+            1.8950809901978076,
+            5.039454670000335,
+            9.99336793420411
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -3.0305112175202045e-05
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -4.025904369386628e-05
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -3.0080949897129064e-05
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": -3.2114925910061025e-16
+            }
+          ]
+        },
+        {
+          "h": 0.0020833333333333333,
+          "newtonIterations": 2,
+          "residualNorm": 1.5461904760463653e-15,
+          "initialEnergy": 177.0,
+          "fixedGenerator": [
+            1.9477231518937093,
+            5.02028189442464,
+            9.996604819696248
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -7.620055089768676e-06
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -1.0141410274528647e-05
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -7.591903180078887e-06
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": -3.2114925910061025e-16
+            }
+          ]
+        }
+      ],
+      "successiveHalfStepErrorRatios": [
+        0.2581987612238514,
+        0.25391655913180106,
+        0.25190390391895356
+      ]
+    },
+    {
+      "inertiaDiagonal": [
+        1,
+        2,
+        3
+      ],
+      "initialBodyAngularVelocity": [
+        12,
+        15,
+        20
+      ],
+      "refinement": [
+        {
+          "h": 0.016666666666666666,
+          "newtonIterations": 3,
+          "residualNorm": 2.7012892057857038e-15,
+          "initialEnergy": 897.0,
+          "fixedGenerator": [
+            9.305797096809119,
+            16.517854820007273,
+            19.573022762695725
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.005386938290581681
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.006825309737620713
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.004827974198186693
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        },
+        {
+          "h": 0.008333333333333333,
+          "newtonIterations": 3,
+          "residualNorm": 2.2232198742534223e-15,
+          "initialEnergy": 897.0,
+          "fixedGenerator": [
+            10.692228584520782,
+            15.88051256848924,
+            19.764169346636606
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.0014617132228583515
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0019036204306113658
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.001391902562310786
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        },
+        {
+          "h": 0.004166666666666667,
+          "newtonIterations": 3,
+          "residualNorm": 2.5823128856601336e-15,
+          "initialEnergy": 897.0,
+          "fixedGenerator": [
+            11.359332536257744,
+            15.47041747751077,
+            19.877962766248764
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.00037913665019532084
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0004999257815668171
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.00037062677645301206
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": -1.2674117917682946e-16
+            }
+          ]
+        },
+        {
+          "h": 0.0020833333333333333,
+          "newtonIterations": 2,
+          "residualNorm": 1.052527441637301e-12,
+          "initialEnergy": 897.0,
+          "fixedGenerator": [
+            11.683426556844903,
+            15.242652166599676,
+            19.93816444197233
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -9.641814505696775e-05
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0001278676783248503
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -9.537519036362885e-05
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 1.0139294334146357e-15
+            }
+          ]
+        }
+      ],
+      "successiveHalfStepErrorRatios": [
+        0.27890608687232465,
+        0.2626184156923874,
+        0.25577332284024296
+      ]
+    },
+    {
+      "inertiaDiagonal": [
+        1,
+        2,
+        3
+      ],
+      "initialBodyAngularVelocity": [
+        20,
+        50,
+        100
+      ],
+      "refinement": [
+        {
+          "h": 0.016666666666666666,
+          "newtonIterations": 4,
+          "residualNorm": 1.9459014222361976e-14,
+          "initialEnergy": 17700.0,
+          "fixedGenerator": [
+            -12.98215802772229,
+            39.029269845177254,
+            101.40745596899086
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.0249855625835051
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.03392385542063771
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.022992274809691127
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": -6.166065774731717e-16
+            }
+          ]
+        },
+        {
+          "h": 0.008333333333333333,
+          "newtonIterations": 3,
+          "residualNorm": 7.393826954250303e-15,
+          "initialEnergy": 17700.0,
+          "fixedGenerator": [
+            -0.718761007296606,
+            49.700367658568524,
+            100.04961484211289
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.009138354561403652
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.011827041082551401
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.008298030447189643
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 2.0553552582439056e-16
+            }
+          ]
+        },
+        {
+          "h": 0.004166666666666667,
+          "newtonIterations": 3,
+          "residualNorm": 7.653294859905773e-15,
+          "initialEnergy": 17700.0,
+          "fixedGenerator": [
+            9.22042378715036,
+            51.91453623840394,
+            99.66758748275592
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.0026801807137405895
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0034703063496968846
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.002502879759788498
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        },
+        {
+          "h": 0.0020833333333333333,
+          "newtonIterations": 3,
+          "residualNorm": 3.0847422370805075e-15,
+          "initialEnergy": 17700.0,
+          "fixedGenerator": [
+            14.647213505825194,
+            51.52175346072118,
+            99.73796870724524
+          ],
+          "samples": [
+            {
+              "fraction": 0.25,
+              "relativeEnergyError": -0.0007201034062885512
+            },
+            {
+              "fraction": 0.5,
+              "relativeEnergyError": -0.0009437301915947454
+            },
+            {
+              "fraction": 0.75,
+              "relativeEnergyError": -0.0006939933015019051
+            },
+            {
+              "fraction": 1.0,
+              "relativeEnergyError": 0.0
+            }
+          ]
+        }
+      ],
+      "successiveHalfStepErrorRatios": [
+        0.34863493361536896,
+        0.2934213490487216,
+        0.2719443462612965
+      ]
+    }
+  ],
+  "conclusions": [
+    "At t=h the Cayley update satisfies the implicit midpoint endpoint invariant to solve/rounding error.",
+    "At t<h the full-duration fixed generator need not conserve energy exactly.",
+    "Half-step dense-output energy errors decrease approximately quadratically as h halves.",
+    "A TOI split may retain interior energy error; endpoint invariants do not imply exact constrained/CCD energy conservation.",
+    "World angular momentum remains preserved by the transport definition at each sample.",
+    "Recomputing the midpoint at every query would change the anchored geometric path and its CCD bounds; no such production change is proposed here."
+  ]
+}

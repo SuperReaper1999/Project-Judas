@@ -1,0 +1,20 @@
+﻿{
+    "seconds":  2.9678,
+    "freeBytes":  85245952,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+    "case":  "balance_lab",
+    "expectedSaveSHA256":  null,
+    "run":  "balance-radial",
+    "executableSHA256":  "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "scope":  "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+    "arguments":  [
+                      "C:\\JudasValidation\\M78NativeFunctionalResults\\balance-radial",
+                      "radial"
+                  ],
+    "exitCode":  0,
+    "environment":  {
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source"
+                    }
+}

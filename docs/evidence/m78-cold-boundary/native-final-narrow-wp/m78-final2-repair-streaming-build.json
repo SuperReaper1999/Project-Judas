@@ -1,0 +1,40 @@
+﻿{
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final2-repair-streaming.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\streaming-0.obj\"",
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "case":  "streaming",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-streaming.exe",
+    "executableSHA256":  "3ad7a3c98e4722351fb7d9900ed7ceb0416ddc7d1e16afc2d2875c9ab416ef5a",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "runs":  [
+                 {
+                     "seconds":  7.7685914,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "streaming",
+                     "expectedSaveSHA256":  null,
+                     "run":  "streaming",
+                     "executableSHA256":  "3ad7a3c98e4722351fb7d9900ed7ceb0416ddc7d1e16afc2d2875c9ab416ef5a",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+
+                               ],
+                     "arguments":  [
+
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  75014144,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 }
+             ],
+    "freeBytes":  75010048,
+    "objects":  [
+                    {
+                        "objectSHA256":  "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a",
+                        "source":  "tests/WorldStreamingTests.cpp",
+                        "bytes":  1100935,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\streaming-0.obj",
+                        "sourceSHA256":  "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b",
+                        "reuseOriginal":  true
+                    }
+                ],
+    "executableBytes":  8045056
+}

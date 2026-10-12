@@ -1,0 +1,476 @@
+# M62 — Judas learns to get dressed and bend.
+
+Starting checkpoint : 9e281d6ed57a7f88bc0a8fa48cd9c3cec6984961
+
+
+M61 must be complete, human-accepted and checkpointed before this brief executes.
+If the hash is blank, STOP and ask for it. Verify the supplied hash against
+HEAD/main/origin/main and inspect the working tree before editing. Preserve
+operator-owned edits; stop on unexplained implementation changes rather than
+resetting or absorbing them.
+
+RENUMBERING — THIS IS ONE MILESTONE
+The formerly planned M62 cloth milestone and M63 soft/deformable-solids milestone
+are now combined into M62. Both are required for this candidate.
+The formerly planned M64 fracture/structural-destruction milestone is now M63.
+Do NOT implement fracture, tearing or structural destruction in this task.
+
+Implement the combined M62 to completion, then present ONE human-review candidate.
+No intermediate review gate between cloth and soft bodies. No commit, push, tag
+or automatic move to M63 before operator approval.
+
+GOAL
+Provide reusable physical deformables for curtains, flags, capes/simple clothing,
+rubber-like objects and solids that can retain a modest permanent deformation.
+These are engine primitives, not a clothing, skateboard or destruction framework.
+
+Judas owns simulation, collision, material response and safe attachment mechanics.
+Projects author geometry/materials. JavaScript chooses gameplay meaning.
+Simulation geometry, collision geometry and rendered geometry remain distinct.
+
+## 1. Establish the real baseline and respect parallel work
+
+Read the current architecture, the actual accepted M61 save contract, M45 joints,
+M46–48 pose/ragdoll paths, M56 profiling, M57 materials, M59 streaming and current
+JudasJS reference. This advance brief does not assume which M61 interfaces shipped.
+
+Claude is separately fixing the skate audit's D-01 slider instability, D-02 limit
+rebound and D-03 localization-startup diagnostic, with regressions and a PR.
+Those fixes are NOT assigned to you. Do not duplicate, cherry-pick, merge, rebase
+onto or wait for that PR without operator instruction. Use whichever accepted
+fixes are already present in the supplied starting commit. If an unfixed issue
+blocks a necessary path, record the exact dependency and ask; do not hide it with
+another correction or start a competing JointSolver patch.
+
+The skate audit describes a frozen M60 checkout, not necessarily your baseline.
+Its missing mesh colliders, general bone-query/IK tooling, ragdoll sleeping and
+editor recommendations are not a second M62 feature list. Use it as evidence of
+integration traps, not authorization to fix everything it mentions.
+
+Do not edit Claude's skate workspace or pending game PR. Use a new ordinary
+Judas project for this milestone. Preserve protected FTFT/P1 research, historical
+milestone evidence and unrelated accepted projects. Do not recreate a roadmap.
+
+## 2. Shared infrastructure, distinct material models
+
+Add a RuntimeWorld-owned deformable service integrated with the authoritative
+fixed-step pipeline. Cloth and volumetric solids should reuse particle/state
+storage, contact handling, attachment machinery, lifecycle and rendering bindings
+where sensible. They need different internal constraints/material laws.
+
+A practical representation separates:
+- Shared immutable asset: simulation topology/rest geometry, masses or density
+  inputs, constraint connectivity, boundary mesh, named attachment groups and
+  render-to-simulation mapping.
+- Per-instance simulation: positions, velocities, material/constraint state,
+  attachments, contacts, enabled/sleep state and any plastic rest-state changes.
+- Presentation: previous/current samples, deformed render buffers and bounds.
+
+Do not represent every node as a full Judas Entity/RigidBody. One deformable owns
+many simulation nodes. Use existing safe entity/asset identities and bounded
+node/element references. Sharing an asset must never share mutable deformation.
+
+Use a compact CPU-authoritative implementation first, with no new GPU-compute or
+OpenGL-version requirement. Reuse JobSystem and resource loading if needed; workers
+must not race PhysicsWorld, QuickJS or Renderer. No compulsory deformable update or
+large allocation in scenes without deformables.
+
+## 3. Numerical direction and a small first proof
+
+Design recommendation for this brief: use XPBD/compliant constraints, with bounded
+substeps and clear material parameters, as the shared starting point. For solid
+elasticity, a tetrahedral strain-energy model with distinct distortional and
+volumetric response is appropriate. References R1–R3 below support that direction;
+they are not instructions to import another complete physics engine.
+
+A better-fitting mature method is acceptable if you explain the concrete benefit
+and retain these contracts. Pin and record any added dependency and its license.
+Do not write a custom general tetrahedralizer or undertake a solver survey.
+
+First establish a small cloth patch and a small elastic solid, then contact with
+one static and one dynamic body. Prove those mechanics before building a park full
+of examples. After repeated failure of the same approach, report the mechanism
+and proposed change instead of endlessly loosening tolerances.
+
+With XPBD, use the actual substep dt in compliance and damping. Define multiplier
+initialization/accumulation/warm-start lifetime explicitly. Reconstruct velocity
+consistently with corrected positions; do not apply the same reaction twice as
+both a projection and a later impulse. Finite iteration error still exists: do
+not advertise perfect timestep/iteration independence.
+
+Position projection inside a documented constraint solve is legitimate. A demo
+script teleporting vertices back into shape after the solve is not.
+
+Keep the existing fixed-step cadence. Configure bounded deformable substeps and
+iterations instead of slowing the whole engine or hiding instability with huge
+unconditional velocity damping. Validate masses, elements and material ranges;
+report invalid/nonfinite solves honestly rather than silently resetting rest pose.
+
+## 4. Cloth and thin-surface capability
+
+Support indexed triangle simulation meshes, not only a hardcoded rectangular
+flag. Required mechanics:
+- Mass distribution from authored surface density or explicit weights.
+- In-plane stretch and shear resistance, separately controllable from bending.
+- Bending resistance, explicit damping, gravity and external forces/impulses.
+- Configurable contact thickness and friction, distinct from render thickness.
+- Fixed pins, moving attachments and released/free nodes.
+- Usable self-contact for folding fabric; external collision is not a substitute.
+
+Provide a rectangular-sheet authoring helper and a reusable import path for
+triangulated cloth meshes. Keep render UV seams/hard-normal splits from becoming
+unintended physical tears. Welding must be intentional and topology-aware; do not
+join separate layers simply because vertices happen to overlap.
+
+For garment use, support a simple weight/mask or attachment-group workflow: e.g.
+a cape's shoulders follow animated targets while the rest is simulated. A bounded
+skin-reference tether is acceptable when explicitly authored, not a hidden force
+pinning every vertex to its animation. No assumption of humanoid bone names.
+
+Provide simple optional air-velocity/drag forcing so a flag responds to relative
+airflow. An authored uniform airflow is sufficient; no weather or atmosphere
+simulation rewrite, and no sine-wave vertex animation masquerading as wind physics.
+
+## 5. Volumetric elastic and plastic solids
+
+Support a reusable tetrahedral or equally justified volumetric simulation asset.
+The minimum production route may import pre-tetrahedralized meshes and generate
+simple block/beam/lattice fixtures. It must not require engine code changes for
+every new object. Validate connectivity, orientation, degenerate elements and
+boundary extraction. Preserve deliberate disconnected components.
+
+The solid must resist both shape distortion/shear and volume change. A surface
+balloon with only one total-volume constraint is NOT sufficient for this half of
+M62. Demonstrate compression, bending and twisting, not just a jiggling sphere.
+
+Expose mass/density, elastic response and damping with documented units and
+meaning. Compliance parameters are acceptable; do not label an arbitrary slider
+as a measured Young's modulus. Near-incompressibility is a controlled approximation,
+not permission to normalize all vertices globally each frame. Monitor element
+volume/inversion and give the supported deformation envelope honestly.
+
+Include a modest optional irreversible/plastic response:
+- Below an authored yield threshold, the object recovers elastically.
+- Above it, a bounded update changes internal rest/plastic state.
+- Remove the load: part of the deformation remains without ongoing forces.
+- A second identical instance remains unaffected.
+
+Use a material/strain-based rule, not an object-name dent, morph animation or
+scripted rest-pose swap. Document whether plastic flow preserves rest volume or
+models compressibility; update dependent rest data coherently. This is a modest
+game-oriented material model, not calibrated steel/concrete, granular flow or
+arbitrarily large plastic folding. Use an established formulation as appropriate;
+R5 is an alternative-method reference, not a demand for another solver.
+
+Keep topology fixed in M62. No tearing, cracks, bond failure, remeshing, separated
+chunks or conversion into rubble. Those are the newly renumbered M63.
+
+## 6. Contacts and actual rigid/deformable interaction
+
+Use Judas's existing PhysicsWorld geometry, broadphase/filter vocabulary and safe
+body handles. Establish a compact support matrix before integration: deformable
+versus existing box/sphere/compound/terrain geometry, self-contact, other deformables,
+CharacterMotor queries, raycasts and M42 events. Do not claim unsupported pairs.
+
+Required: cloth and soft solids collide with ordinary static and dynamic primitive
+bodies; representative cloth/soft-body contact works; self-folding cloth resists
+passing through itself in the demonstrated speed/resolution envelope.
+
+Do not rely solely on separated particle centres to claim a collision-free triangle
+surface. Handle relevant vertex/face and edge/edge proximity or a justified bounded
+surface-aware alternative. Use adjacency exclusions and accelerated candidates,
+not all-pairs scans. Account for body point velocity in moving contact/friction.
+A discrete/substepped approximation is acceptable if its limits are explicit and
+ordinary curtain/cape/squeeze tests do not repeatedly tunnel. R4 explains why
+surface contact must be considered separately from internal material constraints.
+
+Two-way dynamic interaction is required in a modest proof: a body strikes/loads
+cloth or a soft block, and both respond with finite mass/inertia. Do not treat all
+bodies as immovable colliders and call it two-way coupling. Share reactions with
+the normal rigid step through one defined coupling boundary; do not advance the
+whole PhysicsWorld twice or apply independent contradictory responses afterward.
+
+An animated or static attachment may be prescribed/infinite-mass support. Label
+that distinctly from a dynamic rigid attachment. External work from prescribed
+motion is not a closed-system conservation failure. Demonstrate reaction on a
+free dynamic support and no unexplained energy growth in a simple unforced test.
+
+Use M39 filtering. Provide ray picking of the current deformed surface and a safe
+hit/location representation for applying a physical impulse or temporary attachment.
+Reuse normal M44 dispatch where possible; make any separate query coverage explicit.
+Never pretend an undeformed rest hull is the current exact collision surface.
+
+Do not smuggle a general static-mesh collider, complete shape-cast expansion or
+CharacterMotor redesign into M62. Deformable-local surface tests needed here are
+not automatically a new general world-collision capability.
+
+## 7. Attachments, animation timing and spatial authority
+
+Support stable named node groups or weighted surface locations attached to:
+- A fixed authored world anchor.
+- A rigid body's local frame.
+- A skeleton joint's local frame, resolved through existing pose infrastructure.
+
+Attachment location/motion comes from the actual transform/pose, not clip names,
+fade fractions or handwritten character dimensions. Resolve targets at the fixed
+simulation boundary, with coherent target velocity/substep sampling. Do not drive
+physics from interpolated render transforms. Rendering later interpolates the
+simulated result consistently with the rest of Judas.
+
+Inspect the current pose-evaluation order. Animation is one pose producer; passive
+ragdoll is another. Deformables consume the chosen authoritative target without
+owning the skeleton. No second animation evaluation with independent clocks.
+No IK, balance or active-ragdoll implementation is required.
+
+A minimal safe attachment/bone-reference facility is authorized if genuinely
+necessary for cloth. That is not blanket authorization for the skate audit's
+entire socket/IK wishlist. Generic public additions need normal documentation.
+
+Define the entity/root policy for freely moving deformables. Do not simulate nodes
+in world space and then apply root motion to them a second time. Gravity comes
+through Judas's selected field at the relevant positions, including radial and
+oblique cases; zero gravity is valid for this particle-based representation.
+Respect fixed-origin double absolute/local coordinates. No live origin rebasing.
+
+Disabling, releasing or destroying an attachment must have a documented physical
+and lifetime result. Releasing an anchor is allowed; automatic stress-based
+breakage remains M63. Explicit teleports/reset operations must coherently update
+velocities, previous poses, contacts and bounds rather than imparting accidental
+infinite anchor speed.
+
+## 8. Rendering and material composition
+
+Renderer owns GL resources and submission. Bind a render mesh to the simulation
+mesh using reusable triangle/tetrahedral interpolation or equivalent stored weights.
+A one-to-one path may be the simplest case, but prove at least one denser render
+mesh follows a coarser simulation mesh correctly.
+
+Keep deformed positions, normals/tangent handling and bounds coherent. Preserve
+UV/material seams, M57 material slots/overrides, shadows, M33 secondary cameras,
+M39 render masks and M37 culling. A cloth material may be two-sided through the
+ordinary material path; no new cloth-only renderer or fake wave shader.
+
+Use previous/current simulation state for smooth presentation. Do not run cloth
+once per camera, and do not freeze it merely because the main camera looks away.
+The shadow and visible mesh must describe the same presented deformation.
+
+## 9. Usable assets, editor and JudasJS
+
+Use existing AssetDatabase/ResourceManager registration, immutable sharing,
+background preparation, baked-data fingerprints and package-relative resolution.
+No compulsory runtime remeshing. Use a versioned deformable payload appropriate
+to existing conventions; do not assume a filename/API already exists.
+
+Editor minimum: create/import a simulation mesh, select its render binding and
+material parameters, select node/attachment groups, configure collision/quality,
+preview wireframe/pins and inspect invalid assets. A small viewport or list-based
+selection helper is enough. Do not make users hand-enter hundreds of vertex
+indices or write an external generator merely to create the shipped curtain.
+Simple sheet/tet-block helpers plus generic mesh import are sufficient; no garment
+sewing application or arbitrary watertight-model tetrahedralization project.
+
+Scene/prefab authoring must round-trip. Remap entity/bone references on instantiation;
+spawning two instances must produce independent physics/plastic/attachment state.
+Rebake diagnostics identify the changed source, not a mysterious startup failure.
+
+Expose a small public JS surface for obtaining a safe deformable handle, inspecting
+state/bounds, enable/reset controls, applied forces/impulses and attachment control.
+Use named groups/validated hit references, not raw native node pointers. Material
+changes and force submissions must occur at documented safe phases. JS supplies
+game intent; it must not loop over every node to implement the native solver.
+
+Update judas.d.ts, current subsystem docs, inventory/manifest, live enumeration,
+drift checker and a small executable cookbook example. Preserve existing aliases
+and null/stale-handle semantics or explicitly document necessary new ones.
+
+## 10. Streaming and persistence are part of delivery
+
+Extend the actual M61 participant mechanism rather than inventing another save
+format. Capture sufficient authoritative state to resume: node positions/velocities,
+plastic/internal rest state, changed material settings, attachment state/references,
+enabled/sleep state, and any solver history actually needed for stable continuation.
+Assets/topology use stable identities and content compatibility. GPU buffers,
+broadphase structures and derived normals are rebuilt, not serialized as pointers.
+
+Required cold-process proof: save a moving cloth and a permanently deformed solid;
+exit; reload in a new process. The cloth must not reset flat, the dent must remain,
+and references must resolve to fresh safe handles without a first-step explosion.
+Define cache reconstruction and compare bounded continuation, not an unsupported
+promise of indefinitely bit-identical trajectories.
+
+Use M59 region ownership and dependency rules. Independent state must suspend and
+resume through the supported M61/M59 path. An attachment to a live body/character
+in another region needs an explicit dependency/pin/adoption policy. Never unload
+its target and leave a dangling attachment, or report a pinned region as unloaded.
+Do not capture unbounded particle arrays repeatedly in every unload-budget slice.
+
+Missing support must fail diagnostically, not silently omit a required deformable
+from a successful save. Preserve authored reload versus restoring a saved runtime
+state as distinct operations. Stop/project change cleans all simulation records.
+
+## 11. Bounded work, sleeping and diagnostics
+
+Use M56 scopes for force/prediction, internal constraints, collision candidates,
+contact solve/coupling, attachments, plastic updates, render mapping and resource
+work. Report node/triangle/tet/constraint/contact counts, substeps and iterations.
+Preallocate ordinary hot-path storage and expose capacity/overflow diagnostics.
+
+Provide modest deformable quiescence/sleeping when it can be correct: stable objects
+stop expensive work, then wake on impulses, changed gravity/airflow, moving anchors,
+contacts, material changes or relevant restoration. Sleeping is not camera culling.
+A moving driven anchor prevents sleeping its dependent patch. Do not put a dynamic
+rigid support to sleep through a new competing rigid-world sleep system.
+
+The audit's general ragdoll/rigid-island sleeping recommendation remains separate.
+Likewise, adaptive remeshing and runtime mesh-LOD transitions are not required.
+A bounded authored simulation-resolution/quality setting is sufficient initially.
+Don't hide poor performance by changing quality between benchmark modes.
+
+## 12. One combined playable demonstration
+
+Create a current ordinary Deformable Lab project with useful controls and readable
+labels, not new native demo dispatch. Demonstrate:
+
+A. Curtain/flag: pinned group, airflow on/off, an ordinary moving rigid object
+   brushing/pushing it, visible folding/self-contact and an anchor release.
+B. Animated cape or simple garment: attached to a real skeleton, colliding with
+   authored moving body proxies while the character moves/turns. Not just a free
+   flag placed behind a character. A short passive-ragdoll transition is useful if
+   clean, but no active recovery/IK detour.
+C. Soft specimens: rubber-like block/ball plus a beam or cushion that compresses,
+   bends or twists and recovers. A second yielding specimen retains deformation
+   after unloading. Use physical loading, not selecting a baked morph.
+D. Mixed interaction: cloth draped onto a deformable cushion or another small
+   cloth/solid contact proof, plus a dynamic rigid support that receives reaction.
+E. Oblique/radial fixture: the same general systems under actual selected gravity,
+   not a rotated visual scene hiding world-Y simulation.
+F. Integration: independent prefab spawn, offscreen return, region suspend/revisit,
+   save/quit/relaunch/load, and moved standalone export.
+
+Use project JS for controls, wind selection, applying test loads and HUD. Label
+elastic versus yielding parameters and show physical/deformed wireframes where
+useful. Original simple assets are fine. Do not require Claude's game PR to merge
+before this demonstration can work or modify it behind his back.
+
+## 13. Focused correctness checks
+
+Keep a compact suite with independent simple expectations, then actual-world tests:
+
+- Topology/mass: invalid assets rejected; total mass matches geometry/density;
+  shared asset instances remain independent; render seams do not disconnect cloth.
+- Material: known compliant extension or small-strain reference; cloth stretch/
+  shear/bend respond separately; solid resists volume change AND shear; below-yield
+  recovery versus retained above-yield deformation. Rest rotation is not strain.
+- Numerics: compare two practical timestep/substep/iteration settings and report
+  residual/damping changes; no uncontrolled energy growth in an unforced fixture;
+  finite inversion/failure handling within the stated envelope.
+- Contacts: moving box/sphere, friction relative to support motion, cloth fold
+  self-contact, cloth/soft interaction, and dynamic rigid reaction. Include a
+  surface-crossing case that particle-centre separation alone would not prove.
+- Frames/attachments: rotated equivalence, radial/zero gravity, fixed-origin large
+  absolute offset, animated bone target, dynamic support, release/target destruction
+  and stale handle/slot reuse. No double-applied root or carrier motion.
+- Presentation: denser render mapping, coherent normals/shadows/culling, two cameras,
+  interpolation; presentation must not mutate authoritative simulation.
+- Lifecycle: sleep/wake, runtime prefab, safe disable/reset, region unload/revisit,
+  old-handle invalidation and a genuine cold-process save/load with retained dent.
+- Public path: real VM cookbook/control execution, synced types/inventory, actual
+  editor authoring/Play–Stop and moved exported project with required assets/notices.
+
+Do not count a source scan or setter round-trip as proof of physical behaviour.
+Do not manufacture failure evidence; preserve genuine defects and narrow follow-ups.
+
+## 14. Validation and performance gate
+
+Develop cloth and solid cores sequentially if useful, recording separate evidence,
+but run ONE clean Release/production candidate gate once the combined milestone is
+ready. Include existing async integration, M61 persistence, affected rigid/joint,
+animation/presentation, streaming and JudasJS checks. Existing tests are not to be
+weakened to accommodate a deformable bug. Late narrow fixes get affected reruns,
+not repeated unrelated fluid/research validation.
+
+Measure a representative few-thousand-node cloth, modest volumetric specimens and
+a small mixed group at identical authored quality. These are starting workloads,
+not mandatory benchmark counts. Compare active, resting/sleeping, and no-deformables
+baselines. Report fixed-step/frame median, p95 and maximum, allocation/residency,
+contacts/constraints and the slowest measured phase. Separate software GL from
+native desktop results and note concurrent machine load.
+
+Do not monopolize the machine with parallel all-target builds, broad test runs and
+GPU stress. Use focused targets during development and bounded build parallelism.
+Correctness and useful game-scale performance matter; a theorem-grade cloth solver,
+rigid-island optimization campaign and huge simulation benchmark do not.
+
+## 15. Human review and exact scope boundary
+
+Give one combined checklist with actual controls:
+1. Push/drape the curtain; fold it and release an attachment.
+2. Toggle airflow and watch a flag settle rather than freeze cosmetically.
+3. Move/turn the animated character; inspect cape/garment contacts and attachment.
+4. Compress/bend the elastic body; release and inspect recovery.
+5. Load the yielding body past its threshold; release and inspect the lasting dent.
+6. See cloth/soft contact and a dynamic rigid support react physically.
+7. Repeat key interactions in the oblique/radial setup.
+8. Spawn another instance, leave/revisit its region, and check independence.
+9. Save while deformed, quit the process, reload, then continue interacting.
+10. Inspect shadows/materials, responsiveness, Stop/reload and moved standalone.
+
+The operator owns visual/physical-feel acceptance. Do not assert it from headless
+numbers or a single attractive screenshot.
+
+OUT OF SCOPE: fracture/tearing/structural collapse (new M63); breakable bonds;
+remeshing; rubble conversion; detailed material damage/fatigue; liquid–cloth
+soaking/wetting or deformable liquid cavities; fluid solver changes; weather;
+full-body skin collision; tailor/sewing tools; IK/active physical animation;
+network replication; general static-mesh collision; the rest of Claude's audit;
+wholesale editor renovation, rigid-body solver replacement or broad sleep rewrite.
+
+Use a small explicit seam for future material/topology extensions, not a speculative
+fracture framework. Both M62 material families must actually work; do not quietly
+ship only cloth and relabel soft bodies as future work.
+
+## 16. Handoff
+
+Report briefly: actual baseline/parallel-PR status; shared architecture and solver;
+cloth mechanics; elastic/plastic model and units; contact support matrix and two-way
+coupling; attachment/root/pose timing; render mapping; editor/assets/JS contracts;
+M61 save and M59 residency integration; focused/broad checks; performance and
+numerical limitations; one human checklist; project/docs/evidence locations; exact
+changed files and final source/asset fingerprints; git status.
+
+Identify any existing APIs extended and why they are generic. State explicitly
+that protected historical work and Claude's independent PR/workspace were untouched.
+No commit, push, merge or tag. Stop for the single combined M62 review.
+
+Suggested commit after later operator approval:
+Add M62 cloth and volumetric deformables
+
+## Reference starting points — not an additional research assignment
+
+These references inform the proposed implementation direction, not the skate
+report's findings. Read the relevant method/limitations, not every cited paper.
+
+R1. Macklin, Müller, Chentanez (2016), XPBD: Position-Based Simulation of Compliant
+Constrained Dynamics. Compliance/constraint-force formulation and finite-iteration
+limitations. https://matthias-research.github.io/pages/publications/XPBD.pdf
+
+R2. Macklin et al. (2019), Small Steps in Physics Simulation. Compare bounded
+substepping with iterations; collision reuse has caveats and must fit this scene.
+https://matthias-research.github.io/pages/publications/smallsteps.pdf
+
+R3. Macklin and Müller (2021), A Constraint-based Formulation of Stable Neo-Hookean
+Materials. Distortional versus volume response for tetrahedral elastic solids;
+not a complete plasticity, collision or game-engine integration implementation.
+https://doi.org/10.1145/3487983.3488289
+
+R4. Bridson, Fedkiw, Anderson (2002), Robust Treatment of Collisions, Contact and
+Friction for Cloth Animation. Surface contact/thickness and render-subdivision
+pitfalls; reference rather than a mandate for the entire offline algorithm.
+https://graphics.stanford.edu/papers/cloth-sig02/
+
+R5. Müller et al. (2005), Meshless Deformations Based on Shape Matching. Alternative
+game-oriented elastic/plastic representation; not calibrated structural mechanics
+or authorization for topology change. Do not add a second solver just to use it.
+https://matthias-research.github.io/pages/publications/MeshlessDeformations_SIG05.pdf
+
+Milestone 62 — Judas learns to get dressed and bend.

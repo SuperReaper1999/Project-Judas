@@ -1,0 +1,21 @@
+$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';$root='C:\JudasValidation';$base='http://192.168.122.1:8872';$m=$null
+function Upload($p,$n){Invoke-WebRequest -UseBasicParsing "$base/$n" -Method Post -InFile $p|Out-Null}
+try{
+ $m=(Invoke-WebRequest -UseBasicParsing "$base/m78-final-cold-repair-v1.json").Content|ConvertFrom-Json;$scratch=$m.scratch;$out=$m.output
+ if(Test-Path $scratch){throw 'Preserve previous final repair scratch'};if((Get-PSDrive C).Free -lt 92MB){throw 'Insufficient bounded final library headroom'}
+ if((Get-FileHash $m.baselineLibrary.path).Hash.ToLower() -ne $m.baselineLibrary.sha256){throw 'Old final archive mismatch'}
+ New-Item -ItemType Directory "$scratch\source","$scratch\objects",$out|Out-Null;$zip="$scratch\source.zip";Invoke-WebRequest -UseBasicParsing "$base/$($m.archiveName)" -OutFile $zip
+ if((Get-FileHash $zip).Hash.ToLower() -ne $m.archiveSHA256){throw 'Final source ZIP mismatch'};Expand-Archive $zip "$scratch\source"
+ foreach($f in $m.files){$p=Join-Path "$scratch\source" $f.path;if((Get-Item $p).Length -ne $f.bytes -or (Get-FileHash $p).Hash.ToLower() -ne $f.sha256){throw ('Final source mismatch '+$f.path)}}
+ Import-Module "$root\VS2022\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";Enter-VsDevShell -VsInstallPath "$root\VS2022" -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -host_arch=x64';Set-Location "$root\Build";$rows=@();$objects=@();$remove=@();$ErrorActionPreference='Continue'
+ $members=@(& lib.exe /nologo /list $m.baselineLibrary.path);if($LASTEXITCODE -ne 0 -or $members.Count -ne $m.baselineMemberCount){throw 'Old archive member count mismatch'}
+ foreach($u in $m.replacements){
+  $source=Join-Path "$scratch\source" $u.path;$obj="$scratch\objects\$($u.objectName)";$old=@($members|Where-Object {[IO.Path]::GetFileName($_) -ieq $u.objectName});if($old.Count -ne 1){throw 'Unique original archive member required'}
+  $flags=[string]$m.engineFlags;$flags=[regex]::Replace($flags,'/Fo"[^"]*"',('/Fo"'+$obj+'"'),'IgnoreCase');$flags=[regex]::Replace($flags,'/Fd"[^"]*"',('/Fd"'+$scratch+'\objects\compile.pdb"'),'IgnoreCase');$flags=[regex]::Replace($flags,'\s+C:\\JUDASVALIDATION\\SOURCE\\[^\r\n]*\.CPP\s*$','','IgnoreCase');$flags='/I"'+$scratch+'\source\src" /I"'+$root+'\Source\third_party" '+$flags+' "'+$source+'"'
+  $rsp="$scratch\objects\$($u.objectName).rsp";[IO.File]::WriteAllText($rsp,$flags,[Text.UTF8Encoding]::new($false));$name="m78-final-repair-$($u.objectName)-compile.log";$log="$out\$name";[IO.File]::WriteAllText($log,'');& cl.exe "@$rsp" 2>&1|Tee-Object -FilePath $log;$code=$LASTEXITCODE;Upload $log $name;if($code -ne 0){throw ('Final TU compile failed '+$u.path)}
+  $objects+=$obj;$remove+=('/REMOVE:'+$old[0]);$rows+=@{source=$u.path;sourceSHA256=(Get-FileHash $source).Hash.ToLower();object=$obj;objectSHA256=(Get-FileHash $obj).Hash.ToLower();bytes=(Get-Item $obj).Length;compilerResponse=$flags;removedOriginalMember=$old[0]}
+ }
+ $archive="$scratch\judas_engine.lib";$log="$out\m78-final-repair-library.log";[IO.File]::WriteAllText($log,'');& lib.exe /nologo ("/OUT:"+$archive) $m.baselineLibrary.path @remove @objects 2>&1|Tee-Object -FilePath $log;$code=$LASTEXITCODE;Upload $log ([IO.Path]::GetFileName($log));if($code -ne 0){throw 'Final archive construction failed'}
+ $fresh=@(& lib.exe /nologo /list $archive);if($LASTEXITCODE -ne 0 -or $fresh.Count -ne $m.baselineMemberCount){throw 'Final archive member count mismatch'};foreach($u in $m.replacements){if(@($fresh|Where-Object {[IO.Path]::GetFileName($_) -ieq $u.objectName}).Count -ne 1){throw 'Final replacement duplicate/missing'}}
+ $rp="$out\m78-final-repair-library.json";@{scope=$m.scope;archive=$archive;archiveSHA256=(Get-FileHash $archive).Hash.ToLower();archiveBytes=(Get-Item $archive).Length;baseline=$m.baselineLibrary;memberCount=$fresh.Count;units=$rows;sourceBundleSHA256=$m.archiveSHA256;freeBytes=(Get-PSDrive C).Free}|ConvertTo-Json -Depth 6|Set-Content $rp -Encoding UTF8;Upload $rp ([IO.Path]::GetFileName($rp))
+}catch{if(!$m){$out="$root\M78ColdRepairFinalResults"};New-Item -ItemType Directory $out -Force|Out-Null;[string]$_.Exception.Message|Set-Content "$out\m78-final-repair-library-error.txt";Upload "$out\m78-final-repair-library-error.txt" 'm78-final-repair-library-error.txt';exit 1}

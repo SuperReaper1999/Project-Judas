@@ -1,0 +1,41 @@
+{
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "mode": "read-only source review; probes prepared but not built or executed",
+  "new_findings": [
+    {
+      "id": "PHY-CLOSURE-001",
+      "risk": "high",
+      "status": "source-confirmed control flow; runtime probe pending",
+      "issue": "unrelated query-only motor proxy resets clear world restored-completed publication token"
+    }
+  ],
+  "source_sha256": {
+    "src/RigidBody.cpp": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b",
+    "src/RigidBody.h": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+    "src/PhysicsWorld.cpp": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff",
+    "src/PhysicsWorld.h": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9",
+    "src/CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0",
+    "src/CollisionGeometry.h": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198",
+    "src/ContactSolver.cpp": "17f5b0f8772a75896f438ebc9759b9df1cf5166cfdd471650929baead46b03e2",
+    "src/ImpactSolver.cpp": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+    "src/JointSolver.cpp": "72e43f81cb8c773a8029528fc0ac290b41966614a405a468c93cc45132726444",
+    "src/PhysicalBalance.cpp": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+    "src/WorldPersistence.cpp": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+    "src/WorldPersistence.h": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c",
+    "src/WorldCharacter.cpp": "381194ab8c9440e588d54a66a3594e77856924dc661ce77937174602e804817a",
+    "src/Simulation.cpp": "699d97408cc80d090fd775b4193f62835c734a1a72adab9985e48ce18f41ce9c",
+    "src/SaveArchive.h": "9f7a2cb6b75eaf77623f76142168f57b9fa917607e7d4441948eee4fbc0d347b",
+    "src/SaveService.cpp": "4daecfe95c7854e3c19f64fdb202620736214dbb54588c5084c204313684ca60",
+    "tests/PhysicsContinuationTests.cpp": "2c37b796a0a4e78935b1009b500e15063c9730414389e785812f341544117f69",
+    "tests/RigidMotionTests.cpp": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a",
+    "tests/ContactLifecycleTests.cpp": "59bf3711105a68444c8a3ff5f8c9ecf8617e43dfb732cbc4574f921a70067014",
+    "tests/CollisionGeometryTests.cpp": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2"
+  },
+  "owned_artifacts_sha256": {
+    "docs/evidence/m78-closure/review-physics/MixedBalanceLabProbe.cpp": "4052aae1e62bb0e83ff25e68d50b006658c5860a62bbc2d6bf75ea6e1414c0c1",
+    "docs/evidence/m78-closure/review-physics/RestoredPublicationIsolationProbe.cpp": "996b49bc87dc1ed1f94c682faf214f3844e0edb938a5d2a9e74bdf41cac0b013",
+    "docs/evidence/m78-closure/review-physics/PROBE_IDENTITY.json": "edd131698f6e717448616611d55bb340974526eaf1cdad049090ac1f9edbc71b",
+    "docs/evidence/m78-closure/review-physics/REVIEW.md": "f36f09ad0887c35e1cf7dc49d7fb427229762673d8cda97606394f5118b3e39e"
+  }
+}

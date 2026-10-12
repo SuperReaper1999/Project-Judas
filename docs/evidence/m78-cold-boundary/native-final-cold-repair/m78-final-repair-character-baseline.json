@@ -1,0 +1,35 @@
+﻿{
+    "seconds":  7.7567220999999993,
+    "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+    "case":  "character_lab",
+    "expectedSaveSHA256":  null,
+    "run":  "character-baseline",
+    "executableSHA256":  "d79f4c12325aa850fd722a60d2b8769ec06e3730dc7b2fc8c3c9539bd944d8f7",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character\\multi-target-ik.json",
+                      "sha256":  "12d9a3fdb469e842d4d0a31ed2667e0e59c3fd5c5fa0b6ee0c29b2198f2001ef",
+                      "bytes":  106,
+                      "reportName":  "m78-final-repair-character-baseline-multi-target-ik.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character\\owner-contact-sequence.json",
+                      "sha256":  "0cdc70afdbddb9f36cdd8246abf618a9dad64bccf945c7c96f70a65b7e321692",
+                      "bytes":  265,
+                      "reportName":  "m78-final-repair-character-baseline-owner-contact-sequence.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\character\\physical-animation.json",
+                      "sha256":  "c67a300c71865f6f16661a4d59e61fa71e575f956a4d8aff874d9579aad8a41d",
+                      "bytes":  152,
+                      "reportName":  "m78-final-repair-character-baseline-physical-animation.json"
+                  }
+              ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ColdRepairFinalResults\\character"
+                  ],
+    "exitCode":  0,
+    "freeBytes":  62296064,
+    "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

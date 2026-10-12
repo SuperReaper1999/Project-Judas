@@ -1,0 +1,23 @@
+PASS ordinary dynamic normal source world
+PASS ordinary dynamic normal runtime actor ownership
+PASS ordinary dynamic actor retained by default
+PASS ordinary dynamic full ordinary participant capture
+PASS ordinary dynamic normal saved scene decode
+PASS ordinary dynamic saved scene ownership matches public exclusion
+PASS ordinary dynamic preserved captured scene
+PASS ordinary dynamic normal private saved-world construction
+PASS ordinary dynamic normal private participant preparation
+PASS ordinary dynamic full private restore succeeds
+PASS ordinary dynamic retained body's real velocity survives
+PASS ordinary dynamic restored ownership matches authored exclusion
+PASS excluded dynamic normal source world
+PASS excluded dynamic normal runtime actor ownership
+PASS excluded dynamic public exclusion accepted
+PASS excluded dynamic full ordinary participant capture
+PASS excluded dynamic normal saved scene decode
+PASS excluded dynamic saved scene ownership matches public exclusion
+PASS excluded dynamic preserved captured scene
+PASS excluded dynamic normal private saved-world construction
+PASS excluded dynamic normal private participant preparation
+FAIL excluded dynamic full private restore succeeds
+SUMMARY 22 checks 1 failures

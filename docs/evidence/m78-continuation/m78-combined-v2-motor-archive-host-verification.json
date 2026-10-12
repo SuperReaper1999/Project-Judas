@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "motor",
+  "archiveSHA256": "393dc7b85e5a746db15f81fae35eda9ce0578f7c554bbb82d92b037010971c36",
+  "archiveBytes": 3581930,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_motor.exe",
+      "sha256": "07b43eb3a08698f81de3437689cc44f1bf30846c98cf900a40154e7237dbea25",
+      "name": "m78_combined-v2_motor.exe",
+      "bytes": 7693312
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\motor-0.obj",
+      "sha256": "36b56ddd63c63143e84a19e382097ae7645a24a7d979316880b6bfb35776c82d",
+      "name": "motor-0.obj",
+      "bytes": 384509
+    }
+  ]
+}

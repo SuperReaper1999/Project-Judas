@@ -1,0 +1,8 @@
+{
+  "scope": "Preparation-only source/recipe extraction; explicitly NOT a frozen final build or result",
+  "cases": 31,
+  "nativeCommandsExecuted": 0,
+  "staleSourceOrObjectTokens": [],
+  "preparedManifest": ".cache/windows-vm-transfer/m78-continuation-direct-matrix-recipe-preparation-only.json",
+  "preparedArchiveBytes": 222378
+}

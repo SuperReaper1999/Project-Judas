@@ -1,0 +1,28 @@
+{
+  "id": "judas_shooter_application_tests",
+  "source": "tests/ShooterApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_shooter_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_shooter_application_tests"
+  ],
+  "adapter": "ordinary project and isolated result root",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "65a547805ed21b78523ce12f04b7e8a1b6caa40a068362c4db4d10b62a88798d",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 14,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_shooter_application_tests.log",
+  "logSHA256": "b6647d9dd4d762e5d3804cc5e2ec8302f422c4802b3523180f5118d2826b0184",
+  "seconds": 6.980000583000219
+}

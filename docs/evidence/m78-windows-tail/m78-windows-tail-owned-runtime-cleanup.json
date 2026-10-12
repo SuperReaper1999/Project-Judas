@@ -1,0 +1,43 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_runtime.exe",
+                      "sha256":  "ea39694571f4e8dbf0322cd6f5c216cd97437104c4a7432af4100b2c1ac326bf",
+                      "name":  "m78_combined-v2_runtime.exe",
+                      "bytes":  10314752
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\runtime-0.obj",
+                      "sha256":  "ff7de32197f0f5b55546d93bd45cb0fd99effdc8b2ae8a440987f1e6e8c13674",
+                      "name":  "runtime-0.obj",
+                      "bytes":  21878
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\runtime-1.obj",
+                      "sha256":  "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+                      "name":  "runtime-1.obj",
+                      "bytes":  295887
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\runtime-2.obj",
+                      "sha256":  "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+                      "name":  "runtime-2.obj",
+                      "bytes":  229861
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\runtime-3.obj",
+                      "sha256":  "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+                      "name":  "runtime-3.obj",
+                      "bytes":  20401
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\runtime-4.obj",
+                      "sha256":  "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+                      "name":  "runtime-4.obj",
+                      "bytes":  340964
+                  }
+              ],
+    "archiveSHA256":  "dd564c839f7deb52b07c2d3df054172fd1d67340e71f9a057c52815c89ab396b",
+    "freeBytes":  28037120
+}

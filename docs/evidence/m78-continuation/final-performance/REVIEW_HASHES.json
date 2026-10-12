@@ -1,0 +1,73 @@
+{
+  "scope": "Append-only read-only reviewer analysis and copied performance artifacts only; not final candidate/source fingerprints",
+  "files": {
+    "docs/evidence/m78-continuation/final-performance/ANALYSIS.json": {
+      "bytes": 70754,
+      "sha256": "256779c6f58c60cf6fd764721c96128fe4f64475fc01eab8a6eb92f653a708d9"
+    },
+    "docs/evidence/m78-continuation/final-performance/RAW_FINGERPRINTS.json": {
+      "bytes": 3289,
+      "sha256": "9ac121b0c471f73cece37d430c13eb7d1f5d9487eaae7d9f19b81a42496812a0"
+    },
+    "docs/evidence/m78-continuation/final-performance/README.md": {
+      "bytes": 4383,
+      "sha256": "d7191800f9d50a793fd657a657245892476c6a9758d3ad0583fba3e0d8177334"
+    },
+    "docs/evidence/m78-continuation/final-performance/RETAINED_SCOPES.json": {
+      "bytes": 6737,
+      "sha256": "705a99069704fff25100e8b6406197ea45192cddc899dbb41038a03de7e6a068"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-1-profile.json": {
+      "bytes": 990278,
+      "sha256": "6624d3cb70a531e7860876f964e889fb466e3cc8a4685e44cd8175fbe01ccf4e"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-1.csv": {
+      "bytes": 50683,
+      "sha256": "51c313cc11b73301fe7faef0b3caee7c73775fa669c449dfd352c6e6e3522f4a"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-4-profile.json": {
+      "bytes": 1703850,
+      "sha256": "5bbd70bb90ecb63a6d819b18f890109041d27ed57292c2a76953803014f712de"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-4.csv": {
+      "bytes": 51524,
+      "sha256": "1906f13204ff35ff5966aa71d5552ff4043a6539905ac5ecd1e3d95e36ce7e08"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-1-profile.json": {
+      "bytes": 995610,
+      "sha256": "0342d238340bac83c66ad13fbdc69e2dcc9bee2859fc6bf21058f1b63d0f7150"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-1.csv": {
+      "bytes": 49054,
+      "sha256": "dad835a0a4e6fd3dfbce21f5f68cd62a672b89563b9e18c91925731a370f6bae"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-4-profile.json": {
+      "bytes": 1704996,
+      "sha256": "598fd8d055352aa6bf0890cd3401e52d33aa211b60e209363fa0e4d5666f797b"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-4.csv": {
+      "bytes": 49257,
+      "sha256": "854093dfd4c6f795a1ce16e3554c6ea0dd05284baefcea343364dfd695abd8bc"
+    },
+    "docs/evidence/m78-continuation/probes/review_final_ragdoll_trace.py": {
+      "bytes": 6325,
+      "sha256": "9f5ea5727f55be5f6ba1ce4f9b9a3247a3e518f79c05e6a3d6473a5f61a92565"
+    },
+    "docs/evidence/m78-continuation/probes/review_midpoint_dense_output.py": {
+      "bytes": 6624,
+      "sha256": "b3a929cad96badafab4525df3ad216d47a2e03d1cac6674ee4a30b8cdac3ce11"
+    },
+    "docs/evidence/m78-continuation/reviewer-implicit-midpoint.md": {
+      "bytes": 4038,
+      "sha256": "0fdac9bea8a6ccb872b9f64c51a97bb9d526a3820c9426dbe37bb57ee1af3292"
+    },
+    "docs/evidence/m78-continuation/reviewer-midpoint-dense-output.json": {
+      "bytes": 16478,
+      "sha256": "39a78f0797b5fb81a7cd8606a352b2040b0541000ea59bc4a5ef88896bfb3cab"
+    },
+    "docs/evidence/m78-continuation/reviewer-protected-preservation.json": {
+      "bytes": 2536,
+      "sha256": "c479e1e6c99cbf21c5bb16092fe4a00b7220be651ad5351db2574403f6ccd9a2"
+    }
+  }
+}

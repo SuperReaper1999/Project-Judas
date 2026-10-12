@@ -1,0 +1,441 @@
+# M64 — Judas learns what shape things actually are.
+
+Starting checkpoint:
+b5676438ed12d9cb3d05c634eaf5f578d7216ada
+
+M63 is complete, human-tested, committed and pushed. Verify HEAD/main/origin/main
+and the worktree before starting. Preserve operator-owned edits. Stop on unexpected
+source changes or divergence rather than resetting, merging or absorbing other work.
+
+Implement one complete M64 candidate. Do not commit, push, merge or tag before
+operator review. Do not modify Claude's skate workspace, branches or pending PRs.
+
+PURPOSE
+Fix the general collision-shape and query limitations exposed by the skate-game
+consumer audit. Imported curved world geometry must not require reconstruction as
+hundreds of independent boxes. Scripts must be able to inspect collision geometry
+and ask for its closest point without duplicating collider dimensions in game data.
+
+Required scope:
+- Cooked STATIC triangle-mesh colliders.
+- Cooked convex hull colliders for static and dynamic rigid bodies.
+- Compound children with independent local positions AND rotations.
+- Practical mesh-to-collider editor/asset workflow.
+- Real contact and query integration, including CharacterMotor sweeps.
+- Safe public collider inspection and closest-point queries (audit E-04).
+- Normal streaming, persistence, export, documentation and integration proof.
+
+Judas owns collision geometry, contacts and physical response.
+JavaScript owns skating, grinding and other game behaviour.
+This is NOT a replacement physics engine, skateboard system or general CAD suite.
+
+## 1. Read the evidence, then establish the actual current boundary
+
+Use SKATE_GAME_ENGINE_AUDIT.md E-03/E-04, the relevant workflow findings, and JOURNAL.md
+J04/J07/J09 as the problem evidence. Copies accompany the bundled handoff. If using
+this prompt alone, locate those documents in the supplied project/audit material.
+Do not edit the original audit, journal, reproduction logs or historical evidence.
+
+The audit is frozen at M60 a9c6cd7, NOT the current engine. It reports roughly 200
+box colliders for curved park geometry, unrotatable compound children, severe facet
+contact discontinuities, and no public collider extents/closest-point access.
+The bare-board trial reportedly slowed from 6.86 to 1.21 m/s at the first quarter-pipe
+seam; the retained JS chassis uses four-ray plane fitting and velocity transport.
+These observations are evidence, not a proof that one particular contact algorithm
+will solve every skating issue.
+
+Read current collision dispatch, broadphase, impact/contact/joint solver, M42 events,
+M44 queries, CharacterMotor, M53 navigation, M59 streaming, M60 occlusion, M61 saves,
+and the actual M62/M63 contact/query limitations. Check for facilities added since
+the frozen audit before inventing replacements. M61 persistence and Claude's
+D-01/D-02/D-03 fixes are already integrated; do not reopen their original assignments.
+
+Make a compact coverage matrix BEFORE extending dispatch: shape pairs versus rigid
+contacts, ray/shape queries, motor movement and relevant downstream consumers.
+Extend the existing machinery. No parallel PhysicsWorld, gravity implementation,
+Jolt/PhysX runtime replacement or hidden demo-only collision path.
+
+If a central prerequisite genuinely requires a substantial redesign, report the
+specific conflict early. Do not silently downgrade the milestone to ray-only meshes.
+
+## 2. Collision assets and cooking
+
+Separate immutable cooked geometry from per-instance pose/filter/state. Use the
+normal CPU resource/asset pipeline and shared asset lifetimes. Renderer owns GL;
+collision cooking and simulation must work without a graphics context.
+
+Provide a documented collision asset format or extend the existing appropriate
+asset format. Include format/cooker version, source/settings identity, local bounds,
+mesh vertices/indices or convex faces, acceleration data, and feature/subshape keys.
+
+Reuse existing OBJ/glTF CPU import paths for explicit selected source geometry.
+Support the static mesh assets needed for the supplied ramps/half-pipes, including
+selected primitives and their authored transforms. Do not expand the whole character
+importer or silently bake every mesh in a file when the author selected one part.
+A separate low-detail physical source must be usable as well as an explicit bake
+from a visual model. Materials, render LOD and visibility never change collision.
+
+Cooking must:
+- Validate finite coordinates, index ranges, usable areas/volume, winding and bounds.
+- Handle duplicate/degenerate triangles deterministically with reported outcomes.
+- Build a mesh-local BVH or equivalent midphase, plus physical edge adjacency.
+- Maintain a cooked-feature to source-feature mapping where reordering/cleaning occurs.
+- State welding tolerances and preserve intentionally separate components/openings.
+- Diagnose nonmanifold/ambiguous topology rather than silently claiming welded seams.
+- Bound input/output complexity and report any simplification/error policy.
+
+UV/normal seams need not become collision seams. Conversely, close vertices are not
+permission to merge distinct nearby sheets. Mesh cleaning, adjacency and feature
+remapping are established cooking concerns [R1]; use them deliberately.
+
+Use a mature, suitably licensed hull cooker where useful. Pin any new dependency,
+record provenance and ship required notices. Do not write a new asset parser or turn
+hull generation into research. Do not import an entire dynamics engine for cooking.
+
+Editor and CLI cooking must share code. Cook into a replacement asset safely: failed
+validation preserves the previous accepted asset. Track staleness when source or
+settings change. Runtime loads cooked data, not expensive geometry reconstruction on
+every launch, spawn or region activation. No silent AABB substitution on cook failure.
+
+## 3. Static triangle meshes: real collision, not just picking
+
+Represent concave authored STATIC surfaces as triangle meshes, not one body per
+triangle and not a bounding box with a decorative mesh. Keep the existing world
+broadphase, followed by per-mesh candidate traversal and actual geometric narrowphase.
+
+Required contacts include dynamic boxes, spheres, convex hulls and supported compound
+children against static meshes. Return contact points, separation and solver normals
+through the normal manifold/contact path. Preserve friction/restitution, mass/inertia,
+M45 constraints, M42 observations and existing impact processing.
+
+Define sidedness explicitly for contacts and queries. Open meshes are valid surfaces,
+not magically watertight solid volumes. Demonstrate front/back behaviour and real
+open boundaries. Backface settings must not conceal incorrectly authored winding.
+A collider used as a volume sensor must have a supported volume definition; do not
+pretend a bare open sheet has an interior. Reject unsupported sensor combinations.
+
+STATIC means no simulated moving concave triangle body in M64. Rigid placement at
+creation, editor repositioning and M59 region placement are supported and update
+bounds correctly. Runtime replacement/repositioning, if exposed, occurs at safe
+boundaries with explicit teleport semantics; it is not continuous platform motion.
+Moving shapes use convex hulls or authored convex/primitive compounds.
+
+## 4. Internal edges are an explicit acceptance problem
+
+Replacing boxes with unrelated individual triangles can retain seam artifacts.
+Triangle contacts must account for neighbouring physical faces. Do not use smooth
+render normals as a substitute for contact geometry.
+
+Implement appropriate shared-edge/internal-feature handling across the cooked mesh:
+- A box/sphere/capsule crosses the diagonal of a triangulated plane without a false
+  barrier, launch or large contact impulse.
+- Concave internal features do not generate artificial blocking normals.
+- Actual convex corners, ledges, open boundaries and intentional gaps still collide.
+- Coplanar retriangulation does not materially change support/sliding behaviour.
+- T-junctions and invalid adjacency have an explicit supported/diagnosed policy.
+
+Use adjacency/feature classification and robust manifold selection rather than
+averaging every normal until the demo looks smooth. Box2D's ghost-collision analysis
+illustrates the mechanism in 2D [R2]; it is NOT a ready-made 3D implementation.
+Jolt's active-edge documentation illustrates the tradeoff between suppressing false
+edges and damaging legitimate collision response [R3]. References are prior art,
+not permission to restore Jolt as Judas's physics owner.
+
+A triangulated curve remains piecewise planar. M64 need not make a coarse ramp
+mathematically smooth or guarantee a perfectly inelastic box conserves energy on it.
+Separate geometric faceting, timestep/contact tolerances and artificial seam contacts
+in the measurements. Do not promise that all skate assists disappear after importing
+a mesh; prove precisely which engine limitation has been removed.
+
+## 5. Convex hulls and oriented compounds
+
+Convex hulls must be actual physical shapes, not query-only decorations. Support
+hull-versus-hull, hull-versus-existing primitives/compounds, and hull-versus-static
+mesh through Judas's solver. Use an appropriate established convex narrowphase and
+bounded degeneracy/convergence handling; retain useful existing primitive fast paths.
+An algorithm failure must not silently become a clean miss.
+
+Cook closed convex geometry with usable support/face information. A convex hull of
+concave input fills its recesses: show that in the preview and do not claim it matches
+the original concave surface. Dynamic concavity uses author-defined compounds; automatic
+convex decomposition is not mandatory.
+
+Compute meaningful hull volume, centre of mass and inertia. Preserve the authored
+entity pivot through an explicit collider/COM transform rather than moving visuals
+or joint anchors accidentally. Verify an off-centre impulse and an analytic fixture;
+do not estimate every hull's inertia using its enclosing box and call it exact.
+
+Compound children have stable child keys and local position/rotation. At minimum,
+boxes, spheres and convex children must compose correctly. Propagate those transforms
+once through contacts, casts, bounds, mass properties, authoring and save/load.
+An identity child rotation must reproduce existing compound behaviour. Preserve one
+rigid-body identity, not separate independently simulated bodies for each child.
+Document mass aggregation for overlapping children; disjoint mass geometry or explicit
+mass properties are acceptable, silent double-counting presented as union volume is not.
+
+Keep scale support honest. Bake selected positive nonuniform source scale into geometry
+where needed for the supplied assets. Runtime rigid instances may remain unit-scale
+if that matches existing contracts. Reject unsupported shear/mirrors/scale clearly;
+never render one size while colliding at another. No compulsory general transform rewrite.
+
+## 6. One query contract for real geometry
+
+Extend the existing M39/M44 paths rather than adding mesh-only public casts:
+- Raycasts against meshes, hulls and oriented compounds.
+- Sphere, capsule and fixed-orientation box casts against those targets.
+- Existing overlap/support queries used by CharacterMotor and other consumers.
+- Closest-point queries and read-only collider inspection.
+
+Maintain layer/tag filters where applicable, ignored safe handles, disabled state,
+sensor inclusion, nearest-hit ordering and deterministic tie-breaking. Broadphase
+AABBs are candidates, not final hits. Existing deliberately conservative AABB queries
+must remain labelled as such; do not silently change their contract.
+
+Document initial overlap, zero motion/distance, tangency, backfaces, normals and
+bounded numerical tolerances. Sweep support is not a universal high-speed CCD claim.
+Route new shapes through existing supported impact/continuous paths; explicitly
+record any remaining high-angular-speed or unsupported-pair limit.
+
+Results should identify the safe entity/body, collider/child key and mesh feature
+where meaningful, plus point, normal, distance/fraction. Explain that cooked feature
+keys may change on recooking; they are not immortal cross-version entity identities.
+Geometric query normals and edge-aware solver contact normals may differ for a stated
+reason, but neither comes from an unrelated rendering normal map.
+
+For closestPoint, specify whether the operation means nearest surface or nearest
+occupied point, particularly for points inside closed convex shapes. Expose/describe
+containment separately where needed. An open triangle mesh must not fabricate a signed
+inside distance. Bound world searches with a maximum radius/filter; use BVH pruning.
+If a boundary feature has no unique normal, represent that honestly. Return a clear
+no-result for missing/filtered geometry, not stale memory or an invented origin.
+
+Collider inspection returns bounded value metadata: shape type, local pose, dimensions
+where applicable, children and cooked-asset identity/counts. No mutable native geometry
+pointers or unbounded full-mesh copies on every script read. A generic rail script
+must be able to derive an authored box child's extent without a duplicate JS size field.
+
+## 7. Update the existing consumers, not just the new demo
+
+Trace consumers that currently switch on box/sphere/compound shapes. Required
+connections are ordinary rigid contacts/events, public casts, CharacterMotor movement,
+navigation bake extraction, audio obstruction, streaming and persistence.
+
+CharacterMotor must sweep/support against the new geometry without acquiring skate
+rules or a second collision engine. Preserve its existing gravity/locomotion contract.
+M42 events remain body-pair events; per-triangle contact churn must not spam duplicate
+enter/exit callbacks.
+
+M53 navigation bakes the chosen PHYSICAL triangles/hulls/compound children in its own
+frame. Changes invalidate relevant nav bakes. Do not use the render mesh instead or
+fill a concave opening with the mesh bounds. Nav remains guidance, not collision.
+M60 occlusion uses the same actual geometry and must distinguish an opening from a wall.
+
+Reuse M62's current contact/query seam so cloth and soft bodies can contact the new
+static environment without an invisible stack of old boxes underneath. Exercise a
+small cloth drape and soft/rigid fragment on a curved mesh using the existing method.
+Do not upgrade M62 into exact triangle-triangle/self-CCD or arbitrary volumetric Boolean
+contact. Record inherited approximations and unsupported pairs explicitly.
+
+M63's existing fracture proxies/failure model remain valid. Let ordinary supported
+fragments hit the new environment; do not convert dynamic rubble into forbidden static
+triangle meshes or make fracture generate new arbitrary hulls/remeshes in this milestone.
+
+Preserve M54/M55 fluid algorithms and authored cavity authority. Rotated old primitive
+children must not regress existing liquid calculations. Do not claim new open mesh
+colliders define liquid capacity. If new hull-body loading is unsupported, reject or
+require an explicit supported interaction proxy; never silently substitute an AABB
+for accurate displacement. A new fluid-coupling solver is outside M64.
+
+## 8. Usable editor, assets and JudasJS
+
+A normal developer must be able to import/select a static ramp model, choose a triangle
+mesh or convex bake, preview the physical result, assign it and Play. Include clear
+static/dynamic restrictions, cook errors, source selection and rebake/stale status.
+An external park-generation script alone does not satisfy mesh-to-collider authoring.
+
+Provide oriented compound-child editing and collision-wireframe/normal/bounds debug
+views through existing editor/Renderer facilities. Useful counts and selected child
+identity are enough; do not build a general mesh modeller or editor redesign.
+
+Use the existing scene/prefab schema and reference-remapping mechanisms. Serialize all
+new shape references/local rotations without breaking old default behaviour. Do not
+bump canonical fingerprint schema merely because M64 exists; version cooked geometry
+and persistence participation where genuinely required. Source/settings/cooked content
+must contribute to the right fingerprints, independent of repository paths.
+
+Expose the minimum coherent public API for E-04. Exact names follow current JudasJS
+style, e.g. a read-only collider handle/snapshot and physics.closestPoint(...). Existing
+casts gain the necessary safe feature metadata without gratuitous breaking changes.
+Scripts consume collision data; no native GrindRail or Skateboard component.
+
+Update declarations, current reference, inventory/manifest, live enumeration and
+cookbook together. Explain units, local/world frames, inside-point semantics and stale
+handles. Do not add E-06 physical-material assets, E-07 runtime joints, IK or the rest
+of the audit simply because nearby code is open.
+
+## 9. Streaming, saves, lifetime and coordinates
+
+Use M59 workers for prepared immutable resources and budgeted safe installation. Hold
+cooked geometry as long as live bodies, pending queries or in-use dependencies need it.
+Unload removes every relevant broadphase/contact/query registration. Revisit must not
+leave ghost colliders or lose newly required assets. Do not cook hulls on first contact.
+
+Use M61 persistence for collider asset identity, child transforms and any permitted
+instance changes. Fresh-process reconstruction restores dynamic hull mass/motion and
+joint relationships through new runtime handles; do not serialize BVH pointers or rely
+on old process caches. Define source/cook compatibility and fail safely on stale data.
+
+Exercise region placement, travel/adoption and unload/revisit. A rotated compound in a
+rotated region must not get transformed twice. Shared immutable resources may survive
+while another instance uses them; report actual residency, not a fake unload claim.
+
+No universal up. Test arbitrary body/mesh/compound orientation and oblique/radial
+placement without gravity-type branches. Respect M23's fixed-origin precise/local
+representation; subtract local origins before float conversion. No live rebasing work.
+
+## 10. Integration proof: the skate evidence becomes a regression
+
+Create one current collision lab plus a skate-ramp comparison using the accepted skate
+project/assets if available in this checkout. Preserve ordinary game rules. If the
+skate project has not landed, build the same bounded comparison in a new normal Judas
+project using available permitted assets or original generated ramps. Do not merge a
+PR or modify Claude's clone to obtain it. Record missing raw reproductions honestly.
+
+Include:
+A. Imported quarter/half-pipe with visible physical wireframe matching the source.
+B. Static concave doorway/channel/arch that a primitive bounding box would close.
+C. Dynamic asymmetric convex body and an offset/rotated multi-child compound.
+D. JS closest-point/shape inspection with a marker and metadata, not copied extents.
+E. A short streamed boundary and cold-save/reload proof for the new shapes.
+
+Run TWO distinct ramp evaluations:
+1. Physics-only fixture: known box/sphere/hull, fixed initial state, no JS velocity
+   transport, anti-snag force, auto-alignment, teleport or energy restoration.
+2. Ordinary skate consumer: unchanged baseline gameplay first, then a clearly labelled
+   comparison disabling only seam-specific compensation where technically sensible.
+
+Keep the old box-chain case as a comparison fixture, not a hidden fallback collider
+under the new mesh. Record source/cooked triangles, curve faceting and tolerances.
+Measure seam impulses, minimum progress/speed, penetration and physical energy change.
+Use a triangulated flat plane with alternative diagonals as the simple seam oracle;
+use increasing curve resolution to distinguish faceting from a contact defect.
+
+Success means usable actual mesh collision and no artificial internal-edge barriers
+in the verified envelope, not a fabricated promise of perfectly lossless skate motion.
+Do not rewrite the game to hide a failing engine contact test.
+
+## 11. Focused checks and independent expectations
+
+Build small failing/unsupported baseline cases first, then extend them. Test groups:
+
+GEOMETRY / COOKING
+- Known tetrahedron/cube hull, volume/COM/inertia, mesh winding and degenerate input.
+- Open concave mesh, duplicate vertices at visual seams, real gaps and sharp creases.
+- Deterministic cook, source-feature mapping, staleness and previous-good preservation.
+- Runtime shape/scale rejection and correct baked source transforms.
+
+CONTACTS / QUERIES
+- Required primitive/hull/compound pairs against mesh; hull-hull contacts and friction.
+- Off-centre impulses, stable rest and a modest supported hull stack.
+- Coplanar diagonals, concave joins, convex corners and bounded high-speed approaches.
+- Rays plus sphere/capsule/box sweeps, initial overlap, backfaces and filters.
+- Closest point inside/on/outside closed shapes, open sheets, rotated children, misses.
+- Collider inspection matches authored geometry without redundant game-side dimensions.
+- M42 pair lifecycle remains coherent across several triangles and on unload/destruction.
+
+COMPOSITION
+- CharacterMotor on mesh ramps/steps and appropriate slope rejection.
+- Nav bake/route through the real mesh opening; audio obstruction through that opening.
+- Representative M62 contact and M63 rigid-fragment contact with the new environment.
+- Old compounds unchanged; oblique/radial placement and large absolute fixed origin.
+- Prefab spawn, region placement, unload/revisit, adoption, handle/asset lifetime.
+- Save, close the process, reopen, load and continue physically interacting.
+- Public API/types/cookbook plus actual editor cook/assign/Play and moved export.
+
+Use analytic geometry and direct invariants where available. Do not validate casts
+against a second call to the same buggy cast routine. Preserve recorded failures and
+corrections; never weaken the expectation solely because a solver returns something.
+
+## 12. Performance, limits and candidate gate
+
+Use M56 profiling, not a new profiler. Measure cook time/asset bytes; local BVH
+candidates versus total triangles; representative ray/sphere/capsule/box/closest-point
+queries; contacts and compounds; and the playable ramp workload. Include a primitive-
+only comparison so optional mesh support does not quietly tax every simple scene.
+Report frame/fixed-step median, p95/max and cold cooking/loading separately.
+
+One mesh is not one body per triangle. A miss should not scan the whole imported park.
+Cache immutable work, bound contact/candidate buffers with an honest overflow policy,
+and record hardware/concurrent load. Investigate demonstrated pathologies, not
+speculative micro-optimizations. Do not launch simultaneous competing build/profiler
+jobs or kill another agent's/user's processes to manufacture clean measurements.
+
+At candidate completion freeze participating source, then run once:
+- Clean Release build and the current production suite.
+- Async integration and affected contact/joint/query/motor regressions.
+- Focused M64 cases, API drift/live enumeration and cookbook checks.
+- Relevant nav/audio/deformable/fracture/save/streaming follow-ups.
+- Editor cook/Play/Stop, scene transitions and moved standalone checks.
+
+Use fresh scratch outputs and avoid historical-evidence-writing test defaults.
+Separate genuine numerical failures from desktop-input contamination. Do not edit
+participating source while claiming the broad gate tested one frozen candidate.
+Late narrow corrections receive affected reruns; retain the original broad results
+and say precisely what the final follow-up covers. No repeated full-suite churn.
+
+## 13. Human review and scope stop
+
+Provide clear controls and a compact checklist:
+1. Bake/assign a ramp collider and inspect collision versus visual geometry.
+2. Traverse the mesh ramp in the physics comparison and ordinary game consumer.
+3. Cross internal triangle joins; hit a real edge/ledge; pass through the concave opening.
+4. Throw the convex body/rotated compound and inspect contacts and physical response.
+5. Inspect closest-point and child-shape data through project JS.
+6. Check motor movement, navigation/audio geometry and the small deformable/fragment proof.
+7. Cross regions and return; save, quit fully, load and continue.
+8. Test Play/Stop, responsiveness and the moved exported package.
+
+Human gameplay/visual acceptance remains pending until the operator confirms it.
+
+Outside M64: arbitrary dynamic concave meshes, runtime mesh deformation/remeshing,
+automatic convex decomposition research, new heightfield systems, full CCD redesign,
+sleeping overhaul, IK/sockets, skeletal import expansion, physical-material framework,
+new joint APIs, procedural park-editor toolkit, fluid rewrite and unrelated audit items.
+Do not silently certify all those as supported because a new shape dispatch exists.
+
+## 14. Handoff
+
+Report concise architecture, actual pair/query/consumer coverage, seam policy,
+convex mass/COM handling, compound transforms, asset/editor workflow, JudasJS changes,
+streaming/saves/export integration, before/after skate evidence, measured costs,
+known limitations, human checklist, source/asset fingerprints and exact changed files.
+Map E-03/E-04 to what was resolved and what remains explicitly outside scope.
+Record dependency licenses/provenance and preserve protected FTFT/P1 history, accepted
+liquid algorithms, existing project history and Claude's independently owned work.
+
+Leave the complete candidate uncommitted for review. Report git status and proposed
+commit; do not begin another milestone.
+
+Suggested commit after acceptance:
+Add M64 mesh and convex collision with geometric queries
+
+## Primary reference starting points (not another research assignment)
+
+[R1] NVIDIA PhysX 5.6.1, Geometry — mesh/hull cooking, validation, shared geometry,
+acceleration, adjacency and source-feature remapping. Integration concepts only;
+Judas keeps its own solver and support policy.
+https://nvidia-omniverse.github.io/PhysX/physx/5.6.1/docs/Geometry.html
+
+[R2] Erin Catto, Ghost Collisions (2020) — adjacent-edge normal constraints and
+why isolated contact features can create false barriers. This is a 2D explanation,
+not a complete 3D triangle-mesh implementation.
+https://box2d.org/posts/2020/06/ghost-collisions/
+
+[R3] Jolt Physics, MeshShapeSettings — active edges, sidedness, mesh-local tree
+and triangle/source identity. Consult as prior art, not a dependency prescription.
+https://jrouwe.github.io/JoltPhysics/class_mesh_shape_settings.html
+
+Frozen problem sources: SKATE_GAME_ENGINE_AUDIT.md E-03/E-04 and JOURNAL.md J04/J07/J09.
+Their missing features refer to M60; verify current M63 before acting.
+
+Milestone 64 — Judas learns what shape things actually are.

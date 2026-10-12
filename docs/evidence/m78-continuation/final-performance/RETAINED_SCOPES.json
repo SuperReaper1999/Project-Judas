@@ -1,0 +1,176 @@
+{
+  "scope": "Retained last 120 final frames only; no early impact spike retained",
+  "frames": 120,
+  "top5RetainedFixedStepFrames": [
+    {
+      "frame": 3593,
+      "scopesMs": {
+        "Physics broadphase": 0.020911,
+        "Physics contacts": 0.557114,
+        "Physics initial impacts": 0.000121,
+        "Physics velocity constraints": 0.074048,
+        "Physics continuous impacts": 0.011294,
+        "Physics position constraints": 0.020362,
+        "Physics sleeping assessment": 0.016988,
+        "Physics contact and joint solver": 0.123526,
+        "Physics proxy refresh": 0.015539,
+        "Fixed simulation step": 0.837047
+      },
+      "counters": {
+        "Physics bodies last step": 53,
+        "Physics candidate pairs last step": 52,
+        "Physics contacts last step": 41,
+        "Physics joints": 48,
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact search iterations": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact search limits": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact pose evaluations": 0,
+        "Physics impact pose reuses": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics impact remaining-bound rejections": 0
+      }
+    },
+    {
+      "frame": 3482,
+      "scopesMs": {
+        "Physics broadphase": 0.020691,
+        "Physics contacts": 0.455278,
+        "Physics initial impacts": 0.000155,
+        "Physics velocity constraints": 0.106119,
+        "Physics continuous impacts": 0.016217,
+        "Physics position constraints": 0.024991,
+        "Physics sleeping assessment": 0.028738,
+        "Physics contact and joint solver": 0.17729,
+        "Physics proxy refresh": 0.024516,
+        "Fixed simulation step": 0.798396
+      },
+      "counters": {
+        "Physics bodies last step": 53,
+        "Physics candidate pairs last step": 52,
+        "Physics contacts last step": 41,
+        "Physics joints": 48,
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact search iterations": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact search limits": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact pose evaluations": 0,
+        "Physics impact pose reuses": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics impact remaining-bound rejections": 0
+      }
+    },
+    {
+      "frame": 3577,
+      "scopesMs": {
+        "Physics broadphase": 0.020971,
+        "Physics contacts": 0.500241,
+        "Physics initial impacts": 0.00017,
+        "Physics velocity constraints": 0.082887,
+        "Physics continuous impacts": 0.011502,
+        "Physics position constraints": 0.020238,
+        "Physics sleeping assessment": 0.01751,
+        "Physics contact and joint solver": 0.133442,
+        "Physics proxy refresh": 0.015437,
+        "Fixed simulation step": 0.796011
+      },
+      "counters": {
+        "Physics bodies last step": 53,
+        "Physics candidate pairs last step": 52,
+        "Physics contacts last step": 41,
+        "Physics joints": 48,
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact search iterations": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact search limits": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact pose evaluations": 0,
+        "Physics impact pose reuses": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics impact remaining-bound rejections": 0
+      }
+    },
+    {
+      "frame": 3512,
+      "scopesMs": {
+        "Physics broadphase": 0.022068,
+        "Physics contacts": 0.506941,
+        "Physics initial impacts": 0.000125,
+        "Physics velocity constraints": 0.074189,
+        "Physics continuous impacts": 0.011255,
+        "Physics position constraints": 0.020554,
+        "Physics sleeping assessment": 0.01687,
+        "Physics contact and joint solver": 0.123677,
+        "Physics proxy refresh": 0.015196,
+        "Fixed simulation step": 0.788842
+      },
+      "counters": {
+        "Physics bodies last step": 53,
+        "Physics candidate pairs last step": 52,
+        "Physics contacts last step": 41,
+        "Physics joints": 48,
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact search iterations": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact search limits": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact pose evaluations": 0,
+        "Physics impact pose reuses": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics impact remaining-bound rejections": 0
+      }
+    },
+    {
+      "frame": 3516,
+      "scopesMs": {
+        "Physics broadphase": 0.021836,
+        "Physics contacts": 0.396565,
+        "Physics initial impacts": 0.000127,
+        "Physics velocity constraints": 0.074176,
+        "Physics continuous impacts": 0.011283,
+        "Physics position constraints": 0.020338,
+        "Physics sleeping assessment": 0.016963,
+        "Physics contact and joint solver": 0.123573,
+        "Physics proxy refresh": 0.014862,
+        "Fixed simulation step": 0.783518
+      },
+      "counters": {
+        "Physics bodies last step": 53,
+        "Physics candidate pairs last step": 52,
+        "Physics contacts last step": 41,
+        "Physics joints": 48,
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact search iterations": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact search limits": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact pose evaluations": 0,
+        "Physics impact pose reuses": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics impact remaining-bound rejections": 0
+      }
+    }
+  ]
+}

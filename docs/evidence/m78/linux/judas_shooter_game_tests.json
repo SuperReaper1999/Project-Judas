@@ -1,0 +1,26 @@
+{
+  "id": "judas_shooter_game_tests",
+  "source": "tests/ShooterGameTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_shooter_game_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e52dcfb2eb1bdf83135eb7c398d20f8fc2e023cfebf299855b62fc66edbc3c90",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 36,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_shooter_game_tests.log",
+  "logSHA256": "11c147a85c1a84b3ea28e8e281239de212340f002e6c0709e0e3c92405f8f91e",
+  "seconds": 2.027195444001336
+}

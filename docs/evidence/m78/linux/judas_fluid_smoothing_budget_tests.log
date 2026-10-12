@@ -1,0 +1,12 @@
+CASE unequal_mass_pair initial_P=0 final_P=0 delta_P=0 initial_KE=0.75 final_KE=0.59383445849352778 momentum=1 dissipative=1
+ particle=0 mass=1 final_vx=0.88981980085372925
+ particle=1 mass=2 final_vx=-0.44490990042686462
+CASE equal_mass_asymmetric_neighbourhood initial_P=0 final_P=0 delta_P=0 initial_KE=0.75 final_KE=0.61116619243551895 momentum=1 dissipative=1
+ particle=0 mass=1 final_vx=0.90185379981994629
+ particle=1 mass=1 final_vx=-0.41685366630554199
+ particle=2 mass=1 final_vx=-0.4850001335144043
+CONFIG smoothing=-0.0099999997764825821 rejected=1
+CONFIG smoothing=1.0099999904632568 rejected=1
+CONFIG smoothing=inf rejected=1
+CONFIG smoothing=nan rejected=1
+SUMMARY cases=2 invalid_config_checks=4 failures=0

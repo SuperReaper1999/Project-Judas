@@ -1,0 +1,85 @@
+{
+  "sourceSHA256": "42424f8ff51b2f932be6769dbf9ee689df1cc63cd53eb33c54efe2ca38a846a9",
+  "archiveSHA256": "577943674b2f319acbe956393f55a94ab6bb9de48a9f33dc4b4471d4775f8100",
+  "executableSHA256": "1cafd6caaa9c3c7b49c936b618abc534e93f98b3dbc653f453392611607d9540",
+  "stages": [
+    {
+      "stage": "compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-continuation/probes/joint_drive_roundtrip.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/joint-drive-roundtrip/observer.o"
+      ],
+      "exitCode": 0
+    },
+    {
+      "stage": "link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/joint-drive-roundtrip/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/joint-drive-roundtrip/observer",
+        "libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0
+    },
+    {
+      "stage": "run",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/joint-drive-roundtrip/observer"
+      ],
+      "exitCode": 4
+    }
+  ],
+  "scope": "Ordinary authored two-body Ball-joint; actual command before capture; no skeleton/contacts/gravity/solver warm history; unchanged60Hz"
+}

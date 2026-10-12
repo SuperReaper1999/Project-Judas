@@ -1,0 +1,25 @@
+{
+  "case": "mod-shipped-moved-runtime",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/moved-runtime/judas"
+  ],
+  "cwd": "/tmp",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:23:46.781830+00:00",
+  "explicitEnvironment": [
+    "JUDAS_TEST_SCRIPT=/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/mod-runtime.harness"
+  ],
+  "executableSHA256": "15e4b91ba847e14ef84f7c8805b88314cd71fd65081210d8dc87d843105197f8",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 1.270920679999108,
+  "log": "docs/evidence/m78/cases/mod-shipped-moved-runtime.log",
+  "logSHA256": "c084867bcd9b75e9dcad1dd40f311d6fdef91c91c8618ff25b929befc6381852"
+}

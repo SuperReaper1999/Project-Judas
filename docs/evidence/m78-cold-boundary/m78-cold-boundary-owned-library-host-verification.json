@@ -1,0 +1,112 @@
+{
+  "hostVerified": true,
+  "scope": "Independent exact diagnostic archive/chunk preservation before owned cleanup",
+  "source": "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\judas_engine.lib",
+  "bytes": 67680390,
+  "sha256": "cac3377b110dd81a2262aa0757fbabfdfb06b0bf1daa34a7817bf2c676a3eeb6",
+  "parts": [
+    {
+      "offset": 0,
+      "sha256": "3750374da0297eadc8c7686cded7af585be4fa80dcbd664454ab37bd406c134a",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-0.bin"
+    },
+    {
+      "offset": 4194304,
+      "sha256": "ee5e23ce0420387bfcd66bc3d38e14ed11926bd10935437218dba27b9932a1ba",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-1.bin"
+    },
+    {
+      "offset": 8388608,
+      "sha256": "6a440ce82577076f6752a2104d46a11dfae8434e115a77f030257afb66c8aa46",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-2.bin"
+    },
+    {
+      "offset": 12582912,
+      "sha256": "0ade29644b8c849039582b602496dd52b7c2d6ae08e8eb4613f6e25e74d744b6",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-3.bin"
+    },
+    {
+      "offset": 16777216,
+      "sha256": "f4c8a0639d5b94f156142e6736886027cf30fc46e6712087cd7e810758e91095",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-4.bin"
+    },
+    {
+      "offset": 20971520,
+      "sha256": "8aa9dabdb22401a0f15f0d3a969f32143480a6887aa7b440837919ae8b1c06be",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-5.bin"
+    },
+    {
+      "offset": 25165824,
+      "sha256": "df5121f4420e9f8dc4c3616b2847e949a996a507b48163cf8fed5803f4f162d0",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-6.bin"
+    },
+    {
+      "offset": 29360128,
+      "sha256": "f68e58acf244853c4cdf3114f12c9ff59f80ff33423d4173c6d33bc5a702af9b",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-7.bin"
+    },
+    {
+      "offset": 33554432,
+      "sha256": "ac8ebe088100481c195815b6c098a29666b6df967e69d662c3e87b63e618ec27",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-8.bin"
+    },
+    {
+      "offset": 37748736,
+      "sha256": "5359ca54a35e30cd6937c47d41bcd56dfafb534ddba1c52bf8a9463ef2eb69eb",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-9.bin"
+    },
+    {
+      "offset": 41943040,
+      "sha256": "21ff7c980c7c6bc83d42919155423938f87a388ccf88a7a80477e5edc6842484",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-10.bin"
+    },
+    {
+      "offset": 46137344,
+      "sha256": "4bbd42d17a769db75f76a1e5ea0ae8695515f1af35c72bdf7e9218ff42fbb48c",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-11.bin"
+    },
+    {
+      "offset": 50331648,
+      "sha256": "a6ef949c29424f6e20799907920a237b1502a410b8d3521fe2a767c7b5e12103",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-12.bin"
+    },
+    {
+      "offset": 54525952,
+      "sha256": "1a44dba8b42ce292181502f00146b6a107b4111cdc3ceb8c0169b57547832499",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-13.bin"
+    },
+    {
+      "offset": 58720256,
+      "sha256": "1aa8574764559fb37fc38b28c9ab338f59e27b0eaa7a22dfad74d72194eeece5",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-14.bin"
+    },
+    {
+      "offset": 62914560,
+      "sha256": "17d14454ce49769ec5a554e92eb10b3b6d95e2440304c509391a8c4fd30cd6e6",
+      "bytes": 4194304,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-15.bin"
+    },
+    {
+      "offset": 67108864,
+      "sha256": "71f117182443f95ec97d1009236b4e7549ec40e7fce023ddd9279e4660cb3004",
+      "bytes": 571526,
+      "reportName": "m78-cold-boundary-owned-library-archive-part-16.bin"
+    }
+  ],
+  "hostPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/native-binaries/diagnostic-boundary-v1-judas_engine.lib"
+}

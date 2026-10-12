@@ -1,0 +1,21 @@
+ CMakeLists.txt                   | 10 ++++++++--
+ docs/ARCHITECTURE.md             | 16 ++++++++++++++--
+ docs/M77.md                      | 11 ++++++++---
+ src/CollisionGeometry.cpp        | 17 +++++++++++++++--
+ src/PhysicsWorld.cpp             | 41 +++++++++++++++++++++++++++++++---------
+ src/PhysicsWorld.h               |  4 ++--
+ src/Prefab.cpp                   |  8 +++++++-
+ src/RigidBody.cpp                | 36 +++++++++++++++++++++++++++++++----
+ src/RigidBody.h                  | 29 ++++++++++++++++------------
+ src/RigidMotion.h                | 18 +++++++++++-------
+ src/editor/TerrainTools.cpp      | 16 +++++++++++++---
+ src/editor/TerrainTools.h        |  3 +++
+ tests/CollisionGeometryTests.cpp | 23 ++++++++++++++--------
+ tests/PrefabTests.cpp            |  9 +++++++++
+ tests/RigidMotionTests.cpp       | 20 +++++++++++++++++++-
+ tests/ScalabilityTests.cpp       |  2 +-
+ tests/SpacecraftControlTests.cpp |  9 +++++++--
+ tests/SpacecraftFlightTests.cpp  | 12 +++++++-----
+ tests/WorldStreamingTests.cpp    | 11 +++++++++++
+ tools/NavigationBake.cpp         |  3 ++-
+ 20 files changed, 233 insertions(+), 65 deletions(-)

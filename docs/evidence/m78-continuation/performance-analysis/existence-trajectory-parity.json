@@ -1,0 +1,22 @@
+{
+  "box-1": {
+    "steps": 900,
+    "unchangedPhysicalObservations": true,
+    "differences": []
+  },
+  "box-4": {
+    "steps": 900,
+    "unchangedPhysicalObservations": true,
+    "differences": []
+  },
+  "mesh-1": {
+    "steps": 900,
+    "unchangedPhysicalObservations": true,
+    "differences": []
+  },
+  "mesh-4": {
+    "steps": 900,
+    "unchangedPhysicalObservations": true,
+    "differences": []
+  }
+}

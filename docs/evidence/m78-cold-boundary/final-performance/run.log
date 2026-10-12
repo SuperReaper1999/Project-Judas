@@ -1,0 +1,9 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+{"case":"box-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":0,"medianMs":0.150191,"p95Ms":0.287093,"maxMs":2.714715,"first120MaxMs":2.714715,"contactRows":13801,"ccdIterations":997,"ccdLimits":1,"minimumBoneCenterY":0.0493287928,"sleeping":13}
+{"case":"box-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":0,"medianMs":0.60878,"p95Ms":0.755772,"maxMs":11.063631,"first120MaxMs":11.063631,"contactRows":55204,"ccdIterations":3988,"ccdLimits":4,"minimumBoneCenterY":0.0493287928,"sleeping":52}
+{"case":"mesh-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":8192,"medianMs":0.28051,"p95Ms":0.428942,"maxMs":10.323794,"first120MaxMs":10.323794,"contactRows":15677,"ccdIterations":2574,"ccdLimits":5,"minimumBoneCenterY":0.0489002839,"sleeping":0}
+{"case":"mesh-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":8192,"medianMs":1.085516,"p95Ms":5.454081,"maxMs":28.235067,"first120MaxMs":28.235067,"contactRows":56576,"ccdIterations":19163,"ccdLimits":7,"minimumBoneCenterY":0.0447216108,"sleeping":26}
+observer_sanity=1

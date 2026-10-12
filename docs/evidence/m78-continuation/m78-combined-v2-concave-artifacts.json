@@ -1,0 +1,56 @@
+﻿{
+    "scope":  "Exact original four 900-step 60-Hz articulated workloads; raw CSV and profiler phases, no retuning/forced sleep/quality change.",
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "files":  [
+                  {
+                      "sha256":  "5fbc6c58ecbb88cd7711da4fb95963b79ce12dee26beb5d2d53d5f98c2b11c31",
+                      "name":  "m78-combined-v2-concave-box-1-profile.json",
+                      "bytes":  985418,
+                      "relativePath":  "box-1-profile.json"
+                  },
+                  {
+                      "sha256":  "4cbd1beccc49a7e113cb21fb9237e01057163235595976c01aecd61f360ed3c1",
+                      "name":  "m78-combined-v2-concave-box-1.csv",
+                      "bytes":  44454,
+                      "relativePath":  "box-1.csv"
+                  },
+                  {
+                      "sha256":  "9d4833d2c2ae40aebd3e632974db7919e638ea4cbcf6281c4bfe5b5d9a585f48",
+                      "name":  "m78-combined-v2-concave-box-4-profile.json",
+                      "bytes":  1692067,
+                      "relativePath":  "box-4-profile.json"
+                  },
+                  {
+                      "sha256":  "dc55fa9ba978a5a1eecee7be7fbb20443f1005a8be54f065eb0e38d9a89cb461",
+                      "name":  "m78-combined-v2-concave-box-4.csv",
+                      "bytes":  45325,
+                      "relativePath":  "box-4.csv"
+                  },
+                  {
+                      "sha256":  "d13f635890319fd44d5719a4d4c6d86eea1819e2c2948ad48d6178dcae20b522",
+                      "name":  "m78-combined-v2-concave-mesh-1-profile.json",
+                      "bytes":  990264,
+                      "relativePath":  "mesh-1-profile.json"
+                  },
+                  {
+                      "sha256":  "2727976831fe5ab5c2e6f138cdc589685c48920b6b433ec700647494ddaf7120",
+                      "name":  "m78-combined-v2-concave-mesh-1.csv",
+                      "bytes":  42806,
+                      "relativePath":  "mesh-1.csv"
+                  },
+                  {
+                      "sha256":  "8205b62e9d7ecbcfbff5f2027c5ab4e170b29715a5c0fd8dae85053d748da9f1",
+                      "name":  "m78-combined-v2-concave-mesh-4-profile.json",
+                      "bytes":  1806294,
+                      "relativePath":  "mesh-4-profile.json"
+                  },
+                  {
+                      "sha256":  "ba8e69a7e4aa315b1528068af49801a57a78fb729dd1981abeb41ca0068b7f78",
+                      "name":  "m78-combined-v2-concave-mesh-4.csv",
+                      "bytes":  43716,
+                      "relativePath":  "mesh-4.csv"
+                  }
+              ],
+    "sourceSHA256":  "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136",
+    "freeBytes":  345034752
+}

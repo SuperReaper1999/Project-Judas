@@ -1,0 +1,54 @@
+[
+  {
+    "command": [
+      "c++",
+      "-std=c++17",
+      "-O3",
+      "-DNDEBUG",
+      "-I/home/conner/Documents/GitHub/Project-Judas/src",
+      "-c",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/free_rotation_world.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/free_rotation_world.o"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/free_rotation_world.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/free_rotation_world",
+      "libjudas_engine.a",
+      "libjudas_profiler.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "libjudas_profiler.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/free_rotation_world"
+    ],
+    "exitCode": 0,
+    "binarySHA256": "68ab1c7fe1361bb32d69d695463b8b7678fee3d1ce229ee62d782ad02eb622bb",
+    "engineLibrarySHA256": "43f9c3512a3b395492278b819710badc1e8a884692baa30f0a27c8c08fce456b"
+  }
+]

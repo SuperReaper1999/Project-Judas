@@ -1,0 +1,109 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  59162624,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicalBalance.obj",
+                        "sha256":  "b6dc75e92ee23328bec1ec93d74a110ca829c6d089b44c86b4027e9b9cebb840",
+                        "name":  "000-PhysicalBalance.obj",
+                        "bytes":  1462385
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj",
+                        "sha256":  "fc0bbc98176fe2317021091ea4e759715e00873a2e8eeced959ab8ffc01eeacb",
+                        "name":  "001-PhysicsWorld.obj",
+                        "bytes":  1494120
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\WorldPersistence.obj",
+                        "sha256":  "e69bb8befc7e57ff336ffec69c708000118c43f2b67cccb202d276aaa0fe198d",
+                        "name":  "002-WorldPersistence.obj",
+                        "bytes":  1272989
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v1\\objects\\RigidBody.obj",
+                        "sha256":  "ae8f72d16ba4f933335e38214232503cb54aec1e5366f6b6d493757cbab25aeb",
+                        "name":  "003-RigidBody.obj",
+                        "bytes":  31094
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\CollisionGeometry.obj",
+                        "sha256":  "6f7afd302be23329f65fb73ddfec1370a99c40dffa1327cdea5b53f95ad67c04",
+                        "name":  "004-CollisionGeometry.obj",
+                        "bytes":  247280
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\concave-0.obj",
+                        "sha256":  "7538895bfb7e4e97f3980515e21f7203f9341d5e7cbdcc115c6cd836050b3651",
+                        "name":  "005-concave-0.obj",
+                        "bytes":  669883
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\flu001-0.obj",
+                        "sha256":  "016309c32aa05523a28fc6cbf329ce242cfefe36bae378161b38bb85f200db11",
+                        "name":  "006-flu001-0.obj",
+                        "bytes":  523780
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\PhysicsWorld.obj",
+                        "sha256":  "3ec58f69b0bed2bb80bf5d496fdfeb1ffc59919acfe8a39f642859b5575a82c2",
+                        "name":  "007-PhysicsWorld.obj",
+                        "bytes":  1392761
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\RigidBody.obj",
+                        "sha256":  "f2163edd0b4bff60813d39e88573a20e16f6799f3c2f718d7956e86ddc2c6e76",
+                        "name":  "008-RigidBody.obj",
+                        "bytes":  31094
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\objects\\JointSolver.obj",
+                        "sha256":  "6aa8a2f8b955fa3416ba0ca25f038866c389aac68a132fe6dfc82a75390b2955",
+                        "name":  "009-JointSolver.obj",
+                        "bytes":  874371
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\JointSolver.obj",
+                        "sha256":  "28b745bcb303fddb2e5c160511642873a1f4b40e2cd16f99ee78161e5f7ff05d",
+                        "name":  "010-JointSolver.obj",
+                        "bytes":  71392
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\PhysicsWorld.obj",
+                        "sha256":  "255ed05476f41b1e083eb877176fa3058b1f464bd2c9cd78b5c76232578d334c",
+                        "name":  "011-PhysicsWorld.obj",
+                        "bytes":  1406860
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj",
+                        "sha256":  "edd664d11022a916a76b35f0b2e28b946dc7806c017f7f90bf92aaf2ba9490fa",
+                        "name":  "012-BalanceLabBoundaryObserver.obj",
+                        "bytes":  3034133
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj",
+                        "sha256":  "2490752e85cf0254f87b6a8204d1a1ea20f0365016e87e677d46f502552b6711",
+                        "name":  "013-JointSolver.obj",
+                        "bytes":  924010
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\PhysicalBalance.obj",
+                        "sha256":  "5c37fb688daea9511e4e83525184cb28f549527cde2524b90355e0d320ee7076",
+                        "name":  "014-PhysicalBalance.obj",
+                        "bytes":  1463448
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78FirstBoundarySplit\\objects\\JointSolver.obj",
+                        "sha256":  "6b8c43e1b5284eb091507753941b5df527e44648963eb2bb9fa37a0d39393e25",
+                        "name":  "015-JointSolver.obj",
+                        "bytes":  968817
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\m78-final2-old-object-archive.zip",
+                        "bytes":  2840304,
+                        "sha256":  "f843939e082ecd84533c3819fab1fbb3cd84f4c830b367d433f5b53f8221594c"
+                    }
+                ],
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "freeAfter":  77905920
+}

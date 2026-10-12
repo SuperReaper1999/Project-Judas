@@ -1,0 +1,48 @@
+﻿{
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final-repair-gravity.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\gravity-0.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\gravity-1.obj\"",
+    "librarySHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "case":  "gravity",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-gravity.exe",
+    "executableSHA256":  "8b6e899f89284ae9abfddcc6255d5211bc01dbee5c936b79ee8710e5b0cabfe1",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "runs":  [
+                 {
+                     "seconds":  1.4994318,
+                     "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+                     "case":  "gravity",
+                     "expectedSaveSHA256":  null,
+                     "run":  "gravity",
+                     "executableSHA256":  "8b6e899f89284ae9abfddcc6255d5211bc01dbee5c936b79ee8710e5b0cabfe1",
+                     "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+                     "files":  [
+
+                               ],
+                     "arguments":  [
+
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  84664320,
+                     "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+                 }
+             ],
+    "freeBytes":  84660224,
+    "objects":  [
+                    {
+                        "objectSHA256":  "657521ac6cd732f24b725c8aa0c095c2466cfe737407d9ff8c149197f23da950",
+                        "source":  "tests/GravitySelectionTests.cpp",
+                        "bytes":  951028,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\gravity-0.obj",
+                        "sourceSHA256":  "027e92ccf8dd3cead1133ef0e2983eb34472c8500a6af5bfdac422bfdfd587e9",
+                        "reuseOriginal":  true
+                    },
+                    {
+                        "objectSHA256":  "f3c6b36f176a3ba8abaf3ae06755c3cff961c5f6849dabd638fb70db6ccad5a8",
+                        "source":  "src/editor/EditorHistory.cpp",
+                        "bytes":  712178,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\gravity-1.obj",
+                        "sourceSHA256":  "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b",
+                        "reuseOriginal":  true
+                    }
+                ],
+    "executableBytes":  9265152
+}

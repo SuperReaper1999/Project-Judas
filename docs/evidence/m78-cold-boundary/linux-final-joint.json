@@ -1,0 +1,13 @@
+{
+  "name": "joint",
+  "utc": "2026-10-11T23:00:08.900167+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_joint_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.04259736699896166,
+  "executableSHA256": "509d86e5860c0d6a849d9979046d34ef0241bb96e06b0bbc56649657500cd1ea",
+  "logSHA256": "b709fb895d5689f3db74b972e885ed1b1ef66ee3d857c4fb76f860fb708d640e",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

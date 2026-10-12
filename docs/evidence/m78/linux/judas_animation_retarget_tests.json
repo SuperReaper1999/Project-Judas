@@ -1,0 +1,27 @@
+{
+  "id": "judas_animation_retarget_tests",
+  "source": "tests/AnimationRetargetTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_animation_retarget_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "0668f41d7dbbbc0ebc346cf11e940ee121f293000e83e086f8093152435c226c",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 57,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_animation_retarget_tests.log",
+  "logSHA256": "b2b10eec2ef46e5e3a0083e53341e77519078f8624d189e4854ef66a5d0894a0",
+  "seconds": 0.20378465599969786
+}

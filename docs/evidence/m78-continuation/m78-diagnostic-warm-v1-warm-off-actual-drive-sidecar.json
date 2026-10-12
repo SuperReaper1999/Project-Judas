@@ -1,0 +1,217 @@
+{
+  "drives": [
+    {
+      "bodyA": 4611686018427387905,
+      "bodyB": 4611686018427387904,
+      "damping": 80.0,
+      "disposableImpulses": [
+        -0.4566608965396881,
+        0.06611932069063187,
+        1.443375825881958
+      ],
+      "enabled": true,
+      "index": 1,
+      "maxTorque": 150.0,
+      "relativeAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stiffness": 800.0,
+      "target": [
+        0.996183454990387,
+        0.08702563494443893,
+        0.0005853753536939621,
+        -0.006700469180941582
+      ]
+    },
+    {
+      "bodyA": 4611686018427387906,
+      "bodyB": 4611686018427387905,
+      "damping": 80.0,
+      "disposableImpulses": [
+        -0.25415945053100586,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "index": 2,
+      "maxTorque": 150.0,
+      "relativeAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stiffness": 800.0,
+      "target": [
+        0.9698575735092163,
+        -0.24367263913154602,
+        -3.085005673142405e-08,
+        -3.2561362672822725e-07
+      ]
+    },
+    {
+      "bodyA": 4611686018427387907,
+      "bodyB": 4611686018427387906,
+      "damping": 80.0,
+      "disposableImpulses": [
+        -0.13042914867401123,
+        0.4693627655506134,
+        0.6183324456214905
+      ],
+      "enabled": true,
+      "index": 3,
+      "maxTorque": 150.0,
+      "relativeAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stiffness": 800.0,
+      "target": [
+        0.9873617887496948,
+        0.1583402156829834,
+        0.0010650501353666186,
+        0.006641462445259094
+      ]
+    },
+    {
+      "bodyA": 4611686018427387908,
+      "bodyB": 4611686018427387904,
+      "damping": 80.0,
+      "disposableImpulses": [
+        0.2864486575126648,
+        -0.041214797645807266,
+        0.0036432920023798943
+      ],
+      "enabled": true,
+      "index": 4,
+      "maxTorque": 150.0,
+      "relativeAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stiffness": 800.0,
+      "target": [
+        -0.9054241180419922,
+        -0.4242599904537201,
+        -0.006160422693938017,
+        0.013146857731044292
+      ]
+    },
+    {
+      "bodyA": 4611686018427387909,
+      "bodyB": 4611686018427387908,
+      "damping": 80.0,
+      "disposableImpulses": [
+        0.05610097199678421,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "index": 5,
+      "maxTorque": 150.0,
+      "relativeAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stiffness": 800.0,
+      "target": [
+        -0.7507930397987366,
+        0.660537600517273,
+        2.3283067918100642e-08,
+        2.286397204898094e-07
+      ]
+    },
+    {
+      "bodyA": 4611686018427387910,
+      "bodyB": 4611686018427387909,
+      "damping": 80.0,
+      "disposableImpulses": [
+        0.08872662484645844,
+        0.011406483128666878,
+        0.08226899802684784
+      ],
+      "enabled": true,
+      "index": 6,
+      "maxTorque": 150.0,
+      "relativeAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stiffness": 800.0,
+      "target": [
+        0.9600256681442261,
+        0.279535174369812,
+        0.004058910068124533,
+        0.013939954340457916
+      ]
+    }
+  ],
+  "history": {
+    "elapsed": 0.3500000834465027,
+    "referenceTime": 3.0,
+    "swing": 1,
+    "swingTime": 0.28333336114883423,
+    "transferTime": 0.0833333358168602
+  },
+  "owner": 12,
+  "participantIdentities": {
+    "animation": {
+      "SHA256": "796c467ed780ca12b5595fe987ea89a7e9dcc77045a8e18f73343ad039d20566",
+      "version": 1
+    },
+    "articulation": {
+      "SHA256": "4061796d2862a538a5e64a5c95c871b63c7c8c2ac8d75cafef9d219c8d148221",
+      "version": 3
+    },
+    "audio": {
+      "SHA256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "version": 1
+    },
+    "contacts": {
+      "SHA256": "1ec6a13b0c9e6d57a8b3e8504c790f4a4909d9c66d2ea34ef9efbea8ece7fb66",
+      "version": 1
+    },
+    "entities": {
+      "SHA256": "75ca601a02b04b2fd8c27271c4a2b0cbb4424a59065e7d6910891dd658707aed",
+      "version": 1
+    },
+    "liquid": {
+      "SHA256": "5a0bfcbbd6b8715fdb73e8a7ad7363f34cf0214252719984e0a2b5b3c4ec14b9",
+      "version": 1
+    },
+    "motors": {
+      "SHA256": "b4ebbc9d3c7b985920386fe0a539f311dbf07b451209ee026529d8edb9d46759",
+      "version": 1
+    },
+    "navigation": {
+      "SHA256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "version": 1
+    },
+    "physical-animation": {
+      "SHA256": "1ddda90b322b4132d0b016cc1c07a4d272db79e78c39598a13391ae0f9f877e2",
+      "version": 2
+    },
+    "physical-balance": {
+      "SHA256": "dc2b2727cc2bfed74a278233cbf1834d6a9bd15dc5cd6e349dd5f5b58a2cb254",
+      "version": 1
+    },
+    "scripts": {
+      "SHA256": "81d307600b6c4851bd84f42b2262f8dbbd39f3d70a26dbc64073c61cf62d16b3",
+      "version": 1
+    },
+    "sleep": {
+      "SHA256": "6564d24cde9074eb3b3a096c5baf3a621a5e3f5f43a778f3b0f38c205d4613e2",
+      "version": 1
+    },
+    "view-projection": {
+      "SHA256": "7de4ca305000d7ba9623592d75fba2e8391aef013f6c1e63e47f8f0774da00cd",
+      "version": 1
+    }
+  },
+  "sceneFingerprint": "9b74e3788e0e5a565e98e95fe51835b0388e293c8a476bc411a0c287dc3bdd32"
+}

@@ -1,0 +1,22 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=3.0004,1.4157,-0.0134383 height=1.41745 up=0.99993 speed=0.000223615 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+ACTOR 10 status=2 root=-2.99985,1.24857,0.364068 height=1.24954 up=0.999992 speed=3.94022e-07 supports=4/4 landings=0 reason=measured supported physical standing
+PASS face-up authored robot gets up through public JS request
+ACTOR 11 status=2 root=0.00273317,1.25911,-0.481293 height=1.25965 up=0.999996 speed=1.79773e-07 supports=4/4 landings=0 reason=measured supported physical standing
+PASS different face-down rig gets up physically
+PASS cancel releases actuators and preserves physical articulation
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 16 checks 0 failures

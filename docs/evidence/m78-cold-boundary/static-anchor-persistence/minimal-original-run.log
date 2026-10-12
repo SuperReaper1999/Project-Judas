@@ -1,0 +1,4 @@
+FAIL ordinary static body uses slotless entity state
+FAIL actual prescribed static pose round trips exactly
+FAIL actual prescribed static velocities round trip exactly
+SUMMARY 8 checks 3 failures

@@ -1,0 +1,29 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/Saves/lab.judasstate (none saved)
+Project: Judas Save / Load State Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/save_lab.judasproj)
+Scene: Save Lab / waves, cup, poses and music (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+IDLE service_ns=3.36800 entities=56 bodies=41 owners=0
+SAMPLE save capture=3.295740 worker=46.616983 restore=0.000000 frame=12.588146 bytes=82870 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.286835 restore=53.320978 frame=36.352389 bytes=82870 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=63.243206 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.716895 worker=25.446233 restore=0.000000 frame=31.915188 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.521682 restore=76.303978 frame=37.764224 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=41.849987 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.708440 worker=17.492363 restore=0.000000 frame=36.481353 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.182698 restore=81.747848 frame=44.581242 bytes=89203 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=42.410436 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.743359 worker=14.008335 restore=0.000000 frame=37.273930 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.154463 restore=82.264596 frame=45.087248 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=45.957083 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.705746 worker=21.731535 restore=0.000000 frame=38.098801 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.150182 restore=82.586502 frame=42.381216 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=41.561950 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.787216 worker=15.784361 restore=0.000000 frame=37.318994 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.209517 restore=81.378502 frame=43.318214 bytes=89206 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=42.827161 entities=56 bodies=42 owners=9 voices=1 jobs=1
+SAMPLE save capture=1.693573 worker=13.644046 restore=0.000000 frame=36.973744 bytes=89264 entities=56 bodies=42 owners=9 rss=0
+SAMPLE load capture=0.000000 worker=3.229021 restore=82.588453 frame=43.071121 bytes=89264 entities=56 bodies=42 owners=9 rss=0
+FIRST_RESUME frame_ms=41.593281 entities=56 bodies=42 owners=9 voices=1 jobs=1
+PASS seven save/load cycles complete with bounded native counts

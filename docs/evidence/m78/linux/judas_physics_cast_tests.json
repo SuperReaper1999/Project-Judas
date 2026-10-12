@@ -1,0 +1,26 @@
+{
+  "id": "judas_physics_cast_tests",
+  "source": "tests/PhysicsCastTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_cast_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "9e6b586d4b97714162cae9f1cfbe612fa9dc1139f02bacec21b9a2a8e0db2061",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 26,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_physics_cast_tests.log",
+  "logSHA256": "789b756784bf3ada7f43b57290200b0d65a66e43a538103fa2dab88b00288975",
+  "seconds": 0.18487606400049117
+}

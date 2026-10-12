@@ -1,0 +1,28 @@
+{
+  "case": "mod-fork-enable",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+    "enable",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+    "landscape-fork",
+    "1.0.0",
+    "1494935d82b56fe65e665e5620e47072a954f2027ce37a295c581b0b32c6b1a1"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:15:41.924190+00:00",
+  "explicitEnvironment": [],
+  "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 0.06441382899902237,
+  "log": "docs/evidence/m78/cases/mod-fork-enable.log",
+  "logSHA256": "ea206bdd2ff16272b6809240d834005a77f15ce8cdc211c7b8dca4712947118b"
+}

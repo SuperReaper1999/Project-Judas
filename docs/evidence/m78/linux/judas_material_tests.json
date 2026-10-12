@@ -1,0 +1,28 @@
+{
+  "id": "judas_material_tests",
+  "source": "tests/MaterialTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_material_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/material_lab/Assets/environment/studio.judasenv"
+  ],
+  "adapter": "normal material pixels plus existing environment asset",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "d641f83b68415ed6b7b5814e8ae749c612d2338179cb17d0c7d386b91bc31615",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 44,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_material_tests.log",
+  "logSHA256": "75990fc4eb57eec47177183b812db3afdf2a7e24da34979f3591a01e57a334e4",
+  "seconds": 3.4168168070009415
+}

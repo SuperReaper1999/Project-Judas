@@ -1,0 +1,198 @@
+{
+  "archiveSHA256": "244616cd25ef57a3b958bc71e044f753a983fe396d100ceb30559d5187c9a13a",
+  "sourceSHA256": {
+    "src/PhysicsWorld.cpp": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff",
+    "src/PhysicsWorld.h": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9",
+    "src/WorldPersistence.cpp": "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+    "src/WorldPersistence.h": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c",
+    "src/PhysicalBalance.cpp": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32",
+    "tests/PhysicsContinuationTests.cpp": "e75c09f8167918ee29460555574c9269076f27388a2af46b7b56f22fd1368246"
+  },
+  "results": [
+    {
+      "name": "judas_editor-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorMain.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorMilestoneNotice.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorCamera.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorPicking.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorPanels.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/RetargetPanel.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/WorldTools.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/TerrainTools.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/ModTools.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/ProfilerView.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/EditorWidgets.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o",
+        "CMakeFiles/judas_editor.dir/src/editor/GizmoMath.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/libjudas_engine.a",
+        "libjudas_imgui.a",
+        "libjudas_navigation_baker.a",
+        "libjudas_model_import.a",
+        "libjudas_profiler.a",
+        "libjudas_world_authoring.a",
+        "libjudas_ufbx.a",
+        "libjudas_navigation_baker.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_navigation_backend.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release",
+      "environment": {},
+      "utc": "2026-10-11T23:55:16.774314+00:00",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.1084403860004386,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "judas_navigation_dependency_tests-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_navigation_dependency_tests.dir/tests/NavigationDependencyTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/judas_navigation_dependency_tests",
+        "libjudas_world_authoring.a",
+        "libjudas_navigation_baker.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_navigation_backend.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release",
+      "environment": {},
+      "utc": "2026-10-11T23:55:17.615246+00:00",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.7716159130068263,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "navigation",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/judas_navigation_dependency_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-smokes/navigation/landscape_fork.judasproj",
+        "Imports/landscape.judasterrain"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "environment": {},
+      "utc": "2026-10-11T23:55:18.453142+00:00",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.702980160000152,
+      "logSHA256": "c016fc212493ef925aafa2ebec1e1d6ce4fb15630ec04ebceb091f4ecff70884"
+    },
+    {
+      "name": "editor-play-stop",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-smokes/editor-project/balance_lab.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "environment": {
+        "JUDAS_EDITOR_AUTOTEST": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-smokes/editor-evidence"
+      },
+      "utc": "2026-10-11T23:55:24.269785+00:00",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 5.758285998999781,
+      "logSHA256": "54a8d630cc44c0425cb417ff09fa8e82fbddce43b7d336509d235da167464e38"
+    },
+    {
+      "name": "export",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/balance_lab/balance_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-smokes/package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "environment": {},
+      "utc": "2026-10-11T23:55:24.825214+00:00",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.40140968799823895,
+      "logSHA256": "2136018bd6f582604e236fc13e1b972deb931aeac9f98711106e245aca3d6d44"
+    },
+    {
+      "name": "moved-standalone",
+      "command": [
+        "/tmp/judas-m78-cold-boundary-final-moved/judas"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "JUDAS_ENGINE_ROOT": "/tmp/unavailable-m78-engine-root",
+        "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-smokes/startup.harness"
+      },
+      "utc": "2026-10-11T23:55:26.639311+00:00",
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.737884836999001,
+      "logSHA256": "efce9fb2659684c05ce33ed14c2dbf76e39f9ebc3b0bcc12a7aaa019289f362d"
+    },
+    {
+      "name": "legacy-a106",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-combined-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-smokes/legacy-a106",
+        "cold-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "environment": {},
+      "utc": "2026-10-11T23:55:28.061697+00:00",
+      "exitCode": 1,
+      "expectedExit": 1,
+      "programPassed": false,
+      "seconds": 1.3664786920053302,
+      "logSHA256": "0a62295cae4d1d2855aced825f3bcbdc9de74b3bfc8aa06fa81dc8ed68250378"
+    }
+  ],
+  "legacyClassification": "Original snapshot still fails; expected exit is not a validation pass.",
+  "executableSHA256": {
+    ".cache/m78-cold-boundary/final-combined-build/judas": "618df71e90f92f33269042fe32170718313e38c3d42765e5fd8366b6a61a4399",
+    ".cache/m78-cold-boundary/final-combined-build/judas_editor": "abc4833405fc87d100f7f9d32b50849d51afcc4ac1508b0d9e6719e8cfac88db",
+    ".cache/m78-cold-boundary/final-combined-build/judas_navigation_dependency_tests": "d287beeb67e29f1bee6764ae2988fc700d3215162cf64c577baacd54a1bf80c5",
+    ".cache/m78-cold-boundary/final-combined-build/judas_balance_lab_tests": "d73f37d3c92ac9017f2009c0af26d44603c8e651c00b1f135a1e0a057aa1450a"
+  },
+  "movedRuntimeMatchesBuilt": true
+}

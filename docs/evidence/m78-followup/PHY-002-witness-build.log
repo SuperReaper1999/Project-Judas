@@ -1,0 +1,37 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 22%] Built target freetype
+[ 27%] Built target judas_quickjs
+[ 38%] Built target judas_navigation_backend
+[ 38%] Built target judas_glad
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target judas_profiler
+[ 38%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 38%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_collision_geometry_tests.dir/tests/CollisionGeometryTests.cpp.o
+[100%] Linking CXX executable judas_collision_geometry_tests
+[100%] Built target judas_collision_geometry_tests
+[ 16%] Built target freetype
+[ 22%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 27%] Built target judas_app_icon
+[ 27%] Built target judas_profiler
+[ 27%] Built target judas_glad
+[ 38%] Built target judas_navigation_backend
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target judas_materials
+[ 38%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_prefab_tests.dir/tests/PrefabTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/PrefabTests.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/PrefabTests.cpp:45:32: error: ‘reverse’ is not a member of ‘std’
+   45 |     Scene reordered=scene;std::reverse(reordered.Objects().begin(),reordered.Objects().end());Scene reorderedResolved;
+      |                                ^~~~~~~
+gmake[3]: *** [CMakeFiles/judas_prefab_tests.dir/build.make:79: CMakeFiles/judas_prefab_tests.dir/tests/PrefabTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:4016: CMakeFiles/judas_prefab_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:4023: CMakeFiles/judas_prefab_tests.dir/rule] Error 2
+gmake: *** [Makefile:1281: judas_prefab_tests] Error 2

@@ -1,0 +1,73 @@
+Renderer fragment texture units: 32 (material path uses 12)
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+{"case":"box-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":0,"medianMs":0.15736,"p95Ms":0.274631,"maxMs":4.963501,"first120MaxMs":4.963501,"contactRows":10340,"ccdIterations":1583,"ccdLimits":0,"minimumBoneCenterY":0.0447952822,"sleeping":13}
+{"case":"box-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":0,"medianMs":0.666566,"p95Ms":1.154918,"maxMs":19.721883,"first120MaxMs":19.721883,"contactRows":41360,"ccdIterations":6332,"ccdLimits":0,"minimumBoneCenterY":0.0447952822,"sleeping":52}
+MOTION owner=200 joint=mixamorig:Hips linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:Spine1 linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:Head linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftForeArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightForeArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftFoot linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightFoot linear=0 angular=0 sleeping=1
+{"case":"mesh-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":8192,"medianMs":0.329179,"p95Ms":10.962711,"maxMs":26.72083,"first120MaxMs":9.589925,"contactRows":9246,"ccdIterations":44322,"ccdLimits":19,"minimumBoneCenterY":0.0494667999,"sleeping":13}
+MOTION owner=200 joint=mixamorig:Hips linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:Spine1 linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:Head linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftForeArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightForeArm linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:LeftFoot linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightLeg linear=0 angular=0 sleeping=1
+MOTION owner=200 joint=mixamorig:RightFoot linear=0 angular=0 sleeping=1
+MOTION owner=201 joint=mixamorig:Hips linear=0.000189760758 angular=0.0006074353 sleeping=0
+MOTION owner=201 joint=mixamorig:Spine1 linear=0.000196750902 angular=0.00130902242 sleeping=0
+MOTION owner=201 joint=mixamorig:Head linear=0.00460038707 angular=0.049027089 sleeping=0
+MOTION owner=201 joint=mixamorig:LeftArm linear=0.000338585291 angular=0.000506288721 sleeping=0
+MOTION owner=201 joint=mixamorig:LeftForeArm linear=0.000117102754 angular=0.000820889836 sleeping=0
+MOTION owner=201 joint=mixamorig:RightArm linear=0.000282879337 angular=0.00252283923 sleeping=0
+MOTION owner=201 joint=mixamorig:RightForeArm linear=0.000307735114 angular=0.00163752912 sleeping=0
+MOTION owner=201 joint=mixamorig:LeftUpLeg linear=9.78468815e-05 angular=0.000464641053 sleeping=0
+MOTION owner=201 joint=mixamorig:LeftLeg linear=0.000242147944 angular=0.000552298734 sleeping=0
+MOTION owner=201 joint=mixamorig:LeftFoot linear=0.000132857283 angular=0.000548733864 sleeping=0
+MOTION owner=201 joint=mixamorig:RightUpLeg linear=5.37715823e-05 angular=0.000208284095 sleeping=0
+MOTION owner=201 joint=mixamorig:RightLeg linear=0.000183614597 angular=0.000206811237 sleeping=0
+MOTION owner=201 joint=mixamorig:RightFoot linear=0.000152243112 angular=0.000208407437 sleeping=0
+MOTION owner=202 joint=mixamorig:Hips linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:Spine1 linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:Head linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:LeftArm linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:LeftForeArm linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:RightArm linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:RightForeArm linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:LeftUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:LeftLeg linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:LeftFoot linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:RightUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:RightLeg linear=0 angular=0 sleeping=1
+MOTION owner=202 joint=mixamorig:RightFoot linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:Hips linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:Spine1 linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:Head linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:LeftArm linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:LeftForeArm linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:RightArm linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:RightForeArm linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:LeftUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:LeftLeg linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:LeftFoot linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:RightUpLeg linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:RightLeg linear=0 angular=0 sleeping=1
+MOTION owner=203 joint=mixamorig:RightFoot linear=0 angular=0 sleeping=1
+{"case":"mesh-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":8192,"medianMs":1.124685,"p95Ms":19.796131,"maxMs":40.930887,"first120MaxMs":24.715041,"contactRows":44766,"ccdIterations":76266,"ccdLimits":26,"minimumBoneCenterY":0.0443587974,"sleeping":39}
+observer_sanity=1

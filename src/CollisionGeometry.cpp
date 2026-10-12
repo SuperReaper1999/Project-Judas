@@ -79,12 +79,13 @@ std::vector<V> clip(std::vector<V> points,V normal,double plane) {
  std::vector<V> out;if(points.empty())return out;V previous=points.back();double before=glm::dot(normal,previous)-plane;
  for(V current:points){double now=glm::dot(normal,current)-plane;if((before<=eps)!=(now<=eps))out.push_back(previous+(current-previous)*(before/(before-now)));if(now<=eps)out.push_back(current);previous=current;before=now;}return out;
 }
-std::vector<std::pair<V,V>> witnesses(const Poly& a,const Poly& b,const Separation& s) {
+std::vector<std::pair<V,V>> witnesses(const Poly& a,const Poly& b,const Separation& s,bool* clippedFace=nullptr) {
  unsigned reference=0,incident=0;double alignment=-INFINITY,opposite=INFINITY;
  for(unsigned i=0;i<b.normals.size();++i)if(glm::dot(b.normals[i],s.normal)>alignment){alignment=glm::dot(b.normals[i],s.normal);reference=i;}
  for(unsigned i=0;i<a.normals.size();++i)if(glm::dot(a.normals[i],s.normal)<opposite){opposite=glm::dot(a.normals[i],s.normal);incident=i;}
  std::vector<std::pair<V,V>> result;
  if(alignment>1-1e-6&&!s.edge){auto& face=b.faces[reference];V n=b.normals[reference];std::vector<V> polygon;for(auto v:a.faces[incident])polygon.push_back(a.points[v]);for(unsigned i=0;i<face.size();++i){V x=b.points[face[i]],y=b.points[face[(i+1)%face.size()]];V side=unit(glm::cross(y-x,n));polygon=clip(std::move(polygon),side,glm::dot(side,x));}double plane=glm::dot(n,b.points[face[0]]);for(V p:polygon)result.push_back({p,p-n*(glm::dot(n,p)-plane)});}
+ if(clippedFace)*clippedFace=!result.empty();
  if(result.empty()){
   double supportA=INFINITY,supportB=-INFINITY;V pa=a.points[0],pb=b.points[0];for(V p:a.points)if(glm::dot(p,s.normal)<supportA){supportA=glm::dot(p,s.normal);pa=p;}for(V p:b.points)if(glm::dot(p,s.normal)>supportB){supportB=glm::dot(p,s.normal);pb=p;}
   // Keep edge witnesses on actual features, rather than inventing a plane point.
@@ -105,6 +106,26 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
  std::stable_sort(contacts.begin(),contacts.end(),[](const Contact& a,const Contact& b){return a.signedSeparation<b.signedSeparation;});if(contacts.empty())return;
  // Deepest first, then maximize coverage. Deduplicate shared-face witnesses.
  std::vector<unsigned> chosen;chosen.push_back(0);while(chosen.size()<4){double best=1e-12;unsigned selected=UINT32_MAX;for(unsigned i=0;i<contacts.size();++i){double score=INFINITY;for(auto j:chosen)score=std::min(score,glm::dot(contacts[i].localAnchorB-contacts[j].localAnchorB,contacts[i].localAnchorB-contacts[j].localAnchorB));if(score>best){best=score;selected=i;}}if(selected==UINT32_MAX)break;chosen.push_back(selected);}for(auto i:chosen)out.Add(contacts[i]);
+}
+// Shared accepted-witness traversal. A full manifold consumer visits every
+// witness in the original deterministic order. An existence-only consumer may
+// stop after the first accepted witness; it never changes SAT, clipping, margins,
+// sidedness, crease handling or the contacts used by a physical solver.
+template<class Consumer>
+bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume) {
+ V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](Poly pb){
+  auto s=sat(pa,pb);if(s.gap>margin)return false;
+  bool faceWitness=false;
+  const auto pairs=witnesses(pa,pb,s,&faceWitness);
+  for(auto [x,y]:pairs){
+   const double gap=faceWitness?glm::dot(s.normal,x-y):s.gap;
+   if(gap<=margin&&consume(x+origin,y+origin,s.normal,gap))return true;
+  }
+  return false;
+ };
+ if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box)return test(poly(b,origin));
+ if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;Poly pb=triangle(b,i,origin);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!b.shape.asset->twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,*b.shape.asset,i);}if(test(std::move(pb)))return true;}return false;}
+ throw std::invalid_argument("unsupported cooked contact target");
 }
 }
 Shape Shape::Cooked(std::shared_ptr<const CollisionAsset> data,std::string id){if(!data)throw std::invalid_argument("missing cooked collision asset");Shape s;s.type=data->convex?ShapeType::ConvexHull:ShapeType::TriangleMesh;s.asset=std::move(data);s.assetId=std::move(id);return s;}
@@ -163,11 +184,21 @@ ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,dou
  if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule){M r=PrimitiveRotation(a);V center=PrimitiveCenter(a);double half=a.shape.type==ShapeType::Capsule?a.shape.halfHeight:0;auto d=SegmentGeometry(center-r[1]*half,center+r[1]*half,a.shape.radius,b,margin);if(d.valid&&d.gap<=margin)out.Add(make(a,b,d.queryPoint-d.normal*double(a.shape.radius),d.point,d.normal,d.gap));return out;}
  if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
- V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](Poly pb){auto s=sat(pa,pb);if(s.gap>margin)return;for(auto [x,y]:witnesses(pa,pb,s))contacts.push_back(make(a,b,x+origin,y+origin,s.normal,s.gap));};
- if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box)test(poly(b,origin));
- else if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;Poly pb=triangle(b,i,origin);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!b.shape.asset->twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,*b.shape.asset,i);}test(std::move(pb));}}
- else throw std::invalid_argument("unsupported cooked contact target");
+ visitCookedPolyContacts(a,b,margin,[&](V x,V y,V normal,double gap){
+  contacts.push_back(make(a,b,x,y,normal,gap));return false;
+ });
  reduce(contacts,out);return out;
+}
+// Boolean truth for CCD observations, not a replacement response manifold.
+bool CookedHasContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
+ if(a.shape.type==ShapeType::TriangleMesh)return CookedHasContacts(b,a,margin);
+ // Keep unoptimized sphere/capsule and unsupported cases on the same dispatcher.
+ if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule||
+    b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule)
+  return CookedContacts(a,b,margin).count>0;
+ if(!a.shape.asset&&!b.shape.asset)throw std::invalid_argument("CookedContacts called without cooked geometry");
+ if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
+ return visitCookedPolyContacts(a,b,margin,[](V,V,V,double){return true;});
 }
 CollisionMassProperties ShapeMassProperties(const Shape& shape) {
  CollisionMassProperties out;

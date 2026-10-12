@@ -1,0 +1,13 @@
+warm=0 rows=6 coordinate=-0.899999976 angular_x=10
+row 0 bounds=-inf,inf bias=0 mass=0.800000012 lambda=0
+row 1 bounds=-inf,inf bias=0 mass=0.800000012 lambda=0
+row 2 bounds=-inf,inf bias=0 mass=1 lambda=0
+row 3 bounds=-inf,inf bias=0 mass=1 lambda=0
+row 4 bounds=-inf,inf bias=0 mass=1 lambda=0
+row 5 bounds=0,inf bias=6.00000095 mass=1 lambda=0
+warm=1 rows=5 coordinate=-0.899999976 angular_x=0
+row 0 bounds=-inf,inf bias=0 mass=0.800000012 lambda=0
+row 1 bounds=-inf,inf bias=0 mass=0.800000012 lambda=-20
+row 2 bounds=-inf,inf bias=0 mass=1 lambda=0
+row 3 bounds=-inf,inf bias=0 mass=1 lambda=0
+row 4 bounds=-inf,inf bias=0 mass=1 lambda=0

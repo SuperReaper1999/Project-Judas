@@ -1,0 +1,1238 @@
+{
+  "scope": "Exact native a106 input, source commands/seeds guarded and unchanged body state. Compare first native uninterrupted boundary against Linux diagnostic closure. Output float differences do not imply cross-platform bitwise determinism.",
+  "variants": {
+    "commands-seeds": {
+      "journalSHA256": "01b6a77f2623718dac84f5735e230b74fc9bda3242d3bf92441e8506f4235cf8",
+      "closureGuardMarkers": [
+        {
+          "iteration": 0,
+          "kind": "actual_native_first_boundary_replayed",
+          "prepare": 0,
+          "scope": "Actual recorded native commands and numerical seeds, after exact physical/geometry equality guard; one diagnostic boundary only. No persistence implementation.",
+          "sourceJournalSHA256": "a5a5dd995c54edf2ed146e0acd1c1a5b86f94586343ebba1cacaea60f3db97e9",
+          "sourceSnapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+          "tick": 0
+        }
+      ],
+      "sourceRows": 36,
+      "closureRows": 36,
+      "rowEquationOrWarmDifferences": [],
+      "completedFirstJointPassVelocityErrors": [
+        {
+          "sourceBody": 6,
+          "closureBody": 2,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 5,
+          "closureBody": 1,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 7,
+          "closureBody": 3,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 8,
+          "closureBody": 4,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 9,
+          "closureBody": 5,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 10,
+          "closureBody": 6,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 11,
+          "closureBody": 7,
+          "velocityMaxAbs": 0.0
+        }
+      ],
+      "firstTenPhysicalStates": [
+        {
+          "step": 1,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.30000004172325134,
+          "closureSwingTime": 0.28333336114883423
+        },
+        {
+          "step": 2,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0001043081283569336,
+              "rotation": 0.00038240477442741394,
+              "linearVelocity": 0.006267726421356201,
+              "angularVelocity": 0.04652203619480133
+            },
+            {
+              "index": 1,
+              "position": 7.838010787963867e-05,
+              "rotation": 0.00035704486072063446,
+              "linearVelocity": 0.004685640335083008,
+              "angularVelocity": 0.0423436164855957
+            },
+            {
+              "index": 2,
+              "position": 0.00013276934623718262,
+              "rotation": 0.0001790076494216919,
+              "linearVelocity": 0.007968425750732422,
+              "angularVelocity": 0.021448254585266113
+            },
+            {
+              "index": 3,
+              "position": 0.00012578070163726807,
+              "rotation": 0.00031845271587371826,
+              "linearVelocity": 0.007520511746406555,
+              "angularVelocity": 0.03741812705993652
+            },
+            {
+              "index": 4,
+              "position": 6.663799285888672e-05,
+              "rotation": 0.0009245574474334717,
+              "linearVelocity": 0.0039937496185302734,
+              "angularVelocity": 0.11389517784118652
+            },
+            {
+              "index": 5,
+              "position": 0.0002664923667907715,
+              "rotation": 0.00019199401140213013,
+              "linearVelocity": 0.015978455543518066,
+              "angularVelocity": 0.022179007530212402
+            },
+            {
+              "index": 6,
+              "position": 0.00024759769439697266,
+              "rotation": 0.00041966885328292847,
+              "linearVelocity": 0.014857172966003418,
+              "angularVelocity": 0.0508686900138855
+            }
+          ],
+          "sourceSwingTime": 0.31666672229766846,
+          "closureSwingTime": 0.30000004172325134
+        },
+        {
+          "step": 3,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.00019562244415283203,
+              "rotation": 0.0007823742926120758,
+              "linearVelocity": 0.005466818809509277,
+              "angularVelocity": 0.04821448028087616
+            },
+            {
+              "index": 1,
+              "position": 0.0001951754093170166,
+              "rotation": 0.0008064687135629356,
+              "linearVelocity": 0.007017970085144043,
+              "angularVelocity": 0.053505271673202515
+            },
+            {
+              "index": 2,
+              "position": 0.0002906918525695801,
+              "rotation": 0.00043506920337677,
+              "linearVelocity": 0.009496569633483887,
+              "angularVelocity": 0.03135836124420166
+            },
+            {
+              "index": 3,
+              "position": 0.0002998858690261841,
+              "rotation": 0.0006756186485290527,
+              "linearVelocity": 0.010438278317451477,
+              "angularVelocity": 0.043631017208099365
+            },
+            {
+              "index": 4,
+              "position": 0.00013375282287597656,
+              "rotation": 0.0016967952251434326,
+              "linearVelocity": 0.004750847816467285,
+              "angularVelocity": 0.09573602676391602
+            },
+            {
+              "index": 5,
+              "position": 0.0005286037921905518,
+              "rotation": 0.0004449523985385895,
+              "linearVelocity": 0.01573467254638672,
+              "angularVelocity": 0.033913880586624146
+            },
+            {
+              "index": 6,
+              "position": 0.00045415759086608887,
+              "rotation": 0.0007017254829406738,
+              "linearVelocity": 0.01493990421295166,
+              "angularVelocity": 0.03485983610153198
+            }
+          ],
+          "sourceSwingTime": 0.33333340287208557,
+          "closureSwingTime": 0.31666672229766846
+        },
+        {
+          "step": 4,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.00024056434631347656,
+              "rotation": 0.0010782554745674133,
+              "linearVelocity": 0.0026977956295013428,
+              "angularVelocity": 0.03517088294029236
+            },
+            {
+              "index": 1,
+              "position": 0.00033089518547058105,
+              "rotation": 0.0011277534067630768,
+              "linearVelocity": 0.008144140243530273,
+              "angularVelocity": 0.03824499249458313
+            },
+            {
+              "index": 2,
+              "position": 0.0003783106803894043,
+              "rotation": 0.0006936788558959961,
+              "linearVelocity": 0.005541492253541946,
+              "angularVelocity": 0.0319938063621521
+            },
+            {
+              "index": 3,
+              "position": 0.00043895840644836426,
+              "rotation": 0.0009313225746154785,
+              "linearVelocity": 0.008344650268554688,
+              "angularVelocity": 0.031450510025024414
+            },
+            {
+              "index": 4,
+              "position": 0.00022113323211669922,
+              "rotation": 0.00197756290435791,
+              "linearVelocity": 0.006583750247955322,
+              "angularVelocity": 0.046615734696388245
+            },
+            {
+              "index": 5,
+              "position": 0.000723421573638916,
+              "rotation": 0.0007761642336845398,
+              "linearVelocity": 0.011690616607666016,
+              "angularVelocity": 0.06912939250469208
+            },
+            {
+              "index": 6,
+              "position": 0.0007871687412261963,
+              "rotation": 0.0008485615253448486,
+              "linearVelocity": 0.024385929107666016,
+              "angularVelocity": 0.04509627819061279
+            }
+          ],
+          "sourceSwingTime": 0.3500000834465027,
+          "closureSwingTime": 0.33333340287208557
+        },
+        {
+          "step": 5,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.000270843505859375,
+              "rotation": 0.0013461485505104065,
+              "linearVelocity": 0.0027138590812683105,
+              "angularVelocity": 0.030980169773101807
+            },
+            {
+              "index": 1,
+              "position": 0.0005244612693786621,
+              "rotation": 0.0013606068678200245,
+              "linearVelocity": 0.014411257579922676,
+              "angularVelocity": 0.038107872009277344
+            },
+            {
+              "index": 2,
+              "position": 0.0003724098205566406,
+              "rotation": 0.001016080379486084,
+              "linearVelocity": 0.015174590982496738,
+              "angularVelocity": 0.039230555295944214
+            },
+            {
+              "index": 3,
+              "position": 0.0004823654890060425,
+              "rotation": 0.0010222792625427246,
+              "linearVelocity": 0.016863375902175903,
+              "angularVelocity": 0.024289757013320923
+            },
+            {
+              "index": 4,
+              "position": 0.0003345608711242676,
+              "rotation": 0.0019510388374328613,
+              "linearVelocity": 0.009114883840084076,
+              "angularVelocity": 0.0488545298576355
+            },
+            {
+              "index": 5,
+              "position": 0.0008841753005981445,
+              "rotation": 0.001521974802017212,
+              "linearVelocity": 0.009643077850341797,
+              "angularVelocity": 0.10660143569111824
+            },
+            {
+              "index": 6,
+              "position": 0.0013310611248016357,
+              "rotation": 0.0011334680020809174,
+              "linearVelocity": 0.03263425827026367,
+              "angularVelocity": 0.05718567967414856
+            }
+          ],
+          "sourceSwingTime": 0.3666667640209198,
+          "closureSwingTime": 0.3500000834465027
+        },
+        {
+          "step": 6,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.00031054019927978516,
+              "rotation": 0.0016264989972114563,
+              "linearVelocity": 0.008207648992538452,
+              "angularVelocity": 0.03239858150482178
+            },
+            {
+              "index": 1,
+              "position": 0.0007364451885223389,
+              "rotation": 0.0016573462635278702,
+              "linearVelocity": 0.015073597431182861,
+              "angularVelocity": 0.03724759817123413
+            },
+            {
+              "index": 2,
+              "position": 0.000561058521270752,
+              "rotation": 0.0011104196310043335,
+              "linearVelocity": 0.011318668723106384,
+              "angularVelocity": 0.01853764057159424
+            },
+            {
+              "index": 3,
+              "position": 0.0005805790424346924,
+              "rotation": 0.0010115653276443481,
+              "linearVelocity": 0.011463642120361328,
+              "angularVelocity": 0.022096365690231323
+            },
+            {
+              "index": 4,
+              "position": 0.0004551410675048828,
+              "rotation": 0.0016716420650482178,
+              "linearVelocity": 0.008592218160629272,
+              "angularVelocity": 0.046315670013427734
+            },
+            {
+              "index": 5,
+              "position": 0.0010129213333129883,
+              "rotation": 0.002626866102218628,
+              "linearVelocity": 0.018456101417541504,
+              "angularVelocity": 0.13980840146541595
+            },
+            {
+              "index": 6,
+              "position": 0.0019958913326263428,
+              "rotation": 0.0016385167837142944,
+              "linearVelocity": 0.03988945484161377,
+              "angularVelocity": 0.06161075830459595
+            }
+          ],
+          "sourceSwingTime": 0.3833334445953369,
+          "closureSwingTime": 0.3666667640209198
+        },
+        {
+          "step": 7,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0003145933151245117,
+              "rotation": 0.001880459487438202,
+              "linearVelocity": 0.011673778295516968,
+              "angularVelocity": 0.030184291303157806
+            },
+            {
+              "index": 1,
+              "position": 0.000959932804107666,
+              "rotation": 0.0019573590252548456,
+              "linearVelocity": 0.013409912586212158,
+              "angularVelocity": 0.037238359451293945
+            },
+            {
+              "index": 2,
+              "position": 0.0006676912307739258,
+              "rotation": 0.001337885856628418,
+              "linearVelocity": 0.00851467251777649,
+              "angularVelocity": 0.053820282220840454
+            },
+            {
+              "index": 3,
+              "position": 0.000704348087310791,
+              "rotation": 0.0010759979486465454,
+              "linearVelocity": 0.007190495729446411,
+              "angularVelocity": 0.025853797793388367
+            },
+            {
+              "index": 4,
+              "position": 0.0006206631660461426,
+              "rotation": 0.0018920376896858215,
+              "linearVelocity": 0.009930253028869629,
+              "angularVelocity": 0.06660354137420654
+            },
+            {
+              "index": 5,
+              "position": 0.001096963882446289,
+              "rotation": 0.003939181566238403,
+              "linearVelocity": 0.032020002603530884,
+              "angularVelocity": 0.168512225151062
+            },
+            {
+              "index": 6,
+              "position": 0.002743542194366455,
+              "rotation": 0.002103373408317566,
+              "linearVelocity": 0.044860124588012695,
+              "angularVelocity": 0.05588257312774658
+            }
+          ],
+          "sourceSwingTime": 0.40000012516975403,
+          "closureSwingTime": 0.3833334445953369
+        },
+        {
+          "step": 8,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0005121231079101562,
+              "rotation": 0.0020578429102897644,
+              "linearVelocity": 0.012691318988800049,
+              "angularVelocity": 0.028553873300552368
+            },
+            {
+              "index": 1,
+              "position": 0.0011374056339263916,
+              "rotation": 0.00220892415381968,
+              "linearVelocity": 0.010649383068084717,
+              "angularVelocity": 0.029628070071339607
+            },
+            {
+              "index": 2,
+              "position": 0.0007132291793823242,
+              "rotation": 0.0015360265970230103,
+              "linearVelocity": 0.007727332413196564,
+              "angularVelocity": 0.03734101355075836
+            },
+            {
+              "index": 3,
+              "position": 0.0007026195526123047,
+              "rotation": 0.0011097043752670288,
+              "linearVelocity": 0.006168529391288757,
+              "angularVelocity": 0.007101118564605713
+            },
+            {
+              "index": 4,
+              "position": 0.0008124709129333496,
+              "rotation": 0.0019761137664318085,
+              "linearVelocity": 0.011507987976074219,
+              "angularVelocity": 0.09602361917495728
+            },
+            {
+              "index": 5,
+              "position": 0.001148998737335205,
+              "rotation": 0.005395293235778809,
+              "linearVelocity": 0.043658047914505005,
+              "angularVelocity": 0.18954181671142578
+            },
+            {
+              "index": 6,
+              "position": 0.0035327672958374023,
+              "rotation": 0.0024523623287677765,
+              "linearVelocity": 0.05719998478889465,
+              "angularVelocity": 0.05239748954772949
+            }
+          ],
+          "sourceSwingTime": 0.41666680574417114,
+          "closureSwingTime": 0.40000012516975403
+        },
+        {
+          "step": 9,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0006937980651855469,
+              "rotation": 0.002101421356201172,
+              "linearVelocity": 0.010898411273956299,
+              "angularVelocity": 0.026481151580810547
+            },
+            {
+              "index": 1,
+              "position": 0.0012268126010894775,
+              "rotation": 0.00248059188015759,
+              "linearVelocity": 0.013882927596569061,
+              "angularVelocity": 0.03191829472780228
+            },
+            {
+              "index": 2,
+              "position": 0.0007041692733764648,
+              "rotation": 0.0015987902879714966,
+              "linearVelocity": 0.008814025670289993,
+              "angularVelocity": 0.029230058193206787
+            },
+            {
+              "index": 3,
+              "position": 0.0007138252258300781,
+              "rotation": 0.0011621713638305664,
+              "linearVelocity": 0.003714323043823242,
+              "angularVelocity": 0.008352581411600113
+            },
+            {
+              "index": 4,
+              "position": 0.0009905099868774414,
+              "rotation": 0.0018749423325061798,
+              "linearVelocity": 0.010681748390197754,
+              "angularVelocity": 0.1269071102142334
+            },
+            {
+              "index": 5,
+              "position": 0.0019864439964294434,
+              "rotation": 0.006918430328369141,
+              "linearVelocity": 0.05024799704551697,
+              "angularVelocity": 0.19993537664413452
+            },
+            {
+              "index": 6,
+              "position": 0.004328310489654541,
+              "rotation": 0.0026094242930412292,
+              "linearVelocity": 0.06331455707550049,
+              "angularVelocity": 0.05834051966667175
+            }
+          ],
+          "sourceSwingTime": 0.43333348631858826,
+          "closureSwingTime": 0.41666680574417114
+        },
+        {
+          "step": 10,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0008699893951416016,
+              "rotation": 0.002030991017818451,
+              "linearVelocity": 0.010572850704193115,
+              "angularVelocity": 0.023467272520065308
+            },
+            {
+              "index": 1,
+              "position": 0.0012294948101043701,
+              "rotation": 0.0025909135583788157,
+              "linearVelocity": 0.007310912013053894,
+              "angularVelocity": 0.012924798182211816
+            },
+            {
+              "index": 2,
+              "position": 0.0008416175842285156,
+              "rotation": 0.0013672113418579102,
+              "linearVelocity": 0.008765283972024918,
+              "angularVelocity": 0.05938234552741051
+            },
+            {
+              "index": 3,
+              "position": 0.0009455680847167969,
+              "rotation": 0.0014780759811401367,
+              "linearVelocity": 0.0176421474898234,
+              "angularVelocity": 0.07346774637699127
+            },
+            {
+              "index": 4,
+              "position": 0.0011546015739440918,
+              "rotation": 0.0018474459648132324,
+              "linearVelocity": 0.009844064712524414,
+              "angularVelocity": 0.15008223056793213
+            },
+            {
+              "index": 5,
+              "position": 0.00286179780960083,
+              "rotation": 0.008441448211669922,
+              "linearVelocity": 0.052521467208862305,
+              "angularVelocity": 0.20002442598342896
+            },
+            {
+              "index": 6,
+              "position": 0.00510561466217041,
+              "rotation": 0.0025151297450065613,
+              "linearVelocity": 0.06407871842384338,
+              "angularVelocity": 0.05402807891368866
+            }
+          ],
+          "sourceSwingTime": 0.45000016689300537,
+          "closureSwingTime": 0.43333348631858826
+        }
+      ]
+    },
+    "commands-seeds-normal-prepare": {
+      "journalSHA256": "01b6a77f2623718dac84f5735e230b74fc9bda3242d3bf92441e8506f4235cf8",
+      "closureGuardMarkers": [
+        {
+          "iteration": 0,
+          "kind": "actual_native_first_boundary_replayed",
+          "prepare": 0,
+          "scope": "Actual recorded native commands and numerical seeds, after exact physical/geometry equality guard; one diagnostic boundary only. No persistence implementation.",
+          "sourceJournalSHA256": "a5a5dd995c54edf2ed146e0acd1c1a5b86f94586343ebba1cacaea60f3db97e9",
+          "sourceSnapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+          "tick": 0
+        }
+      ],
+      "sourceRows": 36,
+      "closureRows": 36,
+      "rowEquationOrWarmDifferences": [],
+      "completedFirstJointPassVelocityErrors": [
+        {
+          "sourceBody": 6,
+          "closureBody": 2,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 5,
+          "closureBody": 1,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 7,
+          "closureBody": 3,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 8,
+          "closureBody": 4,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 9,
+          "closureBody": 5,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 10,
+          "closureBody": 6,
+          "velocityMaxAbs": 0.0
+        },
+        {
+          "sourceBody": 11,
+          "closureBody": 7,
+          "velocityMaxAbs": 0.0
+        }
+      ],
+      "firstTenPhysicalStates": [
+        {
+          "step": 1,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.30000004172325134,
+          "closureSwingTime": 0.30000004172325134
+        },
+        {
+          "step": 2,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.31666672229766846,
+          "closureSwingTime": 0.31666672229766846
+        },
+        {
+          "step": 3,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.33333340287208557,
+          "closureSwingTime": 0.33333340287208557
+        },
+        {
+          "step": 4,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.3500000834465027,
+          "closureSwingTime": 0.3500000834465027
+        },
+        {
+          "step": 5,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.3666667640209198,
+          "closureSwingTime": 0.3666667640209198
+        },
+        {
+          "step": 6,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.3833334445953369,
+          "closureSwingTime": 0.3833334445953369
+        },
+        {
+          "step": 7,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.40000012516975403,
+          "closureSwingTime": 0.40000012516975403
+        },
+        {
+          "step": 8,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.41666680574417114,
+          "closureSwingTime": 0.41666680574417114
+        },
+        {
+          "step": 9,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.43333348631858826,
+          "closureSwingTime": 0.43333348631858826
+        },
+        {
+          "step": 10,
+          "bodies": [
+            {
+              "index": 0,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 1,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 2,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 3,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 4,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 5,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            },
+            {
+              "index": 6,
+              "position": 0.0,
+              "rotation": 0.0,
+              "linearVelocity": 0.0,
+              "angularVelocity": 0.0
+            }
+          ],
+          "sourceSwingTime": 0.45000016689300537,
+          "closureSwingTime": 0.45000016689300537
+        }
+      ]
+    }
+  },
+  "sourceJournalSHA256": "a5a5dd995c54edf2ed146e0acd1c1a5b86f94586343ebba1cacaea60f3db97e9"
+}

@@ -1,0 +1,14 @@
+﻿{
+    "freeAfter":  3055616,
+    "freeBefore":  0,
+    "sha256":  "bc33037d24e8a56f4066ed8209041def66fb0afacaa2b6fd4c37f6e5545ad248",
+    "scope":  "Root approved named generated balance_lab MAP retirement after in-memory host/guest exact SHA/size comparison, current linked executable no longer needs this output; no original fixtures/snapshots/packages/config changed",
+    "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-balance_lab.map",
+    "bytes":  5006345,
+    "emptyHelper":  {
+                        "path":  "C:\\JudasValidation\\m78-closure-archive-partial.ps1",
+                        "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                        "bytes":  0
+                    },
+    "hostArchive":  "docs/evidence/m78-closure/native/m78-closure-balance_lab.map"
+}

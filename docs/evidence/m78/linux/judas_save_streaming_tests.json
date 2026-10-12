@@ -1,0 +1,29 @@
+{
+  "id": "judas_save_streaming_tests",
+  "source": "tests/SaveStreamingTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+    "write",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_save_streaming_tests"
+  ],
+  "adapter": "existing save application writes in isolated user data; fresh-process reads scheduled separately",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "9a4e8e94ae1a2c8a0a0ccdfedfdb65f1f92a9fe6fe63fb50504b52e9cb35f956",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 11,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_save_streaming_tests.log",
+  "logSHA256": "9b878b43789b64f4cce1e58b4dc9c2fa4c1e117e29394617c80abdd35648d418",
+  "seconds": 4.4980249170002935
+}

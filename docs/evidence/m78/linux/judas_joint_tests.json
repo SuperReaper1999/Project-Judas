@@ -1,0 +1,26 @@
+{
+  "id": "judas_joint_tests",
+  "source": "tests/JointTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "0e2f1031b1a195a15bb40f95bc77b34978cff6732e278d6a6098e909b7913e25",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 29,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_joint_tests.log",
+  "logSHA256": "a66997e6734d84c1cb66a169b1d055a9e0f18979f0391b9e6daf4f3de4049255",
+  "seconds": 0.07529328300006455
+}

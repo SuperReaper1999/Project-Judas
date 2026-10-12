@@ -1,0 +1,3 @@
+PASS generic fork allocates four independent identities
+PASS sculpt/cook original production pipeline
+PASS original source remains byte-equivalent in serialization

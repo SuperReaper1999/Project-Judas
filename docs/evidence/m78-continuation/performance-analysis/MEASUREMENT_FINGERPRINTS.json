@@ -1,0 +1,401 @@
+{
+  "scope": "Bounded isolated CCD performance/parity evidence; excludes this self-referential manifest; hashes build outputs without adding them to tracked evidence",
+  "files": {
+    ".cache/m78-continuation/concave-attribution-original": {
+      "bytes": 51110200,
+      "sha256": "6b1f1a61f29b9cc40a120db4a8d16e37e1d452066b556fdf016a3636e45bfb03"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/box-1-profile.json": {
+      "bytes": 1099795,
+      "sha256": "3310bc8fb0132df11446eb754023a70940a2f552009fafed66b68bce05e11108"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/box-1.csv": {
+      "bytes": 50205,
+      "sha256": "2948293309838cbcad71c508103ecb8922f0a544efa3a90213f07f60461fa14d"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/box-4-profile.json": {
+      "bytes": 1812819,
+      "sha256": "0870e84e78b2e57f0555f268d383be4ce49aaafdfc1bc330c12968f88fbe8e17"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/box-4.csv": {
+      "bytes": 50920,
+      "sha256": "220eafceb52ec6d319c6eeb927f461945dbad8c68c75a0869d83aeaee54efd6f"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/mesh-1-profile.json": {
+      "bytes": 1103670,
+      "sha256": "e37369cddc400bbfcb29cb98428eed24759c701109b5e84ef0b1708182038645"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/mesh-1.csv": {
+      "bytes": 49222,
+      "sha256": "9749b89b5f949be7eb12b1734cf486f0d7d94e9c97b13d0201d52405482090ee"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/mesh-4-profile.json": {
+      "bytes": 1895886,
+      "sha256": "7388d22d97b5d02c86ce176724d02760f746a37225764960e7a0fca72056eda2"
+    },
+    ".cache/m78-continuation/concave-attribution-spikes-data/mesh-4.csv": {
+      "bytes": 49833,
+      "sha256": "ed962c705c25d5586e0a510f7145d4b79c08bbb8013d98e649f5b4194265863a"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/box-1-profile.json": {
+      "bytes": 989033,
+      "sha256": "ec7487f69c2ce7aef7b9278f3176a8a89e52bb5afa82ffc21860167870dfca56"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/box-1.csv": {
+      "bytes": 50289,
+      "sha256": "c5ab49e770734535815752e6790a003fdf2aab5316e67af9519ba0ef9ba95078"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/box-4-profile.json": {
+      "bytes": 1702643,
+      "sha256": "1e109105a4a3fc25716ec64ad0c86ab3986fb41bd049ae98d48f247af0db59d4"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/box-4.csv": {
+      "bytes": 50949,
+      "sha256": "2dfaef4f4729465aba395eda439276fc563acfc4380883a6e05095788ecbfe45"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/mesh-1-profile.json": {
+      "bytes": 992801,
+      "sha256": "1964dcbe3e123a780951180554bfcaf8592e3ebf067bec1566d403af5c3b52ec"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/mesh-1.csv": {
+      "bytes": 49251,
+      "sha256": "80a35c796f3b749fc5ad74a3548ebd965b1c0dacb5faf36ca5d8ca36c9d5076a"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/mesh-4-profile.json": {
+      "bytes": 1704909,
+      "sha256": "8a1caa05f1b47f42e9a54c47c6d26e5951ce3b4c6fcb4da4d7d8c88a0ab008d3"
+    },
+    ".cache/m78-continuation/concave-existence-isolated-data/mesh-4.csv": {
+      "bytes": 49843,
+      "sha256": "36b9cf62d039350b42b989d28777b7e0e827ee8afeaaec91d0752bb3cef8d0f2"
+    },
+    ".cache/m78-continuation/contact-existence-parity-corrected": {
+      "bytes": 51101224,
+      "sha256": "b94d24f08491306e081ba84e57faf396bb3a163a4c8f6fcaf3e1773f2d0295cd"
+    },
+    ".cache/m78-continuation/existence-observer/BUILD.json": {
+      "bytes": 10401,
+      "sha256": "f07567e2c613e9b015bf0de08da34c9f9b56d794c4b214ac8c2d554b7e233a42"
+    },
+    ".cache/m78-continuation/existence-observer/CollisionGeometry.cpp": {
+      "bytes": 21407,
+      "sha256": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+    },
+    ".cache/m78-continuation/existence-observer/CollisionGeometry.h": {
+      "bytes": 1693,
+      "sha256": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198"
+    },
+    ".cache/m78-continuation/existence-observer/OriginalCookedContactOracle.cpp": {
+      "bytes": 12696,
+      "sha256": "c8c9f0eec7608036a767a6edc9179d9c1058fbefe4e8e701549682c70d0d3718"
+    },
+    ".cache/m78-continuation/existence-observer/PhysicsWorld.cpp": {
+      "bytes": 179694,
+      "sha256": "3ac2f92fa94be82624e95a37ab601a49692bb2df2b7d05b421779d0d6f88817b"
+    },
+    ".cache/m78-continuation/existence-observer/Probe.cpp": {
+      "bytes": 5248,
+      "sha256": "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136"
+    },
+    ".cache/m78-continuation/existence-observer/libjudas_engine.a": {
+      "bytes": 22137842,
+      "sha256": "5d8b2992a8fd87761e95082d8eb615e3775b9a90681b458c4e6898ee502a3162"
+    },
+    ".cache/m78-continuation/existence-observer/probe": {
+      "bytes": 51108112,
+      "sha256": "5171a9177c7c1a19f1dfaa167f4d63563f3da029cd0895dcb5b0ade7ab98e876"
+    },
+    ".cache/m78-continuation/existence-parity-v2/BUILD.json": {
+      "bytes": 10112,
+      "sha256": "c1ea2f7009ae0d01c4fa517761455082665f7ce36afe9bda28e13dda4845eefa"
+    },
+    ".cache/m78-continuation/existence-parity-v2/CollisionGeometry.cpp": {
+      "bytes": 21407,
+      "sha256": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+    },
+    ".cache/m78-continuation/existence-parity-v2/CollisionGeometry.h": {
+      "bytes": 1693,
+      "sha256": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198"
+    },
+    ".cache/m78-continuation/existence-parity-v2/OriginalCookedContactOracle.cpp": {
+      "bytes": 12696,
+      "sha256": "c8c9f0eec7608036a767a6edc9179d9c1058fbefe4e8e701549682c70d0d3718"
+    },
+    ".cache/m78-continuation/existence-parity-v2/PhysicsWorld.cpp": {
+      "bytes": 179694,
+      "sha256": "3ac2f92fa94be82624e95a37ab601a49692bb2df2b7d05b421779d0d6f88817b"
+    },
+    ".cache/m78-continuation/existence-parity-v2/Probe.cpp": {
+      "bytes": 8495,
+      "sha256": "607cabf80cc4eb1ea4050b9361d73cf627602d53f484fcffcd2d7486573abda4"
+    },
+    ".cache/m78-continuation/existence-parity-v2/libjudas_engine.a": {
+      "bytes": 22135770,
+      "sha256": "4ef763cedd33fa541783f3d5a5a24ed909089e04fff29d76e9de6050ea408fe5"
+    },
+    ".cache/m78-continuation/existence-parity-v2/probe": {
+      "bytes": 51097024,
+      "sha256": "b1788e334b0bb451985c46bd0d5f33adf3b96934ed53900e0f06035ffd73bae3"
+    },
+    ".cache/m78-followup/concave-final-data/box-1-profile.json": {
+      "bytes": 989152,
+      "sha256": "604762fe4310f7308ae94167bed5a3711af075b022137ac5ab2178d8c27e59d9"
+    },
+    ".cache/m78-followup/concave-final-data/box-1.csv": {
+      "bytes": 50281,
+      "sha256": "7348e1c6584a9fe4eeef5156a5d1e77997bbf9ce00ec390066f38935655de9b2"
+    },
+    ".cache/m78-followup/concave-final-data/box-4-profile.json": {
+      "bytes": 1702971,
+      "sha256": "47108a73fa2a3602a625107774ccd418c74ebf0392bdb49d380c292eecd6ca77"
+    },
+    ".cache/m78-followup/concave-final-data/box-4.csv": {
+      "bytes": 50955,
+      "sha256": "c5cc070a7257c5317bd66bedb6876bb2861cd756089c32f6236a149b1e0d0768"
+    },
+    ".cache/m78-followup/concave-final-data/mesh-1-profile.json": {
+      "bytes": 993304,
+      "sha256": "a1a11ed2652eda2797152bd07c99f3efc9bec0a610e14c0e3af3fe91bdee54cf"
+    },
+    ".cache/m78-followup/concave-final-data/mesh-1.csv": {
+      "bytes": 49254,
+      "sha256": "1418085f8db632a44eb22c62dd27cc12da1f7de103fce4b3a750e9843d1d760f"
+    },
+    ".cache/m78-followup/concave-final-data/mesh-4-profile.json": {
+      "bytes": 1719084,
+      "sha256": "d1728a94be6771a24915fc97d02b8b9d1246d246d9932197270ede2d7223267f"
+    },
+    ".cache/m78-followup/concave-final-data/mesh-4.csv": {
+      "bytes": 49796,
+      "sha256": "344109ebcc8b6e86dc8210a6f634c35820987a156a6e551db433bfb600c1f75e"
+    },
+    "docs/evidence/m78-continuation/ccd-attribution-original-build.json": {
+      "bytes": 2414,
+      "sha256": "3d70b34def5a8b46cace48ce18225e05a04e3a84011764f447496fee3d398228"
+    },
+    "docs/evidence/m78-continuation/ccd-attribution-original-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-original-build-0.log": {
+      "bytes": 1467,
+      "sha256": "d9bc9c2a6f675dd08f117afb2a2d49672a5325e1b8b12b0cbf07feeb1224e837"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-original-build-1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-original-build.json": {
+      "bytes": 3556,
+      "sha256": "85786ffefea1c61139248e326a483a96e76191ff991b8d6f5c6176d2b707e8a6"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-original.json": {
+      "bytes": 1346,
+      "sha256": "987e98de6ee2f2b022058fc3a9c2b2f21fbf9558fa2387c9bd64538a6546d991"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-original.log": {
+      "bytes": 1387,
+      "sha256": "0b341d54f7a6c93cea88ed063656c362fbb0da5942415f0ee5022d9d2f53d7c2"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-spikes.json": {
+      "bytes": 1409,
+      "sha256": "163b3975e38f49bfdaf3807f6230ae38e70d305a4dcf619f8fe1029284d3ff14"
+    },
+    "docs/evidence/m78-continuation/concave-attribution-spikes.log": {
+      "bytes": 1388,
+      "sha256": "354e0c3aa2d5acf58d4b082ad2959b681a56d537d2f2733fe74c0b5f908afe2f"
+    },
+    "docs/evidence/m78-continuation/concave-existence-isolated.json": {
+      "bytes": 1340,
+      "sha256": "b0c8aed74dbbcb53ffb4dd8d2b90205a38d93da4bb265d086b24bc33bd0e966d"
+    },
+    "docs/evidence/m78-continuation/concave-existence-isolated.log": {
+      "bytes": 1389,
+      "sha256": "83d2aac516616fcddf1f9e79773f6ae255e617882196bf6fb3736b1b4a7d930a"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity-corrected-build-0.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity-corrected-build-1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity-corrected-build.json": {
+      "bytes": 3844,
+      "sha256": "ab3eb4ad27d65b6cf189cf746edbff3a724cbcd80feaf510e29b14e3c028b670"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity-corrected.json": {
+      "bytes": 1287,
+      "sha256": "48aba804c52e0ed03020ec13c5c061e58b9beb6347f01cbf68d8b3d193dd871a"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity-corrected.log": {
+      "bytes": 177,
+      "sha256": "1346f9ab2aa71a3d6690827429250c272114e259d23c969296dc1df6e546a395"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity.json": {
+      "bytes": 1277,
+      "sha256": "778d66fadcf2160d1e80d9d978d7186b86cda1875d810a58c58af134680b0ca6"
+    },
+    "docs/evidence/m78-continuation/contact-existence-parity.log": {
+      "bytes": 102,
+      "sha256": "31dd2f82bc2fa68536adf07e2b8094d07b10397b43de8595d3a033c1ecefe3fc"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic-build-0.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic-build-1.log": {
+      "bytes": 412,
+      "sha256": "58a2f4a908017bd2dcae0fb476be8d81696c2fde25f8fa6626c24e22124f5138"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic-build.json": {
+      "bytes": 3525,
+      "sha256": "92e3c4ab6fb59ea85859adbd57091ba0a7b3260be9caad37799c0c6795157400"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic-linked-build-0.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic-linked-build-1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic-linked-build.json": {
+      "bytes": 3783,
+      "sha256": "cb8c818d9af8c29c6e8a9a08730e612440755760e1ce0c68eacfae83604abbdf"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic.json": {
+      "bytes": 1281,
+      "sha256": "38ff7b111ae8341f5792b5f03b75d499fc055606fad51f42239eace445227eb6"
+    },
+    "docs/evidence/m78-continuation/parity-gap-diagnostic.log": {
+      "bytes": 367,
+      "sha256": "0082cba4c15ca81d132777fcfc30917b83b04886739b034f5e3fbd947a68eefc"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/analyze_existing_trace.py": {
+      "bytes": 3810,
+      "sha256": "fd0975cd577d5786e20fe48d99721e5f315bddb4ca55e54afb9f9b2b390292c8"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/build_contact_existence_overlay.py": {
+      "bytes": 4154,
+      "sha256": "5541cc40f2e84ff64e77f734e957374dcfa7ba95bc954c5e88287867d68601ce"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/ccd-trace-initial-snapshot/OVERLAY.json": {
+      "bytes": 1427,
+      "sha256": "9a075bccf9049bbfd8296ba2cf792ec4d3e3765dc521c00a4771e78307c808c3"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/ccd-trace-initial-snapshot/PhysicsWorld.instrumented.cpp": {
+      "bytes": 182727,
+      "sha256": "4b5bf5e9d8fb93a82820ec004532b09a2e703b186b17e63613f4b07923ed3dd3"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/ccd-trace-initial-snapshot/PhysicsWorld.original.cpp": {
+      "bytes": 179209,
+      "sha256": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/CollisionGeometry.cpp": {
+      "bytes": 21407,
+      "sha256": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/CollisionGeometry.cpp.original": {
+      "bytes": 20252,
+      "sha256": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/CollisionGeometry.h": {
+      "bytes": 1693,
+      "sha256": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/CollisionGeometry.h.original": {
+      "bytes": 1525,
+      "sha256": "c90d2826d73590d8700417dcc124b70461927c5b4888b500636d135e337d86c7"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/OriginalCookedContactOracle.cpp": {
+      "bytes": 12696,
+      "sha256": "c8c9f0eec7608036a767a6edc9179d9c1058fbefe4e8e701549682c70d0d3718"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/PROPOSAL.json": {
+      "bytes": 1287,
+      "sha256": "06545f5ddc4528bf484364caea677e9bd405dad4e390b7ed3377791348debcf9"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/PhysicsWorld.cpp": {
+      "bytes": 179694,
+      "sha256": "3ac2f92fa94be82624e95a37ab601a49692bb2df2b7d05b421779d0d6f88817b"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact-existence-initial-snapshot/PhysicsWorld.cpp.original": {
+      "bytes": 179209,
+      "sha256": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact_existence_parity.cpp": {
+      "bytes": 9058,
+      "sha256": "98f546948a4c3d6c3cfbd091bb24c1ef0fd6450796c415a0da8787722d373dfe"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/contact_existence_proposal.json": {
+      "bytes": 3654,
+      "sha256": "66e2d52c875fb801daaed7e630b217904c1af15a452b5000ef0f0d3384cc6f01"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/existence-trajectory-parity.json": {
+      "bytes": 409,
+      "sha256": "7191926eefed74a28fff58f3371ea168255bc46049c0f32d397ec75a5f17125b"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/existing_trace_analysis.json": {
+      "bytes": 13501,
+      "sha256": "c712cd4db9461cae1dd339930b57f8da488ac21da73756b5e3c50b3ab7b95458"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/fingerprint_measurements.py": {
+      "bytes": 2147,
+      "sha256": "213fe85fadf7c367e82bff017b5084c9d735733cad37ef9bef43de6b600a2263"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/make_ccd_trace_overlay.py": {
+      "bytes": 8268,
+      "sha256": "bdb8940e4c8436290f6ea36cacad235a55d1eceb6db3eefa8a9d7745a374f5f0"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/make_contact_existence_overlay.py": {
+      "bytes": 7254,
+      "sha256": "7cc830723397c2336d0c13ecf9744944bc489b4a61d237aa30f520f17dcb5038"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/parity-assertion-attempt1.cpp": {
+      "bytes": 8495,
+      "sha256": "607cabf80cc4eb1ea4050b9361d73cf627602d53f484fcffcd2d7486573abda4"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/parity-compile-attempt1/BUILD.json": {
+      "bytes": 8605,
+      "sha256": "aa7a56b13aea04bf4794d3ea3246b02037f7216413fb71af8215b1313ef08256"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/parity-compile-attempt1/CollisionGeometry.cpp-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/parity-compile-attempt1/OriginalCookedContactOracle.cpp-compile.log": {
+      "bytes": 416,
+      "sha256": "468c60fd0809aaf06379bdc4896e1b8a249fe6a2148c34750cfb03cf266071ac"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/parity-compile-attempt1/Probe.cpp-compile.log": {
+      "bytes": 888,
+      "sha256": "64cb6a1bb23cb6d937e3792c4814b784f9b32a0e5d66db6ff537e51c11faf802"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/parity.md": {
+      "bytes": 4641,
+      "sha256": "356b8cfbb722ce99233e62dcd34eb24420ecfbefb7b05b2bdc2f6ea1f3450a09"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/performance.md": {
+      "bytes": 4746,
+      "sha256": "72082cc13a47eec384825f649c38da6d19593278dfdfe62346467f29d41fa14c"
+    },
+    "docs/evidence/m78-continuation/performance-analysis/phase-attribution.json": {
+      "bytes": 1560,
+      "sha256": "20363d4aae43765ad70e9315317978a8d74e718954c4fa682ba086b42fbbdf25"
+    },
+    "docs/evidence/m78-followup/linux-concave-combined-final.log": {
+      "bytes": 1391,
+      "sha256": "efcab8f7f25c9ccac1271d56ca282a4246e8d5b3b2f5d130dada6ee9cb27e03d"
+    },
+    "docs/evidence/m78-followup/probes/concave_final.cpp": {
+      "bytes": 5248,
+      "sha256": "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136"
+    },
+    "projects/post_m65_consumers/Scenes/skate/park.judas": {
+      "bytes": 45523,
+      "sha256": "fedd4a0f32f9ff559056ade9d7b8a8efd3a6d295112c1250f189f80d569b17d1"
+    }
+  }
+}

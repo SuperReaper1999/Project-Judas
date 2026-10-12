@@ -1,0 +1,38 @@
+Section A: spacecraft is a celestial test body and coasts in orbit
+  OK   orbit world initialized
+  OK   unpowered spacecraft remains on a curved, bounded trajectory for one orbit
+  OK   spacecraft orbital radius stays bounded throughout the revolution
+  OK   spacecraft completes almost a full revolution without an orbit mode
+  OK   orbit world initialized
+  OK   SAS does not measurably alter the unpowered celestial trajectory
+  OK   orbit world initialized
+  OK   spacecraft celestial trajectory rotates with the complete scenario
+  OK   spacecraft celestial velocity has no preferred world axis
+Measured spacecraft orbit: T=12.6500 s (analytic 12.6374 s), radius 29.8768..30.1254 m
+  OK   gravity measurement world initialized
+  OK   ship acceleration matches Newtonian source mass and separation
+  OK   ship acceleration points toward the attracting body
+Section B: spacecraft thrust changes its physical orbit
+  OK   thrust orbit world initialized
+  OK   thrust orbit world initialized
+  OK   thrust orbit world initialized
+  OK   prograde spacecraft thrust raises orbital energy
+  OK   retrograde spacecraft thrust lowers orbital energy
+  OK   radial thrust produces a distinct, physically appropriate energy change
+  OK   escape orbit world initialized
+  OK   sustained real thrust can raise the trajectory above escape energy
+  OK   unpowered positive-energy trajectory continues escaping
+Section C: SAS applies torque, holds attitude, and leaves translation alone
+  OK   SAS world initialized
+  OK   SAS off preserves M12 angular inertia when no rotation input is held
+  OK   SAS stops a fast three-axis tumble even with a rotation key held
+  OK   SAS returns to and holds the attitude captured when enabled
+  OK   SAS torque does not change spacecraft linear velocity
+  OK   SAS damps a small angular disturbance
+  OK   SAS resists the disturbance and restores the attitude target
+  OK   disabling SAS restores torque-free M12 rotational coast
+Section D: SAS input request is one-shot and can be drained while UI owns input
+  OK   X request is drained independently of gameplay policy
+  OK   drained X request cannot toggle later on resume
+
+ALL TESTS PASSED

@@ -1,0 +1,30 @@
+﻿{
+    "seconds":  4.2752981,
+    "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+    "case":  "balance_lab",
+    "expectedSaveSHA256":  null,
+    "run":  "balance-step-trace",
+    "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-step-trace\\step-trace-state.json",
+                      "sha256":  "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2",
+                      "bytes":  365,
+                      "reportName":  "m78-final2-repair-balance-step-trace-step-trace-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-step-trace\\step-trace.jsonl",
+                      "sha256":  "838e760220e2bd1f6f6b5bd26cdcfdc3b14a4a303bbb0941458bf1a1670e4d18",
+                      "bytes":  612109,
+                      "reportName":  "m78-final2-repair-balance-step-trace-step-trace.jsonl"
+                  }
+              ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-step-trace",
+                      "step-trace"
+                  ],
+    "exitCode":  0,
+    "freeBytes":  70078464,
+    "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+}

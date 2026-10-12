@@ -1,0 +1,36 @@
+Section A: stationary and translating frames
+  OK   identity stationary frame leaves positions unchanged
+  OK   identity stationary frame leaves directions unchanged
+  OK   world velocity is relative velocity in a stationary world frame
+  OK   translated frame adds its origin to frame position
+  OK   translating frame adds its linear velocity to local velocity
+  OK   translated position round-trips
+  OK   translated velocity round-trips
+Section B: arbitrary rotated-frame transforms and round trips
+  OK   world-to-frame-to-world position round trip is stable
+  OK   world-to-frame-to-world direction round trip is stable
+  OK   world-to-frame-to-world velocity round trip is stable
+  OK   arbitrary valid rotated-frame conversions remain finite
+Section C: rotating-frame point velocity includes omega cross r
+  OK   frame point velocity equals translation plus independently evaluated omega cross r
+  OK   object moving with a rotating-frame point has zero relative velocity
+  OK   rotating-frame velocity conversion removes point rotation speed
+  OK   a stationary-in-frame offset point can have substantial world velocity
+Section D: equal world velocities imply zero relative motion
+  OK   object matching a translating frame has zero frame-relative velocity
+  OK   two objects with identical world velocity have zero relative velocity
+  OK   unequal velocities preserve their correctly rotated relative result
+Section E: spacecraft and pilot motion relative to live physics bodies
+  OK   reference-frame physics world initializes
+  OK   both celestial body and spacecraft retain nonzero world velocity
+  OK   spacecraft velocity is reported relative to a moving, rotating celestial body
+  OK   attached pilot world velocity matches spacecraft point velocity used on release
+  OK   attached pilot is stationary in the moving spacecraft frame
+  OK   attached pilot can be stationary relative to a spacecraft moving in world space
+  OK   reset physics state produces fresh zero-speed frame telemetry
+Section F: rotate-the-universe reference-frame equivalence
+  OK   rotating frame, origin, and point rotates the world position identically
+  OK   rotating frame and all velocities preserves frame-relative velocity
+  OK   rotated scenario reports the same local relative velocity
+
+ALL TESTS PASSED

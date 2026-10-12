@@ -1,0 +1,41 @@
+PASS recipe copies approved external image and buffer into owned sources
+PASS initial coherent generation publishes
+PASS normal runtime loader reads cooked asset without source parser
+PASS unchanged recipe preserves output bytes and asset identity
+PASS source node reordering reimports without retargeting asset
+PASS part and material slot identities survive source order changes
+PASS deleted required joint blocks publication and keeps last generation
+PASS explicit retained local-name alias resolves reported joint rename
+PASS source correction retries normally
+PASS missing dependency preserves accepted generation
+PASS export rejects stale/missing source instead of silently shipping last-good
+PASS first missing-dependency import retains editable recipe
+PASS first missing dependencies do not publish incomplete content
+PASS explicit project-owned glTF buffer and image remaps retry through shared service
+PASS cancel before parsing leaves accepted generation intact
+PASS empty cache reproduces accepted bytes and stable mappings
+PASS cyclic malformed source fails without publication
+PASS asynchronous generation stages before publication
+PASS recipe change between cook and publication rejects obsolete generation
+PASS changed copied texture invalidates its cooked generation
+PASS changed texture retains authored material slot identities
+PASS restored dependency reproduces deterministic accepted bytes
+PASS root-motion fixture recipe created
+PASS explicit model-axis root extraction publishes
+PASS extracted motion reconstructs complementary pose without losing unselected axes
+PASS animation-only source ordering maps by verified hierarchy and skin binding
+PASS ambiguous same-path motion joints reject safely
+PASS same-rig motion recipe assembles through shared service
+PASS changed compatible clip republishes coherent animation generation
+PASS motion reimport preserves unrelated cached geometry/material products
+PASS bad shared-edge winding reports actual source node and face
+PASS explicit derived orientation repairs one patch and preserves original geometry
+PASS selected Z twist and nonzero pivot reconstruct source while preserving vertical motion
+PASS root extraction matches independent analytic selected translation and twist
+PASS background source recipe created
+PASS running background cancellation never publishes partial rig
+PASS finished import job record is explicitly retired
+{
+  "checks": 37,
+  "failures": 0
+}

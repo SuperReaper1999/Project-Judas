@@ -1,0 +1,27 @@
+{
+  "id": "judas_paired_input_script_tests",
+  "source": "tests/PairedInputScriptTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_paired_input_script_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_paired_input_script_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "2394a964df4c1b2b47d2b0fad2ebad8340aafa4c62e379a6ee37a6c8630f3954",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 21,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_paired_input_script_tests.log",
+  "logSHA256": "312b9106d28e499c00ababed80a8bdfdf0909a6af03cfb3de3e8b619bcf20d39",
+  "seconds": 0.3673472509999556
+}

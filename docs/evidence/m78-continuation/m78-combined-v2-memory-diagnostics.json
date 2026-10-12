@@ -1,0 +1,68 @@
+﻿{
+    "freeBytes":  669401088,
+    "events":  [
+
+               ],
+    "processes":  [
+                      {
+                          "Name":  "TiWorker",
+                          "Id":  2820,
+                          "WorkingSet64":  850124800,
+                          "VirtualMemorySize64":  2204366217216
+                      },
+                      {
+                          "Name":  "MsMpEng",
+                          "Id":  2960,
+                          "WorkingSet64":  312033280,
+                          "VirtualMemorySize64":  2204446466048
+                      },
+                      {
+                          "Name":  "SearchApp",
+                          "Id":  5544,
+                          "WorkingSet64":  166969344,
+                          "VirtualMemorySize64":  2247163170816
+                      },
+                      {
+                          "Name":  "explorer",
+                          "Id":  4332,
+                          "WorkingSet64":  147623936,
+                          "VirtualMemorySize64":  2203874168832
+                      },
+                      {
+                          "Name":  "Registry",
+                          "Id":  108,
+                          "WorkingSet64":  135012352,
+                          "VirtualMemorySize64":  172064768
+                      },
+                      {
+                          "Name":  "svchost",
+                          "Id":  1480,
+                          "WorkingSet64":  119496704,
+                          "VirtualMemorySize64":  2207843622912
+                      },
+                      {
+                          "Name":  "msedgewebview2",
+                          "Id":  4020,
+                          "WorkingSet64":  115290112,
+                          "VirtualMemorySize64":  2414899339264
+                      },
+                      {
+                          "Name":  "msedgewebview2",
+                          "Id":  6876,
+                          "WorkingSet64":  111988736,
+                          "VirtualMemorySize64":  3878449979392
+                      }
+                  ],
+    "memory":  {
+                   "TotalVisibleMemorySize":  6290924,
+                   "FreePhysicalMemory":  1868136,
+                   "TotalVirtualMemorySize":  7384952,
+                   "FreeVirtualMemory":  3310808
+               },
+    "pagefiles":  {
+                      "Name":  "C:\\pagefile.sys",
+                      "AllocatedBaseSize":  1068,
+                      "CurrentUsage":  4,
+                      "PeakUsage":  5
+                  }
+}

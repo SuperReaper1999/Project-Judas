@@ -1,0 +1,3 @@
+$paths=@('C:\JudasValidation\vcpkg\downloads\tools\git-2.7.4-windows.partial.2180');$rows=@();foreach($path in $paths){$files=Get-ChildItem -LiteralPath $path -Recurse -File -ErrorAction SilentlyContinue;$rows+=@{path=$path;files=$files.Count;bytes=($files|Measure-Object -Property Length -Sum).Sum}}
+$result=@{free=(Get-PSDrive C).Free;generated=$rows;cache=@(Get-Content C:\JudasValidation\Build\CMakeCache.txt|Where-Object {$_ -match '^(VCPKG|CMAKE_TOOLCHAIN_FILE|SDL2_DIR|JUDAS|ZLIB)'})}|ConvertTo-Json -Depth 4 -Compress
+Invoke-WebRequest -UseBasicParsing http://192.168.122.1:8872/m78-config-scratch-bounded.json -Method Post -Body $result -ContentType application/json|Out-Null

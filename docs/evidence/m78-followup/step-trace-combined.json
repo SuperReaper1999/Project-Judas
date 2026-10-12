@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".cache/m78-followup/step_trace_corrected"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:07:59.246297+00:00",
+  "seconds": 0.4244027959975938,
+  "exitCode": 1,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "65427ead134a9f8f32f3321589d308ff63504b2e5de702724e03fbb35aed9650",
+  "logSHA256": "137eff47bab52818715116d5b97e808d919f99d0ec735a621dc984443a16a9b8",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

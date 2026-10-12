@@ -1,0 +1,369 @@
+# M58 — Judas learns to speak every language.
+
+Starting checkpoint:
+ba16c2c52c60194a95ff161d55b93ff874863b77
+
+M57 is committed, pushed and human-accepted. HEAD/main/origin/main were aligned.
+The ONLY known pre-existing worktree change is the operator's unstaged
+`docs/ROADMAP.md` edit. Preserve its exact bytes and staging state. Do not restore,
+rewrite, stage or commit it. Check actual repository state before working; report
+unexpected differences without overwriting them. Do not read ahead into M59.
+
+Implement M58 to candidate completion. Do not commit, push or tag before review.
+
+GOAL
+Replace the ASCII-limited runtime text path with real Unicode text layout,
+font fallback and project-owned localization. A developer must be able to ship
+multilingual menus/HUDs through ordinary Judas assets, UI and JavaScript.
+
+Judas owns text/layout/localization primitives.
+Projects own fonts, translations and presentation choices.
+JavaScript owns game behaviour and language-selection policy.
+
+The milestone name is an ambition, not a claim that every font contains every
+character or that Judas automatically translates text. Demonstrate a genuinely
+general horizontal-text pipeline with representative complex scripts.
+
+## 1. Trace the current path; reuse the engine
+
+Inspect the actual FontLoader/font assets, Renderer text calls, RuntimeUI
+measurement/layout, QuickJS string conversion and export handling. Identify which
+ASCII assumptions must change before implementing.
+
+Use one shared shaped-text representation for measurement and drawing. Existing
+text APIs may delegate to it through compatibility adapters; do not build a
+Unicode-only demo renderer beside the real UI. Keep existing ASCII menus, HUDs
+and engine debug text usable. Editor chrome can retain its existing toolkit.
+
+Separate decoding/layout/shaping, glyph rasterization and GPU submission. Native
+library types and GL objects stay behind Judas-owned interfaces. No game-specific
+English/French/Arabic branches in engine code.
+
+## 2. Use commodity Unicode machinery
+
+Recommended stack:
+- HarfBuzz for shaping font/script/language/direction runs.
+- FreeType for scalable font metrics and glyph rasterization.
+- ICU4C for bidi analysis, Unicode boundaries, locale handling, plural rules and
+  established MessageFormat/number formatting.
+
+Use pinned compatible releases/commits, not moving branches. Confirm build
+requirements against Judas's actual C++/Linux/OpenGL baseline. Document versions,
+Unicode/locale-data versions, provenance and chosen dependency licenses. Keep
+runtime deployment offline and reproducible; do not add a browser or Node.
+
+An equivalent established stack is acceptable only with a concrete integration
+reason and equivalent required coverage. Do not replace ICU with hand-written
+Arabic reversal, guessed plural rules or byte/space-based segmentation. HarfBuzz
+alone is NOT paragraph layout, bidi resolution or font fallback.
+
+Build only needed library facilities where straightforward; avoid duplicate
+shapers and circular font-library build dependencies. Report the data/binary
+footprint, but do not turn dependency trimming into a separate project. Include
+required locale/boundary data rather than silently disabling covered languages.
+
+## 3. Unicode and text layout contract
+
+Keep authored text and external strings in logical order. Use UTF-8 at Judas
+asset/API boundaries; handle the QuickJS boundary correctly, including supplementary
+code points. Internal UTF-16 for ICU is fine with correct index conversion.
+
+Provide these behaviours through the real text path:
+- Validated decoding and documented malformed-input handling. Authored malformed
+  files should fail usefully; runtime bad strings must not crash or overrun.
+- No assumption that byte, code point, grapheme cluster and glyph are equivalent.
+- Paragraph bidi analysis, directional/script/font runs, shaping with proper
+  advances/offsets, then correct visual placement for each wrapped line.
+- Arabic joining, Indic shaping, combining marks, ligatures and kerning supplied
+  by the selected font/shaper. Never render complex text one code point at a time.
+- Mixed RTL/LTR text, punctuation, brackets and numbers; honour direction controls
+  and isolation through the Unicode algorithm rather than reversing strings.
+- Unicode-aware wrapping and mandatory breaks, including CJK without spaces.
+  Preserve grapheme/shaping boundaries; reshape line fragments when required.
+- A documented long-unbreakable-text policy: overflow/clip or cluster-safe
+  emergency wrap, never arbitrary byte cuts.
+- Actual shaped measurement, ascent/descent/baselines, line spacing and fallback
+  metrics. Marks and taller fallback glyphs must not be clipped by ASCII metrics.
+- Text direction auto/LTR/RTL and start/end/centre alignment while preserving
+  existing explicit left/right behaviour.
+
+Measurement and rendering must consume the SAME layout result. Resizing, wrapping,
+font/size changes and language changes invalidate the right cached layout.
+Do not silently normalize/rewrite asset strings or identity keys to make tests pass.
+
+## 4. Font assets, fallback and bounded caches
+
+Reuse ordinary font assets. Support practical TrueType/OpenType outline fonts;
+record any unsupported format clearly. Add an authored ordered fallback-font
+configuration, with optional locale/script choices where useful.
+
+Fallback selection must preserve clusters and shaping context, not mix a base
+letter from one font with its combining mark from another arbitrarily. Retry a
+larger shaping run where necessary. Retain font identity with every glyph ID.
+Handle missing coverage with a visible replacement and useful bounded diagnostics;
+do not silently drop characters. Prove fallback with genuinely missing coverage,
+not merely two fonts that both contain the test string.
+
+Use on-demand glyph rasterization and bounded atlas pages. Do not pre-bake the
+whole Unicode range. Cache glyphs by font identity/revision, glyph ID, size and
+relevant raster settings; cache layouts by actual shaping/layout inputs.
+
+Atlas growth/eviction must not leave cached geometry pointing at unrelated glyphs.
+Use stable placement or invalidation/generation tracking. Preserve draw order
+while batching compatible text. Spaces and zero-area glyphs still have layout
+semantics. Respect font-face/break-iterator thread-safety and backing-byte lifetime;
+GPU creation/upload/deletion remains on the owning Renderer thread.
+
+Pack only project-required fonts. Use redistributable font files with recorded
+provenance/licenses, not whatever fonts happen to be installed on this PC. Default
+ASCII-only projects must not load every fallback family just because it is bundled
+with a multilingual demonstration.
+
+## 5. Rendering and M41 UI
+
+Integrate all runtime labels and control captions with shaped measurement/drawing,
+normal clipping, scaling, alpha and ordering. Font switching must not misalign
+buttons or change input ownership. Keep keyboard/gamepad focus deterministic.
+
+Preserve M57's exposure-independent UI after world tone mapping. Glyph coverage is
+coverage, not an sRGB colour texture; handle tint/blending consistently with the
+actual UI pipeline. Do not route text through PBR or change world lighting.
+
+Support sensible horizontal text at multiple UI sizes. Grayscale atlas rendering
+is sufficient; no SDF/MSDF research required. Missing/failed font resources should
+produce a safe diagnostic/fallback rather than crash rendering.
+
+Text direction is not universal layout mirroring. Add inherited UI direction and
+logical start/end handling needed for RTL menus. Any mirroring/reversal of a row
+must be explicit/inherited by documented authoring policy. Do not automatically
+mirror images, game axes, cameras or every icon when the locale changes.
+
+## 6. Localization assets and formatting
+
+Add a project-owned UTF-8 string-table/catalog asset using an ordinary maintainable
+format and existing resource conventions. Stable keys identify messages, not
+English source sentences or translated strings. Define namespaces/tables and
+missing/duplicate-key behaviour clearly.
+
+Support:
+- Project default locale and explicit available locales, with BCP 47 identifiers.
+- Deterministic configured fallback: requested locale, appropriate parents/project
+  fallbacks, then default; no cycles or accidental host-locale fallback.
+- Missing-key diagnostics and a visible final fallback rather than blank text.
+- Named parameters, plural selection and select variants using an established
+  message syntax. English `count == 1` is not a general plural implementation.
+- Locale-aware number formatting with a small useful options surface.
+- Message validation at load/import and safe handling of missing/wrong arguments.
+  Parameter values are data, not additional message templates to execute.
+
+Use established ICU MessageFormat unless another already-integrated format is
+clearly better. State the chosen syntax, escaping rules and argument types.
+Format whole messages, not fragments concatenated in English order. Cache compiled
+messages/formatters. A fallback template must use coherent language/plural rules;
+document the resolved-message locale versus requested display-locale policy.
+
+Locale selection must NEVER change engine serialization, hashes, physics numeric
+parsing or shared process-global locale. Scene numbers remain invariant-format.
+
+## 7. Runtime locale and authored UI
+
+Localization state belongs to the played project/session, not a process-global
+mutable language setting. It survives ordinary scene changes/reload within that
+session; Stop/project change clears the session override and starts from configured
+defaults. Do not build persistent user settings or a new save system here.
+
+Allow language changes while playing AND while paused. Apply changes coherently;
+refresh localized labels/layout without reconstructing the world, losing score,
+changing physics or breaking pointer capture. Validate a replacement catalog before
+publishing it; an invalid request must not leave half-updated state.
+
+Support authored localization keys for static UI captions alongside literal text.
+JS supplies dynamic message parameters/strings for HUD values. Define precedence
+between key bindings and explicit `.text` assignments so the two do not fight.
+Provide a small revision/change notification mechanism so scripts can refresh
+cached dynamic text without recompiling/reformatting every label every frame.
+
+Editor workflow must support importing catalogs/fonts, selecting defaults/fallbacks,
+authoring text keys and previewing rendered text. A basic catalog editor or source
+editing plus reload/preview is enough. Preserve UTF-8 through existing editor fields;
+use the real Judas text path for multilingual preview. Do not rewrite Dear ImGui
+paragraph layout or translate the entire editor as part of this milestone.
+
+## 8. JudasJS surface
+
+Expose a small generic localization API, consistent with current JudasJS style:
+query available/current locale, choose locale, resolve/format a key with parameters,
+format a number, and detect locale changes. Extend UI text direction/font access
+only where needed for ordinary project control.
+
+Conceptual use, NOT a claim these names already exist:
+
+    const caption = localization.format("hud.targetsRemaining", { count: remaining });
+    hud.get("remaining").text = caption;
+
+No `translateShooterHUD()`, game-specific localization manager or hidden dispatcher.
+Use normal safe lifetimes and bounded arguments. Callbacks must remain safe during
+entity/document destruction and scene replacement.
+
+Update judas.d.ts, current reference/landing page, inventory/manifest, live VM
+coverage and cookbook with every public addition. Do not assume QuickJS has Intl;
+provide Judas bindings to the selected native facilities, not an ECMA-402 project.
+
+## 9. Resource, prefab and export integration
+
+Font/fallback/catalog references use normal stable asset identity, resource demand,
+async loading, dependency validation and prefab overrides. Queued old-project work
+must not publish into a replacement world. Shared font bytes may be cached; mutable
+layout, locale and UI state must not leak between sessions.
+
+M38 export includes required fonts, catalogs, library/data dependencies and notices.
+A moved/read-only package must work with unrelated CWD, no network, no repository
+and no reliance on desktop-installed fonts or unrecorded ICU data paths. Package
+runtime dependencies deliberately rather than copying arbitrary system folders.
+
+New authored data follows existing content-fingerprint conventions. Transient
+locale choices, glyph caches and formatted text do not become saved-world state.
+Preserve existing schema-5/legacy compatibility where the actual contract permits;
+never bump a schema merely because a milestone number advanced.
+
+## 10. Integration proof: text lab and Spring Range
+
+Provide a compact ordinary multilingual text/UI project plus localize the existing
+Spring Range HUD, pause menu, controls/instructions and language selector. Keep
+shooter logic, physics, materials, navigation and scoring unchanged. Project JS
+owns language-selection buttons and dynamic score/target messages.
+
+Text lab must exercise Latin accents and decomposed combining marks, Cyrillic,
+Arabic and Hebrew mixed with Latin/numbers, Devanagari, and horizontal CJK. Include
+at least one supplementary-plane decoding case and one genuine font-fallback case.
+Use meaningful short strings, not random glyphs presented as language support.
+
+Spring Range needs a small useful catalog set: English, one other LTR locale,
+Arabic and Japanese are sufficient. Russian plural examples and Hindi shaping can
+remain in the lab. Label translations as demonstration content unless reviewed
+for linguistic quality. Do not spend the milestone translating the whole repo.
+
+Include long/expanded text, narrow wrapping, multi-font lines, a missing-key case
+and an intentionally unsupported glyph. Make locale/direction/fallback information
+inspectable. No scene-specific text fixes, pre-rendered Arabic images, reversed
+translation files or hardcoded glyph positions.
+
+## 11. Focused correctness checks
+
+Test Judas integration, not every Unicode character. Reuse pinned library conformance
+fixtures or reference-tool output for a small justified sample; do not merely assert
+that invoking the same wrapper twice gives the same answer.
+
+Cover these groups in compact suites:
+1. UTF-8/JS/asset round trips, supplementary characters, malformed strings and
+   combining sequences; no byte truncation or silent text loss.
+2. Arabic/Indic shaping and mixed-direction paragraphs against independent
+   reference outputs for the same pinned fonts, including wrapped mixed-bidi lines.
+3. Unicode line-break/grapheme boundaries, CJK wrapping, long-token policy and
+   equality of measured layout with the glyph positions actually submitted.
+4. Fallback clusters/context, baseline metrics, missing coverage, atlas growth and
+   eviction/reload without stale glyph references; preserve ASCII usability.
+5. Catalog loading, key/locale fallback, malformed patterns/arguments, reordered
+   placeholders, locale numbers and plurals beyond English one/other.
+6. Locale change while paused/playing; authored and JS-driven labels refresh,
+   focus/capture stay correct and game state does not reset.
+7. Two documents/instances, prefab references, Play/Stop, scene/project changes and
+   delayed resources; no locale or font-handle lifetime leaks.
+8. Actual GL text rendering/clipping/scaling and M57 exposure independence; test
+   real glyph placement, not only a nonempty framebuffer.
+9. JudasJS types/inventory/live enumeration plus executed localization cookbook;
+   Spring Range still plays and works in a moved/read-only offline package.
+10. Different process locale settings do not change authored numeric serialization,
+    fingerprints or simulation results for identical fixed-step gameplay inputs.
+
+For visual examples retain the logical source text, font/version and reference
+render/tool command. Human recognition of an unfamiliar script alone is not proof
+of correct shaping. Report linguistic or script cases not independently validated.
+
+## 12. Performance and final validation
+
+Use M56, not another profiler. Measure cold glyph/layout work separately from warm
+text rendering, a changing numeric HUD, roughly 100 multilingual labels, locale
+switch stalls, atlas/cache memory and added package size. Show ASCII-project and
+multilingual-project costs. Repeated unchanged labels should not rerasterize or
+reformat needlessly. Report frame median/p95/max and concurrent workload conditions;
+do not secretly stop the operator's other applications to get nicer numbers.
+
+During development run affected focused checks. At candidate completion run ONE
+clean Release build and ONE production suite, because this changes shared text/UI/
+resource infrastructure. Run relevant async integration, M58 checks, API/cookbook,
+Spring Range, editor Play/Stop and moved-package smoke without duplicating tests
+already run by the same candidate gate. Check real GTX 970 rendering as available;
+software GL is useful evidence, not a hardware-performance substitute.
+
+Late narrow fixes get affected reruns only. Do not hammer unrelated fluids,
+navigation or protected research during every iteration. Preserve genuine failures
+and explain stale expectations instead of weakening tests to hide regressions.
+
+## 13. Human handoff and scope boundary
+
+Hand back one short controls/checklist covering:
+- Read the multilingual lab, mixed-direction numbers and fallback lines.
+- Resize/change UI scale; check wrapping, marks, baselines and clipping.
+- Switch Spring Range languages during play and pause, then continue the same round.
+- Confirm scoring/plurals/numbers and readable menus in LTR/RTL modes.
+- Change a catalog entry without rebuilding C++; reload and see the change.
+- Test Play/Stop, scene replacement and the moved standalone; inspect M56 cost.
+
+Human visual/gameplay acceptance is required. Do not claim native-speaker review
+or typography certification from numerical checks or your own screenshots.
+
+OUT OF SCOPE: automatic translation/services, full editor translation, a rich-text
+editor, new text-entry widgets/IME/caret/selection systems, vertical writing, ruby,
+advanced justification/hyphenation, color-emoji/SVG font rendering, SDF research,
+accessibility narration, subtitle/lip-sync systems, localized audio/texture variants,
+full Intl/calendar/currency APIs, user-profile persistence, M59 streaming, M60 audio
+or unrelated engine upgrades. Supplementary Unicode decoding remains required even
+when a font/rendering feature such as color emoji is out of scope.
+
+## 14. Delivery and repository discipline
+
+Leave the complete candidate uncommitted for operator review. Preserve protected
+FTFT/P1 research, historical M33–M57 evidence and accepted simulation work. Keep the
+operator's docs/ROADMAP.md edit byte-identical and unstaged. Current documentation
+may be updated/cross-linked; historical evidence is never rewritten.
+
+Report concisely:
+- Dependency pins/data versions and text/font/localization ownership.
+- Shaping/bidi/wrapping/fallback/cache design and exact supported font/script limits.
+- Catalog syntax, fallback/formatting policy, locale lifetime and UI refresh rules.
+- Editor/JS/prefab/export integration and final API counts/coverage.
+- Lab and localized Spring Range paths; practical controls/human checklist.
+- Tests actually run, reference evidence, performance/memory/package results.
+- Known limitations, exact changed-file list and final source/asset fingerprints.
+- Git status, preserved roadmap/protected-work confirmation and proposed commit.
+
+Suggested commit after operator approval:
+Add M58 Unicode text shaping and localization
+
+No commit, push, tag or M59 work now. Stop at operator review.
+
+PRIMARY IMPLEMENTATION REFERENCES
+Use the APIs/documentation matching the actual pinned versions. These establish
+library responsibilities; they do not prescribe Judas-specific classes or policy.
+
+HarfBuzz shaping boundaries:
+https://harfbuzz.github.io/what-harfbuzz-doesnt-do.html
+HarfBuzz cluster/line-boundary flags:
+https://harfbuzz.github.io/harfbuzz-hb-buffer.html
+HarfBuzz maintainers on font fallback:
+https://github.com/harfbuzz/harfbuzz/discussions/4949
+FreeType face lifetime/threading:
+https://freetype.org/freetype2/docs/reference/ft2-face_creation.html
+ICU bidi and boundary analysis:
+https://unicode-org.github.io/icu/userguide/transforms/bidi.html
+https://unicode-org.github.io/icu/userguide/boundaryanalysis/
+ICU locale and message formatting:
+https://unicode-org.github.io/icu/userguide/locale/
+https://unicode-org.github.io/icu/userguide/format_parse/messages/
+Unicode algorithm specifications; use the versions matching pinned data:
+https://www.unicode.org/reports/tr9/
+https://www.unicode.org/reports/tr14/
+https://www.unicode.org/reports/tr29/
+
+Milestone 58 — Judas learns to speak every language.

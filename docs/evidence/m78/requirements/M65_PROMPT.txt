@@ -1,0 +1,375 @@
+# M65 — Judas learns to stop fighting its developers.
+
+Starting accepted checkpoint:
+19a53a42a9b363818e67c07d8b63e9fddcea2845
+
+M64 and the documentation realignment are complete. Verify the repository state
+before starting; preserve unrelated operator changes and stop on unexpected source
+changes or divergence. Do not reset, merge or absorb somebody else's work.
+
+Implement ONE complete candidate. No commit, push, merge or tag before human review.
+Do not modify Claude's workspaces or processes.
+
+PURPOSE
+Close the most consequential remaining friction demonstrated by the skate-game and
+Rooftop Run consumer reports. Ordinary games should not need to fight support state,
+hand-write trigger checks, estimate foot positions from crossfade progress, keep
+settled ragdolls solving forever, or read C++ serializers to author a menu.
+
+This is an evidence-driven integration/usability milestone, not a replacement engine.
+Judas provides reusable machinery; JavaScript owns skating, parkour, checkpoints,
+jumping, grabbing, scoring and other game policy. Keep Judas physics authoritative.
+No Jolt or other replacement physics engine.
+
+## 1. Evidence and scope
+
+The bundle contains unchanged source reports:
+- evidence/SKATE_GAME_ENGINE_AUDIT.md — frozen at M60.
+- evidence/JOURNAL.md — its chronological investigation.
+- evidence/ROOFTOP_RUN_REPORT.md — tested M64; later documentation read separately.
+
+These are observations and proposals, not proof of every suggested diagnosis.
+Reproduce against CURRENT source before fixing a reported bug. Do not confuse the
+Skate E-01 numbering with Rooftop E1. Keep both reports' own game-code mistakes and
+partial/headless editor evaluation explicitly distinguished from engine defects.
+
+Already handled before M65: Skate D-01/D-02/D-03 via PR #1; core E-03/E-04 collision
+and query capability via M64; game save/load via M61. Preserve their regressions.
+Do not resurrect the old implementations or claim every broader wish within those
+entries was implemented. In particular, M64 did not promise smooth physical motion
+over arbitrarily coarse ramps, and M61 is not proof of every possible profile-store API.
+
+Required work packages:
+1. CharacterMotor support semantics and ordinary collision/trigger participation.
+2. Resolved skeletal transforms/sockets and a small reusable limb-IK contributor.
+3. Island-aware rigid-body/articulation sleeping and correct waking.
+4. Missing general gravity, physical-material and runtime-joint access.
+5. Modern input/camera/capture test harness.
+6. Practical bulk authoring, entity-reference properties, skeleton selection and
+   documented/serializer-backed code-first content authoring.
+7. Small presentation/product diagnostics listed below.
+
+Track findings in a compact CURRENT closure table: source ID, reproduced/already
+covered, change, proof, and any remainder. A workaround or documentation clarification
+is not full implementation of a missing feature. Do not turn the table into another
+open-ended audit. Work through the packages and hand back once, unless a genuine
+blocker requires operator input.
+
+## 2. Modernize the harness first, then use it
+
+Addresses Rooftop E1/E2 and the screenshot portions of E8/Skate C-08.
+
+Route test actions/axes through the real M35 InputSystem path consumed by JudasJS,
+including named actions, analog axes, pressed/held/released edges, relative look,
+multiple fixed steps per frame and UI consumption. Keep compatible legacy commands
+where possible. Test input must not bypass game scripts by assigning their private
+intent objects. Deterministic test mode must isolate real desktop input; normal play
+must remain normal play.
+
+Capture through the normal application presentation/render path after the current
+script-owned camera is applied. Honour presentationUpdate, presented transforms,
+active camera selection, current rendering/UI and interpolation. No second legacy-
+player-only renderer. Frame/UI-clock captures must work while simulation is paused.
+Support several captures per run and useful selected-entity/motor telemetry instead
+of reporting only the built-in player's zero state.
+
+Use fresh isolated output paths. Missing/invalid commands or expectations must fail
+usefully, not crash on stale output. Do not rewrite old FTFT evidence while running.
+Prove a named-input script actually sees the inputs, the captured camera changes
+with JS view state, and a paused modal menu can be captured. Do not claim human input
+feel merely because the harness passed.
+
+## 3. Fix CharacterMotor support and close the event gap
+
+Addresses Skate B-01 and Rooftop E3/E4/E5.
+
+Reproduce uphill tangent movement on the reported ramp, then correct support departure
+semantics. An upward component relative to gravity is not, by itself, separation from
+an inclined support. Preserve support for legitimate tangent motion and release it
+for actual departure/jumping. Base this on the motor's resolved contact/support and
+relative motion, not a scene exception or a blanket supported=true rule. Derive and
+test the decision; do not blindly replace one dot product and declare it solved.
+
+Preserve moving/rotating-support point velocity, stepping, slope limits, headroom,
+explicit gravity scaling, oblique/radial gravity and genuine loss of support at edges.
+Do not add a built-in Jump/WallRun/Skate mode or world-Y fallback.
+
+Document supportNormal precisely: contact/separation normal is not necessarily a
+mesh-face normal. Do not smooth legitimate corners into invented walkable surfaces.
+Expose a separately named geometric-surface normal only where it is genuinely known;
+otherwise report unavailable. Supply a short safe usage example instead of teaching
+scripts to project velocity onto every changing contact normal unconditionally.
+
+Integrate motors with the normal M42 event lifecycle:
+- A sensor can detect a motor-driven player through ordinary engine geometry/filtering.
+- Actual motor contacts and sensor overlaps produce appropriate enter/stay/exit events.
+- Use existing M39 masks and generation-safe identities; do not add fake rigid mass.
+- Coalesce internal slide/sweep observations into documented fixed-step events, avoiding
+  duplicate pairs. Sensors never block or push; missing solved impulse remains null.
+- Destroy/disable/resize/teleport, support removal and region unload cannot leave stale
+  pairs. Dispatch safely after movement, including callbacks that request destruction.
+
+Document continuous-crossing coverage honestly; do not promise full trigger CCD if
+only endpoint overlap is supported. Motor-to-motor physical blocking is NOT required.
+
+Proof: uphill/downhill tangent movement, actual jump, walking off a roof, moving
+platform departure, arbitrary orientation, ordinary sensor checkpoints, collisions,
+filters and callback destruction. Replace manual checkpoint-box tests in the current
+parkour integration copy where available; do not move its checkpoint rules into C++.
+
+## 4. Resolved skeleton access, sockets and minimal IK
+
+Addresses Skate E-01/E-02 and the corresponding bone-selection workflow.
+
+Expose safe read-only joint transforms from the existing resolved pose. Provide clear
+local/model/world-space semantics and distinguish simulation/evaluation samples from
+presented samples using the engine's actual timing model. Presentation consumers must
+see the same pose used for skinning, not raw clip tracks, bind pose or guessed fades.
+Missing joints and replaced/unloaded skeleton assets must fail safely.
+
+Add simple authored sockets: a stable joint key plus a local offset/orientation.
+Use them for visual attachments and queries without a second skeleton or entity-ID
+system. References must remap through prefabs, streaming and saves. A visual socket
+must not silently teleport a dynamic rigid body; physical attachment uses normal
+joints/forces. Prevent attachment cycles and define evaluation order.
+
+Add one generic two-bone/limb IK contribution with root/middle/end selection, target,
+pole/bend reference, weight, enabled state and deterministic ordering. JS supplies
+intent/targets; the engine solves the chain through M47 pose composition. Support
+moving world targets without humanoid bone-name assumptions. Handle unreachable and
+near-straight/folded configurations without NaNs, sudden flips or accidental stretch.
+Do not claim an unreachable target was reached.
+
+Preserve clip layers/masks, interrupted crossfades, arbitrary entity orientation and
+M48 ragdoll authority. IK must not write directly into GPU matrices or continuously
+pose-drive dynamic bones. No full-body IK, balance, motion matching, retargeting,
+automatic locomotion or active physical animation.
+
+Proof: a hand/socket prop follows layered/interrupted animation and ragdoll output;
+two independently targeted feet follow a tilting board while the rider need not be
+rigidly rotated with the entire board. Measure end-target error and inspect in motion.
+Explicitly show where the old transitionFraction workaround is no longer necessary.
+Persist authored/runtime IK and socket state according to M61's participant contract;
+do not serialize cached GPU/layout data or raw handles.
+
+## 5. Sleep idle physics without breaking physical relationships
+
+Addresses Skate F-01; measure the CURRENT implementation before choosing the fix.
+
+Add generic island-aware sleeping/quiescence to the existing PhysicsWorld. Connected
+contacts/joints must settle coherently; do not freeze individual limbs that an active
+neighbour is trying to move. Use documented bounded motion/error and settling criteria,
+not camera distance, object names or a ragdoll-only shortcut. Keep bodies queryable,
+visible and available for collisions while asleep.
+
+Wake the affected connected state when something can actually change it: impacts,
+forces/impulses/torques, meaningful gravity/support changes, moved kinematic geometry,
+motor/limit/attachment changes, collider changes, fracture or external fluid/deformable
+loading. Static balanced support under unchanged gravity must still be able to sleep.
+Audit each existing force producer so sleeping cannot silently swallow its forces.
+
+Sleeping must preserve appropriate sensor/event behaviour and spatial registration.
+Stream/load/destroy safely; restore or reconstruct sleep state without first-frame
+explosions, lost support or invalid warm starts. Check bounded wake propagation and
+make diagnostic sleep state visible through M56. Keep the existing active solver;
+this is not a solver rewrite or permission to lower physics cadence.
+
+Proof: resting crates, one/ten/twenty resting articulations, and a modest fragment
+pile; wake by impact/impulse, moving support and changed joint drive. Measure awake
+versus settled cost and confirm a sleeping pile can react again. Include one existing
+liquid/deformable force interaction to demonstrate it is not ignored. Report residual
+cost honestly rather than promising any crowd size is free.
+
+## 6. Complete the small general physics/API gaps
+
+Addresses Skate E-06/E-07/E-09. These are engine access, not game frameworks.
+
+GRAVITY
+Expose a public world-position acceleration sample through the SAME normal gravity
+resolver used by physics. No CharacterMotor dependency, no assumed -Y and no type
+checks in consumer scripts. Prove uniform/radial/overriding regions and a rigid-body
+script using the query. Follow existing fixed-origin coordinate conventions.
+
+PHYSICAL MATERIALS
+Provide reusable physical-material identity and safe runtime selection/control of
+existing friction/restitution properties. Reuse current records where possible; add
+only a small normal authored resource if no shared identity exists. Keep physical and
+render materials independent. Preserve legacy authored values and existing response
+laws. Hits/contact data must identify the actual applicable material where supported;
+do not fabricate per-triangle materials when only a body material was assigned.
+Changes must wake/invalidate the relevant state safely. No anisotropic friction,
+rolling-friction model or new contact-response research.
+
+RUNTIME JOINTS
+Expose creation, destruction and re-anchoring/configuration of existing M45 joint
+primitives through safe public APIs. Validate first, apply at safe boundaries, invalidate
+stale solver caches and reject inconsistent requests without partial mutation. Use
+normal entity/ownership references for world anchors and dynamic pairs, including
+M59 adoption/unload and M61 reconstruction. No new joint solver, rail or grab system.
+
+Proof: two identical scripts run under different selected gravity; change a body's
+physical material and observe the existing response; query the corresponding identity;
+create/re-anchor/release an ordinary connection at runtime, then save/reload and unload
+its region without stale joints. Preserve the integrated D-01/D-02 regressions.
+
+## 7. Make ordinary authoring bearable
+
+Addresses Skate C-02/C-03/C-09, part of C-01/C-04 and Rooftop E7/Skate C-06.
+
+Keep the existing editor and visual language. This is functional productivity, not
+a new dashboard/theme, DCC application or giant procedural-modelling framework.
+
+Required:
+- Multi-selection with useful batch transforms and common component/property editing.
+  Mixed values must be explicit; unchanged fields must not be overwritten accidentally.
+- Hierarchy search/filter and normal grouping/parenting workflow. Preserve selection
+  identity while filtering; do not duplicate hierarchy storage.
+- Component copy/paste and duplicate/batch edits using the existing command/undo path.
+  A batch action should undo coherently; preserve prefab overrides and references.
+- A typed entity-reference script property with an inspector picker. Serialize stable
+  authored/qualified identity and resolve to safe runtime access; remap for prefabs,
+  streamed instances and saves. Do not store raw runtime handles in content. Existing
+  number/boolean/string script properties remain compatible.
+- Joint/skeleton pickers and local-axis visualization for sockets, IK and ragdoll
+  mapping. No more requiring a user to type every full bone path or guess Euler axes.
+- Show existing M64 collider cooking/selection in this workflow; do not recreate it.
+
+For code-first authoring, document the actual versioned scene/UI/input record contracts
+and supply a small structured authoring path through the REAL existing serializers
+and validators. Extend the existing authoring tool where possible, especially for UI;
+do not introduce a second independent serializer with its own defaults. An external
+generator must be able to create a scene/input map/menu without reading C++ or counting
+fifty positional fields. Keep existing on-disk assets compatible. Provide a copyable
+example and a round-trip check, not a new general schema language.
+
+Make importer failures identify the actual violated limit and required preparation.
+Full FBX support, multi-mesh skin/import redesign, raising every rig limit, automatic
+ragdoll fitting, arc/spline modelling and retargeting are explicitly deferred. Do not
+mark those parts of C-01/C-04 closed because the picker or error message improved.
+
+## 8. Small product fixes with clear boundaries
+
+Addresses Rooftop E6/E8 and the inexpensive parts of Skate E-08/C-05/C-07.
+
+- Author a per-view/scene clear/background colour with a documented relationship to
+  M57 HDR/exposure and environment-background precedence. Expose it normally to JS.
+  Solid-colour background must not require generating/baking an HDR environment.
+- Use the configured project/game title in runtime/exported windows; preserve the
+  editor's useful identity. Startup control hints must reflect actual bindings or be
+  omitted when inapplicable; do not print obsolete universal save-key instructions.
+- Distinguish invalid clip, invalid settings, missing group and voice-capacity failures
+  in audio diagnostics without changing their established control semantics.
+- Provide material UV scale/offset through the existing material/instance mechanism
+  for tiled primitive textures. Maintain existing defaults; no triplanar shader project.
+- Allow explicit project scene inclusion/exclusion for export, without guessing JS
+  control flow. Reject an invalid startup/manifest/reference configuration clearly.
+  Retain registered assets needed for dynamic loading; do not silently prune them.
+
+Each item needs a small direct check, normal authoring/serialization where applicable,
+and no unrelated subsystem rewrite. Multiple AudioEmitters per entity remain deferred.
+
+## 9. State, ownership and compatibility are part of the implementation
+
+For each new persistent component/property, use the existing editor, asset, prefab,
+M59 ownership and M61 save contracts. Transient caches/test captures are not game state.
+Test appropriate adoption, region suspension/pinning, restore and destruction. No
+silent loss of joint/socket/IK references when a region leaves residency.
+
+Preserve canonical fingerprints for unchanged old content. Extend conditional authored
+fields normally; any genuinely required format revision needs an explicit reason and
+compatibility behaviour. Update public JudasJS runtime/types/inventory/reference and
+executed examples together. Do not add hidden native calls for official demos.
+
+Keep simulation and presentation distinct. No profiler timing as simulation input,
+no interpolation transforms driving physics accidentally, no world-up assumptions.
+
+## 10. One combined real-game handoff
+
+Use current local copies of Skate and Rooftop Run if available and permitted. Never
+edit, pull into or build inside Claude's working trees. Copy only the project material
+needed into a clearly scoped current integration location; respect asset licenses.
+If original projects/assets are unavailable, use plainly labelled reproductions of
+the reported situations, and do not claim validation against the original games.
+
+Preserve the games' rules. Remove only workarounds actually superseded by M65.
+Keep useful arcade steering, parkour state machines, jump/coyote-time policy and
+camera behaviour in JS. A physics-normal API improvement is not a reason to strip
+all skate assists or change a game's intended feel.
+
+Provide one obvious project launcher/compact set of scenes covering:
+- A walkable slope/edge/platform course with real sensor checkpoints and harness input.
+- A tilting-board rider plus hand/socket attachment with basic IK on the normal pose path.
+- A settled ragdoll/debris group that can be woken and interacted with.
+- Runtime joints/materials/gravity access and the relevant editor/code-authoring flow.
+
+Do not build another full skate or parkour game during M65. Existing games plus focused
+examples are the consumer proof. Keep controls readable and the checklist short.
+
+Streaming hitches (Skate F-02) remain a measured backlog item, not a mandate to rewrite
+M59 here. Exercise crossings with the new objects; fix regressions introduced by M65.
+Report pre-existing indivisible stalls separately. No false hard-budget guarantee.
+
+## 11. Focused validation and performance
+
+Develop with narrow reproductions, then run ONE final clean Release/production gate.
+Do not repeatedly rebuild/run every historical suite for each work package.
+
+Focused proof must cover:
+- Harness inputs reach real JS/UI; screenshots follow script cameras; paused captures work.
+- Motor tangent support versus genuine departure; edges, steps, moving supports and
+  rotated/radial gravity; sensor/contact ordering, filtering and safe destruction.
+- Resolved joint/socket transforms through layered/interrupted animation and ragdoll;
+  limb target accuracy, degenerate/unreachable cases, weights and instance independence.
+- Sleep/wake islands, changed supports/drives/forces, body deletion, queries/events and
+  at least one liquid/deformable interaction; regression of active physical behaviour.
+- Runtime joints/materials/gravity, including integrated slider correctness checks.
+- Editor multi-edit/undo, copy/paste, prefab/reference remapping, skeleton selection and
+  code-first scene/UI/input round-trips.
+- Appropriate cold-process save/load and streamed unload/revisit/adoption for new state.
+- Background/title/UV/audio diagnostics and explicit export scene selection.
+- M50 types/inventory/live API verification and representative executed examples.
+
+Use independent expectations where possible; don't compare one new helper with itself.
+A changed test expectation requires an explained contract, not merely a green result.
+Keep genuine failures and final-source fingerprints; tests write new evidence, not old.
+
+At candidate completion: clean Release, production suite once, actual async checks,
+affected focused tests, API/type checks, editor Play/Stop, cold save/load and moved
+standalone. Narrow late fixes get affected reruns unless they invalidate wider proof.
+Report initial failures and follow-ups honestly; don't claim an uninterrupted clean
+run if it wasn't. Avoid editing source during the final broad run.
+
+Use M56 for warmed median/p95/max and workload counts. Priorities are resting versus
+awake articulations, motor/event overhead, a modest batch of IK/socket consumers, and
+ordinary gameplay. Record concurrent machine load; do not stop the user's applications
+or Claude's processes. No speculative optimization, huge benchmark farm, reduced
+physics cadence or smaller game workload to disguise regression.
+
+## 12. Completion and operator review
+
+Return one concise report containing:
+- What changed in each required package; actual JS APIs and new authoring paths.
+- Finding closure table with honest fixed/implemented/clarified/partial/deferred states.
+- Current-source findings that superseded a frozen audit claim.
+- Measured performance and exact validation outcomes, including failures/follow-ups.
+- Demo locations, controls, limitations, changed files and final fingerprints.
+- Confirmation protected history/research, accepted fluid algorithms and Claude's work
+  remain untouched apart from explicitly necessary shared integration reported here.
+
+Human checklist should fit in roughly eight items: slope/jump/edge movement and
+checkpoints; camera/input/paused capture; board feet/hand sockets; sleeping/waking
+ragdolls; runtime physical attachments/materials; batch authoring and entity pickers;
+save/quit/load and streaming; exported gameplay. Human feel/visual acceptance is not
+something the agent can certify through a test log.
+
+Do NOT expand this into full-body animation, active physical animation/Euphoria,
+cloth/fracture changes, another collision engine, dynamic concave collision, a new
+asset importer/DCC suite, an editor redesign, networking or a streaming rewrite.
+These are explicit remainders, not hidden promises to close every audit row.
+
+Suggested commit AFTER operator approval:
+Add M65 gameplay integration and developer workflow improvements
+
+Leave the full candidate uncommitted for review. Do not advance to another milestone.
+
+Milestone 65 — Judas learns to stop fighting its developers.

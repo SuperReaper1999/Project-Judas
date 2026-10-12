@@ -1,0 +1,26 @@
+=== Judas Step-Climb Tests ===
+
+TryStepMove: a riser at exactly the max step height succeeds
+  OK   TryStepMove returns true
+  OK   landed at (roughly) the step's own top height
+  OK   made real forward progress past where a flat sweep would have stopped
+TryStepMove: a riser taller than the max step height fails (stays a wall)
+  OK   TryStepMove returns false — too tall to be a step
+TryStepMove: an unobstructed flat sweep needs no stepping
+  OK   TryStepMove returns false — nothing was in the way
+TryStepMove: rotating the entire scenario produces the identically-rotated result
+  OK   reference (unrotated) scenario steps up successfully
+  OK   rotated scenario ALSO steps up successfully
+  OK   rotated-back result matches the unrotated reference result
+TryStepDown: a drop within the max step height is caught
+  OK   TryStepDown returns true
+  OK   identifies the body landed on
+  OK   landed at (roughly) the lower floor's own height
+TryStepDown: a drop taller than the max step height is left alone (free-fall)
+  OK   TryStepDown returns false — too far to catch, must free-fall
+TryStepDown: rotating the entire scenario produces the identically-rotated result
+  OK   reference (unrotated) scenario catches the step-down
+  OK   rotated scenario ALSO catches the step-down
+  OK   rotated-back result matches the unrotated reference result
+
+ALL TESTS PASSED

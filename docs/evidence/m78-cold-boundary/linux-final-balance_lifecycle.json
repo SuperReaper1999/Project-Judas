@@ -1,0 +1,15 @@
+{
+  "name": "balance_lifecycle",
+  "utc": "2026-10-11T23:00:18.233919+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-linux/balance-lifecycle",
+    "lifecycle"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 1.9102461639995454,
+  "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+  "logSHA256": "fff6cd930a17c8fee75eefc6998a99ac66f4bf17dbd1e2111b865dd42b32bfe1",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

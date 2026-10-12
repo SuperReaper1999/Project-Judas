@@ -1,0 +1,13 @@
+{
+  "scope": "Isolated coherent world-foot-goal IK diagnostic, same full attitude correction applied before chain geometry; no gain,clock,threshold,budget,bodytransform or production change.",
+  "sourceSHA256": {
+    "src/PhysicalBalance.cpp": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+    "src/PhysicalBalance.h": "c711ebe2424edd0af7023d891328f558000652574102484499b527c09aee6274",
+    "tests/PhysicalBalanceControllerTests.cpp": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+    "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f"
+  },
+  "overlaySHA256": {
+    "PhysicalBalance.cpp": "2949f90614e38711006fa44d1343db3ff8546b3e2aa2c7dfdcbe53f0c6861651",
+    "PhysicalBalance.h": "040f460ac58e3d2487fd958de78fe897e41d2de5f978dad38733db8f4e5a0c15"
+  }
+}

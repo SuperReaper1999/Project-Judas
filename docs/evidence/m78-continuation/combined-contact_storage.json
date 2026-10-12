@@ -1,0 +1,26 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_contact_storage_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T18:29:41.697062+00:00",
+  "seconds": 0.11549303699939628,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/config"
+  },
+  "sourceSHA256": {
+    "src/RigidBody.cpp": "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+    "src/RigidBody.h": "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+    "src/PhysicsWorld.cpp": "adcd0dcb7a49f918cd4db2143ce6040a606bc5f7b02d333fb83e34ac5381de82",
+    "src/CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+  },
+  "executableSHA256": "409242835171c9d11e396f1787ffaf1c4ce2f8c020e7174476ca9c2501f14d22",
+  "logSHA256": "81bd31be418b01c78de98cd2e1e19ec5033382c3dbba46aa94de0a8b1e9ddaac",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

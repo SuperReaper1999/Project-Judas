@@ -1,0 +1,46 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Fracture Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/fracture_lab/fracture_lab.judasproj)
+Scene: Fracture Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/fracture_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+BEAM initial revision=1 peak=804.804
+PASS normal asynchronous fracture asset publication
+PASS logical family owner has no duplicate collider/mass
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS published cells partition material mass exactly once
+PASS modest supported gravity load survives
+PASS real impulse causes physically detected failure without explicit release
+PASS physical failure cause distinct from tool release
+PASS remaining material persists
+BOND 0 broken=0 tension=6445.26 shear=1778.89
+BOND 1 broken=1 tension=27320.8 shear=4542.75
+BOND 2 broken=0 tension=5473.23 shear=2110.51
+BOND 3 broken=1 tension=20251.8 shear=10763.1
+BOND 4 broken=1 tension=21973.7 shear=3775.91
+BOND 5 broken=0 tension=11592.1 shear=6072.33
+BOND 6 broken=0 tension=6487.71 shear=873.274
+BOND 7 broken=1 tension=21022.2 shear=4594.54
+BOND 8 broken=0 tension=8321.91 shear=1861.15
+BOND 9 broken=0 tension=4090.88 shear=421.18
+BOND 10 broken=1 tension=13656.1 shear=183.489
+BOND 11 broken=0 tension=7894.45 shear=751.787
+PREBREAK plastic=0.723241 revision=1 peak=806.385
+PASS modest load yields material without breaking it
+BEAM plastic=1.06158 revision=3 peak=1582.73
+PASS yielding soft specimen breaks from current plastic state
+PASS source-part mapping reacquires current descendants
+PASS explicit piece cleanup leaves durable tombstone
+PASS ordinary surviving rubble remains simulated
+PASS main/secondary/shadow passes do not rerun fracture
+LAB bodies=44 fixed_ms=2.134286 draws=65
+PASS ordinary startup and clean shutdown
+SUMMARY mode=probe checks=23 failures=0

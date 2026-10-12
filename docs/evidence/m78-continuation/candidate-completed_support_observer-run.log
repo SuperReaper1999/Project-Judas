@@ -1,0 +1,5 @@
+settled valid=1 floor_rows=4 floor_impulse=0.654000506 impact_events=0 box_y=0.49999994 vy=-8.19563866e-08
+after_real_impact valid=1 floor_rows=0 floor_impulse=0 impact_events=1 box_y=0.511879802 vy=-2.70025325
+disabled valid=0 floor_rows=0 floor_impulse=0 impact_events=1 box_y=0.511879802 vy=-2.70025325
+re_enabled_before_solve valid=1 floor_rows=0 floor_impulse=0 impact_events=1 box_y=0.511879802 vy=-2.70025325
+support_slot_reused_before_solve valid=1 floor_rows=0 floor_impulse=0 impact_events=1 box_y=0.511879802 vy=-2.70025325

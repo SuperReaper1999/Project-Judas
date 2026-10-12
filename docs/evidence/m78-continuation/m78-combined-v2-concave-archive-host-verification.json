@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "concave",
+  "archiveSHA256": "58dd2dda1e9488e06e071e68f70eedb9dcf4e4819471aa698849af668b07bf7c",
+  "archiveBytes": 4506135,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_concave.exe",
+      "sha256": "bd10e97e8998af0ca8eeb3214bfa791cd266d2b7c816c918141a77457e89d903",
+      "name": "m78_combined-v2_concave.exe",
+      "bytes": 8870400
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\concave-0.obj",
+      "sha256": "7538895bfb7e4e97f3980515e21f7203f9341d5e7cbdcc115c6cd836050b3651",
+      "name": "concave-0.obj",
+      "bytes": 669883
+    }
+  ]
+}

@@ -1,0 +1,973 @@
+{
+  "scope": "DIAGNOSTIC ONLY. Exact native a106 first-boundary commands/seed closure, no production edit or persistent warm-cache restoration. Explicit copied objects precede untouched frozen production archive; map must prove replaced archive members not extracted.",
+  "archiveName": "m78-native-first-boundary-closure-input.zip",
+  "archiveSHA256": "24284fdb8996c5cf1028972dd72625fb75989f3f75e96ac1730017b1a4414e75",
+  "files": [
+    {
+      "path": "src/RigidBody.h",
+      "bytes": 5782,
+      "sha256": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "bytes": 31100,
+      "sha256": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6"
+    },
+    {
+      "path": "src/CollisionGeometry.h",
+      "bytes": 1693,
+      "sha256": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198"
+    },
+    {
+      "path": "src/RigidMotion.h",
+      "bytes": 6249,
+      "sha256": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+    },
+    {
+      "path": "src/AerodynamicDrag.h",
+      "bytes": 1650,
+      "sha256": "09b1669d95ae1d8bcad8a0b192c345509f64403771f31128565f4ec4186370c9"
+    },
+    {
+      "path": "src/AnimationRetarget.h",
+      "bytes": 2930,
+      "sha256": "30ca7ad89579f857c9a7c73ceb855e816efcc93f40e459b821b215bc00c29c29"
+    },
+    {
+      "path": "src/AppIcon.h",
+      "bytes": 431,
+      "sha256": "2edbaac80111cd068d58006559c3e8652c902d8e2292fea1405de890b3d236af"
+    },
+    {
+      "path": "src/Application.h",
+      "bytes": 1659,
+      "sha256": "987f48aea4a4abf150c85ccf1450050d078b9a0a759b98abc4f9301452af7123"
+    },
+    {
+      "path": "src/AssetDatabase.h",
+      "bytes": 5954,
+      "sha256": "5f5d9d05a9f626f2abe89f8be963a0856f7690567ecc1bc695a1ca5e2157a93b"
+    },
+    {
+      "path": "src/AssetDependencies.h",
+      "bytes": 460,
+      "sha256": "928b133067d5ddc029366d16a1b2f089c2d1ded6ace3c6b7744207bf9331eac4"
+    },
+    {
+      "path": "src/AsyncFile.h",
+      "bytes": 3241,
+      "sha256": "bf909ae2d0a79d758a8dac777f2ef81ddcd8b570717f016938c228674a6d4dd6"
+    },
+    {
+      "path": "src/AtmosphereField.h",
+      "bytes": 3253,
+      "sha256": "e02d5fe85cac5370a18e5f3e70ada42e0f3b57a83b96b09fd9f4c20f6c349f14"
+    },
+    {
+      "path": "src/AudioData.h",
+      "bytes": 601,
+      "sha256": "b9dc9e78828c3bc62400108f8de9a10c2346a44727429fc996c03db2cb5aa402"
+    },
+    {
+      "path": "src/AudioEnvironment.h",
+      "bytes": 758,
+      "sha256": "cc52d6a478b7a2b080c6bcb1ee0495e241bf211fb36fbf57220f8c6d5cc1530d"
+    },
+    {
+      "path": "src/AudioStream.h",
+      "bytes": 2051,
+      "sha256": "a0bbc983043bfc3f51af64b2445a7f9daf1462b7f3ffba010ff4c8b09b4550db"
+    },
+    {
+      "path": "src/AudioSystem.h",
+      "bytes": 3084,
+      "sha256": "568f7bd73e3415a992c44bda70f76bcb224c72b52dc098a29139d194b37c01fa"
+    },
+    {
+      "path": "src/AudioTypes.h",
+      "bytes": 2282,
+      "sha256": "981dc00456a241f7015d46f224dfb81fee4bc2faee5322535d03d93aaa061029"
+    },
+    {
+      "path": "src/AuthoringJSON.h",
+      "bytes": 1737,
+      "sha256": "5163a4defb1ebbd1d4b2fa72c38843475f0b85549ed9a791ae10be2716578ef9"
+    },
+    {
+      "path": "src/AuthoringNumeric.h",
+      "bytes": 1166,
+      "sha256": "a82f9ec307a65d464dfb7a852f8522f1d190743587b8e2de9ec72a9d90aeebc3"
+    },
+    {
+      "path": "src/BoxVolume.h",
+      "bytes": 557,
+      "sha256": "d059696c2a1d00f6b6f458b692b513a4c42cce7a96aca619a99c27b9444ea807"
+    },
+    {
+      "path": "src/Broadphase.h",
+      "bytes": 5056,
+      "sha256": "456224f263003425efc74c18978bfc7d3eadefee0f33214887d70d4bfa2c5003"
+    },
+    {
+      "path": "src/CameraProjection.h",
+      "bytes": 801,
+      "sha256": "7e55cb6c6e42212d3be70354cd8eb9097baae9d5390b8feaacbfcd08a89c6249"
+    },
+    {
+      "path": "src/CelestialGravity.h",
+      "bytes": 1699,
+      "sha256": "92bf2726843b1a712a360435771eb969e3cae02c8958fc71860d722117c8e991"
+    },
+    {
+      "path": "src/CharacterMotor.h",
+      "bytes": 2873,
+      "sha256": "2212e7aa01ab232a56ba95cd894a5dbaa9eaa591d64108a9b2c808c16f37df72"
+    },
+    {
+      "path": "src/Classification.h",
+      "bytes": 1442,
+      "sha256": "0f52e7b6ce06b2ec220d65b56e1f103e052b4f2c3fe8afc839f64981459a160e"
+    },
+    {
+      "path": "src/CoarseSimulation.h",
+      "bytes": 2438,
+      "sha256": "29a05ab59768b1d626913b176bb7af3f4eeb75c1803c9fb1fcb79ca9cb9df0b2"
+    },
+    {
+      "path": "src/CollisionAsset.h",
+      "bytes": 2746,
+      "sha256": "ee4883186dff9dad73717c5ba7eaecc6c2aec2d067af1a83a37e7573c3e02a0d"
+    },
+    {
+      "path": "src/CollisionAuthoring.h",
+      "bytes": 350,
+      "sha256": "2d5b697104a89e0c45ecf91c73524c1635602cb1a66cf369634c7fd4eabc421f"
+    },
+    {
+      "path": "src/CollisionShapes.h",
+      "bytes": 2983,
+      "sha256": "0f7d625998b5cd037412b2b64ef3aa452bfd9eee86086b570f2350e87ac24cf2"
+    },
+    {
+      "path": "src/CombustionWorld.h",
+      "bytes": 4962,
+      "sha256": "f767f4d043e789a662513e9ece96075580d7496e2c9fafaaaba2742211c4fc34"
+    },
+    {
+      "path": "src/ContactGeometryInternal.h",
+      "bytes": 10574,
+      "sha256": "f88ac35ef4cb4dddbea3d2782ced49241c48a1aa70583069835acd14456d17b3"
+    },
+    {
+      "path": "src/ContactPreparedGeometry.h",
+      "bytes": 1061,
+      "sha256": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9"
+    },
+    {
+      "path": "src/ContactSolver.h",
+      "bytes": 7678,
+      "sha256": "f8c973362eeaedc714d2e9ca072ad5b37d173b9d1f21952582cd8e5f6ed7c794"
+    },
+    {
+      "path": "src/Contacts.h",
+      "bytes": 7179,
+      "sha256": "08508e20d4ead73ee0b680c1f56f121c8abbb191e63ea1c609bfd39d5c7010c0"
+    },
+    {
+      "path": "src/DebugDraw.h",
+      "bytes": 1639,
+      "sha256": "262e0c83e58bb06bd5f19afcf080f07eca91b9f6a9f1c071d87271bbf1bc59ff"
+    },
+    {
+      "path": "src/Deformable.h",
+      "bytes": 6755,
+      "sha256": "752393cff78387c6cfbb0e0e025bb1244b93c5e2bc69b8606e4f242efae92bf0"
+    },
+    {
+      "path": "src/Door.h",
+      "bytes": 4854,
+      "sha256": "580bf403ed3867da019d20fa833dd22206b4c3560a52d86c871aef8e4637fc34"
+    },
+    {
+      "path": "src/DynamicBody.h",
+      "bytes": 5665,
+      "sha256": "719c03ca42a6c67221a79a75b2751956034c6e9fc081e8b5cddb537a57dc4cb3"
+    },
+    {
+      "path": "src/EngineHost.h",
+      "bytes": 2841,
+      "sha256": "0cd23c77f4224b78e2dc43e6d19ceb71d151eebcf88d88ca057a9c3df5c013c1"
+    },
+    {
+      "path": "src/EnginePaths.h",
+      "bytes": 829,
+      "sha256": "e405055bfbefff8e6f2b31089d21baed6d3eab76d884fcb9704f20701278760a"
+    },
+    {
+      "path": "src/EntityLifecycle.h",
+      "bytes": 4486,
+      "sha256": "cbc55e0e306f639bfa093dc0ee017a7043a9cac9f39a732fa17d7cd52265622f"
+    },
+    {
+      "path": "src/Environment.h",
+      "bytes": 748,
+      "sha256": "d4332df0c410a2b482a231aade983aaf4c8f8bc0f349fece1dc2b4a7d3665541"
+    },
+    {
+      "path": "src/FaithfulGravity.h",
+      "bytes": 913,
+      "sha256": "cd59ac5200fda2b67a42d1f19d8cb060856a7a9dd47fb077ae7337e8254cf9bb"
+    },
+    {
+      "path": "src/FidelityPolicy.h",
+      "bytes": 2173,
+      "sha256": "531aad2ed0a59813dbf00f8f72c3b65e2b3108612bbcaa80c42e3721ce671882"
+    },
+    {
+      "path": "src/FirePresentation.h",
+      "bytes": 1579,
+      "sha256": "29a4e979fedb177401a1585466167512ea7cf0772d61dc7557f4d7ff77a135ec"
+    },
+    {
+      "path": "src/FluidHydrostatics.h",
+      "bytes": 5640,
+      "sha256": "b847dca2092b57742dbf24040eff02a02d1db4b23ff4e346639cbd3505b7c964"
+    },
+    {
+      "path": "src/FluidSurface.h",
+      "bytes": 596,
+      "sha256": "179cd6f2bc6216309019f488cc30224a905e2f09f28cef332889cc2186e82816"
+    },
+    {
+      "path": "src/FluidWorld.h",
+      "bytes": 7846,
+      "sha256": "96ee89317ef80acd11cbfb4823cdc5dc6cbfa9bd06da878b73a6fb2277a0ec04"
+    },
+    {
+      "path": "src/FlyingPrimitiveControl.h",
+      "bytes": 3916,
+      "sha256": "f2dc79b906696265ec32baa95411fa82e793d60078939a3c4db2ca6dce872619"
+    },
+    {
+      "path": "src/FontLoader.h",
+      "bytes": 3321,
+      "sha256": "9506b93476fcc66e880c607df46dc30c1f86901552a8a36da417e82cc0dcd726"
+    },
+    {
+      "path": "src/FractureTypes.h",
+      "bytes": 2117,
+      "sha256": "f38bb9e912e3ebfb1918e09dd21849fc31675ef32df622a8162db85f55952fad"
+    },
+    {
+      "path": "src/FullBodyIK.h",
+      "bytes": 3886,
+      "sha256": "bb84f10a04f712c47e43fbb8137cfcbdc003df32807ec2adb39e47a5e095f814"
+    },
+    {
+      "path": "src/GamePackage.h",
+      "bytes": 513,
+      "sha256": "25931e4d69b1f1ffa248268bc24c361dabd56900961908611c64438039fc00d2"
+    },
+    {
+      "path": "src/GameSession.h",
+      "bytes": 5107,
+      "sha256": "dc8563410932dc2c0fa1ef013413fb8141d65f11d29568fa2c312f2804a55c16"
+    },
+    {
+      "path": "src/GameplayHud.h",
+      "bytes": 542,
+      "sha256": "5002c9a877e860f877e5de250d4040f8772c1e01bcbb5518cf53c6c57f457602"
+    },
+    {
+      "path": "src/GltfLoader.h",
+      "bytes": 631,
+      "sha256": "1a4b4b76b30d48ff8d4be8b9124c689125083fb6933a1bc784eeb5e7b97829c9"
+    },
+    {
+      "path": "src/GravityContextMap.h",
+      "bytes": 3021,
+      "sha256": "73f07e95a78406674f605be2bdde581f30eebe70b97e6a0cdbdf17b5570bcc6c"
+    },
+    {
+      "path": "src/GravityField.h",
+      "bytes": 1932,
+      "sha256": "178f7d887e502ec6b9452c6081a7cc41c5121b049174e10261f7ba892661d620"
+    },
+    {
+      "path": "src/GravitySelection.h",
+      "bytes": 931,
+      "sha256": "ae0eba351200d8e98684c43c6b39dac2c42d50c731495d2787661a450b2265c9"
+    },
+    {
+      "path": "src/GravityVolume.h",
+      "bytes": 675,
+      "sha256": "acce363af30efd73cd511d06ff190e37b9f45aeaa502977430bf05f05c262777"
+    },
+    {
+      "path": "src/HUD.h",
+      "bytes": 3318,
+      "sha256": "c08c50c347f7ec3c9219d16ea430aaac5fedb01bbeb46b79388bd5ae025ee8c2"
+    },
+    {
+      "path": "src/HingeTransform.h",
+      "bytes": 1757,
+      "sha256": "366c44fa376c3d793721e234a3e26b0df245ce5966a7caf044be3ffc2d9b27a4"
+    },
+    {
+      "path": "src/ImpactSolver.h",
+      "bytes": 1825,
+      "sha256": "704d0773d919b3476d30928e60ed1c4d02d10f686a10868b08efa02fa1b4f9e0"
+    },
+    {
+      "path": "src/InputSystem.h",
+      "bytes": 4279,
+      "sha256": "7f0a402729df3a491a557ec14489f95b2b98747e7c3a2934804b654cf7ab7ba5"
+    },
+    {
+      "path": "src/Interactable.h",
+      "bytes": 2599,
+      "sha256": "082ec699231b1195ac3bcef6c523a6e7e861019523cbecdfe057e6fb36ea22ae"
+    },
+    {
+      "path": "src/InteractionSystem.h",
+      "bytes": 1371,
+      "sha256": "3179176449333e46bfd5df62a1cbdc60190f98d689ad8b4e59fa25149550a101"
+    },
+    {
+      "path": "src/InteractivePlay.h",
+      "bytes": 4809,
+      "sha256": "53f1c16a3044f469ce4cdf44c00a2568fded6e5fd4a448ffb4f4bd6add7ca0e1"
+    },
+    {
+      "path": "src/JobSystem.h",
+      "bytes": 6699,
+      "sha256": "ac871d09ca16f98460afd6d6b8a390d7ef862e41beb805ec10d1c5544d8fa958"
+    },
+    {
+      "path": "src/JointSolver.h",
+      "bytes": 1006,
+      "sha256": "3e54a9cfb9d92d8aa9cf2834ae7c598b602c587c5c70bc4afc3a2c289f24232a"
+    },
+    {
+      "path": "src/JointTypes.h",
+      "bytes": 2665,
+      "sha256": "dae374f7a6318dc35eed94283db7e04c5b7a034f8cb0c78c0ec766cf8b320b18"
+    },
+    {
+      "path": "src/Light.h",
+      "bytes": 4602,
+      "sha256": "915b176e09cce99f98e61e8a404d210b4a5df4eceb455ac3362ce7eb44c92880"
+    },
+    {
+      "path": "src/LightAttenuation.h",
+      "bytes": 2223,
+      "sha256": "81d5741db926662f970c9027bb3bb0c8f553ad8dc74c79f559fb642ff7d48c57"
+    },
+    {
+      "path": "src/LightSwitch.h",
+      "bytes": 3748,
+      "sha256": "5460d2cc1f2f731f513e4bdd423bfbfb7741a0ec0cceec5f3e087c6b8e2c450b"
+    },
+    {
+      "path": "src/LightTransforms.h",
+      "bytes": 2336,
+      "sha256": "23ecb6428e1b8f855bdeb4b889394a2ff2356c60bb41498769496b8699a127e3"
+    },
+    {
+      "path": "src/LiquidGeometry.h",
+      "bytes": 4006,
+      "sha256": "a47a78d595959d148667db3921cf5a9af9308fe11c54c221f3375f0b616c6250"
+    },
+    {
+      "path": "src/LiquidSurface.h",
+      "bytes": 3958,
+      "sha256": "393582e6349650556376b7e52ebd8443c59518280cedbaf56c2174821cdeba76"
+    },
+    {
+      "path": "src/LiquidSystem.h",
+      "bytes": 4537,
+      "sha256": "1eb1a3f57bea72a3ddf206063a80e6f0b3c714511aac76e91e7363c9e7d06ac3"
+    },
+    {
+      "path": "src/LiquidTypes.h",
+      "bytes": 1576,
+      "sha256": "bfc4f8056b2f86c7c7bbf8a9b1b78be7b8f494c502fc6bf819a480c7a5a54871"
+    },
+    {
+      "path": "src/Localization.h",
+      "bytes": 1765,
+      "sha256": "cac8085faaeb536bda244c2758833ecd1a1a7e56d138924ba4b937143135bb64"
+    },
+    {
+      "path": "src/Material.h",
+      "bytes": 2910,
+      "sha256": "b5d91ac75586cee2d5ae31d50dbc8005ceaf4f622af40199791f190c0e5f549e"
+    },
+    {
+      "path": "src/MeshData.h",
+      "bytes": 2758,
+      "sha256": "234fc4b32d5d5e742de5a02964e7faae90e09c8635f13e1e1c16f97d3c7a31c1"
+    },
+    {
+      "path": "src/ModelArchive.h",
+      "bytes": 815,
+      "sha256": "02c68215af21903d04f556a601d3cec8c3478ba6371e6b68693958d2aaf43674"
+    },
+    {
+      "path": "src/ModelCollision.h",
+      "bytes": 953,
+      "sha256": "0d753721637d14ad26a54cd0fb6624ebf1ebbefd9860fe39dace504f6a09d3e3"
+    },
+    {
+      "path": "src/ModelCook.h",
+      "bytes": 2005,
+      "sha256": "b6a91296b097024ff0a01b9e92039a17c1892a0bd1f89c25928db6a47ad099e9"
+    },
+    {
+      "path": "src/ModelImport.h",
+      "bytes": 1763,
+      "sha256": "a3e90e44148747f2c076f31a8d1385bab3f24e21dc87cb52e1e01ba471b279d7"
+    },
+    {
+      "path": "src/ModelLoader.h",
+      "bytes": 1861,
+      "sha256": "9f1de480cb8deb6fe2fabebdd1125e97baa6fdd67a0a29f9c165d891955981be"
+    },
+    {
+      "path": "src/NamedAuthoring.h",
+      "bytes": 1003,
+      "sha256": "89aca6bc92bbbc772fbcbfcafe466b8382bda7f4b706f1103ff373c662b492a5"
+    },
+    {
+      "path": "src/NamedInput.h",
+      "bytes": 1868,
+      "sha256": "c74eacf1240c76f140376115981c60f896c21484489a557e10671668bcad55f2"
+    },
+    {
+      "path": "src/Narrowphase.h",
+      "bytes": 3309,
+      "sha256": "8e1b9b548209ef5d523a4547cc8a2c7d18c7017a602fab18608563781fd7f9ac"
+    },
+    {
+      "path": "src/NavigationAsset.h",
+      "bytes": 1198,
+      "sha256": "9f81c5db728e52b4dc2c35fe1ba44206268c1d42dfad10e6eabacd6221220e11"
+    },
+    {
+      "path": "src/NavigationBackend.h",
+      "bytes": 547,
+      "sha256": "d3cd009255894af40e8ca08c89c52ad49d4afebb063b49abb09fb14e3ebc87b9"
+    },
+    {
+      "path": "src/NavigationSystem.h",
+      "bytes": 2238,
+      "sha256": "1075ce8c79c25131a5695b8f0266d4f27d1d0185a0df4a19f7971c1e478b13b6"
+    },
+    {
+      "path": "src/NavigationTypes.h",
+      "bytes": 1820,
+      "sha256": "043985cc8df1eb45f6c6fae38f625cc25914379bb9dde8c787a026a08736a8eb"
+    },
+    {
+      "path": "src/ObjectManipulation.h",
+      "bytes": 2531,
+      "sha256": "c3c9a7aba98686c5eff66ed09144cd0ce6b42af04ab80ea4db1de3bb7bcddb5f"
+    },
+    {
+      "path": "src/OrientedGravityVolume.h",
+      "bytes": 682,
+      "sha256": "949dc2426caadc21b5f9fee3d598b6315d4ecf6d28bf72fcd7d17f8976e0623a"
+    },
+    {
+      "path": "src/PauseMenu.h",
+      "bytes": 3665,
+      "sha256": "e6770159a9b396af6b953d50c911b94d545b2e6636e2f6552f4d1cab0135e993"
+    },
+    {
+      "path": "src/PerformanceProfiler.h",
+      "bytes": 7147,
+      "sha256": "82b7991f3214196bd4c1f8ad1fc5dd8d7b224caa2207e27fad18cf7f626c57a5"
+    },
+    {
+      "path": "src/PhysicalAnimation.h",
+      "bytes": 3465,
+      "sha256": "5c762c3d380956183f78a39ec17d0c62aa314b66aac75f47de517a1975447253"
+    },
+    {
+      "path": "src/PhysicalBalance.h",
+      "bytes": 5224,
+      "sha256": "c711ebe2424edd0af7023d891328f558000652574102484499b527c09aee6274"
+    },
+    {
+      "path": "src/PhysicalMaterial.h",
+      "bytes": 399,
+      "sha256": "3fe726716e2d68c52136d67c2d6968ade67c522b57c175bd5949e280988153f3"
+    },
+    {
+      "path": "src/PhysicsCastGeometry.h",
+      "bytes": 549,
+      "sha256": "0084406b2ceda2fbe6aaa112677cfb9a915bbbe5ef7c2da72e165874e7b591ec"
+    },
+    {
+      "path": "src/PhysicsHandles.h",
+      "bytes": 452,
+      "sha256": "9fa13d0cbcfae6d61a5b3d5716aa35c523b8327d47144ec8c1413b679808966f"
+    },
+    {
+      "path": "src/PilotAttachment.h",
+      "bytes": 5400,
+      "sha256": "4888953973dd2472077960a161cf719080b3ba1114ea70d8a896a4e7cc472819"
+    },
+    {
+      "path": "src/PilotControl.h",
+      "bytes": 2930,
+      "sha256": "d5fe00fd5951b30d173ca65ca48fcd070c7477ebd6c281318f85a164429cda01"
+    },
+    {
+      "path": "src/PlatformServices.h",
+      "bytes": 877,
+      "sha256": "a545e1ff29ac085f2499268810a314daf74147735624ef30a1d81c037fa893df"
+    },
+    {
+      "path": "src/PlayerController.h",
+      "bytes": 15899,
+      "sha256": "a75a6098f78bddcb120eca2b98f6a08dc1af091e3d1a4b62afcf37e66a9825aa"
+    },
+    {
+      "path": "src/PlayerView.h",
+      "bytes": 1226,
+      "sha256": "9926cb042d92ceed1bf375493a322db6d5301176444a8c5c7816050916b8c465"
+    },
+    {
+      "path": "src/PoseComposition.h",
+      "bytes": 2113,
+      "sha256": "27855d597a84184e9aec7fd9408bf7a908a66635b3efdd2b8bd9ea0a892c6aa6"
+    },
+    {
+      "path": "src/Prefab.h",
+      "bytes": 1787,
+      "sha256": "4ff46b40b5bb10e77fffcd10b7137d5c5b74dfa94d3618fafdcd514b2ccb0c6a"
+    },
+    {
+      "path": "src/ProductionFluidCoupling.h",
+      "bytes": 2271,
+      "sha256": "9ffe8471f43a921d424d26d4699015f8f449230974d0c55d40618996b14ab1b3"
+    },
+    {
+      "path": "src/Project.h",
+      "bytes": 5448,
+      "sha256": "a6840f27de0fd1a65611148922aabb3a881c1599b3a321203dafd7743f7b3e47"
+    },
+    {
+      "path": "src/ProjectExporter.h",
+      "bytes": 1258,
+      "sha256": "fe709a1d733cc9c0af01e1112c8698d0f32d0e465e7a5b4d2c810af820811ddf"
+    },
+    {
+      "path": "src/RadialTerrain.h",
+      "bytes": 1305,
+      "sha256": "5b6c8ceb9e0a45b95283edf67fdcb204a6ca73606b69b7fb514e85924ea79169"
+    },
+    {
+      "path": "src/RadicalGravity.h",
+      "bytes": 1101,
+      "sha256": "9d8b014d1ac3b23e98b802828d595f24a30e4ff5a9dfa274a0ce270824098516"
+    },
+    {
+      "path": "src/Ragdoll.h",
+      "bytes": 1579,
+      "sha256": "6fd11cd07785d90a0b932f2e6be12d869282e3a066a419fc83b31b9bbbedaacd"
+    },
+    {
+      "path": "src/ReferenceFrame.h",
+      "bytes": 1990,
+      "sha256": "a41443c09bcb24dec11b54fe3f096dfdad212c97886c6b3dc741b7e1c62e4eea"
+    },
+    {
+      "path": "src/Renderer.h",
+      "bytes": 29664,
+      "sha256": "aac98f7d9109bb18e507e71b22bdb75352c313765d80391d32cf361ca0893df4"
+    },
+    {
+      "path": "src/ResourceManager.h",
+      "bytes": 16112,
+      "sha256": "d5815f9314f293a257c510a63ee87e4d231ac1427cbaff064d4a30ae88585a39"
+    },
+    {
+      "path": "src/ResourceTrace.h",
+      "bytes": 1284,
+      "sha256": "5821eee768dc0f8f7ae1795b1050a2af1af48ef06a355970b5cc2160cf6ef027"
+    },
+    {
+      "path": "src/RigidBodyGravity.h",
+      "bytes": 821,
+      "sha256": "32d6873a40114eec496254b133122c20cd5fa061de4bd23b575215b4bf165ea2"
+    },
+    {
+      "path": "src/RuntimeDiagnostics.h",
+      "bytes": 1964,
+      "sha256": "be1cad82ad2c4d3ba50119023da81da2ea50608738e4b78c630cc29ceeb357bb"
+    },
+    {
+      "path": "src/RuntimeOptions.h",
+      "bytes": 3284,
+      "sha256": "585daf4b86fa04c36bf10d05bf1315c805620496b9c63d632524a98f09d01a9d"
+    },
+    {
+      "path": "src/RuntimeUI.h",
+      "bytes": 4254,
+      "sha256": "0ffe43da12185018c63edafd3dfb453197ec9399b7a44abdc14806e7a50fb618"
+    },
+    {
+      "path": "src/RuntimeWorld.h",
+      "bytes": 37474,
+      "sha256": "cd0390dd6a7fe20a7ca0053d9944a96e59fcd164536cccfdbc9f3284f383ba72"
+    },
+    {
+      "path": "src/SaveArchive.h",
+      "bytes": 3633,
+      "sha256": "9f7a2cb6b75eaf77623f76142168f57b9fa917607e7d4441948eee4fbc0d347b"
+    },
+    {
+      "path": "src/SaveService.h",
+      "bytes": 2079,
+      "sha256": "374943f9607e5d2f17043a78966c7de78fba0f377af617ebcb8a6505d18c90d2"
+    },
+    {
+      "path": "src/SaveStorage.h",
+      "bytes": 2072,
+      "sha256": "164169fd2e1326ed48624734fc1cb2ced77da5d34af2408f77a6523d59a9b0f4"
+    },
+    {
+      "path": "src/Scene.h",
+      "bytes": 18551,
+      "sha256": "e153c8dfb8b047447a5910fb0044cb96fcd6b518aa98271d4243ff33bf88361f"
+    },
+    {
+      "path": "src/SceneFingerprint.h",
+      "bytes": 2087,
+      "sha256": "53e6c6e19a2dfa2a00ef990fede35080120bb84d9d5c2a95661b4fb418c2df0f"
+    },
+    {
+      "path": "src/SceneSerialization.h",
+      "bytes": 2582,
+      "sha256": "580a572fd12b7a12bf0c56b0a46c64d9bbdaddae96597472c9089b73e5638943"
+    },
+    {
+      "path": "src/SceneSession.h",
+      "bytes": 2609,
+      "sha256": "c49e122e9f47a9b6b9b21bd9cd76b28ae584b4b55c67889bed9131dbd7585978"
+    },
+    {
+      "path": "src/ScreenshotWriter.h",
+      "bytes": 440,
+      "sha256": "0940a5a24b733c89d3419275c3f9b85bbc6e0b84287f3e2ae67d1100eb699d06"
+    },
+    {
+      "path": "src/ScriptSystem.h",
+      "bytes": 3224,
+      "sha256": "7a556e498bca9f6805cf18894e4936d9760daa46ba7fe4307841c849752c3294"
+    },
+    {
+      "path": "src/ShadowTransforms.h",
+      "bytes": 3573,
+      "sha256": "10b449f40331e1251a47d7acf1412c0501116b327b2128e5720dac45bd18cdca"
+    },
+    {
+      "path": "src/Simulation.h",
+      "bytes": 1621,
+      "sha256": "d37e9c3ce35b072b02ada4d6f643ccd08b5d895476c558bf9b7e13c7e98fb4d5"
+    },
+    {
+      "path": "src/SimulationTiming.h",
+      "bytes": 683,
+      "sha256": "94768d45689caa49be5160b9c9d2884ab15ebd33bff9a6003e8d8113d920bf9d"
+    },
+    {
+      "path": "src/SkeletalAnimation.h",
+      "bytes": 2308,
+      "sha256": "321ee4c9f686bb776e7b577805f21d8dbbc355d0be631476adebf5ab5f73c379"
+    },
+    {
+      "path": "src/SphericalVolume.h",
+      "bytes": 521,
+      "sha256": "acea52ba56f6aaeebbbe2a5d474e947abe95ebc6e79dbde629e6bb25dc7b5334"
+    },
+    {
+      "path": "src/StepClimb.h",
+      "bytes": 4679,
+      "sha256": "2d686890998f63adfc3977753d187935fd156f317c598b364cd8fad9a5a9e1e8"
+    },
+    {
+      "path": "src/Tangents.h",
+      "bytes": 230,
+      "sha256": "a191c9c29991ee02dfb3763c7375a29fb8afbf8bf01d60bfc4b31b8537733d43"
+    },
+    {
+      "path": "src/TerrainDemo.h",
+      "bytes": 691,
+      "sha256": "bcfc25ecdfcc45825403ed0a96f672e4d14c4af8539d7d1d1cb8578e055f5794"
+    },
+    {
+      "path": "src/TerrainLibrary.h",
+      "bytes": 812,
+      "sha256": "54620cec867822e7e6a9c536c2239e0ef2275b63ec227d4f298ade29b1a45b78"
+    },
+    {
+      "path": "src/TestHarness.h",
+      "bytes": 592,
+      "sha256": "637efc39920cdbacddc99078ecea372d5e6525bddf7bd046deba48fe9f0ec40b"
+    },
+    {
+      "path": "src/TextLayout.h",
+      "bytes": 1890,
+      "sha256": "bf702cd34d215bc9961e1d919124b67b484c1a91be2d32a71325c86f3a525eac"
+    },
+    {
+      "path": "src/TextureData.h",
+      "bytes": 749,
+      "sha256": "f3da580fab581b6d7f2a0e161d09179a3a282a22571d0626da156f59c83ec8b2"
+    },
+    {
+      "path": "src/TextureLoader.h",
+      "bytes": 1375,
+      "sha256": "5e71ba2bbbb57f7ecd0918291e021151a643123abdd3947303c24154efb5c0e8"
+    },
+    {
+      "path": "src/UIStack.h",
+      "bytes": 1431,
+      "sha256": "4c6db720ba71e64bdf75b4c8a3c23a304f9a5218d5897f650777a5078cbc5cd0"
+    },
+    {
+      "path": "src/UIWidgets.h",
+      "bytes": 3604,
+      "sha256": "4ddb50cda2578617293664d9c882caccc1948af14eaaa67e00c7c133afc243f1"
+    },
+    {
+      "path": "src/UniformGravity.h",
+      "bytes": 1161,
+      "sha256": "c83c23e41de395c78bfae920ae7f25731539908224b80ff87a6ac71934a814e8"
+    },
+    {
+      "path": "src/Visibility.h",
+      "bytes": 1544,
+      "sha256": "fd43033d7e6f90696c7b52d523792de8dad21baa441c567a4b665b1155aeb081"
+    },
+    {
+      "path": "src/VisualParticles.h",
+      "bytes": 1869,
+      "sha256": "5a6a6bb3b6f407f99badaa332daca1c4fd3655171d8dd3f92dc126979f54eb43"
+    },
+    {
+      "path": "src/Window.h",
+      "bytes": 4869,
+      "sha256": "03dd482ede8cff2615937af59f1db9a29cd58f2b6968bee0939b9a6e6db97a7c"
+    },
+    {
+      "path": "src/WorldCoordinates.h",
+      "bytes": 1248,
+      "sha256": "60d71392f5b40a17b3632db23e3930e5dd1217bbfdf900c2f62cf40a8f11a12a"
+    },
+    {
+      "path": "src/WorldDebugView.h",
+      "bytes": 3562,
+      "sha256": "a5f15d962fcab8e1ab8081f554a73fd2cf4dc53fa47c161cee9a555ec4880f01"
+    },
+    {
+      "path": "src/WorldPersistence.h",
+      "bytes": 1781,
+      "sha256": "5e365077f0fc3178aeb7fefb0d0febf2d2032379fea34b0f3e61d6eaffb9a777"
+    },
+    {
+      "path": "src/WorldPresentation.h",
+      "bytes": 3067,
+      "sha256": "b7d0951a0d65a738df7525ffa6a8845ca1697cc15913fe418d7a0905b9fce947"
+    },
+    {
+      "path": "src/WorldState.h",
+      "bytes": 4206,
+      "sha256": "fe64ed2506bc79d5a8f3793d166cfb6b7e65e16908a87766a077d1af2a63f428"
+    },
+    {
+      "path": "src/WorldStreaming.h",
+      "bytes": 3923,
+      "sha256": "572c20ad873f03c940f1a3620fcf2efe22d126b5bb822d220899ae3e22a34c51"
+    },
+    {
+      "path": "src/authoring/AuthoringDocument.h",
+      "bytes": 1318,
+      "sha256": "d7ee7642b6e57bb580c8f4aa78456afdd77f36b5c6d559d78feee552ed819719"
+    },
+    {
+      "path": "src/authoring/ContentReferences.h",
+      "bytes": 374,
+      "sha256": "d98ab135d9ebba0dfc6d274d3e7b2d93269669d9fdc1145eedaf2b40babd3da0"
+    },
+    {
+      "path": "src/authoring/ModAuthoring.h",
+      "bytes": 981,
+      "sha256": "eecedc830ce57ad5aea9210e55a847fa06b8f809e15b8265ada7106f5780c2d6"
+    },
+    {
+      "path": "src/authoring/NavigationDependencies.h",
+      "bytes": 979,
+      "sha256": "4a06d2e44893761d1088b397c830f693e744574e5df555510cf04bc3579828dd"
+    },
+    {
+      "path": "src/authoring/RecipePreview.h",
+      "bytes": 595,
+      "sha256": "dbd80737d774d94741b34ddb5d9d10c322573243169c98753b935ff97c401378"
+    },
+    {
+      "path": "src/authoring/SkeletonAuthoring.h",
+      "bytes": 395,
+      "sha256": "7cc5ecf36264bf4f34200b82053ab1fc3f2031a806bf9c6bfc7dceda707dde77"
+    },
+    {
+      "path": "src/authoring/TerrainAuthoring.h",
+      "bytes": 3292,
+      "sha256": "fc63c36464a821bdbcdc902f4cd68429910ddbd357be21d51b90bc9ef2b6c206"
+    },
+    {
+      "path": "src/authoring/WorldBuilder.h",
+      "bytes": 1332,
+      "sha256": "3d73343891443012db4087ccf9556e0d77a1c55292169dfe49b3da1da141615c"
+    },
+    {
+      "path": "src/editor/ComponentEditors.h",
+      "bytes": 2418,
+      "sha256": "e8a1f4e59043bfc6993ec98f80fe417e5730dced80a1cd1314412e1f41240479"
+    },
+    {
+      "path": "src/editor/EditorApplication.h",
+      "bytes": 4813,
+      "sha256": "0d61d4142d2d0c8d1fada243b2d907f732c9642e10c14ef9eeeabdddc0e1aa1d"
+    },
+    {
+      "path": "src/editor/EditorCamera.h",
+      "bytes": 3722,
+      "sha256": "b3dc8a0cb0df6128aad669387c0d76a60d4b2d33552fd7702ef3023ebfa95159"
+    },
+    {
+      "path": "src/editor/EditorDocument.h",
+      "bytes": 4414,
+      "sha256": "b443a917bb84d6ef2ed042d69e926fcb8aae97efdfdc18c845db3964ddbfa49f"
+    },
+    {
+      "path": "src/editor/EditorMilestoneNotice.h",
+      "bytes": 600,
+      "sha256": "53fabe5847a83c3070e33abb45f1d9e8c28379df50bbaf0e8412ffab7c7e6273"
+    },
+    {
+      "path": "src/editor/EditorPanels.h",
+      "bytes": 10359,
+      "sha256": "44fad992e4fc03cf32de8f7625d02804d3f3bb35a0722de5bdaac7aac18afad3"
+    },
+    {
+      "path": "src/editor/EditorPicking.h",
+      "bytes": 1580,
+      "sha256": "602a0616a265868e91a5141f813d37902cb7c0e917afdb3ff6a59a3bd6f60632"
+    },
+    {
+      "path": "src/editor/EditorTheme.h",
+      "bytes": 2831,
+      "sha256": "d370817e1a71fae83ba9e4862495817564b9f12114c7ba0a389962818d1cd510"
+    },
+    {
+      "path": "src/editor/EditorWidgets.h",
+      "bytes": 2454,
+      "sha256": "6c48dcb237080297acd6a3150a697ac2a862820ca56c51951fcc8fe004cec1a5"
+    },
+    {
+      "path": "src/editor/EditorWorkspaceLayout.h",
+      "bytes": 4174,
+      "sha256": "d54917b0da6a665da0fe213dfbb33f6f384e681c8916163a1fd0e521de2b2ae1"
+    },
+    {
+      "path": "src/editor/GizmoMath.h",
+      "bytes": 4242,
+      "sha256": "59d0c7507044f9542590479707c314b33705ca72212a5411fd1d1d59bae5abb4"
+    },
+    {
+      "path": "src/editor/ModTools.h",
+      "bytes": 464,
+      "sha256": "fe03669d3179dfdfe0439006446e2f1c660dc09223e489bdc2f40c9b757d0205"
+    },
+    {
+      "path": "src/editor/ProfilerView.h",
+      "bytes": 48,
+      "sha256": "4af6aea9ce77941dc124ad3fbc2d9906b9a268cc6eb03f558a36870bb7736a49"
+    },
+    {
+      "path": "src/editor/RetargetDraftState.h",
+      "bytes": 4223,
+      "sha256": "9f0a8163f0e7a408201cdfd2cef755b594cde88439fbbd25d2540105bb6b5618"
+    },
+    {
+      "path": "src/editor/RetargetPanel.h",
+      "bytes": 1175,
+      "sha256": "9a93a90b556855eb9dcc9a6a63a1cf77b3637c151e365061ed1c90fe1e7850db"
+    },
+    {
+      "path": "src/editor/TerrainTools.h",
+      "bytes": 1324,
+      "sha256": "e34a836f86fd1b40e49c49129f9e184c1dcfae8654a92c92c6a63ba43f9585b6"
+    },
+    {
+      "path": "src/modding/ContentStorage.h",
+      "bytes": 1742,
+      "sha256": "c9d165ebcc0a396455524c096a2e931b1e7fdbcd4fa8fdd2da0c6caf782d59c2"
+    },
+    {
+      "path": "src/modding/ModContent.h",
+      "bytes": 3765,
+      "sha256": "b7266a79991e9ab6a8e7f0b20728886d427c7f1591e59a2d9e842273639dff3b"
+    },
+    {
+      "path": "src/modding/ModRuntime.h",
+      "bytes": 919,
+      "sha256": "79423ed8e86ca206ce1e947cfdb0e5820155966961f99c9530b47c601555f1c5"
+    },
+    {
+      "path": "src/modding/ModStore.h",
+      "bytes": 1860,
+      "sha256": "41621eacad2e96cb5472b9295d2194c8b121c556510327d764ab55665048d866"
+    },
+    {
+      "path": "src/JointSolver.cpp",
+      "bytes": 29296,
+      "sha256": "8d20f18a9f39ddf84360669eb2da5bba7f9ae0fd6c3e0590842af54453e01404"
+    },
+    {
+      "path": "src/PhysicalBalance.cpp",
+      "bytes": 39153,
+      "sha256": "c0f7d7cfb0041acdb9be1816f1ba58bf2b5d2412b26ab449bcce4de5c8d172f1"
+    },
+    {
+      "path": "probes/BalanceLabBoundaryObserver.cpp",
+      "bytes": 38385,
+      "sha256": "65d681645fc149f6668ae3abcfacd18b424bba0f9106f29b468ddd45495eb180"
+    },
+    {
+      "path": "probes/IDENTITY.json",
+      "bytes": 1433,
+      "sha256": "2a3ebabdf69b680caf1604e1e6ac7c66ea0465a800fb09ac05529637a781ee70"
+    }
+  ],
+  "library": {
+    "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+    "sha256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "bytes": 66840496
+  },
+  "scratch": "C:\\JudasValidation\\M78FirstBoundaryClosure",
+  "output": "C:\\JudasValidation\\M78FirstBoundaryClosureResults",
+  "engineFlags": "/c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_ENGINE.DIR\\RELEASE\\\\\" /Fd\"C:\\JUDASVALIDATION\\BUILD\\RELEASE\\JUDAS_ENGINE.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\JOINTSOLVER.CPP",
+  "caseFlags": "/c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_BALANCE_LAB_TESTS.DIR\\RELEASE\\\\\" /Fd\"JUDAS_BALANCE_LAB_TESTS.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj /I\"C:\\JudasValidation\\Source\\third_party\" ",
+  "linkFlags": "/OUT:\"C:\\JUDASVALIDATION\\BUILD\\RELEASE\\JUDAS_BALANCE_LAB_TESTS.EXE\" /INCREMENTAL:NO /NOLOGO RELEASE\\JUDAS_ENGINE.LIB RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level='asInvoker' uiAccess='false'\" /manifest:embed /PDB:\"C:/JUDASVALIDATION/BUILD/RELEASE/JUDAS_BALANCE_LAB_TESTS.PDB\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:/JUDASVALIDATION/BUILD/RELEASE/JUDAS_BALANCE_LAB_TESTS.LIB\" /MACHINE:X64  /machine:x64",
+  "save": {
+    "path": "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\slots\\m77.save",
+    "sha256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+  },
+  "project": "C:\\JudasValidation\\Source\\projects\\balance_lab",
+  "sourceBundleSHA256": "8af55c57e26746be22eed2870ca17ebfc2b239b504c04ce9cd73398d5c38deca"
+}

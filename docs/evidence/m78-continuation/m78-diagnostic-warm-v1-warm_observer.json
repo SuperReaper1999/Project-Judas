@@ -1,0 +1,30 @@
+﻿{
+    "seconds":  3.2229587,
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78_diagnostic-warm-v1_warm_observer.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\case-import.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\warm_observer-0.obj\"",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_diagnostic-warm-v1_warm_observer.exe",
+    "case":  "warm_observer",
+    "label":  "diagnostic-warm-v1",
+    "freeBytes":  258543616,
+    "executableSHA256":  "d34dc90c7cc03d743b2de91ef1aa6c0e498d41623695f6eaf25a8f1969c98c49",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "compiles":  [
+                     {
+                         "object":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\warm_observer-0.obj",
+                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\warm_observer-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj /I\"C:\\JudasValidation\\Source\\third_party\"  \"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\probes\\BalanceLabWarmSeedObserver.cpp\"",
+                         "source":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-warm-v1\\source\\probes\\BalanceLabWarmSeedObserver.cpp",
+                         "sourceSHA256":  "840c0362135f5c7ece3757914bd6b67050774e4942abbfba53ba3aa1a788a44c",
+                         "objectSHA256":  "7987f9cf0aa02362fe8067c1a46efb327028b2f689cb38a49f2c86e43998d03c"
+                     }
+                 ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-warm-v1\\warm-on",
+                      "cold-write"
+                  ],
+    "exitCode":  0,
+    "archiveSHA256":  "7196087eae852aa049a51168f03006e53adee6c818eece27a91e480dc7097c5e"
+}

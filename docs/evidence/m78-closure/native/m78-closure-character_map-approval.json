@@ -1,0 +1,12 @@
+{
+  "hostVerified": true,
+  "case": "character_map",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-character_lab.map",
+      "sha256": "ecc539b0da854bdbf6d27340e22d622983e51970e70ab24f0e74d3cb015c0d95",
+      "name": "m78-closure-character-first-failed.map",
+      "bytes": 9172699
+    }
+  ]
+}

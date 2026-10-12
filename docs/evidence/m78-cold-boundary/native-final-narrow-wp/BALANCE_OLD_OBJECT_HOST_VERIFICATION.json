@@ -1,0 +1,12 @@
+{
+  "scope": "Exact fullhostSHAverified obsolete old fixture duplicate, current final fixture and observer separate",
+  "hostVerified": true,
+  "case": "oldbalance",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj",
+      "bytes": 2230400,
+      "sha256": "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff"
+    }
+  ]
+}

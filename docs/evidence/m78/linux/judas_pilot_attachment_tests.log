@@ -1,0 +1,26 @@
+Section A: BeginPilotAttachment/ApplyPilotAttachment round trip
+  OK   attachment reports attached after Begin
+  OK   applying immediately with the SAME ship transform reproduces the original position
+  OK   applying immediately reproduces the original orientation (dot magnitude 1)
+Section B: pure ship translation carries the attachment rigidly
+  OK   a pure ship translation carries the player by the exact same displacement
+Section C: 180-degree roll under gravity does not detach the pilot
+  OK   roll: X offset inverts (perpendicular to the roll axis)
+  OK   roll: the player's own offset above the deck inverts in world Y along with it
+  OK   roll: Z offset (along the roll axis) is unchanged
+  OK   attachment remains marked attached through the roll (never silently cleared)
+Section D: repeated rotations accumulate zero attachment drift
+  OK   after 500 incremental rotations, the world-space offset length is exactly preserved
+  OK   after 500 incremental rotations, the orientation is still a unit quaternion
+Section E: rotate-the-universe equivalence
+  OK   rotated-back position matches the unrotated reference position
+  OK   rotated-back orientation matches the unrotated reference orientation
+Section F: release velocity — pure translation, zero offset contribution
+  OK   with zero angular velocity, release velocity equals the ship's own linear velocity
+Section G: release velocity — angular contribution at a non-zero offset
+  OK   release velocity matches v + omega x r for a spinning ship with a non-zero offset
+  OK   the angular contribution is not silently dropped (non-zero result for a spinning ship)
+Section H: release velocity — combined linear and angular motion
+  OK   release velocity correctly sums the ship's linear velocity and the point's own angular contribution, not just one or the other
+
+ALL TESTS PASSED

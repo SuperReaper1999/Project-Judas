@@ -1,0 +1,36 @@
+﻿{
+    "seconds":  2.6692507,
+    "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+    "case":  "balance_lab",
+    "expectedSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "run":  "balance-exact-cold-read",
+    "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold\\cold-read-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "bytes":  365,
+                      "reportName":  "m78-final2-repair-balance-exact-cold-read-cold-read-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-final2-repair-balance-exact-cold-read-.lock"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "bytes":  52557,
+                      "reportName":  "m78-final2-repair-balance-exact-cold-read-m77.save"
+                  }
+              ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold",
+                      "cold-read"
+                  ],
+    "exitCode":  1,
+    "freeBytes":  59416576,
+    "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+}

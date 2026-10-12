@@ -1,0 +1,4 @@
+{
+  "failure": "Controller ran 119 checks / 1 failure: unchanged assertion requires first restore no task clock advance. Build helper then FileNotFoundError because exact-native parent absent. No production changes.",
+  "helperSHA256": "7e7195acbf1775570193134ad8e0737e1e3e0841c41e5fd3607f3ef4ab19bf57"
+}

@@ -1,0 +1,22 @@
+﻿{
+    "seconds":  2.5080358,
+    "freeBytes":  469073920,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_drive_observer.exe",
+    "case":  "drive_observer",
+    "label":  "combined-v2",
+    "run":  "drive-original-overlay",
+    "executableSHA256":  "d17aea5b6f630148208dda4dc7bf6612dd9980c9305e0efba31cc4e399dfbfb7",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "scope":  "Fresh native execution of a verified final candidate executable; no recompile",
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ContinuationResults\\combined-v2\\drives-original-overlay",
+                      "cold-read"
+                  ],
+    "exitCode":  1,
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+}

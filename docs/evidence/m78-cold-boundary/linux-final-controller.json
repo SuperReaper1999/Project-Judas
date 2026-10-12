@@ -1,0 +1,13 @@
+{
+  "name": "controller",
+  "utc": "2026-10-11T23:00:07.987314+00:00",
+  "command": [
+    ".cache/m78-followup/release/judas_physical_balance_controller_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 2.8174266799978795,
+  "executableSHA256": "62829b5b07934227080e44252926bbf0ed692c42ab57202c4c19ca09152e4912",
+  "logSHA256": "3ae721971c11f39f834f82506bcb39e8c6aa9043dc3a7be293d061979aeedd58",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

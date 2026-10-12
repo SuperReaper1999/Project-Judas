@@ -1,0 +1,13 @@
+{
+  "name": "motion",
+  "utc": "2026-10-11T23:00:08.033101+00:00",
+  "command": [
+    ".cache/m78-followup/release/judas_rigid_motion_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.03386727200268069,
+  "executableSHA256": "588751cee68a0de8ea7fd9a157386cb65bbf281716e9aa13e0170969bfb1ccc2",
+  "logSHA256": "d9f968cc8b1bbb021f6b469c8e27314acdcdf2f72c8a2667fc6d8e43877c6cc5",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

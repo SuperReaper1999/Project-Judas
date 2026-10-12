@@ -1,0 +1,9 @@
+# Copied completed-publication new-save proof
+
+Compile only the three copied sources `PhysicsWorld.cpp`, `WorldPersistence.cpp`, and `PhysicalBalance.cpp` with the existing final native engine flags. Link their objects explicitly BEFORE the unchanged final `791edc06...` engine archive; use a map/verbose library receipt proving original members were not extracted. Use the original unchanged BalanceLabTests object/source SHA `5ba5cb47...`; no observer or source input substitution.
+
+Set `M78_DIAGNOSTIC_PERSIST_DRIVE_IMPULSES=1`. On a fresh owned project/output directory, run original `cold-write` then original `cold-read` (60 Hz and720 steps unchanged). Preserve the new snapshot before read, SHA, participant versions and final physical state receipts. Then run the original unchanged PhysicalBalanceControllerTests linked with the same copied objects to establish the standalone-history first-wait remains valid. If space permits also read the unchanged original a106 snapshot in a separate owned project and preserve its expected legacy failure. No production source changes.
+
+The new saved companion contains actual existing angular commands/impulses and actual completed PhysicsWorld observations (normal, normalImpulse, separation, primitive parts, actual A local anchor plus B anchor derived from the SAME observation point) remapped to current generations/revisions. Explicit actual completed epoch/dt distinguishes a known-empty completed ledger from unpublished state. The restored token expires at the next real Step, and the controller consumes it only to permit the normal first producer phase; standalone History restores receive no token.
+
+Linux original results: controller119/0; cold-write24/0, new cold-read13/0 with actual supported standing; unchanged old a10613/1. Existing versions1–3 follow the original path. This is a diagnostic implementation with external hooks, NOT production API/persistence design.

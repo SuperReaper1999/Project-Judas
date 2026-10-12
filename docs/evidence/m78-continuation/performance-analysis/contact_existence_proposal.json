@@ -1,0 +1,41 @@
+{
+  "status": "PROPOSAL ONLY; not implemented or built",
+  "decision_gate": "Use instrumented corrected combined candidate to prove contact-query geometry is a dominant remaining cost before implementation.",
+  "seam": {
+    "name_is_provisional": "HasContacts(a, b, margin, preparedA, preparedB)",
+    "scope": "Internal shared narrowphase predicate, not a public gameplay or JS binding",
+    "contract": "Return precisely whether unchanged ComputeContacts(a,b,margin,...).count > 0 for the same represented inputs.",
+    "ccd_use": "Replace Boolean-only touchingAt and island-discovery truth requests. Preserve full manifolds for proximity advancement and all actual impulse rows.",
+    "cooked_algorithm": [
+      "Preserve normal dispatch and primitive/mesh reversal semantics.",
+      "Reuse the same candidate BVH, triangle sidedness, inactive-edge classification and SAT evaluator.",
+      "Preserve the existing faceWitness flag and individual clipped witness signed gap dot(normal,x-y); preserve SAT gap for edge fallback.",
+      "Stop at the first accepted witness with gap <= the requested margin.",
+      "Omit only Contact local-anchor/world-point construction and global contact sorting/coverage reduction; neither is required to determine whether an accepted witness exists.",
+      "For unsupported/unmeasured primitive paths, fall back to the unchanged full manifold dispatcher; do not invent another geometric approximation."
+    ],
+    "must_not_change": [
+      "Collision geometry or triangle count",
+      "Contact margin, tolerances, sidedness or crease handling",
+      "CCD advancement, bisection count, sampling limits or physical impulses",
+      "Body properties, gravity, cadence, authored rig or solver thresholds"
+    ]
+  },
+  "focused_parity_tests": [
+    "For each fixture, compare predicate result with full ComputeContacts count using exact same inputs.",
+    "Preserve existing tilted-box per-witness false-penetration regression at zero and positive margin.",
+    "Near-boundary boxes: separated, exactly touching, penetrating; nextafter changes to represented positions/orientations/margins.",
+    "One-sided and two-sided meshes viewed from both sides; reversed argument order.",
+    "Coplanar internal edges, convex and concave creases, active/inactive edges and clipped-face versus edge fallback.",
+    "Rotated boxes and convex hulls; sphere and capsule cooked paths if optimized.",
+    "Deterministic seeded sweeps over small and large-coordinate offsets, nontrivial parent/child offsets/orientations, and zero/positive margins.",
+    "Compare unchanged impact time brackets and final body states in the exact original concave four-articulation observer, not just standalone geometry.",
+    "Run affected continuous impacts, contact, gravity, M70/M77 and save/lifecycle checks on combined candidate; then measure uninstrumented identical observer."
+  ],
+  "cache_alternative": {
+    "observation": "Cooked dispatcher ignores matching ContactPreparedOrientation and repeatedly calls ContactRotation inside PrimitiveRotation, PrimitiveCenter, triangle, candidates and contact-anchor construction.",
+    "numerical_fact": "ContactRotation and prepared.rotation both use the same Rotation<double> numerator/divisor expressions; matching quaternion reuse can preserve arithmetic.",
+    "restriction": "Use exact represented quaternion matching, retain every child/pivot transform, validate returned full contact data bitwise or with the current established oracle; no tolerance cache keys.",
+    "priority": "Only retain a cache correction after separate timing/geometry-call measurement demonstrates value."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "judas_animation_application_tests",
+  "source": "tests/AnimationApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_animation_application_tests"
+  ],
+  "adapter": "existing argc==3 output path; test assertions unchanged",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e863c8409cd3bd4c4d7e1f414f9c6095923a79d6b96626e3156dbb92e3e4207b",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 4,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_animation_application_tests.log",
+  "logSHA256": "398dac2d24cbd61aa855640367e600d2c6c61e63b90a2b8171a37c3db0b82a77",
+  "seconds": 1.5012090019990865
+}

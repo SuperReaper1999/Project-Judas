@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "diagnostic-boundary-v1",
+  "case": "boundary_observer",
+  "archiveSHA256": "53023ad8427a978994b629475803c1a2a89c605c649c9d0b19026ec9398d6038",
+  "archiveBytes": 5124591,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_diagnostic-boundary-v1_boundary_observer.exe",
+      "sha256": "a5da0e1a2ba1331276f8353a17743fc28198e6fc300f52140a2824e183c393b0",
+      "name": "m78_diagnostic-boundary-v1_boundary_observer.exe",
+      "bytes": 9569792
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\objects\\boundary_observer-0.obj",
+      "sha256": "32cbf34fb5f439c1a6c8b4882a838e72c1f4c5ef9c003abc47c48e20cc42fd53",
+      "name": "boundary_observer-0.obj",
+      "bytes": 3023933
+    }
+  ]
+}

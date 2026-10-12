@@ -1,0 +1,416 @@
+# M70 — Judas Learns to Move Like a Person
+## Multi-target full-body IK and partial physical animation
+
+Starting accepted checkpoint:
+934c5d3f0556c920cc7cae8b80dc4677d8cbf87b
+
+This is the reported Windows-corrected checkpoint with subsequent Linux regression
+verification. Use a later accepted hash only if Conner explicitly supplies it.
+Verify HEAD/main/origin-main and the worktree before editing; do not reset or absorb
+another worker's changes. Standing project instructions remain in force.
+
+Implement ONE combined M70 candidate, then leave it uncommitted for review.
+Claude continues his game independently. Do not wait for his next phase, alter his
+workspace, or require him to adopt an unfinished API to let this milestone finish.
+
+## 1. Deliver the two consumer-backed primitives, not the entire wish list
+
+Claude recommends parallel development because his game is not blocked. His actual
+remaining workarounds are hands aligned by moving the whole rider, feet floating
+away from a wall, feet misaligned on a tilting board, and passive-only bail/impact
+responses. He already handles movement, ledge scanning, sockets, clip selection,
+stride matching and recovery decisions in game JavaScript.
+
+REQUIRED, in implementation order:
+1. Multi-target full-body IK: coordinated hand/foot position and orientation targets,
+   bounded pelvis/root-of-skeleton adjustment, spine participation and joint limits.
+2. Partial physical animation: selected articulated regions driven toward an animated/
+   IK reference pose, with explicit animation/active/passive authority transitions.
+
+Both belong in the final candidate. They must also be independently usable: IK
+alone must not allocate a ragdoll or require articulated-physics locomotion.
+
+NOT INCLUDED: balance controllers, automatic recovery steps, procedural gait or
+footstep planning, autonomous get-up, retargeting, motion matching, general animation
+polish, controller rumble, replay, broad sleeping optimization, or new platforms.
+Claude's runtime joint-subtree hiding/scaling request is explicitly outside M70;
+preserve his existing head-hiding layer instead of adding that feature incidentally.
+Do not turn this into an editor rewrite or a new animation-graph product.
+
+Judas supplies pose/physics tools. JS chooses targets, movement, reactions, bail
+conditions, scoring and when to resume animation. No native hang, skate, injury,
+zipline, punch or recovery-state systems.
+
+The supplied consumer feedback is rationale. The contracts and fixtures below are
+M70 acceptance requirements, not claims about capabilities already implemented.
+
+## 2. Establish ownership once; keep parallel development safe
+
+Read the CURRENT pose/layer/crossfade, limb-IK, resolved-joint/socket, ragdoll/joint,
+CharacterMotor, imported-model and persistence contracts and their implementation.
+Historical prompts explain intent; current accepted code establishes the baseline.
+
+Before implementation, write one short ownership table beside the current design:
+reference-pose production -> new target solving -> fixed-step drive application ->
+physics resolution -> final/presented pose -> joint reads, sockets and skinning.
+Map this onto the actual scheduler, not a fictional replacement pipeline. Specify
+which sample each stage reads, when script writes become effective, and how an
+entity/joint obtains exactly one authoritative result. This is working design,
+not a separate audit or a request for another approval before coding.
+
+Two compatibility guarantees are mandatory:
+- Existing crossfades, layers/masks, sockets, rootMotion and M65 limb-IK semantics
+  remain valid. With M70 disabled, existing consumers retain their behaviour.
+- CharacterMotor remains a supported locomotion authority. Adding IK or a physical
+  arm/upper body must not force a rewrite into fully articulated locomotion.
+
+Claude reports separate local engine fixes for animation trimming and setSocket(null).
+The trim fix was reported as local commit d3cc3c4f; upstream status of both fixes is
+not established here. Check the actual baseline before depending on them. Do not cherry-pick, duplicate, merge or take over pending
+consumer fixes without authorization. If one blocks an essential case, identify the
+exact overlap and continue independent work rather than modifying his live branch.
+
+Use your own fixtures, asset copies and isolated outputs. Never rebuild/re-export
+Claude's working game or alter his controller tuning. If main advances during this
+work, retain the recorded base and report integration needs; no silent mid-run rebase.
+
+## 3. Multi-target full-body IK
+
+### Shared solve and explicit skeleton mapping
+
+Extend the existing pose-composition infrastructure. Resolve a bounded set of
+connected targets together, allowing shared pelvis/spine motion to reconcile them.
+Several unrelated two-bone solves, with one more entity offset afterward, do not
+satisfy this requirement. Choose the numerical method to fit Judas; document its
+iteration bounds, joint model, supported topology and failure behaviour.
+
+Use stable imported joint identities and explicit chain/body-root/spine mappings.
+Names such as Hips, LeftFoot or Mixamo are not engine semantics. Preserve helper
+nodes, multipart skin bindings and unmapped branches. Support the actual M66 full
+multipart character or an approved equivalent without reducing its skeleton.
+Include a differently named/proportioned mapping as proof against hidden rig rules.
+This is same-skeleton posing, not cross-skeleton animation retargeting.
+
+A target must support:
+- Stable identity and enabled state; independent position/orientation influence.
+- Position and quaternion orientation, including position-only/orientation-only use.
+- An effector-local offset/frame: the sole or palm contact frame need not coincide
+  with the imported joint origin or axes.
+- Clearly documented coordinate spaces. Model-space and world-space targets are
+  required; support-relative targets may be formed in JS from ordinary transforms.
+- Bounded weights and a deterministic documented rule for competing constraints.
+
+Permit a declared skeletal body root/pelvis to translate within authored limits and
+allow the selected spine/ancestor joints to participate. That correction must come
+from solving the target set, not a per-pose pelvis offset the game has to guess.
+Other bone lengths remain intact; no silent limb stretching or arbitrary local translations to force success.
+Respect validated joint ranges in declared local frames, including bend preferences
+needed to avoid unstable straight/folded configurations. Do not invent universal
+anatomical limits from names or assume every imported local axis has the same meaning.
+
+### Pose correction is not character movement
+
+IK modifies the instance's evaluated skeletal pose. A pelvis correction must NOT
+move the entity, motor capsule, root-motion track, support frame, or dynamic body
+behind the game's back. Keep authored source data and shared model resources immutable.
+Start from the current reference pose; do not accumulate last frame's correction
+as permanent drift. Any warm start must have explicit invalidation and bounds.
+
+Preserve legacy layer composition, including carry and head-hiding layers. Do not
+require inversion of a singular transform on an uninvolved hidden subtree. Diagnose
+unsupported mapped transforms rather than silently changing scale/bind mathematics.
+Define overlap with M65 limb IK explicitly; existing unrelated contributors keep
+their ordering. A new solve is not permission to reorder every old layer globally.
+
+Solved joint reads, attachments and skinning must agree for the same sample. Do not
+write directly into GPU palettes or solve once per camera. A new world target must
+not be reconstructed from whichever stale presentation matrix happens to be handy.
+Support motion is sampled consistently: no one-frame disagreement between the board
+frame used by the feet and the board/character frame drawn by the renderer.
+
+Do not introduce implicit target feedback through sockets or the character's own
+solved joints. Inputs are sampled at a defined boundary; cycles are rejected or have
+explicit previous-sample semantics, never evaluation-order accidents.
+
+### Numerical and coordinate behaviour
+
+Reachable targets should converge within the documented bounded solve. Unreachable
+or mutually inconsistent targets must give a finite bounded compromise and useful
+per-target residual/status, not claim success, stretch bones or displace the entity.
+Handle zero weights, missing keys, invalid quaternions, abrupt changes, nearly
+straight limbs, rotation wraparound and target removal without NaNs or uncontrolled
+flips. Declared damping/weight transitions must not secretly become gameplay timing.
+
+Do not assume world Y is up. Any preferred up/bend/reference direction is explicitly
+supplied or derived from the configured skeleton/target frame. Preserve existing
+large-coordinate conventions: calculate small relative offsets before float solving.
+This does not add origin rebasing, gravity policy or an automatic ground scanner.
+
+## 4. Partial physical animation
+
+### Drive a reference pose; do not overwrite simulation
+
+Reuse Judas's bodies, ragdoll mappings, joints, collision solver and fixed-step
+orchestration. Add the smallest reusable bounded pose-drive capability where the
+existing joint system lacks it. No second physics world or replacement solver.
+
+The target is a separate animation/IK REFERENCE pose. Selected bodies are driven
+through physical forces/torques or appropriate constraint impulses. Their actual
+pose comes from the physics solution, with ordinary contacts and inertia. Do not
+teleport dynamic bodies onto the target, overwrite their velocity every step, or
+render them at the target and call that physical response.
+
+Resolve drive targets through the existing bone/body/COM offsets and joint frames.
+An imported bone frame is not automatically the rigid body's frame or rest frame.
+Use valid rotational errors and finite, timestep-aware control parameters. Expose
+useful strength/stiffness, damping and effort limits with their units and meanings.
+Targets beyond joint limits saturate/reconcile safely; no unbounded correction.
+Keep contact/joint-limit enforcement authoritative over requested animation.
+
+Control named/mapped regions or bounded joint sets with independent drive and
+physical-contribution settings. State how overlaps resolve. Fade drive effort and
+presentation blend separately where both exist: they are not interchangeable.
+Zero drive means no active pose-restoring effort; ordinary constraints, material
+response and authored passive resistance remain. Do not erase accepted rig tuning.
+If an intermediate visual blend differs from the physical collision pose, document
+that approximation and expose the actual physical result. It must not masquerade
+as a body having reached its target or conceal failed collision response.
+
+An active driven region must genuinely depart from its reference under an impact
+and visibly reflect the simulated result. IK may help generate its target but must
+not run afterward and overwrite dynamically owned joints. Unmapped children inherit
+through the normal hierarchy once; avoid double-applying parent/entity motion.
+
+### Motor-driven locomotion stays available
+
+Provide a usable mode with the capsule CharacterMotor controlling locomotion and
+selected regions physically responding. The rest of the pose can remain animated.
+Use explicit animated/kinematic boundary anchors where needed. Document which
+bodies collide and how the motor, mapped bodies and self-collision filters interact;
+do not leave duplicate physical roots fighting over the character position.
+
+A moving kinematic/motor anchor is an externally driven boundary, not proof of a
+closed momentum-conserving system. Do not claim its reaction necessarily pushes the
+motor. Between simulated dynamic bodies, retain the solver's normal reaction and
+contact behaviour. No hidden root pinning or cancellation of incoming impulses in
+fully dynamic mode merely to keep a demonstration standing.
+
+For fully physical bails, allow the motor to relinquish locomotion authority through
+an explicit handoff. Do not require a balance controller to use active joints while
+falling: active characters can still lose support and fall. Generic gravity and
+reference-frame handling remain Judas-owned, not hardcoded downward forces.
+
+Retain ordinary contact/query participation and stable body-to-joint attribution.
+Reuse existing events for bone-impact consumers; add only necessary generic identity
+exposure if absent, not an injury/scoring subsystem or second collision-event bus.
+Unchanged settled drive targets must not gratuitously invalidate sleep each frame;
+meaningful drive changes/impacts must wake correctly. This is integration correctness,
+not a reopening of every old ragdoll-settling/performance finding.
+
+## 5. Authority transitions, timing and lifecycle
+
+Expose explicit, reversible transitions among animation-only, selected physical
+regions, full active ragdoll and passive ragdoll. Configuration/transition requests
+validate before publication and apply at a safe simulation boundary.
+
+On physical activation, initialize from the correct evaluated pose and motion:
+- Account for root translation/rotation, bone-local motion, and the engine's support/
+  frame conventions without adding a support velocity twice.
+- Derive required new motion history from authoritative samples, not camera cadence.
+  Reuse explicit caller-supplied motion when supported. Define first-sample/no-history
+  behaviour honestly; do not invent a previous step or arbitrary launch velocity.
+- Preserve existing body identity/state where possible and invalidate stale solver
+  caches where necessary. No duplicate ragdolls, old collider ghosts or one-frame
+  explosions during repeated toggles.
+
+Active -> passive preserves current physical pose and velocities while removing
+active drive. Resuming animation is a game request with explicit alignment/placement
+and blend policy, using the existing motor placement/collision contract. Do not snap
+through a wall, silently relocate the root, or launch an automatic get-up controller.
+A refused transition retains a coherent previous state with a useful reason.
+
+Sample drive references at fixed-step boundaries. Presentation interpolation may
+smooth the output but cannot feed back into authoritative forces or change simulation
+because another camera/render frame was evaluated. Specify the phase of script target
+writes and resolved-joint reads; no promises that pre-physics reads see future results.
+
+Keep new configuration/state inside normal prefab, scene, M67 named-authoring,
+streaming and M61 save ownership. Save the declared targets, region/drive settings,
+mode and transition state needed to resume; reuse existing physical-state capture.
+Do not serialize pointers, GPU matrices or disposable solver caches. Restore through
+fresh handles, reconstruct history safely, and do not replay activation impulses or
+fresh-spawn defaults after load. Preserve compatibility deliberately; version real
+format changes rather than rewriting old fingerprints to make checks pass.
+
+Destroyed targets, skeleton reimport/replacement, region unload/adoption, project
+switch and Play/Stop must invalidate the correct mappings and pending work. Use
+existing qualified references and pin/retirement policies, not permanent stale pins
+or per-frame VM construction. Define pending/not-ready behaviour for async models;
+invalid or unresolved configurations must not leave half-created physical regions.
+
+## 6. Public API and practical authoring
+
+Keep JudasJS declarative, consistent with existing layer/limb APIs. Scripts submit
+bounded target sets, mappings, masks and drive/transition requests; they do not get
+raw bone-array setters or run native joint solving through hundreds of bridge calls.
+Choose exact API names after checking current declarations; do not invent an alias
+surface solely to match this prompt.
+
+Provide atomic batched configuration/target updates, safe snapshots/status, caps and
+indexed diagnostics for invalid entries. State ownership, coordinate spaces, units,
+write/read phases, persistence, and behaviour while disabled, unavailable or destroyed.
+Different instances sharing one imported model must not share mutable targets/poses.
+No runtime FK/IK graph compilation or entire-world enumeration per property update.
+
+Reuse M67 skeleton pickers, property/command infrastructure and normal serializers
+for mappings/limits/regions. Supply the small inspector and debug overlay needed to
+configure and understand this feature: effectors, target/actual frames, pelvis bounds,
+joint limits, ownership masks, drive errors and saturation. No separate editor toolkit.
+All authored edits use existing undo and validation; Play does not write them back.
+
+Update affected types, reference, live inventory and executed cookbook examples.
+Give Claude exact examples for replacing presentation target hacks and enabling a
+physical region/bail, including disabling it again. Show reuse of crossFade, existing
+layers and sockets, not a new controller that takes over his game.
+
+## 7. One ordinary integration project, three demonstrations
+
+Build a small project-owned character lab using shipped authoring/import paths and
+public APIs. A script may generate moving targets and request explicit transitions;
+it must not contain privileged native test dispatch or duplicate the solver.
+Use redistributable fixtures and existing approved full-rig assets where available.
+Keep restricted original art/derivatives local under their existing licensing rules.
+
+A. WALL HANG
+Two palm frames on a ledge plus two sole frames against a wall. Adjust compatible
+wall/ledge spacing; the pelvis/spine and multiple limbs adapt without moving the
+entity/motor merely to hit the targets. Include a deliberate impossible configuration
+that reports residuals instead of breaking the character. Hang selection and target
+placement are demonstration JS, not native hang semantics.
+
+B. TILTING SUPPORT
+Both feet target a translated/rotated board-sized support, including sole orientation.
+The actor retains its own root/motor authority. Authored upper-body/carry animation,
+a socket prop, crossfades and an existing head-hiding layer remain usable. Include a
+slope/step target variant using the SAME target solver, not an automatic gait system.
+Do not physically weld the feet, disable ground collision, or rotate the entire rider
+with the support and claim that full-body IK solved the task.
+
+C. PARTIAL RESPONSE AND BAIL
+Move a motor-controlled character while an arm/upper-body region responds to an
+external impact and returns under bounded drives. Show disabled drives as a control.
+Then explicitly enter full active ragdoll, remove drives to become passive, and
+request a documented safe return to animation/motor control. Real contacts, velocity
+handoff and resolved sockets must remain observable. No requirement to stand upright,
+choose a recovery step or automatically find a get-up animation.
+
+These fixtures establish engine capability without waiting for Claude's Phase 2.
+His eventual adoption is separate real-consumer evidence, not claimed in this report.
+
+## 8. Evidence that distinguishes the implementation from a convincing demo
+
+Write focused regressions as part of implementation. Consolidate related cases into
+a small number of targets and one lab run, not separate rebuilds for every bullet.
+
+IK proof:
+- Independently constructed reachable target poses, not expectations generated by
+  the IK solver itself. For feasible held human-scale fixtures, require each contact
+  frame within 1 cm and 2 degrees after the documented bounded solve. State scaled
+  tolerances for differently sized fixtures; do not silently loosen failed thresholds.
+- Two/four simultaneous targets requiring pelvis/spine participation; disabling that
+  participation supplies a negative control. Assert root/motor unchanged, lengths
+  preserved and declared joint limits respected. Record EACH effector, not an average
+  that hides one failed hand or foot.
+- Position-only/orientation-only, effector offsets, unreachable/conflicting targets,
+  invalid data, singular/near-straight cases, changes/removal and independent instances.
+- A rotated whole setup and translated/rotating target support, under existing
+  arbitrary-gravity/large-coordinate conventions. No special planetary demo needed.
+- Legacy layers/crossfades/limb IK and resolved socket/skin samples unchanged when M70
+  is disabled; no cumulative drift or double application when it is enabled.
+
+Physical proof:
+- Drive response against a known joint target, declared limits, damping and effort
+  saturation. Assert actual physical motion/contact, not only skin-matrix movement.
+- Impact on the partially physical region with a still-working motor; dynamic-target
+  error increases, bounded drive response follows, collision remains effective.
+- Animation -> partial/full active -> passive -> animation transitions preserve the
+  declared pose/motion contract. Passive release must not inject an extra kick.
+- Equivalent fixed-step input under different presentation rates gives equivalent
+  physical trajectories within stated tolerances. Account for root rotation/support
+  velocity, missing first history and repeated enable/disable.
+- Rest/wake integration, normal filters and safe destruction during transitions;
+  no new immortal constraints or silently disabled external interaction.
+
+Lifecycle/public proof:
+- Real VM calls and a full imported multipart rig; renaming/mapping variation, helper
+  bones, nontrivial bone/body offsets, and two instances sharing immutable resources.
+- Authored/named round trip; save/exit/fresh-process load during an active or transitioning
+  state; streamed owner/target removal or adoption; Play/Stop/reload. Consolidate these
+  into the lab where possible. Restore must not replay initialization.
+- One moved, source-hidden exported lab runs through normal packaging. Legacy content
+  still loads without migration or changed default control.
+
+Profile inside that same run using M56: animation-only, IK, partial driven and passive
+modes on the same full rig, at 1 and 10 instances. Record warmed median/p95/max for
+pose/IK/drive/physics work, iterations, active bodies and allocations. Use the current
+final build's disabled path as the control; no historical rebuild campaign. Choose
+and document finite target/iteration/drive caps; no full-world scans, unbounded solving
+or per-camera physics. Do not lower fidelity/cadence to conceal cost. Report limits
+honestly rather than promising any crowd size or hardware frame rate.
+
+## 9. Fast validation, not ritual repetition
+
+Implement the coherent code, integration, tests, examples and docs first. Plan ONE
+normal Release build of affected engine/editor/authoring and focused test targets,
+then ONE relevant final validation pass. Generate CMake rules before invoking new
+targets so the M69 stale-Make issue is not repeated. No clean rebuild by habit and
+no full production-suite/two-pass marathon merely for reassurance.
+
+The final pass includes the focused proof above, affected existing pose/animation/
+ragdoll/joint/motor checks, relevant save/stream/authoring coverage, API/type/live
+checks, the new examples, editor Play/Stop and the moved lab. Reuse coverage once;
+do not rerun the same test under several labels. Reuse an unchanged consumer smoke
+only where needed to prove old layers/motor/sockets still compose normally.
+
+This is NOT a one-attempt prohibition. A genuine build/test failure authorizes its
+narrow correction, the necessary incremental rebuild and affected reruns. Preserve
+original results and state which final bytes they cover. Escalate wider validation
+only when the actual change invalidates wider evidence; do not stop for permission
+because a generated build rule or an ordinary compiler error needs correcting.
+
+Keep the Windows portability work intact. Build/test on available platforms with
+the same final candidate; do not substitute Linux success for Windows proof or wait
+indefinitely for unavailable hardware. Report exactly which platform/compiler and
+which visual/interactive checks were actually exercised. Automated/offscreen success
+is not Conner's human acceptance, and it does not complete M67's deferred checklist.
+
+## 10. Final handoff and stop
+
+Deliver one concise closure report: requested gap -> mechanism -> focused proof ->
+remaining boundary. Include:
+- The actual ownership/phase diagram and compatibility guarantees.
+- Exact public API, mapping/target/drive examples and Claude's incremental integration
+  steps. Identify source overlaps with pending consumer PRs without merging them.
+- Per-effector errors, physical response/transition evidence, measured costs and caps.
+- Exact configure/build/test commands, results, warning counts, failures/follow-ups,
+  platform coverage and genuinely untested human tasks.
+- Project/package/guide paths, changed-file list, final candidate fingerprints and Git.
+
+Give ONE short human checklist with actual controls: change wall/board targets;
+inspect pelvis, soles, palms and the unchanged root; try legacy layers/socket prop;
+impact a physical region while moving; toggle active/passive/animated modes; save,
+restart/load and repeat in the moved export. Let Conner judge quality and feel.
+
+Do not claim that IK improves the source animation itself, that an active ragdoll is
+a balance controller, or that Claude has adopted the new APIs before he actually has.
+
+Leave the exact candidate uncommitted. No commit/push/tag without acceptance; no
+later milestone work. Normal project rules cover licensing/provenance and protected
+history; do not append another unrelated cleanup programme.
+
+Suggested commit after acceptance:
+Add M70 multi-target full-body IK and partial physical animation
+
+Final sanity check: Is this still a game engine? Judas solves poses and drives
+physical joints. Claude decides where to put the hands and feet, what a hit means,
+and whether the character hangs on, bails, recovers or gets back on the board.

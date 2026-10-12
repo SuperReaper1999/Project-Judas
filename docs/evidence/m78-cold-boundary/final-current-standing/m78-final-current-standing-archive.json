@@ -1,0 +1,21 @@
+﻿{
+    "archiveBytes":  5123726,
+    "scope":  "Archive only; generated copies require host SHA verification before cleanup",
+    "archiveSHA256":  "1c9f7ea20ea204ca0f9e9e5b8087b7375af34f76a3d55db914e897eadfe385a6",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-current-standing.exe",
+                      "sha256":  "a1542e52ac91f14c171e3504ced5c5cd05306d3bce074567b03adc5d016bc508",
+                      "name":  "m78-final-current-standing.exe",
+                      "bytes":  9569280
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78FinalCurrentStandingBuild\\FinalCurrentStandingObserver.obj",
+                      "sha256":  "6ca158b70a770a9797c8335772f1f4ed2a98bf95c88d73471aed429675066a9d",
+                      "name":  "FinalCurrentStandingObserver.obj",
+                      "bytes":  2921898
+                  }
+              ],
+    "archiveName":  "m78-final-current-standing-generated.zip",
+    "archivePath":  "C:\\JudasValidation\\M78FinalCurrentStandingBuild\\m78-final-current-standing-generated.zip"
+}

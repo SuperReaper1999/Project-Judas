@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "scalability",
+  "archiveSHA256": "60e1ff8726be34eaaef858d414efc87263b1ff795b783cb7e46579eed0c8aaff",
+  "archiveBytes": 3880294,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_scalability.exe",
+      "sha256": "4c089dd9dcf5992a090095363aa9a580154d254f96c2e399b847ca481ef4a4bd",
+      "name": "m78_combined-v2_scalability.exe",
+      "bytes": 8015872
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\scalability-0.obj",
+      "sha256": "5f01a03eb9157febd9b86b4f0588650aa395600f71aef829ff385ef24702dc26",
+      "name": "scalability-0.obj",
+      "bytes": 1560407
+    }
+  ]
+}

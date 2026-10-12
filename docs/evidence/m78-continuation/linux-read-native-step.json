@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/linux-read-native-step",
+    "cold-read"
+  ],
+  "exitCode": 1,
+  "seconds": 1.6211670590018912,
+  "sourceNativeSnapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+  "executableSHA256": "f50ecc12c5267b0f8c92d01a25f001ebad44c82371247653d2f89cf5ee0d0971",
+  "archiveSHA256": "577943674b2f319acbe956393f55a94ab6bb9de48a9f33dc4b4471d4775f8100",
+  "fixtureSHA256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+  "scope": "Exact unchanged failing native Windows save resumed on Linux; same original60Hz and acceptance"
+}

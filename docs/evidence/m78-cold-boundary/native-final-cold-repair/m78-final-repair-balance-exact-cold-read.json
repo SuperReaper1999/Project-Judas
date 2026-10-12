@@ -1,0 +1,36 @@
+﻿{
+    "seconds":  2.7583588999999997,
+    "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+    "case":  "balance_lab",
+    "expectedSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "run":  "balance-exact-cold-read",
+    "executableSHA256":  "f7d4df34013c4e347f1b0c920a9d2b330c49250736950cf6a5968509ac73fac6",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-exact-cold\\cold-read-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "bytes":  365,
+                      "reportName":  "m78-final-repair-balance-exact-cold-read-cold-read-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-exact-cold\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-final-repair-balance-exact-cold-read-.lock"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-exact-cold\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "bytes":  52557,
+                      "reportName":  "m78-final-repair-balance-exact-cold-read-m77.save"
+                  }
+              ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-exact-cold",
+                      "cold-read"
+                  ],
+    "exitCode":  1,
+    "freeBytes":  65871872,
+    "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

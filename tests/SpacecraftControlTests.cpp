@@ -551,6 +551,8 @@ void TestNoOpWhenNotControlled() {
     physics.SetLinearVelocity(handle, glm::vec3(1.0f, 2.0f, 3.0f));
     physics.SetAngularVelocity(handle, glm::vec3(0.1f, 0.2f, 0.3f));
 
+    const auto initialMomentum = physics.GetInertiaWorld(handle)*physics.GetAngularVelocity(handle);
+
     Window window;
     window.SetTestInputMode(true);
     window.SetTestActionState(Action::MoveForward, true);
@@ -566,8 +568,11 @@ void TestNoOpWhenNotControlled() {
 
     CheckVec3Near(physics.GetLinearVelocity(handle), glm::vec3(1.0f, 2.0f, 3.0f), 1.0e-5f,
                   "linear velocity is untouched while not controlled, even with input held for 10 steps");
-    CheckVec3Near(physics.GetAngularVelocity(handle), glm::vec3(0.1f, 0.2f, 0.3f), 1.0e-5f,
-                  "angular velocity is untouched while not controlled, even with input held for 10 steps");
+    // An anisotropic torque-free body changes omega as its inertia rotates.
+    // No controller torque means conserved world momentum, not frozen omega.
+    CheckVec3Near(physics.GetInertiaWorld(handle)*physics.GetAngularVelocity(handle),
+                  initialMomentum, glm::length(initialMomentum)*1.0e-5f,
+                  "world angular momentum is untouched while not controlled, even with input held for 10 steps");
 }
 
 void TestRotateTheUniverseEquivalence() {

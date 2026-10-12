@@ -1,0 +1,34 @@
+{
+  "command": [
+    "cmake",
+    "--build",
+    ".cache/m78-followup/release",
+    "--target",
+    "judas_physical_balance_controller_tests",
+    "judas_rigid_motion_tests",
+    "judas_balance_lab_tests",
+    "--parallel",
+    "2"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T18:40:03.999067+00:00",
+  "seconds": 8.887256478999916,
+  "exitCode": 2,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/config"
+  },
+  "sourceSHA256": {
+    "src/RigidBody.cpp": "b0fd8b2a5ce42784a3d9fbaeb500f5a429b50b840f6a2a07755f33f5b29dad34",
+    "src/RigidBody.h": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+    "src/RigidMotion.h": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+    "src/CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+  },
+  "executableSHA256": null,
+  "logSHA256": "2b7b4679cdbe6cd8d95f66a1fba405bc9bbf88f8c571ee7e1718dac6a21e7ee0",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

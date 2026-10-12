@@ -1,0 +1,31 @@
+JudasScene 3
+settings
+  name ""
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2
+end
+
+object 1 "persisted body"
+  position 0 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed true
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end

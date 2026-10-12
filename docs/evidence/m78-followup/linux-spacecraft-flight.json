@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_spacecraft_flight_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:59.284421+00:00",
+  "seconds": 0.03220772900021984,
+  "exitCode": 1,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "471c3d34d4b51076caa02005530eddade3f8c2b11f8b7533c112a4eb6984cab5",
+  "logSHA256": "2f1056fb5c53b49c146a4c8086178bb52adc467ec3ae37e2893c892639354ede",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

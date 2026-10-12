@@ -1,0 +1,284 @@
+# M72 — Judas Learns to Change the World
+## Runtime lighting/environment, render visibility and per-instance materials
+
+Last operator-supplied accepted engine checkpoint:
+02b540f083bcf3d99b0dc6eb9aa70e63c91a31c3
+
+Implement ONE combined M72 candidate and leave it uncommitted for human review.
+Verify and record the actual HEAD/main/origin-main and worktree first. Use a newer
+accepted base only when authorized; do not reset newer work to this hash. Separate
+asset-library/pack work and Claude's consumer fixes are not permission to absorb,
+revert or reorganize somebody else's changes. Standing project rules remain in force.
+
+## 1. Deliver the agreed capabilities
+
+Claude's city currently approximates night with exposure/sky colour because its
+scripts cannot control the sun, and hides smashed objects by parking them out of
+sight. Establish the current implementation, then close those generic engine gaps.
+
+Required:
+- Runtime directional/sun light direction, intensity, colour and enabled state.
+- Script-controlled environment settings sufficient for a real lighting transition,
+  not merely darkening the final image. Reuse the existing environment representation.
+- Entity-level and individual render-component visibility, independent of physics.
+- Instance-local material properties, colour, opacity and texture overrides without
+  modifying shared source assets or unintentionally changing other instances.
+- Practical editor authoring and normal prefab/save/stream/export integration.
+
+Judas supplies lighting, environment and rendering primitives. JS decides the time,
+sun path, day length, which objects disappear and what a material change means.
+Do not add native day/night gameplay, security logic or a hardcoded world clock.
+
+Conner permits renderer restructuring or replacement where justified. Preserve
+supported behaviour, not historical internals: do not build awkward workarounds
+solely to avoid changing Renderer. Equally, permission is not a rewrite mandate.
+Judas must own the implementation; do not substitute a third-party renderer or
+material framework. Existing foundation dependencies need not be purged. New external
+implementation dependencies require explicit agreement, not automatic adoption.
+
+Not included: asset-pack distribution, retargeting, joint-subtree hiding/scaling,
+weather/astronomy, new atmospheric scattering, GI/reflection research, a shader-graph
+product, unlimited light counts or a general streaming/performance overhaul.
+
+IMPORTANT: secondary cameras, picture-in-picture and in-world camera screens may
+retain their CURRENT LOWER-FIDELITY rendering. Main-camera quality/feature parity
+is explicitly NOT an M72 requirement. See section 6.
+
+## 2. Inspect the real pipeline; establish ownership once
+
+Read current scene/runtime environment ownership, Renderer passes and shader state,
+M57 materials/PBR, M33 secondary cameras, render batching, imported material slots,
+resource loading, script declarations, editor authoring and durable state handling.
+An absent JS setter does not prove that the underlying rendering feature is absent.
+Reuse existing mechanisms where suitable; do not create competing state systems.
+
+Record one short working design: authored defaults -> runtime overrides -> validated
+publication -> renderer snapshot/resource resolution -> draw/shadow passes. State
+which owner stores each value, when JS writes/readbacks take effect, how overrides
+clear, and which changes invalidate caches. This is implementation preparation, not
+another audit/approval milestone.
+
+Keep Renderer responsible for raw graphics operations and GPU lifetime. No GL handles
+in JS, disposable GPU state in saves, or renderer-only edits that disappear next step.
+All passes for a given rendered sample consume coherent state. A secondary camera
+must not advance the clock, apply a fade twice or alter main-camera state. Preserve
+existing simulation/presentation boundaries rather than inventing a second scheduler.
+
+## 3. Runtime lighting and environment
+
+Expose the existing sun/directional-light model through normal JudasJS and authoring.
+A project can enable/disable it and change direction, intensity and colour at runtime.
+Define direction space and whether it means light travel or direction toward the
+source. Validate finite/nonzero directions; document colour space, intensity units
+and supported ranges rather than silently changing existing lighting conventions.
+
+Actual direct lighting and its supported shadows must follow these settings together.
+Changing exposure alone does not satisfy this. Moving the sun must update shadow
+orientation/invalidation without stale shadows, scene reloads or recompiling shaders
+on every direction change. Disabling a light removes its direct contribution; it
+need not make the scene black when ambient/environment illumination remains.
+
+Expose the relevant existing sky/background and ambient/environment contribution
+controls so scripts can coordinate them with the direct light. A bounded environment
+strength control is sufficient where elaborate environment-map blending does not
+exist; do not turn this into new sky or GI technology. Existing exposure remains an
+independent presentation control, not a substitute for lighting. Inspect point/spot
+controls and reuse them where available; document remaining limits instead of
+promising a new unbounded lighting system.
+
+Environment ownership must be explicit within the shared RuntimeWorld. Loading an
+additive region must not accidentally reset the sun because it has different scene
+defaults. Use the existing owner/override rules where sound; define replacement,
+removal and multiple-writer behaviour without introducing a new arbitration framework.
+
+The engine must not assume a universal world-up or a compulsory sun path. JS can
+provide a direction directly or animate it around a chosen frame. No gravity/orbital
+policy changes, automatic planetary lighting or origin rebasing are required.
+
+## 4. Render visibility without changing the simulation
+
+Provide a render-only entity switch and independently addressable render-component
+visibility. Define how they combine: hiding the entity suppresses its renderables;
+showing it again must preserve intentionally hidden component settings. Define child
+scope explicitly rather than silently deactivating an entire hierarchy.
+
+Cover ordinary primitives and imported static/skinned renderables through their
+existing component/part identities. Preserve physics, queries, scripts, animation
+needed by joint reads/sockets, audio and interaction state. Do not implement hiding
+through movement, zero scale, collider removal, despawning or entity deactivation.
+
+Visibility must affect applicable visible/depth/shadow submissions coherently; no
+stale shadow or occlusion contribution from an ordinarily hidden renderer. Document
+any separate existing shadow-only policy rather than introducing one accidentally.
+Editor hierarchy/inspector access must still allow a user to find and restore hidden
+objects; do not confuse editor overlays with runtime visibility.
+
+Respect renderer-managed batching/instancing: changing one logical renderable must
+not hide unrelated members or leave a stale baked submission. Geometry already
+combined into one authored mesh is only independently addressable at its actual
+supported part/component granularity; do not invent the original lost entities.
+
+## 5. Material instances, including real opacity and texture changes
+
+Use immutable shared material/model assets with bounded per-instance overrides.
+Support the current shader's material parameters, including base colour, usable
+opacity and the existing PBR/emissive properties where supported. Texture changes
+must use normal asset references and existing supported material texture slots.
+No raw shader editing or automatic new shading model is needed.
+
+A whole-instance override and explicit material-slot/part targeting must fit existing
+renderable bindings, including imported multipart models. Use stable identities and
+useful diagnostics; do not make engine semantics depend on a generated mesh name.
+Two entities sharing a model/material/texture remain independent unless the caller
+explicitly elects an existing shared-edit operation. Clearing an override returns to
+the correct authored/shared value. Source assets, import recipes and base materials
+must not be rewritten by runtime calls.
+
+Opacity must visibly work in the MAIN render path, not merely store an alpha value
+that opaque shaders ignore. Expose/define opaque, cutout and alpha-blended behaviour,
+including cutoff, colour/texture alpha interaction and depth/blend handling. Use a
+bounded appropriate transparency strategy and state its ordering limitations. Prove
+simple overlapping non-intersecting surfaces; arbitrary intersecting transparency,
+refraction and physically coloured transparent shadows are not required. Document
+shadow policy for alpha modes and prevent stale state when modes change.
+
+Retain the current texture colour/data conventions, normal/tangent handling and
+skinned/static paths. Reuse loaded immutable GPU resources; do not copy models,
+reimport textures or compile shader programs for every colour/opacity update.
+Texture requests can be asynchronous. Define pending/failed replacement behaviour,
+preserve a coherent last-valid or documented fallback rendering, and reject stale
+publication after a newer request, reset, destruction or region unload.
+
+Batch material updates validate before publication; invalid input cannot leave half
+an override applied. Expose useful status and reset/readback without returning mutable
+renderer internals. Finite values, unsupported slots, missing assets and invalid
+handles need actionable, bounded diagnostics rather than a per-frame error flood.
+
+## 6. Keep secondary-camera rendering deliberately cheaper
+
+Preserve the existing lower-fidelity render-to-texture path, cadence, target ownership,
+feedback protection and resource safety. Do NOT upgrade it to full main-view lighting,
+shadows, transparency or other expensive effects simply for feature parity.
+
+Separate scene state correctness from rendering quality. Explicit render visibility
+still governs what is submitted, and supported material/environment controls use a
+coherent snapshot. Effects the auxiliary path does not support may retain their
+existing simplified/omitted treatment; document that matrix instead of secretly
+promising identical output. Main-view acceptance must not compare its pixels against
+a simplified camera screen or require the screen to match its shadows/transparency.
+
+Test a live camera texture on an in-world screen while changing supported state,
+hiding/showing its source objects and retiring/reloading resources. Ensure no stale
+handles, render feedback or shared GPU-state leakage corrupts the main view.
+
+## 7. Public API, authoring and lifecycle
+
+Choose exact API names after inspecting current declarations. Extend the existing
+JudasJS/component style rather than adding aliases to match this prompt. Document
+colour/direction/vector conventions, units, slots, write/read phases, reset semantics,
+async status, visibility scope and per-view support. Provide atomic grouped updates
+where several related values must change together.
+
+Conner is using the editor manually. Expose discoverable controls in the existing
+inspector/environment UI with undo/redo, live preview and a way to clear overrides.
+No separate editor framework. Play-time edits must not silently write into authored
+scenes, and Play/Stop must restore the authored state. Preserve the accepted M71
+navigation and editor fixes.
+
+Integrate defaults and durable overrides through normal named authoring, prefabs,
+scene state, M61 save slots and M59 streaming. A fresh process restores selected
+materials/textures, visibility and environment values without replaying initialization
+or persisting GPU handles. JS owns any clock state; show it using existing persistence.
+Respect resource readiness and rebuild disposable render caches from durable data.
+
+Handle destruction, owner/region removal or adoption, model reimport, project switch
+and reload without leaked resources, stale slot bindings or unexpectedly inherited
+state. Slot changes after reimport must resolve or diagnose, not recolour another
+part silently. Preserve unchanged defaults/formats/fingerprints; version genuine
+extensions rather than rewriting historical evidence.
+
+Export must include textures/materials used only by runtime switches through the
+existing declared dependency/dynamic-asset mechanisms. Do not pretend arbitrary JS
+strings can always be statically inferred, or package the entire optional asset
+library as a workaround. No new pack installer or alternate runtime loader.
+
+## 8. One ordinary lab with proof of rendered behaviour
+
+Build one small project using public JS and approved reusable assets. Do not alter
+Claude's working game or require his adoption. The lab should exercise these areas:
+
+A. LIGHTING/ENVIRONMENT: visibly rotate/recolour/dim/disable the sun, with identifiable
+shadows and lit surfaces. Hold exposure fixed for direct-light checks. A separate
+ordinary JS demonstration coordinates sun, sky and environment through a cycle with
+pause/scrub controls; the cycle is game code, not a native time-of-day system.
+
+B. VISIBILITY: independently hide/show renderers on visible shared/batched geometry
+and an imported/skinned figure. Show that a hidden solid still collides and its script
+and resolved socket remain usable. Demonstrate component settings surviving an
+entity hide/show and no unintended shadow left behind.
+
+C. MATERIALS: two instances share the same imported source. Change only one instance's
+colour, supported PBR/emissive values, texture and opacity/alpha mode; keep the other
+unchanged. Include a multi-slot case, actual cutout/blend examples, reset, and a
+pending/failed texture request. Add one lower-fidelity live camera screen.
+
+Focused evidence must exercise real VM calls AND actual rendered output, not just
+getters or successful process exit. Use controlled colour/depth/shadow/image probes
+with stated tolerances and independent expectations. Change one cause at a time;
+include disabled/reset controls. Distinguish native component reachability, JS delivery
+and rendered effect so a lab-only code path cannot conceal a missing consumer API.
+
+Reuse the lab for named/prefab round trips, undo/Play-Stop, save/exit/fresh-process load,
+streamed target/resource removal and a moved, source-hidden export launched from an
+unrelated working directory. Check source immutability and independent instances.
+Exercise supported main and simplified secondary views without demanding visual parity.
+
+Measure M56 CPU/GPU/render-resource work where available: unchanged defaults, a bounded
+repeated-instance case and frequent lighting/material/visibility updates. Separate
+cold resource/variant creation from steady updates; include first use, repeated swaps
+and resource retirement. No repeated shader compilation, unbounded cache growth or
+whole-world rebuilding hidden by a tiny demo. Report timings and resource limits,
+not an unsupported FPS guarantee or a claim that M68 upload hitches are all solved.
+
+## 9. Execution and final handoff
+
+Implement coherent changes, fixtures, tests and documentation, then perform one
+planned affected Release build and focused final validation pass. Genuine failures
+permit necessary corrections, incremental builds and affected reruns. No literal
+one-attempt trap or repeated full production-suite ritual. Renderer restructuring
+may justify broader affected coverage; choose it from actual dependency changes.
+
+Include affected existing rendering/PBR/shadow, secondary-camera, model/skinning,
+resource and editor/persistence checks. Preserve M71's cold-start sampler correction
+and existing GL coverage. Do not alter accepted physics/fluid behaviour to make a
+visual test pass. Preserve original failures and identify exactly which final source
+and assets each result covers.
+
+Build/run available platforms; report exact platform/compiler coverage. Linux success
+is not Windows validation. Do not wait indefinitely for unavailable hardware or claim
+older outstanding Windows/human checks have been completed. Automated/offscreen
+output never substitutes for Conner's desktop review.
+
+Return one concise candidate report with:
+- Actual ownership/publication design and any justified renderer restructuring.
+- Exact public API examples for a JS lighting cycle, hide/show and per-instance
+  material/texture changes/reset; include Claude's incremental adoption path.
+- Supported main/secondary-view behaviour, opacity/shadow policy and remaining limits.
+- Focused rendered/lifecycle evidence, costs, exact commands, warnings and failures.
+- Project/export paths, changed files, final fingerprints and current Git state.
+
+Give ONE short human checklist with actual controls: move/dim the sun; inspect shadow
+and environment response; hide one renderer without losing collision; change one
+shared-model instance's material/texture/opacity; inspect the cheaper camera screen;
+undo/Play-Stop; save/restart/load; repeat in the moved package.
+
+Leave the reviewed candidate uncommitted. No commit/push/tag until Conner accepts and
+authorizes it; no later milestone work. Keep current status distinct from preserved
+pre-commit evidence so the live summary is not left claiming "uncommitted" after release.
+
+Suggested commit after acceptance:
+Add M72 runtime lighting, environment and per-instance render controls
+
+Final sanity check: Is this still a game engine? Judas controls light, environment,
+visibility and material instances. JS decides when night falls, what disappears and
+why the world changes. A camera on a screen is still allowed to look cheaper.

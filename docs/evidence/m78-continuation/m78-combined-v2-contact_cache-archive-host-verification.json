@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "contact_cache",
+  "archiveSHA256": "7d6876e975b0355d502347895ba0fcc5cdef5a746b82ded466601ea6e2ac8a10",
+  "archiveBytes": 324282,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_contact_cache.exe",
+      "sha256": "97c0523cce421b84197439b63a1c73afcaec49830b82a24716d414ecba2cbc62",
+      "name": "m78_combined-v2_contact_cache.exe",
+      "bytes": 522752
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\contact_cache-0.obj",
+      "sha256": "78e70132ca861e620fb32df508ace8aacc69e1ce86692c2a33b018b4cde43c75",
+      "name": "contact_cache-0.obj",
+      "bytes": 293194
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "scope": "Unchanged editor source compilation from actual retained MSVC recipes, linking exclusively final combined-v2 physics archive. Ordinary copied-project Editor autotest, no implementation change. VM software GL functional-only.",
+  "libraryPath": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+  "librarySHA256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+  "units": [
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorMain.cpp",
+      "sha256": "2fa57cd6faeb9d5f6ff9480f7370c7efefbdeff328f76661fe4b905120ed54c9",
+      "objectName": "EditorMain.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORMAIN.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorMilestoneNotice.cpp",
+      "sha256": "1addf130df96912789b71268ab2cbc2acc6353ad1a569778378653d6a15b9ae7",
+      "objectName": "EditorMilestoneNotice.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORMILESTONENOTICE.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorApplication.cpp",
+      "sha256": "8a75b2bf408bc6f179c4f3e46256af2d3cfce9161a22b2b5f8bfb6652e33ee51",
+      "objectName": "EditorApplication.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORAPPLICATION.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorCamera.cpp",
+      "sha256": "2f1cd57baf3c9de9d533c9c036be43d3f732e73dde6cbc265976d42244361a1b",
+      "objectName": "EditorCamera.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORCAMERA.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorPicking.cpp",
+      "sha256": "8d764f060f10e2a401f3f73ef5397d7bec3b55be731ded2d4f26af0a0f3683a0",
+      "objectName": "EditorPicking.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORPICKING.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp",
+      "sha256": "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b",
+      "objectName": "EditorHistory.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORHISTORY.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorPanels.cpp",
+      "sha256": "09cd19cba173010883bb499d0139f0e2bb6437c78126eaa45ca2436414da844f",
+      "objectName": "EditorPanels.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORPANELS.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\RetargetPanel.cpp",
+      "sha256": "98d347951a785d04236d4b98261260928c59a84acee0ed5b7d74d2e3acb8fb72",
+      "objectName": "RetargetPanel.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\RETARGETPANEL.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\WorldTools.cpp",
+      "sha256": "259e8a2684039dd00eacb8fbb5f9203ce14e523965d64b06833f06c2c58c957a",
+      "objectName": "WorldTools.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\WORLDTOOLS.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\TerrainTools.cpp",
+      "sha256": "9f77a6e123d96ee6e6caa65f5b254be0d2406d20164951524e3ded98f3025043",
+      "objectName": "TerrainTools.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\TERRAINTOOLS.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\ModTools.cpp",
+      "sha256": "1609df2076d905be4dad91d108dd8dee61f4230bd1ad3fdb62a949d0d0891b6a",
+      "objectName": "ModTools.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\MODTOOLS.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\ProfilerView.cpp",
+      "sha256": "41c5a23cedc2237a5369546572c273359d517f4df84ff86776100cad24d124fc",
+      "objectName": "ProfilerView.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\PROFILERVIEW.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\EditorWidgets.cpp",
+      "sha256": "a419afbb585b12e165bd30122676b1961889b85791682817219088ca4abffb9c",
+      "objectName": "EditorWidgets.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\EDITORWIDGETS.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\ComponentEditors.cpp",
+      "sha256": "bffd6faab558119f901f5f9af233e7c76c3ed2d0adf2c427f5276c1b9f2922df",
+      "objectName": "ComponentEditors.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\COMPONENTEDITORS.CPP"
+    },
+    {
+      "path": "C:\\JudasValidation\\Source\\src\\editor\\GizmoMath.cpp",
+      "sha256": "cbbefe41cdfe501715a3378dde0eebd515f6d50335869f915648b1a4562bdc6e",
+      "objectName": "GizmoMath.obj",
+      "flags": "/c /IC:\\JUDASVALIDATION\\BUILD\\GENERATED /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\IMGUI\\BACKENDS /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\UFBX /IC:\\JUDASVALIDATION\\SOURCE\\SRC\\AUTHORING /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"JUDAS_EDITOR.DIR\\RELEASE\\\\\" /Fd\"JUDAS_EDITOR.DIR\\RELEASE\\VC143.PDB\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj C:\\JUDASVALIDATION\\SOURCE\\SRC\\EDITOR\\GIZMOMATH.CPP"
+    }
+  ],
+  "linkFlags": "/OUT:\"C:\\JUDASVALIDATION\\BUILD\\RELEASE\\JUDAS_EDITOR.EXE\" /INCREMENTAL:NO /NOLOGO RELEASE\\JUDAS_ENGINE.LIB RELEASE\\JUDAS_IMGUI.LIB RELEASE\\JUDAS_NAVIGATION_BAKER.LIB RELEASE\\JUDAS_MODEL_IMPORT.LIB RELEASE\\JUDAS_PROFILER.LIB RELEASE\\JUDAS_WORLD_AUTHORING.LIB RELEASE\\JUDAS_UFBX.LIB RELEASE\\JUDAS_ENGINE.LIB RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level='asInvoker' uiAccess='false'\" /manifest:embed /PDB:\"C:/JUDASVALIDATION/BUILD/RELEASE/JUDAS_EDITOR.PDB\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:/JUDASVALIDATION/BUILD/RELEASE/JUDAS_EDITOR.LIB\" /MACHINE:X64  /machine:x64 /MANIFEST:EMBED /MANIFESTINPUT:C:/JudasValidation/Source/packaging/windows/judas.manifest JUDAS_EDITOR.DIR\\RELEASE\\EDITORMAIN.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORMILESTONENOTICE.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORAPPLICATION.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORCAMERA.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORPICKING.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORHISTORY.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORPANELS.OBJ JUDAS_EDITOR.DIR\\RELEASE\\RETARGETPANEL.OBJ JUDAS_EDITOR.DIR\\RELEASE\\WORLDTOOLS.OBJ JUDAS_EDITOR.DIR\\RELEASE\\TERRAINTOOLS.OBJ JUDAS_EDITOR.DIR\\RELEASE\\MODTOOLS.OBJ JUDAS_EDITOR.DIR\\RELEASE\\PROFILERVIEW.OBJ JUDAS_EDITOR.DIR\\RELEASE\\EDITORWIDGETS.OBJ JUDAS_EDITOR.DIR\\RELEASE\\COMPONENTEDITORS.OBJ JUDAS_EDITOR.DIR\\RELEASE\\GIZMOMATH.OBJ",
+  "sources": [
+    {
+      "path": "src\\editor\\ComponentEditors.cpp",
+      "sha256": "bffd6faab558119f901f5f9af233e7c76c3ed2d0adf2c427f5276c1b9f2922df",
+      "bytes": 100395
+    },
+    {
+      "path": "src\\editor\\ComponentEditors.h",
+      "sha256": "e8a1f4e59043bfc6993ec98f80fe417e5730dced80a1cd1314412e1f41240479",
+      "bytes": 2418
+    },
+    {
+      "path": "src\\editor\\EditorApplication.cpp",
+      "sha256": "8a75b2bf408bc6f179c4f3e46256af2d3cfce9161a22b2b5f8bfb6652e33ee51",
+      "bytes": 135680
+    },
+    {
+      "path": "src\\editor\\EditorApplication.h",
+      "sha256": "0d61d4142d2d0c8d1fada243b2d907f732c9642e10c14ef9eeeabdddc0e1aa1d",
+      "bytes": 4813
+    },
+    {
+      "path": "src\\editor\\EditorCamera.cpp",
+      "sha256": "2f1cd57baf3c9de9d533c9c036be43d3f732e73dde6cbc265976d42244361a1b",
+      "bytes": 6571
+    },
+    {
+      "path": "src\\editor\\EditorCamera.h",
+      "sha256": "b3dc8a0cb0df6128aad669387c0d76a60d4b2d33552fd7702ef3023ebfa95159",
+      "bytes": 3722
+    },
+    {
+      "path": "src\\editor\\EditorDocument.h",
+      "sha256": "b443a917bb84d6ef2ed042d69e926fcb8aae97efdfdc18c845db3964ddbfa49f",
+      "bytes": 4414
+    },
+    {
+      "path": "src\\editor\\EditorHistory.cpp",
+      "sha256": "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b",
+      "bytes": 18899
+    },
+    {
+      "path": "src\\editor\\EditorMain.cpp",
+      "sha256": "2fa57cd6faeb9d5f6ff9480f7370c7efefbdeff328f76661fe4b905120ed54c9",
+      "bytes": 133
+    },
+    {
+      "path": "src\\editor\\EditorMilestoneNotice.cpp",
+      "sha256": "1addf130df96912789b71268ab2cbc2acc6353ad1a569778378653d6a15b9ae7",
+      "bytes": 8973
+    },
+    {
+      "path": "src\\editor\\EditorMilestoneNotice.h",
+      "sha256": "53fabe5847a83c3070e33abb45f1d9e8c28379df50bbaf0e8412ffab7c7e6273",
+      "bytes": 600
+    },
+    {
+      "path": "src\\editor\\EditorPanels.cpp",
+      "sha256": "09cd19cba173010883bb499d0139f0e2bb6437c78126eaa45ca2436414da844f",
+      "bytes": 135007
+    },
+    {
+      "path": "src\\editor\\EditorPanels.h",
+      "sha256": "44fad992e4fc03cf32de8f7625d02804d3f3bb35a0722de5bdaac7aac18afad3",
+      "bytes": 10359
+    },
+    {
+      "path": "src\\editor\\EditorPicking.cpp",
+      "sha256": "8d764f060f10e2a401f3f73ef5397d7bec3b55be731ded2d4f26af0a0f3683a0",
+      "bytes": 16610
+    },
+    {
+      "path": "src\\editor\\EditorPicking.h",
+      "sha256": "602a0616a265868e91a5141f813d37902cb7c0e917afdb3ff6a59a3bd6f60632",
+      "bytes": 1580
+    },
+    {
+      "path": "src\\editor\\EditorTheme.h",
+      "sha256": "d370817e1a71fae83ba9e4862495817564b9f12114c7ba0a389962818d1cd510",
+      "bytes": 2831
+    },
+    {
+      "path": "src\\editor\\EditorWidgets.cpp",
+      "sha256": "a419afbb585b12e165bd30122676b1961889b85791682817219088ca4abffb9c",
+      "bytes": 5759
+    },
+    {
+      "path": "src\\editor\\EditorWidgets.h",
+      "sha256": "6c48dcb237080297acd6a3150a697ac2a862820ca56c51951fcc8fe004cec1a5",
+      "bytes": 2454
+    },
+    {
+      "path": "src\\editor\\EditorWorkspaceLayout.h",
+      "sha256": "d54917b0da6a665da0fe213dfbb33f6f384e681c8916163a1fd0e521de2b2ae1",
+      "bytes": 4174
+    },
+    {
+      "path": "src\\editor\\GizmoMath.cpp",
+      "sha256": "cbbefe41cdfe501715a3378dde0eebd515f6d50335869f915648b1a4562bdc6e",
+      "bytes": 9474
+    },
+    {
+      "path": "src\\editor\\GizmoMath.h",
+      "sha256": "59d0c7507044f9542590479707c314b33705ca72212a5411fd1d1d59bae5abb4",
+      "bytes": 4242
+    },
+    {
+      "path": "src\\editor\\ModTools.cpp",
+      "sha256": "1609df2076d905be4dad91d108dd8dee61f4230bd1ad3fdb62a949d0d0891b6a",
+      "bytes": 7099
+    },
+    {
+      "path": "src\\editor\\ModTools.h",
+      "sha256": "fe03669d3179dfdfe0439006446e2f1c660dc09223e489bdc2f40c9b757d0205",
+      "bytes": 464
+    },
+    {
+      "path": "src\\editor\\ProfilerView.cpp",
+      "sha256": "41c5a23cedc2237a5369546572c273359d517f4df84ff86776100cad24d124fc",
+      "bytes": 8349
+    },
+    {
+      "path": "src\\editor\\ProfilerView.h",
+      "sha256": "4af6aea9ce77941dc124ad3fbc2d9906b9a268cc6eb03f558a36870bb7736a49",
+      "bytes": 48
+    },
+    {
+      "path": "src\\editor\\RetargetDraftState.h",
+      "sha256": "9f0a8163f0e7a408201cdfd2cef755b594cde88439fbbd25d2540105bb6b5618",
+      "bytes": 4223
+    },
+    {
+      "path": "src\\editor\\RetargetPanel.cpp",
+      "sha256": "98d347951a785d04236d4b98261260928c59a84acee0ed5b7d74d2e3acb8fb72",
+      "bytes": 58666
+    },
+    {
+      "path": "src\\editor\\RetargetPanel.h",
+      "sha256": "9a93a90b556855eb9dcc9a6a63a1cf77b3637c151e365061ed1c90fe1e7850db",
+      "bytes": 1175
+    },
+    {
+      "path": "src\\editor\\TerrainTools.cpp",
+      "sha256": "9f77a6e123d96ee6e6caa65f5b254be0d2406d20164951524e3ded98f3025043",
+      "bytes": 16976
+    },
+    {
+      "path": "src\\editor\\TerrainTools.h",
+      "sha256": "e34a836f86fd1b40e49c49129f9e184c1dcfae8654a92c92c6a63ba43f9585b6",
+      "bytes": 1324
+    },
+    {
+      "path": "src\\editor\\WorldTools.cpp",
+      "sha256": "259e8a2684039dd00eacb8fbb5f9203ce14e523965d64b06833f06c2c58c957a",
+      "bytes": 17187
+    }
+  ],
+  "recipeSHA256": "9104ef4f7a74ea957a863db7dcaa5b4b37cbec15cb397a4fd17fd7e7eef25ca2",
+  "linkRecipeSHA256": "327b8c11741b562cecc30981aac9678edb80ab4701fb1331a0011ab4ba6ad6bf"
+}

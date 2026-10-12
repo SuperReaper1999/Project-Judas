@@ -1,0 +1,3 @@
+EDGE_OR_FACE_DIAGNOSTIC margin=0.2 reported=0.199589 own=0.179122 normal=-0.29552,0.955336,-0
+EDGE_OR_FACE_DIAGNOSTIC margin=0.2 reported=0.0197274 own=0.0996783 normal=-0.29552,0.955336,-0
+{"checks":286085,"samples":43980,"positive":6874,"negative":37106,"originalRigBodies":13,"meshTriangles":8192,"fullManifoldBitwiseParity":true,"seed":"0x4d783843","failures":0}

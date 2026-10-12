@@ -1,0 +1,61 @@
+{
+  "scope": "Bounded timing diagnosis: exact original four workloads plus observational thread-CPU clock; serial prior/final archives.",
+  "results": [
+    {
+      "label": "prior",
+      "archiveSHA256": "39973b306e1d251e4422b8afc5048e0d2f5e8ccf037f35a8a0d6e72c13890449",
+      "binarySHA256": "1d71cb2ffee16c126310e4197fab1995ee90a541e3349c0168d2befefe0c67ea",
+      "wallMedianMs": 1.26542,
+      "wallP95Ms": 6.31734,
+      "wallMaxMs": 30.5498,
+      "threadCpuMedianMs": 1.26752,
+      "threadCpuP95Ms": 6.28757,
+      "threadCpuMaxMs": 30.3465,
+      "wallStepsOver16_67": 13,
+      "aggregatePhysical": {
+        "contactRows": 56576,
+        "ccdIterations": 19163,
+        "ccdLimit": 7
+      },
+      "rawSHA256": {
+        "box-4.csv": "9954bf008da49050a409b5d34c30af57f357d9a9920e85dec82056a84801580d",
+        "box-1-profile.json": "10f502d846b27e3cd92be57b984bbec97bfc82e5992243eab29243ced326ff2d",
+        "box-1.csv": "02852cb476ed4e3afb8f13017b57b61e42a3069fc53a6b71bbe31219de5c5d43",
+        "mesh-1.csv": "25f2e7b8a43b80670791d0f0a4bdced2a9757dcd2d3bd1c196214263de282a66",
+        "box-4-profile.json": "537f323482f4d1bc3910503084a757b3f7901a7cc392af12d425e944e2545cd7",
+        "mesh-4-profile.json": "54aae3dc358d357f5cbbf55edcc9d1d58f2d1f99f3a8a3db835092ebe8eb2ca4",
+        "mesh-4.csv": "4b332bc22ef33d0494c44b5ac01fee59ee8237031a1ab772c65e770a5c224176",
+        "mesh-1-profile.json": "72ea55382a53fbd2bd89c9a3b07e556e31b43d7ec34d26a8b37a5e18722d037f"
+      },
+      "limit": "Observation includes per-step thread CPU clock overhead, identical in both serial variants. CPU time is not the frame-time acceptance gate. External host load uncontrolled; no scheduling/affinity/resource changes."
+    },
+    {
+      "label": "final",
+      "archiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+      "binarySHA256": "6ffdd0c448ffb6ab05566f205b4d3721d444e967254b483d7e3cfba103b55ffe",
+      "wallMedianMs": 1.29902,
+      "wallP95Ms": 7.0623,
+      "wallMaxMs": 33.3996,
+      "threadCpuMedianMs": 1.30564,
+      "threadCpuP95Ms": 6.91117,
+      "threadCpuMaxMs": 33.3919,
+      "wallStepsOver16_67": 18,
+      "aggregatePhysical": {
+        "contactRows": 56576,
+        "ccdIterations": 19163,
+        "ccdLimit": 7
+      },
+      "rawSHA256": {
+        "box-4.csv": "b0369ea1b763694f104aa7271ef3b6b2d905afd7432da8784e79b5feaaed947f",
+        "box-1-profile.json": "ad2454e0ac83c485037ee160745c0afb37ceb93c71950dbb87971c8689186fc1",
+        "box-1.csv": "e5b899a253ea66f69a4d779c878a85485e0ed77e4feafa1971add5db9ee46eea",
+        "mesh-1.csv": "0d8ccbc25644ae0dda7db4725f19281c4719afe723f2e709a4d747f76ccceb83",
+        "box-4-profile.json": "cec3c834001494bef0c460d0e6a8e6cf4978c93cbdc506607f21ee6cf296f9cd",
+        "mesh-4-profile.json": "942bc839e7ded1bc01146bfd3c2ede9aa4d0ddf93fc5508890a718731bd3b017",
+        "mesh-4.csv": "48c989a9b63e8685ea7cf7d128ec14a51fa7c84c6f8073e07542cd2a3414632b",
+        "mesh-1-profile.json": "37a283406005e94881ee42420cac627630030e6e587f35cd40828f2b22bd9aa4"
+      },
+      "limit": "Observation includes per-step thread CPU clock overhead, identical in both serial variants. CPU time is not the frame-time acceptance gate. External host load uncontrolled; no scheduling/affinity/resource changes."
+    }
+  ]
+}

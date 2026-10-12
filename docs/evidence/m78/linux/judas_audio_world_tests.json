@@ -1,0 +1,26 @@
+{
+  "id": "judas_audio_world_tests",
+  "source": "tests/AudioWorldTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_world_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "650d5e7935b8c45972cb4442eed551d5100d9163759d88f922aa04fd7d842648",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 65,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_audio_world_tests.log",
+  "logSHA256": "1c3cff90df5d387b3fefcf136c320f0395537a2895e6febdf51b1d1a1ac91d31",
+  "seconds": 1.6159093840014975
+}

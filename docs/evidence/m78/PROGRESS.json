@@ -1,0 +1,76 @@
+{
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "status": "Audit handoff with explicit partial semantic/platform coverage",
+  "M77": {
+    "hash": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+    "push": "succeeded",
+    "humanValidation": "NOT HUMAN VALIDATED / NOT HUMAN TESTED",
+    "alignment": "HEAD = main = origin/main",
+    "remainingWorktreeBeforeAudit": [
+      "?? POST_M73_REPORT.txt"
+    ]
+  },
+  "baselineCampaign": {
+    "buildCommand": "cmake --build build --parallel 4 --target $(cat .cache/m78/test-targets.txt)",
+    "buildSession": 24456,
+    "buildLog": ".cache/m78/linux-baseline-build.log",
+    "testPlan": "BASELINE_PLAN.json",
+    "scheduledTargets": 184,
+    "notExecutedYet": 0,
+    "runner": "python3 docs/evidence/m78/probes/run_baseline.py",
+    "executionCwd": ".cache/m78/frozen",
+    "rule": "Start suite campaign only after successful build. Preserve failed receipts. A zero exit is not independently verified capability coverage.",
+    "buildStatus": "succeeded",
+    "buildReceipt": "LINUX_BUILD.json",
+    "runSession": 36755,
+    "runProgressLog": ".cache/m78/linux-campaign-progress.log",
+    "runStatus": "complete",
+    "firstRunExits": {
+      "zero": 177,
+      "nonzero": 7
+    }
+  },
+  "completed": [
+    "M77 exact candidate/fingerprint verification and provisional checkpoint/push",
+    "Tracked baseline hash manifest and disposable committed-tree archive",
+    "CMake test target/argument/output discovery",
+    "Static JudasJS/TypeScript inventory check including three drift negative controls",
+    "Two independent torque-free rotational probes, one through actual PhysicsWorld",
+    "Read-only Windows environment/source verification (853 inputs match; six native test executables present)",
+    "All 184 Linux target receipts; affected prerequisite reruns and M77 modes/cold active saves recorded",
+    "Independent concave/box articulated workload and retained per-step performance traces",
+    "Default/larger retained-region budget controls",
+    "Fresh native Windows common five tests recovered after authorized VM restart",
+    "Owned curated kit and mod package pipeline; editor authoring/Play-Stop receipt",
+    "Owned source-hidden exact mod runtime, shipped moved binary pause/resume and fresh-process mod save/load",
+    "Optional milestone-notice native missing/malformed/valid/cancellation controls",
+    "Inert startup phase controls and observed steady script costs",
+    "Partial contract/requirement reconciliation and explicit per-row semantic gaps"
+  ],
+  "findings": [
+    "DOC-001",
+    "REQ-001",
+    "PHY-001",
+    "OBS-001",
+    "PHY-002",
+    "FLU-001",
+    "TST-001",
+    "ENV-001",
+    "OBS-002",
+    "WORK-001",
+    "PERF-001"
+  ],
+  "remaining": [
+    "Per-member effect traces and independently tested phase/input envelopes remain documented coverage gaps, not claimed complete",
+    "59 original milestone briefs unavailable; available briefs not sentence-by-sentence proved",
+    "Broader Windows and physical GPU/input/audio validation unfinished",
+    "Separate pending operator checklists: M67 specified authoring, M74, M76, M77, Lastlight/Wayfarer"
+  ],
+  "notAuthorized": [
+    "M78 product fixes",
+    "M78 commit/push/tag",
+    "M79 work",
+    "VM configuration changes"
+  ],
+  "timestampUTC": "2026-10-11T15:33:02.309478+00:00"
+}

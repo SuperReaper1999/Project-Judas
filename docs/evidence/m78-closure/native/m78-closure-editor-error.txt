@@ -1,0 +1,8 @@
+Final editor link failed
+At C:\JudasValidation\m78-closure-editor.ps1:8 char:1003
++ ... eName($log));if($code -ne 0){throw 'Final editor link failed'};Upload ...
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Final editor link failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : Final editor link failed
+ 
+

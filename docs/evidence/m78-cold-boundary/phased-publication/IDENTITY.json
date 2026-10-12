@@ -1,0 +1,11 @@
+{
+  "scope": "Copied diagnostic: direct physical COM/gravity and reference/actuator dt advance on first restored frame; unknown contacts gate load/lift/touchdown/standing/carrier changes. No thresholds/gains/budgets/clockdelays changed. No positivecontactfabrication. Not retained yet; current saved driver commands are absent in legacy snapshots.",
+  "originalSHA256": {
+    "src/PhysicalBalance.cpp": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+    "src/PhysicalBalance.h": "c711ebe2424edd0af7023d891328f558000652574102484499b527c09aee6274"
+  },
+  "overlaySHA256": {
+    "PhysicalBalance.cpp": "e96fa1c32c64859d8db186e6887612945a78805e1677e9af064bdb913b5dbcb5",
+    "PhysicalBalance.h": "68d3fff51b4a3349bb4f20205ad684867f00dc2833a0a2230f73c66500c45db6"
+  }
+}

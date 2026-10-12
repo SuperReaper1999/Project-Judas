@@ -1,0 +1,31 @@
+﻿{
+    "seconds":  1.4206988,
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78_combined-v2_export.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib\" RELEASE\\JUDAS_PROFILER.LIB RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case-import.lib\" /MACHINE:X64  /machine:x64 /MANIFEST:EMBED /MANIFESTINPUT:C:/JudasValidation/Source/packaging/windows/judas.manifest \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\export-0.obj\"",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_export.exe",
+    "case":  "export",
+    "label":  "combined-v2",
+    "freeBytes":  360529920,
+    "executableSHA256":  "be3239161daeba43a7f6c68eb9e0eb0cdf0afe7be0c4454ef63a06a66f61bd68",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "compiles":  [
+                     {
+                         "object":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\export-0.obj",
+                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\source\\src\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\export-0.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\case.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\Source\\src\\ExportMain.cpp\"",
+                         "source":  "C:\\JudasValidation\\Source\\src\\ExportMain.cpp",
+                         "sourceSHA256":  "b239ce606c4c69b2d808b1e0d44d6ca2458979e2c965d8f916d47360d09266b6",
+                         "objectSHA256":  "1dae240f9f828d5d8fdcedc3cf0e40e538cf8502b227bce43c49a0b7380a8a5e"
+                     }
+                 ],
+    "arguments":  [
+                      "projects/balance_lab/balance_lab.judasproj",
+                      "C:\\JudasValidation\\M78ContinuationPackage-combined-v2",
+                      "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_runtime.exe"
+                  ],
+    "exitCode":  0,
+    "archiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+}

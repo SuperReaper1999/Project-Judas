@@ -1,0 +1,24 @@
+﻿{
+    "archive":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\judas_engine.lib",
+    "units":  [
+                  {
+                      "objectSHA256":  "6aa8a2f8b955fa3416ba0ca25f038866c389aac68a132fe6dfc82a75390b2955",
+                      "commandResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\objects\\JointSolver.obj\" /Fd\"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\source\\src\\JointSolver.cpp\"",
+                      "source":  "src/JointSolver.cpp",
+                      "object":  "C:\\JudasValidation\\M78ContinuationBuild\\diagnostic-boundary-v1\\objects\\JointSolver.obj",
+                      "sourceSHA256":  "ce989816b658586439cb33c4fd4776422470568d1487f9551947b737c0e18865",
+                      "exitCode":  0
+                  }
+              ],
+    "label":  "diagnostic-boundary-v1",
+    "freeBytes":  48824320,
+    "scope":  "Copied passive exact native a106 boundary journal; arithmetic/fixtures/60Hz/acceptance unchanged. Only JointSolver observer replacement. Optional first-joint warm seed OFF is diagnostic, never production.",
+    "baseline":  {
+                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                     "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+                     "bytes":  66840496
+                 },
+    "archiveBytes":  67680390,
+    "memberCount":  138,
+    "archiveSHA256":  "cac3377b110dd81a2262aa0757fbabfdfb06b0bf1daa34a7817bf2c676a3eeb6"
+}

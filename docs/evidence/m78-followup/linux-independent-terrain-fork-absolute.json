@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".cache/m78-followup/terrain_fork",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/dependency-final-project/landscape_fork.judasproj",
+    "Imports/landscape.judasterrain",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/independent-terrain-fork-absolute"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:29:56.757303+00:00",
+  "seconds": 0.032234149002761114,
+  "exitCode": 5,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "894ec4fff87885a829d866b1bff1bd4427e5698a5dc34eb78b4726b55a6ad56f",
+  "logSHA256": "db42cdca25e158f411bd80f484b370e5b500f69ef913170f573efa67a218133b",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

@@ -1,0 +1,298 @@
+# M78 corrective follow-up: fix the demonstrated issues, preserve the audit
+
+Execution directive for FHS. Begin the corrective work below now. Do not return
+only another proposed investigation plan. Return one coherent, UNCOMMITTED
+correction candidate with before/after evidence and an updated findings register.
+
+## 0. Authorization and baseline
+
+This directive explicitly supersedes M78's implementation-read-only restriction
+FOR THE FINDINGS AND SUPPORTING CORRECTIONS LISTED HERE. Production code and
+current tests may now receive justified, focused changes. This is an M78 follow-up,
+not authorization for a new numbered milestone or unrelated feature work.
+
+Frozen audit subject:
+9e77b2226edcf217ab789fe4f0fea42a3415a72d
+M77 checkpoint, explicitly NOT HUMAN VALIDATED.
+
+Verify actual HEAD, branch, index and worktree first. The M78 audit/probes and
+POST_M73_REPORT.txt are already uncommitted/untracked work, not disposable clutter.
+Do not reset, clean, stash, rebase or overwrite other work to manufacture a clean
+starting tree. Identify unexpected drift or concurrent ownership before editing it.
+
+Keep the original audit report, failed runs, original fixtures, measurements and
+baseline fingerprints intact. Put correction records in a clearly separate M78
+follow-up location. Link every result to the exact source/binary/fixture identity.
+The original 38,386-file baseline must remain reproducible; do not keep claiming
+that the working product is unchanged after making authorized corrections.
+
+No commit, push, tag, blanket staging, automatic updater or unrelated milestone is
+authorized. Do not import a replacement physics engine or launch a fluid rewrite.
+Preserve Lastlight/Wayfarer, Claude's consumers, original art, ignored video_work/,
+asset_packs/, local tooling, TripleTake and Terrain-ML. Use owned disposable project
+copies, packages and save roots for experiments, not the operator's real content.
+
+## 1. Recover Windows working space first
+
+The audit reported approximately 128 MiB free in the Windows guest. Inventory and
+report the exact paths/sizes of proposed cleanup targets, then remove only clearly
+owned, regenerable, redundant test/build/export scratch. Do not require another
+approval for obviously disposable outputs within this scope; ask about ambiguous,
+shared or irreplaceable paths rather than guessing.
+
+Before removing any temporary directory containing unique evidence, transfer its
+required logs, hashes, manifests and unique reproduction inputs through the existing
+approved transfer mechanism and verify the copy. Retain a recoverable baseline build
+recipe/source identity and the artifacts necessary to reproduce each finding. Do not
+keep redundant full exports merely because nobody identified their ownership.
+
+Do not delete compiler/SDK installations, installed toolchains, original source,
+protected evidence/research, authored projects, user saves, mod installations/trust,
+or the only working human-review package. Do not use broad wildcard deletion or
+wipe an entire shared cache. Restrict SDK cleanup to known disposable build output,
+not the SDK itself. Report remaining free space and plan enough headroom for the
+next build/staging operation; stop that operation before a disk-full failure.
+
+The VM remains Windows 10 with Conner's local administrator account, internet,
+4 vCPUs, 6 GB RAM and a FIXED 60 GB virtual disk. FHS's primary workspace is Linux.
+Do not resize the disk, alter VM resources/configuration, add Linux filesystem
+shares, change global permissions/path/security policy or bypass the operator's
+access rules. Use the existing short Windows work roots. Keep software-OpenGL DLLs
+confined to disposable VM test copies, not stock SDKs or exports. Do not run heavy
+host and guest builds/benchmarks concurrently. Resource limits are not permission
+to saturate the host continuously.
+
+## 2. PHY-002: triangle-mesh articulated contact cost and failure to settle/sleep
+
+Reproduce the original one- and four-articulation workloads: the same 13-body rig,
+8,192-triangle planar floor, box-floor controls, initial conditions and cadence.
+Reuse the recorded baseline receipts where exact inputs match; capture missing
+profiling rather than repeating every audit test. Retain the original 900-step
+sequence and report first contact, sustained contact and settling separately.
+
+Baseline fixed-step median / p95 / maximum:
+- One articulation: 23.91 / 58.56 / 105.10 ms.
+- Four articulations: 170.13 / 258.71 / 338.87 ms.
+
+Repeated CCD iteration/limit counters are a suspect, NOT a proven root cause.
+Trace where time and repeated work actually occur: candidate generation, triangle
+selection, impact-time search, contact/history invalidation, solver progress and
+sleep/wake behaviour as relevant. Explain the demonstrated causal chain, then fix
+the generic mechanism. Do not merely relabel a limit hit as successful progress.
+
+Preserve legitimate continuous impacts, collision geometry, contact response,
+friction, configured bodies and simulation cadence. No demo-name branch, simpler
+stand-in collider, hidden floor, enlarged feet, changed masses, forced sleep,
+velocity clamp, extra damping, reduced physical work based on elapsed wall time,
+or relaxed assertions to make the original workload look fast. Conservative
+pruning/caching or a changed CCD eligibility/progress rule is permitted only with
+its correctness conditions explained and appropriate positive/negative controls.
+
+Check the original box/mesh cases, resting and awake transitions, impulse wake-up,
+initial overlap, relevant edge/grazing/thin-obstacle and fast-impact cases, filtering
+and affected kinematic/rigid/articulation paths. Reuse existing regressions where
+applicable; do not invent a universal CCD guarantee beyond supported geometry.
+
+Report before/after median, p95, maximum, diagnostic work counts and actual sleep
+state. Keep physics correctness observations separate from timing. Establish a
+workload-specific performance target before judging the correction, and explain
+remaining spikes. A cheaper but still impractical run is partial improvement,
+not automatic closure. Time benchmarks without a concurrent guest compile.
+
+## 3. PHY-001: torque-free anisotropic angular integration
+
+Fix the demonstrated inherited angular-momentum transport limitation in the real
+rigid-body integration path, not merely the observer or M77 controller.
+
+Repeat the original asymmetric-body, four-timestep and isotropic-sphere controls.
+The reported approximately 100.3% residual is a WORLD ANGULAR-MOMENTUM VECTOR error
+relative to the initial norm, not scalar energy loss. Preserve that diagnostic.
+
+Derive and document a consistent relationship between orientation, inertia,
+angular velocity, applied torque and angular momentum in the chosen frames. Use a
+justified generic integrator; do not bolt on empirical damping, clip spin, freeze
+orientation, compare only momentum magnitude or hardcode an analytic fixture.
+A momentum-based state formulation is allowed if it preserves the public contracts.
+
+Measure vector momentum and energy behaviour separately, with timestep refinement,
+rotated initial states, torque/angular-impulse response and the spherical control.
+State tolerances and expected integration order before judging outcomes. Then run
+affected joint/contact, M70 physical-animation, M71 moving-support and M77 balance/
+step/recovery regressions. Include other existing angular-motion consumers where
+source tracing shows they are affected.
+
+Do not retune a lab rig or raise its effort budget to conceal a new regression.
+Paired actuator reactions do not by themselves prove exact global angular
+conservation in the contact/constraint solver. Quantify remaining residuals and
+keep that limitation distinct from the free-body correction.
+
+## 4. PERF-001 and TST-001: construction cost and honest retention tests
+
+PERF-001: remove the repeated linear source-rank lookup inside ResolvePrefabs'
+sort, or correct its demonstrated cost through an equivalent generic solution.
+The baseline 6,400-inert-object build costs about two seconds, about 1.85 seconds
+in ResolvePrefabs even without prefabs. Preserve exact authored ordering, tie
+semantics, entity/reference identities, validation and actual prefab behaviour.
+
+Use increasing inert counts including 6,400, plus mixed real prefab/hierarchy
+controls. Report construction and the resolver separately from steady simulation.
+No skipping integrity checks, sorting by a different key, or fixture-only path.
+
+TST-001 is NOT a demonstrated deadlock. Four 100-object snapshots need 5.188 MB
+against the existing 4 MiB budget, so retention correctly pins the last region.
+Reconcile the CURRENT test with the contract; preserve its original failed receipt.
+
+Keep two explicit cases:
+- A workload/budget combination that fits and demonstrably suspends/retires/restores.
+- An intentionally over-budget combination that safely pins, reports the reason,
+  retains state and can proceed when the blocking retention condition is removed.
+
+Document exactly why fixture counts or its explicit test budget change. Do not
+silently increase the engine default, drop saved fields, discard state, weaken the
+pinning guarantee or label expected pressure as a deadlock. Measure retained
+accounted bytes and preserve the memory-overhead finding separately; a general
+snapshot-memory redesign is not required in this batch.
+
+## 5. FLU-001: narrow legacy-PBF settling correction
+
+This is an explicit, LIMITED exception to the earlier rule against changing
+current production fluid implementation: you may change the minimum current
+legacy-PBF/coupling code required to correct FLU-001, with a demonstrated cause.
+Identify those files and the physical/numerical reason before editing them.
+
+The separate Navier-Stokes investigation remains entirely separate. Do not change
+archived accepted fluid versions, FTFT/P1/JSGT research/prototypes/evidence, M54
+quantity ledgers, M55 surface algorithms or unrelated current fluid behaviours.
+Shared physics corrections above must be disclosed and regression-tested rather
+than counted as an unexplained fluid fix.
+
+Reproduce the original rotated half-immersion fixture unchanged: final speed
+0.55870 m/s against its existing less-than-0.5 m/s settling requirement. Establish
+whether the failure originates in coupling, forces, geometry/orientation, numerical
+integration or another measured mechanism; do not assume the cause from the speed.
+
+Keep the threshold, duration, densities, timestep, initial conditions and intended
+physical behaviour. No extra drag, forced zero velocity, solver-quality reduction,
+scene-specific force or longer settling window solely to turn the test green.
+A correction to a demonstrated erroneous physical/numerical term is allowed and
+must be justified independently of this one threshold.
+
+Check the original and rotated-equivalent cases, relevant existing buoyancy/
+boundary/settling regressions, finite values, mass and available coupling
+observations. Use a small real application case for the corrected path. This is
+not authorization to rerun or redesign the entire fluid research programme.
+
+If the expected fixture contract itself is demonstrably inconsistent, show that
+separately and request a decision before changing it. If a genuine fix needs a
+broader model replacement, report that bounded blocker while continuing other
+items. Do not declare FLU-001 solved by relaxing its acceptance.
+
+## 6. WORK-001: shared terrain and dependent-navigation freshness
+
+Keep the stale-navigation rejection. Correct the authoring workflow around it.
+After a shared terrain geometry edit, enumerate all known dependent scenes and
+navigation bakes within the current project/kit scope, not merely the open scene.
+Show why each is stale and what must be rebuilt. Provide an explicit integrated
+way to rebuild those affected bakes using existing services, with the equivalent
+CLI workflow documented. Reuse dependency tracking instead of a second ad-hoc
+terrain/navigation pipeline.
+
+Do not silently edit private base-game sources from a kit. Where required inputs
+are not published/available or outside scope, give an actionable diagnostic rather
+than pretending a rebake occurred. Preserve explicit Save/Cook/publication
+boundaries, cancellation, failures, last-good outputs and export/mod integrity.
+
+Prove the original two-scene shared-source case: edit/cook, discover both affected
+bakes, rebuild, then publish/export and use both actual terrain/collision/nav paths.
+A deliberately unrepaired second bake must still block publication. Include an
+independent terrain fork control. Ordinary paint-weight/tiling changes must not
+unnecessarily become geometry edits; document existing palette-identity freshness
+limits rather than promising capabilities not implemented.
+
+This is a focused dependency/rebuild UX correction, not a general editor redesign,
+runtime terrain editing, automatic navmesh generation in gameplay or a new mod system.
+
+## 7. DOC-001 / REQ-001 and incomplete audit coverage
+
+Update CURRENT checkpoint/status/limitation indexes for verified outcomes. Preserve
+historical preview reports and original observations; link a superseding correction
+rather than rewriting what an earlier run claimed. Fix stale current labels without
+converting 'committed' into 'human accepted'.
+
+Use the original M77_PROMPT.txt supplied with this directive to restore the missing
+M77 requirement comparison. Trace its actual promises against the implementation,
+not merely the later narrowed description. Record supported, failed, unimplemented
+and untested requirements separately. Do not silently rewrite the original brief
+to make the weighted-foot demonstrations satisfy a broader claim.
+
+Other original briefs still unavailable remain explicit gaps. Search known existing
+repository/history locations when useful; do not invent original text or treat a
+later summary as the original. Any newly demonstrated substantial M77 requirement
+gap needs its own bounded correction proposal, not an unlimited hidden expansion
+of this batch.
+
+Add the directly relevant per-member negative/phase/lifecycle proof and native
+Windows coverage for changed mechanisms. Do not call the remaining M78 capability
+register fully verified simply because these fixes pass. Report remaining audit
+coverage separately from remaining product defects and from human-only checks.
+
+## 8. Execution and validation discipline
+
+Work in the ranked order after safe VM cleanup: PHY-002, PHY-001, PERF-001/TST-001,
+FLU-001, WORK-001 and documentation/requirement reconciliation. You may reorder
+small independent tasks for build efficiency; explain material deviations.
+
+Preserve causal attribution with per-finding diffs/checkpoints/manifests without
+making Git commits. After interacting physics fixes, rerun affected earlier
+reproducers on the COMBINED final candidate. Do not mix a fast PHY-002 binary with
+a different PHY-001 binary and call the combination tested.
+
+Plan one affected Release build/validation pass per platform after coherent edits;
+necessary development builds, failure corrections and affected reruns are allowed.
+Do not automatically repeat all 184 targets after every fix, nor impose a literal
+one-attempt limit. Select regressions from the actual dependency graph. If wider
+validation is warranted by shared physics changes, explain and group it rather
+than repeatedly executing unrelated suites.
+
+Validate real shipping paths, not only helper functions. Run the corrected native
+Windows reproducers and affected editor/save/export cases once space permits.
+Verify source AND executable freshness; timestamp skew/stale guest objects must
+not masquerade as final results. Retain missing inputs, platform-specific cases,
+compiler warnings and infrastructure failures honestly. Native VM execution does
+not establish Windows hardware performance, GPU, input or audio acceptance.
+
+For each issue record: baseline, demonstrated cause or unresolved cause, exact
+change, reproducible failing-before/passing-after evidence, negative controls,
+performance/correctness limits, affected regressions and platform scope. A harness
+correction and an engine correction must never share an ambiguous 'fixed' label.
+
+## 9. Required handoff and stopping boundary
+
+Return:
+1. One uncommitted combined correction candidate, exact changed-file list and final
+   source/binary/input fingerprints; current HEAD/index/worktree status.
+2. Findings table keyed PHY-002, PHY-001, PERF-001, TST-001, FLU-001, WORK-001,
+   DOC-001 and REQ-001, classified fixed / partly fixed / not a product defect /
+   blocked / still unverified, with receipts and remaining work.
+3. Before/after timings and physical residuals for matched workloads, including
+   maxima and cold/impact spikes, without claims beyond the measurements.
+4. VM cleanup ledger, preserved-evidence verification and current free space;
+   confirmation that the VM configuration and protected/unrelated work are intact.
+5. Updated M78 coverage and original-requirement reconciliation, with remaining
+   Windows and human gaps plainly separated from automated passes.
+6. One short prioritized human checklist and runnable review packages for changed
+   behaviours/workflows. Do not launch a fresh full historical validation ceremony.
+
+M67's specified review, M74, M76, M77, Wayfarer boarding/flight and Windows hardware
+acceptance remain pending unless the operator supplies actual acceptance. M75's
+recorded acceptance remains historical fact; record any affected new checks against
+this new candidate. Do not infer approval from screenshots, scheduling or a commit.
+
+No staging, commit, push, tag or subsequent numbered milestone until authorized.
+Finish the correction work, preserve failures, and return the candidate for review.
+A single unresolved item should not cause abandonment of all independent fixes.
+Follow the existing rule to surface repeated unexplained failures and genuine
+scope/ownership conflicts instead of silently changing the task.
+
+Final sanity check: Judas still supplies generic engine mechanisms. Correct the
+measured defect, not the demonstration, the physical law or the history of the test.

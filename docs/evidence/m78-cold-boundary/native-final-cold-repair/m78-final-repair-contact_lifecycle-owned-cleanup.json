@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  83628032,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-contact_lifecycle.exe",
+                        "sha256":  "98890a675db1fd803d182dc9221f95b1beeebc079325a9a7416ce040299454a5",
+                        "name":  "m78-final-repair-contact_lifecycle.exe",
+                        "bytes":  8168448
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\contact_lifecycle-0.obj",
+                        "sha256":  "f1ea07e996d67c90467debafd4246b4d670cdb8dad9b037f145857c389d83f55",
+                        "name":  "contact_lifecycle-0.obj",
+                        "bytes":  246170
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-contact_lifecycle-generated.zip",
+                        "bytes":  3805057,
+                        "sha256":  "6abcfc38284b6fc01b415ce280259ffef87c7f5567498c1305c758b6dea9e5dc"
+                    }
+                ],
+    "librarySHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "freeAfter":  95854592
+}

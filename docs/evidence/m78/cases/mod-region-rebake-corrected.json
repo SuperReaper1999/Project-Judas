@@ -1,0 +1,25 @@
+{
+  "case": "mod-region-rebake-corrected",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_bake",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-replacement/landscape_fork.judasproj",
+    "Scenes/region.judas"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:15:23.450949+00:00",
+  "explicitEnvironment": [],
+  "executableSHA256": "4542cf93b1b1e8f9b183bfe85729ba232a44592ada740a1340093e89593bb142",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 0.06419630799973675,
+  "log": "docs/evidence/m78/cases/mod-region-rebake-corrected.log",
+  "logSHA256": "9eff4a7e7d93f62f7220d4fc6adf441331eab291a848b5525432ec34e241d938"
+}

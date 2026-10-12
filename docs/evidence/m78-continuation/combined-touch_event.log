@@ -1,0 +1,28 @@
+PASS ordinary collision responds and enters once
+PASS real manifold event data and generation-safe bodies
+PASS collision stay per pair, not per point
+PASS collision exit
+PASS no duplicate exit
+PASS sensor enters without impulses or contact solver rows
+PASS trigger stay
+PASS disable causes one exit
+PASS M39 bilateral mask rejects trigger
+PASS reenabled permitted pair enters
+PASS destruction and slot reuse cannot alias event identity
+PASS physical queries omit sensor by default
+PASS query explicitly includes sensor
+PASS normal registered event script asset
+PASS sensor/enabled scene round-trip
+PASS sensor changes authored compatibility fingerprint
+PASS real RuntimeWorld constructs sensor and participant
+STATE sequence {"enter":1,"stay":1,"exit":1,"other":"2","safe":true,"point":true,"fixed":true,"otherValid":true}
+PASS JS receives enter/stay/exit and safe data
+PASS event callbacks fault-free
+PASS JS receives actual ordinary collision callback
+PASS callback may destroy other safely
+PASS survivor exit exposes stale other safely
+PASS callback disabling collider is safe and exits once
+PASS ordinary scripted prefab registered
+PASS prefab spawned participant receives normal event callbacks
+PASS prefab callback data has no VM faults
+SUMMARY 26 checks 0 failures

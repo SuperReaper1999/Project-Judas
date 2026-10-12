@@ -1,0 +1,13 @@
+{
+  "name": "physical_balance_foundation",
+  "utc": "2026-10-11T23:00:08.272799+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_physical_balance_foundation_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.018256524999742396,
+  "executableSHA256": "8679899dcde3d870bdd91c40ffcb44144ba6cf1bd5ae722946abb48e505e9d8e",
+  "logSHA256": "22ac0c93103ff0faa2ba81a2e85fdd669b8d20029fa2721f095e3c8e04dc0144",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

@@ -1,0 +1,38 @@
+PASS copyable kinematic cookbook example is a normal tracked script
+PASS copyable cookbook uses ordinary scene/runtime construction
+COOKBOOK kinematic {"actual":{"position":{"x":1,"y":0,"z":0},"rotation":{"w":0.9800666570663452,"x":0,"y":0.19866934418678284,"z":0},"scale":{"x":1,"y":1,"z":1}},"angularVelocity":{"x":0,"y":0,"z":0},"completed":true,"invalidRejected":true,"pointIncludesRotation":true,"steps":50,"targetQueued":true,"velocity":{"x":0,"y":0,"z":0},"velocityQueued":true}
+PASS executed public cookbook covers velocity, target, stop, point readback and validation
+PASS kinematic authored mode round-trips through normal scene serializer
+PASS kinematic authoring changes baseline fingerprint deliberately
+PASS ordinary scene creates independent prescribed bodies
+PASS actual VM validates complete requests and detached readback
+PASS public JS queues target before normal fixed-step advancement
+PASS presentation attempts cannot publish kinematic commands
+PASS public VM target drives ordinary contact impulse into dynamic neighbour
+PASS real callback delivery emits one enter for the body pair
+PASS script authority declaration preserves existing body handle
+PASS different presentation rates retain identical fixed-step physics
+PASS rate comparison actually exercised distinct presentation cadence
+PASS ordinary prefab spawn contains independent prescribed state
+PASS stopping one prefab instance leaves another moving independently
+PASS ordinary removal retires native body and pending target
+PASS removed prefab native handle cannot read stale command
+PASS modern participants preserve target/velocity control: 
+PASS save restores current pose without command replay
+PASS resumed target and durable velocity continue equivalently
+PASS missing prescribed participant refuses incomplete restore
+PASS legacy delta explicitly rejects prescribed state with modern save guidance
+PASS unchanged ordinary static baseline retains legacy delta support
+PASS static runtime promotion reuses native handle
+PASS legacy delta rejects a changed authority declaration
+PASS restoring baseline authority restores legacy eligibility
+PASS regional initial prescribed body remains private before publication
+PASS fresh regional prescribed initial velocity begins at publication once
+PASS regional removal retires motion ownership
+PASS retained stopped intent replaces staged authored velocity
+PASS retained stopped regional body remains stopped after publication
+PASS retained target replaces staged authored velocity
+PASS retained target regional publication advances its own remaining interval
+PASS disabled regional authoring does not start prescribed initial velocity
+PASS Play/Stop authored reset retires previous durable commands
+SUMMARY 36 checks 0 failures

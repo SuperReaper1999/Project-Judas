@@ -1,0 +1,26 @@
+{
+  "scope": "Durable entity keyed physical body state; only nativeHandle excluded because fresh private reconstruction allocates different slots. Every other reported body field, completed contact row, mapped current-body endpoint and history compared unchanged. Previous raw document and comparison receipts retained.",
+  "currentPhysicalEndpointExactWithinPair": true,
+  "allPhysicalBodyFieldsExactWithinPair": true,
+  "bodyCount": 13,
+  "changedBodyEntities": [],
+  "historyExactWithinPair": true,
+  "freshNativeHandlesDiffer": [
+    10,
+    11,
+    12,
+    13,
+    1000,
+    4611686018427387904,
+    4611686018427387905,
+    4611686018427387906,
+    4611686018427387907,
+    4611686018427387908,
+    4611686018427387909,
+    4611686018427387910
+  ],
+  "sourceHashes": {
+    "physical-uninterrupted-final.json": "094cabf35612224edddc0e488fbd852510f2fd4acda7353afe517b9fe2df2463",
+    "physical-restored-final.json": "406c958399b0579d2bdc45eb1777272bc7e445b42f5fee7dccacbb306899ef9d"
+  }
+}

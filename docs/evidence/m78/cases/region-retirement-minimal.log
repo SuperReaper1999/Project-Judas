@@ -1,0 +1,21 @@
+CASE objects_per_region=10 budget=4194304 ready=1 retired=1 active=0 retained=518800 scene_object_size=4248
+r0 state=unloaded error= bytes=129700
+r1 state=unloaded error= bytes=129700
+r2 state=unloaded error= bytes=129700
+r3 state=unloaded error= bytes=129700
+CASE objects_per_region=10 budget=16777216 ready=1 retired=1 active=0 retained=518800 scene_object_size=4248
+r0 state=unloaded error= bytes=129700
+r1 state=unloaded error= bytes=129700
+r2 state=unloaded error= bytes=129700
+r3 state=unloaded error= bytes=129700
+CASE objects_per_region=100 budget=4194304 ready=1 retired=0 active=1 retained=3891000 scene_object_size=4248
+r0 state=unloaded error= bytes=1297000
+r1 state=unloaded error= bytes=1297000
+r2 state=unloaded error= bytes=1297000
+r3 state=active error= bytes=0 PIN=retained session byte budget
+CASE objects_per_region=100 budget=16777216 ready=1 retired=1 active=0 retained=5188000 scene_object_size=4248
+r0 state=unloaded error= bytes=1297000
+r1 state=unloaded error= bytes=1297000
+r2 state=unloaded error= bytes=1297000
+r3 state=unloaded error= bytes=1297000
+all_retired=0

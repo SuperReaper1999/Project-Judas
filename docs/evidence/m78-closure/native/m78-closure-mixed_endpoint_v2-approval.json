@@ -1,0 +1,31 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "mixed_endpoint_v2",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-mixed_endpoint_v2.exe",
+      "sha256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+      "name": "m78-closure-mixed_endpoint_v2.exe",
+      "bytes": 9569792
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\mixed_endpoint_v2-0.obj",
+      "sha256": "a7cf1e9849785d503e61e753c31c6924b4afe29d3bea3ba64051031a1dd46692",
+      "name": "mixed_endpoint_v2-0.obj",
+      "bytes": 2930638
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed_endpoint_v2.map",
+      "sha256": "f50e6893ad7cf8590a4f90ad6e2efe40895e40d13d4fa780a103f3ca5818f242",
+      "name": "m78-closure-mixed_endpoint_v2.map",
+      "bytes": 8721342
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-mixed_endpoint_v2-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-closure-mixed_endpoint_v2-link.log",
+      "bytes": 33930
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  6316032,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-streaming.exe",
+                        "sha256":  "4f4ef6794b3d5afd28a3176573301f675cb55b9684830c3412172571955ce36c",
+                        "name":  "m78-closure-streaming.exe",
+                        "bytes":  8039936
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\streaming-0.obj",
+                        "sha256":  "53e017296d0e83bff433fd6d402c87e9b2e2301224252d322e58baa80f36711a",
+                        "name":  "streaming-0.obj",
+                        "bytes":  1100935
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-streaming.map",
+                        "sha256":  "0ed4526e31c40d20e86e9ed6d7c3bd95c8a00ccf6c137e429d7bf52dc46d8688",
+                        "name":  "m78-closure-streaming.map",
+                        "bytes":  4232493
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-streaming-link.log",
+                        "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                        "name":  "m78-closure-streaming-link.log",
+                        "bytes":  33930
+                    }
+                ],
+    "freeAfter":  19730432
+}

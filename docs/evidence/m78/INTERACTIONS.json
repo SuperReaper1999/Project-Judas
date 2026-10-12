@@ -1,0 +1,82 @@
+{
+  "scope": "Risk-based supported routes; not a Cartesian product or universal integration pass",
+  "routes": [
+    {
+      "id": "author-cook-package",
+      "risks": "draft/published divergence and stale second-scene navigation",
+      "cases": [
+        "editor-authoring-owned",
+        "editor-terrain-package",
+        "mod-region-rebake-corrected",
+        "mod-editor-package-all-bakes-corrected",
+        "mod-source-hidden-correct-startup",
+        "mod-shipped-moved-runtime"
+      ],
+      "observed": "Actual editor gestures/cook/bake/rejection, exact-hash admitted runtime and shipped relocated executable; first stale publication fails honestly",
+      "gaps": "all editor controls, OS focus/hardware, every asset type and source-change pattern"
+    },
+    {
+      "id": "identity-lifetime",
+      "risks": "slot alias, duplicate references, stale articulation drives",
+      "cases": [
+        "mod-source-hidden-correct-startup",
+        "balance-lifecycle",
+        "balance-regions"
+      ],
+      "observed": "Prefab/runtime/contact/region/reload and M77 lifetime receipts; verify exact case filenames through CASE_INDEX.json",
+      "gaps": "every component permutation, external consumer branches and concurrent user mutations"
+    },
+    {
+      "id": "cold-active-state",
+      "risks": "good-save replacement, phase replay and missing participants",
+      "cases": [
+        "mod-source-hidden-cold-write",
+        "mod-source-hidden-cold-read"
+      ],
+      "additionalReceipts": "FOLLOWUP_PLAN.json includes fresh-process stand/step/recovery and save/application/streaming write/read",
+      "observed": "Normal application replacement and participant state, not only archive structs",
+      "gaps": "all missing/corrupt combinations and every active physical-animation configuration"
+    },
+    {
+      "id": "gravity-support-articulation",
+      "risks": "world-up, attachment confusion, owner selection becoming bone inheritance",
+      "additionalReceipts": "M77 supports/radial/blocked-recovery/regions and gravity/character baseline targets",
+      "observed": "Bounded current test assertions and actual bodies; no automatic bone inheritance asserted",
+      "gaps": "universal body layouts, support materials, large coordinates plus active recovery"
+    },
+    {
+      "id": "pose-camera-timing",
+      "risks": "multiple/zero steps, duplicate simulation and camera/model mismatch",
+      "additionalReceipts": "baseline animation/pose/presentation/multi-target-IK/physical-animation suites and M77 modes",
+      "observed": "Existing assertions executed; individual cross-product effect traces incomplete",
+      "gaps": "all layers/IK/ragdoll/socket combinations under arbitrary auxiliary-camera cadence"
+    },
+    {
+      "id": "ui-input-signals",
+      "risks": "pause edge replay, teardown permission and absent focus",
+      "cases": [
+        "mod-shipped-moved-runtime",
+        "mod-source-hidden-correct-startup"
+      ],
+      "observed": "Paused frame22 zero steps; resumed frame62 one step; screenshots, signals and reload through shipped runtime",
+      "gaps": "real OS mouse capture and all controller/modal/zero-step faults"
+    },
+    {
+      "id": "jobs-replacement",
+      "risks": "stale publication/cancellation and prior-good resource ownership",
+      "additionalReceipts": "baseline resource-handoff/job/async/script/UI application targets; corrected reimport fixture",
+      "observed": "Scoped existing cancellation/last-good assertions; 184 campaign is not race exhaustiveness",
+      "gaps": "all timing interleavings, hardware GPU loss, genuine power-loss durability"
+    },
+    {
+      "id": "default-off-cost",
+      "risks": "legacy policy leakage and inert-scene expense",
+      "cases": [
+        "inert-startup-phase-controls",
+        "scalability-observational-no-acceptance"
+      ],
+      "observed": "Steady active-script cost independent of inert objects in sampled 1000 steps; startup defect PERF-001",
+      "gaps": "all optional subsystems, full populated game FPS and exact historical workload comparability"
+    }
+  ]
+}

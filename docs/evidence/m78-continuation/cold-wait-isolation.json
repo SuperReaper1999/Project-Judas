@@ -1,0 +1,122 @@
+{
+  "scope": "Owned PhysicalBalance.cpp overlay only removes first restored Prepare return. Actual current physical body observation and empty completed contact ledger; no synthesized support/warm history, unchanged acceptance/60Hz/inputs.",
+  "originalControllerSHA256": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+  "overlayControllerSHA256": "c0f7d7cfb0041acdb9be1816f1ba58bf2b5d2412b26ab449bcce4de5c8d172f1",
+  "originalFixtureSHA256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+  "observerSourceSHA256": "9a3594e56eedaa2f3b6ffd41f39e64ebea63994e3c12345461021d33c645f60f",
+  "nativeSnapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+  "baseArchiveSHA256": "577943674b2f319acbe956393f55a94ab6bb9de48a9f33dc4b4471d4775f8100",
+  "overlayArchiveSHA256": "2fdf4f745e3cea113a404b935fe9ff3d97b90b93b31470dab3c7365fcaed1a0a",
+  "exeSHA256": "e47c00f4865a413e344820baaece06b02cb6f76a82c2b66737a9d578b6a625f0",
+  "steps": [
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/PhysicalBalance.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/PhysicalBalance.cpp.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 7.738744881000457,
+      "log": "cold-wait-bypass-compile.log"
+    },
+    {
+      "command": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/PhysicalBalance.cpp.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.09961821700198925,
+      "log": "cold-wait-bypass-archive.log"
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-state-observer/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release",
+      "exitCode": 0,
+      "seconds": 0.6727343649981776,
+      "log": "cold-wait-bypass-link.log"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-state-observer/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/baseline",
+        "cold-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 1,
+      "seconds": 1.3750606510002399,
+      "log": "cold-wait-baseline-run.log"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/cold-wait-isolation/bypass",
+        "cold-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 1,
+      "seconds": 1.3267398520001734,
+      "log": "cold-wait-bypass-run.log"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/tmp/judas-m78-followup-terrain-review/game.judasproj)
+Scene: Protected hub (/tmp/judas-m78-followup-terrain-review/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal registered landscape request from hub
+PASS ordinary composed scripts remain healthy
+terrain height 3.25 expected 3.25
+PASS real replacement collision matches independently edited terrain vertex
+PASS normal Detour path on this replaced scene
+PASS normal renderer presents actual composed content
+PASS real presented frame captured for review
+PASS normal scene boundary requests second dependent replacement
+PASS ordinary composed scripts remain healthy
+terrain height 3.25 expected 3.25
+PASS real replacement collision matches independently edited terrain vertex
+PASS normal Detour path on this replaced scene
+PASS normal renderer presents actual composed content
+PASS real presented frame captured for review
+PASS normal current-scene reload queued
+PASS ordinary composed scripts remain healthy
+terrain height 3.25 expected 3.25
+PASS real replacement collision matches independently edited terrain vertex
+PASS normal Detour path on this replaced scene
+PASS normal renderer presents actual composed content
+PASS real presented frame captured for review
+PASS reload retires old native world/body identity
+PASS both real dependent scenes and reload complete normally
+20 checks 0 failures

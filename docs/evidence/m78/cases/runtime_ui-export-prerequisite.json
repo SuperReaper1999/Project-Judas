@@ -1,0 +1,24 @@
+{
+  "case": "runtime_ui-export-prerequisite",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/runtime_ui"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T14:51:06.979728+00:00",
+  "executableSHA256": "525838d0f00a102323f78d333e5e90a6c96475d2f3c749a690642da5b6d0c6d5",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 2.4702838489993155,
+  "log": "docs/evidence/m78/cases/runtime_ui-export-prerequisite.log",
+  "logSHA256": "c9584b0f4373dc9373383af54e206e5c16256a5017234cacb7cba5ecae931062"
+}

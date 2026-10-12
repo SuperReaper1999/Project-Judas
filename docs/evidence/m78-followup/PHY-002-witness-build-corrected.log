@@ -1,0 +1,29 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 22%] Built target freetype
+[ 27%] Built target judas_quickjs
+[ 38%] Built target judas_navigation_backend
+[ 38%] Built target judas_glad
+[ 38%] Built target judas_profiler
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[ 38%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 38%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_collision_geometry_tests
+[100%] Built target judas_collision_geometry_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 22%] Built target freetype
+[ 27%] Built target judas_quickjs
+[ 38%] Built target judas_navigation_backend
+[ 38%] Built target judas_glad
+[ 38%] Built target judas_profiler
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_prefab_tests.dir/tests/PrefabTests.cpp.o
+[100%] Linking CXX executable judas_prefab_tests
+[100%] Built target judas_prefab_tests

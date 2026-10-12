@@ -1,0 +1,26 @@
+{
+  "id": "judas_reference_frame_tests",
+  "source": "tests/ReferenceFrameTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_reference_frame_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "f55596340cd110757f55c3c4238383732fef80d573f7f3d938bc5a4805b93a29",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 28,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_reference_frame_tests.log",
+  "logSHA256": "8502e9075bf9706a92f3f4c700e1f71cbb75a1c1ba2618ff6a0bbb405386c597",
+  "seconds": 0.00849654099874897
+}

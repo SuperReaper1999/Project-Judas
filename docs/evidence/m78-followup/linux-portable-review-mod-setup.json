@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/tmp/judas-m78-followup-terrain-review/run-review.sh",
+    "--prepare-only"
+  ],
+  "cwd": "/tmp",
+  "utc": "2026-10-11T17:43:02.572898+00:00",
+  "seconds": 0.21522348600046826,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "35e21dcc7836c7cdb05d7fcf28543c5fbe088b965c67468baf272e6d44127206",
+  "logSHA256": "c69edb457b6aa0cb25758401f7c4d65ef06a18d3cd0aca3202372e1627c31368",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

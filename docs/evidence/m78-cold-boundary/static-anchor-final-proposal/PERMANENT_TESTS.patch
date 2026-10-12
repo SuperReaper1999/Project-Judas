@@ -1,0 +1,67 @@
+--- a/tests/PhysicsContinuationTests.cpp
++++ b/tests/PhysicsContinuationTests.cpp
+@@ -121,5 +121,63 @@
+  auto newer=chunks;newer["contacts"].version=99;RuntimeWorld rejectVersion;rejectVersion.Build(loaded,nullptr,error,nullptr,nullptr,true);WorldPersistence::Prepare(rejectVersion,error);Check(!WorldPersistence::Restore(rejectVersion,newer,error),"unsupported newer publication version rejects");
+  auto missing=chunks;missing.erase("contacts");RuntimeWorld rejectMissing;rejectMissing.Build(loaded,nullptr,error,nullptr,nullptr,true);WorldPersistence::Prepare(rejectMissing,error);Check(!WorldPersistence::Restore(rejectMissing,missing,error),"new articulated context cannot silently lose its completed publication");
+ }
++void PhysicalEntityPersistence(){
++ Scene scene;auto id=scene.CreateObject("ordinary static prescribed body").id;auto* o=scene.Find(id);o->body=SceneBodyComponent{};o->body->motion=SceneBodyMotion::Static;o->body->managed=false;o->body->shape=SceneShape::Box;
++ RuntimeWorld source,restored;std::string error;Check(source.Build(scene,nullptr,error),"static body builds");Check(WorldPersistence::Prepare(source,error),"normal persistence preparation materializes static entity record");auto body=source.RuntimeBody(id);auto* record=source.FindEntity(id);
++ Check(body.IsValid()&&record&&record->slot==std::numeric_limits<std::size_t>::max(),"ordinary static body uses slotless entity state");
++ const glm::vec3 position(2,3,4),velocity(.1f,-.2f,.3f),angular(.4f,.5f,-.6f);const auto rotation=glm::angleAxis(.43f,glm::normalize(glm::vec3(1,2,3)));
++ source.Physics().ResetBody(body,position,rotation);source.Physics().SetLinearVelocity(body,velocity);source.Physics().SetAngularVelocity(body,angular);
++ EntityPhysicalState cached;source.GetEntityState(id,cached);Check(cached.position!=position,"fixture exposes independently prescribed body vs cached entity state");
++ std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(source,chunks,error),"existing world participant captures live static motion");Scene loaded;const bool ready=WorldPersistence::SceneFrom(chunks,loaded,error)&&restored.Build(loaded,nullptr,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error);Check(ready,"normal private restoration succeeds");if(!ready)std::printf("ERROR %s\n",error.c_str());
++ auto result=restored.RuntimeBody(id);const auto a=source.Physics().GetTransform(body),b=restored.Physics().GetTransform(result);
++ Check(a.position==b.position&&a.rotation==b.rotation,"actual prescribed static pose round trips exactly");Check(source.Physics().GetLinearVelocity(body)==restored.Physics().GetLinearVelocity(result)&&source.Physics().GetAngularVelocity(body)==restored.Physics().GetAngularVelocity(result),"actual prescribed static velocities round trip exactly");Check(restored.Physics().GetMotionType(result)==BodyMotionType::Static,"static authority is unchanged");
++
++ // Reduced entities have retained authoritative state and no native body.
++ for(auto fidelity:{SimulationFidelity::Coarse,SimulationFidelity::Dormant}){
++  Scene reduced;auto did=reduced.CreateObject("ordinary managed body").id;auto* def=reduced.Find(did);def->body=SceneBodyComponent{};def->body->managed=true;def->body->motion=SceneBodyMotion::Dynamic;
++  RuntimeWorld live,again;Check(live.Build(reduced,nullptr,error),"managed fixture builds");auto obsolete=live.RuntimeBody(did);Check(live.SetEntityFidelity(did,fidelity,&error),"normal reduced authority transition succeeds");
++  EntityPhysicalState desired;desired.position={7,8,9};desired.rotation=glm::angleAxis(.23f,glm::normalize(glm::vec3(1,1,2)));desired.linearVelocity={.7f,.8f,.9f};desired.angularVelocity={.1f,.2f,.3f};Check(live.SetEntityState(did,desired)&&!live.RuntimeBody(did).IsValid()&&!live.Physics().IsDynamicBody(obsolete),"reduced cached state is independent from obsolete native handle");
++  std::map<std::string,SaveChunk> saved;Scene next;bool ok=WorldPersistence::Capture(live,saved,error)&&WorldPersistence::SceneFrom(saved,next,error)&&again.Build(next,nullptr,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(again,error)&&WorldPersistence::Restore(again,saved,error);Check(ok,"Coarse or Dormant cached-state snapshot restores");EntityPhysicalState actual;Check(again.GetEntityState(did,actual)&&actual.position==desired.position&&actual.rotation==desired.rotation&&actual.linearVelocity==desired.linearVelocity&&actual.angularVelocity==desired.angularVelocity&&again.FindEntity(did)->fidelity==fidelity,"reduced pose/velocity/fidelity stay authoritative");
++ }
++ // A motor observation capsule is derived query geometry, not root authority.
++ for(bool enabled:{true,false}){
++  ProjectClassification categories;categories.collision.names[7]="MotorFixture";categories.collision.nextId=8;categories.tags.names[0]="Fixture";categories.tags.nextId=1;
++  Scene motorScene;auto mid=motorScene.CreateObject("offset character motor").id;
++  CharacterMotorSettings motorSettings;motorSettings.offset={.9f,1.3f,-.4f};motorSettings.collisionLayer=7;motorSettings.collisionMask=CategoryBit(0);motorSettings.enabled=enabled;
++  motorScene.Find(mid)->characterMotor=motorSettings;motorScene.Find(mid)->tags=CategoryBit(0);
++  RuntimeWorld live,again;Check(live.Build(motorScene,nullptr,error,&categories)&&WorldPersistence::Prepare(live,error),"offset motor fixture prepares");
++  EntityPhysicalState desired;desired.position={3,4,5};desired.rotation=glm::angleAxis(.7f,glm::normalize(glm::vec3(1,2,3)));desired.linearVelocity={.2f,.3f,.4f};
++  Check(live.SetEntityState(mid,desired),"normal root motor state is authored");live.UpdateCharacters(1.f/60);
++  auto* motor=live.RuntimeCharacter(mid);EntityPhysicalState rootState;live.GetEntityState(mid,rootState);auto proxy=live.RuntimeBody(mid);
++  Check(motor&&proxy.IsValid()&&live.Physics().GetTransform(proxy).position!=motor->position,"nonzero-offset proxy differs from root");
++  std::map<std::string,SaveChunk> saved;Scene next;
++  bool ok=WorldPersistence::Capture(live,saved,error)&&WorldPersistence::SceneFrom(saved,next,error)&&again.Build(next,nullptr,error,&categories,nullptr,true)&&WorldPersistence::Prepare(again,error)&&WorldPersistence::Restore(again,saved,error);
++  Check(ok,"offset motor ordinary snapshot restores");if(!ok)std::printf("ERROR %s\n",error.c_str());
++  auto* actual=again.RuntimeCharacter(mid);auto restoredProxy=again.RuntimeBody(mid);
++  Check(actual&&actual->position==motor->position&&actual->orientation==motor->orientation&&actual->velocity==motor->velocity,"root motor pose and velocity are not replaced by observation proxy");
++  // The normal entity transform setter normalizes this cached quaternion again;
++  // motor state and query geometry above/below retain exact captured bits.
++  EntityPhysicalState restoredRoot;
++  Check(again.GetEntityState(mid,restoredRoot)&&restoredRoot.position==rootState.position&&glm::length(glm::vec4(restoredRoot.rotation.x,restoredRoot.rotation.y,restoredRoot.rotation.z,restoredRoot.rotation.w)-glm::vec4(rootState.rotation.x,rootState.rotation.y,rootState.rotation.z,rootState.rotation.w))<2e-7f&&restoredRoot.linearVelocity==rootState.linearVelocity,"entity root state remains motor root rather than offset proxy");
++  Check(again.Physics().GetLinearVelocity(restoredProxy)==live.Physics().GetLinearVelocity(proxy),"observation proxy velocity policy remains unchanged");
++  const auto originalPose=live.Physics().GetTransform(proxy),restoredPose=again.Physics().GetTransform(restoredProxy);
++  Check(originalPose.position==restoredPose.position&&originalPose.rotation==restoredPose.rotation,"motor query geometry is exact before first resumed callback");
++  unsigned layer=0;CategoryMask mask=0;
++  Check(again.Physics().GetCollisionFilter(restoredProxy,layer,mask)&&layer==7&&mask==CategoryBit(0),"motor query collision layer and mask restore before first step");
++  Check(again.Physics().IsBodyEnabled(restoredProxy)==enabled,"disabled motor handoff does not expose an enabled query capsule");
++  PhysicsQueryFilter filter;filter.requiredTags=CategoryBit(0);
++  auto originalTagged=live.Physics().QueryBodiesInAabb({-20,-20,-20},{20,20,20},filter),restoredTagged=again.Physics().QueryBodiesInAabb({-20,-20,-20},{20,20,20},filter);
++  Check(originalTagged.size()==(enabled?1u:0u)&&restoredTagged.size()==originalTagged.size(),"motor authored tags are queryable before first resumed callback");
++  filter.excludedTags=CategoryBit(0);
++  Check(again.Physics().QueryBodiesInAabb({-20,-20,-20},{20,20,20},filter).empty(),"motor excluded-tag filtering works before first step");
++  filter={};filter.includeLayers=CategoryBit(7);
++  const auto origin=originalPose.position+glm::vec3(3,0,0);
++  const auto sourceHit=live.Physics().Raycast(origin,{-1,0,0},6,filter),restoredHit=again.Physics().Raycast(origin,{-1,0,0},6,filter);
++  Check(sourceHit.hit==enabled&&restoredHit.hit==sourceHit.hit,"motor enabled and disabled layer-filtered rays match before first step");
++  Check(!sourceHit.hit||(glm::length(sourceHit.point-restoredHit.point)<3e-6f&&std::abs(sourceHit.distance-restoredHit.distance)<3e-6f),"motor restored nonzero-offset ray geometry matches actual source");
++  again.UpdateCharacters(1.f/60);actual=again.RuntimeCharacter(mid);
++  Check(again.Physics().GetTransform(restoredProxy).position==actual->position+actual->orientation*actual->settings.offset,"normal first fixed motor update retains offset observation geometry");
++ }
+ }
+-int main(){try{JointContinuation();CompletedPublication();WorldParticipant();}catch(const std::exception& e){Check(false,e.what());}std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;}
++}
++int main(){try{JointContinuation();CompletedPublication();WorldParticipant();PhysicalEntityPersistence();}catch(const std::exception& e){Check(false,e.what());}std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;}

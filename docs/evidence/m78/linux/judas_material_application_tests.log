@@ -1,0 +1,168 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary host
+PASS material lab project registered
+PASS material lab scene loads
+PASS scene/material/environment round trip
+PASS lab world uses normal resources
+PASS lab game begins
+PASS lab script uses public API without faults
+PASS JS edits one shared-material instance only
+PASS prefab-spawned material/skinned instance
+PASS runtime revert restores shared parameters
+PASS async material uploaded
+PASS material decode uses worker
+PASS derived environment uploaded
+PASS embedded static mesh retains two imported slots
+PASS lab screen retains camera feedback protection
+PASS main/secondary dimensions reuse HDR targets
+PASS actual M33 material screen rendered
+PASS lab skinned/static/secondary pass has no GL errors
+PASS in-flight material cancellation installs no stale resource
+PASS material source reload through normal resource workflow
+PASS Stop clears scripts and camera ownership
+PASS authored scene untouched by runtime edits
+PASS material fingerprint remains path independent
+PASS shared source readable
+PASS isolated shared-source edit
+PASS material source bytes change authored fingerprint
+PASS legacy-mode declared-material scene builds
+PASS runtime-assignable declared source is fingerprinted before assignment
+PASS M55 project loads unchanged
+PASS M55 scene loads
+PASS M55 world builds
+PASS actual above/below camera intersects liquid boundary paths
+PASS M55 optical composition and modern resolve agree
+PASS actual above/below camera intersects liquid boundary paths
+PASS M55 optical composition and modern resolve agree
+PASS M55 accounting/surface has no errors
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+PROFILE hardware Mesa renderer llvmpipe (LLVM 21.1.8, 256 bits) dimensions 1024x768
+PROFILE bodies 45 cameras 0
+PROFILE mode 0 fixed 1.196000 appearance bytes 84994 draws 89
+PASS Spring Range scripts fault-free in comparable profile
+PASS M56 structured render profile exported
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+PASS Spring Range real application startup/render/Stop
+PROFILE hardware Mesa renderer llvmpipe (LLVM 21.1.8, 256 bits) dimensions 1024x768
+PROFILE bodies 45 cameras 0
+PROFILE mode 1 fixed 2.206533 appearance bytes 8801282 draws 89
+PASS Spring Range scripts fault-free in comparable profile
+PASS M56 structured render profile exported
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+PASS Spring Range real application startup/render/Stop
+PROFILE hardware Mesa renderer llvmpipe (LLVM 21.1.8, 256 bits) dimensions 1024x768
+PROFILE bodies 45 cameras 0
+PROFILE mode 2 fixed 1.558069 appearance bytes 8801282 draws 89
+PASS Spring Range scripts fault-free in comparable profile
+PASS M56 structured render profile exported
+PASS Spring Range real application startup/render/Stop
+M57 integration 45 checks 0 failures

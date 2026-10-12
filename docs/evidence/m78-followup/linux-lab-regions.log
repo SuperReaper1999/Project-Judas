@@ -1,0 +1,28 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal region source saved
+PASS normal immutable assets and world publish: 
+PASS ordinary region asynchronously publishes support
+PASS support belongs to actual region
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=2.9976,1.41747,0.00860512 height=1.41816 up=0.999932 speed=0.000366518 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+PASS actual external balance support pins its source region
+PASS individual transient physical bone adoption refuses
+PASS complete articulation adoption changes inferred bone ownership without retiring task
+PASS complete articulation returns to persistent ownership
+PASS retiring dependent actors releases region support pins
+PASS region unload invalidates old support generation
+PASS support region revisits normally
+PASS revisited support cannot alias old generation
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 24 checks 0 failures

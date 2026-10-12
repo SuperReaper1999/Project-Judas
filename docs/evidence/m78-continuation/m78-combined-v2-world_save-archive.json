@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "8e186895b4c7631a461a6368f83e16aae438de12aa52b6d1c5c0a21760981818",
+    "case":  "world_save",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_world_save.exe",
+                      "sha256":  "60360e4d448a68bc7fcbc9f4ea8107c2089f4372726bebec6e3777e70cae0b58",
+                      "name":  "m78_combined-v2_world_save.exe",
+                      "bytes":  7797760
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\world_save-0.obj",
+                      "sha256":  "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322",
+                      "name":  "world_save-0.obj",
+                      "bytes":  202093
+                  }
+              ],
+    "freeBytes":  477245440,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  3600556,
+    "archiveName":  "m78-combined-v2-world_save-archive.zip"
+}

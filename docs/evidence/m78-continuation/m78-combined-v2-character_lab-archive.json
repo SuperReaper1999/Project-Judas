@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "8069369a96f5f358c666c04cffc682f67bda6992ad9af14f72310441b01ac404",
+    "case":  "character_lab",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_character_lab.exe",
+                      "sha256":  "82b2e2beea5c9bb985147aba217b30b8b8a6a69ae4a0bb0efbfda1b295dcf6be",
+                      "name":  "m78_combined-v2_character_lab.exe",
+                      "bytes":  9170944
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\character_lab-0.obj",
+                      "sha256":  "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09",
+                      "name":  "character_lab-0.obj",
+                      "bytes":  2208781
+                  }
+              ],
+    "freeBytes":  448831488,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  4840217,
+    "archiveName":  "m78-combined-v2-character_lab-archive.zip"
+}

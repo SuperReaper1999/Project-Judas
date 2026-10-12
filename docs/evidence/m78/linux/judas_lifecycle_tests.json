@@ -1,0 +1,26 @@
+{
+  "id": "judas_lifecycle_tests",
+  "source": "tests/LifecycleTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_lifecycle_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "9b511ce3d9bb39539467c0e3cc4de91dade202140fe027173354edc37d7aefa1",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 78,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_lifecycle_tests.log",
+  "logSHA256": "c2209fe6fb385f59ca658c84544e3ffc9b162601ac1c3bf294601aa37996177c",
+  "seconds": 2.0877971879999677
+}

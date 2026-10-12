@@ -1,0 +1,256 @@
+{
+  "scope": "Copied WP captures and restores actual live body motion in existing EntityPhysicalState records; original test fixtures unchanged, exact physical guards retained. No production edit.",
+  "originalWPsha": "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+  "copiedWPsha": "b26d2ffd1397f9390ce0a3ee421615a3361c683ea83a27a1f7594935a2065eba",
+  "originalCharacterFixtureSHA256": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+  "archiveSHA256": "d29d66c3eb37ecb9039683388b2ffc849fbd34b7033033d5d19a7cb4742bf22a",
+  "steps": [
+    {
+      "name": "WP-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/WorldPersistence.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/WorldPersistence.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 11.743350451004517
+    },
+    {
+      "name": "archive",
+      "command": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/WorldPersistence.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 0.11250493899569847
+    },
+    {
+      "name": "character_lab-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_character_lab_tests.dir/tests/CharacterLabTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/character_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.713912781997351
+    },
+    {
+      "name": "balance_lab-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_balance_lab_tests.dir/tests/BalanceLabTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/balance_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7230734740005573
+    },
+    {
+      "name": "observer-compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/CharacterBodyObserver.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer.o"
+      ],
+      "exitCode": 0,
+      "seconds": 13.05045456699736
+    },
+    {
+      "name": "observer-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7142040339967934
+    },
+    {
+      "name": "character_lab-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/character_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/original-character",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 0.3482602689982741
+    },
+    {
+      "name": "character_lab-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/character_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/original-character",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 0.2215883050012053
+    },
+    {
+      "name": "balance_lab-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/balance_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/original-balance",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.2910186249937396
+    },
+    {
+      "name": "balance_lab-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/balance_lab",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/original-balance",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.3134075140042114
+    },
+    {
+      "name": "observer-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer-character",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 0.2750340850034263
+    },
+    {
+      "name": "observer-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer-character",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 0.20438224599638488
+    }
+  ]
+}

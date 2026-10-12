@@ -1,0 +1,10 @@
+﻿{
+    "sha256":  "7ad8d8fd5f4079e8a6ace4123e27501ab5afcd7e203c5d7ff04d0a81caa6e9b4",
+    "libExecutable":  "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\lib.exe",
+    "compilerExecutable":  "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe",
+    "scope":  "Exact current observer source staging and read-only library member enumeration; no compilation",
+    "path":  "C:\\JudasValidation\\M78ContinuationSource\\Probes\\event_angular_transport.cpp",
+    "bytes":  4500,
+    "freeBytes":  330092544,
+    "linkExecutable":  "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe"
+}

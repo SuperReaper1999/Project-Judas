@@ -1,0 +1,32 @@
+﻿{
+    "seconds":  2.7293914999999997,
+    "executableSHA256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+    "expectedExitCode":  0,
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final",
+                      "cold-write"
+                  ],
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\cold-write-state.json",
+                      "sha256":  "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+                      "bytes":  364,
+                      "reportName":  "m78-closure-final-balance-new-cold-write-cold-write-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-closure-final-balance-new-cold-write-.lock"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\slots\\m77.save",
+                      "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                      "bytes":  56640,
+                      "reportName":  "m78-closure-final-balance-new-cold-write-m77.save"
+                  }
+              ],
+    "legacyExpectedSHA256":  null,
+    "run":  "m78-closure-final-balance-new-cold-write",
+    "exitCode":  0
+}

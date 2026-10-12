@@ -1,0 +1,10 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: C:\JudasValidation\M78NativeFunctionalResults\editor-autotest.edit.png
+[editor autotest] edit frame: 8 draw calls, 360 triangles, 80 debug lines
+[editor autotest] wrote: C:\JudasValidation\M78NativeFunctionalResults\editor-autotest.play.png
+[editor autotest] play frame: 2 steps, step 0.365 ms, 5 bodies, 0 contacts, 12 draw calls, 636 triangles, 1 shadow passes, 0 lights, 172 debug lines, 0 particles
+[editor autotest] resources: 3 meshes, 0 textures, 0 terrain meshes, hits 1472, misses 4, failed 0, uploads 3, resident 856623 bytes
+[editor autotest] jobs: 3 workers, 4 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

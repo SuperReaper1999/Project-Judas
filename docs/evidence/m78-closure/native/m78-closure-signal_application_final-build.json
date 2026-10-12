@@ -1,0 +1,213 @@
+﻿{
+    "executableSHA256":  "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+    "freeBytes":  2543616,
+    "case":  "signal_application_final",
+    "runs":  [
+                 {
+                     "archive":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                                     "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                                     "bytes":  67019246
+                                 },
+                     "seconds":  4.7205924999999995,
+                     "freeBytes":  2560000,
+                     "case":  "signal_application_final",
+                     "expectedExitCode":  0,
+                     "run":  "signals-write",
+                     "executableSHA256":  "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+                     "scope":  "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+                     "files":  [
+
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\Source\\projects\\signals_lab\\signals_lab.judasproj"
+                                   ],
+                     "exitCode":  1,
+                     "objects":  [
+                                     {
+                                         "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                         "source":  "src/PhysicsWorld.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\PhysicsWorld.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                         "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                         "bytes":  1495011,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                                     },
+                                     {
+                                         "sha256":  "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+                                         "source":  "src/WorldPersistence.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\WorldPersistence.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+                                         "sourceSHA256":  "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+                                         "bytes":  1276496,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                                     }
+                                 ]
+                 },
+                 {
+                     "archive":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                                     "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                                     "bytes":  67019246
+                                 },
+                     "seconds":  12.9685277,
+                     "freeBytes":  2551808,
+                     "case":  "signal_application_final",
+                     "expectedExitCode":  0,
+                     "run":  "signals-read",
+                     "executableSHA256":  "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+                     "scope":  "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+                     "files":  [
+
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\Source\\projects\\signals_lab\\signals_lab.judasproj",
+                                       "load"
+                                   ],
+                     "exitCode":  1,
+                     "objects":  [
+                                     {
+                                         "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                         "source":  "src/PhysicsWorld.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\PhysicsWorld.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                         "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                         "bytes":  1495011,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                                     },
+                                     {
+                                         "sha256":  "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+                                         "source":  "src/WorldPersistence.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\WorldPersistence.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+                                         "sourceSHA256":  "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+                                         "bytes":  1276496,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                                     }
+                                 ]
+                 }
+             ],
+    "ownedLargeEvidence":  {
+                               "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-signal_application_final-link.log",
+                               "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                               "name":  "m78-closure-signal_application_final-link.log",
+                               "bytes":  33930
+                           },
+    "diagnosticMapOmittedForBoundedStorage":  true,
+    "replacementObjects":  [
+                               {
+                                   "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                   "source":  "src/PhysicsWorld.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\PhysicsWorld.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                   "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                   "bytes":  1495011,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                               },
+                               {
+                                   "sha256":  "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+                                   "source":  "src/WorldPersistence.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\WorldPersistence.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+                                   "sourceSHA256":  "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+                                   "bytes":  1276496,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                               }
+                           ],
+    "mapSHA256":  null,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-closure-signal_application_final.exe",
+    "reusedOrFreshInputs":  [
+                                {
+                                    "sha256":  "ac9de85b291a3fb67a87ad3330e8231fa478322af8f3434ee7c4fbc1046bc920",
+                                    "name":  "signal_application_final-0.obj",
+                                    "bytes":  1050371,
+                                    "source":  "tests/SignalApplicationTests.cpp",
+                                    "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-0.obj",
+                                    "sourceSHA256":  "2dfa65dc6ba3b740ec56fd030bd53acf9931626cbfb8bb378f5c34f7721478fd",
+                                    "reuseOriginal":  false
+                                },
+                                {
+                                    "sha256":  "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+                                    "name":  "signal_application_final-1.obj",
+                                    "bytes":  295887,
+                                    "source":  "src/Application.cpp",
+                                    "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-1.obj",
+                                    "sourceSHA256":  "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+                                    "reuseOriginal":  true
+                                },
+                                {
+                                    "sha256":  "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+                                    "name":  "signal_application_final-2.obj",
+                                    "bytes":  229861,
+                                    "source":  "src/RuntimeOptions.cpp",
+                                    "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-2.obj",
+                                    "sourceSHA256":  "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+                                    "reuseOriginal":  true
+                                },
+                                {
+                                    "sha256":  "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+                                    "name":  "signal_application_final-3.obj",
+                                    "bytes":  20401,
+                                    "source":  "src/RuntimeDiagnostics.cpp",
+                                    "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-3.obj",
+                                    "sourceSHA256":  "a63c2d3e661c6d938cca894933fa3da32e5807ad8bded98880af388bb27af9d9",
+                                    "reuseOriginal":  true
+                                },
+                                {
+                                    "sha256":  "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+                                    "name":  "signal_application_final-4.obj",
+                                    "bytes":  340964,
+                                    "source":  "src/TestHarness.cpp",
+                                    "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-4.obj",
+                                    "sourceSHA256":  "9c16ca348038ab35fb992dafb43031cc4bfe5c844b680473d73ed56dd6aeedcc",
+                                    "reuseOriginal":  true
+                                }
+                            ],
+    "archive":  {
+                    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                    "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                    "bytes":  67019246
+                },
+    "scope":  "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+    "executableBytes":  10359296,
+    "linkerResponse":  "\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" \"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-closure-signal_application_final.exe\" /INCREMENTAL:NO /NOLOGO  RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ClosureBuild\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ClosureBuild\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-0.obj\" \"C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-1.obj\" \"C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-2.obj\" \"C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-3.obj\" \"C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-4.obj\" /VERBOSE:LIB",
+    "generatedFiles":  [
+                           {
+                               "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-signal_application_final.exe",
+                               "sha256":  "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+                               "name":  "m78-closure-signal_application_final.exe",
+                               "bytes":  10359296
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-0.obj",
+                               "sha256":  "ac9de85b291a3fb67a87ad3330e8231fa478322af8f3434ee7c4fbc1046bc920",
+                               "name":  "signal_application_final-0.obj",
+                               "bytes":  1050371
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-1.obj",
+                               "sha256":  "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+                               "name":  "signal_application_final-1.obj",
+                               "bytes":  295887
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-2.obj",
+                               "sha256":  "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+                               "name":  "signal_application_final-2.obj",
+                               "bytes":  229861
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-3.obj",
+                               "sha256":  "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+                               "name":  "signal_application_final-3.obj",
+                               "bytes":  20401
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-4.obj",
+                               "sha256":  "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+                               "name":  "signal_application_final-4.obj",
+                               "bytes":  340964
+                           }
+                       ],
+    "frozenReplacedMembersNotExtracted":  true
+}

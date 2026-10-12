@@ -1,0 +1,7 @@
+PASS genuine positive completed source contact
+PASS restored genuine publication begins ready
+PASS unrelated proxy reset leaves actual completed rows readable
+FAIL unrelated query-only proxy reset must not demote independent completed publication
+PASS affected contact body mutation demotes restored publication
+PASS affected teleport does not expose stale support rows
+SUMMARY 6 checks 1 failures

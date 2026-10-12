@@ -1,0 +1,88 @@
+diff --git a/src/RigidBody.cpp b/src/RigidBody.cpp
+index 34004aed..7579cb8b 100644
+--- a/src/RigidBody.cpp
++++ b/src/RigidBody.cpp
+@@ -22,6 +22,20 @@ glm::mat3 SolidBoxInverseInertia(float mass, const glm::vec3& halfExtents) {
+     return inverseInertia;
+ }
+ 
++
++glm::vec3 TransportAngularVelocity(const glm::mat3& inverseInertiaLocal,
++    const glm::quat& from,const glm::quat& to,const glm::vec3& velocity) {
++    if(from==to||velocity==glm::vec3(0))return velocity;
++    const glm::dmat3 inverseBody(inverseInertiaLocal);
++    // Locked axes cannot be reconstructed by inverting a singular tensor.
++    // Normal authored dynamic shapes have a positive definite full tensor.
++    if(!(glm::determinant(inverseBody)>0))return velocity;
++    const auto oldRotation=glm::mat3_cast(glm::normalize(glm::dquat(from)));
++    const auto newRotation=glm::mat3_cast(glm::normalize(glm::dquat(to)));
++    const auto momentum=oldRotation*glm::inverse(inverseBody)*glm::transpose(oldRotation)*glm::dvec3(velocity);
++    return glm::vec3(newRotation*inverseBody*glm::transpose(newRotation)*momentum);
++}
++
+ void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime) {
+     IntegrateRigidBodyVelocity(body, fixedDeltaTime);
+     IntegrateRigidBodyPosition(body, fixedDeltaTime);
+@@ -47,6 +61,8 @@ void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime) {
+     const glm::quat angularVelocityQuat(0.0f, body.angularVelocity.x, body.angularVelocity.y,
+                                          body.angularVelocity.z);
+     const glm::quat orientationDelta = angularVelocityQuat * body.orientation;
+-    body.orientation =
+-        glm::normalize(body.orientation + orientationDelta * (0.5f * fixedDeltaTime));
++    const auto previous=body.orientation;
++    const auto advanced=body.orientation + orientationDelta * (0.5f * fixedDeltaTime);
++    if(advanced!=previous)body.orientation=glm::normalize(advanced);
++    body.angularVelocity=TransportAngularVelocity(body.inverseInertiaLocal,previous,body.orientation,body.angularVelocity);
+ }
+diff --git a/src/RigidBody.h b/src/RigidBody.h
+index aa8d8425..39170d92 100644
+--- a/src/RigidBody.h
++++ b/src/RigidBody.h
+@@ -107,3 +107,9 @@ void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime);
+ // Calling both in order is exactly IntegrateRigidBody.
+ void IntegrateRigidBodyVelocity(RigidBody& body, float fixedDeltaTime);
+ void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime);
++
++// Recover physical world angular velocity after a force-free orientation drift.
++// The old orientation/velocity define L = R I_body R^T omega. Singular/locked
++// rotational inertia retains its prior representation; no inverse of zero.
++glm::vec3 TransportAngularVelocity(const glm::mat3& inverseInertiaLocal,
++    const glm::quat& from,const glm::quat& to,const glm::vec3& velocity);
+diff --git a/src/RigidMotion.h b/src/RigidMotion.h
+index 80a5ae61..a0d52ea0 100644
+--- a/src/RigidMotion.h
++++ b/src/RigidMotion.h
+@@ -11,6 +11,7 @@ struct RigidMotionSegment {
+     unsigned int owner = 0;
+     double begin = 0, end = 0;
+     float inverseMass = 0;
++    glm::mat3 inverseInertiaLocal{0};
+     glm::vec3 position{0}, linearVelocity{0}, angularVelocity{0};
+     glm::quat orientation{1,0,0,0};
+     glm::vec3 endPosition{0};
+@@ -19,7 +20,7 @@ struct RigidMotionSegment {
+     RigidBody Evaluate(double time) const {
+         if (time < begin || time > end) throw std::out_of_range("motion segment time");
+         RigidBody result;
+-        result.inverseMass = inverseMass;
++        result.inverseMass = inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
+         result.position = position; result.orientation = orientation;
+         result.linearVelocity = linearVelocity; result.angularVelocity = angularVelocity;
+         // Keep the integrator's arithmetic for represented movement, but an
+@@ -41,6 +42,7 @@ struct RigidMotionSegment {
+             if (!same(advanced.w, orientation.w) || !same(advanced.x, orientation.x) ||
+                 !same(advanced.y, orientation.y) || !same(advanced.z, orientation.z))
+                 result.orientation = glm::normalize(advanced);
++            if(!prescribed)result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
+         }
+         return result;
+     }
+@@ -84,7 +86,7 @@ public:
+ private:
+     void Append(unsigned int owner, const RigidBody& body, double begin, double end,bool prescribed=false) {
+         RigidMotionSegment s;
+-        s.inverseMass=body.inverseMass; s.prescribed=prescribed; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
++        s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
+         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
+         const auto pose=s.Evaluate(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
+         segments.push_back(s);

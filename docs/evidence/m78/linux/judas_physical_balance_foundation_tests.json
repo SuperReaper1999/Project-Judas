@@ -1,0 +1,26 @@
+{
+  "id": "judas_physical_balance_foundation_tests",
+  "source": "tests/PhysicalBalanceFoundationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_foundation_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "04cc4f76afcff39f37d9ec1225572e4a3370d1e3fa53073ec9d0fe013ed40449",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 34,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_physical_balance_foundation_tests.log",
+  "logSHA256": "22ac0c93103ff0faa2ba81a2e85fdd669b8d20029fa2721f095e3c8e04dc0144",
+  "seconds": 0.15912108999873453
+}

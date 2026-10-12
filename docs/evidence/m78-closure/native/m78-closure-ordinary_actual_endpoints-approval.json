@@ -1,0 +1,13 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "ordinary_actual_endpoints",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-ordinary_actual_endpoints.exe",
+      "sha256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+      "name": "m78-closure-ordinary_actual_endpoints.exe",
+      "bytes": 9569792
+    }
+  ]
+}

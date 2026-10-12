@@ -1297,6 +1297,9 @@ judas_warnings(judas_save_storage_tests -Wpedantic)
 
 add_executable(judas_world_persistence_tests tests/WorldPersistenceTests.cpp)
 target_link_libraries(judas_world_persistence_tests PRIVATE judas_engine)
+add_executable(judas_physics_continuation_tests tests/PhysicsContinuationTests.cpp)
+target_link_libraries(judas_physics_continuation_tests PRIVATE judas_engine)
+judas_warnings(judas_physics_continuation_tests)
 judas_warnings(judas_world_persistence_tests -Wpedantic)
 
 add_executable(judas_save_application_tests tests/SaveApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
@@ -1411,10 +1414,11 @@ add_executable(judas_world_building_tests tests/WorldBuildingTests.cpp src/edito
 target_link_libraries(judas_world_building_tests PRIVATE judas_engine)
 judas_warnings(judas_world_building_tests)
 
-add_library(judas_world_authoring STATIC src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/ModAuthoring.cpp)
+add_library(judas_world_authoring STATIC src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/ModAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
-target_link_libraries(judas_world_authoring PUBLIC judas_engine)
+target_link_libraries(judas_world_authoring PUBLIC judas_engine judas_navigation_baker)
 judas_warnings(judas_world_authoring)
+target_link_libraries(judas_navigation_bake PRIVATE judas_world_authoring)
 target_link_libraries(judas_scene_author PRIVATE judas_world_authoring)
 target_link_libraries(judas_editor PRIVATE judas_world_authoring)
 target_link_libraries(judas_world_building_tests PRIVATE judas_world_authoring)
@@ -1595,3 +1599,8 @@ judas_warnings(judas_mod_application_tests)
 if(WIN32)
     include(cmake/JudasWindowsSdk.cmake)
 endif()
+
+# M78 correction: saved-scene dependent-bake workflow, no runtime subsystem.
+add_executable(judas_navigation_dependency_tests tests/NavigationDependencyTests.cpp)
+target_link_libraries(judas_navigation_dependency_tests PRIVATE judas_world_authoring)
+judas_warnings(judas_navigation_dependency_tests)

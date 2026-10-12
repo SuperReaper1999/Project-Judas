@@ -1,0 +1,27 @@
+{
+  "id": "judas_terrain_authoring_tests",
+  "source": "tests/TerrainAuthoringTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_authoring_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_terrain_authoring_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "da0fc7fd3930d193a642263977c7311603f0dcd2f4eda713b143fe138e8a8d59",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 89,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_terrain_authoring_tests.log",
+  "logSHA256": "5635870b3dc484f6e19ceac83b95b69d4e190184d328fdf616a4e68698b004c9",
+  "seconds": 0.6857738140006404
+}

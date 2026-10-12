@@ -1,0 +1,497 @@
+# M66 — Judas learns to import
+
+Starting checkpoint:
+3e5147a4ed97102200da91b4181c97b2a98942ba
+
+Expected: HEAD = main = origin/main; worktree clean.
+Implement M66 to completion, then stop for operator review. Do not commit, push,
+merge or tag before acceptance. Do not start M67 or other future milestones.
+
+JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
+
+The objective is ordinary professional content ingestion, not merely a higher
+bone-limit constant: import the ORIGINAL multi-part Skate character and its
+animations, retain its rig, obtain correct materials/scale/poses, place it in a
+normal project, and reimport it safely without an external Blender surgery pipeline.
+
+## 1. Starting point and the evidence this milestone must close
+
+Read current import/resource/render/animation/editor contracts and the relevant
+consumer findings before editing. Use current source and the accepted post-M65
+repair handoff as authority over older audit statements.
+
+Primary evidence:
+- SKATE_GAME_ENGINE_AUDIT.md: C-04/G-01 and the character-preparation account.
+- JOURNAL.md: J05/J06, original assets and the Blender preprocessing steps.
+- LATEST_ENGINE_FOLLOWUP.md: rejected artist half-pipe and unlocated topology errors.
+- docs/POST_M65_CONSUMER_REVIEW.md: remaining import/content-workflow findings.
+- docs/POST_M65_CONSUMER_REPAIRS.md and its final evidence: accepted current baseline.
+
+The original audit describes Skateboarder.fbx with 65 bones and six mesh objects,
+plus separate Push/Cruise/Walking motion files. Previous preparation joined meshes,
+removed/folded bones, corrected units, stripped root travel and merged animations
+outside Judas. Those are the concrete import obstacles to remove. Bone, skin-joint
+and hierarchy-node counts are different; measure and report them separately.
+
+The half-pipe report distinguishes genuine source topology defects from poor
+cooker diagnostics. M66 must make that distinction usable, not disable validation.
+Bundled historical reports remain immutable evidence, not current implementation claims.
+
+Verify the starting hash and working state. Do not reset somebody else's work.
+Locate the original source assets through the reports/provenance and current project
+records; use read-only access and project-owned copies. Do not modify Claude's
+workspaces, originals or processes. The already-reduced rider.glb is NOT the primary
+acceptance asset. If original assets are genuinely unavailable, report the exact
+missing inputs and request them; continue independent work, but do not silently
+substitute a simplified model and claim that the original obstacle is solved.
+
+Carry forward the accepted post-M65 limits without reopening them: linear world
+work remains, the imported ragdoll's joint resistance was explicitly authored,
+and streaming has some indivisible coherent operations. None is an extra cleanup
+assignment here. Preserve the accepted rigs, resistance and workload as baselines.
+
+## 2. One import service, normal assets, mature parsers
+
+Provide one shared import/cook service used by editor and CLI. Required front ends:
+- FBX, including the original character, animation-only files and static models.
+- glTF 2.0 / GLB, including external buffers/images as well as embedded data.
+- Existing OBJ/MTL ingestion and collision-source workflows must remain usable.
+
+Use pinned ufbx for FBX unless a demonstrated incompatibility justifies another
+mature permissively licensed parser. Reuse the existing cgltf path for glTF and
+existing OBJ support; do not replace working front ends gratuitously. Pin exact
+versions/commits and hashes, retain licenses/provenance, and use matching dependency
+source/header versions. Primary references are listed in M66_SOURCE_NOTES.md.
+
+Do not write an FBX parser. Use the library's transform/animation evaluation rather
+than hand-decoding raw FBX Euler curves and pivots. Parser support alone does not
+mean Judas supports every deformation or material the file can describe.
+
+Pipeline:
+source files + import settings + resolved dependencies
+  -> validated normalized model/rig/clip/material data
+  -> ordinary versioned runtime assets and stable subasset references
+  -> existing ResourceManager / RuntimeWorld / Renderer.
+
+Choose the smallest coherent extension of current asset formats; a normalized
+GLB-based representation or an appropriate cooked asset can work. Do not create a
+second AssetDatabase or animation runtime. Runtime assets contain no parser-owned
+pointers. Raw source files stay intact, and generated data records its provenance.
+Validate counts, indices, finite transforms/weights and recursion/allocation bounds.
+Malformed assets must fail usefully, not crash or allocate without bounds. External
+file access follows explicitly approved import roots/remaps, not arbitrary paths
+embedded in a downloaded model.
+
+The supported user workflow must not depend on Blender, Python conversion scripts,
+an Autodesk installation, a cloud service or an import-time network download.
+DCC tools may create independent test fixtures/reference measurements, not secretly
+perform a required production conversion. Existing format users keep working.
+
+## 3. Transform and unit correctness
+
+Normalize source coordinates once, consistently across geometry, hierarchy,
+animations, skin bindings, collision sources and attachment targets.
+
+- Read FBX axis/unit metadata. Provide visible deterministic overrides when metadata
+  is absent/wrong. For formats without reliable unit metadata, show the assumption;
+  do not guess from a filename or secretly rescale everything to human height.
+- Preserve hierarchy, authored pivots and static mesh instances. Evaluate geometry
+  transforms, pre/post rotations and inheritance correctly with the parser.
+- Handle source centimetres/metres, rotated roots, mirrored static parts and baked
+  nonuniform object scale. Correct normals, winding and tangent handedness together.
+- Source normalization may produce unit-scale runtime physics assets; this does NOT
+  authorize arbitrary dynamic nonuniform collider scaling in Judas.
+- Apply the actual source-format skin semantics. Do not double-apply a skinned mesh
+  node transform or collapse mesh-specific bind matrices into one skeleton-wide guess.
+  Bind data, rest/default pose and the first animation frame are not interchangeable.
+- Never project a required affine/sheared transform into an inaccurate TRS silently.
+  Use a correct evaluated/baked representation where supported; identify unsupported
+  deformations explicitly instead of reporting a successful but distorted import.
+
+Preview dimensions, axes and a metre reference. Import-space up/forward conventions
+are content conversion rules, not global gravity. Rotating the imported character
+in a radial/oblique scene must not introduce a world-Y simulation assumption.
+
+## 4. Multi-part models and practical skeleton capacity
+
+Remove the one-mesh-node/48-joint bottleneck through the runtime path, not just parsing.
+
+Required behavior:
+- A character retains multiple skinned mesh nodes/primitives and material slots,
+  including body, clothing and accessories. No compulsory mesh join or bone amputation.
+- Several meshes can share a resolved skeleton while retaining their own skin-joint
+  remaps and inverse-bind data. Static attachments can coexist with skinned parts.
+- A source containing separate armatures must preserve that distinction. Import
+  selection or hierarchy instantiation must not silently render only its first rig.
+- Shared geometry/skeleton/clips remain immutable. Separate character instances own
+  independent playback, final poses, part visibility and material overrides.
+- Preserve nondeforming parents/helper nodes needed for animation, sockets, IK or
+  hierarchy evaluation. Do not strip nodes merely because their direct skin weight is zero.
+
+Use size-aware bounded storage and hardware-appropriate palette delivery. Preserve
+skeleton identity independently of per-draw palette limits; batching/palette remaps
+are allowed without deleting meaningful source joints or changing the asset's pose.
+Do not replace 48 with another unexplained magic number throughout the code.
+
+Minimum capacity proof: the original full rig, plus a generated 256-skin-joint
+fixture whose high-index joints actually influence animated vertices. This is a
+verification floor, not a requirement to allocate 256 matrices for every tiny model.
+Support at least eight meaningful influences per vertex in a dedicated fixture.
+Above supported bounds, reject clearly or offer an explicitly selected lossy profile
+with a quantified reduction report; never silently truncate weights or joints.
+Do not fold fingers into hands to pass the main character test.
+
+Audit downstream fixed-size assumptions in pose composition, draw palettes,
+shadows, bounds, editor pickers, sockets, IK, ragdoll mappings and saved state.
+The full original character must render through main and secondary cameras and
+shadows, not only a private import preview. Keep the existing graphics baseline;
+no new rendering backend or high-end-GPU requirement.
+
+## 5. Animation import and same-rig clip assembly
+
+Import named takes/clips, including translation, quaternion rotation and scale.
+Use correct source evaluation or bounded-error baking, and report sample/reduction
+settings. Preserve discontinuities where the source requires them. Handle glTF
+STEP/LINEAR/CUBICSPLINE correctly rather than silently treating all keys as linear.
+
+Provide an editor/CLI workflow to:
+- Add animation-only files to an imported compatible skeleton.
+- Select takes, name/trim clips, set loop metadata and preview sampling.
+- Assemble the original Push/Cruise/Walking files without manual NLA/export work.
+- Reimport one motion file without rebuilding unrelated geometry/materials.
+
+Match rigs using verified hierarchy/bind information and an explicit mapping when
+needed. Do not assume source node indices match between files; short bone names
+need not be unique. A compatible rig exported with reordered nodes should still work.
+Ambiguous names, missing animated joints or incompatible rest geometry must identify
+the conflict and allow correction, not bind to the first similarly named node.
+
+Same-rig mapping and basis/unit conversion are required. Cross-species/proportion-
+changing retargeting is not. Do not label a permissive name match as retargeting.
+
+Clips remain ordinary pose producers in the M47 pipeline. Existing crossfades,
+masks, additives and external producers must work with imported multi-part characters.
+
+## 6. Root motion: usable data, not an automatic gameplay controller
+
+Provide explicit per-clip policies:
+- Preserve source motion.
+- Bake in place using selected root-motion components.
+- Extract selected motion into a separate time-addressable track while retaining
+  the complementary pose.
+
+The author chooses the motion node and model-space axes/components. A sensible
+preview/default is fine; hardcoded Mixamo/Hips, Walk or Skate rules are not.
+Removing planar travel must not accidentally remove crouch, pelvis bob, turning or
+vertical jump motion that the author chose to preserve.
+
+Define the decomposition and spaces. For extraction, applying the extracted motion
+back to the complementary pose must reconstruct the source motion within declared
+bake error. Preserve the initial offset convention. Correct interval sampling must
+handle seeking, negative playback where supported and loop crossings without a
+backward teleport or double-applied displacement.
+
+Expose the extracted track through a small documented generic animation query so
+ordinary JS can consume it; metadata hidden inside a cook file is insufficient.
+A clip/time-interval query is acceptable without inventing a blended locomotion
+framework. Report exactly what live-mixer sampling is and is not supported.
+
+Animation must not directly move CharacterMotor, rigid bodies or the entity root.
+Demonstrate a script optionally using sampled motion as motor intent, with a wall
+proving collisions still win. In-place gameplay stays the default for existing
+projects. Do not change Skate movement/trick rules merely to show root motion.
+
+## 7. Materials, textures and model hierarchy
+
+Retain M57's actual material semantics instead of importing geometry with arbitrary
+default materials. Preserve stable primitive/part slots and supported base colour,
+normal, metallic/roughness, emission, opacity/cutout and double-sided settings.
+
+FBX material conversion must state its approximations. Unsupported shader graphs
+must not be advertised as faithfully reproduced. Preserve source metadata and
+provide an actionable warning/default for unsupported appearance features.
+
+Resolve embedded and external image dependencies through the import service.
+Handle source-relative paths, configured search locations, Windows path separators
+and Unicode names on Linux. Ambiguous texture matches require an explicit choice;
+no random first-match search across the user's disk. Copy approved dependencies
+into project-owned storage and retain their dependency identities.
+
+Keep colour textures and data maps in their correct existing colour-space paths.
+Reuse pinned MikkTSpace when tangents need generation, with the selected normal-map
+UVs, seams and reflections handled coherently. Support the ordinary UV0/UV1 texture
+selections in focused fixtures; unsupported additional channels must be diagnosed,
+not all silently mapped to UV0. Preserve supported sampler/UV-transform settings.
+
+Imported defaults, project material remaps and per-instance overrides are distinct.
+Reimporting a model must not overwrite a developer's separate material asset or
+reset an instance override. Identical dependencies can share resources without
+accidentally coupling independently editable material instances.
+
+## 8. Identity, dependencies and transactional reimport
+
+This is a deliverable, not optional cleanup after first import.
+
+Persist an import recipe containing source identities, conversion settings,
+parser/cooker revision, dependencies, stable generated subasset IDs, selections,
+clip mappings and any explicit lossy/repair options. Use Judas's existing asset
+identity/fingerprint infrastructure, not a competing registry.
+
+Required guarantees:
+- Unchanged input bytes/settings/dependencies under the same toolchain produce
+  stable outputs and IDs. No timestamps, machine paths or process pointers in hashes.
+- Changing a source mesh, external texture, motion file or setting invalidates its
+  actual dependent products. Do not recompute everything on every frame or launch.
+- Unaffected meshes, materials, clips and authored references keep their identities
+  when source ordering changes. Maintain provenance/mapping; raw array indices and
+  short names alone are not durable IDs.
+- Renames/deletions with ambiguous correspondence are surfaced for remapping.
+  Never retarget an old socket/IK/ragdoll reference to an unrelated replacement node.
+- Cancellation, parse failure or crash before publication leaves the last accepted
+  generation intact. Publish a coherent generation only after all required outputs
+  and dependencies validate. Do not expose half of a new rig with half of an old skin.
+- Keep last-good content available for inspection after failure, visibly marked
+  stale. Do not silently export stale content against changed source/settings.
+- Distinguish generated products from author-owned edits. Garbage collection may
+  remove obsolete owned products only when references and author edits are safe.
+
+Parsing/cooking/hashing run through existing background jobs with bounded work,
+progress, cancellation and explicit main-thread/GPU publication. Use M65's corrected
+bookkeeping; do not instantiate VMs to inspect assets or repeatedly scan all world
+entities to rebind an unchanged model.
+
+Live replacement during Play is not required: staging reimport until Stop/restart
+is acceptable if explicit. Never mutate shared live rig buffers underneath physics,
+sockets or Renderer. Source changes affect saved-world compatibility through the
+existing policy; M66 must not silently reinterpret an old save against a new rig.
+
+## 9. Ordinary editor and CLI workflow
+
+The same operation must work in the editor and supported command-line tools.
+Provide a practical import panel/workflow with:
+- Source/dependency selection, settings/presets and an import report.
+- Node/mesh/skin/material/clip selection; preview of scale, bounds and skeleton.
+- Playback/scrub, multiple part visibility and a simple root-motion trail/preview.
+- Add-compatible-animation, reimport, retry/cancel and missing-file remap.
+- Place/create an ordinary model hierarchy or prefab with stable references.
+- Select a diagnostic and highlight the affected source geometry when available.
+
+Reuse existing inspectors, previews, undo and serializer-backed authoring. Recipes
+must be documented and reviewable through named fields; do not require hand-writing
+another long positional record or source-specific conversion script. A headless
+report has structured severity, code, source location, action and generated outputs;
+exit status must distinguish failure from warnings.
+
+This is a focused import experience, not M67's complete editor redesign. A user should
+import, preview and place the character without editing engine source or rebuilding
+Judas. Settings can require judgment; six corrective DCC operations cannot remain
+the normal success path.
+
+## 10. Environment content and collision-cooking diagnostics
+
+Visual geometry and collision geometry remain separate. A renderable artist mesh
+may be unsuitable as a collision surface without being an invalid visual model.
+Do not block its visual import merely because an optional collision cook fails.
+
+Integrate import selections with M64's existing cooker:
+- Choose explicit source nodes/primitives or a separate physical-source file.
+- Preserve source-to-cooked transforms, including import unit/pivot conversions.
+- Offer existing static mesh, convex hull and selected-part compound/proxy choices
+  through one ordinary workflow; show the resulting collision overlay.
+- A hull that fills a quarter-pipe's playable concavity is NOT a successful matching
+  ramp collider. Convex approximation is an explicit user choice with visible cost.
+
+For bad winding, degenerates, T-junctions, nonmanifold edges and other checks the
+cooker performs, report source file/node/mesh and original face/edge/vertex identifiers
+where recoverable, coordinates/bounds and a selectable preview location. Carry
+triangulation provenance so a cooked triangle index can be traced back to its source.
+Do not fabricate text line numbers for a binary source.
+
+Provide small explicit safe cleanup operations where justified: triangulation,
+removing true degenerates, bounded duplicate-position welding for collision-only
+geometry and orienting consistently orientable connected patches. Preserve render
+UV/normal seams. Exact/locally validated T-junction splitting is acceptable if
+implemented robustly; broad destructive repair is not a requirement.
+
+Every geometry-changing repair operates on derived content, records its settings
+and counts, and reruns validation. Never silently fill holes, merge unrelated
+surfaces or relax seam/topology checks until the file passes.
+
+Revisit the original artist half-pipe. If its nonmanifold/overlapping structure
+cannot be safely repaired, point to the actual offending locations and provide a
+practical separate-source/proxy-selection workflow. Report that boundary honestly.
+No promise of automatically reconstructing intended geometry from arbitrary bad art.
+A clean physical reference must also import/cook and agree with rendering/queries.
+
+## 11. Existing runtime consumers must actually use the imported assets
+
+Route normal model instances through existing public APIs and lifecycle mechanisms.
+
+- Animation/Pose: one final resolved pose per appropriate animation instance; all
+  skinned parts consume it, including high-index joints. No competing FBX player.
+- Sockets/IK: use stable resolved joint identity and presentation/fixed timing;
+  source reordering must not swap hands/feet or disconnect attachments.
+- Ragdolls: mappings remain a physical subset, not a rigid body per imported bone.
+  Enter from the resolved pose; every visual part follows through the normal skinning
+  path. Keep accepted authored resistance and physics semantics intact.
+- Renderer: all passes use the right per-skin palette/materials and conservative
+  bounds. No disappearing boots/hair/shadows when only a limb leaves rest bounds.
+- Scenes/prefabs: independent instances, part/material references, duplication,
+  runtime spawn/destruction and undo remain coherent.
+- Streaming: load/retire the complete dependency graph safely; do not turn parsing
+  source FBX into main-thread region installation or retain stale import generations.
+- Saves: cold restore of unchanged imported content preserves supported clip/mixer,
+  skeleton-consumer and instance state using stable IDs. Incompatible source edits
+  fail under existing content-compatibility rules rather than aliasing old handles.
+
+Extend JudasJS only for genuinely needed generic model/clip/root-motion access,
+using existing APIs when sufficient. Update declarations, reference, inventory,
+manifest, cookbook and live coverage for every addition/change. No ImportMixamo,
+SkateCharacter or native gameplay policy. Keep public compatibility or provide an
+explicit documented migration; do not change existing primitive semantics casually.
+
+## 12. Export and deliverable asset policy
+
+Authoring inputs and cooked runtime dependencies are different categories.
+The shipping package must contain every selected model/skin/material/texture/clip
+and collision dependency, but need not contain DCC sources, import caches or tools.
+It must run moved, read-only and offline without Blender, source directories or
+runtime FBX parsing/cooking. Keep source import code out of the player build where
+practical; report any remaining binary cost honestly.
+
+Cache deletion must not destroy author-owned recipes or stable mappings. Rebuilding
+owned generated assets from those records must reproduce the accepted outputs.
+Conversely, shipping cannot depend on an accidentally warm editor cache.
+
+Preserve old direct-GLB/OBJ projects and their export behavior. Version new cooked
+payloads explicitly; keep unchanged content compatible where feasible, and never
+bypass M61 fingerprint checks to fake backward compatibility.
+
+Retain dependency licenses and asset provenance. Follow the project's asset-rights
+policy; do not newly publish restricted originals just because they were used for
+a local acceptance test. Supply redistributable fixtures for automated coverage.
+
+## 13. Acceptance projects, correctness and performance
+
+Use a compact import lab plus the accepted Three Games consumer where relevant.
+Leave Claude's source projects and historical comparison assets untouched.
+
+A. ORIGINAL CHARACTER
+Import the original unmodified Skateboarder.fbx and original separate motion files
+through the normal workflow. Retain the source rig and all intended mesh parts,
+including fingers where present. Record what changed from the old six-operation
+pipeline: source hashes, source/retained joint counts, parts, units, clip mapping,
+remaining manual choices and any loss. Show multiple independent instances,
+materials, clips/crossfades, socket, IK and ordinary ragdoll usage. Adapt only the
+repo-owned consumer content needed to exercise the new import. Keep old reduced
+clips as comparison content; do not claim that incompatible reduced-rig game poses
+magically become compatible with the original rig.
+
+B. FORMATS AND SOURCE SEMANTICS
+Use small independent fixtures: a multi-mesh GLB; an external-buffer/image glTF;
+a nonhumanoid hierarchy; two skins with different bind data; two distinct rigs;
+static instances; a 256-joint weighted fixture; eight influences; rotated roots,
+centimetres/metres and a mirrored static part. Verify animation-only clip mapping
+under reordered source nodes and rejection of ambiguous/incompatible mappings.
+These prevent an importer that only happens to recognize the Mixamo specimen.
+
+C. REIMPORT AND FAILURE
+Reimport unchanged data, then change a copied texture and animation. Keep unrelated
+IDs, material overrides, scene/prefab links, sockets and mappings. Reorder nodes;
+report a deleted required joint. Test cancel and missing dependency/malformed source:
+last-good generation survives and no incomplete output is published. Rebuild from
+an empty generated cache and test changed-source save/export rejection.
+
+D. COLLISION WORKFLOW
+Import clean and deliberately defective environment fixtures, plus the original
+artist half-pipe if available. Assert diagnostic locations correspond to the real
+bad features, not just that an error string exists. Verify explicit cleanup does
+not remove a legitimate edge or fill a concavity, and cooked proxy transforms match
+visual placement, raycasts and CharacterMotor use.
+
+Independent numerical checks must compare selected joint/vertex transforms against
+analytic fixtures and source evaluation at bind, mid-clip and endpoint times. FBX
+parser evaluation checks Judas's conversion; at least one independent analytic/DCC
+reference also checks the oracle rather than merely calling Judas twice. Specify
+translation/rotation/skinning error tolerances in metres/radians. Test reconstruction
+of extracted root motion, loop-crossing intervals and unselected motion preservation.
+Actual GL checks must include high-index skinning, normals/tangents, material parts,
+shadows and a secondary camera. Parser success is not visual correctness.
+
+Measure with M56 on the current machine: cold import and peak working memory;
+unchanged reimport; one changed texture/clip; first preview upload; cooked cold load;
+1/10 independent full-rig instances with pose time, draw count, palette bytes and
+GPU time; export time/size and dependency count. Report p95/max where meaningful,
+context/concurrent work, and small-asset overhead. No universal speedup claim from
+comparing the old reduced rig to a larger imported rig. Unchanged models must not
+be reparsed/rehashed or allocate fresh full-scene structures every frame.
+
+During development, use narrow failing fixtures and fix the generic cause. Once
+the candidate is stable, freeze implementation and run ONE clean Release build,
+the current full production suite once, actual async/resource tests, focused import/
+geometry/animation/GL/editor tests, JudasJS coverage, Three Games smoke, and fresh-
+process save/stream/unload/revisit plus moved read-only export. Use the corrected
+real-loop harness. Discover current target counts; do not copy old report totals.
+
+Protect historical evidence from legacy test output paths: use new result directories
+and the current runner's supported isolation. Do not run overlapping full builds or
+kill unrelated processes. Narrow late fixes receive affected reruns, with the exact
+coverage/fingerprints and any invalidated earlier evidence stated. Do not repeat
+already-passed broad validation just for reassurance, or weaken assertions to pass.
+
+## 14. Boundaries and final handoff
+
+Required scope is import/runtime support/reimport/dependencies/diagnostics needed
+above. It is not a DCC replacement or permission to combine future milestones.
+
+Out of scope: arbitrary .blend/USD/CAD support; full source rig-constraint evaluation
+inside the game; general retargeting; automatic humanoid generation; full-body IK,
+procedural balance or Euphoria; morph/facial/cloth expansion; automatic arbitrary
+nonmanifold reconstruction; dynamic concave collision or a physics replacement;
+new shader graphs/material families; large editor redesign; global content-format
+rewrite; streaming redesign; unrelated save/audio/fluid or post-M65 cleanup.
+
+Detect unsupported source features and report their effect. An explicitly chosen
+base/static import may be useful, but is not a successful faithful animated import.
+Do not use a long list of limitations to avoid required original-character support.
+If a real blocker changes the agreed scope, ask a precise question with evidence
+instead of silently shipping a watered-down substitute.
+
+At handoff provide:
+- Source-to-runtime architecture, parser pins/licenses and actual supported format
+  matrix; selected hard/resource bounds and unsupported-feature behavior.
+- Original-character before/after workflow, preservation counts, compatible clips,
+  scale/material results and root-motion semantics.
+- Reimport identity/dependency/publication design, negative-case results and current
+  save/stream/export behavior.
+- Collision diagnostic/cleanup examples, original half-pipe outcome and unresolved
+  topology explicitly separated from importer failure.
+- Numerical/GL/consumer checks, final broad-gate/follow-up accounting, M56 timings,
+  dependency/binary costs and known limits.
+- Project paths, editor/CLI instructions, current docs, exact changes and final
+  fingerprints. Keep current docs distinct from preserved historical evidence.
+
+Give the operator this concise human checklist, with actual controls/paths:
+1. Import the original character without DCC preprocessing; inspect all parts,
+   dimensions, retained joints/fingers and materials.
+2. Add the separate motion files, play/crossfade, scrub and inspect root policies.
+3. Try sockets/IK/ragdoll and two independent instances in ordinary runtime views.
+4. Change a copied texture/clip, reimport, and confirm overrides/references survive.
+5. Trigger a bad dependency/topology error, inspect its exact location, and confirm
+   the last accepted asset has not been destroyed.
+6. Cook/select a clean collision source or explicit proxy and inspect its fit.
+7. Save, exit, reload; stream away/back; run a moved package without source access.
+8. Judge import usability, visual fidelity and responsiveness. Report anything still
+   requiring external corrective work rather than pretending the workflow is finished.
+
+Leave the complete candidate uncommitted for operator review. Preserve protected
+history/research, accepted fluid behavior and unrelated project content. Record
+legitimate failures and follow-ups, not fabricated evidence. Do not expand into
+future work after finishing or while awaiting the operator.
+
+Suggested commit after acceptance:
+Add M66 professional model import and reliable reimport
+
+Then stop.
+
+Milestone 66 — Judas learns to import.

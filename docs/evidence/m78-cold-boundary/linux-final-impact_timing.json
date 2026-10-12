@@ -1,0 +1,13 @@
+{
+  "name": "impact_timing",
+  "utc": "2026-10-11T23:00:10.182144+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_impact_timing_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.016992689001199324,
+  "executableSHA256": "5aa103e46d0c51a83300958d9e6e69c9422de87cfe2db98701773e23d9fd8e11",
+  "logSHA256": "4915e4a212d5cf950e8b561a5cbb3ffe7b0690b3815cd6ca867b6b1582bc6d8b",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

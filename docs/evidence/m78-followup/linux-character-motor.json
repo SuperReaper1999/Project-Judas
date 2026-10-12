@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_character_motor_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:57.536061+00:00",
+  "seconds": 0.5151436009982717,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "475c4c05ea7524dd6bd7083ac317b683f3d4af4f178c1bc370ccf0b7e891bc59",
+  "logSHA256": "1f953d777798313042cd9e17e70fcca7fbf9437ddcc1ad9d481c62bff9848af3",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

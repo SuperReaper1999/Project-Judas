@@ -1,0 +1,9 @@
+PASS fresh process decodes complete modern snapshot: 
+PASS fresh process restores command state and current physical state: 
+PASS restoration does not replay preceding two metres of target displacement
+PASS disposable previous motion history reconstructed empty
+PASS first resumed target step advances only remaining interval
+PASS first resumed velocity step continues once
+PASS resumed real VM sees durable state without start replay
+PASS restored completed target holds after its interval
+SUMMARY 8 checks 0 failures

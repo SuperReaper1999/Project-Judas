@@ -1,0 +1,25 @@
+{
+  "scope": "Exact final moved ordinary content matches all44unchanged files in prior45-file export; only runtime replaced. Existing content uses preserved original hardlinks, final post-launch hashes unchanged. No fresh export-generator claim.",
+  "priorManifestSHA256": "560acbf0802f13d76530e26666f740a066a877db31d04b7faa19592a63b077d7",
+  "finalReceiptSHA256": "14e6c9f542717baa076a39e8bb3bf4b317283f78d0b012b3cdd0ddf60ceab76b",
+  "identicalContentFiles": 44,
+  "changedFiles": [
+    "judas.exe"
+  ],
+  "runtimeSHA256": "46b5c697c740c651250c35d0a5a73cabdbae3c0209663f06d88927d4c5a282b9",
+  "runtimeBytes": 10340864,
+  "arguments": [],
+  "cwd": "C:\\Windows\\Temp",
+  "exitCode": 0,
+  "harnessSHA256": "6f975418b9e6f0a2af2644c509bc98115be2407db0e8f0afae88d092e149ef1d",
+  "saveWaitObservations": [
+    "[TestHarness] service save ready after 29 wait frames at frame 602",
+    "[TestHarness] service save ready after 5 wait frames at frame 682"
+  ],
+  "sceneWaitObservations": [
+    "[TestHarness] service scene ready after 0 wait frames at frame 802",
+    "[TestHarness] service scene ready after 0 wait frames at frame 902",
+    "[TestHarness] service scene ready after 0 wait frames at frame 1022",
+    "[TestHarness] service scene ready after 0 wait frames at frame 1162"
+  ]
+}

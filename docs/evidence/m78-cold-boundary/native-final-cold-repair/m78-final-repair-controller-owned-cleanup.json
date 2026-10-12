@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  95305728,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-controller.exe",
+                        "sha256":  "6a52511a6d38a926a351d4c3551f25ac687e7d25d6477b9a22f076b31cf749dd",
+                        "name":  "m78-final-repair-controller.exe",
+                        "bytes":  602624
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\controller-0.obj",
+                        "sha256":  "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7",
+                        "name":  "controller-0.obj",
+                        "bytes":  169808
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-controller-generated.zip",
+                        "bytes":  339095,
+                        "sha256":  "5fb73085da32dbe1c6ff78c839daf8c7a3c807c942e488f2eb18485235b56cd2"
+                    }
+                ],
+    "librarySHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "freeAfter":  96423936
+}

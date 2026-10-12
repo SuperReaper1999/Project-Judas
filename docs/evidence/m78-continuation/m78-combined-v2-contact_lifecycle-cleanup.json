@@ -1,0 +1,19 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_contact_lifecycle.exe",
+                      "sha256":  "880264c00aeee97186bed2124750d34fc41fef8bbdf6a13887826879f9d8b8a0",
+                      "name":  "m78_combined-v2_contact_lifecycle.exe",
+                      "bytes":  8167936
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\contact_lifecycle-0.obj",
+                      "sha256":  "f1ea07e996d67c90467debafd4246b4d670cdb8dad9b037f145857c389d83f55",
+                      "name":  "contact_lifecycle-0.obj",
+                      "bytes":  246170
+                  }
+              ],
+    "archiveSHA256":  "d12fa3c6c403fd001325138b4eb82a03d7f06c13ca84adb66d55c1191606ae99",
+    "freeBytes":  491229184
+}

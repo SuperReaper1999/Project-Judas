@@ -1,0 +1,20 @@
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=3.00039,1.41566,-0.0139958 height=1.4174 up=0.999924 speed=1.22713e-06 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+ACTOR 10 status=2 root=-2.99985,1.24856,0.363913 height=1.24953 up=0.99999 speed=2.54833e-07 supports=4/4 landings=0 reason=measured supported physical standing
+PASS face-up authored robot gets up through public JS request
+ACTOR 11 status=2 root=0.00274887,1.25912,-0.48127 height=1.25966 up=0.999994 speed=2.09635e-07 supports=4/4 landings=0 reason=measured supported physical standing
+PASS different face-down rig gets up physically
+PASS cancel releases actuators and preserves physical articulation
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 16 checks 0 failures

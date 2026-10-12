@@ -1,0 +1,516 @@
+{
+  "utc": "2026-10-12T00:47:39.310704+00:00",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "manifest": "docs/evidence/m78-cold-boundary/FINAL_FINGERPRINTS.json",
+  "manifestSHA256": "f47faea5cce489834e1d1e3c180fab8e0537ff61ba93c452bb69076ae3723944",
+  "filesVerified": 4071,
+  "binaryOutputsVerified": 29,
+  "excludedUntrackedNow": [
+    {
+      "path": "POST_M73_REPORT.txt",
+      "reason": "Unrelated pre-existing report"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/character-restore-error/restored-context.bin",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/character-restore-error/saved-context.bin",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/final-current-standing/native-observer-source.zip",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-boundary-observer-source.zip",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-closure/m78-native-first-closure-commands-seeds-normal-prepare.map.gz",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-closure/m78-native-first-closure-commands-seeds.map.gz",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-cold-recovery-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-cold-recovery-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-cold-stand-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-cold-stand-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-exact-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-new-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-balance-new-cold-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-character-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-cold-repair/m78-final-repair-character-cold-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-recovery-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-recovery-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-stand-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-cold-stand-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-exact-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-new-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-balance-new-cold-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-character-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-final-narrow-wp/m78-final2-repair-character-cold-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-first-boundary-closure-source.zip",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-first-boundary-closure-split-source.zip",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-capture-publication-source.zip",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-cold-write-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab-legacy-a106-read-.lock",
+      "reason": "Extracted runtime save-slot lock; temporary output, preserved but never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-balance_lab.map.gz",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-new-publication/m78-native-new-publication-controller.map.gz",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-split/m78-native-first-split-commands-normal-prepare.map.gz",
+      "reason": "Build/cache/executable/archive output; never staged"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/native-split/m78-native-first-split-seeds-normal-prepare.map.gz",
+      "reason": "Build/cache/executable/archive output; never staged"
+    }
+  ],
+  "preservation": {
+    "historicalAndTracked": [
+      {
+        "manifest": "docs/evidence/m78/BASELINE.json",
+        "manifestSHA256": "1573c689c3861e71bb7a0d5d51d85cca9bdc8439cd2b6408912b37f3462a1dd1",
+        "checked": 38386,
+        "authorizedDifferences": [
+          {
+            "path": "CMakeLists.txt",
+            "recorded": "6ada3d2936f35023c04901297bf6ade75f2b23c9b183de53483df59621e98b13",
+            "actual": "3ffa1c4a05ff3c8e247f94f0395b2b51660fabfe2e2556f67656045a89aae292"
+          },
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "recorded": "44b5998a0d8881a7feecd41b32ff4161ccd223c61c32bce2e4b6726b4debe477",
+            "actual": "34238e1046663c4dc674eb240ff7a0c3f404aa728af0be6567b9f0b7391c30f5"
+          },
+          {
+            "path": "docs/M77.md",
+            "recorded": "b9826b6866a1e189fbe17fe4c89072f595aeab199153d8ed191ab3e5654e51fd",
+            "actual": "2d301a9797f7969179a949aeb8bc815adab58afb8c860a7a1b0b06fccb7eee57"
+          },
+          {
+            "path": "docs/judasjs/saves.md",
+            "recorded": "48d783f14fe5b910baf3dbbc4068548cfec8edf0befe4005d223e6c51dfa2004",
+            "actual": "0e884d43f038b6cb54bc675b3565dc07b8561921cbb458b0d72d2dfe2a2bde1f"
+          },
+          {
+            "path": "src/CollisionGeometry.cpp",
+            "recorded": "6a37faf7e0d9d3f32c8b39a2993ecde374c606ec5b6fad623e590a9ee515aaaa",
+            "actual": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+          },
+          {
+            "path": "src/CollisionGeometry.h",
+            "recorded": "c90d2826d73590d8700417dcc124b70461927c5b4888b500636d135e337d86c7",
+            "actual": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198"
+          },
+          {
+            "path": "src/PhysicalBalance.cpp",
+            "recorded": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+            "actual": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32"
+          },
+          {
+            "path": "src/PhysicsWorld.cpp",
+            "recorded": "27fdc6032265ff6c44bd4068b98fa1427ddda1864b341532eeb6c68430b9e57f",
+            "actual": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff"
+          },
+          {
+            "path": "src/PhysicsWorld.h",
+            "recorded": "f3d29d63a3fa5ffb03514e7aa77c2b083a95aefab8bbb849ea25f6bbaab5afa9",
+            "actual": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9"
+          },
+          {
+            "path": "src/Prefab.cpp",
+            "recorded": "ec39683a358a5b4e26c92a03aedf08ad78ca9c380ac50a7add0eecacc6bee8b9",
+            "actual": "d2cd051026a5d943ade664dcafff953029fda967460cc1faf25cbaf45a0b9cd3"
+          },
+          {
+            "path": "src/RigidBody.cpp",
+            "recorded": "fee230c7a41d7a40f7e3445c5851abe22fc42f491782e94fed514487e6742912",
+            "actual": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b"
+          },
+          {
+            "path": "src/RigidBody.h",
+            "recorded": "190d53d16a212b5d42dc9bbaa216134f56ff5e43ee0e9ad540ebdb8621890904",
+            "actual": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df"
+          },
+          {
+            "path": "src/RigidMotion.h",
+            "recorded": "bf2730ef69b1f5e1ca86cd6143e6cdf32d5c2537dd93dd22fa377f31c3d1e677",
+            "actual": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+          },
+          {
+            "path": "src/WorldPersistence.cpp",
+            "recorded": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+            "actual": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb"
+          },
+          {
+            "path": "src/WorldPersistence.h",
+            "recorded": "5e365077f0fc3178aeb7fefb0d0febf2d2032379fea34b0f3e61d6eaffb9a777",
+            "actual": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c"
+          },
+          {
+            "path": "src/editor/TerrainTools.cpp",
+            "recorded": "852d1801f3ae5fb523a9eb64159e570172c0c6ccc9f6705477fe224f18bdb8da",
+            "actual": "9f77a6e123d96ee6e6caa65f5b254be0d2406d20164951524e3ded98f3025043"
+          },
+          {
+            "path": "src/editor/TerrainTools.h",
+            "recorded": "39ddc37d6c658c9c23f261c4eaabeb637102e003b1014013322879ca3c0fcfdb",
+            "actual": "e34a836f86fd1b40e49c49129f9e184c1dcfae8654a92c92c6a63ba43f9585b6"
+          },
+          {
+            "path": "tests/CollisionGeometryTests.cpp",
+            "recorded": "04fb063d81a7ec28d16c19aa3122c363be7ea23cf6f56b74110b72182fb68ef8",
+            "actual": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2"
+          },
+          {
+            "path": "tests/ContactLifecycleTests.cpp",
+            "recorded": "cce028e849cd241d6bcc7bf445ff54cf8c5ca5ca3ccea2719f3553c67567f520",
+            "actual": "59bf3711105a68444c8a3ff5f8c9ecf8617e43dfb732cbc4574f921a70067014"
+          },
+          {
+            "path": "tests/PrefabTests.cpp",
+            "recorded": "8b9290e8faa0e83f912ecf9b589f9bf534f18202b861a45b798fc5c34ed764e6",
+            "actual": "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b"
+          },
+          {
+            "path": "tests/RigidMotionTests.cpp",
+            "recorded": "0fa04976a26860e0b24032efdede305c752cb00510969de2e28fffed6d31dcdd",
+            "actual": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a"
+          },
+          {
+            "path": "tests/ScalabilityTests.cpp",
+            "recorded": "ddcda9d177fb6e31eae0cff92f2b3740531d590e6ab50ff2c4642e5fa85f1384",
+            "actual": "b790389689ed90f4e65ce67aa2a66bb7b69cefef1c137235a7e0310aec21fba5"
+          },
+          {
+            "path": "tests/SpacecraftControlTests.cpp",
+            "recorded": "44ab131a58f68d8e10aa0bc25ffcdebd114d76164f6681f226c11518fe5296e4",
+            "actual": "548ceaafed42b5caba9781108b21c527be30d60afe3a74e606919c96845b5198"
+          },
+          {
+            "path": "tests/SpacecraftFlightTests.cpp",
+            "recorded": "40760bdff7aa0f29efab294a114925670b62f3c3c291cb58f0338e7de7d098d1",
+            "actual": "85b0139c79ec4a2a5e691cd191ea0738c949d35ce76a49f11ae9478a48b1c472"
+          },
+          {
+            "path": "tests/WorldStreamingTests.cpp",
+            "recorded": "5669ec74f3eefd9440b23b0539a0042ba572fd47c4ac696f8c1a5c06ca0b16bc",
+            "actual": "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b"
+          },
+          {
+            "path": "tools/NavigationBake.cpp",
+            "recorded": "5edd35b93713b3a42269c0c02fa01bed65d7237782d38760c58fa7d030f351da",
+            "actual": "eba675d2fce315d13927f31ee9ea0936bb0dc139d2c863530590ff157f680f75"
+          }
+        ],
+        "exceptions": [
+          "CMakeLists.txt",
+          "docs/ARCHITECTURE.md",
+          "docs/M77.md",
+          "docs/judasjs/saves.md",
+          "src/CollisionGeometry.cpp",
+          "src/CollisionGeometry.h",
+          "src/PhysicalBalance.cpp",
+          "src/PhysicsWorld.cpp",
+          "src/PhysicsWorld.h",
+          "src/Prefab.cpp",
+          "src/RigidBody.cpp",
+          "src/RigidBody.h",
+          "src/RigidMotion.h",
+          "src/WorldPersistence.cpp",
+          "src/WorldPersistence.h",
+          "src/editor/TerrainTools.cpp",
+          "src/editor/TerrainTools.h",
+          "tests/CollisionGeometryTests.cpp",
+          "tests/ContactLifecycleTests.cpp",
+          "tests/PrefabTests.cpp",
+          "tests/RigidMotionTests.cpp",
+          "tests/ScalabilityTests.cpp",
+          "tests/SpacecraftControlTests.cpp",
+          "tests/SpacecraftFlightTests.cpp",
+          "tests/WorldStreamingTests.cpp",
+          "tools/NavigationBake.cpp"
+        ],
+        "unexpectedDifferences": []
+      },
+      {
+        "manifest": "docs/evidence/m78/FINAL_FINGERPRINTS.json",
+        "manifestSHA256": "fe4d7221e165d26cf79836a62f4fe000eff8700661d06b1e21b0ffc938cb0e27",
+        "checked": 600,
+        "authorizedDifferences": [],
+        "exceptions": [],
+        "unexpectedDifferences": []
+      },
+      {
+        "manifest": "docs/evidence/m78-followup/FINAL_FINGERPRINTS.json",
+        "manifestSHA256": "38892f9979dc8eadf91c6a397c7f86ae60678bce83e48b5927aafac7f4c829e5",
+        "checked": 439,
+        "authorizedDifferences": [
+          {
+            "path": "CMakeLists.txt",
+            "recorded": "fcc2bb0604c4e78cf19d489c05a82be8d7d596868c0099cdadd1a003766ea11a",
+            "actual": "3ffa1c4a05ff3c8e247f94f0395b2b51660fabfe2e2556f67656045a89aae292"
+          },
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "recorded": "8e2a7942d9826993bd8cc3555c7b0627f65900fd40e3fdcf912b21e8c6ff89c5",
+            "actual": "34238e1046663c4dc674eb240ff7a0c3f404aa728af0be6567b9f0b7391c30f5"
+          },
+          {
+            "path": "docs/M77.md",
+            "recorded": "318de2d7ce1742da83b2c8f833b6958c512c3d0fd5e6617eef9ce4c55f89e2a7",
+            "actual": "2d301a9797f7969179a949aeb8bc815adab58afb8c860a7a1b0b06fccb7eee57"
+          },
+          {
+            "path": "docs/M78_FOLLOWUP.md",
+            "recorded": "80df62c004de09340247ce5148323351ae0ea0a0cefafef2cc657efe5af3a460",
+            "actual": "11019bfc41c34b61bf93fd01c50e5100f8df6ddc0b32cee9ee5213a94c381ffd"
+          },
+          {
+            "path": "src/CollisionGeometry.cpp",
+            "recorded": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a",
+            "actual": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0"
+          },
+          {
+            "path": "src/PhysicsWorld.cpp",
+            "recorded": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+            "actual": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff"
+          },
+          {
+            "path": "src/PhysicsWorld.h",
+            "recorded": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6",
+            "actual": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9"
+          },
+          {
+            "path": "src/RigidBody.cpp",
+            "recorded": "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+            "actual": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b"
+          },
+          {
+            "path": "src/RigidBody.h",
+            "recorded": "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b",
+            "actual": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df"
+          },
+          {
+            "path": "src/RigidMotion.h",
+            "recorded": "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497",
+            "actual": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8"
+          },
+          {
+            "path": "tests/CollisionGeometryTests.cpp",
+            "recorded": "9792433d5f8dc8626f4bf2724b431215639b25c5d7174fd36c3bc231ce298b59",
+            "actual": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2"
+          },
+          {
+            "path": "tests/RigidMotionTests.cpp",
+            "recorded": "38692f953ff456b40c05eb7856728aa698bd82c8fdc3f646a5a402a462a0742c",
+            "actual": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a"
+          }
+        ],
+        "exceptions": [
+          "CMakeLists.txt",
+          "docs/ARCHITECTURE.md",
+          "docs/M77.md",
+          "docs/M78_FOLLOWUP.md",
+          "src/CollisionGeometry.cpp",
+          "src/PhysicalBalance.cpp",
+          "src/PhysicsWorld.cpp",
+          "src/PhysicsWorld.h",
+          "src/RigidBody.cpp",
+          "src/RigidBody.h",
+          "src/RigidMotion.h",
+          "src/WorldPersistence.cpp",
+          "src/WorldPersistence.h",
+          "tests/CollisionGeometryTests.cpp",
+          "tests/RigidMotionTests.cpp"
+        ],
+        "unexpectedDifferences": []
+      },
+      {
+        "manifest": "docs/evidence/m78-continuation/FINAL_FINGERPRINTS.json",
+        "manifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865",
+        "checked": 2505,
+        "authorizedDifferences": [
+          {
+            "path": "CMakeLists.txt",
+            "recorded": "fcc2bb0604c4e78cf19d489c05a82be8d7d596868c0099cdadd1a003766ea11a",
+            "actual": "3ffa1c4a05ff3c8e247f94f0395b2b51660fabfe2e2556f67656045a89aae292"
+          },
+          {
+            "path": "docs/ARCHITECTURE.md",
+            "recorded": "5ad80a494daea70693ceb1dad4391c5b69a257792569664826892b037fcfdd47",
+            "actual": "34238e1046663c4dc674eb240ff7a0c3f404aa728af0be6567b9f0b7391c30f5"
+          },
+          {
+            "path": "docs/M77.md",
+            "recorded": "a614ac6beb9811f3324e95bb506cead875e53f1bd838fa62d7f1acc5743f8a63",
+            "actual": "2d301a9797f7969179a949aeb8bc815adab58afb8c860a7a1b0b06fccb7eee57"
+          },
+          {
+            "path": "src/PhysicalBalance.cpp",
+            "recorded": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+            "actual": "e7a41780fcd5a1196e3d57066b38fa8f2735714f7cb3a16675ace47379e24e32"
+          },
+          {
+            "path": "src/PhysicsWorld.cpp",
+            "recorded": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+            "actual": "0a59fd11626f9099806f9eae67879125e257f688814249a701324abae6bb81ff"
+          },
+          {
+            "path": "src/PhysicsWorld.h",
+            "recorded": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6",
+            "actual": "0f8510bce0a3741ecdec7e94973f4d861b5e04ebe5f0a908aab8ba0a80b9bca9"
+          },
+          {
+            "path": "src/WorldPersistence.cpp",
+            "recorded": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+            "actual": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb"
+          },
+          {
+            "path": "src/WorldPersistence.h",
+            "recorded": "5e365077f0fc3178aeb7fefb0d0febf2d2032379fea34b0f3e61d6eaffb9a777",
+            "actual": "045ba6e7a103eeb0781196d726ede4572fd88fb1f329de0da045ab54a1a5910c"
+          }
+        ],
+        "exceptions": [
+          "CMakeLists.txt",
+          "docs/ARCHITECTURE.md",
+          "docs/M77.md",
+          "docs/judasjs/saves.md",
+          "src/PhysicalBalance.cpp",
+          "src/PhysicsWorld.cpp",
+          "src/PhysicsWorld.h",
+          "src/WorldPersistence.cpp",
+          "src/WorldPersistence.h"
+        ],
+        "unexpectedDifferences": []
+      }
+    ],
+    "rawEvidence": [
+      {
+        "manifest": "docs/evidence/m78-continuation/performance-analysis/MEASUREMENT_FINGERPRINTS.json",
+        "manifestSHA256": "eda92f7d9a1353ca3af78443090dc9d07c20eef46e10bc893ea0588c81070211",
+        "rawEvidenceFilesChecked": 80,
+        "externalBuildOutputsNotRequiredPresent": [
+          ".cache/m78-continuation/concave-attribution-original",
+          ".cache/m78-continuation/contact-existence-parity-corrected",
+          ".cache/m78-continuation/existence-observer/BUILD.json",
+          ".cache/m78-continuation/existence-observer/CollisionGeometry.cpp",
+          ".cache/m78-continuation/existence-observer/CollisionGeometry.h",
+          ".cache/m78-continuation/existence-observer/OriginalCookedContactOracle.cpp",
+          ".cache/m78-continuation/existence-observer/PhysicsWorld.cpp",
+          ".cache/m78-continuation/existence-observer/Probe.cpp",
+          ".cache/m78-continuation/existence-observer/libjudas_engine.a",
+          ".cache/m78-continuation/existence-observer/probe",
+          ".cache/m78-continuation/existence-parity-v2/BUILD.json",
+          ".cache/m78-continuation/existence-parity-v2/CollisionGeometry.cpp",
+          ".cache/m78-continuation/existence-parity-v2/CollisionGeometry.h",
+          ".cache/m78-continuation/existence-parity-v2/OriginalCookedContactOracle.cpp",
+          ".cache/m78-continuation/existence-parity-v2/PhysicsWorld.cpp",
+          ".cache/m78-continuation/existence-parity-v2/Probe.cpp",
+          ".cache/m78-continuation/existence-parity-v2/libjudas_engine.a",
+          ".cache/m78-continuation/existence-parity-v2/probe",
+          "projects/post_m65_consumers/Scenes/skate/park.judas"
+        ]
+      },
+      {
+        "manifest": "docs/evidence/m78-continuation/final-performance/RAW_FINGERPRINTS.json",
+        "manifestSHA256": "9ac121b0c471f73cece37d430c13eb7d1f5d9487eaae7d9f19b81a42496812a0",
+        "rawEvidenceFilesChecked": 13,
+        "externalBuildOutputsNotRequiredPresent": []
+      },
+      {
+        "manifest": "docs/evidence/m78-continuation/final-performance/REVIEW_HASHES.json",
+        "manifestSHA256": "cb1bd816f0cd2b6a074c6acef765e7dbef1c050e7a0a624857d6c34378f0fb01",
+        "rawEvidenceFilesChecked": 17,
+        "externalBuildOutputsNotRequiredPresent": []
+      }
+    ],
+    "frozenLocalInputsChecked": 7,
+    "unrelatedPOSTUnchanged": true
+  },
+  "indexDiff": "",
+  "passed": true
+}

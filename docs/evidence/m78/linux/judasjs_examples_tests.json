@@ -1,0 +1,27 @@
+{
+  "id": "judasjs_examples_tests",
+  "source": "tests/JudasJSExamplesTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judasjs_examples_tests"
+  ],
+  "adapter": "all existing public cookbook examples",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "19dbe607ea8686a425078ece3598a5f1b650f15ba6ea5850e7fd4395a30fbfa1",
+  "exitCode": 1,
+  "status": "failed",
+  "passingLines": 281,
+  "failingLines": 1,
+  "log": "docs/evidence/m78/linux/judasjs_examples_tests.log",
+  "logSHA256": "dbcfabd35baddf1748c44991b1c9d670c1a23c811ce5e6a5c1d8b309a602e9e8",
+  "seconds": 4.913119370999993
+}

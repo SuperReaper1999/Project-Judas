@@ -1,0 +1,26 @@
+{
+  "case": "mod-moved-probe-with-replacement",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+    "probe",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-probe-corrected"
+  ],
+  "cwd": "/tmp",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:15:42.172833+00:00",
+  "explicitEnvironment": [],
+  "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+  "exitCode": 1,
+  "status": "failed",
+  "seconds": 3.729408353998224,
+  "log": "docs/evidence/m78/cases/mod-moved-probe-with-replacement.log",
+  "logSHA256": "37fdc76da8421aa62e0da0d38818cf4af3dcbd8d038f49fb7d493b1d88b940f4"
+}

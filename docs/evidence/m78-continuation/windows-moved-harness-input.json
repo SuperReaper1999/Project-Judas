@@ -1,0 +1,6 @@
+{
+  "source": ".cache/windows-vm-transfer/m77-services.harness",
+  "input": "m78-continuation-moved-services.harness",
+  "sha256": "6f975418b9e6f0a2af2644c509bc98115be2407db0e8f0afae88d092e149ef1d",
+  "purpose": "Existing unchanged normal M77 public input save/load/pause/reload/all-four-scene application harness"
+}

@@ -1,0 +1,9 @@
+{"path":"PhysicsWorld::Step","shape":"sphere","hz":60,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.21348398404e-07,"relativeError":1.9719281834e-07,"peakEnergyRelativeError":1.53269083182e-07}
+{"path":"PhysicsWorld::Step","shape":"sphere","hz":120,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.50859832903e-07,"relativeError":2.23483692745e-07,"peakEnergyRelativeError":2.12589927895e-07}
+{"path":"PhysicsWorld::Step","shape":"sphere","hz":240,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.84578464201e-07,"relativeError":2.53522635806e-07,"peakEnergyRelativeError":2.52823042183e-07}
+{"path":"PhysicsWorld::Step","shape":"sphere","hz":480,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.57404434227e-07,"relativeError":2.29314086772e-07,"peakEnergyRelativeError":2.1542820512e-07}
+{"path":"PhysicsWorld::Step","shape":"triaxial-box","hz":60,"seconds":2,"contactRows":0,"maximumAngularMomentumError":1.70084651182e-06,"relativeError":7.78723340961e-07,"peakEnergyRelativeError":7.46230322465e-07}
+{"path":"PhysicsWorld::Step","shape":"triaxial-box","hz":120,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.43213086092e-06,"relativeError":1.11353790981e-06,"peakEnergyRelativeError":9.15372441156e-07}
+{"path":"PhysicsWorld::Step","shape":"triaxial-box","hz":240,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.81390629388e-06,"relativeError":1.288331719e-06,"peakEnergyRelativeError":1.41383762034e-06}
+{"path":"PhysicsWorld::Step","shape":"triaxial-box","hz":480,"seconds":2,"contactRows":0,"maximumAngularMomentumError":2.64162001029e-06,"relativeError":1.20945137946e-06,"peakEnergyRelativeError":1.81562072633e-06}
+{"observerControlsPass":true}

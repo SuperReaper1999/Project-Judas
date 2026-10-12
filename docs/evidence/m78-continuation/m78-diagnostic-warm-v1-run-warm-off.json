@@ -1,0 +1,22 @@
+﻿{
+    "seconds":  3.2696701,
+    "freeBytes":  255836160,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_diagnostic-warm-v1_warm_observer.exe",
+    "case":  "warm_observer",
+    "label":  "diagnostic-warm-v1",
+    "run":  "warm-off",
+    "executableSHA256":  "d34dc90c7cc03d743b2de91ef1aa6c0e498d41623695f6eaf25a8f1969c98c49",
+    "environment":  {
+                        "TEMP":  "C:\\JudasValidation\\M78ContinuationResults\\temp",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  null
+                    },
+    "scope":  "Fresh native execution of a verified final candidate executable; no recompile",
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-warm-v1\\warm-off",
+                      "cold-write"
+                  ],
+    "exitCode":  0,
+    "archiveSHA256":  "7196087eae852aa049a51168f03006e53adee6c818eece27a91e480dc7097c5e"
+}

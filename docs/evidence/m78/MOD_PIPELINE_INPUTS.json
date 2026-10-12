@@ -1,0 +1,12 @@
+{
+  "scope": "Audit-owned package only; terrain probe requires authored landscape startup, not protected flat hub. No original project changed.",
+  "beforeSHA256": "2d996bde1a6f7a6c73fa5e05712de493afcf1aef851ecc34fa628039ecb15b0e",
+  "afterSHA256": "066cda9894671a2813afbc2dbf95a7056a6942831bd874464cd3493cc4003f1f",
+  "change": "startup-scene Scenes/landscape.judas",
+  "hiddenOwnedAuthoringInputs": [
+    "mod-base",
+    "mod-kit",
+    "mod-addition",
+    "mod-replacement"
+  ]
+}

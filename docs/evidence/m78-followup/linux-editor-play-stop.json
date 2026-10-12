@@ -1,0 +1,22 @@
+{
+  "command": [
+    "env",
+    "JUDAS_EDITOR_AUTOTEST=/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/editor-balance",
+    ".cache/m78-followup/release/judas_editor",
+    ".cache/m78-followup/editor-balance-project/balance_lab.judasproj"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:39:00.922309+00:00",
+  "seconds": 5.609506074000819,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": null,
+  "logSHA256": "a92284c953674aba83464b977164843ddd38b03d111bf99dba048c1d77e7a998",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

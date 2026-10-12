@@ -1,0 +1,6 @@
+free_anisotropic impacts=0 segments=1 first_event=1 dL=(-0.057023722,0.0371222415,-0.00574025278) abs_L=0.0682840844 rel_L=0.00815507488 abs_P=0
+impact_no_spin impacts=1 segments=2 first_event=0.010000000242143871 dL=(0,0,-2.10018296e-07) abs_L=2.10018296e-07 rel_L=2.33353659e-08 abs_P=1.90734863e-06
+impact_anisotropic impacts=1 segments=2 first_event=0.0098922387696802633 dL=(0.0582015553,-0.0703336664,-0.00924347312) abs_L=0.0917588549 rel_L=0.0109586346 abs_P=3.81577396e-06
+impact_sphere impacts=1 segments=2 first_event=0.010423388797789816 dL=(0,0,9.63087032e-09) abs_L=9.63087032e-09 rel_L=1.08741677e-09 abs_P=9.53674316e-07
+same_time_geometry_left_vs_physical_right omega_difference=0.787400842
+end_time_geometry_left_vs_physical_right omega_difference=0.374165744

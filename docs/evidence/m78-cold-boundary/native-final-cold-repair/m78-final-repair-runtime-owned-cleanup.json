@@ -1,0 +1,49 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  55177216,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-runtime.exe",
+                        "sha256":  "c2cdb8e6cd6170dc4877f610cd0e0a67b341576f727c438be6fe91b311df60b5",
+                        "name":  "m78-final-repair-runtime.exe",
+                        "bytes":  10342912
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\runtime-0.obj",
+                        "sha256":  "ff7de32197f0f5b55546d93bd45cb0fd99effdc8b2ae8a440987f1e6e8c13674",
+                        "name":  "runtime-0.obj",
+                        "bytes":  21878
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\runtime-1.obj",
+                        "sha256":  "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+                        "name":  "runtime-1.obj",
+                        "bytes":  295887
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\runtime-2.obj",
+                        "sha256":  "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+                        "name":  "runtime-2.obj",
+                        "bytes":  229861
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\runtime-3.obj",
+                        "sha256":  "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+                        "name":  "runtime-3.obj",
+                        "bytes":  20401
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\runtime-4.obj",
+                        "sha256":  "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+                        "name":  "runtime-4.obj",
+                        "bytes":  340964
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-runtime-generated.zip",
+                        "bytes":  5233483,
+                        "sha256":  "f079893ab9b57c52825ea078fcd32c2191ad22f87a1a2bc3e43e9ff894d8911c"
+                    }
+                ],
+    "librarySHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "freeAfter":  71680000
+}

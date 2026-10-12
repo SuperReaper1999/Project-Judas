@@ -1,0 +1,29 @@
+﻿{
+    "archiveSHA256":  "a1a4cb73ede6ea329aee7580d53bb7c63b58bf66fa31dc83fe83a0afe82c113a",
+    "case":  "prefab",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_prefab.exe",
+                      "sha256":  "918fdcbfa2472b4f5d0188ad126241dc1553db690ebf73e9b43768b24a34906e",
+                      "name":  "m78_combined-v2_prefab.exe",
+                      "bytes":  7492608
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\prefab-0.obj",
+                      "sha256":  "c5bbad76bf062d751159503adbc9ad8889080bf8fc33a9e35793e9a45cd6d50b",
+                      "name":  "prefab-0.obj",
+                      "bytes":  650549
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\prefab-1.obj",
+                      "sha256":  "63c209542448dd083cce4c5c64704b44727e7ede9788446c5ad70c1499368484",
+                      "name":  "prefab-1.obj",
+                      "bytes":  712178
+                  }
+              ],
+    "freeBytes":  452317184,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  3682992,
+    "archiveName":  "m78-combined-v2-prefab-archive.zip"
+}

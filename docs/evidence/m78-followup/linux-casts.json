@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_physics_cast_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:59.769960+00:00",
+  "seconds": 0.16454772200086154,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "4c6e89e795717279151566fa1ee2ece3924a1a88909b42f23b0042b2b2d5482e",
+  "logSHA256": "01b02150ac86f0d6f38480321e45d741b32974f5fe72b85004d1bde9793f0e13",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

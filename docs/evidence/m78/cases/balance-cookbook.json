@@ -1,0 +1,24 @@
+{
+  "case": "balance-cookbook",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cookbook",
+    "cookbook"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T14:51:39.450676+00:00",
+  "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 1.1164401960013492,
+  "log": "docs/evidence/m78/cases/balance-cookbook.log",
+  "logSHA256": "1d10d11a342408af4c5d7c21737dd9e5371ad845d6c595c504f92ca3e22ae817"
+}

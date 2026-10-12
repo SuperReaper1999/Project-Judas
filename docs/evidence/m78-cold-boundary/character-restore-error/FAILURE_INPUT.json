@@ -1,0 +1,8 @@
+{
+  "scope": "Exact existing combined CharacterLab strict-context failure input. No mutation or regenerated expected hashes.",
+  "source": ".cache/m78-cold-boundary/final-combined-cases/character-cold/slots/m70.save",
+  "file": "m70-static-anchor-original-failed.save",
+  "bytes": 107787,
+  "sha256": "e99338822e8843b91467e535b1e7e85116e12c33be4580f10b34b79e39539fee",
+  "originalFixtureSHA256": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d"
+}

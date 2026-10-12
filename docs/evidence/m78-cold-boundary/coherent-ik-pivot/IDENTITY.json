@@ -1,0 +1,12 @@
+{
+  "scope": "Copied world-foot IK with SAME authored C reference-root rotation and translation about stance ankle anchor (planted midpoint); no actual body transform/gain/clock/threshold/budget or production changes.",
+  "parent": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik",
+  "parentSHA256": {
+    "PhysicalBalance.cpp": "2949f90614e38711006fa44d1343db3ff8546b3e2aa2c7dfdcbe53f0c6861651",
+    "PhysicalBalance.h": "040f460ac58e3d2487fd958de78fe897e41d2de5f978dad38733db8f4e5a0c15"
+  },
+  "overlaySHA256": {
+    "PhysicalBalance.cpp": "7944cd31d7bb4ea626c899f03a338b6f80df7bdf72108ee4e4c268ecd45fdc4e",
+    "PhysicalBalance.h": "040f460ac58e3d2487fd958de78fe897e41d2de5f978dad38733db8f4e5a0c15"
+  }
+}

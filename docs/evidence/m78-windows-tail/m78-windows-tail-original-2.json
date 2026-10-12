@@ -1,0 +1,64 @@
+﻿{
+    "seconds":  14.8026272,
+    "exeSHA256":  "bd10e97e8998af0ca8eeb3214bfa791cd266d2b7c816c918141a77457e89d903",
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\box-1-profile.json",
+                      "sha256":  "f2b334a6028dfb3310030b96a164c640c8d8dd6a786550d12a63e57c636c0399",
+                      "bytes":  992839,
+                      "reportName":  "m78-windows-tail-original-2-box-1-profile.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\box-1.csv",
+                      "sha256":  "920dfddcfd26cba9edead8d9ce4e64092effb9f3957d375cc700777ea576efe0",
+                      "bytes":  44423,
+                      "reportName":  "m78-windows-tail-original-2-box-1.csv"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\box-4-profile.json",
+                      "sha256":  "1c3135ba65f66133dc8ef465b828578dd15305659c3611a4a3681355b1a647f5",
+                      "bytes":  1723142,
+                      "reportName":  "m78-windows-tail-original-2-box-4-profile.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\box-4.csv",
+                      "sha256":  "15dab2afbfe27947a507b380461bcf79ea8d6b64b26d8ad6e8481c98ce38b37d",
+                      "bytes":  45346,
+                      "reportName":  "m78-windows-tail-original-2-box-4.csv"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\mesh-1-profile.json",
+                      "sha256":  "c746b1c3ba1d65700887fb17aead1d5985fdcc6c8c923b1cdbedc36ac7612be4",
+                      "bytes":  997770,
+                      "reportName":  "m78-windows-tail-original-2-mesh-1-profile.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\mesh-1.csv",
+                      "sha256":  "8c07bd49b70157822a761c07d97ed8bee7dad3855b5395068f860afa2dacb2e7",
+                      "bytes":  42829,
+                      "reportName":  "m78-windows-tail-original-2-mesh-1.csv"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\mesh-4-profile.json",
+                      "sha256":  "a825fa956d5273f1667f4fe7e13e88b8c4224dd76cbaeddb58b56dbff6a21cb9",
+                      "bytes":  1824798,
+                      "reportName":  "m78-windows-tail-original-2-mesh-4-profile.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78WindowsTailResults\\original-2\\mesh-4.csv",
+                      "sha256":  "f2ee381235145dc486caf5fe9c5759e8e83ba7f55da47f71909bb06b2427497d",
+                      "bytes":  43704,
+                      "reportName":  "m78-windows-tail-original-2-mesh-4.csv"
+                  }
+              ],
+    "processCpuMs":  15281.25,
+    "environment":  {
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source"
+                    },
+    "scope":  "Unchanged original 4-case 900-step60Hz native benchmark, exact frozen exe/library; no source/quality/cadence changes",
+    "utcBefore":  "2026-10-11T22:41:42.1477019Z",
+    "exitCode":  0,
+    "freeBytes":  41140224
+}

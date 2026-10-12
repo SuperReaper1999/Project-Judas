@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_streaming_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:58.495857+00:00",
+  "seconds": 0.5154021919988736,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "cd2746a6f381b07953286402f2a103b77401908347ae44d8011cd29d0cabad11",
+  "logSHA256": "7af96ed4b9cf0bf3b73d5cefe34dd233b912d11a0e6c3dcc295d9313cc1377e0",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

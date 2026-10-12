@@ -1,0 +1,569 @@
+{
+  "scope": "Prepared frozen combined source inputs only; no native compilation or test run",
+  "manifestSHA256": "60144b1503dcb04af7a854c4674c2e992f1df3ac9066549cf060eb27f5a01333",
+  "archiveSHA256": "6672a53079c9cb8182637115e0ae7af8549cfb046e528799220330ad9a06efd8",
+  "files": [
+    {
+      "path": "src/RigidBody.cpp",
+      "sha256": "747b3b87c0d8e4cc890a7e44470351a790eaddff7c2e075d57319bc93df30e2b",
+      "bytes": 4782
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "sha256": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+      "bytes": 181934
+    },
+    {
+      "path": "src/CollisionGeometry.cpp",
+      "sha256": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0",
+      "bytes": 21407
+    },
+    {
+      "path": "src/RigidBody.h",
+      "sha256": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+      "bytes": 5782
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "sha256": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6",
+      "bytes": 31100
+    },
+    {
+      "path": "src/CollisionGeometry.h",
+      "sha256": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198",
+      "bytes": 1693
+    },
+    {
+      "path": "src/RigidMotion.h",
+      "sha256": "5004567b69c1f94b8577f7b6d3ec55562f5eddf27dbe8faa7df4b1cf61a9e1a8",
+      "bytes": 6249
+    },
+    {
+      "path": "tests/PhysicalBalanceControllerTests.cpp",
+      "sha256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+      "bytes": 21534
+    },
+    {
+      "path": "tests/RigidMotionTests.cpp",
+      "sha256": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a",
+      "bytes": 13819
+    },
+    {
+      "path": "probes/event.cpp",
+      "sha256": "7ad8d8fd5f4079e8a6ace4123e27501ab5afcd7e203c5d7ff04d0a81caa6e9b4",
+      "bytes": 4500
+    },
+    {
+      "path": "tests/PhysicalBalanceFoundationTests.cpp",
+      "sha256": "a2d04c35b5e4b3fb6885935918c153da0c744b25976594bfd19317600ad22abf",
+      "bytes": 8367
+    },
+    {
+      "path": "tests/PhysicalAnimationTests.cpp",
+      "sha256": "9c98d9431d8e5fb29c1bbe340a23b30f100e6bbcecf99cde79fbb93f4f080b67",
+      "bytes": 34032
+    },
+    {
+      "path": "tests/RagdollTests.cpp",
+      "sha256": "75aa43ab4d1704334b21dec13083055b5f38f0fa90d2589ad51c3d7c8dbf74d3",
+      "bytes": 10796
+    },
+    {
+      "path": "tests/JointTests.cpp",
+      "sha256": "6945998bb13c7a39917aec261c8d30b75af8ef232e5835196f4d7f0876f73558",
+      "bytes": 8334
+    },
+    {
+      "path": "tests/RigidContactTests.cpp",
+      "sha256": "1f17ae776bbadc6b29f34811babc9b3a8c9879727c07d9ebd0f3b47c2a84b933",
+      "bytes": 23902
+    },
+    {
+      "path": "tests/CollisionGeometryTests.cpp",
+      "sha256": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2",
+      "bytes": 31233
+    },
+    {
+      "path": "tests/ContactLifecycleTests.cpp",
+      "sha256": "59bf3711105a68444c8a3ff5f8c9ecf8617e43dfb732cbc4574f921a70067014",
+      "bytes": 23730
+    },
+    {
+      "path": "tests/ContactCacheTests.cpp",
+      "sha256": "4dbc3d4806d698bd985f14725996933463961c787ddaabd668238d7811b4b3e1",
+      "bytes": 16031
+    },
+    {
+      "path": "tests/ImpactSolverTests.cpp",
+      "sha256": "2e2721efb747f6b0c04bf2b72d16d933cf8ff863e2e01d3b9f2c4c081c82d8fa",
+      "bytes": 6912
+    },
+    {
+      "path": "tests/ImpactTimingTests.cpp",
+      "sha256": "b95394745ba8a9f5c7d43a516ebc82f16f16fcf9d499afd92296a8120e6e92ed",
+      "bytes": 29104
+    },
+    {
+      "path": "tests/GravitySelectionTests.cpp",
+      "sha256": "027e92ccf8dd3cead1133ef0e2983eb34472c8500a6af5bfdac422bfdfd587e9",
+      "bytes": 17525
+    },
+    {
+      "path": "tests/UniformGravitySceneTests.cpp",
+      "sha256": "6afdfe9bde108ceb5933381ec3f3af67ea09d349c1714b08db4717307c228a60",
+      "bytes": 12394
+    },
+    {
+      "path": "tests/WorldPersistenceTests.cpp",
+      "sha256": "b51c36f46c6bb69aa9bb84ffbaa87c222ab5e3b709a354974b0d84c2ce0a6853",
+      "bytes": 12341
+    },
+    {
+      "path": "tests/KinematicTests.cpp",
+      "sha256": "fe0730d206941fe83486f7082099131aa9447ac30ca48247d2800fbd3fe6a8cb",
+      "bytes": 17532
+    },
+    {
+      "path": "tests/KinematicLabTests.cpp",
+      "sha256": "a593ad5405930245967c07e4c0eac7023e3aa177f006379cd6d31e700eeeb71c",
+      "bytes": 29147
+    },
+    {
+      "path": "tests/CharacterMotorTests.cpp",
+      "sha256": "7eacfe961f9eae0478d7b3a164836d3465a35d75a754dd3db54fcf5dcffcf46b",
+      "bytes": 10706
+    },
+    {
+      "path": "tests/LifecycleIntegrationTests.cpp",
+      "sha256": "f142c61203180aaeb186bbe2be9c1657b8056422befa14e4fb4bae9a20730bdf",
+      "bytes": 14839
+    },
+    {
+      "path": "tests/BalanceLabTests.cpp",
+      "sha256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+      "bytes": 27911
+    },
+    {
+      "path": "tests/CharacterLabTests.cpp",
+      "sha256": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+      "bytes": 35497
+    },
+    {
+      "path": "tests/SpacecraftControlTests.cpp",
+      "sha256": "548ceaafed42b5caba9781108b21c527be30d60afe3a74e606919c96845b5198",
+      "bytes": 31023
+    },
+    {
+      "path": "tests/SpacecraftFlightTests.cpp",
+      "sha256": "85b0139c79ec4a2a5e691cd191ea0738c949d35ce76a49f11ae9478a48b1c472",
+      "bytes": 15566
+    },
+    {
+      "path": "tests/PrefabTests.cpp",
+      "sha256": "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b",
+      "bytes": 8709
+    },
+    {
+      "path": "tests/WorldStreamingTests.cpp",
+      "sha256": "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b",
+      "bytes": 27558
+    },
+    {
+      "path": "tests/ScalabilityTests.cpp",
+      "sha256": "b790389689ed90f4e65ce67aa2a66bb7b69cefef1c137235a7e0310aec21fba5",
+      "bytes": 7659
+    },
+    {
+      "path": "tests/NavigationDependencyTests.cpp",
+      "sha256": "38aecede76bbd6c2bebed3303bf941b872f116046025ca327288a0aff3489a0b",
+      "bytes": 5084
+    },
+    {
+      "path": "probes/concave.cpp",
+      "sha256": "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136",
+      "bytes": 5248
+    }
+  ],
+  "controllerByteIdenticalToHEAD": true,
+  "controllerSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+  "currentExpectedChecks": {
+    "controller": 119,
+    "rigid_motion": 10239,
+    "contact_lifecycle": 1076,
+    "collision_geometry": 345,
+    "balance_public_js": 15
+  },
+  "cases": [
+    {
+      "id": "controller",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\PhysicalBalanceControllerTests.cpp",
+          "sourceRelativePath": "tests/PhysicalBalanceControllerTests.cpp",
+          "sha256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "motion",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\RigidMotionTests.cpp",
+          "sourceRelativePath": "tests/RigidMotionTests.cpp",
+          "sha256": "65d7d03b3857914acc0c60b4eb4bb72bed657b05717f029246bea7d7f0d3768a"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "event",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\probes\\event.cpp",
+          "sourceRelativePath": "docs/evidence/m78-continuation/probes/event_angular_transport.cpp",
+          "sha256": "7ad8d8fd5f4079e8a6ace4123e27501ab5afcd7e203c5d7ff04d0a81caa6e9b4"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "foundation",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\PhysicalBalanceFoundationTests.cpp",
+          "sourceRelativePath": "tests/PhysicalBalanceFoundationTests.cpp",
+          "sha256": "a2d04c35b5e4b3fb6885935918c153da0c744b25976594bfd19317600ad22abf"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "physical",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\PhysicalAnimationTests.cpp",
+          "sourceRelativePath": "tests/PhysicalAnimationTests.cpp",
+          "sha256": "9c98d9431d8e5fb29c1bbe340a23b30f100e6bbcecf99cde79fbb93f4f080b67"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "ragdoll",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\RagdollTests.cpp",
+          "sourceRelativePath": "tests/RagdollTests.cpp",
+          "sha256": "75aa43ab4d1704334b21dec13083055b5f38f0fa90d2589ad51c3d7c8dbf74d3"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "joints",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\JointTests.cpp",
+          "sourceRelativePath": "tests/JointTests.cpp",
+          "sha256": "6945998bb13c7a39917aec261c8d30b75af8ef232e5835196f4d7f0876f73558"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "rigid_contact",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\RigidContactTests.cpp",
+          "sourceRelativePath": "tests/RigidContactTests.cpp",
+          "sha256": "1f17ae776bbadc6b29f34811babc9b3a8c9879727c07d9ebd0f3b47c2a84b933"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "geometry",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\CollisionGeometryTests.cpp",
+          "sourceRelativePath": "tests/CollisionGeometryTests.cpp",
+          "sha256": "b2330708ce1a3abdccf8beba9e8cae92790645e68161f9b0ddf2e4e282df57f2"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "contact_lifecycle",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\ContactLifecycleTests.cpp",
+          "sourceRelativePath": "tests/ContactLifecycleTests.cpp",
+          "sha256": "59bf3711105a68444c8a3ff5f8c9ecf8617e43dfb732cbc4574f921a70067014"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "contact_cache",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\ContactCacheTests.cpp",
+          "sourceRelativePath": "tests/ContactCacheTests.cpp",
+          "sha256": "4dbc3d4806d698bd985f14725996933463961c787ddaabd668238d7811b4b3e1"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "impact_solver",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\ImpactSolverTests.cpp",
+          "sourceRelativePath": "tests/ImpactSolverTests.cpp",
+          "sha256": "2e2721efb747f6b0c04bf2b72d16d933cf8ff863e2e01d3b9f2c4c081c82d8fa"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "impact_timing",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\ImpactTimingTests.cpp",
+          "sourceRelativePath": "tests/ImpactTimingTests.cpp",
+          "sha256": "b95394745ba8a9f5c7d43a516ebc82f16f16fcf9d499afd92296a8120e6e92ed"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "gravity",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\GravitySelectionTests.cpp",
+          "sourceRelativePath": "tests/GravitySelectionTests.cpp",
+          "sha256": "027e92ccf8dd3cead1133ef0e2983eb34472c8500a6af5bfdac422bfdfd587e9"
+        },
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp",
+          "sourceRelativePath": "src/editor/EditorHistory.cpp",
+          "sha256": "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "uniform_gravity",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\UniformGravitySceneTests.cpp",
+          "sourceRelativePath": "tests/UniformGravitySceneTests.cpp",
+          "sha256": "6afdfe9bde108ceb5933381ec3f3af67ea09d349c1714b08db4717307c228a60"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "world_save",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\WorldPersistenceTests.cpp",
+          "sourceRelativePath": "tests/WorldPersistenceTests.cpp",
+          "sha256": "b51c36f46c6bb69aa9bb84ffbaa87c222ab5e3b709a354974b0d84c2ce0a6853"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "kinematic",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\KinematicTests.cpp",
+          "sourceRelativePath": "tests/KinematicTests.cpp",
+          "sha256": "fe0730d206941fe83486f7082099131aa9447ac30ca48247d2800fbd3fe6a8cb"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "kinematic_lab",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\KinematicLabTests.cpp",
+          "sourceRelativePath": "tests/KinematicLabTests.cpp",
+          "sha256": "a593ad5405930245967c07e4c0eac7023e3aa177f006379cd6d31e700eeeb71c"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "motor",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\CharacterMotorTests.cpp",
+          "sourceRelativePath": "tests/CharacterMotorTests.cpp",
+          "sha256": "7eacfe961f9eae0478d7b3a164836d3465a35d75a754dd3db54fcf5dcffcf46b"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "lifecycle",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\LifecycleIntegrationTests.cpp",
+          "sourceRelativePath": "tests/LifecycleIntegrationTests.cpp",
+          "sha256": "f142c61203180aaeb186bbe2be9c1657b8056422befa14e4fb4bae9a20730bdf"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "balance_lab",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\BalanceLabTests.cpp",
+          "sourceRelativePath": "tests/BalanceLabTests.cpp",
+          "sha256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "character_lab",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\CharacterLabTests.cpp",
+          "sourceRelativePath": "tests/CharacterLabTests.cpp",
+          "sha256": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "spacecraft_control",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\SpacecraftControlTests.cpp",
+          "sourceRelativePath": "tests/SpacecraftControlTests.cpp",
+          "sha256": "548ceaafed42b5caba9781108b21c527be30d60afe3a74e606919c96845b5198"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "spacecraft_flight",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\SpacecraftFlightTests.cpp",
+          "sourceRelativePath": "tests/SpacecraftFlightTests.cpp",
+          "sha256": "85b0139c79ec4a2a5e691cd191ea0738c949d35ce76a49f11ae9478a48b1c472"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "prefab",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\PrefabTests.cpp",
+          "sourceRelativePath": "tests/PrefabTests.cpp",
+          "sha256": "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b"
+        },
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\editor\\EditorHistory.cpp",
+          "sourceRelativePath": "src/editor/EditorHistory.cpp",
+          "sha256": "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "streaming",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\WorldStreamingTests.cpp",
+          "sourceRelativePath": "tests/WorldStreamingTests.cpp",
+          "sha256": "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "scalability",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\ScalabilityTests.cpp",
+          "sourceRelativePath": "tests/ScalabilityTests.cpp",
+          "sha256": "b790389689ed90f4e65ce67aa2a66bb7b69cefef1c137235a7e0310aec21fba5"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "nav_dependency",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\tests\\NavigationDependencyTests.cpp",
+          "sourceRelativePath": "tests/NavigationDependencyTests.cpp",
+          "sha256": "38aecede76bbd6c2bebed3303bf941b872f116046025ca327288a0aff3489a0b"
+        }
+      ],
+      "recipeTemplate": "judas_navigation_dependency_tests"
+    },
+    {
+      "id": "concave",
+      "sources": [
+        {
+          "sourcePath": "@SOURCE@\\probes\\concave.cpp",
+          "sourceRelativePath": "docs/evidence/m78-followup/probes/concave_final.cpp",
+          "sha256": "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136"
+        }
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "runtime",
+      "sources": [
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\main.cpp",
+          "sourceRelativePath": "src/main.cpp",
+          "sha256": "47ad5c1f79c4f3e022e4d1d2c8741a3251e3ce9d2a31e33b1cae4dfbad8352ce"
+        },
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\Application.cpp",
+          "sourceRelativePath": "src/Application.cpp",
+          "sha256": "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0"
+        },
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\RuntimeOptions.cpp",
+          "sourceRelativePath": "src/RuntimeOptions.cpp",
+          "sha256": "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff"
+        },
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\RuntimeDiagnostics.cpp",
+          "sourceRelativePath": "src/RuntimeDiagnostics.cpp",
+          "sha256": "a63c2d3e661c6d938cca894933fa3da32e5807ad8bded98880af388bb27af9d9"
+        },
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\TestHarness.cpp",
+          "sourceRelativePath": "src/TestHarness.cpp",
+          "sha256": "9c16ca348038ab35fb992dafb43031cc4bfe5c844b680473d73ed56dd6aeedcc"
+        }
+      ],
+      "recipeTemplate": "judas"
+    },
+    {
+      "id": "export",
+      "sources": [
+        {
+          "sourcePath": "C:\\JudasValidation\\Source\\src\\ExportMain.cpp",
+          "sourceRelativePath": "src/ExportMain.cpp",
+          "sha256": "b239ce606c4c69b2d808b1e0d44d6ca2458979e2c965d8f916d47360d09266b6"
+        }
+      ],
+      "recipeTemplate": "judas_export"
+    }
+  ]
+}

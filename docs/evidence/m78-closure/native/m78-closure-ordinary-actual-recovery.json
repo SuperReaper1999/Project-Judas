@@ -1,0 +1,111 @@
+﻿{
+    "seconds":  3.1053607999999997,
+    "expectedExitCode":  0,
+    "run":  "m78-closure-ordinary-actual-recovery",
+    "executableSHA256":  "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\cold-recovery-read-state.json",
+                      "sha256":  "8b719f6737f7b62af5536c642b830d74d1c69556ee468bf5335d2faa81bb49d8",
+                      "bytes":  183,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-cold-recovery-read-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\diagnostic-cold-read-trace.jsonl",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-diagnostic-cold-read-trace.jsonl"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-final.json",
+                      "sha256":  "85cc7fd835b5b2a3aa4e449f6d1c8a394669e021f18e5bbacd5804bc9057e948",
+                      "bytes":  61054,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-final.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-immediately-restored.json",
+                      "sha256":  "5e754dfb4ee08cc8e15caa072b621f2d7b3021dda4d7132be3081cf05940d675",
+                      "bytes":  60909,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-immediately-restored.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-1.json",
+                      "sha256":  "28ecff5f0195345f2f9880cc4e3157c854bc59b12130a6b414efcc5c3288b062",
+                      "bytes":  59186,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-1.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-10.json",
+                      "sha256":  "9652a6781b9a7ba3c6e5573e87d5003b508a357255d60a0f4391f5e328b800f2",
+                      "bytes":  60807,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-10.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-2.json",
+                      "sha256":  "b9f4914ec21359edca4841a60031acac3127f047716afa6c82fc62c4c8a3e33b",
+                      "bytes":  60966,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-3.json",
+                      "sha256":  "07e9a5f5cdab3a1d44440e7aace73ba8e0215fd4f9114e6b8e6ed76bad1bb32b",
+                      "bytes":  60827,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-3.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-4.json",
+                      "sha256":  "cadd9af249225b16ae078e1f8609fbefcf5a3713003eda85bb8a119cabddef89",
+                      "bytes":  60775,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-4.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-5.json",
+                      "sha256":  "8e29add0a9f34e4539e7733454b4a92e459cffd959b539b27560d7073d6514eb",
+                      "bytes":  60743,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-5.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-6.json",
+                      "sha256":  "09b99c2a6738e248eae71c3cf0b282a5fb403661ba6a5c7bea5e10bf0e96d2e1",
+                      "bytes":  60881,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-6.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-7.json",
+                      "sha256":  "833f87688d85c5460e0e7debe6ea4fbe9221fbfef44abe5b1171178b4afd3004",
+                      "bytes":  60817,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-7.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-8.json",
+                      "sha256":  "13ebb4308f07de3c6aff1d857c287a507e379808562f9a62eea82e7f34d693d3",
+                      "bytes":  60782,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-8.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\physical-step-9.json",
+                      "sha256":  "f1006d1d5800725ef3b7a3657359c795e7fb95287c1fbf27f24cb7ce17160431",
+                      "bytes":  60919,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-physical-step-9.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-.lock"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery\\slots\\m77.save",
+                      "sha256":  "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59",
+                      "bytes":  60206,
+                      "reportName":  "m78-closure-ordinary-actual-recovery-m77.save"
+                  }
+              ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ClosureResults\\ordinary-actual-recovery",
+                      "cold-recovery-read"
+                  ],
+    "exitCode":  0,
+    "originalSnapshotSHA256":  "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59",
+    "actualCurrentPhysicalStanding":  true
+}

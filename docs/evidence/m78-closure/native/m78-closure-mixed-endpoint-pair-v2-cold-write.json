@@ -1,0 +1,116 @@
+﻿{
+    "seconds":  3.7976897,
+    "executableSHA256":  "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+    "expectedExitCode":  0,
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2",
+                      "cold-write"
+                  ],
+    "observerOnlyContinueWrite":  true,
+    "exitCode":  0,
+    "run":  "m78-closure-mixed-endpoint-pair-v2-cold-write",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\actual-drive-sidecar.json",
+                      "sha256":  "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd",
+                      "bytes":  5482,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-actual-drive-sidecar.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\cold-write-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "bytes":  365,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-cold-write-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\diagnostic-uninterrupted-trace.jsonl",
+                      "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                      "bytes":  610874,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-diagnostic-uninterrupted-trace.jsonl"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-before-save.json",
+                      "sha256":  "dbcbebaf6cf5e071553f128ee80921193800a6d9157a416b18d3ab9b4691f32d",
+                      "bytes":  49691,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-before-save.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-final.json",
+                      "sha256":  "a423caf0a5042453b33078406b97e50e2d0821d52b898e3c0dd32c5bf0775cd1",
+                      "bytes":  60636,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-final.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-1.json",
+                      "sha256":  "80274ee761ea3d5424b2932aa14c2d5ef755a991cd9940bb2677afb556f0434b",
+                      "bytes":  47153,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-1.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-10.json",
+                      "sha256":  "713dbedab3a294a060d5ea9fe41479367f2dde8588425856b9a91c9027ad7aae",
+                      "bytes":  50385,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-10.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-2.json",
+                      "sha256":  "fee5fe76261871f149295ef7cfafcad638596953e60edf9608a0c4e62aebb50c",
+                      "bytes":  48944,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-2.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-3.json",
+                      "sha256":  "430838b1af2c85d62b7c957dac53fab73ac7bb4bd6d7709a56f12ea7c86c8b50",
+                      "bytes":  48908,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-3.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-4.json",
+                      "sha256":  "b826d2c008138c64729b0fc10c967d9d11b0f2eb737ab7253d25fdd325db1734",
+                      "bytes":  50511,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-4.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-5.json",
+                      "sha256":  "44976475f875390db37b8c02c96c97bc64431a81d50dd83959137394f3e1e483",
+                      "bytes":  50431,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-5.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-6.json",
+                      "sha256":  "5483c19f33f282454a88fcd8ebd84ce35eb6a64b7d4f275e12cbbae243949acf",
+                      "bytes":  50508,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-6.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-7.json",
+                      "sha256":  "eeabc21ef508fe936e9a0ac30e49c590279d20648cc5fcf15b532180c155069a",
+                      "bytes":  50423,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-7.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-8.json",
+                      "sha256":  "7093f4ee76887b5e2106a7eb625569792ccd60d17d37e3331383c65b47a0be45",
+                      "bytes":  50435,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-8.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\physical-step-9.json",
+                      "sha256":  "22f152b49fd7427e27b48c1617823d82bda876d00b6f42d330ea80f62deaf4fb",
+                      "bytes":  50454,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-9.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-.lock"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ClosureResults\\mixed-endpoint-pair-v2\\slots\\m77.save",
+                      "sha256":  "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442",
+                      "bytes":  64001,
+                      "reportName":  "m78-closure-mixed-endpoint-pair-v2-cold-write-m77.save"
+                  }
+              ]
+}

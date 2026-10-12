@@ -1,0 +1,5 @@
+PRECONDITION rotated_half warmup_steps=240 mean_particle_speed=0.0323812
+PRECONDITION rotated_half observed_release_surface=1.79014 body_top=1 clearance=0.790144
+FAIL rotated_half settles rather than passing through desired immersion
+CASE rotated_half failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=1152 y=1.734204531 vy=0.558701396 fraction=0.4888963997 observed_fraction=0.5276835124 max_speed=2.807448149 particle_ms=32.684089 executed_ms=35.831376 amortized_ms=19.46915253
+SUMMARY checks=731 failures=1 acceptance_failures=1 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=0 steps=480

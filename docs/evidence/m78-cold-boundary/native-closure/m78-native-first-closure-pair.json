@@ -1,0 +1,281 @@
+﻿{
+    "runs":  [
+                 {
+                     "linkLogSHA256":  "5af5713cb2c3c8ef4c8a4fd19166781fe09a19fa2c578d79809a0678b311c9ef",
+                     "seconds":  3.0380916,
+                     "exitCode":  0,
+                     "compiles":  [
+                                      {
+                                          "sha256":  "8d20f18a9f39ddf84360669eb2da5bba7f9ae0fd6c3e0590842af54453e01404",
+                                          "response":  "/I\"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj\" /Fd\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\JointSolver.cpp\"",
+                                          "source":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\JointSolver.cpp",
+                                          "objectSHA256":  "2490752e85cf0254f87b6a8204d1a1ea20f0365016e87e677d46f502552b6711",
+                                          "object":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj"
+                                      },
+                                      {
+                                          "sha256":  "c0f7d7cfb0041acdb9be1816f1ba58bf2b5d2412b26ab449bcce4de5c8d172f1",
+                                          "response":  "/I\"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\PhysicalBalance.obj\" /Fd\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\PhysicalBalance.cpp\"",
+                                          "source":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\PhysicalBalance.cpp",
+                                          "objectSHA256":  "5c37fb688daea9511e4e83525184cb28f549527cde2524b90355e0d320ee7076",
+                                          "object":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\PhysicalBalance.obj"
+                                      },
+                                      {
+                                          "sha256":  "65d681645fc149f6668ae3abcfacd18b424bba0f9106f29b468ddd45495eb180",
+                                          "response":  "/I\"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj\" /Fd\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj /I\"C:\\JudasValidation\\Source\\third_party\"  \"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\probes\\BalanceLabBoundaryObserver.cpp\"",
+                                          "source":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\probes\\BalanceLabBoundaryObserver.cpp",
+                                          "objectSHA256":  "edd664d11022a916a76b35f0b2e28b946dc7806c017f7f90bf92aaf2ba9490fa",
+                                          "object":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj"
+                                      }
+                                  ],
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\diagnostic-cold-read-trace.jsonl",
+                                       "sha256":  "6b155fd09d93da30e4a594170e30e5b0e4243067da6663dbdfb53eb82f70a04d",
+                                       "bytes":  606554,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-diagnostic-cold-read-trace.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\joint-boundary.jsonl",
+                                       "sha256":  "c840bbf07177c478b0ddd0f09f63c28c178e0e9cb99ecf706c60f9377ebca84e",
+                                       "bytes":  1259860,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-joint-boundary.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-final.json",
+                                       "sha256":  "f1c5843d6981b42d93a809437693d5e6e5efe6f267cc8da12184fd3bbdbfeacd",
+                                       "bytes":  37449,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-final.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-immediately-restored.json",
+                                       "sha256":  "7f104df86fad32f8055ec6d362b617f2ac190129dc781c9530ae23eadbd0f3b9",
+                                       "bytes":  36616,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-immediately-restored.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-1.json",
+                                       "sha256":  "b5864494d9a26a7191ee7508981b707f9b8fea4f84e870eeac15b3e0c79dd3ef",
+                                       "bytes":  37265,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-1.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-10.json",
+                                       "sha256":  "8499e3b22bc343cf81b9bc0a5ce3dbf429b1d3085808fa2213b122d8638769d4",
+                                       "bytes":  37236,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-10.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-2.json",
+                                       "sha256":  "f93c3af7a16c8b7de8921e512694f5587bc2acd121f4e195b7bba5a7792d032e",
+                                       "bytes":  37198,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-2.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-3.json",
+                                       "sha256":  "e2b6204a7ecc36372cc3caf4cc44fe8514a1479e01ac915f7ddf6bc9893285a8",
+                                       "bytes":  37261,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-3.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-4.json",
+                                       "sha256":  "57678411c0c5cce428a7c41f06d929e7b04c92af6b015b6887ec9d525bcce41b",
+                                       "bytes":  37262,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-4.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-5.json",
+                                       "sha256":  "0fd52ed2c24ffad03d7cc80b209e6d48a2b1b1e305a27baba34e8de6e409ad89",
+                                       "bytes":  37319,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-5.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-6.json",
+                                       "sha256":  "730284b10cab62ed5c0434d6158827cb0657e00e85b88c50529bf584ba8ab7e1",
+                                       "bytes":  37221,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-6.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-7.json",
+                                       "sha256":  "c70539893ff10586cf40e016a99874281f2a5902a21810f32c440056df318f52",
+                                       "bytes":  37208,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-7.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-8.json",
+                                       "sha256":  "420e3d51b28ea0d055f85fd1866c386e98688a20e32b4e420824bf2835d2ed7e",
+                                       "bytes":  37384,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-8.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds\\physical-step-9.json",
+                                       "sha256":  "c0461babb6970f8c3db05812d13d549a9cd47ada8e43d37664a6520e6729bde7",
+                                       "bytes":  37306,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-physical-step-9.json"
+                                   }
+                               ],
+                     "variant":  "commands-seeds",
+                     "sourceBundleSHA256":  "8af55c57e26746be22eed2870ca17ebfc2b239b504c04ce9cd73398d5c38deca",
+                     "inputSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                     "executableSHA256":  "9d1c9680a3a222fbd2c741e775e457169d5a666d120a6e4c5ca7f1d5e6b54f10",
+                     "executable":  "C:\\JudasValidation\\Build\\Release\\m78-native-first-closure-commands-seeds.exe",
+                     "scope":  "DIAGNOSTIC ONLY. Exact native a106 first-boundary commands/seed closure, no production edit or persistent warm-cache restoration. Explicit copied objects precede untouched frozen production archive; map must prove replaced archive members not extracted.",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds",
+                                       "cold-read"
+                                   ],
+                     "linkMapSHA256":  "697c6c92389f0fa859caef139c2a64c870d7d156b0c5b1861104da48cf27888c",
+                     "linkerResponse":  "\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj\" \"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-native-first-closure-commands-seeds.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\commands-seeds.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\commands-seeds.lib\" /MACHINE:X64  /machine:x64 /VERBOSE:LIB /MAP:\"C:\\JudasValidation\\M78FirstBoundaryClosureResults\\m78-native-first-closure-commands-seeds.map\"",
+                     "library":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                                     "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+                                     "bytes":  66840496
+                                 },
+                     "freeBytes":  41246720
+                 },
+                 {
+                     "linkLogSHA256":  "5af5713cb2c3c8ef4c8a4fd19166781fe09a19fa2c578d79809a0678b311c9ef",
+                     "seconds":  2.5849932,
+                     "exitCode":  0,
+                     "compiles":  [
+                                      {
+                                          "sha256":  "8d20f18a9f39ddf84360669eb2da5bba7f9ae0fd6c3e0590842af54453e01404",
+                                          "response":  "/I\"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj\" /Fd\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\JointSolver.cpp\"",
+                                          "source":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\JointSolver.cpp",
+                                          "objectSHA256":  "2490752e85cf0254f87b6a8204d1a1ea20f0365016e87e677d46f502552b6711",
+                                          "object":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj"
+                                      },
+                                      {
+                                          "sha256":  "c0f7d7cfb0041acdb9be1816f1ba58bf2b5d2412b26ab449bcce4de5c8d172f1",
+                                          "response":  "/I\"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\PhysicalBalance.obj\" /Fd\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\PhysicalBalance.cpp\"",
+                                          "source":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\\PhysicalBalance.cpp",
+                                          "objectSHA256":  "5c37fb688daea9511e4e83525184cb28f549527cde2524b90355e0d320ee7076",
+                                          "object":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\PhysicalBalance.obj"
+                                      },
+                                      {
+                                          "sha256":  "65d681645fc149f6668ae3abcfacd18b424bba0f9106f29b468ddd45495eb180",
+                                          "response":  "/I\"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj\" /Fd\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj /I\"C:\\JudasValidation\\Source\\third_party\"  \"C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\probes\\BalanceLabBoundaryObserver.cpp\"",
+                                          "source":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\source\\probes\\BalanceLabBoundaryObserver.cpp",
+                                          "objectSHA256":  "edd664d11022a916a76b35f0b2e28b946dc7806c017f7f90bf92aaf2ba9490fa",
+                                          "object":  "C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj"
+                                      }
+                                  ],
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\diagnostic-cold-read-trace.jsonl",
+                                       "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                                       "bytes":  610874,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-diagnostic-cold-read-trace.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\joint-boundary.jsonl",
+                                       "sha256":  "c840bbf07177c478b0ddd0f09f63c28c178e0e9cb99ecf706c60f9377ebca84e",
+                                       "bytes":  1259860,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-joint-boundary.jsonl"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-final.json",
+                                       "sha256":  "baaa6633532e71963374979bc0c1ffec9c16b9b0f263ca5f91d69dc8b80fd34e",
+                                       "bytes":  37365,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-final.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-immediately-restored.json",
+                                       "sha256":  "7f104df86fad32f8055ec6d362b617f2ac190129dc781c9530ae23eadbd0f3b9",
+                                       "bytes":  36616,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-immediately-restored.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-1.json",
+                                       "sha256":  "03b87f7eda8951df2f300c17150475cbca914b37c7a329151d1fcecb0a223950",
+                                       "bytes":  37285,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-1.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-10.json",
+                                       "sha256":  "6bf087675d5d96db6e8788abde976fac85427bb5568ace4d39392be88c4e46c6",
+                                       "bytes":  37175,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-10.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-2.json",
+                                       "sha256":  "f935eab04f8c727dd8646a31b80b6401f96f5412f934d6e0ecaf252aa53d32b1",
+                                       "bytes":  37351,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-2.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-3.json",
+                                       "sha256":  "46ca68e58f99ec80a47e9faa43d967f218953d7ed24d54c106ffe7c55889f257",
+                                       "bytes":  37322,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-3.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-4.json",
+                                       "sha256":  "c08e369753a9c18fd5e5d4335820ccedf5072ecd457759eefb76d49d44f02941",
+                                       "bytes":  37299,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-4.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-5.json",
+                                       "sha256":  "6e5363b3917bb9584fd27b00126951aaeaa0483221b8b9540f641a413dc9e628",
+                                       "bytes":  37226,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-5.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-6.json",
+                                       "sha256":  "575d0b710cb0bd4f2986aeea33295f8abfe5dcb5d2755203b759aea70493069f",
+                                       "bytes":  37310,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-6.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-7.json",
+                                       "sha256":  "9e34b1fa9366fa46eedd17903094026e594d2ab13b7dbb88fac3703882f76670",
+                                       "bytes":  37225,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-7.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-8.json",
+                                       "sha256":  "af22cbab68cab002887006052372dd52ffe45700cf0984cc2388e63c4966c950",
+                                       "bytes":  37240,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-8.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare\\physical-step-9.json",
+                                       "sha256":  "655f54a61af41a53fb0dac419874cccbaa340d691aef62e1995b0b90efe63de4",
+                                       "bytes":  37259,
+                                       "reportName":  "m78-native-first-closure-commands-seeds-normal-prepare-physical-step-9.json"
+                                   }
+                               ],
+                     "variant":  "commands-seeds-normal-prepare",
+                     "sourceBundleSHA256":  "8af55c57e26746be22eed2870ca17ebfc2b239b504c04ce9cd73398d5c38deca",
+                     "inputSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                     "executableSHA256":  "5da89c0c9df414df7a8d52d20bdf4b5becb24a9a73c6eaa916ff948c2f72b617",
+                     "executable":  "C:\\JudasValidation\\Build\\Release\\m78-native-first-closure-commands-seeds-normal-prepare.exe",
+                     "scope":  "DIAGNOSTIC ONLY. Exact native a106 first-boundary commands/seed closure, no production edit or persistent warm-cache restoration. Explicit copied objects precede untouched frozen production archive; map must prove replaced archive members not extracted.",
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\commands-seeds-normal-prepare",
+                                       "cold-read"
+                                   ],
+                     "linkMapSHA256":  "4c8ff2dc435dbc41cbfae8e8b33c8f5a1cbccdf4055bd6eb6470285a08047ebf",
+                     "linkerResponse":  "\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\BalanceLabBoundaryObserver.obj\" \"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\JointSolver.obj\" \"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\PhysicalBalance.obj\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-native-first-closure-commands-seeds-normal-prepare.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\commands-seeds-normal-prepare.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78FirstBoundaryClosure\\objects\\commands-seeds-normal-prepare.lib\" /MACHINE:X64  /machine:x64 /VERBOSE:LIB /MAP:\"C:\\JudasValidation\\M78FirstBoundaryClosureResults\\m78-native-first-closure-commands-seeds-normal-prepare.map\"",
+                     "library":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                                     "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+                                     "bytes":  66840496
+                                 },
+                     "freeBytes":  12775424
+                 }
+             ],
+    "freeBytes":  12754944
+}

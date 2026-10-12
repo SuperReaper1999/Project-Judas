@@ -1,0 +1,462 @@
+{
+  "state": "PREPARATION ONLY - no native compilation or execution authorized before final source freeze",
+  "latestFreeBytes": 338219008,
+  "baselineArchiveSHA256": "8f6a6e44b439fdfa8c82a9151015022abb5739c802ac854f86372a57d2399092",
+  "baselineArchiveBytes": 66779688,
+  "cases": [
+    {
+      "id": "controller",
+      "source": "tests/PhysicalBalanceControllerTests.cpp",
+      "purpose": "unchanged M77 119 checks; same inputs/timestep/thresholds",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "motion",
+      "source": "tests/RigidMotionTests.cpp",
+      "purpose": "combined rigid motion / world-angular-momentum",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "event",
+      "source": "docs/evidence/m78-continuation/probes/event_angular_transport.cpp",
+      "purpose": "actual PhysicsWorld impact event angular-transport observer",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "foundation",
+      "source": "tests/PhysicalBalanceFoundationTests.cpp",
+      "purpose": "M77 force/contact foundations",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "physical",
+      "source": "tests/PhysicalAnimationTests.cpp",
+      "purpose": "M70 physical animation",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "ragdoll",
+      "source": "tests/RagdollTests.cpp",
+      "purpose": "actual mapped rig/lifetime/orientation",
+      "arguments": [
+        "--output",
+        "@OUT@\\ragdoll"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "joints",
+      "source": "tests/JointTests.cpp",
+      "purpose": "M45 articulations",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "rigid_contact",
+      "source": "tests/RigidContactTests.cpp",
+      "purpose": "actual rigid contacts",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "geometry",
+      "source": "tests/CollisionGeometryTests.cpp",
+      "purpose": "portable geometry regression and exact parity",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "contact_lifecycle",
+      "source": "tests/ContactLifecycleTests.cpp",
+      "purpose": "first-step/persistent/end contact observation and saves",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "contact_cache",
+      "source": "tests/ContactCacheTests.cpp",
+      "purpose": "prepared contact cache lifetime",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "impact_solver",
+      "source": "tests/ImpactSolverTests.cpp",
+      "purpose": "impact solver",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "impact_timing",
+      "source": "tests/ImpactTimingTests.cpp",
+      "purpose": "all unchanged impact/CCD/ledger fixtures",
+      "arguments": [
+        "all"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "gravity",
+      "source": "tests/GravitySelectionTests.cpp",
+      "purpose": "generation-safe selected gravity and authoring",
+      "arguments": [],
+      "extraSources": [
+        "src/editor/EditorHistory.cpp"
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "uniform_gravity",
+      "source": "tests/UniformGravitySceneTests.cpp",
+      "purpose": "FTFT3 original gravity/serialization fixtures",
+      "arguments": [
+        "--fixtures",
+        "docs/evidence/ftft3/fixtures",
+        "--output",
+        "@OUT@\\uniform-gravity"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "world_save",
+      "source": "tests/WorldPersistenceTests.cpp",
+      "purpose": "normal save capture/restore/first resumed step",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "kinematic",
+      "source": "tests/KinematicTests.cpp",
+      "purpose": "moving support and prescribed-body timeline",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "kinematic_lab",
+      "source": "tests/KinematicLabTests.cpp",
+      "purpose": "real JS timeline/save/stream integration",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "motor",
+      "source": "tests/CharacterMotorTests.cpp",
+      "purpose": "CharacterMotor regressions",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "lifecycle",
+      "source": "tests/LifecycleIntegrationTests.cpp",
+      "purpose": "actual mixed lifetime/persistence",
+      "arguments": [
+        "--output",
+        "@OUT@\\lifecycle"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "balance_lab",
+      "source": "tests/BalanceLabTests.cpp",
+      "purpose": "actual public JS M77 step and lifecycle/cold saves",
+      "arguments": [
+        "@OUT@\\balance-step",
+        "step-trace"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "character_lab",
+      "source": "tests/CharacterLabTests.cpp",
+      "purpose": "M70 actual GL/JS and cold saves",
+      "arguments": [
+        "@OUT@\\character"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "spacecraft_control",
+      "source": "tests/SpacecraftControlTests.cpp",
+      "purpose": "retained world-L spacecraft actuation contract",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "spacecraft_flight",
+      "source": "tests/SpacecraftFlightTests.cpp",
+      "purpose": "retained world-L flight contract",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "prefab",
+      "source": "tests/PrefabTests.cpp",
+      "purpose": "retained independent template correction",
+      "arguments": [],
+      "extraSources": [
+        "src/editor/EditorHistory.cpp"
+      ],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "streaming",
+      "source": "tests/WorldStreamingTests.cpp",
+      "purpose": "retained independent streaming correction",
+      "arguments": [],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "scalability",
+      "source": "tests/ScalabilityTests.cpp",
+      "purpose": "streaming residency/lifetime load",
+      "arguments": [
+        "@OUT@\\scalability"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "nav_dependency",
+      "source": "tests/NavigationDependencyTests.cpp",
+      "purpose": "retained multi-scene stale-navigation correction",
+      "arguments": [
+        "@NAVPROJECT@",
+        "Imports/landscape.judasterrain"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_navigation_dependency_tests"
+    },
+    {
+      "id": "concave",
+      "source": "docs/evidence/m78-followup/probes/concave_final.cpp",
+      "purpose": "unchanged original 900 x four cases, 8192 mesh triangles",
+      "arguments": [
+        "@OUT@\\concave"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_balance_lab_tests"
+    },
+    {
+      "id": "runtime",
+      "source": "src/main.cpp",
+      "purpose": "fresh standalone used to package ordinary project",
+      "arguments": [
+        "projects/balance_lab/balance_lab.judasproj"
+      ],
+      "extraSources": [
+        "src/Application.cpp",
+        "src/RuntimeOptions.cpp",
+        "src/RuntimeDiagnostics.cpp",
+        "src/TestHarness.cpp"
+      ],
+      "recipeTemplate": "judas",
+      "requiresEnvironment": {
+        "JUDAS_TEST_SCRIPT": "@OUT@\\startup.harness"
+      }
+    },
+    {
+      "id": "export",
+      "source": "src/ExportMain.cpp",
+      "purpose": "normal exported package with fresh runtime",
+      "arguments": [
+        "projects/balance_lab/balance_lab.judasproj",
+        "@PACKAGE@",
+        "@RUNTIME@"
+      ],
+      "extraSources": [],
+      "recipeTemplate": "judas_export",
+      "runAfterRetaining": [
+        "runtime"
+      ],
+      "requiresSDKAdjacentDirectories": [
+        "windows-runtime",
+        "windows-licenses"
+      ]
+    }
+  ],
+  "additionalRuns": {
+    "balance_lab": [
+      {
+        "id": "lifecycle",
+        "arguments": [
+          "@OUT@\\balance-lifecycle",
+          "lifecycle"
+        ]
+      },
+      {
+        "id": "regions",
+        "arguments": [
+          "@OUT@\\balance-regions",
+          "regions"
+        ]
+      },
+      {
+        "id": "radial",
+        "arguments": [
+          "@OUT@\\balance-radial",
+          "radial"
+        ]
+      },
+      {
+        "id": "variants",
+        "arguments": [
+          "@OUT@\\balance-variants",
+          "variants"
+        ]
+      },
+      {
+        "id": "recovery",
+        "arguments": [
+          "@OUT@\\balance-recovery",
+          "recovery"
+        ]
+      },
+      {
+        "id": "denied",
+        "arguments": [
+          "@OUT@\\balance-denied",
+          "denied"
+        ]
+      },
+      {
+        "id": "blocked-recovery",
+        "arguments": [
+          "@OUT@\\balance-blocked-recovery",
+          "blocked-recovery"
+        ]
+      },
+      {
+        "id": "low-grip",
+        "arguments": [
+          "@OUT@\\balance-low-grip",
+          "low-grip"
+        ]
+      },
+      {
+        "id": "fault",
+        "arguments": [
+          "@OUT@\\balance-fault",
+          "fault"
+        ]
+      },
+      {
+        "id": "cookbook",
+        "arguments": [
+          "@OUT@\\balance-cookbook",
+          "cookbook"
+        ]
+      },
+      {
+        "id": "cold-stand-write",
+        "arguments": [
+          "@OUT@\\balance-cold-stand",
+          "cold-stand-write"
+        ]
+      },
+      {
+        "id": "cold-stand-read",
+        "arguments": [
+          "@OUT@\\balance-cold-stand",
+          "cold-stand-read"
+        ]
+      },
+      {
+        "id": "cold-recovery-write",
+        "arguments": [
+          "@OUT@\\balance-cold-recovery",
+          "cold-recovery-write"
+        ]
+      },
+      {
+        "id": "cold-recovery-read",
+        "arguments": [
+          "@OUT@\\balance-cold-recovery",
+          "cold-recovery-read"
+        ]
+      },
+      {
+        "id": "cold-write",
+        "arguments": [
+          "@OUT@\\balance-cold-step",
+          "cold-write"
+        ]
+      },
+      {
+        "id": "cold-read",
+        "arguments": [
+          "@OUT@\\balance-cold-step",
+          "cold-read"
+        ]
+      }
+    ],
+    "character_lab": [
+      {
+        "id": "cold-write",
+        "arguments": [
+          "@OUT@\\character-cold",
+          "cold-write"
+        ]
+      },
+      {
+        "id": "cold-read",
+        "arguments": [
+          "@OUT@\\character-cold",
+          "cold-read"
+        ]
+      }
+    ]
+  },
+  "sourceInputs": {
+    "manifest": "windows-immutable-test-inputs-v1.json",
+    "archiveBytes": 12226766,
+    "unpackedBytes": 16338823,
+    "files": 248
+  },
+  "diskBudgetBytes": {
+    "oneCandidateLibraryUpperBound": 70000000,
+    "sourceZipExtractAndNewInputsUpperBound": 45000000,
+    "oneLiveExecutableAndObjectsUpperBound": 16000000,
+    "smallResultsUpperBound": 32000000,
+    "originalConcaveProfilesUpperBound": 6000000,
+    "oneMovedPackageIncludingVMSoftwareGLUpperBound": 115000000,
+    "untouchedReserve": 33554432
+  },
+  "constraints": [
+    "All tests use the SAME isolated candidate engine archive",
+    "Staging exact changed test source does not weaken original M77 input/timestep/thresholds",
+    "No MSBuild target dependencies/full engine rebuild while missing baseline objects",
+    "One case executable at a time; archive and independently verify before cleanup",
+    "Move/rename one new package, do not keep duplicate package",
+    "No FLU-001 modification or acceptance change; remains an independent known failure",
+    "Native software-GL VM receipts do not assert hardware or human validation"
+  ]
+}

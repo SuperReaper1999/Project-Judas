@@ -1,0 +1,22 @@
+{
+  "scope": "Independent host byte count/SHA verification of every exact completed native executable/object before owned guest cleanup",
+  "hostVerified": true,
+  "label": "combined-v2",
+  "case": "event",
+  "archiveSHA256": "cbe94893439c812a7c2c363752bda14893920ab4284ccc0a504ad83a6bb9c73c",
+  "archiveBytes": 231038,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_event.exe",
+      "sha256": "7ae8114effa2d19855ad9284d4d49a5d7b411cddc3db2ea99aef3c4706253b79",
+      "name": "m78_combined-v2_event.exe",
+      "bytes": 440320
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\event-0.obj",
+      "sha256": "261a14b154b855b50a6951ab1e05efc5808ae779f271e9d997e54c8bcdb15042",
+      "name": "event-0.obj",
+      "bytes": 57301
+    }
+  ]
+}

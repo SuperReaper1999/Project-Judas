@@ -1,0 +1,19 @@
+﻿{
+    "scope":  "Only independently archived exact owned completed executable and its case objects removed; sources, libraries, DLLs and receipts preserved",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_export.exe",
+                      "sha256":  "be3239161daeba43a7f6c68eb9e0eb0cdf0afe7be0c4454ef63a06a66f61bd68",
+                      "name":  "m78_combined-v2_export.exe",
+                      "bytes":  8139264
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\export-0.obj",
+                      "sha256":  "1dae240f9f828d5d8fdcedc3cf0e40e538cf8502b227bce43c49a0b7380a8a5e",
+                      "name":  "export-0.obj",
+                      "bytes":  88409
+                  }
+              ],
+    "archiveSHA256":  "c22fb60e340272918056a73b407003f6f34c49c00c499a9094c3141305d20b66",
+    "freeBytes":  368750592
+}

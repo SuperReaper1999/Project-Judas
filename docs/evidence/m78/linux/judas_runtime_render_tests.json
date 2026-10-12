@@ -1,0 +1,27 @@
+{
+  "id": "judas_runtime_render_tests",
+  "source": "tests/RuntimeRenderTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_runtime_render_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "6df6c080a1c29215b2353cffe718571b426c50d72484ba1acecc5ad382740301",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 54,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_runtime_render_tests.log",
+  "logSHA256": "664102e35984a3fb934d178cf011ce02ca827a5c17affdd892393975f966c82a",
+  "seconds": 4.168044115000157
+}

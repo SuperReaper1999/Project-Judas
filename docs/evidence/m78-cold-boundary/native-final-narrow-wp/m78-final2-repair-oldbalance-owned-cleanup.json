@@ -1,0 +1,13 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  77799424,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj",
+                        "bytes":  2230400,
+                        "sha256":  "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff"
+                    }
+                ],
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "freeAfter":  80031744
+}

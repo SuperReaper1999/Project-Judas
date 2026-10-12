@@ -1,0 +1,4 @@
+Compound geometry, orientation and prior pose
+Physical bottom/walls with no invisible top
+Player query and point impulse use compound parent
+Compound body tests: all passed

@@ -1,0 +1,31 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "motion",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-motion.exe",
+      "sha256": "9841be826f8d4b9610737de5222e8d9110d71e9b4b41ecbe39f2eebabbf6de9f",
+      "name": "m78-closure-motion.exe",
+      "bytes": 4262400
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\motion-0.obj",
+      "sha256": "19a7be4a5c937b9bb1c2efc0f8a1c562adea037ee004458f1ed7fad18f55a6a1",
+      "name": "motion-0.obj",
+      "bytes": 149039
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-motion.map",
+      "sha256": "eb6d8bf82f08e8f2f34f315a919005fcbdbd6a8e5b5f169c971bfc1a4aaa522b",
+      "name": "m78-closure-motion.map",
+      "bytes": 3539507
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-motion-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-closure-motion-link.log",
+      "bytes": 33930
+    }
+  ]
+}

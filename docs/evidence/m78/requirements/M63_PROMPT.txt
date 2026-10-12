@@ -1,0 +1,489 @@
+# M63 — Judas learns to break.
+
+Starting checkpoint : 29845bbdb911d2129a2d2b995fed22a1448594e7
+
+
+M62 must be complete, human-accepted and checkpointed before this brief executes.
+If the hash is blank, STOP and ask for it. Verify it against HEAD/main/origin/main
+and inspect the worktree. Preserve operator-owned edits; stop on unexplained source
+changes rather than resetting, overwriting or absorbing another agent's work.
+
+NUMBERING: M62 combines cloth and volumetric elastic/plastic deformables. M63 is
+structural failure, fracture and physical fragments. It is NOT another soft-body
+milestone. No subsequent milestone is authorized by this brief.
+
+Implement one complete M63 candidate. Do not commit, push, merge or tag before
+operator review. Do not modify Claude's skate workspace or independently managed PRs.
+
+GOAL
+An ordinary authored object or structure can carry load, deform where configured,
+fail locally, separate into physical pieces and continue interacting with the world.
+The fracture pattern is bounded by authored/baked topology; the actual sequence of
+failure must respond to physical loading, not a prerecorded collapse animation.
+
+Judas owns material failure, connectivity, safe topology changes and physical state.
+Projects own fracture assets/material choices. JavaScript owns weapons, scoring,
+destruction objectives, sounds and other game meaning.
+
+## 1. Establish what M62 actually delivered
+
+Read the accepted M62 handoff, current implementation and limitations first. This
+advance prompt does not assume every requested M62 feature or suggested name shipped.
+Also inspect M45 constraints, M42/M44 contact/query paths, M56 profiling, M57 materials,
+M59 streaming, M61 saves and the current JudasJS reference.
+
+Map the needed seams: material/constraint observations, simulation topology,
+render bindings, contacts, attachments, body construction and save participation.
+Extend those facilities; do not introduce a second deformable or rigid-body solver.
+If a critical prerequisite is genuinely absent, identify the specific dependency
+and ask before quietly redefining the milestone or undertaking a large replacement.
+
+Claude's D-01/D-02/D-03 fixes were integrated before M62. Preserve their regressions;
+use the supplied baseline, not the frozen M60 skate-audit checkout. The audit's
+mesh-collider expansion, general IK, editor renovation and rigid-island sleeping
+recommendations are not an additional M63 assignment.
+
+Preserve historical evidence, protected FTFT/P1 research, accepted liquid work and
+unrelated game projects. Add new evidence rather than rewriting earlier results.
+
+## 2. Bounded fracture representation, not unlimited mesh destruction
+
+Recommended starting direction: precomputed physical cells/chunks with explicit
+interfaces/bonds, using M62 deformation and a local material-failure criterion.
+A partition of the existing volumetric elements is sufficient. Cracks may follow
+those interfaces; arbitrary runtime crack cutting/remeshing is NOT required.
+
+Separate immutable source data from per-instance state:
+- Asset: physical partition, rest mass/geometry, interface area/normal/centroid,
+  stable part/interface keys, material assignments, render/interior-face bindings,
+  supported collision representations and authored support/attachment locations.
+- Instance: surviving interfaces, irreversible failure state, current connectivity,
+  deformed/plastic state, physical fragment ownership and live attachments.
+- Presentation: visible boundary faces, mapped vertices, normals, bounds and buffers.
+
+Support at least one reusable imported/prepartitioned volumetric asset route and
+small block/beam/panel generation helpers. Reject overlapping or invalid material
+partitions. Render UV seams are not physical cracks; separate pieces must not weld
+merely because their vertices coincide. Shared assets never share fracture state.
+
+A cooked chunk/bond graph is established prior art [R1]. Its topology machinery
+alone does not prove stress-driven collapse. Reuse mature geometry/bookkeeping code
+where useful; do not write a general-purpose Boolean/Voronoi/tetrahedralization
+package. Any added library must be pinned, licensed and integrated behind Judas
+ownership. No replacement PhysicsWorld, PhysX runtime or GPU requirement.
+
+Use ONE coherent topology/fragment-ownership model. It may support deformable pieces
+and rigid descendants; it must not become two unrelated destruction systems whose
+only common feature is a demo button.
+
+## 3. Failure must come from physical demand
+
+Implement local, irreversible material/interface failure using a demonstrated
+stress, strain, traction or fracture-energy approximation appropriate to M62.
+At minimum distinguish tensile opening and shear demand; define compression's role
+rather than treating every absolute force as equivalent damage.
+
+Failure strength is separate from elastic stiffness and plastic yield. A yielding
+beam may retain a bend without necessarily breaking. Expose documented physical or
+normalized engineering parameters; do not label an arbitrary number as calibrated
+concrete toughness. This is game-oriented mechanics, not certified engineering.
+
+Use the actual solved material/constraint state. XPBD force estimation, if M62 uses
+it, requires the accumulated multiplier, constraint gradient and correct substep
+units [R2]. Do not sum absolute solver-iteration corrections as independent impacts.
+Do not accumulate gravity damage once per render frame or mistake rigid rotation
+for strain. Any gradual damage law must use physical elapsed time; a simple brittle
+threshold is acceptable when its scope is explicit.
+
+Observe contacts, external loads and support reactions through the authoritative
+solver. Apply a hit impulse ONCE. Do not also add a guessed equivalent explosion
+or charge the same impact again through every contact callback.
+
+A public explicit break/cut request may be useful for tools and gameplay, but must
+remain visibly distinct from physically detected failure. Acceptance includes
+breakage with NO script calling break and no object health counter driving it.
+
+First prove a small loaded specimen: below threshold it survives; above threshold
+an interface fails; remaining material remains intact. Compare two practical
+substep/iteration configurations and report sensitivity, not perfect invariance.
+
+## 4. Structural support and redistribution
+
+A connectivity graph identifies attached pieces; it does not calculate whether a
+connection can carry a load. Reuse M62 internal/cohesive constraints or a compact,
+justified load model so changing a support changes demand in the remaining structure.
+Stress-graph methods are another reference for this distinction [R3], not a mandate
+to run a second competing solver beside M62.
+
+Provide explicit supports in world or rigid-body local frames. An authored fixed
+support is an external reaction source; a dynamic support must receive the existing
+physical reaction. No global "bottom row" or object-name support detection.
+
+Required demonstrations:
+- An intact supported assembly holds a modest load.
+- Removing/breaking one support redistributes load; remaining connections either
+  hold or fail according to their capacity, not a hardcoded neighbour cascade.
+- A detached connected component falls/moves as a component, rather than every
+  internal element becoming a separate particle simply because it lost a support.
+- A free assembly under uniform gravity does not acquire fictitious self-weight
+  stress merely because it is falling. Supported and freely falling are different.
+
+Use actual selected Judas gravity at the relevant positions. Prove rotated uniform
+gravity and a small radial fixture. Respect local/reference-frame coordinates and
+M23's fixed double absolute origin; no live origin rebasing or world-Y shortcut.
+
+## 5. Real topology separation and progressive breakage
+
+Failed interfaces must cease carrying tensile/shear connection through every
+relevant constraint. Shared nodes, shape constraints, render bindings or attachment
+indices must not secretly keep disconnected pieces welded.
+
+Compute surviving connected components in stable order. If an interface opens but
+an alternate path still connects the pieces, preserve that remaining load path.
+Further loading may break other interfaces in a surviving fragment. The cooked
+partition sets the finite fracture resolution; infinite recursive subdivision is
+not required.
+
+When a split requires duplicate interface vertices, partition their mass from their
+incident material elements. Do not copy the complete original nodal mass into every
+fragment. Do not delete tetrahedra merely to draw a crack. Expose newly internal
+faces as boundary faces while retaining material, rest/plastic state and UV mapping.
+
+At least one M62 yielding/deformable specimen must actually separate from its CURRENT
+deformed state. Swapping it for pristine pre-broken copies does not meet this goal.
+Continuing soft pieces retain their M62 solver; ordinary rigid fragments are also
+required for a supported stiff/rigid specimen. These are two outcomes of the same
+fracture ownership path, not two mandatory full constitutive solvers.
+
+## 6. Atomic publication and safe fixed-step lifetime
+
+Record failure candidates during the authoritative step; commit topology/body changes
+at a documented safe boundary, never while iterating a solver array or invoking JS.
+Deduplicate break requests by stable interface identity and topology revision.
+
+Prepare and validate all child state before publication. The world must never expose
+an old solid collider plus its new fragment colliders for the same material, or a
+half-installed fracture where render, physics and queries disagree. Budget/capacity
+failure retains the last coherent representation and reports/defer-retries safely.
+It must not partially destroy an object and drop the pieces that did not fit.
+
+At commit, update the affected constraints, attachments, contacts/broadphase, query
+mapping, render bindings, bounds and resource ownership. Invalidate or remap caches
+selectively; do not flush unrelated world joints or restart the entire PhysicsWorld.
+
+Use immutable worker preparation where helpful. Only the authoritative thread may
+publish entities, physical bodies and JS-visible results. Save/load, region unload,
+script destruction and cancellation must not race a half-finished split.
+
+## 7. Fragment mass, inertia and inherited motion
+
+Every material cell has exactly one physical owner before and after a split.
+Preserve total mass and use its actual mass distribution for centres and inertia.
+Keep physical density/material data separate from M57 visual material properties.
+
+For a rigid parent split without extra forces, each child inherits the parent's
+angular velocity and point velocity at its own centre of mass:
+
+v_child = v_parent + omega_parent cross (COM_child - COM_parent)
+
+Do not give every child only the parent's linear velocity, zero all motion, or
+apply the triggering impact to every child again. A static supported part has finite
+authored material mass even though its support prevents motion before release.
+
+For a deforming source, transfer the current element/node motion. If a sufficiently
+stiff fragment is converted to a rigid body, derive linear and angular momentum
+from that motion using the actual mass model and a consistent inertia. State any
+nonrigid-energy loss from rigidification; do not add energy to make rubble dramatic.
+A substantially deforming piece stays deformable rather than snapping to rest shape.
+
+Test topology conversion separately from the external load: an unforced translating/
+rotating split should preserve mass, centre of mass, linear and angular momentum
+within declared numerical/proxy tolerances. Compression, fracture dissipation and
+external support work are not reasons to claim exact total-energy conservation.
+
+Collision proxy volume need not define the material mass. Declare approximation
+bounds and reject invalid/singular fragment configurations, not arbitrary fake mass.
+
+## 8. Collisions, query truth and attached objects
+
+Reuse actual M62 contacts and ordinary PhysicsWorld collision primitives. Establish
+a compact support matrix for intact structures, deformable fragments and rigid
+fragments against rigid bodies, CharacterMotor, M44 queries and M42 events.
+
+The supplied baseline may still lack general triangle-mesh/convex world colliders.
+Do not silently assume they exist. Prebaked box/compound proxies or existing M62
+surface contacts may serve supported assets. Prove at least one irregular or
+multi-cell component with useful collision, not only perfect cubes. A tiny general
+extension needed for those pieces is allowed; a full mesh-collision milestone is not.
+
+Broken openings must actually open in collision/query space. A stale parent AABB
+must not remain the narrowphase collider. A render crack over an intact collider
+is not destruction. Conversely, no permanent family-wide collision suppression:
+separated pieces must be able to collide. Former neighbours may have a short,
+explicit contact-safe transition policy, not an indefinite invisibility to physics.
+
+Map attachments, held-object hit locations and joint anchors to material part IDs
+or other stable locations, not array indices that are renumbered during splitting.
+They follow the owning surviving piece, release with an event, or fail explicitly.
+Never duplicate attached scripts/components onto every piece by default.
+
+Demonstrate a generic attachment or M45 joint surviving the split of its other end.
+Do not reopen the already-integrated slider fixes. Material fracture does not
+require automatic break thresholds on every unrelated M45 joint type.
+
+## 9. Identity, events and project JavaScript
+
+Provide world-owned fracture family/instance state with stable source-part identity
+and generation-safe fragment handles. An ordinary scene/entity handle must never
+silently start referring to unrelated rubble after slot reuse.
+
+Define whether a logical parent persists as a nonphysical family owner. If it does,
+it must not retain duplicate physics/mass/render state. Give scripts an explicit
+mapping from source parts to current fragments and a safe way to reacquire them.
+Topology-sensitive hit references carry a revision or equivalent validity check.
+
+Expose a small documented public API for fracture state, material/settings inspection,
+safe fragment enumeration and optional explicit interface release. Prefer existing
+force/impulse APIs for physical loading. Do not invent Building, DestructibleEnemy,
+BulletDamage or CollapseController engine classes.
+
+After commit, deliver bounded fracture/split notifications with stable source part
+information, valid current fragment references and a documented cause. No callback
+may observe a half-built family. Removal during callbacks is safe; save restoration
+must not replay break notifications as fresh gameplay events.
+
+JS drives demo controls, shooter impulses, scoring, audio/particles and explicit
+cleanup policy. Surface dust can be cosmetic, but cosmetic dust is not a substitute
+for missing physical pieces.
+
+Update JudasJS declarations, inventory/manifest, live enumeration, reference and a
+small executable cookbook example. Read actual current API counts; don't hardcode
+an earlier milestone's inventory or promise a guessed signature in the docs.
+
+## 10. Rendering, assets and useful authoring
+
+Renderer consumes final mapped geometry and owns GL. Preserve M57 material slots,
+outer UVs, interior material selection, normals/tangents, M33 cameras, shadows,
+render-layer masks and culling. Revealed interior faces must be correctly oriented;
+no opaque caps bridging a split or bright unlit triangles hiding missing geometry.
+
+Preserve previous/current presentation state across splitting. Newly created pieces
+must start visually at their pre-split positions, without one-frame rest-pose flashes
+or interpolation across unrelated fragment coordinates. Two cameras observe the
+same simulation; fracture does not rerun per camera.
+
+Use normal versioned project assets and asynchronous ResourceManager preparation.
+Runtime metadata/topology versions, content fingerprints and M61 schema participation
+are separate concerns; do not bump global scene fingerprints ceremonially. Stale or
+invalid fracture cooks produce actionable editor/export errors.
+
+Editor minimum: import/create a partitioned asset, assign material/failure settings,
+select support/interface groups, preview chunks/interior faces/collision proxies,
+bake/rebake, and view invalid geometry. Include a small block/beam/panel helper and
+reusable source import. No hand-entering hundreds of bond IDs, and no new native
+code required for a project's next destructible object.
+
+Scene/prefab overrides and repeated instances work normally. Export includes exact
+accepted fracture geometry/materials/notices and runs after moving the package.
+No huge DCC-style fracture editor or general runtime Boolean cutting is required.
+
+## 11. Streaming, navigation, liquids and audio boundaries
+
+M59 owns region lifetime. A fracture family's travelling fragments have explicit
+ownership/adoption/dependency rules; crossing a boundary must not destroy, duplicate
+or resurrect them when their original region unloads or reloads. Root removal,
+fragment removal, disable and full-family destruction need distinct documented
+semantics. Reuse current retention/pin mechanisms where genuinely required and make
+pin reasons visible. Do not report retained physical state as unloaded.
+
+Queries, audio obstruction and rendering must see removed parent geometry and new
+supported fragment geometry through their normal paths. Test one physical hole for
+raycast/CharacterMotor passage and one sound path; no new audio solver.
+
+For navigation, use an authored example whose floor is baked walkable independently
+of the breakable barrier, with ordinary M53 obstacles representing blockage. Update
+those through the existing generic path, potentially from project JS split events.
+Demonstrate opening/replanning after the barrier breaks; document latency and debris
+proxy limits. This does NOT promise runtime rebaking of a fractured walkable floor,
+newly created stairs, or arbitrary nav topology after a building collapses.
+
+Do not make breakable M54 liquid cavities or flowing water through new fractures a
+hidden requirement. Unsupported liquid-bearing fracture combinations must be rejected
+or retained safely with a clear diagnostic, not delete conserved water. No fluid
+solver or basin-geometry rewrite. Ordinary supported debris may use existing liquid
+interaction, but an entire water/destruction showcase is not needed here.
+
+## 12. M61 persistence is required, including the next break
+
+Extend the actual save participant contract. Persist stable family/part identities,
+broken interfaces, any accumulated failure state, deformed/plastic rest state,
+fragment material membership, transforms/velocities and attached references. Preserve
+representation choices and physics history needed for a stable first resumed step.
+Rebuild derived connectivity, contact caches and render buffers; never save pointers.
+
+A saved partially broken object must not heal, replay its explosion, reset its dent,
+recreate killed fragments or duplicate its intact parent on load. Remaining connected
+material must still be able to fracture later. Fresh runtime handles are expected.
+
+Capture only before/after an atomic fracture commit, not halfway through publication.
+If asynchronous preparation exists, define whether capture waits for the safe commit
+or records the last coherent state. No double-application on resume.
+
+Required proof: break and plastically deform an object, move a fragment to another
+region, remove another through explicit game action, save, QUIT the process, load in
+a new process, revisit the original region and continue breaking surviving material.
+Include a moving fragment and an attached support in the restore checks.
+
+Keep existing save size/capacity limits explicit. Preflight the supported workload;
+never claim save success after omitting required fracture state. Unsupported state
+must fail before replacing a good save. Strict content compatibility may remain.
+
+## 13. Bounded work and usable performance
+
+Use M56 scopes/counters for load observation, failure evaluation, graph updates,
+fragment preparation/commit, collision rebuild, render updates and save/residency.
+Measure intact, actively failing and settled-debris workloads, plus no-fracture
+baseline. Avoid compulsory fracture work or large allocations in ordinary scenes.
+
+Cook expensive geometry offline. Limit runtime work to affected components, with
+bounded preparation/publication and visible pending work. Dispatch budgets are not
+hard deadlines; report the largest indivisible operation and first-fracture stall.
+Do not hide initial geometry/upload cost by reporting only warm medians.
+
+Set finite authored piece/topology budgets. On exhaustion, retain a coherent physical
+representation or report explicit unsupported further fracture. Do not silently
+delete matter, merge moving bodies across a gap, zero velocities or freeze visible
+rubble to rescue the frame rate. Game-requested debris removal is a separate policy.
+
+Reuse M62 quiescence where valid. Generic rigid/ragdoll island sleeping remains a
+separate audit recommendation unless the accepted baseline now provides it. Choose
+modest useful fragment counts instead of starting an unbounded sleeping/optimization
+campaign. Measure any awake-debris cost honestly and include active versus settled
+figures with identical authored settings.
+
+## 14. One current Fracture Lab and a small real-game proof
+
+Create an ordinary project with simple original assets and readable controls:
+
+A. Impact specimen: a partitioned panel/block struck by an ordinary projectile or
+   public hit-point impulse. Different hit locations/loading produce different
+   local failures; untouched material does not instantly disintegrate.
+B. Yield-then-break beam: M62 deformation/plasticity remains visible, then sufficient
+   loading separates material from its current shape. At least one resulting part
+   continues deforming, and the stiff specimen produces ordinary rigid fragments.
+C. Supported structure: a small frame, span or wall with multiple load paths. Remove
+   one physical support and observe survival or secondary failure from redistributed
+   loads. No countdown/collapse animation or hardcoded "support destroyed" cascade.
+D. Interaction: fragments collide, can be queried/manipulated, and open a real hole.
+   Show attachment remapping, independent prefab instances and oblique/radial gravity.
+E. Lifetime: streamed revisit plus the fresh-process save/load/continue proof above.
+
+Add a bounded destructible barrier/exhibit to an ordinary Spring Range variant or
+a separate registered game scene, reusing public shooter impulses and M53 navigation.
+The player makes a physical opening and an agent can route through it. Preserve the
+accepted original projects or use a copied extension; do not edit Claude's skate game.
+One focused game exhibit is enough, not a city-demolition game.
+
+No cloth-tearing requirement. M62 cloth/cape behaviour must remain intact. The
+fracture demonstration should not depend on a future socket/IK or mesh-collider
+milestone to be playable.
+
+## 15. Focused regression and final candidate gate
+
+Develop in small proofs, then run one combined final gate. Important checks:
+- Asset partition mass/coverage, adjacency, stable IDs and instance independence;
+  invalid/overlapping cooks rejected; unit-scale/support assumptions explicit.
+- Below-threshold survival, tension/shear failure, plastic-yield-before-fracture;
+  rigid rotation and unforced freefall do not cause false failure. Compare practical
+  dt/substeps/iterations and a supported-load reference such as force/area or mg.
+- Alternate load path survives one broken bond; complete cut creates correct islands;
+  partial crack and later progressive fracture; remaining elements retain rest state.
+- Zero-impulse split preserves mass/COM/linear/angular momentum with documented error;
+  no duplicated contact impulse, mass at interface nodes or unexplained energy burst.
+- Current deformed shape retained, interior faces exposed, old collider removed;
+  fragments collide, M44 hits current geometry and the intended opening is traversable.
+- Attachment/body ownership remaps correctly; stale hits/handles fail; callback removal
+  and slot reuse safe; no unrelated world-anchored joint is removed.
+- Rotated uniform, radial and fixed-origin large-coordinate fixtures; no world-up rule.
+- Save mid-damage/after split, fresh-process restore, unloaded-region revisit, adopted
+  and explicitly removed pieces, stable first resumed steps and another break afterward.
+- Piece-budget/prepare failure is atomic; offscreen simulation and multi-camera
+  presentation agree; API/types/manifest/cookbook and editor/export paths work.
+
+At candidate completion: one clean Release build and production-suite run, actual
+async integration, focused M63 checks, affected M62/M45/M61/M59 regressions, JudasJS
+coverage, editor Play/Stop, reload, and moved read-only standalone proof. Do not guess
+the suite count or demand a second all-suite run after a narrow late correction.
+
+Use fresh isolated test output directories and established runners. Existing test
+harnesses have previously admitted real desktop mouse input and rewritten historical
+evidence; avoid contaminating results or protected files. Diagnose pre-existing
+failures against baseline instead of weakening tests or expanding the repair scope.
+
+Performance: report frame/fixed-step median, p95/max, first fracture/peak commit cost,
+node/element/bond/fragment/body counts and retained memory for representative tens to
+low hundreds of pieces as hardware permits. Separate native/software GL and concurrent
+machine load. Do not run CPU/GPU stress alongside broad builds indiscriminately.
+
+## 16. Human handoff and scope boundary
+
+Provide actual controls and one concise checklist: impact different locations; load
+and break the yielding beam; remove a support; interact with rubble and walk/shoot
+through the opening; observe navigation and sound; repeat a rotated/radial case;
+spawn another instance; cross/revisit a region; save, quit, reload and break again;
+inspect material interiors, shadows, responsiveness and the moved standalone.
+
+The operator owns visual/gameplay acceptance. Automated measurements do not establish
+that a collapse looks good or that the editor is pleasant to use.
+
+Report the actual M62 baseline and reused facilities; failure criterion/units and
+limitations; graph/topology and atomic publication; mass/motion conversion results;
+collision/query support; attachments/identity/events; editor/assets/JS; save/streaming
+contracts; tests/failures; performance; one human checklist; changed files, evidence
+and final source/asset fingerprints; git status and proposed commit.
+
+OUT OF SCOPE: arbitrary runtime cutting/remeshing; cloth tearing; unbounded crack
+propagation; detailed fatigue/reinforced-concrete/steel calibration; granular sand or
+powder; healing/welding; general static triangle-mesh collision; complete physics-
+material overhaul; IK/active physical animation; broad rigid-island sleep rewrite;
+navmesh rebaking of newly fractured floors; fracturing liquid cavities; fluid research;
+networked destruction; unrelated skate-audit fixes; wholesale editor redesign.
+
+Prefractured geometry is an accepted approximation, not a canned collapse sequence.
+Do not silently replace the required deformable/structural proof with a JS health
+counter swapping an intact prop for a fixed collection of cosmetic debris.
+
+No commit, push, merge, tag or later milestone work. Stop for operator review.
+
+Suggested commit after later approval:
+Add M63 structural fracture and physical fragments
+
+## Method references — scoped starting points, not another research programme
+
+The design in this brief is a Judas integration proposal, not a claim that these
+sources implement M62/M63 or certify its behaviour.
+
+R1. NVIDIA Blast low-level API and asset/support model. Prepartitioned chunks,
+bonds and connected components; the core is physics/graphics agnostic. Use the
+separation of responsibilities, not its default damage shader as evidence of
+physically solved structural loading. No wholesale PhysX integration is implied.
+https://docs.omniverse.nvidia.com/kit/docs/blast-sdk/latest/docs/api/api_ll_users_guide.html
+https://docs.omniverse.nvidia.com/kit/docs/blast-sdk/latest/docs/api/introduction.html
+
+R2. Macklin, Müller, Chentanez (2016), XPBD. Constraint-force estimates can drive
+force-dependent effects, including breakable constraints; finite-iteration force
+error still matters. Use only if it matches the accepted M62 formulation.
+https://matthias-research.github.io/pages/publications/XPBD.pdf
+
+R3. NVIDIA Blast stress extension. Separates tensile/compressive/shear demand and
+explicit support reactions from mere support-graph connectivity. Its documentation
+also distinguishes supported gravity loading from freefall. This is an optional
+method reference, not authorization for a second full simulation stack.
+https://docs.omniverse.nvidia.com/kit/docs/blast-sdk/latest/docs/api/extensions/ext_stress.html
+
+R4. O'Brien, Bargteil, Hodgins (2002), Graphical Modeling and Animation of Ductile
+Fracture. Background on coupling plastic yielding to fracture. Do not adopt its
+complete offline FEM/remeshing pipeline; M63 deliberately permits baked interfaces.
+https://cal.cs.umbc.edu/Papers/Obrien-2002-GMA/index.html
+
+Milestone 63 — Judas learns to break.

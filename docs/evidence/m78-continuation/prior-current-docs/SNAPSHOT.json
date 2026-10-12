@@ -1,0 +1,14 @@
+{
+  "docs/ARCHITECTURE.md": {
+    "bytes": 586213,
+    "sha256": "8e2a7942d9826993bd8cc3555c7b0627f65900fd40e3fdcf912b21e8c6ff89c5"
+  },
+  "docs/M77.md": {
+    "bytes": 16069,
+    "sha256": "318de2d7ce1742da83b2c8f833b6958c512c3d0fd5e6617eef9ce4c55f89e2a7"
+  },
+  "docs/M78_FOLLOWUP.md": {
+    "bytes": 5827,
+    "sha256": "80df62c004de09340247ce5148323351ae0ea0a0cefafef2cc657efe5af3a460"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "originalWPsha": "81e74af801d5601b5995f94532ca62da387065f750137a2c61a87349841fdeb3",
+  "proposedWPsha": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb",
+  "guardSourceSHA256": "8055a1d0c8307ddcc56caa2188fd8326f055f58584e1bd9f3767aef82880ad4c",
+  "scope": "Copied WP-only capture and private query reconstruction; unchanged original application fixtures; no production edit"
+}

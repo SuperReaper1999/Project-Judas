@@ -1,0 +1,26 @@
+{
+  "id": "judas_pilot_dismount_tests",
+  "source": "tests/PilotDismountTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_pilot_dismount_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e731bd9c2d8672ae5307590190522ba0c4d4b5e60b19f56e9fad6d739d718751",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 8,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_pilot_dismount_tests.log",
+  "logSHA256": "46d0ac569d57f8e360391ccdbb5a68d35cb19fa2152855aae5410f8eb93b8371",
+  "seconds": 0.007904606000010972
+}

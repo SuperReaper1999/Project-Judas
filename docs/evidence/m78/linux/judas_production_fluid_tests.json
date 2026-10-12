@@ -1,0 +1,28 @@
+{
+  "id": "judas_production_fluid_tests",
+  "source": "tests/ProductionFluidTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_production_fluid_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_production_fluid_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "95499022f28eaaef13b99ec139552861eeb5d78d2df9d10378230a5536342903",
+  "exitCode": 1,
+  "status": "failed",
+  "passingLines": 0,
+  "failingLines": 1,
+  "log": "docs/evidence/m78/linux/judas_production_fluid_tests.log",
+  "logSHA256": "ffd19389e62cee227329b05b03514284746de7006f0b33b2d17803f3fde0d9df",
+  "seconds": 63.97012421200088
+}

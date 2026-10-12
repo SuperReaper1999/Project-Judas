@@ -1,0 +1,14 @@
+{
+  "name": "right_rk4_observations",
+  "base": "right_observations_v2",
+  "baseArchiveSHA256": "24ed2072ed63304befa7c556d0b576bf4d16563ffc2f643337894e8f5010171e",
+  "donor": "right_rk4_16",
+  "donorSourceSHA256": "12f7f4614f70719e43bb4f3ce8994033171b83a779bd05d46e107a4f812fff3f",
+  "donorObjectSHA256": "77f1653e6a48b703a7846051c8a105deab8682f5f0400481dd65e8c76893a959",
+  "engineSHA256": "4b9d53876e4f9985daf060bc07a69b7af4e9aad9e397be31797231a6d73f9b10",
+  "exeSHA256": "b85291f6543b1730ffe0f783a1487052d223c2417cf42e7ae58ef24ed8b55f20",
+  "exitCode": 1,
+  "seconds": 3.217676541997207,
+  "fixtureSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+  "scope": "Diagnostic object composition only; no fixture or acceptance edits"
+}

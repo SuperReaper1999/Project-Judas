@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "69fad03f5e67c2cbce4b55393c0b67bbfaf667f1d036068227cfe0fcbc87a9b3",
+    "case":  "spacecraft_flight",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_spacecraft_flight.exe",
+                      "sha256":  "b8f08f172b0160d8929ac08f06ae8ec90e25228ebc7ec297e011b0200fd914c1",
+                      "name":  "m78_combined-v2_spacecraft_flight.exe",
+                      "bytes":  2098688
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\spacecraft_flight-0.obj",
+                      "sha256":  "30f584f9c6e682c3c4a5792e4c08286e8f2a00937b7c938e4965779e83be4354",
+                      "name":  "spacecraft_flight-0.obj",
+                      "bytes":  91339
+                  }
+              ],
+    "freeBytes":  461901824,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  876076,
+    "archiveName":  "m78-combined-v2-spacecraft_flight-archive.zip"
+}

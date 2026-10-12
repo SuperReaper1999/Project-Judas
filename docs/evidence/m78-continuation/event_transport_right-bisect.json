@@ -1,0 +1,62 @@
+{
+  "name": "event_transport_right",
+  "source": {
+    "RigidBody.cpp": "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+    "RigidBody.h": "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b",
+    "RigidMotion.h": "b31682556975a3656c96d0b11066b6fbc5199af76bc2ad5f3b2cfe2e482bcf42",
+    "PhysicsWorld.cpp": "97d3b6a1ca760ebff1d649778137eeaf7892616e222f2fb6e56909b65e67100c",
+    "PhysicsWorld.h": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6",
+    "CollisionGeometry.cpp": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a"
+  },
+  "builds": [
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/event_transport_right",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/event_transport_right/PhysicsWorld.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-continuation/variants/event_transport_right/PhysicsWorld.cpp.o"
+      ],
+      "exit": 0
+    }
+  ],
+  "engineSHA256": "d041255a798fbea0ee7905dc7343c5667abb9cfdadc096f60b50a709e1289472",
+  "exeSHA256": "40d2a47384d587bf3626adfa1197bbaa23caf7a892f7386db587e1a5c587cf27",
+  "exitCode": 1,
+  "seconds": 2.382071336000081,
+  "fixtureSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+  "scope": "Diagnostic variant only; no production/fixture changes"
+}

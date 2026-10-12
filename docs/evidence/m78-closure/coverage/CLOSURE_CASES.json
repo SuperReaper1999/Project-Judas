@@ -1,0 +1,1986 @@
+{
+  "schema": 1,
+  "status": "SCOPED FINAL LINUX / NATIVE FUNCTIONAL RECEIPTS ATTACHED — incomplete audit; human/hardware gaps retained",
+  "policy": "Baseline IDs/platform states remain unchanged. Cases attach only actual named receipts and discriminating oracles. Expected failures remain failed assertions. No suite linkage, symbol presence or source location promotes a capability. Native executed routes are distinct from explicitly omitted fixtures, human/hardware acceptance and whole-member semantics.",
+  "cases": [
+    {
+      "id": "restored-publication-isolation",
+      "relatedFeatureIds": [
+        "A.04",
+        "A.06",
+        "C.05",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "LINUX PASS WITHIN NAMED ENVELOPE — separate scoped native receipts attached",
+      "beforeReceipt": "docs/evidence/m78-closure/linux-mechanism-before-v2/RESULTS.json",
+      "oracle": "Actual positive completed contacts survive an unrelated motor-proxy reset; teleport of a participating body invalidates its publication.",
+      "gap": "Exact scope of invalidation and unrelated owner isolation; retain genuine negative controls.",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/linux-mechanism-before-v2/RESULTS.json",
+          "sha256": "ac43b221f2c29b576cd4f755a6e1e694348b944d81b24dbdcff28a7d51049d6a"
+        },
+        {
+          "path": "docs/evidence/m78-closure/mixed-final/RESULTS.json",
+          "sha256": "38b9eff3b2958554d8b50daf40e89608e9d53b31813c8bfefb49816e1f562b3c"
+        },
+        {
+          "path": "docs/evidence/m78-closure/final-build/BUILD.json",
+          "sha256": "d273702de98b73f00295c45bf40c9b46524527d735f75577213f8268f0745af5"
+        }
+      ],
+      "observedResult": "8 checks / 0 failures. Unrelated independent query-only mutations preserve the restored completed publication; attached joints and ordinary physical-body mutations still invalidate it.",
+      "remaining": "No universal publication-lifetime certificate; selected unit guards and native after-repair receipt remain distinct.",
+      "nativeCaseIds": [
+        "native-final-publication-isolation"
+      ]
+    },
+    {
+      "id": "mixed-motor-balance-cold",
+      "relatedFeatureIds": [
+        "A.06",
+        "D.01",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "LINUX PASS WITHIN NAMED ENVELOPE — separate scoped native receipts attached",
+      "beforeReceipt": "docs/evidence/m78-closure/linux-mechanism-before-v2/RESULTS.json",
+      "oracle": "Ordinary M77 step capture/fresh read with distant independent M70 motor; actual first-boundary readiness and current physical standing, unchanged controls/thresholds.",
+      "gap": "Previous separate-system cold pairs do not prove mixed-world first-boundary isolation.",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/linux-mechanism-before-v2/RESULTS.json",
+          "sha256": "ac43b221f2c29b576cd4f755a6e1e694348b944d81b24dbdcff28a7d51049d6a"
+        },
+        {
+          "path": "docs/evidence/m78-closure/mixed-final/RESULTS.json",
+          "sha256": "38b9eff3b2958554d8b50daf40e89608e9d53b31813c8bfefb49816e1f562b3c"
+        },
+        {
+          "path": "docs/evidence/m78-closure/final-build/BUILD.json",
+          "sha256": "d273702de98b73f00295c45bf40c9b46524527d735f75577213f8268f0745af5"
+        },
+        {
+          "path": "docs/evidence/m78-closure/mixed-final/ACTUAL_ENDPOINT_BY_ENTITY.json",
+          "sha256": "445874169179ac78f46a25563d40117fcbd8fee480b9ab2306c9bbbbadc009db"
+        },
+        {
+          "path": "docs/evidence/m78-closure/mixed-final/physical-restored-final.json",
+          "sha256": "406c958399b0579d2bdc45eb1777272bc7e445b42f5fee7dccacbb306899ef9d"
+        }
+      ],
+      "observedResult": "Writer 25/0, fresh reader 13/0. First restored clock advances from .35 to .366667 s, instead of skipping after distant independent motor refresh.",
+      "actualEndpoint": {
+        "durableEntityBodyCount": 13,
+        "allReportedBodyFieldsAndCompletedContactsEqualWithinPair": true,
+        "excludedIdentityField": "nativeHandle: fresh reconstruction uses fresh native slots, never persisted identity",
+        "upright": 0.99858439,
+        "rootHeightMetres": 1.36158717,
+        "relativeCOMSpeedMetresPerSecond": 2.13776e-06
+      },
+      "remaining": "Within this unchanged Linux paired fixture, not universal cross-platform/order/timestep continuation.",
+      "nativeCaseIds": [
+        "native-final-mixed-balance",
+        "native-final-mixed-physical-endpoint",
+        "native-actual-endpoint-actual-endpoint-by-entity"
+      ]
+    },
+    {
+      "id": "streamed-motor-publication",
+      "relatedFeatureIds": [
+        "A.04",
+        "A.06",
+        "D.01",
+        "I.04"
+      ],
+      "status": "FINAL LINUX FAILURE REPRODUCED — pre-existing query publication defect; no runtime fix",
+      "plan": "docs/evidence/m78-closure/audit-lifecycle/AUDIT_PLAN.md",
+      "oracle": "Immediately published rotated nonzero-offset capsule obeys layers/tags/enabled before a fixed update, including fresh-generation revisit.",
+      "gap": "Cold SaveService reconstruction is not region activation/revisit publication.",
+      "linuxStatus": "failed-within-envelope",
+      "windowsStatus": "not-executed-for-this-case",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-04/streaming-fixture/RESULT.json",
+          "sha256": "caa5ff89577ca071340fcff97795986e7e9bc42eadf227c4c1b9014847593e7a"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-04/streaming-run.stdout.log",
+          "sha256": "e473f87bd3f6f12ff5b7910b2ad519ac3165e54a76ed51ae536bf1d93fbfe7a6"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/AUDIT_RECEIPT.json",
+          "sha256": "63958f0b2936848e6eaa7361f8dc92d5f8a9e34ecb049195d91ecd0a132b8141"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/MANIFEST.json",
+          "sha256": "5bc0383f38c506a3470b74e6f884c9a65a7d19caa0ce6bb671d8f01223aaf250"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-02/streaming-fixture/RESULT.json",
+          "sha256": "1cdc9e1a2b1d4dfe2ecb326bf61ff613413a1282bb4ccb2ab15b803f0084c6bf"
+        }
+      ],
+      "observedResult": "46 checks / 8 failures. Authored layer 1 / mask 2 reads as layer 0 / all-category mask before the first update. Initial disabled proxy is enabled; retained active proxy is disabled. Combined layer-plus-tag queries miss. Rotated offset/root/velocity/fresh generation checks pass. Ordinary zero-dt UpdateCharacters corrects all five representation checks at both boundaries.",
+      "remaining": "Final run-04 explicitly sequences field readback; the earlier run-02 scratch diagnostic is preserved and not treated as actual metadata. Tags are source-derived diagnosis only: the combined query does not isolate them while layer/enabled state is wrong. All four relevant world source files are byte-identical HEAD. No universal region failure or native pass is claimed."
+    },
+    {
+      "id": "resolved-prefab-mod-policy",
+      "relatedFeatureIds": [
+        "A.05",
+        "J.06",
+        "ASSET.Prefab"
+      ],
+      "status": "FINAL LINUX PASS WITHIN NAMED ENVELOPE",
+      "plan": "docs/evidence/m78-closure/audit-lifecycle/AUDIT_PLAN.md",
+      "oracle": "Resolved indirect script/schema policy rejects absent or wrongly typed behavior; valid composition does not evaluate constructor.",
+      "gap": "Manifest trust alone does not prove indirect resolved executable/property admission.",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "not-executed-for-this-case",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-03/mod-policy-fixture/RESULT.json",
+          "sha256": "1aa53f6242b60806f99d323d2adf956e5f91f421797255cf4835503c2e4053fe"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-03/mod-policy-run.stdout.log",
+          "sha256": "18bfec2c052042fa1d2403047203c79bcbe611fbdfc28865b78f07d97dd9bd64"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/AUDIT_RECEIPT.json",
+          "sha256": "63958f0b2936848e6eaa7361f8dc92d5f8a9e34ecb049195d91ecd0a132b8141"
+        }
+      ],
+      "observedResult": "17 checks / 0 failures. Supported indirect prefab slot/schema is resolved; valid typed composition succeeds, absent published schema and wrong numeric default reject. No project script constructor executes.",
+      "remaining": "Selected resolved-slot policy cases, not all executable import/replacement/admission paths, nested prefabs, security sandboxing or native/hardware execution."
+    },
+    {
+      "id": "navigation-input-race",
+      "relatedFeatureIds": [
+        "A.05",
+        "G.04",
+        "J.03",
+        "J.05",
+        "J.08"
+      ],
+      "status": "FINAL LINUX PASS WITHIN NAMED ENVELOPE",
+      "plan": "docs/evidence/m78-closure/audit-lifecycle/AUDIT_PLAN.md",
+      "oracle": "Supported linked-prefab source changes after bake cause rejection, byte-preserving all other published outputs; current rebuild restores both scenes.",
+      "gap": "Cancellation and direct terrain dependencies are not the same source-revision race.",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "not-executed-for-this-case",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-02/navigation-fixture/RESULT.json",
+          "sha256": "dda0050519ae6213b76cb26c940ce585467f136633633b056b5e38263bc3e391"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/run-02/navigation-run.stdout.log",
+          "sha256": "07bbf9cc8aeb779675f153c259c8881527be7ed2c3c6e9e516796ae6e8b99456"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/linux-current-01/AUDIT_RECEIPT.json",
+          "sha256": "63958f0b2936848e6eaa7361f8dc92d5f8a9e34ecb049195d91ecd0a132b8141"
+        }
+      ],
+      "observedResult": "34 checks / 0 failures. Supported shared linked-prefab collider edit after actual bake rejects changed inputs rather than cancelling. Other published bytes remain unchanged, staging is removed, and explicit current rebuild makes both scenes fresh; normal content/export validation accepts both.",
+      "remaining": "A bounded transitive linked-prefab post-bake revision/publication oracle; not a new moved-package launch, read-only-kit mutation proof, every navigation dependency or native/hardware execution."
+    },
+    {
+      "id": "native-save-streaming",
+      "relatedFeatureIds": [
+        "I.01",
+        "I.03",
+        "I.04",
+        "J.08"
+      ],
+      "status": "NOT EXECUTED IN FINAL NATIVE CLOSURE — original plan retained",
+      "plan": "docs/evidence/m78-closure/native/PLAN.md",
+      "oracle": "Actual Application save/private replacement, adopted/tombstoned participants and suspended-region revisit in separate native write/read/read-b.",
+      "gap": "Final-source native SaveStreaming Application write/read/read-b omitted. Lower-level streaming82/world-save27 and current SignalApplication region/save17+6 are separate contracts, not substitutes.",
+      "windowsStatus": "not-executed-for-this-case",
+      "closureSummaryReceipt": {
+        "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+        "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+      }
+    },
+    {
+      "id": "native-signal-application",
+      "relatedFeatureIds": [
+        "A.02",
+        "A.07",
+        "H.08",
+        "I.01",
+        "I.04"
+      ],
+      "status": "NAMED FINAL NATIVE APPLICATION ROUTE EXECUTED — plan retained",
+      "plan": "docs/evidence/m78-closure/native/PLAN.md",
+      "oracle": "Fixed/UI lanes, pause/zero-step, deletion/adoption/revisit and fresh-process subscription restoration in actual application.",
+      "gap": "Exact current ordinary project passes17/0+6/0 using the same compiled final-source driver. Stale copied guest content failures10/1+4/3 remain separate; neither establishes every signal member or hardware/focus behaviour.",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "nativeCaseIds": [
+        "native-final-signal-application",
+        "native-final-signal-application-final"
+      ]
+    },
+    {
+      "id": "continuation-guards-final-linux",
+      "relatedFeatureIds": [
+        "A.04",
+        "A.06",
+        "C.05",
+        "C.08",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "LINUX PASS WITHIN NAMED ENVELOPE — separate scoped native receipts attached",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/final-build/LINUX_MATRIX.json",
+          "sha256": "581c50624d8e3b511899141b36e317b1324ed16b859edccb051517fc1b3868fc"
+        },
+        {
+          "path": "docs/evidence/m78-closure/final-build/BUILD.json",
+          "sha256": "d273702de98b73f00295c45bf40c9b46524527d735f75577213f8268f0745af5"
+        }
+      ],
+      "observedResult": "112 continuation checks / 0 failures, including 14 added scoped invalidation guards. Other named affected core tests pass as individually listed in the matrix.",
+      "remaining": "The matrix retains navigation_dependency exit 2 from a no-argument invocation; it is a preserved runner setup failure, not a behavioural verdict. The unchanged original regression later passes 38/0 with its required owned project/source arguments, separately indexed below. Neither result certifies every public member.",
+      "nativeCaseIds": [
+        "native-final-physics-continuation"
+      ]
+    },
+    {
+      "id": "m77-m70-new-cold-final-linux",
+      "relatedFeatureIds": [
+        "A.06",
+        "D.01",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "LINUX PASS WITHIN NAMED NEW-CAPTURE ENVELOPES — separate scoped native receipts attached",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/final-applications/LINUX_MATRIX.json",
+          "sha256": "604794deecacc98d3d899837b5e79b3513e1febdf472dc9696920b6f398b64b1"
+        }
+      ],
+      "observedResult": "M77 ordinary step15/0, lifecycle26/0, radial18/0; new step24/0+13/0, standing23/0+13/0, recovery21/0+13/0; M70 application98/0 and new cold10/0+14/0. Gravity70/0.",
+      "remaining": "Legacy a106 failure is separate, not converted into pass by expected exit1. M70 CharacterLab98+cold10/14 proves authority/finite pose, not full articulated trajectory equality. Exact moving static-anchor pose/velocities and motor reconstruction are independently tested in continuation112. Unrelated members/topology/order remain unproved.",
+      "nativeCaseIds": [
+        "native-final-balance-lab",
+        "native-final-legacy-and-new-cold",
+        "native-final-character-lab"
+      ]
+    },
+    {
+      "id": "legacy-a106-unchanged",
+      "relatedFeatureIds": [
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "PRESERVED LINUX LEGACY FAILURE — missing historical continuation bytes",
+      "linuxStatus": "failed-preserved-legacy",
+      "windowsStatus": "final-native-legacy-failure-preserved-13/1",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/final-applications/LINUX_MATRIX.json",
+          "sha256": "604794deecacc98d3d899837b5e79b3513e1febdf472dc9696920b6f398b64b1"
+        },
+        {
+          "path": "docs/evidence/m78-closure/final-smokes/RESULTS.json",
+          "sha256": "183377ea2d8f9ba242de44be32fd7a8e4c6723fca621a0a7a63097f433ab7fa1"
+        }
+      ],
+      "observedResult": "Original exact snapshot reader remains 13 checks / 1 failure. No absent bytes are synthesized.",
+      "remaining": "Compatibility limit, not a new-format after-repair regression or authorization to rewrite the historical snapshot.",
+      "nativeCaseIds": [
+        "native-final-legacy-and-new-cold"
+      ]
+    },
+    {
+      "id": "four-rig-raw-performance-final-linux",
+      "relatedFeatureIds": [
+        "C.02",
+        "C.05",
+        "C.09",
+        "D.08",
+        "D.10",
+        "I.06",
+        "K.01"
+      ],
+      "status": "RAW MISS PRESERVED; LATER SERIAL FINAL WALL P95 PASS — historical stall attribution remains limited",
+      "linuxStatus": "raw-miss-preserved; later-observed-wall-gate-pass",
+      "windowsStatus": "not-a-Windows-performance-gate",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/final-performance/RESULTS.json",
+          "sha256": "8b8090a37d956b904261556247ef682b4ccd154d314b81e980eb2d470f18a762"
+        },
+        {
+          "path": "docs/evidence/m78-closure/final-performance/HOST_CONTENTION.json",
+          "sha256": "e65a369573698ea92e03d6dc85a42b4725c0cd245bfe7e4e72bb4bee8dba4fb6"
+        },
+        {
+          "path": "docs/evidence/m78-closure/cpu-observer/RESULTS.json",
+          "sha256": "81e56a899d419e9ffb2543410d743999f17f4627087b1d3289290563c3c545eb"
+        }
+      ],
+      "observedResult": {
+        "fourRigMedianMilliseconds": 2.413731,
+        "fourRigP95Milliseconds": 17.700774,
+        "fourRigMaximumMilliseconds": 95.307776,
+        "stepsOver16_67Milliseconds": 50,
+        "steps": 900,
+        "rigBodies": 52,
+        "meshTriangles": 8192,
+        "cadenceHz": 60,
+        "sleepingBodies": 26
+      },
+      "remaining": "No per-step CPU data for earlier raw timing, so external compiler observations and new serial pass do not prove exact old-stall attribution. Residual33.3996ms tails/incomplete sleeping remain. CPU time is observational, not a substitute frame-time gate; both variants include identical observer overhead.",
+      "laterSerialObserver": {
+        "sameOriginalWorkload": true,
+        "priorWallP95Milliseconds": 6.31734,
+        "priorWallMaximumMilliseconds": 30.5498,
+        "finalWallMedianMilliseconds": 1.29902,
+        "finalWallP95Milliseconds": 7.0623,
+        "finalWallMaximumMilliseconds": 33.3996,
+        "finalThreadCPUP95Milliseconds": 6.91117,
+        "finalStepsOver16_67Milliseconds": 18,
+        "contactRows": 56576,
+        "ccdIterations": 19163,
+        "boundedFallbacks": 7,
+        "sleepingBodies": 26,
+        "totalRigBodies": 52,
+        "wallP95GateMilliseconds": 16.67,
+        "wallP95GatePassed": true,
+        "enginePerformanceChangesInThisClosureDiagnosis": false
+      }
+    },
+    {
+      "id": "save-streaming-final-linux",
+      "relatedFeatureIds": [
+        "I.01",
+        "I.03",
+        "I.04",
+        "J.08"
+      ],
+      "status": "FINAL LINUX PASS WITHIN NAMED APPLICATION ENVELOPE — native route not executed",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "not-executed-for-this-case",
+      "oracle": "Unchanged actual Application writer and separate read/read-b processes exercise private replacement, adopted/tombstoned participants and suspended-region revisit.",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/selected-applications-v2/RESULTS.json",
+          "sha256": "2cfbedd8e05a808f95854dba7c5217bb2307feffcf49cbbbd0e5e7b84628d11f"
+        },
+        {
+          "path": "docs/evidence/m78-closure/selected-applications/RESULTS.json",
+          "sha256": "36da40e41f1bbe2c768c8c7ab61f9ced5d650e6f5629bebcee5cb7f1c4cc7159"
+        }
+      ],
+      "observedResult": "Write 11/0 (110 frames), read 19/0 (91 frames), read-b 19/0 (89 frames). Only two unchanged test driver TUs were compiled; the same final four Application runtime objects/archive were reused. First missing-object link setup failure is preserved.",
+      "remaining": "This particular ordinary Linux Application route, not every save/streaming combination or immediate motor query publication. Distinct final native Application route was not executed; lower-level native save/streaming passes do not substitute."
+    },
+    {
+      "id": "signal-application-final-linux",
+      "relatedFeatureIds": [
+        "A.02",
+        "A.07",
+        "H.08",
+        "I.01",
+        "I.04"
+      ],
+      "status": "FINAL LINUX PASS WITHIN NAMED APPLICATION ENVELOPE — separate scoped native receipts attached",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "oracle": "Unchanged actual Application signal fixture covers fixed/UI lanes, pause/zero-step, deletion/adoption/revisit and fresh-process subscription restoration.",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/selected-applications-v2/RESULTS.json",
+          "sha256": "2cfbedd8e05a808f95854dba7c5217bb2307feffcf49cbbbd0e5e7b84628d11f"
+        }
+      ],
+      "observedResult": "Signals 17/0 and signals-load 6/0 on final archive/Application objects.",
+      "remaining": "Selected actual Linux/current native lifecycle routes, not all public signal members, subscription errors, callback interactions or hardware execution; stale native copied-content failure remains separately preserved.",
+      "nativeCaseIds": [
+        "native-final-signal-application"
+      ]
+    },
+    {
+      "id": "navigation-dependency-original-final-linux",
+      "relatedFeatureIds": [
+        "G.04",
+        "J.03",
+        "J.05",
+        "J.08"
+      ],
+      "status": "FINAL LINUX PASS WITHIN UNCHANGED ORIGINAL REGRESSION ENVELOPE",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "not-executed-for-this-case",
+      "oracle": "Unchanged original dependency fixture supplied with its required owned project and terrain source arguments.",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/navigation-unit/RESULTS.json",
+          "sha256": "61a09a924b3c33f6c135b1c27eb8348e4459f11be4b59bec775669a818f0c3b8"
+        },
+        {
+          "path": "docs/evidence/m78-closure/final-build/navigation_dependency.log",
+          "sha256": "83589e4107296ec30070ecbb4053e984fcfa4d71768036a7f30294378a428d9b"
+        }
+      ],
+      "observedResult": "38 navigation dependency checks passed, exit 0. Initial exit 2 printed usage only and is retained as invocation error.",
+      "remaining": "Related source/dependency cases are not universal asset-family or native behaviour proof."
+    },
+    {
+      "id": "editor-export-moved-final-linux",
+      "relatedFeatureIds": [
+        "A.05",
+        "I.01",
+        "I.03",
+        "J.08"
+      ],
+      "status": "FINAL LINUX OFFSCREEN SMOKE PASS WITHIN NAMED BALANCE LAB ENVELOPE — separate scoped native receipts attached",
+      "linuxStatus": "pass-within-envelope",
+      "windowsStatus": "see-separate-scoped-native-receipts",
+      "oracle": "Ordinary final editor Play/Stop, export using final runtime, and launch moved standalone from /tmp with unavailable engine root.",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/final-smokes/RESULTS.json",
+          "sha256": "183377ea2d8f9ba242de44be32fd7a8e4c6723fca621a0a7a63097f433ab7fa1"
+        }
+      ],
+      "observedResult": "Editor Play/Stop, export and moved standalone each exit 0; moved runtime hash matches built runtime. The same receipt preserves a106 expected exit 1 as programPassed=false.",
+      "remaining": "Linux offscreen smoke and native editor/moved final-runtime smoke, not human or real GPU/controller/audio/focus acceptance. Native moved smoke uses byte-verified prior export content; no fresh final-source native export-generator invocation. One package does not prove every asset family.",
+      "nativeCaseIds": [
+        "native-final-editor-v3",
+        "native-final-moved-runtime"
+      ]
+    },
+    {
+      "id": "native-final-balance-lab",
+      "relatedFeatureIds": [
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab-build.json",
+          "sha256": "3c96bd6add919a48dfcd0f7ad32f9dede16bd73be97ecd489e79882a40976ff5"
+        }
+      ],
+      "oracle": "Original M77 step/radial/lifecycle plus fresh ordinary standing/recovery cold pairs. Original standing() reads cached controller observation; separate actual body/current-contact witnesses below strengthen endpoint scope.",
+      "executedRuns": [
+        {
+          "run": "balance-step-trace",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 15,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-radial",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 18,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-radial.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-lifecycle",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 26,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-lifecycle.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-stand-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 23,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-stand-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-recovery-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 21,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "balance-cold-recovery-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-character-lab",
+      "relatedFeatureIds": [
+        "D.01",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-character_retry-build.json",
+          "sha256": "ce3c0ba7a65e1728dcf57ad5f74c25951f1beccf930e97536bf9c4d20723213e"
+        }
+      ],
+      "oracle": "Original M70 CharacterLab baseline98, fresh cold writer10/read14: restored partial/full authority and finite pose. Not exact full articulated cold-trajectory parity; static-anchor/motor actual round-trip is independently checked by physics_continuation.",
+      "executedRuns": [
+        {
+          "run": "character-baseline",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 98,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-character-baseline.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "character-cold-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 10,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-character-cold-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "character-cold-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 14,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-character-cold-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-contact-lifecycle",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-build.json",
+          "sha256": "c40f6b8f5785fd9aead016588291bc57584fb8f163254f06ddc4a4df8f56e7bc"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "contact_lifecycle",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 1076,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-controller",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-controller-build.json",
+          "sha256": "281e802e583d2b17ea64d212238e888e5f83ac305fe17ff3dc7ca2c229fa3047"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "controller",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 119,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-controller.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-editor-v3",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — EXECUTED-EXIT-ZERO-WITHIN-SMOKE-SCOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "executed-exit-zero-within-smoke-scope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+          "sha256": "6c4ab9b3fb0d03fb3d5a745875f6bc1347910af07c53226e4c4cd96cce010f58"
+        }
+      ],
+      "oracle": "Actual final-source editor edit/duplicate/undo/Play-Stop/save smoke with exact frozen unchanged editor objects and current physics/persistence replacements. Native softwareGL functional only.",
+      "executedRuns": [
+        {
+          "run": "editor-smoke",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": null,
+          "failures": null,
+          "stdout": null,
+          "status": "passed_exit_only"
+        }
+      ],
+      "observedResult": "Exit-zero route only where assertion counts are absent; no member semantics inferred.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-gravity",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-build.json",
+          "sha256": "400789467033296d27aeadbff6d949fb3e16442590234cdd64d1dce6fc0f25dc"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "gravity-final",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 70,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-gravity-final.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-impact-timing",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-impact_timing-build.json",
+          "sha256": "5f894d5f1bc0b0412418aa3abc19e11aca43c7713144e5ae3791d4aafded90eb"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "impact-timing",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 3197,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-impact-timing.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-joints",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-joints-build.json",
+          "sha256": "16354736de1f62285171f7bdd22ff21d7955c8d0e621c57c1331f6452f352afa"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "joints",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 29,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-joints.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-mixed-balance",
+      "relatedFeatureIds": [
+        "A.06",
+        "D.01",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-build.json",
+          "sha256": "328ba829dbd849bc99e2bb4ae118d56a8c1ad7fb46679da36977cb46f0717a42"
+        }
+      ],
+      "oracle": "Original M77 public driver with one distant independently updated ordinary motor. Real cold writer/read unchanged settings/timestep/endpoint acceptance.",
+      "executedRuns": [
+        {
+          "run": "mixed-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "mixed-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-mixed-physical-endpoint",
+      "relatedFeatureIds": [
+        "A.06",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair_v2-build.json",
+          "sha256": "49f4daab336f7bb7e8d8f20a1948a51b3251131016a592520a2905a8a5284564"
+        }
+      ],
+      "oracle": "Same exact compiled actual-body observer reused; uninterrupted continuation versus fresh process from same save. All durable physical records and current contacts compared exactly after excluding only fresh native handles and canonical ordering. No thresholds added.",
+      "executedRuns": [
+        {
+          "run": "m78-closure-mixed-endpoint-pair-v2-cold-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "m78-closure-mixed-endpoint-pair-v2-cold-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-mixed-endpoint-v2",
+      "relatedFeatureIds": [
+        "A.06",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-build.json",
+          "sha256": "7ed580ebe8c681eb8da8184fb6cacbf6dbcf80e83d8e2af23e4a0df0c56fb440"
+        }
+      ],
+      "oracle": "Actual-body observer initial cold pair passed fixture checks. Writer lacked observer-only continue-write environment, so this pair alone has no uninterrupted endpoint equality claim; later proper paired observation below is authoritative for equality.",
+      "executedRuns": [
+        {
+          "run": "mixed-endpoint-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 25,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "mixed-endpoint-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-motion",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-motion-build.json",
+          "sha256": "556067598d6c91b9ab3efe9c861dd3fc6e4adbcf7cea85b0293b4db7c0b44f29"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "motion",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 10239,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-motion.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-ordinary-physical-endpoint",
+      "relatedFeatureIds": [
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-ordinary_actual_endpoints-build.json",
+          "sha256": "dd6fe19fbb2abfae6e0e2c00f9387d6d73b160a865659763f56925626abcbf8d"
+        }
+      ],
+      "oracle": "Same final actual-body observer reads byte-exact copies of fresh ordinary standing/recovery snapshots, derives actual physical standing from body pose/current contacts, independent of cached observation. Does not assert uninterrupted trajectory equality.",
+      "executedRuns": [
+        {
+          "run": "m78-closure-ordinary-actual-stand",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "m78-closure-ordinary-actual-recovery",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-physical",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-physical-build.json",
+          "sha256": "d863e653b56394195f52957cddb70840aa71bbe672defa258d14f5e9dd1e5c32"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "physical",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 64,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-physical.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-physics-continuation",
+      "relatedFeatureIds": [
+        "A.04",
+        "A.06",
+        "C.05",
+        "C.08",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-build.json",
+          "sha256": "04f658ce7595886b298cd7783675d0e8cb142e08d535db4273defb8ffc827814"
+        }
+      ],
+      "oracle": "112 actual joint continuation, completed contact publication, independent query isolation, malformed/newer/missing context rejection, real moving static-anchor pose/velocities, reduced states and offset motor reconstruction checks. Direct physics/world mechanisms, not a full CharacterLab cold trajectory oracle.",
+      "executedRuns": [
+        {
+          "run": "physics-continuation",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 112,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-physics-continuation.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-publication-isolation",
+      "relatedFeatureIds": [
+        "A.04",
+        "A.06",
+        "C.05",
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-build.json",
+          "sha256": "e8acfabbc0333c6a067f4612ebfe2ce05cb7b1322f32e8f85ad6b93ce9713fe3"
+        }
+      ],
+      "oracle": "Direct restored-contact publication isolation across an independent CharacterMotor query/update, including the first resumed production boundary.",
+      "executedRuns": [
+        {
+          "run": "publication-isolation",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 8,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-publication-isolation.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-legacy-and-new-cold",
+      "relatedFeatureIds": [
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — FAILED-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "failed-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-remaining_m77-build.json",
+          "sha256": "bb5f7ea7b86825e080c015b5695d7060747d6380b8227dc1f1783f5407f2eb07"
+        }
+      ],
+      "oracle": "Original legacy a106 snapshot read remains failing13/1; new-format fresh corrective writer/read24/0+13/0 passes. Legacy expectedExit=1 is preserved evidence, not a pass.",
+      "executedRuns": [
+        {
+          "run": "m78-closure-final-balance-exact-cold-read",
+          "exitCode": 1,
+          "expectedExitCode": 1,
+          "checks": 13,
+          "failures": 1,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read.stdout.log",
+          "status": "failed"
+        },
+        {
+          "run": "m78-closure-final-balance-new-cold-write",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 24,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "m78-closure-final-balance-new-cold-read",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 13,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual nonzero exit/failed assertions retained; expected exits do not turn failures into passes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-signal-application-final",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — FAILED-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "failed-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+          "sha256": "d652d7a8fa92eb00f295d03f9b333ed9f90875087e689f4481b8e6b9a1b2ce33"
+        }
+      ],
+      "oracle": "Same final-source driver ran against stale historical guest lab.js without valid guard. Actual write10/1, read4/3 retained as stale verification-content failure; no current engine defect inferred. Exact current project copied separately and rerun without recompilation.",
+      "executedRuns": [
+        {
+          "run": "signals-write",
+          "exitCode": 1,
+          "expectedExitCode": 0,
+          "checks": 10,
+          "failures": 1,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-signals-write.stdout.log",
+          "status": "failed"
+        },
+        {
+          "run": "signals-read",
+          "exitCode": 1,
+          "expectedExitCode": 0,
+          "checks": 4,
+          "failures": 3,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-signals-read.stdout.log",
+          "status": "failed"
+        }
+      ],
+      "observedResult": "Actual nonzero exit/failed assertions retained; expected exits do not turn failures into passes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-streaming",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-streaming-build.json",
+          "sha256": "8b73fc083f135bda9bca64a36561b963521f3e3803ecb80b98873084890e784b"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "streaming",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 82,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-streaming.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-world-save",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-world_save-build.json",
+          "sha256": "5f1b7f8b26a6b29d44d86230acd5b75e1e1df55f7aa2e150672bfb2b8de0b0ee"
+        }
+      ],
+      "oracle": "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+      "executedRuns": [
+        {
+          "run": "world_save",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "checks": 27,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-world_save.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-signal-application",
+      "relatedFeatureIds": [
+        "A.02",
+        "A.07",
+        "H.08",
+        "I.01",
+        "I.04"
+      ],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — PASS-WITHIN-ENVELOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "pass-within-envelope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-current-signals.json",
+          "sha256": "22749c4c80ad281f9974d0adf88e32e3449421362a343224115f14cfcf333f76"
+        }
+      ],
+      "oracle": "Byte-exact ordinary current project copied to new closure-only directory. Historical guest project untouched; prior stale-fixture failure retained. Same already compiled final-source driver reused. No runtime or test changes. Actual fixed/UI lane, modal/zero-step pause, safe repeated deletion, adopted region/subscription lifecycle and fresh-process save restoration. No controller hardware or OS focus claim.",
+      "executedRuns": [
+        {
+          "run": "current-signals-write",
+          "exitCode": 0,
+          "checks": 17,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-current-signals-write.stdout.log",
+          "status": "passed_assertions"
+        },
+        {
+          "run": "current-signals-read",
+          "exitCode": 0,
+          "checks": 6,
+          "failures": 0,
+          "stdout": "docs/evidence/m78-closure/native/m78-closure-current-signals-read.stdout.log",
+          "status": "passed_assertions"
+        }
+      ],
+      "observedResult": "Actual recorded assertions pass within these exact native functional routes.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-final-moved-runtime",
+      "relatedFeatureIds": [],
+      "status": "SCOPED FINAL NATIVE FUNCTIONAL RECEIPT — EXECUTED-EXIT-ZERO-WITHIN-SMOKE-SCOPE",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "executed-exit-zero-within-smoke-scope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-moved-package-v2.json",
+          "sha256": "14e6c9f542717baa076a39e8bb3bf4b317283f78d0b012b3cdd0ddf60ceab76b"
+        }
+      ],
+      "oracle": "Actual final closure runtime in byte-verified previously exported ordinary package content. NEW package tree moved and launched without arguments from unrelated cwd, unavailable engine root; original1720frame four-scene/save/load/pause/reload harness. This is final-runtime moved-package smoke, not a fresh export-generator invocation. Unchanged package files use NTFS hardlinks only to bound existing disk; original package untouched. VM softwareGL functional only.",
+      "executedRuns": [
+        {
+          "run": "moved-package-v2",
+          "exitCode": 0,
+          "checks": null,
+          "failures": null,
+          "status": "passed_exit_only"
+        }
+      ],
+      "observedResult": "Exit-zero route only where assertion counts are absent; no member semantics inferred.",
+      "exactEngineIdentity": {
+        "summaryReceipt": {
+          "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+          "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+        },
+        "meaning": "Exact archive/replacement-object/source/binary identities are retained once in the immutable linked native summary."
+      },
+      "remaining": "Only named functional routes. No unexecuted public-member, physical GPU/controller/audio/focus, human or Windows performance acceptance."
+    },
+    {
+      "id": "native-actual-endpoint-actual-endpoint-by-entity",
+      "relatedFeatureIds": [
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED ACTUAL NATIVE PHYSICAL ENDPOINT OBSERVATION",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "actual-observation-within-scope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/ACTUAL_ENDPOINT_BY_ENTITY.json",
+          "sha256": "58243b787ac44b52cbb7193023e4ed89974bd3e638b0c496a8e1290ba0268351"
+        }
+      ],
+      "oracle": "Independent actual physical endpoint comparison, within this native pair only. No controller-cached status substitute. No numerical tolerance added. Linux/Windows trajectories are not asserted bit-identical.",
+      "observedResult": {
+        "scope": "Independent actual physical endpoint comparison, within this native pair only. No controller-cached status substitute. No numerical tolerance added. Linux/Windows trajectories are not asserted bit-identical.",
+        "sourceFiles": [
+          {
+            "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-final.json",
+            "bytes": 60636,
+            "sha256": "a423caf0a5042453b33078406b97e50e2d0821d52b898e3c0dd32c5bf0775cd1"
+          },
+          {
+            "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-final.json",
+            "bytes": 60636,
+            "sha256": "b859e82c5cfd801b3ed7a2a3e7800e20ad4981545aee2cea8db7cde6d20a6077"
+          }
+        ],
+        "rawRecordEquality": false,
+        "excludedIdentityField": "Only bodies[].nativeHandle, a fresh runtime slot identifier, not physical data",
+        "durableBodyRecords": 13,
+        "mappedArticulationRecords": 7,
+        "completedContactRows": 16,
+        "canonicalBodyAndContactOrder": "Entity identity plus deterministic JSON sorting; no rows discarded",
+        "normalizedRecordExactEquality": true,
+        "actualEndpoint": {
+          "actualRelativeComSpeed": 7.136183626244019e-07,
+          "actualRootHeightAboveCurrentSupport": 1.3618701696395874,
+          "actualUpright": 0.9986021518707275,
+          "currentPhysicalStanding": true,
+          "gravityUp": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "landings": 1,
+          "massWeightedCom": [
+            3.0581369400024414,
+            0.8696181774139404,
+            0.37094664573669434
+          ],
+          "massWeightedVelocity": [
+            -1.6302044514304725e-07,
+            -6.947470865270589e-07,
+            1.3969749801390208e-09
+          ],
+          "owned": true,
+          "owner": 12,
+          "progress": 2,
+          "reason": "measured supported physical standing",
+          "rootAngularVelocity": [
+            3.292842976065913e-08,
+            8.695094493305078e-07,
+            -9.022873825870192e-08
+          ],
+          "rootEntity": 4611686018427387904,
+          "rootLinearVelocity": [
+            -1.2522417591753765e-06,
+            -1.5259905694620102e-06,
+            -7.83685649707877e-09
+          ],
+          "rootPosition": [
+            3.0794835090637207,
+            1.3608317375183105,
+            0.3413323163986206
+          ],
+          "rootRotation": [
+            0.9993501305580139,
+            0.00788373127579689,
+            0.024501388892531395,
+            -0.025234591215848923
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ],
+          "standingHeight": 1.4199999570846558,
+          "standingSpeed": 0.1599999964237213,
+          "standingTolerance": 0.18000000715255737,
+          "supportFeet": 2
+        }
+      },
+      "remaining": "Only the explicitly identified physical endpoint route. Ordinary stand/recovery reads are not uninterrupted trajectory equality; mixed equality applies only to its named pair with documented fresh native identity exclusion. No Linux/Windows bitwise trajectory or arbitrary recovery promise."
+    },
+    {
+      "id": "native-actual-endpoint-ordinary-actual-endpoints",
+      "relatedFeatureIds": [
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED ACTUAL NATIVE PHYSICAL ENDPOINT OBSERVATION",
+      "linuxStatus": "not-a-new-Linux-execution",
+      "windowsStatus": "actual-observation-within-scope",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/native/ORDINARY_ACTUAL_ENDPOINTS.json",
+          "sha256": "de18a03f0da66bc501e8c081253edd9d4c902fe169045f85dc2e122a1e3c4b03"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-final.json",
+          "sha256": "82c8e76985f6b3501b7732c0cfda8902d6032829b4c5bd88a1bea2556e59f69a"
+        },
+        {
+          "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-final.json",
+          "sha256": "85cc7fd835b5b2a3aa4e449f6d1c8a394669e021f18e5bbacd5804bc9057e948"
+        }
+      ],
+      "oracle": "Already linked final native actual-body observer reads fresh ordinary standing/recovery snapshots byte-exact copied to new namespaces. These are actual rigid-body/current-contact endpoints, independently derived from pose, gravity and contacts; original cached Observation is not the physical witness. No threshold changed. This does not assert uninterrupted equality for ordinary snapshots.",
+      "observedResult": {
+        "scope": "Already linked final native actual-body observer reads fresh ordinary standing/recovery snapshots byte-exact copied to new namespaces. These are actual rigid-body/current-contact endpoints, independently derived from pose, gravity and contacts; original cached Observation is not the physical witness. No threshold changed. This does not assert uninterrupted equality for ordinary snapshots.",
+        "rows": [
+          {
+            "kind": "stand",
+            "snapshotSHA256": "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230",
+            "actualRecordPath": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-final.json",
+            "actualRecordSHA256": "82c8e76985f6b3501b7732c0cfda8902d6032829b4c5bd88a1bea2556e59f69a",
+            "allBodyRecords": 12,
+            "mappedArticulationRecords": 7,
+            "endpoint": {
+              "actualRelativeComSpeed": 2.9467084914358566e-06,
+              "actualRootHeightAboveCurrentSupport": 1.4182453155517578,
+              "actualUpright": 0.9999289512634277,
+              "currentPhysicalStanding": true,
+              "gravityUp": [
+                -0.0,
+                1.0,
+                -0.0
+              ],
+              "landings": 0,
+              "massWeightedCom": [
+                3.000210762023926,
+                0.9053558707237244,
+                0.0231741052120924
+              ],
+              "massWeightedVelocity": [
+                2.9137399906176142e-06,
+                -4.3805437144328607e-07,
+                -3.632159462085838e-08
+              ],
+              "owned": true,
+              "owner": 12,
+              "progress": 2,
+              "reason": "measured supported physical standing",
+              "rootAngularVelocity": [
+                -1.842034720311858e-07,
+                -1.1453896320290369e-07,
+                -1.0385816651137247e-08
+              ],
+              "rootEntity": 4611686018427387904,
+              "rootLinearVelocity": [
+                4.520278253039578e-06,
+                -8.803215791886032e-07,
+                -1.1276777911461977e-07
+              ],
+              "rootPosition": [
+                3.000459909439087,
+                1.4176697731018066,
+                0.0042509399354457855
+              ],
+              "rootRotation": [
+                0.9999707937240601,
+                -0.005937089212238789,
+                0.0047882478684186935,
+                -0.0005105019663460553
+              ],
+              "sampledGravity": [
+                0.0,
+                -9.8100004196167,
+                0.0
+              ],
+              "standingHeight": 1.4199999570846558,
+              "standingSpeed": 0.1599999964237213,
+              "standingTolerance": 0.18000000715255737,
+              "supportFeet": 2
+            }
+          },
+          {
+            "kind": "recovery",
+            "snapshotSHA256": "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59",
+            "actualRecordPath": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-final.json",
+            "actualRecordSHA256": "85cc7fd835b5b2a3aa4e449f6d1c8a394669e021f18e5bbacd5804bc9057e948",
+            "allBodyRecords": 13,
+            "mappedArticulationRecords": 7,
+            "endpoint": {
+              "actualRelativeComSpeed": 9.935005351735526e-08,
+              "actualRootHeightAboveCurrentSupport": 1.2495478391647339,
+              "actualUpright": 0.9999911785125732,
+              "currentPhysicalStanding": true,
+              "gravityUp": [
+                -0.0,
+                1.0,
+                -0.0
+              ],
+              "landings": 0,
+              "massWeightedCom": [
+                -2.999795913696289,
+                0.49095866084098816,
+                0.3173208236694336
+              ],
+              "massWeightedVelocity": [
+                -9.084517671453796e-08,
+                -3.9917090077778994e-08,
+                4.920626572868514e-09
+              ],
+              "owned": true,
+              "owner": 10,
+              "progress": 2,
+              "reason": "measured supported physical standing",
+              "rootAngularVelocity": [
+                1.6073005326688872e-07,
+                -2.2948910327613703e-07,
+                -1.2816653338632022e-07
+              ],
+              "rootEntity": 4611686018427387904,
+              "rootLinearVelocity": [
+                -9.015638511300494e-07,
+                -3.153033958369633e-07,
+                -6.68193251840421e-08
+              ],
+              "rootPosition": [
+                -2.999821186065674,
+                1.2485644817352295,
+                0.36417195200920105
+              ],
+              "rootRotation": [
+                0.9999977946281433,
+                -0.0020979689434170723,
+                -0.00014321522030513734,
+                1.9549326680134982e-05
+              ],
+              "sampledGravity": [
+                0.0,
+                -9.809999465942383,
+                0.0
+              ],
+              "standingHeight": 1.399999976158142,
+              "standingSpeed": 0.1599999964237213,
+              "standingTolerance": 0.18000000715255737,
+              "supportFeet": 2
+            }
+          }
+        ]
+      },
+      "remaining": "Only the explicitly identified physical endpoint route. Ordinary stand/recovery reads are not uninterrupted trajectory equality; mixed equality applies only to its named pair with documented fresh native identity exclusion. No Linux/Windows bitwise trajectory or arbitrary recovery promise."
+    },
+    {
+      "id": "legal-simple-actor-save-exclusion",
+      "relatedFeatureIds": [
+        "A.04",
+        "A.06",
+        "C.05",
+        "I.01",
+        "I.03"
+      ],
+      "status": "EXECUTED LINUX SAVE-EXCLUSION PROBE — FAILURE",
+      "linuxStatus": "failed-within-envelope",
+      "windowsStatus": "not-executed-for-this-case",
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/save-exclusion/linux-current-01/fixture/RESULT.json",
+          "sha256": "fe666b009e8b7d8f7fb409a605df74b8a016ef9919187214d7041a2541175079"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/save-exclusion/MEASURED_RESULT.md",
+          "sha256": "b4e69050be14ebfbaefee4539479eb96a5f95e2378cfee6a6c233adea31775ea"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/save-exclusion/linux-current-01/AUDIT_RECEIPT.json",
+          "sha256": "f6ac26ab221f5fdc4fbd72d875f5076086b737bf254c1638e3a8d6013cb56042"
+        },
+        {
+          "path": "docs/evidence/m78-closure/audit-lifecycle/save-exclusion/linux-current-01/SOURCE_MECHANISM_COMPARE.json",
+          "sha256": "b16121fe3b53af40d3710cd3f64245761083b8601701ee79e4886be3a8494005"
+        }
+      ],
+      "oracle": "Public saves.exclude may omit a simple dynamic actor without leaving required orphaned participants; no integration or fixture retuning.",
+      "observedResult": {
+        "checks": 22,
+        "failures": 1,
+        "ordinaryControl": {
+          "checks": 12,
+          "failures": 0
+        },
+        "excludedActor": {
+          "checks": 10,
+          "failures": 1
+        },
+        "error": "saved sleep body unavailable/duplicate"
+      },
+      "remaining": "Only legal non-articulated transient dynamic actor capture/private restore/control paths measured. Scene omits the actor but sleep collector retains it; those exact mechanisms match HEAD. No runtime fix, live-world replacement loss, service/UI callback behaviour or native execution claim.",
+      "finding": "LIF-002 — measured pre-existing generic participant-ownership mismatch, P2"
+    },
+    {
+      "id": "ordinary-actual-physical-endpoint-final-linux",
+      "relatedFeatureIds": [
+        "D.07",
+        "D.10",
+        "I.01",
+        "I.03"
+      ],
+      "status": "SCOPED ACTUAL LINUX ORDINARY STANDING / RECOVERY ENDPOINT READS",
+      "linuxStatus": "pass-within-physical-endpoint-envelope",
+      "windowsStatus": "see-separate-native-ordinary-endpoint-observations",
+      "nativeCaseIds": [
+        "native-final-ordinary-physical-endpoint",
+        "native-actual-endpoint-ordinary-actual-endpoints"
+      ],
+      "receipts": [
+        {
+          "path": "docs/evidence/m78-closure/ordinary-actual-endpoints/RESULTS.json",
+          "sha256": "15b91f89028855ada5e7209773985adf934653e5c239bb2abfdfbd05ef4c7bb6"
+        }
+      ],
+      "oracle": "Derive actual physical standing from current seven mapped body poses/velocities, sampled gravity and completed contacts, rather than cached controller observation; read unchanged fresh ordinary stand/recovery captures.",
+      "observedResult": [
+        {
+          "case": "stand",
+          "exitCode": 0,
+          "passed": true,
+          "originalSaveSHA256": "56b887d0e2b1a4dc2780c252706026234d175d0aad0dff5b00cd1643a3515483",
+          "originalSaveUnchanged": true,
+          "copiedSaveUnchanged": true,
+          "observerSHA256": "c805cf1aa73ef35f918f1a86dbd17ab4223783d95364b57e669995740b874967",
+          "archiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+          "mappedPhysicalBodies": 7,
+          "currentPhysicalStanding": true,
+          "actualUpright": 0.9999340176582336,
+          "actualRootHeightAboveCurrentSupport": 1.4182831048965454,
+          "actualRelativeComSpeed": 1.9955150492023677e-06,
+          "supportFeet": 2,
+          "acceptedContactRows": 8
+        },
+        {
+          "case": "recovery",
+          "exitCode": 0,
+          "passed": true,
+          "originalSaveSHA256": "f7b50dc31416f684197752aada006e68dfc7e4907801379130d0a4953acb5a03",
+          "originalSaveUnchanged": true,
+          "copiedSaveUnchanged": true,
+          "observerSHA256": "c805cf1aa73ef35f918f1a86dbd17ab4223783d95364b57e669995740b874967",
+          "archiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+          "mappedPhysicalBodies": 7,
+          "currentPhysicalStanding": true,
+          "actualUpright": 0.9999896883964539,
+          "actualRootHeightAboveCurrentSupport": 1.2495194673538208,
+          "actualRelativeComSpeed": 3.629410230132635e-07,
+          "supportFeet": 2,
+          "acceptedContactRows": 8
+        }
+      ],
+      "remaining": "Each read has two supported feet and eight accepted contact rows. Endpoint observations are not full uninterrupted trajectory equality, every support topology or human physical-motion acceptance."
+    }
+  ],
+  "nativeClosureSummary": {
+    "receipt": {
+      "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+      "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+    },
+    "outstandingScopes": [
+      {
+        "scope": "SaveStreaming Application write/read/read-b on final native source",
+        "status": "not_executed",
+        "reason": "Bounded isolated guest storage and sequential closure budget; lower-level streaming82 and world-save27 reran, plus actual signal region/save/reload route17+6, but they are not substitutes for this distinct fixture."
+      },
+      {
+        "scope": "New closure NavigationInputRace, ResolvedPrefabModPolicy and StreamingMotorPublication audit observers",
+        "status": "not_executed_native",
+        "reason": "Linux-only new audit observations; native historical narrower suites are not promoted to this behavioural coverage."
+      },
+      {
+        "scope": "New closure tiny save-exclusion audit probe",
+        "status": "not_executed_native",
+        "reason": "Separate newly selected Linux audit contract; not silently covered by another fixture."
+      },
+      {
+        "scope": "Fresh final-source export generator invocation",
+        "status": "not_executed_native",
+        "reason": "Final native runtime tested in byte-verified previously exported ordinary content; prior export receipt retained separately."
+      },
+      {
+        "scope": "Full M70 cold articulated trajectory equality",
+        "status": "not_demonstrated",
+        "reason": "CharacterLab pair validates authority/finite pose; actual static anchor/motor reconstruction is tested directly, not every M70 body over a resumed trajectory."
+      },
+      {
+        "scope": "FLU-001 legacy PBF settling correction",
+        "status": "deferred_unchanged",
+        "reason": "Original failures and separate settling-contract issue retained; no fluid implementation/threshold/research modifications or new fluid acceptance claim."
+      },
+      {
+        "scope": "Windows physical GPU/hardware and performance acceptance",
+        "status": "outstanding",
+        "reason": "Unchanged native Windows10 VM/softwareGL is functional validation only; historical timing diagnostic remains, Linux host is performance reference."
+      }
+    ],
+    "toolingFailures": [
+      {
+        "id": "editor-link-storage",
+        "result": "first LNK1106 disk full and duplicated PW/WP LNK4042 preserved; duplication corrected only in verification response before successful fresh link",
+        "evidence": "m78-closure-editor-link.log"
+      },
+      {
+        "id": "editor-preflight",
+        "result": "conservative storage preflight declined before second editor link; no runtime failure",
+        "evidence": "m78-closure-editor_v2-error.txt"
+      },
+      {
+        "id": "editor-cleanup-pattern",
+        "result": "editor passed, cleanup name regex did not accept digit3; archival cleanup repaired without simulation rerun"
+      },
+      {
+        "id": "publication-artifact-sharing",
+        "result": "fixture8/0; upload sharing lock corrected by disposed process and bounded artifact transfer retry, no simulation rerun"
+      },
+      {
+        "id": "observer-include",
+        "result": "first observer compile lacked nlohmann include path; fixed verification recipe only, same unmodified observer"
+      },
+      {
+        "id": "observer-metadata-BOM",
+        "result": "first paired observation JSON decode rejected before simulation; corrected file download decoding, original failure retained"
+      },
+      {
+        "id": "partial-M77-matrix",
+        "result": "first seven actual M77 runs passed, storage blocked legacy fixture copy before test; remaining runs used same exact executable and new namespace"
+      },
+      {
+        "id": "empty-archive-helper",
+        "result": "zero disk created empty helper and wrapper exited0; empty helper retained as tooling failure, later wrappers stop on errors; no pass claimed"
+      },
+      {
+        "id": "single-item-archive-shape",
+        "result": "host post-result archival parser normalized PowerShell single-item object to list; no test rerun"
+      },
+      {
+        "id": "gravity-link-storage",
+        "result": "first LNK1106 before execution; failed MAP archived, link-only same-object retry passed70/0"
+      },
+      {
+        "id": "character-link-storage",
+        "result": "first LNK1106 before execution; failed MAP archived, link-only same-object retry with diagnostic MAP omitted passed98/0+10/0+14/0"
+      },
+      {
+        "id": "stale-signals-fixture",
+        "result": "actual old guest project failure write10/1/read4/3 preserved; lab.js missing previously accepted valid guard; exact current copied project passes17/0+6/0 with same binary"
+      },
+      {
+        "id": "moved-package-preflight",
+        "result": "first conservative 4MiB storage reserve declined before any package creation/launch; second receipt, if present, uses approved 2MiB tooling reserve and unchanged runtime/harness",
+        "evidence": "m78-closure-moved-package-error.txt"
+      }
+    ],
+    "meaning": "Named actual native functional results; baseline platform flags and unexecuted semantics stay unchanged."
+  }
+}

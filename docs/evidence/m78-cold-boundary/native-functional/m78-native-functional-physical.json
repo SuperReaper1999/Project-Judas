@@ -1,0 +1,19 @@
+﻿{
+    "seconds":  0.9896934,
+    "freeBytes":  97292288,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_physical.exe",
+    "case":  "physical",
+    "expectedSaveSHA256":  null,
+    "run":  "physical",
+    "executableSHA256":  "e72fb4113333db3989546420873502dcc0358ad4ae0a7c0311e33f5d4c0c7b0f",
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "scope":  "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "environment":  {
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source"
+                    }
+}

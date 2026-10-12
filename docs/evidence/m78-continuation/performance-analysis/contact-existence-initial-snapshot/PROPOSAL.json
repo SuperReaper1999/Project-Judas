@@ -1,0 +1,19 @@
+{
+  "status": "UNBUILT ISOLATED PROPOSAL; requires measured dominant cost and parity checks before any production integration",
+  "inputDirectory": "/home/conner/Documents/GitHub/Project-Judas/src",
+  "inputSHA256": {
+    "CollisionGeometry.cpp": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a",
+    "CollisionGeometry.h": "c90d2826d73590d8700417dcc124b70461927c5b4888b500636d135e337d86c7",
+    "PhysicsWorld.cpp": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b"
+  },
+  "outputSHA256": {
+    "CollisionGeometry.cpp": "554caa6eb6823fe1e9fa33d8c16472e6d1757faa315532768e6233316ca67de0",
+    "CollisionGeometry.h": "5b8b12373b7d4fbcf98c9d87a6487d8e440e2b12d80e0d6aae352aba8ef22198",
+    "PhysicsWorld.cpp": "3ac2f92fa94be82624e95a37ab601a49692bb2df2b7d05b421779d0d6f88817b",
+    "OriginalCookedContactOracle.cpp": "c8c9f0eec7608036a767a6edc9179d9c1058fbefe4e8e701549682c70d0d3718"
+  },
+  "scope": "Shared accepted-witness visitor; short circuit Boolean queries only; full manifold consumer retains original visit order and contact construction",
+  "preserved": "SAT/witness arithmetic, BVH, margins, sidedness, active-edge policy, full impulse rows, CCD advancement and all iteration/cadence limits",
+  "buildRun": false,
+  "productionEdited": false
+}

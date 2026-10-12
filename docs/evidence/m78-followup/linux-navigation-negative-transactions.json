@@ -1,0 +1,21 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_navigation_dependency_tests",
+    ".cache/m78-followup/dependency-negatives-project/landscape_fork.judasproj",
+    "Imports/landscape.judasterrain"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:28:03.419380+00:00",
+  "seconds": 0.7164333979999356,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "ea3705a732efc904e04d327a87b1487cab0e60760dcf389b64914fce3cb5cbca",
+  "logSHA256": "c016fc212493ef925aafa2ebec1e1d6ce4fb15630ec04ebceb091f4ecff70884",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

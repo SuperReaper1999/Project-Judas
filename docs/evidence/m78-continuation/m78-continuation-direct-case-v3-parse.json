@@ -1,0 +1,9 @@
+﻿{
+    "scope":  "Native PowerShell parser only; multi-TU build script not executed",
+    "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\windows_direct_case_v3.ps1",
+    "sha256":  "8467d4fa7eec34da0456ac0abe4250c09e04810464ac10900c5207a6b81aa5c2",
+    "parseErrors":  [
+
+                    ],
+    "freeBytes":  329920512
+}

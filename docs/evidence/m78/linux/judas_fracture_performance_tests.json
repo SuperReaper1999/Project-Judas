@@ -1,0 +1,26 @@
+{
+  "id": "judas_fracture_performance_tests",
+  "source": "tests/FracturePerformanceTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_fracture_performance_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "12e1746aabe2a5ec303013c50e5cad8f23f62a9aebc9e5108e7bde5d44eb4305",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_fracture_performance_tests.log",
+  "logSHA256": "8f86c77788ec43a003bd8bf3b2aa9280dc88f748e5c7fbd0d7333a704053b548",
+  "seconds": 0.7250657789991237
+}

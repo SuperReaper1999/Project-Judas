@@ -1,0 +1,40 @@
+﻿{
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final2-repair-physics_continuation.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\physics_continuation-0.obj\"",
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "case":  "physics_continuation",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-physics_continuation.exe",
+    "executableSHA256":  "588674fe9e72343a970b80a15335d059f357782f92603f5bccb1483973130a89",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "runs":  [
+                 {
+                     "seconds":  0.8407169,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "physics_continuation",
+                     "expectedSaveSHA256":  null,
+                     "run":  "physics-continuation",
+                     "executableSHA256":  "588674fe9e72343a970b80a15335d059f357782f92603f5bccb1483973130a89",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+
+                               ],
+                     "arguments":  [
+
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  56082432,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 }
+             ],
+    "freeBytes":  56078336,
+    "objects":  [
+                    {
+                        "objectSHA256":  "d634c999d8958b0152481f9a0b3b281be8d54213a345f1b6fc6484cd02f82c57",
+                        "source":  "tests/PhysicsContinuationTests.cpp",
+                        "bytes":  366660,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\physics_continuation-0.obj",
+                        "sourceSHA256":  "2c37b796a0a4e78935b1009b500e15063c9730414389e785812f341544117f69",
+                        "reuseOriginal":  false
+                    }
+                ],
+    "executableBytes":  7869440
+}

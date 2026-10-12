@@ -1,0 +1,38 @@
+[
+  {
+    "variant": "commands-seeds",
+    "mapGuestPath": "m78-native-first-closure-commands-seeds.map",
+    "mapSHA256": "697c6c92389f0fa859caef139c2a64c870d7d156b0c5b1861104da48cf27888c",
+    "mapBytes": 14846235,
+    "compressedEvidence": "docs/evidence/m78-cold-boundary/native-closure/m78-native-first-closure-commands-seeds.map.gz",
+    "compressedBytes": 1276226,
+    "compressedSHA256": "8d07feafd0872e800137e7e172ddd022824ce436e61b45f08df4698e046cc34c",
+    "loadedOriginalReplacementMembers": [],
+    "explicitObjectMapLines": [
+      "0001:000004f0       ??$?0AEAY01$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY01$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0BC@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0BC@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0BE@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0BE@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0BI@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0BI@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0CG@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0CG@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0EB@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0EB@$$CBD@Z 00000001400014f0 f i JointSolver.obj"
+    ]
+  },
+  {
+    "variant": "commands-seeds-normal-prepare",
+    "mapGuestPath": "m78-native-first-closure-commands-seeds-normal-prepare.map",
+    "mapSHA256": "4c8ff2dc435dbc41cbfae8e8b33c8f5a1cbccdf4055bd6eb6470285a08047ebf",
+    "mapBytes": 14824708,
+    "compressedEvidence": "docs/evidence/m78-cold-boundary/native-closure/m78-native-first-closure-commands-seeds-normal-prepare.map.gz",
+    "compressedBytes": 1275764,
+    "compressedSHA256": "510833d290a5ac250499f82c6f02cd38f21105587ee34508a39f1ea8984159ff",
+    "loadedOriginalReplacementMembers": [],
+    "explicitObjectMapLines": [
+      "0001:000004f0       ??$?0AEAY01$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY01$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0BC@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0BC@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0BE@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0BE@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0BI@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0BI@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0CG@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0CG@$$CBD@Z 00000001400014f0 f i JointSolver.obj",
+      "0001:000004f0       ??$?0AEAY0EB@$$CBD$0A@@?$json_ref@V?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@json_abi_v3_11_3@nlohmann@@V?$vector@EV?$allocator@E@std@@@2@X@json_abi_v3_11_3@nlohmann@@@detail@json_abi_v3_11_3@nlohmann@@QEAA@AEAY0EB@$$CBD@Z 00000001400014f0 f i JointSolver.obj"
+    ]
+  }
+]

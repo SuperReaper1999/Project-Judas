@@ -1,0 +1,69 @@
+[  0%] Built target judas_app_icon
+[ 16%] Built target freetype
+[ 22%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas
+[100%] Built target judas
+[  0%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 20%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 30%] Built target judas_navigation_backend
+[ 30%] Built target judas_glad
+[ 30%] Built target judas_profiler
+[ 30%] Built target judas_audio_backend
+[ 30%] Built target harfbuzz
+[ 30%] Built target judas_imgui
+[ 30%] Built target judas_ufbx
+[ 35%] Built target judas_materials
+[ 90%] Built target judas_engine
+[ 95%] Built target judas_navigation_baker
+[ 95%] Built target judas_model_import
+[ 95%] Built target judas_world_authoring
+[ 95%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  0%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 21%] Built target judas_icu_build
+[ 26%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 36%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Linking CXX executable judas_production_fluid_tests
+[100%] Built target judas_production_fluid_tests
+[  0%] Built target judas_app_icon
+[ 16%] Built target freetype
+[ 22%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_fluid_cavity_impact_tests
+[100%] Built target judas_fluid_cavity_impact_tests
+[  0%] Built target judas_profiler
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/CollisionGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ContactSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/ImpactSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/JointSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/Narrowphase.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/PhysicsCastGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/PhysicsWorld.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RigidBody.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_fluid_rigid_coupling_tests.dir/src/RigidBodyGravity.cpp.o
+[  0%] Linking CXX executable judas_fluid_rigid_coupling_tests
+[100%] Built target judas_fluid_rigid_coupling_tests

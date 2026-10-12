@@ -1,0 +1,31 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  79757312,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-gravity.exe",
+                        "sha256":  "8b6e899f89284ae9abfddcc6255d5211bc01dbee5c936b79ee8710e5b0cabfe1",
+                        "name":  "m78-final-repair-gravity.exe",
+                        "bytes":  9265152
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\gravity-0.obj",
+                        "sha256":  "657521ac6cd732f24b725c8aa0c095c2466cfe737407d9ff8c149197f23da950",
+                        "name":  "gravity-0.obj",
+                        "bytes":  951028
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\gravity-1.obj",
+                        "sha256":  "f3c6b36f176a3ba8abaf3ae06755c3cff961c5f6849dabd638fb70db6ccad5a8",
+                        "name":  "gravity-1.obj",
+                        "bytes":  712178
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-gravity-generated.zip",
+                        "bytes":  4885971,
+                        "sha256":  "d326b1ff1c30b6e45551df8fc702b9abdc9ca636c1ab45814e4490b2ae62147b"
+                    }
+                ],
+    "librarySHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "freeAfter":  95576064
+}

@@ -87,18 +87,13 @@ struct RigidBody {
 glm::mat3 SolidSphereInverseInertia(float mass, float radius);
 glm::mat3 SolidBoxInverseInertia(float mass, const glm::vec3& halfExtents);
 
-// Semi-implicit (symplectic) Euler: velocity is updated from this step's
-// accumulated force/torque, then position/orientation are advanced using
-// the NEW velocity — unconditionally more stable than explicit Euler for
-// the same reason PlayerController's own fixed-step integration has always
-// been implicitly consistent with this choice. Orientation is integrated
-// via the standard quaternion derivative (dq/dt = 1/2 * omega_quat * q)
-// and renormalized every step to counter floating-point drift away from a
-// unit quaternion — never left to accumulate. Clears both accumulators at
-// the end, matching every existing force-accumulator convention in this
-// engine (a force must be re-applied every step it should act, exactly
-// like GravityField::Sample being re-evaluated fresh every fixed step
-// rather than cached).
+// Force/torque kicks use the current world inertia. Linear drift uses the
+// kicked velocity; free angular drift solves the body-momentum implicit midpoint
+// and uses its anchored Cayley quaternion step, then transports world angular
+// momentum into the endpoint inertia. Free rotation is second order and
+// conserves quadratic kinetic energy to solve/rounding error. Torque kicks
+// retain first-order splitting.
+// Both force accumulators are cleared by the velocity phase.
 void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime);
 
 // Milestone 32: the same integration split at the point a contact solver
@@ -107,3 +102,15 @@ void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime);
 // Calling both in order is exactly IntegrateRigidBody.
 void IntegrateRigidBodyVelocity(RigidBody& body, float fixedDeltaTime);
 void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime);
+
+// Recover physical world angular velocity after a force-free orientation drift.
+// The old orientation/velocity define L = R I_body R^T omega. Singular/locked
+// rotational inertia retains its prior representation; no inverse of zero.
+glm::vec3 TransportAngularVelocity(const glm::mat3& inverseInertiaLocal,
+    const glm::quat& from,const glm::quat& to,const glm::vec3& velocity);
+
+// Bounded implicit body-momentum midpoint for the Cayley drift generator.
+// Retains an anchored trajectory and second-order free rotation. Nonconvergence
+// is an explicit error rather than a nonconservative fallback.
+glm::vec3 AngularDriftGenerator(const glm::mat3& inverseInertiaLocal,
+    const glm::quat& orientation,const glm::vec3& velocity,float duration);

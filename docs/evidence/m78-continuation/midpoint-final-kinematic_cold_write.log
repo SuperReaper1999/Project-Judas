@@ -1,0 +1,5 @@
+PASS fresh process save fixture constructs
+PASS fresh process metadata uses the canonical authored scene fingerprint
+PASS capture active target and durable velocity: 
+PASS write modern snapshot for separate process
+SUMMARY 4 checks 0 failures

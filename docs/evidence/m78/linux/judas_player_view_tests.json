@@ -1,0 +1,26 @@
+{
+  "id": "judas_player_view_tests",
+  "source": "tests/PlayerViewTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_player_view_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "7ec37c5fa3dafeb495eb3f764ca0ace1e7f35ef52340faef01166088a852058d",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 14,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_player_view_tests.log",
+  "logSHA256": "415eb13d4f487271602189127942d1b91c062b0b04b5ef34801683a540b6b1fd",
+  "seconds": 0.001977930000066408
+}

@@ -1,0 +1,135 @@
+{
+  "scope": "Already linked final native actual-body observer reads fresh ordinary standing/recovery snapshots byte-exact copied to new namespaces. These are actual rigid-body/current-contact endpoints, independently derived from pose, gravity and contacts; original cached Observation is not the physical witness. No threshold changed. This does not assert uninterrupted equality for ordinary snapshots.",
+  "rows": [
+    {
+      "kind": "stand",
+      "snapshotSHA256": "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230",
+      "actualRecordPath": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-final.json",
+      "actualRecordSHA256": "82c8e76985f6b3501b7732c0cfda8902d6032829b4c5bd88a1bea2556e59f69a",
+      "allBodyRecords": 12,
+      "mappedArticulationRecords": 7,
+      "endpoint": {
+        "actualRelativeComSpeed": 2.9467084914358566e-06,
+        "actualRootHeightAboveCurrentSupport": 1.4182453155517578,
+        "actualUpright": 0.9999289512634277,
+        "currentPhysicalStanding": true,
+        "gravityUp": [
+          -0.0,
+          1.0,
+          -0.0
+        ],
+        "landings": 0,
+        "massWeightedCom": [
+          3.000210762023926,
+          0.9053558707237244,
+          0.0231741052120924
+        ],
+        "massWeightedVelocity": [
+          2.9137399906176142e-06,
+          -4.3805437144328607e-07,
+          -3.632159462085838e-08
+        ],
+        "owned": true,
+        "owner": 12,
+        "progress": 2,
+        "reason": "measured supported physical standing",
+        "rootAngularVelocity": [
+          -1.842034720311858e-07,
+          -1.1453896320290369e-07,
+          -1.0385816651137247e-08
+        ],
+        "rootEntity": 4611686018427387904,
+        "rootLinearVelocity": [
+          4.520278253039578e-06,
+          -8.803215791886032e-07,
+          -1.1276777911461977e-07
+        ],
+        "rootPosition": [
+          3.000459909439087,
+          1.4176697731018066,
+          0.0042509399354457855
+        ],
+        "rootRotation": [
+          0.9999707937240601,
+          -0.005937089212238789,
+          0.0047882478684186935,
+          -0.0005105019663460553
+        ],
+        "sampledGravity": [
+          0.0,
+          -9.8100004196167,
+          0.0
+        ],
+        "standingHeight": 1.4199999570846558,
+        "standingSpeed": 0.1599999964237213,
+        "standingTolerance": 0.18000000715255737,
+        "supportFeet": 2
+      }
+    },
+    {
+      "kind": "recovery",
+      "snapshotSHA256": "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59",
+      "actualRecordPath": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-final.json",
+      "actualRecordSHA256": "85cc7fd835b5b2a3aa4e449f6d1c8a394669e021f18e5bbacd5804bc9057e948",
+      "allBodyRecords": 13,
+      "mappedArticulationRecords": 7,
+      "endpoint": {
+        "actualRelativeComSpeed": 9.935005351735526e-08,
+        "actualRootHeightAboveCurrentSupport": 1.2495478391647339,
+        "actualUpright": 0.9999911785125732,
+        "currentPhysicalStanding": true,
+        "gravityUp": [
+          -0.0,
+          1.0,
+          -0.0
+        ],
+        "landings": 0,
+        "massWeightedCom": [
+          -2.999795913696289,
+          0.49095866084098816,
+          0.3173208236694336
+        ],
+        "massWeightedVelocity": [
+          -9.084517671453796e-08,
+          -3.9917090077778994e-08,
+          4.920626572868514e-09
+        ],
+        "owned": true,
+        "owner": 10,
+        "progress": 2,
+        "reason": "measured supported physical standing",
+        "rootAngularVelocity": [
+          1.6073005326688872e-07,
+          -2.2948910327613703e-07,
+          -1.2816653338632022e-07
+        ],
+        "rootEntity": 4611686018427387904,
+        "rootLinearVelocity": [
+          -9.015638511300494e-07,
+          -3.153033958369633e-07,
+          -6.68193251840421e-08
+        ],
+        "rootPosition": [
+          -2.999821186065674,
+          1.2485644817352295,
+          0.36417195200920105
+        ],
+        "rootRotation": [
+          0.9999977946281433,
+          -0.0020979689434170723,
+          -0.00014321522030513734,
+          1.9549326680134982e-05
+        ],
+        "sampledGravity": [
+          0.0,
+          -9.809999465942383,
+          0.0
+        ],
+        "standingHeight": 1.399999976158142,
+        "standingSpeed": 0.1599999964237213,
+        "standingTolerance": 0.18000000715255737,
+        "supportFeet": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_fluid_rigid_coupling_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:37:57.669725+00:00",
+  "seconds": 13.509047202998772,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "ef0086a53363b2e67f3381b2ca7c03ca5168852bf1eaa29f6f57f3945aa08416",
+  "logSHA256": "16e2b11847fb9a3a8193f91d2bc2b392c7da6220b942a6499ba660278cd1d7a1",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

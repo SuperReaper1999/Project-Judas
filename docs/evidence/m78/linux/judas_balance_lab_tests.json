@@ -1,0 +1,28 @@
+{
+  "id": "judas_balance_lab_tests",
+  "source": "tests/BalanceLabTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_balance_lab_tests",
+    "standing"
+  ],
+  "adapter": "standing mode only; other modes separate",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 15,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_balance_lab_tests.log",
+  "logSHA256": "860561c78b1f89d1c035bab84c04c7ba83c52f450b44fefbd448773a3c2627d8",
+  "seconds": 1.619785695000246
+}

@@ -1,0 +1,10 @@
+{
+  "scope": "Paired newly captured Linux continuation, full passive and actuator history plus normal first producer phase, no first-boundary replay. Separate source/restored journals.",
+  "journalSHA256": {
+    "docs/evidence/m78-cold-boundary/linux-new-capture-command-with-impulses-normal-cold-write-joint-boundary.jsonl": "45255feb1533d19b4e0c788adb46e746de6015b3da9562c58e877f3e8f6792d2",
+    "docs/evidence/m78-cold-boundary/linux-new-capture-command-with-impulses-normal-cold-read-joint-boundary.jsonl": "7d2f7be6b4382cbf31159a7af26bbf9beb0946e894d4286bb303232dbefb71f5"
+  },
+  "sourceRows": 36,
+  "restoredRows": 36,
+  "differences": []
+}

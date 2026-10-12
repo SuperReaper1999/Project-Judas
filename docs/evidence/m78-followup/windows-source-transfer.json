@@ -1,0 +1,81 @@
+{
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "fcc2bb0604c4e78cf19d489c05a82be8d7d596868c0099cdadd1a003766ea11a"
+    },
+    {
+      "path": "src/CollisionGeometry.cpp",
+      "sha256": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a"
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "sha256": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "sha256": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6"
+    },
+    {
+      "path": "src/Prefab.cpp",
+      "sha256": "d2cd051026a5d943ade664dcafff953029fda967460cc1faf25cbaf45a0b9cd3"
+    },
+    {
+      "path": "src/RigidBody.cpp",
+      "sha256": "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df"
+    },
+    {
+      "path": "src/RigidBody.h",
+      "sha256": "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b"
+    },
+    {
+      "path": "src/RigidMotion.h",
+      "sha256": "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497"
+    },
+    {
+      "path": "src/editor/TerrainTools.cpp",
+      "sha256": "9f77a6e123d96ee6e6caa65f5b254be0d2406d20164951524e3ded98f3025043"
+    },
+    {
+      "path": "src/editor/TerrainTools.h",
+      "sha256": "e34a836f86fd1b40e49c49129f9e184c1dcfae8654a92c92c6a63ba43f9585b6"
+    },
+    {
+      "path": "tests/CollisionGeometryTests.cpp",
+      "sha256": "b1e818ce3531938f8a96cd2562956d107d976643078b3112c3de022d913dc7d0"
+    },
+    {
+      "path": "tests/PrefabTests.cpp",
+      "sha256": "f445b0a310752fece374a253d40ab396e2fbd322329b0ef882064c98ca7d774b"
+    },
+    {
+      "path": "tests/RigidMotionTests.cpp",
+      "sha256": "38692f953ff456b40c05eb7856728aa698bd82c8fdc3f646a5a402a462a0742c"
+    },
+    {
+      "path": "tests/ScalabilityTests.cpp",
+      "sha256": "b790389689ed90f4e65ce67aa2a66bb7b69cefef1c137235a7e0310aec21fba5"
+    },
+    {
+      "path": "tests/WorldStreamingTests.cpp",
+      "sha256": "b51b10173d4d74b7b042411ef7109f28ba7e42b0f45bcc3aca26b7416517f71b"
+    },
+    {
+      "path": "tools/NavigationBake.cpp",
+      "sha256": "eba675d2fce315d13927f31ee9ea0936bb0dc139d2c863530590ff157f680f75"
+    },
+    {
+      "path": "src/authoring/NavigationDependencies.h",
+      "sha256": "4a06d2e44893761d1088b397c830f693e744574e5df555510cf04bc3579828dd"
+    },
+    {
+      "path": "src/authoring/NavigationDependencies.cpp",
+      "sha256": "5666758985926e221ee87f0120698cd6ee1a4e0b2bd2600d4f776224ee949120"
+    },
+    {
+      "path": "tests/NavigationDependencyTests.cpp",
+      "sha256": "05ef0e617660479fc1f411d4137556f8c2fb261a24ad0efd39eedb5967cc39e3"
+    }
+  ],
+  "archiveSHA256": "6280e03314eccd618d155e8dad44da30da9dc1e0dfa06edf1429e644d5d5cbb0"
+}

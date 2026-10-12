@@ -1,0 +1,86 @@
+[
+  {
+    "name": "mod-policy",
+    "compile": {
+      "command": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/ResolvedPrefabModPolicy.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/audit-lifecycle-03/mod-policy.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 11.226937309002096
+    },
+    "link": {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/audit-lifecycle-03/mod-policy.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/audit-lifecycle-03/mod-policy.exe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a",
+        "-lm",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.8907829739982844
+    },
+    "executableSHA256": "c115b5aa76e0e38c8172ae2238d6a06f3260d2990b5d2840a4cc435b210f8256",
+    "run": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/audit-lifecycle-03/mod-policy.exe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/audit-lifecycle-03/mod-policy-fixture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.02004884900088655
+    }
+  }
+]

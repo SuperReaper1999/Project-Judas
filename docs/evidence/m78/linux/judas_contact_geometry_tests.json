@@ -1,0 +1,27 @@
+{
+  "id": "judas_contact_geometry_tests",
+  "source": "tests/ContactGeometryProbe.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_geometry_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/ftft4/geometry/fixtures.txt"
+  ],
+  "adapter": "read-only accepted geometry fixture",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "8a9e99e90f54f3c24464d0d9c268082ef8bcb8ef96cc9b396c4af2fc0eb23885",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 0,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_contact_geometry_tests.log",
+  "logSHA256": "7a0eda3458b6693a68bf55e224dc2649e4626b77e19a54e65ba1cbcd37285e79",
+  "seconds": 0.09652365800138796
+}

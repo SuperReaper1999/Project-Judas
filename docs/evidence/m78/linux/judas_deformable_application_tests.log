@@ -1,0 +1,32 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Deformable Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/deformable_lab/deformable_lab.judasproj)
+Scene: Deformable Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/deformable_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary project asynchronously publishes all seven deformable instances
+PASS real animated target shares normal skeletal resource
+PASS normal authored UI loaded
+PASS cape resolves authored stable bone attachment
+PASS cape pins consume exact resolved joint pose without another animation clock
+PASS runtime scale change rejects unsupported deformable scale
+PASS main/secondary/shadow presentation never advances or changes physics
+PASS normal M33 camera renders deformable scene independently
+PASS real VM controls airflow/load and prefab spawn safely
+PASS runtime prefab adds independent deformable owner
+LAB contacts=1137 bodies=7 fixed_ms=14.652061 draws=86
+FRAME median_ms=42.553499 p95_ms=60.407374 max_ms=1513.586742
+PHASE Deformable attachments 0.023482ms
+PHASE Deformable edge edge contacts 1.138792ms
+PHASE Deformable fixed step 15.037451ms
+PHASE Deformable force prediction 0.246225ms
+PHASE Deformable internal constraints 5.339191ms
+PHASE Deformable plastic flow 0.264518ms
+PHASE Deformable render mapping 0.393141ms
+PHASE Deformable rigid contacts 4.732210ms
+PHASE Deformable self pair cache 2.947569ms
+PHASE Deformable surface candidates 0.134355ms
+PHASE Deformable surface contacts 4.234524ms
+PHASE Deformable vertex face contacts 0.124692ms
+PASS normal startup and clean shutdown
+SUMMARY mode=probe checks=11 failures=0 frames=120

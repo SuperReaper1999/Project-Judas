@@ -1,0 +1,28 @@
+{
+  "id": "judas_render_camera_tests",
+  "source": "tests/RenderCameraTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_render_camera_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_render_camera_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "ea63d963371f5dbcbceffe68b35297d48dde5e21200b20cf3cc9ccaf969aa690",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 52,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_render_camera_tests.log",
+  "logSHA256": "4b93ca3258cf9f993f0b14caab6987c4f58d11d045b45940f1d5a9d863d7eff2",
+  "seconds": 2.3999871060004807
+}

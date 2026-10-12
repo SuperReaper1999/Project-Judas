@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "ae3d9d778afd9c9e388f327c1ddebca7a64b3ae39e4b904fc42c8ce90f05dcbd",
+    "case":  "motion",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_motion.exe",
+                      "sha256":  "c9e207b6eb30583d3317880e571772e818484dfd34359ab57a6691c291471a67",
+                      "name":  "m78_combined-v2_motion.exe",
+                      "bytes":  480768
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\motion-0.obj",
+                      "sha256":  "19a7be4a5c937b9bb1c2efc0f8a1c562adea037ee004458f1ed7fad18f55a6a1",
+                      "name":  "motion-0.obj",
+                      "bytes":  149039
+                  }
+              ],
+    "freeBytes":  1058349056,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  274517,
+    "archiveName":  "m78-combined-v2-motion-archive.zip"
+}

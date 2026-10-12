@@ -1,0 +1,21 @@
+﻿{
+    "archiveBytes":  3387472,
+    "scope":  "Archive only; cleanup requires host verification",
+    "archiveSHA256":  "fd35d66bb16b3a50c8987f865738c6580c99f1e905c7f7e6a88df3e53cfaee30",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-foundation.exe",
+                      "sha256":  "f86cf780473c532c8bc61013d3ebefe44730f6648a81acc3ac9ff91f5d764d9d",
+                      "name":  "m78-final-repair-foundation.exe",
+                      "bytes":  7397376
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\foundation-0.obj",
+                      "sha256":  "eca39443345ae73ae082d21d8eb9457dd0feb9bc8de25326759a082ebdbd20b1",
+                      "name":  "foundation-0.obj",
+                      "bytes":  96467
+                  }
+              ],
+    "archiveName":  "m78-final-repair-foundation-generated.zip",
+    "archivePath":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-foundation-generated.zip"
+}

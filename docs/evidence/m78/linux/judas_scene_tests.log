@@ -1,0 +1,84 @@
+Section A: create -> save -> load -> equivalent authored state
+  OK   scene serializes to text
+  OK   scene text loads: 
+  OK   loaded scene equals the authored scene exactly
+  OK   save -> load -> save is byte-identical (deterministic format)
+  OK   file starts with the format identifier and version
+  OK   object ids and names are written explicitly
+  OK   floats use the shortest exact decimal
+Section B: stable identity across deletion and reload
+  OK   an object can be deleted by id
+  OK   deleted id no longer resolves
+  OK   a deleted id is never reused
+  OK   ids survive save/load
+  OK   the id counter survives save/load
+  OK   ids continue from the saved counter after reload
+Section C: create/delete/modify generic objects
+  OK   two created objects get distinct ids
+  OK   a component can be added to an existing object
+  OK   a component can be removed again
+  OK   objects can be reordered
+  OK   reordering past the front is rejected
+  OK   deleting an unknown id is rejected
+  OK   inserting a duplicate id is rejected
+  OK   clear resets objects and the id counter
+Section D: malformed/incompatible scene data fails clearly
+  OK   empty input fails
+  OK     ...and the output scene is left untouched
+  OK   an unsupported version fails
+  OK     ...and the output scene is left untouched
+  OK   a wrong identifier fails
+  OK     ...and the output scene is left untouched
+  OK   a non-finite number fails
+  OK     ...and the output scene is left untouched
+  OK   an unknown key fails (no silent default for the missing one)
+  OK     ...and the output scene is left untouched
+  OK   a missing required transform field fails
+  OK     ...and the output scene is left untouched
+  OK   a duplicate object id fails
+  OK     ...and the output scene is left untouched
+  OK   a component whose prerequisites are absent (vehicle without a body) fails
+  OK     ...and the output scene is left untouched
+  OK   a truncated file fails
+  OK     ...and the output scene is left untouched
+  OK   a missing file fails with its path in the message
+Section E: edit -> play -> mutate runtime -> stop -> authored state restored
+  OK   scene instantiates headlessly: 
+  OK   one dynamic and one static body were created
+  OK   the player start was read from the scene
+  OK   the standalone light was instantiated
+  OK   a game session begins over the world
+  OK   the crate fell under the scene's gravity during play
+  OK   playing did not touch the authored scene object
+  OK   runtime mutation moved the body sideways
+  OK   after stopping, the scene serializes byte-identically to before play
+  OK   the same scene instantiates again after stop
+  OK   the second run starts from the authored pose, not the mutated one
+  OK   a second session begins
+  OK   an in-run reset restores the authored pose as well
+Section F: scenes saved by the editor representation load through the runtime path
+  OK   scene saves to a file: 
+  OK   saved file loads from disk: 
+  OK   the reloaded scene instantiates
+  OK   shipped scene loads and instantiates: assets/scenes/classic.judas
+  OK     ...and round-trips through the format unchanged
+  OK   shipped scene loads and instantiates: assets/scenes/classic_fluid_rotated.judas
+  OK     ...and round-trips through the format unchanged
+  OK   shipped scene loads and instantiates: assets/scenes/classic_fluid_zero.judas
+  OK     ...and round-trips through the format unchanged
+  OK   shipped scene loads and instantiates: assets/scenes/terrain.judas
+  OK     ...and round-trips through the format unchanged
+  OK   shipped scene loads and instantiates: assets/scenes/terrain_rotated.judas
+  OK     ...and round-trips through the format unchanged
+  OK   shipped scene loads and instantiates: assets/scenes/terrain_atmospheric_pass.judas
+  OK     ...and round-trips through the format unchanged
+  OK   shipped scene loads and instantiates: assets/scenes/terrain_atmospheric_pass_rotated.judas
+  OK     ...and round-trips through the format unchanged
+  OK   classic scene: vehicle, door, switch, three Newtonian participants, 125 water particles
+  OK   terrain scene: terrain body, atmosphere, three combustibles, point-mass source, lake
+  OK   the authored emitter adds real particles on demand
+  OK   restoring authored state discards emitted particles
+Section G: unrealisable scenes fail at instantiation, not silently
+  OK   an unknown terrain surface id fails with the id in the message
+  OK   a failed build leaves no world behind
+Scene tests: PASS (0 failures)

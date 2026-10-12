@@ -1,0 +1,113 @@
+﻿{
+    "scope":  "Only redundant old generated first-candidate Build/Release engine archive removed after independent complete host byte/SHA preservation. Frozen final791ed archive, all sources/receipts/saves/results/package intact",
+    "old":  {
+                "freeBytes":  49094656,
+                "scope":  "Read-only bounded streaming of exact redundant generated first-candidate library; no guest temporary parts or deletion",
+                "source":  "C:\\JudasValidation\\Build\\Release\\judas_engine.lib",
+                "sha256":  "8f6a6e44b439fdfa8c82a9151015022abb5739c802ac854f86372a57d2399092",
+                "parts":  [
+                              {
+                                  "offset":  0,
+                                  "sha256":  "65d853c4c20a284797f5e1182d58a48893d9409da53e5c526bb2c7c95b7f1c85",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-0.bin"
+                              },
+                              {
+                                  "offset":  4194304,
+                                  "sha256":  "0bab240542eae6ee556daffa61dda29137a63295b78c18ded0f75a9da3d9d2c4",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-1.bin"
+                              },
+                              {
+                                  "offset":  8388608,
+                                  "sha256":  "8020568c0a39fee8b0d354cf56d68f11d9a92a300159724e443fd8a4bb68ce7b",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-2.bin"
+                              },
+                              {
+                                  "offset":  12582912,
+                                  "sha256":  "6f6d9a0074a67ffe4cc16614a9ae1fcdd3e9b9371171e0a0ed5efbf5bfaa2b77",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-3.bin"
+                              },
+                              {
+                                  "offset":  16777216,
+                                  "sha256":  "a22337eb9b4389991b3c688279c9c6c84c45da3922c92cabacb638f56dd84483",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-4.bin"
+                              },
+                              {
+                                  "offset":  20971520,
+                                  "sha256":  "40926bd917f4211e68870726c0f0390d460ac724cfba868b7252c0f2346623cf",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-5.bin"
+                              },
+                              {
+                                  "offset":  25165824,
+                                  "sha256":  "cc89cd1bb0cfaac041fabb2c00c2c5cdb8364e3b52d5da722349146de00514e6",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-6.bin"
+                              },
+                              {
+                                  "offset":  29360128,
+                                  "sha256":  "bb67cf708a8b34e4880d15c12221abdde0d2842c50956d51b72db4616fde876a",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-7.bin"
+                              },
+                              {
+                                  "offset":  33554432,
+                                  "sha256":  "7e42164008797ffcfa70dd22c95098b58e0781dd8ce1531fd676c7cf80f867df",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-8.bin"
+                              },
+                              {
+                                  "offset":  37748736,
+                                  "sha256":  "3aee3061ff292f47b5059e4af38cda406e2eb9ee3927fb803482f4cb87768849",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-9.bin"
+                              },
+                              {
+                                  "offset":  41943040,
+                                  "sha256":  "2c8bd92a0adce808773a54e702395e0ec178fe8e762c82161791617be734b93e",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-10.bin"
+                              },
+                              {
+                                  "offset":  46137344,
+                                  "sha256":  "2d95bf77b8fb2b8175d5afa515b8c8a10860736546e87ac3320bacee585af972",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-11.bin"
+                              },
+                              {
+                                  "offset":  50331648,
+                                  "sha256":  "9afa436b23b986da17a125933f06f9fec822bda641002edd5a342d9d96bd7303",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-12.bin"
+                              },
+                              {
+                                  "offset":  54525952,
+                                  "sha256":  "b60a01ef8dc77f4afdc9140543e25677579b923f439d84b9b2f57ce94e3198bd",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-13.bin"
+                              },
+                              {
+                                  "offset":  58720256,
+                                  "sha256":  "3cbba641d7096b2032224ef9fab989e937a6fb2d020a01aeeaa7b659a6317207",
+                                  "bytes":  4194304,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-14.bin"
+                              },
+                              {
+                                  "offset":  62914560,
+                                  "sha256":  "7c3e2bcfc880aaec908cd5e54311892fe45960164b7fe578c851ba16d7b1bcef",
+                                  "bytes":  3865128,
+                                  "reportName":  "m78-cold-boundary-owned-firstcandidate-library-archive-part-15.bin"
+                              }
+                          ],
+                "bytes":  66779688,
+                "hostVerified":  true,
+                "hostPath":  ".cache/m78-cold-boundary/native-binaries/firstcandidate-judas_engine.lib",
+                "hostSHA256":  "8f6a6e44b439fdfa8c82a9151015022abb5739c802ac854f86372a57d2399092"
+            },
+    "freeBytes":  115851264,
+    "finalLibrarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48"
+}

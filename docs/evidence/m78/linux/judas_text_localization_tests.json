@@ -1,0 +1,27 @@
+{
+  "id": "judas_text_localization_tests",
+  "source": "tests/TextLocalizationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_text_localization_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_text_localization_tests"
+  ],
+  "adapter": "inspected output positional argument",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "715b30bb5562172b4efe27f29a990a8f990d7e54bedd97f393cc26bd1e2243ee",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 49,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_text_localization_tests.log",
+  "logSHA256": "c2009e44920f144792d3f78dd5413804d496a694675f54ebe24c2d4690bb7928",
+  "seconds": 0.27630758799932664
+}

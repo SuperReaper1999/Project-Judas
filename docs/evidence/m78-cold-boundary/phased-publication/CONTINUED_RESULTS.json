@@ -1,0 +1,41 @@
+{
+  "scope": "Diagnostic only; NO production/test changes; existing first-clock contract failed.",
+  "results": [
+    {
+      "name": "exact-native-cold-read",
+      "mode": "cold-read",
+      "exitCode": 1,
+      "seconds": 1.7553946609987179
+    },
+    {
+      "name": "ordinary-step",
+      "mode": "step-trace",
+      "exitCode": 0,
+      "seconds": 1.7706260500053759
+    },
+    {
+      "name": "cold-stand-write",
+      "mode": "cold-stand-write",
+      "exitCode": 0,
+      "seconds": 1.3346712730053696
+    },
+    {
+      "name": "cold-stand-read",
+      "mode": "cold-stand-read",
+      "exitCode": 0,
+      "seconds": 1.5030028500041226
+    },
+    {
+      "name": "cold-recovery-write",
+      "mode": "cold-recovery-write",
+      "exitCode": 0,
+      "seconds": 1.2593472139997175
+    },
+    {
+      "name": "cold-recovery-read",
+      "mode": "cold-recovery-read",
+      "exitCode": 0,
+      "seconds": 1.5057401619997108
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+﻿{
+    "executableBytes":  13187072,
+    "scope":  "Unchanged verified native editor objects relinked against exact new final engine; no public layout changes. Original source hashes checked.",
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final2-repair-editor.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_IMGUI.LIB RELEASE\\JUDAS_NAVIGATION_BAKER.LIB RELEASE\\JUDAS_MODEL_IMPORT.LIB RELEASE\\JUDAS_PROFILER.LIB RELEASE\\JUDAS_WORLD_AUTHORING.LIB RELEASE\\JUDAS_UFBX.LIB \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78Final2RepairEditor\\link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78Final2RepairEditor\\editor.lib\" /MACHINE:X64  /machine:x64 /MANIFEST:EMBED /MANIFESTINPUT:C:/JudasValidation/Source/packaging/windows/judas.manifest                \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorMain.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorMilestoneNotice.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorApplication.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorCamera.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorPicking.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorHistory.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorPanels.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\RetargetPanel.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\WorldTools.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\TerrainTools.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\ModTools.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\ProfilerView.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\EditorWidgets.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\ComponentEditors.obj\" \"C:\\JudasValidation\\M78Final2RepairEditor\\GizmoMath.obj\"",
+    "objects":  [
+                    {
+                        "source":  "src/editor/EditorMain.cpp",
+                        "sourceSHA256":  "2fa57cd6faeb9d5f6ff9480f7370c7efefbdeff328f76661fe4b905120ed54c9",
+                        "objectName":  "EditorMain.obj",
+                        "objectSHA256":  "99877d6036625007ba5a12da8b336f7b733f0f0af0fa073e861c806f296acfa0",
+                        "bytes":  5639,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorMain.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorMilestoneNotice.cpp",
+                        "sourceSHA256":  "1addf130df96912789b71268ab2cbc2acc6353ad1a569778378653d6a15b9ae7",
+                        "objectName":  "EditorMilestoneNotice.obj",
+                        "objectSHA256":  "2600f00a94f079f01bcdaaf0ca3f762a050ce7242be9edd73ca24953408769a0",
+                        "bytes":  1476924,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorMilestoneNotice.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorApplication.cpp",
+                        "sourceSHA256":  "8a75b2bf408bc6f179c4f3e46256af2d3cfce9161a22b2b5f8bfb6652e33ee51",
+                        "objectName":  "EditorApplication.obj",
+                        "objectSHA256":  "5d2357b7ccb6ce48a16952e49f9fae8fb1a49c374a7cb092f898a595e3ee0c7a",
+                        "bytes":  3489899,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorApplication.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorCamera.cpp",
+                        "sourceSHA256":  "2f1cd57baf3c9de9d533c9c036be43d3f732e73dde6cbc265976d42244361a1b",
+                        "objectName":  "EditorCamera.obj",
+                        "objectSHA256":  "548662a4c71c802ba3f6707ba8bdab4c7cce6624b687aa96dd09818b7cd5cf52",
+                        "bytes":  18462,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorCamera.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorPicking.cpp",
+                        "sourceSHA256":  "8d764f060f10e2a401f3f73ef5397d7bec3b55be731ded2d4f26af0a0f3683a0",
+                        "objectName":  "EditorPicking.obj",
+                        "objectSHA256":  "911cdc4fa3eb13d9f2963adfd3417c45ffb7624565437dfad7dea9f6f1f714ba",
+                        "bytes":  264555,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorPicking.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorHistory.cpp",
+                        "sourceSHA256":  "33376ed6cbdc6614b277eb61336481f93538ac9bd905662a7429f3d7d5b5b40b",
+                        "objectName":  "EditorHistory.obj",
+                        "objectSHA256":  "0894db2dbe0b21249c24e0c8c240d763de978d5636865f2d956e22c8c0e070ec",
+                        "bytes":  712162,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorHistory.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorPanels.cpp",
+                        "sourceSHA256":  "09cd19cba173010883bb499d0139f0e2bb6437c78126eaa45ca2436414da844f",
+                        "objectName":  "EditorPanels.obj",
+                        "objectSHA256":  "3da219c81b5ca07fe491b7d821909a3c148ade72ac0ba9a558b6d1898574069f",
+                        "bytes":  3014494,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorPanels.obj"
+                    },
+                    {
+                        "source":  "src/editor/RetargetPanel.cpp",
+                        "sourceSHA256":  "98d347951a785d04236d4b98261260928c59a84acee0ed5b7d74d2e3acb8fb72",
+                        "objectName":  "RetargetPanel.obj",
+                        "objectSHA256":  "3f38eca0d801212c35699b1a48c16167b9b9214130987208dc6898908b384093",
+                        "bytes":  2193899,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/RetargetPanel.obj"
+                    },
+                    {
+                        "source":  "src/editor/WorldTools.cpp",
+                        "sourceSHA256":  "259e8a2684039dd00eacb8fbb5f9203ce14e523965d64b06833f06c2c58c957a",
+                        "objectName":  "WorldTools.obj",
+                        "objectSHA256":  "35479d6829be9138708fadc4860b19c1b9c300b72fb9b1ff67e448eb0961fb5c",
+                        "bytes":  1577394,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/WorldTools.obj"
+                    },
+                    {
+                        "source":  "src/editor/TerrainTools.cpp",
+                        "sourceSHA256":  "9f77a6e123d96ee6e6caa65f5b254be0d2406d20164951524e3ded98f3025043",
+                        "objectName":  "TerrainTools.obj",
+                        "objectSHA256":  "5e10bbc2fe2dbcce7bbc6f73506438a06e36b23283d15a72888546c233afa4bb",
+                        "bytes":  1397138,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/TerrainTools.obj"
+                    },
+                    {
+                        "source":  "src/editor/ModTools.cpp",
+                        "sourceSHA256":  "1609df2076d905be4dad91d108dd8dee61f4230bd1ad3fdb62a949d0d0891b6a",
+                        "objectName":  "ModTools.obj",
+                        "objectSHA256":  "e8f8e68e25e90f2c1dca5feac265a850c217b18b68a1161c70f9677ffe380db3",
+                        "bytes":  482103,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/ModTools.obj"
+                    },
+                    {
+                        "source":  "src/editor/ProfilerView.cpp",
+                        "sourceSHA256":  "41c5a23cedc2237a5369546572c273359d517f4df84ff86776100cad24d124fc",
+                        "objectName":  "ProfilerView.obj",
+                        "objectSHA256":  "a7e70fa667d0f8a31a71824058547ad58fb5e0551db63a3be5286342d5010412",
+                        "bytes":  101445,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/ProfilerView.obj"
+                    },
+                    {
+                        "source":  "src/editor/EditorWidgets.cpp",
+                        "sourceSHA256":  "a419afbb585b12e165bd30122676b1961889b85791682817219088ca4abffb9c",
+                        "objectName":  "EditorWidgets.obj",
+                        "objectSHA256":  "3f0184966c6fe1d9deec200ec1c589071315e38d424f642dca341d72b2e38f59",
+                        "bytes":  52948,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/EditorWidgets.obj"
+                    },
+                    {
+                        "source":  "src/editor/ComponentEditors.cpp",
+                        "sourceSHA256":  "bffd6faab558119f901f5f9af233e7c76c3ed2d0adf2c427f5276c1b9f2922df",
+                        "objectName":  "ComponentEditors.obj",
+                        "objectSHA256":  "72bab989f8c3a68de5c829e0f77eef21f2a9ec73379c6de0cb8b6bc59c872cee",
+                        "bytes":  1437795,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/ComponentEditors.obj"
+                    },
+                    {
+                        "source":  "src/editor/GizmoMath.cpp",
+                        "sourceSHA256":  "cbbefe41cdfe501715a3378dde0eebd515f6d50335869f915648b1a4562bdc6e",
+                        "objectName":  "GizmoMath.obj",
+                        "objectSHA256":  "c6aa0cfb384fbda122d70eccd0d8289409d0e5e5a73f95ed13a46e70d18b2fc8",
+                        "bytes":  23060,
+                        "url":  "http://192.168.122.1:8872/m78-final-repair-editor-objects/GizmoMath.obj"
+                    }
+                ],
+    "executableSHA256":  "d47f99bb93ba7f87089a4139fe320138d1fa30ff76702885b498a5ed260e2f5b",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-editor.exe",
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+}

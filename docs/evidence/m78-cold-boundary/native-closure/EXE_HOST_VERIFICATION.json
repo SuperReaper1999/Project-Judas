@@ -1,0 +1,19 @@
+{
+  "freeBytes": 42307584,
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-native-first-closure-commands-seeds.exe",
+      "sha256": "9d1c9680a3a222fbd2c741e775e457169d5a666d120a6e4c5ca7f1d5e6b54f10",
+      "bytes": 9578496,
+      "reportName": "m78-closure-archive-commands-seeds.exe",
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/closure/m78-closure-archive-commands-seeds.exe"
+    },
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-native-first-closure-commands-seeds-normal-prepare.exe",
+      "sha256": "5da89c0c9df414df7a8d52d20bdf4b5becb24a9a73c6eaa916ff948c2f72b617",
+      "bytes": 9578496,
+      "reportName": "m78-closure-archive-commands-seeds-normal-prepare.exe",
+      "hostPath": ".cache/m78-cold-boundary/native-binaries/closure/m78-closure-archive-commands-seeds-normal-prepare.exe"
+    }
+  ]
+}

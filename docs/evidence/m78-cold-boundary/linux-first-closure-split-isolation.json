@@ -1,0 +1,273 @@
+{
+  "scope": "Diagnostic only: exact original a106 input guards, separately replay actual first-source commands and actual prior numerical seeds. Commands mode preserves current impulses; seeds mode preserves current actuator command fields. Pre-overwrite commands recorded. No production cache persistence or fixture change.",
+  "sourceSHA256": {
+    "src/JointSolver.cpp": "72e43f81cb8c773a8029528fc0ac290b41966614a405a468c93cc45132726444",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+    "src/PhysicalBalance.cpp": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+    "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f"
+  },
+  "overlaySHA256": {
+    "BalanceLabBoundaryObserver.cpp": "65d681645fc149f6668ae3abcfacd18b424bba0f9106f29b468ddd45495eb180",
+    "JointSolver.cpp": "df23f0c7fbce443b3f0d621f1094150ceebdd410f13291d5dc6ee68438f83efd",
+    "PhysicalBalance.cpp": "c0f7d7cfb0041acdb9be1816f1ba58bf2b5d2412b26ab449bcce4de5c8d172f1"
+  },
+  "recordedSourceJournalSHA256": "a5a5dd995c54edf2ed146e0acd1c1a5b86f94586343ebba1cacaea60f3db97e9",
+  "recipeSHA256": "a518ccfb732b088a7d60defd74ba790ee179f31a8b4a425105f38ab41ffe87a9",
+  "nativeSourceJournal": "m78-diagnostic-boundary-v1-source-joint-boundary.jsonl",
+  "steps": [
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/JointSolver.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/JointSolver.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 7.6798128339942195
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/BalanceLabBoundaryObserver.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7052610870014178
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands/native-restored",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.3937917839939473,
+      "snapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "archiveSHA256": "6f106e0a8dc80b4e4a979a69340d47aa88fbb92c84e1277d0854ad7757463d74",
+      "exeSHA256": "1a15ec96845eeb2adb1dadeb19c63edcd45b7ddaf62b020275246f227263fb8c",
+      "normalPrepareDiagnostic": false,
+      "replayMode": "commands"
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/BalanceLabBoundaryObserver.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.6895448669965845
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds/native-restored",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.5788979380013188,
+      "snapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "archiveSHA256": "6f106e0a8dc80b4e4a979a69340d47aa88fbb92c84e1277d0854ad7757463d74",
+      "exeSHA256": "1a15ec96845eeb2adb1dadeb19c63edcd45b7ddaf62b020275246f227263fb8c",
+      "normalPrepareDiagnostic": false,
+      "replayMode": "seeds"
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/BalanceLabBoundaryObserver.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands-normal-prepare/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands-normal-prepare/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7650565760050085
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands-normal-prepare/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/commands-normal-prepare/native-restored",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.398163135003415,
+      "snapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "archiveSHA256": "c88a648ad8f219acfc633f57a2002ce57a4af7a88e83ba8caa57aa9cd51085d4",
+      "exeSHA256": "bb7be152d498e03621f1643ada8c5468b295d9fa0a9a52571d8586052484e343",
+      "normalPrepareDiagnostic": true,
+      "replayMode": "commands"
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/BalanceLabBoundaryObserver.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds-normal-prepare/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds-normal-prepare/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 1.001501995997387
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds-normal-prepare/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/seeds-normal-prepare/native-restored",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.396862945999601,
+      "snapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "archiveSHA256": "c88a648ad8f219acfc633f57a2002ce57a4af7a88e83ba8caa57aa9cd51085d4",
+      "exeSHA256": "bb7be152d498e03621f1643ada8c5468b295d9fa0a9a52571d8586052484e343",
+      "normalPrepareDiagnostic": true,
+      "replayMode": "seeds"
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/BalanceLabBoundaryObserver.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/both-normal-prepare/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/both-normal-prepare/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.6785429379960988
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/both-normal-prepare/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/first-boundary-closure-split/both-normal-prepare/native-restored",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.3719520930026192,
+      "snapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+      "archiveSHA256": "c88a648ad8f219acfc633f57a2002ce57a4af7a88e83ba8caa57aa9cd51085d4",
+      "exeSHA256": "bb7be152d498e03621f1643ada8c5468b295d9fa0a9a52571d8586052484e343",
+      "normalPrepareDiagnostic": true,
+      "replayMode": "both"
+    }
+  ]
+}

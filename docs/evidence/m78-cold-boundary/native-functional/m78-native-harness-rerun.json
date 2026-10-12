@@ -1,0 +1,27 @@
+﻿{
+    "buildExit":  0,
+    "rows":  [
+                 {
+                     "exitCode":  0,
+                     "case":  "collision_geometry",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_collision_geometry_tests.exe",
+                     "sha256":  "278762b6ad3f59c8af795fd2c04d1cd4d8f99d24a76272d8a83879f3ea6a21b9",
+                     "seconds":  2.0786116999999997
+                 },
+                 {
+                     "exitCode":  0,
+                     "case":  "streaming",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_streaming_tests.exe",
+                     "sha256":  "81d9c91a13b18ba70887c76f93edab888427bd9256ff932fd0db04e441756dbd",
+                     "seconds":  6.7359335
+                 },
+                 {
+                     "exitCode":  0,
+                     "case":  "scalability",
+                     "exe":  "C:\\JudasValidation\\Build\\Release\\judas_scalability_tests.exe",
+                     "sha256":  "47b1bd135249828bb8ee0e8764107c222fa2291f03a936329b7257cbe9b71e66",
+                     "seconds":  15.762972099999999
+                 }
+             ],
+    "freeBytes":  81465344
+}

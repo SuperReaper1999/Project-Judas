@@ -1,0 +1,31 @@
+#include "FixtureSupport.h"
+#include "modding/ModRuntime.h"
+#include "Project.h"
+#include "SceneSerialization.h"
+#include "SceneFingerprint.h"
+#include "Prefab.h"
+using namespace LifecycleAudit;
+using namespace JudasMods;
+namespace {
+Package PackageScene(const Contract& c,const Scene& scene,const AssetId& prefab,const AssetId& script,const fs::path& out,Receipt& r){Package p;p.manifest.id="consumer";p.manifest.name="Consumer";p.manifest.version="1.0.0";p.manifest.game=c.game;p.manifest.gameVersion=p.manifest.contractVersion="1.0.0";p.manifest.author="Judas lifecycle audit";p.manifest.license="CC0";p.manifest.executable=false;p.manifest.notices={"NOTICE.txt"};p.manifest.scenes={"Scenes/map.judas"};p.manifest.imports={{"base","prop",{"prefab",prefab}},{"base","behavior",{"script",script}}};p.files["NOTICE.txt"]="Original bounded fixture\n";std::string text,error;r.Require(SaveSceneToString(scene,text),"serialize ordinary data scene");p.files["Scenes/map.judas"]=text;for(const auto& [name,bytes]:p.files)p.manifest.files.push_back({name,SceneFingerprintSha256(bytes),bytes.size()});std::string encoded;r.Require(EncodePackage(p,encoded,error),"encode immutable data-only package",error);Package decoded;r.Require(DecodePackage(encoded,decoded,error),"decode actual package",error);std::ofstream(out/"consumer.judasmod",std::ios::binary)<<encoded;return decoded;}
+Snapshot Materialize(const Contract& c,const Package& p,const fs::path& out,Receipt& r){Snapshot snapshot;std::string error;auto package=std::make_shared<Package>(p);r.Require(Resolve(c,{{package,{}}},snapshot.resolution,error),"manifest/import policy resolves without executable trust",error);for(const auto& [name,bytes]:p.files){auto path=out/"prepared"/name;fs::create_directories(path.parent_path());std::ofstream(path,std::ios::binary)<<bytes;snapshot.files[p.manifest.id+":"+name]=path.string();}return snapshot;}
+}
+int main(int argc,char** argv){Receipt r;fs::path out;try{out=FreshOutput(argc,argv);std::string error;Project project;AssetDatabase db;r.Require(Project::CreateNew((out/"source").string(),"Resolved prefab policy audit",project,error),"ordinary project",error);db.Scan(project.RootDir(),project.AssetsDir());
+ auto scriptPath=fs::path(project.AssetsDir())/"published.js";std::ofstream(scriptPath)<<"export const properties={speed:{type:'number',default:2}}; export default class { constructor(){throw new Error('AUDIT_MUST_NOT_EVALUATE');} }\n";AssetRecord script;r.Require(db.Track(scriptPath.string(),script,error),"base behavior asset",error);
+ Scene prefab;auto& behavior=prefab.CreateObject("published behavior root");behavior.scripts={{1,script.id,true,"{\"speed\":3}"}};const auto sourceId=behavior.id;const auto prefabPath=fs::path(project.AssetsDir())/"published.judasprefab";r.Require(SaveSceneToFile(prefab,prefabPath.string(),error),"scripted base prefab",error);AssetRecord prop;r.Require(db.Track(prefabPath.string(),prop,error),"base prefab identity",error);
+ Scene requested;SceneObjectId linked=0;r.Require(InstantiatePrefab(requested,prefab,prop.id,{},linked,error),"ordinary linked scene",error);
+ // The serialized request intentionally carries no cached executable slot. The
+ // current base prefab supplies it only through normal ResolvePrefabs.
+ for(auto& object:requested.Objects()){object.scripts.clear();}
+ r.Check(std::all_of(requested.Objects().begin(),requested.Objects().end(),[](const auto& v){return v.scripts.empty();}),"requesting authored scene contains no direct script slot");
+ Contract contract;contract.enabled=true;contract.executable=false;contract.game="audit-lifecycle";contract.gameVersion=contract.version="1.0.0";contract.registries=RegistryIdentity(project);contract.additions={"scene"};contract.published={{"prop",{"prefab",prop.id}},{"behavior",{"script",script.id}}};contract.behaviors[script.id]=JSON{{"speed",{{"type","number"},{"default",2}}}};
+ auto package=PackageScene(contract,requested,prop.id,script.id,out,r);auto snapshot=Materialize(contract,package,out,r);Session session;
+ const bool valid=ComposeContent(project,contract,snapshot,db,{},session,error);r.Check(valid,"data-only linked prefab accepts the explicitly published behavior/schema without evaluating its constructor",{{"error",error}});
+ auto unpublished=contract;unpublished.behaviors.clear();Session rejected;error.clear();const bool absent=ComposeContent(project,unpublished,snapshot,db,{},rejected,error);r.Check(!absent&&error.find("unpublished base behaviour in resolved prefab")!=std::string::npos,"published prefab cannot conceal an unpublished resolved behavior",{{"error",error}});
+ prefab.Find(sourceId)->scripts[0].properties="{\"speed\":\"wrong-type\"}";r.Require(SaveSceneToFile(prefab,prefabPath.string(),error),"current base prefab has genuine incompatible authored property",error);error.clear();Session invalid;const bool accepted=ComposeContent(project,contract,snapshot,db,{},invalid,error);r.Check(!accepted&&error.find("invalid schema/default/value for speed")!=std::string::npos,"resolved indirect slot is checked against the published property schema",{{"error",error}});
+ // These negatives reject before a RuntimeWorld or project ScriptSystem exists;
+ // the unchanged good effective session retains its resolved asset ownership.
+ r.Check(session.assets.Find(prop.id)&&session.assets.Find(prop.id)->owner.empty()&&session.assets.Find(script.id)&&session.assets.Find(script.id)->owner.empty(),"failed candidates do not alter the prior effective view asset ownership mapping");
+ prefab.Find(sourceId)->scripts[0].properties="{\"speed\":4}";r.Require(SaveSceneToFile(prefab,prefabPath.string(),error),"valid authored follow-up",error);error.clear();Session repaired;const bool followup=ComposeContent(project,contract,snapshot,db,{},repaired,error);r.Check(followup,"correctly typed follow-up resolves through the same policy",{{"error",error}});
+ return r.Finish(out,"Data-only composition must inspect actual resolved prefab slots and published schemas, without requiring VM execution or treating a published prefab as executable permission");
+ }catch(const std::exception& e){std::cerr<<e.what()<<'\n';r.Check(false,"unexpected fixture exception",{{"error",e.what()}});if(!out.empty())return r.Finish(out,"resolved prefab mod policy");return 2;}}

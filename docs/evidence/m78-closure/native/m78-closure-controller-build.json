@@ -1,0 +1,118 @@
+﻿{
+    "executableSHA256":  "58d4b53702dfc8c81276fc514ba0e3c4f6946b6dd2c4d0e7b93b683336621fd5",
+    "freeBytes":  10338304,
+    "case":  "controller",
+    "runs":  [
+                 {
+                     "archive":  {
+                                     "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                                     "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                                     "bytes":  67019246
+                                 },
+                     "seconds":  8.4345284,
+                     "freeBytes":  10346496,
+                     "case":  "controller",
+                     "expectedExitCode":  0,
+                     "run":  "controller",
+                     "executableSHA256":  "58d4b53702dfc8c81276fc514ba0e3c4f6946b6dd2c4d0e7b93b683336621fd5",
+                     "scope":  "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+                     "files":  [
+
+                               ],
+                     "arguments":  [
+
+                                   ],
+                     "exitCode":  0,
+                     "objects":  [
+                                     {
+                                         "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                         "source":  "src/PhysicsWorld.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\PhysicsWorld.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                         "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                         "bytes":  1495011,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                                     },
+                                     {
+                                         "sha256":  "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+                                         "source":  "src/WorldPersistence.cpp",
+                                         "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\WorldPersistence.cpp\"",
+                                         "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+                                         "sourceSHA256":  "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+                                         "bytes":  1276496,
+                                         "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                                     }
+                                 ]
+                 }
+             ],
+    "ownedLargeEvidence":  [
+                               {
+                                   "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-controller.map",
+                                   "sha256":  "c9616916e1c5bdfd359b1c232939fdb61c9f152110d35d57bf246811a730bf81",
+                                   "name":  "m78-closure-controller.map",
+                                   "bytes":  3653006
+                               },
+                               {
+                                   "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-controller-link.log",
+                                   "sha256":  "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+                                   "name":  "m78-closure-controller-link.log",
+                                   "bytes":  33930
+                               }
+                           ],
+    "frozenReplacedMembersNotExtracted":  true,
+    "replacementObjects":  [
+                               {
+                                   "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                   "source":  "src/PhysicsWorld.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\PhysicsWorld.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                   "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                   "bytes":  1495011,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                               },
+                               {
+                                   "sha256":  "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+                                   "source":  "src/WorldPersistence.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\WorldPersistence.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+                                   "sourceSHA256":  "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+                                   "bytes":  1276496,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                               }
+                           ],
+    "mapSHA256":  "c9616916e1c5bdfd359b1c232939fdb61c9f152110d35d57bf246811a730bf81",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-closure-controller.exe",
+    "reusedOrFreshInputs":  [
+                                {
+                                    "sha256":  "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7",
+                                    "name":  "controller-0.obj",
+                                    "bytes":  169808,
+                                    "source":  "tests/PhysicalBalanceControllerTests.cpp",
+                                    "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\controller-0.obj",
+                                    "sourceSHA256":  "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+                                    "reuseOriginal":  true
+                                }
+                            ],
+    "archive":  {
+                    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                    "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                    "bytes":  67019246
+                },
+    "scope":  "Actual M78 closure production source. Native Windows functional validation only; frozen archive plus explicit replacement PW/WP objects, unchanged fixture/controller/timestep. No performance gate.",
+    "executableBytes":  4384768,
+    "linkerResponse":  "\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" \"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" /OUT:\"C:\\JudasValidation\\Build\\Release\\m78-closure-controller.exe\" /INCREMENTAL:NO /NOLOGO  RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ClosureBuild\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ClosureBuild\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ClosureBuild\\objects\\controller-0.obj\" /MAP:\"C:\\JudasValidation\\M78ClosureResults\\m78-closure-controller.map\" /VERBOSE:LIB",
+    "generatedFiles":  [
+                           {
+                               "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-controller.exe",
+                               "sha256":  "58d4b53702dfc8c81276fc514ba0e3c4f6946b6dd2c4d0e7b93b683336621fd5",
+                               "name":  "m78-closure-controller.exe",
+                               "bytes":  4384768
+                           },
+                           {
+                               "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\controller-0.obj",
+                               "sha256":  "9002b5997e035390d9f8655de40fd1e35feeac3d9804b41a05c82c8bf883d0f7",
+                               "name":  "controller-0.obj",
+                               "bytes":  169808
+                           }
+                       ]
+}

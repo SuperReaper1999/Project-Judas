@@ -1,0 +1,15 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+M55 loop frame samples 61 median 48.25098 p95 49.32442 max 105.02348 ms
+M55 loop fixed samples 179 median 3.48801 p95 3.92661 max 5.51561 ms
+M55 loop render samples 61 median 36.61912 p95 37.70143 max 38.11384 ms
+M55 loop surface samples 61 median 0.00026 p95 0.00044 max 0.00565 ms
+M55 loop liquid samples 179 median 3.30607 p95 3.70162 max 5.30318 ms
+M55 loop containers samples 179 median 0.23982 p95 0.31155 max 0.43002 ms
+M55 loop solid storage samples 179 median 1.69250 p95 1.94667 max 3.09267 ms
+M55 loop loading samples 179 median 0.76482 p95 0.84862 max 1.33509 ms
+M55 loop catchup 61 capped 0 frames 76 failures 0

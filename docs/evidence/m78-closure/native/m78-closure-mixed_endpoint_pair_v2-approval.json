@@ -1,0 +1,13 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "mixed_endpoint_pair_v2",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-mixed_endpoint_pair_v2.exe",
+      "sha256": "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+      "name": "m78-closure-mixed_endpoint_pair_v2.exe",
+      "bytes": 9569792
+    }
+  ]
+}

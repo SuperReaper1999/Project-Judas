@@ -1,0 +1,188 @@
+{
+  "scope": "Copied coherent world-foothold IK mechanism diagnostic only; originaltests,gains,thresholds,cadence,budgetsunchanged; no productionchanges.",
+  "records": [
+    {
+      "name": "compile",
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/PhysicalBalance.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/PhysicalBalance.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 8.542432684000232
+    },
+    {
+      "name": "archive",
+      "command": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/PhysicalBalance.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 0.10806878299626987
+    },
+    {
+      "name": "link-judas_balance_lab_tests",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_balance_lab_tests.dir/tests/BalanceLabTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.6720513109976309
+    },
+    {
+      "name": "link-judas_physical_balance_controller_tests",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_physical_balance_controller_tests.dir/tests/PhysicalBalanceControllerTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_physical_balance_controller_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.11128466799709713
+    },
+    {
+      "name": "controller",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_physical_balance_controller_tests"
+      ],
+      "exitCode": 1,
+      "seconds": 2.576803828997072
+    },
+    {
+      "name": "exact-native-cold-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/exact-native",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 1.30546619699453
+    },
+    {
+      "name": "ordinary-step",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/ordinary-step",
+        "step-trace"
+      ],
+      "exitCode": 1,
+      "seconds": 1.5870145770022646
+    },
+    {
+      "name": "cold-stand-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/standing",
+        "cold-stand-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.238329702995543
+    },
+    {
+      "name": "cold-stand-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/standing",
+        "cold-stand-read"
+      ],
+      "exitCode": 0,
+      "seconds": 1.2845167749983375
+    },
+    {
+      "name": "cold-recovery-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/recovery",
+        "cold-recovery-write"
+      ],
+      "exitCode": 0,
+      "seconds": 1.2598392859945307
+    },
+    {
+      "name": "cold-recovery-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/coherent-ik/recovery",
+        "cold-recovery-read"
+      ],
+      "exitCode": 0,
+      "seconds": 2.2613933259999612
+    }
+  ],
+  "archiveSHA256": "561c5915b1d868f3abbf3e73be3b9eb9ec41f34c2a2eedbf06fbecdb7bc19883",
+  "exeSHA256": "08213c78fc82a2e98edf5273b6526116dd11e17cad9996505da5765ad41c4cb0"
+}

@@ -1,0 +1,412 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Saves/range.judasstate (none saved)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+M56 shooter_game trial 1 mode 0 outer interval incl collection/swap median 26.18755 p95 28.82691 max 30.36451 ms
+M56 shooter_game trial 1 mode 0 fixed median 1.95022 p95 2.19570 max 2.59602 ms
+M56 shooter_game trial 1 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 2 mode 1 outer interval incl collection/swap median 26.45076 p95 28.88458 max 29.99299 ms
+M56 shooter_game trial 2 mode 1 fixed median 2.03613 p95 2.34277 max 2.52016 ms
+M56 shooter_game trial 2 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 70748976 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 3 mode 2 outer interval incl collection/swap median 28.85099 p95 31.69231 max 35.32675 ms
+M56 shooter_game trial 3 mode 2 fixed median 1.90907 p95 2.15285 max 2.39809 ms
+M56 shooter_game trial 3 mode 2 profiler UI median 1.18147 p95 1.29172 max 2.77301 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 70812304 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 4 mode 1 outer interval incl collection/swap median 26.39564 p95 28.57878 max 30.68921 ms
+M56 shooter_game trial 4 mode 1 fixed median 1.89089 p95 2.29460 max 5.80200 ms
+M56 shooter_game trial 4 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 70812304 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 5 mode 0 outer interval incl collection/swap median 26.40283 p95 29.21617 max 30.77912 ms
+M56 shooter_game trial 5 mode 0 fixed median 1.93474 p95 2.15932 max 2.80644 ms
+M56 shooter_game trial 5 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 shooter_game trial 6 mode 2 outer interval incl collection/swap median 29.27490 p95 32.93815 max 44.94735 ms
+M56 shooter_game trial 6 mode 2 fixed median 1.86213 p95 2.16243 max 2.88770 ms
+M56 shooter_game trial 6 mode 2 profiler UI median 1.17170 p95 1.29779 max 3.67506 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 71064464 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+M56 liquid_surface_demo trial 1 mode 0 outer interval incl collection/swap median 41.94553 p95 59.02402 max 61.76543 ms
+M56 liquid_surface_demo trial 1 mode 0 fixed median 4.36061 p95 5.78862 max 6.37057 ms
+M56 liquid_surface_demo trial 1 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 2 mode 1 outer interval incl collection/swap median 42.08549 p95 57.72179 max 61.29537 ms
+M56 liquid_surface_demo trial 2 mode 1 fixed median 4.41739 p95 5.78555 max 6.10852 ms
+M56 liquid_surface_demo trial 2 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 71075632 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 3 mode 2 outer interval incl collection/swap median 45.01150 p95 62.07565 max 64.39368 ms
+M56 liquid_surface_demo trial 3 mode 2 fixed median 4.52451 p95 5.85884 max 6.43302 ms
+M56 liquid_surface_demo trial 3 mode 2 profiler UI median 0.70241 p95 0.80818 max 0.85214 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+PASS bounded structured integration capture
+M56 capacity 71075800 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 4 mode 1 outer interval incl collection/swap median 42.11857 p95 59.66927 max 62.44335 ms
+M56 liquid_surface_demo trial 4 mode 1 fixed median 4.38697 p95 5.87472 max 6.52779 ms
+M56 liquid_surface_demo trial 4 mode 1 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 71075800 bytes drops 0 truncated 0 GPU dropped 0
+PASS ordinary integration project
+PASS profiled project libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Saves/lab.judasstate (none saved)
+Project: Dynamic Liquid Surface Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/liquid_surface_demo.judasproj)
+Scene: Dynamic Surface / Flat Pool (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/liquid_surface_demo/Scenes/lab.judas)
+World origin (m): 1000000000000.000, -2000000000000.000, 3000000000000.000
+scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 5 mode 0 outer interval incl collection/swap median 41.71608 p95 58.69883 max 62.38757 ms
+M56 liquid_surface_demo trial 5 mode 0 fixed median 4.44141 p95 5.74854 max 7.52107 ms
+M56 liquid_surface_demo trial 5 mode 0 profiler UI median 0.00000 p95 0.00000 max 0.00000 ms
+PASS ordinary integration project
+PASS profiled project scripts remain fault-free
+PASS profiled liquid path retains accepted solve behaviour
+PASS real outer application lifecycle
+PASS same actual fixed-step input count for every mode
+PASS live profiler inspection releases cursor while fixed simulation continues
+PASS editor cursor routing preserves script pointer-capture intent
+PASS capture/UI do not alter deterministic physics and script state
+M56 liquid_surface_demo trial 6 mode 2 outer interval incl collection/swap median 45.13023 p95 62.46144 max 63.66714 ms
+M56 liquid_surface_demo trial 6 mode 2 fixed median 4.50038 p95 5.78969 max 6.23515 ms
+M56 liquid_surface_demo trial 6 mode 2 profiler UI median 0.68849 p95 0.83462 max 0.97198 ms
+PASS outer frames contain fixed identities and completed delayed GPU results
+PASS moving storage is distinguishable from water presentation
+PASS submission counters describe each frame rather than cumulative standalone totals
+M56 capacity 71075800 bytes drops 0 truncated 0 GPU dropped 0
+PASS captured workload actually acquires liquid through physical bucket opening
+M56 application 103 checks 0 failures

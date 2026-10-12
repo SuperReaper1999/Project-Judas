@@ -1,0 +1,17 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS fresh-process participants restore: 
+PASS fresh process preserves step/recovery clocks without replay
+PASS fresh controller does not fabricate saved contact observations
+PASS restored game starts: 
+ACTOR 12 status=3 root=4.93577,0.162304,0.0290082 height=1.46192 up=0.991911 speed=1.37466 supports=1/0 landings=0 reason=corrective step lost support, reach or physical touchdown
+FAIL restored native task reaches measured physical standing
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 13 checks 1 failures

@@ -1,0 +1,302 @@
+﻿{
+    "diagnosticArchiveSHA256":  "cac3377b110dd81a2262aa0757fbabfdfb06b0bf1daa34a7817bf2c676a3eeb6",
+    "baselineArchiveSHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "expectedSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "freeBytes":  24801280,
+    "seedOffSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "scope":  "Exact same a106 native captured boundary: passive source warm-seed journal versus ordinary fresh-process cold restore; separate seed-OFF suppresses only first initial joint seeds, never contact history, current commands or geometry eligibility. No production modification.",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\actual-drive-sidecar.json",
+                      "sha256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9",
+                      "name":  "m78-diagnostic-boundary-v1-source-actual-drive-sidecar.json",
+                      "bytes":  5482
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\cold-write-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "name":  "m78-diagnostic-boundary-v1-source-cold-write-state.json",
+                      "bytes":  365
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\diagnostic-uninterrupted-trace.jsonl",
+                      "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                      "name":  "m78-diagnostic-boundary-v1-source-diagnostic-uninterrupted-trace.jsonl",
+                      "bytes":  610874
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\joint-boundary.jsonl",
+                      "sha256":  "a5a5dd995c54edf2ed146e0acd1c1a5b86f94586343ebba1cacaea60f3db97e9",
+                      "name":  "m78-diagnostic-boundary-v1-source-joint-boundary.jsonl",
+                      "bytes":  1259451
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-before-save.json",
+                      "sha256":  "2574d25aa8c22d13c4444a9995f078fbd166d456f512f7c6a1be1ec0d1b98942",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-before-save.json",
+                      "bytes":  37167
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-1.json",
+                      "sha256":  "b789d0c97a96795e766ae4545087ebde1ef1095ab6ab53749aa5055cb2f23d20",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-1.json",
+                      "bytes":  37210
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-10.json",
+                      "sha256":  "deaa55e847d79b1dab273b093df565d8a38a2e7848de88df6fdb1b5ebe2b7001",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-10.json",
+                      "bytes":  37100
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-2.json",
+                      "sha256":  "e10abea80545ccb5d0b5481ecd6e93bc6f63e63229f348d7293b4a61d72ef07f",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-2.json",
+                      "bytes":  37276
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-3.json",
+                      "sha256":  "953587ce5fc7b4bf0ae6cb87f2e7eda4f9174471176b9ae1ef11e21fb28b32f6",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-3.json",
+                      "bytes":  37247
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-4.json",
+                      "sha256":  "730395b7237d12afb78e77b93d1c453f5bc2fafafc041cc0729c03a3906050bb",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-4.json",
+                      "bytes":  37224
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-5.json",
+                      "sha256":  "df8fcec6dce59fda958b0531ae6ac4872fd8c9719cd5638a74f7ef5287673988",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-5.json",
+                      "bytes":  37151
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-6.json",
+                      "sha256":  "45b234a1aebb706326c1c5ccde60fc20ef92a3cf0e97c532ecb5da6da992ecb5",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-6.json",
+                      "bytes":  37235
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-7.json",
+                      "sha256":  "28c500cf02473647c8b3d2d4c79e4b4ceaca49209404ed6c8d2ed64bb237a60d",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-7.json",
+                      "bytes":  37150
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-8.json",
+                      "sha256":  "c080294470b24461d69a6c87a4d665837c972040af009cd787302bd2d4e80614",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-8.json",
+                      "bytes":  37165
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\physical-step-9.json",
+                      "sha256":  "79569c6078987c150500df182a045badcf1f63a94014de77a42d5ecd15fef635",
+                      "name":  "m78-diagnostic-boundary-v1-source-physical-step-9.json",
+                      "bytes":  37184
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\source\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "name":  "m78-diagnostic-boundary-v1-source-m77.save",
+                      "bytes":  52557
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\actual-drive-sidecar.json",
+                      "sha256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9",
+                      "name":  "m78-diagnostic-boundary-v1-restored-actual-drive-sidecar.json",
+                      "bytes":  5482
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\cold-read-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "name":  "m78-diagnostic-boundary-v1-restored-cold-read-state.json",
+                      "bytes":  365
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\diagnostic-cold-read-trace.jsonl",
+                      "sha256":  "30e2a3031847bccb7a4ade98d4017abd32392bbdae92b69c44a4e457819c0f0e",
+                      "name":  "m78-diagnostic-boundary-v1-restored-diagnostic-cold-read-trace.jsonl",
+                      "bytes":  604640
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\joint-boundary.jsonl",
+                      "sha256":  "aa20c69da1f23e18d4433b069ee304f52f0205970876a845169d7d64a940cd60",
+                      "name":  "m78-diagnostic-boundary-v1-restored-joint-boundary.jsonl",
+                      "bytes":  777446
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-immediately-restored.json",
+                      "sha256":  "4f6f91fc1ad33152a3de8ff62d1bf3e00c166b1740eca56d9de0c6464619f0a6",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-immediately-restored.json",
+                      "bytes":  36541
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-1.json",
+                      "sha256":  "0f4ab7e7b525e41169249da4a8740c493d77bac724a1dc78c485e7f31d00a908",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-1.json",
+                      "bytes":  36572
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-10.json",
+                      "sha256":  "fd934e5b20cc49b4f91c8b90207627ccc784c2bb7a17fb3b7802273b1c647140",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-10.json",
+                      "bytes":  37053
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-2.json",
+                      "sha256":  "78db84cad7561818f01f3454227dbe77bcac4678963361b6060eeedfd20b4674",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-2.json",
+                      "bytes":  37208
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-3.json",
+                      "sha256":  "80b035fe02145e31d51498c02494e7d3e3837e0fe197255e4a0e1a0c129763ba",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-3.json",
+                      "bytes":  37132
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-4.json",
+                      "sha256":  "84a889b7975c95a6d96a3e253be33bf14b7d80f0d39ed772732a8eea8ff56b50",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-4.json",
+                      "bytes":  37234
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-5.json",
+                      "sha256":  "37a6798342871f088b32fc2e964e61bf637d54dcb5519603dbf6d00454c0f556",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-5.json",
+                      "bytes":  37200
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-6.json",
+                      "sha256":  "4af6719e3eb5a193a3583bfd41ddd849548b5e120d302c807e3b9b48dfcea22a",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-6.json",
+                      "bytes":  37104
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-7.json",
+                      "sha256":  "86cd034ab96406d9dbd331bfb20d8f99f9560e39562646a2416979d4cf3c85e7",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-7.json",
+                      "bytes":  37199
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-8.json",
+                      "sha256":  "9a77286f6d5947e28c1132a012986ea8522936d76d7cfabe45010df336e1adad",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-8.json",
+                      "bytes":  37146
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\physical-step-9.json",
+                      "sha256":  "0854e3f553d641eec80c2069f403089c90bb9431fbe1cab4d841ea1a63142194",
+                      "name":  "m78-diagnostic-boundary-v1-restored-physical-step-9.json",
+                      "bytes":  37183
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\restored\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "name":  "m78-diagnostic-boundary-v1-restored-m77.save",
+                      "bytes":  52557
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\actual-drive-sidecar.json",
+                      "sha256":  "5781e59a9b4e0c0edeb5cec499ccb22554527d24df191d9e4bf508950a9d3cb9",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-actual-drive-sidecar.json",
+                      "bytes":  5482
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\cold-write-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-cold-write-state.json",
+                      "bytes":  365
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\diagnostic-uninterrupted-trace.jsonl",
+                      "sha256":  "afc05f8c9d83d3cb1dfffee9aa1a1003fa439dde059663dc372b264afcd3eb74",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-diagnostic-uninterrupted-trace.jsonl",
+                      "bytes":  607466
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\joint-boundary.jsonl",
+                      "sha256":  "a7cae2c7a1c7c77b5a93102cc69936e5587e36a7edc3d199fd38f9e715afbda9",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-joint-boundary.jsonl",
+                      "bytes":  1261736
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-before-save.json",
+                      "sha256":  "2574d25aa8c22d13c4444a9995f078fbd166d456f512f7c6a1be1ec0d1b98942",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-before-save.json",
+                      "bytes":  37167
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-1.json",
+                      "sha256":  "ed745930bc11219b21d067ff4948bbabe10377e9c54fade7419ce0c5738a912e",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-1.json",
+                      "bytes":  37187
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-10.json",
+                      "sha256":  "e8126ca049ff5dcdc569e807195ea2f021dc6c1e8ebc15b7d6c8f760ae4f66f6",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-10.json",
+                      "bytes":  37080
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-2.json",
+                      "sha256":  "32284bec7537c00f091c73c6650d7571d91d39912e2d1b19046e980b1587af40",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-2.json",
+                      "bytes":  37263
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-3.json",
+                      "sha256":  "a6103e86e08874b8f9dff7292eb2ea2b7a8595191fb462cc3d3d3c9652ea3913",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-3.json",
+                      "bytes":  37202
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-4.json",
+                      "sha256":  "91fdc6d2dfe02da4860b6847ff137cf3cb306122c3410c95ef38f639db069531",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-4.json",
+                      "bytes":  37170
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-5.json",
+                      "sha256":  "3888a6b7cfa42b32dc3b177ff11ef1753127fda78cbe1881195f8a6fcec3eeb3",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-5.json",
+                      "bytes":  37155
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-6.json",
+                      "sha256":  "5cd3733c0d58cd412a911c9cf0f70bf9dd3e3a74b87682b177b249e2cfd62a6e",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-6.json",
+                      "bytes":  37189
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-7.json",
+                      "sha256":  "5057619cd6fc8ce971c7b9589ae4d5a9de2024151ba7d35ba104376c4ab209f9",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-7.json",
+                      "bytes":  37222
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-8.json",
+                      "sha256":  "b943245e8427036492990ea5b13a51f29e479c1860b826b89f4b6ea81d94b0c6",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-8.json",
+                      "bytes":  37134
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\physical-step-9.json",
+                      "sha256":  "d04ab00bfe61c44e81575bfed46cc36b6c2c54278fa50d830450e2cdde34c9bd",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-physical-step-9.json",
+                      "bytes":  37178
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationResults\\diagnostic-boundary-v1\\seed-off\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "name":  "m78-diagnostic-boundary-v1-seed-off-m77.save",
+                      "bytes":  52557
+                  }
+              ],
+    "restoredSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+    "sameSaveBytes":  true,
+    "sourceSHA256":  "9c11ead644720fd5d56e2cd7ec205f89aa8612dea75c95ac107be5def1743b68",
+    "sourceSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+}

@@ -1,0 +1,306 @@
+{
+  "scope": "Affected final WorldPersistence regression on the combined candidate; prior unchanged physics checks remain separately recorded.",
+  "buildSHA256": "cb4031ca80d6d5fd58e7f7624ec3d1e2110d7a07cc1fdea8d13944fd53439e7c",
+  "results": [
+    {
+      "name": "physics_continuation",
+      "utc": "2026-10-12T00:21:27.692716+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_physics_continuation_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.015879577003943268,
+      "executableSHA256": "f3a3e8018721e543b8e4d0e5c698ce01197c568a59db611a13f2a7af64f48037",
+      "logSHA256": "7d56126b33f942c1b71326f8e94b48e7f1167812b9253d65855de9b9312a0154",
+      "summary": [
+        "SUMMARY 98 checks 0 failures"
+      ]
+    },
+    {
+      "name": "world_persistence",
+      "utc": "2026-10-12T00:21:27.856630+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_world_persistence_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.018668021002667956,
+      "executableSHA256": "c859dbd9aba49a1c94b3555fe2071a87c5f0b9d75f07cd42ce989331bbeee9bb",
+      "logSHA256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e",
+      "summary": [
+        "SUMMARY 27 checks 0 failures"
+      ]
+    },
+    {
+      "name": "streaming",
+      "utc": "2026-10-12T00:21:28.613720+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_streaming_tests"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.5970650700037368,
+      "executableSHA256": "0960a836f696e6a460b6247dd193157c309401f1da4dc896d313bb0d780fb53d",
+      "logSHA256": "93960aef708a694706ae0a85ed3398947b4b4c14ab318316bd0fb06d6e915d6e",
+      "summary": [
+        "M59 82 checks 0 failures"
+      ]
+    },
+    {
+      "name": "gravity_selection",
+      "utc": "2026-10-12T00:21:29.046395+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_gravity_selection_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/gravity"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.2666020219985512,
+      "executableSHA256": "1707dd32d02ca7b419aeeaf586ab4eb5249f2d420097f3f7b4aa6980cf389c5a",
+      "logSHA256": "1137473ab4f4d23bcb9636bec22e12b228548c2e787add2c275b181b5a72a4dd",
+      "summary": [
+        "SUMMARY 70 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_step-trace",
+      "utc": "2026-10-12T00:21:30.892762+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-step-trace",
+        "step-trace"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.703766111000732,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "f56b6a55b709b690e7f0f32a55724d3bb391b9254e1fdbe465a659b5c1938555",
+      "summary": [
+        "SUMMARY 15 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_lifecycle",
+      "utc": "2026-10-12T00:21:32.481935+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-lifecycle",
+        "lifecycle"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.4484800989957876,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "fff6cd930a17c8fee75eefc6998a99ac66f4bf17dbd1e2111b865dd42b32bfe1",
+      "summary": [
+        "SUMMARY 26 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_radial",
+      "utc": "2026-10-12T00:21:33.981558+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-radial",
+        "radial"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.3715766009991057,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "3ed99c0da1d96415c46ab90b041c5b985dbf0b753f6d06d6a8a543ea909f5aa7",
+      "summary": [
+        "SUMMARY 18 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_cold-write",
+      "utc": "2026-10-12T00:21:35.594346+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-cold",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.4424170269994647,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "8a082f152346484e0199855434449c2394b8c44af8829c55f2a93c1c63f82231",
+      "summary": [
+        "SUMMARY 24 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_cold-read",
+      "utc": "2026-10-12T00:21:37.077686+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-cold",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.3460160360045847,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "80708001018eadf6565733a04a1546a93b89143e569dd8a448b82824f2806b7d",
+      "summary": [
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_cold-stand-write",
+      "utc": "2026-10-12T00:21:38.469186+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-cold-stand",
+        "cold-stand-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.2625164540004334,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "1088188939b44e4e9acf52f2941923aed02cf7ced3500673a27da04c04a8aa1b",
+      "summary": [
+        "SUMMARY 23 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_cold-stand-read",
+      "utc": "2026-10-12T00:21:39.993690+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-cold-stand",
+        "cold-stand-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.383249122001871,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "a8cfa80f0320bfc3b7c619cd71beb34d32e0ed127703feb55ba435bcb0898885",
+      "summary": [
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_cold-recovery-write",
+      "utc": "2026-10-12T00:21:41.346390+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-cold-recovery",
+        "cold-recovery-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.214375078001467,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "6fa8e55b1658a41fd75bd024c4cbb1948feb0de7fc4759c7ea63cc099bd79e77",
+      "summary": [
+        "SUMMARY 21 checks 0 failures"
+      ]
+    },
+    {
+      "name": "balance_cold-recovery-read",
+      "utc": "2026-10-12T00:21:42.819624+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/balance-cold-recovery",
+        "cold-recovery-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 1.3306541159981862,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "16da88a9a886a5afb098950451aa08c45dd70deb975d5d70b36adaf4766d85cd",
+      "summary": [
+        "SUMMARY 13 checks 0 failures"
+      ]
+    },
+    {
+      "name": "character_application",
+      "utc": "2026-10-12T00:21:45.561869+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/character"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 2.614172856003279,
+      "executableSHA256": "b31f268d258261a394eb6c18874301ab086610f1d8bd2347fb7ab8e8ab4d34dd",
+      "logSHA256": "bccc0b264f21207ad3b77bc6b51bb134992e1d29ea02c0690777e82bdad7269a",
+      "summary": [
+        "SUMMARY 98 checks 0 failures"
+      ]
+    },
+    {
+      "name": "character_cold-write",
+      "utc": "2026-10-12T00:21:46.071273+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/character-cold",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.32194471600087127,
+      "executableSHA256": "b31f268d258261a394eb6c18874301ab086610f1d8bd2347fb7ab8e8ab4d34dd",
+      "logSHA256": "17d41578258c4bdbd9efbc694cf42f231dba7cdcfea6222b4d633e39dbfe79ea",
+      "summary": [
+        "SUMMARY 10 checks 0 failures"
+      ]
+    },
+    {
+      "name": "character_cold-read",
+      "utc": "2026-10-12T00:21:46.454815+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_character_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/character-cold",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "programPassed": true,
+      "seconds": 0.24696879100520164,
+      "executableSHA256": "b31f268d258261a394eb6c18874301ab086610f1d8bd2347fb7ab8e8ab4d34dd",
+      "logSHA256": "b26df6a9405a26e05dfc4905b87e39ea1990d644c4f8b4a6a362310a3434f22e",
+      "summary": [
+        "SUMMARY 14 checks 0 failures"
+      ]
+    },
+    {
+      "name": "legacy-a106",
+      "utc": "2026-10-12T00:21:48.151371+00:00",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/final-after-static-cases/legacy-a106",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "programPassed": false,
+      "seconds": 1.547856357996352,
+      "executableSHA256": "f2432517513fd669443621dc2d18e73f3c84910b8c924d48ed6926f6c7f55a29",
+      "logSHA256": "0a62295cae4d1d2855aced825f3bcbdc9de74b3bfc8aa06fa81dc8ed68250378",
+      "summary": [
+        "SUMMARY 13 checks 1 failures"
+      ],
+      "classification": "Preserved genuine legacy failure; NOT a pass or repaired legacy archive",
+      "snapshotSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "scope": "Full independent host SHA/size verification of new final archive plus retained old791ed host archive before retiring only redundant guest old archive",
+  "newArchive": {
+    "hostPath": ".cache/m78-cold-boundary/native-binaries/final-repair/judas_engine.lib",
+    "sha256": "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "bytes": 67015480,
+    "guestPath": "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib"
+  },
+  "oldArchive": {
+    "hostPath": ".cache/m78-continuation/native-final-binaries/judas_engine.lib",
+    "sha256": "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "bytes": 66840496,
+    "guestPath": "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib"
+  }
+}

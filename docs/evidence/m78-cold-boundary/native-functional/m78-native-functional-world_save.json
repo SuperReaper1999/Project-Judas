@@ -1,0 +1,19 @@
+﻿{
+    "seconds":  0.5208931,
+    "freeBytes":  96784384,
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_world_save.exe",
+    "case":  "world_save",
+    "expectedSaveSHA256":  null,
+    "run":  "world_save",
+    "executableSHA256":  "60360e4d448a68bc7fcbc9f4ea8107c2089f4372726bebec6e3777e70cae0b58",
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "scope":  "Fresh original native functional execution on unchanged final archive; original inputs/timesteps/thresholds retained. No build. VM timing is descriptive only.",
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "environment":  {
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source"
+                    }
+}

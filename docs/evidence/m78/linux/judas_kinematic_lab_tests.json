@@ -1,0 +1,26 @@
+{
+  "id": "judas_kinematic_lab_tests",
+  "source": "tests/KinematicLabTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_lab_tests"
+  ],
+  "adapter": "inspected defaults: read-only source / owned temporary output",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "04dcc9db5e212fafa28a36afffcd7047114a3971ff3767b5df51637935e934e5",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 36,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_kinematic_lab_tests.log",
+  "logSHA256": "2a7331fba9971dab47c4b06f711da45e7f937b3fc9b8812ac5dd46727fb3fe41",
+  "seconds": 0.22187126199969498
+}

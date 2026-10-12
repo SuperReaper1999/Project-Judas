@@ -1,0 +1,1603 @@
+{
+  "cases": [
+    {
+      "case": "balance-blocked-recovery",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-blocked-recovery",
+        "blocked-recovery"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:26.462675+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.5200698919998104,
+      "log": "docs/evidence/m78/cases/balance-blocked-recovery.log",
+      "logSHA256": "a9ec613a73e093f12980e7976495b8df1b8b3e49f035f1ebcd993bf991d5f120",
+      "receipt": "docs/evidence/m78/cases/balance-blocked-recovery.json"
+    },
+    {
+      "case": "balance-cold-recovery-read",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-recovery",
+        "cold-recovery-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:47.579975+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.2667825400003494,
+      "log": "docs/evidence/m78/cases/balance-cold-recovery-read.log",
+      "logSHA256": "78177681f7b40c1cdfa4212636b6bb8c131d15bda6600ec77bf6304baf6127de",
+      "receipt": "docs/evidence/m78/cases/balance-cold-recovery-read.json"
+    },
+    {
+      "case": "balance-cold-recovery-write",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-recovery",
+        "cold-recovery-write"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:46.320720+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.0664854209990153,
+      "log": "docs/evidence/m78/cases/balance-cold-recovery-write.log",
+      "logSHA256": "6fa8e55b1658a41fd75bd024c4cbb1948feb0de7fc4759c7ea63cc099bd79e77",
+      "receipt": "docs/evidence/m78/cases/balance-cold-recovery-write.json"
+    },
+    {
+      "case": "balance-cold-stand-read",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-stand",
+        "cold-stand-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:44.919709+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.216873264998867,
+      "log": "docs/evidence/m78/cases/balance-cold-stand-read.log",
+      "logSHA256": "78559551f29d13a3e0855d8d406373893f1cb91b17be501c00271b9f9f25eeb1",
+      "receipt": "docs/evidence/m78/cases/balance-cold-stand-read.json"
+    },
+    {
+      "case": "balance-cold-stand-write",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-stand",
+        "cold-stand-write"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:43.565413+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.1679588389997662,
+      "log": "docs/evidence/m78/cases/balance-cold-stand-write.log",
+      "logSHA256": "f611963141c9ae1f3417242bfb9da117039b2b16570c10fa2586e4eaa272b3f3",
+      "receipt": "docs/evidence/m78/cases/balance-cold-stand-write.json"
+    },
+    {
+      "case": "balance-cold-step-read",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-step",
+        "cold-step-read"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:42.163002+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.216682010999648,
+      "log": "docs/evidence/m78/cases/balance-cold-step-read.log",
+      "logSHA256": "dc2df4bf24d7086a255d9d054b575a0a8e9036b2b8068b27604aa35d85d32fa9",
+      "receipt": "docs/evidence/m78/cases/balance-cold-step-read.json"
+    },
+    {
+      "case": "balance-cold-step-write",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cold-step",
+        "cold-step-write"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:40.760249+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.216789942000105,
+      "log": "docs/evidence/m78/cases/balance-cold-step-write.log",
+      "logSHA256": "5fa243380cb369e1d2ead00819ad3d5a1e93cba521cf7cb6f79f6d593f75f71b",
+      "receipt": "docs/evidence/m78/cases/balance-cold-step-write.json"
+    },
+    {
+      "case": "balance-cookbook",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-cookbook",
+        "cookbook"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:39.450676+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.1164401960013492,
+      "log": "docs/evidence/m78/cases/balance-cookbook.log",
+      "logSHA256": "1d10d11a342408af4c5d7c21737dd9e5371ad845d6c595c504f92ca3e22ae817",
+      "receipt": "docs/evidence/m78/cases/balance-cookbook.json"
+    },
+    {
+      "case": "balance-denied",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-denied",
+        "denied"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:24.651428+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.617517922000843,
+      "log": "docs/evidence/m78/cases/balance-denied.log",
+      "logSHA256": "5976b8af94d6550bc307972787f669794b072a530ecc34b9d943ca6229b5f0e5",
+      "receipt": "docs/evidence/m78/cases/balance-denied.json"
+    },
+    {
+      "case": "balance-fault",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-fault",
+        "fault"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:33.031603+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.2166395659987757,
+      "log": "docs/evidence/m78/cases/balance-fault.log",
+      "logSHA256": "1745d5c4a6570c36021a266cbd5d0b1f25657288fb1b5c0d848e1e606f4d2251",
+      "receipt": "docs/evidence/m78/cases/balance-fault.json"
+    },
+    {
+      "case": "balance-lifecycle",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-lifecycle",
+        "lifecycle"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:30.370362+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.3669049229993107,
+      "log": "docs/evidence/m78/cases/balance-lifecycle.log",
+      "logSHA256": "36ce28bd7df71ea2a7d3f5ac94f0b5da274b62852ddf931962780c128838d7ba",
+      "receipt": "docs/evidence/m78/cases/balance-lifecycle.json"
+    },
+    {
+      "case": "balance-low-grip",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-low-grip",
+        "low-grip"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:28.164680+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 2.019042752999667,
+      "log": "docs/evidence/m78/cases/balance-low-grip.log",
+      "logSHA256": "6627c92055bee18ad510d070b28d214c8820978088a6be8832bda8c4893d1d65",
+      "receipt": "docs/evidence/m78/cases/balance-low-grip.json"
+    },
+    {
+      "case": "balance-radial",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-radial",
+        "radial"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:23.091924+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.3670530229992437,
+      "log": "docs/evidence/m78/cases/balance-radial.log",
+      "logSHA256": "27b0caeed59175d3400b261c8fea1fbefb0019f85d1307f7653fdd7bec8efa0b",
+      "receipt": "docs/evidence/m78/cases/balance-radial.json"
+    },
+    {
+      "case": "balance-recovery",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-recovery",
+        "recovery"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:20.886826+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 2.018484611999156,
+      "log": "docs/evidence/m78/cases/balance-recovery.log",
+      "logSHA256": "c053b4b677e3cccfb08eae6c65ad8563c3fd31b96135b978cafc814835bfd343",
+      "receipt": "docs/evidence/m78/cases/balance-recovery.json"
+    },
+    {
+      "case": "balance-regions",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-regions",
+        "regions"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:31.923003+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.9159683850011788,
+      "log": "docs/evidence/m78/cases/balance-regions.log",
+      "logSHA256": "4ab45b506142843e686f0ce49a67af2a37bcec0a230cbe86533257d31225ed64",
+      "receipt": "docs/evidence/m78/cases/balance-regions.json"
+    },
+    {
+      "case": "balance-step-trace",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-step-trace",
+        "step-trace"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:37.799295+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.4671867130000464,
+      "log": "docs/evidence/m78/cases/balance-step-trace.log",
+      "logSHA256": "860561c78b1f89d1c035bab84c04c7ba83c52f450b44fefbd448773a3c2627d8",
+      "receipt": "docs/evidence/m78/cases/balance-step-trace.json"
+    },
+    {
+      "case": "balance-supports",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-supports",
+        "supports"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:19.565883+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.1168942610001977,
+      "log": "docs/evidence/m78/cases/balance-supports.log",
+      "logSHA256": "a6d06cdb8245194019d7d5cb7caeb4da6c66267555b23e695f0d632e9e1da14f",
+      "receipt": "docs/evidence/m78/cases/balance-supports.json"
+    },
+    {
+      "case": "balance-variants",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/balance-variants",
+        "variants"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:34.447088+00:00",
+      "executableSHA256": "37a37fc90d4d5d68782985caebd5ab02a41e8eed06af4e32704011535ba01fd9",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 3.170165167999585,
+      "log": "docs/evidence/m78/cases/balance-variants.log",
+      "logSHA256": "835b07029512a3a2566876a4759e9ebbd0c776ad38d3467005fa7f45797d1859",
+      "receipt": "docs/evidence/m78/cases/balance-variants.json"
+    },
+    {
+      "case": "concave-current-rig",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/concave_rig",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/concave-current"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:53:13.328229+00:00",
+      "executableSHA256": "f10ad75b591e6e98911397ecf19c49a9cdb70b53cc06690bb93b33d82f3cdc97",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 176.46207264000077,
+      "log": "docs/evidence/m78/cases/concave-current-rig.log",
+      "logSHA256": "96f24ebd9d501652d1e56d12e1a4c2a251833aed67d50453e0f5dcba97cf36d8",
+      "receipt": "docs/evidence/m78/cases/concave-current-rig.json"
+    },
+    {
+      "case": "cookbook-imported-local-prerequisite-corrected",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/cookbook-imported",
+        "imported-model"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:43:38.839736+00:00",
+      "executableSHA256": "19dbe607ea8686a425078ece3598a5f1b650f15ba6ea5850e7fd4395a30fbfa1",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 7.209329568000612,
+      "log": "docs/evidence/m78/cases/cookbook-imported-local-prerequisite-corrected.log",
+      "logSHA256": "53265683c261742498cd44d98427cc6f8a05b17306ec5cd6f41fd9ba02c12135",
+      "receipt": "docs/evidence/m78/cases/cookbook-imported-local-prerequisite-corrected.json"
+    },
+    {
+      "status": "observer-launch-error",
+      "cause": "relative executable looked up against isolated cwd; original log empty; no product ran",
+      "correction": "resolve executable against invoking root before launch; corrected case separately identified",
+      "receipt": "docs/evidence/m78/cases/cookbook-imported-local-prerequisite.json"
+    },
+    {
+      "case": "editor-authoring-owned",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-base/modding_lab.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:43.664379+00:00",
+      "explicitEnvironment": [
+        "JUDAS_EDITOR_AUTOTEST=/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-owned",
+        "JUDAS_EDITOR_AUTOTEST_AUTHORING=1"
+      ],
+      "executableSHA256": "ad315ef0ffc459dd0df0eceb156e6555054d96582a1867206e2107060c56ae00",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 3.98927079600071,
+      "log": "docs/evidence/m78/cases/editor-authoring-owned.log",
+      "logSHA256": "11b9155c1f969075fb0f2d352988ee3404699de6c4fcbeef49adf7fc161492b9",
+      "receipt": "docs/evidence/m78/cases/editor-authoring-owned.json"
+    },
+    {
+      "case": "editor-terrain-package",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-replacement/landscape_fork.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:13:47.261740+00:00",
+      "explicitEnvironment": [
+        "JUDAS_EDITOR_AUTOTEST=/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-terrain",
+        "JUDAS_EDITOR_AUTOTEST_TERRAIN=Imports/landscape.judasterrain",
+        "JUDAS_EDITOR_AUTOTEST_MOD_PACKAGE=/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-fork.judasmod"
+      ],
+      "executableSHA256": "ad315ef0ffc459dd0df0eceb156e6555054d96582a1867206e2107060c56ae00",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 4.434563213999354,
+      "log": "docs/evidence/m78/cases/editor-terrain-package.log",
+      "logSHA256": "61b50c6fb1cc0611b6515c6c2167e750b54865c98113e234444642da614142e2",
+      "receipt": "docs/evidence/m78/cases/editor-terrain-package.json"
+    },
+    {
+      "case": "fluid-rotated-repeat",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_production_fluid_tests",
+        "--case",
+        "rotated_half",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/fluid-repeat"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:10.950663+00:00",
+      "executableSHA256": "95499022f28eaaef13b99ec139552861eeb5d78d2df9d10378230a5536342903",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 8.330187188999844,
+      "log": "docs/evidence/m78/cases/fluid-rotated-repeat.log",
+      "logSHA256": "68f27efd173d364e1c33bcf5921a97058cee95120d62a2c88ec67889424e3d12",
+      "receipt": "docs/evidence/m78/cases/fluid-rotated-repeat.json"
+    },
+    {
+      "case": "inert-startup-phase-controls",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/inert_startup"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:19:15.933072+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "7f97b923b03e61e0a0a2268a015d2993b8d42a870622bf1f77685fe3b56af76d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 15.194329703999756,
+      "log": "docs/evidence/m78/cases/inert-startup-phase-controls.log",
+      "logSHA256": "34ac6d1aaf4a88b415c833578fc654b4b4da07a526767aa1c77d12002a1eec28",
+      "receipt": "docs/evidence/m78/cases/inert-startup-phase-controls.json"
+    },
+    {
+      "case": "mod-editor-package-after-all-bakes",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-replacement/landscape_fork.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-fork-corrected.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:14:53.336004+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 0.11447406300067087,
+      "log": "docs/evidence/m78/cases/mod-editor-package-after-all-bakes.log",
+      "logSHA256": "2fbc303921b1d01a9c37c2c1649b2ecf555cabfcb1092206f606ffb43651d2c7",
+      "receipt": "docs/evidence/m78/cases/mod-editor-package-after-all-bakes.json"
+    },
+    {
+      "case": "mod-editor-package-all-bakes-corrected",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-replacement/landscape_fork.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-fork-corrected.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:15:29.242635+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.21464255600039905,
+      "log": "docs/evidence/m78/cases/mod-editor-package-all-bakes-corrected.log",
+      "logSHA256": "d62fd031c61cdd15c813e972212137e5694ecb1784f1deb577da8878b46fd372",
+      "receipt": "docs/evidence/m78/cases/mod-editor-package-all-bakes-corrected.json"
+    },
+    {
+      "case": "mod-explicit-trust",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "hill-map",
+        "1.0.0",
+        "2e7ab4325cd065bf8ca25f997168989f2eb5a7f52d767b705c839c4a82a14911",
+        "--trust-executable"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:13:11.337571+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.03224299700013944,
+      "log": "docs/evidence/m78/cases/mod-explicit-trust.log",
+      "logSHA256": "ea206bdd2ff16272b6809240d834005a77f15ce8cdc211c7b8dca4712947118b",
+      "receipt": "docs/evidence/m78/cases/mod-explicit-trust.json"
+    },
+    {
+      "case": "mod-fork-enable",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "landscape-fork",
+        "1.0.0",
+        "1494935d82b56fe65e665e5620e47072a954f2027ce37a295c581b0b32c6b1a1"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:15:41.924190+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.06441382899902237,
+      "log": "docs/evidence/m78/cases/mod-fork-enable.log",
+      "logSHA256": "ea206bdd2ff16272b6809240d834005a77f15ce8cdc211c7b8dca4712947118b",
+      "receipt": "docs/evidence/m78/cases/mod-fork-enable.json"
+    },
+    {
+      "case": "mod-fork-install-corrected",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "install",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-fork-corrected.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:15:34.255836+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.11446880999938003,
+      "log": "docs/evidence/m78/cases/mod-fork-install-corrected.log",
+      "logSHA256": "2365391cd28315272452a4d0c54d29526cb4f08eb601ca4e54ff18367d236dd1",
+      "receipt": "docs/evidence/m78/cases/mod-fork-install-corrected.json"
+    },
+    {
+      "case": "mod-fork-install",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "install",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/editor-fork-corrected.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:14:53.635001+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 0.008148783999786247,
+      "log": "docs/evidence/m78/cases/mod-fork-install.log",
+      "logSHA256": "f33d3c84056452cdde5c9edb45c93fa0e3fa6f3e775116944123924465b40712",
+      "receipt": "docs/evidence/m78/cases/mod-fork-install.json"
+    },
+    {
+      "case": "mod-moved-probe-with-replacement",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-probe-corrected"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:15:42.172833+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 3.729408353998224,
+      "log": "docs/evidence/m78/cases/mod-moved-probe-with-replacement.log",
+      "logSHA256": "37fdc76da8421aa62e0da0d38818cf4af3dcbd8d038f49fb7d493b1d88b940f4",
+      "receipt": "docs/evidence/m78/cases/mod-moved-probe-with-replacement.json"
+    },
+    {
+      "case": "mod-moved-probe",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-probe"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:13:11.563501+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 3.641827887000545,
+      "log": "docs/evidence/m78/cases/mod-moved-probe.log",
+      "logSHA256": "142ab3846fafc2ee20cf51241b29fde3895c4e73fcdce569a33e7195010cfab6",
+      "receipt": "docs/evidence/m78/cases/mod-moved-probe.json"
+    },
+    {
+      "case": "mod-owned-addition",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_lab_builder",
+        "addition",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-kit",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-addition"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:23.175350+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "00f84a06a29a9708cc754bb632d15d21cfb410f2206865a03b10788541a3b1de",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.21462939500088396,
+      "log": "docs/evidence/m78/cases/mod-owned-addition.log",
+      "logSHA256": "12b8b3cc5a53bb83a8e496d6cb5d71ef1cedf973a7c4e17bbf47be1d4b915376",
+      "receipt": "docs/evidence/m78/cases/mod-owned-addition.json"
+    },
+    {
+      "case": "mod-owned-base",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_lab_builder",
+        "base",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-base",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:11:44.650580+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "00f84a06a29a9708cc754bb632d15d21cfb410f2206865a03b10788541a3b1de",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.06440675100020599,
+      "log": "docs/evidence/m78/cases/mod-owned-base.log",
+      "logSHA256": "4e72218a31920e5694e1f19badb47a98c5d31d78060a39fb13c8b274a49bc898",
+      "receipt": "docs/evidence/m78/cases/mod-owned-base.json"
+    },
+    {
+      "case": "mod-owned-export",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-base/modding_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:32.808222+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "001cc75bd4a0268b121abc44560c3ffdf2764acf1c91d87192b49c1e923f2091",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.11451537200082385,
+      "log": "docs/evidence/m78/cases/mod-owned-export.log",
+      "logSHA256": "8267a685b857589846a594ba08427ccff6ac135c1d72e6ff60772224f6a00708",
+      "receipt": "docs/evidence/m78/cases/mod-owned-export.json"
+    },
+    {
+      "case": "mod-owned-install",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "install",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/hill-map.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:52.810547+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.11427317400011816,
+      "log": "docs/evidence/m78/cases/mod-owned-install.log",
+      "logSHA256": "ed4ff7e823b9f502a3869a86d1fa41679c841880ac5796b0e8d1268cd99666b7",
+      "receipt": "docs/evidence/m78/cases/mod-owned-install.json"
+    },
+    {
+      "case": "mod-owned-kit",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "kit",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-base/modding_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-kit",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/docs"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:13.656106+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.0644951360009145,
+      "log": "docs/evidence/m78/cases/mod-owned-kit.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receipt": "docs/evidence/m78/cases/mod-owned-kit.json"
+    },
+    {
+      "case": "mod-owned-package-corrected",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-addition/hill_map.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/hill-map.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:52.452206+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.1644130180011416,
+      "log": "docs/evidence/m78/cases/mod-owned-package-corrected.log",
+      "logSHA256": "4b686338bf7a0e930e1b92385f64ab64eb9315620bf37cacededabe9974bd708",
+      "receipt": "docs/evidence/m78/cases/mod-owned-package-corrected.json"
+    },
+    {
+      "case": "mod-owned-package",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "package",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-addition/hill-map.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/hill-map.judasmod"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:12:32.616983+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 0.008009385001059854,
+      "log": "docs/evidence/m78/cases/mod-owned-package.log",
+      "logSHA256": "502ca690ccc991b65a4a79d2959d9bab18b39904275b3fc2b69d069454ed0eb3",
+      "receipt": "docs/evidence/m78/cases/mod-owned-package.json"
+    },
+    {
+      "case": "mod-owned-replacement",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_lab_builder",
+        "replacement",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-kit",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-replacement"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:13:46.904000+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "00f84a06a29a9708cc754bb632d15d21cfb410f2206865a03b10788541a3b1de",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.16454764199988858,
+      "log": "docs/evidence/m78/cases/mod-owned-replacement.log",
+      "logSHA256": "58b3a21f4c91414f83c176e759177ac4bf6049f93a8389eed20654f55937167a",
+      "receipt": "docs/evidence/m78/cases/mod-owned-replacement.json"
+    },
+    {
+      "case": "mod-region-rebake-corrected",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_bake",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-replacement/landscape_fork.judasproj",
+        "Scenes/region.judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:15:23.450949+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "4542cf93b1b1e8f9b183bfe85729ba232a44592ada740a1340093e89593bb142",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.06419630799973675,
+      "log": "docs/evidence/m78/cases/mod-region-rebake-corrected.log",
+      "logSHA256": "9eff4a7e7d93f62f7220d4fc6adf441331eab291a848b5525432ec34e241d938",
+      "receipt": "docs/evidence/m78/cases/mod-region-rebake-corrected.json"
+    },
+    {
+      "case": "mod-shipped-moved-runtime",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/moved-runtime/judas"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:23:46.781830+00:00",
+      "explicitEnvironment": [
+        "JUDAS_TEST_SCRIPT=/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78/probes/mod-runtime.harness"
+      ],
+      "executableSHA256": "15e4b91ba847e14ef84f7c8805b88314cd71fd65081210d8dc87d843105197f8",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.270920679999108,
+      "log": "docs/evidence/m78/cases/mod-shipped-moved-runtime.log",
+      "logSHA256": "c084867bcd9b75e9dcad1dd40f311d6fdef91c91c8618ff25b929befc6381852",
+      "receipt": "docs/evidence/m78/cases/mod-shipped-moved-runtime.json"
+    },
+    {
+      "case": "mod-source-hidden-cold-read",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/moved-runtime/game.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-cold"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:16:38.535370+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.872724783999729,
+      "log": "docs/evidence/m78/cases/mod-source-hidden-cold-read.log",
+      "logSHA256": "b7f89cb86657af1daaed097a6e12517c8ad60e269e434eae7b5eb8523e9e36e7",
+      "receipt": "docs/evidence/m78/cases/mod-source-hidden-cold-read.json"
+    },
+    {
+      "case": "mod-source-hidden-cold-write",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/moved-runtime/game.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-cold"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:16:36.533938+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 1.81841512200117,
+      "log": "docs/evidence/m78/cases/mod-source-hidden-cold-write.log",
+      "logSHA256": "b23e76921d577c18b4957f64372abda9f7601461e43053575dc0782281b3f53c",
+      "receipt": "docs/evidence/m78/cases/mod-source-hidden-cold-write.json"
+    },
+    {
+      "case": "mod-source-hidden-correct-startup",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/moved-runtime/game.judasproj",
+        "probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-source-hidden-probe"
+      ],
+      "cwd": "/tmp",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:16:14.939277+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "f723b22c156b9fc4e3f14e028c422feaed90dab85eac1c93bcacf606740c91b1",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 3.582982437999817,
+      "log": "docs/evidence/m78/cases/mod-source-hidden-correct-startup.log",
+      "logSHA256": "830e7ead18d136514aa39e44535c2438b1882add51b480eb06dd73688a75d4c8",
+      "receipt": "docs/evidence/m78/cases/mod-source-hidden-correct-startup.json"
+    },
+    {
+      "case": "mod-trust-negative",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod",
+        "enable",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/mod-package/game.judasproj",
+        "hill-map",
+        "1.0.0",
+        "2e7ab4325cd065bf8ca25f997168989f2eb5a7f52d767b705c839c4a82a14911"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:13:11.132362+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "9b0ce0e4c323ba6aceec81cc015cba6f7c4719642e892fac13f286f620bede3d",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 0.016100288999950862,
+      "log": "docs/evidence/m78/cases/mod-trust-negative.log",
+      "logSHA256": "5f69b1ec52975bcf4ba410bff1ea4352eb3443b388e5feba747cab16872a63d0",
+      "receipt": "docs/evidence/m78/cases/mod-trust-negative.json"
+    },
+    {
+      "case": "notice-cancel",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/milestone_notice",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/notice-fixtures/cancel",
+        "cancel"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:18:28.499884+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "8653f39fee41355958d46f1b721b6ee9ff14b20fe00bdad454c9c6987150b29f",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.007860122999773012,
+      "log": "docs/evidence/m78/cases/notice-cancel.log",
+      "logSHA256": "1e7032cfe74ee492de986f51f0313b0d12d1345d674fd4295ea24f9d66229ae9",
+      "receipt": "docs/evidence/m78/cases/notice-cancel.json"
+    },
+    {
+      "case": "notice-malformed",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/milestone_notice",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/notice-fixtures/malformed",
+        "malformed"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:18:28.312286+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "8653f39fee41355958d46f1b721b6ee9ff14b20fe00bdad454c9c6987150b29f",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.032013042000471614,
+      "log": "docs/evidence/m78/cases/notice-malformed.log",
+      "logSHA256": "1b1dfc5307483cd01a6920eee917bb722c899d4bc09df99fcc35621109e900cc",
+      "receipt": "docs/evidence/m78/cases/notice-malformed.json"
+    },
+    {
+      "case": "notice-missing",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/milestone_notice",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/notice-fixtures/missing",
+        "missing"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:18:28.240989+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "8653f39fee41355958d46f1b721b6ee9ff14b20fe00bdad454c9c6987150b29f",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.00783716300065862,
+      "log": "docs/evidence/m78/cases/notice-missing.log",
+      "logSHA256": "85e749708d6440de8d2a46388de4e3ea9c12cedd19678da8b34bade793434fa7",
+      "receipt": "docs/evidence/m78/cases/notice-missing.json"
+    },
+    {
+      "case": "notice-valid",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/milestone_notice",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/notice-fixtures/valid",
+        "valid"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:18:28.407303+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "8653f39fee41355958d46f1b721b6ee9ff14b20fe00bdad454c9c6987150b29f",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.03203815000051691,
+      "log": "docs/evidence/m78/cases/notice-valid.log",
+      "logSHA256": "061f87ca078621b81a99d4e724f73b9ab8a7f8a6dc468959c644d110f05faa63",
+      "receipt": "docs/evidence/m78/cases/notice-valid.json"
+    },
+    {
+      "case": "region-retirement-minimal",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/region_retire",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/region-retirement-minimal"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:57:52.041637+00:00",
+      "executableSHA256": "306b68df1102610f7c5a12a047f8c1ffd6643fe20973f2a3b644d89a03167042",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 4.623934404000465,
+      "log": "docs/evidence/m78/cases/region-retirement-minimal.log",
+      "logSHA256": "06ec9e6148b372771818c7ba69e9efcedd12ea4480f7e588c85515fdfaded840",
+      "receipt": "docs/evidence/m78/cases/region-retirement-minimal.json"
+    },
+    {
+      "case": "reimport-local-prerequisite",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_reimport_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/reimport"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:10.176747+00:00",
+      "executableSHA256": "78c7f04a19de82dd91acec4ba7cedf1b4f58e81c5820abfd1ca0ddb9225bc3fd",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.5653243329998077,
+      "log": "docs/evidence/m78/cases/reimport-local-prerequisite.log",
+      "logSHA256": "26656d005302f38fbcc679676efba6ad82680feb5168d15d1da93fcc2ee0a307",
+      "receipt": "docs/evidence/m78/cases/reimport-local-prerequisite.json"
+    },
+    {
+      "case": "runtime_ui-export-prerequisite",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/runtime_ui"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:06.979728+00:00",
+      "executableSHA256": "525838d0f00a102323f78d333e5e90a6c96475d2f3c749a690642da5b6d0c6d5",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 2.4702838489993155,
+      "log": "docs/evidence/m78/cases/runtime_ui-export-prerequisite.log",
+      "logSHA256": "c9584b0f4373dc9373383af54e206e5c16256a5017234cacb7cba5ecae931062",
+      "receipt": "docs/evidence/m78/cases/runtime_ui-export-prerequisite.json"
+    },
+    {
+      "case": "save_application-cold-read",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/save_lab.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/save_application"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:52.403070+00:00",
+      "executableSHA256": "89016395d445ce35ce10d1eb78a4686c4eb9d39c965a921c567c8e0139aaadc0",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 3.830588988999807,
+      "log": "docs/evidence/m78/cases/save_application-cold-read.log",
+      "logSHA256": "f21fc19124ca43158597a4a507f86bd8242e5b24f07adb6bd155e7fd5e0523e8",
+      "receipt": "docs/evidence/m78/cases/save_application-cold-read.json"
+    },
+    {
+      "case": "save_application-cold-write",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/save_lab/save_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/save_application"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:49.033649+00:00",
+      "executableSHA256": "89016395d445ce35ce10d1eb78a4686c4eb9d39c965a921c567c8e0139aaadc0",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 3.080911261999063,
+      "log": "docs/evidence/m78/cases/save_application-cold-write.log",
+      "logSHA256": "2daba5d65ec701116c022bf6772ec2355a49ee8973b26b0c484a9928421f9489",
+      "receipt": "docs/evidence/m78/cases/save_application-cold-write.json"
+    },
+    {
+      "case": "save_streaming-cold-read",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/save_streaming"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:52:01.045558+00:00",
+      "executableSHA256": "9a4e8e94ae1a2c8a0a0ccdfedfdb65f1f92a9fe6fe63fb50504b52e9cb35f956",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 4.13477387400053,
+      "log": "docs/evidence/m78/cases/save_streaming-cold-read.log",
+      "logSHA256": "2fd9949c7ae4cf496a9da2fe6790644ce4482c30e80dd39ada9db9131f38d8e5",
+      "receipt": "docs/evidence/m78/cases/save_streaming-cold-read.json"
+    },
+    {
+      "case": "save_streaming-cold-write",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/save_streaming"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:56.425965+00:00",
+      "executableSHA256": "9a4e8e94ae1a2c8a0a0ccdfedfdb65f1f92a9fe6fe63fb50504b52e9cb35f956",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 4.3308330880008725,
+      "log": "docs/evidence/m78/cases/save_streaming-cold-write.log",
+      "logSHA256": "1831ac77a6e41f652e8046a997cd29a0ecae595f99fc016606072ab26b9e652b",
+      "receipt": "docs/evidence/m78/cases/save_streaming-cold-write.json"
+    },
+    {
+      "case": "scalability-observational-no-acceptance",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scalability_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/scalability-measure",
+        "--measure-baseline"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T15:16:40.597609+00:00",
+      "explicitEnvironment": [],
+      "executableSHA256": "f7c21d99160d079d8d18a6bc237dfb12cd92cbfea19a3eff4f02963b26e8ed82",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 103.93685703499978,
+      "log": "docs/evidence/m78/cases/scalability-observational-no-acceptance.log",
+      "logSHA256": "87bbbc68f2ef0fe8c25ae53992f6e8686a5439884a1c42c03933e19078408798",
+      "receipt": "docs/evidence/m78/cases/scalability-observational-no-acceptance.json"
+    },
+    {
+      "case": "scalability-unload-repeat",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scalability_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/scalability-repeat"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:52:05.374355+00:00",
+      "executableSHA256": "f7c21d99160d079d8d18a6bc237dfb12cd92cbfea19a3eff4f02963b26e8ed82",
+      "exitCode": 1,
+      "status": "failed",
+      "seconds": 16.650915676000295,
+      "log": "docs/evidence/m78/cases/scalability-unload-repeat.log",
+      "logSHA256": "55a65f53cfec6470d55e01475c2b18f49724e7aa54a8018634f0df76935d68fb",
+      "receipt": "docs/evidence/m78/cases/scalability-unload-repeat.json"
+    },
+    {
+      "case": "script-export-prerequisite",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/script"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:03.208706+00:00",
+      "executableSHA256": "ca030c70f8bf0434bcd4d8dc537d5ea0bf1f9b2b2b76a0613e52a653eace2f92",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 3.4293263260005915,
+      "log": "docs/evidence/m78/cases/script-export-prerequisite.log",
+      "logSHA256": "3618e58ddee17037185db9cd4ffae78b5215547ee161fc4b341696b4d4b2273a",
+      "receipt": "docs/evidence/m78/cases/script-export-prerequisite.json"
+    },
+    {
+      "case": "storage-path-guard",
+      "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/m61-storage-confirm"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+      "environment": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "SDL_AUDIODRIVER": "dummy",
+        "LIBGL_ALWAYS_SOFTWARE": "1",
+        "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+        "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+      },
+      "utc": "2026-10-11T14:51:09.773157+00:00",
+      "executableSHA256": "c72f6b5eb712342caf8274d02286f827af0c17becb669fa2686dceb2d0efedef",
+      "exitCode": 0,
+      "status": "exited-zero",
+      "seconds": 0.11481245899994974,
+      "log": "docs/evidence/m78/cases/storage-path-guard.log",
+      "logSHA256": "bbd9c93f1571089869dfd911b108adc12d399a0c694f49855df3f2a1651e9381",
+      "receipt": "docs/evidence/m78/cases/storage-path-guard.json"
+    }
+  ],
+  "statusCounts": {
+    "exited-zero": 51,
+    "observer-launch-error": 1,
+    "failed": 10
+  },
+  "warning": "Expected negative controls and observational assertion-disabled runs retain raw exit classification; consult adjudication before interpreting zero or failure."
+}

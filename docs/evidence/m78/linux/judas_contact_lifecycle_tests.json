@@ -1,0 +1,26 @@
+{
+  "id": "judas_contact_lifecycle_tests",
+  "source": "tests/ContactLifecycleTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "0efc9b3d3a52f2adc8b1efcf2d8abc095343c3071c719e9a74b65cfc570947f6",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 1050,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_contact_lifecycle_tests.log",
+  "logSHA256": "b9eabbcdf5ac64c5ab3ea2bc193de2d70054a096cd6b221fde12bf6f0943614a",
+  "seconds": 0.16216924099899188
+}

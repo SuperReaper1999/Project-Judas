@@ -1,0 +1,2 @@
+three_spheres energy_before=85.562498733401313 energy_after=84.574844702896598 momentum_before=49.624999254941947 momentum_after=49.624999560323765
+Impact response 46 cases 267 checks PASS; safety_fallbacks=0 (actual engine timing is validated separately)

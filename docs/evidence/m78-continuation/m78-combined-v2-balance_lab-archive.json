@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "8afe23a30053b6028009872ccf164b85e5a4bacdb1b58ed654bbf12f85f96c90",
+    "case":  "balance_lab",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe",
+                      "sha256":  "764ed6d3041b263d99495e14db869a0301d742c901ae29a45229cc9145ee4851",
+                      "name":  "m78_combined-v2_balance_lab.exe",
+                      "bytes":  9480192
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\balance_lab-0.obj",
+                      "sha256":  "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff",
+                      "name":  "balance_lab-0.obj",
+                      "bytes":  2230400
+                  }
+              ],
+    "freeBytes":  475357184,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  5002213,
+    "archiveName":  "m78-combined-v2-balance_lab-archive.zip"
+}

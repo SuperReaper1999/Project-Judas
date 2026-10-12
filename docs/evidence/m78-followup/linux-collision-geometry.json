@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_collision_geometry_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:08:44.879094+00:00",
+  "seconds": 0.8661941190002835,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "980492ce1295fb75678c799bc736c3fef24a17e662d2b0c90416cb963c0676da",
+  "logSHA256": "7ce2cb0f94db27135a5ea27a992952d25b343c237ee605a9fa2b49d77d26df47",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

@@ -1,0 +1,29 @@
+{
+  "status": "READ_ONLY_SOURCE_REVIEW_NO_COMPILE_OR_EXECUTION",
+  "observerCorrections": [
+    {
+      "file": "StreamingMotorPublication.cpp",
+      "cause": "WorldStreaming::Status returns optional<RegionStatus>, not pointer",
+      "change": "auto s = stream.Status(token); same status condition"
+    },
+    {
+      "file": "NavigationInputRace.cpp",
+      "cause": "front() after a non-fatal empty dependency assertion could be undefined behavior",
+      "change": "positive fixture setup requires exact two legal fresh/stale rows before front()"
+    },
+    {
+      "file": "FixtureSupport.h",
+      "change": "explicit iterator include rather than rely on transitive headers"
+    },
+    {
+      "file": "ResolvedPrefabModPolicy.cpp, NavigationInputRace.cpp",
+      "cause": "JSON diagnostic arguments could be evaluated before tested call",
+      "change": "store the boolean result first, then snapshot returned error into receipt"
+    }
+  ],
+  "ids": "All authored IDs allocated with Scene::CreateObject or InstantiatePrefab; NextId updates through normal Scene APIs. No fabricated runtime IDs or manual NextId.",
+  "supportedTypes": "Static primitive body prefab + navigation; data-only scene importing base prefab and published base script; motor-only streamed scene. No nested prefab, liquid/deformable/world mod payload or terrain body stream.",
+  "navigationBoundary": "Existing cancel poll invoked before scene, before BakeNavigation, after BakeNavigation: third call edits current source and returns false; test requires changed-input diagnostic, not cancellation.",
+  "queryOracle": "World-space ray transformed by motor orientation goes through expected shape-offset capsule, includes only authored layer and required tag; enabled and filter inspected independently, disabled motor has separate position.",
+  "sourceConcernClassification": "Suspected existing generic lifecycle publication defect, not yet measured or classified as a new regression; no automatic correction authorized."
+}

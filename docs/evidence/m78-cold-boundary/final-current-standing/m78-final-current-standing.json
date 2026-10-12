@@ -1,0 +1,253 @@
+﻿{
+    "sourceBundleSHA256":  "52f7755bec8455b76f257730177dc87bdb4ff23e15487f0189d2f44a5704678c",
+    "objectSHA256":  "6ca158b70a770a9797c8335772f1f4ed2a98bf95c88d73471aed429675066a9d",
+    "exeSHA256":  "a1542e52ac91f14c171e3504ced5c5cd05306d3bce074567b03adc5d016bc508",
+    "object":  "C:\\JudasValidation\\M78FinalCurrentStandingBuild\\FinalCurrentStandingObserver.obj",
+    "freeBytes":  7393280,
+    "compilerResponse":  "/I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78FinalCurrentStandingBuild\\FinalCurrentStandingObserver.obj\" /Fd\"C:\\JudasValidation\\M78FinalCurrentStandingBuild\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78FinalCurrentStandingBuild\\source\\FinalCurrentStandingObserver.cpp\"",
+    "exe":  "C:\\JudasValidation\\Build\\Release\\m78-final-current-standing.exe",
+    "scope":  "Read-only final current body/History/completed-contact endpoint witness. No engine object substitution or runtime mutation/drive replay; original24/13 acceptance unchanged. Both runs share exact newly captured save bytes. WindowsVM functional-only.",
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final-current-standing.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78FinalCurrentStandingBuild\\link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78FinalCurrentStandingBuild\\observer.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78FinalCurrentStandingBuild\\FinalCurrentStandingObserver.obj\"",
+    "runs":  [
+                 {
+                     "exitCode":  0,
+                     "seconds":  3.0559021,
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\actual-drive-sidecar.json",
+                                       "sha256":  "5cf6daff2b9a520e843b2809cd5ec13bfe860658ed0c0fd1b3b692af5521fbb7",
+                                       "name":  "m78-final-current-standing-source-actual-drive-sidecar.json",
+                                       "bytes":  5482
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\cold-write-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "name":  "m78-final-current-standing-source-cold-write-state.json",
+                                       "bytes":  365
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\diagnostic-uninterrupted-trace.jsonl",
+                                       "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                                       "name":  "m78-final-current-standing-source-diagnostic-uninterrupted-trace.jsonl",
+                                       "bytes":  610874
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-before-save.json",
+                                       "sha256":  "f25bc9f808b34cd455ac2070e09285160393b8c57d77bd8c31c9dcd2b061bbf7",
+                                       "name":  "m78-final-current-standing-source-physical-before-save.json",
+                                       "bytes":  47965
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-final.json",
+                                       "sha256":  "1aed90e8f2abce10affca1eecdcf676f2a06b2de9101fc06b834e870a3538622",
+                                       "name":  "m78-final-current-standing-source-physical-final.json",
+                                       "bytes":  58910
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-1.json",
+                                       "sha256":  "1a2eb024fd99bbf8c9a1796aa6d21e90eaa6d35eae75edace2a3234f5943466f",
+                                       "name":  "m78-final-current-standing-source-physical-step-1.json",
+                                       "bytes":  45423
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-10.json",
+                                       "sha256":  "ae9f90b6d7c9784c5cafa0e3b723a00b45d0e0580292b5b349da497f865d452f",
+                                       "name":  "m78-final-current-standing-source-physical-step-10.json",
+                                       "bytes":  48657
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-2.json",
+                                       "sha256":  "219b498916c5d3aeaa963eb26b040ecc83dacf295913af265746a06e1e9a116f",
+                                       "name":  "m78-final-current-standing-source-physical-step-2.json",
+                                       "bytes":  47216
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-3.json",
+                                       "sha256":  "130bf9ff0fb934b560f442ec2acb641c4f0e122cfb18161a9459f52a5d03573c",
+                                       "name":  "m78-final-current-standing-source-physical-step-3.json",
+                                       "bytes":  47178
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-4.json",
+                                       "sha256":  "e2b12029e55a38b119d0b0dfd454283a996ecab116fbc8db7608ed30825c7426",
+                                       "name":  "m78-final-current-standing-source-physical-step-4.json",
+                                       "bytes":  48787
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-5.json",
+                                       "sha256":  "ad85c4790dc35e29e3d679e1563247eaafd97101bd8baeabf93b405f727ab8cb",
+                                       "name":  "m78-final-current-standing-source-physical-step-5.json",
+                                       "bytes":  48701
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-6.json",
+                                       "sha256":  "c4dc0f1e2042fde49410672a168dffbd12b345ae7fb2ec2be9dbb233e2122191",
+                                       "name":  "m78-final-current-standing-source-physical-step-6.json",
+                                       "bytes":  48780
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-7.json",
+                                       "sha256":  "89ba49649ecf683d50409ad064a649b1f25d502f0774488e83082c7aba0fc5ad",
+                                       "name":  "m78-final-current-standing-source-physical-step-7.json",
+                                       "bytes":  48693
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-8.json",
+                                       "sha256":  "a01f4d627be5b651825287338b0c076338cb755a0be0edf2c6711a000ef3c7e3",
+                                       "name":  "m78-final-current-standing-source-physical-step-8.json",
+                                       "bytes":  48709
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\physical-step-9.json",
+                                       "sha256":  "e7fd1f945e5185dc94950ee438cb7f2a32581b9deedae18d2f94b22a9a1ecb2c",
+                                       "name":  "m78-final-current-standing-source-physical-step-9.json",
+                                       "bytes":  48724
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "name":  "m78-final-current-standing-source-.lock",
+                                       "bytes":  0
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\source\\m77.save",
+                                       "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                                       "name":  "m78-final-current-standing-source-m77.save",
+                                       "bytes":  56640
+                                   }
+                               ],
+                     "mode":  "cold-write",
+                     "saveSHA256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d"
+                 },
+                 {
+                     "exitCode":  0,
+                     "seconds":  2.4094794,
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\actual-drive-sidecar.json",
+                                       "sha256":  "5cf6daff2b9a520e843b2809cd5ec13bfe860658ed0c0fd1b3b692af5521fbb7",
+                                       "name":  "m78-final-current-standing-restored-actual-drive-sidecar.json",
+                                       "bytes":  5482
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "name":  "m78-final-current-standing-restored-cold-read-state.json",
+                                       "bytes":  365
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\cold-write-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "name":  "m78-final-current-standing-restored-cold-write-state.json",
+                                       "bytes":  365
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\diagnostic-cold-read-trace.jsonl",
+                                       "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                                       "name":  "m78-final-current-standing-restored-diagnostic-cold-read-trace.jsonl",
+                                       "bytes":  610874
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\diagnostic-uninterrupted-trace.jsonl",
+                                       "sha256":  "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef",
+                                       "name":  "m78-final-current-standing-restored-diagnostic-uninterrupted-trace.jsonl",
+                                       "bytes":  610874
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-before-save.json",
+                                       "sha256":  "f25bc9f808b34cd455ac2070e09285160393b8c57d77bd8c31c9dcd2b061bbf7",
+                                       "name":  "m78-final-current-standing-restored-physical-before-save.json",
+                                       "bytes":  47965
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-final.json",
+                                       "sha256":  "22d744afc6b3a094d9db7f07b4dd8493d904f6f8228b9cdf06d08d62ed44723c",
+                                       "name":  "m78-final-current-standing-restored-physical-final.json",
+                                       "bytes":  58910
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-immediately-restored.json",
+                                       "sha256":  "75a77899aae969e88294a44c8a0f034ffc8fa65e7ee0adef07f522a7e80fd1f5",
+                                       "name":  "m78-final-current-standing-restored-physical-immediately-restored.json",
+                                       "bytes":  47965
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-1.json",
+                                       "sha256":  "18f5c425f41d4ff54e1ab4ee8bd76d64c9280e8efd7c41b69928d42bef190164",
+                                       "name":  "m78-final-current-standing-restored-physical-step-1.json",
+                                       "bytes":  45423
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-10.json",
+                                       "sha256":  "ce85e918cb9af84a852ecd0323ee992ea2f39b4593500038a608f3618b57ca71",
+                                       "name":  "m78-final-current-standing-restored-physical-step-10.json",
+                                       "bytes":  48657
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-2.json",
+                                       "sha256":  "1d5bb96a121d020e3c736420a324ef344efc7509c529974481fe3325f29732de",
+                                       "name":  "m78-final-current-standing-restored-physical-step-2.json",
+                                       "bytes":  47216
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-3.json",
+                                       "sha256":  "736951c52cd845e9ecadb85aa40309bd083e67db96508950dcf8749d7ab5d336",
+                                       "name":  "m78-final-current-standing-restored-physical-step-3.json",
+                                       "bytes":  47178
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-4.json",
+                                       "sha256":  "04af99dd3f96f28899e419492b8bf56df1ac13db5f2a2493ce1a503cd390a2bf",
+                                       "name":  "m78-final-current-standing-restored-physical-step-4.json",
+                                       "bytes":  48787
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-5.json",
+                                       "sha256":  "ec0795d3991cd060b589575f870c8624203b14462428ec0db2012d581c9f0697",
+                                       "name":  "m78-final-current-standing-restored-physical-step-5.json",
+                                       "bytes":  48701
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-6.json",
+                                       "sha256":  "53da12491f813c2049e28859e308b3361499064180ead7752444ce3f658cc679",
+                                       "name":  "m78-final-current-standing-restored-physical-step-6.json",
+                                       "bytes":  48780
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-7.json",
+                                       "sha256":  "08b3dcf360a2d286325db49f4935317ca1375884064004704574308b6134a85e",
+                                       "name":  "m78-final-current-standing-restored-physical-step-7.json",
+                                       "bytes":  48693
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-8.json",
+                                       "sha256":  "00f00c6c253168317f74a5330c08f6e67924769da1a70497bee6e0ec98cc1c03",
+                                       "name":  "m78-final-current-standing-restored-physical-step-8.json",
+                                       "bytes":  48709
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\physical-step-9.json",
+                                       "sha256":  "0cca7f6ad302e2297fb2b78851abb68117e6e8288702d3f6b97a9ad09be6906e",
+                                       "name":  "m78-final-current-standing-restored-physical-step-9.json",
+                                       "bytes":  48724
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "name":  "m78-final-current-standing-restored-.lock",
+                                       "bytes":  0
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78FinalCurrentStandingResults\\restored\\m77.save",
+                                       "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                                       "name":  "m78-final-current-standing-restored-m77.save",
+                                       "bytes":  56640
+                                   }
+                               ],
+                     "mode":  "cold-read",
+                     "saveSHA256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d"
+                 }
+             ],
+    "sourceSHA256":  "715dd4ae56bc5a8b9556379d95bb5b6e8f4402fd4a60515b69ba039f0b918e13",
+    "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+}

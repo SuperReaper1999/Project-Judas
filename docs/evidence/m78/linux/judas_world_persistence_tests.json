@@ -1,0 +1,26 @@
+{
+  "id": "judas_world_persistence_tests",
+  "source": "tests/WorldPersistenceTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_persistence_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "a6141f5455358584b422cf1974537c0f023f1f0cc5630f98555672469b550cc3",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 27,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_world_persistence_tests.log",
+  "logSHA256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e",
+  "seconds": 0.19066985199970077
+}

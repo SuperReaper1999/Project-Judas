@@ -1,0 +1,8 @@
+Fresh fixture compile failed
+At C:\JudasValidation\m78-closure-case.ps1:12 char:832
++ ... FileName($log));if($exit -ne 0){throw 'Fresh fixture compile failed'}
++                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Fresh fixture compile failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : Fresh fixture compile failed
+ 
+

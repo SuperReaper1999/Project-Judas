@@ -1,0 +1,18 @@
+{
+  "name": "candidate",
+  "source": {
+    "RigidBody.cpp": "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+    "RigidBody.h": "404d80c13218280766edaf5335bc0c34ee81f71bf538abab51fda4755937041b",
+    "RigidMotion.h": "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497",
+    "PhysicsWorld.cpp": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+    "PhysicsWorld.h": "b28cab372f1e17463578556d7056aec12126a4aec2ddd4d107ceb03eb28c75f6",
+    "CollisionGeometry.cpp": "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a"
+  },
+  "builds": [],
+  "engineSHA256": "55f181d2858c39bff02610283dc4392a63ac07962b437de83fd00894b6e30a32",
+  "exeSHA256": "f84ca0f2f8f5edb33fe13519fd65f324a45d955000cdfab148d858dfb4c92d21",
+  "exitCode": 1,
+  "seconds": 2.4537233780029055,
+  "fixtureSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+  "scope": "Diagnostic variant only; no production/fixture changes"
+}

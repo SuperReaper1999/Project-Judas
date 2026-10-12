@@ -1,0 +1,17 @@
+﻿{
+    "rows":  [
+                 {
+                     "exitCode":  0,
+                     "case":  "spacecraft_control",
+                     "sha256":  "26e36fbbd64914b074d035a309f99e530cfd23886ecc2fe4c8c93d347573fae0",
+                     "sourceSHA256":  "548ceaafed42b5caba9781108b21c527be30d60afe3a74e606919c96845b5198"
+                 },
+                 {
+                     "exitCode":  0,
+                     "case":  "spacecraft_flight",
+                     "sha256":  "b33dbd3bdea1a62efb7e4e8ed8174c2cabc2ac1166f7212f14ab3af3aa6d3d81",
+                     "sourceSHA256":  "85b0139c79ec4a2a5e691cd191ea0738c949d35ce76a49f11ae9478a48b1c472"
+                 }
+             ],
+    "freeBytes":  64782336
+}

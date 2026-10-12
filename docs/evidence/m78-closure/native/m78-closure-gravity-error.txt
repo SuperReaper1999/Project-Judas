@@ -1,0 +1,8 @@
+Final explicit-object link failed
+At C:\JudasValidation\m78-closure-case.ps1:16 char:962
++ ... g));if($exit -ne 0){throw 'Final explicit-object link failed'};Upload ...
++                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Final explicit-object link failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : Final explicit-object link failed
+ 
+

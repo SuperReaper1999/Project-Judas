@@ -1,0 +1,23 @@
+﻿{
+    "archiveSHA256":  "ac883439510bd45a5b6950dbbb2d18e6f6438dcbc9b3d7a3a66322233a0e0a60",
+    "case":  "drive_observer",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78_combined-v2_drive_observer.exe",
+                      "sha256":  "d17aea5b6f630148208dda4dc7bf6612dd9980c9305e0efba31cc4e399dfbfb7",
+                      "name":  "m78_combined-v2_drive_observer.exe",
+                      "bytes":  9499648
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\objects\\drive_observer-0.obj",
+                      "sha256":  "8e0c7d7a8c2ebaf82f5b2ce6719cd52b838bbeb59c2ee940f4c8458892982273",
+                      "name":  "drive_observer-0.obj",
+                      "bytes":  2653106
+                  }
+              ],
+    "freeBytes":  22986752,
+    "label":  "combined-v2",
+    "scope":  "Archive only; no cleanup until independent host verification",
+    "archiveBytes":  5051496,
+    "archiveName":  "m78-combined-v2-drive_observer-archive.zip"
+}

@@ -1,0 +1,11 @@
+PASS actual fixed boundary broadcasts to independent slots
+PASS signal receiver changes real M72 material override
+PASS actual targeted send only changes left entity slots
+PASS authored modal pauses gameplay
+PASS fixed lane waits while paused
+PASS UI lane onUI signal drains while paused, including zero-step frame
+PASS resume fixed messages after UI closure without gameplay leak
+PASS unsubscribe leaves other receivers active
+FAIL repeated receiver removal is safe and leaves lab controls active
+PASS normal application exit
+SUMMARY 10 checks 1 failures

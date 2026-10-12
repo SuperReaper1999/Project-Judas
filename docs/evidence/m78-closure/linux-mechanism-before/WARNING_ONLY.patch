@@ -1,0 +1,11 @@
+--- prior/WorldPersistence.cpp
++++ current/WorldPersistence.cpp
+@@ -72,7 +72,7 @@
+    auto body=motor->observationBody;a.Require(body.IsValid(),"missing restored motor observation body");
+    w.Physics().ResetBody(body,motor->position+motor->orientation*motor->settings.offset,motor->orientation);
+    a.Require(w.Physics().SetBodyEnabled(body,motor->settings.enabled)&&w.Physics().SetCollisionFilter(body,motor->settings.collisionLayer,motor->settings.collisionMask)&&w.Physics().SetBodyTags(body,w.TagsOf(id)),"invalid restored motor observation settings");
+-   motor->result.support=support?w.RuntimeBody(support):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto body=w.RuntimeBody(e);a.Require(body.IsValid(),"missing ignored body reference");motor->filter.ignoredBodies.push_back(body);}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
++   motor->result.support=support?w.RuntimeBody(support):BodyHandle{};a.Require(!support||motor->result.support.IsValid(),"missing required support body");motor->filter.ignoredBodies.clear();for(auto e:ignored){auto ignoredBody=w.RuntimeBody(e);a.Require(ignoredBody.IsValid(),"missing ignored body reference");motor->filter.ignoredBodies.push_back(ignoredBody);}auto& p=w.m_characters.at(id).previous;p.position=motor->position;p.rotation=motor->orientation;}
+  }
+ }
+ // Identical instance payload for durable saves and bounded region suspension.

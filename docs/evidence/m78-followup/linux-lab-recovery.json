@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/lab-recovery",
+    "recovery"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:25:55.314819+00:00",
+  "seconds": 2.068371337998542,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "15894bdb60ee43fdff19d41a830e561ef38b37874205da30744c34fe7fb73d67",
+  "logSHA256": "5025c60db02a3043a0ae039499ae49c398a7348d495595c2ea5a7ba542e0599e",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

@@ -1,0 +1,27 @@
+﻿{
+    "archiveBytes":  9034271,
+    "scope":  "Only generated exporter/runtime/object/archive candidates for host-verified cleanup; moved package untouched",
+    "archiveSHA256":  "a3e4d223808cb643f02f90030503c75c4dabbe6a0b2369578702f1c8a44bba1a",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-export.exe",
+                      "sha256":  "497e725e8e40535ba4aab4026684f5e195c3a2aaf047645d16efe596cd416260",
+                      "name":  "m78-final2-repair-export.exe",
+                      "bytes":  8139776
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78Final2RepairExport\\export-0.obj",
+                      "sha256":  "1dae240f9f828d5d8fdcedc3cf0e40e538cf8502b227bce43c49a0b7380a8a5e",
+                      "name":  "export-0.obj",
+                      "bytes":  88409
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-runtime.exe",
+                      "sha256":  "740b77d3435cf2b3f3067dc7175df46cca5caf642e6d9d88e2487cf4ab413b23",
+                      "name":  "m78-final2-repair-runtime.exe",
+                      "bytes":  10344448
+                  }
+              ],
+    "archiveName":  "m78-final2-repair-export-generated.zip",
+    "archivePath":  "C:\\JudasValidation\\M78Final2RepairExport\\m78-final2-repair-export-generated.zip"
+}

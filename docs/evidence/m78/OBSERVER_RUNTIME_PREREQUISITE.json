@@ -1,0 +1,10 @@
+{
+  "change": "M78 isolated observer prerequisite only",
+  "reason": "legacy application tests locate runtime at cwd/build/judas; frozen source archive intentionally lacks build products",
+  "source": "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+  "destination": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/build/judas",
+  "sha256": "15e4b91ba847e14ef84f7c8805b88314cd71fd65081210d8dc87d843105197f8",
+  "utc": "2026-10-11T14:41:47.628172+00:00",
+  "originalFailedReceiptsPreserved": true,
+  "productChanged": false
+}

@@ -1,0 +1,9 @@
+PASS genuine positive completed source contact
+PASS restored genuine publication begins ready
+PASS unrelated proxy reset leaves actual completed rows readable
+PASS unrelated query-only proxy reset must not demote independent completed publication
+PASS affected contact body mutation demotes restored publication
+PASS affected teleport does not expose stale support rows
+PASS query-only proxy can be an existing generic joint endpoint
+PASS physical joint endpoint proxy mutation retains conservative publication invalidation
+SUMMARY 8 checks 0 failures

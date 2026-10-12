@@ -1,0 +1,32 @@
+{
+  "free": 0,
+  "generated": [
+    {
+      "path": "C:\\JudasValidation\\vcpkg\\downloads\\tools\\git-2.7.4-windows.partial.2180",
+      "files": 6050,
+      "bytes": 200764552
+    }
+  ],
+  "cache": [
+    "CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/JudasValidation/vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "SDL2_DIR:PATH=C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/share/sdl2",
+    "VCPKG_APPLOCAL_DEPS:BOOL=ON",
+    "VCPKG_BOOTSTRAP_OPTIONS:STRING=",
+    "VCPKG_HOST_TRIPLET:UNINITIALIZED=x64-windows-static-md",
+    "VCPKG_INSTALLED_DIR:PATH=C:/JudasValidation/Build/vcpkg_installed",
+    "VCPKG_INSTALL_OPTIONS:STRING=",
+    "VCPKG_MANIFEST_DIR:PATH=C:/JudasValidation/Source/packaging/windows",
+    "VCPKG_MANIFEST_INSTALL:BOOL=ON",
+    "VCPKG_MANIFEST_MODE:BOOL=ON",
+    "VCPKG_OVERLAY_PORTS:STRING=",
+    "VCPKG_OVERLAY_TRIPLETS:STRING=",
+    "VCPKG_PREFER_SYSTEM_LIBS:BOOL=OFF",
+    "VCPKG_SETUP_CMAKE_PROGRAM_PATH:BOOL=ON",
+    "VCPKG_TARGET_TRIPLET:STRING=x64-windows-static-md",
+    "VCPKG_TRACE_FIND_PACKAGE:BOOL=OFF",
+    "VCPKG_USE_HOST_TOOLS:BOOL=ON",
+    "VCPKG_VERBOSE:BOOL=OFF",
+    "CMAKE_TOOLCHAIN_FILE-ADVANCED:INTERNAL=1",
+    "VCPKG_VERBOSE-ADVANCED:INTERNAL=1"
+  ]
+}

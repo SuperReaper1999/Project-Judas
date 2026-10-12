@@ -1,0 +1,58 @@
+[
+  {
+    "label": "windows-readiness",
+    "checks": 21,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 1.3593442999999998,
+    "admin": false
+  },
+  {
+    "label": "judas_character_motor_tests",
+    "checks": 32,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 1.1874854,
+    "admin": false
+  },
+  {
+    "label": "judas_physical_animation_tests",
+    "checks": 64,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 0.5000002,
+    "admin": false
+  },
+  {
+    "label": "judas_multi_target_ik_tests",
+    "checks": 38,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 1.0468747999999999,
+    "admin": false
+  },
+  {
+    "label": "judas_gravity_selection_tests",
+    "checks": 70,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 2.6986569,
+    "admin": false
+  },
+  {
+    "label": "judas_runtime_render_tests",
+    "checks": 54,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 8.0980852,
+    "admin": false
+  },
+  {
+    "label": "judas_character_lab_tests",
+    "checks": 98,
+    "failures": 0,
+    "exit": 0,
+    "seconds": 11.1859132,
+    "admin": false
+  }
+]

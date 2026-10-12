@@ -1,0 +1,26 @@
+{
+  "id": "judas_physical_animation_tests",
+  "source": "tests/PhysicalAnimationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "ab2f2f0c979f080136f0b591f6c0725a0dedf372efb2285dca6e45638ab1457a",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 64,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_physical_animation_tests.log",
+  "logSHA256": "fbde9da194ded71444f11d0bd67b6e07839721b287beaa16ca870fd060502867",
+  "seconds": 0.2637418560007063
+}

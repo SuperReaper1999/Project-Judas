@@ -1,0 +1,9 @@
+out-file : There is not enough space on the disk.
+
+At line:9 char:2
++  & $cmake -S "$root\Source" -B "$root\Build" 2>&1|Tee-Object -FilePat ...
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [out-file], IOException
+    + FullyQualifiedErrorId : System.IO.IOException,Microsoft.PowerShell.Commands.OutFileCommand
+ 
+

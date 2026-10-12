@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_physical_animation_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:11:57.229244+00:00",
+  "seconds": 0.11452183300207253,
+  "exitCode": 0,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "6f587adf3faa5788a01ec123ab6badf1cd6156ada3eec3b7222ce07d745fae1d",
+  "logSHA256": "723361e89434065106ed53b66ac5d7429839b56e9c734deb423a55843fd075da",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

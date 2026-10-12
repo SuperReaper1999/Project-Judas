@@ -25,7 +25,8 @@ private:
  static void Animation(RuntimeWorld&,SaveArchive&);
  static void InstanceAnimation(RuntimeWorld&,uint64_t,SaveArchive&);
  static void Articulation(RuntimeWorld&,SaveArchive&);
- static void ArticulationExtended(RuntimeWorld&,SaveArchive&,unsigned);
+ static void ArticulationExtended(RuntimeWorld&,SaveArchive&,unsigned,std::string* deferred=nullptr);
+ static void JointContinuation(RuntimeWorld&,SaveArchive&);
  static void PhysicalAnimation(RuntimeWorld&,SaveArchive&);
  static void PhysicalBalance(RuntimeWorld&,SaveArchive&);
  static void Navigation(RuntimeWorld&,SaveArchive&);

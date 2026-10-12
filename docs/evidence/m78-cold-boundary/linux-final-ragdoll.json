@@ -1,0 +1,13 @@
+{
+  "name": "ragdoll",
+  "utc": "2026-10-11T23:00:09.506778+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/judas_ragdoll_tests"
+  ],
+  "exitCode": 0,
+  "expectedExit": 0,
+  "seconds": 0.37742006599728484,
+  "executableSHA256": "ee59b2a5cf8aee9da18b765d420a42dfd37b08ed245a20ea599f8146f85b9a4a",
+  "logSHA256": "d326b7dd1efeddd41bdf119b84bb0027e4c63aebbe331b38786240ea9db26426",
+  "unchangedCandidateManifestSHA256": "993ef6fe81b5ad4df3897020a6a620def4090a20ecd8b7a80f392923a4c33865"
+}

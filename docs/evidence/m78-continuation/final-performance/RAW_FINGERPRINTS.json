@@ -1,0 +1,65 @@
+{
+  "scope": "Immutable copied raw measurements and read-only analysis only; not final candidate/source fingerprints",
+  "files": {
+    "docs/evidence/m78-continuation/final-performance/raw/box-1.csv": {
+      "bytes": 50683,
+      "sha256": "51c313cc11b73301fe7faef0b3caee7c73775fa669c449dfd352c6e6e3522f4a",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/box-1.csv"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-1-profile.json": {
+      "bytes": 990278,
+      "sha256": "6624d3cb70a531e7860876f964e889fb466e3cc8a4685e44cd8175fbe01ccf4e",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/box-1-profile.json"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-4.csv": {
+      "bytes": 51524,
+      "sha256": "1906f13204ff35ff5966aa71d5552ff4043a6539905ac5ecd1e3d95e36ce7e08",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/box-4.csv"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/box-4-profile.json": {
+      "bytes": 1703850,
+      "sha256": "5bbd70bb90ecb63a6d819b18f890109041d27ed57292c2a76953803014f712de",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/box-4-profile.json"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-1.csv": {
+      "bytes": 49054,
+      "sha256": "dad835a0a4e6fd3dfbce21f5f68cd62a672b89563b9e18c91925731a370f6bae",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/mesh-1.csv"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-1-profile.json": {
+      "bytes": 995610,
+      "sha256": "0342d238340bac83c66ad13fbdc69e2dcc9bee2859fc6bf21058f1b63d0f7150",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/mesh-1-profile.json"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-4.csv": {
+      "bytes": 49257,
+      "sha256": "854093dfd4c6f795a1ce16e3554c6ea0dd05284baefcea343364dfd695abd8bc",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/mesh-4.csv"
+    },
+    "docs/evidence/m78-continuation/final-performance/raw/mesh-4-profile.json": {
+      "bytes": 1704996,
+      "sha256": "598fd8d055352aa6bf0890cd3401e52d33aa211b60e209363fa0e4d5666f797b",
+      "copiedFrom": ".cache/m78-continuation/midpoint-final-concave-data/mesh-4-profile.json"
+    },
+    "docs/evidence/m78-continuation/final-performance/ANALYSIS.json": {
+      "bytes": 70754,
+      "sha256": "256779c6f58c60cf6fd764721c96128fe4f64475fc01eab8a6eb92f653a708d9"
+    },
+    "docs/evidence/m78-continuation/midpoint-final-concave.log": {
+      "bytes": 1384,
+      "sha256": "4ddfd61242d15568019cb3eb68a7a2f33b5c7c79ca5e373f3e39579baa12f812"
+    },
+    "docs/evidence/m78-continuation/midpoint-final-concave.json": {
+      "bytes": 1333,
+      "sha256": "f7463f28342d1bf0b5b20c41cb2ccce0b068e3904a970ded1ce6e94bb14bf89c"
+    },
+    "docs/evidence/m78-continuation/midpoint-final-concave-build.json": {
+      "bytes": 3505,
+      "sha256": "e08852c831dccf019246d0a4afc469c65a3d16e873758e2c1b32f3607f218c28"
+    },
+    "docs/evidence/m78-continuation/probes/review_final_ragdoll_trace.py": {
+      "bytes": 6325,
+      "sha256": "9f5ea5727f55be5f6ba1ce4f9b9a3247a3e518f79c05e6a3d6473a5f61a92565"
+    }
+  }
+}

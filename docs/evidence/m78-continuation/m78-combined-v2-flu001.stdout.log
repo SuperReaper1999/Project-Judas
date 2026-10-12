@@ -1,0 +1,4 @@
+PRECONDITION rotated_half warmup_steps=240 mean_particle_speed=0.0323812
+PRECONDITION rotated_half observed_release_surface=1.79014 body_top=1 clearance=0.790144
+CASE rotated_half failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=108.0000076 particles=1152 y=1.78269875 vy=0.41912359 fraction=0.4903175235 observed_fraction=0.5098149618 max_speed=2.799500704 particle_ms=47.0575 executed_ms=51.6747 amortized_ms=27.97908042
+SUMMARY checks=731 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=0 steps=480

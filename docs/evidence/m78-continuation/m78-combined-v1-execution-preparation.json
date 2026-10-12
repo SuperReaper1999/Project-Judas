@@ -1,0 +1,33 @@
+﻿{
+    "scope":  "Verified original fixture/tool staging and export SDK presence only; no compilation or test execution",
+    "tools":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\ArchiveV1\\windows_archive_completed_case.ps1",
+                      "sha256":  "d30e6b0e57805d5c6cd4f784ca4c0d0a40f12cc9be06136ec0be3351c4e37401",
+                      "parserErrors":  [
+
+                                       ]
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\ArchiveV1\\windows_remove_verified_case.ps1",
+                      "sha256":  "033b510026cf4db3c21f11ed84817b5ad90c32fae49568c990e7bd63b7ba85a7",
+                      "parserErrors":  [
+
+                                       ]
+                  }
+              ],
+    "navigationInputSHA256":  "571d2eeb6d467055d2d00eca46a7b81026e1a226228c336b9bc1f9d73fbbb946",
+    "sdk":  [
+                {
+                    "path":  "C:\\JudasValidation\\Build\\Release\\windows-runtime",
+                    "files":  12,
+                    "bytes":  39387334
+                },
+                {
+                    "path":  "C:\\JudasValidation\\Build\\Release\\windows-licenses",
+                    "files":  2,
+                    "bytes":  3749
+                }
+            ],
+    "freeBytes":  290971648
+}

@@ -1,0 +1,25 @@
+{
+  "case": "notice-malformed",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/milestone_notice",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/notice-fixtures/malformed",
+    "malformed"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:18:28.312286+00:00",
+  "explicitEnvironment": [],
+  "executableSHA256": "8653f39fee41355958d46f1b721b6ee9ff14b20fe00bdad454c9c6987150b29f",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 0.032013042000471614,
+  "log": "docs/evidence/m78/cases/notice-malformed.log",
+  "logSHA256": "1b1dfc5307483cd01a6920eee917bb722c899d4bc09df99fcc35621109e900cc"
+}

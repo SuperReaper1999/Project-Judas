@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  48128000,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-character_lab.exe",
+                        "sha256":  "c8b0f9179d49ebd0c9b74be2f5bfd55df33363289560f0f57930cea5f3cd5dbd",
+                        "name":  "m78-final2-repair-character_lab.exe",
+                        "bytes":  9200128
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\character_lab-0.obj",
+                        "sha256":  "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09",
+                        "name":  "character_lab-0.obj",
+                        "bytes":  2208781
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\m78-final2-repair-character_lab-generated.zip",
+                        "bytes":  4853310,
+                        "sha256":  "4c1d45b1cf76c1e97e5705b3a2891c34ce5a1ce9b2caedf4fd8c23508b54a505"
+                    }
+                ],
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "freeAfter":  64397312
+}

@@ -1,0 +1,55 @@
+﻿{
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final2-repair-runtime.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_PROFILER.LIB RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case.lib\" /MACHINE:X64  /machine:x64 /MANIFEST:EMBED /MANIFESTINPUT:C:/JudasValidation/Source/packaging/windows/judas.manifest \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-0.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-1.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-2.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-3.obj\" \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-4.obj\"",
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "case":  "runtime",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-runtime.exe",
+    "executableSHA256":  "740b77d3435cf2b3f3067dc7175df46cca5caf642e6d9d88e2487cf4ab413b23",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "runs":  [
+
+             ],
+    "freeBytes":  53108736,
+    "objects":  [
+                    {
+                        "objectSHA256":  "ff7de32197f0f5b55546d93bd45cb0fd99effdc8b2ae8a440987f1e6e8c13674",
+                        "source":  "src/main.cpp",
+                        "bytes":  21878,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-0.obj",
+                        "sourceSHA256":  "47ad5c1f79c4f3e022e4d1d2c8741a3251e3ce9d2a31e33b1cae4dfbad8352ce",
+                        "reuseOriginal":  true
+                    },
+                    {
+                        "objectSHA256":  "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+                        "source":  "src/Application.cpp",
+                        "bytes":  295887,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-1.obj",
+                        "sourceSHA256":  "752b26046f3e88c53920b53ae734beb3dd13792ebf2f1d2bb7686c90a1834ae0",
+                        "reuseOriginal":  true
+                    },
+                    {
+                        "objectSHA256":  "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+                        "source":  "src/RuntimeOptions.cpp",
+                        "bytes":  229861,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-2.obj",
+                        "sourceSHA256":  "dcb18ceff20cee92c4eda479efc3e70765ee55e2ee84c60bf1dfdf5454f363ff",
+                        "reuseOriginal":  true
+                    },
+                    {
+                        "objectSHA256":  "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+                        "source":  "src/RuntimeDiagnostics.cpp",
+                        "bytes":  20401,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-3.obj",
+                        "sourceSHA256":  "a63c2d3e661c6d938cca894933fa3da32e5807ad8bded98880af388bb27af9d9",
+                        "reuseOriginal":  true
+                    },
+                    {
+                        "objectSHA256":  "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+                        "source":  "src/TestHarness.cpp",
+                        "bytes":  340964,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\runtime-4.obj",
+                        "sourceSHA256":  "9c16ca348038ab35fb992dafb43031cc4bfe5c844b680473d73ed56dd6aeedcc",
+                        "reuseOriginal":  true
+                    }
+                ],
+    "executableBytes":  10344448
+}

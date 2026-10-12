@@ -1,0 +1,5 @@
+{
+  "status": "observer-launch-error",
+  "cause": "relative executable looked up against isolated cwd; original log empty; no product ran",
+  "correction": "resolve executable against invoking root before launch; corrected case separately identified"
+}

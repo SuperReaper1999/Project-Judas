@@ -200,8 +200,14 @@ bool ResolvePrefabs(const Scene& scene,const AssetDatabase* assets,Scene& resolv
         }
     }
     // Restore source-independent scene ordering after resolution.
+    // Compute the original first-occurrence ranks once. Newly introduced
+    // children retain their existing relative order at the shared final rank;
+    // stable_sort still preserves authored gravity/reference precedence.
+    std::map<SceneObjectId,std::size_t> sourceRanks;
+    for(std::size_t i=0;i<scene.Objects().size();++i)sourceRanks.try_emplace(scene.Objects()[i].id,i);
+    const auto rank=[&](SceneObjectId id){const auto found=sourceRanks.find(id);return found==sourceRanks.end()?scene.Objects().size():found->second;};
     std::stable_sort(result.Objects().begin(),result.Objects().end(),[&](const auto& a,const auto& b){
-        auto rank=[&](SceneObjectId id){for(size_t i=0;i<scene.Objects().size();++i)if(scene.Objects()[i].id==id)return i;return scene.Objects().size();};return rank(a.id)<rank(b.id);
+        return rank(a.id)<rank(b.id);
     });
     for(const auto& o:result.Objects())if(o.prefabRoot){const auto* root=result.Find(o.prefabRoot);if(!root||root->prefabAsset.empty()){error="orphaned prefab child";return false;}}
     if(!ValidateHierarchy(result,error))return false;

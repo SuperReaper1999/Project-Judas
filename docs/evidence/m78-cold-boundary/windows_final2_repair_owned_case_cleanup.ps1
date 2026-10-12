@@ -1,0 +1,7 @@
+param([string]$ApprovalName='')
+$ErrorActionPreference='Stop';$base='http://192.168.122.1:8872';$out='C:\JudasValidation\M78ColdRepairFinalV2Results'
+if($ApprovalName -notmatch '^m78-final2-repair-[a-z_]+-owned-approval\.json$'){throw 'Explicit owned host verification required'}
+$m=(Invoke-WebRequest -UseBasicParsing "$base/$ApprovalName").Content|ConvertFrom-Json;if(!$m.hostVerified){throw 'No independent host proof'}
+$lib=[IO.File]::ReadAllText("$out\m78-final2-repair-library.json")|ConvertFrom-Json;if((Get-FileHash $lib.archive).Hash.ToLower() -ne $lib.archiveSHA256){throw 'Final archive changed'}
+foreach($f in $m.files){if((Get-Item $f.path).Length -ne $f.bytes -or (Get-FileHash $f.path).Hash.ToLower() -ne $f.sha256){throw 'Owned cleanup identity mismatch'};if($f.path -match '\.exe$' -and @(Get-Process|Where-Object {$_.Path -eq $f.path}).Count){throw 'Owned exe still running'}}
+$before=(Get-PSDrive C).Free;foreach($f in $m.files){Remove-Item -LiteralPath $f.path};$rp="$out\m78-final2-repair-$($m.case)-owned-cleanup.json";@{scope='Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged';removed=$m.files;freeBefore=$before;freeAfter=(Get-PSDrive C).Free;librarySHA256=$lib.archiveSHA256}|ConvertTo-Json -Depth 5|Set-Content $rp -Encoding UTF8;Invoke-WebRequest -UseBasicParsing "$base/$([IO.Path]::GetFileName($rp))" -Method Post -InFile $rp|Out-Null

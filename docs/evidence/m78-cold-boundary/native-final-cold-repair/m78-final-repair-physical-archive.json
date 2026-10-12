@@ -1,0 +1,21 @@
+﻿{
+    "archiveBytes":  3540065,
+    "scope":  "Archive only; cleanup requires host verification",
+    "archiveSHA256":  "54d0b8e0cf2d59600478376632dd2d9370f49f825cd1793d9fd458626bcc4d0b",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-physical.exe",
+                      "sha256":  "96e4ff7873015b2f03f05a13796338cb0bdd60b5085f5cf2a564239ba7a06dec",
+                      "name":  "m78-final-repair-physical.exe",
+                      "bytes":  7523328
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\physical-0.obj",
+                      "sha256":  "52aabd12bf9d30785233709e4ca5062dc96e0c5f2240cab2a2d62c8c6d0b7fe0",
+                      "name":  "physical-0.obj",
+                      "bytes":  536260
+                  }
+              ],
+    "archiveName":  "m78-final-repair-physical-generated.zip",
+    "archivePath":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-physical-generated.zip"
+}

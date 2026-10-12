@@ -1,0 +1,49 @@
+{
+  "scope": "Only exact named generated binary outputs archived independently; this is archival approval, NOT a claim test results passed. Actual signals-write/read failures preserved separately.",
+  "hostVerified": true,
+  "case": "signal_application_final",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-signal_application_final.exe",
+      "sha256": "b034946550b482029b450154378dad180b0231c031b9fadbf5871d8ac14df4bf",
+      "name": "m78-closure-signal_application_final.exe",
+      "bytes": 10359296
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-0.obj",
+      "sha256": "ac9de85b291a3fb67a87ad3330e8231fa478322af8f3434ee7c4fbc1046bc920",
+      "name": "signal_application_final-0.obj",
+      "bytes": 1050371
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-1.obj",
+      "sha256": "6494f91d10083a1c1635c6355152ad3777ef479a87788c3c813d84b15f6146d6",
+      "name": "signal_application_final-1.obj",
+      "bytes": 295887
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-2.obj",
+      "sha256": "746c33d85f3cf3f83b4d9b93eabbedac2264456a9e7efe26a01dd29e6a1b4e26",
+      "name": "signal_application_final-2.obj",
+      "bytes": 229861
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-3.obj",
+      "sha256": "dd51a50e14ab20dc62c2bf1b79ed8e271e532b31faf70eb5ff75a246189beeef",
+      "name": "signal_application_final-3.obj",
+      "bytes": 20401
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\signal_application_final-4.obj",
+      "sha256": "560e035b88abfecc7dfd27bd572bebd75d3ba404280a881db5dd4931fd5e3daf",
+      "name": "signal_application_final-4.obj",
+      "bytes": 340964
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-signal_application_final-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-closure-signal_application_final-link.log",
+      "bytes": 33930
+    }
+  ]
+}

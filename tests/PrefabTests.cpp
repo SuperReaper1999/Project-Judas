@@ -6,6 +6,7 @@
 #include "WorldState.h"
 #include "editor/EditorDocument.h"
 #include <chrono>
+#include <algorithm>
 #include <filesystem>
 #include <cstdio>
 
@@ -38,6 +39,14 @@ int main(){
     if(!resolved.Find(childA)){std::printf("ERROR %s\n",error.c_str());return 1;}
     Check(resolved.Find(childA)->light->color.x==5&&resolved.Find(childB)->light->color.x==4,"override wins and unmodified source propagates");
     Check(resolved.Find(childA)->prefabSource==cid,"child identity survives source addition");
+    bool authoredOrder=resolved.Objects().size()>=scene.Objects().size();
+    for(size_t i=0;i<scene.Objects().size()&&authoredOrder;++i)authoredOrder=resolved.Objects()[i].id==scene.Objects()[i].id;
+    Check(authoredOrder,"resolver retains exact authored order while new children append stably");
+    Check(resolved.Objects()[scene.Objects().size()].prefabRoot==a&&resolved.Objects()[scene.Objects().size()+1].prefabRoot==b,"new children tied at final rank retain instance expansion order");
+    Scene reordered=scene;std::reverse(reordered.Objects().begin(),reordered.Objects().end());Scene reorderedResolved;
+    bool reversedOrder=ResolvePrefabs(reordered,&assets,reorderedResolved,error);
+    for(size_t i=0;i<reordered.Objects().size()&&reversedOrder;++i)reversedOrder=reorderedResolved.Objects()[i].id==reordered.Objects()[i].id;
+    Check(reversedOrder,"source order rather than numeric identity controls mixed hierarchy resolution");
     Check(RevertPrefabProperty(resolved,childA,"light.color",assets,error)&&resolved.Find(childA)->light->color.x==4,"revert property to current source");
     SaveSceneToString(resolved,text);Scene reloaded;Check(LoadSceneFromString(text,reloaded,error)&&ScenesEqual(resolved,reloaded),"linked instance mapping and override roundtrip");
     Scene flat;Check(FlattenHierarchy(resolved,flat,error)&&flat.Find(childA)->transform.position==glm::vec3(4,2,0),"parent-local transform resolution");

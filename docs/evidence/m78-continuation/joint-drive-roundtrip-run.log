@@ -1,0 +1,4 @@
+COMMAND before enabled=1 target=(0.980066597,0.198669329,0,0) k=100 damping=10 cap=20 rate=(0.300000012,0,0) warm=(0,0,0)
+COMMAND restored enabled=0 target=(1,0,0,0) k=0 damping=0 cap=0 rate=(0,0,0)
+FIRST60HZ sourceA=(-1.77441525,0,0) sourceB=(1.77441525,0,0) restoredA=(0,0,0) restoredB=(0,0,0)
+AUTHORITATIVE_COMMAND LOST; no warm-history or contact row existed at capture

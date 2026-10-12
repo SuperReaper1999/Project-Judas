@@ -1,0 +1,23 @@
+{
+  "purpose": "Diagnostic attribution only; no production edits or build execution",
+  "source": "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp",
+  "sourceSHA256": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+  "originalSnapshotSHA256": "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+  "overlaySHA256": "4b5bf5e9d8fb93a82820ec004532b09a2e703b186b17e63613f4b07923ed3dd3",
+  "replacementAnchorCount": 9,
+  "scopes": [
+    "CCD impact-time query",
+    "CCD island discovery",
+    "CCD event contact rows",
+    "CCD event joint preparation",
+    "CCD event impulse solve"
+  ],
+  "geometryCounters": "PairAt elapsed time/call counts, accumulated separately for query/island/contact rows/other; cooked BVH/triangle/SAT counter deltas",
+  "limitations": [
+    "Instrumented wall times include timer/profiler overhead; final acceptance timing must use uninstrumented candidate.",
+    "Pair geometry includes pose sampling and prepared orientations, not just CookedContacts.",
+    "Impact-time scope is inclusive of recursive interval splitting; use exclusive scope totals or geometry phase counters to avoid double counting.",
+    "Existing profiler history/event caps are unchanged; inspect dropped/incomplete/truncated diagnostics before interpreting scopes.",
+    "This overlay does not change geometry, inputs, cadence, iteration limits or solver expressions."
+  ]
+}

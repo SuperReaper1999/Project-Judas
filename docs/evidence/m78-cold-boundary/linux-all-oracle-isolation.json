@@ -1,0 +1,164 @@
+{
+  "scope": "DIAGNOSTIC ONLY, every actual joint solve call after the saved boundary is independent frozen box QP (bounded<=64rows,active-set<=1000), ten ORIGINAL outer contact/joint passes,60Hz. RHS retains current contact updates and removes only actual accumulated joint impulses. No physics/controller/input/threshold change, no warm history serialized. All-frame oracle is not proposed production algorithm; prove whether converged current equations/controller actually stand.",
+  "sourceSHA256": {
+    "src/JointSolver.cpp": "72e43f81cb8c773a8029528fc0ac290b41966614a405a468c93cc45132726444",
+    "src/PhysicsWorld.cpp": "1d948cb5f1b19c1708a27fdaf6db2206a2196c063a1714bed3a30d5ea13b7fad",
+    "src/PhysicalBalance.cpp": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+    "tests/BalanceLabTests.cpp": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f"
+  },
+  "overlaySHA256": {
+    "BalanceLabBoundaryObserver.cpp": "2de286aa813444b8e64ad8b2ef3fe505490132109a41635ca576c3bc63134100",
+    "JointSolver.cpp": "596b9f9c6f2cee1cc49653c07a5a1cae5f0e75eef162dabf64c1ace4cceb09c0"
+  },
+  "steps": [
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/JointSolver.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/JointSolver.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 7.998306061999756
+    },
+    {
+      "command": [
+        "c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/BalanceLabBoundaryObserver.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/BalanceLabBoundaryObserver.cpp.o"
+      ],
+      "exitCode": 0,
+      "seconds": 21.499960686000122
+    },
+    {
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/BalanceLabBoundaryObserver.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7126761870022165
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/source",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 5.593528106001031,
+      "discard": false,
+      "saveSHA256": "54d8cd220055df34d39a4028c106f52352f1032885d298177352f7b4b7784437"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/source-discard",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 4.727900873003819,
+      "discard": true,
+      "saveSHA256": "54d8cd220055df34d39a4028c106f52352f1032885d298177352f7b4b7784437"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/all-boundary-oracle/native-restored",
+        "cold-read"
+      ],
+      "exitCode": 1,
+      "seconds": 3.5344575089984573,
+      "discard": false,
+      "saveSHA256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+    }
+  ],
+  "exeSHA256": "41f7353c0fdf64adf24377068d001737026e8f6b5f21140b2756bfa6b79df311",
+  "archiveSHA256": "d46d8ecfb8b96bd86184c468714d421905a4980b5f6a018a642d1b4166251b95"
+}

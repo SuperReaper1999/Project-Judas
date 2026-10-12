@@ -1,0 +1,2287 @@
+{
+  "scope": "Exact new native closure evidence inventory after all functional operations and final reports; excludes only this manifest and generated Python cache. Binary outputs remain ignored and independently recorded in FINAL_BINARY_IDENTITY.json. No original historical evidence edited.",
+  "files": [
+    {
+      "path": "docs/evidence/m78-closure/native/ACTUAL_ENDPOINT_BY_ENTITY.json",
+      "bytes": 2494,
+      "sha256": "58243b787ac44b52cbb7193023e4ed89974bd3e638b0c496a8e1290ba0268351"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/COMMON_HOST_VERIFICATION.json",
+      "bytes": 777,
+      "sha256": "12623fb7dc0236f5c75fda951ac2e7300e2ab141df6bb6dcfde500421717a7bd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/CURRENT_SIGNALS_INPUTS.json",
+      "bytes": 3312,
+      "sha256": "b185b8f6960eaefad32c3253c7002f147aa464936a999d1d6b3f89d4c83a5f80"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/EXTRA_PREPARED_INPUTS_V1.json",
+      "bytes": 38054,
+      "sha256": "130761808f6b07d252ff0f830aad5370257939efa5c97b7e6854ba4cd0ce764c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/EXTRA_PREPARED_INPUTS_V2.json",
+      "bytes": 38470,
+      "sha256": "73c31c03ba3fbf8fa72a13cbc7f924009e082f6bb5e9db00a0cf339e937ca3a2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/EXTRA_PREPARED_INPUTS_V3.json",
+      "bytes": 38364,
+      "sha256": "beb7c0826fe65805d1b4372f1b6ab6d7690640767e141775e039a6cb121888f9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/EXTRA_PREPARED_INPUTS_V4.json",
+      "bytes": 39896,
+      "sha256": "de2809997cbf89998650a3126adb721d2362621ae99e0c517bebe4870b4291d3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/FAILED_EDITOR_HOST_VERIFICATION.json",
+      "bytes": 242,
+      "sha256": "b715269309af064484b0485f2de1f37866849d8aa70bf6ee22222dfa9de7f44a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/FINAL_BINARY_IDENTITY.json",
+      "bytes": 26626,
+      "sha256": "ff39af6ab50e8626a1aef53d65b5f4cbef1609a25acb1a277ed8851bdc00e3c5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/MOVED_CONTENT_IDENTITY.json",
+      "bytes": 1284,
+      "sha256": "b0f6132feea4d9c3f65fb18e03cc2f73f55047fbd6d1e47039bb0ece14540c7f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/ORDINARY_ACTUAL_ENDPOINTS.json",
+      "bytes": 4509,
+      "sha256": "de18a03f0da66bc501e8c081253edd9d4c902fe169045f85dc2e122a1e3c4b03"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/PLAN.md",
+      "bytes": 5624,
+      "sha256": "a000b6d60bb24a66bf716b7cfb9253ab58de58f62177e7b5a6b24a9d406465ce"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/PREPARED_INPUTS.json",
+      "bytes": 112107,
+      "sha256": "531fb978cb7c997c41f1e2b010959c44b8cf13db40cffbec2f73e35458d1c030"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/REPORT.md",
+      "bytes": 8667,
+      "sha256": "73dade3646c3f640aed5373dac9b250139fc1f599438e7324a367484711673f5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/SUMMARY.json",
+      "bytes": 59642,
+      "sha256": "3e1b0b63183df9e639e17bf155c653979de30c357f383b760b6839f9a262dd49"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/WP_WARNING_REVIEW.json",
+      "bytes": 635,
+      "sha256": "4a359ee9d5e2e19483ff65623002d46f0d1f8c297480a44f1243a9bddae24ca4"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-PhysicsWorld.obj-compile.log",
+      "bytes": 1314,
+      "sha256": "e7a2b69ed1899799bd969754fa8a8fcf1febb12bcd53ba28f24d1bae47ea73cf"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-WorldPersistence.obj-compile.log",
+      "bytes": 9330,
+      "sha256": "db57fd53823b4c0fa24fa4defe69a297c789638149eec49c66720b44e5c04bc2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read-cold-recovery-read-state.json",
+      "bytes": 183,
+      "sha256": "8b719f6737f7b62af5536c642b830d74d1c69556ee468bf5335d2faa81bb49d8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read-cold-recovery-write-state.json",
+      "bytes": 183,
+      "sha256": "b05d43cfd2c2d0e220edd6f59ed13526c34db6fb1a353592e1b58c1d26457e7f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read-m77.save",
+      "bytes": 60206,
+      "sha256": "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read.json",
+      "bytes": 7780,
+      "sha256": "7228c3fd7bbbd26eec7d705ebeb4a8c402d11958fbf77c8de886f200cae74c3a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-read.stdout.log",
+      "bytes": 816,
+      "sha256": "ac723930606ba650db404a43083e538f81951ea95a39f690eb6c4805272b690d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write-cold-recovery-write-state.json",
+      "bytes": 183,
+      "sha256": "b05d43cfd2c2d0e220edd6f59ed13526c34db6fb1a353592e1b58c1d26457e7f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write-m77.save",
+      "bytes": 60206,
+      "sha256": "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write.json",
+      "bytes": 7365,
+      "sha256": "bd3a3525b2f02defabb710928b6bf34cf74240e13ec73ba5bcbaa7189bd3033a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-recovery-write.stdout.log",
+      "bytes": 1114,
+      "sha256": "1f3fe5eda57e61d54540f6c38866059cacc1d749c310f451b4448a8dd091bc8c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read-cold-stand-read-state.json",
+      "bytes": 183,
+      "sha256": "6ee068f35d63225761576284d53d6edd7c94b66293a946a812f616f2ef0bae8d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read-cold-stand-write-state.json",
+      "bytes": 182,
+      "sha256": "cf7bbc6ab1d2283d80820383a8da55912e43eb2a35c9bcf97921784ce50355be"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read-m77.save",
+      "bytes": 59705,
+      "sha256": "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read.json",
+      "bytes": 7741,
+      "sha256": "5f9c9b8a51cfc99746e3bae173b7b2a2d44c585215793adb72f05cd3c7ebab36"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-read.stdout.log",
+      "bytes": 818,
+      "sha256": "06876e456bdd046c42a1a625e1eac886a8f99c8f94efcfe6764df3e7a9877f3b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write-cold-stand-write-state.json",
+      "bytes": 182,
+      "sha256": "cf7bbc6ab1d2283d80820383a8da55912e43eb2a35c9bcf97921784ce50355be"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write-m77.save",
+      "bytes": 59705,
+      "sha256": "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write.json",
+      "bytes": 7338,
+      "sha256": "c9b08b2df72550ccee64bbf9a6ccfb54daaa00d699c595c946006a239a2e7251"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-cold-stand-write.stdout.log",
+      "bytes": 1410,
+      "sha256": "d38134cfce805e77320c4adc225423749f45d660ba4a1253d42ccaf3dd3d5765"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-lifecycle-lifecycle-state.json",
+      "bytes": 221,
+      "sha256": "b4ee3dd21794af010d7d0d6967360ea0d0f08fbf8e54648f31771c75ee4f85b0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-lifecycle.json",
+      "bytes": 6546,
+      "sha256": "5ab8cc6d2e1c6ea2623b8afa3339cb8667a2a67740537f611f08e5d5290e9747"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-lifecycle.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-lifecycle.stdout.log",
+      "bytes": 1716,
+      "sha256": "589048c28e08a865fd2658f40fffa51984177704f8ad590dec40e28fcb051ae4"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-map-retirement.json",
+      "bytes": 854,
+      "sha256": "c3431cb57e0bf1ef38afaf48ac2321df35042f3a565b37dc23899e7cc398fe25"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-radial-radial-state.json",
+      "bytes": 184,
+      "sha256": "5e8ee098150ec516193400d2a44909b437f2e89abc8a2178a7db89d570062873"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-radial.json",
+      "bytes": 6526,
+      "sha256": "b9ec6196e97831a45648b1fb7a4713d17a14e55996fd8b7a97820fbe3bcd6254"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-radial.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-radial.stdout.log",
+      "bytes": 1195,
+      "sha256": "9850557c32b9d7dba65da5c2f4f1bb17b02865ea4f01f1573351eddca07c4d0c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace-step-trace-state.json",
+      "bytes": 365,
+      "sha256": "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace-step-trace.jsonl",
+      "bytes": 612109,
+      "sha256": "838e760220e2bd1f6f6b5bd26cdcfdc3b14a4a303bbb0941458bf1a1670e4d18"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace.json",
+      "bytes": 6940,
+      "sha256": "a2b690604db996ca2dfa7c429b9132df47092948638693bca096266ccba0b23f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance-step-trace.stdout.log",
+      "bytes": 1605,
+      "sha256": "a2742446b4dcd52fadc626e85416a37d61ff5f3235345d68016ae57e804ba384"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab-approval.json",
+      "bytes": 912,
+      "sha256": "17f29156b579ed5bb07adbdc2a24f14a98c37228174431e3571c55e30b05a6b9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab-build.json",
+      "bytes": 67255,
+      "sha256": "3c96bd6add919a48dfcd0f7ad32f9dede16bd73be97ecd489e79882a40976ff5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab-cleanup.json",
+      "bytes": 1373,
+      "sha256": "5a84a2ef268cde8490de141180649d1596e59f412487bf9bb957bcb2f4ff106b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab-error.txt",
+      "bytes": 470,
+      "sha256": "be97a6337f335b017802853e94381b58add4444a9382468f6b14bb1c39903dac"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-balance_lab.map",
+      "bytes": 5006345,
+      "sha256": "bc33037d24e8a56f4066ed8209041def66fb0afacaa2b6fd4c37f6e5545ad248"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-baseline-multi-target-ik.json",
+      "bytes": 106,
+      "sha256": "12d9a3fdb469e842d4d0a31ed2667e0e59c3fd5c5fa0b6ee0c29b2198f2001ef"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-baseline-owner-contact-sequence.json",
+      "bytes": 265,
+      "sha256": "0cdc70afdbddb9f36cdd8246abf618a9dad64bccf945c7c96f70a65b7e321692"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-baseline-physical-animation.json",
+      "bytes": 152,
+      "sha256": "c67a300c71865f6f16661a4d59e61fa71e575f956a4d8aff874d9579aad8a41d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-baseline.json",
+      "bytes": 7285,
+      "sha256": "5b58ca76e3fa226c3ad5ae032bb51398c104bc0137b4aba65628d104d5aee21a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-baseline.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-baseline.stdout.log",
+      "bytes": 7613,
+      "sha256": "d332d9b8ab12ce79f554ba2cddbbf59b8bffc47a7aa698a0927899fd95f08a00"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read-cold-read-state.json",
+      "bytes": 286,
+      "sha256": "887affe5f6eeb92a7a885a07d04d20c705014e711c5eb5504d21f722c12af38a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read-cold-write-state.json",
+      "bytes": 286,
+      "sha256": "cdbbfc0dbde32b7924d1f7d1d274fe4f62b923c8aec03970f24ba21a84fa5351"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read-m70.save",
+      "bytes": 107796,
+      "sha256": "0df3da6365f7c8a035ae1f30992f82633bed56e39cf10bfd9bba1855dc01f4c5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read.json",
+      "bytes": 7676,
+      "sha256": "72e3aece43587bfbb8abc24eaba7a2db2fe8444383d6c1b8b1ee7f3cb7b928f1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-read.stdout.log",
+      "bytes": 1142,
+      "sha256": "563a482d62d65cd44d49b71e8a411380f5d75378c7f326d3e221fe56afc5090a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-write-cold-write-state.json",
+      "bytes": 286,
+      "sha256": "cdbbfc0dbde32b7924d1f7d1d274fe4f62b923c8aec03970f24ba21a84fa5351"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-write-m70.save",
+      "bytes": 107796,
+      "sha256": "0df3da6365f7c8a035ae1f30992f82633bed56e39cf10bfd9bba1855dc01f4c5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-write.json",
+      "bytes": 7293,
+      "sha256": "462cec06453f46cbb845fe90c3ad9952f0867d44e47bba17f75ccaee51faf68c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-cold-write.stdout.log",
+      "bytes": 580,
+      "sha256": "9306df96b863e4d6bfa9e312a05903540e73f687752a293276ece6323e8d2fcb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-first-failed-map.json",
+      "bytes": 254,
+      "sha256": "3703b3fbe02d3dc1b0e742ff35c2a9fdf8ce43bba02134a0245bbe1b702e7f47"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character-first-failed.map",
+      "bytes": 9172699,
+      "sha256": "ecc539b0da854bdbf6d27340e22d622983e51970e70ab24f0e74d3cb015c0d95"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_lab-error.txt",
+      "bytes": 424,
+      "sha256": "bfc4f3dd7a049aeb8ea950bbcc1047d0cd9e8434a1a3052b40074c1c579caab7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_lab-link.log",
+      "bytes": 34206,
+      "sha256": "d6a18bafeb13956a6188be0cefebbacbcfa02a7d4473baf10b8fa012b0a40d80"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_map-approval.json",
+      "bytes": 334,
+      "sha256": "6c86913b4b3f577efd5131329337062c74d4f7810a5196438e1d29ec71ec604f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_map-cleanup.json",
+      "bytes": 666,
+      "sha256": "5eb7f99e369326855dc2640b9edd3d758da51dc6e49689a36e4e28baf33ff84d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_retry-approval.json",
+      "bytes": 936,
+      "sha256": "3aabefc670613a1c99b6907a95b735428f402db19d288605fde9e8bdf3a5d8dc"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_retry-build.json",
+      "bytes": 35331,
+      "sha256": "ce3c0ba7a65e1728dcf57ad5f74c25951f1beccf930e97536bf9c4d20723213e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_retry-cleanup.json",
+      "bytes": 1393,
+      "sha256": "b6aed55a144546e7eaac238c1265001f13e1b9d698218f363d33decc88be118e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-character_retry-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-common-archive.json",
+      "bytes": 498,
+      "sha256": "dcdf7369dabb05508c329ebbf0ec4945f59fc6da15b2a0cda5dacffb138c3df4"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-common-retirement.json",
+      "bytes": 583,
+      "sha256": "f2245740a7e8f1a88715301bb20436d30251752b51544233406ea06539c152fc"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-common.json.gz",
+      "bytes": 1413343,
+      "sha256": "090363551ba76b3ca796c57bdbaca3ba7aabfa40c8a9d5dd93fcbae3aa17d57e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-approval-v2.json",
+      "bytes": 68380,
+      "sha256": "f11a565177b63754ff37831470548e8d366a4bee6d5d880aeadb5c974721fb47"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-approval-v3.json",
+      "bytes": 19788,
+      "sha256": "24f52de4282b907f96047a64a32b333e4e88ddc1a1877201db0c1c7287507018"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-approval.json",
+      "bytes": 29503,
+      "sha256": "6b4946353d98dbb0622dde0776ff1a827a77eaba300428c24b20a94b19d28ee1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-archives-v2.json",
+      "bytes": 117323,
+      "sha256": "6efdce20ec31157bd01acb6a881425117cad2a8d5fb1e2ca70007427050bbfbe"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-archives-v3.json",
+      "bytes": 33690,
+      "sha256": "e8c12c22e221e602a73efd8e009f45e8f82968b8e55a65ebb40b4ff97f10e677"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-archives.json",
+      "bytes": 50366,
+      "sha256": "e11e5d6d39b995f58505d06cc87dfba67076ba75e872814d06980ffef8c73934"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-retirement-v2.json",
+      "bytes": 117423,
+      "sha256": "9d7d1e864718f4c626b57915f11bcf2f977101ee21d3db506784283f8455c663"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-retirement-v3.json",
+      "bytes": 33791,
+      "sha256": "fcd5154a39eea8bee06e7bd0ee3eacf5decddc0e70ad7db6ae74672d1af10f75"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-completed-project-retirement.json",
+      "bytes": 50467,
+      "sha256": "290638ff08a0f40509b1b4d72c66474f9181d6599ca29d525e62ccbd9902ccc7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-approval.json",
+      "bytes": 1215,
+      "sha256": "bc05de7bc7ad15b571768dfe98cf27f49250c1029992cea689e4b9ce9cee8333"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-build.json",
+      "bytes": 17354,
+      "sha256": "c40f6b8f5785fd9aead016588291bc57584fb8f163254f06ddc4a4df8f56e7bc"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-cleanup.json",
+      "bytes": 1784,
+      "sha256": "f770cffc16502d4b418a2478b51d4dd267c823d9cfc729a784bbbbfadc284497"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle.json",
+      "bytes": 6050,
+      "sha256": "d7cc082d6755200ba6462c1069bf687b6a393189a3f3afefae1fbb9a32b58240"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle.map",
+      "bytes": 3075899,
+      "sha256": "a8855db007cdc663495d47631801c43f34d29ca12d23c4594260f73e0ee5d5ae"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-contact_lifecycle.stdout.log",
+      "bytes": 85104,
+      "sha256": "b5a902be42e66a28c3c6930263ae8e58ab8f4e1a622da7e28ae1408b4ce7f0cf"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller-approval.json",
+      "bytes": 1152,
+      "sha256": "73830f626a41578736ff0fa5a2aa160f89a844d6c9af11544abc5d0de912f7d8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller-build.json",
+      "bytes": 17246,
+      "sha256": "281e802e583d2b17ea64d212238e888e5f83ac305fe17ff3dc7ca2c229fa3047"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller-cleanup.json",
+      "bytes": 1729,
+      "sha256": "9af1636b3bbb5716dbb403ad1315f63ed5f6c15ac398729b9c42002c4dbb1a1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller.json",
+      "bytes": 6037,
+      "sha256": "dc4322ade4ae6e123ce2af628061e9e1c1255f5d3f3239afb946c5cba2ac45c3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller.map",
+      "bytes": 3653006,
+      "sha256": "c9616916e1c5bdfd359b1c232939fdb61c9f152110d35d57bf246811a730bf81"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-controller.stdout.log",
+      "bytes": 1579,
+      "sha256": "98a46c4bd826d8bd3bf3320ffa5c280398bcfb2499318c4d3c5106887680c7ea"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-current-signals-cleanup.json",
+      "bytes": 423,
+      "sha256": "eac3602d7bb569dfb750f3e6c46fb8d593da59f468763fd3e52b8969a9e1a515"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-current-signals-read.stderr.log",
+      "bytes": 418,
+      "sha256": "af033b9c1a44359346f40e6d2fbcbe0bb9977899f8639f4a07b396a714895095"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-current-signals-read.stdout.log",
+      "bytes": 806,
+      "sha256": "3e3fc64a0fb7264d9847aaa62041c44ed40900c8539f48afdde1a40d5e9c1efe"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-current-signals-write.stderr.log",
+      "bytes": 418,
+      "sha256": "af033b9c1a44359346f40e6d2fbcbe0bb9977899f8639f4a07b396a714895095"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-current-signals-write.stdout.log",
+      "bytes": 995,
+      "sha256": "d0886bd1753781953f8019cea785d23b355b6b8ac3829e21168f72a886727e69"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-current-signals.json",
+      "bytes": 13186,
+      "sha256": "22749c4c80ad281f9974d0adf88e32e3449421362a343224115f14cfcf333f76"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor-error.txt",
+      "bytes": 399,
+      "sha256": "de1a4ad8021570018412561cb3b5e6a77ff6c65e4b0d4d7ecbd4d99e65b362ce"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor-first-failed-map.json",
+      "bytes": 293,
+      "sha256": "9dbe2383147fcaa6b9247911a1a7a0e0dd33bc2695f7aace88f007fda646e3da"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor-first-failed.map",
+      "bytes": 6085842,
+      "sha256": "19ce709c0c7f0bcfbc1c384386976978344bb137747115872fe648fa469c4a67"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor-link.log",
+      "bytes": 38158,
+      "sha256": "5602abc7e022b0b7d5b191ad01f4990712944c09d8d0fa9db45911c5a5d3fc7c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor-object-compression.json",
+      "bytes": 13814,
+      "sha256": "32da7240862c4a8058de07616c200282bfe6190dfe832eb5e9ebea2a8249c9df"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v2-error.txt",
+      "bytes": 456,
+      "sha256": "0e725a7558e0009e1190f31aae6f10de1b5ccb7cf684bc02e96a09da75d5f934"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-approval.json",
+      "bytes": 4326,
+      "sha256": "a0fcae7a66a8349d8541e99d5c73664ea208d77725a85b7d99f8e017d718ccb9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-build.json",
+      "bytes": 25174,
+      "sha256": "6c4ab9b3fb0d03fb3d5a745875f6bc1347910af07c53226e4c4cd96cce010f58"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-cleanup.json",
+      "bytes": 6499,
+      "sha256": "d687a3609c97bc4d738ab6d75940e208df250aef101a9ecee6718cb0c50d0ad7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-editor-autotest.edit.png",
+      "bytes": 177346,
+      "sha256": "57545279b72286a10c464ef996d92da8ebfdcb07b975a24b750531d4d8525573"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-editor-autotest.play.png",
+      "bytes": 129828,
+      "sha256": "5ef93cc2689985c645705dfd0b2f7d2e2827b57654f3df4f96bea28a1ee30e76"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-editor-autotest.saved.judas",
+      "bytes": 40001,
+      "sha256": "f46bcea835e6a49d94453ecd41c23330739ff56379fe4a564e24ce1828cd9a95"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-link.log",
+      "bytes": 37376,
+      "sha256": "969c4884cdc896d43dfdb1119f2a87e5145f2ea31d012a99cf102f74647ddf1b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3-smoke.json",
+      "bytes": 1556,
+      "sha256": "f1b476eafc5a3707069cd52ed7823718377a6c348ca22df84fe427dabfb9c5a8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3.map",
+      "bytes": 3505666,
+      "sha256": "4dfa169718d79f1f4ec5e55133de1bdd08e05661a0af2dc582a48908dbaa6b0a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3.stderr.log",
+      "bytes": 856,
+      "sha256": "648b6823cef8eb85850843744cede87a4d6874dadaed12660a6a0e194c3e131a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-editor_v3.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-engine.json",
+      "bytes": 5824,
+      "sha256": "1da5b0af808e2b2ad71cc741f70b1702fc958084eccdb2e0f36def69fb3724af"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-failed-editor-archive.json",
+      "bytes": 5189,
+      "sha256": "36f28d08f65234af5b8cd092f67f23be952eefc66175ce8fb44ec0caa88ff6ad"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-failedmap-retirement.json",
+      "bytes": 624,
+      "sha256": "a12d6c017fb4c6f901ad38da8b5a24fee2d6742740ac252db802ced92642abd9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read-m77.save",
+      "bytes": 52557,
+      "sha256": "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read.json",
+      "bytes": 1732,
+      "sha256": "a9621c37907da9d50dbc58162df878a896195688745263b0bb2e13c2f4828d13"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-exact-cold-read.stdout.log",
+      "bytes": 832,
+      "sha256": "da0f1ac740f80f3e756a32d9634139904a042bfa3207a653c5ed2ee9e830d9b2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read-m77.save",
+      "bytes": 56640,
+      "sha256": "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read.json",
+      "bytes": 2060,
+      "sha256": "0526c654f6a0ed687d34c5c988289dff70c7867df286a2897f1607b1fd26691e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-read.stdout.log",
+      "bytes": 816,
+      "sha256": "ab9db0df106ce6cb5b5b94e643836d66cb419d9b8ba07fbb1c7c980b498ab8be"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write-m77.save",
+      "bytes": 56640,
+      "sha256": "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write.json",
+      "bytes": 1661,
+      "sha256": "f075c284311a077a76fc1786b0d6ca1b307453553ecbf614de04cda7643aade1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-final-balance-new-cold-write.stdout.log",
+      "bytes": 1470,
+      "sha256": "2a40d9c4e57ce05644785d1faf3fbaa9852ca6ca728f185b8a4dc25cc55745b2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-error.txt",
+      "bytes": 424,
+      "sha256": "bfc4f3dd7a049aeb8ea950bbcc1047d0cd9e8434a1a3052b40074c1c579caab7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-final.json",
+      "bytes": 6042,
+      "sha256": "b540a6a756309f2a8fe8086df520dfcb56361a6c0d5edd62ccd0e5987ff819c6"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-final.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-final.stdout.log",
+      "bytes": 3193,
+      "sha256": "4ece82510722684b2dc2d32ac3327f08d9158f38a8697102f675b1d55317eed1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-first-failed-map.json",
+      "bytes": 246,
+      "sha256": "40a284d983a4a7802db64755b19e06c775ebaf7b65b499f5fa84cd7e616fa229"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-first-failed.map",
+      "bytes": 7994937,
+      "sha256": "1aaaea4e60dade7727d6660eb7332b6aa356d7d2746e809ef8b12b7e3ae09491"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity-link.log",
+      "bytes": 34194,
+      "sha256": "5755715e2052f7d935a0080475a28716cb8fbb172d7ca1d70bcfca69cea27138"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-approval.json",
+      "bytes": 1395,
+      "sha256": "34efb42b4272cd3d1a599fc6bdaf5ae5e0005c6f176fea32562d566948629285"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-build.json",
+      "bytes": 18382,
+      "sha256": "400789467033296d27aeadbff6d949fb3e16442590234cdd64d1dce6fc0f25dc"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-cleanup.json",
+      "bytes": 2082,
+      "sha256": "600d36dc8dd489b28815327344476e8fa331a1551b9cf3aae5faf7ed509a328c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity_retry-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-gravity_retry.map",
+      "bytes": 1360716,
+      "sha256": "926cd3d54d9026688c0d074f126d0c997a0a285c646d651d5ed4405cb297bc98"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact-timing.json",
+      "bytes": 6069,
+      "sha256": "1be21143387d357e738ab4907a9d6c8d77c6ba72109356edd89520bfc804dbac"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact-timing.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact-timing.stdout.log",
+      "bytes": 43903,
+      "sha256": "8c30f3255c877aeeafa406172cd83d202b8af2fde514dfc1c553a59dbf57fc07"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact_timing-approval.json",
+      "bytes": 1179,
+      "sha256": "df2eda75d91f029d96149b7b053f9afc40b08708947a4c22fe381d2032b06980"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact_timing-build.json",
+      "bytes": 17326,
+      "sha256": "5f894d5f1bc0b0412418aa3abc19e11aca43c7713144e5ae3791d4aafded90eb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact_timing-cleanup.json",
+      "bytes": 1752,
+      "sha256": "f95ccfcf5a2d2f532015c0b27f228eecb73908aa4cef0f56f7540b23538db39a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact_timing-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-impact_timing.map",
+      "bytes": 3578545,
+      "sha256": "85cd231b079c2439b5531d7b2ff9b97dc972c3e18b29bb9848856b8cecd3afb1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints-approval.json",
+      "bytes": 1115,
+      "sha256": "c3398577e90bb06db0d7acf7f480d210488075eb46582d4d5982098f41b03dd2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints-build.json",
+      "bytes": 17165,
+      "sha256": "16354736de1f62285171f7bdd22ff21d7955c8d0e621c57c1331f6452f352afa"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints-cleanup.json",
+      "bytes": 1696,
+      "sha256": "293826d5f4e65b0b82e84807ba8e58835358be2c512e7819c68627fcb931e2a1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints.json",
+      "bytes": 6038,
+      "sha256": "c87f5f28e11f70725cec858fc762347de6518a045d29dc788ad487c238e33774"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints.map",
+      "bytes": 3519172,
+      "sha256": "bdc5d4ed3f8cd95b9c91158402c1154ef6194731386678e672ae45cf12eb050f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-joints.stdout.log",
+      "bytes": 1468,
+      "sha256": "a740ad1706b7006d84497d04a91d9d9b0c12be2c5f1df5f51f26e96728f9cda3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-actual-drive-sidecar.json",
+      "bytes": 5482,
+      "sha256": "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-cold-write-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-diagnostic-cold-read-trace.jsonl",
+      "bytes": 610874,
+      "sha256": "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-diagnostic-uninterrupted-trace.jsonl",
+      "bytes": 610874,
+      "sha256": "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-before-save.json",
+      "bytes": 49691,
+      "sha256": "dbcbebaf6cf5e071553f128ee80921193800a6d9157a416b18d3ab9b4691f32d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-final.json",
+      "bytes": 60636,
+      "sha256": "b859e82c5cfd801b3ed7a2a3e7800e20ad4981545aee2cea8db7cde6d20a6077"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-immediately-restored.json",
+      "bytes": 49691,
+      "sha256": "1e501623619ebb4491532a68d4fbcc1075b89f92f6d10dc7c7998d742eb4fa2e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-1.json",
+      "bytes": 47153,
+      "sha256": "bf94ac1bf2b0e684f83d469aaa79455284d329ab8d7afd76b18097ab8653a353"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-10.json",
+      "bytes": 50385,
+      "sha256": "bd93c1434ac2a6f93083e606ea65ea5358b1219ae702369d62695ac837993032"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-2.json",
+      "bytes": 48944,
+      "sha256": "62fb3231b152f9d9b26c187362bf25056c8071fcca8f21f2b45548986c7e2bd5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-3.json",
+      "bytes": 48908,
+      "sha256": "a9af73d6dde5057f07e752aabea44fafe3ba7abe98d503f8a6e4741fd4921f70"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-4.json",
+      "bytes": 50511,
+      "sha256": "997a4db296f4a12c9f83974cee5dbc77a2e228ca14d119ffbd764d5e89f25fa3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-5.json",
+      "bytes": 50431,
+      "sha256": "50896fc9f89309cf7455b90b43910a72a1d8f0259ed283420a0d22b716fc1438"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-6.json",
+      "bytes": 50508,
+      "sha256": "b17a27ef5d53ddf17c90293834ee369261ed1d082c88309c50ac0ad307c9d64d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-7.json",
+      "bytes": 50423,
+      "sha256": "726a7ac2c8697158956fbf2d6318a2a22f8a9fd3d7c6095746ca5fb82ab3b358"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-8.json",
+      "bytes": 50435,
+      "sha256": "5b309ac1841ecd1c083ea0e7d857e9392581f440c968eaac82d0488ad07867f6"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read-physical-step-9.json",
+      "bytes": 50454,
+      "sha256": "dd0d6220617710ddd73ded536759221c9db5dc384d9229cee9c4fc585fb748bb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read.json",
+      "bytes": 8772,
+      "sha256": "35e76374ceaee965adc86a1bca70f7b177112de11d5c16de70da3e986eb690b0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-read.stdout.log",
+      "bytes": 23741,
+      "sha256": "9f67c6ed6c88135c6dfb16b397f6749847a171c64a4946bd05a064795676b689"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-actual-drive-sidecar.json",
+      "bytes": 5482,
+      "sha256": "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-cold-write-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-diagnostic-uninterrupted-trace.jsonl",
+      "bytes": 610874,
+      "sha256": "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-before-save.json",
+      "bytes": 49691,
+      "sha256": "dbcbebaf6cf5e071553f128ee80921193800a6d9157a416b18d3ab9b4691f32d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-final.json",
+      "bytes": 60636,
+      "sha256": "a423caf0a5042453b33078406b97e50e2d0821d52b898e3c0dd32c5bf0775cd1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-1.json",
+      "bytes": 47153,
+      "sha256": "80274ee761ea3d5424b2932aa14c2d5ef755a991cd9940bb2677afb556f0434b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-10.json",
+      "bytes": 50385,
+      "sha256": "713dbedab3a294a060d5ea9fe41479367f2dde8588425856b9a91c9027ad7aae"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-2.json",
+      "bytes": 48944,
+      "sha256": "fee5fe76261871f149295ef7cfafcad638596953e60edf9608a0c4e62aebb50c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-3.json",
+      "bytes": 48908,
+      "sha256": "430838b1af2c85d62b7c957dac53fab73ac7bb4bd6d7709a56f12ea7c86c8b50"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-4.json",
+      "bytes": 50511,
+      "sha256": "b826d2c008138c64729b0fc10c967d9d11b0f2eb737ab7253d25fdd325db1734"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-5.json",
+      "bytes": 50431,
+      "sha256": "44976475f875390db37b8c02c96c97bc64431a81d50dd83959137394f3e1e483"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-6.json",
+      "bytes": 50508,
+      "sha256": "5483c19f33f282454a88fcd8ebd84ce35eb6a64b7d4f275e12cbbae243949acf"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-7.json",
+      "bytes": 50423,
+      "sha256": "eeabc21ef508fe936e9a0ac30e49c590279d20648cc5fcf15b532180c155069a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-8.json",
+      "bytes": 50435,
+      "sha256": "7093f4ee76887b5e2106a7eb625569792ccd60d17d37e3331383c65b47a0be45"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write-physical-step-9.json",
+      "bytes": 50454,
+      "sha256": "22f152b49fd7427e27b48c1617823d82bda876d00b6f42d330ea80f62deaf4fb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write.json",
+      "bytes": 7497,
+      "sha256": "6b1ecdc92705b132566de70cf66023340080f6685ead403a97aea849bcfc1fb6"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-pair-v2-cold-write.stdout.log",
+      "bytes": 26273,
+      "sha256": "d885878ca1fc9e30c717d4a994c2dbedf29525e20dd919b5ca9b977f98ee0953"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-actual-drive-sidecar.json",
+      "bytes": 5482,
+      "sha256": "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-diagnostic-cold-read-trace.jsonl",
+      "bytes": 610874,
+      "sha256": "512dbf412395ab75716ff9e047774915f106bdf3edce849140df9802649880ef"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-before-save.json",
+      "bytes": 49691,
+      "sha256": "dbcbebaf6cf5e071553f128ee80921193800a6d9157a416b18d3ab9b4691f32d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-final.json",
+      "bytes": 60636,
+      "sha256": "b859e82c5cfd801b3ed7a2a3e7800e20ad4981545aee2cea8db7cde6d20a6077"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-immediately-restored.json",
+      "bytes": 49691,
+      "sha256": "1e501623619ebb4491532a68d4fbcc1075b89f92f6d10dc7c7998d742eb4fa2e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-1.json",
+      "bytes": 47153,
+      "sha256": "bf94ac1bf2b0e684f83d469aaa79455284d329ab8d7afd76b18097ab8653a353"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-10.json",
+      "bytes": 50385,
+      "sha256": "bd93c1434ac2a6f93083e606ea65ea5358b1219ae702369d62695ac837993032"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-2.json",
+      "bytes": 48944,
+      "sha256": "62fb3231b152f9d9b26c187362bf25056c8071fcca8f21f2b45548986c7e2bd5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-3.json",
+      "bytes": 48908,
+      "sha256": "a9af73d6dde5057f07e752aabea44fafe3ba7abe98d503f8a6e4741fd4921f70"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-4.json",
+      "bytes": 50511,
+      "sha256": "997a4db296f4a12c9f83974cee5dbc77a2e228ca14d119ffbd764d5e89f25fa3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-5.json",
+      "bytes": 50431,
+      "sha256": "50896fc9f89309cf7455b90b43910a72a1d8f0259ed283420a0d22b716fc1438"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-6.json",
+      "bytes": 50508,
+      "sha256": "b17a27ef5d53ddf17c90293834ee369261ed1d082c88309c50ac0ad307c9d64d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-7.json",
+      "bytes": 50423,
+      "sha256": "726a7ac2c8697158956fbf2d6318a2a22f8a9fd3d7c6095746ca5fb82ab3b358"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-8.json",
+      "bytes": 50435,
+      "sha256": "5b309ac1841ecd1c083ea0e7d857e9392581f440c968eaac82d0488ad07867f6"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read-physical-step-9.json",
+      "bytes": 50454,
+      "sha256": "dd0d6220617710ddd73ded536759221c9db5dc384d9229cee9c4fc585fb748bb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read.json",
+      "bytes": 13599,
+      "sha256": "f1651e0978a50606c415ce89bf956d01f430aff833805a3276f673f23969c070"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-read.stdout.log",
+      "bytes": 23741,
+      "sha256": "9f67c6ed6c88135c6dfb16b397f6749847a171c64a4946bd05a064795676b689"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write-actual-drive-sidecar.json",
+      "bytes": 5482,
+      "sha256": "373670052c37cc417b2f86b231cbf7a99624265f9092ceb8b786360a026441cd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write-m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write-physical-before-save.json",
+      "bytes": 49691,
+      "sha256": "dbcbebaf6cf5e071553f128ee80921193800a6d9157a416b18d3ab9b4691f32d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write.json",
+      "bytes": 8095,
+      "sha256": "bf35822eb975642512dc876b68a6ead09bd680f6125fc748edda4c586f504197"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-endpoint-write.stdout.log",
+      "bytes": 5216,
+      "sha256": "65fa38dd6c159bea18acf6a75d8072570f7f2abf07943d0444e11a49dc0b9315"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read-cold-read-state.json",
+      "bytes": 365,
+      "sha256": "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read-m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read.json",
+      "bytes": 7608,
+      "sha256": "208f1c6c82d289fd6d442a4b9cd6d797ba65b9cbe8fce059ca82fef84c887732"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-read.stdout.log",
+      "bytes": 949,
+      "sha256": "c97072f496d5c24ceb5f140c6e5f8d8d1ee5ec8dee502fd3d3cc0f600feb26f4"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-write-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-write-cold-write-state.json",
+      "bytes": 364,
+      "sha256": "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-write-m77.save",
+      "bytes": 64001,
+      "sha256": "c955949f94fc0ae05c5e6442a30bbcc944f0f4ecca6bc93a7662f2ea77c6f442"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-write.json",
+      "bytes": 7238,
+      "sha256": "cac33c10f323fd11dd2e6730d3a400ee04adb0506e09594cb5428fc5748d492d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-write.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed-write.stdout.log",
+      "bytes": 1544,
+      "sha256": "8d01eca7a89c49f0b5b41843fba9f267a51b501c8ca766303b41d56bc592a5bd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-approval.json",
+      "bytes": 1181,
+      "sha256": "7d70945e633e6aefc113d1e22fcb742cd2de4ad58c286daf9183e907f78d2606"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-build.json",
+      "bytes": 27573,
+      "sha256": "328ba829dbd849bc99e2bb4ae118d56a8c1ad7fb46679da36977cb46f0717a42"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-cleanup.json",
+      "bytes": 1754,
+      "sha256": "e50243f93f4ac886833d2a59408fe25d6ac6dd79503fe7b4ef8cb2b210001af4"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance-mixed_balance-0.obj-compile.log",
+      "bytes": 58,
+      "sha256": "d3d24d8c5eff30c8d25aa8ab6c1fdedd6f531894a6aa4c1fc7759c863530ae57"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_balance.map",
+      "bytes": 14341525,
+      "sha256": "0b2b02ed5c5af21a407170d6a68803a0721572486235e7563c69a951daf7e366"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint-error.txt",
+      "bytes": 412,
+      "sha256": "4a18795afd69b7ba612a2212a00ae1bdc9249d50d5518460f61b524aec0e3836"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint-mixed_endpoint-0.obj-compile.log",
+      "bytes": 536,
+      "sha256": "6df800dc6732c822245163d0d8bf601ed1c86adf1c7ded6ad59a843105f1e608"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair-error.txt",
+      "bytes": 459,
+      "sha256": "396dd4f499f3798b90b2f3b1164e63f35ab93d30975125c34f365cb1991b42cb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair_v2-approval.json",
+      "bytes": 450,
+      "sha256": "bbb3327c1eca18c4e4e4d978ba80692f4a7e57ab1263572b7ee36086c1a26cfb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair_v2-build.json",
+      "bytes": 27355,
+      "sha256": "49f4daab336f7bb7e8d8f20a1948a51b3251131016a592520a2905a8a5284564"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_pair_v2-cleanup.json",
+      "bytes": 673,
+      "sha256": "b815239c1a7edfcf8e75711affcfb947ab2cd9253cc97c86b964ed271d0fcf51"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-approval.json",
+      "bytes": 1216,
+      "sha256": "40a84415221d782cac7aeeae40017bf20c6050dabf74008a7dd9200d05c05e89"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-build.json",
+      "bytes": 36228,
+      "sha256": "7ed580ebe8c681eb8da8184fb6cacbf6dbcf80e83d8e2af23e4a0df0c56fb440"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-cleanup.json",
+      "bytes": 1785,
+      "sha256": "02d627077f036b2ef99bc50c27f3f596530bb0a60b0c628f7e74971e9ea2c14d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2-mixed_endpoint_v2-0.obj-compile.log",
+      "bytes": 456,
+      "sha256": "cb6b56eb0c0094211621d4ec5da3cca9b881664f293b658cb093c5aee55641f9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-mixed_endpoint_v2.map",
+      "bytes": 8721342,
+      "sha256": "f50e6893ad7cf8590a4f90ad6e2efe40895e40d13d4fa780a103f3ca5818f242"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion-approval.json",
+      "bytes": 1116,
+      "sha256": "be8ba6c69340436a07a0da09d719403b830b880bf6409b024909aa0473dc030a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion-build.json",
+      "bytes": 17164,
+      "sha256": "556067598d6c91b9ab3efe9c861dd3fc6e4adbcf7cea85b0293b4db7c0b44f29"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion-cleanup.json",
+      "bytes": 1697,
+      "sha256": "5e753972501e1a0767613e78b07f8e1013723f0e83376a96a08609d707cf7a13"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion.json",
+      "bytes": 6029,
+      "sha256": "91247f89936a86777ea380b92ebe23641b1f13aff2e108d0e24b6cba91825345"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion.map",
+      "bytes": 3539507,
+      "sha256": "eb6d8bf82f08e8f2f34f315a919005fcbdbd6a8e5b5f169c971bfc1a4aaa522b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-motion.stdout.log",
+      "bytes": 328,
+      "sha256": "3978bbdaba554d4506400f0d64541bf28b15be90a7d1d9c56cbe2cfa009c944d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-moved-package-error.txt",
+      "bytes": 459,
+      "sha256": "d5728b161d4fa9b7df6d82a9a0972881f06662ce9430b3a0e5e78e413e721ab1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-moved-package-v2.json",
+      "bytes": 19124,
+      "sha256": "14e6c9f542717baa076a39e8bb3bf4b317283f78d0b012b3cdd0ddf60ceab76b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-moved-package-v2.stderr.log",
+      "bytes": 459,
+      "sha256": "3bd5ee9de318c1c127eb27e9c95d0c528f6e9f2c5db0f352681ce7c15f53557e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-moved-package-v2.stdout.log",
+      "bytes": 6662,
+      "sha256": "2a08de0c119ab1f4b113b1adad2fd871915c58b5b9ecd6970a194022c4c4cde0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-cold-recovery-read-state.json",
+      "bytes": 183,
+      "sha256": "8b719f6737f7b62af5536c642b830d74d1c69556ee468bf5335d2faa81bb49d8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-diagnostic-cold-read-trace.jsonl",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-m77.save",
+      "bytes": 60206,
+      "sha256": "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-final.json",
+      "bytes": 61054,
+      "sha256": "85cc7fd835b5b2a3aa4e449f6d1c8a394669e021f18e5bbacd5804bc9057e948"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-immediately-restored.json",
+      "bytes": 60909,
+      "sha256": "5e754dfb4ee08cc8e15caa072b621f2d7b3021dda4d7132be3081cf05940d675"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-1.json",
+      "bytes": 59186,
+      "sha256": "28ecff5f0195345f2f9880cc4e3157c854bc59b12130a6b414efcc5c3288b062"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-10.json",
+      "bytes": 60807,
+      "sha256": "9652a6781b9a7ba3c6e5573e87d5003b508a357255d60a0f4391f5e328b800f2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-2.json",
+      "bytes": 60966,
+      "sha256": "b9f4914ec21359edca4841a60031acac3127f047716afa6c82fc62c4c8a3e33b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-3.json",
+      "bytes": 60827,
+      "sha256": "07e9a5f5cdab3a1d44440e7aace73ba8e0215fd4f9114e6b8e6ed76bad1bb32b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-4.json",
+      "bytes": 60775,
+      "sha256": "cadd9af249225b16ae078e1f8609fbefcf5a3713003eda85bb8a119cabddef89"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-5.json",
+      "bytes": 60743,
+      "sha256": "8e29add0a9f34e4539e7733454b4a92e459cffd959b539b27560d7073d6514eb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-6.json",
+      "bytes": 60881,
+      "sha256": "09b99c2a6738e248eae71c3cf0b282a5fb403661ba6a5c7bea5e10bf0e96d2e1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-7.json",
+      "bytes": 60817,
+      "sha256": "833f87688d85c5460e0e7debe6ea4fbe9221fbfef44abe5b1171178b4afd3004"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-8.json",
+      "bytes": 60782,
+      "sha256": "13ebb4308f07de3c6aff1d857c287a507e379808562f9a62eea82e7f34d693d3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery-physical-step-9.json",
+      "bytes": 60919,
+      "sha256": "f1006d1d5800725ef3b7a3657359c795e7fb95287c1fbf27f24cb7ce17160431"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery.json",
+      "bytes": 7099,
+      "sha256": "b516e3a7a849a2a4d20e992cd7be175a5c73511d3c92132c2128fa12bec59d58"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-recovery.stdout.log",
+      "bytes": 24081,
+      "sha256": "86a7fdb390b255587d0a4048dc8f21ae28c2d21e4606e29a637504b308a27b52"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-cold-stand-read-state.json",
+      "bytes": 183,
+      "sha256": "6ee068f35d63225761576284d53d6edd7c94b66293a946a812f616f2ef0bae8d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-diagnostic-cold-read-trace.jsonl",
+      "bytes": 494965,
+      "sha256": "5fae16e9982bb48ebfc489ba49b52541e4cdf16053250a019be54b5c1d7b1ce9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-m77.save",
+      "bytes": 59705,
+      "sha256": "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-final.json",
+      "bytes": 59064,
+      "sha256": "82c8e76985f6b3501b7732c0cfda8902d6032829b4c5bd88a1bea2556e59f69a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-immediately-restored.json",
+      "bytes": 58959,
+      "sha256": "136a9de1260da5aa48aa4629ac1b73f038c14b0a98825dbb131db196d419b723"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-1.json",
+      "bytes": 58959,
+      "sha256": "f1484e2abf9a0b5902f36f54d578455a79e5b8009154295585a97636e166a5de"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-10.json",
+      "bytes": 58993,
+      "sha256": "6056fe8fd86acb7570e8ab393e4ac3c362126aa30017162f020666ee94c274b3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-2.json",
+      "bytes": 58990,
+      "sha256": "485b1a6dad0ee201b6a7335ebc0ccf8695267a4dae09443eedb9811815f0ee8a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-3.json",
+      "bytes": 58886,
+      "sha256": "f179905d7c8d2e6a41dfafca9e3de4cce0074c831d403a29d6a707f2be33a0a5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-4.json",
+      "bytes": 58920,
+      "sha256": "9e21817a9994138e66336840b141aa4de9416e18bbc8b934f8d2f0c1c5a14ee7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-5.json",
+      "bytes": 58955,
+      "sha256": "cddef284ee4901f96aa6f8696eed20e1c68248ac09cd69a0503c678bd793ad0f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-6.json",
+      "bytes": 59004,
+      "sha256": "030936ab4d6d8112de09ffb9a94a306ffabe6f7aea93f5e1efa922e55383cef9"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-7.json",
+      "bytes": 58960,
+      "sha256": "87f88155fc0ae1069ac8a0e7075e0af071c17e676b092f3b426929afca790a1e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-8.json",
+      "bytes": 58923,
+      "sha256": "d897e2d4b55e155d9a46a5e4dc60eea9ffe53c0d3a1e1546aa07122933b37eaf"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand-physical-step-9.json",
+      "bytes": 59017,
+      "sha256": "b49d66782a89b7a6d78e3c000c61d02e70845964e49b2ce89eb9786604f059a8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand.json",
+      "bytes": 6993,
+      "sha256": "b6a86ef1637ee8c399d19b8e95cd885c42438883be05734b3f06c17fb648de7a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand.stderr.log",
+      "bytes": 61,
+      "sha256": "cc3b08bad5ecb1f3c73515d9f17b39c1361b7561e5570c6e70b55b84b09a3a8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary-actual-stand.stdout.log",
+      "bytes": 23452,
+      "sha256": "67cc212fb3a7cb77b74db02cfa3f2f444f71f930cf0cfe350a93a92d49b1e2f8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary_actual_endpoints-approval.json",
+      "bytes": 459,
+      "sha256": "7388e6ab005300be5d1a8e6c78a2fb6d717ad35e70f0ccabb0527dd8cd55cc06"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary_actual_endpoints-build.json",
+      "bytes": 24767,
+      "sha256": "dd6fe19fbb2abfae6e0e2c00f9387d6d73b160a865659763f56925626abcbf8d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ordinary_actual_endpoints-cleanup.json",
+      "bytes": 671,
+      "sha256": "6e962d3b8269fd88fed01a1692252eca810de0ce7a494b1aa2e6911a08eed3f0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical-approval.json",
+      "bytes": 1134,
+      "sha256": "977f33a1f80e9dd09ed6ee301907d5b65eaf14657105f5c513948bd782a9d7c1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical-build.json",
+      "bytes": 17202,
+      "sha256": "d863e653b56394195f52957cddb70840aa71bbe672defa258d14f5e9dd1e5c32"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical-cleanup.json",
+      "bytes": 1712,
+      "sha256": "8cc9e2f9a91c96a8454c7fb71066a85f81b0a82cc9dc6668cf5ecbe6492f4e43"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical.json",
+      "bytes": 6032,
+      "sha256": "5a0fcbc7daae39495d89e4d42761f94c76596ddae9023ef8268d2ed2865f5b21"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical.map",
+      "bytes": 4346404,
+      "sha256": "ffc963b4204c3e26819208a657c8033e28314a6f658b22fc1c5e27631b2f66f7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physical.stdout.log",
+      "bytes": 7519,
+      "sha256": "cb1f02420b4336f33568a4ecd5fb84b770bd283fbe8561db6be0c98231e079ef"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics-continuation.json",
+      "bytes": 6057,
+      "sha256": "03b8781ba42cf70eb84b6609f8e4914c541820f56d76b232e471e6770db6a461"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics-continuation.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics-continuation.stdout.log",
+      "bytes": 31,
+      "sha256": "d1cfb4716f74651cbfea319c7343b3c27f058ecea842081f0c6c19d03cf03289"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-approval.json",
+      "bytes": 1243,
+      "sha256": "6ccbb3f778bc2732c053d165503df6c022b93b667abd6b8360cd1677f51dce0c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-build.json",
+      "bytes": 17412,
+      "sha256": "04f658ce7595886b298cd7783675d0e8cb142e08d535db4273defb8ffc827814"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-cleanup.json",
+      "bytes": 1810,
+      "sha256": "cd2da35f1d966705358a5cac8c42b6081562be53a21ff668aaf20836c1b35481"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation-physics_continuation-0.obj-compile.log",
+      "bytes": 62,
+      "sha256": "1d5a114c9fa710fd2c474c11417ee4e5b36c234a780ce2e1a1d367152e54720e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-physics_continuation.map",
+      "bytes": 12194274,
+      "sha256": "080952719f13811175c40d7685ef1af5687076e65e0f4bb588ab940db6ca6216"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication-isolation.json",
+      "bytes": 6059,
+      "sha256": "6e24cb965197880cd02773b1634f1a7f341a9eb53ff67777da7bb6dca4b70edb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication-isolation.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication-isolation.stdout.log",
+      "bytes": 561,
+      "sha256": "1f38b34e073943f8aaf324bdf9bd015d4be154f9fde15f2c76661dfe404b19be"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-approval.json",
+      "bytes": 1250,
+      "sha256": "de7631dfa621e1f35c9cf30830d8b0e8411e7679f7aadbeae9382b0c103d1aca"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-build.json",
+      "bytes": 17593,
+      "sha256": "e8acfabbc0333c6a067f4612ebfe2ce05cb7b1322f32e8f85ad6b93ce9713fe3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-cleanup.json",
+      "bytes": 1816,
+      "sha256": "6b5880aa5d60288c0d9a7264b0b7e91fdd27ddcd3d78dd8b39d0aa4e240d9909"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-error.txt",
+      "bytes": 582,
+      "sha256": "2b729139c9c24bcc415e3143cc71ac08aff9849eb2078b9f5049d2faae1b3a14"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation-publication_isolation-0.obj-compile.log",
+      "bytes": 84,
+      "sha256": "d2cc83b1905b2833f1b28235f71c04a2ce3fdd2347a0e7855d38e27739cb92f7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-publication_isolation.map",
+      "bytes": 3587591,
+      "sha256": "578aa1caa52944a6a7b449d89f1ece3729748c01610b1db154130736259da4e0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-remaining_m77-approval.json",
+      "bytes": 423,
+      "sha256": "9c85e077135a7e8ef9df6b6c2a165c06f71403112963ae6756aa0c0a91e3d166"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-remaining_m77-build.json",
+      "bytes": 13990,
+      "sha256": "bb5f7ea7b86825e080c015b5695d7060747d6380b8227dc1f1783f5407f2eb07"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-remaining_m77-cleanup.json",
+      "bytes": 654,
+      "sha256": "a1cf3eb146e39752735af4d7e82fb580de03121bef97965657b6302cd2ca064e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-runtime-approval.json",
+      "bytes": 1794,
+      "sha256": "68c055afd94371d3d43d21e531a2ed51ca8f648bbebc99315d29d86a3195aa2a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-runtime-build.json",
+      "bytes": 14483,
+      "sha256": "8206b6aabe8cec5e39ee608f3259c4d8f9beaf45ec0175599873eebd24533a78"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-runtime-cleanup.json",
+      "bytes": 2715,
+      "sha256": "1cc86e56e6dc6172e1448e59d3c6cd4a2d5863c916075cbfb08ca588065046fb"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-runtime-link.log",
+      "bytes": 34198,
+      "sha256": "a8f6572eb688898a238b46eb041ce4869e0ae3ccb9c06f01f8481036c6a63e86"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-approval.json",
+      "bytes": 2147,
+      "sha256": "dc5af337f9f443e7f18fe26516a515dc39beb39eae36d86e0a01ecc5ea8a491b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-build.json",
+      "bytes": 28644,
+      "sha256": "d652d7a8fa92eb00f295d03f9b333ed9f90875087e689f4481b8e6b9a1b2ce33"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-cleanup.json",
+      "bytes": 2955,
+      "sha256": "68f8ed3a7941405923cf6ef82e7437e6d78bd9b5051278cf46455233f565b8ca"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signal_application_final-signal_application_final-0.obj-compile.log",
+      "bytes": 58,
+      "sha256": "c88c7c372780376da4520eb82adf0e83a621910c539e4cb2f14c18036ce7925f"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-original-project.json",
+      "bytes": 3663,
+      "sha256": "1a267676c031d4da9e245e2a54fe8c80b7acf86d0a4058908647abbc75d545e3"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-read.json",
+      "bytes": 6181,
+      "sha256": "44d873875a1050f961893c5f2a16666e21da77e3cf6767f2f89a7802f63d6ef2"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-read.stderr.log",
+      "bytes": 428,
+      "sha256": "58cb2f6906b47b5871cbac51c479df5d35ba48914b3b123c73a528e34fe5feda"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-read.stdout.log",
+      "bytes": 166,
+      "sha256": "e1c80dfa097e476dec8f4e93e44f984f391c6e5c08fc7558d088a814dfa0c725"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-write.json",
+      "bytes": 6159,
+      "sha256": "4417c3181f1af9cfda4e47fd57b72daeede7f8c928bb0de1e2635315e54a2a98"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-write.stderr.log",
+      "bytes": 637,
+      "sha256": "e8762346d627aacc7197cde768fa4c31b1a88132e3bedd4470d32fc887bb53dd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-signals-write.stdout.log",
+      "bytes": 567,
+      "sha256": "8d8b6b2cf70fea21a9185ee80d13501f5373e0a7e15b163f19781784c68925a5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-storage_extra-approval.json",
+      "bytes": 1277,
+      "sha256": "2078694dd7649ef253724fb219bfc8986b433882e2a829334b9d74e64b9f8996"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-storage_extra-cleanup.json",
+      "bytes": 1807,
+      "sha256": "56cf0620584fb32f0b9b1e1f137af4c11c366316eeba81998caeb0f8494cdd8e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming-approval.json",
+      "bytes": 1144,
+      "sha256": "b9fd2bbfcb397e622a1f2ae24be0d7e146833b2a435b5270dfdb20cbd9814684"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming-build.json",
+      "bytes": 17218,
+      "sha256": "8b73fc083f135bda9bca64a36561b963521f3e3803ecb80b98873084890e784b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming-cleanup.json",
+      "bytes": 1721,
+      "sha256": "31b3861a0b28359b94bb2efcd069402ee3f0a46a263231ec3ab3ba2e5d818ee7"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming.json",
+      "bytes": 6034,
+      "sha256": "45fbba069eb9f37ab3ae712c3315e6f7c19fde42b75ad39f1817a3a55188067b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming.map",
+      "bytes": 4232493,
+      "sha256": "0ed4526e31c40d20e86e9ed6d7c3bd95c8a00ccf6c137e429d7bf52dc46d8688"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-streaming.stdout.log",
+      "bytes": 4312,
+      "sha256": "38c2b0747a53e9713606373af934680dfa8fac53a05cdbe1efd8214cc7cbdf78"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ten-zip-approval.json",
+      "bytes": 4262,
+      "sha256": "3d4dc0a4095689c723d41ac1d077985b228c45571f302c66698059c560fcac4c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-ten-zip-retirement.json",
+      "bytes": 5523,
+      "sha256": "c399afcc6a7a8d48f1a598075b34a1948976e57d0edb7822e476debb1ea2b4ba"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save-approval.json",
+      "bytes": 1152,
+      "sha256": "e751e101c937322b5e4d22244a18fe446973ddbb7e381938ab414a73529b8d10"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save-build.json",
+      "bytes": 17235,
+      "sha256": "5f1b7f8b26a6b29d44d86230acd5b75e1e1df55f7aa2e150672bfb2b8de0b0ee"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save-cleanup.json",
+      "bytes": 1728,
+      "sha256": "5549a82f88d53232eedccf46f040dec23571054edbbabe5788568842d7200f44"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save-link.log",
+      "bytes": 33930,
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save.json",
+      "bytes": 6036,
+      "sha256": "aa4b9b59369285c772344e12b27356654f07978a56db1b9e56d66fadb19f0a36"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save.map",
+      "bytes": 5115552,
+      "sha256": "faf5d1ad064dd838ed7c7b14efb960a3e1284603284587ac2ace220545147ec5"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/m78-closure-world_save.stdout.log",
+      "bytes": 1538,
+      "sha256": "1b3d53077092d9b988558addfc4a9c60fe9db1781f7775cbede21b7918b81b35"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/archive_common.ps1",
+      "bytes": 1370,
+      "sha256": "6bcd3989b180d60f0ba6226ce59099bfbe684f3c88b08ba153a49fbfbf4e7fff"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/build_native_summary.py",
+      "bytes": 13835,
+      "sha256": "4de6326217fa40de7f32705adf861269d73c366820a45940c48721d0883ff418"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/compare_actual_endpoint.py",
+      "bytes": 2224,
+      "sha256": "0fd03775d34172d5c4e48a7c9bc3c676961f3087258c7834f6e4ee4ff3516f72"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/compress_owned_editor.ps1",
+      "bytes": 1545,
+      "sha256": "93119c1b930d6cc515a25e01f71a6767526f804493fb5f01471789ff9eaa3506"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/failed-empty-archival-helper.ps1.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/00538c6024c5807748a37dec0aed87f97ec20b030543ea92738f365b28d48d67-m78-closure-windows_case.ps1",
+      "bytes": 7945,
+      "sha256": "00538c6024c5807748a37dec0aed87f97ec20b030543ea92738f365b28d48d67"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/08b65662f39854cc274c7b7b0ae81311e459891117a7a7274f4ace4fa4b87a48-m78-closure-windows_case.ps1",
+      "bytes": 7745,
+      "sha256": "08b65662f39854cc274c7b7b0ae81311e459891117a7a7274f4ace4fa4b87a48"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/1bf4622f5a01ed5d4681e5c90c3a3ff64ab7954e8485afc695fb3aa5fde95a59-m78-closure-windows_case.ps1",
+      "bytes": 7876,
+      "sha256": "1bf4622f5a01ed5d4681e5c90c3a3ff64ab7954e8485afc695fb3aa5fde95a59"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/78565f3b4c3370ba9783e9e6428897630211447936aab60f3b9aca3449cacedd-m78-closure-windows_case.ps1",
+      "bytes": 7726,
+      "sha256": "78565f3b4c3370ba9783e9e6428897630211447936aab60f3b9aca3449cacedd"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/8d72e8e1847183f297541d8f03e03704eaa44dd88339c8aa36e9267fb3027e7c-m78-closure-windows_editor.ps1",
+      "bytes": 5989,
+      "sha256": "8d72e8e1847183f297541d8f03e03704eaa44dd88339c8aa36e9267fb3027e7c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/c6a4567e63064e0678a08217586e9b9929452a5b10b9dce59fef82b57be41729-m78-closure-windows_case.ps1",
+      "bytes": 8151,
+      "sha256": "c6a4567e63064e0678a08217586e9b9929452a5b10b9dce59fef82b57be41729"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/c6e5177bd0978ddc7808a6e364bdbe14cc63a8b295ca9ce720a41ace411caa4b-m78-closure-windows_cleanup.ps1",
+      "bytes": 1277,
+      "sha256": "c6e5177bd0978ddc7808a6e364bdbe14cc63a8b295ca9ce720a41ace411caa4b"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/historical-tools/e0ac544c1e85eeba23d10605f1eba45e9c3d0d91297c44c2173c46b5b4c21108-m78-closure-windows_moved_current_runtime.ps1",
+      "bytes": 4202,
+      "sha256": "e0ac544c1e85eeba23d10605f1eba45e9c3d0d91297c44c2173c46b5b4c21108"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/prepare_native.py",
+      "bytes": 4823,
+      "sha256": "5df270e4aaddf927b452ee4bde30f02d615cda46a5d17a4739c2cb1a4c35b146"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/retire_verified_common.ps1",
+      "bytes": 1197,
+      "sha256": "a183ed95e7585b182475f63c58b2470a8e90dfe9f8210a2f5841906bd74ff4a6"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/run_native.py",
+      "bytes": 5322,
+      "sha256": "b82a72a4c43c9edb1064e4fa52d80f249efaad3a7683b0b3111f872314af032a"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_archive_completed_case.ps1",
+      "bytes": 2755,
+      "sha256": "e6dafde99c143c096384672c0fd64dd4729fb9085e2afa61ca92c74fb0363b45"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_archive_completed_projects.ps1",
+      "bytes": 1339,
+      "sha256": "a333f8d3da999a30d11ef0dd9cd07334fcf55aa70c70106af40d5f87ee4d2218"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_archive_completed_projects_v2.ps1",
+      "bytes": 1441,
+      "sha256": "b486362f18efbb041275c9f42a76e5a2110a98ef8a328dcaaff45f4a30ad8472"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_archive_completed_projects_v3.ps1",
+      "bytes": 1337,
+      "sha256": "253655dffce38d48b6d71230b6420c2cc60b87b9920512b5adc61ffb26d8a858"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_archive_partial_case.ps1",
+      "bytes": 2874,
+      "sha256": "da26efdce3df658534932874900b43f1a60b0cef87df86eb378b980de8842358"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_archive_partial_case_v2.ps1",
+      "bytes": 3014,
+      "sha256": "4cc70623b47f970648123ad96cab47accb97062b57ec909caa5653c5b8780f2d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_case.ps1",
+      "bytes": 8327,
+      "sha256": "d580da995c1b7a180211997c5a3e4121f17b4ceea7d884b2b729cdd2671a25b0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_cleanup.ps1",
+      "bytes": 1280,
+      "sha256": "1dd3df07733443252d67c53345d863097a7f81e495a89599c2adaca4f414bcc8"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_current_signals.ps1",
+      "bytes": 4891,
+      "sha256": "b5dc46e2f9fb7a803789136efa41b57448b20156f92941493fb840adffe2ed65"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_editor.ps1",
+      "bytes": 6008,
+      "sha256": "3df2571884a935992b80559f07297c8fd422f5a830c8e1c60f8c1057c12e02ca"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_editor_first_failed.ps1",
+      "bytes": 5989,
+      "sha256": "8d72e8e1847183f297541d8f03e03704eaa44dd88339c8aa36e9267fb3027e7c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_editor_v2.ps1",
+      "bytes": 6052,
+      "sha256": "397fdb9139b989324a374a8e5079d654c59bf8ab3a6f0f750a0272f03910bbca"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_editor_v3.ps1",
+      "bytes": 6052,
+      "sha256": "069616c972a4c9a09f0cb9e1bd53a960cb5b4e70d42c5bb670605fdace63070e"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_mixed_endpoint_pair.ps1",
+      "bytes": 3637,
+      "sha256": "24583444ba49b884942446ca2c2622290acf5aec866b48098e64fb35295fa256"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_mixed_endpoint_pair_v2.ps1",
+      "bytes": 3749,
+      "sha256": "ad5022036f84d46afdfbfc5ee589fd016b7b1a1c14aeeadb0537e3eecbc19fd0"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_moved_current_runtime.ps1",
+      "bytes": 4291,
+      "sha256": "d577c970e7b67dc876402fd1910142a018cb11a7648308b5f310b4369c7b7676"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_moved_current_runtime_v2.ps1",
+      "bytes": 4298,
+      "sha256": "af58e38afe280814f852274d933fe241b97aae766c367af809a39bed85e9c678"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_ordinary_actual_endpoints.ps1",
+      "bytes": 4409,
+      "sha256": "409064a3d720ceefc029d17a7e3d0eb0d22f331c8933b4068816b391b1eef702"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_prepare.ps1",
+      "bytes": 3221,
+      "sha256": "197eb64899d19ee0ee17c1b5d3cebd91bab645d20130d516835b7b2d7b6696b1"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_remaining_m77.ps1",
+      "bytes": 4545,
+      "sha256": "172379034f1dafffb50dc506503560246a0adbce6b74a66da4a71510f5cc0e5d"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_retire_completed_projects.ps1",
+      "bytes": 1542,
+      "sha256": "98f88bb0bf8e2ee21f3d8eb1b9a50ce8303bdf266948d85e21d154594fcd3f49"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_retire_completed_projects_v2.ps1",
+      "bytes": 1647,
+      "sha256": "c36b1046ed0fa435542273de3fe06d318cbd81d38cad1fb00361fbf506c13b2c"
+    },
+    {
+      "path": "docs/evidence/m78-closure/native/probes/windows_retire_completed_projects_v3.ps1",
+      "bytes": 1543,
+      "sha256": "a40c260e34684d452b096c01330ae8558602642b5fc7cbe0e4d2adf98f8a3cc9"
+    }
+  ],
+  "totalFiles": 456,
+  "totalBytes": 115888870
+}

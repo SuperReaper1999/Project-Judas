@@ -1,3 +1,5 @@
+Copyright (c) 2026 Conner/SuperReaper1999 · [MIT License](LICENSE).
+
 # Project Judas
 
 **Judas is a game engine.** It is purpose-built for one class of game —
@@ -15,20 +17,39 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## JUDAS STATUS: READY FOR NEW FEATURE DEVELOPMENT
+## Current status — M77 checkpoint and M78 corrective candidate
 
-Current accepted checkpoint: `b7d7f4142b243cd57d9998f4952857e67e5d84a8`
-(Lastlight UI and wall pursuit); M73 owned signals are accepted at
-`18650ba23c23eaaab0542d6e0055e33cc14d1049`. M74 editor-time animation
-retargeting is **checkpointed provisionally; human motion validation is pending**.
-See [retargeting/profile reference](docs/M74.md) and the ordinary
-[Retarget Lab project](projects/retarget_lab/retarget_lab.judasproj).
-M72 desktop review and native Windows VM checks are complete within their recorded
-scope. Physical Windows hardware validation remains outstanding; M67 human authoring
-review remains provisional/deferred. M69 controller acceptance uses synthetic/VM
-checks; hardware feel is untested.
-Start with [Architecture](docs/ARCHITECTURE.md), [JudasJS](docs/JUDASJS.md) and
+Current checkpoint: `9e77b2226edcf217ab789fe4f0fea42a3415a72d` (M77).
+M77 is **not human validated**. The combined M78 corrective implementation and
+continued capability audit are **uncommitted / unstaged; human acceptance pending**.
+Use [M78 final handoff](docs/M78_FINAL.md) for current correction status, exact
+execution/performance evidence, unresolved findings and the human checklist.
+Earlier M78 reports retain their original failures and source identities.
+
+M78 addresses generic angular/contact/CCD mechanisms, Boolean query cost, prefab
+ordering, navigation dependencies and cold joint/static/motor continuation. Its
+closure additionally corrects independent query-proxy invalidation of restored
+physical observations. These are bounded repairs, not a completed engine audit.
+The [coverage overlay](docs/evidence/m78-closure/coverage/README.md) preserves
+485 overlapping discovery rows (345 public JS members, 89 mechanism groups,
+34 components and 17 asset families); source locations, API presence and related
+suite passes do not prove every member or supported combination. See
+[remaining coverage](docs/evidence/m78-closure/coverage/REMAINING_COVERAGE.md).
+
+[M75 local terrain authoring](docs/M75.md) is human accepted.
+[M76 local mod packages/game-owned kits](docs/M76.md) and
+[M74 retargeting](docs/M74.md) are provisionally checkpointed with human review
+pending; M67's specified authoring review remains deferred. M72 desktop review
+and native Windows VM checks have their recorded bounded scope; physical Windows
+hardware acceptance remains outstanding. M69 controller evidence uses synthetic/VM
+checks, not hardware-feel acceptance. Current native M78 closure status belongs to
+the final handoff, not an assumed all-platform pass.
+
+Start with [Architecture](docs/ARCHITECTURE.md), [JudasJS](docs/JUDASJS.md),
+[editor guide](docs/EDITOR_GUIDE.md) and
 [documentation maintenance](docs/DOCUMENTATION_MAINTENANCE.md).
+The milestone/FTFT descriptions below preserve their historical scope; current
+consumer APIs and the M78 handoff take precedence over older status prose.
 
 **M38 standalone export (accepted):** Project settings can export a movable Linux
 Release game package with its project input, scenes and registered runtime assets.
@@ -49,7 +70,7 @@ approximate hydrostatics/drag, explicit geometric container cavities, and custom
 player swimming. Exterior collision and analytic support have distinct ownership;
 exact exterior liquid/body momentum conservation is not claimed. The historical
 M24–M26 results below retain their original scope and do not describe this new
-coupling. Current behavioural evidence and accepted numerical limits are recorded
+coupling. Historical FTFT behavioural evidence and accepted numerical limits are recorded
 in the ledger and the [final gate](docs/evidence/stabilization/final-gate/README.md).
 
 Current conserved liquid uses [M54 reservoirs/containers](docs/LIQUID_RESERVOIRS.md)
@@ -80,7 +101,7 @@ Historical FTFT4 rigid-physics results (the numerical costs below describe that 
    consumed. A transient anchored motion ledger preserves out-and-back
    travel for dynamic/player queries. Low-speed/event-cap capture and
    finite-resolution grazing CCD are explicit approximations.
-4. Passing current-engine timing, energy, stack, slope, platform, broadphase,
+4. Passing FTFT4-engine timing, energy, stack, slope, platform, broadphase,
    lifecycle and geometry checks. **43 production suites** and protected
    async/persistence/gravity/near-far integration checks pass for FTFT4.
 
@@ -262,8 +283,9 @@ scenes-dir "Scenes"
 saves-dir "Saves"
 ```
 
-`./build/judas <project>` plays the startup scene; F6/F7 world-state
-deltas live in the project's saves directory. The technology
+`./build/judas <project>` plays the startup scene. Historical legacy-gameplay
+projects retain F6/F7 world-state deltas in their saves directory; modern projects
+choose their own input and [M61 save-slot policy](docs/M61_SAVES.md) in JavaScript. The technology
 demonstration is `judas_tech_demo.judasproj` at the repository root
 (assets under `assets/`, scenes under `assets/scenes/`, startup scene
 `terrain.judas`); the tiny game is `projects/tiny_game/`. The editor's
@@ -351,8 +373,9 @@ object 2 "Planet A"
 end
 ```
 
-Every field the writer emits, the reader requires — nothing is defaulted
-silently. Saving is deterministic (objects in scene order, fixed key order,
+In this historical M30 format description, every emitted required field was
+required on read. Later optional component fields use explicit compatibility
+defaults; the current serializer and component documentation define their rules. Saving is deterministic (objects in scene order, fixed key order,
 shortest exact decimals), so scene files diff cleanly under version
 control. The full grammar and every component's fields are in
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 28, Scene file
@@ -432,12 +455,16 @@ are never written back to the scene; M29 world-state deltas go to the
 project's saves directory. "Apply runtime state to the scene" is a
 possible future feature, not an M30 one.
 
-Object parenting, an OS file dialog, mesh-precise picking, asynchronous
-loading and an asset cooking pipeline are deliberately not part of M30 —
+Historical M30 exclusions: object parenting, an OS file dialog, mesh-precise
+picking, asynchronous loading and an asset cooking pipeline were not part of M30 —
 see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 30,
 Deliberately not implemented."
 
 ## Lifecycle, fidelity and persistence (M29)
+
+**Historical M29/FTFT1 delta path.** Modern game saves use the separate
+[M61 save-slot system](docs/M61_SAVES.md); the controls and archive rules below
+belong to the retained compatibility path.
 
 Every dynamic body in a scene is a **persistent entity** with a stable id
 (its scene object id; runtime-created entities take ids from a separate
@@ -484,7 +511,7 @@ not migration or a hash of external asset bytes. See [FTFT ledger](docs/FTFT.md)
 ## Milestone 28 accepted baseline
 
 M28 established real scenes (`src/Scene.h`), the `.judas` scene file
-format (`src/SceneSerialization.h`; strict, deterministic, versioned — now
+format (`src/SceneSerialization.h`; strict, deterministic, versioned — then
 version 2 after M29's two additions), a scene-driven runtime
 (`RuntimeWorld`, `Simulation`, `WorldPresentation`, `GameSession`,
 `InteractivePlay`) that reduced `Application.cpp` from 2,404 lines to ~120
@@ -493,7 +520,7 @@ Edit/Play split. The operator accepted M28; it is commit `57e69a0` on
 `main`. The M28 portability fix (`glm::glm` as well as
 `glm::glm-header-only`) stands.
 
-## Current thermal scope (FTFT8)
+## Thermal scope (FTFT8 foundation)
 
 Finite combustible coatings use temperature, fuel and sampled oxidizer; there
 is no burn timer controlling the reaction. The atmosphere is an **open prescribed
@@ -682,7 +709,7 @@ local gravity contexts, including zero acceleration where no context applies.
 Ordinary rigid boxes and spheres block the fluid; their previous and current
 poses provide moving-wall motion, and fluid contact impulses are returned to
 dynamic rigid bodies. A lit surface mesh is rebuilt from presented particle
-positions for display only. It never determines fluid motion. The current
+positions for display only. It never determines fluid motion. The historical M24
 demonstration starts with 125 particles; this is a small interactive pour,
 not an ocean or a general-purpose fluid framework. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 24," for the method,
@@ -753,6 +780,10 @@ spacecraft's relative speed to body A and the pilot's relative speed to the
 spacecraft. These readouts do not alter physics, gravity, support, or
 attachment. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), "Milestone 22."
+
+**Historical M5–M22 technology-demonstration description.** The controls and
+then-unimplemented features below describe that period, not the complete current
+engine. Modern ordinary game behaviour is project JavaScript.
 
 A controllable player walks, jumps, and falls under real physics — Judas's
 own physics engine, not a third-party library. The retained classic scene
@@ -853,6 +884,11 @@ secured-pilot attachment mechanism. The project still has no general vehicle
 framework, artificial gravity, or multiple spacecraft. M21 adds Newtonian
 gravity from the M20 celestial bodies and one attitude-hold mode, but no
 scripted orbital behavior or navigation systems.
+
+**Historical M12 drift qualification:** the constant-angular-velocity explanation
+below records the original integration. The M78 candidate preserves free-body
+angular momentum as inertia rotates; world angular velocity need not stay constant.
+See [the current corrective handoff](docs/M78_FINAL.md).
 
 **New this milestone:** the spacecraft's controls are genuine force/
 torque-driven inertia, not a directly commanded speed. Holding a
@@ -968,9 +1004,10 @@ piloted, and the selected player view returns on release. See
 
 ### Windows candidate
 
-Native Windows preparation is **unvalidated, not final**. See
-[Windows build, SDK and export testing](docs/WINDOWS.md). Linux remains the
-accepted platform; Windows acceptance requires native testing.
+Native Windows VM builds and focused functional/editor/export checks have
+recorded bounded results; see [Windows build, SDK and export testing](docs/WINDOWS.md)
+and the [current M78 handoff](docs/M78_FINAL.md). Physical Windows GPU/input/audio
+acceptance remains outstanding. VM execution is not a hardware-performance gate.
 
 ### Linux requirements
 
@@ -1030,6 +1067,10 @@ working directory does not matter. Only the engine's UI font is located
 relative to the executable / `$JUDAS_ENGINE_ROOT` (see "Quick start").
 
 ## Controls
+
+The following controls are for the retained legacy technology demonstration.
+Modern projects define their own logical bindings, cameras and gameplay in
+JavaScript; consult each project's controls and the [JudasJS input reference](docs/judasjs/input.md).
 
 The mouse is captured on launch and controls where the player looks. WASD
 walks the player relative to that look direction and the current surface
@@ -1414,8 +1455,9 @@ upstream commit and which files are vendored. Only `judas_editor` links it.
 `assets/fonts/DejaVuSans.ttf` (Milestone 13) is the DejaVu Sans font,
 under the Bitstream Vera License (a permissive, redistribution-friendly
 license) — see [`assets/fonts/DejaVuSans-LICENSE.txt`](assets/fonts/DejaVuSans-LICENSE.txt)
-for the full text. Rasterized at runtime via `stb_truetype`
-(`third_party/stb_truetype.h`, public domain).
+for the full text. The retained engine/debug atlas uses `stb_truetype`
+(`third_party/stb_truetype.h`, public domain); authored runtime text uses the
+[M58 Unicode shaping/font pipeline](docs/M58.md).
 
 `third_party/miniaudio/` (Milestone 34) is miniaudio v0.11.23 by David Reid,
 Copyright 2025 David Reid. Judas uses its **MIT-0 (MIT No Attribution)** option.
@@ -1496,7 +1538,7 @@ project JavaScript. See [M51 workflow/controls](docs/M51_ENGINE_BOUNDARY.md) and
 A small ordinary JudasJS shooting-range game: [project and controls](projects/shooter_game/README.md), [architecture and candidate results](docs/M52_SHOOTER_GAME.md).
 All movement/camera/shooting/score/menu policy is project JavaScript. Generic native additions expose impulse-at-point and interpolated presentation poses; authoritative gameplay remains separate.
 
-## Later milestones (M53–M69)
+## Later capabilities (M53–M77)
 
 Each document below is that milestone's architecture/workflow record. The
 current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
@@ -1520,3 +1562,17 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M67 (provisional) | World building recipes and named authoring documents | [M67_WORLD_BUILDING.md](docs/M67_WORLD_BUILDING.md), [NAMED_AUTHORING.md](docs/NAMED_AUTHORING.md) | `projects/world_workshop` |
 | M68 | Measured scalability, bounded resource handoff, import caches and export closure | [SCALABILITY.md](docs/SCALABILITY.md) | `projects/world_workshop` |
 | M69 | Paired controller input and batched physics queries | [M69.md](docs/M69.md), [input](docs/judasjs/input.md), [physics](docs/judasjs/physics.md) | [cookbook examples](docs/judasjs/cookbook.md) |
+| M70 | Shared multi-target IK and partial/active physical pose contribution | [M70.md](docs/M70.md), [animation/ragdoll API](docs/judasjs/animation-ragdolls.md) | `projects/character_lab` |
+| M71 | Prescribed kinematic rigid-body motion and editor scene-view panning | [M71.md](docs/M71.md), [body motion API](docs/judasjs/entities.md#kinematic-motion-m71) | `projects/character_lab` |
+| M72 | Runtime lighting, render visibility and instance materials | [M72.md](docs/M72.md), [appearance/material API](docs/judasjs/materials.md) | `projects/render_control_lab` |
+| M73 | Lifetime-safe owned signals and queued script messaging | [M73.md](docs/M73.md), [signals API](docs/judasjs/signals.md) | `projects/signals_lab` |
+| M74 (provisional) | Editor-time retarget profiles and clip baking | [M74.md](docs/M74.md) | `projects/retarget_lab` |
+| M75 (human accepted) | Finite local terrain sculpt/paint/fork/cook | [M75.md](docs/M75.md) | `projects/terrain_lab` |
+| M76 (provisional) | Optional local mod contracts, packages and terrain-capable kits | [M76.md](docs/M76.md), [modding guide](docs/MODDING.md) | `projects/modding_lab` |
+| M77 (human pending) | Default-off two-chain physical balance, bounded corrective steps and recovery | [M77.md](docs/M77.md), [current corrective handoff](docs/M78_FINAL.md) | `projects/balance_lab` |
+
+M78 remains a combined corrective candidate and incomplete audit, not another
+accepted feature milestone. New-format cold continuation passes do not repair
+missing historical snapshot bytes; legacy PBF settling, immediate streamed-motor
+query publication, excluded-dynamic-body save restoration and measured physics
+tails remain qualified in the final handoff.

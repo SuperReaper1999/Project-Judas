@@ -1,0 +1,26 @@
+{
+  "id": "judas_editor_workspace_tests",
+  "source": "tests/EditorWorkspaceLayoutTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_workspace_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "7b3509f02a10842de07c23d82ad28fb1843ac6c546a3c0cda03b624a5bac7c7a",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 24,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_editor_workspace_tests.log",
+  "logSHA256": "d8197472fe4efed269149d575a24643c98b417af5d1b42593a0e44635ef1a3e5",
+  "seconds": 0.00201869199918292
+}

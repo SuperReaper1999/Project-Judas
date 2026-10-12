@@ -1,0 +1,13 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  8269824,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-character_lab.map",
+                        "sha256":  "ecc539b0da854bdbf6d27340e22d622983e51970e70ab24f0e74d3cb015c0d95",
+                        "name":  "m78-closure-character-first-failed.map",
+                        "bytes":  9172699
+                    }
+                ],
+    "freeAfter":  17444864
+}

@@ -1,0 +1,466 @@
+﻿{
+    "linkerResponse":  "/OUT:\"C:\\JudasValidation\\Build\\Release\\m78-final2-repair-balance_lab.exe\" /INCREMENTAL:NO /NOLOGO \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib\" RELEASE\\JUDAS_APP_ICON.LIB RELEASE\\JUDAS_MATERIALS.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\SDL2-STATIC.LIB\" KERNEL32.LIB USER32.LIB GDI32.LIB WINMM.LIB IMM32.LIB OLEAUT32.LIB VERSION.LIB UUID.LIB ADVAPI32.LIB SETUPAPI.LIB DINPUT8.LIB \"VCPKG_INSTALLED\\X64-WINDOWS-STATIC-MD\\LIB\\GLM.LIB\" RELEASE\\JUDAS_GLAD.LIB RELEASE\\JUDAS_AUDIO_BACKEND.LIB RELEASE\\JUDAS_NAVIGATION_BACKEND.LIB RELEASE\\JUDAS_QUICKJS.LIB RELEASE\\JUDAS_PROFILER.LIB PSAPI.LIB \"_DEPS\\JUDAS_FREETYPE-BUILD\\RELEASE\\FREETYPE.LIB\" \"_DEPS\\JUDAS_HARFBUZZ-BUILD\\RELEASE\\HARFBUZZ.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUIN.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUUC.LIB\" \"UNICODE\\WINDOWS-ICU\\LIB64\\ICUDT.LIB\" SHELL32.LIB OLE32.LIB KERNEL32.LIB USER32.LIB GDI32.LIB WINSPOOL.LIB SHELL32.LIB OLE32.LIB OLEAUT32.LIB UUID.LIB COMDLG32.LIB ADVAPI32.LIB /MANIFEST /MANIFESTUAC:\"level=\u0027asInvoker\u0027 uiAccess=\u0027false\u0027\" /manifest:embed /PDB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case-link.pdb\" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\case.lib\" /MACHINE:X64  /machine:x64 \"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\balance_lab-0.obj\"",
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "case":  "balance_lab",
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-balance_lab.exe",
+    "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "runs":  [
+                 {
+                     "seconds":  4.2752981,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-step-trace",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-step-trace\\step-trace-state.json",
+                                       "sha256":  "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2",
+                                       "bytes":  365,
+                                       "reportName":  "m78-final2-repair-balance-step-trace-step-trace-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-step-trace\\step-trace.jsonl",
+                                       "sha256":  "838e760220e2bd1f6f6b5bd26cdcfdc3b14a4a303bbb0941458bf1a1670e4d18",
+                                       "bytes":  612109,
+                                       "reportName":  "m78-final2-repair-balance-step-trace-step-trace.jsonl"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-step-trace",
+                                       "step-trace"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  70078464,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  3.1895175,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-standing",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-standing\\standing-state.json",
+                                       "sha256":  "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2",
+                                       "bytes":  365,
+                                       "reportName":  "m78-final2-repair-balance-standing-standing-state.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-standing",
+                                       "standing"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  68276224,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.2530772999999997,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-supports",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-supports\\supports-state.json",
+                                       "sha256":  "224d53c46ed07533d6356e866afda156e0bba0f25a8cd9084812384a9956217f",
+                                       "bytes":  183,
+                                       "reportName":  "m78-final2-repair-balance-supports-supports-state.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-supports",
+                                       "supports"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  66736128,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  6.9652559,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-variants",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-variants\\variants-state.json",
+                                       "sha256":  "2fe65a8aa9c698790e6b629e4138e5beefb20528d224cd58ea139464dc8ace8c",
+                                       "bytes":  182,
+                                       "reportName":  "m78-final2-repair-balance-variants-variants-state.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-variants",
+                                       "variants"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  65191936,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  4.0510820999999995,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-recovery",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-recovery\\recovery-state.json",
+                                       "sha256":  "359b1086572fb1e8750a63aafa5804ab70d461bb41dd2fa416d7d166403f24bf",
+                                       "bytes":  184,
+                                       "reportName":  "m78-final2-repair-balance-recovery-recovery-state.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-recovery",
+                                       "recovery"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  67833856,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.6677592,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-radial",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-radial\\radial-state.json",
+                                       "sha256":  "5e8ee098150ec516193400d2a44909b437f2e89abc8a2178a7db89d570062873",
+                                       "bytes":  184,
+                                       "reportName":  "m78-final2-repair-balance-radial-radial-state.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-radial",
+                                       "radial"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  66031616,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.7566405,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-lifecycle",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-lifecycle\\lifecycle-state.json",
+                                       "sha256":  "b4ee3dd21794af010d7d0d6967360ea0d0f08fbf8e54648f31771c75ee4f85b0",
+                                       "bytes":  221,
+                                       "reportName":  "m78-final2-repair-balance-lifecycle-lifecycle-state.json"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-lifecycle",
+                                       "lifecycle"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  64491520,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.524657,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-cold-stand-write",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\cold-stand-write-state.json",
+                                       "sha256":  "cf7bbc6ab1d2283d80820383a8da55912e43eb2a35c9bcf97921784ce50355be",
+                                       "bytes":  182,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-write-cold-stand-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-write-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\slots\\m77.save",
+                                       "sha256":  "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230",
+                                       "bytes":  59705,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-write-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand",
+                                       "cold-stand-write"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  62889984,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.7556336,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-cold-stand-read",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\cold-stand-read-state.json",
+                                       "sha256":  "6ee068f35d63225761576284d53d6edd7c94b66293a946a812f616f2ef0bae8d",
+                                       "bytes":  183,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-read-cold-stand-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\cold-stand-write-state.json",
+                                       "sha256":  "cf7bbc6ab1d2283d80820383a8da55912e43eb2a35c9bcf97921784ce50355be",
+                                       "bytes":  182,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-read-cold-stand-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand\\slots\\m77.save",
+                                       "sha256":  "695a8f1768322b2ee22de25402fa27f7704a555b128cd21397f532624c1c3230",
+                                       "bytes":  59705,
+                                       "reportName":  "m78-final2-repair-balance-cold-stand-read-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-stand",
+                                       "cold-stand-read"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  62881792,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.0666311,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-cold-recovery-write",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\cold-recovery-write-state.json",
+                                       "sha256":  "b05d43cfd2c2d0e220edd6f59ed13526c34db6fb1a353592e1b58c1d26457e7f",
+                                       "bytes":  183,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-write-cold-recovery-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-write-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\slots\\m77.save",
+                                       "sha256":  "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59",
+                                       "bytes":  60206,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-write-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery",
+                                       "cold-recovery-write"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  61280256,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.3312063,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-cold-recovery-read",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\cold-recovery-read-state.json",
+                                       "sha256":  "8b719f6737f7b62af5536c642b830d74d1c69556ee468bf5335d2faa81bb49d8",
+                                       "bytes":  183,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-read-cold-recovery-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\cold-recovery-write-state.json",
+                                       "sha256":  "b05d43cfd2c2d0e220edd6f59ed13526c34db6fb1a353592e1b58c1d26457e7f",
+                                       "bytes":  183,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-read-cold-recovery-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery\\slots\\m77.save",
+                                       "sha256":  "342aef6bbca98eae8fc8d99d56dcee44a1116cb453fb92da40baa8a8379ffc59",
+                                       "bytes":  60206,
+                                       "reportName":  "m78-final2-repair-balance-cold-recovery-read-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-cold-recovery",
+                                       "cold-recovery-read"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  61267968,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.6692507,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                     "run":  "balance-exact-cold-read",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-final2-repair-balance-exact-cold-read-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-exact-cold-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold\\slots\\m77.save",
+                                       "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                                       "bytes":  52557,
+                                       "reportName":  "m78-final2-repair-balance-exact-cold-read-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-exact-cold",
+                                       "cold-read"
+                                   ],
+                     "exitCode":  1,
+                     "freeBytes":  59416576,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.7141669999999998,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-new-cold-write",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\cold-write-state.json",
+                                       "sha256":  "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+                                       "bytes":  364,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-write-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-write-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\slots\\m77.save",
+                                       "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                                       "bytes":  56640,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-write-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold",
+                                       "cold-write"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  57819136,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 },
+                 {
+                     "seconds":  2.4252161,
+                     "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+                     "case":  "balance_lab",
+                     "expectedSaveSHA256":  null,
+                     "run":  "balance-new-cold-read",
+                     "executableSHA256":  "48354b8fae7c368236ea892609b3902fd6136ac6edf59e7cb9539a4034279a6c",
+                     "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-read-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\cold-write-state.json",
+                                       "sha256":  "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+                                       "bytes":  364,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-read-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold\\slots\\m77.save",
+                                       "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                                       "bytes":  56640,
+                                       "reportName":  "m78-final2-repair-balance-new-cold-read-m77.save"
+                                   }
+                               ],
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ColdRepairFinalV2Results\\balance-new-cold",
+                                       "cold-read"
+                                   ],
+                     "exitCode":  0,
+                     "freeBytes":  57798656,
+                     "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+                 }
+             ],
+    "freeBytes":  57794560,
+    "objects":  [
+                    {
+                        "objectSHA256":  "77fc4508993e1c8ee4896b33c35454c23fdf425b13a73dd1b160725769cf36ff",
+                        "source":  "tests/BalanceLabTests.cpp",
+                        "bytes":  2230400,
+                        "object":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\balance_lab-0.obj",
+                        "sourceSHA256":  "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+                        "reuseOriginal":  true
+                    }
+                ],
+    "executableBytes":  9509376
+}

@@ -1,0 +1,16 @@
+﻿{
+    "scope":  "Only exact generated link maps independently preserved and SHA-verified on host (also losslessly gzip evidence) removed; all copied diagnostic source/objects/executables/results and production library untouched",
+    "maps":  [
+                 {
+                     "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\m78-native-first-closure-commands-seeds.map",
+                     "sha256":  "697c6c92389f0fa859caef139c2a64c870d7d156b0c5b1861104da48cf27888c",
+                     "bytes":  14846235
+                 },
+                 {
+                     "path":  "C:\\JudasValidation\\M78FirstBoundaryClosureResults\\m78-native-first-closure-commands-seeds-normal-prepare.map",
+                     "sha256":  "4c8ff2dc435dbc41cbfae8e8b33c8f5a1cbccdf4055bd6eb6470285a08047ebf",
+                     "bytes":  14824708
+                 }
+             ],
+    "freeBytes":  42360832
+}

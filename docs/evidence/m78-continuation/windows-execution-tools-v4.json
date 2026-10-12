@@ -1,0 +1,27 @@
+{
+  "scope": "Execution tooling staging and native parser verification only; NO compile or test launch",
+  "archiveName": "m78-continuation-execution-tools-v4.zip",
+  "archiveSHA256": "343feafbf84edbdd846a9228733201961d86f71054b383880405c43fbf1e3ae6",
+  "files": [
+    {
+      "path": "windows_direct_library.ps1",
+      "bytes": 4307,
+      "sha256": "961c2e4566faa367581dd6d4a2c85c15371e31398d11a3386fc09ead114e601a"
+    },
+    {
+      "path": "windows_direct_case.ps1",
+      "bytes": 5416,
+      "sha256": "ff7d10df4bf00d0fba70a92cd5e75a23a82d64e9c6165226a096f2e2010b3b1c"
+    },
+    {
+      "path": "windows_direct_run.ps1",
+      "bytes": 2822,
+      "sha256": "f16fa4c027e0869337096fc1044dc902eec60c75dcc1967149e313b91fc8d6be"
+    },
+    {
+      "path": "windows_stage_immutable_inputs.ps1",
+      "bytes": 2937,
+      "sha256": "43f82472c2173c348daa0627ce19665770b35de55c901dbdbf380d5f31bff263"
+    }
+  ]
+}

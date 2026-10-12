@@ -1,0 +1,27 @@
+{
+  "scope": "Linux Release; one scheduled compile/link/run; no Windows execution",
+  "HEAD": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "result": {
+    "checks": 22,
+    "failures": 1,
+    "exitCode": 1,
+    "ordinary": {
+      "checks": 12,
+      "failures": 0
+    },
+    "excluded": {
+      "checks": 10,
+      "failures": 1
+    }
+  },
+  "runtimeError": "saved sleep body unavailable/duplicate",
+  "sourceSHA256": "9ac8c60aa46143371e4015c5e4bf316fc528c68ae32bdb0229ca4c220fca74d9",
+  "engineArchiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+  "executableSHA256": "8060b7136aa83ec115b28d3e41e87471dc37dc03218370158743ce005c37ad69",
+  "currentWorldPersistenceSHA256": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+  "HEADWorldPersistenceSHA256": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+  "unchangedMechanism": true,
+  "warnings": "",
+  "productionChangesMade": false,
+  "noAdditionalReruns": true
+}

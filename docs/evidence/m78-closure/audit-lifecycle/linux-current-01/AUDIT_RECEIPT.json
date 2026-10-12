@@ -1,0 +1,131 @@
+{
+  "status": "EXECUTED_LINUX_ONLY",
+  "HEAD": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "engineArchive": ".cache/m78-closure/final-build/libjudas_engine.a",
+  "engineArchiveSHA256": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+  "compiledSourceSnapshots": {
+    "run-01/compiled-source/StreamingMotorPublication.cpp": "e219463b621140b7f9203f98cf565eb9d0415a938113a37e539dcda835519b9d",
+    "run-01/compiled-source/ResolvedPrefabModPolicy.cpp": "fd1f130b6c7831f657151684e3893776be3bf18945222cdf46f75d0e27f0a232",
+    "run-01/compiled-source/NavigationInputRace.cpp": "bbd5b335bf6fc38eb303ae63d1acebe880f96a9954555e876bd73f8a799f0258",
+    "run-01/compiled-source/FixtureSupport.h": "486de2747e6cb489631e60d503d26f5a24f75237bf77d0b0e47bed63a654edbd",
+    "run-02/compiled-source/StreamingMotorPublication.cpp": "e219463b621140b7f9203f98cf565eb9d0415a938113a37e539dcda835519b9d",
+    "run-02/compiled-source/ResolvedPrefabModPolicy.cpp": "fd1f130b6c7831f657151684e3893776be3bf18945222cdf46f75d0e27f0a232",
+    "run-02/compiled-source/NavigationInputRace.cpp": "bbd5b335bf6fc38eb303ae63d1acebe880f96a9954555e876bd73f8a799f0258",
+    "run-02/compiled-source/FixtureSupport.h": "e79a4376eeb705e9a611076d302060327c4bfac15dfe296887a6b8930a40ec3b",
+    "run-03/compiled-source/ResolvedPrefabModPolicy.cpp": "6cc8e89cd1a80969806c13f699cbfdb21f927f9b08758c063ce4165b40ad2be4",
+    "run-03/compiled-source/FixtureSupport.h": "e79a4376eeb705e9a611076d302060327c4bfac15dfe296887a6b8930a40ec3b",
+    "run-04/compiled-source/StreamingMotorPublication.cpp": "969e2cdb0026823a4145915d0efd7ec85034353e73c85aa1bbd317d414027161",
+    "run-04/compiled-source/FixtureSupport.h": "e79a4376eeb705e9a611076d302060327c4bfac15dfe296887a6b8930a40ec3b"
+  },
+  "currentSourceVersusHEAD": {
+    "src/WorldStreaming.cpp": {
+      "currentSHA256": "a32013d53298df434fe46dff94e4b769b8465fe0a9a1dc003d8c17b65c762154",
+      "HEADSHA256": "a32013d53298df434fe46dff94e4b769b8465fe0a9a1dc003d8c17b65c762154",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/WorldRegions.cpp": {
+      "currentSHA256": "84a9025c0e99a4f76646f36c45b4f56e2af3a3472782c254f564619f9660236f",
+      "HEADSHA256": "84a9025c0e99a4f76646f36c45b4f56e2af3a3472782c254f564619f9660236f",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/WorldCharacter.cpp": {
+      "currentSHA256": "381194ab8c9440e588d54a66a3594e77856924dc661ce77937174602e804817a",
+      "HEADSHA256": "381194ab8c9440e588d54a66a3594e77856924dc661ce77937174602e804817a",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/WorldScripts.cpp": {
+      "currentSHA256": "3dbb2075270ef0700ce831c08a1e50109a173586651b7e97618e17c971d4688a",
+      "HEADSHA256": "3dbb2075270ef0700ce831c08a1e50109a173586651b7e97618e17c971d4688a",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/Prefab.cpp": {
+      "currentSHA256": "d2cd051026a5d943ade664dcafff953029fda967460cc1faf25cbaf45a0b9cd3",
+      "HEADSHA256": "ec39683a358a5b4e26c92a03aedf08ad78ca9c380ac50a7add0eecacc6bee8b9",
+      "sameAsHEAD": false,
+      "HEADAvailable": true
+    },
+    "src/modding/ModRuntime.cpp": {
+      "currentSHA256": "81e4b8bf77a56cfd91722a23a7126fbacb41e2761c6fde13260785b8f482b06c",
+      "HEADSHA256": "81e4b8bf77a56cfd91722a23a7126fbacb41e2761c6fde13260785b8f482b06c",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/modding/ModContent.cpp": {
+      "currentSHA256": "ee54d86c46881b09475d2e367975f1538eee4b140fa25ba88e443b229bb221a1",
+      "HEADSHA256": "ee54d86c46881b09475d2e367975f1538eee4b140fa25ba88e443b229bb221a1",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/authoring/NavigationDependencies.cpp": {
+      "currentSHA256": "5666758985926e221ee87f0120698cd6ee1a4e0b2bd2600d4f776224ee949120",
+      "HEADSHA256": null,
+      "sameAsHEAD": null,
+      "HEADAvailable": false
+    },
+    "src/ProjectExporter.cpp": {
+      "currentSHA256": "8bd8496c376c5d45ffe16d8a1c7ed90a6978e349f89521aac397383bf996d53f",
+      "HEADSHA256": "8bd8496c376c5d45ffe16d8a1c7ed90a6978e349f89521aac397383bf996d53f",
+      "sameAsHEAD": true,
+      "HEADAvailable": true
+    },
+    "src/PhysicsWorld.cpp": {
+      "currentSHA256": "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+      "HEADSHA256": "27fdc6032265ff6c44bd4068b98fa1427ddda1864b341532eeb6c68430b9e57f",
+      "sameAsHEAD": false,
+      "HEADAvailable": true
+    },
+    "src/WorldPersistence.cpp": {
+      "currentSHA256": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+      "HEADSHA256": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+      "sameAsHEAD": false,
+      "HEADAvailable": true
+    }
+  },
+  "linkedLibrarySHA256": {
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-closure/final-build/libjudas_engine.a": "a5ec91426ce0f8476db3bbdbda8ad52f3094d38c37b64a0052c7ef4bd37c2e1f",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+    "/usr/lib/x86_64-linux-gnu/libSDL2.so": "3f61932a8856a6ac99b59acee2aaf23a2d72bf75ffb4fe3c53d1ff228210a15a",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_world_authoring.a": "b024c1eee20c69a1be2e97929c75704787f0827e104ee3ddcdf0eb89b038befb",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/release/libjudas_navigation_baker.a": "44b357207236857e240f8be9f24b08051fd1124503590c30881db0cd331bf612"
+  },
+  "binariesRetainedOnlyInOwnedCache": true,
+  "runs": {
+    "01": "fixture include setup compile failures only; no runtime",
+    "02": "streaming46/8, navigation34/0, mod-policy incomplete Project compile failure",
+    "03": "mod-policy17/0 after explicit include",
+    "04": "streaming46/8 with sequenced field metadata; same assertions"
+  },
+  "finalResults": {
+    "streaming": {
+      "checks": 46,
+      "failures": 8,
+      "result": "run-04/streaming-fixture/RESULT.json"
+    },
+    "mod-policy": {
+      "checks": 17,
+      "failures": 0,
+      "result": "run-03/mod-policy-fixture/RESULT.json"
+    },
+    "navigation": {
+      "checks": 34,
+      "failures": 0,
+      "result": "run-02/navigation-fixture/RESULT.json"
+    }
+  },
+  "windows": "not executed; no native claim"
+}

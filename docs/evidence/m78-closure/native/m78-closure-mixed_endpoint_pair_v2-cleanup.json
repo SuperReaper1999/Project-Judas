@@ -1,0 +1,13 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  12726272,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-mixed_endpoint_pair_v2.exe",
+                        "sha256":  "772f4ef97ef9d9527e0cf74e8ca6a6d93fbe9604e0bcb2f17d4bcdea1d0039ba",
+                        "name":  "m78-closure-mixed_endpoint_pair_v2.exe",
+                        "bytes":  9569792
+                    }
+                ],
+    "freeAfter":  22298624
+}

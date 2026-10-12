@@ -1,0 +1,8 @@
+{
+  "scope": "Failure-only observer in copied source; no physical arithmetic, predicates, state transitions, thresholds or budgets changed",
+  "inputPath": "/home/conner/Documents/GitHub/Project-Judas/src/PhysicalBalance.cpp",
+  "inputSHA256": "df2da6961d2ff4a1fbad6913a586393ea4b0f814b0507edce3b336d153fa9ad7",
+  "outputPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/balance-failure-observer/PhysicalBalance.cpp",
+  "outputSHA256": "c158b6b311cdadb6ed4a71cfd10f310e2b93800773de5a87ae995ffd4965f736",
+  "env": "JUDAS_M78_BALANCE_FAILURE_LOG"
+}

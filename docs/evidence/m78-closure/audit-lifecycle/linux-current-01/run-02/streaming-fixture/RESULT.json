@@ -1,0 +1,411 @@
+{
+  "checks": [
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary owned project",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "project-owned query classification",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "project saved",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "authored motor scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary world",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal region request",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "region reaches atomic active publication",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "initial publication motor exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "actualProxy": [
+          2.6513516902923584,
+          3.068885326385498,
+          3.4891226291656494
+        ],
+        "expectedProxy": [
+          2.6513516902923584,
+          3.068885326385498,
+          3.4891226291656494
+        ],
+        "root": [
+          2.0,
+          3.0,
+          4.0
+        ]
+      },
+      "name": "initial publication query pose is derived from authoritative root plus rotated offset",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "initial publication authored enabled state is visible before callbacks",
+      "passed": true
+    },
+    {
+      "details": {
+        "layer": 99,
+        "mask": 0
+      },
+      "name": "initial publication authored physical filter is visible before callbacks",
+      "passed": false
+    },
+    {
+      "details": {
+        "body": 4294967295,
+        "expectedBody": 0,
+        "hit": false
+      },
+      "name": "initial publication filtered cast reflects real capsule geometry and tag",
+      "passed": false
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "initial disabled publication motor exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "actualProxy": [
+          -3.3486483097076416,
+          2.068885326385498,
+          0.48912256956100464
+        ],
+        "expectedProxy": [
+          -3.3486483097076416,
+          2.068885326385498,
+          0.48912256956100464
+        ],
+        "root": [
+          -4.0,
+          2.0,
+          1.0
+        ]
+      },
+      "name": "initial disabled publication query pose is derived from authoritative root plus rotated offset",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "initial disabled publication authored enabled state is visible before callbacks",
+      "passed": false
+    },
+    {
+      "details": {
+        "layer": 99,
+        "mask": 0
+      },
+      "name": "initial disabled publication authored physical filter is visible before callbacks",
+      "passed": false
+    },
+    {
+      "details": {
+        "body": 4294967295,
+        "expectedBody": 1,
+        "hit": false
+      },
+      "name": "initial disabled publication filtered cast reflects real capsule geometry and tag",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary zero-dt synchronization motor exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "actualProxy": [
+          2.6513516902923584,
+          3.068885326385498,
+          3.4891226291656494
+        ],
+        "expectedProxy": [
+          2.6513516902923584,
+          3.068885326385498,
+          3.4891226291656494
+        ],
+        "root": [
+          2.0,
+          3.0,
+          4.0
+        ]
+      },
+      "name": "ordinary zero-dt synchronization query pose is derived from authoritative root plus rotated offset",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "ordinary zero-dt synchronization authored enabled state is visible before callbacks",
+      "passed": true
+    },
+    {
+      "details": {
+        "layer": 99,
+        "mask": 0
+      },
+      "name": "ordinary zero-dt synchronization authored physical filter is visible before callbacks",
+      "passed": true
+    },
+    {
+      "details": {
+        "body": 0,
+        "expectedBody": 0,
+        "hit": true
+      },
+      "name": "ordinary zero-dt synchronization filtered cast reflects real capsule geometry and tag",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal motor root and velocity edit",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "release own demand",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary retained suspension",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "old entity/body do not alias after retirement",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "normal region request",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "region reaches atomic active publication",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "revisit has fresh runtime identity",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "revisit preserves authoritative root and velocity",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained revisit before first callback motor exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "actualProxy": [
+          6.8266191482543945,
+          6.918942928314209,
+          8.011431694030762
+        ],
+        "expectedProxy": [
+          6.8266191482543945,
+          6.918942928314209,
+          8.011431694030762
+        ],
+        "root": [
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "name": "retained revisit before first callback query pose is derived from authoritative root plus rotated offset",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "retained revisit before first callback authored enabled state is visible before callbacks",
+      "passed": false
+    },
+    {
+      "details": {
+        "layer": 99,
+        "mask": 0
+      },
+      "name": "retained revisit before first callback authored physical filter is visible before callbacks",
+      "passed": false
+    },
+    {
+      "details": {
+        "body": 4294967295,
+        "expectedBody": 2,
+        "hit": false
+      },
+      "name": "retained revisit before first callback filtered cast reflects real capsule geometry and tag",
+      "passed": false
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "retained disabled revisit motor exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "actualProxy": [
+          -3.3486483097076416,
+          2.068885326385498,
+          0.48912256956100464
+        ],
+        "expectedProxy": [
+          -3.3486483097076416,
+          2.068885326385498,
+          0.48912256956100464
+        ],
+        "root": [
+          -4.0,
+          2.0,
+          1.0
+        ]
+      },
+      "name": "retained disabled revisit query pose is derived from authoritative root plus rotated offset",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "retained disabled revisit authored enabled state is visible before callbacks",
+      "passed": true
+    },
+    {
+      "details": {
+        "layer": 99,
+        "mask": 0
+      },
+      "name": "retained disabled revisit authored physical filter is visible before callbacks",
+      "passed": false
+    },
+    {
+      "details": {
+        "body": 4294967295,
+        "expectedBody": 3,
+        "hit": false
+      },
+      "name": "retained disabled revisit filtered cast reflects real capsule geometry and tag",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "publication/revisit did not advance simulation",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "revisit ordinary zero-dt synchronization motor exists",
+      "passed": true
+    },
+    {
+      "details": {
+        "actualProxy": [
+          6.8266191482543945,
+          6.918942928314209,
+          8.011431694030762
+        ],
+        "expectedProxy": [
+          6.8266191482543945,
+          6.918942928314209,
+          8.011431694030762
+        ],
+        "root": [
+          6.0,
+          7.0,
+          8.0
+        ]
+      },
+      "name": "revisit ordinary zero-dt synchronization query pose is derived from authoritative root plus rotated offset",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "revisit ordinary zero-dt synchronization authored enabled state is visible before callbacks",
+      "passed": true
+    },
+    {
+      "details": {
+        "layer": 99,
+        "mask": 0
+      },
+      "name": "revisit ordinary zero-dt synchronization authored physical filter is visible before callbacks",
+      "passed": true
+    },
+    {
+      "details": {
+        "body": 2,
+        "expectedBody": 2,
+        "hit": true
+      },
+      "name": "revisit ordinary zero-dt synchronization filtered cast reflects real capsule geometry and tag",
+      "passed": true
+    }
+  ],
+  "contract": "M59 atomic activation publishes complete CharacterMotor query representation before the next script callback",
+  "failures": 8,
+  "scope": "Standalone M78 lifecycle audit; original fixtures and source unchanged."
+}

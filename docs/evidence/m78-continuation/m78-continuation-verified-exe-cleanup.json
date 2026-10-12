@@ -1,0 +1,179 @@
+﻿{
+    "scope":  "Removed only exact generated executables after independent host archive SHA and byte verification; no libraries, DLLs, sources, tools, results or working review package removed",
+    "freeBefore":  214614016,
+    "freeAfter":  328589312,
+    "files":  [
+                  {
+                      "archiveName":  "m78-continuation-old-judas.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas.exe",
+                      "sha256":  "0e3ab4eedc9ddc4f37e26536a9af01ebb15d88539b379dc0fc557d0992ff196e",
+                      "name":  "judas.exe",
+                      "bytes":  10301952,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas.exe",
+                      "hostVerifiedSHA256":  "0e3ab4eedc9ddc4f37e26536a9af01ebb15d88539b379dc0fc557d0992ff196e"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_balance_lab_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_balance_lab_tests.exe",
+                      "sha256":  "61e5eafe728d892561e82b82aaa527ed7c2351fbc9a4e299f9c7a48d09312be3",
+                      "name":  "judas_balance_lab_tests.exe",
+                      "bytes":  9467392,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_balance_lab_tests.exe",
+                      "hostVerifiedSHA256":  "61e5eafe728d892561e82b82aaa527ed7c2351fbc9a4e299f9c7a48d09312be3"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_character_motor_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_character_motor_tests.exe",
+                      "sha256":  "97c87ce426db35dc6d0d2150ae2bc81d70d2dd2ed9aca8c825e4174617536a80",
+                      "name":  "judas_character_motor_tests.exe",
+                      "bytes":  7683072,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_character_motor_tests.exe",
+                      "hostVerifiedSHA256":  "97c87ce426db35dc6d0d2150ae2bc81d70d2dd2ed9aca8c825e4174617536a80"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_collision_geometry_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_collision_geometry_tests.exe",
+                      "sha256":  "278762b6ad3f59c8af795fd2c04d1cd4d8f99d24a76272d8a83879f3ea6a21b9",
+                      "name":  "judas_collision_geometry_tests.exe",
+                      "bytes":  5292544,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_collision_geometry_tests.exe",
+                      "hostVerifiedSHA256":  "278762b6ad3f59c8af795fd2c04d1cd4d8f99d24a76272d8a83879f3ea6a21b9"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_editor.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_editor.exe",
+                      "sha256":  "12b08ed177e9dd44326db497f90560e87f2b48e838f54d20f796a212d11d1e66",
+                      "name":  "judas_editor.exe",
+                      "bytes":  13112832,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_editor.exe",
+                      "hostVerifiedSHA256":  "12b08ed177e9dd44326db497f90560e87f2b48e838f54d20f796a212d11d1e66"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_export.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_export.exe",
+                      "sha256":  "2b27ce19c51d574ff50640f0e31aa9e7bd900167a69375897402b870a7e59e14",
+                      "name":  "judas_export.exe",
+                      "bytes":  8138752,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_export.exe",
+                      "hostVerifiedSHA256":  "2b27ce19c51d574ff50640f0e31aa9e7bd900167a69375897402b870a7e59e14"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_joint_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_joint_tests.exe",
+                      "sha256":  "2ef8f76430ffb69b8ba36b47f9018a677e125848c6fe40d13cb6d4087cfbd9a4",
+                      "name":  "judas_joint_tests.exe",
+                      "bytes":  443904,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_joint_tests.exe",
+                      "hostVerifiedSHA256":  "2ef8f76430ffb69b8ba36b47f9018a677e125848c6fe40d13cb6d4087cfbd9a4"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_navigation_bake.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_navigation_bake.exe",
+                      "sha256":  "fb9cc09d985e51205de6f8a7b008b5b8a91d8b86c160de379853e777676089aa",
+                      "name":  "judas_navigation_bake.exe",
+                      "bytes":  7819776,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_navigation_bake.exe",
+                      "hostVerifiedSHA256":  "fb9cc09d985e51205de6f8a7b008b5b8a91d8b86c160de379853e777676089aa"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_navigation_dependency_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_navigation_dependency_tests.exe",
+                      "sha256":  "b7206a45ee307394a2d9db00f66cbdc458dd9a7178c9321a02fbeca01f88bc00",
+                      "name":  "judas_navigation_dependency_tests.exe",
+                      "bytes":  7891456,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_navigation_dependency_tests.exe",
+                      "hostVerifiedSHA256":  "b7206a45ee307394a2d9db00f66cbdc458dd9a7178c9321a02fbeca01f88bc00"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_physical_animation_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_physical_animation_tests.exe",
+                      "sha256":  "245432a8ecfc3fe5f8a00c234933fe2bf398edd2176d14acca871d24b2112ddf",
+                      "name":  "judas_physical_animation_tests.exe",
+                      "bytes":  7512064,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_physical_animation_tests.exe",
+                      "hostVerifiedSHA256":  "245432a8ecfc3fe5f8a00c234933fe2bf398edd2176d14acca871d24b2112ddf"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_physical_balance_controller_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_physical_balance_controller_tests.exe",
+                      "sha256":  "4eea568accf8b22050d67bb5b1305394e7bbd399a8861b0bf652c4c4f219ea3f",
+                      "name":  "judas_physical_balance_controller_tests.exe",
+                      "bytes":  591360,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_physical_balance_controller_tests.exe",
+                      "hostVerifiedSHA256":  "4eea568accf8b22050d67bb5b1305394e7bbd399a8861b0bf652c4c4f219ea3f"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_physical_balance_foundation_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_physical_balance_foundation_tests.exe",
+                      "sha256":  "b2f12f5962806303db7f1c10ee9ea68b362e2b739191a5b47f769babeb13a9e2",
+                      "name":  "judas_physical_balance_foundation_tests.exe",
+                      "bytes":  7385600,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_physical_balance_foundation_tests.exe",
+                      "hostVerifiedSHA256":  "b2f12f5962806303db7f1c10ee9ea68b362e2b739191a5b47f769babeb13a9e2"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_prefab_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_prefab_tests.exe",
+                      "sha256":  "b6cf0de5e00a2eea9c416690e4450f0798cb8fe6500bdddcc66348d8051e237b",
+                      "name":  "judas_prefab_tests.exe",
+                      "bytes":  7492096,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_prefab_tests.exe",
+                      "hostVerifiedSHA256":  "b6cf0de5e00a2eea9c416690e4450f0798cb8fe6500bdddcc66348d8051e237b"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_profiler_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_profiler_tests.exe",
+                      "sha256":  "bfa0aa9b6a28829c73e6917231b4a170c5fa3e82965974f3eb1a47d2950a4895",
+                      "name":  "judas_profiler_tests.exe",
+                      "bytes":  125952,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_profiler_tests.exe",
+                      "hostVerifiedSHA256":  "bfa0aa9b6a28829c73e6917231b4a170c5fa3e82965974f3eb1a47d2950a4895"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_rigid_motion_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_rigid_motion_tests.exe",
+                      "sha256":  "17b2dbf2df8dc656a4d32886545c15b177bdb573c3d33fbf50574ae4de562107",
+                      "name":  "judas_rigid_motion_tests.exe",
+                      "bytes":  455680,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_rigid_motion_tests.exe",
+                      "hostVerifiedSHA256":  "17b2dbf2df8dc656a4d32886545c15b177bdb573c3d33fbf50574ae4de562107"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_scalability_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_scalability_tests.exe",
+                      "sha256":  "47b1bd135249828bb8ee0e8764107c222fa2291f03a936329b7257cbe9b71e66",
+                      "name":  "judas_scalability_tests.exe",
+                      "bytes":  8004608,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_scalability_tests.exe",
+                      "hostVerifiedSHA256":  "47b1bd135249828bb8ee0e8764107c222fa2291f03a936329b7257cbe9b71e66"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_spacecraft_control_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_spacecraft_control_tests.exe",
+                      "sha256":  "26e36fbbd64914b074d035a309f99e530cfd23886ecc2fe4c8c93d347573fae0",
+                      "name":  "judas_spacecraft_control_tests.exe",
+                      "bytes":  2092032,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_spacecraft_control_tests.exe",
+                      "hostVerifiedSHA256":  "26e36fbbd64914b074d035a309f99e530cfd23886ecc2fe4c8c93d347573fae0"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_spacecraft_flight_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_spacecraft_flight_tests.exe",
+                      "sha256":  "b33dbd3bdea1a62efb7e4e8ed8174c2cabc2ac1166f7212f14ab3af3aa6d3d81",
+                      "name":  "judas_spacecraft_flight_tests.exe",
+                      "bytes":  2088448,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_spacecraft_flight_tests.exe",
+                      "hostVerifiedSHA256":  "b33dbd3bdea1a62efb7e4e8ed8174c2cabc2ac1166f7212f14ab3af3aa6d3d81"
+                  },
+                  {
+                      "archiveName":  "m78-continuation-old-judas_streaming_tests.exe",
+                      "path":  "C:\\JudasValidation\\Build\\Release\\judas_streaming_tests.exe",
+                      "sha256":  "81d9c91a13b18ba70887c76f93edab888427bd9256ff932fd0db04e441756dbd",
+                      "name":  "judas_streaming_tests.exe",
+                      "bytes":  8033280,
+                      "hostArchivePath":  ".cache/windows-vm-transfer/reports/m78-continuation-old-judas_streaming_tests.exe",
+                      "hostVerifiedSHA256":  "81d9c91a13b18ba70887c76f93edab888427bd9256ff932fd0db04e441756dbd"
+                  }
+              ],
+    "totalBytes":  113932800
+}

@@ -1,0 +1,18 @@
+Id:             1
+Name:           win10
+UUID:           877d6b10-f85b-4108-9d07-11953f247974
+OS Type:        hvm
+State:          running
+CPU(s):         4
+CPU time:       8552.5s
+Max memory:     6291456 KiB
+Used memory:    6291456 KiB
+Persistent:     yes
+Autostart:      disable
+Autostart Once: disable
+Managed save:   no
+Security model: apparmor
+Security DOI:   0
+Security label: libvirt-877d6b10-f85b-4108-9d07-11953f247974 (enforcing)
+Messages:       tainted: custom guest agent control commands issued
+

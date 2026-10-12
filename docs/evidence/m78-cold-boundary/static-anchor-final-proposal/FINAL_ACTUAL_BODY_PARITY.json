@@ -1,0 +1,65 @@
+{
+  "scope": "Instrumentation-only unchanged M70 copy; exact proposed WP archive. Ordinary real rigid-body authority and derived motor query geometry are counted separately; compare before capture vs immediately after Restore before callbacks/steps.",
+  "ordinaryRigidBodyCount": 35,
+  "motorProxyCount": 2,
+  "motorProxyEntityIds": [
+    10,
+    11
+  ],
+  "allNativeBodyCount": 37,
+  "differences": [],
+  "observerSourceSHA256": "ada79c04e3fad43a4780adfd3051804b038f9e0a9849315ec3d885a217e40eb9",
+  "proposedWPsha": "39ae0eb2132f7b5f6f43710dd82accf38ef21b04dc1c57bd8af4279da84ad2bb",
+  "archiveSHA256": "39973b306e1d251e4422b8afc5048e0d2f5e8ccf037f35a8a0d6e72c13890449",
+  "steps": [
+    {
+      "name": "final-parity-observer-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-motor-reconstruction/observer.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-final-proposal/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-final-proposal/libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl"
+      ],
+      "exitCode": 0,
+      "seconds": 0.7612371069990331
+    },
+    {
+      "name": "final-parity-observer-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-final-proposal/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-final-proposal/final-parity-observer",
+        "cold-write"
+      ],
+      "exitCode": 0,
+      "seconds": 0.3082060029992135
+    },
+    {
+      "name": "final-parity-observer-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-final-proposal/observer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-cold-boundary/static-anchor-final-proposal/final-parity-observer",
+        "cold-read"
+      ],
+      "exitCode": 0,
+      "seconds": 0.22828146599931642
+    }
+  ]
+}

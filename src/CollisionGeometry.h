@@ -20,6 +20,8 @@ glm::dvec3 PrimitiveCenter(const PrimitivePose&);
 GeometryDistance SegmentGeometry(glm::dvec3 a,glm::dvec3 b,double radius,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity(),bool nearestSurface=false,uint32_t feature=UINT32_MAX);
 GeometryDistance PointGeometry(glm::dvec3 point,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity());
 ContactManifold CookedContacts(const PrimitivePose&,const PrimitivePose&,double margin);
+// Exact accepted-contact existence; full manifolds remain authoritative for response.
+bool CookedHasContacts(const PrimitivePose&,const PrimitivePose&,double margin);
 GeometryDistance PolyGeometry(const PrimitivePose& query,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity(),uint32_t feature=UINT32_MAX);
 struct CollisionMassProperties {double volume=0;glm::dvec3 center{0};glm::dmat3 inertia{0};};
 CollisionMassProperties ShapeMassProperties(const Shape&);

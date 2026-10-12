@@ -1,0 +1,73 @@
+{
+  "scope": "Two unchanged native functional fixture repeats completed before operator clarified VM timings are descriptive only. No third repeat, diagnostic instrumentation or optimization was run. Linux host performance remains authoritative.",
+  "repeats": [
+    {
+      "repeat": 1,
+      "maxStep": 89,
+      "maxMs": 72.2031,
+      "over16_67": 37,
+      "step85": {
+        "step": "85",
+        "wall_ms": "60.2216",
+        "contacts": "24",
+        "ccd_queries": "285",
+        "ccd_iterations": "830",
+        "ccd_limit": "1",
+        "sampling_fallback": "1",
+        "geometry_predicates": "0",
+        "broadphase_ms": "0.0911",
+        "narrowphase_ms": "1.8731",
+        "solver_ms": "57.9781",
+        "sleeping": "0"
+      },
+      "worst": {
+        "step": "89",
+        "wall_ms": "72.2031",
+        "contacts": "40",
+        "ccd_queries": "252",
+        "ccd_iterations": "577",
+        "ccd_limit": "0",
+        "sampling_fallback": "0",
+        "geometry_predicates": "0",
+        "broadphase_ms": "0.1253",
+        "narrowphase_ms": "2.9503",
+        "solver_ms": "68.7563",
+        "sleeping": "0"
+      }
+    },
+    {
+      "repeat": 2,
+      "maxStep": 89,
+      "maxMs": 76.7884,
+      "over16_67": 39,
+      "step85": {
+        "step": "85",
+        "wall_ms": "59.2907",
+        "contacts": "24",
+        "ccd_queries": "285",
+        "ccd_iterations": "830",
+        "ccd_limit": "1",
+        "sampling_fallback": "1",
+        "geometry_predicates": "0",
+        "broadphase_ms": "0.1071",
+        "narrowphase_ms": "1.9325",
+        "solver_ms": "56.9188",
+        "sleeping": "0"
+      },
+      "worst": {
+        "step": "89",
+        "wall_ms": "76.7884",
+        "contacts": "40",
+        "ccd_queries": "252",
+        "ccd_iterations": "577",
+        "ccd_limit": "0",
+        "sampling_fallback": "0",
+        "geometry_predicates": "0",
+        "broadphase_ms": "0.2112",
+        "narrowphase_ms": "1.8303",
+        "solver_ms": "74.2541",
+        "sleeping": "0"
+      }
+    }
+  ]
+}

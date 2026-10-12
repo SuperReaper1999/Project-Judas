@@ -1,0 +1,30 @@
+{
+  "preparedOnly": true,
+  "noCompileOrExecution": true,
+  "HEAD": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "sources": {
+    "src/WorldPersistence.cpp": {
+      "currentSHA256": "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+      "HEAD_SHA256": "3a0f0b2ef9de4b0c40289e44562d52b62975028a5dad3d50fa03353038e24440",
+      "sameBytes": false
+    },
+    "src/RuntimeWorld.cpp": {
+      "currentSHA256": "1e9400f8276ba4e86a1f030610fe50a87c9e76d9777e628dd609ea58c4f6fc02",
+      "HEAD_SHA256": "1e9400f8276ba4e86a1f030610fe50a87c9e76d9777e628dd609ea58c4f6fc02",
+      "sameBytes": true
+    },
+    "src/ScriptSystem.cpp": {
+      "currentSHA256": "f436312f4a54a4330b8c7759a96aec1c655467f6fe4d0d22867e57771042daec",
+      "HEAD_SHA256": "f436312f4a54a4330b8c7759a96aec1c655467f6fe4d0d22867e57771042daec",
+      "sameBytes": true
+    },
+    "tests/WorldPersistenceTests.cpp": {
+      "currentSHA256": "b51c36f46c6bb69aa9bb84ffbaa87c222ab5e3b709a354974b0d84c2ce0a6853",
+      "HEAD_SHA256": "b51c36f46c6bb69aa9bb84ffbaa87c222ab5e3b709a354974b0d84c2ce0a6853",
+      "sameBytes": true
+    }
+  },
+  "probeSHA256": "9ac8c60aa46143371e4015c5e4bf316fc528c68ae32bdb0229ca4c220fca74d9",
+  "runnerSHA256": "3b91e0ce35479d6906a3769d27c9a256ccf68672563e3998dd8db361a4315afc",
+  "receiptSHA256": "681f8ec8a3e0ca3e4da28952cbfc5393cae425701fd8d72d92decb2b1822abc6"
+}

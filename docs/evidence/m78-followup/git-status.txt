@@ -1,0 +1,28 @@
+ M CMakeLists.txt
+ M docs/ARCHITECTURE.md
+ M docs/M77.md
+ M src/CollisionGeometry.cpp
+ M src/PhysicsWorld.cpp
+ M src/PhysicsWorld.h
+ M src/Prefab.cpp
+ M src/RigidBody.cpp
+ M src/RigidBody.h
+ M src/RigidMotion.h
+ M src/editor/TerrainTools.cpp
+ M src/editor/TerrainTools.h
+ M tests/CollisionGeometryTests.cpp
+ M tests/PrefabTests.cpp
+ M tests/RigidMotionTests.cpp
+ M tests/ScalabilityTests.cpp
+ M tests/SpacecraftControlTests.cpp
+ M tests/SpacecraftFlightTests.cpp
+ M tests/WorldStreamingTests.cpp
+ M tools/NavigationBake.cpp
+?? POST_M73_REPORT.txt
+?? docs/M78.md
+?? docs/M78_FOLLOWUP.md
+?? docs/evidence/m78-followup/
+?? docs/evidence/m78/
+?? src/authoring/NavigationDependencies.cpp
+?? src/authoring/NavigationDependencies.h
+?? tests/NavigationDependencyTests.cpp

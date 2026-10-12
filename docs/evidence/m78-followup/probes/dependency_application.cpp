@@ -1,0 +1,16 @@
+// Real moved shipping Application: replacement scenes, mesh collision, Detour,
+// rendering and safe reload; independent height comes from the edited source.
+#include "Application.h"
+#include "EngineHost.h"
+#include "RuntimeWorld.h"
+#include "SceneSession.h"
+#include "ScriptSystem.h"
+#include "CharacterMotor.h"
+#include "InteractivePlay.h"
+#include "ScreenshotWriter.h"
+#include <filesystem>
+#include <iostream>
+#include <thread>
+int main(int argc,char** argv){if(argc!=4)return 2;std::filesystem::path out=argv[2];std::filesystem::create_directories(out);float expected=std::stof(argv[3]);unsigned frame=0,phase=0,steady=0,checks=0,failures=0;BodyHandle old;std::string error;auto check=[&](bool ok,const char* name){++checks;failures+=!ok;std::cout<<(ok?"PASS ":"FAIL ")<<name<<std::endl;};auto quit=[](){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);};ApplicationControl c;c.hidden=true;c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);};c.frameSeconds=[](float){return 1.f/60;};c.afterFrame=[&](EngineHost& host,RuntimeWorld& w,InteractivePlay&){++frame;if(frame>2000){check(false,"bounded real application readiness");quit();return;}if(host.Resources().Stats().loading||w.Navigation().Statistics().surfaces==0){std::this_thread::sleep_for(std::chrono::milliseconds(1));return;}if(phase==1&&w.SceneControl()->Current()!="Scenes/region.judas")return;if(phase==2&&w.RuntimeBody(1).world==old.world)return;if(++steady<30)return;steady=0;
+ check(!w.Scripts()||w.Scripts()->Diagnostics().empty(),"ordinary composed scripts remain healthy");auto floor=w.RuntimeBody(1);PhysicsQueryFilter filter;for(auto id:w.ScriptObjects()){if(id==1)continue;auto h=w.RuntimeBody(id);if(h.IsValid())filter.ignoredBodies.push_back(h);if(auto* motor=w.RuntimeCharacter(id))filter.ignoredBodies.push_back(motor->observationBody);}auto hit=w.Physics().Raycast({0,15,0},{0,-1,0},30,filter);std::cout<<"terrain height "<<(hit.hit?hit.point.y:-999)<<" expected "<<expected<<std::endl;check(hit.hit&&hit.body.id==floor.id&&std::abs(hit.point.y-expected)<.001f,"real replacement collision matches independently edited terrain vertex");check(w.Navigation().FindPath({-10,0,-10},{10,0,-10}).status==NavigationPath::Status::Complete,"normal Detour path on this replaced scene");check(host.GetRenderer().Stats().drawCalls>0,"normal renderer presents actual composed content");std::vector<unsigned char> pixels;host.GetRenderer().CaptureFrame(host.GetWindow().Width(),host.GetWindow().Height(),pixels);check(WriteRgbPng((out/("scene-"+std::to_string(phase)+".png")).string(),host.GetWindow().Width(),host.GetWindow().Height(),pixels),"real presented frame captured for review");
+ if(phase==0){check(w.SceneControl()->Request("Scenes/region.judas",error),"normal scene boundary requests second dependent replacement");phase=1;}else if(phase==1){old=floor;check(w.SceneControl()->Reload(error),"normal current-scene reload queued");phase=2;}else{check(floor.world!=old.world,"reload retires old native world/body identity");phase=3;quit();}};Application app;char* args[]={argv[0],argv[1]};int code=app.Run(2,args,&c);check(code==0&&phase==3,"both real dependent scenes and reload complete normally");std::cout<<checks<<" checks "<<failures<<" failures\n";return failures?1:0;}

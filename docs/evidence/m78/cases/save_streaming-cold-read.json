@@ -1,0 +1,25 @@
+{
+  "case": "save_streaming-cold-read",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+    "read",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/followups/save_streaming"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T14:52:01.045558+00:00",
+  "executableSHA256": "9a4e8e94ae1a2c8a0a0ccdfedfdb65f1f92a9fe6fe63fb50504b52e9cb35f956",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 4.13477387400053,
+  "log": "docs/evidence/m78/cases/save_streaming-cold-read.log",
+  "logSHA256": "2fd9949c7ae4cf496a9da2fe6790644ce4482c30e80dd39ada9db9131f38d8e5"
+}

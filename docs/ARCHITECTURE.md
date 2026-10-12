@@ -1,6 +1,10 @@
 # Architecture
 
-## M77 physical-balance candidate (uncommitted; human review pending)
+## Current checkpoint and M78 corrective follow-up
+
+M77 is checkpointed at `9e77b2226edcf217ab789fe4f0fea42a3415a72d`, **NOT HUMAN VALIDATED**. The [M78 frozen audit](M78.md) describes that exact baseline; its read-only statements are historical audit scope, not the current working tree. The [first corrective candidate](M78_FOLLOWUP.md) and [midpoint/contact continuation](M78_CONTINUATION.md) are preserved reports of earlier corrective stages. The [cold-boundary continuation](M78_COLD_CONTINUATION.md) preserves that save-boundary stage. The [final combined M78 handoff](M78_FINAL.md) records the later publication-isolation correction, final-source checks and resumed audit gaps; it does not certify every engine capability. Physical Windows hardware acceptance remains outstanding.
+
+## M77 physical balance (checkpointed; human review pending)
 
 [M77](M77.md) adds explicit two-chain physical balance, bounded corrective steps
 and rest-reference get-up tasks. Configuration is default-off and does not activate
@@ -10,11 +14,26 @@ fully dynamic and unpinned. A planned foothold/reference is never physical suppo
 M77 owns mapped posture while opted in; M70/shared IK cannot also command those
 actuators. Clips/layers continue for unmapped joints and later visual return; actual
 physical pose publishes through M47, interpolation and normal skinning/sockets.
-Modern saves retain semantic task history and real bodies, reacquiring observations
-on resume. Whole-articulation region ownership is retained; individual-bone adoption
+Modern saves retain semantic task history and real bodies. Guarded new-format
+slots restore a captured complete, compatible observation publication before
+the next ordinary preparation. Older slots, unavailable publications and standalone
+history restoration reacquire observations after a step.
+Whole-articulation region ownership is retained; individual-bone adoption
 is refused. This is a bounded mechanical-rig capability, not universal humanoid
 recovery, a gait generator or a motor root servo. Candidate/platform/human status
 and inherited numerical limitations are recorded in M77; no acceptance is implied.
+
+The M78 continuation solves positive-definite body Euler angular drift by bounded implicit midpoint and its Cayley rotation, with world angular-momentum transport. Free-body orientation convergence, momentum and full-horizon energy are checked independently. Shortened anchored CCD segments and force/contact/constraint integration remain approximate; exact full-horizon energy does not imply exact interior-sample energy. Mesh contact witnesses use per-point geometric separation, and conservative CCD advancement can use the complete mesh enclosure. Boolean cooked-contact queries stop at an accepted witness only when a consumer needs existence; physical response still constructs complete manifolds. These are generic corrections, not balance-fixture retuning.
+
+HISTORICAL — the first M78 corrective candidate regressed the unchanged M77 impulse case on Linux and Windows. Isolated continuation builds traced completed support observations incorrectly sharing invalidated warm-start ownership, event-boundary angular state, and an explicit angular energy defect. The midpoint/contact continuation separated actual start/TOI solved observations from solver warm-start history, retaining generation/revision/filter bounds. At that stage the unchanged controller and authored application passed on Linux and native Windows VM, while an additional exact-snapshot in-progress cold-save continuation still failed on both platforms. Command replay and waiting bypass were insufficient, and joint warm-initial-guess sensitivity was recorded. No controller gains, authored rig, timestep or original success thresholds were retuned, and no diagnostic controller/persistence overlay from that stage was retained. The later save-boundary correction and remaining legacy gap are described next.
+
+The later [M78 cold-boundary continuation](M78_COLD_CONTINUATION.md) establishes the missing save contract: actual latched joint commands, bounded numerical continuation history and a separately completed physics observation. New joint-bearing saves use articulation 4/contact 2, existing durable mappings and guarded private reconstruction; no new participant slots or contact-cache replay. Old snapshots lacking these fields retain their cold-start path and the original failed witness remains failed. The Windows VM validates native functionality, not the host performance gate. FLU-001 remains deferred and unchanged; human review is pending.
+
+The final combined review separates independent query-proxy refresh from physical restored-publication invalidation; an attached joint or ordinary physical body still invalidates its affected continuation. The resumed audit also reproduces a pre-existing streamed-motor query filter/enabled publication gap before the next character update. That defect is recorded, not repaired or covered by disk-save reconstruction proof.
+
+The same audit reproduces a separate pre-existing save-exclusion gap: a legally excluded simple dynamic actor is omitted from the entity scene but still contributes a required sleep record, so full restoration fails. The normal non-excluded control restores its real velocity. This is an unresolved participant-eligibility defect, not a change to the new joint-continuation contract; see the final handoff's LIF-002 reproduction.
+
+Terrain cooking now reports dependent saved-scene navigation freshness across registered owned scenes and explicitly published kit scenes. Rebuild is explicit, uses the existing baker/publication transaction, and preserves immutable kit inputs. Private unpublished base scenes cannot be inferred. Appearance-only changes do not invalidate geometry bakes.
 
 ## M75 author-time local terrain
 
@@ -38,7 +57,7 @@ describe the evidence available at their original milestones.
 
 ## Current reference and historical capability overview
 
-Current accepted source baseline: `ab3dfbab13585680a9e6cc92fa318c8d95012979`
+Historical accepted baseline before the M77 checkpoint: `ab3dfbab13585680a9e6cc92fa318c8d95012979`
 (post-M76 housekeeping/demo game). M76 human validation remains pending.
 Historical Lastlight UI/wall-pursuit checkpoint:
 `b7d7f4142b243cd57d9998f4952857e67e5d84a8`. M73 owned signals were accepted and checkpointed at
@@ -6391,6 +6410,8 @@ available. Disable SAS to restore raw M12 rotation input and torque-free
 angular coast. The controller does not apply force or write any linear or
 angular velocity directly. It does not model gyroscopic terms or
 contact-aware control.
+
+**Historical controller formulation:** the preceding SAS law does not explicitly compensate gyroscopic torque. The M78 rigid-body correction transports angular momentum during free drift; it does not add that compensation to this historical SAS controller. Its affected regressions and remaining numerical bounds are separate from this historical M18 evidence.
 
 `judas_spacecraft_flight_tests` checks source acceleration magnitude/direction,
 one-period unpowered curved flight, rotate-the-universe equivalence, prograde,

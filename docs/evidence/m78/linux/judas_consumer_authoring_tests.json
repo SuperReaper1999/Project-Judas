@@ -1,0 +1,28 @@
+{
+  "id": "judas_consumer_authoring_tests",
+  "source": "tests/ConsumerAuthoringTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_consumer_authoring_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/post_m65_consumers",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_consumer_authoring_tests"
+  ],
+  "adapter": "read-only consumer source and owned output",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "8bb6134674831a0f9da822bcb20dcb580ea519d4fd1052e879eaf529b2990527",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 35,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_consumer_authoring_tests.log",
+  "logSHA256": "3aab6cf1d8f3fd8160fdcb790ec5485c4e2d967d1d990c0c19dd6806ec1c070a",
+  "seconds": 0.3833584250005515
+}

@@ -1,0 +1,31 @@
+{
+  "scope": "Independent host SHA/size verification of exact named generated case before retirement",
+  "hostVerified": true,
+  "case": "physical",
+  "files": [
+    {
+      "path": "C:\\JudasValidation\\Build\\Release\\m78-closure-physical.exe",
+      "sha256": "7590de88af533209e962c1ca51c486b09884042e607a5cfe7bfd87a1ac610a1b",
+      "name": "m78-closure-physical.exe",
+      "bytes": 7523840
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureBuild\\objects\\physical-0.obj",
+      "sha256": "52aabd12bf9d30785233709e4ca5062dc96e0c5f2240cab2a2d62c8c6d0b7fe0",
+      "name": "physical-0.obj",
+      "bytes": 536260
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-physical.map",
+      "sha256": "ffc963b4204c3e26819208a657c8033e28314a6f658b22fc1c5e27631b2f66f7",
+      "name": "m78-closure-physical.map",
+      "bytes": 4346404
+    },
+    {
+      "path": "C:\\JudasValidation\\M78ClosureResults\\m78-closure-physical-link.log",
+      "sha256": "61d492d07c0da71ea667719940fa833962016af0a61a99e5e1cbd7045c8b807c",
+      "name": "m78-closure-physical-link.log",
+      "bytes": 33930
+    }
+  ]
+}

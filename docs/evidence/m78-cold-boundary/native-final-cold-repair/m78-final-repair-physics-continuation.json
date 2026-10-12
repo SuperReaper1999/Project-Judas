@@ -1,0 +1,18 @@
+﻿{
+    "seconds":  1.0165644,
+    "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+    "case":  "physics_continuation",
+    "expectedSaveSHA256":  null,
+    "run":  "physics-continuation",
+    "executableSHA256":  "3eb3053e1af95c20a66bc5e5f8ec66e8775ef6fc251de3825c87c9428765ec93",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "files":  [
+
+              ],
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "freeBytes":  63496192,
+    "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

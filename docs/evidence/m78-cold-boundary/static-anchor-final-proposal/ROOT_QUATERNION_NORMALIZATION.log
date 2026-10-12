@@ -1,0 +1,5 @@
+ROOT enabled=1 p 1 q 0 v 1 qbefore 0.939372718,0.0916432887,0.183286577,0.274929851 qafter 0.939372838,0.0916432962,0.183286592,0.274929881
+FAIL entity root state remains motor root rather than offset proxy
+ROOT enabled=0 p 1 q 0 v 1 qbefore 0.939372838,0.0916432962,0.183286592,0.274929881 qafter 0.939372718,0.0916432887,0.183286577,0.274929851
+FAIL entity root state remains motor root rather than offset proxy
+SUMMARY 49 checks 2 failures

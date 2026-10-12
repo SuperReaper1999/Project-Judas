@@ -1,0 +1,72 @@
+﻿{
+    "sources":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\src\\RigidBody.cpp",
+                        "sha256":  "a585f6bec6c639f9eb7207a6bf67a7209e76c743216c8221b0c93288115555df",
+                        "bytes":  4168
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\src\\PhysicsWorld.cpp",
+                        "sha256":  "c62cc731ccaa04fe48a16ad19fed16dec529211cfbd80b37cae2ae2c3627d30b",
+                        "bytes":  179209
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\src\\CollisionGeometry.cpp",
+                        "sha256":  "14de46531f10a3e42d859ef3a45d4e164b2faf34f6bd4266e60bf4a6b272421a",
+                        "bytes":  20252
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\src\\RigidMotion.h",
+                        "sha256":  "4f834b483c51ef533d4361dff0e333a14e59f6f23070c645b6864a0cdd997497",
+                        "bytes":  5735
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\tests\\NavigationDependencyTests.cpp",
+                        "sha256":  "38aecede76bbd6c2bebed3303bf941b872f116046025ca327288a0aff3489a0b",
+                        "bytes":  5084
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\tests\\SpacecraftControlTests.cpp",
+                        "sha256":  "548ceaafed42b5caba9781108b21c527be30d60afe3a74e606919c96845b5198",
+                        "bytes":  31023
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Source\\tests\\SpacecraftFlightTests.cpp",
+                        "sha256":  "85b0139c79ec4a2a5e691cd191ea0738c949d35ce76a49f11ae9478a48b1c472",
+                        "bytes":  15566
+                    }
+                ],
+    "recipes":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_navigation_dependency_tests.dir\\Release\\judas_navigation_dependency_tests.tlog\\CL.command.1.tlog",
+                        "missing":  true,
+                        "target":  "judas_navigation_dependency_tests"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_navigation_dependency_tests.dir\\Release\\judas_navigation_dependency_tests.tlog\\link.command.1.tlog",
+                        "missing":  true,
+                        "target":  "judas_navigation_dependency_tests"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_spacecraft_control_tests.dir\\Release\\judas_spacecraft_control_tests.tlog\\CL.command.1.tlog",
+                        "missing":  true,
+                        "target":  "judas_spacecraft_control_tests"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_spacecraft_control_tests.dir\\Release\\judas_spacecraft_control_tests.tlog\\link.command.1.tlog",
+                        "missing":  true,
+                        "target":  "judas_spacecraft_control_tests"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_spacecraft_flight_tests.dir\\Release\\judas_spacecraft_flight_tests.tlog\\CL.command.1.tlog",
+                        "missing":  true,
+                        "target":  "judas_spacecraft_flight_tests"
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\judas_spacecraft_flight_tests.dir\\Release\\judas_spacecraft_flight_tests.tlog\\link.command.1.tlog",
+                        "missing":  true,
+                        "target":  "judas_spacecraft_flight_tests"
+                    }
+                ],
+    "freeBytes":  42344448
+}

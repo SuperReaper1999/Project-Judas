@@ -1,0 +1,5 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/StreamingMotorPublication.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m78-closure/audit-lifecycle/FixtureSupport.h:11:10: fatal error: nlohmann/json.hpp: No such file or directory
+   11 | #include <nlohmann/json.hpp>
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.

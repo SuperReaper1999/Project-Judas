@@ -1,0 +1,18 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/moved-runtime/game.judasproj)
+Scene: Forked landscape (/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data/judas/mods/judas-modding-lab/Cache/5e839140a0028cf7afef0ecac1c9f806fbf3f9bb1a4204c19132b8deb0915eaf.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS required composed terrain/body ready through normal resource path
+PASS ordinary authored UI published
+PASS normal renderer capture
+PASS frozen catalog reaches normal script/resource database
+PASS motor grounded above actual terrain
+PASS normal modern save/load request
+PASS same exact loadout completes modern transaction
+PASS fresh process restores saved mod fact without replayed signal
+PASS fresh process restores authoritative character pose
+PASS effective-content fingerprint established
+PASS normal Application shutdown
+11 checks, 0 failures

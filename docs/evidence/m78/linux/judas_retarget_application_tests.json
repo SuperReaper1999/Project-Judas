@@ -1,0 +1,29 @@
+{
+  "id": "judas_retarget_application_tests",
+  "source": "tests/RetargetApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/retarget_lab/retarget_lab.judasproj",
+    "probe",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_retarget_application_tests"
+  ],
+  "adapter": "ordinary project and inspected application probe mode",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "e767d782829e7209f9ed64e8be36e722ae57600928ef37e264f7f086363c1e3a",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 30,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_retarget_application_tests.log",
+  "logSHA256": "bf07567bc0ad2d1a74f34eba049819cd28a1559bd7f29104853e49faee060223",
+  "seconds": 3.930806439000662
+}

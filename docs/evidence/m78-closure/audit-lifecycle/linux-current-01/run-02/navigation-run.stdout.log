@@ -1,0 +1,35 @@
+PASS ordinary owned project
+PASS physical prefab source
+PASS normal prefab identity
+PASS linked physical prefab instance
+PASS normal prefab and hierarchy resolution
+PASS ordinary compact initial bake
+PASS save accepted initial bake
+PASS normal navigation identity
+PASS owned scene
+PASS linked physical prefab instance
+PASS normal prefab and hierarchy resolution
+PASS ordinary compact initial bake
+PASS save accepted initial bake
+PASS normal navigation identity
+PASS owned scene
+PASS registered startup
+PASS inspect transitive physical prefab dependency
+PASS both independently authored scenes are fresh dependents of the prefab
+PASS real shared collider edit
+PASS reinspect changed source
+PASS both scenes detect changed resolved prefab geometry
+PASS source changes after the actual bounded bake
+PASS revision race rejected before batch publication
+PASS failed rebuild retains exact scene/assets/metadata/project bytes and creates no published orphan
+PASS failed revision race releases private staging
+PASS changed source remains inspectable
+PASS neither dependent is falsely reported fresh after race rejection
+PASS new explicit rebuild from the current source
+PASS recheck newly accepted batch
+PASS both owned dependents are now fresh
+PASS read accepted scene
+PASS normal export validation accepts actual refreshed dependency
+PASS read accepted scene
+PASS normal export validation accepts actual refreshed dependency
+SUMMARY 34 checks 0 failures

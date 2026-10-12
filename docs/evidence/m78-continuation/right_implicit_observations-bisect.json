@@ -1,0 +1,14 @@
+{
+  "name": "right_implicit_observations",
+  "base": "right_observations_v2",
+  "baseArchiveSHA256": "24ed2072ed63304befa7c556d0b576bf4d16563ffc2f643337894e8f5010171e",
+  "donor": "right_implicit_midpoint",
+  "donorSourceSHA256": "10f9585bf92c525efaa2a2c4b6e0fdbafa5448d8e1f16def6802b16e57c9a09a",
+  "donorObjectSHA256": "cec13dcd4192b3fbb2586aa44efa48e909d64e2709e0567e97d56b6b8cac413d",
+  "engineSHA256": "b269b8665425453dd8b74331964f07ecda3201d8557326acfc53659e723e1032",
+  "exeSHA256": "15e4d93d7987ff83d4b48c99dd46c8e2c643fea04bf12604801b0e020a78977d",
+  "exitCode": 0,
+  "seconds": 2.753031480999198,
+  "fixtureSHA256": "fabaca3fea9087db521c6a43fcb45dd3731dd621c33e328a15ff247366afd772",
+  "scope": "Diagnostic object composition only; no fixture or acceptance edits"
+}

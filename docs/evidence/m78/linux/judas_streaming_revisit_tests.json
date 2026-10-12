@@ -1,0 +1,28 @@
+{
+  "id": "judas_streaming_revisit_tests",
+  "source": "tests/StreamingRevisitTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_revisit_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen/projects/streamed_range/streamed_range.judasproj",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_streaming_revisit_tests"
+  ],
+  "adapter": "ordinary project and isolated result root",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "48c48e7df669cfa709bd81651e659258f4b68ab61903fa530385f11506767727",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 7,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_streaming_revisit_tests.log",
+  "logSHA256": "ad5cc4fea919aa0c94fa747684c3cd55cacc5742e3211465c31aa6f715b46b7f",
+  "seconds": 45.8248590259991
+}

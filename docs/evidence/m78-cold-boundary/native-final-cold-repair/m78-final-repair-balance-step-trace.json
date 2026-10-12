@@ -1,0 +1,30 @@
+﻿{
+    "seconds":  2.9198082,
+    "sourceBundleSHA256":  "a7f7fb649e80dc0002091c7a15d35b99f57811a2ad412b1bbedd1a4bf56a58d4",
+    "case":  "balance_lab",
+    "expectedSaveSHA256":  null,
+    "run":  "balance-step-trace",
+    "executableSHA256":  "f7d4df34013c4e347f1b0c920a9d2b330c49250736950cf6a5968509ac73fac6",
+    "scope":  "Final actual production candidate native focused validation; unchanged original fixtures and acceptance. Exact legacy a106 remains preserved separately. No VM performance gate.",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-step-trace\\step-trace-state.json",
+                      "sha256":  "50b5dc0637cb78267fb859cc564483b3646304283e409438aa5ffc3f73e086e2",
+                      "bytes":  365,
+                      "reportName":  "m78-final-repair-balance-step-trace-step-trace-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-step-trace\\step-trace.jsonl",
+                      "sha256":  "838e760220e2bd1f6f6b5bd26cdcfdc3b14a4a303bbb0941458bf1a1670e4d18",
+                      "bytes":  612109,
+                      "reportName":  "m78-final-repair-balance-step-trace-step-trace.jsonl"
+                  }
+              ],
+    "arguments":  [
+                      "C:\\JudasValidation\\M78ColdRepairFinalResults\\balance-step-trace",
+                      "step-trace"
+                  ],
+    "exitCode":  0,
+    "freeBytes":  81149952,
+    "archiveSHA256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e"
+}

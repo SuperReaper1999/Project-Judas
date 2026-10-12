@@ -1,0 +1,480 @@
+# M61 — Judas learns to remember everything.
+
+Starting checkpoint : a9c6cd780b8c93db6355b791c6fdb34afec7cf53
+
+
+M60 must be human-accepted, committed and pushed before this brief is executed.
+If the checkpoint above is blank, STOP and ask for it. Do not substitute M59,
+the icon checkpoint or an unreviewed candidate. Verify HEAD/main/origin/main and
+working-tree state; preserve unexpected operator edits rather than overwriting them.
+Read the actual M60 handoff, current source and documentation before designing
+its persistence integration. This advance brief does not claim that every planned
+M60 feature has shipped or prescribe unverified audio API names.
+
+Implement M61 to candidate completion. No commit, push or tag before review.
+Do not begin M62 or unrelated feature work.
+
+GOAL
+Give ordinary Judas games an easy, reusable SAVE/LOAD subsystem: slots, metadata,
+safe disk storage, engine-state reconstruction and bounded game-owned JS data.
+A game should request a save, exit the process, relaunch, load that slot, and
+continue its world without writing a serializer for every engine subsystem.
+
+Judas owns storage, identity, snapshot consistency and subsystem restoration.
+Projects choose save policy and contribute game-specific state through JudasJS.
+No SpringRangeSaveManager, player-specific save path or privileged demo dispatch.
+
+"Remember everything" means supported authoritative state, not a process-memory
+dump. Do not serialize GPU objects, native pointers, QuickJS heaps, decoder memory,
+worker stacks or diagnostic history. Reconstruct derived services deliberately;
+never silently reset meaningful state while reporting a complete successful save.
+
+## 1. Reuse existing persistence and establish an honest participation contract
+
+Trace existing world saves/baseline validation, M29 lifecycle, M40 script state,
+M43 session/scene replacement, M54/M55 liquid ownership and M59 suspension/adoption.
+Reuse the actual capture/validation/creation paths. Do not copy RuntimeWorld
+construction into a separate save-only implementation or make scripts reimplement
+native component serializers.
+
+Keep four concepts distinct:
+- Authored baseline: scenes, prefabs, registered assets and configuration.
+- Live runtime: instantiated entities and authoritative subsystem state.
+- Suspended runtime: M59's retained changes/tombstones for nonresident regions.
+- Disk save: a versioned record sufficient to reconstruct the selected game state.
+
+Provide one small extensible persistence-participant mechanism. Participants own
+capture, format version, validation, reference fixup and restoration for their
+subsystem. Reuse a participant between disk saves and suspension where their
+semantics match; disk persistence must not automatically change eviction policy.
+Do not build universal reflection, an ECS rewrite or a serialization framework
+larger than the engine problem.
+
+First produce a compact component coverage matrix: preserved state, derived or
+restarted state, transient exclusions, legacy handling and unsupported combinations.
+Use sensible default participation for ordinary entities. Allow explicit transient
+project content, but reject a supposedly complete save when required state cannot
+be restored. Report the exact entity/component/reason. Do not quietly demote the
+required modern systems below into exclusions to make the matrix green.
+
+## 2. Game-facing slots, metadata and a small JudasJS API
+
+Provide a project-scoped save service available from a boot/menu scene as well as
+an active game. Async operation lifetime must not depend on the requesting world
+surviving. Integrate with EngineHost/current runtime ownership; no VM per slot.
+
+Expose operations conceptually equivalent to:
+    saves.save(slotId, options)
+    saves.load(slotId)
+    saves.list()
+    saves.exists(slotId)
+    saves.delete(slotId)
+
+These are API intent, NOT assertions that these names exist. Match JudasJS style.
+Save/load return safe request/status handles or the existing equivalent. Expose
+queued/capturing/writing/preparing/restoring/completed/failed states, errors and
+staged progress where measurable. Polling or safe-boundary notifications suffice;
+do not add Promises, async JS or arbitrary filesystem access.
+
+A slot has an opaque validated ID and separate Unicode display name, timestamp,
+root scene/world identity, compatibility status and bounded game metadata. Listing
+slots should inspect metadata without reconstructing every world. Missing, corrupt,
+incompatible and busy are distinct outcomes. Bound listings and request records.
+Provide two independent slots and overwrite/delete in the demonstration.
+
+Projects own manual save, quicksave, autosave cadence and menu decisions in JS.
+No mandatory engine timer or automatic overwrite on quit. A successful request
+means its actual disk-commit stage completed, not just that saving was queued.
+Requests for one slot have deterministic serialization; an older async write must
+not overwrite a newer completed save. Define conflict/cancellation rules for
+save/load/delete, caller destruction, project changes and shutdown. Cancellation
+is only promised before the documented commit boundary.
+
+## 3. Stable identity and reference reconstruction
+
+Persist project/game identity and qualified authored identity, not transient body
+slots or asset paths derived from CWD. Reuse M59 region-instance/local identities.
+Runtime-spawned entities need durable identities that survive saving, loading and
+subsequent saves. Adoption changes ownership, not the travelling entity's identity.
+Two instances of one prefab must remain distinct.
+
+Save prefab/source identity and necessary runtime definition/overrides; preserve
+created/destroyed entities, hierarchy, adoption and tombstones. Baseline entities
+must not respawn after load merely because their region was unloaded at save time.
+Capture references to joints, supports, attachments, liquid connections and script
+state using stable keys, then remap to fresh generation-safe runtime handles.
+Preserve full-width IDs without rounding through JavaScript Number.
+
+Expose a minimal safe persistent-reference encode/resolve facility if scripts need
+one. Do not serialize raw wrapper objects or encourage saving runtime numeric IDs.
+Unloaded/destroyed optional targets resolve explicitly as unavailable; required
+references activate their dependency or fail validation. Never synchronously load
+an entire region from an innocent reference getter.
+
+All old world handles become invalid on load, even if the same authored entity
+returns. Stable identity permits reacquisition; it does not prolong native lifetime.
+
+## 4. A coherent snapshot, not several different moments mixed together
+
+Queue requests from update/fixedUpdate/UI/contact callbacks. Capture at a safe
+outer boundary after the current authoritative step and event processing finish.
+Document whether the save represents request time or the later capture boundary.
+Freeze publication/mutation only long enough to produce one consistent snapshot:
+entities, region ownership, script/session data, liquid transfers and relevant
+subsystem state must describe the same boundary.
+
+Use immutable snapshot buffers for worker encoding/I/O. Workers must not traverse
+live PhysicsWorld, QuickJS, LiquidSystem, Renderer or mutable streaming caches.
+Audio state needs a bounded control-state handoff, never a wait on its callback.
+Reuse JobSystem; no new uncontrolled thread pool. Snapshot sizes, pending writes
+and restore staging are bounded. Backpressure must be visible, not hidden memory
+growth or dropped unique state.
+
+A short measured capture pause is acceptable; arbitrary zero-pause snapshots are
+not required. Do not spread reads over advancing frames and call it consistent.
+Encoding/writing after capture should run in the background. Saving itself must
+not reset waves, poses, motor velocity, music or region residency.
+
+Pending M59 preparation may continue privately, but cannot publish halfway through
+capture. Snapshot committed gameplay state, not half-installed components. Normalize
+or defer in-progress unload units safely; include their retained state exactly once.
+Do not WaitAll on every streaming/audio job or load every region to take a save.
+
+## 5. Physical, character, animation and navigation state
+
+Preserve the current supported authoritative state for ordinary entities: transforms,
+linear/angular velocities, lifecycle/fidelity, enabled flags, runtime classification,
+physical parameters and changed constraint limits/motors/springs. Include simulation
+time and engine-owned deterministic sequence state where gameplay depends on them.
+Offline wall-clock time must not become a huge physics catch-up interval on load.
+
+CharacterMotor needs velocity, orientation, configuration and support/motion state
+necessary for a stable resume. Rebind supporting bodies and generic attachments
+without doubling carrier motion or creating a false jump/landing. Cameras and game
+controls remain separate. Initialize presentation/motion observations coherently
+so restored movement causes neither model jitter nor artificial Doppler spikes.
+
+Preserve animation playback times, loop/speed, transitions, masks/layers/additive
+configuration and any captured pose needed to continue an in-progress transition.
+Ragdolls restore active mode, mapped bodies, poses, velocities and constraints;
+do not silently return an active articulation to bind pose or ordinary animation.
+Rebuild skinning/GPU data through normal resources. No new animation physics.
+
+Navigation restores destination, relevant settings and gameplay-relevant traversal
+state. Rebuild corridors/native polygon refs against available baked surfaces; do
+not serialize Detour pointers or claim a route is complete across absent regions.
+Restore obstacle/link enable state and handle an interrupted link traversal without
+duplicating its scripted action. Navigation remains advisory.
+
+Broadphase trees and most numerical caches can be rebuilt. Determine whether any
+support/contact history or warm-start data needs preservation for stable continuation.
+Test resting bodies, a moving support, a hinge and a ragdoll on the first resumed
+steps. Define M42 event restoration so loading does not replay old hits, pickups or
+score awards. Do not promise bit-identical infinite future trajectories merely
+because initial state round-trips; measure immediate state and bounded continuation.
+
+## 6. M54/M55 liquid persistence is REQUIRED
+
+Save actual double-precision reservoir/container quantities, material identity,
+connections and all detached/parked parcels. For active M55 surfaces, preserve the
+cell-volume partition, face-flow/momentum state and other authoritative state needed
+to resume disturbed water. Save moving-solid poses consistently with that partition.
+
+Restore reservoir ownership exactly once: surface-cell totals are allocations of
+that reservoir, NOT another amount to add. Do not apply authored initial water and
+then add saved water on top. Rebuild geometric/storage caches consistently without
+flattening waves, dropping parcels or invoking destruction's parked-volume policy
+on the outgoing world as if water should transfer into the replacement world.
+
+Require save during a disturbed surface and while some water is in a tilted cup or
+in flight. After a fresh-process load, reservoir + containers + detached quantity
+must match the captured ledger within its established accounting tolerance. Geometry
+approximation is not permission to lose litres. Inspect the first resumed steps,
+not only a checksum of a saved total.
+
+Do not redesign fluid solvers, raise cadence, remove ownership guards or substitute
+legacy PBF. Preserve existing legacy-save behaviour where supported; explicitly
+classify any legacy-only state beyond the new modern contract.
+
+## 7. M60 audio, presentation, localization and preferences
+
+Inspect what M60 actually shipped. Persist semantic playback state for selected
+persistent voices: stable source asset, cursor/time with documented seek precision,
+loop/pitch/gain, pause state, relevant runtime routing/effect settings and fade target
+or progress where supported. Restore using ordinary stream prefill/seek/retirement,
+not serialized decoder pages, mutexes or DSP memory.
+
+Persistent music/ambience must not silently restart from zero. One-shot effects,
+reverb tails and transient particles may deliberately restart/clear under a stated
+policy. Exact waveform-phase/tail continuity across process exit is not required.
+Keep reconstructed audio muted/paused until publication, then resume coherently;
+no duplicate old/new voices, replayed startup gunshots or callback-thread JS.
+
+Restore selected material overrides, light/environment/view settings and other
+persistent authored-component changes. Recreate render targets, font atlases and
+GPU resources rather than saving their handles. M58 locale/session choices should
+round-trip when included by the project; catalog bytes remain normal assets.
+
+Distinguish per-save game state from machine/user preferences such as output device,
+master volume and display mode. Do not overwrite current device settings with an
+old save or unexpectedly restore unsafe loudness. UI layout comes from assets;
+scores/menu presentation rebuild from game data. Do not persist raw focus/cursor
+handles. Post-load pause, pointer capture and input-edge handling must be explicit,
+with no shot/jump caused by the click used to select Load.
+
+## 8. Streamed worlds: unloaded does not mean forgotten
+
+A composed-world save includes root/world manifest identity, region placement and
+qualified records for active, suspended and changed nonresident content, including
+tombstones and adopted runtime hierarchies. Include retained records that have no
+currently instantiated native objects. Unvisited unchanged regions can be represented
+by the baseline; do not serialize/instantiate a universe of untouched entities.
+
+On load, reconstruct a useful initial resident/dependency set and keep other saved
+region records suspended until requested. Preserve per-region changes when the
+operator later walks back into them. Resident-set policy can be reevaluated; the
+amount or identity of gameplay state cannot depend on current RAM pressure.
+
+Rebind cross-region joints, gravity dependencies, liquid groups, traveller ownership
+and navigation links coherently. Recompute native demand counts/pin reasons from
+restored relationships, not old request tokens. Preserve intentional residency
+requests through safe logical state or a documented script re-acquisition contract.
+Async completion order must not change gravity precedence or select a new listener.
+
+M59 pinning is NOT disk persistence: a pinned lake still disappears on process exit
+unless saved. Add persistence for the required pinned liquid/articulation families.
+You need not remove their existing runtime suspension pins unless lossless suspension
+is also demonstrated. Do not broadly redesign M59 eviction merely for symmetry.
+
+## 9. Game-owned data and load-aware script lifecycle
+
+Reuse bounded script-state/session mechanisms for JSON-like game data, with an
+explicit persistent subset/contract. Offer a simple per-save game-data document or
+namespace for quests, inventory facts, score and timers. Avoid a second mandatory
+key/value store that duplicates session data. Scripts contribute semantics; they
+must not manually serialize every physics body or water cell.
+
+Persist independent script-slot state using stable entity/slot identity. Do not
+promise persistence of module globals, functions, closures, coroutines or the JS
+heap. Validate cycles, unsupported values, depth/size limits and finite numbers.
+Retained entity references use the stable-reference facility, not object pointers.
+Saves contain data, not executable code: script modules and migration functions
+come from the validated project, never eval of strings supplied by a save file.
+
+Give scripts a clear new-game versus restored-game lifecycle. If hooks are added,
+specify order, context, allowed operations and failure policy. Allocate identities,
+restore component/game data and fix references before gameplay resumes. Scripts
+must be able to reacquire handles without rerunning initial enemy spawning, score
+initialization or play-on-start effects. Existing script start semantics must remain
+compatible for new games; document the restore path rather than silently changing it.
+
+Capture hooks run only on the main thread. A failing required hook aborts the save
+without replacing its previous slot. Load/migration hooks must not run gameplay
+against half-built worlds. Do not claim arbitrary JS side effects can be rolled back;
+separate data validation/migration from post-publication gameplay callbacks.
+
+## 10. Safe load pipeline and normal engine ownership
+
+Separate reading/decoding/compatibility checking from activation. Before replacing
+the current game, validate the complete save structure, required participant
+versions, identities/references, content dependencies and bounded state. Prepare
+required assets through existing async/resource paths. A corrupt/incompatible save
+must leave the current world playable and the existing slot untouched.
+
+Stage restoration privately through shared normal construction paths with simulation,
+script gameplay and audible output inactive. A temporary non-ticking candidate is
+not a second simultaneously running game. Publish only a coherent valid state at
+the safe outer boundary; retire the old world/audio/jobs generation-safely. Clearly
+define the no-return point and controlled handling of genuinely late failures.
+Do not promise transactional rollback after arbitrary gameplay callbacks execute.
+
+Never double-apply an old automatic world-save overlay to the new slot restore.
+New Game/reload/load are distinct operations: new game starts from authored data,
+reload follows its documented reset policy, load applies the selected save.
+The save menu must not require the exact saved scene to be running already.
+
+## 11. Versioning, compatibility and migrations
+
+Keep save-container version, participant-state versions, project game-data version
+and authored-content fingerprint separate. Include stable project identity, root
+scene/world, relevant content compatibility and diagnostic build information.
+Do not equate a different Git hash with automatic incompatibility, nor ignore a
+changed script, prefab, nav bake or liquid geometry merely because its ID matches.
+Keep existing strict compatibility defaults unless an explicit migration applies.
+
+Use a bounded portable representation with explicit numeric/string encoding; no
+raw struct dumps, pointer values or native-size/endian assumptions. Preserve volume
+precision and Unicode strings. All persisted numeric formatting/parsing is invariant
+to the selected locale. Save checksums detect corruption; they do not authenticate the author of a file.
+Compression is optional; do not create a new compressor, encryption or database
+project. If compressed, bound decompressed sizes before allocation.
+
+Provide a small explicit version-to-version migration mechanism, including game-data
+migration where useful. Prove one legitimate older-version fixture upgrades and one
+unknown/newer version rejects safely. Migrations work on detached validated data,
+never rewrite the source slot in place, and do not bypass content identity by
+changing an expected hash. Arbitrary compatibility across every content edit is
+not a promise. Report legacy .judasstate support/import/rejection explicitly;
+preserve old files and historical evidence whichever policy is selected.
+
+## 12. Durable local storage, recovery and isolation
+
+Use the existing Linux user-data convention with a stable project/game save
+namespace. Slot IDs are not arbitrary paths; display names are not filenames.
+Reject traversal/escape and unsafe symlink handling. Identical local project and
+moved exports should deliberately find the same namespace; unrelated projects
+must not collide. Editor test saves use a separate sandbox by default so testing
+never overwrites real player saves. Do not write beside read-only installed assets.
+
+Use one authoritative slot payload or a clearly transactional container. Write a
+uniquely named temporary on the same filesystem, check every write/flush result,
+then atomically publish it. On Linux, durable publication needs file synchronization
+and synchronization of the containing directory; rename alone supplies replacement
+atomicity, not the complete durability protocol. Keep a bounded previous-good
+recovery generation or equivalent. Test its update ordering rather than assuming
+an extra .bak filename makes the operation safe. [S1, S2]
+
+A failed/partial write must not trash the last good save. Return real errors for
+permissions, space/I/O failures and synchronization failures. Distinguish failure
+before publication from uncertain durability after publication; do not falsely
+promise the original filename is unchanged in every late failure case. Startup
+recovery must ignore incomplete temporaries and use only validated committed data.
+Report recovery to the caller instead of disguising it as the newest successful save.
+
+Serialize conflicting writers, including detecting/rejecting unsupported concurrent
+process access to the same slot. Enforce bounded file/chunk/count/allocation limits
+when loading; no unbounded parser allocations from corrupt metadata. Delete/list
+must respect the same ownership/locking rules and operate only on selected slots.
+
+Implement/test against normal supported local Linux storage. Do not claim universal
+power-loss guarantees for arbitrary network filesystems or faulty hardware. Do not
+change system permissions, fill the operator's disk or kill their running game to
+test failure handling; use isolated temporary storage and controlled child processes.
+
+## 13. One small save UI and a real fresh-process integration test
+
+Add localized project-owned Save/Load/Overwrite/Delete UI using M41/M58 and public
+JudasJS, including request progress/errors and visible slot metadata. A simple boot
+menu can offer New Game and Continue/Load. No native save-screen gameplay class.
+The same API must work in an ordinary single-scene project without a .judasworld.
+
+Extend Streamed Spring Range minimally, plus use a compact state fixture when a
+subsystem would clutter the game. The main proof is:
+
+1. Play, change score/session data and locale; defeat one enemy and spawn another.
+2. Carry/adopt a prop across a region boundary. Change a hinge/barrier, then leave
+   another altered region genuinely unloaded with retained state/tombstones.
+3. Disturb the liquid exhibit; keep water in a cup and some in flight. Use a small
+   animation/ragdoll fixture and a seekable persistent M60 music/ambience source.
+4. Save through the game's public UI/API and wait for completed disk publication.
+5. EXIT THE PROCESS ENTIRELY. Start a fresh process with no old VM, region cache or
+   native state. Load the slot from the boot/current project path.
+6. Verify game state, locale, bodies, travellers, constraints, liquid accounting/
+   waves, animation/ragdoll and declared audio state. Revisit the unloaded region:
+   the destroyed entity must stay destroyed and saved changes must reappear once.
+7. Continue playing, backtrack, pour/re-fill, save another slot, exit and load again.
+
+Same-process capture/apply is useful but is NOT the final proof. Record facts before
+exit and compare them in the second process at a pre-resume boundary and after a
+few fixed steps. A changed runtime handle is expected; changed logical identity,
+doubled water, reset score or replayed startup spawning is not.
+
+Run the same proof in a moved, read-only exported package from unrelated CWD. Do
+not bundle real user saves, machine-specific paths or temporary test files into
+exports. Small authored compatibility fixtures may be committed as test assets.
+
+## 14. Focused validation and M56 measurements
+
+Implement in useful internal stages: single-scene slots/identity and JS state;
+participant restoration; streamed/nonresident state; fresh-process integration.
+Record findings and continue within this milestone without demanding approval for
+every stage. A real architectural blocker deserves a specific report, not repeated
+failed patches or silently shrinking save coverage.
+
+Group focused checks around these behaviours, not a giant combinatorial campaign:
+- Two slots/overwrite/delete/metadata; Unicode names and locale-invariant numbers;
+  project and editor isolation; conflicting requests and invalid paths.
+- Consistent safe-boundary capture, including callback requests, streaming work in
+  flight and continued gameplay during background writes.
+- Fresh handles/stable identities, colliding region-local IDs, adopted prefabs,
+  spawned/destroyed entities and unloaded-region tombstones across process exit.
+- Required participant round-trips: moving/resting physics/supports, joints,
+  animation transitions/ragdolls, navigation intent and no replayed game events.
+- Exact liquid ownership/partition/parcel restore and stable first resumed updates;
+  independent M54/M55 geometry versus ledger tolerances remain distinct.
+- JS restore ordering, independent slots, stable references, session/locale/game
+  timers and no duplicate initial enemies or audio.
+- Persistent M60 stream seek/resume within its declared precision, resource
+  retirement and safe device-unavailable behaviour; no decoder memory in saves.
+- Unsupported state, missing/stale assets, corrupt/truncated/oversized/duplicate-ID
+  records and newer schemas reject before live mutation. Known migration succeeds.
+- Controlled I/O failure and subprocess termination at write/publication boundaries
+  retain a valid recoverable generation. These tests are NOT a physical power-cut
+  certification. Save/delete racing and abandoned temporaries behave explicitly.
+- Repeated load/backtrack/save/Stop cycles plateau in jobs, resources and native
+  objects; no stale-world publication. API/types/examples and editor/export pass.
+
+Do not continuously capture worlds that have no save request or active persistence
+work. Simple games must not pay for streamed-world or fluid serializers they do not use.
+Use M56 to report capture pause, encoding/read/write/sync time, restore preparation,
+activation and first resumed frame separately. Include median/p95/max, largest
+indivisible operation, file sizes, snapshot/staging memory and active versus
+suspended entity/region counts. Compare disabled persistence overhead and simple
+versus streamed/liquid saves. Saving must not instantiate all unloaded regions;
+loading must not require all regions simultaneously resident. Do not hide a giant
+main-thread snapshot freeze behind a fast worker write number.
+
+Use focused checks while implementing. At candidate completion run one clean
+Release build, one production suite, actual async integration, M61 focused and
+fresh-process tests, JudasJS drift/type/cookbook checks, affected M59/M60/liquid/
+animation/motor checks, editor Play/Stop and moved-export proof. Reuse results
+already in that gate. Narrow late fixes get affected reruns only. Keep genuine
+failures and follow-ups; do not close operator apps or run needless soak workloads.
+
+## 15. Scope, human review and delivery
+
+No cloud saves, accounts, achievements, networking/rollback, arbitrary VM/process
+checkpoints, off-platform ports, general database tooling, encryption/anti-cheat,
+automatic content remapping, save thumbnails, universal editor undo, or new fluid,
+audio, animation, navigation or streaming algorithms. No M62 work. Do not turn
+persistence coverage into another FTFT physics audit.
+
+Provide one concise human checklist: create/overwrite two slots; change game state;
+save with altered/unloaded regions and a travelling prop; quit completely/relaunch;
+load and revisit; inspect liquid and articulated state/audio policy; switch locale;
+check pause/input; delete only a chosen slot; repeat in the moved package. Human
+acceptance remains the operator's, not a claim made from logs.
+
+Deliver:
+- Actual persistence participation matrix and all deliberate transient exclusions.
+- Slot/API/game-data workflow, identity model and capture/load lifecycle ordering.
+- Streamed-world, liquid, animation/ragdoll, navigation and actual M60 audio coverage.
+- Version/content compatibility, migration example, storage/recovery guarantees
+  and exact late-failure limitations.
+- Fresh-process results, conservation/state comparisons, fault checks, performance
+  and memory; distinguish tested behaviour from broader promises.
+- Localized demo/UI instructions, save location, current docs/cookbook, synchronized
+  declarations/inventory/live enumeration, changed files and final fingerprints.
+- Git status and preservation of protected FTFT/P1 research, historical evidence,
+  accepted simulation work and unrelated operator files.
+
+Update current architecture/coverage/reference docs where M61 supersedes session-only
+limitations; preserve those older claims as historical evidence. Do not invent a
+current API symbol count from the pending M60 brief. Leave the candidate uncommitted.
+
+Suggested commit after operator approval:
+Add M61 game save slots and world persistence
+
+No commit, push, tag or later milestone work now. Stop for operator review.
+
+IMPLEMENTATION REFERENCES
+Repository source and the completed M60 handoff define Judas contracts. These
+primary platform references support storage semantics, not a new engine dependency:
+[S1] Linux man-pages, fsync(2): file synchronization and containing-directory scope.
+https://man7.org/linux/man-pages/man2/fsync.2.html
+[S2] Linux man-pages, rename(2): atomic replacement and filesystem/error boundaries.
+https://man7.org/linux/man-pages/man2/rename.2.html
+[S3] Linux man-pages, open(2): creation flags and descriptor-relative file handling.
+https://man7.org/linux/man-pages/man2/open.2.html
+
+Milestone 61 — Judas learns to remember everything.

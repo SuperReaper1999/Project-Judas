@@ -1,0 +1,28 @@
+{
+  "id": "judas_touch_application_tests",
+  "source": "tests/TouchApplicationTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_touch_application_tests",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/judas_touch_application_tests"
+  ],
+  "adapter": "existing explicit output option",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "8548a44268bfa01d8c632b20d8dd4a6f663288ffd31c4fcca5791b18f051ec4f",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 7,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_touch_application_tests.log",
+  "logSHA256": "0d0cda4dbc9c5da4cff9076890494db4b726ebca24d2e86dcb9a82a429a8e7ba",
+  "seconds": 3.8254639949991542
+}

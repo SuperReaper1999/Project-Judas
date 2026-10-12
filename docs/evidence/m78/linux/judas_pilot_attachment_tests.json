@@ -1,0 +1,26 @@
+{
+  "id": "judas_pilot_attachment_tests",
+  "source": "tests/PilotAttachmentTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_pilot_attachment_tests"
+  ],
+  "adapter": "explicit no-argument main",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "ac224dff71131c34d70fe5abd47effe931311c5a781ccb6ffa289af0be1ce0e2",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 16,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_pilot_attachment_tests.log",
+  "logSHA256": "c7849da5eb8f9e01f8bc898ef9196756459d71236bfe424935d00a5dd6d7a40d",
+  "seconds": 0.0021165080015634885
+}

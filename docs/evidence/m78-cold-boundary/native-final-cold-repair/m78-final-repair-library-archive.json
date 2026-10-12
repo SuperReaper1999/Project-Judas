@@ -1,0 +1,105 @@
+﻿{
+    "freeBytes":  36438016,
+    "scope":  "Read-only bounded streaming of exact final native replacement archive; no guest temporary parts or deletion",
+    "source":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\judas_engine.lib",
+    "sha256":  "3554c52ca3f8961ca61551074d616f24d2fe0024ecae75f17aef97431e6de83e",
+    "parts":  [
+                  {
+                      "offset":  0,
+                      "sha256":  "4fe113a2f925b1e20e018fcd63709e91a682cfb0a2950eff34fcbddfe7642ce3",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-0.bin"
+                  },
+                  {
+                      "offset":  4194304,
+                      "sha256":  "0fa2459a943afba37579b2a01dfb30a4ae9e2fa2c543037676dd29a79c9f19a8",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-1.bin"
+                  },
+                  {
+                      "offset":  8388608,
+                      "sha256":  "0e9c4d4714cc57faf1afb6420c47401444c7897c4e978b6471399a4bb941fbff",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-2.bin"
+                  },
+                  {
+                      "offset":  12582912,
+                      "sha256":  "d2facb3208cb2dfadcd5e668d69d4c81d7c115fbd8432e547775d62dfde8acf4",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-3.bin"
+                  },
+                  {
+                      "offset":  16777216,
+                      "sha256":  "0e2355c3aa75418fa8e98cb1f941a752da0b977195e48ff1307ac034755bb1f4",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-4.bin"
+                  },
+                  {
+                      "offset":  20971520,
+                      "sha256":  "8ce2e1855c3dbf8d30cbfaeec6cd9d7516577f2d4b54155155f36e5e68f0e633",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-5.bin"
+                  },
+                  {
+                      "offset":  25165824,
+                      "sha256":  "78ee704faa485a8086744237ee5ea665e0566f5ca18d6f3764e045ec3fc220dd",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-6.bin"
+                  },
+                  {
+                      "offset":  29360128,
+                      "sha256":  "7a5e6f9628218071f6e26425241afa6205343a20266b9fc7dafacc8bad36c117",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-7.bin"
+                  },
+                  {
+                      "offset":  33554432,
+                      "sha256":  "195990566c248dec90fdccd6f71e81f049eb38d22f821c39df83666b36c1dfbf",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-8.bin"
+                  },
+                  {
+                      "offset":  37748736,
+                      "sha256":  "c2059796eeab2e68eaf19bef6d4b86d1c1f684402753d873ca3f998acb8804be",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-9.bin"
+                  },
+                  {
+                      "offset":  41943040,
+                      "sha256":  "0e4cc58d8d3b26c446defc22cbe5d9680a082d8ff32cb3e47401603f8756c151",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-10.bin"
+                  },
+                  {
+                      "offset":  46137344,
+                      "sha256":  "6e39c432c1b6b1349f0f990b2a5e99901fb37d9ac5f9d8ef60537ef3ada04804",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-11.bin"
+                  },
+                  {
+                      "offset":  50331648,
+                      "sha256":  "d14544ee77fece4e428d0a7877eaf6c82cc34c5aa6130fa962987880b6979465",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-12.bin"
+                  },
+                  {
+                      "offset":  54525952,
+                      "sha256":  "571f938e97412a6308cde053c15c70f8a8a76fca4df6aa01b5f361530f42b83b",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-13.bin"
+                  },
+                  {
+                      "offset":  58720256,
+                      "sha256":  "5ab1675d6ba8317854fbce40c0f6141750df5a765f1d147005847226d3462227",
+                      "bytes":  4194304,
+                      "reportName":  "m78-final-repair-library-archive-part-14.bin"
+                  },
+                  {
+                      "offset":  62914560,
+                      "sha256":  "f038b5b5819cc9fcc7646e27a9c66d7a39edf2e3ed67d8b5b5f5aa51ddf36d24",
+                      "bytes":  4100920,
+                      "reportName":  "m78-final-repair-library-archive-part-15.bin"
+                  }
+              ],
+    "bytes":  67015480
+}

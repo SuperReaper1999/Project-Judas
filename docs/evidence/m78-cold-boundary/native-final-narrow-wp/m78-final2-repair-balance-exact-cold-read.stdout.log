@@ -1,0 +1,15 @@
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS fresh-process participants restore: 
+PASS fresh process preserves step/recovery clocks without replay
+PASS fresh controller does not fabricate saved contact observations
+PASS restored game starts: 
+ACTOR 12 status=3 root=5.13184,0.21725,-1.1006 height=1.21327 up=0.769235 speed=1.60322 supports=1/0 landings=1 reason=corrective step lost support, reach or physical touchdown
+FAIL restored native task reaches measured physical standing
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 13 checks 1 failures

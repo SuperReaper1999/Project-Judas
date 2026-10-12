@@ -1,0 +1,23 @@
+{
+  "case": "inert-startup-phase-controls",
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/inert_startup"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/case-data/config"
+  },
+  "utc": "2026-10-11T15:19:15.933072+00:00",
+  "explicitEnvironment": [],
+  "executableSHA256": "7f97b923b03e61e0a0a2268a015d2993b8d42a870622bf1f77685fe3b56af76d",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "seconds": 15.194329703999756,
+  "log": "docs/evidence/m78/cases/inert-startup-phase-controls.log",
+  "logSHA256": "34ac6d1aaf4a88b415c833578fc654b4b4da07a526767aa1c77d12002a1eec28"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "judas_liquid_surface_refill_tests",
+  "source": "tests/LiquidSurfaceRefillTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_refill_tests"
+  ],
+  "adapter": "inspected defaults: read-only source / owned temporary output",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "045293145d0faa556990d9463568253adba38dd993be3e7aa2a90593570d0e7c",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 34,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_liquid_surface_refill_tests.log",
+  "logSHA256": "f86c25cb4c12c5040896e9f7acde8e6a82687740cc7305e32381c4d514551033",
+  "seconds": 9.514894132000336
+}

@@ -1,0 +1,25 @@
+﻿{
+    "scope":  "Only independently host hash/size verified completed generated case objects/executable/archive removed; final engine/source/rawresults/saves/packages unchanged",
+    "freeBefore":  72548352,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-final2-repair-world_save.exe",
+                        "sha256":  "5dbe010ea76aa34880b5168a8d68da3fa979062c645229aceb8a6c2f5af37646",
+                        "name":  "m78-final2-repair-world_save.exe",
+                        "bytes":  7827968
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\world_save-0.obj",
+                        "sha256":  "a9172e014733dfa898694a5fca247c30eaf8b5c646f0778dce84a7a43a6ba322",
+                        "name":  "world_save-0.obj",
+                        "bytes":  202093
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\m78-final2-repair-world_save-generated.zip",
+                        "bytes":  3611710,
+                        "sha256":  "f1b16526d8f59f2d7f2f39889526ee1a53309cf17f49755f754527dec4f26350"
+                    }
+                ],
+    "librarySHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+    "freeAfter":  84197376
+}

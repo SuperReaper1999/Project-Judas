@@ -1,0 +1,153 @@
+{
+  "checks": [
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic normal source world",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic normal runtime actor ownership",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "ordinary dynamic actor retained by default",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic full ordinary participant capture",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic normal saved scene decode",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "ordinary dynamic saved scene ownership matches public exclusion",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic preserved captured scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic normal private saved-world construction",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "ordinary dynamic normal private participant preparation",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "",
+        "loaded": true
+      },
+      "name": "ordinary dynamic full private restore succeeds",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "ordinary dynamic retained body's real velocity survives",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "ordinary dynamic restored ownership matches authored exclusion",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic normal source world",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic normal runtime actor ownership",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic public exclusion accepted",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic full ordinary participant capture",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic normal saved scene decode",
+      "passed": true
+    },
+    {
+      "details": {},
+      "name": "excluded dynamic saved scene ownership matches public exclusion",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic preserved captured scene",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic normal private saved-world construction",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": ""
+      },
+      "name": "excluded dynamic normal private participant preparation",
+      "passed": true
+    },
+    {
+      "details": {
+        "error": "saved sleep body unavailable/duplicate",
+        "loaded": false
+      },
+      "name": "excluded dynamic full private restore succeeds",
+      "passed": false
+    }
+  ],
+  "contract": "Public saves.exclude may omit a simple dynamic actor without leaving required orphaned participants; no integration or fixture retuning.",
+  "failures": 1,
+  "scope": "Standalone M78 lifecycle audit; original fixtures and source unchanged."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "judas_audio_acoustics_tests",
+  "source": "tests/AudioAcousticsTests.cpp",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_acoustics_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/audio-fixtures"
+  ],
+  "adapter": "fresh generated known codec fixtures required before execution",
+  "timeoutSeconds": 300,
+  "checkpoint": "9e77b2226edcf217ab789fe4f0fea42a3415a72d",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/userdata",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/linux-baseline/config"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78/frozen",
+  "executableSHA256": "2f5d199450332feb44a9f60b8a12b5fb30e13c31545a91d51ee08bde12844c0d",
+  "exitCode": 0,
+  "status": "exited-zero",
+  "passingLines": 194,
+  "failingLines": 0,
+  "log": "docs/evidence/m78/linux/judas_audio_acoustics_tests.log",
+  "logSHA256": "e16361f32d622b0191acca44b8da7367a8c0cdee608a4942dbcc6746c71d7823",
+  "seconds": 0.7060330059994158
+}

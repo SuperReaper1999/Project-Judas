@@ -1,0 +1,21 @@
+﻿{
+    "verifiedPackageFiles":  45,
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "seconds":  2.1990450999999998,
+    "exitCode":  0,
+    "arguments":  [
+
+                  ],
+    "cwd":  "C:\\Windows\\Temp",
+    "previousPackageReceiptSHA256":  "25ed3f66be231dc151e34431188f692c261392ac8263dac4bed758fda789b515",
+    "runtimeSHA256":  "ea39694571f4e8dbf0322cd6f5c216cd97437104c4a7432af4100b2c1ac326bf",
+    "scope":  "Fresh no-argument launch of exact final moved package from unrelated C:\\Windows\\Temp with deliberately unavailable engine root; original1720-frame four-scene/save/load/pause/reload harness. VM software GL functional-only.",
+    "movedPath":  "C:\\JudasValidation\\M78ContinuationMoved-combined-v2",
+    "freeBytes":  48128000,
+    "environment":  {
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\UnavailableEngineRoot",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_TEST_SCRIPT":  "C:\\JudasValidation\\M78NativeFunctionalResults\\moved-services.harness"
+                    },
+    "harnessSHA256":  "6f975418b9e6f0a2af2644c509bc98115be2407db0e8f0afae88d092e149ef1d"
+}

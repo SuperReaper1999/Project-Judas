@@ -1,0 +1,21 @@
+PASS actual project registry loads
+PASS actual radial demo parses
+PASS actual gravity content builds without a special simulation path
+DEMO_FLAT_SAMPLE 0.00000000 -9.81000042 0.00000000
+PASS actual flat-area authored region supplies uniform gravity
+PASS planet gravity away from flat zone remains unchanged
+PASS real CharacterMotor samples applicable region at current position
+PASS real CharacterMotor samples applicable region at current position
+PASS real CharacterMotor samples applicable region at current position
+PASS ordinary rigid body receives the same uniform acceleration
+PASS ordinary rotated mixed-region runtime builds
+PASS continuous motion crosses radial/uniform boundary and returns
+PASS motor movement remains finite and bounded through transitions
+PASS physical support normal remains distinct from gravity direction
+PASS uniform gravity uses authored orientation, not global Y
+PASS ordinary rotated mixed-region runtime builds
+PASS continuous motion crosses radial/uniform boundary and returns
+PASS motor movement remains finite and bounded through transitions
+PASS physical support normal remains distinct from gravity direction
+PASS uniform gravity uses authored orientation, not global Y
+SUMMARY 19 checks 0 failures

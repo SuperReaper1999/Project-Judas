@@ -1,0 +1,12 @@
+﻿{
+    "tools":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationSource\\Scripts\\v5\\windows_direct_case.ps1",
+                      "sha256":  "ddbb9d1d109b1360099ab130da100ba9019a8d80baa229ac891c315365bff80e",
+                      "parserErrors":  [
+
+                                       ]
+                  }
+              ],
+    "scope":  "Validation-tooling only: precreate successful empty linker log. No runtime/source change."
+}

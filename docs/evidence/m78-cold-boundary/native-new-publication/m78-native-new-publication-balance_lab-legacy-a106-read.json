@@ -1,0 +1,39 @@
+﻿{
+    "mode":  "legacy-a106-read",
+    "seconds":  2.5190733,
+    "sourceBundleSHA256":  "b380317ed504dd3236a416b50653766a004b78ad4e3a404ee7ca54fc4aa74690",
+    "case":  "balance_lab",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\legacy-a106\\cold-read-state.json",
+                      "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                      "bytes":  365,
+                      "reportName":  "m78-native-new-publication-balance_lab-legacy-a106-read-cold-read-state.json"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\legacy-a106\\slots\\.lock",
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "bytes":  0,
+                      "reportName":  "m78-native-new-publication-balance_lab-legacy-a106-read-.lock"
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NewCapturePublicationResults\\legacy-a106\\slots\\m77.save",
+                      "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                      "bytes":  52557,
+                      "reportName":  "m78-native-new-publication-balance_lab-legacy-a106-read-m77.save"
+                  }
+              ],
+    "executableSHA256":  "4d65e46d189bbd558f49a171377f6db0d2a292fd188446274084e482c1919e16",
+    "scope":  "Copied-only diagnostic new-capture continuation including actual completed observation publication. Original fixtures/inputs/gains/60Hz/thresholds unchanged; no production edits and final archive untouched.",
+    "library":  {
+                    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\combined-v2\\judas_engine.lib",
+                    "sha256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+                    "bytes":  66840496
+                },
+    "arguments":  [
+                      "C:\\JudasValidation\\M78NewCapturePublicationResults\\legacy-a106",
+                      "cold-read"
+                  ],
+    "exitCode":  1,
+    "freeBytes":  78004224
+}

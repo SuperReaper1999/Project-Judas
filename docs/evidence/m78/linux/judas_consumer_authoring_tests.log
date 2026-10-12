@@ -1,0 +1,36 @@
+PASS combined ordinary project loads
+PASS combined project has no legacy gameplay path
+PASS named menu loads through normal UI serializer
+PASS skate/park editor document loads
+PASS actual consumer has editable render/body batches
+PASS actual consumer multi-selection
+PASS batch-edit colour on actual consumer geometry
+PASS both selected items edited
+PASS batch undo preserves authored consumer byte serialization
+PASS body component copy/paste on actual scene
+PASS duplicate batch including hierarchy
+PASS edited/undo scene saves to isolated output
+PASS rooftop/rooftops editor document loads
+PASS actual consumer has editable render/body batches
+PASS actual consumer multi-selection
+PASS batch-edit colour on actual consumer geometry
+PASS both selected items edited
+PASS batch undo preserves authored consumer byte serialization
+PASS body component copy/paste on actual scene
+PASS duplicate batch including hierarchy
+PASS edited/undo scene saves to isolated output
+PASS void/system editor document loads
+PASS actual consumer has editable render/body batches
+PASS actual consumer multi-selection
+PASS batch-edit colour on actual consumer geometry
+PASS both selected items edited
+PASS batch undo preserves authored consumer byte serialization
+PASS body component copy/paste on actual scene
+PASS duplicate batch including hierarchy
+PASS edited/undo scene saves to isolated output
+PASS Skate typed-reference fixture loads
+PASS Skate actually authors deck/rider entity references
+PASS Skate board/deck/rider duplicated together
+PASS three independent copied consumer entities
+PASS copy remaps typed references to copied visual rig
+SUMMARY 35 checks 0 failures

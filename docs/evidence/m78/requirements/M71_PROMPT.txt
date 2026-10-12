@@ -1,0 +1,229 @@
+# M71 — Judas Learns to Move the World
+## Proper kinematic rigid bodies + a bounded scene-camera panning investigation
+
+Starting accepted checkpoint supplied by Conner:
+fb31f0244c9f41f74c439afd99855e3707937edd
+
+Implement ONE combined candidate and leave it uncommitted for review. Kinematic
+rigid bodies are the main deliverable. Scene-view panning is a small, conditional
+investigation/fix, not an editor-navigation rewrite.
+
+Verify the actual HEAD/main/origin-main and worktree before editing. Use a newer
+accepted checkpoint only if Conner supplies it. Do not reset, silently absorb other
+work, or merge Claude's local fixes. Standing project instructions remain in force.
+
+## 1. The consumer problem and the scope
+
+Claude's Skate & Parkour cart currently moves by setting a static body's transform.
+It can follow a route, but does not provide the physical pushing/contact behaviour
+wanted from a moving scripted object. Moving platforms and other prescribed-motion
+objects need the same generic capability.
+
+Deliver an explicit kinematic motion authority: JS commands motion; Judas advances
+that motion through its authoritative physics timeline; dynamic bodies respond to
+contacts. Do not implement a native golf cart, skitching, vehicle AI or route system.
+
+Conner also reports that the editor scene view only seems to orbit a fixed point:
+panning is either absent, broken or undiscoverable. Establish which before changing it.
+
+Not included: new vehicle dynamics, balance/get-up, retargeting, multiplayer,
+lighting APIs, Android, a broad contact-solver optimization campaign, or a new editor
+camera framework. Do not add moving concave triangle-mesh support under this milestone.
+
+## 2. Inspect and extend the existing authority model
+
+Read the current motion/body types, rigid-motion sampling and CCD, contact solver,
+broadphase, sleeping, CharacterMotor/support frames, script transform setters,
+M70 animated boundary anchors, authoring and persistence paths.
+
+The consumer report does not prove that Judas has no internal kinematic machinery.
+Reuse or generalize suitable existing mechanisms rather than adding a second physics
+world, solver or parallel support-velocity system.
+
+Before coding, record one short ownership/phase table against the actual scheduler:
+JS command -> fixed-step command publication -> prescribed motion/contact sampling ->
+physics and motor/support resolution -> authoritative state -> presentation/events.
+State when commands take effect, which samples readers see, and who owns each body.
+This is working design, not a separate approval gate or open-ended audit.
+
+Static, dynamic and kinematic authority must be explicit. Kinematic motion is
+externally prescribed: gravity and impulses do not independently integrate its pose.
+Dynamic neighbours still receive ordinary contact response. Do not claim closed-system
+momentum conservation when an externally driven body supplies work.
+
+## 3. Real prescribed motion, not disguised teleportation
+
+Provide public, bounded pose-target and velocity-driven control through the existing
+component/API style. Choose exact names after inspecting current declarations.
+
+- A pose command advances toward its position/orientation over a defined fixed
+  interval. It must not jump straight to the endpoint before collision processing.
+- Velocity control has explicit linear/angular units, frames and continuation rules.
+- Define replacement, stop, missing-command and multiple-writes-in-one-step behaviour.
+  Do not integrate a target and a velocity as two competing commands.
+- Keep explicit placement/teleport distinct from continuous kinematic motion. Preserve
+  existing transform-setter semantics; do not silently reinterpret old game code.
+- Validate complete requests before publication: finite data, valid rotations, body
+  identity/type, supported shape and usable coordinates. Invalid requests leave a
+  coherent previous state and useful diagnostics.
+
+Linear and angular velocity must agree with the actual prescribed trajectory and
+bone/body/COM conventions. Contact-point velocity must account for rotation, not just
+translation of the entity origin. Document target rotation interpolation, quaternion
+sign/wrap handling, and how continuous spins are commanded without wrap discontinuities.
+
+Use fixed authoritative samples, never render delta time or the last camera's matrix.
+Presentation may interpolate the result but must not create motion history or change
+collisions. Preserve M70's represented-rotation correction: unchanged/sub-ULP angular
+updates must not manufacture alternating rotations and reopen contacts indefinitely.
+
+Keep large positions in Judas's existing representation; form small relative offsets
+before float calculations. No universal world-up, extra gravity policy, origin rebasing
+or duplicated reference-frame conversion.
+
+## 4. Collision and support behaviour
+
+Use ordinary broadphase, continuous motion/contact processing, filters, triggers and
+queries. A moving kinematic body must wake and interact with sleeping dynamic bodies
+when appropriate. An unchanged command must not manufacture movement or contact churn.
+
+Demonstrate pushing with real contact impulses, including contact generated during
+rotation and motion that would cross a small dynamic object within one step. Do not
+fake the result by parenting, directly moving the crate, cancelling its velocity,
+disabling collision or using an endpoint-overlap test as the whole movement model.
+
+Document the actual policy for kinematic-versus-static/kinematic obstruction and for
+objects trapped by prescribed motion. A commanded trajectory is not automatically a
+collision-free route. Do not silently promise both unconditionally prescribed motion
+and automatic stopping at every obstacle. Any obstruction information must use generic
+engine mechanisms; gameplay decides how its door/cart/platform responds.
+
+Support the currently valid moving shape types and diagnose unsupported configurations.
+M64 static concave meshes remain static-only. Keep valid existing contacts, masks,
+triggers and M70 owner-contact subscriptions working without duplicate callbacks or
+stale body identities.
+
+CharacterMotor must remain usable on translating, lifting and rotating supports.
+Carry support motion through the existing support/reference-frame contract, not a
+second per-frame entity offset. A dynamic crate on the same platform moves through
+ordinary contact/friction, not scripted attachment.
+
+Test walking, jumping and leaving the support. Linear and rotational support velocity
+must be inherited according to the documented existing contract, without being added
+twice. Preserve free movement and loss of support; do not glue riders to the platform.
+Use a rotated-gravity/reference setup to expose hidden world-up assumptions.
+
+## 5. Public lifecycle and authoring integration
+
+Expose the motion type, commands and useful readback through normal JudasJS types,
+reference, live inventory and an executed example. Document coordinate spaces, units,
+fixed-step timing and vector representation; no unexplained new array/object convention.
+
+Integrate the kinematic mode/settings with existing inspector, undo, named authoring,
+prefabs, normal scene ownership, streaming and saves. Instances must remain independent.
+Use existing serializers and version extensions deliberately; unchanged default content
+must not acquire unrelated migrations or rewritten historical fingerprints.
+
+Provide explicit safe authority changes using existing body identity where possible.
+Define velocity treatment on dynamic/kinematic transitions and placement versus motion;
+do not accidentally apply the old command twice, produce a launch impulse, or leave
+stale contacts, constraints or broadphase state. Reject unsupported transitions cleanly.
+
+Save/load must restore declared motion mode, durable command state and physical state
+without replaying the previous movement as a new displacement. Reconstruct disposable
+history safely. Removal, region unload/adoption, reload and Play/Stop must retire handles
+and pending commands normally. Do not pull in a new streaming or save framework.
+
+Keep the accepted M70 physics/contact fixes and existing engine consumers intact.
+Claude's live game and pending importer/socket changes remain his work. Provide adoption
+examples; do not require his rebase or game integration for the candidate to finish.
+
+## 6. Scene-view panning: investigate first, fix only the demonstrated gap
+
+Inspect the actual editor camera bindings, pointer/focus ownership and documented
+navigation. Reproduce Conner's observation in the ordinary scene view.
+
+- If panning works: report the exact gesture, verify its input path, and make it
+  discoverable in existing editor help/shortcut hints and documentation as needed.
+  Do not add a duplicate controller merely because the gesture was hard to find.
+- If panning is broken: correct the responsible binding, focus, capture or camera
+  update while preserving established navigation and editing gestures.
+- If absent: add conventional camera-relative panning through the existing controller.
+  Translate camera and orbit pivot together in the view plane so the user can inspect
+  a different part of the scene rather than continuing to orbit the old fixed point.
+
+Choose a binding compatible with existing selection, gizmos, orbit and zoom; middle-mouse
+drag is a candidate, not permission to overwrite an existing operation. Scale motion
+sensibly with the current view/zoom and use the existing projection modes. Do not add
+free-fly controls, projection modes or a complete keybinding system incidentally.
+
+Keep gestures owned by the viewport. Test focus loss, release/cancel, text input,
+gizmos and Play/Stop so panning does not leave the pointer captured or move authored
+objects. Preserve orbit, zoom and existing frame-selection behaviour. Automated input
+checks can prove camera/pivot updates; Conner judges actual desktop usability.
+
+## 7. Small ordinary lab and discriminating evidence
+
+Use one small project with public JS, ordinary authored bodies and normal packaging:
+
+A. PUSHER: a script-commanded box/cart pushes dynamic crates. Include translation,
+rotation, stop/reverse and a faster crossing. The crates remain genuinely dynamic.
+
+B. MOVING SUPPORT: a translating/lifting platform and a rotating support carry a
+motor-controlled character and a dynamic crate. Include walking and jump/dismount,
+plus the same essential case with rotated gravity/coordinates. No hidden parenting.
+
+C. LIFECYCLE: reuse those actors for authority changes, sleeping/wake, filtered contact
+observation, removal and save/exit/fresh-process load. No separate large demo per case.
+
+Record commanded/actual transforms and velocities, contact-driven dynamic response,
+support-relative drift and release velocity against independently computed expectations.
+State numerical tolerances and tested speed/shape bounds. Include a static/no-motion
+control so a visually travelling box cannot masquerade as correct kinematic physics.
+
+Exercise actual VM calls and the relevant motor/contact/sleeping/rigid-motion regression
+paths. Verify different presentation rates do not change the same fixed-step input's
+physics. Cover quaternion sign-equivalent and unchanged rotations, real angular motion,
+teleport separation and stale-command removal. Retain any genuine failure reproducer.
+
+Measure median/p95/max fixed-step cost and relevant contact/CCD counts in the same
+build with a small bounded workload. Include first movement, first impact and authority
+changes, not only a warmed settled window that hides a landing freeze. No new generic
+benchmark campaign or unsupported FPS promise.
+
+One editor session can cover panning plus ordinary undo/Play-Stop/export. Run the moved,
+source-hidden lab package from an unrelated working directory. Build/check available
+platforms; explicitly distinguish Linux evidence from Windows evidence and retain any
+unavailable platform validation as outstanding. Do not undo the Windows portability work.
+
+## 8. Proportionate execution, handoff and stop
+
+Implement coherent code, tests, fixtures and docs, then perform one planned affected
+Release build and focused validation pass. Configure generated targets before building.
+Genuine failures permit necessary corrections, incremental builds and affected reruns.
+No clean/full-suite ritual, duplicate testing under new labels, or stop-for-permission
+trap after an ordinary compiler error. Broaden testing only where actual changes
+invalidate wider evidence. Preserve failures and identify the final source they cover.
+
+Return one concise candidate report containing:
+- Actual authority/phase table, public API examples and supported motion/collision policy.
+- Measured pusher/support/release evidence, lifecycle checks, cost and remaining limits.
+- The panning finding: missing, broken or undiscoverable; exact resulting controls/fix.
+- Build/test commands, warning counts, platform coverage and untested human tasks.
+- Lab/export paths, changed files, fingerprints and actual Git state.
+
+Give Conner one short human checklist: push crates; ride, rotate and jump off supports;
+stop/reverse and change authority; save/reload; pan to another area then orbit it; check
+selection/gizmos/Play-Stop; repeat the lab in the moved package. Do not claim his visual
+or input acceptance, Claude's adoption, or completion of older deferred checks.
+
+Leave the exact combined candidate uncommitted. No commit/push/tag until Conner accepts
+and authorizes it. No later milestone work. Keep current status clearly distinguished
+from retained historical pre-commit evidence.
+
+Suggested commit after acceptance:
+Add M71 kinematic rigid bodies and scene-view navigation improvements
+
+Final sanity check: Is this still a game engine? Judas supplies prescribed physical
+motion and usable authoring navigation. Claude decides where the cart drives, why a
+platform moves, and what the player does with it.

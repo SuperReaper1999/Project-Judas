@@ -1,0 +1,25 @@
+{
+  "scope": "Actual physical final states and complete continuation traces from previously recorded diagnostic oracle, no production/source changes.",
+  "files": [
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-all-oracle-source-physical-final.json",
+      "bytes": 35116,
+      "sha256": "199d91f935b94d5cf0ec09227975f7e1e6980c14630f185e3d111c093deffa15"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-all-oracle-source-discard-physical-final.json",
+      "bytes": 35159,
+      "sha256": "6b24f5180480add083bbf657575d4b8b01be47834a9628f8a7619dca9c4779b7"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-all-oracle-native-restored-physical-final.json",
+      "bytes": 35116,
+      "sha256": "4c02d998e06fe6fcbc5475441f381c5887063aee3f0438dc62a40a07e2be809b"
+    },
+    {
+      "path": "docs/evidence/m78-cold-boundary/linux-all-oracle-native-restored-diagnostic-cold-read-trace.jsonl",
+      "bytes": 612675,
+      "sha256": "4ea0176a0bcf8d90c556c99bb0c2dab283af7aa620cc82f2288a7c8903368b40"
+    }
+  ]
+}

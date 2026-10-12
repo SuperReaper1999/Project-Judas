@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".cache/m78-followup/release/judas_physical_balance_controller_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "utc": "2026-10-11T17:06:17.464539+00:00",
+  "seconds": 2.721127435001108,
+  "exitCode": 1,
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/data",
+    "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/config"
+  },
+  "executableSHA256": "f84ca0f2f8f5edb33fe13519fd65f324a45d955000cdfab148d858dfb4c92d21",
+  "logSHA256": "b5407c05e0ddf73a0192d6f0542aac2d617c3ffa7e1cb630ee90068165d85313",
+  "head": "9e77b2226edcf217ab789fe4f0fea42a3415a72d"
+}

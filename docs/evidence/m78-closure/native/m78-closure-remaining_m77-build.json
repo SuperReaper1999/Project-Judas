@@ -1,0 +1,148 @@
+﻿{
+    "archive":  {
+                    "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\judas_engine.lib",
+                    "sha256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62",
+                    "bytes":  67019246
+                },
+    "ownedLargeEvidence":  [
+
+                           ],
+    "executable":  "C:\\JudasValidation\\Build\\Release\\m78-closure-remaining_m77.exe",
+    "case":  "remaining_m77",
+    "generatedFiles":  [
+                           {
+                               "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-remaining_m77.exe",
+                               "sha256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+                               "name":  "m78-closure-remaining_m77.exe",
+                               "bytes":  9508352
+                           }
+                       ],
+    "scope":  "Same already-linked final original M77 executable, remaining unrun rows after disk-full fixture copy. Legacy a106 snapshot exact bytes preserved and expected to fail; fresh current-format corrective step write/read unchanged test/controller/timestep",
+    "reusedExecutableSHA256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+    "runs":  [
+                 {
+                     "seconds":  3.4253530999999997,
+                     "executableSHA256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+                     "expectedExitCode":  1,
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ClosureResults\\balance-exact-cold-final",
+                                       "cold-read"
+                                   ],
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-exact-cold-final\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-closure-final-balance-exact-cold-read-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-exact-cold-final\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-closure-final-balance-exact-cold-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-exact-cold-final\\slots\\m77.save",
+                                       "sha256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                                       "bytes":  52557,
+                                       "reportName":  "m78-closure-final-balance-exact-cold-read-m77.save"
+                                   }
+                               ],
+                     "legacyExpectedSHA256":  "a106ce212416a510ec0470d2cf7abe0fc96fccdfec202c95e5209c9e56c4379b",
+                     "run":  "m78-closure-final-balance-exact-cold-read",
+                     "exitCode":  1
+                 },
+                 {
+                     "seconds":  2.7293914999999997,
+                     "executableSHA256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+                     "expectedExitCode":  0,
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final",
+                                       "cold-write"
+                                   ],
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\cold-write-state.json",
+                                       "sha256":  "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+                                       "bytes":  364,
+                                       "reportName":  "m78-closure-final-balance-new-cold-write-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-closure-final-balance-new-cold-write-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\slots\\m77.save",
+                                       "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                                       "bytes":  56640,
+                                       "reportName":  "m78-closure-final-balance-new-cold-write-m77.save"
+                                   }
+                               ],
+                     "legacyExpectedSHA256":  null,
+                     "run":  "m78-closure-final-balance-new-cold-write",
+                     "exitCode":  0
+                 },
+                 {
+                     "seconds":  2.6221707999999997,
+                     "executableSHA256":  "b057080cdd50d7d75bdaf58bcbbdcd242f5aaafa53d656e8713b1ca670d523a4",
+                     "expectedExitCode":  0,
+                     "arguments":  [
+                                       "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final",
+                                       "cold-read"
+                                   ],
+                     "files":  [
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\cold-read-state.json",
+                                       "sha256":  "500d98ba84fd7c31d3b66d92745ca6339ee266330cedd814b36d4ed5cfc11996",
+                                       "bytes":  365,
+                                       "reportName":  "m78-closure-final-balance-new-cold-read-cold-read-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\cold-write-state.json",
+                                       "sha256":  "49f0dfd88c3d229d4a58d9463c8cd5c205e5beb5241e7697371ca918f453ad1a",
+                                       "bytes":  364,
+                                       "reportName":  "m78-closure-final-balance-new-cold-read-cold-write-state.json"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\slots\\.lock",
+                                       "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                       "bytes":  0,
+                                       "reportName":  "m78-closure-final-balance-new-cold-read-.lock"
+                                   },
+                                   {
+                                       "path":  "C:\\JudasValidation\\M78ClosureResults\\balance-new-cold-final\\slots\\m77.save",
+                                       "sha256":  "cc73b426266cfa94b946317567ccbc49015594e3dc974a24ca577aa9f9fa2c6d",
+                                       "bytes":  56640,
+                                       "reportName":  "m78-closure-final-balance-new-cold-read-m77.save"
+                                   }
+                               ],
+                     "legacyExpectedSHA256":  null,
+                     "run":  "m78-closure-final-balance-new-cold-read",
+                     "exitCode":  0
+                 }
+             ],
+    "freeBytes":  3051520,
+    "executableBytes":  9508352,
+    "replacementObjects":  [
+                               {
+                                   "sha256":  "6d70c3f9ff8c932ddc8bac2b0a7ab47539813d95e0ea17d7e000e77465702ed1",
+                                   "source":  "src/PhysicsWorld.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\PhysicsWorld.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\PhysicsWorld.obj",
+                                   "sourceSHA256":  "6a60747e4bb970821e2ebb68adbe78ea89f6fdc3db9137b5160290ca1da2f193",
+                                   "bytes":  1495011,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\PhysicsWorld.obj"
+                               },
+                               {
+                                   "sha256":  "1890d0fd27038ddf3e2c67290dc33bdcb2ef499a02543da88480dadfd0b3eabb",
+                                   "source":  "src/WorldPersistence.cpp",
+                                   "compilerResponse":  "/I\"C:\\JudasValidation\\M78ClosureBuild\\source\\src\" /I\"C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\source\\src\" /I\"C:\\JudasValidation\\Source\\third_party\" /c /IC:\\JUDASVALIDATION\\SOURCE\\SRC /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\GLAD\\INCLUDE /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\MINIAUDIO /IC:\\JUDASVALIDATION\\SOURCE\\THIRD_PARTY\\VERBLIB /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-BUILD\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_FREETYPE-SRC\\INCLUDE\" /I\"C:\\JUDASVALIDATION\\BUILD\\_DEPS\\JUDAS_HARFBUZZ-SRC\\SRC\" /nologo /W4 /WX- /diagnostics:column /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D NOMINMAX /D WIN32_LEAN_AND_MEAN /D SDL_MAIN_HANDLED /D _CRT_SECURE_NO_WARNINGS /D MA_NO_RESOURCE_MANAGER /D MA_NO_ENCODING /D MA_NO_GENERATION /D DT_VIRTUAL_QUERYFILTER /D \"CMAKE_INTDIR=\\\"Release\\\"\" /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++17 /Fo\"C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj\" /Fd\"C:\\JudasValidation\\M78ClosureBuild\\objects\\compile.pdb\" /external:W0 /Gd /TP  /external:I \"C:/JudasValidation/Source/third_party/quickhull\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include\" /external:I \"C:/JudasValidation/Build/vcpkg_installed/x64-windows-static-md/include/SDL2\" /external:I \"C:/JudasValidation/Source/third_party/cgltf\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/Detour/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourTileCache/Include\" /external:I \"C:/JudasValidation/Source/third_party/recastnavigation/DetourCrowd/Include\" /external:I \"C:/JudasValidation/Source/third_party/quickjs\" /external:I \"C:/JudasValidation/Build/unicode/windows-icu/include\" /utf-8 /bigobj \"C:\\JudasValidation\\M78ClosureBuild\\source\\src\\WorldPersistence.cpp\"",
+                                   "path":  "C:\\JudasValidation\\M78ClosureBuild\\objects\\WorldPersistence.obj",
+                                   "sourceSHA256":  "14a5ce3a78eebb2db801f91ddd91dc35808f23ff637a797c7cbb599d2e756ad4",
+                                   "bytes":  1276496,
+                                   "frozenMember":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v2\\objects\\WorldPersistence.obj"
+                               }
+                           ]
+}

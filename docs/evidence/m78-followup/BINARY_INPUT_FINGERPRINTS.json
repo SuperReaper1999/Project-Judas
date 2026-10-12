@@ -1,0 +1,196 @@
+{
+  "utc": "2026-10-11T17:49:08.201254+00:00",
+  "scope": "Final owned binaries/packages and selected fixed original inputs. Complete frozen source and audit hashes remain in original manifests. No build artifacts copied into tracked documentation.",
+  "engineLibrarySHA256": "55f181d2858c39bff02610283dc4392a63ac07962b437de83fd00894b6e30a32",
+  "finalProbeReceiptVerification": [
+    {
+      "name": "concave_final",
+      "sourceMatch": true,
+      "engineMatch": true,
+      "executableMatch": true
+    },
+    {
+      "name": "inert_final",
+      "sourceMatch": true,
+      "engineMatch": true,
+      "executableMatch": true
+    },
+    {
+      "name": "free_final",
+      "sourceMatch": true,
+      "engineMatch": true,
+      "executableMatch": true
+    },
+    {
+      "name": "step_trace_corrected",
+      "sourceMatch": true,
+      "engineMatch": true,
+      "executableMatch": true
+    },
+    {
+      "name": "dependency_application_registered",
+      "sourceMatch": true,
+      "engineMatch": true,
+      "executableMatch": true
+    }
+  ],
+  "linuxExecutables": {
+    ".cache/m78-followup/release/judas": "5bc8d1970e992089d485b05306f039717bc48657c33b6e845b181db254c63e22",
+    ".cache/m78-followup/release/judas-editor.desktop": "8fb900efca55f898b11649a64c8f1fe6b9653e278931a5da0090cc310c307716",
+    ".cache/m78-followup/release/judas_balance_lab_tests": "15894bdb60ee43fdff19d41a830e561ef38b37874205da30744c34fe7fb73d67",
+    ".cache/m78-followup/release/judas_character_motor_tests": "475c4c05ea7524dd6bd7083ac317b683f3d4af4f178c1bc370ccf0b7e891bc59",
+    ".cache/m78-followup/release/judas_collision_geometry_tests": "980492ce1295fb75678c799bc736c3fef24a17e662d2b0c90416cb963c0676da",
+    ".cache/m78-followup/release/judas_editor": "d44b7c85f7bdd04dd972dd4fc4ef79c0fa4869ca0008025f772a0ae880448a46",
+    ".cache/m78-followup/release/judas_export": "71c70076171dfdad71f7ed49002e3f27a283e031bf54f9d7aeb728ade9cbb2e4",
+    ".cache/m78-followup/release/judas_fluid_boundary_contact_tests": "fc59d1c11a183ff083a971ef36d40f3eda79a98478225d3671128e4b47851848",
+    ".cache/m78-followup/release/judas_fluid_cavity_impact_tests": "90d53db09fb9c63f9fd002c1611a0cb232d2e4742c601020810e30f7c7d74b9b",
+    ".cache/m78-followup/release/judas_fluid_hydrostatics_tests": "2c53696a20455542210adeedf4724298a85597ed2baf3cbac4f8b6fe4462b420",
+    ".cache/m78-followup/release/judas_fluid_rigid_coupling_tests": "ef0086a53363b2e67f3381b2ca7c03ca5168852bf1eaa29f6f57f3945aa08416",
+    ".cache/m78-followup/release/judas_joint_tests": "05a93b19d974989b21264e4beac7c32ea46c829233378a7a455b7daabbba219e",
+    ".cache/m78-followup/release/judas_mod": "7a43f867b1b5ece3d3053226338eab73883d5adc35c536e98b6584b2bea63af9",
+    ".cache/m78-followup/release/judas_mod_application_tests": "804c78f2bb4e10c7f539f74c2f3c4a193d4be05138741d61dbdbb76d2d642e9f",
+    ".cache/m78-followup/release/judas_navigation_bake": "b394cfa09e50bc45ab1ee0f3d111ddd3ac34dd78c89ec7fb4bb3ee82636f93c6",
+    ".cache/m78-followup/release/judas_navigation_dependency_tests": "ea3705a732efc904e04d327a87b1487cab0e60760dcf389b64914fce3cb5cbca",
+    ".cache/m78-followup/release/judas_physical_animation_tests": "6f587adf3faa5788a01ec123ab6badf1cd6156ada3eec3b7222ce07d745fae1d",
+    ".cache/m78-followup/release/judas_physical_balance_controller_tests": "f84ca0f2f8f5edb33fe13519fd65f324a45d955000cdfab148d858dfb4c92d21",
+    ".cache/m78-followup/release/judas_physical_balance_foundation_tests": "c29513fe5a07af134566248957105fdd5fa52e51aa112b038a4c124e5901d092",
+    ".cache/m78-followup/release/judas_physics_cast_tests": "4c6e89e795717279151566fa1ee2ece3924a1a88909b42f23b0042b2b2d5482e",
+    ".cache/m78-followup/release/judas_prefab_tests": "83731e32ffdc517a098a4fd1f02a7e96b7585bbdcd984d3ea2932024a49c1332",
+    ".cache/m78-followup/release/judas_production_fluid_tests": "bece4804c38786427049d19507c7a6d90d7aee5bea9bdc4b7ecb0cc259edd2df",
+    ".cache/m78-followup/release/judas_rigid_contact_tests": "1d5869efd2d3f6ff8701734aeded3ac11e2dc3b73f8030653047ede39d2ce91b",
+    ".cache/m78-followup/release/judas_rigid_motion_tests": "a056ad2901c9133eb71dab9e6b70ccaf004b561f5a53700369a2fd7177796e55",
+    ".cache/m78-followup/release/judas_scalability_tests": "53b79adbe8d469cd6c55d332875ee43e59ad4e3cf4a0e3e709a4f321a6ab8b2e",
+    ".cache/m78-followup/release/judas_spacecraft_control_tests": "21dd8cfa2164237bcb4b3f1b3c140e1ff02bb4ef4447432e4086d9b21db345a0",
+    ".cache/m78-followup/release/judas_spacecraft_flight_tests": "1884099f8e89de68a2c5af23538cc857b8752a270554bbe19409b87fc150f397",
+    ".cache/m78-followup/release/judas_streaming_tests": "cd2746a6f381b07953286402f2a103b77401908347ae44d8011cd29d0cabad11",
+    ".cache/m78-followup/release/judas_terrain_pipeline_tests": "2efb2a44092d5114ed1753814645a2f1c73bdaceeade756ef088aaa340cf111c"
+  },
+  "reviewPackages": {
+    "review-balance-package": {
+      "root": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/review-balance-package",
+      "files": {
+        "Assets/LICENSE.txt": "ef1bf7ac668f3fd92a7b17cb68896cbba0786e61b64e2615046c36c1ef49ae10",
+        "Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "Assets/fonts/DejaVuSans.ttf.judasmeta": "960e17099b23455def727ee0caefe8cc058cae28a788ff7ae21ba8c2c7abe612",
+        "Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "Assets/models/anchor.judasmodel": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0",
+        "Assets/models/anchor.judasmodel.judasmeta": "9c3877eacfdab9eaf074484b7a6096f9d42127d8dee6dfd4ee27cd4f7ed26706",
+        "Assets/models/receiver.judasmodel": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e",
+        "Assets/models/receiver.judasmodel.judasmeta": "61e3a4b1d54da2eab92583d39185a2a845e65741cbba9d2ed1b94c3f45ac5737",
+        "Assets/models/stride.judasmodel": "fa6741ac4795b3faee8db92871f417ca7ae99154078319a9bb0fbdba2f0c4876",
+        "Assets/models/stride.judasmodel.judasmeta": "a3880cc1fa45b38880a9c2780856210bf9978644217a0a770af77d17470f9676",
+        "Assets/prefabs/anchor.judasprefab": "8fd1953cf1145cadc587491976e338a8db0008ce239a0163847a4c322e74c93b",
+        "Assets/prefabs/anchor.judasprefab.judasmeta": "d9c07bf7ffac556c4ae104e142e1f8884a354d1a86f46f9762d290135a36f672",
+        "Assets/scripts/lab.js": "c98db0d35f6587a6427ef6d11ab4e306e5f61e69c8fdc9cf99d7a0b413929e5d",
+        "Assets/scripts/lab.js.judasmeta": "3139147dbbfc708dd4b0afaf494ec699913bb0280453751cdcbc9772a6c55d40",
+        "Assets/ui/lab.judasui": "81a50aa26b288a3a91169239760c8375f98fd657040deb8717c37f2610cfd52c",
+        "Assets/ui/lab.judasui.judasmeta": "b8c473fdb9692ca3279046d7e171dc253b9d16b31895dbab9c520b3729dff26c",
+        "DEPENDENCIES.json": "d2332c06ed41ddedf96d2a83fccea0f5813ec19d1fbebb71126d1485247f26b7",
+        "RUNTIME_REQUIREMENTS.txt": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416",
+        "Scenes/radial.judas": "906c91c3efefdf5d718013f0b231d3c3f8e1af9a1d0d513e84c1ed5836ff9587",
+        "Scenes/recovery.judas": "87677ca212617907ea9e3f69ac280f1e22e2fa405de0694d099f85e8f7303018",
+        "Scenes/standing.judas": "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+        "Scenes/supports.judas": "a1f6b3d2836449f1cd1e956da00f29a19e43787aa40239c0088296c51a217d48",
+        "engine/assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "engine/licenses/DejaVuSans.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "engine/licenses/Judas.txt": "26682b82940cdcaf8293c0f52c6948bafa77ae8365f9be7389e4422e447a44c3",
+        "engine/third_party/RUNTIME_NOTICES.txt": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536",
+        "game-icon.png": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+        "game.judasproj": "25d73ff138a738d18474ac49fe9c346ab0a7f13a41ee5e8612d39441b0fc4054",
+        "judas": "5bc8d1970e992089d485b05306f039717bc48657c33b6e845b181db254c63e22",
+        "judas-package.txt": "2a47d101e745a7ab20a81ccd7a302c6ddc452fca3513949b5cd4f7316bc35e26"
+      }
+    },
+    "review-shared-terrain-package": {
+      "root": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/review-shared-terrain-package",
+      "files": {
+        "Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judascollision": "6517b4948683f3688c8433a17a2835efe578ff10472c696da3a36790fac5e0bb",
+        "Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judascollision.judasmeta": "ba990e38a5b869e30f291d154df3b491683accabb1d171f1518dd66efe9e8e5f",
+        "Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judasmodel": "a1946caad8493af7f0e77709f774a206bff0c574a8e396baae84d1c73bd612a5",
+        "Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.judasmodel.judasmeta": "8ee8c00fa09110e19003bad55a1160bcd535057d8b2c357434a219a8612ef91e",
+        "Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.tga": "13e7e672fc015eccfea986002b861e2ded330c373f57f9fb06d510cb77dd5798",
+        "Assets/Terrain/bd805a29250096b0a427fdad7dd69f4d/terrain.tga.judasmeta": "d86564d0c547b0512f55e3d84b19c37cdac6c1156e64140a194d731be3d13718",
+        "Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "Assets/fonts/DejaVuSans.ttf.judasmeta": "c71839ef7e937470f5029ec1bbf95a2bce0d07031bd5f21d7bc74ca164344345",
+        "Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "Assets/navigation/landscape.judasnav": "65a1251c38005942d6c51470b0cb33aff703b02e1618986b1ff9e9da2ec5358e",
+        "Assets/navigation/landscape.judasnav.judasmeta": "46b75fdba2a06e5d143cb8e10ca8b32db41df7f63a161cf45d4649b4399dcfa8",
+        "Assets/prefabs/drop.judasprefab": "d162b19e7a90ff346f35afe60be51ad45ccabdd60547a1521affbfe644d0a671",
+        "Assets/prefabs/drop.judasprefab.judasmeta": "7ffa9e826bcc89fe01d743bdf8a1905c905297884a2f4b417ec955c707562e8b",
+        "Assets/scripts/controller.js": "51db2523e93e19cca227b7b2a310c328ac16b4c1ed648d8ca6c118cd9dcca8c3",
+        "Assets/scripts/controller.js.judasmeta": "7b4e627dcebcd47866ef5638f48c649b4aba2faf52f65fa5e52149fa591cbf70",
+        "Assets/textures/grass.png": "0d9d77a1eeed7721b0e9a63ba02af592cb5a85d470a50436757cf00bdd8d00c6",
+        "Assets/textures/grass.png.judasmeta": "0f453537ac32afc9a8e089bf8b002ce2d94e0f74d5ecc0572ed341b65fc9df2b",
+        "Assets/textures/stone.png": "e87faa8b0e3b89c96c7c89313e0d6e86ee69ab7dcdef494a1d09c5a8091c8c23",
+        "Assets/textures/stone.png.judasmeta": "8fe41ff50e66a39b6b3ccb2d9356107bf50d4b1e4c363568abdf1378e785495a",
+        "Assets/ui/lab.judasui": "86e075610906558998e577051daf34608b90c2b16b4f439d945ba517aa4e19d7",
+        "Assets/ui/lab.judasui.judasmeta": "a349806efcda1aff740579090476eeb7776e711995f5dae2d81fe4e212cf7275",
+        "Assets/world/lab.judasworld": "80ee5d34b6ea4ee954e6ff3b100a3c1a23fa1978fc03bd02f48281862c3156ad",
+        "Assets/world/lab.judasworld.judasmeta": "983d45ccde76bb9930fe0c5b90e49e5bb4e8dd6f5e862ecbb4f2fe04e7cada89",
+        "DEPENDENCIES.json": "0918358542869635f4b5bfe1735e976e8b3008e558c72aabd27529942d6b7510",
+        "RUNTIME_REQUIREMENTS.txt": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416",
+        "Scenes/landscape.judas": "8480531e0f6b3d63042c628ecdbacc208c8249562ee77d13d0d539782284be5a",
+        "Scenes/main.judas": "91df120fdba5fb60463df998e37aaaec0e33f55aa1ab5cd899dbef26e031139b",
+        "Scenes/region.judas": "bf8fe766bab26ded1aea72932ce1698e5e84c0646501f96c76dabe10c2a66f33",
+        "engine/assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+        "engine/licenses/DejaVuSans.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+        "engine/licenses/Judas.txt": "26682b82940cdcaf8293c0f52c6948bafa77ae8365f9be7389e4422e447a44c3",
+        "engine/third_party/RUNTIME_NOTICES.txt": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536",
+        "game-icon.png": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+        "game.judasproj": "2d996bde1a6f7a6c73fa5e05712de493afcf1aef851ecc34fa628039ecb15b0e",
+        "judas": "5bc8d1970e992089d485b05306f039717bc48657c33b6e845b181db254c63e22",
+        "judas-package.txt": "c9757ed558fa48f05b462dc95f661b765bc274f2cf9346a76f33a90a2c486d47",
+        "judas_mod": "7a43f867b1b5ece3d3053226338eab73883d5adc35c536e98b6584b2bea63af9",
+        "review-mods/hill-map.judasmod": "2e7ab4325cd065bf8ca25f997168989f2eb5a7f52d767b705c839c4a82a14911",
+        "review-mods/landscape-fork.judasmod": "6df238d6f016cb1dc66e1a481024bc4e4eb5f74e29e01c906d525e24b84f5e41",
+        "run-review.sh": "35e21dcc7836c7cdb05d7fcf28543c5fbe088b965c67468baf272e6d44127206"
+      }
+    }
+  },
+  "originalLocalInputs": [
+    {
+      "path": "projects/import_lab/Assets/models/skate_original.judasmodel",
+      "sha256": "611932b1eb7bc920d4858b9563e7a0d2ed3b9ae42c250d782d0ec905e5fa1275",
+      "bytes": 142653401
+    },
+    {
+      "path": "projects/import_lab/Assets/models/skate_original.judasmodel.judasmeta",
+      "sha256": "caf27aeabec5438e4b445198c97a141e16b0b9b3be2b4e310675cdf4c5c5c229",
+      "bytes": 88
+    },
+    {
+      "path": "projects/import_lab/Assets/models/skate_original.judasmodel.import-report.json",
+      "sha256": "d065c634a74b483858b423d6cb493d27f54330e2ba1ebab1141fead402da18d6",
+      "bytes": 14816
+    },
+    {
+      "path": "projects/import_lab/Assets/models/halfpipe.judasmodel.import-report.json",
+      "sha256": "d14951a9823a8e7bd1e912994c528827c1ee04f56b1bc96d5bbd6f2e591527cc",
+      "bytes": 11403
+    },
+    {
+      "path": "projects/import_lab/Assets/models/halfpipe.judasmodel.judasmeta",
+      "sha256": "31f607a642188e571cd4149faa3fbb0167a722f668296585852efb253d1cc307",
+      "bytes": 88
+    },
+    {
+      "path": "projects/import_lab/Assets/models/halfpipe.judasmodel",
+      "sha256": "7ba04ba9bc88a9eb1155d234f8d789d10f1bfc343f00e12424e8233183e7842d",
+      "bytes": 15282861
+    },
+    {
+      "path": ".cache/m66/originals/Skateboarder.fbx",
+      "sha256": "953aa682ae141b7ba09656c6873150aa3f06cc38ea4a7f5500a357440bc64814",
+      "bytes": 53981136,
+      "reason": "unchanged legacy reimport test uses this exact relative fixture path"
+    }
+  ],
+  "archivedOriginalWindowsTests": {
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m78-followup/windows-baseline-test-copy.zip",
+    "sha256": "616e92afe92088e0263b0f14c1c79b2b68ca0c94da279897afddb0b551a08559",
+    "bytes": 69567926
+  },
+  "publishedKitReceipt": "kit-preservation.json",
+  "frozenSourceManifest": "../m78/BASELINE.json",
+  "nativeCurrentSourceReceipt": "native-final/m78-final-source-check.json"
+}

@@ -1,0 +1,21 @@
+﻿{
+    "archiveBytes":  4852144,
+    "scope":  "Archive only; cleanup requires host verification",
+    "archiveSHA256":  "4b7e751000649643ba82b3d47d16ba476f1b7e7952dfbdbae3a4bc0e2bf2816f",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\m78-final-repair-character_lab.exe",
+                      "sha256":  "d79f4c12325aa850fd722a60d2b8769ec06e3730dc7b2fc8c3c9539bd944d8f7",
+                      "name":  "m78-final-repair-character_lab.exe",
+                      "bytes":  9198592
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\objects\\character_lab-0.obj",
+                      "sha256":  "931701684c49fcc0ad188b79dbe010358331654607ef77c0406e7ff51c565c09",
+                      "name":  "character_lab-0.obj",
+                      "bytes":  2208781
+                  }
+              ],
+    "archiveName":  "m78-final-repair-character_lab-generated.zip",
+    "archivePath":  "C:\\JudasValidation\\M78ContinuationBuild\\cold-repair-final-v1\\m78-final-repair-character_lab-generated.zip"
+}

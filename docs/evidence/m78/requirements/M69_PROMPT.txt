@@ -1,0 +1,226 @@
+# M69 — Judas Learns What Claude Needs
+## Paired controller input and batched physics queries
+
+Starting checkpoint:
+c042797c755df68b45e36aa917c4ca72818b9bcd
+
+Expected baseline: committed M68, HEAD = main = origin/main, clean worktree.
+Use a later accepted checkpoint only if the operator explicitly supplies it.
+Verify Git state without building; do not reset another worker's changes.
+
+Implement ONLY Claude's asks 1 and 2. These unblock his Flick-it stick recognizer
+and ledge scanner. His API names below are suggestions, not a reason to fight the
+existing API. Read the relevant current input, query, JudasJS and input-map code,
+then implement the smallest coherent extension. No separate audit milestone.
+
+Project instructions remain in force. Return one uncommitted candidate for review.
+
+## 1. Execution: implementation first, ONE final build and test pass
+
+Finish both features, their focused regressions, declarations, documentation and
+examples before invoking a build or executing tests. Use source inspection and
+static diff review during implementation. Do not run a baseline rebuild, compile
+between features, or repeatedly run tests after each edit.
+
+At completion perform ONE normal Release build of the affected runtime/editor,
+existing authoring target if changed, and required focused test targets, followed
+by ONE focused validation pass described in section 5. Reuse the existing build
+configuration; no clean-and-rebuild ceremony, full production suite, repeated
+rerun-hygiene sweeps, or separate historical-checkpoint build.
+
+The single gate is not permission to invent a pass. If it fails, stop and report
+the failure and smallest required correction; do not start another build/test
+cycle without operator instruction. State exactly what ran and what did not.
+
+## 2. Paired stick input without axis-deadzone distortion
+
+Claude needs the two physical stick axes together, before the engine's individual
+axis deadzones/scales destroy their direction. A suggested raw API is:
+
+    input.stick('right')  // {x, y}; also support 'left'
+
+Choose names consistent with current JudasJS. Provide the following contract:
+
+- Return a copied pair of normalized device-axis values, each in [-1, 1], before
+  engine deadzone, sensitivity, smoothing or response-curve processing. Raw here
+  means before Judas's processing, not bypassing controller firmware/OS behaviour.
+- Read both axes from the same selected controller. Reuse existing normalization,
+  device assignment and sign conventions; document them. Do not reconstruct raw
+  values from already processed logical axes. Do not clamp raw diagonals to a unit
+  circle: raw components and a processed movement vector are different products.
+- Keep current button, trigger, keyboard/mouse, scalar-axis and controller mappings
+  compatible. Do not silently change every existing binding's deadzone behaviour.
+- Follow normal gameplay input focus/capture rules. No controller returns a defined
+  neutral result. Disconnect, controller reassignment, focus loss and session
+  changes must not fabricate a flick or leave stale movement pending.
+
+Add a paired-stick/vector binding with an explicit optional circular deadzone in
+the normal input map. It must load/save through the existing supported legacy and
+M67 named-authoring paths, with the normal validation and existing input inspector
+where applicable. Preserve old bindings and defaults. No new input-map language
+or replacement editor.
+
+Define the radial response instead of merely calling two independent axis
+processors. A suitable default for the NEW circular mode is:
+
+    v = raw paired vector; m = length(v); inner deadzone d satisfies 0 <= d < 1
+    if m <= d: output = (0, 0)
+    otherwise: output = (v / m) * min(1, (m - d) / (1 - d))
+
+This preserves direction outside the deadzone and rescales usable travel. Reuse
+an equivalent existing radial processor if present. Reject invalid/non-finite
+configuration, apply processing once, and keep raw reads unaffected. Document how
+paired bindings interact with supported inversion/scaling. Game scripts must be
+able to read BOTH the raw pair and the mapped circular-deadzone result.
+
+### Fast flicks and frame/fixed-step delivery
+
+Claude would also use a render-frame reading and movement since the last frame.
+Provide the latest frame sample and clearly defined frame delta through the
+normal input service; readings must not update only when physics steps.
+
+However, neutral -> diagonal -> neutral can finish between fixed steps, and its
+net delta is zero. Endpoints plus delta alone do not preserve that movement.
+
+Retain a small bounded history of the paired observations delivered by the
+existing backend event/input pump, reusing an existing event history if suitable.
+Expose it through a minimal supported API so game JS can process ordered movement
+samples even when no fixed step happened between them. Include monotonically
+ordered sample IDs and usable timing information; document timing/units and
+reset behaviour. Repeated readers must not steal samples from another script.
+A cursor/sequence-based snapshot API is sufficient; no new input framework.
+
+Specify capacity and detectable overflow/reset behaviour. Do not silently present
+a truncated movement as complete. Ensure the game can recognize new observations
+once across zero, one or multiple fixed steps and avoid a burst of stale actions
+after pause, focus loss or scene change. Keep authoritative gameplay on its normal
+fixed-step boundary; do not move physics into a render callback to catch flicks.
+
+Do not claim to recover movement the device/backend never delivered. A bounded
+input sample history is in scope; recording/replaying worlds, custom HID drivers,
+background polling threads, rollback networking and a general replay system are not.
+
+## 3. Batched queries: one JS-to-native call, existing collision mathematics
+
+Required: a synchronous nearest-hit ray batch, with up to 256 entries per call.
+Claude's suggested shape is:
+
+    physics.raycastMany(rays, filter)
+    // rays: [{origin, direction, maximum}, ...]
+    // results: one corresponding hit/miss per input, in the same order
+
+Use the current scalar API's names, coordinate conventions and result fields.
+Use null for misses only if that matches the existing scalar convention; otherwise
+retain its normal miss representation. Document the actual shipped signature.
+
+- Cross the JS/native bridge ONCE for an accepted batch, validate/prepare the common
+  filter once, then iterate the existing query service natively. A JS map that calls
+  physics.raycast 100 times does not solve this request.
+- Reuse normal broadphase/narrowphase, nearest-hit selection and filtering. Preserve
+  layers/masks, tags, sensors, exclusions, generation-safe handles and existing
+  disabled/destroyed-object rules. Do not introduce alternate collision geometry.
+- Maintain input order, including misses and repeated queries. Empty input returns
+  an empty result. Do not sort, truncate, or silently split an oversized call.
+- Validate the whole bounded request before executing queries. Reject malformed
+  entries or >256 queries with useful indexed diagnostics and no partial result.
+  Preserve scalar rules for finite values, directions, distance and overlaps.
+- Execute against the same authoritative world and legal query phase as scalar
+  calls. Do not advance simulation or deliver script callbacks halfway through a
+  batch. No copied world, worker query scheduler, asynchronous result handles or
+  alternative snapshot engine is needed for this synchronous operation.
+- Results follow existing snapshot/lifetime semantics and use safe entity handles,
+  not pointers into temporary storage. Preserve arbitrary orientations and the
+  existing large-coordinate representation; no world-up or legacy-player shortcut.
+
+Add sphereCastMany and capsuleCastMany as well IF they are thin bounded wrappers
+around existing scalar query/marshalling paths. That is Claude's requested cheap
+extension, not permission to invent new shape algorithms or a generic query DSL.
+If either requires substantial new machinery, ship the required ray batch and
+state the specific deferred extension/reason. Do not add box/overlap/all-hit batch
+families merely for symmetry.
+
+The goal is approximately 100 ledge-scan rays per step without 100 bridge calls,
+not fewer real geometric queries. Do not promise an arbitrary speedup or claim
+this automatically makes a 200-query game affordable on every machine.
+
+## 4. Integration and boundaries
+
+Update only the affected JudasJS declarations, input/physics references, API
+inventory/live coverage and executed cookbook material. Document binding syntax,
+raw versus processed values, sampling/consumption, phase/lifetime rules, query
+limits, invalid requests and result ordering.
+
+Give Claude two small usable public-API examples: a right-stick reader showing
+raw/circular values and ordered flick observations; and a 100-ray wall/ledge fan
+returning ordered hits. Reuse one small normal fixture/example where practical.
+No elaborate new showcase project or port of the entire Skate & Parkour game.
+
+Do NOT implement trick recognition, kickflip/heelflip classification, ledge-choice
+heuristics, climbing states or player-controller changes natively. Claude will
+build the Flick-it recognizer and ledge scanner in his own game after delivery.
+Leave his workspaces and original game files alone.
+
+No hand/foot orientation IK, rumble, ragdoll motors, sleeping fixes or replay work.
+No M70 work, physics/fluid solver changes, broadphase redesign, M68 optimization
+follow-up, general input rewrite or unrelated documentation cleanup. Preserve
+existing projects and M68's cached script/lifecycle behaviour.
+
+## 5. ONE final focused validation pass
+
+Write the regressions during implementation; run them only after the final build.
+Use existing input/harness/query paths rather than JS mocks or a private test API.
+Run each selected target once with its correct arguments and isolated output.
+Do not add a second suite pass to show that nothing changed.
+
+Input coverage, combined into a focused fixture:
+- Raw cardinal/diagonal values survive before axis processing; old scalar bindings
+  retain their behaviour. New circular bindings preserve direction, apply the
+  documented deadzone boundaries and reject invalid settings.
+- Named and legacy input-map round trips preserve the new binding and old defaults.
+- Inject delivered neutral -> diagonal -> neutral observations before a fixed step;
+  the sequence remains available even though endpoint and net delta are neutral.
+  Also cover a rendered frame without a step, catch-up steps, repeated readers,
+  overflow/reset, and disconnect/focus/pause handling without fabricated flicks.
+- Exercise the normal native-to-JS path. Synthetic correctness is not a claim that
+  real controller feel has been human-validated. Hardware absence is not a reason
+  to substitute a fake successful hardware test or launch a larger test campaign.
+
+Query coverage, combined into a focused fixture:
+- Compare batched results with current scalar queries on unchanged geometry, and
+  include independently known hit/miss/distance expectations so shared mistakes
+  cannot pass solely by agreeing. Cover ordering, filters, ignored/stale handles,
+  relevant rotated geometry, empty/256/257 entries and an invalid middle entry.
+- Exercise actual JudasJS/VM calls, not only the native loop. Include equivalent
+  focused cases for whichever optional shape-batch APIs actually ship.
+- Within this same pass, use one small matched measurement of 100 scalar calls
+  versus one 100-ray batch in the same VM/world/build. Report bridge-call counts
+  and warmed elapsed cost, with modest internal sampling rather than separate
+  build/test runs. Show one batch crossing versus 100 scalar crossings. Separate
+  bridge/marshalling savings from unchanged geometric work; no historical rebuild.
+
+Finish this pass with affected API/types/live checks and the two public examples.
+Reuse existing focused input/query regressions where they cover the same work;
+avoid duplicate execution. No full production suite, all-Three-Games tour, import
+workload, cold-save matrix, export matrix or benchmark campaign for this milestone.
+
+## 6. Handoff
+
+Provide a short report with:
+- Exact usable APIs and input-map example; raw/processed/sampling semantics.
+- Ray batch delivery, any cheap shape batches, and the cap/filter/result contract.
+- The single build's warning/result status, focused results and measured bridge
+  overhead. Keep genuine failures and untested human/hardware claims explicit.
+- Changed files, candidate fingerprint/diff reference, Git status and exact commands.
+- A short operator check: try right-stick diagonal/out-and-back flicks, confirm the
+  sample display, and compare the 100-ray results with scalar mode in the example.
+
+Leave the candidate uncommitted and stop. Do not mark M67's outstanding human
+review complete. Claude's later game integration is follow-up evidence, not a
+reason to run another implementation/testing marathon in this session.
+
+Suggested commit after operator acceptance:
+Add M69 paired stick input and batched physics queries
+
+Final sanity check: Is this still a game engine? Paired controller input and
+batched physics queries belong in Judas. Flick-it recognition, ledge selection
+and climbing behaviour belong in game JavaScript.

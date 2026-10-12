@@ -1,0 +1,48 @@
+﻿{
+    "env":  {
+                "JUDAS_ENGINE_ROOT":  null,
+                "GALLIUM_DRIVER":  null,
+                "LP_NUM_THREADS":  null
+            },
+    "events":  [
+                   {
+                       "Id":  1001,
+                       "TimeCreated":  "\/Date(1791745400625)\/",
+                       "ProviderName":  "Windows Error Reporting",
+                       "Message":  "Fault bucket 2207402342441343043, type 4\r\nEvent Name: APPCRASH\r\nResponse: Not available\r\nCab Id: 0\r\n\r\nProblem signature:\r\nP1: m78_combined-v2_balance_lab.exe\r\nP2: 0.0.0.0\r\nP3: 6acbdd71\r\nP4: KERNELBASE.dll\r\nP5: 10.0.19041.6280\r\nP6: 56511854\r\nP7: 0000087a\r\nP8: 0000000000025369\r\nP9: \r\nP10: \r\n\r\nAttached files:\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER5503.tmp.WERInternalMetadata.xml\r\n\r\nThese files may be available here:\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppCrash_m78_combined-v2__7eab8371f53af32061674d5beed867eb1efab3a1_a4883df0_0c37491b-1821-44fa-948f-cb8067cb2f1b\r\n\r\nAnalysis symbol: \r\nRechecking for solution: 0\r\nReport Id: 0cc1e92a-84ce-44bc-ba0f-a0f7bf97d267\r\nReport Status: 268435456\r\nHashed bucket: c54de56fdb9850e7eea244bc3194d843\r\nCab Guid: 0"
+                   },
+                   {
+                       "Id":  1001,
+                       "TimeCreated":  "\/Date(1791745399506)\/",
+                       "ProviderName":  "Windows Error Reporting",
+                       "Message":  "Fault bucket , type 0\r\nEvent Name: APPCRASH\r\nResponse: Not available\r\nCab Id: 0\r\n\r\nProblem signature:\r\nP1: m78_combined-v2_balance_lab.exe\r\nP2: 0.0.0.0\r\nP3: 6acbdd71\r\nP4: KERNELBASE.dll\r\nP5: 10.0.19041.6280\r\nP6: 56511854\r\nP7: 0000087a\r\nP8: 0000000000025369\r\nP9: \r\nP10: \r\n\r\nAttached files:\r\n\r\nThese files may be available here:\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\AppCrash_m78_combined-v2__7eab8371f53af32061674d5beed867eb1efab3a1_a4883df0_0c37491b-1821-44fa-948f-cb8067cb2f1b\r\n\r\nAnalysis symbol: \r\nRechecking for solution: 0\r\nReport Id: 0cc1e92a-84ce-44bc-ba0f-a0f7bf97d267\r\nReport Status: 4\r\nHashed bucket: \r\nCab Guid: 0"
+                   },
+                   {
+                       "Id":  1000,
+                       "TimeCreated":  "\/Date(1791745398439)\/",
+                       "ProviderName":  "Application Error",
+                       "Message":  "Faulting application name: m78_combined-v2_balance_lab.exe, version: 0.0.0.0, time stamp: 0x6acbdd71\r\nFaulting module name: KERNELBASE.dll, version: 10.0.19041.6280, time stamp: 0x56511854\r\nException code: 0x0000087a\r\nFault offset: 0x0000000000025369\r\nFaulting process id: 0x6ec\r\nFaulting application start time: 0x01dd59b32a59129c\r\nFaulting application path: C:\\JudasValidation\\Build\\Release\\m78_combined-v2_balance_lab.exe\r\nFaulting module path: C:\\Windows\\System32\\KERNELBASE.dll\r\nReport Id: 0cc1e92a-84ce-44bc-ba0f-a0f7bf97d267\r\nFaulting package full name: \r\nFaulting package-relative application ID: "
+                   }
+               ],
+    "processes":  [
+
+                  ],
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\opengl32.dll",
+                      "sha256":  "75b295fc80df0eaa8f1264c28663f6932c8b72d36513eb092556608858b7f5e0",
+                      "bytes":  139264
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\Build\\Release\\libgallium_wgl.dll",
+                      "sha256":  "53e49adf87590d5b0cab8553b1e98084812040cc1fca8c487695b17b7af3702e",
+                      "bytes":  61868032
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\Source\\assets\\fonts\\DejaVuSans.ttf",
+                      "sha256":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+                      "bytes":  759720
+                  }
+              ],
+    "freeBytes":  739635200
+}

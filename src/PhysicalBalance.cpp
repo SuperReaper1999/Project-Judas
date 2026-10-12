@@ -281,7 +281,12 @@ bool PhysicalBalanceController::SwingReferences(PhysicsWorld& world,const glm::q
 void PhysicalBalanceController::Prepare(PhysicsWorld& world,const std::vector<glm::vec3>& gravity,float dt){
     if(m_history.progress!=BalanceProgress::Executing&&m_history.progress!=BalanceProgress::Succeeded)return;
     if(!(dt>0)||dt>.1f||!std::isfinite(dt)){Fail(world,"invalid physical control interval");return;}
-    if(m_waitingForSample){m_waitingForSample=false;m_observation={};return;} // Reacquire completed contacts after a restored world steps.
+    if(m_waitingForSample){
+        m_waitingForSample=false;m_observation={};
+        // A full world snapshot can restore the actual completed publication.
+        // A controller-History-only restore still waits for a real world step.
+        if(!world.HasRestoredCompletedContactObservations(dt))return;
+    }
     if(!Observe(world,gravity)){Fail(world,"unavailable/stale contacts, bodies or coherent nonzero gravity");return;}
     if(m_history.progress==BalanceProgress::Executing)m_history.elapsed+=dt;
     m_history.referenceTime=std::min(m_history.referenceTime+dt,m_settings.referenceSeconds);

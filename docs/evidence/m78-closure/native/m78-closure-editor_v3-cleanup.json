@@ -1,0 +1,115 @@
+﻿{
+    "scope":  "Only named generated output bytes independently archived and host SHA/size verified; frozen engine archive, source, results, snapshots and existing packages unchanged",
+    "freeBefore":  9424896,
+    "removed":  [
+                    {
+                        "path":  "C:\\JudasValidation\\Build\\Release\\m78-closure-editor_v3.exe",
+                        "sha256":  "339eecca6e058e11f65c0cef0021c26701277e7fe5c1386938074be70c4355bc",
+                        "name":  "m78-closure-editor_v3.exe",
+                        "bytes":  13184512
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorMain.obj",
+                        "sha256":  "99877d6036625007ba5a12da8b336f7b733f0f0af0fa073e861c806f296acfa0",
+                        "name":  "EditorMain.obj",
+                        "bytes":  5639
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorMilestoneNotice.obj",
+                        "sha256":  "2600f00a94f079f01bcdaaf0ca3f762a050ce7242be9edd73ca24953408769a0",
+                        "name":  "EditorMilestoneNotice.obj",
+                        "bytes":  1476924
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorApplication.obj",
+                        "sha256":  "5d2357b7ccb6ce48a16952e49f9fae8fb1a49c374a7cb092f898a595e3ee0c7a",
+                        "name":  "EditorApplication.obj",
+                        "bytes":  3489899
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorCamera.obj",
+                        "sha256":  "548662a4c71c802ba3f6707ba8bdab4c7cce6624b687aa96dd09818b7cd5cf52",
+                        "name":  "EditorCamera.obj",
+                        "bytes":  18462
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorPicking.obj",
+                        "sha256":  "911cdc4fa3eb13d9f2963adfd3417c45ffb7624565437dfad7dea9f6f1f714ba",
+                        "name":  "EditorPicking.obj",
+                        "bytes":  264555
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorHistory.obj",
+                        "sha256":  "0894db2dbe0b21249c24e0c8c240d763de978d5636865f2d956e22c8c0e070ec",
+                        "name":  "EditorHistory.obj",
+                        "bytes":  712162
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorPanels.obj",
+                        "sha256":  "3da219c81b5ca07fe491b7d821909a3c148ade72ac0ba9a558b6d1898574069f",
+                        "name":  "EditorPanels.obj",
+                        "bytes":  3014494
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\RetargetPanel.obj",
+                        "sha256":  "3f38eca0d801212c35699b1a48c16167b9b9214130987208dc6898908b384093",
+                        "name":  "RetargetPanel.obj",
+                        "bytes":  2193899
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\WorldTools.obj",
+                        "sha256":  "35479d6829be9138708fadc4860b19c1b9c300b72fb9b1ff67e448eb0961fb5c",
+                        "name":  "WorldTools.obj",
+                        "bytes":  1577394
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\TerrainTools.obj",
+                        "sha256":  "5e10bbc2fe2dbcce7bbc6f73506438a06e36b23283d15a72888546c233afa4bb",
+                        "name":  "TerrainTools.obj",
+                        "bytes":  1397138
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\ModTools.obj",
+                        "sha256":  "e8f8e68e25e90f2c1dca5feac265a850c217b18b68a1161c70f9677ffe380db3",
+                        "name":  "ModTools.obj",
+                        "bytes":  482103
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\ProfilerView.obj",
+                        "sha256":  "a7e70fa667d0f8a31a71824058547ad58fb5e0551db63a3be5286342d5010412",
+                        "name":  "ProfilerView.obj",
+                        "bytes":  101445
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\EditorWidgets.obj",
+                        "sha256":  "3f0184966c6fe1d9deec200ec1c589071315e38d424f642dca341d72b2e38f59",
+                        "name":  "EditorWidgets.obj",
+                        "bytes":  52948
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\ComponentEditors.obj",
+                        "sha256":  "72bab989f8c3a68de5c829e0f77eef21f2a9ec73379c6de0cb8b6bc59c872cee",
+                        "name":  "ComponentEditors.obj",
+                        "bytes":  1437795
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureEditor\\GizmoMath.obj",
+                        "sha256":  "c6aa0cfb384fbda122d70eccd0d8289409d0e5e5a73f95ed13a46e70d18b2fc8",
+                        "name":  "GizmoMath.obj",
+                        "bytes":  23060
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-editor_v3.map",
+                        "sha256":  "4dfa169718d79f1f4ec5e55133de1bdd08e05661a0af2dc582a48908dbaa6b0a",
+                        "name":  "m78-closure-editor_v3.map",
+                        "bytes":  3505666
+                    },
+                    {
+                        "path":  "C:\\JudasValidation\\M78ClosureResults\\m78-closure-editor_v3-link.log",
+                        "sha256":  "969c4884cdc896d43dfdb1119f2a87e5145f2ea31d012a99cf102f74647ddf1b",
+                        "name":  "m78-closure-editor_v3-link.log",
+                        "bytes":  37376
+                    }
+                ],
+    "freeAfter":  31891456
+}

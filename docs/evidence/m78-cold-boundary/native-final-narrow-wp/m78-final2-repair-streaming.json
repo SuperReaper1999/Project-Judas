@@ -1,0 +1,18 @@
+﻿{
+    "seconds":  7.7685914,
+    "sourceBundleSHA256":  "8793966754f5998de34e3c82cfc30587af84491b33bbb14e199778e742b6d9e8",
+    "case":  "streaming",
+    "expectedSaveSHA256":  null,
+    "run":  "streaming",
+    "executableSHA256":  "3ad7a3c98e4722351fb7d9900ed7ceb0416ddc7d1e16afc2d2875c9ab416ef5a",
+    "scope":  "Final actual production candidate with approved generic current-physical-state persistence correction. Narrow affected native reruns, original fixtures/acceptance and legacy a106 unchanged; Windows VM functional-only.",
+    "files":  [
+
+              ],
+    "arguments":  [
+
+                  ],
+    "exitCode":  0,
+    "freeBytes":  75014144,
+    "archiveSHA256":  "71a722dded64cfcc634d679e55ddbd257058da888ada914f7f7150b8d88c2d62"
+}

@@ -1,0 +1,8 @@
+Insufficient bounded compressed editor headroom
+At C:\JudasValidation\m78-closure-editor.ps1:4 char:116
++ ... ee -lt 22MB){throw 'Insufficient bounded compressed editor headroom'}
++                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Insufficient bo...editor headroom:String) [], RuntimeException
+    + FullyQualifiedErrorId : Insufficient bounded compressed editor headroom
+ 
+

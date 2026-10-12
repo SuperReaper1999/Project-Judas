@@ -1,0 +1,8 @@
+{
+  "exitcode": 0,
+  "err-data": "#< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S=\"progress\" RefId=\"1\"><TNRef RefId=\"0\" /><MS><I64 N=\"SourceId\">2</I64><PR N=\"Record\"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S=\"progress\" RefId=\"2\"><TNRef RefId=\"0\" /><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>",
+  "out-data": "{\r\n    \"removed\":  [\r\n                    \"C:\\\\JudasValidation\\\\M77TestBin\",\r\n                    \"C:\\\\JudasValidation\\\\m78-old-test-copy.zip\"\r\n                ],\r\n    \"free\":  342032384,\r\n    \"preservedHostSHA256\":  \"616e92afe92088e0263b0f14c1c79b2b68ca0c94da279897afddb0b551a08559\"\r\n}\r\n",
+  "err-truncated": false,
+  "out-truncated": false,
+  "exited": true
+}

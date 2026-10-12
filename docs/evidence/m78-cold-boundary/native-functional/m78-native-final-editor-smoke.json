@@ -1,0 +1,37 @@
+﻿{
+    "sceneBeforeSHA256":  "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+    "seconds":  8.6366444,
+    "freeBytes":  48230400,
+    "librarySHA256":  "791edc06d69e9a0c750c2bf23f91b20936ed5c0d530f20a936eed0c544c9ba48",
+    "sceneAfterSHA256":  "e7af42515a537284efd5d56d1b29073117f39090a6da368e88f24b7acd181fb2",
+    "files":  [
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest.edit.png",
+                      "sha256":  "57545279b72286a10c464ef996d92da8ebfdcb07b975a24b750531d4d8525573",
+                      "name":  "m78-native-final-editor-autotest.edit.png",
+                      "bytes":  177346
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest.play.png",
+                      "sha256":  "dc4963de108a6eeb9f561107e0df9f3dadf02ba1108840367447cf32d6d4fa47",
+                      "name":  "m78-native-final-editor-autotest.play.png",
+                      "bytes":  129785
+                  },
+                  {
+                      "path":  "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest.saved.judas",
+                      "sha256":  "f46bcea835e6a49d94453ecd41c23330739ff56379fe4a564e24ce1828cd9a95",
+                      "name":  "m78-native-final-editor-autotest.saved.judas",
+                      "bytes":  40001
+                  }
+              ],
+    "executableSHA256":  "5b9a4d31976fbd7820901dbadee14e6f85667e5ac6264024d96ce82206033085",
+    "environment":  {
+                        "JUDAS_ENGINE_ROOT":  "C:\\JudasValidation\\Source",
+                        "GALLIUM_DRIVER":  "llvmpipe",
+                        "JUDAS_EDITOR_AUTOTEST":  "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-autotest"
+                    },
+    "scope":  "Fresh unchanged-source editor target linked against final physics archive. Ordinary copied project autotest: edit/duplicate/undo/Play/Stop/save; authored scene identity measured before/after. Native software GL functional-only.",
+    "authoredScene":  "C:\\JudasValidation\\M78NativeFunctionalResults\\editor-project\\Scenes\\standing.judas",
+    "exitCode":  0,
+    "sceneUnchanged":  true
+}

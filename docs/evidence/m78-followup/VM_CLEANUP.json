@@ -1,0 +1,61 @@
+{
+  "archive": ".cache/m78-followup/windows-baseline-test-copy.zip",
+  "bytes": 69567926,
+  "sha256": "616e92afe92088e0263b0f14c1c79b2b68ca0c94da279897afddb0b551a08559",
+  "guestRemoved": [
+    "C:/JudasValidation/M77TestBinFollowup",
+    "C:/JudasValidation/M77TestBin",
+    "C:/JudasValidation/m78-old-test-copy.zip"
+  ],
+  "guestFreeAfter": 342032384,
+  "preserved": "Original sources, all result directories, SDK, compiler, ICU, working review package, saves and trust stores. VM configuration unchanged.",
+  "nextBuildHeadroom": "No further full build/package assumed safe. Plan peak temporary/output footprint plus reserve before any operation. Narrow checks were guarded and original disk-full attempt remains evidence.",
+  "initialArchiveStage": {
+    "archive": ".cache/m78-followup/windows-baseline-test-copy.zip",
+    "bytes": 69567926,
+    "sha256": "616e92afe92088e0263b0f14c1c79b2b68ca0c94da279897afddb0b551a08559",
+    "guestRemoved": [
+      "C:/JudasValidation/M77TestBinFollowup",
+      "C:/JudasValidation/M77TestBin",
+      "C:/JudasValidation/m78-old-test-copy.zip"
+    ],
+    "guestFreeAfter": 342032384,
+    "preserved": "Original sources, all result directories, SDK, compiler, ICU, working review package, saves and trust stores. VM configuration unchanged.",
+    "nextBuildHeadroom": "Only bounded incremental changed-target build; reserve >=100 MiB, stage one package at a time. Stop if projected operation exceeds space."
+  },
+  "finalGuestFreeBytes": 69431296,
+  "finalSourceCheck": "native-final/m78-final-source-check.json",
+  "configuration": {
+    "vCPUs": 4,
+    "memoryKiB": 6291456,
+    "diskCapacityBytes": 42949672960,
+    "changed": false,
+    "receipts": [
+      "windows-final-dominfo.txt",
+      "windows-final-disk.txt"
+    ]
+  },
+  "additionalStages": [
+    {
+      "scope": "Failed automatic vcpkg download scratch only",
+      "partialGitBytes": 200764552,
+      "twoArchiveBytes": [
+        62705000,
+        62945640
+      ],
+      "receipts": [
+        "windows-config-scratch-cleanup.json",
+        "windows-download-cleanup.json"
+      ]
+    },
+    {
+      "scope": "240 explicitly inventoried completed compiler objects; binaries/libraries/source/recipes preserved",
+      "bytes": 92079037,
+      "receipts": [
+        "windows-all-build-intermediates.json",
+        "windows-compiler-intermediate-cleanup.json"
+      ]
+    }
+  ],
+  "limitations": "Free space dropped after the successful build while no compiler was running; root pagefile/swapfile observed, but their complete prior sizes were not captured, so attribution is not proved. No installed SDK/tool/shared-cache/user-data cleanup or VM resource expansion."
+}
