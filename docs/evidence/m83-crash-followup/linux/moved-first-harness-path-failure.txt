@@ -1,0 +1,6 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/tmp/Judas M83 Crash Followup Package/game.judasproj)
+Scene: Mechanical damage / two-car wall crash (/tmp/Judas M83 Crash Followup Package/Scenes/crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+[TestHarness] cannot open /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/export-smoke.txt

@@ -1,0 +1,6 @@
+NORMAL_CONE angle=0 expected_gap=-0.09 actual_gap=-0.09 normal=0,0,-1
+NORMAL_CONE angle=-0.002 expected_gap=-0.09002 actual_gap=-0.09002 normal=0.002,0,-0.999998
+NORMAL_CONE angle=-0.2 expected_gap=-0.092186 actual_gap=-0.092186 normal=0.198669,-0,-0.980067
+NORMAL_CONE angle=-0.6 expected_gap=-0.0973931 actual_gap=-0.0973931 normal=0.564642,0,-0.825336
+NORMAL_CONE angle=-0.775398 expected_gap=-0.0998586 actual_gap=-0.0998586 normal=0.7,0,-0.714142
+FAIL after 79: lateral SAT normal survives unless backward component dominates

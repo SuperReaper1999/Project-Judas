@@ -1,0 +1,34 @@
+[
+  {
+    "path": "tools/CreateMechanicalDamageLab.py",
+    "sha256": "5acaf79894ab82feeca24f45bc1940d161de68a06334e87cd285d58cf7d792b9"
+  },
+  {
+    "path": "projects/damage_lab/Scenes/crash.judas",
+    "sha256": "7fe2ea78334c4849b4ffbbd0f12d05af0dce763a0ed948fea71fcc0676eaa925"
+  },
+  {
+    "path": "projects/damage_lab/Assets/prefabs/crash_car.judasprefab",
+    "sha256": "4b799cc90c53014ca9d94eb4bcf8fee50b242127acd0a3f453fa399cf6c0ad30"
+  },
+  {
+    "path": "projects/damage_lab/damage_lab.judasproj",
+    "sha256": "4cf9377dba36532a6007eb618574345ba8655e284a4832fd2f5fa973c3eb07f9"
+  },
+  {
+    "path": "projects/damage_lab/Assets/scripts/controller.js",
+    "sha256": "178a43569a7710e7f700ba5c1f59d87a6362c75c8ce7d41d54950e934501baa0"
+  },
+  {
+    "path": "tests/MechanicalCrashApplicationTests.cpp",
+    "sha256": "e3af01ba38aae817e769abd775d445cb2561af2db4d8e8d7da3c6e5304a2b389"
+  },
+  {
+    "path": "projects/damage_lab/Assets/deformables/arm.judasdeform",
+    "sha256": "cd2561210e18f3575a666193f34a1f2a9f706151e45ad97ebe8342ab1f3c6923"
+  },
+  {
+    "binary": "build/judas_mechanical_crash_application_tests",
+    "sha256": "8b996f15a0e4625635b3deb8af0b25735450b5cdc6cda73f4deb368ed82ab0a8"
+  }
+]

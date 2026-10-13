@@ -1,0 +1,29 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / two-car wall crash (projects/damage_lab/Scenes/crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS parallel vehicles share geometry and material; only authored mount strength changes
+PASS ordinary mobile wheels terminate in physical material-supported carrier bodies
+RIDE tick=80 root=900 height_m=0.210756868 current_speed_mps=0.0420794263 up=(-0.00422587,0.999966,0.00702375) ground_contact_impulse_ns=3.231457 wheel_normal_force_n=1641.59338
+RIDE tick=80 root=1100 height_m=0.210756958 current_speed_mps=0.0420791768 up=(-0.00422617,0.999966,0.00702364) ground_contact_impulse_ns=3.2314589 wheel_normal_force_n=1641.59521
+PASS both complete vehicle assemblies support their normal resting load without mount failure
+PASS ordinary tyre contacts support each complete vehicle before driving
+RIDE tick=300 root=900 height_m=0.198654175 current_speed_mps=0.291573137 up=(5.93657e-06,0.999999,-0.00122005) ground_contact_impulse_ns=17.2890832 wheel_normal_force_n=726.999146
+RIDE tick=300 root=1100 height_m=0.198654324 current_speed_mps=0.291557431 up=(5.93062e-06,0.999999,-0.00121992) ground_contact_impulse_ns=17.2891433 wheel_normal_force_n=727.002533
+RIDE tick=600 root=900 height_m=0.198634163 current_speed_mps=0.131909043 up=(-6.64207e-05,0.999999,-0.00121033) ground_contact_impulse_ns=17.4783001 wheel_normal_force_n=711.424789
+RIDE tick=600 root=1100 height_m=0.198634282 current_speed_mps=0.131906539 up=(-6.64085e-05,0.999999,-0.00121022) ground_contact_impulse_ns=17.4784865 wheel_normal_force_n=711.430954
+CRASH root=900 distance_m=2.53257465 max_speed_mps=2.5938766 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=966.815016 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+CRASH root=1100 distance_m=2.53253078 max_speed_mps=2.5938766 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=966.814392 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+PASS ordinary crash content uses public JS input, camera and mechanical commands without script errors
+PASS vehicle material remains within its supported physical solve envelope
+PASS one ordinary logical drive input supplies equal source commands to both vehicles
+FAIL actual drivetrain and tyre forces accelerate both complete vehicles toward their walls
+FAIL both moving vehicles hit walls through actual solved carrier contacts
+FAIL weak mount failure follows genuine vehicle-wall impact rather than a scripted break
+FAIL detached finite carriers retain real collision and move independently of the damaged chassis
+FAIL actual physical mount loss stops the affected drive row while authored driver enable remains held
+PASS same-input stronger mounts preserve their physical wiring after the equivalent wall encounter
+PASS registered current crash scene starts and shuts down normally
+PERF samples=700 fixed_median_ms=5.437261 fixed_p95_ms=7.270888 fixed_max_ms=14.546366
+M83 crash application drive checks=14 failures=5

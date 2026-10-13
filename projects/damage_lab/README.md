@@ -4,6 +4,31 @@ An ordinary editable Judas project for M83. Open `damage_lab.judasproj` in the
 editor, or launch its exported `judas` executable. The project supplies controls,
 camera, watch sequence and HUD through `Assets/scripts/controller.js`.
 
+## Start with the crash lane
+
+The startup scene is now `Scenes/crash.judas`. Press **V** and watch two recognizable
+cars drive into ordinary solid walls. Orange has 6,000 N wheel-mount capacities;
+green has 15,000 N capacities. Geometry, material, driver input and mechanical
+settings are otherwise equal. Both use real powered wheels, physical bearing
+bodies and tetrahedral suspension members. Orange loses a mount after impact;
+its detached wheel retains collision/motion and its drive connection opens.
+Green preserves its connections under the same input. There is no prescribed
+crash pose, scripted break, hidden launch velocity or decorative detached wheel.
+
+**1** returns to the crash lane, **2** opens the original bearing/load fixtures,
+and **3** opens those fixtures under oblique gravity. The original separate ram
+and force demonstrations remain available; the crash lane watch sequence supplies
+ordinary throttle/brake commands only.
+
+The new compact suspension cook is `Assets/deformables/crash-arm.judasdeform`.
+The earlier `arm.judasdeform` and all original bearing/annex fixtures are retained.
+Small, long soft mounts were unsuitable for the driven car's axle loads: isolated
+rigid, merged-material and torque controls are preserved in the follow-up evidence.
+The crash lane uses shorter/thicker actual material, larger physical bearing
+inertia and 12 authored material iterations at the same four substeps / 60 Hz.
+This is a measured construction within the existing approximate coupling envelope,
+not a claim that arbitrary extremely compliant drivetrains are stable.
+
 ## What is physical
 
 - **Orange bench:** a tetrahedral plastic arm connects a fixed bearing stand to
@@ -43,12 +68,12 @@ writes a bent transform, wheel mount, plastic rest state or failure flag.
 | Mouse | Orbit the independent presentation camera |
 | P | Spawn a complete material-supported buggy prefab |
 | F3 | Load/unload the retained annex bearing region |
-| 1 / 2 | Flat / genuinely oblique uniform-gravity scene |
+| 1 / 2 / 3 | Crash lane / original flat fixtures / genuinely oblique fixtures |
 | F5 / F8 | Save / load the complete physical state |
 | R | Reload the authored intact scene |
 | Escape | Pause / resume |
 
-The watch tour changes inputs and loads only. It finishes after 36 seconds and
+The original bearing watch tour changes inputs and loads only. It finishes after 36 seconds and
 leaves the physically damaged result visible. Press R for a fresh authored
 scene. The tour is not a navigation controller; manual steering remains useful
 on the finite deck.
@@ -76,6 +101,16 @@ uniform field together; it is not a visual-only rotation.
 
 ## Human checklist
 
+1. In the startup crash lane, press V. Both cars should drive into visible walls.
+2. Observe the orange wheel/mount physically fail after contact, with independent
+   wheel motion and a lost drive path in the HUD. Compare the stronger green car.
+3. R restores the intact authored assembly. Try normal W/S, steering and brakes.
+4. Save a damaged car with F5; reload with F8. Its physical damage should persist.
+5. Press 2 or 3 for the earlier load, plastic deformation and oblique-gravity tests below.
+
+### Original fixtures
+
+
 1. Apply B, then unload. Orange should retain misalignment while green largely
    recovers; the carrier and wheel must follow the real material.
 2. Power a still-connected bench or buggy. Observe actual wheel motion and RPM.
@@ -89,5 +124,6 @@ uniform field together; it is not a visual-only rotation.
 8. Pause/reload/Stop; then repeat representative checks in exported standalone.
 
 Automated measurements and current modelling limits are recorded in
-`docs/evidence/m83` and `docs/M83_MECHANICAL_DAMAGE.md` in the source repository.
+`docs/evidence/m83`, `docs/evidence/m83-crash-followup`,
+`docs/evidence/m83-collision-followup` and `docs/M83_MECHANICAL_DAMAGE.md` in the source repository.
 Human acceptance and native Windows validation are separate from those checks.

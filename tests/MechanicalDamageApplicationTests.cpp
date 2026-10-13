@@ -269,7 +269,11 @@ int main(int argc,char** argv){
   std::this_thread::sleep_for(std::chrono::milliseconds(1));
   if(frame>2200){Check(false,"bounded application deadline");world.UI().RequestQuit();}
  };
+ // This regression retains the original bearing/load fixtures even when the
+ // ordinary project changes its startup scene to the clearer crash lane.
  Application application;std::string argument=project;
+ if(std::filesystem::path(project).extension()==".judasproj")
+  argument=(std::filesystem::absolute(project).parent_path()/"Scenes/flat.judas").string();
  if(mode=="oblique")argument=(std::filesystem::absolute(project).parent_path()/"Scenes/oblique.judas").string();
  char name[]="judas";char* args[]={name,argument.data()};Check(application.Run(2,args,&control)==0&&completed,"normal application startup and shutdown");
  if(!fixedTimes.empty()){

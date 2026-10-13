@@ -1,0 +1,10 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 3000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/editor.edit.png
+[editor autotest] edit frame: 96 draw calls, 2280 triangles, 688 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/editor.play.png
+[editor autotest] play frame: 0 steps, step 9.795 ms, 13 bodies, 0 contacts, 156 draw calls, 3876 triangles, 1 shadow passes, 0 lights, 516 debug lines, 0 particles
+[editor autotest] resources: 1 meshes, 0 textures, 0 terrain meshes, hits 5118, misses 5, failed 0, uploads 3, resident 818171 bytes
+[editor autotest] jobs: 7 workers, 6 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

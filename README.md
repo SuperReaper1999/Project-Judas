@@ -22,9 +22,12 @@ SDL-created context; generation and license provenance are recorded in
 [M83 coupled mechanical damage](docs/M83_MECHANICAL_DAMAGE.md) connects real
 elastic/plastic material geometry, finite-strength body mounts and explicit
 transmission prerequisites. The editable [Mechanical Damage Lab](projects/damage_lab/damage_lab.judasproj)
-compares material/strength choices, physical bearing misalignment and loss of drive.
+starts with two wheel-driven cars hitting solid walls, then offers the original
+material/strength, bearing misalignment and drive-loss fixtures.
 Project JavaScript supplies loads, driver controls and the watch tour. Linux
-validation and limits are recorded in [M83 evidence](docs/evidence/m83/RESULTS.md).
+validation and limits are recorded in [M83 evidence](docs/evidence/m83/RESULTS.md),
+the [crash follow-up](docs/evidence/m83-crash-followup/RESULTS.md) and
+[finite-triangle contact correction](docs/evidence/m83-collision-followup/INVESTIGATION.md).
 This does not promote Experimental to main or certify Windows/human acceptance.
 
 ## Latest accepted release — M82 human validated

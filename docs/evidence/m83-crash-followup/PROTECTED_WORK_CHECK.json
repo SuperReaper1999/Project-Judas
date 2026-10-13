@@ -1,0 +1,49 @@
+{
+  "followup_baseline": "5799683b272f85e27d9e38c1d03ded456697c416",
+  "release_baseline": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "historical_evidence_changes": [],
+  "original_M83_evidence_files_checked": 117,
+  "original_M83_evidence_all_unchanged": true,
+  "original_payloads": [
+    {
+      "path": "projects/damage_lab/Scenes/flat.judas",
+      "matches_checkpoint": true,
+      "sha256": "30462d5cc2c7f3ff61342e484eb5a12ab1ebacb1b443bc1291c49de3642363ff"
+    },
+    {
+      "path": "projects/damage_lab/Scenes/oblique.judas",
+      "matches_checkpoint": true,
+      "sha256": "eb409888a4849ab6db89a404432f988f79049726271b10fc45e55afeee194b29"
+    },
+    {
+      "path": "projects/damage_lab/Scenes/annex.judas",
+      "matches_checkpoint": true,
+      "sha256": "863f1fd0f6553c35015e1f73924595904c7f435254b00dbd9233edf425b0ac4f"
+    },
+    {
+      "path": "projects/damage_lab/Assets/deformables/arm.judasdeform",
+      "matches_checkpoint": true,
+      "sha256": "cd2561210e18f3575a666193f34a1f2a9f706151e45ad97ebe8342ab1f3c6923"
+    },
+    {
+      "path": "projects/damage_lab/Assets/deformables/section.judasdeform",
+      "matches_checkpoint": true,
+      "sha256": "f3246fda5411ada3310b7152a7679b239a845407c020131abfb77eb40ea1ded9"
+    },
+    {
+      "path": "projects/damage_lab/Assets/prefabs/buggy.judasprefab",
+      "matches_checkpoint": true,
+      "sha256": "543652e34841dc5fdfc68a57f13eba044f2d794fa5b0159b1887adc3629d954c"
+    },
+    {
+      "path": "projects/damage_lab/Assets/prefabs/bench.judasprefab",
+      "matches_checkpoint": true,
+      "sha256": "a4ca42eedf39ea43b8f9ad00f2c99e2e9721b3d5035c254586c7270b927ff814"
+    }
+  ],
+  "existing_games_changed_since_release": [],
+  "fluid_or_independent_research_changed_since_release": [],
+  "main": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "origin_main": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "scope": "Tracked diffs and exact original M83 evidence/payload comparisons; unrelated pre-existing untracked artifacts are excluded, not rewritten or claimed audited."
+}

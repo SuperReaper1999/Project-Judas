@@ -14,10 +14,11 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'projects/damage_lab'
-BAKER = Path(sys.argv[1] if len(sys.argv) > 1 else ROOT / 'build/judas_deformable_bake')
+arguments = [arg for arg in sys.argv[1:] if arg != '--crash-only']
+BAKER = Path(arguments[0] if arguments else ROOT / 'build/judas_deformable_bake')
 IDS = {name: '83' * 12 + f'{n:08x}' for n, name in enumerate(
     ('wheel', 'controller', 'math', 'ui', 'font', 'arm', 'section', 'outer',
-     'inner', 'buggy', 'bench', 'world', 'ram'), 1)}
+     'inner', 'buggy', 'bench', 'world', 'ram', 'crash_car', 'crash_arm'), 1)}
 
 # Reuse the current ordinary scene-format helpers, without executing another
 # project's generator or modifying any accepted lab.
@@ -160,6 +161,119 @@ def bench(root, position, q=(1, 0, 0, 0), strong=False, fractured=False):
     return ''.join(rows)
 
 
+def crash_car(root, position, strong=False):
+    """Two real-carrier assemblies differ only in authored connection capacity.
+
+    The front finite carriers lead the chassis collision box. A car driving
+    forward therefore physically strikes its bearing bodies against the wall;
+    query tyres are not claimed to be horizontal rigid collision geometry.
+    """
+    color = (.15, .70, .57) if strong else (.96, .46, .12)
+    shafts = [shaft('motor', inertia=.4, drag=.01, bearing=root)]
+    links = []
+    for index in range(4):
+        shafts.append(shaft(f'wheel{index+1}', 'wheel', target=root+1+index))
+        row = link(f'drive{index+1}', 'clutch', 0, index+1, .25, 120)
+        row['connection'] = connection(root+20+index, 'right' if index % 2 else 'left',
+                                        'left' if index % 2 else 'right')
+        links.append(row)
+    graph = {'version': 1, 'enabled': True, 'shafts': shafts,
+             'sources': [source('motor', 0, 'electric', 80, 6000)],
+             'links': links, 'brakes': [brake(f'wheel{i+1}', i+1, 100) for i in range(4)]}
+    rows = [object_(root, 'Strong crash rover' if strong else 'Weak-mount crash rover',
+                    position, render((.72, .20, 1.10), color)
+                    + assembly_body((.72, .20, 1.10), 120) + graph_line(graph))]
+    for index, (z, side) in enumerate(((-1.35, -1), (-1.35, 1), (1.05, -1), (1.05, 1))):
+        carrier, arm = root+10+index, root+20+index
+        center, mount = (side*.90, -.05, z), (side*1.25, -.05, z)
+        tip, root_group = ('right', 'left') if side > 0 else ('left', 'right')
+        rows.append(object_(carrier, 'Protruding finite wheel bearing / collision body', mount,
+                            render((.20, .28, .32), (.56, .61, .65))
+                            + assembly_body((.20, .28, .32), 8), parent=root))
+        fields = material('crash_arm', 80, .0000001,
+                          [(root_group, root, center), (tip, carrier, (-side*.35, 0, 0))],
+                          plastic=True)
+        # This heavier driven assembly needs a measured higher-quality material
+        # solve than the small benches. Cadence/substeps remain unchanged.
+        fields = fields.replace('deformable.iterations "4"', 'deformable.iterations "12"')
+        fields += '  deformable.attachmentLimits ' + json.dumps(
+            f'1 "{tip}" {15000 if strong else 6000} 0') + '\n'
+        rows.append(object_(arm, 'Plastic suspension material / finite terminal patch', center,
+                            render((.35, .25, .30), color) + fields, parent=root))
+        fields = wheel(carrier, (0, 0, 0), 2400)
+        fields = fields.replace('wheel.collisionLayer 0', 'wheel.collisionLayer 1').replace(
+            f'wheel.collisionMask {2**64-1}', 'wheel.collisionMask 1')
+        for old, new in (('wheel.radius .38', 'wheel.radius .34'),
+                         ('wheel.damping 1600', 'wheel.damping 180'),
+                         ('wheel.spinInertia 1.2', 'wheel.spinInertia .3')):
+            fields = fields.replace(old, new)
+        rows.append(object_(root+1+index, 'Physical rolling contact on actual bearing',
+                            (0, -.4, 0), f'  render mesh\n  render.mesh-asset "{IDS["wheel"]}"\n'
+                            '  render.color .055 .065 .075\n' + fields, parent=carrier))
+        rows.append(object_(root+40+index, 'Visible wheel rotation stripe', (side*.155, 0, 0),
+                            render((.025, .045, .26), (.96, .89, .65)), parent=root+1+index))
+    # Recognizable low-poly car presentation remains independent of collision
+    # and mounting mechanics; none of these meshes prescribes a damaged pose.
+    rows += [object_(root+30, 'Cabin body', (0, .47, .20),
+                     render((.50, .28, .56), color), parent=root),
+             object_(root+31, 'Front windscreen', (0, .55, -.375),
+                     render((.44, .20, .035), (.11, .26, .34)), parent=root),
+             object_(root+32, 'Rear window', (0, .55, .775),
+                     render((.44, .18, .025), (.11, .26, .34)), parent=root),
+             object_(root+33, 'Roof', (0, .76, .20),
+                     render((.54, .055, .60), (.29, .34, .39)), parent=root),
+             object_(root+34, 'Front bumper visual', (0, -.015, -1.14),
+                     render((.75, .10, .08), (.27, .31, .35)), parent=root),
+             object_(root+35, 'Left headlight', (-.48, .11, -1.115),
+                     render((.16, .075, .02), (1, .88, .53)), parent=root),
+             object_(root+36, 'Right headlight', (.48, .11, -1.115),
+                     render((.16, .075, .02), (1, .88, .53)), parent=root),
+             object_(root+37, 'Left side window', (-.515, .53, .22),
+                     render((.02, .17, .43), (.11, .26, .34)), parent=root),
+             object_(root+38, 'Right side window', (.515, .53, .22),
+                     render((.02, .17, .43), (.11, .26, .34)), parent=root)]
+    return ''.join(rows)
+
+
+def create_crash():
+    """Add the clear wall-impact experience without rewriting the old fixtures."""
+    (OUT/'Scenes').mkdir(parents=True, exist_ok=True)
+    (OUT/'Assets/prefabs').mkdir(parents=True, exist_ok=True)
+    (OUT/'Assets/deformables').mkdir(parents=True, exist_ok=True)
+    subprocess.run([str(BAKER), 'block', str(OUT/'Assets/deformables/crash-arm.judasdeform'),
+                    '4', '1', '1', '.7', '.5', '.6'], check=True)
+    metadata('Assets/deformables/crash-arm.judasdeform', 'crash_arm', 'deformable')
+    rows = [object_(1, 'Crash lane uniform gravity', (0, 0, 0),
+                    '  gravity uniform 9.81\n  gravity.region sphere 250\n'),
+            object_(3, 'Crash lane physical ground', (0, -.20, 3),
+                    render((11, .20, 26), (.095, .13, .16)) + body((11, .20, 26))),
+            object_(10, 'Project-owned crash driving, view and UI', (0, 0, 0),
+                    script({'crashDemo': True}) + f'  ui.asset "{IDS["ui"]}"\n'
+                    '  ui.name "lab"\n  ui.enabled true\n'),
+            crash_car(900, (-4, .99, 13)), crash_car(1100, (4, .99, 13), True)]
+    for identity, x, color in ((1500, -4, (.91, .37, .12)), (1501, 4, (.12, .57, .48))):
+        rows.append(object_(identity, 'Ordinary solid impact wall', (x, 1.0, -6),
+                            render((2.3, 1.0, .25), (.35, .40, .43)) + body((2.3, 1.0, .25))))
+        rows.append(object_(identity+10, 'Lane-color impact marker', (x, 1.75, -5.74),
+                            render((2.10, .12, .025), color)))
+        for index in range(7):
+            stripe=1700+(identity-1500)*40+index*2
+            rows.append(object_(stripe, 'Lane edge stripe',
+                                (x-1.95, .012, 13-index*3), render((.035, .012, .72), color)))
+            rows.append(object_(stripe+1, 'Lane edge stripe',
+                                (x+1.95, .012, 13-index*3), render((.035, .012, .72), color)))
+    # Raised coloured start bars and clear centre dashes make direction readable.
+    for index in range(9):
+        rows.append(object_(1600+index, 'Centre lane dash', (0, .014, 15-index*3),
+                            render((.055, .014, .60), (.75, .81, .83))))
+    rows.append(object_(12, 'Compatibility view seed only', (0, 7, 20),
+                        '  player-start first-person\n  player-start.yaw 0\n'))
+    (OUT/'Scenes/crash.judas').write_text(settings('Mechanical damage / two-car wall crash') + '\n'.join(rows))
+    (OUT/'Assets/prefabs/crash_car.judasprefab').write_text(
+        settings('Physical carrier-supported crash rover', 80) + crash_car(1, (0, 0, 0)))
+    metadata('Assets/prefabs/crash_car.judasprefab', 'crash_car', 'prefab')
+
+
 def create():
     for directory in ('Assets/deformables', 'Assets/scripts', 'Assets/models',
                       'Assets/materials', 'Assets/fonts', 'Assets/ui', 'Assets/prefabs',
@@ -200,7 +314,7 @@ def create():
     (OUT/'Assets/ui/lab.judasui').write_text(ui)
     actions = {'brake': 'key:Space', 'select': 'key:Tab', 'autopilot': 'key:V',
                'load': 'key:B', 'impact': 'key:I', 'overload': 'key:H',
-               'spawn': 'key:P', 'region': 'key:F3', 'flat': 'key:1', 'oblique': 'key:2',
+               'spawn': 'key:P', 'region': 'key:F3', 'crash': 'key:1', 'flat': 'key:2', 'oblique': 'key:3',
                'save_game': 'key:F5', 'load_game': 'key:F8', 'pause': 'key:Escape',
                'restart': 'key:R', 'view': 'key:C', 'ui_click': 'mouse:Left',
                'ui_activate': 'key:Return', 'ui_up': 'key:Up', 'ui_down': 'key:Down'}
@@ -212,7 +326,7 @@ def create():
         for name, bindings in axes.items())
     classification = 'JudasClassification 1 0 0 2 2 0 "Environment" 1 "Assembly" 1 1 0 "Default"'
     (OUT/'damage_lab.judasproj').write_text(
-        'JudasProject 1\nname "Mechanical Damage Lab"\nstartup-scene "Scenes/flat.judas"\n'
+        'JudasProject 1\nname "Mechanical Damage Lab"\nstartup-scene "Scenes/crash.judas"\n'
         'assets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\nlegacy-gameplay "false"\n'
         'classification ' + json.dumps(classification) + '\ninput-map ' + json.dumps(mapping)
         + f'\nworld-manifest "{IDS["world"]}"\n')
@@ -252,4 +366,6 @@ def create():
 
 
 if __name__ == '__main__':
-    create()
+    if '--crash-only' not in sys.argv:
+        create()
+    create_crash()

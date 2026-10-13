@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-m83-rigid-control-proof/project/Saves/rigid-crash.judasstate (none saved)
+Project: M83 ordinary rigid isolation control (/tmp/judas-m83-rigid-control-proof/project/rigid_control.judasproj)
+Scene: Mechanical damage / two-car wall crash (/tmp/judas-m83-rigid-control-proof/project/Scenes/rigid-crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS rigid isolation retains the approximate complete-vehicle gross mass
+PASS rigid control wheels act directly on ordinary root bodies through original authored mounts
+RIDE tick=80 root=900 height_m=0.541746795 current_speed_mps=0.121689133 up=(-0.00412651,0.999813,0.0188763) ground_contact_impulse_ns=0 wheel_normal_force_n=2053.254
+RIDE tick=80 root=1100 height_m=0.541746795 current_speed_mps=0.121689208 up=(-0.00412651,0.999813,0.0188763) ground_contact_impulse_ns=0 wheel_normal_force_n=2053.254
+PASS ordinary tyre contacts support each complete vehicle before driving
+RIDE tick=300 root=900 height_m=0.418193847 current_speed_mps=0.373668224 up=(-0.0122261,0.999171,-0.0388322) ground_contact_impulse_ns=0 wheel_normal_force_n=3614.55145
+RIDE tick=300 root=1100 height_m=0.418193907 current_speed_mps=0.373667955 up=(-0.0122261,0.999171,-0.0388321) ground_contact_impulse_ns=0 wheel_normal_force_n=3614.55176
+RIDE tick=600 root=900 height_m=0.44854331 current_speed_mps=0.0642887577 up=(-0.00110064,0.999167,-0.0407999) ground_contact_impulse_ns=0 wheel_normal_force_n=2081.04395
+RIDE tick=600 root=1100 height_m=0.44854337 current_speed_mps=0.0642891824 up=(-0.00110072,0.999167,-0.0407999) ground_contact_impulse_ns=0 wheel_normal_force_n=2081.0437
+CRASH root=900 distance_m=17.6440372 max_speed_mps=9.92958546 approach_speed_mps=9.92916107 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=248.232407 peak_patch_n=0 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+CRASH root=1100 distance_m=17.6440372 max_speed_mps=9.9295845 approach_speed_mps=9.92916012 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=248.232269 peak_patch_n=0 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+PASS ordinary crash content uses public JS input, camera and mechanical commands without script errors
+PASS one ordinary logical drive input supplies equal source commands to both vehicles
+PASS actual drivetrain and tyre forces accelerate both complete vehicles toward their walls
+PASS rigid controls reach the ordinary walls through actual solved chassis contacts
+PASS registered current crash scene starts and shuts down normally
+PERF samples=700 fixed_median_ms=2.410313 fixed_p95_ms=3.672303 fixed_max_ms=6.458026
+M83 crash application rigid-drive checks=8 failures=0

@@ -1,0 +1,13 @@
+{
+  "starting_head": "5799683b272f85e27d9e38c1d03ded456697c416",
+  "source": "/home/conner/Documents/GitHub/Project-Judas/src/CollisionGeometry.cpp",
+  "source_sha256": "884b5c3299085f11a7503dc70099232ea30b2fd64ffe835b8a05e46d66cdf2bb",
+  "probe_original_sha256": "aff8aef5dc256b6738d56b2f6484963b97597b4bbae92d8e06ee9e7431d8a921",
+  "binary_sha256": "0ed9308989ee35c2a718dbfe1fbe32dc1719249832ba1887b358beaa3452539e",
+  "guard": "dot(s.normal,pb.normals[0]) < -1e-3",
+  "run": [
+    "/tmp/judas-m83-guard/probe"
+  ],
+  "fixture": "single independently cooked one-sided finite wall triangle; sweep own box-face angle across lateral/backward directions",
+  "notes": "No production source modification. Probe includes current CollisionGeometry.cpp in one isolated translation unit to read SAT source feature before public CookedContacts response."
+}

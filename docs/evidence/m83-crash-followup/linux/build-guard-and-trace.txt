@@ -1,0 +1,28 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 31%] Built target judas_quickjs
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target judas_materials
+[ 37%] Built target harfbuzz
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 37%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_mechanical_crash_application_tests.dir/tests/MechanicalCrashApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/MechanicalCrashApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/MechanicalCrashApplicationTests.cpp:121:109: error: ‘glm::dmat4 DeformableInstance::initial’ is private within this context
+  121 |         plasticChange=std::max(plasticChange,glm::length(arm->plasticRest[element][column]-(glm::dmat3(arm->initial)*arm->asset->solids[element].rest)[column]));
+      |                                                                                                             ^~~~~~~
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.h:13,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/EngineHost.h:10,
+                 from /home/conner/Documents/GitHub/Project-Judas/tests/MechanicalCrashApplicationTests.cpp:2:
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.h:140:16: note: declared private here
+  140 |     glm::dmat4 initial{1};
+      |                ^~~~~~~
+gmake[3]: *** [CMakeFiles/judas_mechanical_crash_application_tests.dir/build.make:79: CMakeFiles/judas_mechanical_crash_application_tests.dir/tests/MechanicalCrashApplicationTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:11010: CMakeFiles/judas_mechanical_crash_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11017: CMakeFiles/judas_mechanical_crash_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:3413: judas_mechanical_crash_application_tests] Error 2

@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / two-car wall crash (projects/damage_lab/Scenes/crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS parallel vehicles share geometry and material; only authored mount strength changes
+PASS ordinary mobile wheels terminate in physical material-supported carrier bodies
+PASS both complete vehicle assemblies support their normal resting load without mount failure
+PASS ordinary tyre contacts support each complete vehicle before driving
+CRASH root=900 distance_m=3.81469727e-06 max_speed_mps=2.5938766 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=966.815016 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+CRASH root=1100 distance_m=3.81469727e-06 max_speed_mps=2.5938766 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=966.814392 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+PASS ordinary crash content uses public JS input, camera and mechanical commands without script errors
+PASS vehicle material remains within its supported physical solve envelope
+PASS same-duration no-drive negative control retains both mounts with no wall impact
+PASS negative vehicles do not receive hidden launch velocity or a scripted crash sequence
+PASS registered current crash scene starts and shuts down normally
+PERF samples=700 fixed_median_ms=5.484709 fixed_p95_ms=8.047520 fixed_max_ms=17.464081
+M83 crash application rest checks=9 failures=0

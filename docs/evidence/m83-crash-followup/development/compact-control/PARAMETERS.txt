@@ -1,0 +1,1 @@
+Only authored physical geometry changes: arm0.7x0.5x0.6m, original4x1x1 topology; centers side0.90/carriers side1.25; carrierboxhalf0.20,0.28,0.32m atunchanged8kg. Same12iterations4substeps60Hz,1e-7shear,80Nm6kW,2500/15000N,120kgchassis,height0.99,walls/inputs/checks. Materialarm mass16.8kg; totalassembly219.2kg (was187.9424kg). Bearing Ixx0.482133kgm2 (was0.181333).

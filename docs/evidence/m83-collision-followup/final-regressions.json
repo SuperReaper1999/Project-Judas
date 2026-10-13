@@ -1,0 +1,147 @@
+[
+  {
+    "name": "rigid_contact",
+    "command": [
+      "build/judas_rigid_contact_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.9945136950009328,
+    "binary_sha256": "ea6b7cc4a7983958b8d8d400b73a80981b9e7cfd8ce42d62e4123842966bab76"
+  },
+  {
+    "name": "collision",
+    "command": [
+      "build/judas_collision_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.01865786900089006,
+    "binary_sha256": "4a702ab8a76f1bc512976eef4c06ee3e9670a116a968573e565475d5a34df1f2"
+  },
+  {
+    "name": "kinematic",
+    "command": [
+      "build/judas_kinematic_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.02960254799836548,
+    "binary_sha256": "e7a1ab6d988e600a3679b83eda9369dd90d02d2c577015a2125bc3b4a6f943e2"
+  },
+  {
+    "name": "ragdoll",
+    "command": [
+      "build/judas_ragdoll_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.23329675700006192,
+    "binary_sha256": "9aa2319fd4255de2732c48b0b247e642a514ea6658161a584f03126394e3f263"
+  },
+  {
+    "name": "physical_animation",
+    "command": [
+      "build/judas_physical_animation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.07708998100133613,
+    "binary_sha256": "cc8667bd6053203e7f3399fbacc85fd2fcb68a5b03e08d0b085fbc45f8c7e2fd"
+  },
+  {
+    "name": "impact_timing",
+    "command": [
+      "build/judas_impact_timing_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015644584000256145,
+    "binary_sha256": "55964498159fd47c835612d2f6e7004b448b7fc23321654e0f3589e207165835"
+  },
+  {
+    "name": "impact_solver",
+    "command": [
+      "build/judas_impact_solver_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.002758162998361513,
+    "binary_sha256": "d1c0d14bab318c8c9ab84fff09dda5bd3eddd61d8b2f6f2adb6ec9d900005fc2"
+  },
+  {
+    "name": "impact_mesh_cost",
+    "command": [
+      "build/judas_impact_mesh_cost_tests"
+    ],
+    "exit": 0,
+    "seconds": 14.51928976400086,
+    "binary_sha256": "4ffa9b94028d965a6c27341aa09ff120d74beab0eff3b2d6362f28d40b5b96bc"
+  },
+  {
+    "name": "physics_cast",
+    "command": [
+      "build/judas_physics_cast_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.15286351000031573,
+    "binary_sha256": "d390b7fa8da88e3fe5e2b77d8e39f12134c69a7835d2b54ae4b88865f8914591"
+  },
+  {
+    "name": "physics_continuation",
+    "command": [
+      "build/judas_physics_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.016037609999330016,
+    "binary_sha256": "8975944fb8de4680a48582358a644e5cd86c962a39c41e337147026ca48a152f"
+  },
+  {
+    "name": "mechanical_damage",
+    "command": [
+      "build/judas_mechanical_damage_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.012958498002262786,
+    "binary_sha256": "d66058d3ca5b34a985f196e7df90a6c4f54f82f3e414c6df837f327a92f6a355"
+  },
+  {
+    "name": "mechanical_connection",
+    "command": [
+      "build/judas_mechanical_connection_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03851900600056979,
+    "binary_sha256": "9fbe5d52b765a5f061baf732361e40eeec8d3c845d12c33ff60cc7b42a85d5bf"
+  },
+  {
+    "name": "mechanical_damage_script",
+    "command": [
+      "build/judas_mechanical_damage_script_tests",
+      "/tmp/judas-m83-guard-js"
+    ],
+    "exit": 0,
+    "seconds": 0.031038835000799736,
+    "binary_sha256": "3c52667dd0ba581c5f67ae9f8cf485e2083d2601042f94d75f8e21036b510be1"
+  },
+  {
+    "name": "wheel",
+    "command": [
+      "build/judas_wheel_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.12387363399830065,
+    "binary_sha256": "eb820cdccca931d2e475b424c01fc6b7be2391fdcf2b02d822d5e20a1954d65e"
+  },
+  {
+    "name": "powertrain",
+    "command": [
+      "build/judas_powertrain_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.2096598459975212,
+    "binary_sha256": "ac24babf18c59ea6a40bd4a74248f332dbddb37c86bbd4a1ed7162a64ae41085"
+  },
+  {
+    "name": "bending",
+    "command": [
+      "build/judas_bending_tests"
+    ],
+    "exit": 0,
+    "seconds": 2.2194055849977303,
+    "binary_sha256": "27dab5f52f23a2c8458f13d51a86907b904bcfaa65ee4e9ed394c3734d1c6a53"
+  }
+]

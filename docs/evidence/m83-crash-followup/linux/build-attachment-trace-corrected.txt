@@ -1,0 +1,19 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 31%] Built target judas_quickjs
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_mechanical_crash_application_tests.dir/tests/MechanicalCrashApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/MechanicalCrashApplicationTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/MechanicalCrashApplicationTests.cpp:50:66: warning: missing initializer for member ‘{anonymous}::Observations::initialPlastic’ [-Wmissing-field-initializers]
+   50 |  std::array<Observations,2> observations{{{900,1500},{1100,1501}}};
+      |                                                                  ^
+/home/conner/Documents/GitHub/Project-Judas/tests/MechanicalCrashApplicationTests.cpp:50:66: warning: missing initializer for member ‘{anonymous}::Observations::initialPlastic’ [-Wmissing-field-initializers]
+[100%] Linking CXX executable judas_mechanical_crash_application_tests
+[100%] Built target judas_mechanical_crash_application_tests

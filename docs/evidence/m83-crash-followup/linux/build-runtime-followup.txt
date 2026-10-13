@@ -1,0 +1,58 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 31%] Built target judas_quickjs
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas
+[100%] Built target judas
+[  0%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 21%] Built target judas_icu_build
+[ 26%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_imgui
+[ 31%] Built target judas_ufbx
+[ 31%] Built target judas_materials
+[ 84%] Built target judas_engine
+[ 89%] Built target judas_navigation_baker
+[ 89%] Built target judas_model_import
+[ 94%] Built target judas_world_authoring
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMilestoneNotice.cpp.o
+[ 94%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 31%] Built target judas_quickjs
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_export
+[100%] Built target judas_export
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 31%] Built target judas_quickjs
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_mechanical_damage_application_tests
+[100%] Built target judas_mechanical_damage_application_tests

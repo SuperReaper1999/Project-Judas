@@ -115,6 +115,32 @@ namespace, gameplay damage function or unsafe node memory is exposed.
 
 ## Demonstration and review
 
+The default experience is now a two-car **wall-crash lane**. Real electric
+powertrains and tyres accelerate equal constructions into ordinary walls;
+6,000 N versus 15,000 N finite mounting capacities produce different damage.
+The weak car's mount releases after actual wall contact, its carrier moves
+independently, and physical continuity opens the drive row without changing held
+commands. The stronger car retains its connections. A same-duration no-drive
+control remains intact. See the [crash follow-up](evidence/m83-crash-followup/RESULTS.md).
+
+The original tour was a bearing/ram experiment and lacked a crash wall; the
+operator correctly found it unclear. Those original fixtures/evidence remain
+preserved. New vehicle construction uses a distinct shorter/thicker suspension
+cook and larger real bearing inertia, with measured authored solve quality.
+It does not change the deformable integration algorithm or use fake body motion.
+The existing partitioned coupling is still approximate and can be unsuitable
+for very compliant small bearings subject to high axle torque.
+
+An independently reproduced finite-triangle response bug is corrected in the
+same follow-up candidate: predominantly lateral SAT axes are preserved rather
+than snapped to a much deeper face push. Clearly backward axes retain the prior
+deep-overlap protection. See [collision evidence](evidence/m83-collision-followup/INVESTIGATION.md).
+No public API, physics cadence, fluid implementation or solver budget changes
+were introduced by that contact correction.
+
+### Original bearing and load fixtures
+
+
 The ordinary lab has equal-load orange/green plastic/strong bearing comparisons,
 a purple cohesive-path bench, and two four-wheel material-supported buggies.
 Project JS applies ordinary sustained forces and launches a physical rigid ram.

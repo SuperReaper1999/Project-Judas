@@ -134,12 +134,14 @@ bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,doubl
   // SAT separation is authoritative. Choosing a response normal must never
   // turn an edge-separated finite triangle into an overlapping infinite plane.
   if(s.gap>margin)return false;
-  // A triangle only pushes toward its front (the side the query centre is on;
-  // reversed for a two-sided sheet seen from behind). Deep in a thin body,
-  // sat()'s least-overlap axis can be one of the body's own faces pointing the
-  // other way, which would drive the body through the sheet. Use the
-  // triangle's face axis then; lateral edge axes (perpendicular) still stand.
-  if(pb.triangle&&s.gap<=0&&glm::dot(s.normal,pb.normals[0])<-1e-3){
+  // Deep in a thin body, a least-overlap axis dominated by the backward face
+  // component can drive it through the sheet. Guard that rear 45-degree cone
+  // (backward component > total tangential component), using the selected
+  // front, or reversed front of a two-sided sheet. Predominantly lateral axes
+  // remain real finite-edge responses: a small backward component must not
+  // replace a shallow sideways overlap with much deeper face penetration.
+  // This is a bounded response policy, not a unique continuum contact law.
+  if(pb.triangle&&s.gap<=0&&glm::dot(s.normal,pb.normals[0])<-std::sqrt(.5)){
    const V n=unit(pb.normals[0]);double alo=INFINITY;for(V p:pa.points)alo=std::min(alo,glm::dot(p,n));
    double bhi=-INFINITY;for(V p:pb.points)bhi=std::max(bhi,glm::dot(p,n));
    s={alo-bhi,n,false};

@@ -1,0 +1,34 @@
+[
+  {
+    "label": "export",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "/tmp/judas-m83-crash-followup-final",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "exit": 0,
+    "seconds": 0.11915225900156656
+  },
+  {
+    "label": "final-export",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "/tmp/judas-m83-crash-final2",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "exit": 0,
+    "seconds": 0.10522261299774982
+  },
+  {
+    "label": "final-moved-standalone",
+    "command": [
+      "/tmp/Judas M83 Crash Final2 Package/judas"
+    ],
+    "cwd": "/tmp",
+    "harness": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/final-export-smoke.txt",
+    "exit": 0,
+    "seconds": 22.217661794999003
+  }
+]

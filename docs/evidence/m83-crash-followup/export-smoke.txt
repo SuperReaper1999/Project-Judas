@@ -1,0 +1,37 @@
+FRAMES 1900
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ENTITY 900
+ACTION autopilot 1 60 61
+SCREENSHOT 180 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-intact.png
+SCREENSHOT 400 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-approach.png
+SCREENSHOT 590 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-impact.png
+SCREENSHOT 880 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-damaged.png
+SCREENSHOT 1230 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-strong.png
+ACTION save_game 1 1450 1451
+WAIT_SERVICES save 4000 1452
+ACTION restart 1 1500 1501
+WAIT_SERVICES scene 4000 1502
+EXPECT_SCENE Scenes/crash.judas 1505
+ACTION load_game 1 1520 1521
+WAIT_SERVICES save 4000 1522
+WAIT_SERVICES scene 4000 1523
+EXPECT_SCENE Scenes/crash.judas 1525
+SCREENSHOT 1540 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-restored.png
+ACTION pause 1 1560 1561
+EXPECT_PAUSED 1 1565
+SCREENSHOT 1570 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-crash-followup/linux/standalone-paused.png
+ACTION pause 1 1580 1581
+EXPECT_PAUSED 0 1585
+ACTION flat 1 1610 1611
+WAIT_SERVICES scene 4000 1612
+EXPECT_SCENE Scenes/flat.judas 1615
+ACTION oblique 1 1680 1681
+WAIT_SERVICES scene 4000 1682
+EXPECT_SCENE Scenes/oblique.judas 1685
+ACTION restart 1 1730 1731
+WAIT_SERVICES scene 4000 1732
+EXPECT_SCENE Scenes/oblique.judas 1735
+ACTION crash 1 1780 1781
+WAIT_SERVICES scene 4000 1782
+EXPECT_SCENE Scenes/crash.judas 1785

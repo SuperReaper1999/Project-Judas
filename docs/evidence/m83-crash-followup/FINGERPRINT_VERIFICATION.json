@@ -1,0 +1,513 @@
+{
+  "source_files": 78,
+  "binaries": 23,
+  "all_match": true,
+  "checks": [
+    {
+      "kind": "source",
+      "path": "CMakeLists.txt",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "README.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/ARCHITECTURE.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/JUDASJS.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/M83_MECHANICAL_DAMAGE.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/evidence/m83-collision-followup/INVESTIGATION.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/evidence/m83-crash-followup/HUMAN_FAILURE.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/evidence/m83-crash-followup/REPRODUCE.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/evidence/m83-crash-followup/RESULTS.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judas.d.ts",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judasjs/API_INVENTORY.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judasjs/api-inventory.json",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judasjs/cookbook.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judasjs/deformables.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judasjs/examples/mechanical-damage.js",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "docs/judasjs/powertrains.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/deformables/arm.judasdeform",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/deformables/arm.judasdeform.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/deformables/crash-arm.judasdeform",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/deformables/crash-arm.judasdeform.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/deformables/section.judasdeform",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/deformables/section.judasdeform.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/fonts/DejaVuSans.ttf",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/fonts/LICENSE.txt",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/materials/inner.judasmat",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/materials/inner.judasmat.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/materials/outer.judasmat",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/materials/outer.judasmat.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/models/LICENSE.txt",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/models/wheel.obj",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/models/wheel.obj.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/bench.judasprefab",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/bench.judasprefab.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/buggy.judasprefab",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/buggy.judasprefab.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/crash_car.judasprefab",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/crash_car.judasprefab.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/ram.judasprefab",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/prefabs/ram.judasprefab.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/scripts/controller.js",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/scripts/controller.js.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/scripts/math.js",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/scripts/math.js.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/ui/lab.judasui",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/ui/lab.judasui.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/worlds/lab.judasworld",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Assets/worlds/lab.judasworld.judasmeta",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/README.md",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Scenes/annex.judas",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Scenes/crash.judas",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Scenes/flat.judas",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/Scenes/oblique.judas",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "projects/damage_lab/damage_lab.judasproj",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "scripts/check_judasjs_api.mjs",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/CollisionGeometry.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/Deformable.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/Deformable.h",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/DeformableAsset.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/Powertrain.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/Powertrain.h",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/PowertrainAuthoring.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/RuntimeWorld.h",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/ScriptSystem.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/Simulation.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/WorldDeformables.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/WorldPersistence.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/WorldPersistence.h",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/WorldPowertrains.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/WorldStreaming.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "src/editor/ComponentEditors.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tests/CollisionGeometryTests.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tests/MechanicalConnectionTests.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tests/MechanicalCrashApplicationTests.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tests/MechanicalDamageApplicationTests.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tests/MechanicalDamageScriptTests.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tests/MechanicalDamageTests.cpp",
+      "matches": true
+    },
+    {
+      "kind": "source",
+      "path": "tools/CreateMechanicalDamageLab.py",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_editor",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_export",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_collision_geometry_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_impact_robustness_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_mechanical_crash_application_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_mechanical_damage_application_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_rigid_contact_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_collision_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_kinematic_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_ragdoll_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_physical_animation_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_impact_timing_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_impact_solver_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_impact_mesh_cost_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_physics_cast_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_physics_continuation_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_mechanical_damage_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_mechanical_connection_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_mechanical_damage_script_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_wheel_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_powertrain_tests",
+      "matches": true
+    },
+    {
+      "kind": "binary",
+      "path": "build/judas_bending_tests",
+      "matches": true
+    }
+  ],
+  "historical_fingerprints": "Original docs/evidence/m83 manifests remain unchanged and describe commit5799683; this separate manifest records the follow-up candidate."
+}

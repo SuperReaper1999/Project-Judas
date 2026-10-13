@@ -1,0 +1,2 @@
+NORMAL_CONE angle=0 expected_gap=-0.09 actual_gap=-0.09 normal=0,0,-1
+FAIL after 19: lateral SAT normal survives unless backward component dominates

@@ -18,8 +18,56 @@ namespace {
 unsigned checks=0;
 void require(bool condition,const char* message){++checks;if(!condition)throw std::runtime_error(message);}
 MeshData cube(){MeshData m;for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1}){MeshVertex v;v.position={float(x),float(y),float(z)};m.vertices.push_back(v);}m.indices={0,4,6,0,6,2,1,3,7,1,7,5,0,1,5,0,5,4,2,6,7,2,7,3,0,2,3,0,3,1,4,5,7,4,7,6};return m;}
+void checkTriangleResponseCone(){
+ // A thin box overlaps a finite wall's lower edge by about 9 cm. Its
+ // independently projected minimum translation is sideways, even when the
+ // box's face normal has a small backward component. Snapping that axis to
+ // the wall face would instead create about 22 cm of face penetration.
+ const std::array<glm::vec3,3> vertices{{{0,-1,-1},{0,-1,1},{0,1,-1}}};
+ const double boundary=std::atan(1.); // equal backward and tangential components
+ for(bool twoSided:{false,true})for(bool reverseWinding:{false,true}){
+  MeshData source;for(auto p:vertices){MeshVertex v;v.position=p;source.vertices.push_back(v);}
+  source.indices=reverseWinding?std::vector<uint32_t>{0,2,1}:std::vector<uint32_t>{0,1,2};
+  CollisionCookSettings settings;settings.convex=false;settings.twoSided=twoSided;
+  CollisionAsset cooked;std::string error;require(CookCollision(source,settings,cooked,error),"normal-cone finite wall independently cooks");
+  for(bool rotated:{false,true}){
+   const auto frame=rotated?glm::angleAxis(.79f,glm::normalize(glm::vec3(1,2,-3))):glm::quat(1,0,0,0);
+   const auto r=glm::mat3_cast(glm::normalize(glm::dquat(frame)));const auto front=r*glm::dvec3(-1,0,0);
+   PrimitivePose wall;wall.shape=Shape::Cooked(std::make_shared<CollisionAsset>(cooked),"finite wall response fixture");wall.parentOrientation=frame;
+   for(double angle:{0.,-.002,-.2,-.6,-boundary+.01,-boundary-.01,-1.1})for(double margin:{-.05,0.,.02}){
+    PrimitivePose box;box.shape=Shape::Box({.23f,.4f,.1f});box.parentPosition=frame*glm::vec3(-.01f,-.5f,-1.01f);box.parentOrientation=frame*glm::angleAxis(float(angle),glm::vec3(0,1,0));
+    auto contacts=CookedContacts(box,wall,margin);const bool allowed=!reverseWinding||twoSided;
+    require(bool(contacts.count)==allowed,"one-sided winding culls backside; two-sided finite overlap survives");
+    require(CookedHasContacts(box,wall,margin)==bool(contacts.count),"normal-cone Boolean truth agrees with real manifold");
+    if(!allowed)continue;
+    const auto bodyRotation=glm::mat3_cast(glm::normalize(glm::dquat(box.parentOrientation)));
+    const glm::dvec3 lateral=-bodyRotation[2];
+    const bool backwardDominates=-glm::dot(lateral,front)>std::sqrt(.5);
+    const auto expected=backwardDominates?front:lateral;
+    // Independent projection of the eight body vertices and three triangle
+    // vertices; this oracle does not call SAT or its contact normal chooser.
+    double minimum=INFINITY,maximum=-INFINITY;
+    for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1}){auto p=glm::dvec3(box.parentPosition)+bodyRotation*(glm::dvec3(x,y,z)*glm::dvec3(box.shape.halfExtents));minimum=std::min(minimum,glm::dot(p,expected));}
+    for(auto p:vertices)maximum=std::max(maximum,glm::dot(r*glm::dvec3(p),expected));
+    const double projectedGap=minimum-maximum;
+    if(!rotated&&!twoSided&&!reverseWinding&&margin==0)std::cout<<"NORMAL_CONE angle="<<angle<<" expected_gap="<<projectedGap<<" actual_gap="<<contacts.points[0].signedSeparation<<" normal="<<contacts.points[0].preciseNormal.x<<","<<contacts.points[0].preciseNormal.y<<","<<contacts.points[0].preciseNormal.z<<"\n";
+    for(int i=0;i<contacts.count;++i){const auto& c=contacts.points[i];
+     require(glm::length(c.preciseNormal-expected)<1e-6,"lateral SAT normal survives unless backward component dominates");
+     require(backwardDominates?c.signedSeparation>=projectedGap-1e-6:std::abs(c.signedSeparation-projectedGap)<1e-6,"lateral depth remains its finite projection; deep face witnesses retain real clipped depths");
+    }
+    auto reversed=CookedContacts(wall,box,margin);
+    require(reversed.count==contacts.count&&glm::length(reversed.points[0].preciseNormal+contacts.points[0].preciseNormal)<1e-7,"reversed pair order preserves response cone and depth");
+   }
+   // The box still crosses the infinite wall plane, but a full metre gap to
+   // the finite triangle's edge is a miss for positive and negative margins.
+   PrimitivePose outside;outside.shape=Shape::Box({.23f,.4f,.1f});outside.parentPosition=frame*glm::vec3(-.01f,-.5f,-2);outside.parentOrientation=frame*glm::angleAxis(-.002f,glm::vec3(0,1,0));
+   for(double margin:{-.01,0.,.1})require(!CookedContacts(outside,wall,margin).count&&!CookedHasContacts(outside,wall,margin),"normal correction cannot invent a contact beyond a finite triangle edge");
+  }
+ }
+}
 }
 int main(){try{
+ checkTriangleResponseCone();
  const auto temporary=std::filesystem::temp_directory_path()/("judas-m78-collision-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
  std::filesystem::create_directories(temporary);
  const auto file=[&](const char* name){return (temporary/name).string();};

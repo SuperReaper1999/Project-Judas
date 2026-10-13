@@ -1,0 +1,1935 @@
+JudasScene 3
+settings
+  name "Mechanical damage / two-car wall crash"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 3000
+end
+object 1 "Crash lane uniform gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 250
+end
+
+object 3 "Crash lane physical ground"
+  position 0 -0.2 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 11 0.2 26
+  render.color 0.095 0.13 0.16
+  body static box
+  body.half-extents 11 0.2 26
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Project-owned crash driving, view and UI"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "83838383838383838383838300000002"
+  script.0.enabled true
+  script.0.properties "{\"crashDemo\": true}"
+  ui.asset "83838383838383838383838300000004"
+  ui.name "lab"
+  ui.enabled true
+end
+
+object 900 "Weak-mount crash rover"
+  position -4 0.99 13
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.72 0.2 1.1
+  render.color 0.96 0.46 0.12
+  body dynamic box
+  body.half-extents 0.72 0.2 1.1
+  body.mass 120
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.4,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"900\",\"axis\":[1,0,0]},{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"901\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"902\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"903\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"904\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":80,\"maxPower\":6000,\"starterTorque\":0}],\"links\":[{\"name\":\"drive1\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"920\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive2\",\"kind\":\"clutch\",\"input\":0,\"output\":2,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"921\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}},{\"name\":\"drive3\",\"kind\":\"clutch\",\"input\":0,\"output\":3,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"922\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive4\",\"kind\":\"clutch\",\"input\":0,\"output\":4,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"923\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":1,\"maxTorque\":100},{\"name\":\"wheel2\",\"shaft\":2,\"maxTorque\":100},{\"name\":\"wheel3\",\"shaft\":3,\"maxTorque\":100},{\"name\":\"wheel4\",\"shaft\":4,\"maxTorque\":100}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 910 "Protruding finite wheel bearing / collision body"
+  parent 900
+  position -1.42 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 920 "Plastic suspension material / finite terminal patch"
+  parent 900
+  position -0.82 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.96 0.46 0.12
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 900 \"\" -0.82 -0.05 -1.35 1 \"left\" 1 910 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 1500 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 901 "Physical rolling contact on actual bearing"
+  parent 910
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 910
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 940 "Visible wheel rotation stripe"
+  parent 901
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 911 "Protruding finite wheel bearing / collision body"
+  parent 900
+  position 1.42 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 921 "Plastic suspension material / finite terminal patch"
+  parent 900
+  position 0.82 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.96 0.46 0.12
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 900 \"\" 0.82 -0.05 -1.35 1 \"right\" 1 911 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 1500 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 902 "Physical rolling contact on actual bearing"
+  parent 911
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 911
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 941 "Visible wheel rotation stripe"
+  parent 902
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 912 "Protruding finite wheel bearing / collision body"
+  parent 900
+  position -1.42 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 922 "Plastic suspension material / finite terminal patch"
+  parent 900
+  position -0.82 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.96 0.46 0.12
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 900 \"\" -0.82 -0.05 1.05 1 \"left\" 1 912 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 1500 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 903 "Physical rolling contact on actual bearing"
+  parent 912
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 912
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 942 "Visible wheel rotation stripe"
+  parent 903
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 913 "Protruding finite wheel bearing / collision body"
+  parent 900
+  position 1.42 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 923 "Plastic suspension material / finite terminal patch"
+  parent 900
+  position 0.82 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.96 0.46 0.12
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 900 \"\" 0.82 -0.05 1.05 1 \"right\" 1 913 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 1500 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 904 "Physical rolling contact on actual bearing"
+  parent 913
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 913
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 943 "Visible wheel rotation stripe"
+  parent 904
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 930 "Cabin body"
+  parent 900
+  position 0 0.47 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.28 0.56
+  render.color 0.96 0.46 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 931 "Front windscreen"
+  parent 900
+  position 0 0.55 -0.375
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.44 0.2 0.035
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 932 "Rear window"
+  parent 900
+  position 0 0.55 0.775
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.44 0.18 0.025
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 933 "Roof"
+  parent 900
+  position 0 0.76 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.54 0.055 0.6
+  render.color 0.29 0.34 0.39
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 934 "Front bumper visual"
+  parent 900
+  position 0 -0.015 -1.14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.1 0.08
+  render.color 0.27 0.31 0.35
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 935 "Left headlight"
+  parent 900
+  position -0.48 0.11 -1.115
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.16 0.075 0.02
+  render.color 1 0.88 0.53
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 936 "Right headlight"
+  parent 900
+  position 0.48 0.11 -1.115
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.16 0.075 0.02
+  render.color 1 0.88 0.53
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 937 "Left side window"
+  parent 900
+  position -0.515 0.53 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.17 0.43
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 938 "Right side window"
+  parent 900
+  position 0.515 0.53 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.17 0.43
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1100 "Strong crash rover"
+  position 4 0.99 13
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.72 0.2 1.1
+  render.color 0.15 0.7 0.57
+  body dynamic box
+  body.half-extents 0.72 0.2 1.1
+  body.mass 120
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.4,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"1100\",\"axis\":[1,0,0]},{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"1101\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"1102\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"1103\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"1104\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":80,\"maxPower\":6000,\"starterTorque\":0}],\"links\":[{\"name\":\"drive1\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"1120\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive2\",\"kind\":\"clutch\",\"input\":0,\"output\":2,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"1121\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}},{\"name\":\"drive3\",\"kind\":\"clutch\",\"input\":0,\"output\":3,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"1122\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive4\",\"kind\":\"clutch\",\"input\":0,\"output\":4,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"1123\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":1,\"maxTorque\":100},{\"name\":\"wheel2\",\"shaft\":2,\"maxTorque\":100},{\"name\":\"wheel3\",\"shaft\":3,\"maxTorque\":100},{\"name\":\"wheel4\",\"shaft\":4,\"maxTorque\":100}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 1110 "Protruding finite wheel bearing / collision body"
+  parent 1100
+  position -1.42 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 1120 "Plastic suspension material / finite terminal patch"
+  parent 1100
+  position -0.82 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.15 0.7 0.57
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 1100 \"\" -0.82 -0.05 -1.35 1 \"left\" 1 1110 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 15000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1101 "Physical rolling contact on actual bearing"
+  parent 1110
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 1110
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 1140 "Visible wheel rotation stripe"
+  parent 1101
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1111 "Protruding finite wheel bearing / collision body"
+  parent 1100
+  position 1.42 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 1121 "Plastic suspension material / finite terminal patch"
+  parent 1100
+  position 0.82 -0.05 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.15 0.7 0.57
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 1100 \"\" 0.82 -0.05 -1.35 1 \"right\" 1 1111 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 15000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1102 "Physical rolling contact on actual bearing"
+  parent 1111
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 1111
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 1141 "Visible wheel rotation stripe"
+  parent 1102
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1112 "Protruding finite wheel bearing / collision body"
+  parent 1100
+  position -1.42 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 1122 "Plastic suspension material / finite terminal patch"
+  parent 1100
+  position -0.82 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.15 0.7 0.57
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 1100 \"\" -0.82 -0.05 1.05 1 \"left\" 1 1112 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 15000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1103 "Physical rolling contact on actual bearing"
+  parent 1112
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 1112
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 1142 "Visible wheel rotation stripe"
+  parent 1103
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1113 "Protruding finite wheel bearing / collision body"
+  parent 1100
+  position 1.42 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.14 0.22
+  render.color 0.56 0.61 0.65
+  body dynamic box
+  body.half-extents 0.18 0.14 0.22
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 1123 "Plastic suspension material / finite terminal patch"
+  parent 1100
+  position 0.82 -0.05 1.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.15 0.7 0.57
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 1100 \"\" 0.82 -0.05 1.05 1 \"right\" 1 1113 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 15000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1104 "Physical rolling contact on actual bearing"
+  parent 1113
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .055 .065 .075
+  wheel.enabled true
+  wheel.chassis 1113
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .34
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 2400
+  wheel.damping 180
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 1143 "Visible wheel rotation stripe"
+  parent 1104
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.025 0.045 0.26
+  render.color 0.96 0.89 0.65
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1130 "Cabin body"
+  parent 1100
+  position 0 0.47 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.28 0.56
+  render.color 0.15 0.7 0.57
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1131 "Front windscreen"
+  parent 1100
+  position 0 0.55 -0.375
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.44 0.2 0.035
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1132 "Rear window"
+  parent 1100
+  position 0 0.55 0.775
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.44 0.18 0.025
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1133 "Roof"
+  parent 1100
+  position 0 0.76 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.54 0.055 0.6
+  render.color 0.29 0.34 0.39
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1134 "Front bumper visual"
+  parent 1100
+  position 0 -0.015 -1.14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.1 0.08
+  render.color 0.27 0.31 0.35
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1135 "Left headlight"
+  parent 1100
+  position -0.48 0.11 -1.115
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.16 0.075 0.02
+  render.color 1 0.88 0.53
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1136 "Right headlight"
+  parent 1100
+  position 0.48 0.11 -1.115
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.16 0.075 0.02
+  render.color 1 0.88 0.53
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1137 "Left side window"
+  parent 1100
+  position -0.515 0.53 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.17 0.43
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1138 "Right side window"
+  parent 1100
+  position 0.515 0.53 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.17 0.43
+  render.color 0.11 0.26 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1500 "Ordinary solid impact wall"
+  position -4 1 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.3 1 0.25
+  render.color 0.35 0.4 0.43
+  body static box
+  body.half-extents 2.3 1 0.25
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 1510 "Lane-color impact marker"
+  position -4 1.75 -5.74
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.1 0.12 0.025
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1700 "Lane edge stripe"
+  position -5.95 0.012 13
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1701 "Lane edge stripe"
+  position -2.05 0.012 13
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1702 "Lane edge stripe"
+  position -5.95 0.012 10
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1703 "Lane edge stripe"
+  position -2.05 0.012 10
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1704 "Lane edge stripe"
+  position -5.95 0.012 7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1705 "Lane edge stripe"
+  position -2.05 0.012 7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1706 "Lane edge stripe"
+  position -5.95 0.012 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1707 "Lane edge stripe"
+  position -2.05 0.012 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1708 "Lane edge stripe"
+  position -5.95 0.012 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1709 "Lane edge stripe"
+  position -2.05 0.012 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1710 "Lane edge stripe"
+  position -5.95 0.012 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1711 "Lane edge stripe"
+  position -2.05 0.012 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1712 "Lane edge stripe"
+  position -5.95 0.012 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1713 "Lane edge stripe"
+  position -2.05 0.012 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.91 0.37 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1501 "Ordinary solid impact wall"
+  position 4 1 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.3 1 0.25
+  render.color 0.35 0.4 0.43
+  body static box
+  body.half-extents 2.3 1 0.25
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 1511 "Lane-color impact marker"
+  position 4 1.75 -5.74
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.1 0.12 0.025
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1740 "Lane edge stripe"
+  position 2.05 0.012 13
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1741 "Lane edge stripe"
+  position 5.95 0.012 13
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1742 "Lane edge stripe"
+  position 2.05 0.012 10
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1743 "Lane edge stripe"
+  position 5.95 0.012 10
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1744 "Lane edge stripe"
+  position 2.05 0.012 7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1745 "Lane edge stripe"
+  position 5.95 0.012 7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1746 "Lane edge stripe"
+  position 2.05 0.012 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1747 "Lane edge stripe"
+  position 5.95 0.012 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1748 "Lane edge stripe"
+  position 2.05 0.012 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1749 "Lane edge stripe"
+  position 5.95 0.012 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1750 "Lane edge stripe"
+  position 2.05 0.012 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1751 "Lane edge stripe"
+  position 5.95 0.012 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1752 "Lane edge stripe"
+  position 2.05 0.012 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1753 "Lane edge stripe"
+  position 5.95 0.012 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.012 0.72
+  render.color 0.12 0.57 0.48
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1600 "Centre lane dash"
+  position 0 0.014 15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1601 "Centre lane dash"
+  position 0 0.014 12
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1602 "Centre lane dash"
+  position 0 0.014 9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1603 "Centre lane dash"
+  position 0 0.014 6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1604 "Centre lane dash"
+  position 0 0.014 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1605 "Centre lane dash"
+  position 0 0.014 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1606 "Centre lane dash"
+  position 0 0.014 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1607 "Centre lane dash"
+  position 0 0.014 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 1608 "Centre lane dash"
+  position 0 0.014 -9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.055 0.014 0.6
+  render.color 0.75 0.81 0.83
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 12 "Compatibility view seed only"
+  position 0 7 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end

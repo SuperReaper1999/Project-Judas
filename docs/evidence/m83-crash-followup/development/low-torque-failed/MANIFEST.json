@@ -1,0 +1,5 @@
+{
+  "change": "Only electric source maxTorque80to20Nm and maxPower6000to1500W. All physical geometry, material, limits, tyre configuration, cadence, controls and assertions retained.",
+  "before_sha256": "12eb9a44a6781fc2039a15bbb4cabe89a1fb40b6a27d49d86bed8693bbf1a1dc",
+  "after_sha256": "b64bb9b2788a4658c11e0e0d863e97ce1cf264c7ab772be5c0d7bcd03e911551"
+}

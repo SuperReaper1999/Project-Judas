@@ -1,0 +1,26 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / two-car wall crash (projects/damage_lab/Scenes/crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS parallel vehicles share geometry and material; only authored mount strength changes
+PASS ordinary mobile wheels terminate in physical material-supported carrier bodies
+RIDE tick=80 root=900 height_m=0.478824109 current_speed_mps=0.0263057742 up=(-0.00418428,0.999885,0.0145988) ground_contact_impulse_ns=0 wheel_normal_force_n=2358.70135
+RIDE tick=80 root=1100 height_m=0.478824079 current_speed_mps=0.0263070557 up=(-0.00418426,0.999885,0.0145988) ground_contact_impulse_ns=0 wheel_normal_force_n=2358.70166
+WORKLOAD bodies=13 dynamic_bodies=10 wheels=8 powertrains=2 materials=8 nodes=160 tets=192 fixed_hz=60
+PASS both complete vehicle assemblies support their normal resting load without mount failure
+PASS ordinary tyre contacts support each complete vehicle before driving
+RIDE tick=300 root=900 height_m=0.499367267 current_speed_mps=0.164295569 up=(-0.00359843,0.999897,0.0138772) ground_contact_impulse_ns=0 wheel_normal_force_n=2145.28604
+RIDE tick=300 root=1100 height_m=0.499367237 current_speed_mps=0.164295867 up=(-0.00359845,0.999897,0.0138772) ground_contact_impulse_ns=0 wheel_normal_force_n=2145.28583
+RIDE tick=600 root=900 height_m=0.499452531 current_speed_mps=0.163718179 up=(-0.00360999,0.999897,0.0138568) ground_contact_impulse_ns=0 wheel_normal_force_n=2144.88162
+RIDE tick=600 root=1100 height_m=0.49945271 current_speed_mps=0.163717404 up=(-0.00360991,0.999897,0.0138566) ground_contact_impulse_ns=0 wheel_normal_force_n=2144.88019
+CRASH root=900 distance_m=0.0827856064 max_speed_mps=1.78004408 approach_speed_mps=0.010915637 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=3685.21529 pre_wall_peak_n=3685.21529 post_wall_peak_n=0 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+CRASH root=1100 distance_m=0.082780838 max_speed_mps=1.78004444 approach_speed_mps=0.0109165544 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=3685.21211 pre_wall_peak_n=3685.21211 post_wall_peak_n=0 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+PASS ordinary crash content uses public JS input, camera and mechanical commands without script errors
+PASS both physical chassis retain live dynamic ownership through the complete encounter
+PASS vehicle material remains within its supported physical solve envelope
+PASS same-duration no-drive negative control retains both mounts with no wall impact
+PASS negative vehicles do not receive hidden launch velocity or a scripted crash sequence
+PASS registered current crash scene starts and shuts down normally
+PERF samples=700 fixed_median_ms=9.826729 fixed_p95_ms=12.794598 fixed_max_ms=23.815256 frame_work_median_ms=12.626814 frame_work_p95_ms=16.960547 frame_work_max_ms=28.058356
+M83 crash application rest checks=10 failures=0

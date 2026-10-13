@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / two-car wall crash (projects/damage_lab/Scenes/crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS parallel vehicles share geometry and material; only authored mount strength changes
+PASS ordinary mobile wheels terminate in physical material-supported carrier bodies
+PASS both complete vehicle assemblies support their normal resting load without mount failure
+PASS ordinary tyre contacts support each complete vehicle before driving
+CRASH root=900 distance_m=2.53257465 max_speed_mps=2.5938766 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=966.815016 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+CRASH root=1100 distance_m=2.53253078 max_speed_mps=2.5938766 carrier_wall_impulse_ns=0 chassis_wall_impulse_ns=0 peak_patch_n=966.814392 detached_motion_m=0 first_contact_tick=0 first_release_tick=0 released=0 unhealthy=0
+PASS ordinary crash content uses public JS input, camera and mechanical commands without script errors
+PASS vehicle material remains within its supported physical solve envelope
+PASS one ordinary logical drive input supplies equal source commands to both vehicles
+FAIL actual drivetrain and tyre forces accelerate both complete vehicles toward their walls
+FAIL both moving vehicles hit walls through actual solved carrier contacts
+FAIL weak mount failure follows genuine vehicle-wall impact rather than a scripted break
+FAIL detached finite carriers retain real collision and move independently of the damaged chassis
+FAIL actual physical mount loss stops the affected drive row while authored driver enable remains held
+PASS same-input stronger mounts preserve their physical wiring after the equivalent wall encounter
+PASS registered current crash scene starts and shuts down normally
+PERF samples=700 fixed_median_ms=5.523148 fixed_p95_ms=9.035220 fixed_max_ms=17.184574
+M83 crash application drive checks=14 failures=5

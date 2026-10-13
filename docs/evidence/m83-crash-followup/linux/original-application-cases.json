@@ -1,0 +1,50 @@
+[
+  {
+    "mode": "write",
+    "command": [
+      "build/judas_mechanical_damage_application_tests",
+      "projects/damage_lab/damage_lab.judasproj",
+      "write",
+      "docs/evidence/m83-crash-followup/linux/original-write"
+    ],
+    "exit": 0,
+    "seconds": 5.970271508998849,
+    "binary_sha256": "305127c06df86597072af1cb44fbb9921c7bc92f27751e5dddb37a492d0fb858"
+  },
+  {
+    "mode": "read",
+    "command": [
+      "build/judas_mechanical_damage_application_tests",
+      "projects/damage_lab/damage_lab.judasproj",
+      "read",
+      "docs/evidence/m83-crash-followup/linux/original-read"
+    ],
+    "exit": 0,
+    "seconds": 0.7594440339998982,
+    "binary_sha256": "305127c06df86597072af1cb44fbb9921c7bc92f27751e5dddb37a492d0fb858"
+  },
+  {
+    "mode": "lifecycle",
+    "command": [
+      "build/judas_mechanical_damage_application_tests",
+      "projects/damage_lab/damage_lab.judasproj",
+      "lifecycle",
+      "docs/evidence/m83-crash-followup/linux/original-lifecycle"
+    ],
+    "exit": 0,
+    "seconds": 2.638450857997668,
+    "binary_sha256": "305127c06df86597072af1cb44fbb9921c7bc92f27751e5dddb37a492d0fb858"
+  },
+  {
+    "mode": "oblique",
+    "command": [
+      "build/judas_mechanical_damage_application_tests",
+      "projects/damage_lab/damage_lab.judasproj",
+      "oblique",
+      "docs/evidence/m83-crash-followup/linux/original-oblique"
+    ],
+    "exit": 0,
+    "seconds": 6.242282396000519,
+    "binary_sha256": "305127c06df86597072af1cb44fbb9921c7bc92f27751e5dddb37a492d0fb858"
+  }
+]
