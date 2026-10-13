@@ -1,0 +1,7 @@
+{
+  "build/judas": "ab8440fcb542dee1b6a51f61d5ae48c207d5f10f743b28e6dd9efbcb662217bb",
+  "build/judas_editor": "a14bd58a8c6766f0685da6d4a33df7234d5915b6259673f4c15b474930f6a36f",
+  "build/judas_export": "a19ff4a83a26db9aecccfb0881593567405a6951cd83f2c19c48073877fea2ef",
+  "build/judas_vehicle_damage_application_tests": "6ec121a86bfbdc64a5d2776384c2bf6bb65118c7d8b0ea449846fa6b2d6b875d",
+  "build/judas_mechanical_damage_application_tests": "2decd84b7053e1ea5be7ba281aa7d5cc856fe961ff39bcde6c7161894733ae57"
+}

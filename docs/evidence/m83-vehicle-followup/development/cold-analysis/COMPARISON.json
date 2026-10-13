@@ -1,0 +1,375 @@
+{
+  "expected_entities_sha256": "b96ea27b0570e71904e74564a5790e5304d584548fa484e4ac2d6fb79d6d71d7",
+  "restored_entities_sha256": "d3973073a4979afaba4e14c5dc15542846f32817d66cf66491373378b3074be4",
+  "expected_total_bytes": 50061,
+  "restored_total_bytes": 50057,
+  "entity_count": 84,
+  "body_entities": [
+    3,
+    900,
+    910,
+    1100,
+    1110,
+    1500,
+    1501
+  ],
+  "allocation_counter_equal": true,
+  "simulation_time_equal": true,
+  "expected_authority_offset": 42688,
+  "restored_authority_offset": 42684,
+  "expected_view_offset": 50016,
+  "restored_view_offset": 50012,
+  "authoritative_section_bytes": 7328,
+  "authoritative_section_sha256": "0b6de8ee42c7f535d8a981a22f04c83e83cfe4e466a9ac0d0d61012eac266ae2",
+  "restored_authoritative_section_sha256": "0b6de8ee42c7f535d8a981a22f04c83e83cfe4e466a9ac0d0d61012eac266ae2",
+  "authoritative_section_exact": true,
+  "differing_authoritative_entities": [],
+  "first_authoritative_byte_differences": [],
+  "first_aligned_view_byte_differences": [
+    {
+      "relative_offset": 1,
+      "expected_absolute_offset": 50017,
+      "restored_absolute_offset": 50013,
+      "expected": 20,
+      "restored": 107
+    },
+    {
+      "relative_offset": 5,
+      "expected_absolute_offset": 50021,
+      "restored_absolute_offset": 50017,
+      "expected": 50,
+      "restored": 115
+    },
+    {
+      "relative_offset": 6,
+      "expected_absolute_offset": 50022,
+      "restored_absolute_offset": 50018,
+      "expected": 20,
+      "restored": 21
+    },
+    {
+      "relative_offset": 9,
+      "expected_absolute_offset": 50025,
+      "restored_absolute_offset": 50021,
+      "expected": 179,
+      "restored": 88
+    }
+  ],
+  "scene_text_exact": false,
+  "scene_non_transform_lines_exact": true,
+  "scene_transform_differences": [
+    {
+      "entity": 903,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 2.7773015941954536e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 904,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 0.0,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": true
+    },
+    {
+      "entity": 920,
+      "position_delta_m": 3.00000000119649e-08,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 930,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 931,
+      "position_delta_m": 1.0000000005838672e-07,
+      "rotation_delta_rad": 5.7198270977220555e-08,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 932,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 5.8306136465001e-08,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 933,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 934,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.9989758443201905e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 935,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 936,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 942,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.5502465855374874e-08,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 943,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 0.0,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": true
+    },
+    {
+      "entity": 945,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 946,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 947,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 948,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.999988578279272e-10,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 950,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.9989758443201905e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 951,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.9989758443201905e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1102,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.5236491663927784e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1104,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.998634427803156e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1120,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1130,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1131,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 2.999647004323744e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1132,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.5047696011455614e-08,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1133,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1134,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 2.828390621759725e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1135,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1136,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1140,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.5999990888677642e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1141,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.5236491663927784e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1142,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.398845390147773e-08,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1143,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 3.998634920342945e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1145,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1146,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1147,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1148,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 1.399972056392335e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1150,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 2.828390621759725e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    },
+    {
+      "entity": 1151,
+      "position_delta_m": 0.0,
+      "rotation_delta_rad": 2.828390621759725e-09,
+      "scale_delta": 0.0,
+      "quaternion_sign_reversed": false
+    }
+  ],
+  "max_scene_position_delta_m": 1.0000000005838672e-07,
+  "max_scene_rotation_delta_rad": 5.8306136465001e-08,
+  "expected_view": {
+    "position": [
+      9.846942901611328,
+      2.485607624053955,
+      -2.064923048019409
+    ],
+    "rotation": [
+      0.8018568754196167,
+      -0.12118881195783615,
+      0.5785272717475891,
+      0.08743584156036377
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "fov": 60.0
+  },
+  "restored_view": {
+    "position": [
+      9.847025871276855,
+      2.4856841564178467,
+      -2.064901351928711
+    ],
+    "rotation": [
+      0.8018568754196167,
+      -0.12118881195783615,
+      0.5785272717475891,
+      0.08743584156036377
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "fov": 60.0
+  },
+  "view_position_delta_m": 0.00011494297922075172,
+  "view_rotation_scale_fov_exact": true,
+  "snapshot_path": "/tmp/judas-m83-vehicle-final-user/judas/games/15afb54227c136f6e3dca996d266e8bf2b204f950e090a571a3cb7bb528b6876/Saves/Slots/damage-current.save",
+  "snapshot_sha256": "c669804c9b102072b8cd3ede1954a98ffaef3173d6da26887949da965120a3e9",
+  "restored_artifact_path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/final-read/restored-entities.bin",
+  "script_sha256": "68fe62113a0537cd31ceb6b8077b8fd41be1e22da0bc1b90f966acaf5153c093",
+  "scope": "Read-only archive analysis; no engine execution, no physics step, no input mutation."
+}

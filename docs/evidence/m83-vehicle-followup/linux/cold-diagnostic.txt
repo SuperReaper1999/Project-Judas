@@ -1,0 +1,20 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (projects/damage_lab/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS same actual vehicle geometry and plastic material compare independently authored cohesive strength
+PASS load-bearing crumple region uses real plastic tetrahedra and interior cohesive failure rather than finite mount release
+PASS two front wheels belong to a substantial physical nose/axle module and rear wheels to the cabin body
+PASS fresh process reads the ordinary actual crashed-vehicle save
+PASS new process observes restored physical endpoint before any resumed solver step
+FAIL cold restoration retains exact authoritative entities rather than cached damage labels
+PASS cold restoration retains exact authoritative deformables rather than cached damage labels
+PASS cold restoration retains exact authoritative wheels rather than cached damage labels
+PASS cold restoration retains exact authoritative powertrains rather than cached damage labels
+PASS cold restored actual fractured body, wheels and derived front-drive cut preserve physical ownership
+COLD IMPULSE vector_ns=(19.977766037,0.00866749323905,-0.942738711834) fixed_dt=0.0166666675359 unchanged_displacement_gate_m=.01 unchanged_observation_steps=45
+COLD ENDPOINT displacement_m=0.00454412447289 fixed_steps=46 paused=0 pose=(-5.04414224625,0.524727106094,-5.31595563889) velocity=(0.00620706146583,-0.0132362451404,0.0126003939658)
+FAIL restored front module physically responds to a new ordinary impulse while its topology and drive stay disconnected
+PASS ordinary registered vehicle scene starts and shuts down normally
+M83 physical vehicle read checks=12 failures=2

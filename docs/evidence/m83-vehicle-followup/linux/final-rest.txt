@@ -1,0 +1,19 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS same actual vehicle geometry and plastic material compare independently authored cohesive strength
+PASS load-bearing crumple region uses real plastic tetrahedra and interior cohesive failure rather than finite mount release
+PASS two front wheels belong to a substantial physical nose/axle module and rear wheels to the cabin body
+WORKLOAD bodies=7 dynamic_bodies=4 wheels=8 powertrains=2 materials=2 nodes=128 tets=96 material_substeps=4 iterations=12 fixed_hz=60
+PASS both real complete vehicles support their ordinary pre-drive load without structural failure
+VEHICLE root=900 distance_m=0.000116706549 approach_speed_mps=0 nose_wall_ns=0 prewall_plastic_m=0 impact_plastic_m=0 precut_plastic_m=0 intact_plastic_m=0 prewall_nonrigid_m=0.00490017958 impact_nonrigid_m=0 precut_nonrigid_m=0 intact_nonrigid_m=0 prewall_shape_m=0.0563872879 impact_shape_m=0 compression_m=0 module_separation_m=0 nose_mass_kg=40 physical_bonds=0 scripted_bonds=0 contact_tick=0 first_fracture_tick=0 cut_tick=0 patch_peak_n=943.26646 tensile_pa=35008.014 shear_pa=7205.25431 error=0
+VEHICLE root=1100 distance_m=0.000338840764 approach_speed_mps=0 nose_wall_ns=0 prewall_plastic_m=0 impact_plastic_m=0 precut_plastic_m=0 intact_plastic_m=0 prewall_nonrigid_m=0.00424869243 impact_nonrigid_m=0 precut_nonrigid_m=0 intact_nonrigid_m=0 prewall_shape_m=0.0389711185 impact_shape_m=0 compression_m=0 module_separation_m=0 nose_mass_kg=40 physical_bonds=0 scripted_bonds=0 contact_tick=0 first_fracture_tick=0 cut_tick=0 patch_peak_n=2418.57054 tensile_pa=35833.7152 shear_pa=7167.61508 error=0
+PASS ordinary public-API vehicle content completes without script or physical-solve failure
+PASS substantial front modules retain original dynamic mass, collision and actual front wheels
+PASS same-duration no-drive control receives no hidden launch or scripted crash
+PASS ordinary stationary load leaves both complete structural paths intact
+PASS ordinary registered vehicle scene starts and shuts down normally
+PERF samples=1180 fixed_median_ms=4.474251 fixed_p95_ms=6.617601 fixed_max_ms=28.214198 frame_median_ms=6.146174 frame_p95_ms=9.174168 frame_max_ms=30.682069
+M83 physical vehicle rest checks=9 failures=0

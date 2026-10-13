@@ -1,0 +1,3 @@
+Comparison to exact /tmp/judas-m83-vehicle-compliance2-ih0tt8pa: only cohesive compression strengths change. Weak 120000 -> 1200000 Pa; strong 1200000 -> 12000000 Pa (same 10x comparison ratio). Weak tension/shear 100000/70000 Pa and strong 1000000/700000 Pa unchanged. ShearCompliance 2e-7, yieldStrain 0.08, plasticRate 10 s^-1, maximumPlasticStrain 0.45, topology, geometry, masses, unlimited Body attachments, 12 iterations/4 substeps, fixed cadence, input and acceptance gates remain unchanged.
+Current cached controller SHA256 d8b400894ab11c9855f2b987037244e59be8fcb429ba55b35d9ea668e0935cad
+Exact-control fixture SHA256 e693f71a0d0458b31eff7ddce940e137a3d6ebcafac29ff5856978baec43b187

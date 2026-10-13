@@ -115,21 +115,33 @@ namespace, gameplay damage function or unsafe node memory is exposed.
 
 ## Demonstration and review
 
-The default experience is now a two-car **wall-crash lane**. Real electric
-powertrains and tyres accelerate equal constructions into ordinary walls;
-6,000 N versus 15,000 N finite mounting capacities produce different damage.
-The weak car's mount releases after actual wall contact, its carrier moves
-independently, and physical continuity opens the drive row without changing held
-commands. The stronger car retains its connections. A same-duration no-drive
-control remains intact. See the [crash follow-up](evidence/m83-crash-followup/RESULTS.md).
+The default experience is now a compact two-car **structural wall-crash lane**,
+`Scenes/vehicle_crash.judas`. Each car contains a rigid cabin and front axle/nose
+joined only by a load-bearing plastic, cohesive front chassis. The hood presents
+that actual material surface. Equal electric drive inputs carry both into solid
+walls; material yields while intact, then the weaker internal connections can
+tear progressively and release the substantial front module with both wheels.
+Front drive requires that actual material path; independent rear drive survives.
+The same geometry/material with stronger connections changes the physical result.
+See the [vehicle follow-up](evidence/m83-vehicle-followup/RESULTS.md).
 
-The original tour was a bearing/ram experiment and lacked a crash wall; the
-operator correctly found it unclear. Those original fixtures/evidence remain
-preserved. New vehicle construction uses a distinct shorter/thicker suspension
-cook and larger real bearing inertia, with measured authored solve quality.
-It does not change the deformable integration algorithm or use fake body motion.
-The existing partitioned coupling is still approximate and can be unsuitable
-for very compliant small bearings subject to high axle torque.
+The first tour had no crash wall. The subsequent mount-only car was also rejected:
+its unbreakable box chassis and outboard carrier blocks did not demonstrate useful
+chassis destruction. Their scenes, assets and both human failures remain intact.
+The replacement uses a distinct eight-cell front structure with explicit axial
+compression capacity, rather than a pretend damaged pose or detachable ornament.
+Its two real modules own 120/40 kg; 30.24 kg belongs to the material. Wheel centres
+are ±0.85 m, without separate outboard bearing cubes. Four material substeps,
+12 authored iterations and 60 Hz cadence remain. No engine algorithm or public
+API changes are needed for this construction follow-up.
+
+A measured initial compression failure interrupted flow on the very first
+yielding step. The authored ductile recipe instead allows compression and fails
+under subsequent tensile/shear load. The comparison changes only cohesive
+strengths; it does not change driver commands, masses, quality or plasticity.
+Permanent rest change and tetrahedron edge-length changes are measured separately
+from rigid fragment movement, including an intact pre-fracture witness. This
+is a game-oriented constitutive construction, not calibrated automotive steel.
 
 An independently reproduced finite-triangle response bug is corrected in the
 same follow-up candidate: predominantly lateral SAT axes are preserved rather

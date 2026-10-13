@@ -1,129 +1,131 @@
 # Mechanical Damage Lab
 
 An ordinary editable Judas project for M83. Open `damage_lab.judasproj` in the
-editor, or launch its exported `judas` executable. The project supplies controls,
-camera, watch sequence and HUD through `Assets/scripts/controller.js`.
+editor or launch its exported executable. Controls, watch narration, camera and
+HUD belong to `Assets/scripts/controller.js`; physical deformation and failure
+belong to the engine.
 
-## Start with the crash lane
+## Start with the structural crash
 
-The startup scene is now `Scenes/crash.judas`. Press **V** and watch two recognizable
-cars drive into ordinary solid walls. Orange has 6,000 N wheel-mount capacities;
-green has 15,000 N capacities. Geometry, material, driver input and mechanical
-settings are otherwise equal. Both use real powered wheels, physical bearing
-bodies and tetrahedral suspension members. Orange loses a mount after impact;
-its detached wheel retains collision/motion and its drive connection opens.
-Green preserves its connections under the same input. There is no prescribed
-crash pose, scripted break, hidden launch velocity or decorative detached wheel.
+`Scenes/vehicle_crash.judas` contains two compact cars and real solid walls.
+Press **V** to watch equal driver inputs accelerate both cars into their walls.
+The camera follows from the side so the front structure remains visible.
 
-**1** returns to the crash lane, **2** opens the original bearing/load fixtures,
-and **3** opens those fixtures under oblique gravity. The original separate ram
-and force demonstrations remain available; the crash lane watch sequence supplies
-ordinary throttle/brake commands only.
+Orange has a **load-bearing, plastic and fracturable front chassis**. Its hood
+is the actual deforming material surface, rather than a rigid cosmetic cover.
+Impact first compresses/yields that structure; internal connections can then
+tear progressively and separate the complete front axle/nose, including both
+front wheels. The front drive requires actual material continuity and loses
+transmission when that path breaks. Rear drive remains independent.
 
-The new compact suspension cook is `Assets/deformables/crash-arm.judasdeform`.
-The earlier `arm.judasdeform` and all original bearing/annex fixtures are retained.
-Small, long soft mounts were unsuitable for the driven car's axle loads: isolated
-rigid, merged-material and torque controls are preserved in the follow-up evidence.
-The crash lane uses shorter/thicker actual material, larger physical bearing
-inertia and 12 authored material iterations at the same four substeps / 60 Hz.
-This is a measured construction within the existing approximate coupling envelope,
-not a claim that arbitrary extremely compliant drivetrains are stable.
+Green has the same geometry, masses, material response and drive inputs, with
+10× stronger internal connections. It can yield under impact while retaining
+its structural and mechanical path. Changing authored strength changes the
+physical outcome. The cabin and front axle are rigid modules: this is a small
+coupled structural demonstration, not whole-car sheet-metal crash simulation.
 
-## What is physical
+### Actual construction
 
-- **Orange bench:** a tetrahedral plastic arm connects a fixed bearing stand to
-  an ordinary finite-mass carrier. Its wheel uses that carrier's real transform.
-- **Green bench:** the same geometry and loads with stiffer material and a
-  stronger mount. It is a physical comparison, not a scripted pass/fail actor.
-- **Purple bench:** an M79 cohesive material path transmits load from root to
-  carrier. Breaking that path disconnects the powertrain even when its tip
-  attachment remains present.
-- **Orange and green buggies:** four independent soft suspension arms, four
-  finite carriers and four normal M81 wheels. A small M82 electric shaft graph
-  drives them through bounded clutch links.
+- Compact wheel placement: centres ±0.85 m, radius 0.32 m; no outboard bearing cubes.
+- Rear body/cabin: 120 kg. Front axle/nose: 40 kg with ordinary collision.
+- Front material: 1.20 × 0.28 × 0.90 m, 30.24 kg, eight cohesive cells,
+  64 nodes / 48 tetrahedra. Total car mass: **190.24 kg**.
+- Two unlimited multi-node body attachments transmit loads between those bodies.
+  There is no rigid collider spanning/bypassing the material section.
+- Weak section capacities: tension 100 kPa, shear 70 kPa, compression 1.2 MPa.
+  Strong capacities are 10× those values. Ductile compression capacity permits
+  plastic forming before tensile/shear tearing; these are game-authored values,
+  not a calibrated automotive material specification.
+- Both use the same yield strain 0.08, plastic rate 10 s⁻¹, shear compliance
+  2e-7, four material substeps / 12 iterations, and normal **60 Hz** physics.
+- Both use ordinary 80 N m / 6 kW electric sources, clutch links and M81 wheels.
 
-Noncollinear material attachment nodes exchange point impulses with the real
-body. Bending changes bearing position/orientation and thus suspension contact,
-traction direction and mechanical load. Mount overload and cohesive failure are
-engine results. Links have optional physical-connection references to the
-material path; gameplay never turns them off to simulate damage. Released
-carriers keep their ordinary mass, collision and motion.
+The watch tour supplies throttle/brakes only. It never sets damage flags, cuts
+bonds, changes a wheel's mount, prescribes bent geometry, launches a hidden ram
+or resets velocities. A separate held-throttle check proves that physical loss
+of the front drive does not come from the watch policy releasing its commands.
 
-The wheel mesh is presentation geometry. The wheel's contact proxy and the
-deformable arm's current boundary are physical geometry. The project never
-writes a bent transform, wheel mount, plastic rest state or failure flag.
+Environment, rigid assembly and material collision layers are explicit project
+content. Attached material avoids its own pin bodies while still colliding with
+ordinary environment geometry. Detached rigid modules keep mass, collision and
+inherited motion. Visual tyres follow the existing physical wheel state.
 
 ## Controls
 
 | Control | Action |
 |---|---|
-| Tab | Select the next bench, buggy, spawned prefab or loaded annex |
+| V | Start/stop the ordinary watch tour |
 | W / S | Forward / reverse source input |
-| A / D | Buggy steering |
-| Space | Mechanical brake |
-| B | Apply/remove equal sustained bearing loads |
-| I | Launch an ordinary finite-mass rigid ram at the selected bearing |
-| H | Apply/remove overload; actual strength decides failure |
-| V | Watch the scripted input/load tour |
-| Mouse | Orbit the independent presentation camera |
-| P | Spawn a complete material-supported buggy prefab |
-| F3 | Load/unload the retained annex bearing region |
-| 1 / 2 / 3 | Crash lane / original flat fixtures / genuinely oblique fixtures |
-| F5 / F8 | Save / load the complete physical state |
-| R | Reload the authored intact scene |
+| A / D | Steer the front wheels |
+| Space | Mechanical brakes |
+| Tab | Select the other car or an independent spawned assembly |
+| Mouse | Orbit the presentation camera |
+| P | Spawn a complete referenced car prefab on a spare deck position |
+| 1 | New structural crash lane |
+| 2 / 3 | Original bearing/load fixtures: flat / oblique gravity |
+| 4 | Earlier wheel-mount crash experiment |
+| F5 / F8 | Save / load actual physical damage and mechanical state |
+| R | Reload the intact authored scene; replay with V |
 | Escape | Pause / resume |
 
-The original bearing watch tour changes inputs and loads only. It finishes after 36 seconds and
-leaves the physically damaged result visible. Press R for a fresh authored
-scene. The tour is not a navigation controller; manual steering remains useful
-on the finite deck.
+The tour stops driving and applies ordinary brakes after observed damage so the
+result can be inspected. Tab compares the stronger car. Save/load retains actual
+material positions, plastic rest, broken topology and physical bodies, rather
+than a damage label. Two prefab cars can be spawned independently.
 
-## Editing
+## Editing and retained experiments
 
-Select a material arm in the hierarchy to edit its generic deformation material,
-named attachments and finite force/torque strengths. Select a drive owner to
-inspect its normal powertrain graph and material connection. Change compliance
-or mount strength in content to compare a different physical outcome. The
-green control is intentionally stronger than orange.
+Select the front material in the hierarchy to inspect/edit its generic plastic
+material and named body attachments. Its `.source` asset explicitly authors the
+M79 cell/bond partition and section strengths; bake with the normal
+`judas_deformable_bake partition` tool. Select the root's powertrain to inspect
+front links' material-path prerequisites. Existing editor facilities remain the
+authoring path; no special vehicle/damage editor is required.
 
-Each arm has a material mass owner; each carrier has a separate rigid-body mass
-owner. The logical deformable entity does not also own a rigid body. Explicit
-project collision layers prevent attached material from colliding against its
-own pin support while retaining ordinary environment contact. This is authored
-filtering, not a scene-name branch.
+`Assets/prefabs/vehicle_car.judasprefab` packages the complete assembly and normal
+reference remapping. The construction recipe is `tools/CreateMechanicalDamageLab.py`;
+`--vehicle-only` emits the new payloads without rewriting retained fixtures.
 
-`Assets/prefabs/buggy.judasprefab` packages the complete referenced assembly.
-`Scenes/annex.judas` and `Assets/worlds/lab.judasworld` exercise normal retained
-streaming: request the annex with F3, then select it with Tab to bend, power or
-strike it; release and revisit it to inspect the retained damage.
-`Scenes/oblique.judas` rotates the physical geometry and the selected
-uniform field together; it is not a visual-only rotation.
+The operator rejected the earlier demonstrations as inadequate vehicle crashes.
+Their scenes, cooks and evidence remain preserved:
+
+- **4 / prior crash:** separate physical wheel carriers and finite mounts. It
+  proves mount release, but is not the new chassis-destruction demonstration.
+- **2 / flat fixtures:** orange plastic arm, green stiffer control, purple
+  cohesive bench and two suspension-supported buggies. B toggles sustained
+  loads, I launches a real ram, H toggles overload. V runs their original tour.
+- **3 / oblique fixtures:** corresponding physical geometry and real gravity
+  field are rotated together.
+- F3 requests/releases the retained annex in those original scenes; Tab selects
+  it. Save, revisit and inspect its retained deformation/connection state.
+
+The shared project script keeps these older controls and construction paths.
+Safe-handle caches for the new fixed prefab hierarchy avoid repeatedly copying
+its whole scene; physical state and presentation poses are always read live and
+caches rebuild after restoration.
 
 ## Human checklist
 
-1. In the startup crash lane, press V. Both cars should drive into visible walls.
-2. Observe the orange wheel/mount physically fail after contact, with independent
-   wheel motion and a lost drive path in the HUD. Compare the stronger green car.
-3. R restores the intact authored assembly. Try normal W/S, steering and brakes.
-4. Save a damaged car with F5; reload with F8. Its physical damage should persist.
-5. Press 2 or 3 for the earlier load, plastic deformation and oblique-gravity tests below.
+1. Press V: both compact cars should visibly drive into their solid walls.
+2. Watch orange's front structure deform, tear and separate with its complete
+   front axle. Inspect the lost front drive; compare green's connected result.
+3. R restores the authored cars. Try normal drive, steering and brakes.
+4. F5 saves a damaged car; F8 restores the same physical damage.
+5. P spawns another independent assembly; Tab selects it.
+6. Escape pauses/resumes; reload and stop leave no stale state.
+7. Visit 2/3 for load, plastic, retained streaming and oblique-gravity fixtures.
+8. Repeat the crash/save controls in the exported standalone.
 
-### Original fixtures
+## Limits and evidence
 
+This is an approximate small tetrahedral/rigid assembly, not industrial crash
+FEM, arbitrary mesh cutting, deformable tyres or a simulation of every car panel.
+Plastic rest flow conserves its authored rest volume. Extreme folding and
+out-of-envelope solves retain explicit existing diagnostics. Strength/compliance
+and solve quality need appropriate authoring; this does not promise stable
+arbitrarily soft drivetrains.
 
-1. Apply B, then unload. Orange should retain misalignment while green largely
-   recovers; the carrier and wheel must follow the real material.
-2. Power a still-connected bench or buggy. Observe actual wheel motion and RPM.
-3. Apply I and H. A weak mount or purple material path should fail and stop
-   transmitting drive without deleting the detached carrier.
-4. Compare the stronger control under the same loads.
-5. Drive the buggies and inspect suspension/traction after damage.
-6. Repeat in the oblique scene.
-7. Save a damaged state, reload it, and verify the damage and disconnected
-   operation remain. Revisit the annex and test a spawned independent prefab.
-8. Pause/reload/Stop; then repeat representative checks in exported standalone.
-
-Automated measurements and current modelling limits are recorded in
-`docs/evidence/m83`, `docs/evidence/m83-crash-followup`,
-`docs/evidence/m83-collision-followup` and `docs/M83_MECHANICAL_DAMAGE.md` in the source repository.
-Human acceptance and native Windows validation are separate from those checks.
+Current implementation/limits: `docs/M83_MECHANICAL_DAMAGE.md`.
+Original failures and measured follow-ups: `docs/evidence/m83`,
+`m83-crash-followup`, `m83-collision-followup`, and **`m83-vehicle-followup`**.
+Automated Linux results do not imply human acceptance or native Windows proof.

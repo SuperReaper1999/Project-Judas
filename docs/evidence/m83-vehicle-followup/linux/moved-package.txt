@@ -1,0 +1,20 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/tmp/judas-m83-vehicle-moved-20261014/game/game.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (/tmp/judas-m83-vehicle-moved-20261014/game/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/intact.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/approach.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/damaged.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/strong.png
+[TestHarness] service save ready after 0 wait frames at frame 1602
+[TestHarness] service scene ready after 0 wait frames at frame 1662
+[TestHarness] service save ready after 0 wait frames at frame 1722
+[TestHarness] service scene ready after 0 wait frames at frame 1723
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/restored.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/paused.png
+[TestHarness] service scene ready after 0 wait frames at frame 1852
+[TestHarness] service scene ready after 0 wait frames at frame 1922
+[TestHarness] service scene ready after 0 wait frames at frame 1982
+[TestHarness] service scene ready after 0 wait frames at frame 2062

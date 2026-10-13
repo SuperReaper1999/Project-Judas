@@ -1,0 +1,46 @@
+[
+  {
+    "path": "CreateMechanicalDamageLab.py",
+    "sha256": "0fe83c4115fbc8d4d1b681307d5c00ecfe2e0356dd814923e8a775cc752b8c42"
+  },
+  {
+    "path": "MechanicalVehicleCrashApplicationTests.cpp",
+    "sha256": "3db2133adc7322a5868fe635f09cabb2549a3f7e3c2dfec9d0005ad82b80c3fb"
+  },
+  {
+    "path": "SOURCE_SHA256.txt",
+    "sha256": "756e98f2a371a9b3d270c4493827f5836827160e19d5cfaee8d8321b05ec6796"
+  },
+  {
+    "path": "controller.js",
+    "sha256": "0f7162fb1a9a10a18520f847c6f8461d2623eae45a4df7b0173e870b5a0ce556"
+  },
+  {
+    "path": "vehicle_crash.judas",
+    "sha256": "97a3976768687f27d514aecbd79f6aa01c21649052a1de8176e69358ee705106"
+  },
+  {
+    "path": "vehicle_strong.judasdeform",
+    "sha256": "41d6c16eafa484d81b98d49604053c256a7f1fd740e8a0509f5a8a2f5922ffc5"
+  },
+  {
+    "path": "vehicle_strong.judasdeform.judasmeta",
+    "sha256": "fa7f3ffd8ac93af2ca4092ee49e96a9c4b52357957540450b11e503b22c7df13"
+  },
+  {
+    "path": "vehicle_strong.source",
+    "sha256": "63b6de91eb6b2a31cfe1a05aa6d94bc9ab8885cb51a24c3cdb849549bb40b34f"
+  },
+  {
+    "path": "vehicle_weak.judasdeform",
+    "sha256": "34bf0ac7c7f72b57c131ef582ecd5fcbe36b707a5151f26e773a7ee10e399f49"
+  },
+  {
+    "path": "vehicle_weak.judasdeform.judasmeta",
+    "sha256": "520de16a1ca848b70726966a8f9311e09cbcafb5bda5094ff0da035e51805b80"
+  },
+  {
+    "path": "vehicle_weak.source",
+    "sha256": "baaa2a1ecc2c52ec45bcbc7f6391d5ebdd02b14b25f1a0d53ffb044f9350d2a4"
+  }
+]

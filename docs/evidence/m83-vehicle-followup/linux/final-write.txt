@@ -1,0 +1,27 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS same actual vehicle geometry and plastic material compare independently authored cohesive strength
+PASS load-bearing crumple region uses real plastic tetrahedra and interior cohesive failure rather than finite mount release
+PASS two front wheels belong to a substantial physical nose/axle module and rear wheels to the cabin body
+WORKLOAD bodies=7 dynamic_bodies=4 wheels=8 powertrains=2 materials=2 nodes=128 tets=96 material_substeps=4 iterations=12 fixed_hz=60
+PASS both real complete vehicles support their ordinary pre-drive load without structural failure
+VEHICLE root=900 distance_m=16.9659023 approach_speed_mps=7.57830572 nose_wall_ns=144.691986 prewall_plastic_m=0 impact_plastic_m=0.0251795255 precut_plastic_m=0.0251795255 intact_plastic_m=0.0176886985 prewall_nonrigid_m=0.00490017958 impact_nonrigid_m=0.0372733503 precut_nonrigid_m=0.0372733503 intact_nonrigid_m=0.0372733503 prewall_shape_m=0.0563872879 impact_shape_m=0.213744698 compression_m=0.0836840875 module_separation_m=1.29648352 nose_mass_kg=40 physical_bonds=4 scripted_bonds=0 contact_tick=291 first_fracture_tick=296 cut_tick=299 patch_peak_n=37450.4207 tensile_pa=107527.712 shear_pa=138618.879 error=0
+VEHICLE root=1100 distance_m=16.5242443 approach_speed_mps=7.5781908 nose_wall_ns=127.30014 prewall_plastic_m=0 impact_plastic_m=0.0249805351 precut_plastic_m=0.0249805351 intact_plastic_m=0.0249805351 prewall_nonrigid_m=0.00424869243 impact_nonrigid_m=0.0376639316 precut_nonrigid_m=0.0376639316 intact_nonrigid_m=0.0376639316 prewall_shape_m=0.0389711185 impact_shape_m=0.210132825 compression_m=0.083844548 module_separation_m=0 nose_mass_kg=40 physical_bonds=0 scripted_bonds=0 contact_tick=291 first_fracture_tick=0 cut_tick=0 patch_peak_n=37446.8247 tensile_pa=116514.044 shear_pa=39541.0442 error=0
+PASS ordinary public-API vehicle content completes without script or physical-solve failure
+PASS substantial front modules retain original dynamic mass, collision and actual front wheels
+PASS equal ordinary logical input supplies the same held source policy to both vehicles
+PASS actual powertrain and tyre forces produce a real forward wall approach
+PASS actual physical front-module wall contacts carry nonzero solved impact impulses
+PASS wall loading permanently forms the actual intact section before any fracture beyond ordinary ride deformation
+PASS physical interior cohesive fracture severs the front/rear load path after impact without scripted or mount release
+PASS a substantial complete front axle/nose module with both wheels separates through real physics
+PASS actual topology loss removes front drive with commands still held while the independent rear drivetrain survives
+PASS otherwise identical stronger same-input vehicle retains its actual structural and mechanical load path
+PASS permanent physical material rest remains changed after the damaging encounter
+PASS ordinary save commits actual crashed material, physical endpoints and drive state
+PASS ordinary registered vehicle scene starts and shuts down normally
+PERF samples=1183 fixed_median_ms=6.915034 fixed_p95_ms=10.185713 fixed_max_ms=26.165280 frame_median_ms=8.589044 frame_p95_ms=12.506782 frame_max_ms=28.969249
+M83 physical vehicle write checks=17 failures=0

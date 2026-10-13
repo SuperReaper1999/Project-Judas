@@ -14,11 +14,13 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'projects/damage_lab'
-arguments = [arg for arg in sys.argv[1:] if arg != '--crash-only']
+arguments = [arg for arg in sys.argv[1:] if arg not in ('--crash-only', '--vehicle-only')]
 BAKER = Path(arguments[0] if arguments else ROOT / 'build/judas_deformable_bake')
 IDS = {name: '83' * 12 + f'{n:08x}' for n, name in enumerate(
     ('wheel', 'controller', 'math', 'ui', 'font', 'arm', 'section', 'outer',
-     'inner', 'buggy', 'bench', 'world', 'ram', 'crash_car', 'crash_arm'), 1)}
+     'inner', 'buggy', 'bench', 'world', 'ram', 'crash_car', 'crash_arm',
+     'vehicle_weak', 'vehicle_strong', 'vehicle_prefab', 'vehicle_body',
+     'vehicle_nose', 'vehicle_cabin', 'vehicle_wheel'), 1)}
 
 # Reuse the current ordinary scene-format helpers, without executing another
 # project's generator or modifying any accepted lab.
@@ -274,6 +276,217 @@ def create_crash():
     metadata('Assets/prefabs/crash_car.judasprefab', 'crash_car', 'prefab')
 
 
+def vehicle_partition(strong=False):
+    """Explicit M79 material cells, not an imported visual seam or damage pose.
+
+    The front and rear patches use real z-facing tetrahedron nodes. All eight
+    cells are connected by actual longitudinal and transverse cohesive bonds.
+    Compression is explicitly finite: the ordinary flex helper defaults to
+    unlimited compressive strength and would not prove a head-on crash.
+    """
+    cells, size = (2, 1, 4), (1.20, .28, .90)
+    extent = tuple(size[i]/cells[i] for i in range(3))
+    nodes, tetrahedra, parts, rear, front = [], [], [], [], []
+    patterns = ((0, 1, 3, 7), (0, 3, 2, 7), (0, 2, 6, 7),
+                (0, 6, 4, 7), (0, 4, 5, 7), (0, 5, 1, 7))
+    identity = lambda x, y, z: (z*cells[1]+y)*cells[0]+x
+    for z in range(cells[2]):
+        for y in range(cells[1]):
+            for x in range(cells[0]):
+                centre = tuple(extent[i]*(value+.5)-size[i]*.5
+                               for i, value in enumerate((x, y, z)))
+                indices = []
+                for k in range(8):
+                    indices.append(len(nodes))
+                    point = tuple(centre[i]+extent[i]*(((k>>i)&1)-.5)
+                                  for i in range(3))
+                    nodes.append(point)
+                    if z == 0 and not k & 4:
+                        front.append(indices[-1])
+                    if z == cells[2]-1 and k & 4:
+                        rear.append(indices[-1])
+                tets = []
+                for pattern in patterns:
+                    tets.append(len(tetrahedra))
+                    tetrahedra.append(tuple(indices[k] for k in pattern))
+                parts.append((centre, indices, tets))
+    factor = 10 if strong else 1
+    rows = ['JudasFractureSource 1',
+            f'settings 0 {100000*factor} {70000*factor} {1200000*factor} 1e-8 16',
+            'structural 1']
+    rows += ['node '+vec(point) for point in nodes]
+    rows += ['tet '+' '.join(map(str, tet)) for tet in tetrahedra]
+    for index, (centre, indices, tets) in enumerate(parts):
+        rows.append(f'part "cell-{index}" '+vec(centre)+' '
+                    +vec(tuple(value*.5 for value in extent))+' '
+                    +str(len(indices))+' '+' '.join(map(str, indices))+' '
+                    +str(len(tets))+' '+' '.join(map(str, tets)))
+    for z in range(cells[2]):
+        for y in range(cells[1]):
+            for x in range(cells[0]):
+                p = identity(x, y, z)
+                for axis in range(3):
+                    adjacent = [x, y, z]
+                    adjacent[axis] += 1
+                    if adjacent[axis] >= cells[axis]:
+                        continue
+                    q = identity(*adjacent)
+                    normal = tuple(int(i == axis) for i in range(3))
+                    centroid = tuple((parts[p][0][i]+parts[q][0][i])*.5 for i in range(3))
+                    pairs = [(a, b) for a in parts[p][1] for b in parts[q][1]
+                             if sum((nodes[a][i]-nodes[b][i])**2 for i in range(3)) < 1e-14]
+                    area = extent[(axis+1)%3]*extent[(axis+2)%3]
+                    rows.append(f'bond "section-{p}-{q}" {p} {q} '+vec(normal)+' '
+                                +vec(centroid)+f' {area:.9g} {len(pairs)} '
+                                +' '.join(f'{a} {b}' for a, b in pairs))
+    rows += ['group "rear" '+str(len(rear))+' '+' '.join(map(str, rear)),
+             'group "front" '+str(len(front))+' '+' '.join(map(str, front)), 'end']
+    return '\n'.join(rows)+'\n'
+
+
+def vehicle_mesh(half, chamfer=.08):
+    """Small original chamfered rigid skin, independent of physical ownership."""
+    x, y, z = half
+    outline = ((-x+chamfer, -z), (x-chamfer, -z), (x, -z+chamfer),
+               (x, z-chamfer), (x-chamfer, z), (-x+chamfer, z),
+               (-x, z-chamfer), (-x, -z+chamfer))
+    rows = ['# Original Judas M83 compact car skin, CC0', 's off']
+    rows += ['v '+vec((a, height, b)) for height in (-y, y) for a, b in outline]
+    rows += ['f 8 7 6 5 4 3 2 1', 'f 9 10 11 12 13 14 15 16']
+    rows += [f'f {i+1} {(i+1)%8+1} {(i+1)%8+9} {i+9}' for i in range(8)]
+    return '\n'.join(rows)+'\n'
+
+
+def asset_render(name, color):
+    return f'  render mesh\n  render.mesh-asset "{IDS[name]}"\n  render.color {vec(color)}\n'
+
+
+def vehicle_car(root, position, strong=False):
+    """Normal-sized car with an actual yielding/fracturing front load path."""
+    color = (.16, .64, .49) if strong else (.94, .37, .085)
+    nose, platform = root+10, root+20
+    shafts = [shaft('motor', inertia=.4, drag=.01, bearing=root)]
+    links = []
+    for index in range(4):
+        shafts.append(shaft(f'wheel{index+1}', 'wheel', target=root+1+index))
+        row = link(f'drive{index+1}', 'clutch', 0, index+1, .25, 120)
+        if index < 2:
+            row['connection'] = connection(platform, 'front', 'rear')
+        links.append(row)
+    graph = {'version': 1, 'enabled': True, 'shafts': shafts,
+             'sources': [source('motor', 0, 'electric', 80, 6000)],
+             'links': links, 'brakes': [brake(f'wheel{i+1}', i+1, 100) for i in range(4)]}
+    rows = [object_(root, 'Strong compact car / rear cabin' if strong else 'Yielding compact car / rear cabin',
+                    position, asset_render('vehicle_body', color)
+                    +assembly_body((.77, .23, .98), 120).replace('body.collision-mask 1', 'body.collision-mask 3')+graph_line(graph)),
+            object_(nose, 'Physical front axle and bumper section', (0, 0, -2.23),
+                    asset_render('vehicle_nose', color)+assembly_body((.65, .22, .35), 40).replace('body.collision-mask 1', 'body.collision-mask 3'), parent=root)]
+    fields = material('vehicle_strong' if strong else 'vehicle_weak', 100, 2e-7,
+                      [('rear', root, (0, 0, -1.43)), ('front', nose, (0, 0, .80))], plastic=True)
+    fields = fields.replace('deformable.iterations "4"', 'deformable.iterations "12"')
+    fields = fields.replace('deformable.collisionLayer "1"', 'deformable.collisionLayer "2"')
+    fields = fields.replace('deformable.material.yieldStrain "0.04"', 'deformable.material.yieldStrain "0.08"')
+    fields = fields.replace('deformable.material.plasticRate "1.5"', 'deformable.material.plasticRate "10"')
+    rows.append(object_(platform, 'Actual plastic hood / structural crumple cells', (0, 0, -1.43),
+                        render((.60, .14, .45), color)+fields, parent=root))
+    for index, (chassis, side, z) in enumerate(((nose, -1, .05), (nose, 1, .05),
+                                               (root, -1, .50), (root, 1, .50))):
+        mount = (side*.85, .08, z)
+        fields = wheel(chassis, mount, 6500)
+        fields = fields.replace('wheel.collisionLayer 0', 'wheel.collisionLayer 1').replace(
+            f'wheel.collisionMask {2**64-1}', 'wheel.collisionMask 1')
+        for old, new in (('wheel.radius .38', 'wheel.radius .32'),
+                         ('wheel.restLength .4', 'wheel.restLength .35'),
+                         ('wheel.maxLength .65', 'wheel.maxLength .5'),
+                         ('wheel.damping 1600', 'wheel.damping 800'),
+                         ('wheel.spinInertia 1.2', 'wheel.spinInertia .3')):
+            fields = fields.replace(old, new)
+        rows.append(object_(root+1+index, 'Rolling tyre on physical '+('front section' if index < 2 else 'rear cabin'),
+                            (side*.85, -.27, z), asset_render('vehicle_wheel', (.045, .052, .062))+fields,
+                            parent=chassis))
+        rows.append(object_(root+40+index, 'Wheel rim marker', (side*.105, 0, 0),
+                            render((.012, .045, .20), (.78, .79, .72)), parent=root+1+index))
+    # Cabin and glazing follow only the ordinary rear rigid body. The hood is
+    # the mapped physical material above: no rigid cosmetic hood hides crush.
+    # The generated cabin mesh has these exact coordinates in rear-body space.
+    rows.append(object_(root+30, 'Low-poly cabin shell', (0, 0, 0), asset_render('vehicle_cabin', color), parent=root))
+    glass_rotation = rotation((1, 0, 0), math.atan2(.61, .58))
+    rows += [object_(root+31, 'Sloped front windscreen', (0, .53, -.475),
+                     render((.585, .36, .016), (.07, .19, .23)), glass_rotation, parent=root),
+             object_(root+32, 'Rear glass', (0, .54, .741),
+                     render((.56, .24, .012), (.07, .19, .23)), rotation((1, 0, 0), -.3), parent=root),
+             object_(root+33, 'Roof', (0, .847, .22),
+                     render((.61, .028, .43), (.22, .27, .28)), parent=root),
+             object_(root+34, 'Real front-module bumper trim', (0, -.035, -.365),
+                     render((.63, .065, .025), (.23, .27, .29)), parent=nose)]
+    for side, index in ((-1, 0), (1, 1)):
+        rows += [object_(root+35+index, 'Side window', (side*.643, .53, .22),
+                         render((.012, .19, .39), (.07, .19, .23)), parent=root),
+                 object_(root+45+index, 'Door trim and sill', (side*.786, -.01, -.03),
+                         render((.012, .13, .65), color), parent=root),
+                 object_(root+47+index, 'Door handle', (side*.803, .135, .35),
+                         render((.014, .018, .065), (.24, .27, .28)), parent=root),
+                 object_(root+50+index, 'Headlight attached to physical nose', (side*.43, .09, -.358),
+                         render((.145, .055, .014), (.98, .89, .59)), parent=nose)]
+    return ''.join(rows)
+
+
+def create_vehicle():
+    """New content only. Prior rejected vehicle and all evidence stay intact."""
+    for directory in ('Scenes', 'Assets/deformables', 'Assets/models', 'Assets/prefabs'):
+        (OUT/directory).mkdir(parents=True, exist_ok=True)
+    for strong in (False, True):
+        key = 'vehicle_strong' if strong else 'vehicle_weak'
+        path = 'Assets/deformables/'+key+'.judasdeform'
+        source_path = OUT/('Assets/deformables/'+key+'.source')
+        source_path.write_text(vehicle_partition(strong))
+        subprocess.run([str(BAKER), 'partition', str(OUT/path), str(source_path)], check=True)
+        metadata(path, key, 'deformable')
+    for key, half in (('vehicle_body', (.79, .25, 1.0)), ('vehicle_nose', (.70, .24, .35))):
+        path = 'Assets/models/'+key+'.obj'
+        (OUT/path).write_text(vehicle_mesh(half))
+        metadata(path, key, 'mesh')
+    vertices = ((-.66, .24, -.78), (.66, .24, -.78), (.66, .24, .82), (-.66, .24, .82),
+                (-.59, .82, -.17), (.59, .82, -.17), (.59, .82, .64), (-.59, .82, .64))
+    rows = ['# Original Judas M83 compact car cabin, CC0', 's off']
+    rows += ['v '+vec(point) for point in vertices]
+    rows += ['f 4 3 2 1', 'f 5 6 7 8', 'f 1 2 6 5', 'f 2 3 7 6', 'f 3 4 8 7', 'f 4 1 5 8']
+    (OUT/'Assets/models/vehicle_cabin.obj').write_text('\n'.join(rows)+'\n')
+    metadata('Assets/models/vehicle_cabin.obj', 'vehicle_cabin', 'mesh')
+    wheel_rows = (OUT/'Assets/models/wheel.obj').read_text().splitlines()
+    for index, line in enumerate(wheel_rows):
+        if line.startswith('v '):
+            x, y, z = map(float, line.split()[1:])
+            wheel_rows[index] = 'v '+vec((x*.10/.13, y*.32/.38, z*.32/.38))
+    (OUT/'Assets/models/vehicle_wheel.obj').write_text('\n'.join(wheel_rows)+'\n')
+    metadata('Assets/models/vehicle_wheel.obj', 'vehicle_wheel', 'mesh')
+    rows = [object_(1, 'Vehicle crash uniform gravity', (0, 0, 0),
+                    '  gravity uniform 9.81\n  gravity.region sphere 250\n'),
+            object_(3, 'Physical test-lane ground', (0, -.20, 3),
+                    render((11, .20, 26), (.10, .13, .15))+body((11, .20, 26))),
+            object_(10, 'Ordinary driver, camera and UI policy', (0, 0, 0),
+                    script({'vehicleDemo': True})+f'  ui.asset "{IDS["ui"]}"\n'
+                    '  ui.name "lab"\n  ui.enabled true\n'),
+            vehicle_car(900, (-4, .60, 13)), vehicle_car(1100, (4, .60, 13), True)]
+    for identity, x, color in ((1500, -4, (.94, .37, .085)), (1501, 4, (.16, .64, .49))):
+        rows.append(object_(identity, 'Real concrete impact wall', (x, 1, -6),
+                            render((1.9, 1, .25), (.38, .40, .41))+body((1.9, 1, .25))))
+        rows.append(object_(identity+10, 'Impact lane colour', (x, 1.75, -5.74),
+                            render((1.7, .08, .02), color)))
+        for index in range(7):
+            stripe = 1700+(identity-1500)*40+index*2
+            rows.append(object_(stripe, 'Lane edge', (x-1.55, .012, 13-index*3),
+                                render((.03, .012, .72), color)))
+            rows.append(object_(stripe+1, 'Lane edge', (x+1.55, .012, 13-index*3),
+                                render((.03, .012, .72), color)))
+    rows.append(object_(12, 'Compatibility view seed only', (0, 7, 20),
+                        '  player-start first-person\n  player-start.yaw 0\n'))
+    (OUT/'Scenes/vehicle_crash.judas').write_text(settings('Compact car / physically yielding and fractured front structure')+'\n'.join(rows))
+    (OUT/'Assets/prefabs/vehicle_car.judasprefab').write_text(
+        settings('Compact car / ordinary material-connected front axle', 100)+vehicle_car(1, (0, 0, 0)))
+    metadata('Assets/prefabs/vehicle_car.judasprefab', 'vehicle_prefab', 'prefab')
+
+
 def create():
     for directory in ('Assets/deformables', 'Assets/scripts', 'Assets/models',
                       'Assets/materials', 'Assets/fonts', 'Assets/ui', 'Assets/prefabs',
@@ -314,7 +527,7 @@ def create():
     (OUT/'Assets/ui/lab.judasui').write_text(ui)
     actions = {'brake': 'key:Space', 'select': 'key:Tab', 'autopilot': 'key:V',
                'load': 'key:B', 'impact': 'key:I', 'overload': 'key:H',
-               'spawn': 'key:P', 'region': 'key:F3', 'crash': 'key:1', 'flat': 'key:2', 'oblique': 'key:3',
+               'spawn': 'key:P', 'region': 'key:F3', 'vehicle': 'key:1', 'crash': 'key:4', 'flat': 'key:2', 'oblique': 'key:3',
                'save_game': 'key:F5', 'load_game': 'key:F8', 'pause': 'key:Escape',
                'restart': 'key:R', 'view': 'key:C', 'ui_click': 'mouse:Left',
                'ui_activate': 'key:Return', 'ui_up': 'key:Up', 'ui_down': 'key:Down'}
@@ -324,9 +537,9 @@ def create():
         f'"{name}" 0 1 "{binding}" 1 0 ' for name, binding in actions.items()) + ''.join(
         f'"{name}" 1 {len(bindings)} ' + ''.join(f'"{binding}" {scale} 0 ' for binding, scale in bindings)
         for name, bindings in axes.items())
-    classification = 'JudasClassification 1 0 0 2 2 0 "Environment" 1 "Assembly" 1 1 0 "Default"'
+    classification = 'JudasClassification 1 0 0 3 3 0 "Environment" 1 "Assembly" 2 "Material" 1 1 0 "Default"'
     (OUT/'damage_lab.judasproj').write_text(
-        'JudasProject 1\nname "Mechanical Damage Lab"\nstartup-scene "Scenes/crash.judas"\n'
+        'JudasProject 1\nname "Mechanical Damage Lab"\nstartup-scene "Scenes/vehicle_crash.judas"\n'
         'assets-dir "Assets"\nscenes-dir "Scenes"\nsaves-dir "Saves"\nlegacy-gameplay "false"\n'
         'classification ' + json.dumps(classification) + '\ninput-map ' + json.dumps(mapping)
         + f'\nworld-manifest "{IDS["world"]}"\n')
@@ -366,6 +579,11 @@ def create():
 
 
 if __name__ == '__main__':
-    if '--crash-only' not in sys.argv:
-        create()
-    create_crash()
+    if '--vehicle-only' in sys.argv:
+        create_vehicle()
+    else:
+        if '--crash-only' not in sys.argv:
+            create()
+        create_crash()
+        if '--crash-only' not in sys.argv:
+            create_vehicle()

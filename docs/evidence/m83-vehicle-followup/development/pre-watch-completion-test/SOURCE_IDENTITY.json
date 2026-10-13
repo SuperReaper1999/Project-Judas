@@ -1,0 +1,6 @@
+{
+  "note": "Exact reconstruction of the pre-watch-completion source by reversing only the last source patch. No production/test source was edited. Drive/rest/probe/write/read semantics are unchanged; only watch length and tour-completion observation differ. Root must associate this with the compilation receipt, not assume the latest source hash describes an older binary.",
+  "archived_sha256": "4f8f07216346f01905b01f000899ae2ff6786e537d3e973ab8d11d7824115465",
+  "current_source_sha256": "a0dc08125b7091695aa15984548e0d8819860321eca6991c44cdb98668f67e17",
+  "reversed_edits": 5
+}

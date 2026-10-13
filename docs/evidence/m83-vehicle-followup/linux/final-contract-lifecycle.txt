@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS same actual vehicle geometry and plastic material compare independently authored cohesive strength
+PASS load-bearing crumple region uses real plastic tetrahedra and interior cohesive failure rather than finite mount release
+PASS two front wheels belong to a substantial physical nose/axle module and rear wheels to the cabin body
+PASS ordinary P creates a complete fresh vehicle with remapped physical nose, material, wheels and drive path
+PASS two ordinary prefab instances settle intact with independent finite bodies/material state and no hidden launch
+PASS ordinary drive moves both separately constructed physical vehicles through their own intact tyres and powertrains
+PASS ordinary pause holds the actual spawned physical endpoints without hidden fixed simulation
+PASS ordinary resume returns to authoritative physical stepping
+PASS ordinary reload replaces the world, retires spawned mechanics and reconstructs healthy intact authored vehicles
+PASS ordinary scene selection replaces vehicle material ownership with the retained bearing lab
+PASS returning normally reconstructs current vehicle assets without stale prefab, material or script ownership
+PASS ordinary registered vehicle scene starts and shuts down normally
+M83 physical vehicle lifecycle checks=12 failures=0

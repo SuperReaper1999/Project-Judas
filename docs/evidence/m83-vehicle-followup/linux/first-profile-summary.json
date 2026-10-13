@@ -1,0 +1,412 @@
+{
+  "sample": "last120frames of profiled first construction; diagnostic overhead not acceptance timings",
+  "top": [
+    {
+      "scope": "Worker queue wait",
+      "inclusive_per_frame_ms": 2007.73832225,
+      "exclusive_per_frame_ms": 2007.73832225,
+      "calls_per_frame": 0.058333333333333334
+    },
+    {
+      "scope": "Script asset: Assets/scripts/controller.js",
+      "inclusive_per_frame_ms": 10.01586355,
+      "exclusive_per_frame_ms": 10.01586355,
+      "calls_per_frame": 3.975
+    },
+    {
+      "scope": "Deformable rigid contacts",
+      "inclusive_per_frame_ms": 7.29729985,
+      "exclusive_per_frame_ms": 7.29729985,
+      "calls_per_frame": 95.2
+    },
+    {
+      "scope": "Deformable attachments",
+      "inclusive_per_frame_ms": 6.43441,
+      "exclusive_per_frame_ms": 6.43441,
+      "calls_per_frame": 95.2
+    },
+    {
+      "scope": "Deformable internal constraints",
+      "inclusive_per_frame_ms": 3.8879120583333333,
+      "exclusive_per_frame_ms": 3.8879120583333333,
+      "calls_per_frame": 95.2
+    },
+    {
+      "scope": "World culling and opaque submission",
+      "inclusive_per_frame_ms": 3.7761635499999997,
+      "exclusive_per_frame_ms": 3.73819155,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Deformable fixed step",
+      "inclusive_per_frame_ms": 18.56204383333333,
+      "exclusive_per_frame_ms": 0.40169822499999996,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Swap present wait",
+      "inclusive_per_frame_ms": 0.35221785,
+      "exclusive_per_frame_ms": 0.35221785,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Shaped text submission",
+      "inclusive_per_frame_ms": 0.23840365,
+      "exclusive_per_frame_ms": 0.23840365,
+      "calls_per_frame": 4.958333333333333
+    },
+    {
+      "scope": "Shadow pass submission",
+      "inclusive_per_frame_ms": 1.8583440500000001,
+      "exclusive_per_frame_ms": 0.2297403083333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Mechanical powertrains",
+      "inclusive_per_frame_ms": 0.19297374166666667,
+      "exclusive_per_frame_ms": 0.19297374166666667,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Deformable force prediction",
+      "inclusive_per_frame_ms": 0.17805654166666665,
+      "exclusive_per_frame_ms": 0.17805654166666665,
+      "calls_per_frame": 7.933333333333334
+    },
+    {
+      "scope": "Host shutdown",
+      "inclusive_per_frame_ms": 0.1759205583333333,
+      "exclusive_per_frame_ms": 0.1751388083333333,
+      "calls_per_frame": 0.008333333333333333
+    },
+    {
+      "scope": "Deformable plastic flow",
+      "inclusive_per_frame_ms": 0.1731128083333333,
+      "exclusive_per_frame_ms": 0.1731128083333333,
+      "calls_per_frame": 7.933333333333334
+    },
+    {
+      "scope": "Fixed simulation step",
+      "inclusive_per_frame_ms": 25.593594825,
+      "exclusive_per_frame_ms": 0.138283325,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Fracture cohesive constraints",
+      "inclusive_per_frame_ms": 0.12606196666666666,
+      "exclusive_per_frame_ms": 0.12606196666666666,
+      "calls_per_frame": 95.2
+    },
+    {
+      "scope": "Physics contacts",
+      "inclusive_per_frame_ms": 0.12144385,
+      "exclusive_per_frame_ms": 0.12144385,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Runtime UI drawing",
+      "inclusive_per_frame_ms": 0.4009053083333333,
+      "exclusive_per_frame_ms": 0.088794025,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Runtime UI layout",
+      "inclusive_per_frame_ms": 0.08086841666666666,
+      "exclusive_per_frame_ms": 0.08086841666666666,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Deformable surface contacts",
+      "inclusive_per_frame_ms": 0.06349238333333333,
+      "exclusive_per_frame_ms": 0.06349238333333333,
+      "calls_per_frame": 95.2
+    },
+    {
+      "scope": "World render submission",
+      "inclusive_per_frame_ms": 4.1238394,
+      "exclusive_per_frame_ms": 0.058075949999999994,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Play frame",
+      "inclusive_per_frame_ms": 33.824382416666666,
+      "exclusive_per_frame_ms": 0.05719256666666667,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Input events",
+      "inclusive_per_frame_ms": 0.05486809166666667,
+      "exclusive_per_frame_ms": 0.05486809166666667,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Deformable render mapping",
+      "inclusive_per_frame_ms": 0.037972,
+      "exclusive_per_frame_ms": 0.037972,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Wheel contact/suspension",
+      "inclusive_per_frame_ms": 0.052620291666666666,
+      "exclusive_per_frame_ms": 0.03418651666666667,
+      "calls_per_frame": 7.933333333333334
+    },
+    {
+      "scope": "Water boundary upload",
+      "inclusive_per_frame_ms": 0.0278496,
+      "exclusive_per_frame_ms": 0.0278496,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Audio control and retirement",
+      "inclusive_per_frame_ms": 0.027587716666666668,
+      "exclusive_per_frame_ms": 0.027587716666666668,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Streaming outer integration",
+      "inclusive_per_frame_ms": 0.021575325,
+      "exclusive_per_frame_ms": 0.021575325,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics shape query",
+      "inclusive_per_frame_ms": 0.018433775000000003,
+      "exclusive_per_frame_ms": 0.018433775000000003,
+      "calls_per_frame": 7.933333333333334
+    },
+    {
+      "scope": "World deformables",
+      "inclusive_per_frame_ms": 18.581753125,
+      "exclusive_per_frame_ms": 0.018163783333333332,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "World destroy",
+      "inclusive_per_frame_ms": 0.017390191666666666,
+      "exclusive_per_frame_ms": 0.017054375,
+      "calls_per_frame": 0.008333333333333333
+    },
+    {
+      "scope": "Main camera",
+      "inclusive_per_frame_ms": 2.2074194,
+      "exclusive_per_frame_ms": 0.015747399999999998,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Water optical paths",
+      "inclusive_per_frame_ms": 0.014725258333333333,
+      "exclusive_per_frame_ms": 0.014725258333333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics velocity constraints",
+      "inclusive_per_frame_ms": 0.013447433333333333,
+      "exclusive_per_frame_ms": 0.013447433333333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Text layout",
+      "inclusive_per_frame_ms": 0.012049975000000001,
+      "exclusive_per_frame_ms": 0.012049975000000001,
+      "calls_per_frame": 4.958333333333333
+    },
+    {
+      "scope": "Physics proxy refresh",
+      "inclusive_per_frame_ms": 0.011580141666666667,
+      "exclusive_per_frame_ms": 0.011580141666666667,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics continuous impacts",
+      "inclusive_per_frame_ms": 0.009951816666666667,
+      "exclusive_per_frame_ms": 0.009951816666666667,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics position constraints",
+      "inclusive_per_frame_ms": 0.00906875,
+      "exclusive_per_frame_ms": 0.00906875,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Rigid physics",
+      "inclusive_per_frame_ms": 0.18274950833333334,
+      "exclusive_per_frame_ms": 0.007461983333333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics sleeping assessment",
+      "inclusive_per_frame_ms": 0.0073909,
+      "exclusive_per_frame_ms": 0.0073909,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Script synchronization",
+      "inclusive_per_frame_ms": 0.007122091666666666,
+      "exclusive_per_frame_ms": 0.007122091666666666,
+      "calls_per_frame": 3.966666666666667
+    },
+    {
+      "scope": "Wheel suspension and tyres",
+      "inclusive_per_frame_ms": 0.05763180833333333,
+      "exclusive_per_frame_ms": 0.005011516666666666,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Runtime UI input",
+      "inclusive_per_frame_ms": 0.023522033333333334,
+      "exclusive_per_frame_ms": 0.004311275,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Script lifecycle callback",
+      "inclusive_per_frame_ms": 10.018763741666667,
+      "exclusive_per_frame_ms": 0.0029001916666666666,
+      "calls_per_frame": 3.975
+    },
+    {
+      "scope": "JavaScript contact events",
+      "inclusive_per_frame_ms": 0.0024680833333333334,
+      "exclusive_per_frame_ms": 0.0024680833333333334,
+      "calls_per_frame": 3.966666666666667
+    },
+    {
+      "scope": "Audio main update",
+      "inclusive_per_frame_ms": 0.02853425,
+      "exclusive_per_frame_ms": 0.0021825833333333337,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Character motors",
+      "inclusive_per_frame_ms": 0.0017125666666666665,
+      "exclusive_per_frame_ms": 0.0017125666666666665,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Fracture topology commit",
+      "inclusive_per_frame_ms": 0.0015455083333333335,
+      "exclusive_per_frame_ms": 0.0015455083333333335,
+      "calls_per_frame": 1.9833333333333334
+    },
+    {
+      "scope": "Particles and water presentation",
+      "inclusive_per_frame_ms": 0.0015373333333333333,
+      "exclusive_per_frame_ms": 0.0015373333333333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "JavaScript presentation",
+      "inclusive_per_frame_ms": 2.379161933333333,
+      "exclusive_per_frame_ms": 0.001500425,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics contact and joint solver",
+      "inclusive_per_frame_ms": 0.041558308333333335,
+      "exclusive_per_frame_ms": 0.0013963,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "JavaScript UI update",
+      "inclusive_per_frame_ms": 1.157884925,
+      "exclusive_per_frame_ms": 0.001331375,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Resource completion and budget",
+      "inclusive_per_frame_ms": 0.0012310250000000002,
+      "exclusive_per_frame_ms": 0.0012310250000000002,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Resource pump",
+      "inclusive_per_frame_ms": 0.003641266666666667,
+      "exclusive_per_frame_ms": 0.0011741916666666665,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "JavaScript update",
+      "inclusive_per_frame_ms": 0.054377475,
+      "exclusive_per_frame_ms": 0.0011463250000000001,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "JavaScript fixedUpdate",
+      "inclusive_per_frame_ms": 6.432076966666667,
+      "exclusive_per_frame_ms": 0.00109525,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Resource release",
+      "inclusive_per_frame_ms": 0.00078175,
+      "exclusive_per_frame_ms": 0.00078175,
+      "calls_per_frame": 0.008333333333333333
+    },
+    {
+      "scope": "Physics broadphase",
+      "inclusive_per_frame_ms": 0.000705225,
+      "exclusive_per_frame_ms": 0.000705225,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Simulation systems",
+      "inclusive_per_frame_ms": 25.594092791666668,
+      "exclusive_per_frame_ms": 0.0004979666666666666,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "JavaScript UI events",
+      "inclusive_per_frame_ms": 0.0003985,
+      "exclusive_per_frame_ms": 0.0003985,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physical animation drives",
+      "inclusive_per_frame_ms": 0.00038028333333333335,
+      "exclusive_per_frame_ms": 0.00038028333333333335,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Ragdoll physics to pose",
+      "inclusive_per_frame_ms": 0.0003596333333333333,
+      "exclusive_per_frame_ms": 0.0003596333333333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Physics initial impacts",
+      "inclusive_per_frame_ms": 0.00030310833333333333,
+      "exclusive_per_frame_ms": 0.00030310833333333333,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Legacy fluid surface update",
+      "inclusive_per_frame_ms": 0.00019463333333333334,
+      "exclusive_per_frame_ms": 0.00019463333333333334,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Animation instances",
+      "inclusive_per_frame_ms": 0.00018685,
+      "exclusive_per_frame_ms": 0.00018685,
+      "calls_per_frame": 0.9916666666666667
+    },
+    {
+      "scope": "Visual particle simulation",
+      "inclusive_per_frame_ms": 0.00017544166666666667,
+      "exclusive_per_frame_ms": 0.00017544166666666667,
+      "calls_per_frame": 0.9916666666666667
+    }
+  ],
+  "diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  }
+}

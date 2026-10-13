@@ -1,0 +1,20 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/tmp/judas-m83-compact-vehicle-gx_sc7u3/project/damage_lab.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (/tmp/judas-m83-compact-vehicle-gx_sc7u3/project/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS same actual vehicle geometry and plastic material compare independently authored cohesive strength
+PASS load-bearing crumple region uses real plastic tetrahedra and interior cohesive failure rather than finite mount release
+PASS two front wheels belong to a substantial physical nose/axle module and rear wheels to the cabin body
+WORKLOAD bodies=7 dynamic_bodies=4 wheels=8 powertrains=2 materials=2 nodes=128 tets=96 material_substeps=4 iterations=12 fixed_hz=60
+PASS both real complete vehicles support their ordinary pre-drive load without structural failure
+VEHICLE root=900 distance_m=17.0517998 approach_speed_mps=7.57874107 nose_wall_ns=168.544571 prewall_plastic_m=0 impact_plastic_m=0.000250040985 prewall_shape_m=0.0555996111 impact_shape_m=0.144601973 compression_m=0.0695426692 module_separation_m=0.659699646 nose_mass_kg=40 physical_bonds=6 scripted_bonds=0 contact_tick=291 cut_tick=293 patch_peak_n=25389.4593 tensile_pa=71594.286 shear_pa=38282.3788 error=0
+VEHICLE root=1100 distance_m=16.5204353 approach_speed_mps=7.57860136 nose_wall_ns=127.200706 prewall_plastic_m=0 impact_plastic_m=0.00137291043 prewall_shape_m=0.0382682086 impact_shape_m=0.194989969 compression_m=0.078213816 module_separation_m=0 nose_mass_kg=40 physical_bonds=0 scripted_bonds=0 contact_tick=291 cut_tick=0 patch_peak_n=39183.9681 tensile_pa=111268.246 shear_pa=46199.6649 error=0
+PASS ordinary public-API vehicle content completes without script or physical-solve failure
+PASS substantial front modules retain original dynamic mass, collision and actual front wheels
+PASS equal ordinary logical input supplies the same held source policy to both vehicles
+PASS actual powertrain and tyre forces produce a real forward wall approach
+PASS actual physical front-module wall contacts carry nonzero solved impact impulses
+PASS ordinary registered vehicle scene starts and shuts down normally
+PERF samples=1180 fixed_median_ms=13.958983 fixed_p95_ms=36.464120 fixed_max_ms=88.171761 frame_median_ms=18.309824 frame_p95_ms=48.308319 frame_max_ms=100.090478
+M83 physical vehicle probe checks=10 failures=0

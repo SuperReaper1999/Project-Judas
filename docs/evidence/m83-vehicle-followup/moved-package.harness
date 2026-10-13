@@ -1,0 +1,36 @@
+FRAMES 2250
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ENTITY 900
+ACTION autopilot 1 60 61
+SCREENSHOT 180 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/intact.png
+SCREENSHOT 420 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/approach.png
+SCREENSHOT 600 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/damaged.png
+SCREENSHOT 1400 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/strong.png
+ACTION save_game 1 1600 1601
+WAIT_SERVICES save 4000 1602
+ACTION restart 1 1660 1661
+WAIT_SERVICES scene 4000 1662
+EXPECT_SCENE Scenes/vehicle_crash.judas 1665
+ACTION load_game 1 1720 1721
+WAIT_SERVICES save 4000 1722
+WAIT_SERVICES scene 4000 1723
+EXPECT_SCENE Scenes/vehicle_crash.judas 1725
+SCREENSHOT 1740 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/restored.png
+ACTION pause 1 1780 1781
+EXPECT_PAUSED 1 1785
+SCREENSHOT 1790 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-vehicle-followup/linux/moved-package/paused.png
+ACTION pause 1 1800 1801
+EXPECT_PAUSED 0 1805
+ACTION flat 1 1850 1851
+WAIT_SERVICES scene 4000 1852
+EXPECT_SCENE Scenes/flat.judas 1855
+ACTION oblique 1 1920 1921
+WAIT_SERVICES scene 4000 1922
+EXPECT_SCENE Scenes/oblique.judas 1925
+ACTION crash 1 1980 1981
+WAIT_SERVICES scene 4000 1982
+EXPECT_SCENE Scenes/crash.judas 1985
+ACTION vehicle 1 2060 2061
+WAIT_SERVICES scene 4000 2062
+EXPECT_SCENE Scenes/vehicle_crash.judas 2065

@@ -1,10 +1,10 @@
 JudasProject 1
 name "Mechanical Damage Lab"
-startup-scene "Scenes/crash.judas"
+startup-scene "Scenes/vehicle_crash.judas"
 assets-dir "Assets"
 scenes-dir "Scenes"
 saves-dir "Saves"
 legacy-gameplay "false"
-classification "JudasClassification 1 0 0 2 2 0 \"Environment\" 1 \"Assembly\" 1 1 0 \"Default\""
-input-map "1 24 \"brake\" 0 1 \"key:Space\" 1 0 \"select\" 0 1 \"key:Tab\" 1 0 \"autopilot\" 0 1 \"key:V\" 1 0 \"load\" 0 1 \"key:B\" 1 0 \"impact\" 0 1 \"key:I\" 1 0 \"overload\" 0 1 \"key:H\" 1 0 \"spawn\" 0 1 \"key:P\" 1 0 \"region\" 0 1 \"key:F3\" 1 0 \"flat\" 0 1 \"key:2\" 1 0 \"oblique\" 0 1 \"key:3\" 1 0 \"save_game\" 0 1 \"key:F5\" 1 0 \"load_game\" 0 1 \"key:F8\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"restart\" 0 1 \"key:R\" 1 0 \"view\" 0 1 \"key:C\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"throttle\" 1 2 \"key:S\" -1 0 \"key:W\" 1 0 \"steer\" 1 2 \"key:D\" -1 0 \"key:A\" 1 0 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 \"crash\" 0 1 \"key:1\" 1 0 "
+classification "JudasClassification 1 0 0 3 3 0 \"Environment\" 1 \"Assembly\" 2 \"Material\" 1 1 0 \"Default\""
+input-map "1 25 \"brake\" 0 1 \"key:Space\" 1 0 \"select\" 0 1 \"key:Tab\" 1 0 \"autopilot\" 0 1 \"key:V\" 1 0 \"load\" 0 1 \"key:B\" 1 0 \"impact\" 0 1 \"key:I\" 1 0 \"overload\" 0 1 \"key:H\" 1 0 \"spawn\" 0 1 \"key:P\" 1 0 \"region\" 0 1 \"key:F3\" 1 0 \"flat\" 0 1 \"key:2\" 1 0 \"oblique\" 0 1 \"key:3\" 1 0 \"save_game\" 0 1 \"key:F5\" 1 0 \"load_game\" 0 1 \"key:F8\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"restart\" 0 1 \"key:R\" 1 0 \"view\" 0 1 \"key:C\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"throttle\" 1 2 \"key:S\" -1 0 \"key:W\" 1 0 \"steer\" 1 2 \"key:D\" -1 0 \"key:A\" 1 0 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 \"crash\" 0 1 \"key:4\" 1 0  \"vehicle\" 0 1 \"key:1\" 1 0 "
 world-manifest "8383838383838383838383830000000c"

@@ -1,0 +1,17 @@
+projects/damage_lab/Assets/deformables/vehicle_strong.judasdeform: OK
+projects/damage_lab/Assets/deformables/vehicle_strong.judasdeform.judasmeta: OK
+projects/damage_lab/Assets/deformables/vehicle_strong.source: OK
+projects/damage_lab/Assets/deformables/vehicle_weak.judasdeform: OK
+projects/damage_lab/Assets/deformables/vehicle_weak.judasdeform.judasmeta: OK
+projects/damage_lab/Assets/deformables/vehicle_weak.source: OK
+projects/damage_lab/Assets/models/vehicle_body.obj: OK
+projects/damage_lab/Assets/models/vehicle_body.obj.judasmeta: OK
+projects/damage_lab/Assets/models/vehicle_cabin.obj: OK
+projects/damage_lab/Assets/models/vehicle_cabin.obj.judasmeta: OK
+projects/damage_lab/Assets/models/vehicle_nose.obj: OK
+projects/damage_lab/Assets/models/vehicle_nose.obj.judasmeta: OK
+projects/damage_lab/Assets/models/vehicle_wheel.obj: OK
+projects/damage_lab/Assets/models/vehicle_wheel.obj.judasmeta: OK
+projects/damage_lab/Assets/prefabs/vehicle_car.judasprefab: OK
+projects/damage_lab/Assets/prefabs/vehicle_car.judasprefab.judasmeta: OK
+projects/damage_lab/Scenes/vehicle_crash.judas: OK

@@ -1,0 +1,487 @@
+JudasScene 3
+settings
+  name "Compact car / ordinary material-connected front axle"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 100
+end
+object 1 "Yielding compact car / rear cabin"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000013"
+  render.color 0.94 0.37 0.085
+  body dynamic box
+  body.half-extents 0.77 0.23 0.98
+  body.mass 120
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 3
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.4,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"1\",\"axis\":[1,0,0]},{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"2\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"3\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"4\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"5\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":80,\"maxPower\":6000,\"starterTorque\":0}],\"links\":[{\"name\":\"drive1\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"21\",\"attachment\":\"front\",\"rootAttachment\":\"rear\"}},{\"name\":\"drive2\",\"kind\":\"clutch\",\"input\":0,\"output\":2,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120,\"connection\":{\"owner\":\"21\",\"attachment\":\"front\",\"rootAttachment\":\"rear\"}},{\"name\":\"drive3\",\"kind\":\"clutch\",\"input\":0,\"output\":3,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120},{\"name\":\"drive4\",\"kind\":\"clutch\",\"input\":0,\"output\":4,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":120}],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":1,\"maxTorque\":100},{\"name\":\"wheel2\",\"shaft\":2,\"maxTorque\":100},{\"name\":\"wheel3\",\"shaft\":3,\"maxTorque\":100},{\"name\":\"wheel4\",\"shaft\":4,\"maxTorque\":100}]}"
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 11 "Physical front axle and bumper section"
+  parent 1
+  position 0 0 -2.23
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000014"
+  render.color 0.94 0.37 0.085
+  body dynamic box
+  body.half-extents 0.65 0.22 0.35
+  body.mass 40
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 3
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 21 "Actual plastic hood / structural crumple cells"
+  parent 1
+  position 0 0 -1.43
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.14 0.45
+  render.color 0.94 0.37 0.085
+  deformable.asset "83838383838383838383838300000010"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "12"
+  deformable.collisionLayer "2"
+  deformable.collisionMask "1"
+  deformable.material.density "100"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "2e-07"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.08"
+  deformable.material.plasticRate "10"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"rear\" 1 1 \"\" 0 0 -1.43 1 \"front\" 1 11 \"\" 0 0 0.8 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 2 "Rolling tyre on physical front section"
+  parent 11
+  position -0.85 -0.27 0.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000016"
+  render.color 0.045 0.052 0.062
+  wheel.enabled true
+  wheel.chassis 11
+  wheel.mount -0.85 0.08 0.05
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .35
+  wheel.maxLength .5
+  wheel.springStiffness 6500
+  wheel.damping 800
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 41 "Wheel rim marker"
+  parent 2
+  position -0.105 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.045 0.2
+  render.color 0.78 0.79 0.72
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 3 "Rolling tyre on physical front section"
+  parent 11
+  position 0.85 -0.27 0.05
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000016"
+  render.color 0.045 0.052 0.062
+  wheel.enabled true
+  wheel.chassis 11
+  wheel.mount 0.85 0.08 0.05
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .35
+  wheel.maxLength .5
+  wheel.springStiffness 6500
+  wheel.damping 800
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 42 "Wheel rim marker"
+  parent 3
+  position 0.105 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.045 0.2
+  render.color 0.78 0.79 0.72
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 4 "Rolling tyre on physical rear cabin"
+  parent 1
+  position -0.85 -0.27 0.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000016"
+  render.color 0.045 0.052 0.062
+  wheel.enabled true
+  wheel.chassis 1
+  wheel.mount -0.85 0.08 0.5
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .35
+  wheel.maxLength .5
+  wheel.springStiffness 6500
+  wheel.damping 800
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 43 "Wheel rim marker"
+  parent 4
+  position -0.105 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.045 0.2
+  render.color 0.78 0.79 0.72
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 5 "Rolling tyre on physical rear cabin"
+  parent 1
+  position 0.85 -0.27 0.5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000016"
+  render.color 0.045 0.052 0.062
+  wheel.enabled true
+  wheel.chassis 1
+  wheel.mount 0.85 0.08 0.5
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .35
+  wheel.maxLength .5
+  wheel.springStiffness 6500
+  wheel.damping 800
+  wheel.spinInertia .3
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 44 "Wheel rim marker"
+  parent 5
+  position 0.105 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.045 0.2
+  render.color 0.78 0.79 0.72
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 31 "Low-poly cabin shell"
+  parent 1
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000015"
+  render.color 0.94 0.37 0.085
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 32 "Sloped front windscreen"
+  parent 1
+  position 0 0.53 -0.475
+  rotation 0.918983577 0.39429581 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.585 0.36 0.016
+  render.color 0.07 0.19 0.23
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 33 "Rear glass"
+  parent 1
+  position 0 0.54 0.741
+  rotation 0.988771078 -0.149438132 -0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.56 0.24 0.012
+  render.color 0.07 0.19 0.23
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 34 "Roof"
+  parent 1
+  position 0 0.847 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.61 0.028 0.43
+  render.color 0.22 0.27 0.28
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 35 "Real front-module bumper trim"
+  parent 11
+  position 0 -0.035 -0.365
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.63 0.065 0.025
+  render.color 0.23 0.27 0.29
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 36 "Side window"
+  parent 1
+  position -0.643 0.53 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.19 0.39
+  render.color 0.07 0.19 0.23
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 46 "Door trim and sill"
+  parent 1
+  position -0.786 -0.01 -0.03
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.13 0.65
+  render.color 0.94 0.37 0.085
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 48 "Door handle"
+  parent 1
+  position -0.803 0.135 0.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.014 0.018 0.065
+  render.color 0.24 0.27 0.28
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 51 "Headlight attached to physical nose"
+  parent 11
+  position -0.43 0.09 -0.358
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.145 0.055 0.014
+  render.color 0.98 0.89 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 37 "Side window"
+  parent 1
+  position 0.643 0.53 0.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.19 0.39
+  render.color 0.07 0.19 0.23
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 47 "Door trim and sill"
+  parent 1
+  position 0.786 -0.01 -0.03
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.012 0.13 0.65
+  render.color 0.94 0.37 0.085
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 49 "Door handle"
+  parent 1
+  position 0.803 0.135 0.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.014 0.018 0.065
+  render.color 0.24 0.27 0.28
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 52 "Headlight attached to physical nose"
+  parent 11
+  position 0.43 0.09 -0.358
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.145 0.055 0.014
+  render.color 0.98 0.89 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end

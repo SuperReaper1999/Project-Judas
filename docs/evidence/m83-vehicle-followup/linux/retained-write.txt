@@ -1,0 +1,8 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Compact car / physically yielding and fractured front structure (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/vehicle_crash.judas)
+World origin (m): 0.000, 0.000, 0.000
+FAIL bounded application deadline
+FAIL normal application startup and shutdown
+M83 application write checks=2 failures=2

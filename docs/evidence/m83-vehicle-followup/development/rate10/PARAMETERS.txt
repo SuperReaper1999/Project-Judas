@@ -1,0 +1,1 @@
+Comparison to /tmp/judas-m83-compact-vehicle-gx_sc7u3: only both cars' authored plasticRate changes from 0.5 s^-1 to 10 s^-1. YieldStrain 0.08, all geometry, masses, strengths, quality, cadence, inputs and test gates are unchanged. The proposed 20 s^-1 exceeded the existing accepted material bound of 10 and was not executed.

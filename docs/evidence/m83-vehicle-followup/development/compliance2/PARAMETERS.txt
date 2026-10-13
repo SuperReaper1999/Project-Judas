@@ -1,0 +1,1 @@
+Comparison to /tmp/judas-m83-vehicle-rate10-9o05wcww: only both cars' authored shearCompliance changes from 1e-7 to 2e-7 (authored XPBD shear compliance). PlasticRate remains 10 s^-1, yieldStrain 0.08; all geometry, masses, strengths, quality, cadence, inputs and test gates are unchanged.

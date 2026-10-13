@@ -1,0 +1,1 @@
+frame,stage,fixed_steps,paused,body_id,body_world,x,y,z,qw,qx,qy,qz,vx,vy,vz,wx,wy,wz,mass_kg,sleeping,displacement_m,gx,gy,gz,force_x,force_y,force_z,torque_x,torque_y,torque_z,contact_available,contacts,normal_impulse_sum_ns,tyre_load_n,tyre_longitudinal_ns,tyre_lateral_ns,attachment_force_x,attachment_force_y,attachment_force_z,front_drive_cut,material_path_connected

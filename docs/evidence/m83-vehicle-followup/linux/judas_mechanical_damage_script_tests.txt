@@ -1,0 +1,19 @@
+PASS registered fixture has an actual non-collinear physical material patch
+PASS normal AssetDatabase registers material and public probe
+PASS ordinary resource path publishes baked material without special native fixture injection
+PASS ordinary runtime builds material, dynamic mount and conditional transmission
+PASS real VM authors finite dynamic material connection while unloaded negative stays intact
+PASS connected material path transmits actual generic rotational source motion
+PASS physical body load causes actual material connection failure
+PASS published transmission disconnect derives from actual released material
+PASS public VM validates finite options, update phase, value snapshots and physical disconnect
+PASS ordinary enable command cannot bypass a broken physical load path
+PASS ordinary retained-handle lifetime probe registered
+PASS independent material lifetime world builds
+PASS normal owning material destruction succeeds
+PASS destroyed generation-safe material handle invalidates and throws on state and mutations
+PASS exact cookbook file registered as project script
+PASS exact cookbook scene uses normal authored finite connection
+PASS project logical input map binds the cookbook load action
+PASS exact cookbook applies physical impulse and observes real released attachment without script break
+M83 mechanical damage JS 18 PASS
