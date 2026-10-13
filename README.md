@@ -25,7 +25,7 @@ ordinary wheel and rigid-body terminals. The editable
 [Powertrain Lab](projects/powertrain_lab/powertrain_lab.judasproj) demonstrates
 combustion-style and electric sources, a transmission/differential and powered
 nonvehicle machinery. Driver policy remains project JavaScript. The operator
-human validated M82 on Linux on 2026-10-13 and authorized Stable promotion; see
+human validated M82 on Linux on 2026-10-13 and authorized release promotion; see
 the [acceptance record](docs/evidence/m82/HUMAN_VALIDATION.md). M82 Windows
 validation remains unperformed and nonblocking.
 
@@ -1602,6 +1602,9 @@ limits and unresolved defects; it is not comprehensive certification or new huma
 validation. Streamed-motor metadata/tags and excluded-body restoration are corrected.
 Legacy PBF settling and missing historical cold-save data remain deferred, and
 fast curved-mesh CCD still has a recorded failure. New development uses
-`Experimental`; promotion to `Stable` requires explicit human acceptance.
-`main` can be fast-forwarded to accepted `Stable` when explicitly requested by
-the operator; it is not updated automatically from development work.
+`Experimental`; promotion to `main` requires explicit human acceptance.
+The two primary branches are `main` (human-tested releases and GitHub default)
+and `Experimental` (development). The duplicate `Stable` branch was retired
+after M82 acceptance; all commit history is preserved. Main blocks force pushes
+and deletion, including administrator actions. It is never promoted automatically
+from development or automated test results; see [AGENTS.md](AGENTS.md).

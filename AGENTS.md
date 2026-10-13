@@ -7,15 +7,15 @@
 - Explicit task instructions to leave work uncommitted, avoid pushing, or perform read-only work override this default permission.
 - Do not claim human validation from automated tests, synthetic input, source inspection or a successful build.
 
-## Stable promotion
+## Main release promotion
 
-- `Stable` requires explicit operator acceptance after human testing of the exact candidate. Never promote automatically from an Experimental push or an automated pass.
-- Preserve a reviewed candidate commit when promoting; do not manufacture an untested intermediate state. If Stable has diverged, stop and establish the actual integration state before promotion.
+- `main` is the human-tested release branch and requires explicit operator acceptance of the exact candidate. Never promote automatically from an Experimental push or an automated pass.
+- Preserve a reviewed candidate commit when promoting; do not manufacture an untested intermediate state. Fast-forward `main` from the accepted Experimental checkpoint. If main has diverged, stop and establish the actual integration state before promotion.
 - Push normally. No force pushes, history rewriting or milestone tags unless specifically authorized.
-- Stable begins at `3102bf6c6e4b5c57eb3ab66a71fa502f8fc423f6`, expressly designated by the operator. This baseline choice does not retroactively certify outstanding milestone, Windows or performance validation.
+- The release lineage begins at `3102bf6c6e4b5c57eb3ab66a71fa502f8fc423f6`, expressly designated by the operator. After M82 acceptance, the operator retired the duplicate `Stable` branch and made `main` the release/default branch. This workflow change does not retroactively certify outstanding milestone, Windows or performance validation.
 
 ## Repository continuity
 
-- `main` is a compatibility entry point for the operator-accepted `Stable` version. It may be fast-forwarded to `Stable` when the operator explicitly requests it. New work goes to `Experimental`; do not update `main` automatically or promote unreviewed implementation through it.
+- The two primary branches are `main` for accepted releases and `Experimental` for development. Keep development on `Experimental`; do not update `main` automatically or promote unreviewed implementation through it.
 - Preserve protected historical evidence, independent research and unrelated assets. Document actual failures and limitations rather than weakening fixtures to obtain a pass.
-- GitHub protects Stable against force pushes and deletion. Human-test acceptance is an operator workflow requirement; GitHub does not independently prove that testing occurred.
+- GitHub protects main against force pushes and deletion, including administrator actions. Human-test acceptance is an operator workflow requirement; GitHub does not independently prove that testing occurred.

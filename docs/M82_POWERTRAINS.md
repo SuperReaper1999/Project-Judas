@@ -3,7 +3,7 @@
 **Human validated by the operator on Linux on 2026-10-13.** Development starts from
 the M81 accepted checkpoint `b74906350084ab20d01b09774dfc56711b4d97cb`.
 Linux is the automated acceptance platform; Windows validation is informational
-and does not imply native hardware acceptance. The operator authorized Stable
+and does not imply native hardware acceptance. The operator authorized release
 promotion; see [acceptance](evidence/m82/HUMAN_VALIDATION.md) and
 [evidence](evidence/m82/RESULTS.md).
 
@@ -201,6 +201,7 @@ no Chrono dependency or copied runtime implementation.
 
 Protected history, independent fluid research, existing games and unrelated
 deferred findings remain unchanged. Human acceptance comes from the operator's
-subsequent desktop test, not automated delivery. Stable promotion is explicitly
-authorized. Main may follow accepted Stable through an explicit operator
-fast-forward request; see the [branch workflow](../AGENTS.md).
+subsequent desktop test, not automated delivery. Release promotion is explicitly
+authorized. After M82 acceptance, main became the human-tested release branch
+and the duplicate Stable branch was retired. Development remains on
+Experimental; see the [branch workflow](../AGENTS.md).
