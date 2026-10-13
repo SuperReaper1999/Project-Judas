@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Powertrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj)
+Scene: Powertrain lab / flat (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS four-wheel combustion and six-wheel electric assemblies use ordinary M81 wheels
+PASS nonvehicle machine terminates in a real hinge-constrained rigid body
+PASS combustion fixture contains engine, gearbox, clutch and open differential
+PASS query tyres support actual chassis; JS input, camera, UI and measured graph telemetry execute
+PASS complete runtime prefab remaps chassis bearings and terminal-wheel identities
+PASS registered streamed region publishes a complete mechanical graph and endpoints
+PASS stream suspension retires old graph identities and retains durable state
+FAIL stream revisit restores exact graph commands and rotor momentum with remapped identities
+PASS prefab root destruction safely retires graph and endpoints
+PASS reload restores authored graph without stale runtime ownership
+PASS normal application startup and shutdown
+PERF mode=lifecycle samples=113 fixed_median_ms=1.122882 p95_ms=1.705561 max_ms=3.661100 frame_median_ms=20.255312 frame_p95_ms=25.049608
+M82 application lifecycle checks=11 failures=1

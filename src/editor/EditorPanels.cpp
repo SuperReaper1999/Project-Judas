@@ -1,3 +1,4 @@
+#include "../PowertrainAuthoring.h"
 #include "AuthoringDocument.h"
 #include "ContentReferences.h"
 #include "NamedAuthoring.h"
@@ -1503,6 +1504,7 @@ SceneObjectId DuplicateObject(EditorDocument& doc, SceneObjectId id) {
             o.id=reverse.at(o.id);if(o.parent)o.parent=reverse.at(o.parent);
             if(o.gravitySelection&&o.gravitySelection->source)o.gravitySelection->source=reverse.at(o.gravitySelection->source);
             if(o.wheel)o.wheel->chassis=reverse.at(o.wheel->chassis);
+            if(o.powertrain)RemapPowertrainReferences(*o.powertrain,[&](uint64_t id){return reverse.at(id);});
             if(o.render&&o.render->textureCamera)o.render->textureCamera=reverse.at(o.render->textureCamera);
         }
         prefab.SetNextId(1);doc.BeginEdit();SceneObjectId root=0;

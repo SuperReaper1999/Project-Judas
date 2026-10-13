@@ -343,6 +343,12 @@ public:
     bool SetWheelSettings(EntityId,const WheelSettings&);
     void UpdateWheels(float dt);
     void PublishWheels();
+    PowertrainInstance* RuntimePowertrain(EntityId id);
+    const PowertrainInstance* RuntimePowertrain(EntityId id)const;
+    bool SetPowertrainSettings(EntityId,const PowertrainSettings&,std::string&);
+    void UpdatePowertrains(float dt);
+    void ResolvePowertrainLoads(float dt);
+    void PublishPowertrains(float dt);
     void UpdateCharacters(float dt,bool onlyM70=false,bool skipM70=false);
     LiquidSystem& Liquids(){return *m_liquid;}
     const LiquidSystem& Liquids()const{return *m_liquid;}
@@ -580,6 +586,10 @@ private:
     std::map<EntityId,WheelInstance> m_wheels;
     std::set<EntityId> m_wheelOwners,m_wheelParticipants;
     void RefreshWheelParticipants();
+    std::map<EntityId,PowertrainInstance> m_powertrains;
+    std::set<EntityId> m_powertrainOwners,m_powertrainParticipants;
+    void RefreshPowertrainParticipants();
+    void StepPowertrains(float dt,bool sources);
     std::map<EntityId,AnimationInstance> m_animationInstances;
     std::map<EntityId,RagdollInstance> m_ragdolls;
     std::map<EntityId,BalanceRuntime> m_balances;

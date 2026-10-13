@@ -2,6 +2,7 @@
 #include "WorldStreaming.h"
 #include "SaveService.h"
 #include "PerformanceProfiler.h"
+#include "PowertrainAuthoring.h"
 #include <array>
 #include <atomic>
 #include "ScriptSystem.h"
@@ -83,6 +84,7 @@ export class Entity {
  get gravity(){return new EntityGravity(this.id)}
  get character(){return call("characterExists",this.id)?new Character(this.id):null}
  get wheel(){return call('wheelExists',this.id)?new Wheel(this.id):null}
+ get powertrain(){return call('powertrainExists',this.id)?new Powertrain(this.id):null}
  get ragdoll(){return call('ragdollExists',this.id)?new Ragdoll(this.id):null}
  get audio(){return call('audioInfo',this.id)}
  setAudio(settings){return call('audioSettings',this.id,settings)}
@@ -198,6 +200,15 @@ export class Wheel {
  get state(){const v=call('wheelState',this.id);return {...v,contactEntity:entity(v.contactEntityId)}}
  set(commands){return call('wheelSet',this.id,commands)}
  configure(settings){return call('wheelConfigure',this.id,settings)}
+}
+export class Powertrain {
+ constructor(id){this.id=String(id)}
+ get valid(){return call('powertrainValid',this.id)}
+ get enabled(){return this.settings.enabled}
+ set enabled(value){call('powertrainEnabled',this.id,value)}
+ get settings(){return call('powertrainSettings',this.id)}
+ get state(){return call('powertrainState',this.id)}
+ set(commands){return call('powertrainSet',this.id,commands)}
 }
 export class LiquidVolume {
  constructor(handle){this.handle=handle}
@@ -840,6 +851,77 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         JS_SetPropertyStr(c,o,"supported",JS_NewBool(c,r.supported));JS_SetPropertyStr(c,o,"collided",JS_NewBool(c,r.collided));
         JS_SetPropertyStr(c,o,"supportEntityId",JS_NewString(c,std::to_string(world.EntityIdOfBody(r.support)).c_str()));
         return o;
+    }
+    if(op.rfind("powertrain",0)==0){
+        EntityId owner=0;try{auto text=String(c,arg(1));size_t end=0;owner=std::stoull(text,&end);if(end!=text.size())owner=0;}catch(...){owner=0;}
+        auto* power=world.RuntimePowertrain(owner);
+        if(op=="powertrainExists"||op=="powertrainValid")return JS_NewBool(c,power!=nullptr);
+        if(!power)return JS_ThrowReferenceError(c,"stale entity or missing powertrain component");
+        std::string error;
+        if(op=="powertrainEnabled"){
+            if(!s->fixed)return JS_ThrowTypeError(c,"powertrain mutation belongs in fixedUpdate");
+            if(!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"powertrain enabled requires boolean");
+            auto next=power->settings;next.enabled=JS_ToBool(c,arg(2));
+            if(!world.SetPowertrainSettings(owner,next,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            return JS_TRUE;
+        }
+        if(op=="powertrainSet"){
+            if(!s->fixed)return JS_ThrowTypeError(c,"powertrain mutation belongs in fixedUpdate");
+            std::string bytes;if(!s->Json(arg(2),bytes,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            // Detached, bounded plain-data patches. Resolve every name and
+            // validate the complete copy before publishing a held command.
+            try{
+                using Json=nlohmann::json;const auto patch=Json::parse(bytes);auto next=power->command;
+                auto keys=[](const Json& value,std::initializer_list<const char*> allowed){
+                    if(!value.is_object())throw std::runtime_error("powertrain patch must be an object");
+                    for(auto it=value.begin();it!=value.end();++it){bool known=false;for(auto name:allowed)known|=it.key()==name;if(!known)throw std::runtime_error("unknown powertrain patch field: "+it.key());}
+                };
+                keys(patch,{"sources","links","brakes"});
+                auto apply=[&](const char* key,const auto& definitions,auto callback){
+                    if(!patch.contains(key))return;
+                    const auto& list=patch.at(key);
+                    if(!list.is_array()||list.size()>kPowertrainMaxRows)throw std::runtime_error("bounded named powertrain patch array required");
+                    std::set<std::string> seen;
+                    for(const auto& value:list){if(!value.is_object()||!value.contains("name")||!value.at("name").is_string())throw std::runtime_error("named powertrain patch required");
+                        auto name=value.at("name").get<std::string>();if(!seen.insert(name).second)throw std::runtime_error("duplicate powertrain patch name");
+                        auto found=std::find_if(definitions.begin(),definitions.end(),[&](const auto& definition){return definition.name==name;});
+                        if(found==definitions.end())throw std::runtime_error("unknown powertrain member: "+name);
+                        callback(size_t(found-definitions.begin()),value);
+                    }
+                };
+                apply("sources",power->settings.sources,[&](size_t i,const Json& value){
+                    keys(value,{"name","input","customTorque","starter"});auto& command=next.sources[i];
+                    if(value.contains("input"))command.input=value.at("input").get<double>();
+                    if(value.contains("customTorque"))command.customTorque=value.at("customTorque").get<double>();
+                    if(value.contains("starter"))command.starter=value.at("starter").get<double>();
+                });
+                apply("links",power->settings.links,[&](size_t i,const Json& value){
+                    keys(value,{"name","enabled","engagement","ratio"});auto& command=next.links[i];
+                    if(value.contains("enabled"))command.enabled=value.at("enabled").get<bool>();
+                    if(value.contains("engagement"))command.engagement=value.at("engagement").get<double>();
+                    if(value.contains("ratio")){command.overrideRatio=!value.at("ratio").is_null();if(command.overrideRatio)command.ratio=value.at("ratio").get<double>();}
+                });
+                apply("brakes",power->settings.brakes,[&](size_t i,const Json& value){
+                    keys(value,{"name","engagement"});if(value.contains("engagement"))next.brakes[i].engagement=value.at("engagement").get<double>();
+                });
+                if(!ValidatePowertrainCommand(power->settings,next,error))throw std::runtime_error(error);
+                power->command=std::move(next);return JS_TRUE;
+            }catch(const std::exception& e){return JS_ThrowTypeError(c,"%s",e.what());}
+        }
+        std::string bytes;
+        if(op=="powertrainSettings")bytes=EncodePowertrainSettings(power->settings);
+        else if(op=="powertrainState"){
+            using Json=nlohmann::json;const auto& state=power->state;
+            Json value={{"available",state.available},{"converged",state.converged},{"diagnostic",state.diagnostic},
+                {"iterations",state.iterations},{"residual",state.residual},{"kineticEnergy",state.kineticEnergy},{"constraintEnergyChange",state.constraintEnergyChange}};
+            value["shafts"]=Json::array();value["sources"]=Json::array();value["links"]=Json::array();value["brakes"]=Json::array();
+            for(size_t i=0;i<state.shafts.size();++i){const auto& shaft=state.shafts[i];value["shafts"].push_back({{"name",power->settings.shafts[i].name},{"available",shaft.available},{"angularVelocity",shaft.angularVelocity},{"rpm",shaft.angularVelocity*60/(2*3.14159265358979323846)},{"angle",shaft.angle},{"torque",shaft.torque}});}
+            for(size_t i=0;i<state.sourceTorque.size();++i)value["sources"].push_back({{"name",power->settings.sources[i].name},{"torque",state.sourceTorque[i]}});
+            for(size_t i=0;i<state.links.size();++i){const auto& link=state.links[i];value["links"].push_back({{"name",power->settings.links[i].name},{"active",link.active},{"saturated",link.saturated},{"impulse",link.impulse},{"torque",link.torque},{"slip",link.slip}});}
+            for(size_t i=0;i<state.brakeTorque.size();++i)value["brakes"].push_back({{"name",power->settings.brakes[i].name},{"torque",state.brakeTorque[i]}});
+            bytes=value.dump();
+        }else return JS_ThrowTypeError(c,"unknown powertrain operation");
+        return JS_ParseJSON(c,bytes.data(),bytes.size(),"powertrain snapshot");
     }
     if(op.rfind("wheel",0)==0){
         EntityId owner=0;try{auto text=String(c,arg(1));size_t end=0;owner=std::stoull(text,&end);if(end!=text.size())owner=0;}catch(...){owner=0;}

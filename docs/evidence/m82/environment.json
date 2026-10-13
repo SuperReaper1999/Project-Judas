@@ -1,0 +1,10 @@
+{
+  "startingCheckpoint": "b74906350084ab20d01b09774dfc56711b4d97cb",
+  "platform": "Linux 7.0.0-38-generic x86_64 GNU/Linux",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "branch": "Experimental",
+  "windows": "not run; Windows 10 VM was shut off when checked; informational/nonblocking",
+  "humanValidation": "pending",
+  "cpu": "Intel Core i7-4790 @ 3.60GHz; 4 cores / 8 logical CPUs",
+  "renderValidation": "SDL offscreen OpenGL; dummy audio; no desktop capture or physical Windows GPU acceptance"
+}

@@ -1,10 +1,16 @@
-# JudasJS — current API reference (M81 Experimental candidate)
+# JudasJS — current API reference (M82 Experimental candidate)
+
+M82 adds optional [Powertrain networks](judasjs/powertrains.md): real rotational
+inertia, torque sources, gearing, bounded clutches, open differentials and brakes.
+Project JavaScript supplies driver and machinery policy. M82 awaits human review.
 
 M81 adds optional [Wheel components](judasjs/wheels.md): independent suspension,
 rolling/traction and torque/brake/steering control on ordinary rigid-body
-chassis. Game-specific vehicle behaviour remains project JavaScript. M80 has
-Linux human acceptance; M81 awaits operator review. The subsystem records below
+chassis. Game-specific vehicle behaviour remains project JavaScript. M80 and M81 have
+Linux operator acceptance. The subsystem records below
 retain their original validation scope.
+
+[Powertrain reference](judasjs/powertrains.md) · [Wheel reference](judasjs/wheels.md)
 
 ## Terrain content
 

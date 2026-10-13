@@ -17,6 +17,8 @@ public:
  static bool CanSuspendAnimation(RuntimeWorld&,uint64_t);
  static bool CaptureWheel(RuntimeWorld&,uint64_t,std::string&,std::string&);
  static bool RestoreWheel(RuntimeWorld&,uint64_t,const std::string&,std::string&);
+ static bool CapturePowertrain(RuntimeWorld&,uint64_t,std::string&,std::string&);
+ static bool RestorePowertrain(RuntimeWorld&,uint64_t,const std::string&,std::string&);
  static bool CaptureAnimation(RuntimeWorld&,uint64_t,std::string&,std::string&);
  static bool RestoreAnimation(RuntimeWorld&,uint64_t,const std::string&,std::string&);
  static bool CaptureKinematic(RuntimeWorld&,uint64_t,std::string&,std::string&);
@@ -25,6 +27,7 @@ private:
  static void Entities(RuntimeWorld&,SaveArchive&);
  static void Motors(RuntimeWorld&,SaveArchive&);
  static void Wheels(RuntimeWorld&,SaveArchive&);
+ static void Powertrains(RuntimeWorld&,SaveArchive&);
  static void Animation(RuntimeWorld&,SaveArchive&);
  static void InstanceAnimation(RuntimeWorld&,uint64_t,SaveArchive&);
  static void Articulation(RuntimeWorld&,SaveArchive&);

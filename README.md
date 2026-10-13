@@ -17,7 +17,15 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current status — M81 human validated
+## Current status — M82 Experimental candidate; M81 human validated
+
+[M82 modular powertrains](docs/M82_POWERTRAINS.md) adds physical rotational
+shafts, torque sources, gearing, clutches, open differentials and brakes, with
+ordinary wheel and rigid-body terminals. The editable
+[Powertrain Lab](projects/powertrain_lab/powertrain_lab.judasproj) demonstrates
+combustion-style and electric sources, a transmission/differential and powered
+nonvehicle machinery. Driver policy remains project JavaScript. M82 human
+validation is pending; Stable retains the operator-accepted M81 checkpoint.
 
 [M81 reusable wheels](docs/M81_WHEELS.md) adds independently authored suspension,
 tyre contact, spin, torque/braking and steering on ordinary rigid bodies.
@@ -1585,6 +1593,7 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M79 (human accepted) | Load-driven material connections, support loss and progressive fracture | [M79_STRUCTURES.md](docs/M79_STRUCTURES.md) | `projects/structural_lab` |
 | M80 (human accepted) | Elastic/plastic solid deformation and soft section-based failure | [M80_BENDING.md](docs/M80_BENDING.md) | `projects/bending_lab` |
 | M81 (human validated) | Generic suspension, tyre contact, traction/slip and direct wheel torque control | [M81_WHEELS.md](docs/M81_WHEELS.md) | `projects/wheel_lab` |
+| M82 (Experimental; human pending) | Modular rotational shafts, torque sources, transmissions, clutches, differentials and brakes | [M82_POWERTRAINS.md](docs/M82_POWERTRAINS.md) | `projects/powertrain_lab` |
 
 M78 has a [completed audit handoff](docs/M78_COMPLETION.md) with explicit coverage
 limits and unresolved defects; it is not comprehensive certification or new human

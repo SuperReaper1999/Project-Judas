@@ -1,0 +1,60 @@
+PASS valid independent scalar mechanical assembly
+PASS duplicate shaft identity rejected
+PASS zero rotor inertia rejected
+PASS zero signed gear ratio rejected
+PASS missing shaft reference rejected
+PASS duplicate external wheel terminal rejected
+PASS wheel terminal rejects an ignored explicit bearing instead of implying an effect
+PASS degenerate physical axis rejected
+PASS free rotor obeys I domega = torque dt
+PASS angle advances from resolved physical spin only when requested
+PASS rotational inertia changes actual acceleration
+PASS post-load projection retains source telemetry without integrating source twice
+PASS over-cap custom command is transactional and reports no applied source work
+PASS failed pre-step remains failed through the same interval post projection
+PASS new interval can recover after invalid command is corrected
+PASS combustion torque interpolates authored RPM curve at actual shaft speed
+PASS zero-speed combustion source does not invent idle rotation
+PASS starter is authored physical torque on rotor inertia
+PASS unordered engine torque samples rejected
+PASS electric source has real stall torque and high-speed power-limited torque
+PASS signed electric control can apply opposing physical torque
+PASS implicit bearing drag removes energy without crossing zero
+PASS large physical bearing drag remains passive on a light rotor
+PASS ideal reduction solves reflected load inertia exactly
+PASS gear impulses respect ratio and zero virtual power
+PASS initial gear engagement cannot create kinetic energy
+PASS connected load slows source through reflected inertia rather than scripted RPM
+PASS signed gear reverses output rotation with physical reaction torque
+PASS open differential permits unequal actual output speeds under unequal load
+PASS open differential supplies equal output impulses and loaded side receives real brake reaction
+PASS clutch capacity bounds physical transfer while retaining real slip
+PASS post-contact coupling cannot spend the clutch torque budget twice
+PASS engagement fraction scales coupling capacity without faking shaft speed
+PASS disengaged clutch disconnects drive mechanically
+PASS sufficient clutch capacity synchronizes shafts using real inertia
+PASS disc brake torque obeys finite angular impulse bound
+PASS brake budget is shared across pre/post phases
+PASS sufficient mechanical braking stops without artificial reversal
+PASS rank-dependent physical brakes combine capacities without a numerical spring
+PASS consistent redundant ideal links converge without budget inflation
+PASS long gear train uses exact dense resolution rather than sequential gear drift
+PASS shared bearing inverse-mass cross terms transmit housing reaction
+PASS indefinite physical inverse mass fails transactionally before source application
+PASS corrected matrix cannot conceal the already-failed source interval
+PASS next source interval retries a repaired physical configuration normally
+PASS missing external DOF disconnects incident links without freezing unrelated source
+PASS disabled assembly applies no torque and advances no physical angle
+PASS stale published relative velocity cannot change the durable mechanical payload
+PASS actual rotor momentum changes the durable payload independently of observation caches
+PASS save stores durable actual rotor state and commands and invalidates derived observations
+PASS new-format continuation reproduces exact cold constraint projection
+PASS truncated mechanical save fails cleanly
+PASS finite but unrepresentable energy fails before publishing any physical work
+PERF 1 7-DOF assemblies pre+post p50 0.007216 ms p95 0.015074 ms max 0.024780 ms
+PASS representative repeated bounded mechanical workload converges
+PERF 10 7-DOF assemblies pre+post p50 0.072501 ms p95 0.158832 ms max 0.192701 ms
+PASS representative repeated bounded mechanical workload converges
+PERF 100 7-DOF assemblies pre+post p50 0.739280 ms p95 1.248367 ms max 3.188245 ms
+PASS representative repeated bounded mechanical workload converges
+SUMMARY 56 checks 0 failures

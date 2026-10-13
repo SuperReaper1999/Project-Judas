@@ -1,0 +1,9 @@
+=== Judas Physics Primitive Tests ===
+
+Section A/D (integration): uniform gravity in arbitrary orientations
+  (7 directions checked against a common rotated reference)
+Section D: full scenario rigid rotation invariance (multi-body)
+Static-body invariant: infinite mass never accelerates
+Section B: radial gravity, no privileged axis
+
+ALL TESTS PASSED

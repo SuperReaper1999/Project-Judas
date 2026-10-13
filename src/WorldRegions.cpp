@@ -38,6 +38,13 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
         m_physics.SetBodyEnabled(body,false);
     }
     m_regionAssets[definition.id]={m_referencedAssets.begin()+before,m_referencedAssets.end()};
+    if(!ok){
+        // Failed registration must not create an owner/definition stub that a
+        // later publication could expose. Retire any partially acquired state
+        // through the ordinary regional cleanup path.
+        RemoveRegionObject(definition.id);
+        return false;
+    }
     if(!stage.body||stage.body->motion==SceneBodyMotion::Static){
         EntityRecord e;e.id=definition.id;e.name=definition.name;e.definition=definition;e.authored=false;e.requiresFull=true;
         e.state.position=definition.transform.position;e.state.rotation=definition.transform.rotation;e.slot=std::numeric_limits<size_t>::max();m_extraEntities.push_back(e);
@@ -71,6 +78,9 @@ void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
         if(auto* motor=RuntimeCharacter(id))m_physics.SetBodyEnabled(motor->observationBody,motor->settings.enabled);
     }
     for(auto id:ids)if(auto* wheel=RuntimeWheel(id)){const auto chassis=RuntimeBody(wheel->settings.chassis);wheel->state.available=wheel->settings.enabled&&m_physics.IsBodyEnabled(chassis)&&m_physics.IsDynamicBody(chassis);wheel->Publish(m_physics,chassis);wheel->previous=wheel->state;}
+    // Mechanical observations become usable at the same atomic publication
+    // boundary as their bodies and wheel endpoints; no simulation is advanced.
+    PublishPowertrains(0);
     for(auto& e:m_audioEmitters)if(std::find(ids.begin(),ids.end(),e.id)!=ids.end())e.wantPlay=e.settings.playOnStart;
     ++m_entityVersion;
 }
@@ -117,6 +127,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     erase(m_audioZones);erase(m_audioEmitters);erase(m_particleEmitters);erase(m_renderCameras);
     if(auto character=m_characters.find(id);character!=m_characters.end())m_physics.DestroyBody(character->second.motor.observationBody);
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
+    m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
     RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_physicalAnimations.erase(id);CancelPhysicalBalance(id);m_balances.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
     m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_characterOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
     if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end()){

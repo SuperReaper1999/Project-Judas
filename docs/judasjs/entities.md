@@ -27,6 +27,7 @@ can exceed safe JS integers. `new Entity(id)` also exists but does not test vali
 | `applyForce(v)`, `applyImpulse(v)`, `applyTorque(v)` | N, N·s, N·m; world-space, existing dynamic body required. Return undefined. `applyImpulseAtPoint(impulse, point)` applies world-space N·s at a world-space point in metres through the existing rigid-body operation (M52). It produces both linear and angular motion; stale/missing/static body throws, and invalid vectors throw before mutation. |
 | `audio`, `animation`, `ragdoll`, `character`, `camera` | Component facades/snapshots or null when component absent; see subsystem pages. Stale entity usually throws; `.character` specifically returns null. |
 | `wheel` | [Wheel](wheels.md) handle or null when absent/stale; `Wheel.valid` checks lifetime, state/settings read detached snapshots, and direct torque/brake/steering mutations belong in fixedUpdate. |
+| `powertrain` | [Powertrain](powertrains.md) handle or null when absent/stale; `valid` checks component lifetime. Detached settings/state describe physical shafts, sources and connections; named held commands and the enabled gate are fixedUpdate work. Retained stale-handle access other than `valid` throws ReferenceError. |
 | `playAudio/stopAudio/pauseAudio/resumeAudio`, `setAudioEnabled`, `burst`, `setParticles`, `setCameraEnabled` | See [effects/cameras](effects-camera.md). |
 
 Use `transform` for physics intent, shooting and game rules. Use `presentedTransform`

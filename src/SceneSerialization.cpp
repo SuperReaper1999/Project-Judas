@@ -4,6 +4,7 @@
 #include "CollisionAuthoring.h"
 #include "NamedAuthoring.h"
 #include "AuthoringNumeric.h"
+#include "PowertrainAuthoring.h"
 #include "../third_party/nlohmann/json.hpp"
 #include "Prefab.h"
 #include "AssetDatabase.h"
@@ -142,6 +143,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
     for(const auto& [key,value]:DeformableProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:LiquidProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:NavigationProperties(o))w.Line(key,Quote(value));
+    if(o.powertrain)w.Line("powertrain.graph",Quote(EncodePowertrainSettings(*o.powertrain)));
     if(o.gravitySelection){const auto& s=*o.gravitySelection;
         w.Line("gravity-selection.mode",Quote(s.mode==GravitySelection::Mode::Uniform?"uniform":"field"));
         w.Line("gravity-selection.source",std::to_string(s.source));
@@ -777,6 +779,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     std::map<std::string,std::string> navFields;
     for(const auto& [key,tokens]:block.values)if(key.rfind("nav.",0)==0){std::string value;if(!p.String(key,value))return false;navFields[key]=value;}
     std::string navError;if(!ApplyNavigationProperties(navFields,o,navError))return reader.Fail(navError);
+    if(p.Has("powertrain.graph")){std::string value,error;PowertrainSettings settings;if(!p.String("powertrain.graph",value)||!DecodePowertrainSettings(value,settings,error))return reader.Fail(error);o.powertrain=std::move(settings);}
     if(p.Has("gravity-selection.mode")){
         GravitySelection s;std::string mode,error;
         if(!p.String("gravity-selection.mode",mode)||!p.Id("gravity-selection.source",s.source)||!p.Vec3("gravity-selection.acceleration",s.acceleration))return false;

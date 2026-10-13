@@ -190,6 +190,7 @@ declare module "judas" {
     setNavigationEnabled(component: "agent" | "obstacle" | "link", enabled: boolean): boolean;
     readonly character: Character | null;
     readonly wheel: Wheel | null;
+    readonly powertrain: Powertrain | null;
     readonly fracture:Fracture|null;
     readonly deformable: Deformable | null;
     readonly ragdoll: Ragdoll | null;
@@ -307,6 +308,60 @@ declare module "judas" {
     readonly settings:WheelSettings;readonly state:WheelState;
     set(commands:WheelCommandPatch):boolean;
     configure(settings:WheelSettingsPatch):boolean;
+  }
+  export interface PowertrainShaftSettings {
+    name:string;kind:'internal'|'wheel'|'body';
+    /** Inertia/initial speed apply to internal rotors. Terminals use actual physical inertia/motion. */
+    inertia:number;initialAngularVelocity:number;viscousDrag:number;
+    /** Existing entity IDs; "0" means no target/bearing. */
+    target:EntityId;bearing:EntityId;
+    /** Canonical authored tuple; bearing-local, otherwise world-space. Wheel uses its own axle. */
+    axis:[number,number,number];
+  }
+  export interface PowertrainSourceSettings {
+    name:string;shaft:number;kind:'combustion'|'electric'|'custom';
+    torqueCurve:[number,number][];maxTorque:number;maxPower:number;starterTorque:number;
+  }
+  export interface PowertrainLinkSettings {
+    name:string;kind:'gear'|'clutch'|'differential';
+    input:number;output:number;outputB:number;
+    /** output = ratio * input; differential average output = ratio * input. */
+    ratio:number;maxTorque:number;
+  }
+  export interface PowertrainBrakeSettings {name:string;shaft:number;maxTorque:number;}
+  export interface PowertrainSettings {
+    version:1;enabled:boolean;shafts:PowertrainShaftSettings[];
+    sources:PowertrainSourceSettings[];links:PowertrainLinkSettings[];brakes:PowertrainBrakeSettings[];
+  }
+  export interface PowertrainSourcePatch {
+    name:string;input?:number;customTorque?:number;starter?:number;
+  }
+  export interface PowertrainLinkPatch {
+    name:string;enabled?:boolean;engagement?:number;
+    /** Signed output/input ratio; null restores the authored ratio. */
+    ratio?:number|null;
+  }
+  export interface PowertrainBrakePatch {name:string;engagement?:number;}
+  export interface PowertrainCommandPatch {
+    sources?:PowertrainSourcePatch[];links?:PowertrainLinkPatch[];brakes?:PowertrainBrakePatch[];
+  }
+  export interface PowertrainState {
+    available:boolean;converged:boolean;diagnostic:string;
+    iterations:number;residual:number;kineticEnergy:number;constraintEnergyChange:number;
+    shafts:{name:string;available:boolean;angularVelocity:number;rpm:number;angle:number;torque:number}[];
+    sources:{name:string;torque:number}[];
+    links:{name:string;active:boolean;saturated:boolean;impulse:number;torque:number;slip:number}[];
+    brakes:{name:string;torque:number}[];
+  }
+  export class Powertrain {
+    constructor(id:EntityId);id:EntityId;
+    readonly valid:boolean;
+    get enabled():boolean;
+    /** Mutations belong in fixedUpdate; disabling disconnects the network. */
+    set enabled(value:boolean);
+    readonly settings:PowertrainSettings;readonly state:PowertrainState;
+    /** Atomic named patches; omitted controls retain their previous values. */
+    set(commands:PowertrainCommandPatch):boolean;
   }
   export interface NavigationFilter {
     profile?: number | string; includeAreas?: string[]; excludeAreas?: string[];

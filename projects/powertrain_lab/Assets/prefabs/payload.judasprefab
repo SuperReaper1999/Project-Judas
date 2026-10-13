@@ -1,0 +1,36 @@
+JudasScene 3
+settings
+  name "Ordinary 225 kg test payload"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 2
+end
+object 1 "Finite-mass test payload"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.2 0.48
+  render.color 0.69 0.29 0.62
+  body dynamic box
+  body.half-extents 0.42 0.2 0.48
+  body.mass 225
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end

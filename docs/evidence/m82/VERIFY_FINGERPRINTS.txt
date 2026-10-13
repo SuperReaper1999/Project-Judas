@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "verified": {
+    "SOURCE_SHA256.txt": 71,
+    "BINARY_SHA256.txt": 13,
+    "EVIDENCE_SHA256.txt": 104
+  },
+  "intendedChangedFiles": 177,
+  "trackedHistoricalEvidenceOrExistingProjectsModified": [],
+  "humanValidation": "pending",
+  "windowsM82Validation": "not run; informational/nonblocking",
+  "stagedContentMatchesCandidate": true,
+  "diffWhitespaceException": "Two inherited trailing spaces in verbatim DejaVu/Bitstream license copy; exact bytes match the existing wheel_lab font license."
+}

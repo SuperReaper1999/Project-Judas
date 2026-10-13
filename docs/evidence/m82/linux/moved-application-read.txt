@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Powertrain Lab (/tmp/Judas M82 Moved Package/game.judasproj)
+Scene: Powertrain lab / flat (/tmp/Judas M82 Moved Package/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS four-wheel combustion and six-wheel electric assemblies use ordinary M81 wheels
+PASS nonvehicle machine terminates in a real hinge-constrained rigid body
+PASS combustion fixture contains engine, gearbox, clutch and open differential
+PASS fresh process reads committed powertrain save bytes
+PASS cold-save observation precedes resumed physics
+PASS cold restore exactly preserves graph settings, commands and finite rotor momentum
+PASS cold-restored physical endpoint responds to new ordinary input, beyond cached graph observations
+PASS normal application startup and shutdown
+M82 application read checks=8 failures=0

@@ -1,4 +1,5 @@
 #include "WorldPersistence.h"
+#include "PowertrainAuthoring.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSerialization.h"
@@ -87,6 +88,16 @@ void WorldPersistence::Wheels(RuntimeWorld& w,SaveArchive& a){
 bool WorldPersistence::CaptureWheel(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){
  try{auto* wheel=w.RuntimeWheel(id);if(!wheel){bytes.clear();return true;}SaveArchive a;wheel->Persist(a);a.Require(a.bytes.size()<=1024,"wheel snapshot bound");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}
 }
+void WorldPersistence::Powertrains(RuntimeWorld& w,SaveArchive& a){
+ auto n=count(a,w.m_powertrainOwners.size());a.Require(n==w.m_powertrainOwners.size(),"incomplete powertrain records");std::set<EntityId> seen;
+ for(uint32_t i=0;i<n;++i){EntityId id=0;PowertrainInstance* train=nullptr;if(!a.reading){auto owner=w.m_powertrainOwners.begin();std::advance(owner,i);id=*owner;train=w.RuntimePowertrain(id);}a(id);if(a.reading)train=w.RuntimePowertrain(id);a.Require(train&&seen.insert(id).second,"unknown/duplicate powertrain");
+  for(auto target:PowertrainReferences(train->settings))a.Require(w.RuntimeDefinition(target)&&!w.IsTransientEntity(target),"required powertrain terminal/bearing missing/transient");
+  train->Persist(a);
+ }
+ if(a.reading)w.PublishPowertrains(0);
+}
+bool WorldPersistence::CapturePowertrain(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){try{auto* train=w.RuntimePowertrain(id);if(!train){bytes.clear();return true;}SaveArchive a;train->Persist(a);a.Require(a.bytes.size()<=64*1024,"powertrain snapshot bound");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}}
+bool WorldPersistence::RestorePowertrain(RuntimeWorld& w,EntityId id,const std::string& bytes,std::string& error){const bool pending=w.m_regionPending.erase(id)!=0;try{auto* train=w.RuntimePowertrain(id);SaveArchive a(bytes);a.Require(train&&bytes.size()<=64*1024,"saved powertrain unavailable");train->Persist(a);a.Finish();if(pending)w.m_regionPending.insert(id);return true;}catch(const std::exception& e){if(pending)w.m_regionPending.insert(id);error=e.what();return false;}}
 bool WorldPersistence::RestoreWheel(RuntimeWorld& w,EntityId id,const std::string& bytes,std::string& error){
  const bool pending=w.m_regionPending.erase(id)!=0;
  try{auto* wheel=w.RuntimeWheel(id);SaveArchive a(bytes);a.Require(wheel&&bytes.size()<=1024,"saved wheel unavailable");wheel->Persist(a);a.Finish();const auto chassis=w.RuntimeBody(wheel->settings.chassis);wheel->state.available=wheel->settings.enabled&&w.Physics().IsBodyEnabled(chassis)&&w.Physics().IsDynamicBody(chassis);wheel->Publish(w.Physics(),chassis);wheel->previous=wheel->state;if(pending)w.m_regionPending.insert(id);return true;}catch(const std::exception& e){if(pending)w.m_regionPending.insert(id);error=e.what();return false;}
@@ -221,6 +232,7 @@ bool WorldPersistence::Capture(RuntimeWorld& w,std::map<std::string,SaveChunk>& 
  std::vector<EntityId> kinematicIds;for(const auto& o:w.ScriptObjects())if(w.Physics().IsKinematicBody(w.RuntimeBody(o.id))&&!w.IsTransientEntity(o.id))kinematicIds.push_back(o.id);
  if(!kinematicIds.empty()){SaveArchive motions;auto n=count(motions,kinematicIds.size());for(unsigned i=0;i<n;++i){auto id=kinematicIds[i];motions(id);w.Physics().PersistKinematic(motions,w.RuntimeBody(id));}chunks["kinematic-motion"]={1,std::move(motions.bytes)};}
  if(!w.m_wheelOwners.empty()){SaveArchive wheels;Wheels(w,wheels);chunks["wheels"]={1,std::move(wheels.bytes)};}
+ if(!w.m_powertrainOwners.empty()){SaveArchive trains;Powertrains(w,trains);chunks["powertrains"]={1,std::move(trains.bytes)};}
  if(!w.m_balances.empty()){SaveArchive balanceState;PhysicalBalance(w,balanceState);chunks["physical-balance"]={1,std::move(balanceState.bytes)};}
  if(!w.m_physicalAnimations.empty()){SaveArchive physicalState;PhysicalAnimation(w,physicalState);unsigned version=1;if(!w.m_balances.empty()){version=2;std::vector<EntityId> balanceOwners;for(const auto& [id,_]:w.m_balances)balanceOwners.push_back(id);physicalState(balanceOwners);}chunks["physical-animation"]={version,std::move(physicalState.bytes)};}if(!w.m_deformableOwners.empty()){SaveArchive deforms;Deformables(w,deforms);chunks["deformables"]={3,std::move(deforms.bytes)};}SaveArchive liquid;w.Liquids().Persist(liquid);chunks["liquid"]={1,std::move(liquid.bytes)};
  // Contacts and sleep must retain the same physical owners as the entity
@@ -248,6 +260,7 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
   }
   if(o.characterMotor)w.RuntimeCharacter(o.id);
   if(o.wheel)w.RuntimeWheel(o.id);
+  if(o.powertrain)w.RuntimePowertrain(o.id);
   if(o.deformable){auto* deform=w.RuntimeDeformable(o.id,error);if(!deform||!deform->error.empty()){if(deform)error="required deformable solve failed: "+deform->error;return false;}if(!w.m_restoreConstruction&&deform->asset->fracture&&deform->asset->fracture->rigid&&!w.PrepareRigidFracture(o.id,error))return false;}
   if(o.navigationAgent&&o.navigationAgent->enabled&&!w.Navigation().Agent(o.id))w.Navigation().RegisterAgent(o.id);
  }
@@ -269,6 +282,7 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
  for(auto id:w.m_animationOwners){auto* v=w.RuntimeAnimation(id);if(!v||!v->asset){auto* d=w.RuntimeDefinition(id);auto* resources=w.Resources();if(d&&d->render&&resources&&resources->StateOf(d->render->meshAsset)==ResourceState::Failed){error="required skeleton "+std::to_string(id)+": "+resources->ErrorOf(d->render->meshAsset);return false;}error="loading";return false;}}return true;}
 bool WorldPersistence::Restore(RuntimeWorld& w,const std::map<std::string,SaveChunk>& chunks,std::string& error){JUDAS_PROFILE_SCOPE("Save restoration");try{std::string deferredJointContinuation;bool hasJointContinuation=false;const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){auto it=chunks.find(name);if(it==chunks.end()||(it->second.version!=1&&!(name=="articulation"&&(it->second.version==2||it->second.version==3||it->second.version==4))))throw std::runtime_error("required participant missing/newer: "+name);ProfileScope participant(PerformanceProfiler::Get().Intern("Save restore "+name));SaveArchive a(it->second.data);if(name=="articulation"){ArticulationExtended(w,a,it->second.version,&deferredJointContinuation);hasJointContinuation=it->second.version>=4;}else fn(w,a);a.Finish();}
  if(!w.m_wheelOwners.empty()){auto it=chunks.find("wheels");if(it==chunks.end()||it->second.version!=1)throw std::runtime_error("required wheel participant missing/newer");SaveArchive wheels(it->second.data);Wheels(w,wheels);wheels.Finish();}
+ if(!w.m_powertrainOwners.empty()){auto it=chunks.find("powertrains");if(it==chunks.end()||it->second.version!=1)throw std::runtime_error("required powertrain participant missing/newer");SaveArchive trains(it->second.data);Powertrains(w,trains);trains.Finish();}
  std::set<EntityId> restoredKinematics;
  if(auto it=chunks.find("kinematic-motion");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer kinematic motion participant");SaveArchive motions(it->second.data);auto n=count(motions,0);for(unsigned i=0;i<n;++i){EntityId id=0;motions(id);auto h=w.RuntimeBody(id);motions.Require(w.Physics().IsKinematicBody(h)&&restoredKinematics.insert(id).second,"saved kinematic body unavailable/duplicate");w.Physics().PersistKinematic(motions,h);}motions.Finish();}
  for(const auto& o:w.ScriptObjects())if(w.Physics().IsKinematicBody(w.RuntimeBody(o.id))&&!w.IsTransientEntity(o.id)&&!restoredKinematics.count(o.id))throw std::runtime_error("required kinematic command record missing");
@@ -306,7 +320,7 @@ bool WorldPersistence::PrepareAudio(RuntimeWorld& w,std::string& error){
 // Required subsystem state cannot disappear behind an exclusion flag.
 bool RuntimeWorld::SetTransientEntity(EntityId id,bool transient,std::string& error){
  auto* e=FindEntity(id);const auto* d=RuntimeDefinition(id);if(!e||!d){error="stale entity";return false;}
- if(m_wheelParticipants.count(id)||d->socket||d->deformable||d->liquidBasin||d->liquidContainer||d->liquidConnection||d->characterMotor||d->wheel||d->animation||d->ragdoll||d->joint||d->navigationAgent||d->navigationSurface||d->navigationObstacle||d->navigationLink||d->audioEmitter||d->audioListener||d->gravity||!d->scripts.empty()){error="entity "+std::to_string(id)+": required component cannot be transient";return false;}
+ if(m_wheelParticipants.count(id)||m_powertrainParticipants.count(id)||d->socket||d->deformable||d->liquidBasin||d->liquidContainer||d->liquidConnection||d->characterMotor||d->wheel||d->powertrain||d->animation||d->ragdoll||d->joint||d->navigationAgent||d->navigationSurface||d->navigationObstacle||d->navigationLink||d->audioEmitter||d->audioListener||d->gravity||!d->scripts.empty()){error="entity "+std::to_string(id)+": required component cannot be transient";return false;}
  e->transient=transient;return true;
 }
 

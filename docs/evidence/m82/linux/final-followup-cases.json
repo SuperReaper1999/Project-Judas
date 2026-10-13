@@ -1,0 +1,73 @@
+[
+  {
+    "label": "powertrain",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.26481323900225107
+  },
+  {
+    "label": "powertrain_lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.032266484002320794
+  },
+  {
+    "label": "powertrain_js",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_script_tests",
+      "/tmp/judas-m82-final-v2-script"
+    ],
+    "exit": 0,
+    "seconds": 0.032360234999941895
+  },
+  {
+    "label": "api-live-coverage",
+    "args": [
+      "node",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+      "--typescript",
+      "/tmp/judas-m80-typecheck/node_modules/typescript",
+      "--runtime",
+      "/tmp/judas-m82-final-v2-script/surface.json"
+    ],
+    "exit": 0,
+    "seconds": 1.268883482000092
+  },
+  {
+    "label": "application-lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "lifecycle",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-lifecycle"
+    ],
+    "exit": 0,
+    "seconds": 3.783567826001672
+  },
+  {
+    "label": "application-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-write"
+    ],
+    "exit": 0,
+    "seconds": 15.703797252997902
+  },
+  {
+    "label": "application-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-read"
+    ],
+    "exit": 1,
+    "seconds": 50.08471802300119
+  }
+]

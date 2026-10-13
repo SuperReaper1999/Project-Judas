@@ -7,6 +7,9 @@ Each wheel has its own suspension, rotational inertia, torque/brake commands and
 contact state. It does not require a vehicle controller, wheel count, gearbox or
 engine. Project JavaScript supplies the control policy.
 
+An optional [Powertrain](powertrains.md) can supply mechanical shaft impulses and
+receive real axle load. Direct wheel commands remain supported independently.
+
 ## `entity.wheel`
 
 Returns a `Wheel` handle when the entity owns a Wheel component, otherwise `null`.

@@ -134,6 +134,9 @@ target_link_libraries(judas_materials PUBLIC ${JUDAS_GLM} judas_profiler)
 add_library(judas_engine STATIC
     src/Wheel.cpp
     src/WorldWheels.cpp
+    src/Powertrain.cpp
+    src/PowertrainAuthoring.cpp
+    src/WorldPowertrains.cpp
     src/modding/ModContent.cpp
     src/modding/ContentStorage.cpp
     src/modding/ModStore.cpp
@@ -1657,3 +1660,17 @@ judas_warnings(judas_wheel_lifecycle_tests -Wpedantic)
 add_executable(judas_wheel_application_tests tests/WheelApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_wheel_application_tests PRIVATE judas_engine)
 judas_warnings(judas_wheel_application_tests -Wpedantic)
+
+# M82 modular rotational mechanics, actual JS and ordinary lab lifecycles.
+add_executable(judas_powertrain_tests tests/PowertrainTests.cpp)
+target_link_libraries(judas_powertrain_tests PRIVATE judas_engine)
+judas_warnings(judas_powertrain_tests -Wpedantic)
+add_executable(judas_powertrain_script_tests tests/PowertrainScriptTests.cpp)
+target_link_libraries(judas_powertrain_script_tests PRIVATE judas_engine)
+judas_warnings(judas_powertrain_script_tests -Wpedantic)
+add_executable(judas_powertrain_lifecycle_tests tests/PowertrainLifecycleTests.cpp)
+target_link_libraries(judas_powertrain_lifecycle_tests PRIVATE judas_engine)
+judas_warnings(judas_powertrain_lifecycle_tests -Wpedantic)
+add_executable(judas_powertrain_application_tests tests/PowertrainApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_powertrain_application_tests PRIVATE judas_engine)
+judas_warnings(judas_powertrain_application_tests -Wpedantic)

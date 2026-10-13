@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M81 Experimental candidate public module based on checkpoint `bc1fd286d75b6db843fa9942b8d21c946c2e5c2a`. M81 human validation is pending; M67 human authoring review remains deferred.
+Current M82 Experimental candidate public module based on checkpoint `b74906350084ab20d01b09774dfc56711b4d97cb`. M82 human validation is pending; M81 has operator acceptance and M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -101,6 +101,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.playAudio` | `playAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.playAudioOneShot` | `audioOneShot` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.pointVelocity` | `pointVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.powertrain` | `powertrainExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.presentedTransform` | `presentedTransform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.ragdoll` | `ragdollExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.removeTag` | `removeTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -187,6 +188,14 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `NavigationAgent.state` | `navAgentState` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `NavigationAgent.steering` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `NavigationAgent.stopped` | `navStopped` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `Powertrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.enabled` | `powertrainEnabled` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.set` | `powertrainSet` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.settings` | `powertrainSettings` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.state` | `powertrainState` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Powertrain.valid` | `powertrainValid` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
 | `Ragdoll` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.active` | `ragdollActive` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.balanceDiagnostics` | `ragdollBalanceDiagnostics` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |

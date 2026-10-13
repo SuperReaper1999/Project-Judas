@@ -1,0 +1,24 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Powertrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj)
+Scene: Powertrain lab / flat (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/Scenes/contracts.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS four-wheel combustion and six-wheel electric assemblies use ordinary M81 wheels
+PASS nonvehicle machine terminates in a real hinge-constrained rigid body
+PASS combustion fixture contains engine, gearbox, clutch and open differential
+PASS valid
+PASS startMutationBlocked
+PASS detachedSettings
+PASS invalidInputBlocked
+PASS unknownSourceBlocked
+PASS invalidRatioBlocked
+PASS unknownFieldBlocked
+PASS positiveCommand
+PASS disabled
+PASS measuredState
+PASS staleInvalid
+PASS staleReadBlocked
+PASS staleWriteBlocked
+PASS public graph API negative cases isolate errors without disabling scripts
+PASS normal application startup and shutdown
+M82 application contracts checks=18 failures=0

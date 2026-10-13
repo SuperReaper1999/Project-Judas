@@ -1,0 +1,94 @@
+[
+  {
+    "label": "powertrain_lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03221795799981919
+  },
+  {
+    "label": "save_storage",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.11429511300229933
+  },
+  {
+    "label": "save-exclusion",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_exclusion_tests",
+      "/tmp/judas-m82-final-v2-exclusion",
+      "/home/conner/Documents/GitHub/Project-Judas"
+    ],
+    "exit": 0,
+    "seconds": 0.03258547999939765
+  },
+  {
+    "label": "wheel-application-probe",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "probe",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/wheel-application-probe"
+    ],
+    "exit": 0,
+    "seconds": 9.052852264001558
+  },
+  {
+    "label": "wheel-application-oblique",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "oblique",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/wheel-application-oblique"
+    ],
+    "exit": 0,
+    "seconds": 8.943645577001007
+  },
+  {
+    "label": "wheel-application-radial",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "radial",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/wheel-application-radial"
+    ],
+    "exit": 0,
+    "seconds": 6.457166694999614
+  },
+  {
+    "label": "wheel-application-lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "lifecycle",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/wheel-application-lifecycle"
+    ],
+    "exit": 0,
+    "seconds": 3.6990619400021387
+  },
+  {
+    "label": "regression-stream-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/regression-stream-write"
+    ],
+    "exit": 0,
+    "seconds": 4.686924556001031
+  },
+  {
+    "label": "regression-stream-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/regression-stream-read"
+    ],
+    "exit": 0,
+    "seconds": 4.443651288998808
+  }
+]

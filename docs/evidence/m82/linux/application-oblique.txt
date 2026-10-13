@@ -1,0 +1,27 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Powertrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj)
+Scene: Powertrain lab / oblique (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/Scenes/oblique.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS four-wheel combustion and six-wheel electric assemblies use ordinary M81 wheels
+PASS nonvehicle machine terminates in a real hinge-constrained rigid body
+PASS combustion fixture contains engine, gearbox, clutch and open differential
+PASS query tyres support actual chassis; JS input, camera, UI and measured graph telemetry execute
+PASS powertrain chassis operates in arbitrarily oriented ordinary gravity
+FREE crank_radps=406.787531 before_radps=91.1010536 wheel_radps=-2.98023224e-08
+PASS open clutch lets finite-inertia engine rev without driving wheel terminals
+PASS clutch take-up changes actual engine RPM through reflected mechanical load
+DRIVE forward_m=7.78204298 speed_mps=4.51312494 crank_radps=590.055334 wheel_radps=27.2935925 residual=0 iterations=2
+PASS engine torque reaches chassis displacement through gear, clutch, differential and tyre loads
+PASS open differential satisfies mean-output speed relation within physical publication tolerance
+PASS logical gear selection changes real shaft speed ratio rather than a displayed gear number
+BRAKE speed_mps=0.718779504 driven_mps=4.51312494
+PASS mechanical and ordinary wheel brakes reduce actual chassis speed without reversing past rest
+PASS six independent electric sources drive a different actual chassis configuration
+PASS nonvehicle shaft endpoint matches actual M45-hinged body's angular motion
+MACHINE early_radps=8.74041748 free_radps=11.4082594 loaded_radps=11.1683884 load_torque=-81
+PASS authored mechanical brake load changes flywheel acceleration and source response
+PASS machine brake dissipates real physical rotor motion
+PASS normal application startup and shutdown
+PERF mode=oblique samples=640 fixed_median_ms=1.024874 p95_ms=1.663866 max_ms=2.070343 frame_median_ms=20.647416 frame_p95_ms=26.654956
+M82 application oblique checks=16 failures=0

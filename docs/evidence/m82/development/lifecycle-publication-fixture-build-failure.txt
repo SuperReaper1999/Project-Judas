@@ -1,0 +1,39 @@
+[  0%] Built target judas_app_icon
+[ 20%] Built target freetype
+[ 20%] Built target judas_icu_build
+[ 20%] Built target judas_quickjs
+[ 20%] Built target judas_glad
+[ 26%] Built target judas_navigation_backend
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_materials
+[ 33%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_powertrain_tests
+[100%] Built target judas_powertrain_tests
+[  0%] Built target judas_app_icon
+[ 20%] Built target freetype
+[ 20%] Built target judas_icu_build
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_powertrain_lifecycle_tests.dir/tests/PowertrainLifecycleTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/PowertrainLifecycleTests.cpp: In function ‘void {anonymous}::StagedReferences()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/PowertrainLifecycleTests.cpp:53:119: error: no matching function for call to ‘RuntimeWorld::RestoreRegionObject(int, SceneTransform&, EntityPhysicalState&, <brace-enclosed initializer list>, std::string&)’
+   53 |  Check(world.StageRegionObject(graph,graph,error)&&world.StageRegionObject(body,body,error)&&world.RestoreRegionObject(200,body.transform,retainedBody,{},error)&&WorldPersistence::RestorePowertrain(world,201,retained,error),"retained mechanical state reconstructs while its owner and endpoint stay private");world.PublishRegion({201,200});const auto* published=world.RuntimePowertrain(201);Check(published&&published->state.available&&Near(published->state.shafts[0].angularVelocity,3)&&Bytes(world.RuntimePowertrain(201))==retained&&Near(world.Physics().GetAngularVelocity(world.RuntimeBody(200)).x,3),"publication reports retained availability and actual speed without a step or impulse");
+      |                                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/PowertrainLifecycleTests.cpp:53:119: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/tests/PowertrainLifecycleTests.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h:536:10: note: candidate 1: ‘bool RuntimeWorld::RestoreRegionObject(EntityId, const SceneTransform&, const EntityPhysicalState&, const std::vector<ScriptStateRecord>&, std::string&, bool)’
+  536 |     bool RestoreRegionObject(EntityId,const SceneTransform&,const EntityPhysicalState&,const std::vector<ScriptStateRecord>&,std::string&,bool);
+      |          ^~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h:536:10: note: candidate expects 6 arguments, 5 provided
+gmake[3]: *** [CMakeFiles/judas_powertrain_lifecycle_tests.dir/build.make:79: CMakeFiles/judas_powertrain_lifecycle_tests.dir/tests/PowertrainLifecycleTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:10785: CMakeFiles/judas_powertrain_lifecycle_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:10792: CMakeFiles/judas_powertrain_lifecycle_tests.dir/rule] Error 2
+gmake: *** [Makefile:3348: judas_powertrain_lifecycle_tests] Error 2

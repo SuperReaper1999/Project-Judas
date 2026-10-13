@@ -1,5 +1,5 @@
 {
-  "checkpoint": "bc1fd286d75b6db843fa9942b8d21c946c2e5c2a",
+  "checkpoint": "b74906350084ab20d01b09774dfc56711b4d97cb",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -1002,6 +1002,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.powertrain",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.powertrain",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.presentedTransform",
       "kinds": [
         "get"
@@ -1908,6 +1919,89 @@
       ],
       "type": "docs/judas.d.ts:NavigationAgent.stopped",
       "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "Powertrain",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Powertrain",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Powertrain.constructor",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "powertrainEnabled"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.enabled",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Powertrain.id",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.set",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "powertrainSet"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.set",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.settings",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainSettings"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.settings",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainState"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.state",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainValid"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.valid",
+      "reference": "docs/judasjs/powertrains.md"
     },
     {
       "symbol": "Ragdoll",
@@ -3940,6 +4034,12 @@
     "playAudio",
     "pointVelocity",
     "pointerCapture",
+    "powertrainEnabled",
+    "powertrainExists",
+    "powertrainSet",
+    "powertrainSettings",
+    "powertrainState",
+    "powertrainValid",
     "presentedTransform",
     "pressed",
     "profileCounter",

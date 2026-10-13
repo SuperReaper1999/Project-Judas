@@ -1,0 +1,38 @@
+[
+  {
+    "label": "powertrain",
+    "args": [
+      "build/judas_powertrain_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.264684228997794
+  },
+  {
+    "label": "powertrain_lifecycle",
+    "args": [
+      "build/judas_powertrain_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.07160492099865223
+  },
+  {
+    "label": "powertrain_js",
+    "args": [
+      "build/judas_powertrain_script_tests",
+      "/tmp/judas-m82-final-script"
+    ],
+    "exit": 0,
+    "seconds": 0.06662796299860929
+  },
+  {
+    "label": "application-flat",
+    "args": [
+      "build/judas_powertrain_application_tests",
+      "projects/powertrain_lab/powertrain_lab.judasproj",
+      "flat",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-flat"
+    ],
+    "exit": 1,
+    "seconds": 16.044767394996597
+  }
+]

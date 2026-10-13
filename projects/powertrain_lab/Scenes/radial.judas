@@ -1,0 +1,1175 @@
+JudasScene 3
+settings
+  name "Powertrain lab / radial"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 3000
+end
+object 1 "Ordinary RadicalGravity"
+  position 0 -80 0
+  rotation 1 0 0 -0
+  scale 1 1 1
+  gravity radial 9.81
+  gravity.region sphere 200
+end
+
+object 10 "Project-owned power controls, camera and lab UI"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "82828282828282828282828200000002"
+  script.0.enabled true
+  script.0.properties "{}"
+  ui.asset "82828282828282828282828200000004"
+  ui.name "lab"
+  ui.enabled true
+end
+
+object 3 "Real spherical collision surface, radius 80 m"
+  position 0 -80 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.radius 80
+  render.color .13 .22 .24
+  body static sphere
+  body.radius 80
+  render.half-extents .5 .5 .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.half-extents .5 .5 .5
+  body.terrain ""
+  body.mass 1
+  body.friction .75
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 100 "Combustion / gearbox / differential buggy"
+  position -6.0705 -0.927999357 16.188
+  rotation 0.994213555 0.100582012 0 0.0377182546
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.24 1.2
+  render.color 0.93 0.47 0.16
+  body dynamic box
+  body.half-extents 0.85 0.24 1.2
+  body.mass 650
+  body.friction 0.75
+  body.restitution 0
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"crank\",\"kind\":\"internal\",\"inertia\":0.28,\"initialAngularVelocity\":100,\"viscousDrag\":0.018,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[1,0,0]},{\"name\":\"gearbox\",\"kind\":\"internal\",\"inertia\":0.07,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[1,0,0]},{\"name\":\"carrier\",\"kind\":\"internal\",\"inertia\":0.1,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[1,0,0]},{\"name\":\"left\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"103\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"right\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"104\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"engine\",\"shaft\":0,\"kind\":\"combustion\",\"torqueCurve\":[[0,0],[600,0],[900,95],[1800,145],[3200,160],[4800,125],[6200,40],[6800,0]],\"maxTorque\":200,\"maxPower\":100000,\"starterTorque\":42}],\"links\":[{\"name\":\"gearbox\",\"kind\":\"gear\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.2222222222222222,\"maxTorque\":500},{\"name\":\"clutch\",\"kind\":\"clutch\",\"input\":1,\"output\":2,\"outputB\":0,\"ratio\":1,\"maxTorque\":1000},{\"name\":\"differential\",\"kind\":\"differential\",\"input\":2,\"output\":3,\"outputB\":4,\"ratio\":0.2857142857142857,\"maxTorque\":500}],\"brakes\":[{\"name\":\"left\",\"shaft\":3,\"maxTorque\":750},{\"name\":\"right\",\"shaft\":4,\"maxTorque\":750}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 101 "Ordinary M81 suspension and tyre terminal"
+  parent 100
+  position -1.02 -0.55 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount -1.02 -0.15 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 131 "Rolling marker / no duplicate collider"
+  parent 101
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 102 "Ordinary M81 suspension and tyre terminal"
+  parent 100
+  position 1.02 -0.55 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount 1.02 -0.15 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 132 "Rolling marker / no duplicate collider"
+  parent 102
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 103 "Ordinary M81 suspension and tyre terminal"
+  parent 100
+  position -1.02 -0.55 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount -1.02 -0.15 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 133 "Rolling marker / no duplicate collider"
+  parent 103
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 104 "Ordinary M81 suspension and tyre terminal"
+  parent 100
+  position 1.02 -0.55 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount 1.02 -0.15 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 134 "Rolling marker / no duplicate collider"
+  parent 104
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 120 "Cabin visual / physics belongs to chassis"
+  parent 100
+  position 0 0.5 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 0.3 0.55
+  render.color 0.25 0.36 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 121 "Forward marker"
+  parent 100
+  position 0 0.31 -1.14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.96 0.89 0.42
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 122 "Rear marker"
+  parent 100
+  position 0 0.31 1.14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.8 0.19 0.16
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 200 "Independent electric rover"
+  position 6.0705 -0.927999357 16.188
+  rotation 0.994213555 0.100582012 0 -0.0377182546
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.24 1.65
+  render.color 0.1 0.68 0.73
+  body dynamic box
+  body.half-extents 0.85 0.24 1.65
+  body.mass 950
+  body.friction 0.75
+  body.restitution 0
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"201\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"202\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"203\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"204\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel5\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"205\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel6\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"206\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor1\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180,\"maxPower\":12000,\"starterTorque\":0},{\"name\":\"motor2\",\"shaft\":1,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180,\"maxPower\":12000,\"starterTorque\":0},{\"name\":\"motor3\",\"shaft\":2,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180,\"maxPower\":12000,\"starterTorque\":0},{\"name\":\"motor4\",\"shaft\":3,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180,\"maxPower\":12000,\"starterTorque\":0},{\"name\":\"motor5\",\"shaft\":4,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180,\"maxPower\":12000,\"starterTorque\":0},{\"name\":\"motor6\",\"shaft\":5,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180,\"maxPower\":12000,\"starterTorque\":0}],\"links\":[],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":0,\"maxTorque\":750},{\"name\":\"wheel2\",\"shaft\":1,\"maxTorque\":750},{\"name\":\"wheel3\",\"shaft\":2,\"maxTorque\":750},{\"name\":\"wheel4\",\"shaft\":3,\"maxTorque\":750},{\"name\":\"wheel5\",\"shaft\":4,\"maxTorque\":750},{\"name\":\"wheel6\",\"shaft\":5,\"maxTorque\":750}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 201 "Ordinary M81 suspension and tyre terminal"
+  parent 200
+  position -1.02 -0.55 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -1.02 -0.15 -1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 231 "Rolling marker / no duplicate collider"
+  parent 201
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 202 "Ordinary M81 suspension and tyre terminal"
+  parent 200
+  position 1.02 -0.55 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 1.02 -0.15 -1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 232 "Rolling marker / no duplicate collider"
+  parent 202
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 203 "Ordinary M81 suspension and tyre terminal"
+  parent 200
+  position -1.02 -0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -1.02 -0.15 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 233 "Rolling marker / no duplicate collider"
+  parent 203
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 204 "Ordinary M81 suspension and tyre terminal"
+  parent 200
+  position 1.02 -0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 1.02 -0.15 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 234 "Rolling marker / no duplicate collider"
+  parent 204
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 205 "Ordinary M81 suspension and tyre terminal"
+  parent 200
+  position -1.02 -0.55 1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -1.02 -0.15 1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 235 "Rolling marker / no duplicate collider"
+  parent 205
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 206 "Ordinary M81 suspension and tyre terminal"
+  parent 200
+  position 1.02 -0.55 1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "82828282828282828282828200000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 1.02 -0.15 1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 236 "Rolling marker / no duplicate collider"
+  parent 206
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 220 "Cabin visual / physics belongs to chassis"
+  parent 200
+  position 0 0.5 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 0.3 0.55
+  render.color 0.25 0.36 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 221 "Forward marker"
+  parent 200
+  position 0 0.31 -1.59
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.96 0.89 0.42
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 222 "Rear marker"
+  parent 200
+  position 0 0.31 1.59
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.8 0.19 0.16
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 300 "Electric shaft machine / fixed bearing"
+  position 0 -0.478637157 10.01875
+  rotation 0.998037259 0.0626229125 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 1.05 0.15 1.05
+  render.color 0.29 0.3 0.37
+  body static box
+  body.half-extents 1.05 0.15 1.05
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.15,\"initialAngularVelocity\":0,\"viscousDrag\":0.05,\"target\":\"0\",\"bearing\":\"300\",\"axis\":[1,0,0]},{\"name\":\"flywheel\",\"kind\":\"body\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"301\",\"bearing\":\"300\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":18,\"maxPower\":1000,\"starterTorque\":0}],\"links\":[{\"name\":\"reduction\",\"kind\":\"gear\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":500}],\"brakes\":[{\"name\":\"load\",\"shaft\":1,\"maxTorque\":180}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 301 "Physical hinged flywheel"
+  parent 300
+  position 0 1.45 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 0.83 0.83
+  render.color 0.68 0.38 0.61
+  body dynamic box
+  body.half-extents 0.1 0.83 0.83
+  body.mass 18
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 302 "Flywheel hinge / axis local X"
+  parent 300
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  joint 1
+  joint.body-a 301
+  joint.body-b 300
+  joint.anchor-a 0 0 0
+  joint.anchor-b 0 1.45 0
+  joint.frame-a 1 0 0 0
+  joint.frame-b 1 0 0 0
+  joint.enabled true
+  joint.limits false
+  joint.motor false
+  joint.spring false
+  joint.lower -1
+  joint.upper 1
+  joint.speed 0
+  joint.max-force 10
+  joint.rest 0
+  joint.stiffness 10
+  joint.damping 1
+end
+object 303 "Physical flywheel rotation marker"
+  parent 301
+  position 0.115 0.54 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.03 0.18 0.05
+  render.color 0.98 0.83 0.33
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 304 "Bearing stand"
+  parent 300
+  position 0 0.78 0.97
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.14 0.65 0.14
+  render.color 0.44 0.49 0.54
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 400 "Uneven load-bearing track obstacle"
+  position -6.009 -0.735846097 10.015
+  rotation 0.997325911 0.0626675787 0 0.0376005472
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.12 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.12 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 401 "Uneven load-bearing track obstacle"
+  position -5.21105 -0.156606441 5.010625
+  rotation 0.998981 0.0312818762 0 0.0325331513
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.17 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.17 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 402 "Uneven load-bearing track obstacle"
+  position -6.7125625 -0.131583184 0
+  rotation 0.999121313 0 0 0.0419118274
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.15 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.15 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 403 "Uneven load-bearing track obstacle"
+  position 6.00975 -0.725952917 10.01625
+  rotation 0.997325911 0.0626675787 0 -0.0376005472
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.13 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.13 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 404 "Uneven load-bearing track obstacle"
+  position 5.3125875 -0.143293187 5.011875
+  rotation 0.998960386 0.0312825217 0 -0.033159473
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.19 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.19 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 405 "Uneven load-bearing track obstacle"
+  position 6.715075 -0.10168858 0
+  rotation 0.999121313 0 0 -0.0419118274
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.18 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.18 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 406 "Uneven load-bearing track obstacle"
+  position -6.02625 -0.185357715 -7.030625
+  rotation 0.999164251 0.0161198414 0.00225240522 0.037495028
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.35 2.5
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.35 2.5
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 407 "Uneven load-bearing track obstacle"
+  position 6.02625 -0.185357715 -7.030625
+  rotation 0.999164251 0.0161198414 -0.00225240522 -0.037495028
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.35 2.5
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.35 2.5
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 500 "Track centre marking"
+  position 0 -3.06523302 -22.0055
+  rotation 0.990314149 -0.13884483 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 501 "Track centre marking"
+  position 0 -2.03181175 -18.0045
+  rotation 0.993569012 -0.113228169 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 502 "Track centre marking"
+  position 0 -1.21483396 -14.0035
+  rotation 0.996134638 -0.0878395316 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 503 "Track centre marking"
+  position 0 -0.607617533 -10.0025
+  rotation 0.998037259 -0.0626229125 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 504 "Track centre marking"
+  position 0 -0.205373629 -6.0015
+  rotation 0.999295635 -0.0375264323 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 505 "Track centre marking"
+  position 0 -0.00501015845 -2.0005
+  rotation 0.99992186 -0.0125009768 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 506 "Track centre marking"
+  position 0 -0.00501015845 2.0005
+  rotation 0.99992186 0.0125009768 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 507 "Track centre marking"
+  position 0 -0.205373629 6.0015
+  rotation 0.999295635 0.0375264323 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 508 "Track centre marking"
+  position 0 -0.607617533 10.0025
+  rotation 0.998037259 0.0626229125 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 509 "Track centre marking"
+  position 0 -1.21483396 14.0035
+  rotation 0.996134638 0.0878395316 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 510 "Track centre marking"
+  position 0 -2.03181175 18.0045
+  rotation 0.993569012 0.113228169 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 511 "Track centre marking"
+  position 0 -3.06523302 22.0055
+  rotation 0.990314149 0.13884483 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 12 "Compatibility camera seed only"
+  position -6.3 -0.117148273 25.2
+  rotation 0.987670575 0.151872501 0 0.0379681251
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end

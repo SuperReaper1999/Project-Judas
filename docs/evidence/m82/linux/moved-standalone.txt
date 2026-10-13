@@ -1,0 +1,15 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Powertrain Lab (/tmp/Judas M82 Moved Package/game.judasproj)
+Scene: Powertrain lab / flat (/tmp/Judas M82 Moved Package/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-combustion.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-electric.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-machine.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-pause.png
+[TestHarness] service scene ready after 0 wait frames at frame 4052
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-oblique.png
+[TestHarness] service scene ready after 0 wait frames at frame 4182
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-radial.png
+[TestHarness] service scene ready after 0 wait frames at frame 4302

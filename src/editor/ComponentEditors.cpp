@@ -1,3 +1,4 @@
+#include "../PowertrainAuthoring.h"
 #include "SkeletonAuthoring.h"
 #include <set>
 #include "CollisionAsset.h"
@@ -150,6 +151,35 @@ void DrawWheel(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
         DrawCategoryMask(doc,"Wheel required tags",v.requiredTags,categories.tags,false);DrawCategoryMask(doc,"Wheel excluded tags",v.excludedTags,categories.tags,false);}
     ImGui::TextWrapped("Local frame: suspension -Y, axle +X, rolling forward -Z. Mount and frame are relative to the chassis; no world-up assumption. This entity presents the wheel only. fixedUpdate supplies torque, brake and steering.");
     std::string error;if(!ValidateWheelSettings(v,error))ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());
+}
+void PowertrainNumber(EditorDocument& doc,const char* label,double& value){double next=value;if(ImGui::InputDouble(label,&next,0,0,"%.8g")&&std::isfinite(next)){doc.BeginEdit();value=next;doc.CommitEdit();}}
+void DrawPowertrain(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
+    auto& train=*object.powertrain;Checkbox(doc,"Mechanical assembly enabled",train.enabled);
+    auto entity=[&](const char* label,uint64_t& id,bool wheel,bool allowNone){const auto* target=doc.GetScene().Find(id);if(ImGui::BeginCombo(label,target?target->name.c_str():"None / missing")){if(allowNone&&ImGui::Selectable("World / no bearing",id==0)){doc.BeginEdit();id=0;doc.CommitEdit();}for(const auto& candidate:doc.GetScene().Objects())if((wheel?bool(candidate.wheel):bool(candidate.body))&&ImGui::Selectable((candidate.name+" ##"+std::to_string(candidate.id)).c_str(),candidate.id==id)){doc.BeginEdit();id=candidate.id;doc.CommitEdit();}ImGui::EndCombo();}};
+    auto shaft=[&](const char* label,unsigned& index){const char* preview=index<train.shafts.size()?train.shafts[index].name.c_str():"Missing shaft";if(ImGui::BeginCombo(label,preview)){for(unsigned i=0;i<train.shafts.size();++i)if(ImGui::Selectable((train.shafts[i].name+" ##"+std::to_string(i)).c_str(),i==index)){doc.BeginEdit();index=i;doc.CommitEdit();}ImGui::EndCombo();}};
+    const char* shaftKinds[]={"Internal rotor","Wheel terminal","Body rotor"};
+    for(size_t i=0;i<train.shafts.size();++i){ImGui::PushID(int(i));auto& v=train.shafts[i];if(ImGui::TreeNode("shaft", "%zu: %s",i,v.name.c_str())){
+        TextField(doc,"Shaft name",v.name);int representation=int(v.kind);if(EnumCombo("Shaft representation",representation,shaftKinds,3)){doc.BeginEdit();v.kind=PowertrainShaftKind(representation);if(v.kind==PowertrainShaftKind::Internal)v.target=0;if(v.kind==PowertrainShaftKind::Wheel)v.bearing=0;doc.CommitEdit();}
+        if(v.kind==PowertrainShaftKind::Internal){PowertrainNumber(doc,"Rotor inertia kg m2",v.inertia);PowertrainNumber(doc,"Initial speed rad/s",v.initialAngularVelocity);}
+        else entity("Physical terminal",v.target,v.kind==PowertrainShaftKind::Wheel,false);
+        PowertrainNumber(doc,"Shaft viscous drag N m s",v.viscousDrag);
+        if(v.kind!=PowertrainShaftKind::Wheel){entity("Reaction bearing",v.bearing,false,true);DragVec3(doc,"Rotation axis (bearing local / world)",v.axis);}else ImGui::TextWrapped("Wheel axle, inertia and chassis reaction come from the selected M81 component.");
+        if(ImGui::Button("Remove shaft and incident elements")){doc.BeginEdit();const auto affected=[&](unsigned n){return n==i;};train.sources.erase(std::remove_if(train.sources.begin(),train.sources.end(),[&](const auto& x){return affected(x.shaft);}),train.sources.end());train.brakes.erase(std::remove_if(train.brakes.begin(),train.brakes.end(),[&](const auto& x){return affected(x.shaft);}),train.brakes.end());train.links.erase(std::remove_if(train.links.begin(),train.links.end(),[&](const auto& x){return affected(x.input)||affected(x.output)||(x.kind==PowertrainLinkKind::Differential&&affected(x.outputB));}),train.links.end());for(auto& x:train.sources)if(x.shaft>i)--x.shaft;for(auto& x:train.brakes)if(x.shaft>i)--x.shaft;for(auto& x:train.links){if(x.input>i)--x.input;if(x.output>i)--x.output;if(x.outputB>i)--x.outputB;}train.shafts.erase(train.shafts.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}
+        ImGui::TreePop();}ImGui::PopID();}
+    if(train.shafts.size()<32&&ImGui::Button("Add internal shaft")){doc.BeginEdit();PowertrainShaft v;v.name="shaft_"+std::to_string(train.shafts.size());train.shafts.push_back(v);doc.CommitEdit();}
+    const char* sourceKinds[]={"Combustion curve","Electric torque / power","Custom script torque"};
+    for(size_t i=0;i<train.sources.size();++i){ImGui::PushID(100+int(i));auto& v=train.sources[i];if(ImGui::TreeNode("source","Source: %s",v.name.c_str())){TextField(doc,"Source name",v.name);shaft("Driven shaft",v.shaft);Combo(doc,"Power source",v.kind,sourceKinds,3);PowertrainNumber(doc,"Maximum torque N m",v.maxTorque);PowertrainNumber(doc,"Maximum power W",v.maxPower);PowertrainNumber(doc,"Starter torque N m",v.starterTorque);
+        for(size_t p=0;p<v.torqueCurve.size();++p){ImGui::PushID(int(p));PowertrainNumber(doc,"Curve RPM",v.torqueCurve[p].rpm);PowertrainNumber(doc,"Curve torque N m",v.torqueCurve[p].torque);if(ImGui::Button("Remove curve point")){doc.BeginEdit();v.torqueCurve.erase(v.torqueCurve.begin()+p);doc.CommitEdit();ImGui::PopID();break;}ImGui::PopID();}if(v.torqueCurve.size()<64&&ImGui::Button("Add torque point")){doc.BeginEdit();v.torqueCurve.push_back({v.torqueCurve.empty()?0:v.torqueCurve.back().rpm+1000,100});doc.CommitEdit();}
+        if(ImGui::Button("Remove source")){doc.BeginEdit();train.sources.erase(train.sources.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
+    if(!train.shafts.empty()&&train.sources.size()<32&&ImGui::Button("Add custom source")){doc.BeginEdit();PowertrainSource v;v.name="source_"+std::to_string(train.sources.size());train.sources.push_back(v);doc.CommitEdit();}
+    const char* linkKinds[]={"Ideal gear","Torque-limited clutch","Open differential"};
+    for(size_t i=0;i<train.links.size();++i){ImGui::PushID(200+int(i));auto& v=train.links[i];if(ImGui::TreeNode("link","Coupling: %s",v.name.c_str())){TextField(doc,"Coupling name",v.name);Combo(doc,"Coupling mechanism",v.kind,linkKinds,3);shaft("Input shaft",v.input);shaft("Output shaft",v.output);if(v.kind==PowertrainLinkKind::Differential)shaft("Second output shaft",v.outputB);PowertrainNumber(doc,"Output / input speed ratio",v.ratio);if(v.kind==PowertrainLinkKind::Clutch)PowertrainNumber(doc,"Clutch output torque capacity N m",v.maxTorque);if(ImGui::Button("Remove coupling")){doc.BeginEdit();train.links.erase(train.links.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
+    if(train.shafts.size()>=2&&train.links.size()<64&&ImGui::Button("Add gear / coupling")){doc.BeginEdit();PowertrainLink v;v.name="coupling_"+std::to_string(train.links.size());train.links.push_back(v);doc.CommitEdit();}
+    for(size_t i=0;i<train.brakes.size();++i){ImGui::PushID(300+int(i));auto& v=train.brakes[i];if(ImGui::TreeNode("brake","Brake: %s",v.name.c_str())){TextField(doc,"Brake name",v.name);shaft("Braked shaft",v.shaft);PowertrainNumber(doc,"Brake torque capacity N m",v.maxTorque);if(ImGui::Button("Remove brake")){doc.BeginEdit();train.brakes.erase(train.brakes.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
+    if(!train.shafts.empty()&&train.brakes.size()<32&&ImGui::Button("Add mechanical brake")){doc.BeginEdit();PowertrainBrake v;v.name="brake_"+std::to_string(train.brakes.size());train.brakes.push_back(v);doc.CommitEdit();}
+    ImGui::TextWrapped("Mechanical graph only: fixedUpdate supplies source inputs, clutch engagement, ratio selection and brakes. Internal/body axes are bearing-local, or world-space without a bearing. An open differential constrains average output speed; it does not force equal wheel speed.");
+    std::string error;if(!ValidatePowertrainSettings(train,error))ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());
+    if(state.runtime)if(const auto* runtime=state.runtime->RuntimePowertrain(object.id)){ImGui::Text("Mechanical solve: %s | residual %.5g",runtime->state.converged?"converged":"failed",runtime->state.residual);for(size_t i=0;i<runtime->state.shafts.size();++i)ImGui::Text("%s: %.1f RPM",runtime->settings.shafts[i].name.c_str(),runtime->state.shafts[i].angularVelocity*60/(2*3.141592653589793));}
 }
 void DrawCharacter(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
     auto& m=*object.characterMotor;Checkbox(doc,"Motor enabled",m.enabled);
@@ -857,6 +887,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<SceneRenderComponent>("Render", 'R', &SceneObject::render, DrawRender),
         Make<GravitySelection>("Gravity selection",'G',&SceneObject::gravitySelection,DrawGravitySelection),
         Make<WheelSettings>("Wheel",'W',&SceneObject::wheel,DrawWheel),
+        {"Powertrain",'P',[](const SceneObject& o){return o.powertrain.has_value();},[](SceneObject& o){o.powertrain=PowertrainSettings{};PowertrainShaft shaft;shaft.name="rotor";o.powertrain->shafts.push_back(shaft);},[](SceneObject& o){o.powertrain.reset();},DrawPowertrain},
         Make<CharacterMotorSettings>("Character motor",'M',&SceneObject::characterMotor,DrawCharacter),
         Make<SceneAnimationComponent>("Animation",'A',&SceneObject::animation,DrawAnimation),
         Make<SceneSocketComponent>("Visual socket",'S',&SceneObject::socket,DrawSocket),

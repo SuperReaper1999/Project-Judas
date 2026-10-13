@@ -1,4 +1,5 @@
 #include "SceneFingerprint.h"
+#include "PowertrainAuthoring.h"
 #include "ScriptSystem.h"
 
 #include <array>
@@ -408,6 +409,8 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
             if(!ValidGravitySelection(*o.gravitySelection,error))w.Fail(error);
             w.U64(o.id);w.U32(unsigned(o.gravitySelection->mode));w.U64(o.gravitySelection->source);w.Vector(o.gravitySelection->acceleration);}}
     size_t wheels=0;for(const auto& o:scene.Objects())wheels+=o.wheel.has_value();
+    size_t powertrains=0;for(const auto& o:scene.Objects())powertrains+=o.powertrain.has_value();
+    if(powertrains){std::string error;if(!ValidateScenePowertrains(scene,error))w.Fail(error);w.Text("Judas.Powertrain.1");w.U64(powertrains);for(const auto& o:scene.Objects())if(o.powertrain){w.U64(o.id);w.Text(EncodePowertrainSettings(*o.powertrain));}}
     if(wheels){w.Text("Judas.Wheel.1");w.U64(wheels);for(const auto& o:scene.Objects())if(o.wheel){const auto& v=*o.wheel;
         std::string error;if(!ValidateWheelSettings(v,error))w.Fail(error);
         if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))w.Fail("wheel owns visual placement and requires unit scale without another motion producer");

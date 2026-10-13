@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Powertrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj)
+Scene: Powertrain lab / flat (/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS four-wheel combustion and six-wheel electric assemblies use ordinary M81 wheels
+PASS nonvehicle machine terminates in a real hinge-constrained rigid body
+PASS combustion fixture contains engine, gearbox, clutch and open differential
+PASS fresh process reads committed powertrain save bytes
+PASS negative fixture changes only participant presence or authored powertrain component presence
+PASS negative snapshot is committed through ordinary SaveStorage
+PASS negative snapshot enters the real asynchronous SaveService load path
+Runtime outer services: powertrain participant does not match snapshot components
+NEGATIVE mode=phantom state=failed error=powertrain participant does not match snapshot components
+PASS missing/phantom powertrain participant fails before private publication with its exact diagnostic
+PASS rejected load leaves the original world, scripts and actual mechanical endpoints published and healthy
+PASS normal application startup and shutdown
+M82 application phantom checks=10 failures=0

@@ -1,3 +1,4 @@
+#include "PowertrainAuthoring.h"
 #include "SceneSession.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
@@ -51,7 +52,7 @@ RuntimeWorld::~RuntimeWorld() {
 }
 
 bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
-    if (o.vehicle || o.combustible || o.characterMotor || o.wheel || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
+    if (o.vehicle || o.combustible || o.characterMotor || o.wheel || o.powertrain || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
     if (o.body && o.body->shape == SceneShape::Compound) return true;
     if (o.body && o.body->motion != SceneBodyMotion::Dynamic) return true;
     return false;
@@ -199,7 +200,7 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
     record.requiresFull = EntityRequiresFull(o)||m_jointParticipants.count(o.id);
     record.state = state;
     record.slot = m_dynamicBodies.size();
-    if (record.requiresFull||m_wheelParticipants.count(o.id)) fidelity = SimulationFidelity::Full;
+    if (record.requiresFull||m_wheelParticipants.count(o.id)||m_powertrainParticipants.count(o.id)) fidelity = SimulationFidelity::Full;
     record.fidelity = fidelity;
     record.lifecycle = fidelity == SimulationFidelity::Dormant ? EntityLifecycle::Unloaded : EntityLifecycle::Active;
     if (fidelity == SimulationFidelity::Dormant) record.dormantSinceSeconds = m_simulationTime;
@@ -333,6 +334,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     }
     m_built = true;
     for(const auto& o:scene.Objects())if(o.wheel)m_wheelParticipants.insert(o.wheel->chassis);
+    for(const auto& o:scene.Objects())if(o.powertrain)for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);
     for(const auto& o:scene.Objects())if(o.joint){m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
 
     if (!(m_settings.fluidScale > 0.0f)) {
@@ -364,7 +366,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.deformable||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         if(o.scripts.empty()&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
@@ -378,7 +380,19 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
 
 bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     const FidelityPolicyContext& loadContext, std::string& outError) {
+    std::map<std::pair<PowertrainShaftKind,EntityId>,EntityId> claims;
+    const auto claim=[&](const SceneObject& object){if(!object.powertrain)return true;for(const auto& shaft:object.powertrain->shafts)if(shaft.kind!=PowertrainShaftKind::Internal){const auto key=std::make_pair(shaft.kind,shaft.target);auto found=claims.find(key);if(found!=claims.end()&&found->second!=object.id){outError="powertrain terminal has competing assembly ownership";return false;}claims[key]=object.id;}return true;};
+    // Private staged graphs already own their physical terminals. Public
+    // script enumeration deliberately hides them until publication, but must
+    // not be used to decide mechanical ownership during construction.
+    for(auto owner:m_powertrainOwners){
+        const auto definition=m_scriptDefinitions.find(owner);
+        const auto* record=FindEntity(owner);
+        if(definition!=m_scriptDefinitions.end()&&(!record||record->lifecycle!=EntityLifecycle::Destroyed)&&!claim(definition->second))return false;
+    }
+    for(const auto& object:scene.Objects())if(!claim(object))return false;
     for(const auto& o:scene.Objects())if(o.wheel){m_wheelOwners.insert(o.id);m_wheelParticipants.insert(o.wheel->chassis);}
+    for(const auto& o:scene.Objects())if(o.powertrain){m_powertrainOwners.insert(o.id);for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);}
     for(const auto& o:scene.Objects())if(o.deformable)m_deformableOwners.insert(o.id);
     for(const auto& o:scene.Objects())if(o.animation)m_animationOwners.insert(o.id);
     for(const auto& o:scene.Objects())if(o.joint){m_jointOwners.insert(o.id);m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
@@ -400,6 +414,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         m_scriptDefinitions[o.id]=o;
         if(!o.scripts.empty())m_scriptOwners.insert(o.id);
         if(o.characterMotor)m_characterOwners.insert(o.id);
+        if(o.powertrain){std::string error;if(!ValidatePowertrainSettings(*o.powertrain,error))return fail(o,error);}
         if(o.wheel){std::string error;if(!ValidateWheelSettings(*o.wheel,error))return fail(o,error);if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))return fail(o,"wheel owns visual placement; no other motion producer or non-unit scale is allowed");}
         m_entityCategories[o.id]={o.tags,o.tags,o.renderLayer,{}};
         const glm::vec3 position = o.transform.position;
@@ -463,7 +478,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
                 isDynamic = true;
                 const EntityPhysicalState state = StateFromDefinition(o);
                 SimulationFidelity fidelity = SimulationFidelity::Full;
-                if (m_policy && b.managed && !EntityRequiresFull(o)&&!m_wheelParticipants.count(o.id)) {
+                if (m_policy && b.managed && !EntityRequiresFull(o)&&!m_wheelParticipants.count(o.id)&&!m_powertrainParticipants.count(o.id)) {
                     FidelityPolicyEntity view;
                     view.id = o.id;
                     view.current = SimulationFidelity::Dormant;  // nothing exists yet
@@ -675,6 +690,18 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         }
     }
 
+    // Graph registration can refer to bodies that already existed in a
+    // reduced representation. Reconstruct them through the same fidelity path
+    // used by ordinary simulation; private regional bodies stay unpublished
+    // and disabled until their normal publication boundary.
+    for(const auto& object:scene.Objects())if(object.powertrain)for(auto target:PowertrainReferences(*object.powertrain)){
+        const auto* record=FindEntity(target);
+        if(record&&record->definition.body&&record->lifecycle!=EntityLifecycle::Destroyed&&record->fidelity!=SimulationFidelity::Full){
+            if(!SetEntityFidelity(target,SimulationFidelity::Full,&outError))return false;
+            if(m_regionPending.count(target))m_physics.SetBodyEnabled(m_entityCategories.at(target).body,false);
+        }
+    }
+
     for (const Combustible& c : m_combustibles) {
         if (!scene.Find(c.id)) continue;
         const SceneObject* o = scene.Find(c.id);
@@ -789,7 +816,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
     m_scripts.reset();spawnStates.clear();
-    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
+    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_powertrains.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
     for(const auto& o:ScriptObjects())if(o.ui&&o.ui->enabled){std::string error;UI().Load(o.ui->asset,o.ui->name,o.id,error);}
@@ -822,7 +849,7 @@ void RuntimeWorld::RestoreAuthoredState() {
             ++e.reconstructions;
         }
     }
-    if(m_hasScripts||std::any_of(m_extraEntities.begin(),m_extraEntities.end(),[](const auto& e){return bool(e.definition.characterMotor)||bool(e.definition.wheel);})){
+    if(m_hasScripts||std::any_of(m_extraEntities.begin(),m_extraEntities.end(),[](const auto& e){return bool(e.definition.characterMotor)||bool(e.definition.wheel)||bool(e.definition.powertrain);})){
         for(auto& e:m_extraEntities)if(e.authored&&e.lifecycle!=EntityLifecycle::Destroyed){
             SetEntityState(e.id,StateFromDefinition(e.definition));SetRuntimeTransform(e.id,e.definition.transform);
         }
@@ -839,6 +866,8 @@ void RuntimeWorld::RestoreAuthoredState() {
     }
     for(auto& [id,d]:m_scriptDefinitions)if(const auto* record=FindEntity(id))if(record->authored&&record->definition.wheel)d.wheel=record->definition.wheel;
     RefreshWheelParticipants();
+    for(auto& [id,d]:m_scriptDefinitions)if(const auto* record=FindEntity(id))if(record->authored&&record->definition.powertrain)d.powertrain=record->definition.powertrain;
+    RefreshPowertrainParticipants();
     for(auto& [id,d]:m_scriptDefinitions)if(const auto* record=FindEntity(id))if(record->authored&&record->definition.body&&d.body){
         d.body->enabled=record->definition.body->enabled;d.body->motion=record->definition.body->motion;
         m_physics.SetBodyEnabled(RuntimeBody(id),d.body->enabled);
@@ -955,7 +984,7 @@ bool RuntimeWorld::SetEntityFidelity(EntityId id, SimulationFidelity fidelity, s
         if (outError) *outError = "entity " + std::to_string(id) + " is destroyed";
         return false;
     }
-    if (fidelity != SimulationFidelity::Full && (e->requiresFull||m_wheelParticipants.count(id))) {
+    if (fidelity != SimulationFidelity::Full && (e->requiresFull||m_wheelParticipants.count(id)||m_powertrainParticipants.count(id))) {
         if (outError) *outError = "entity " + std::to_string(id) + " (" + e->name + ") has no reduced representation";
         return false;
     }
@@ -1018,6 +1047,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     if (!ValidateEntityDestruction(id, error)) { if (outError) *outError = error; return false; }
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
+    m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
     RemoveDeformable(id);m_deformableOwners.erase(id);
     m_liquid->Remove(m_liquid->Handle(id));
     LeaveRagdoll(id,0,error);m_physicalAnimations.erase(id);m_balances.erase(id);
@@ -1077,6 +1107,8 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
     // this one-object component validator.
     copy.joint.reset();
     copy.wheel.reset();
+    if(definition.powertrain&&!ValidatePowertrainSettings(*definition.powertrain,error))return false;
+    copy.powertrain.reset();
     copy.id = 1;
     validation.InsertObject(copy);
     std::string fingerprint;
@@ -1168,7 +1200,13 @@ EntityId RuntimeWorld::CreateEntity(const SceneObject& definitionIn, const Entit
         if(definition.body){definition.body->initialLinearVelocity=state->linearVelocity;definition.body->initialAngularVelocity=state->angularVelocity;}}
     Scene batch;batch.Settings()=m_settings;batch.InsertObject(definition);
     FidelityPolicyContext context;
-    if(!AppendSceneObjects(batch,false,context,error)){if(outError)*outError=error;return 0;}
+    const auto before=m_referencedAssets.size();
+    if(!AppendSceneObjects(batch,false,context,error)){
+        m_regionAssets[definition.id]={m_referencedAssets.begin()+before,m_referencedAssets.end()};
+        RemoveRegionObject(definition.id);
+        if(outError)*outError=error;
+        return 0;
+    }
     if(!definition.body||definition.body->motion==SceneBodyMotion::Static){
         EntityRecord e;e.id=definition.id;e.name=definition.name;e.definition=definition;e.authored=false;
         e.requiresFull=true;e.state=StateFromDefinition(definition);e.slot=std::numeric_limits<std::size_t>::max();
@@ -1209,6 +1247,7 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
         if(!ValidateCollisionPlacement(o,error)||!ValidateCollisionFluid(o,!m_fluidVolumes.empty(),error)||!ValidateEntityDefinition(o,error)||!ValidateVisualAssets(o,error))return 0;
     }
     for(const auto& o:instance.Objects())if(o.wheel)m_wheelParticipants.insert(o.wheel->chassis);
+    for(const auto& o:instance.Objects())if(o.powertrain)for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);
     for(const auto& o:instance.Objects())if(o.joint){m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
     std::vector<EntityId> created;
     std::set<SceneObjectId> pending;
@@ -1292,7 +1331,7 @@ void RuntimeWorld::EvaluateFidelityPolicy(const FidelityPolicyContext& context, 
     m_transitionsThisStep = 0;
     if (!m_policy) return;
     for (EntityRecord& e : m_entities) {
-        if (e.lifecycle == EntityLifecycle::Destroyed || !e.managed || e.requiresFull || m_wheelParticipants.count(e.id) || e.forcedFidelity) continue;
+        if (e.lifecycle == EntityLifecycle::Destroyed || !e.managed || e.requiresFull || m_wheelParticipants.count(e.id) || m_powertrainParticipants.count(e.id) || e.forcedFidelity) continue;
         if (std::find(pinned.begin(), pinned.end(), e.id) != pinned.end()) {
             if (e.fidelity != SimulationFidelity::Full) SetEntityFidelity(e.id, SimulationFidelity::Full);
             continue;
@@ -1345,7 +1384,7 @@ void RuntimeWorld::Destroy() {
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
     m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
-    m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();
+    m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
     m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
     EndAudio();
     m_particleEmitters.clear();

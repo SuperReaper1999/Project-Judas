@@ -1,0 +1,11 @@
+shaft 0 crank absolute=113.75 omega=113.7355322977528 angle=0.93769648978976661 initialized=1
+shaft 1 gearbox absolute=14.665679273392234 omega=14.651211571145032 angle=-1.8860181040797361 initialized=1
+shaft 2 carrier absolute=14.665679273392245 omega=14.651211571145042 angle=-1.8860181040797364 initialized=1
+shaft 3 left absolute=0 omega=4.1706328392028809 angle=1.2664932116775613 initialized=0
+shaft 4 right absolute=0 omega=4.2014880180358887 angle=1.2461737487953091 initialized=0
+source 0 input=0.37 custom=0 starter=0
+link 0 enabled=1 override=0 ratio=1 engagement=1
+link 1 enabled=1 override=0 ratio=1 engagement=1
+link 2 enabled=1 override=0 ratio=1 engagement=1
+brake 0 engagement=0
+brake 1 engagement=0

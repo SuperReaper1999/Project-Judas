@@ -1,0 +1,98 @@
+PASS graph component round-trips exactly through ordinary scene authoring
+PASS physical graph contributes an authored fingerprint
+PASS gear ratio changes scene fingerprint
+PASS canonical bounded graph codec retains every setting
+PASS unknown graph field fails without partial mutation
+PASS missing physical terminal is rejected
+PASS competing physical terminal ownership is rejected
+PASS complete chassis/wheels/powertrain hierarchy becomes ordinary prefab
+PASS first mechanical prefab instance
+PASS second mechanical prefab instance
+PASS prefab identities remap all terminal and bearing references independently
+PASS normal world builds modular mechanical graph
+PASS per-instance mechanical state is independent of shared authored settings
+PASS source and differential transmit real torque to existing wheel spin
+PASS required mechanical terminals and component owners cannot be excluded from save
+PASS component disable uses atomic generic setter
+PASS disabled assembly preserves rotor momentum and publishes no mechanical availability
+PASS reenable retains graph and command state
+PASS unsupported runtime topology mutation is rejected atomically
+PASS ordinary save captures optional powertrain participant
+PASS fresh world restores physical endpoints before mechanical state
+PASS cold restore preserves exact commands internal spin phase and finite-mechanical state
+PASS cold-restored physical endpoint genuinely continues under identical powertrain input
+PASS moving-bearing immediate-save fixture builds
+PASS save before first fixed step restores moving-bearing mechanics
+PASS initial relative rotor speed seeds absolute momentum once and survives immediate cold save exactly
+PASS missing required mechanical participant fails explicitly
+PASS wrong graph shape rejects archived state rather than aliasing indices
+PASS Play reset clears runtime controls and rotor history
+PASS single terminal owner can be removed independently
+PASS destroyed terminal identity never aliases a later entity/body slot
+PASS orphaned required terminal save is rejected honestly
+PASS complete hierarchy destruction retires mechanics safely
+PASS world stop invalidates component access
+PASS bounded envelope supports powertrain plus existing participants
+PASS save envelope retains explicit participant bound
+PASS nonvehicle body-rotor assembly builds
+PASS body shaft torque applies equal physical bearing reaction with conserved angular momentum
+PASS body rotor observation comes from relative physical angular motion
+PASS zero-source negative control adds no rotor drive
+PASS light physical flywheel builds in an arbitrary orientation
+PASS oblique light flywheel retains symmetric mechanical mass and opposite physical torque
+PASS finite authored torque capacity can be represented before motion
+PASS unrepresentable physical impulse reports failure without any partial endpoint mutation
+PASS private streaming fixture builds
+PASS ordinary private body initially follows distance policy
+PASS late graph registration reconstructs required physical terminal
+PASS required-body reconstruction remains disabled and unpublished
+PASS published graph sees the actual retained physical terminal
+PASS powertrain retains Full terminal fidelity
+PASS removing mechanical owner releases only its derived dependency
+PASS opposite graph-before-body staging order succeeds
+PASS graph-first publication retains correct body representation
+PASS unreferenced-body control stages
+PASS no-powertrain control retains ordinary distance policy
+PASS mechanical regional state captures actual moving physical endpoint
+PASS retained mechanical state reconstructs while its owner and endpoint stay private
+PASS publication reports retained availability and actual speed without a step or impulse
+PASS private terminal-ownership fixture builds
+PASS first private graph owns a still-unpublished terminal
+PASS second private graph cannot claim the same physical terminal
+PASS failed private claim leaves no publishable stub and does not expose the first graph
+PASS independent private graph and terminal remain a valid positive control
+PASS publication preserves both independent owners and no rejected owner
+PASS retiring an owner releases its terminal for a later ordinary graph
+PASS runtime graph registration fixture builds
+PASS runtime rotor starts in its ordinary reduced representation
+PASS runtime graph promotes its existing terminal without changing physical state
+PASS new runtime graph immediately observes its actual reconstructed endpoint
+PASS failed runtime terminal claim leaves no component or definition behind
+PASS unreferenced runtime body remains an independent reduced-representation control
+PASS failed claim does not poison later independent runtime graph registration
+PASS prescribed-bearing velocity fixture builds
+PASS fresh prescribed angular velocity command is accepted
+PASS pre-step mechanics uses current angular command without advancing bearing pose or intent
+PASS final mechanical publication reads actual prescribed motion with unchanged free-rotor momentum
+PASS changed command supersedes previous published bearing speed in the same interval
+PASS prescribed-bearing target fixture builds
+PASS fresh next-step bearing target is accepted
+PASS target preview reports angular load without consuming the target phase
+PASS target advances exactly once through normal physics and publishes actual relative speed
+PASS independent stopped-bearing control builds
+PASS no-command negative control invents no prescribed bearing motion
+PASS actual cross-region world-manifest references accept a valid shaft name containing a colon
+PASS qualified-reference validation rejects an absent colon-bearing shaft name
+PASS qualified-reference validation rejects a phantom mechanical reference field
+PASS qualified-reference validation rejects a missing physical endpoint
+PASS ordinary non-colon terminal references remain an independent positive control
+PASS qualified-stream fixture creates an ordinary project
+PASS qualified-stream fixtures retain independently valid local references
+PASS qualified-stream positive world builds
+PASS actual asynchronous loader installs the foreign bearing before a colon-named graph
+PASS published graph references the actual remapped foreign bearing rather than its local placeholder
+PASS published qualified mechanics initializes relative rotor momentum from actual foreign physical motion
+PASS qualified-stream negative world builds
+PASS actual asynchronous loader rejects an absent colon-named shaft
+PASS failed qualified installation publishes no graph and preserves unrelated root physics
+SUMMARY 97 checks 0 failures

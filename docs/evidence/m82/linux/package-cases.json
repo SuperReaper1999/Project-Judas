@@ -1,0 +1,105 @@
+[
+  {
+    "label": "application-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-read"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 2.3408361740002874
+  },
+  {
+    "label": "application-missing",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "missing",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-missing"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 1.018406536000839
+  },
+  {
+    "label": "application-phantom",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "phantom",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-phantom"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.9711644899980456
+  },
+  {
+    "label": "application-lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "lifecycle",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/application-lifecycle"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 3.847802073996718
+  },
+  {
+    "label": "editor",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/tmp/judas-m82-editor-project/powertrain_lab.judasproj"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 5.842174333000003
+  },
+  {
+    "label": "export",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/powertrain_lab/powertrain_lab.judasproj",
+      "/tmp/judas-m82-powertrain-lab-20261013",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.11727998400237993
+  },
+  {
+    "label": "moved-standalone",
+    "args": [
+      "/tmp/Judas M82 Moved Package/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 6.783791532998293
+  },
+  {
+    "label": "moved-application-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/tmp/Judas M82 Moved Package/game.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/moved-application-write"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 15.693273498000053
+  },
+  {
+    "label": "moved-application-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_application_tests",
+      "/tmp/Judas M82 Moved Package/game.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/moved-application-read"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 2.0780691510008182
+  }
+]

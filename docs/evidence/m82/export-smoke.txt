@@ -1,0 +1,24 @@
+FRAMES 4370
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ENTITY 100
+ACTION autopilot 1 60 61
+SCREENSHOT 560 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-combustion.png
+SCREENSHOT 1940 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-electric.png
+SCREENSHOT 3260 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-machine.png
+ACTION pause 1 3980 3981
+EXPECT_PAUSED 1 3985
+SCREENSHOT 3988 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-pause.png
+ACTION pause 1 3990 3991
+EXPECT_PAUSED 0 3995
+ACTION oblique 1 4050 4051
+WAIT_SERVICES scene 4000 4052
+EXPECT_SCENE Scenes/oblique.judas 4055
+SCREENSHOT 4140 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-oblique.png
+ACTION radial 1 4180 4181
+WAIT_SERVICES scene 4000 4182
+EXPECT_SCENE Scenes/radial.judas 4185
+SCREENSHOT 4260 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m82/linux/standalone-radial.png
+ACTION restart 1 4300 4301
+WAIT_SERVICES scene 4000 4302
+EXPECT_SCENE Scenes/radial.judas 4305

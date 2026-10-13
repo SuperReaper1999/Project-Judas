@@ -1,0 +1,29 @@
+from pathlib import Path
+import os, subprocess, time, json, shutil, re
+ROOT=Path.cwd(); OUT=ROOT/'docs/evidence/m82/linux'; results=[]
+env=dict(os.environ,SDL_VIDEODRIVER='offscreen',SDL_AUDIODRIVER='dummy',XDG_DATA_HOME='/tmp/judas-m82-final-user')
+def run(label,args,timeout=240,extra=None,cwd=ROOT):
+    settings=dict(env);settings.update(extra or {});started=time.monotonic()
+    with (OUT/(label+'.txt')).open('w') as f:
+        try:code=subprocess.run([str(x) for x in args],cwd=cwd,env=settings,stdout=f,stderr=subprocess.STDOUT,timeout=timeout).returncode
+        except subprocess.TimeoutExpired:code=124
+    results.append(dict(label=label,args=[str(x) for x in args],cwd=str(cwd),exit=code,seconds=time.monotonic()-started))
+    (OUT/'package-cases.json').write_text(json.dumps(results,indent=2)+'\n');print(label,code,flush=True)
+    if code:raise SystemExit(code)
+project=ROOT/'projects/powertrain_lab/powertrain_lab.judasproj'
+# The earlier successful write contains the final durable format. Separate
+# processes prove valid restoration and both independent malformed-slot paths.
+for mode in ['read','missing','phantom','lifecycle']:
+    run('application-'+mode,[ROOT/'build/judas_powertrain_application_tests',project,mode,OUT/('application-'+mode)])
+scratch=Path('/tmp/judas-m82-editor-project');shutil.copytree(project.parent,scratch)
+scene=scratch/'Scenes/flat.judas';text=scene.read_text();match=re.search(r'^object 100 .*?^end\n',text,re.M|re.S)
+if not match:raise RuntimeError('real authored powertrain missing')
+block=match.group();rest=text[:match.start()]+text[match.end():];first=rest.index('object ')
+scene.write_text(rest[:first]+block+'\n'+rest[first:])
+run('editor',[ROOT/'build/judas_editor',scratch/'powertrain_lab.judasproj'],extra={'JUDAS_EDITOR_AUTOTEST':str(OUT/'editor'),'XDG_DATA_HOME':'/tmp/judas-m82-editor-data'})
+package=Path('/tmp/judas-m82-powertrain-lab-20261013')
+run('export',[ROOT/'build/judas_export',project,package,ROOT/'build/judas'])
+moved=Path('/tmp/Judas M82 Moved Package');shutil.copytree(package,moved)
+run('moved-standalone',[moved/'judas'],timeout=240,cwd=Path('/tmp'),extra={'XDG_DATA_HOME':'/tmp/judas-m82-moved-user','JUDAS_TEST_SCRIPT':str(ROOT/'docs/evidence/m82/export-smoke.txt')})
+for mode in ['write','read']:
+    run('moved-application-'+mode,[ROOT/'build/judas_powertrain_application_tests',moved/'game.judasproj',mode,OUT/('moved-application-'+mode)],cwd=Path('/tmp'),extra={'XDG_DATA_HOME':'/tmp/judas-m82-moved-user'})

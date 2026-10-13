@@ -1,6 +1,17 @@
 # Architecture
 
-## Current checkpoint — M81 human validated
+## Current checkpoint — M82 Experimental candidate; M81 human validated
+
+[M82 powertrains](M82_POWERTRAINS.md) adds bounded rotational networks owned by
+RuntimeWorld. Internal shafts carry finite inertia; wheel and body terminals
+share PhysicsWorld effective inertia and explicit bearing reactions. Ideal gear
+and differential rows and torque-bounded clutches/brakes resolve real speed and
+load. Sources advance once per fixed interval; wheel contact feeds load back
+before ordinary rigid integration. Project JS owns driver and machinery policy.
+Direct M81 wheel commands remain independent. Authoring, ordinary entity
+references, prefab remapping, scene fingerprints, saves and streamed retention
+use the existing infrastructure. M82 human validation is pending; Stable remains
+the accepted M81 checkpoint. Windows validation is informational/nonblocking.
 
 [M81 wheels](M81_WHEELS.md) adds optional per-wheel query-contact suspension and
 scalar spin on ordinary dynamic chassis. RuntimeWorld owns independent wheel

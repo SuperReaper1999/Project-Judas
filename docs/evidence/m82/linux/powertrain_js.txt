@@ -1,0 +1,18 @@
+PASS ordinary registered public powertrain probe
+PASS normal runtime builds powertrain and wheel entities
+PASS partial named patches held and rejected requests atomic
+PASS actual VM phase, finite-value, names, bounds and snapshot contracts
+PASS public source drives ordinary wheel traction and real chassis motion
+PASS registered retained-handle negative probe
+PASS independent mechanical lifetime world
+PASS normal destruction removes powertrain owner
+PASS stale public component read and write throw ReferenceError
+PASS exact documented cookbook registered
+PASS ordinary cookbook world
+PASS project logical input map
+PASS exact cookbook controls actual source and traction through logical input
+PASS exact cookbook commands mechanical brake
+PASS live public API enumeration registered
+PASS live public API enumeration world
+PASS real module exposes typed powertrain surface
+M82 powertrain JS 17 PASS
