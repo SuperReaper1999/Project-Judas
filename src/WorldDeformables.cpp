@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 namespace {
 std::atomic<uint64_t> epochs{1};
+constexpr const char* stateHeader="Judas.DeformableState.1\n";
 glm::dmat4 matrix(const SceneTransform& t){return glm::translate(glm::dmat4(1),glm::dvec3(t.position))*glm::mat4_cast(glm::dquat(t.rotation));
         }
 }
@@ -146,15 +147,17 @@ bool RuntimeWorld::CaptureDeformable(EntityId id,std::string& bytes,std::string&
     try{SaveArchive a;
         s->Persist(a);
         if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
-        bytes=std::move(a.bytes);
+        bytes=stateHeader+std::move(a.bytes);
         return true;
         }catch(const std::exception& e){error=e.what();
         return false;
         }}
 bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged){auto* s=RuntimeDeformable(id,error,staged);
     if(!s)return false;
-    try{SaveArchive a(bytes);
-        s->Persist(a);
+    try{const bool framed=bytes.rfind(stateHeader,0)==0;
+        if(bytes.rfind("Judas.DeformableState.",0)==0&&!framed)throw std::runtime_error("unsupported deformable state version");
+        SaveArchive a(framed?bytes.substr(std::char_traits<char>::length(stateHeader)):bytes);
+        s->Persist(a,framed);
         if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
         a.Finish();
         ++m_deformables.at(id).revision;

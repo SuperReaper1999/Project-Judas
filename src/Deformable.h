@@ -116,7 +116,7 @@ public:
     void Step(double dt,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&);
     void MapRender(double alpha,MeshData&)const;
     DeformableHit Raycast(glm::dvec3 origin,glm::dvec3 direction,double maximum)const;
-    void Persist(SaveArchive&);
+    void Persist(SaveArchive&,bool materialFrame=true);
     glm::dvec3 Minimum()const;
     glm::dvec3 Maximum()const;
     double Mass()const;

@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bending Lab (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/bending_lab.judasproj)
+Scene: Bending lab / RadicalGravity (projects/bending_lab/Scenes/radial.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal async solid and flexible structural assets publish
+PASS deforming material has one nodal mass owner, no undeformed duplicate rigid body
+CALM id=100 plastic_rest_m=0
+CALM id=200 plastic_rest_m=0
+PASS public JS camera, motor and UI execute
+LOADED deformation_m=0.28145331 minJ=0.978169802
+PASS script force changes authoritative beam geometry
+SPECIMEN id=100 shape_m=0.0649443815 plastic_rest_m=0 contacts=0 error=
+SPECIMEN id=200 shape_m=0.122951009 plastic_rest_m=0.0200156859 contacts=0 error=
+SPECIMEN id=300 shape_m=0.759303824 plastic_rest_m=0 contacts=0 error=
+SPECIMEN id=400 shape_m=0.122605241 plastic_rest_m=0.0386617926 contacts=0 error=
+PASS ordinary physical press dents the actual panel and leaves permanent material rest
+PASS ordinary gameplay, physical solids and contacts remain healthy
+PASS real RadicalGravity field has spatial acceleration
+PERF bodies=9 nodes=207 fixed_median_ms=3.794718 p95_ms=5.032531 max_ms=11.976994 frames=300
+FRAME_WORK median_ms=15.324995 p95_ms=19.582979 max_ms=33.155552
+PASS normal application startup and shutdown
+M80 radial checks=8 failures=0

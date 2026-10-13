@@ -207,7 +207,10 @@ void DeformableInstance::Internal(double h){
     for(size_t index=0;index<asset->solids.size();++index){auto& t=asset->solids[index];
         if(asset->fracture&&fracture.removed[asset->fracture->nodePart[t.nodes.x]]){row+=6;continue;}
         unsigned ids[4]={t.nodes.x,t.nodes.y,t.nodes.z,t.nodes.w};
-        M inv=glm::inverse(plasticRest[index]);
+        // Rest matrices remain in their saved authored world frame. Express
+        // elastic columns in the material frame so global rotation cannot
+        // rotate strain components into a different compliance response.
+        M inv=glm::inverse(plasticRest[index])*M(initial);
         for(unsigned a=0;a<3;++a)for(unsigned b=a;b<3;++b){M f=columns(positions,t.nodes)*inv;
             V gradients[4];
             double C=a==b?.5*(glm::dot(f[a],f[b])-1):glm::dot(f[a],f[b]);
@@ -563,11 +566,25 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
             }
         for(size_t i=0;i<asset->solids.size();++i){if(asset->fracture&&fracture.removed[asset->fracture->nodePart[asset->solids[i].nodes.x]])continue;double J=glm::determinant(columns(positions,asset->solids[i].nodes)*glm::inverse(plasticRest[i]));if(!std::isfinite(J)||J<=0){error="deformable element inversion; outside supported deformation envelope; instance stopped";return;}}
         if(asset->fracture){const auto& c=*asset->fracture;
-            for(unsigned b=0;b<c.bonds.size();++b){auto& bond=c.bonds[b];auto& part=c.parts[bond.a];auto tet=asset->solids[part.tets.front()];M rotation=columns(positions,tet.nodes)*tet.inverseRest;
-                for(int k=0;k<5;++k)rotation=.5*(rotation+glm::transpose(glm::inverse(rotation)));
-                V normal=glm::normalize(rotation*bond.normal),force(0);
-                for(unsigned p=0;p<bond.pairs.size();++p){V demand=-fracture.multipliers[b*16+p]/(h*h);force+=demand;fracture.Observe(c,b,demand*double(bond.pairs.size()),normal);}
-                fracture.Observe(c,b,force,normal);
+            for(unsigned b=0;b<c.bonds.size();++b){const auto& bond=c.bonds[b];
+                if(fracture.broken[b]||fracture.removed[bond.a]||fracture.removed[bond.b])continue;
+                const auto& part=c.parts[bond.a];M rotation(0);double volume=0;
+                // A volume-weighted material frame avoids attributing an
+                // entire bent section to one arbitrarily chosen tetrahedron.
+                if(c.structural){for(auto index:part.tets){const auto& tet=asset->solids[index];rotation+=columns(positions,tet.nodes)*tet.inverseRest*tet.volume;volume+=tet.volume;}rotation/=volume;}
+                else{const auto& tet=asset->solids[part.tets.front()];rotation=columns(positions,tet.nodes)*tet.inverseRest;}
+                for(int k=0;k<(c.structural?8:5);++k)rotation=.5*(rotation+glm::transpose(glm::inverse(rotation)));
+                bool valid=true;for(int k=0;k<3;++k)valid&=finite(rotation[k]);
+                if(!valid||glm::determinant(rotation)<=0){error="invalid cohesive material frame; instance stopped";return;}
+                V normal=glm::normalize(rotation*bond.normal),force(0),moment(0),centroid(0);
+                if(c.structural){auto first=bond.pairs.front();V origin=(positions[first.x]+positions[first.y])*.5;centroid=origin;
+                    for(unsigned pair=0;pair<bond.pairs.size();++pair){auto nodes=bond.pairs[pair];centroid+=((positions[nodes.x]+positions[nodes.y])*.5-origin)*bond.sectionWeights[pair];}}
+                for(unsigned pair=0;pair<bond.pairs.size();++pair){V demand=-fracture.multipliers[b*16+pair]/(h*h);force+=demand;
+                    if(c.structural){auto nodes=bond.pairs[pair];moment+=glm::cross((positions[nodes.x]+positions[nodes.y])*.5-centroid,demand);}
+                    else fracture.Observe(c,b,demand*double(bond.pairs.size()),normal);
+                }
+                if(c.structural){M inverse=glm::transpose(rotation);fracture.ObserveSection(c,b,inverse*force,inverse*moment);}
+                else fracture.Observe(c,b,force,normal);
             }
         }
         Plastic(h);
@@ -644,7 +661,7 @@ DeformableHit DeformableInstance::Raycast(V origin,V direction,double maximum)co
         hit.location={generation,t,V(1-u-v,u,v),asset->fracture?fracture.revision:0};
     }return hit;
 }
-void DeformableInstance::Persist(SaveArchive& ar){
+void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame){
     if(asset->fracture)fracture.Persist(ar,*asset->fracture);
     ar(settings.enabled,sleeping,quietSeconds);
     settings.material.Save(ar);
@@ -658,6 +675,14 @@ void DeformableInstance::Persist(SaveArchive& ar){
     for(auto m:plasticRest)ar.Require(glm::determinant(m)>1e-12,"saved deformable rest inversion");
     for(auto value:released)ar.Require(value<=1,"invalid saved attachment release state");
     ar.Require(quietSeconds>=0,"invalid saved deformable sleep time");
+    // Logical owner transforms may move prescribed supports without replacing
+    // the simulated material. Its original constitutive/plastic reference must
+    // survive cold reconstruction from the CURRENT owner transform.
+    if(materialFrame){M reference(initial);ar(reference);
+        for(int a=0;a<3;++a)for(int b=0;b<3;++b)ar.Require(std::abs(glm::dot(reference[a],reference[b])-(a==b?1.:0.))<1e-5,"invalid saved deformable material frame");
+        ar.Require(glm::determinant(reference)>0,"invalid saved deformable material orientation");
+        if(ar.reading)for(int k=0;k<3;++k)initial[k]=glm::dvec4(reference[k],0);
+    }
     if(ar.reading){selfCandidatesValid=false;previous=start=positions;
         forces.assign(positions.size(),V(0));
         lastGravity.assign(positions.size(),V(0));

@@ -1,0 +1,18 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Deformable Lab (/home/conner/Documents/GitHub/Project-Judas/projects/deformable_lab/deformable_lab.judasproj)
+Scene: Deformable Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/projects/deformable_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary project asynchronously publishes all seven deformable instances
+PASS real animated target shares normal skeletal resource
+PASS normal authored UI loaded
+PASS cape resolves authored stable bone attachment
+PASS cape pins consume exact resolved joint pose without another animation clock
+PASS runtime scale change rejects unsupported deformable scale
+PASS ordinary region activation request
+PASS live cross-region attachment pins target region against teardown
+PASS region teardown retains deformable snapshot and invalidates old owner
+PASS revisit restores node state with fresh identity without authored reset
+FRAME median_ms=44.091862 p95_ms=64.132798 max_ms=1653.406024
+PASS normal startup and clean shutdown
+SUMMARY mode=stream checks=11 failures=0 frames=49

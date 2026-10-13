@@ -17,28 +17,23 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current status — M78 corrective checkpoint and continued audit
+## Current status — M79 accepted; M80 bending candidate
 
-Prior corrective checkpoint: `0695433b949df0c1d05ac6798bf118121cc53e2b`.
-This checkpoints the reviewed corrections and evidence; it does **not** complete
-M78 or confer human validation. M77 remains **not human validated**.
-The subsequent motor-publication/save-exclusion/runtime-tag corrections pass
-focused native Linux acceptance and are authorized for checkpointing. Human
-acceptance and comprehensive M78 coverage remain pending. Windows is best-effort
-functional validation, not a checkpoint gate. Use the
-[current lifecycle handoff](docs/M78_LIFECYCLE_CLOSURE.md) for those results and
-the [checkpoint handoff](docs/M78_FINAL.md) for its original source/evidence scope.
-Earlier reports and failure inputs retain their exact bytes and identities.
+[M79 load-driven structures](docs/M79_STRUCTURES.md) is human validated at
+`3745787d0732a05e82aba9496e592bc2233564f0`. Current Experimental work adds
+[M80 elastic/plastic bending](docs/M80_BENDING.md), reusing actual deformable
+material nodes, collision and optional physical interface failure. M80 is a
+candidate; human acceptance is pending. Windows checks are informational and
+do not imply physical Windows hardware acceptance.
 
-M78 addresses generic angular/contact/CCD mechanisms, Boolean query cost, prefab
-ordering, navigation dependencies and cold joint/static/motor continuation. Its
-closure additionally corrects independent query-proxy invalidation of restored
-physical observations. These are bounded repairs, not a completed engine audit.
-The [current coverage overlay](docs/evidence/m78-lifecycle/coverage/README.md) preserves
-485 overlapping discovery rows (345 public JS members, 89 mechanism groups,
-34 components and 17 asset families); source locations, API presence and related
-suite passes do not prove every member or supported combination. See
-[remaining coverage](docs/evidence/m78-lifecycle/coverage/REMAINING_COVERAGE.md).
+The [completed M78 audit handoff](docs/M78_COMPLETION.md) records delivered
+corrections, explicit coverage gaps and unresolved defects. It is not comprehensive
+engine certification or new human validation. The earlier
+[corrective checkpoint](docs/M78_FINAL.md) and
+[lifecycle report](docs/M78_LIFECYCLE_CLOSURE.md) preserve their original review
+states, failure inputs and measurements. Deferred legacy PBF settling, missing
+historical cold-save continuation data and fast curved-mesh CCD remain recorded
+limitations; M80 does not change them or independent fluid research.
 
 [M75 local terrain authoring](docs/M75.md) is human accepted.
 [M76 local mod packages/game-owned kits](docs/M76.md) and
@@ -1574,6 +1569,8 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M75 (human accepted) | Finite local terrain sculpt/paint/fork/cook | [M75.md](docs/M75.md) | `projects/terrain_lab` |
 | M76 (provisional) | Optional local mod contracts, packages and terrain-capable kits | [M76.md](docs/M76.md), [modding guide](docs/MODDING.md) | `projects/modding_lab` |
 | M77 (human pending) | Default-off two-chain physical balance, bounded corrective steps and recovery | [M77.md](docs/M77.md), [M78 final audit handoff](docs/M78_COMPLETION.md) | `projects/balance_lab` |
+| M79 (human accepted) | Load-driven material connections, support loss and progressive fracture | [M79_STRUCTURES.md](docs/M79_STRUCTURES.md) | `projects/structural_lab` |
+| M80 (candidate) | Elastic/plastic solid deformation and soft section-based failure | [M80_BENDING.md](docs/M80_BENDING.md) | `projects/bending_lab` |
 
 M78 has a [completed audit handoff](docs/M78_COMPLETION.md) with explicit coverage
 limits and unresolved defects; it is not comprehensive certification or new human

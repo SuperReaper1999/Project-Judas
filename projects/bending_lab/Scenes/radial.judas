@@ -1,0 +1,515 @@
+JudasScene 3
+settings
+  name "Bending lab / RadicalGravity"
+  world-origin 0 0 0
+  sun-color 1 0.98 0.92
+  sun-direction -0.3 0.8 0.5
+  ambient 0.3 0.32 0.35
+  fluid-scale 1
+  fidelity-policy none
+  next-id 1000
+end
+object 5 "Oblique ordinary uniform region"
+  position -7 4 -5
+  rotation 0.939372713 0 0 0.342897807
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 3 6 3
+end
+
+object 1 "Actual gravity field"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity radial 9.81
+  gravity.region sphere 400
+end
+
+object 3 "Laboratory floor"
+  position 9 -0.3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 23 0.3 22
+  render.color 0.13 0.19 0.23
+  body static box
+  body.half-extents 23 0.3 22
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Script-controlled visitor"
+  position 9 1.1 14
+  rotation 1 0 0 0
+  scale 1 1 1
+  motor.enabled true
+  motor.radius .3
+  motor.halfHeight .6
+  scripts 1
+  script.0.id 1
+  script.0.asset "80808080808080808080808000000005"
+  script.0.enabled true
+  script.0.properties "{}"
+  ui.asset "80808080808080808080808000000007"
+  ui.name "lab"
+  ui.enabled true
+  motor.offset 0 0 0
+  motor.stepHeight 0.5
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+end
+
+object 11 "Ordinary load controls"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "80808080808080808080808000000006"
+  script.0.enabled true
+  script.0.properties "{}"
+end
+
+object 12 "Compatibility view seed"
+  position 9 1.1 14
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end
+
+object 100 "A: elastic cantilever / load and recover"
+  position 0 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.5 0.5 0.5
+  render.color 0.1 0.78 0.6
+  deformable.asset "80808080808080808080808000000001"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "1"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "0.0005"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "5e-06"
+  deformable.material.damping "1"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "1 \"left\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"8080808080808080808080800000000b\" 0 \"8080808080808080808080800000000c\" 0"
+end
+
+object 500 "Physical clamped support"
+  position -1.68 1.65 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 1.65 0.8
+  render.color 0.3 0.36 0.42
+  body static box
+  body.half-extents 0.18 1.65 0.8
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 600 "Station color marker"
+  position 0 0.12 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.3 0.12 0.18
+  render.color 0.1 0.78 0.6
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 200 "B: plastic cantilever / permanent rest strain"
+  position 6 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.5 0.5 0.5
+  render.color 0.94 0.48 0.1
+  deformable.asset "80808080808080808080808000000002"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "1"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "0.0005"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "5e-06"
+  deformable.material.damping "1"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "1 \"left\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"8080808080808080808080800000000b\" 0 \"8080808080808080808080800000000c\" 0"
+end
+
+object 501 "Physical clamped support"
+  position 4.32 1.65 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 1.65 0.8
+  render.color 0.3 0.36 0.42
+  body static box
+  body.half-extents 0.18 1.65 0.8
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 601 "Station color marker"
+  position 6 0.12 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.3 0.12 0.18
+  render.color 0.94 0.48 0.1
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 300 "C: flexible structure / real section failure"
+  position 12 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2 0.5 0.5
+  render.color 0.18 0.6 0.94
+  deformable.asset "80808080808080808080808000000004"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "10"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "0.0005"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "5e-06"
+  deformable.material.damping "1"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "1 \"left\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"8080808080808080808080800000000b\" 0 \"8080808080808080808080800000000c\" 0"
+end
+
+object 502 "Physical clamped support"
+  position 9.82 1.65 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 1.65 0.8
+  render.color 0.3 0.36 0.42
+  body static box
+  body.half-extents 0.18 1.65 0.8
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 602 "Station color marker"
+  position 12 0.12 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.3 0.12 0.18
+  render.color 0.18 0.6 0.94
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 400 "D: yielding panel / actual rigid contact"
+  position 18 1.6 0
+  rotation 0.707106781 0.707106781 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1 1 0.175
+  render.color 0.72 0.3 0.82
+  deformable.asset "80808080808080808080808000000003"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "10"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "0.0005"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "5e-06"
+  deformable.material.damping "1"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 0 0 \"\" 0 0 0 1 \"right\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"8080808080808080808080800000000b\" 0 \"8080808080808080808080800000000c\" 0"
+end
+
+object 510 "Panel clamped edge"
+  position 16.9 0.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 0.8 1.1
+  render.color 0.32 0.38 0.43
+  body static box
+  body.half-extents 0.1 0.8 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 511 "Panel clamped edge"
+  position 19.1 0.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 0.8 1.1
+  render.color 0.32 0.38 0.43
+  body static box
+  body.half-extents 0.1 0.8 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 410 "Movable finite-mass indentation press"
+  position 18 2.9 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.32 0.22 0.32
+  render.color 0.95 0.5 0.16
+  body dynamic box
+  body.half-extents 0.32 0.22 0.32
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  tags 1
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 411 "Throwing / collision proof prop"
+  position 9 0.5 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.35 0.35 0.35
+  render.color 0.72 0.76 0.82
+  body dynamic box
+  body.half-extents 0.35 0.35 0.35
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  tags 1
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 450 "E: oblique elastic specimen"
+  position -7 4 -5
+  rotation 0.939372713 0 0 0.342897807
+  scale 1 1 1
+  render box
+  render.half-extents 1.5 0.5 0.5
+  render.color 0.38 0.75 0.82
+  deformable.asset "80808080808080808080808000000001"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "1"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "0.0005"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "5e-06"
+  deformable.material.damping "1"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "1 \"left\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"8080808080808080808080800000000b\" 0 \"8080808080808080808080800000000c\" 0"
+end

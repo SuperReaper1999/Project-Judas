@@ -1,0 +1,19 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bending Lab (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/bending_lab.judasproj)
+Scene: Bending lab / FaithfulGravity (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal async solid and flexible structural assets publish
+PASS deforming material has one nodal mass owner, no undeformed duplicate rigid body
+CALM id=100 plastic_rest_m=0
+CALM id=200 plastic_rest_m=0
+PASS public JS camera, motor and UI execute
+PASS ordinary deformable prefab spawns
+PASS streamed owner changes pose without resetting existing material
+PASS ordinary plain-solid region suspends geometry and invalidates identity
+PASS stream revisit restores deformed geometry and original material basis with fresh identity
+PASS prefab shares immutable topology with independent nodal state
+PASS destroy removes prefab simulation owner
+PASS reload cleans previous instances and script handles
+PASS normal application startup and shutdown
+M80 stream checks=11 failures=0

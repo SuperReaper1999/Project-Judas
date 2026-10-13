@@ -3,6 +3,11 @@
 Current implementation on Experimental; **human validated by the operator on 2026-10-13**. This is an
 optional extension of M63 fracture, not a second structural physics solver.
 
+[M80 bending](M80_BENDING.md) extends this same section model to optional soft
+cohesive cells. The rigid-cell contracts and original M79 evidence below remain
+unchanged; soft cells retain their actual deforming nodes rather than becoming
+rigid proxy bodies.
+
 ## Ownership and authoring
 
 A normal `.judasdeform` solid partitions material into explicitly authored rigid

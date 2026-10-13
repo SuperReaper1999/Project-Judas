@@ -1,0 +1,14 @@
+import subprocess,os,pathlib,json
+root=pathlib.Path('/home/conner/Documents/GitHub/Project-Judas');base=root/'docs/evidence/m80';env=dict(os.environ,SDL_VIDEODRIVER='offscreen',SDL_AUDIODRIVER='dummy',XDG_DATA_HOME='/tmp/judas-m80-candidate-data')
+cases=[('judas_bending_tests',[], 'numerical-final'),('judas_deformable_tests',[], 'deformable-regression'),('judas_fracture_tests',[], 'fracture-regression'),('judas_structural_tests',[], 'structural-regression'),('judas_joint_tests',[], 'joint-regression')]
+for family,project,modes in [('bending','bending_lab/bending_lab.judasproj',['probe','write','read','stream']),('bending','bending_lab/Scenes/radial.judas',['radial']),('structural','structural_lab/structural_lab.judasproj',['write','read']),('deformable','deformable_lab/deformable_lab.judasproj',['probe','write','read','stream','lifetime'])]:
+ for mode in modes:
+  name=family+'-'+mode;cases.append(('judas_'+family+'_application_tests',['projects/'+project,mode,str(base/'linux'/name)],name))
+results=[]
+for target,args,name in cases:
+ log=base/'linux'/(name+'.log')
+ with log.open('w') as f:r=subprocess.run([str(root/'build'/target),*args],cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT)
+ print(name,r.returncode,flush=True);results.append({'name':name,'exit':r.returncode})
+ if r.returncode:print(log.read_text()[-4500:],flush=True)
+(base/'linux/final-cases.json').write_text(json.dumps(results,indent=2)+'\n')
+raise SystemExit(any(c['exit'] for c in results))

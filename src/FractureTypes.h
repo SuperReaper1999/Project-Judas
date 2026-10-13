@@ -24,6 +24,7 @@ struct FractureBond {
     glm::dmat3 sectionInverse{0};
     double polarMoment=0;
     std::vector<glm::dvec3> sectionPoints;
+    std::vector<double> sectionWeights; // Reference-area centroid weights for soft interfaces.
     void Save(SaveArchive&);
 };
 struct FractureCook {

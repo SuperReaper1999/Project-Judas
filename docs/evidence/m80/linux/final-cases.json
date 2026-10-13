@@ -1,0 +1,70 @@
+[
+  {
+    "name": "numerical-final",
+    "exit": 0
+  },
+  {
+    "name": "deformable-regression",
+    "exit": 0
+  },
+  {
+    "name": "fracture-regression",
+    "exit": 0
+  },
+  {
+    "name": "structural-regression",
+    "exit": 0
+  },
+  {
+    "name": "joint-regression",
+    "exit": 0
+  },
+  {
+    "name": "bending-probe",
+    "exit": 0
+  },
+  {
+    "name": "bending-write",
+    "exit": 0
+  },
+  {
+    "name": "bending-read",
+    "exit": 0
+  },
+  {
+    "name": "bending-stream",
+    "exit": 0
+  },
+  {
+    "name": "bending-radial",
+    "exit": 0
+  },
+  {
+    "name": "structural-write",
+    "exit": 0
+  },
+  {
+    "name": "structural-read",
+    "exit": 0
+  },
+  {
+    "name": "deformable-probe",
+    "exit": 0
+  },
+  {
+    "name": "deformable-write",
+    "exit": 0
+  },
+  {
+    "name": "deformable-read",
+    "exit": 0
+  },
+  {
+    "name": "deformable-stream",
+    "exit": 0
+  },
+  {
+    "name": "deformable-lifetime",
+    "exit": 0
+  }
+]

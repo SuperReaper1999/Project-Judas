@@ -1405,6 +1405,18 @@ int EditorApplication::Run(int argc, char** argv) {
         m_panels.deformableDestination="deformables/editor-fracture-import.judasdeform";m_panels.deformableSource="deformables/L-partition.source";bool imported=BakeEditorDeformable(m_document,450,m_panels,6);
         std::fprintf(stderr,"[editor autotest] fracture rigid/soft/partition authoring: %s / %s / %s: %s\n",rigid?"PASS":"FAIL",soft?"PASS":"FAIL",imported?"PASS":"FAIL",m_panels.status.c_str());
     }
+    if(autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_BENDING")){
+        m_panels.deformableColumns=4;m_panels.deformableRows=1;m_panels.deformableSubdivision=1;m_panels.deformableSize={4,1,1};
+        m_panels.deformableDestination="deformables/editor-bendable.judasdeform";
+        bool baked=BakeEditorDeformable(m_document,300,m_panels,7);
+        const auto* owner=m_document.GetScene().Find(300);
+        const auto assigned=owner&&owner->deformable?owner->deformable->asset:std::string();
+        bool duplicate=BakeEditorDeformable(m_document,300,m_panels,7);
+        const auto* retained=m_document.GetScene().Find(300);
+        bool safe=!duplicate&&retained&&retained->deformable&&retained->deformable->asset==assigned;
+        std::fprintf(stderr,"[M80 editor] bake bendable structural cook: %s; existing destination leaves assignment unchanged: %s\n",baked?"PASS":"FAIL",safe?"PASS":"FAIL");
+        if(!baked||!safe)++navigationFailures;
+    }
     if(autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_COLLISION")){
         auto* object=m_document.GetScene().Find(100);auto source=object&&object->render?object->render->meshAsset:AssetId{};
         CollisionCookSettings settings;bool ok=BakeEditorCollision(m_document,100,m_panels,source,settings,"collision/editor-check.judascollision");

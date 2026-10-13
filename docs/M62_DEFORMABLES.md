@@ -5,6 +5,11 @@ statements and measurements below record the original milestone review state,
 not a current outstanding acceptance gate. Later contracts take precedence;
 start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
 
+**Current extension:** [M80 bending](M80_BENDING.md) reuses these tetrahedral
+elastic/plastic nodes, corrects their authored material basis under rotation and
+adds nominal section-resultant failure to optional cohesive solids. The original
+M62 measurements and review statements below retain their historical scope.
+
 Combined cloth/solid candidate is implemented and ready for operator review.
 Automated validation is complete; human visual/physical acceptance is pending.
 Starting accepted checkpoint: `9e281d6ed57a7f88bc0a8fa48cd9c3cec6984961`.

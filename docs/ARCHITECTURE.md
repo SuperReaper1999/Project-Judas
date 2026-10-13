@@ -1,6 +1,13 @@
 # Architecture
 
-## Current checkpoint and M78 corrective follow-up
+## Current checkpoint and M80 bending candidate
+
+M79 is **human validated** at `3745787d0732a05e82aba9496e592bc2233564f0`.
+Current Experimental work adds [M80 bending](M80_BENDING.md): existing tetrahedral
+elastic/plastic geometry, authored material-frame correction and optional cohesive
+section-resultant failure. M80 remains a candidate with human acceptance pending.
+The M78 audit history and unresolved limitations below retain their recorded scope;
+this extension does not certify them or modify independent fluid research.
 
 M77 is checkpointed at `9e77b2226edcf217ab789fe4f0fea42a3415a72d`, **NOT HUMAN VALIDATED**. The [M78 frozen audit](M78.md) describes that exact baseline; its read-only statements are historical audit scope, not the current working tree. The [first corrective candidate](M78_FOLLOWUP.md) and [midpoint/contact continuation](M78_CONTINUATION.md) are preserved reports of earlier corrective stages. The [cold-boundary continuation](M78_COLD_CONTINUATION.md) preserves that save-boundary stage. The [historical combined corrective handoff](M78_FINAL.md) records the later publication-isolation correction, its final-source checks and then-outstanding audit gaps; it does not certify every engine capability. Physical Windows hardware acceptance remains outstanding.
 
@@ -9654,7 +9661,7 @@ loadouts extend strict modern save context with exact mod/contract/resolution
 identity; empty/unmodded v2 semantics remain. See [modding guide](MODDING.md),
 [catalog API](judasjs/mods.md) and [M76 evidence](M76.md).
 
-## M79 — optional load-driven structural sections (Experimental; human review pending)
+## M79 — optional load-driven structural sections (human validated)
 
 M79 extends M63 rigid fracture rather than introducing another solver. Opted-in
 JudasDeformable3 assets carry per-interface material-strength overrides. Bake/load
@@ -9671,3 +9678,36 @@ finite-strength support connections must be authored as ordinary interfaces.
 This is a bounded brittle resultant model, not continuum engineering certification.
 See [M79 authoring/equations/lab/limitations](M79_STRUCTURES.md) and
 [focused evidence](evidence/m79/RESULTS.md).
+
+## M80 — elastic/plastic bending and cohesive structural sections (candidate)
+
+The existing M62 tetrahedral node solve remains authoritative for elastic and
+permanent deformation. Six Green-strain XPBD constraints plus volume preservation
+operate in the authored material basis; optional rate-limited, isochoric plastic
+rest flow retains a permanent shape without moving nodes back by script. The
+material-basis correction preserves saved rest representation and makes loaded
+response independent of initial world orientation. New deformables participant 3
+and versioned retained streaming state preserve the historical material basis even
+after the logical owner rotates. Old participant 1/2 and raw retained blobs decode
+with the initialization basis; absent historical reference data cannot guarantee
+that rotated-owner continuation. Cooked asset formats remain unchanged.
+
+Optional non-rigid section cooks sum completed cohesive pair forces and their
+moments about the current reference-area-weighted centroid. A volume-weighted
+polar material frame feeds the M79 nominal area/section-strength model. Failure
+removes actual cohesive constraints after the complete fixed boundary; original
+finite-mass nodes, velocity and plastic rest remain. M79 rigid families retain
+their ordinary body/joint path. Yield/plastic caps and strength remain separate;
+no fatigue/history counter or deformation-to-rigid conversion is introduced.
+
+Physical contacts, per-instance ray picking and Renderer binding all consume
+current node geometry. Existing scene/prefab, resource, editor, save, streaming
+and export ownership is reused. JS controls loads through the current Deformable
+and Fracture handles; no new public binding is added. Soft contact remains sampled,
+with no general M44 cast, CharacterMotor block or M42 event expansion. This is
+bounded approximate material response, not industrial FEM or exact soft CCD.
+Self-contact within one connected cohesive component is suppressed; detached
+components contact normally. Extreme intact folds remain outside the supported
+envelope.
+See [M80 equations/authoring/limits](M80_BENDING.md) and
+[JudasJS deformables](judasjs/deformables.md).

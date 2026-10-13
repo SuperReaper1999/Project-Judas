@@ -1,0 +1,22 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bending Lab (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/bending_lab.judasproj)
+Scene: Bending lab / FaithfulGravity (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal async solid and flexible structural assets publish
+PASS deforming material has one nodal mass owner, no undeformed duplicate rigid body
+CALM id=100 plastic_rest_m=0
+CALM id=200 plastic_rest_m=0
+PASS public JS camera, motor and UI execute
+LOADED deformation_m=0.281334494 minJ=0.978175285
+PASS script force changes authoritative beam geometry
+SPECIMEN id=100 shape_m=0.0649480508 plastic_rest_m=0 contacts=0 error=
+SPECIMEN id=200 shape_m=0.120673572 plastic_rest_m=0.0195886691 contacts=0 error=
+SPECIMEN id=300 shape_m=3.21113972 plastic_rest_m=0 contacts=37 error=
+SPECIMEN id=400 shape_m=0.095555241 plastic_rest_m=0.0272716881 contacts=0 error=
+PASS ordinary physical press dents the actual panel and leaves permanent material rest
+PASS logical owner may rotate while existing material retains its historical frame
+PASS increasing actual JS load fails flexible structural material before cold save
+PASS public JS commits deformed and yielded state
+PASS normal application startup and shutdown
+M80 write checks=9 failures=0

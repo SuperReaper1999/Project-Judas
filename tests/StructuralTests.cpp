@@ -28,7 +28,19 @@ int main(){try{
     auto old=MakeFractureBlock({2,1,1},{2,1,1},true);auto legacy=EncodeDeformableAsset(old);check(legacy.rfind("JudasDeformable2",0)==0&&DecodeDeformableAsset({legacy.begin(),legacy.end()},restored,error)&&!restored.fracture->structural,"legacy asset remains legacy model");check(EncodeDeformableAsset(restored)==legacy,"old asset bytes preserved");
     auto invalid=a;invalid.fracture=std::make_shared<FractureCook>(*a.fracture);invalid.fracture->bonds[0].centroid.y=.1;check(!PrepareDeformableAsset(invalid,error),"non-centroid structural section rejected");
     invalid.fracture->bonds[0].centroid=b.centroid;invalid.fracture->bonds[0].tension=-1;check(!PrepareDeformableAsset(invalid,error),"negative strength rejected");
-    invalid.fracture->bonds[0].tension=0;invalid.fracture->rigid=false;check(!PrepareDeformableAsset(invalid,error),"no unsupported soft section mode");
+    // M80 reuses the same independent section model for cohesive XPBD solids.
+    // No rigid child bodies or joint assumptions belong in section preparation.
+    auto soft=MakeFractureBlock({2,1,1},{2,2,4},false);soft.fracture->structural=true;
+    soft.fracture->tension=100;soft.fracture->shear=100;soft.fracture->bonds[0].tension=20;
+    check(PrepareDeformableAsset(soft,error)&&!soft.fracture->rigid,"soft cohesive section is an explicit supported representation");
+    check(close(soft.fracture->bonds[0].area,8)&&close(soft.fracture->bonds[0].sectionInverse[1][1],3./8)&&close(soft.fracture->bonds[0].polarMoment,40./3),"soft section derives actual rectangular area and moments");
+    FractureState softState;softState.Initialize(*soft.fracture);softState.ObserveSection(*soft.fracture,0,{0,0,0},{0,0,40});
+    check(close(softState.tensionDemand[0],15)&&!softState.pending[0],"soft bending below authored override remains connected");
+    softState.ObserveSection(*soft.fracture,0,{0,0,0},{0,0,80});
+    check(close(softState.tensionDemand[0],30)&&softState.Commit(*soft.fracture)&&softState.component[0]!=softState.component[1],"soft bending exceeds capacity and publishes actual topology separation");
+    auto softBytes=EncodeDeformableAsset(soft);DeformableAsset softRestored;
+    check(DecodeDeformableAsset({softBytes.begin(),softBytes.end()},softRestored,error)&&softRestored.fracture->structural&&!softRestored.fracture->rigid&&softRestored.fracture->bonds[0].tension==20,"soft structural asset roundtrip preserves mode and explicit capacity");
+    check(EncodeDeformableAsset(softRestored)==softBytes,"soft structural asset encoding remains deterministic");
     auto rectangular=MakeFractureBlock({2,1,1},{2,.2,4},true);rectangular.fracture->structural=true;check(PrepareDeformableAsset(rectangular,error),"slender non-square section");s.Initialize(*rectangular.fracture);s.ObserveSection(*rectangular.fracture,0,{0,0,0},{0,0,1});check(close(s.tensionDemand[0],37.5),"small bending dimension governs capacity");
     auto small=MakeFractureBlock({2,1,1},{.02,.02,.04},true);small.fracture->structural=true;check(PrepareDeformableAsset(small,error),"section conditioning is independent of world unit scale");s.Initialize(*small.fracture);s.ObserveSection(*small.fracture,0,{0,0,0},{0,0,.00008});check(close(s.tensionDemand[0],30),"scaled moment produces equal section stress");
     check(!DecodeDeformableAsset({bytes.begin(),bytes.end()-1},restored,error),"truncated structural cook rejected transactionally");

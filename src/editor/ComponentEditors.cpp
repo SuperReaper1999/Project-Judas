@@ -726,7 +726,7 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
             ImGui::Text("Fracture: %zu parts / %zu interfaces (%s)",cook.parts.size(),cook.bonds.size(),cook.rigid?"rigid M45 cells":"deformable cohesive cells");
             if(ImGui::BeginCombo("Interface preview",state.fractureInterface.empty()?"all interfaces":state.fractureInterface.c_str())){if(ImGui::Selectable("all interfaces",state.fractureInterface.empty()))state.fractureInterface.clear();for(const auto& bond:cook.bonds)if(ImGui::Selectable(bond.key.c_str(),state.fractureInterface==bond.key))state.fractureInterface=bond.key;ImGui::EndCombo();}
             bool changed=ImGui::InputDouble("Tensile strength (Pa)",&cook.tension)|ImGui::InputDouble("Shear strength (Pa)",&cook.shear)|ImGui::InputDouble("Compression strength (0 = no crushing)",&cook.compression)|ImGui::InputDouble("Cohesive compliance (m/Pa)",&cook.compliance);
-            if(cook.rigid)changed|=ImGui::Checkbox("Structural section stress (M79 opt-in)",&cook.structural);
+            changed|=ImGui::Checkbox("Structural section stress (M79/M80 opt-in)",&cook.structural);
             if(cook.structural&&!state.fractureInterface.empty())for(auto& bond:cook.bonds)if(bond.key==state.fractureInterface){
                 ImGui::TextWrapped("Interface overrides: 0 inherits family strength. Capacity follows actual area and bending section.");
                 changed|=ImGui::InputDouble("Interface tension (Pa)",&bond.tension)|ImGui::InputDouble("Interface shear (Pa)",&bond.shear)|ImGui::InputDouble("Interface compression (Pa)",&bond.compression);
@@ -751,6 +751,7 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
         TextField(doc,"Assets-relative destination",state.deformableDestination);DragInt(doc,"Sheet columns / block X",state.deformableColumns,1,48);DragInt(doc,"Sheet rows / block Y",state.deformableRows,1,48);DragInt(doc,"Render subdivision / block Z",state.deformableSubdivision,1,8);DragVec3(doc,"Size (metres)",state.deformableSize);TextField(doc,"Cloth source mesh asset ID",state.deformableSource);
         int action=0;if(ImGui::Button("Create sheet"))action=1;ImGui::SameLine();if(ImGui::Button("Create tetrahedral block"))action=2;if(ImGui::Button("Import indexed cloth mesh"))action=3;
         if(ImGui::Button("Create cohesive fracture block"))action=4;
+        if(ImGui::Button("Create bendable structural block"))action=7;
         ImGui::SameLine();if(ImGui::Button("Create rigid fracture block"))action=5;TextField(doc,"Partition source (assets-relative path)",state.deformableSource);if(ImGui::Button("Import explicit volumetric partition"))action=6;
         if(action)BakeEditorDeformable(doc,o.id,state,action);
     }
@@ -919,14 +920,14 @@ bool BakeEditorLiquid(EditorDocument& doc,SceneObjectId id,EditorPanelState& sta
 
 bool BakeEditorDeformable(EditorDocument& doc,SceneObjectId id,EditorPanelState& state,int action){
     auto* object=doc.GetScene().Find(id);std::string error;
-    if(!object||!object->deformable||!state.project||!state.assets||action<1||action>6){state.status="Select a deformable and an open project.";return false;}
+    if(!object||!object->deformable||!state.project||!state.assets||action<1||action>7){state.status="Select a deformable and an open project.";return false;}
     try{
             auto path=std::filesystem::path(state.project->AssetsDir())/state.deformableDestination;auto relative=path.lexically_normal().lexically_relative(state.project->AssetsDir());if(relative.empty()||relative.is_absolute()||*relative.begin()==".."||path.extension()!=".judasdeform")throw std::runtime_error("Choose a .judasdeform path inside project assets.");
             if(std::filesystem::exists(path))throw std::runtime_error("Destination exists; choose a new name.");
             DeformableAsset baked;
             if(action==1)baked=MakeDeformableSheet(unsigned(state.deformableColumns),unsigned(state.deformableRows),state.deformableSize.x,state.deformableSize.y,unsigned(state.deformableSubdivision));
             else if(action==2)baked=MakeDeformableBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize));
-            else if(action==4||action==5)baked=MakeFractureBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize),action==5);
+            else if(action==4||action==5||action==7){baked=MakeFractureBlock({state.deformableColumns,state.deformableRows,state.deformableSubdivision},glm::dvec3(state.deformableSize),action==5);if(action==7){baked.fracture->structural=true;if(!PrepareDeformableAsset(baked,error))throw std::runtime_error(error);}}
             else if(action==6){auto path=std::filesystem::path(state.project->AssetsDir())/state.deformableSource;auto relative=path.lexically_normal().lexically_relative(state.project->AssetsDir());if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("Partition source must be inside project assets.");std::ifstream input(path);std::string text{std::istreambuf_iterator<char>(input),{}};if(!input||!ImportFracturePartition(text,baked,error))throw std::runtime_error("Partition import: "+error);}
             else{auto* source=state.assets->Find(state.deformableSource);MeshData mesh;if(!source||source->type!=AssetType::Mesh||!LoadModelMesh(source->path,mesh,error)||!ImportDeformableCloth(mesh,baked,error))throw std::runtime_error("Cloth import: "+error);baked.sourceAsset=source->id;if(!SceneFingerprintSha256File(source->path,baked.sourceFingerprint,error))throw std::runtime_error(error);}
             auto bytes=EncodeDeformableAsset(baked);std::filesystem::create_directories(path.parent_path());std::ofstream output(path,std::ios::binary);output.write(bytes.data(),std::streamsize(bytes.size()));output.close();if(!output)throw std::runtime_error("Failed to write deformable asset.");AssetRecord record;if(!state.assets->Track(path.string(),record,error))throw std::runtime_error(error);doc.BeginEdit();object->deformable->asset=record.id;auto& attachments=object->deformable->attachments;size_t before=attachments.size();attachments.erase(std::remove_if(attachments.begin(),attachments.end(),[&](const auto& a){return !baked.groups.count(a.group);}),attachments.end());doc.CommitEdit();state.status="Deformable created and assigned: "+record.relativePath;if(before!=attachments.size())state.status+="; removed attachments to groups absent from the new topology.";

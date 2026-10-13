@@ -1,0 +1,32 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Deformable Lab (/home/conner/Documents/GitHub/Project-Judas/projects/deformable_lab/deformable_lab.judasproj)
+Scene: Deformable Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/projects/deformable_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary project asynchronously publishes all seven deformable instances
+PASS real animated target shares normal skeletal resource
+PASS normal authored UI loaded
+PASS cape resolves authored stable bone attachment
+PASS cape pins consume exact resolved joint pose without another animation clock
+PASS runtime scale change rejects unsupported deformable scale
+PASS cold process reads committed M61 slot
+PASS M61 required deformable participant present
+PASS cold process reconstructs exact cloth motion and plastic rest state before resume
+PASS cold process retains physical plastic deformation
+PASS fresh deformable handle with saved attachment group
+PASS resumed cloth/solid and restore-aware JS continue without explosion
+FRAME median_ms=49.690187 p95_ms=67.491307 max_ms=1720.234247
+PHASE Deformable attachments 0.021646ms
+PHASE Deformable edge edge contacts 0.968774ms
+PHASE Deformable fixed step 13.072472ms
+PHASE Deformable force prediction 0.224872ms
+PHASE Deformable internal constraints 5.006213ms
+PHASE Deformable plastic flow 0.275797ms
+PHASE Deformable render mapping 0.330670ms
+PHASE Deformable rigid contacts 4.231157ms
+PHASE Deformable self pair cache 2.026051ms
+PHASE Deformable surface candidates 0.066356ms
+PHASE Deformable surface contacts 3.110724ms
+PHASE Deformable vertex face contacts 0.095925ms
+PASS normal startup and clean shutdown
+SUMMARY mode=read checks=13 failures=0 frames=58

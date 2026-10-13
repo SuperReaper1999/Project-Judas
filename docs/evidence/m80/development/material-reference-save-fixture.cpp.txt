@@ -1,0 +1,196 @@
+#include "Deformable.h"
+#include "SaveArchive.h"
+#include "UniformGravity.h"
+#include "RadicalGravity.h"
+#include <algorithm>
+#include <chrono>
+#include <cmath>
+#include <cstdio>
+#include <stdexcept>
+#include <glm/gtc/matrix_transform.hpp>
+
+namespace {
+using V = glm::dvec3;
+using M = glm::dmat3;
+unsigned checks=0, failures=0;
+void check(bool ok,const char* message){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",message);}
+double displacement(const DeformableInstance& s){double result=0;for(size_t n=0;n<s.positions.size();++n)result=std::max(result,glm::length(s.positions[n]-s.asset->nodes[n]));return result;}
+double restChange(const DeformableInstance& s,const glm::dmat3& rotation=M(1)){double result=0;for(size_t i=0;i<s.plasticRest.size();++i)for(int k=0;k<3;++k)result=std::max(result,glm::length(s.plasticRest[i][k]-(rotation*s.asset->solids[i].rest)[k]));return result;}
+DeformableTarget anchor(const glm::dmat4& frame=glm::dmat4(1)){DeformableTarget t;t.valid=true;t.previous=t.current=frame;return t;}
+DeformableSettings elasticSettings(){DeformableSettings s;s.selfContact=false;s.substeps=4;s.iterations=6;s.material.density=100;s.material.shearCompliance=.0005;s.material.volumeCompliance=1e-6;s.material.damping=3;DeformableAttachment pin;pin.group="left";s.attachments={pin};return s;}
+void advance(DeformableInstance& s,PhysicsWorld& p,const GravityField& g,const DeformableTarget& t,unsigned frames,V force=V(0)){
+    for(unsigned i=0;i<frames;++i){if(force!=V(0))s.Force("right",force);s.Step(1./60,p,g,{t});if(s.asset->fracture)s.fracture.Commit(*s.asset->fracture);if(!s.error.empty())throw std::runtime_error(s.error);}
+}
+}
+
+int main(){try{
+    PhysicsWorld physics;check(physics.Init(),"ordinary physics world initializes");UniformGravity zero({0,0,0});
+    auto cube=std::make_shared<DeformableAsset>(MakeDeformableBlock({2,2,2},{1,1,1}));
+    auto beam=std::make_shared<DeformableAsset>(MakeDeformableBlock({6,2,2},{3,.6,.6}));
+    auto settings=elasticSettings();auto fixed=anchor();
+
+    // Independent negative control: the identical unloaded, pinned specimen
+    // has no source of strain or motion. Loads below are ordinary forces.
+    DeformableInstance untouched,bent;untouched.Initialize(beam,settings,glm::dmat4(1),1);bent.Initialize(beam,settings,glm::dmat4(1),2);
+    advance(untouched,physics,zero,fixed,90);
+    check(displacement(untouched)<1e-9&&untouched.error.empty(),"unloaded elastic beam remains at its authored rest geometry");
+    advance(bent,physics,zero,fixed,90,{0,0,8});double loaded=displacement(bent);
+    check(loaded>.005&&bent.stats.minimumJacobian>.2,"physical transverse force bends a volumetric beam without inversion");
+    check(restChange(bent)<1e-12,"elastic load never changes plastic rest state");
+    advance(bent,physics,zero,fixed,360);double unloaded=displacement(bent);
+    std::printf("ELASTIC beam_nodes=%zu tets=%zu loaded=%.9g unloaded=%.9g minJ=%.9g\n",beam->nodes.size(),beam->solids.size(),loaded,unloaded,bent.stats.minimumJacobian);
+    check(unloaded<loaded*.35&&bent.error.empty(),"elastic beam returns toward its original shape after unloading");
+
+    // Existing M62 material values give a known bounded physical yielding case.
+    auto plastic=settings;plastic.iterations=4;plastic.material.shearCompliance=.002;plastic.material.volumeCompliance=.00002;plastic.material.damping=1;plastic.material.yieldStrain=.06;plastic.material.plasticRate=1;plastic.material.maximumPlasticStrain=.4;
+    DeformableInstance dent,belowYield;dent.Initialize(cube,plastic,glm::dmat4(1),3);belowYield.Initialize(cube,plastic,glm::dmat4(1),4);
+    double originalMass=dent.Mass();advance(dent,physics,zero,fixed,60,{0,0,80});advance(belowYield,physics,zero,fixed,60,{0,0,1});
+    double permanentRest=restChange(dent);
+    check(permanentRest>.001,"above-yield physical load creates permanent material rest deformation");
+    check(restChange(belowYield)<1e-10,"otherwise identical below-yield load has no plastic rest flow");
+    advance(dent,physics,zero,fixed,180);double remaining=displacement(dent);
+    check(remaining>.001&&dent.error.empty(),"plastic specimen retains deformed physical geometry after unloading");
+    bool volumePreserved=true;double volumeError=0;
+    for(size_t i=0;i<dent.plasticRest.size();++i){double error=std::abs(glm::determinant(dent.plasticRest[i])-6*cube->solids[i].volume);volumeError=std::max(volumeError,error);volumePreserved&=error<1e-9;}
+    std::printf("PLASTIC rest_change=%.9g retained=%.9g maximum_rest_volume_error=%.9g mass=%.9g\n",permanentRest,remaining,volumeError,dent.Mass());
+    check(volumePreserved&&std::abs(dent.Mass()-originalMass)<1e-12,"plastic flow preserves rest element volumes and material mass");
+
+    // A loaded test is necessary: free fall and zero-strain rigid rotation
+    // cannot detect constitutive rows accidentally expressed in global axes.
+    auto q=glm::angleAxis(.73,glm::normalize(V(1,2,3)));auto frame=glm::mat4_cast(q);auto rotatedAnchor=anchor(frame);
+    DeformableInstance reference,rotated;reference.Initialize(cube,settings,glm::dmat4(1),5);rotated.Initialize(cube,settings,frame,6);
+    for(unsigned i=0;i<90;++i){reference.Force("right",{0,0,20});rotated.Force("right",q*V(0,0,20));reference.Step(1./60,physics,zero,{fixed});rotated.Step(1./60,physics,zero,{rotatedAnchor});}
+    double rotationError=0;for(size_t n=0;n<cube->nodes.size();++n)rotationError=std::max(rotationError,glm::length(q*reference.positions[n]-rotated.positions[n]));
+    std::printf("ROTATED_ELASTIC maximum_position_error=%.9g loaded=%.9g\n",rotationError,displacement(reference));
+    check(reference.error.empty()&&rotated.error.empty()&&rotationError<1e-6,"loaded elastic response is equivalent under arbitrary world rotation");
+    DeformableInstance plasticReference,plasticRotated;plasticReference.Initialize(cube,plastic,glm::dmat4(1),7);plasticRotated.Initialize(cube,plastic,frame,8);
+    for(unsigned i=0;i<60;++i){plasticReference.Force("right",{0,0,80});plasticRotated.Force("right",q*V(0,0,80));plasticReference.Step(1./60,physics,zero,{fixed});plasticRotated.Step(1./60,physics,zero,{rotatedAnchor});}
+    double plasticRotationError=0,plasticFrameError=0;
+    for(size_t n=0;n<cube->nodes.size();++n)plasticRotationError=std::max(plasticRotationError,glm::length(q*plasticReference.positions[n]-plasticRotated.positions[n]));
+    for(size_t i=0;i<cube->solids.size();++i)for(int k=0;k<3;++k)plasticFrameError=std::max(plasticFrameError,glm::length((glm::mat3_cast(q)*plasticReference.plasticRest[i])[k]-plasticRotated.plasticRest[i][k]));
+    std::printf("ROTATED_PLASTIC maximum_position_error=%.9g rest_frame_error=%.9g\n",plasticRotationError,plasticFrameError);
+    check(plasticReference.error.empty()&&plasticRotated.error.empty()&&plasticRotationError<1e-6&&plasticFrameError<1e-6,"plastic flow and resulting geometry rotate with the material frame");
+    auto gravitySettings=settings;gravitySettings.material.density=10;gravitySettings.material.shearCompliance=.00005;
+    DeformableInstance weightReference,weightRotated;weightReference.Initialize(cube,gravitySettings,glm::dmat4(1),70);weightRotated.Initialize(cube,gravitySettings,frame,71);
+    UniformGravity down({0,-9.81f,0}),oblique(glm::vec3(q*V(0,-9.81,0)));
+    for(unsigned i=0;i<90;++i){weightReference.Step(1./60,physics,down,{fixed});weightRotated.Step(1./60,physics,oblique,{rotatedAnchor});}
+    double gravityRotationError=0;for(size_t n=0;n<cube->nodes.size();++n)gravityRotationError=std::max(gravityRotationError,glm::length(q*weightReference.positions[n]-weightRotated.positions[n]));
+    std::printf("ROTATED_SUPPORTED_GRAVITY maximum_position_error=%.9g\n",gravityRotationError);
+    check(weightReference.error.empty()&&weightRotated.error.empty()&&gravityRotationError<1e-6,"supported deformation under oblique gravity equals the rotated physical setup");
+
+    // Locate the most-deformed boundary triangle without using the renderer.
+    // An independent triangle centroid/normal is the ray hit reference.
+    unsigned face=0;double most=0;
+    for(unsigned f=0;f<cube->triangles.size();++f){auto indices=cube->triangles[f];V current=(dent.positions[indices.x]+dent.positions[indices.y]+dent.positions[indices.z])/3.;V rest=(cube->nodes[indices.x]+cube->nodes[indices.y]+cube->nodes[indices.z])/3.;double d=glm::length(current-rest);if(d>most){most=d;face=f;}}
+    auto nodes=cube->triangles[face];V centre=(dent.positions[nodes.x]+dent.positions[nodes.y]+dent.positions[nodes.z])/3.;V normal=glm::normalize(glm::cross(dent.positions[nodes.y]-dent.positions[nodes.x],dent.positions[nodes.z]-dent.positions[nodes.x]));
+    auto hit=dent.Raycast(centre+normal*.05,-normal,.1);
+    check(hit.hit&&glm::length(hit.point-centre)<1e-7&&std::abs(hit.distance-.05)<1e-7,"query intersects the actual plastically deformed boundary geometry");
+    V restCentre=(cube->nodes[nodes.x]+cube->nodes[nodes.y]+cube->nodes[nodes.z])/3.;
+    check(glm::length(hit.point-restCentre)>.001,"current surface hit is distinct from undeformed visual/rest geometry");
+    // A finite rigid sphere is placed at the measured deformed boundary. Its
+    // reaction is the existing two-way physical contact, not a scene trigger.
+    auto sphere=physics.CreateDynamicSphere(glm::vec3(centre+normal*.085),.075f,1,0,0);
+    dent.Step(1./60,physics,zero,{fixed});
+    check(dent.stats.contacts>0&&glm::length(physics.GetLinearVelocity(sphere))>.001f,"ordinary rigid body receives contact reaction from deformed physical surface");
+    physics.DestroyBody(sphere);
+    MeshData mapped;auto physicalBefore=dent.positions;dent.MapRender(.35,mapped);
+    check(dent.positions==physicalBefore,"render interpolation does not alter authoritative deformed geometry");
+
+    // The M79 section model is reused by a deforming cohesive material rather
+    // than a second structural solver. Low/high controls differ only in force.
+    auto fractured=std::make_shared<DeformableAsset>(MakeFractureBlock({3,1,1},{3,1,1},false));
+    fractured->fracture->structural=true;fractured->fracture->tension=80;fractured->fracture->shear=80;fractured->fracture->compliance=1e-6;
+    std::string error;check(PrepareDeformableAsset(*fractured,error),"soft material accepts actual M79 section geometry and strength authoring");
+    auto fractureSettings=settings;fractureSettings.material.density=10;fractureSettings.material.shearCompliance=1e-6;fractureSettings.material.volumeCompliance=1e-7;fractureSettings.material.damping=.5;fractureSettings.iterations=4;
+    DeformableInstance smallLoad,largeLoad;smallLoad.Initialize(fractured,fractureSettings,glm::dmat4(1),9);largeLoad.Initialize(fractured,fractureSettings,glm::dmat4(1),10);
+    advance(smallLoad,physics,zero,fixed,120,{5,0,0});
+    MeshData intact;smallLoad.MapRender(1,intact);double fractureMass=largeLoad.Mass();
+    for(unsigned i=0;i<120&&largeLoad.fracture.revision==1;++i){largeLoad.Force("right",{400,0,0});largeLoad.Step(1./60,physics,zero,{fixed});largeLoad.fracture.Commit(*fractured->fracture);}
+    check(smallLoad.fracture.revision==1,"sub-strength solved soft interface supports ordinary physical load");
+    check(largeLoad.error.empty()&&largeLoad.fracture.revision>1,"above-strength solved soft interface fails physically through the shared section model");
+    check(std::abs(largeLoad.Mass()-fractureMass)<1e-12,"deforming structural failure preserves material mass");
+    MeshData split;largeLoad.MapRender(1,split);check(split.indices.size()>intact.indices.size(),"physical failure exposes actual authored interior boundary faces");
+    double demand=0;for(double value:largeLoad.fracture.tensionDemand)demand=std::max(demand,value);
+    std::printf("SOFT_SECTION peak_tension_pa=%.9g revision=%llu mass=%.9g\n",demand,static_cast<unsigned long long>(largeLoad.fracture.revision),largeLoad.Mass());
+    auto stronger=std::make_shared<DeformableAsset>(*fractured);stronger->fracture=std::make_shared<FractureCook>(*fractured->fracture);
+    for(auto& bond:stronger->fracture->bonds){bond.tension=1e6;bond.shear=1e6;}
+    check(PrepareDeformableAsset(*stronger,error),"deforming section accepts explicit per-interface strength overrides");
+    DeformableInstance strongerLoad;strongerLoad.Initialize(stronger,fractureSettings,glm::dmat4(1),72);advance(strongerLoad,physics,zero,fixed,120,{400,0,0});
+    check(strongerLoad.fracture.revision==1,"identical physical load survives when actual interface strength is increased");
+    DeformableInstance rotatedSection;rotatedSection.Initialize(stronger,fractureSettings,frame,74);
+    for(unsigned i=0;i<120;++i){rotatedSection.Force("right",q*V(400,0,0));rotatedSection.Step(1./60,physics,zero,{rotatedAnchor});rotatedSection.fracture.Commit(*stronger->fracture);}
+    double sectionRotationError=0,sectionDemandError=0;
+    for(unsigned n=0;n<strongerLoad.positions.size();++n)sectionRotationError=std::max(sectionRotationError,glm::length(q*strongerLoad.positions[n]-rotatedSection.positions[n]));
+    for(unsigned b=0;b<strongerLoad.fracture.tensionDemand.size();++b)sectionDemandError=std::max(sectionDemandError,std::abs(strongerLoad.fracture.tensionDemand[b]-rotatedSection.fracture.tensionDemand[b]));
+    std::printf("ROTATED_SECTION position_error=%.9g stress_error_pa=%.9g\n",sectionRotationError,sectionDemandError);
+    check(rotatedSection.error.empty()&&sectionRotationError<1e-6&&sectionDemandError<1e-5,"soft sectional stress and physical deformation rotate with the entire loaded setup");
+    double centroidWeightError=0;for(const auto& bond:stronger->fracture->bonds){double sum=0;V centre(0);for(unsigned n=0;n<bond.pairs.size();++n){sum+=bond.sectionWeights[n];centre+=stronger->nodes[bond.pairs[n].x]*bond.sectionWeights[n];}centroidWeightError=std::max(centroidWeightError,std::abs(sum-1)+glm::length(centre-bond.centroid));}
+    check(centroidWeightError<1e-12,"reference-area nodal weights reproduce the exact authored section centroid");
+    // Authored section area is validated with a relative tolerance. That must
+    // not turn world translation into a spurious bending moment.
+    auto roundedArea=std::make_shared<DeformableAsset>(*stronger);roundedArea->fracture=std::make_shared<FractureCook>(*stronger->fracture);
+    for(auto& bond:roundedArea->fracture->bonds)bond.area*=1+5e-7;
+    check(PrepareDeformableAsset(*roundedArea,error),"valid authored section-area rounding remains accepted");
+    V translation(10000,-20000,30000);auto translatedFrame=glm::translate(glm::dmat4(1),translation);
+    DeformableInstance localSection,translatedSection;localSection.Initialize(roundedArea,fractureSettings,glm::dmat4(1),75);translatedSection.Initialize(roundedArea,fractureSettings,translatedFrame,76);
+    advance(localSection,physics,zero,fixed,120,{400,0,0});advance(translatedSection,physics,zero,anchor(translatedFrame),120,{400,0,0});
+    double translatedPositionError=0,translatedStressError=0;
+    for(unsigned n=0;n<localSection.positions.size();++n)translatedPositionError=std::max(translatedPositionError,glm::length(localSection.positions[n]+translation-translatedSection.positions[n]));
+    for(unsigned b=0;b<localSection.fracture.tensionDemand.size();++b)translatedStressError=std::max(translatedStressError,std::abs(localSection.fracture.tensionDemand[b]-translatedSection.fracture.tensionDemand[b]));
+    std::printf("TRANSLATED_SECTION position_error=%.9g stress_error_pa=%.9g authored_area_relative_rounding=5e-7\n",translatedPositionError,translatedStressError);
+    check(translatedSection.error.empty()&&translatedPositionError<1e-5&&translatedStressError<1e-4,"section stress is independent of translation despite valid authored-area rounding");
+    // Force couple has zero net external force but nonzero bending moment.
+    // Thus an axial-force-only structural observation cannot satisfy this.
+    auto coupleAsset=std::make_shared<DeformableAsset>(*stronger);coupleAsset->fracture=std::make_shared<FractureCook>(*stronger->fracture);
+    for(unsigned n:coupleAsset->groups.at("right"))coupleAsset->groups[coupleAsset->nodes[n].y>0?"upper":"lower"].push_back(n);
+    check(PrepareDeformableAsset(*coupleAsset,error),"pure bending couple has explicit valid upper/lower material groups");
+    DeformableInstance couple;couple.Initialize(coupleAsset,fractureSettings,glm::dmat4(1),73);
+    for(unsigned i=0;i<120;++i){couple.Force("upper",{80,0,0});couple.Force("lower",{-80,0,0});couple.Step(1./60,physics,zero,{fixed});couple.fracture.Commit(*coupleAsset->fracture);}
+    double coupleDemand=0;for(double value:couple.fracture.tensionDemand)coupleDemand=std::max(coupleDemand,value);
+    std::printf("SOFT_COUPLE peak_tension_pa=%.9g external_net_force=0 moment_Nm=80\n",coupleDemand);
+    check(couple.error.empty()&&couple.fracture.revision==1&&coupleDemand>10,"zero-net-force couple produces physical bending stress while strong interfaces remain intact");
+    auto originalHit=smallLoad.Raycast({0,0,3},{0,0,-1},10);auto oldLocation=originalHit.location;
+    smallLoad.fracture.Request(*fractured->fracture,0,smallLoad.fracture.revision);smallLoad.fracture.Commit(*fractured->fracture);
+    check(originalHit.hit&&!smallLoad.Impulse(oldLocation,{0,0,1}),"old topology hit cannot impulse a newly exposed structural boundary");
+    auto brokenBefore=largeLoad.positions;largeLoad.PartLoad(2,{0,0,2},true);advance(largeLoad,physics,zero,fixed,30);
+    bool moved=false;for(unsigned n:fractured->fracture->parts[2].nodes)moved|=glm::length(largeLoad.positions[n]-brokenBefore[n])>.001;
+    check(moved&&largeLoad.error.empty(),"detached deformable material retains and responds to real physical motion");
+
+    // Restart uses the same immutable cook and restored authoritative material
+    // state. A subsequent unforced step must match, not merely a cached status.
+    SaveArchive saved;largeLoad.Persist(saved);DeformableInstance restored;restored.Initialize(fractured,fractureSettings,glm::dmat4(1),11);SaveArchive read(saved.bytes);restored.Persist(read);read.Finish();
+    check(restored.positions==largeLoad.positions&&restored.velocities==largeLoad.velocities&&restored.plasticRest==largeLoad.plasticRest&&restored.fracture.broken==largeLoad.fracture.broken,"fresh instance restores geometry, velocities, plastic rest and structural failures");
+    advance(largeLoad,physics,zero,fixed,1);advance(restored,physics,zero,fixed,1);
+    double continuation=0;for(size_t n=0;n<largeLoad.positions.size();++n)continuation=std::max(continuation,glm::length(largeLoad.positions[n]-restored.positions[n]));
+    check(continuation<1e-12,"fresh-restored structural material continues to the same physical endpoint");
+    // Moving the logical owner does not reinitialize already simulated nodes.
+    // A cold instance nevertheless initializes from that current owner pose;
+    // its historical material basis must therefore be part of saved state.
+    reference.Release("left");SaveArchive shiftedOwnerSave;reference.Persist(shiftedOwnerSave);
+    DeformableInstance shiftedOwnerRestore;shiftedOwnerRestore.Initialize(cube,settings,frame,77);SaveArchive shiftedOwnerRead(shiftedOwnerSave.bytes);shiftedOwnerRestore.Persist(shiftedOwnerRead);shiftedOwnerRead.Finish();
+    reference.Force("right",{0,0,20});shiftedOwnerRestore.Force("right",{0,0,20});reference.Step(1./60,physics,zero,{});shiftedOwnerRestore.Step(1./60,physics,zero,{});
+    double changedOwnerError=0;for(unsigned n=0;n<reference.positions.size();++n)changedOwnerError=std::max(changedOwnerError,glm::length(reference.positions[n]-shiftedOwnerRestore.positions[n]));
+    std::printf("CHANGED_OWNER_CONTINUATION position_error=%.9g\n",changedOwnerError);
+    check(reference.error.empty()&&shiftedOwnerRestore.error.empty()&&changedOwnerError<1e-12,"cold continuation retains original material basis after logical-owner rotation");
+    SaveArchive dentSaved;dent.Persist(dentSaved);DeformableInstance dentRestored;dentRestored.Initialize(cube,plastic,glm::dmat4(1),12);SaveArchive dentRead(dentSaved.bytes);dentRestored.Persist(dentRead);dentRead.Finish();
+    check(dentRestored.plasticRest==dent.plasticRest&&dentRestored.positions==dent.positions,"permanent material shape survives fresh-instance persistence");
+    dentRestored.Reset(glm::dmat4(1));check(displacement(dentRestored)<1e-12&&restChange(dentRestored)<1e-12&&dentRestored.previous==dentRestored.positions,"explicit non-fracture reset clears permanent rest and presentation coherently");
+
+    // Gravity is sampled at each physical node; no world-up assumption or
+    // project-specific branch is introduced by the bending representation.
+    auto falling=settings;falling.attachments.clear();falling.material.damping=0;
+    DeformableInstance freeRadial;freeRadial.Initialize(beam,falling,glm::translate(glm::dmat4(1),V(0,20,0)),13);RadicalGravity field({0,0,0},9.81f);
+    freeRadial.Step(1./60,physics,field,{});
+    check(freeRadial.error.empty()&&freeRadial.velocities[beam->groups.at("right")[0]].y<0,"real radial gravity accelerates ordinary deformable material");
+
+    // Lightweight cost evidence for the actual chosen discretization. Every
+    // specimen remains active under force and uses the same authored quality.
+    std::vector<DeformableInstance> group(8);
+    for(size_t n=0;n<group.size();++n)group[n].Initialize(beam,settings,glm::dmat4(1),100+n);
+    std::vector<double> times;times.reserve(120);
+    for(unsigned step=0;step<150;++step){auto begin=std::chrono::steady_clock::now();for(auto& s:group){s.Force("right",{0,0,8});s.Step(1./60,physics,zero,{fixed});}double elapsed=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();if(step>=30)times.push_back(elapsed);}
+    std::sort(times.begin(),times.end());bool healthy=true;for(const auto& s:group)healthy&=s.error.empty();
+    std::printf("PERFORMANCE instances=%zu nodes_each=%zu tets_each=%zu substeps=%u iterations=%u median_ms=%.6f p95_ms=%.6f max_ms=%.6f\n",group.size(),beam->nodes.size(),beam->solids.size(),settings.substeps,settings.iterations,times[times.size()/2],times[size_t(times.size()*.95)],times.back());
+    check(healthy,"representative simultaneously loaded specimens remain numerically valid");
+    std::printf("M80 numerical: %u checks %u failures\n",checks,failures);return failures?1:0;
+}catch(const std::exception& e){std::fprintf(stderr,"M80 numerical exception: %s\n",e.what());return 1;}}

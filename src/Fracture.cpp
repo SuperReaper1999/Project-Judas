@@ -24,7 +24,9 @@ bool PrepareFractureCook(DeformableAsset& a,std::string& error){
     auto fail=[&](const char* message){error=message;return false;};
     if(a.kind!=DeformableKind::Solid||c.parts.size()<2||c.parts.size()>256||c.bonds.size()>1024||c.pieceBudget<c.parts.size()||c.pieceBudget>256)return fail("fracture partition/piece budget invalid");
     for(double x:{c.tension,c.shear,c.compression,c.compliance})if(!std::isfinite(x)||x<0)return fail("invalid fracture strengths/compliance");
-    if(c.structural&&!c.rigid)return fail("section stress model requires rigid fracture cells");
+    // Structural section geometry is shared by rigid joint reactions and soft
+    // cohesive reactions. The instance owns the force/moment observation; the
+    // immutable section model does not prescribe either motion representation.
     if(c.tension<=0||c.shear<=0)return fail("fracture tension/shear must be positive Pa");
     c.nodePart.assign(a.nodes.size(),~0u);std::vector<unsigned> tetPart(a.tetrahedra.size(),~0u);std::set<std::string> keys;
     for(unsigned p=0;p<c.parts.size();++p){auto& part=c.parts[p];
@@ -45,7 +47,7 @@ bool PrepareFractureCook(DeformableAsset& a,std::string& error){
         for(auto pair:bond.pairs){if(pair.x>=a.nodes.size()||pair.y>=a.nodes.size()||c.nodePart[pair.x]!=bond.a||c.nodePart[pair.y]!=bond.b||!sideA.insert(pair.x).second||!sideB.insert(pair.y).second||glm::length(a.nodes[pair.x]-a.nodes[pair.y])>1e-7)return fail("invalid fracture interface node correspondence");}
         for(double strength:{bond.tension,bond.shear,bond.compression})if(!std::isfinite(strength)||strength<0)return fail("invalid interface strength");
         if(!c.structural&&(bond.tension||bond.shear||bond.compression))return fail("interface strengths require section stress model");
-        bond.sectionPoints.clear();bond.sectionInverse=glm::dmat3(0);bond.polarMoment=0;
+        bond.sectionPoints.clear();bond.sectionWeights.assign(bond.pairs.size(),0);bond.sectionInverse=glm::dmat3(0);bond.polarMoment=0;
         double areaA=0,areaB=0;glm::dmat3 second(0);glm::dvec3 first(0);
         for(unsigned f=0;f<a.triangles.size();++f){auto n=a.triangles[f];bool left=sideA.count(n.x)&&sideA.count(n.y)&&sideA.count(n.z),right=sideB.count(n.x)&&sideB.count(n.y)&&sideB.count(n.z);
             if(!left&&!right)continue;
@@ -56,11 +58,17 @@ bool PrepareFractureCook(DeformableAsset& a,std::string& error){
             if(left){areaA+=area;
                 if(c.structural){glm::dvec3 r[3]={a.nodes[n.x]-bond.centroid,a.nodes[n.y]-bond.centroid,a.nodes[n.z]-bond.centroid};
                     auto sum=r[0]+r[1]+r[2];first+=area*sum/3.;
+                    for(unsigned k=0;k<3;++k)for(unsigned pair=0;pair<bond.pairs.size();++pair)if(bond.pairs[pair].x==n[k])bond.sectionWeights[pair]+=area/(3*bond.area);
                     second+=area/12.*(glm::outerProduct(sum,sum)+glm::outerProduct(r[0],r[0])+glm::outerProduct(r[1],r[1])+glm::outerProduct(r[2],r[2]));
                 }
             }else areaB+=area;}
         if(std::abs(areaA-bond.area)>1e-6*bond.area||std::abs(areaB-bond.area)>1e-6*bond.area)return fail("fracture interface area/face coverage mismatch");
         if(c.structural){
+            // The authored nominal area may differ from the measured area
+            // within the accepted tolerance. Centroid weights must still sum
+            // to one, otherwise global translation creates a false moment.
+            double weightSum=std::accumulate(bond.sectionWeights.begin(),bond.sectionWeights.end(),0.);
+            for(auto& weight:bond.sectionWeights)weight/=weightSum;
             if(glm::length(first)>1e-7*bond.area)return fail("structural interface must use its area centroid");
             // Invert only the two in-plane modes; the added normal mode is
             // algebraic regularization, never artificial physical stiffness.

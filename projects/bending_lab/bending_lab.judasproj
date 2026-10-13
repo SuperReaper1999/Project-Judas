@@ -1,0 +1,10 @@
+JudasProject 1
+name "Bending Lab"
+startup-scene "Scenes/flat.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"
+classification "JudasClassification 1 1 1 0 \"pickup\" 1 1 0 \"Default\" 1 1 0 \"Default\""
+input-map "1 25 \"jump\" 0 1 \"key:Space\" 1 0 \"interact\" 0 1 \"key:G\" 1 0 \"throw\" 0 1 \"key:T\" 1 0 \"load\" 0 1 \"key:B\" 1 0 \"adopt\" 0 1 \"key:H\" 1 0 \"spawn\" 0 1 \"key:P\" 1 0 \"region\" 0 1 \"key:F3\" 1 0 \"flat\" 0 1 \"key:1\" 1 0 \"radial\" 0 1 \"key:2\" 1 0 \"save_game\" 0 1 \"key:F5\" 1 0 \"load_game\" 0 1 \"key:F8\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"restart\" 0 1 \"key:F9\" 1 0 \"push\" 0 1 \"mouse:Left\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"move_x\" 1 2 \"key:A\" -1 0 \"key:D\" 1 0 \"move_y\" 1 2 \"key:S\" -1 0 \"key:W\" 1 0 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 \"look_stick_x\" 1 1 \"stick:RightX\" 1 0 \"look_stick_y\" 1 1 \"stick:RightY\" 1 0 \"wheel_y\" 1 1 \"mouse:wheelY\" 1 0 "
+world-manifest "8080808080808080808080800000000a"

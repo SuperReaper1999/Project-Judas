@@ -1633,3 +1633,11 @@ judas_warnings(judas_structural_tests -Wpedantic)
 add_executable(judas_structural_application_tests tests/StructuralApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_structural_application_tests PRIVATE judas_engine)
 judas_warnings(judas_structural_application_tests -Wpedantic)
+
+# M80 reuses the deformable solver and structural interface model.
+add_executable(judas_bending_tests tests/BendingTests.cpp)
+target_link_libraries(judas_bending_tests PRIVATE judas_engine)
+judas_warnings(judas_bending_tests -Wpedantic)
+add_executable(judas_bending_application_tests tests/BendingApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_bending_application_tests PRIVATE judas_engine)
+judas_warnings(judas_bending_application_tests -Wpedantic)

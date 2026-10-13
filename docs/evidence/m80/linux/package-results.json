@@ -1,0 +1,14 @@
+[
+  {
+    "name": "moved-package",
+    "exit": 0
+  },
+  {
+    "name": "package-write",
+    "exit": 0
+  },
+  {
+    "name": "package-read",
+    "exit": 0
+  }
+]

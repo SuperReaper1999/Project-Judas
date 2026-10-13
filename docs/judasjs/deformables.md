@@ -85,3 +85,24 @@ See [M64 geometry coverage](../M64_COLLISION.md) and the
 An optional partition uses this same resource/component. See [Fracture](fracture.md)
 for irreversible interfaces, rigid/deformable representation, interior materials,
 topology-aware picks, support release and the restrictions on reset/material/attach.
+
+## M80 elastic/plastic structural solids
+
+[M80 bending](../M80_BENDING.md) reuses this API for physically deforming
+tetrahedral solids and optional soft section-based failure. Solid elastic strain
+uses `shearCompliance`; `volumeCompliance` controls volume preservation.
+`stretchCompliance`/`bendCompliance` remain cloth parameters. Yield/rate/capped
+isochoric rest flow produces permanent deformation; the plastic cap is not a
+failure threshold. Optional cooked interface strength determines physical fracture.
+`state.maximumStrain` is a diagnostic strain magnitude, not accumulated damage.
+Current node geometry still supplies contact, rendering and `raycast`; no new
+M44 cast, CharacterMotor blocking or M42 soft-event contract is implied.
+
+New saves use deformables participant 3 and versioned retained streaming state to
+preserve the original material basis independently of a moved owner/support frame.
+Older records still decode, but cannot promise historical owner-rotation
+continuation when that reference was absent. These are internal persistence
+versions; the JavaScript handle API and cooked asset format are unchanged.
+Within a still-connected cohesive component, self-contact is suppressed;
+separated components use normal deformable surface contact. Extreme intact folds
+remain outside the supported envelope.

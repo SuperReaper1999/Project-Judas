@@ -1,0 +1,21 @@
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_icu_build
+[ 29%] Built target judas_quickjs
+[ 41%] Built target judas_navigation_backend
+[ 41%] Built target judas_glad
+[ 41%] Built target judas_profiler
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target harfbuzz
+[ 41%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_bending_application_tests.dir/tests/BendingApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp:41:4: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   41 |    if(t==230&&mode=="write")key(SDL_SCANCODE_H,true);if(t==231)key(SDL_SCANCODE_H,false);
+      |    ^~
+/home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp:41:54: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   41 |    if(t==230&&mode=="write")key(SDL_SCANCODE_H,true);if(t==231)key(SDL_SCANCODE_H,false);
+      |                                                      ^~
+[100%] Linking CXX executable judas_bending_application_tests
+[100%] Built target judas_bending_application_tests

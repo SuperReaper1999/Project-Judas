@@ -1,0 +1,118 @@
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_icu_build
+[ 29%] Built target judas_quickjs
+[ 41%] Built target judas_navigation_backend
+[ 41%] Built target judas_glad
+[ 41%] Built target judas_profiler
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target harfbuzz
+[ 41%] Built target judas_materials
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 47%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1517:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1517 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1517:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1517 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1534:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1534 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1534:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1534 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 52%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 52%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_bending_tests.dir/tests/BendingTests.cpp.o
+[100%] Linking CXX executable judas_bending_tests
+[100%] Built target judas_bending_tests
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_icu_build
+[ 29%] Built target judas_quickjs
+[ 41%] Built target judas_navigation_backend
+[ 41%] Built target judas_glad
+[ 41%] Built target judas_profiler
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target harfbuzz
+[ 41%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_bending_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_bending_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_bending_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_bending_application_tests.dir/src/TestHarness.cpp.o
+[100%] Building CXX object CMakeFiles/judas_bending_application_tests.dir/tests/BendingApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp:53:637: error: ‘glm::dmat4 DeformableInstance::initial’ is private within this context
+   53 |    if(mode=="stream"&&t>40){auto* stream=w.SceneControl()->Streaming(w,error);auto status=stream->Regions().front();if(phase==0&&status.state=="active"){oldAnnex=stream->Resolve("annex",1);auto* sim=w.RuntimeDeformable(oldAnnex,error);if(sim){sim->Impulse("right",{0,0,1});sim->Step(1./60,w.Physics(),UniformGravity({0,0,0}),{});auto moved=w.RuntimeDefinition(oldAnnex)->transform;moved.rotation=glm::angleAxis(.4f,glm::normalize(glm::vec3(1,2,3)));check(w.SetRuntimeTransform(oldAnnex,moved)&&sim->Release("left"),"streamed owner changes pose without resetting existing material");retained=sim->positions;retainedBasis=glm::dmat3(sim->initial);stream->Release(region);frozen=true;phase=1;}}if(phase==1&&status.state=="unloaded"){check(!w.RuntimeDefinition(oldAnnex)&&status.retained>0,"ordinary plain-solid region suspends geometry and invalidates identity");region=stream->Request("annex",false,error);phase=2;}if(phase==2&&status.state=="active"){auto current=stream->Resolve("annex",1);auto* sim=w.RuntimeDeformable(current,error);check(sim&&current!=oldAnnex&&sim->positions==retained&&glm::dmat3(sim->initial)==retainedBasis,"stream revisit restores deformed geometry and original material basis with fresh identity");auto* p=w.RuntimeDeformable(spawned,error);check(p&&p->asset==a->asset&&p->generation!=a->generation,"prefab shares immutable topology with independent nodal state");w.DestroyEntity(spawned);check(!w.RuntimeDefinition(spawned),"destroy removes prefab simulation owner");frozen=false;w.SceneControl()->Reload(error);phase=4;}}
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^~~~~~~
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.h:13,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/EngineHost.h:10,
+                 from /home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp:2:
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.h:129:16: note: declared private here
+  129 |     glm::dmat4 initial{1};
+      |                ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/BendingApplicationTests.cpp:53:1108: error: ‘glm::dmat4 DeformableInstance::initial’ is private within this context
+   53 |    if(mode=="stream"&&t>40){auto* stream=w.SceneControl()->Streaming(w,error);auto status=stream->Regions().front();if(phase==0&&status.state=="active"){oldAnnex=stream->Resolve("annex",1);auto* sim=w.RuntimeDeformable(oldAnnex,error);if(sim){sim->Impulse("right",{0,0,1});sim->Step(1./60,w.Physics(),UniformGravity({0,0,0}),{});auto moved=w.RuntimeDefinition(oldAnnex)->transform;moved.rotation=glm::angleAxis(.4f,glm::normalize(glm::vec3(1,2,3)));check(w.SetRuntimeTransform(oldAnnex,moved)&&sim->Release("left"),"streamed owner changes pose without resetting existing material");retained=sim->positions;retainedBasis=glm::dmat3(sim->initial);stream->Release(region);frozen=true;phase=1;}}if(phase==1&&status.state=="unloaded"){check(!w.RuntimeDefinition(oldAnnex)&&status.retained>0,"ordinary plain-solid region suspends geometry and invalidates identity");region=stream->Request("annex",false,error);phase=2;}if(phase==2&&status.state=="active"){auto current=stream->Resolve("annex",1);auto* sim=w.RuntimeDeformable(current,error);check(sim&&current!=oldAnnex&&sim->positions==retained&&glm::dmat3(sim->initial)==retainedBasis,"stream revisit restores deformed geometry and original material basis with fresh identity");auto* p=w.RuntimeDeformable(spawned,error);check(p&&p->asset==a->asset&&p->generation!=a->generation,"prefab shares immutable topology with independent nodal state");w.DestroyEntity(spawned);check(!w.RuntimeDefinition(spawned),"destroy removes prefab simulation owner");frozen=false;w.SceneControl()->Reload(error);phase=4;}}
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.h:129:16: note: declared private here
+  129 |     glm::dmat4 initial{1};
+      |                ^~~~~~~
+gmake[3]: *** [CMakeFiles/judas_bending_application_tests.dir/build.make:79: CMakeFiles/judas_bending_application_tests.dir/tests/BendingApplicationTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:10467: CMakeFiles/judas_bending_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:10474: CMakeFiles/judas_bending_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:3257: judas_bending_application_tests] Error 2

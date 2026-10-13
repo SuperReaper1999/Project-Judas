@@ -1,0 +1,24 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Structural Lab (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/structural_lab.judasproj)
+Scene: Structural lab / FaithfulGravity (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async structural resource publication
+PASS family has no duplicate body or mass
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS independent density times volume mass oracle
+PASS read original on-disk structural save
+PASS fresh-process restoration matches exact topology, physical poses and owned joint continuation
+PASS restored physical collapse does not heal or replay invalid state
+PASS restored real piece accepts a new ordinary impulse
+PASS cold-restored physics actually resumes, not merely cached topology status
+PASS continued structural solve and scripts healthy
+PASS normal application startup and shutdown
+M79 read checks=18 failures=0

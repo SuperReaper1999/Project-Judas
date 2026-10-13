@@ -5,6 +5,11 @@ statements and measurements below record the original milestone review state,
 not a current outstanding acceptance gate. Later contracts take precedence;
 start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
 
+**Current extensions:** [M79](M79_STRUCTURES.md) adds optional reference-section
+strength evaluation for rigid cells; [M80 bending](M80_BENDING.md) applies that
+model to deforming cohesive cells through actual pair force/moment resultants.
+Legacy cooks and the original measurements below retain their historical scope.
+
 Current candidate from M62 checkpoint
 `29845bbdb911d2129a2d2b995fed22a1448594e7`. Human acceptance is pending.
 

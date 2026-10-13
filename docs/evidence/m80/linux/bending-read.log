@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bending Lab (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/bending_lab.judasproj)
+Scene: Bending lab / FaithfulGravity (/home/conner/Documents/GitHub/Project-Judas/projects/bending_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal async solid and flexible structural assets publish
+PASS deforming material has one nodal mass owner, no undeformed duplicate rigid body
+PASS fresh process reads accepted deformable save bytes
+PASS restore observation precedes any resumed physical step
+PASS cold restore matches exact deformed geometry, plastic rest and fracture topology
+PASS restored yielded material and scripts healthy
+PASS cold-restored material physically resumes after new impulse
+PASS normal application startup and shutdown
+M80 read checks=8 failures=0

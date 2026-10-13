@@ -1,0 +1,42 @@
+PASS ordinary physics world initializes
+PASS unloaded elastic beam remains at its authored rest geometry
+PASS physical transverse force bends a volumetric beam without inversion
+PASS elastic load never changes plastic rest state
+ELASTIC beam_nodes=63 tets=144 loaded=0.0717974428 unloaded=0.00563503689 minJ=1
+PASS elastic beam returns toward its original shape after unloading
+PASS above-yield physical load creates permanent material rest deformation
+PASS otherwise identical below-yield load has no plastic rest flow
+PASS plastic specimen retains deformed physical geometry after unloading
+PLASTIC rest_change=0.074932972 retained=0.266062729 maximum_rest_volume_error=8.32667268e-17 mass=100
+PASS plastic flow preserves rest element volumes and material mass
+ROTATED_ELASTIC maximum_position_error=0.00368301565 loaded=0.0184290782
+FAIL loaded elastic response is equivalent under arbitrary world rotation
+ROTATED_PLASTIC maximum_position_error=0.093361722 rest_frame_error=0.0218789026
+FAIL plastic flow and resulting geometry rotate with the material frame
+ROTATED_SUPPORTED_GRAVITY maximum_position_error=0.00175726329
+FAIL supported deformation under oblique gravity equals the rotated physical setup
+PASS query intersects the actual plastically deformed boundary geometry
+PASS current surface hit is distinct from undeformed visual/rest geometry
+PASS ordinary rigid body receives contact reaction from deformed physical surface
+PASS render interpolation does not alter authoritative deformed geometry
+FAIL soft material accepts actual M79 section geometry and strength authoring
+PASS sub-strength solved soft interface supports ordinary physical load
+PASS above-strength solved soft interface fails physically through the shared section model
+PASS deforming structural failure preserves material mass
+PASS physical failure exposes actual authored interior boundary faces
+SOFT_SECTION peak_tension_pa=758.477658 revision=2 mass=30
+FAIL deforming section accepts explicit per-interface strength overrides
+FAIL identical physical load survives when actual interface strength is increased
+FAIL pure bending couple has explicit valid upper/lower material groups
+SOFT_COUPLE peak_tension_pa=192.889394 external_net_force=0 moment_Nm=80
+FAIL zero-net-force couple produces physical bending stress while strong interfaces remain intact
+PASS old topology hit cannot impulse a newly exposed structural boundary
+PASS detached deformable material retains and responds to real physical motion
+PASS fresh instance restores geometry, velocities, plastic rest and structural failures
+PASS fresh-restored structural material continues to the same physical endpoint
+PASS permanent material shape survives fresh-instance persistence
+PASS explicit non-fracture reset clears permanent rest and presentation coherently
+PASS real radial gravity accelerates ordinary deformable material
+PERFORMANCE instances=8 nodes_each=63 tets_each=144 substeps=4 iterations=6 median_ms=10.437646 p95_ms=12.615555 max_ms=17.527669
+PASS representative simultaneously loaded specimens remain numerically valid
+M80 numerical: 33 checks 8 failures

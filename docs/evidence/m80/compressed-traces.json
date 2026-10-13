@@ -1,0 +1,37 @@
+[
+  {
+    "file": "linux/deformable-lifetime/profile.json.gz",
+    "originalBytes": 26199789,
+    "originalSha256": "fe31a69467885335faea7c8a9305518ab8a8e1d00a10163e4f90c9eb2fff6a4e",
+    "gzipBytes": 2429435,
+    "gzipSha256": "e83c373cd9acb6303fa6efa27a47e200507b9cee5866cb76bd22d9f5e8f85b8a"
+  },
+  {
+    "file": "linux/deformable-read/profile.json.gz",
+    "originalBytes": 12769172,
+    "originalSha256": "10fb1ba672350030dc71547a86fd265f2079555260225a6f2401215b92ac2285",
+    "gzipBytes": 1189494,
+    "gzipSha256": "806ce2e66f394b92f12e514a84767a7e047c5ef5fe0e572d62e5272696d8f41e"
+  },
+  {
+    "file": "linux/deformable-write/profile.json.gz",
+    "originalBytes": 24974320,
+    "originalSha256": "7acba0421dba962a618036c9ba6ea157b0a9e87786351793d0873a2f4ac523fa",
+    "gzipBytes": 2324243,
+    "gzipSha256": "bf352f8d35775f28faa6b61fe4cdd5a9ff9a9a838ceb767b34074dc579f49d7f"
+  },
+  {
+    "file": "linux/deformable-probe/profile.json.gz",
+    "originalBytes": 27447808,
+    "originalSha256": "6020a9324f3d7236bb688a5a895a178124e0a031c9cd9a1fb33141e2beabed55",
+    "gzipBytes": 2520366,
+    "gzipSha256": "e9fea6cd3bb60a162716d554082ba771300c6ba1dd3123614d44d5ddde229d3e"
+  },
+  {
+    "file": "linux/deformable-stream/profile.json.gz",
+    "originalBytes": 10206439,
+    "originalSha256": "bc4c94dfdd39da1ef29d3ce280a18e40017dc92d41b76cd392e90ee936916f90",
+    "gzipBytes": 958224,
+    "gzipSha256": "a1bb2960a366a2720b02f1ec0dcd47d6f99a3c1a795c7c0e64c2c0e71eadace2"
+  }
+]
