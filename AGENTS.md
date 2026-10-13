@@ -16,6 +16,6 @@
 
 ## Repository continuity
 
-- `main` is retained at the split checkpoint for existing links and history. New work goes to `Experimental`; do not update `main` automatically.
+- `main` is a compatibility entry point for the operator-accepted `Stable` version. It may be fast-forwarded to `Stable` when the operator explicitly requests it. New work goes to `Experimental`; do not update `main` automatically or promote unreviewed implementation through it.
 - Preserve protected historical evidence, independent research and unrelated assets. Document actual failures and limitations rather than weakening fixtures to obtain a pass.
 - GitHub protects Stable against force pushes and deletion. Human-test acceptance is an operator workflow requirement; GitHub does not independently prove that testing occurred.

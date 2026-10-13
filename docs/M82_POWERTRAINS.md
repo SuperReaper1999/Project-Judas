@@ -202,4 +202,5 @@ no Chrono dependency or copied runtime implementation.
 Protected history, independent fluid research, existing games and unrelated
 deferred findings remain unchanged. Human acceptance comes from the operator's
 subsequent desktop test, not automated delivery. Stable promotion is explicitly
-authorized; main remains at the branch-split checkpoint.
+authorized. Main may follow accepted Stable through an explicit operator
+fast-forward request; see the [branch workflow](../AGENTS.md).

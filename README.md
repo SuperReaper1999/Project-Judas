@@ -1603,3 +1603,5 @@ validation. Streamed-motor metadata/tags and excluded-body restoration are corre
 Legacy PBF settling and missing historical cold-save data remain deferred, and
 fast curved-mesh CCD still has a recorded failure. New development uses
 `Experimental`; promotion to `Stable` requires explicit human acceptance.
+`main` can be fast-forwarded to accepted `Stable` when explicitly requested by
+the operator; it is not updated automatically from development work.
