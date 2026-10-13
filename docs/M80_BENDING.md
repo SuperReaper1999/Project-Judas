@@ -1,6 +1,9 @@
 # M80 — Judas learns to bend
 
-Current **Experimental candidate; human acceptance pending**. M80 extends the
+**Human validated on Linux by the operator on 2026-10-13**, for implementation
+`0b19cda66e7dfc6d6d0232b936d435248d41c426`; Stable promotion is authorized.
+See the [acceptance record](evidence/m80/HUMAN_VALIDATION.md). Native Windows
+M80 validation remains outstanding and nonblocking. M80 extends the
 existing M62 tetrahedral solids, M63 cohesive fracture and M79 section model.
 It does not add a second body solver or replace physical deformation with a
 render effect. Focused validation and measured results belong to the final
@@ -167,7 +170,7 @@ an impulse at the current deformed ray hit; **G/T** pick up/throw ordinary props
 annex; **1/2** select uniform/radial scenes; **F5/F8** save/load; **F9** reload;
 **Escape** pauses. The physical press contacts the actual panel boundary.
 
-Before accepting a candidate, check elastic return, permanent deformation after
+For future rechecks, inspect elastic return, permanent deformation after
 unloading, physical interface failure under increased load, contact with deformed
 geometry, rotated/gravity equivalence, prefab independence, save/load,
 streaming/reload/Stop and exported standalone behaviour. Automated measurements

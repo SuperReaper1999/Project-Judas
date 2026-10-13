@@ -1,11 +1,14 @@
 # Architecture
 
-## Current checkpoint and M80 bending candidate
+## Current checkpoint — M80 human validated
 
 M79 is **human validated** at `3745787d0732a05e82aba9496e592bc2233564f0`.
-Current Experimental work adds [M80 bending](M80_BENDING.md): existing tetrahedral
-elastic/plastic geometry, authored material-frame correction and optional cohesive
-section-resultant failure. M80 remains a candidate with human acceptance pending.
+[M80 bending](M80_BENDING.md) extends tetrahedral
+elastic/plastic geometry with an authored material-frame correction and optional cohesive
+section-resultant failure. The operator human validated implementation
+`0b19cda66e7dfc6d6d0232b936d435248d41c426` on Linux on 2026-10-13 and
+authorized Stable promotion. See the [acceptance record](evidence/m80/HUMAN_VALIDATION.md).
+Native Windows M80 validation remains outstanding and nonblocking.
 The M78 audit history and unresolved limitations below retain their recorded scope;
 this extension does not certify them or modify independent fluid research.
 
@@ -9679,7 +9682,7 @@ This is a bounded brittle resultant model, not continuum engineering certificati
 See [M79 authoring/equations/lab/limitations](M79_STRUCTURES.md) and
 [focused evidence](evidence/m79/RESULTS.md).
 
-## M80 — elastic/plastic bending and cohesive structural sections (candidate)
+## M80 — elastic/plastic bending and cohesive structural sections (human validated)
 
 The existing M62 tetrahedral node solve remains authoritative for elastic and
 permanent deformation. Six Green-strain XPBD constraints plus volume preservation

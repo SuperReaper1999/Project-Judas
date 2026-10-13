@@ -17,13 +17,16 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current status — M79 accepted; M80 bending candidate
+## Current status — M80 human validated
 
 [M79 load-driven structures](docs/M79_STRUCTURES.md) is human validated at
-`3745787d0732a05e82aba9496e592bc2233564f0`. Current Experimental work adds
-[M80 elastic/plastic bending](docs/M80_BENDING.md), reusing actual deformable
-material nodes, collision and optional physical interface failure. M80 is a
-candidate; human acceptance is pending. Windows checks are informational and
+`3745787d0732a05e82aba9496e592bc2233564f0`.
+[M80 elastic/plastic bending](docs/M80_BENDING.md) reuses actual deformable
+material nodes, collision and optional physical interface failure. The operator
+human validated implementation `0b19cda66e7dfc6d6d0232b936d435248d41c426`
+on Linux on 2026-10-13 and authorized Stable promotion; see the
+[acceptance record](docs/evidence/m80/HUMAN_VALIDATION.md).
+Windows checks remain outstanding, informational and
 do not imply physical Windows hardware acceptance.
 
 The [completed M78 audit handoff](docs/M78_COMPLETION.md) records delivered
@@ -1570,7 +1573,7 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M76 (provisional) | Optional local mod contracts, packages and terrain-capable kits | [M76.md](docs/M76.md), [modding guide](docs/MODDING.md) | `projects/modding_lab` |
 | M77 (human pending) | Default-off two-chain physical balance, bounded corrective steps and recovery | [M77.md](docs/M77.md), [M78 final audit handoff](docs/M78_COMPLETION.md) | `projects/balance_lab` |
 | M79 (human accepted) | Load-driven material connections, support loss and progressive fracture | [M79_STRUCTURES.md](docs/M79_STRUCTURES.md) | `projects/structural_lab` |
-| M80 (candidate) | Elastic/plastic solid deformation and soft section-based failure | [M80_BENDING.md](docs/M80_BENDING.md) | `projects/bending_lab` |
+| M80 (human accepted) | Elastic/plastic solid deformation and soft section-based failure | [M80_BENDING.md](docs/M80_BENDING.md) | `projects/bending_lab` |
 
 M78 has a [completed audit handoff](docs/M78_COMPLETION.md) with explicit coverage
 limits and unresolved defects; it is not comprehensive certification or new human

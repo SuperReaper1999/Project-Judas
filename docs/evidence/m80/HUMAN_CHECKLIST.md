@@ -1,4 +1,9 @@
-# M80 human checklist — pending
+# M80 human checklist — operator acceptance recorded
+
+The operator accepted M80 implementation
+`0b19cda66e7dfc6d6d0232b936d435248d41c426` on Linux on 2026-10-13.
+See [the acceptance record](HUMAN_VALIDATION.md). This remains a useful recheck
+guide; individual items are not assigned results beyond the operator's statement.
 
 Open `projects/bending_lab/bending_lab.judasproj` in the editor and Play, or run
 the normal exported `judas` in `/tmp/judas-m80-bending-lab-20261013`.

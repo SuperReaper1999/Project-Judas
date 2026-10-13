@@ -1,10 +1,14 @@
-# M80 candidate results — 2026-10-13
+# M80 results — 2026-10-13
 
-**Native Linux automated candidate; human acceptance pending.** Starting accepted
+**Native Linux automated checks passed; operator human acceptance recorded on
+2026-10-13** for implementation `0b19cda66e7dfc6d6d0232b936d435248d41c426`.
+See [the acceptance record](HUMAN_VALIDATION.md); no implementation change or
+validation rerun accompanies this status update. Starting accepted
 Experimental/Stable checkpoint: `3745787d0732a05e82aba9496e592bc2233564f0`.
 The operator authorized Stable promotion before M80; Stable already contained
-that exact accepted M79 checkpoint, and the normal push was up to date. M80 goes
-to Experimental only. Main remains at the branch-split checkpoint.
+that exact accepted M79 checkpoint, and the normal push was up to date. M80 was
+first published to Experimental. After human testing the operator authorized
+normal Stable promotion. Main remains at the branch-split checkpoint.
 
 ## Implementation and ownership
 
@@ -124,14 +128,16 @@ parts suppress self-contact, so deep folds can self-intersect. Unit owner scale,
 exclusive physical ownership and existing live-fracture residency pins remain.
 
 The Windows VM was shut off; native Windows M80 validation is outstanding and
-nonblocking. Desktop visual/contact/pointer acceptance is pending. See
+nonblocking. The operator accepted the Linux desktop demonstration; individual
+checklist items are not assigned fabricated per-item results. See
 [platform scope](PLATFORM.md) and [human checklist](HUMAN_CHECKLIST.md).
 
 Protected historical evidence, independent fluid research, accepted fluid
 implementation and existing game assets are unchanged. Current M62/M63/M79
 reference documents only receive clearly identified M80 cross-links. Unrelated
 pre-existing untracked artifacts remain outside this checkpoint. No M81 work,
-tag or Stable/main update is included.
+tag or main update is included. Stable promotion follows the explicit subsequent
+operator authorization recorded in `HUMAN_VALIDATION.md`.
 
 `FINAL_SOURCE_SHA256.txt`, `BINARY_SHA256.txt` and `EVIDENCE_SHA256.txt` identify
 the final candidate. Fingerprints exclude their own recursively defined hashes;
