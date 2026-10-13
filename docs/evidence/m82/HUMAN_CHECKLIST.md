@@ -1,8 +1,10 @@
-# M82 human review — pending
+# M82 human review — accepted
 
 Open `projects/powertrain_lab/powertrain_lab.judasproj` or its ordinary exported
-package. The operator supplies human acceptance; automated tests do not fill
-these checks in.
+package. The operator accepted the Linux desktop watch demonstration on
+2026-10-13 and authorized Stable promotion; see [HUMAN_VALIDATION.md](HUMAN_VALIDATION.md).
+This records the operator's overall acceptance without inventing individual
+check outcomes. The checklist remains available for future review.
 
 1. Drive the orange buggy with W/S and A/D; confirm tyre contact moves its chassis.
 2. Open the clutch with F, hold Space and apply throttle; observe engine RPM
@@ -25,5 +27,5 @@ these checks in.
     finite; manual steering/braking is needed for prolonged driving.
 13. Confirm the moved exported standalone behaves equivalently.
 
-Stable promotion requires explicit acceptance of the exact tested candidate.
+Stable promotion was explicitly authorized for the exact tested candidate.
 Windows validation is informational and remains separate from this Linux review.

@@ -1,9 +1,11 @@
 # M82 — Judas learns to roar
 
-**Experimental candidate; human validation pending.** Development starts from
+**Human validated by the operator on Linux on 2026-10-13.** Development starts from
 the M81 accepted checkpoint `b74906350084ab20d01b09774dfc56711b4d97cb`.
 Linux is the automated acceptance platform; Windows validation is informational
-and does not imply native hardware acceptance. See [evidence](evidence/m82/RESULTS.md).
+and does not imply native hardware acceptance. The operator authorized Stable
+promotion; see [acceptance](evidence/m82/HUMAN_VALIDATION.md) and
+[evidence](evidence/m82/RESULTS.md).
 
 ## Architecture and ownership
 
@@ -198,5 +200,6 @@ is a modelling reference. Judas implements its own bounded shaft solver and adds
 no Chrono dependency or copied runtime implementation.
 
 Protected history, independent fluid research, existing games and unrelated
-deferred findings remain unchanged. M82 automated delivery does not claim human
-acceptance or promote Stable/main.
+deferred findings remain unchanged. Human acceptance comes from the operator's
+subsequent desktop test, not automated delivery. Stable promotion is explicitly
+authorized; main remains at the branch-split checkpoint.

@@ -1,0 +1,11 @@
+README.md
+docs/ARCHITECTURE.md
+docs/JUDASJS.md
+docs/M82_POWERTRAINS.md
+docs/evidence/m82/ACCEPTANCE_CHANGED_FILES.txt
+docs/evidence/m82/ACCEPTANCE_VERIFICATION.txt
+docs/evidence/m82/EVIDENCE_SHA256.txt
+docs/evidence/m82/HUMAN_CHECKLIST.md
+docs/evidence/m82/HUMAN_VALIDATION.md
+docs/evidence/m82/RESULTS.md
+docs/evidence/m82/SOURCE_SHA256.txt

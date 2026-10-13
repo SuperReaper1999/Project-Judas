@@ -1,8 +1,10 @@
-# JudasJS — current API reference (M82 Experimental candidate)
+# JudasJS — current API reference (M82 human validated)
 
 M82 adds optional [Powertrain networks](judasjs/powertrains.md): real rotational
 inertia, torque sources, gearing, bounded clutches, open differentials and brakes.
-Project JavaScript supplies driver and machinery policy. M82 awaits human review.
+Project JavaScript supplies driver and machinery policy. M82 has Linux operator
+acceptance; see [the record](evidence/m82/HUMAN_VALIDATION.md). Windows M82
+validation remains unperformed and nonblocking.
 
 M81 adds optional [Wheel components](judasjs/wheels.md): independent suspension,
 rolling/traction and torque/brake/steering control on ordinary rigid-body

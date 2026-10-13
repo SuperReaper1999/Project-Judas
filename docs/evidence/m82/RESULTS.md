@@ -1,14 +1,16 @@
 # M82 — mechanical powertrain results
 
 Starting checkpoint: `b74906350084ab20d01b09774dfc56711b4d97cb` (accepted M81).
-Work is on **Experimental**. Human validation is pending; Stable/main are not
-promoted by these results. Linux is the automated acceptance platform. The
+The operator **human validated M82 on Linux on 2026-10-13** and authorized normal
+Stable promotion of the tested Experimental candidate. See
+[HUMAN_VALIDATION.md](HUMAN_VALIDATION.md). Main remains at its split checkpoint.
+Linux is the automated acceptance platform. The
 Windows VM was shut off during this delivery; M82 Windows validation remains
 unperformed and informational/nonblocking.
 
 Linux candidate checks, editor smoke and moved-package checks have completed.
-This is scoped automated evidence, not comprehensive vehicle certification or
-operator acceptance.
+These numerical receipts are scoped automated evidence, not comprehensive vehicle
+certification. Human acceptance is the operator's separate desktop test statement.
 
 ## Scope and engineering decisions
 
@@ -218,10 +220,16 @@ retained with the logs; no Windows VM timing is an acceptance gate.
 Exact delivery scope and integrity records are
 [CHANGED_FILES.txt](CHANGED_FILES.txt), [SOURCE_SHA256.txt](SOURCE_SHA256.txt),
 [BINARY_SHA256.txt](BINARY_SHA256.txt) and
-[VERIFY_FINGERPRINTS.txt](VERIFY_FINGERPRINTS.txt). Source hashes identify the
+[pre-acceptance VERIFY_FINGERPRINTS.txt](VERIFY_FINGERPRINTS.txt). Source hashes identify the
 final candidate, while local binaries/packages stay outside the committed
 source inventory. Verification status is the actual receipt, not inferred from
 a successful compilation.
+
+[ACCEPTANCE_VERIFICATION.txt](ACCEPTANCE_VERIFICATION.txt) records the subsequent
+documentation-only acceptance checkpoint; its exact file scope is
+[ACCEPTANCE_CHANGED_FILES.txt](ACCEPTANCE_CHANGED_FILES.txt). Runtime source,
+tests, project content and binaries remain unchanged. Original candidate hashes
+and receipts remain available at `5f2da1a55f0eb077d6c35f7de87601332035df49`.
 
 The raw initial untracked listing includes one newly created M82 header;
 [CONTINUITY_NOTE.md](CONTINUITY_NOTE.md) records that classification correction
@@ -244,6 +252,7 @@ The watch tour uses real continuing motion on a finite deck; it is not an endles
 automated driving course. For prolonged manual driving steer/brake within that
 deck. No scripted chassis repositioning is used to hide this boundary.
 
-Human acceptance is [pending](HUMAN_CHECKLIST.md). Protected history, independent
+Human acceptance is [recorded](HUMAN_VALIDATION.md). Protected history, independent
 fluid research, existing games and unrelated deferred defects remain outside
-this change scope. No later feature work or Stable/main promotion is part of M82 delivery.
+this change scope. The operator authorized Stable promotion after human testing;
+no main update, tag or later feature work is part of this checkpoint.
