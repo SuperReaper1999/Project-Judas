@@ -1,0 +1,10 @@
+{
+  "baseline": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "existingProjectsModified": [],
+  "historicalEvidenceModified": [],
+  "fluidOrResearchImplementationModified": [],
+  "excludedUntrackedEntriesPresent": 75,
+  "scope": "tracked diff plus excluded-path presence; no claim that historical untracked artifact bytes were independently re-audited",
+  "main": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "originMain": "7bfa1ac3f11221ecdc450a5778023f8aff380c52"
+}

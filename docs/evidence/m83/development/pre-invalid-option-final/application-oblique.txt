@@ -1,0 +1,31 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / oblique (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/oblique.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async resources share immutable geometry with independently authored material strength
+PASS bench and mobile vehicle wheels terminate in actual finite material-supported bearing bodies
+PASS third powered bench uses existing M79 cohesive material load topology
+WORKLOAD bodies=17 dynamic_bodies=13 wheels=11 powertrains=5 materials=11 nodes=232 tets=264 material_substeps=4 material_iterations=4 fixed_hz=60
+PASS normal JS camera, input, UI and coupled physical assemblies execute without diagnostics
+PASS normal resting load leaves the authored mount and drive path intact
+PASS identical mechanical content uses genuinely oblique authoritative gravity
+LOADED plastic_rest_m=0.0624795702 strong_rest_m=0 bearing_delta_m=0.300715208 alignment=0.998065591 control_alignment=0.99028635 contact=1
+PASS equal sustained physical loads yield soft material while stronger control retains its rest geometry
+PASS deformed material moves and rotates the real carrier rather than a renderer-only wheel mount
+PASS unloading preserves plastic material rest and leaves the still-connected mechanism operational
+SURFACE displacement_m=0.186012724 contacts=16 positive_speed=114.738052 filtered_speed=0.163500026 response_delta=114.7229
+PASS current deformed boundary transfers a physical contact impulse while an identical filtered-out probe does not
+DRIVEN motor_radps=22.31244 wheel_radps=5.57822466 link_torque_nm=24.0605274 body_speed_mps=0.218631953
+PASS actual source torque still reaches the misaligned wheel through the surviving mechanical link
+FAILURE released=1 section_broken=1 active=0 torque=0 command_enabled=1 motor_radps=67.4429439 wheel_radps=79.0506287
+PASS overload irreversibly breaks a real mount and stops transmitted torque without gameplay disabling its link
+PASS otherwise equivalent stronger material and mount change the physical outcome
+PASS M79 fracture interrupts the actual attachment-to-root material path and connected drive
+PASS detached carrier retains ordinary collision, wheel contact and finite rigid-body ownership
+PASS project-spawned finite ram strikes the carrier through actual solved rigid-body contact
+PASS post-failure source responds to removed reflected load while detached output remains disconnected
+PASS coupled plastic and fractured material retains valid authoritative physical geometry
+PASS normal application startup and shutdown
+PERF samples=630 fixed_median_ms=6.159322 p95_ms=8.473728 max_ms=11.556256 frame_median_ms=7.564971 frame_p95_ms=10.583678
+M83 application oblique checks=19 failures=0

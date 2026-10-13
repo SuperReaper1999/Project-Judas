@@ -37,7 +37,43 @@ std::vector<ShaftRow> Rows(RuntimeWorld& world,PowertrainInstance& train,float d
 }
 glm::dmat3 InverseInertia(PhysicsWorld& physics,BodyHandle body){if(!physics.IsDynamicBody(body))return glm::dmat3(0);const auto inverse=glm::inverse(glm::dmat3(physics.GetInertiaWorld(body)));return .5*(inverse+glm::transpose(inverse));}
 }
-PowertrainInstance* RuntimeWorld::RuntimePowertrain(EntityId id){const auto* definition=RuntimeDefinition(id);if(!definition||!definition->powertrain)return nullptr;auto [it,added]=m_powertrains.try_emplace(id);if(added){it->second.Reset(*definition->powertrain);const auto rows=Rows(*this,it->second);for(size_t i=0;i<rows.size();++i){auto& shaft=it->second.state.shafts[i];shaft.angularVelocity=rows[i].velocity;shaft.available=it->second.settings.enabled&&rows[i].available;it->second.state.available|=shaft.available;}}return &it->second;}
+bool RuntimeWorld::PowertrainConnectionIntact(const PowertrainConnection& connection){
+ if(!connection.owner)return true;
+ // Material identity is resolved through the normal publication/resource
+ // boundary each time. An unloaded/destroyed/reused body slot cannot stand in
+ // for this owner, and a pending asset cannot transmit through a missing mount.
+ std::string error;auto* material=RuntimeDeformable(connection.owner,error);
+ if(!material||!error.empty()||!material->settings.enabled)return false;
+ const auto mount=[&](const std::string& name)->const std::vector<unsigned>*{
+  const auto group=material->asset->groups.find(name);if(group==material->asset->groups.end())return nullptr;
+  for(size_t i=0;i<material->settings.attachments.size();++i){const auto& attachment=material->settings.attachments[i];
+   if(attachment.group!=name)continue;
+   if(!attachment.enabled||i>=material->released.size()||material->released[i])return nullptr;
+   if(attachment.kind!=DeformableAttachment::Kind::World){
+    const auto* target=RuntimeDefinition(attachment.target);if(!target||!IsPublished(attachment.target))return nullptr;
+    if(attachment.kind==DeformableAttachment::Kind::Body&&!m_physics.IsBodyEnabled(RuntimeBody(attachment.target)))return nullptr;
+    if(attachment.kind==DeformableAttachment::Kind::Bone){auto* animation=RuntimeAnimation(attachment.target);if(!animation||!animation->asset||!target->animation||!target->animation->enabled||FindSkeletonJoint(animation->asset->skeleton,attachment.joint)<0)return nullptr;}
+   }
+   return &group->second;
+  }
+  return nullptr;
+ };
+ const auto* attachment=mount(connection.attachment);if(!attachment||attachment->empty())return false;
+ const std::vector<unsigned>* root=nullptr;if(!connection.rootAttachment.empty()){root=mount(connection.rootAttachment);if(!root||root->empty())return false;}
+ if(!material->asset->fracture)return true;
+ const auto& cook=*material->asset->fracture;const auto& fracture=material->fracture;
+ unsigned component=~0u;bool hasAttachment=false,hasRoot=!root;
+ const auto connected=[&](const std::vector<unsigned>& nodes,bool& present){
+  for(auto node:nodes){if(node>=cook.nodePart.size())return false;const auto part=cook.nodePart[node];if(part>=fracture.removed.size()||part>=fracture.component.size())return false;if(fracture.removed[part])continue;
+   present=true;const auto actual=fracture.component[part];if(actual==~0u)return false;
+   // Without a root, a released patch is the prerequisite. With a root,
+   // every surviving patch node must retain a real material load path.
+   if(root){if(component==~0u)component=actual;else if(component!=actual)return false;}
+  }return true;
+ };
+ return connected(*attachment,hasAttachment)&&(!root||connected(*root,hasRoot))&&hasAttachment&&hasRoot;
+}
+PowertrainInstance* RuntimeWorld::RuntimePowertrain(EntityId id){const auto* definition=RuntimeDefinition(id);if(!definition||!definition->powertrain)return nullptr;auto [it,added]=m_powertrains.try_emplace(id);if(added){it->second.Reset(*definition->powertrain);const auto rows=Rows(*this,it->second);for(size_t i=0;i<rows.size();++i){auto& shaft=it->second.state.shafts[i];shaft.angularVelocity=rows[i].velocity;shaft.available=it->second.settings.enabled&&rows[i].available;it->second.state.available|=shaft.available;}for(size_t i=0;i<it->second.state.links.size();++i)it->second.state.links[i].connected=PowertrainConnectionIntact(it->second.settings.links[i].connection);}return &it->second;}
 const PowertrainInstance* RuntimeWorld::RuntimePowertrain(EntityId id)const{const auto* definition=RuntimeDefinition(id);if(!definition||!definition->powertrain)return nullptr;const auto found=m_powertrains.find(id);return found==m_powertrains.end()?nullptr:&found->second;}
 bool RuntimeWorld::SetPowertrainSettings(EntityId id,const PowertrainSettings& settings,std::string& error){
  auto* train=RuntimePowertrain(id);if(!train||!ValidatePowertrainSettings(settings,error))return false;
@@ -55,7 +91,8 @@ void RuntimeWorld::StepPowertrains(float dt,bool sources){
  JUDAS_PROFILE_SCOPE("Mechanical powertrains");JUDAS_PROFILE_COUNTER("Powertrain assemblies",double(m_powertrainOwners.size()),ProfileCounterMode::Latest);
  for(auto id:m_powertrainOwners){auto* train=RuntimePowertrain(id);if(!train)continue;if(!sources&&!train->state.converged)continue;auto rows=Rows(*this,*train,dt);const auto n=rows.size();std::vector<double> velocities(n),mass(n*n);std::vector<bool> available(n);
   for(size_t i=0;i<n;++i){velocities[i]=rows[i].velocity;available[i]=rows[i].available;mass[i*n+i]=rows[i].ownInverse;for(size_t j=0;j<n;++j)for(const auto& [body,a]:rows[i].bodies){auto other=rows[j].bodies.find(body);if(other!=rows[j].bodies.end())mass[i*n+j]+=glm::dot(glm::dvec3(a.axis),InverseInertia(m_physics,a.body)*glm::dvec3(other->second.axis));}}
-  PowertrainState prior;if(!sources)prior=train->state;const double previousEnergy=train->state.kineticEnergy;auto impulses=train->Step(dt,velocities,mass,available,sources);if(impulses.size()!=n)continue;
+  std::vector<bool> connected;connected.reserve(train->settings.links.size());for(const auto& link:train->settings.links)connected.push_back(PowertrainConnectionIntact(link.connection));
+  PowertrainState prior;if(!sources)prior=train->state;const double previousEnergy=train->state.kineticEnergy;auto impulses=train->Step(dt,velocities,mass,available,sources,connected);if(impulses.size()!=n)continue;
   std::map<uint64_t,BodyRow> physical;bool finite=true;
   for(size_t i=0;i<n;++i)if(available[i]){
    const double impulse=impulses[i];finite&=std::isfinite(impulse);
@@ -76,7 +113,15 @@ void RuntimeWorld::ResolvePowertrainLoads(float dt){StepPowertrains(dt,false);}
 void RuntimeWorld::PublishPowertrains(float dt){
  for(auto id:m_powertrainOwners){auto* train=RuntimePowertrain(id);if(!train)continue;const auto rows=Rows(*this,*train);train->state.available=false;
   for(size_t i=0;i<rows.size();++i){train->state.shafts[i].angularVelocity=rows[i].velocity;train->state.shafts[i].available=train->settings.enabled&&train->state.converged&&rows[i].available;train->state.available|=train->state.shafts[i].available;}
-  for(size_t i=0;i<train->state.links.size();++i){auto& state=train->state.links[i];if(!state.active||!train->settings.enabled||!train->state.converged||i>=train->command.links.size()){state.slip=0;continue;}const auto& link=train->settings.links[i];const auto& command=train->command.links[i];const auto ratio=command.overrideRatio?command.ratio:link.ratio;state.slip=rows[link.output].velocity-ratio*rows[link.input].velocity;if(link.kind==PowertrainLinkKind::Differential)state.slip+=rows[link.outputB].velocity-ratio*rows[link.input].velocity;}
+  for(size_t i=0;i<train->state.links.size();++i){auto& state=train->state.links[i];const auto& link=train->settings.links[i];state.connected=PowertrainConnectionIntact(link.connection);if(!state.connected){state.active=false;state.saturated=false;}if(!state.active||!train->settings.enabled||!train->state.converged||i>=train->command.links.size()){state.slip=0;continue;}const auto& command=train->command.links[i];const auto ratio=command.overrideRatio?command.ratio:link.ratio;state.slip=rows[link.output].velocity-ratio*rows[link.input].velocity;if(link.kind==PowertrainLinkKind::Differential)state.slip+=rows[link.outputB].velocity-ratio*rows[link.input].velocity;}
   if(train->settings.enabled&&dt>0)train->AdvanceAngles(dt);
+ }
+}
+void RuntimeWorld::PublishPowertrainConnections(){
+ // Deformable failure commits after the ordinary rigid/mechanical interval.
+ // Refresh only its derived continuity, not rotor time, endpoint velocity or
+ // torque telemetry from the work already done during that interval.
+ for(auto id:m_powertrainOwners){const auto found=m_powertrains.find(id);if(found==m_powertrains.end()||!RuntimeDefinition(id))continue;auto& train=found->second;
+  for(size_t i=0;i<train.settings.links.size()&&i<train.state.links.size();++i)if(train.settings.links[i].connection.owner){auto& state=train.state.links[i];state.connected=PowertrainConnectionIntact(train.settings.links[i].connection);if(!state.connected){state.active=false;state.saturated=false;state.slip=0;}}
  }
 }

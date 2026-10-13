@@ -1,0 +1,20 @@
+FRAMES 2460
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ENTITY 100
+ACTION autopilot 1 60 61
+SCREENSHOT 360 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/standalone-plastic-load.png
+SCREENSHOT 900 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/standalone-cohesive-failure.png
+SCREENSHOT 1400 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/standalone-buggy.png
+ACTION pause 1 2210 2211
+EXPECT_PAUSED 1 2215
+SCREENSHOT 2220 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/standalone-pause.png
+ACTION pause 1 2225 2226
+EXPECT_PAUSED 0 2230
+ACTION oblique 1 2260 2261
+WAIT_SERVICES scene 4000 2262
+EXPECT_SCENE Scenes/oblique.judas 2265
+SCREENSHOT 2340 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/standalone-oblique.png
+ACTION restart 1 2380 2381
+WAIT_SERVICES scene 4000 2382
+EXPECT_SCENE Scenes/oblique.judas 2385

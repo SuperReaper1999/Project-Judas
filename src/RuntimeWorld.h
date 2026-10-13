@@ -346,9 +346,11 @@ public:
     PowertrainInstance* RuntimePowertrain(EntityId id);
     const PowertrainInstance* RuntimePowertrain(EntityId id)const;
     bool SetPowertrainSettings(EntityId,const PowertrainSettings&,std::string&);
+    bool PowertrainConnectionIntact(const PowertrainConnection&);
     void UpdatePowertrains(float dt);
     void ResolvePowertrainLoads(float dt);
     void PublishPowertrains(float dt);
+    void PublishPowertrainConnections();
     void UpdateCharacters(float dt,bool onlyM70=false,bool skipM70=false);
     LiquidSystem& Liquids(){return *m_liquid;}
     const LiquidSystem& Liquids()const{return *m_liquid;}

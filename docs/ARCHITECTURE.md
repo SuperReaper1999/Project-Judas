@@ -1,6 +1,22 @@
 # Architecture
 
-## Current checkpoint — M82 human validated
+## Current Experimental — M83 candidate; human review pending
+
+[M83 mechanical damage](M83_MECHANICAL_DAMAGE.md) extends the existing dynamic
+Body attachment impulse exchange with optional force/moment strengths. Current
+material geometry moves actual finite carriers; normal M81 contact axes and M82
+terminal reactions therefore change with the damaged physical pose. Completed
+material steps can irreversibly release overloaded mounts. Optional authored
+Powertrain link prerequisites use existing material owner/group identities and
+committed M79 component topology, never a second damage counter. Lost continuity
+suppresses transmission impulses while preserving body/shaft motion and driver
+commands. RuntimeWorld owns lifetime, snapshots and ordinary scene/prefab/stream
+references. Strength-free content retains old canonical authoring/save layouts;
+finite strengths use gated participant 4 / retained state 2. The [focused record](evidence/m83/RESULTS.md)
+reports Linux checks and finite-step/geometry bounds. Human acceptance is pending;
+main remains the M82 accepted release.
+
+## Accepted release — M82 human validated
 
 [M82 powertrains](M82_POWERTRAINS.md) adds bounded rotational networks owned by
 RuntimeWorld. Internal shafts carry finite inertia; wheel and body terminals

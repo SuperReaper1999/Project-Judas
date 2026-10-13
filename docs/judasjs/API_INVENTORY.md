@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M82 Experimental candidate public module based on checkpoint `b74906350084ab20d01b09774dfc56711b4d97cb`. M82 human validation is pending; M81 has operator acceptance and M67 human authoring review remains deferred.
+Current M83 Experimental candidate public module based on checkpoint `7bfa1ac3f11221ecdc450a5778023f8aff380c52`. M83 human validation is pending; M82 has operator acceptance and M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -377,7 +377,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 
 - **globalThis.__judas**: Internal native dispatcher; unsupported, not a public API declaration.
 - **globalThis.console**: Alias of exported console; no extra API.
-- **result objects / config / property schema**: Native structured fields (including JointConfiguration.rotationalResistance) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.
+- **result objects / config / property schema**: Native structured fields (including JointConfiguration.rotationalResistance, M83 DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.
 - **types-only exports**: Interfaces/type aliases are tooling only; runtime export comparison excludes them.
 - **setter-only accessors**: TypeScript cannot prohibit reads; docs state these return undefined.
 - **callback ordering / phases**: Implementation traced manually; no AST checker proves temporal semantics.

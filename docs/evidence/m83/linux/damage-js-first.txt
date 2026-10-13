@@ -1,0 +1,5 @@
+M83 mechanical damage JS FAIL after 4: ordinary runtime builds material, dynamic mount and conditional transmission
+PASS registered fixture has an actual non-collinear physical material patch
+PASS normal AssetDatabase registers material and public probe
+PASS ordinary resource path publishes baked material without special native fixture injection
+FAIL ordinary runtime builds material, dynamic mount and conditional transmission

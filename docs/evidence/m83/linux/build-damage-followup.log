@@ -1,0 +1,30 @@
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_icu_build
+[ 29%] Built target judas_quickjs
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_glad
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 35%] Linking CXX static library libjudas_engine.a
+[ 94%] Built target judas_engine
+[ 94%] Building CXX object CMakeFiles/judas_mechanical_damage_tests.dir/tests/MechanicalDamageTests.cpp.o
+[100%] Linking CXX executable judas_mechanical_damage_tests
+[100%] Built target judas_mechanical_damage_tests
+[ 18%] Built target freetype
+[ 18%] Built target judas_app_icon
+[ 25%] Built target judas_icu_build
+[ 31%] Built target judas_quickjs
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_mechanical_damage_script_tests.dir/tests/MechanicalDamageScriptTests.cpp.o
+[100%] Linking CXX executable judas_mechanical_damage_script_tests
+[100%] Built target judas_mechanical_damage_script_tests

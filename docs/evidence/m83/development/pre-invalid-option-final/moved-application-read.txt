@@ -1,0 +1,16 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/tmp/Judas M83 Moved Package/game.judasproj)
+Scene: Mechanical damage / flat (/tmp/Judas M83 Moved Package/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async resources share immutable geometry with independently authored material strength
+PASS bench and mobile vehicle wheels terminate in actual finite material-supported bearing bodies
+PASS third powered bench uses existing M79 cohesive material load topology
+PASS fresh process reads ordinary coupled-damage save bytes
+PASS cold-save comparison observes published physical state before resumed simulation
+PASS cold restoration preserves exact material positions, velocity, plastic rest and failed attachments
+PASS cold restoration preserves exact rotational momentum, commands and authored physical dependencies
+PASS restored physical connection stays broken without a cached script-status shortcut
+PASS restored detached finite carrier physically responds to a new impulse while drive remains disconnected
+PASS normal application startup and shutdown
+M83 application read checks=10 failures=0

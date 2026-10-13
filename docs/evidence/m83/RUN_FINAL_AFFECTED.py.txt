@@ -1,0 +1,20 @@
+from pathlib import Path
+import os, subprocess, time, json
+ROOT=Path.cwd();OUT=ROOT/'docs/evidence/m83/linux';rows=[]
+env=dict(os.environ,SDL_AUDIODRIVER='dummy',XDG_DATA_HOME='/tmp/judas-m83-final-user')
+def run(label,args,timeout=240):
+    start=time.monotonic()
+    with (OUT/(label+'.txt')).open('w') as f:
+        try:code=subprocess.run([str(a) for a in args],env=env,stdout=f,stderr=subprocess.STDOUT,timeout=timeout).returncode
+        except subprocess.TimeoutExpired:code=124
+    rows.append(dict(label=label,args=[str(a) for a in args],exit=code,seconds=time.monotonic()-start))
+    (OUT/'final-affected-cases.json').write_text(json.dumps(rows,indent=2)+'\n');print(label,code,flush=True)
+    if code:raise SystemExit(code)
+for suite in ['mechanical_damage','mechanical_connection','mechanical_damage_script','powertrain_script']:
+    args=[ROOT/'build'/('judas_'+suite+'_tests')]
+    if suite.endswith('_script'):args.append('/tmp/judas-m83-final-error-path-'+suite)
+    run('final-'+suite,args)
+run('api-final',['node','scripts/check_judasjs_api.mjs','--typescript','/tmp/judas-m80-typecheck/node_modules/typescript/lib/typescript.js','--runtime','/tmp/judas-m83-final-error-path-powertrain_script/surface.json'])
+for mode in ['write','read','lifecycle','oblique']:
+    run('application-'+mode,[ROOT/'build/judas_mechanical_damage_application_tests',ROOT/'projects/damage_lab/damage_lab.judasproj',mode,OUT/('application-'+mode)])
+run('final-package-runner',['python3','docs/evidence/m83/RUN_PACKAGE_CHECKS.py.txt'])

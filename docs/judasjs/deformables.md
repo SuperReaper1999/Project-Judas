@@ -11,7 +11,7 @@ scene replacement. Invalid handles throw `ReferenceError` except `valid`.
 
 `state` reports enabled/sleeping/error, mass (kg), world/local-simulation-frame
 AABB `minimum`/`maximum`, node/contact counts, minimum element Jacobian, maximum
-strain and named `groups`. These are snapshots, not mutable solver storage.
+strain, named `groups` and per-attachment observations. These are snapshots, not mutable solver storage.
 
 `raycast(origin, direction, maximum)` queries this instance's **current deformed
 boundary**, returning `{point, normal, distance, location}` or null. Coordinates
@@ -98,7 +98,7 @@ failure threshold. Optional cooked interface strength determines physical fractu
 Current node geometry still supplies contact, rendering and `raycast`; no new
 M44 cast, CharacterMotor blocking or M42 soft-event contract is implied.
 
-New saves use deformables participant 3 and versioned retained streaming state to
+Without finite attachment strengths, new saves use deformables participant 3 and versioned retained streaming state to
 preserve the original material basis independently of a moved owner/support frame.
 Older records still decode, but cannot promise historical owner-rotation
 continuation when that reference was absent. These are internal persistence
@@ -106,3 +106,42 @@ versions; the JavaScript handle API and cooked asset format are unchanged.
 Within a still-connected cohesive component, self-contact is suppressed;
 separated components use normal deformable surface contact. Extreme intact folds
 remain outside the supported envelope.
+
+## M83 material/body connection strength
+
+`attach` accepts optional `forceLimit` (N) and `torqueLimit` (N m), each zero or
+omitted for unlimited strength. Finite limits require an ordinary **dynamic body**
+target. World, bone, static and kinematic prescribed targets have no measured
+finite-mass reaction in this solver and reject finite strength. Rigid fracture
+families retain their M79 section-bond failure path; these limits apply to soft
+material/body patches, including cloth and tetrahedral solids.
+
+The actual signed impulses applied to the body are summed within each substep.
+Force is the resultant divided by substep duration; moment uses the attachment
+patch centroid as its origin. Exceeding either authored limit releases that patch
+at the successfully completed fixed-step boundary. It does not delete the body,
+reset its velocity, teleport a wheel, or apply an additional break impulse.
+Three or more non-collinear attachment nodes can constrain a physical carrier's
+orientation as well as position; deformation therefore changes its actual pose.
+Collision between carrier and material follows ordinary authored layer/mask rules.
+
+`state.attachments` is an array of `{group, enabled, released, active, forceLimit,
+torqueLimit, force, moment, peakForce, peakTorque}`. `force`/`moment` are detached
+world/simulation-space vector snapshots from the last substep. Peaks are maximum
+**signed resultant** demand in the last evaluated fixed step, not sums of individual
+node magnitudes or accumulated gameplay damage. Failed solves can retain partial
+evaluated-substep diagnostics while withholding pending release. `active` means
+both component and attachment enabled and not released; it does not independently
+certify the target's readiness. Reactions are
+reconstructed after load and are zero until reevaluated. Released state, material
+geometry, velocity and plastic rest persist normally. Explicit `reset`/`attach`
+are project-directed reconstruction operations, not automatic healing.
+
+Saves containing finite strengths use deformables participant 4; retained region
+state uses `Judas.DeformableState.2`. Default unlimited content retains participant
+3 / retained-state 1 and unchanged authored attachment rows. Older formats decode
+with unlimited historical strength; no absent strength history is invented.
+
+A [Powertrain connection prerequisite](powertrains.md#physical-connection-prerequisite)
+can require this patch and an intact M79 material path. The next mechanical fixed
+interval observes committed release/fracture. See [M83 model and bounds](../M83_MECHANICAL_DAMAGE.md).

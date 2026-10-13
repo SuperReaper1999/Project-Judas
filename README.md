@@ -17,7 +17,17 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current status — M82 human validated
+## Current Experimental — M83 candidate; human review pending
+
+[M83 coupled mechanical damage](docs/M83_MECHANICAL_DAMAGE.md) connects real
+elastic/plastic material geometry, finite-strength body mounts and explicit
+transmission prerequisites. The editable [Mechanical Damage Lab](projects/damage_lab/damage_lab.judasproj)
+compares material/strength choices, physical bearing misalignment and loss of drive.
+Project JavaScript supplies loads, driver controls and the watch tour. Linux
+validation and limits are recorded in [M83 evidence](docs/evidence/m83/RESULTS.md).
+This does not promote Experimental to main or certify Windows/human acceptance.
+
+## Latest accepted release — M82 human validated
 
 [M82 modular powertrains](docs/M82_POWERTRAINS.md) adds physical rotational
 shafts, torque sources, gearing, clutches, open differentials and brakes, with

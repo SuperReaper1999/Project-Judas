@@ -1,0 +1,3 @@
+21a55e7cffc93ffd6cca17541d8ce9b40b557b40379116ad11e07ae8404440b1  tools/CreateMechanicalDamageLab.py
+048f043e9ceab6f90cfeb6304b0f128e19cb5623490a5e63af103b6fa48eb91a  projects/damage_lab/Scenes/flat.judas
+df4aa35d4979a9e0d9c1e4ddee4fb1479d9f411047b861f2fc8a3eb2a934d63e  projects/damage_lab/Assets/scripts/controller.js

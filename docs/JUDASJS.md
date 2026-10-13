@@ -1,4 +1,9 @@
-# JudasJS — current API reference (M82 human validated)
+# JudasJS — current API reference (M83 Experimental candidate)
+
+M83 adds finite [Deformable attachment strengths/observations](judasjs/deformables.md#m83-materialbody-connection-strength)
+and authored [Powertrain physical prerequisites](judasjs/powertrains.md#physical-connection-prerequisite).
+These extend existing handle snapshots/configuration, with no gameplay damage
+API or new module namespace. Human review is pending; see [model and limits](M83_MECHANICAL_DAMAGE.md).
 
 M82 adds optional [Powertrain networks](judasjs/powertrains.md): real rotational
 inertia, torque sources, gearing, bounded clutches, open differentials and brakes.

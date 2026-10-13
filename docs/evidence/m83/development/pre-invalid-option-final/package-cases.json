@@ -1,0 +1,69 @@
+[
+  {
+    "label": "editor",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/tmp/judas-m83-editor-project/damage_lab.judasproj"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 1.9720515820008586
+  },
+  {
+    "label": "export",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "/tmp/judas-m83-damage-lab-20261013",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.1664282559977437
+  },
+  {
+    "label": "moved-standalone",
+    "args": [
+      "/tmp/Judas M83 Moved Package/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 17.00481089400273
+  },
+  {
+    "label": "moved-application-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/tmp/Judas M83 Moved Package/game.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/moved-application-write"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 6.025728393000463
+  },
+  {
+    "label": "moved-application-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/tmp/Judas M83 Moved Package/game.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/moved-application-read"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 0.815769843000453
+  },
+  {
+    "label": "moved-application-lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/tmp/Judas M83 Moved Package/game.judasproj",
+      "lifecycle",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/moved-application-lifecycle"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 2.7274895329974242
+  }
+]

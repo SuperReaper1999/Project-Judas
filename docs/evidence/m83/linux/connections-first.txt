@@ -1,0 +1,38 @@
+PASS absent prerequisite preserves exact legacy mechanical impulses
+PASS intact material prerequisite transmits physical torque
+PASS severed prerequisite removes only transmission, not source operation
+PASS physical failure does not mutate driver commands
+PASS wrong transient continuity shape fails without a partial impulse
+PASS named physical connection round-trips scene serialization
+PASS material connection is fingerprinted authored content
+PASS legacy powertrain codec emits no new default fields
+PASS bounded graph codec preserves optional connection identity
+PASS material owner participates in ordinary dependency inventory
+PASS generic prefab/reference remap includes material owner
+PASS absent authored material attachment fails preflight
+PASS ordinary body cannot masquerade as material continuity owner
+PASS complete material/wheel/transmission family becomes prefab
+PASS first independently mapped mechanical prefab instance
+PASS second independently mapped mechanical prefab instance
+PASS independent prefab material references point inside each actual instance
+PASS live endpoint/root patches initially share actual fracture connectivity
+PASS material-connected graph drives the real wheel angular DOF
+PASS physical attachment loss publishes immediately without corrupting held commands or shaft momentum
+PASS lost mount disconnects drive even when JS still requests enabled gear
+PASS explicit material-state restoration reconstructs connection rather than caching failure
+PASS disabled material cannot retain hidden mechanical continuity
+PASS reenabling intact material preserves normal dependency availability
+PASS actual fracture path loss disconnects transmission with both endpoint patches still mounted
+PASS unrooted local connection survives an unrelated remote material cut
+PASS forged runtime attachment name fails closed
+PASS missing material entity cannot transmit torque
+PASS cold save restores physical cut and derives disconnected transmission before stepping
+PASS destroyed material identity cannot alias a reused rigid-body slot
+PASS single broken bond retains a genuine alternate material path
+PASS last connecting path loss disconnects the complete rooted attachment patch
+PASS actual asynchronous loader installs colon-named physical connection
+PASS qualified link references real foreign material, not its valid local placeholder
+PASS actual loader rejects foreign ordinary body as material continuity
+PASS invalid qualified material publishes no graph and preserves unrelated world physics
+PASS missing colon-named mechanical link is rejected instead of silently ignored
+M83 mechanical connections checks=37 failures=0

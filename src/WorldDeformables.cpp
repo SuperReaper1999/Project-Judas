@@ -6,11 +6,13 @@
 #include "PerformanceProfiler.h"
 #include "WorldPresentation.h"
 #include <atomic>
+#include <algorithm>
 #include <fstream>
 #include <glm/gtc/matrix_transform.hpp>
 namespace {
 std::atomic<uint64_t> epochs{1};
 constexpr const char* stateHeader="Judas.DeformableState.1\n";
+constexpr const char* strengthStateHeader="Judas.DeformableState.2\n";
 glm::dmat4 matrix(const SceneTransform& t){return glm::translate(glm::dmat4(1),glm::dvec3(t.position))*glm::mat4_cast(glm::dquat(t.rotation));
         }
 }
@@ -145,19 +147,21 @@ bool RuntimeWorld::ResetDeformable(EntityId id,std::string& error){auto* s=Runti
 bool RuntimeWorld::CaptureDeformable(EntityId id,std::string& bytes,std::string& error){auto* s=RuntimeDeformable(id,error);
     if(!s)return false;
     try{SaveArchive a;
-        s->Persist(a);
+        const bool strengths=std::any_of(s->settings.attachments.begin(),s->settings.attachments.end(),[](const auto& attachment){return attachment.forceLimit>0||attachment.torqueLimit>0;});
+        s->Persist(a,true,strengths);
         if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
-        bytes=stateHeader+std::move(a.bytes);
+        bytes=(strengths?strengthStateHeader:stateHeader)+std::move(a.bytes);
         return true;
         }catch(const std::exception& e){error=e.what();
         return false;
         }}
 bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged){auto* s=RuntimeDeformable(id,error,staged);
     if(!s)return false;
-    try{const bool framed=bytes.rfind(stateHeader,0)==0;
+    try{const bool strengths=bytes.rfind(strengthStateHeader,0)==0;
+        const bool framed=strengths||bytes.rfind(stateHeader,0)==0;
         if(bytes.rfind("Judas.DeformableState.",0)==0&&!framed)throw std::runtime_error("unsupported deformable state version");
         SaveArchive a(framed?bytes.substr(std::char_traits<char>::length(stateHeader)):bytes);
-        s->Persist(a,framed);
+        s->Persist(a,framed,strengths);
         if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
         a.Finish();
         ++m_deformables.at(id).revision;

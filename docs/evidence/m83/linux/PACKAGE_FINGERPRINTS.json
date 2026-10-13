@@ -1,0 +1,228 @@
+{
+  "package": "/tmp/judas-m83-damage-lab-final-20261013",
+  "moved": "/tmp/Judas M83 Final Package",
+  "authoredPayloadsExact": true,
+  "canonicalSourcePathMetadata": [
+    "Assets/worlds/lab.judasworld.judasmeta",
+    "Assets/prefabs/ram.judasprefab.judasmeta",
+    "Assets/prefabs/bench.judasprefab.judasmeta",
+    "Assets/prefabs/buggy.judasprefab.judasmeta",
+    "Assets/materials/inner.judasmat.judasmeta",
+    "Assets/materials/outer.judasmat.judasmeta",
+    "Assets/deformables/section.judasdeform.judasmeta",
+    "Assets/deformables/arm.judasdeform.judasmeta",
+    "Assets/fonts/DejaVuSans.ttf.judasmeta",
+    "Assets/ui/lab.judasui.judasmeta",
+    "Assets/scripts/math.js.judasmeta",
+    "Assets/scripts/controller.js.judasmeta",
+    "Assets/models/wheel.obj.judasmeta"
+  ],
+  "movedPackageExact": true,
+  "files": [
+    {
+      "path": "Assets/deformables/arm.judasdeform",
+      "bytes": 12484,
+      "sha256": "cd2561210e18f3575a666193f34a1f2a9f706151e45ad97ebe8342ab1f3c6923"
+    },
+    {
+      "path": "Assets/deformables/arm.judasdeform.judasmeta",
+      "bytes": 115,
+      "sha256": "e0384e9ad888f76b871ebdf7c985e3b5f4d34fae880229b7ef35e6daeeb9ae50"
+    },
+    {
+      "path": "Assets/deformables/section.judasdeform",
+      "bytes": 17581,
+      "sha256": "f3246fda5411ada3310b7152a7679b239a845407c020131abfb77eb40ea1ded9"
+    },
+    {
+      "path": "Assets/deformables/section.judasdeform.judasmeta",
+      "bytes": 119,
+      "sha256": "2623ab77cf00f9838a551d6d5c5bcc24abf72350e2dcd29c619285078e6b694e"
+    },
+    {
+      "path": "Assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "bytes": 102,
+      "sha256": "654f47de6702a04cf8302f4e8bc854d5872ac950b6b7e3a9b5be87f3de7f0163"
+    },
+    {
+      "path": "Assets/fonts/LICENSE.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "Assets/materials/inner.judasmat",
+      "bytes": 323,
+      "sha256": "4bd1bda679b58c1607495b64697cf30b46c7d98b046bcb1e6fc05c8172e45d5a"
+    },
+    {
+      "path": "Assets/materials/inner.judasmat.judasmeta",
+      "bytes": 110,
+      "sha256": "f1b05d63fbc55226862825620b002a6a83c5beed1299afe4039d2265c7130936"
+    },
+    {
+      "path": "Assets/materials/outer.judasmat",
+      "bytes": 315,
+      "sha256": "1f837857470b601099c532c6fdfac907211a52c528e27511e401964a60dd0873"
+    },
+    {
+      "path": "Assets/materials/outer.judasmat.judasmeta",
+      "bytes": 110,
+      "sha256": "5dcdd5d7b00cc3fddaa39177e4cb12cbbefe391830efafadd31c240cf1f9407f"
+    },
+    {
+      "path": "Assets/models/LICENSE.txt",
+      "bytes": 88,
+      "sha256": "560544ce0cfd23b86f96c0dd3f561ab804433f3da9e9fe045daebb1420c7a8ae"
+    },
+    {
+      "path": "Assets/models/wheel.obj",
+      "bytes": 3431,
+      "sha256": "9185b8b54847303a1b313bd762bbdc37fe625a0c1d60948d9ff115dae87ca63e"
+    },
+    {
+      "path": "Assets/models/wheel.obj.judasmeta",
+      "bytes": 98,
+      "sha256": "5ada0e502c4f759c704bc5982670ac9c0cfad1d85684b4e7f5be30c5baa83b98"
+    },
+    {
+      "path": "Assets/prefabs/bench.judasprefab",
+      "bytes": 4670,
+      "sha256": "a4ca42eedf39ea43b8f9ad00f2c99e2e9721b3d5035c254586c7270b927ff814"
+    },
+    {
+      "path": "Assets/prefabs/bench.judasprefab.judasmeta",
+      "bytes": 109,
+      "sha256": "cdc35cb0e4a6f7377c2e253b1fa423e9e5cfe0568c0fddec204140782e07b1c8"
+    },
+    {
+      "path": "Assets/prefabs/buggy.judasprefab",
+      "bytes": 15833,
+      "sha256": "543652e34841dc5fdfc68a57f13eba044f2d794fa5b0159b1887adc3629d954c"
+    },
+    {
+      "path": "Assets/prefabs/buggy.judasprefab.judasmeta",
+      "bytes": 109,
+      "sha256": "1b2ff450bd9091cba55388d9fe0f04e11774910011b65c8862533fa5c4f52910"
+    },
+    {
+      "path": "Assets/prefabs/ram.judasprefab",
+      "bytes": 767,
+      "sha256": "fa9e29329d1058a9c1a086a561bee0b397c9f478e2325e37021df22ddc3c49a9"
+    },
+    {
+      "path": "Assets/prefabs/ram.judasprefab.judasmeta",
+      "bytes": 107,
+      "sha256": "2bc9590a391bb0d8860eee76fd7ef899f2fcc97f03aec0584d1e6f6a5930c047"
+    },
+    {
+      "path": "Assets/scripts/controller.js",
+      "bytes": 9521,
+      "sha256": "5cc7f4e6cf5a177591b37c360726a27d061e2abf88562ac96202476a0a12bf97"
+    },
+    {
+      "path": "Assets/scripts/controller.js.judasmeta",
+      "bytes": 105,
+      "sha256": "0add76444bbfb5ec5a5c647a14352f90b8f1a565e483f0098de9bd0e66bb5074"
+    },
+    {
+      "path": "Assets/scripts/math.js",
+      "bytes": 1050,
+      "sha256": "a1755da3b2fb7e9c56b981e461affe817a9d98478676c5f78d1daa83c2f32173"
+    },
+    {
+      "path": "Assets/scripts/math.js.judasmeta",
+      "bytes": 99,
+      "sha256": "733293b71fd941f27244a9360432ae0d0c5a46bfcbc71136985386d618097ca6"
+    },
+    {
+      "path": "Assets/ui/lab.judasui",
+      "bytes": 3698,
+      "sha256": "752950ca96c60be394f1f1cc040d5aa86e7389fda5263cc6784dec04e3089ce9"
+    },
+    {
+      "path": "Assets/ui/lab.judasui.judasmeta",
+      "bytes": 94,
+      "sha256": "e74b1f199324ffe0b99620027c0f8246e34653c84ba6911b784a71f7c7572b25"
+    },
+    {
+      "path": "Assets/worlds/lab.judasworld",
+      "bytes": 138,
+      "sha256": "af5baf584278e7e861c772528043b7e53d6550e2a838190329a40b8fed6bb9dd"
+    },
+    {
+      "path": "Assets/worlds/lab.judasworld.judasmeta",
+      "bytes": 104,
+      "sha256": "cd64011015056dc2fe63f9739f01e0a6a772734316b96bd06fd78eda3708c019"
+    },
+    {
+      "path": "DEPENDENCIES.json",
+      "bytes": 6202,
+      "sha256": "0440b5be1827a0ab894d9e10941f73d6c3f259f37a70bff0a85be53d26995517"
+    },
+    {
+      "path": "RUNTIME_REQUIREMENTS.txt",
+      "bytes": 747,
+      "sha256": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416"
+    },
+    {
+      "path": "Scenes/annex.judas",
+      "bytes": 5206,
+      "sha256": "863f1fd0f6553c35015e1f73924595904c7f435254b00dbd9233edf425b0ac4f"
+    },
+    {
+      "path": "Scenes/flat.judas",
+      "bytes": 47111,
+      "sha256": "30462d5cc2c7f3ff61342e484eb5a12ab1ebacb1b443bc1291c49de3642363ff"
+    },
+    {
+      "path": "Scenes/oblique.judas",
+      "bytes": 47496,
+      "sha256": "eb409888a4849ab6db89a404432f988f79049726271b10fc45e55afeee194b29"
+    },
+    {
+      "path": "engine/assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "engine/licenses/DejaVuSans.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "engine/licenses/Judas.txt",
+      "bytes": 1079,
+      "sha256": "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d"
+    },
+    {
+      "path": "engine/third_party/RUNTIME_NOTICES.txt",
+      "bytes": 59157,
+      "sha256": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536"
+    },
+    {
+      "path": "game-icon.png",
+      "bytes": 577211,
+      "sha256": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14"
+    },
+    {
+      "path": "game.judasproj",
+      "bytes": 1263,
+      "sha256": "e07d1c5f033ca447dc1d7ca522eb44c98ecd43d8a4a7dc0cabac0e57322459c0"
+    },
+    {
+      "path": "judas",
+      "bytes": 52377600,
+      "sha256": "d67342e14dec3b5e304e1ea2838ac64402287499704c6ba9146f298d7eb7b803"
+    },
+    {
+      "path": "judas-package.txt",
+      "bytes": 115,
+      "sha256": "105d33f3ce34ac418cd2b48916d30d2032450a69bb1652e8da202578f87bb27e"
+    }
+  ]
+}

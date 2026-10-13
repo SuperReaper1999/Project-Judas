@@ -190,6 +190,9 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     world.UpdateRagdolls(fixedDeltaTime);
     world.UpdateSockets();
     world.UpdateDeformables(fixedDeltaTime);
+    // Damage commits after material solving. Refresh only physical continuity;
+    // do not advance shaft angles or repeat the mechanical impulse solve.
+    world.PublishPowertrainConnections();
     world.UpdateVisualParticles(fixedDeltaTime);
     world.AdvanceSimulationTime(fixedDeltaTime);
 

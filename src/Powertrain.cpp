@@ -124,6 +124,8 @@ bool ValidatePowertrainSettings(const PowertrainSettings& s,std::string& error){
         if(!Name(link.name)||!linkNames.insert(link.name).second||int(link.kind)<0||int(link.kind)>2||link.input>=n||link.output>=n||link.input==link.output||
             (link.kind==PowertrainLinkKind::Differential&&(link.outputB>=n||link.outputB==link.input||link.outputB==link.output))||
             !Finite(link.ratio)||std::abs(link.ratio)<1e-6||std::abs(link.ratio)>1e6||!Finite(link.maxTorque)||link.maxTorque<0){error="invalid powertrain gear, clutch or differential";return false;}
+        if((link.connection.owner&&(!Name(link.connection.attachment)||(!link.connection.rootAttachment.empty()&&!Name(link.connection.rootAttachment))))||
+            (!link.connection.owner&&(!link.connection.attachment.empty()||!link.connection.rootAttachment.empty()))){error="invalid powertrain material connection identity";return false;}
     }
     for(const auto& brake:s.brakes)if(!Name(brake.name)||!brakeNames.insert(brake.name).second||brake.shaft>=n||!Finite(brake.maxTorque)||brake.maxTorque<0){error="invalid powertrain brake";return false;}
     return true;
@@ -145,7 +147,7 @@ bool PowertrainSettingsEqual(const PowertrainSettings& a,const PowertrainSetting
     if(a.enabled!=b.enabled||a.shafts.size()!=b.shafts.size()||a.sources.size()!=b.sources.size()||a.links.size()!=b.links.size()||a.brakes.size()!=b.brakes.size())return false;
     for(unsigned i=0;i<a.shafts.size();++i){const auto& x=a.shafts[i];const auto& y=b.shafts[i];if(x.name!=y.name||x.kind!=y.kind||x.inertia!=y.inertia||x.initialAngularVelocity!=y.initialAngularVelocity||x.viscousDrag!=y.viscousDrag||x.target!=y.target||x.bearing!=y.bearing||x.axis!=y.axis)return false;}
     for(unsigned i=0;i<a.sources.size();++i){const auto& x=a.sources[i];const auto& y=b.sources[i];if(x.name!=y.name||x.shaft!=y.shaft||x.kind!=y.kind||x.maxTorque!=y.maxTorque||x.maxPower!=y.maxPower||x.starterTorque!=y.starterTorque||x.torqueCurve.size()!=y.torqueCurve.size())return false;for(unsigned j=0;j<x.torqueCurve.size();++j)if(x.torqueCurve[j].rpm!=y.torqueCurve[j].rpm||x.torqueCurve[j].torque!=y.torqueCurve[j].torque)return false;}
-    for(unsigned i=0;i<a.links.size();++i){const auto& x=a.links[i];const auto& y=b.links[i];if(x.name!=y.name||x.kind!=y.kind||x.input!=y.input||x.output!=y.output||x.outputB!=y.outputB||x.ratio!=y.ratio||x.maxTorque!=y.maxTorque)return false;}
+    for(unsigned i=0;i<a.links.size();++i){const auto& x=a.links[i];const auto& y=b.links[i];if(x.name!=y.name||x.kind!=y.kind||x.input!=y.input||x.output!=y.output||x.outputB!=y.outputB||x.ratio!=y.ratio||x.maxTorque!=y.maxTorque||x.connection.owner!=y.connection.owner||x.connection.attachment!=y.connection.attachment||x.connection.rootAttachment!=y.connection.rootAttachment)return false;}
     for(unsigned i=0;i<a.brakes.size();++i){const auto& x=a.brakes[i];const auto& y=b.brakes[i];if(x.name!=y.name||x.shaft!=y.shaft||x.maxTorque!=y.maxTorque)return false;}return true;
 }
 
@@ -160,7 +162,7 @@ void PowertrainInstance::Reset(const PowertrainSettings& value){
     linkBudgetUsed.assign(settings.links.size(),0);brakeBudgetUsed.assign(settings.brakes.size(),0);
 }
 std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>& velocity,
-    const std::vector<double>& w,const std::vector<bool>& available,bool integrateSources){
+    const std::vector<double>& w,const std::vector<bool>& available,bool integrateSources,const std::vector<bool>& linkConnected){
     const unsigned n=unsigned(settings.shafts.size());std::vector<double> zero(n,0);
     if(!integrateSources&&!state.converged)return zero;
     const auto before=state;const auto beforeLinkBudget=linkBudgetUsed,beforeBrakeBudget=brakeBudgetUsed;
@@ -176,7 +178,8 @@ std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>
         state.available=false;state.converged=false;state.diagnostic=message;return zero;
     };
     if(!ValidatePowertrainSettings(settings,error)||!ValidatePowertrainCommand(settings,command,error))return fail(error);
-    if(!Finite(dt)||dt<=0||velocity.size()!=n||available.size()!=n||w.size()!=n*n||state.shafts.size()!=n)return fail("invalid powertrain step shape or interval");
+    if(!Finite(dt)||dt<=0||velocity.size()!=n||available.size()!=n||w.size()!=n*n||state.shafts.size()!=n||(!linkConnected.empty()&&linkConnected.size()!=settings.links.size()))return fail("invalid powertrain step shape or interval");
+    for(unsigned i=0;i<state.links.size();++i)state.links[i].connected=linkConnected.empty()||linkConnected[i];
     std::vector<unsigned> active;
     for(unsigned i=0;i<n;++i){state.shafts[i].available=available[i];if(integrateSources)state.shafts[i].torque=0;state.shafts[i].angularVelocity=velocity[i];if(!Finite(velocity[i]))return fail("nonfinite powertrain velocity");if(available[i])active.push_back(i);}
     for(double value:w)if(!Finite(value))return fail("nonfinite powertrain inverse mass");
@@ -207,7 +210,7 @@ std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>
         if(!(inverse>0)||!Finite(inverse))return false;
         row.scale=std::sqrt(inverse);for(auto& value:row.j)value/=row.scale;if(Finite(row.limit))row.limit*=row.scale;rows.push_back(std::move(row));return true;};
     for(unsigned i=0;i<settings.links.size();++i){const auto& link=settings.links[i];const auto& control=command.links[i];
-        if(!control.enabled||!available[link.input]||!available[link.output]||(link.kind==PowertrainLinkKind::Differential&&!available[link.outputB]))continue;
+        if(!state.links[i].connected||!control.enabled||!available[link.input]||!available[link.output]||(link.kind==PowertrainLinkKind::Differential&&!available[link.outputB]))continue;
         if(link.kind==PowertrainLinkKind::Clutch&&(control.engagement==0||link.maxTorque==0))continue;
         Row row;row.j.assign(n,0);row.link=int(i);const double ratio=control.overrideRatio?control.ratio:link.ratio;
         if(link.kind==PowertrainLinkKind::Differential){row.j[link.input]=-2*ratio;row.j[link.output]=row.j[link.outputB]=1;}
@@ -239,7 +242,7 @@ std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>
     // Even a capacity-exhausted clutch remains an active, slipping coupling;
     // its telemetry must not imply that a skipped zero-cap row is locked.
     for(unsigned i=0;i<settings.links.size();++i){const auto& link=settings.links[i];const auto& control=command.links[i];auto& result=state.links[i];
-        result.active=control.enabled&&available[link.input]&&available[link.output]&&(link.kind!=PowertrainLinkKind::Differential||available[link.outputB])&&(link.kind!=PowertrainLinkKind::Clutch||control.engagement>0);
+        result.active=result.connected&&control.enabled&&available[link.input]&&available[link.output]&&(link.kind!=PowertrainLinkKind::Differential||available[link.outputB])&&(link.kind!=PowertrainLinkKind::Clutch||control.engagement>0);
         if(!result.active){result.slip=0;result.saturated=false;continue;}
         const double ratio=control.overrideRatio?control.ratio:link.ratio;
         result.slip=state.shafts[link.output].angularVelocity-ratio*state.shafts[link.input].angularVelocity;

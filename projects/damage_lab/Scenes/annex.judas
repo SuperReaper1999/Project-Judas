@@ -1,0 +1,177 @@
+JudasScene 3
+settings
+  name "Retained coupled damage specimen"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 10
+end
+object 1 "Plastic suspension bench"
+  position 35 1.1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 1.1 0.45
+  render.color 0.3 0.37 0.43
+  body static box
+  body.half-extents 0.65 1.1 0.45
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.25,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"1\",\"axis\":[1,0,0]},{\"name\":\"wheel\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"4\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":8,\"maxPower\":250,\"starterTorque\":0}],\"links\":[{\"name\":\"drive\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":40,\"connection\":{\"owner\":\"3\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel\",\"shaft\":1,\"maxTorque\":30}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 2 "Dynamic bearing and real wheel carrier"
+  parent 1
+  position 1.8 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.14 0.2
+  render.color 0.48 0.55 0.61
+  body dynamic box
+  body.half-extents 0.12 0.14 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 3 "Plastic material path"
+  parent 1
+  position 1.2 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.96 0.52 0.14
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 1 \"\" 1.2 -0.35 0 1 \"right\" 1 2 \"\" -0.6 0 0 1"
+  deformable.attachmentLimits "1 \"right\" 180 0"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 4 "Wheel contact follows bending bearing"
+  parent 2
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .07 .09
+  wheel.enabled true
+  wheel.chassis 2
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .30
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1000
+  wheel.damping 80
+  wheel.spinInertia .15
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 5 "Visible physical axle orientation"
+  parent 4
+  position 0.16 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.2 0.035
+  render.color 0.95 0.85 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 9 "Annex floor"
+  position 35 -0.3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 5 0.3 5
+  render.color 0.24 0.29 0.32
+  body static box
+  body.half-extents 5 0.3 5
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end

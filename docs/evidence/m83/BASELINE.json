@@ -1,0 +1,7 @@
+{
+  "checkpoint": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "branch": "Experimental",
+  "humanValidation": "pending",
+  "excludedUntrackedEntries": 75,
+  "excludedNote": "The exclusion list includes prior untracked historical artifacts and setup-generated Python bytecode; none is staged. This is an exclusion inventory, not a historical byte-integrity manifest."
+}

@@ -1,0 +1,102 @@
+[
+  {
+    "label": "final-mechanical_damage",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.016050673999416176
+  },
+  {
+    "label": "final-mechanical_connection",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_connection_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06405245299902163
+  },
+  {
+    "label": "final-mechanical_damage_script",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_script_tests",
+      "/tmp/judas-m83-final-error-path-mechanical_damage_script"
+    ],
+    "exit": 0,
+    "seconds": 0.031934960003127344
+  },
+  {
+    "label": "final-powertrain_script",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_script_tests",
+      "/tmp/judas-m83-final-error-path-powertrain_script"
+    ],
+    "exit": 0,
+    "seconds": 0.06407760200090706
+  },
+  {
+    "label": "api-final",
+    "args": [
+      "node",
+      "scripts/check_judasjs_api.mjs",
+      "--typescript",
+      "/tmp/judas-m80-typecheck/node_modules/typescript/lib/typescript.js",
+      "--runtime",
+      "/tmp/judas-m83-final-error-path-powertrain_script/surface.json"
+    ],
+    "exit": 0,
+    "seconds": 1.3173680870022508
+  },
+  {
+    "label": "application-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/application-write"
+    ],
+    "exit": 0,
+    "seconds": 6.3379979799974535
+  },
+  {
+    "label": "application-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/application-read"
+    ],
+    "exit": 0,
+    "seconds": 0.7654562440002337
+  },
+  {
+    "label": "application-lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "lifecycle",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/application-lifecycle"
+    ],
+    "exit": 0,
+    "seconds": 2.6790391959984845
+  },
+  {
+    "label": "application-oblique",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_damage_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj",
+      "oblique",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83/linux/application-oblique"
+    ],
+    "exit": 0,
+    "seconds": 6.291079788999923
+  },
+  {
+    "label": "final-package-runner",
+    "args": [
+      "python3",
+      "docs/evidence/m83/RUN_PACKAGE_CHECKS.py.txt"
+    ],
+    "exit": 0,
+    "seconds": 28.84741741799735
+  }
+]

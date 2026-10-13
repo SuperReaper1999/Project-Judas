@@ -169,3 +169,13 @@ interactive content. See [command semantics and lifecycle](entities.md#kinematic
 `judas_signal_tests` through the ordinary VM. Its shared registration helper supports
 start and modern restore without resetting counters; see [signals](signals.md) for
 bounds, transient-save semantics and paused-lane delivery.
+
+## Coupled mechanical damage (M83)
+
+[mechanical-damage.js](examples/mechanical-damage.js) reads actual attachment
+reactions and physical transmission availability, then applies an ordinary body
+impulse from logical input. It does not assign a damaged pose or disable a drive
+to fake damage. Configure the named material/physical connection in content; see
+[Deformables](deformables.md#m83-materialbody-connection-strength) and
+[Powertrains](powertrains.md#physical-connection-prerequisite). The exact example
+executes in the focused M83 QuickJS fixture.

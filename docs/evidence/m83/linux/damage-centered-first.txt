@@ -1,0 +1,36 @@
+PASS finite unloaded material/body connection remains intact and calm
+PASS actual impact reaction exceeds weak authored capacity while strong control survives
+PASS capacity does not manufacture or retune the measured physical load
+PASS connection failure publishes after the complete physical step without teleport or extra impulse
+PASS unlimited legacy and finite strong connection share identical movement mathematics
+IMPACT peak_force_N=213.441101 peak_torque_Nm=0.00769469638 momentum_error=2.0615491e-07
+PASS body/material impact exchange conserves measured total linear momentum within float body precision
+PASS released patch stops transmitting subsequent loads while connected control still reacts
+PASS detached component retains finite mass and responds to ordinary later impulse
+PASS ordinary sustained material force can overload a body attachment without a scripted break
+COUPLE peak_force_N=0.0803219489 peak_torque_Nm=20.9579836
+PASS actual rotational load fails torque capacity independently of a force-only rule
+PASS symmetric force couple measures torque without inventing force from individual impulse magnitudes
+PASS arbitrarily oriented physical impact uses the same generic finite-strength mechanism
+TRANSLATED_COUPLE torque_error_Nm=3.99201703e-08
+PASS patch-centroid moment does not turn ordinary translation into false damage
+PASS cold material restore preserves exact physical state, irreversible release and authored strength
+PASS cold restore reconstructs reaction observations instead of persisting solver diagnostics
+PASS restored disconnected material reaches the same subsequent physical endpoint
+PASS old participant layout decodes unchanged with explicitly unlimited historical strength
+PASS legacy attachment field bytes are independent of new optional limits
+PASS nonfinite saved finite strength is rejected rather than silently restoring a connection
+PASS truncated strength-aware physical state fails cleanly
+PASS optional generic attachment strengths round-trip through ordinary authored properties
+PASS default legacy authoring emits no new property or changed attachment row
+PASS duplicate finite patch strength is rejected
+PASS unknown material patch strength cannot bind by accidental identity
+PASS negative strength is invalid
+PASS nonfinite strength is invalid
+PASS unmeasured prescribed world/bone frame cannot claim finite dynamic strength
+PASS finite patch refuses a static target before mutating physical geometry
+PASS unlimited static compatibility root remains valid
+PASS disabled material does not acquire load or failure from an unevaluated attachment
+FAILED_STEP reaction_N=87.0633064 error=deformable element inversion; outside supported deformation envelope; instance stopped
+PASS failed out-of-envelope solve cannot publish a pending connection failure
+M83 material-attachment checks=31 failures=0

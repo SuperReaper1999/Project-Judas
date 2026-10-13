@@ -28,6 +28,10 @@ struct DeformableAttachment {
     uint64_t target=0;
     glm::dvec3 offset{0};
     bool enabled=true;
+    // Optional finite strength of a physical body/material patch. Zero keeps
+    // the legacy unlimited connection. Limits are resultant N and N m, not
+    // per-node thresholds or a gameplay damage counter.
+    double forceLimit=0,torqueLimit=0;
     void Save(SaveArchive&);
 };
 struct DeformableSettings {
@@ -89,6 +93,10 @@ struct DeformableStats {size_t nodes=0,triangles=0,tets=0,contacts=0,candidates=
 // Targets are sampled by RuntimeWorld AFTER ordinary pose resolution, once per
 // fixed step. Prescribed targets never receive reaction; Body targets do.
 struct DeformableTarget {bool valid=false;glm::dmat4 previous{1},current{1};BodyHandle body;};
+struct DeformableAttachmentState {
+    glm::dvec3 force{0},moment{0}; // Last substep's actual body reaction, world-space.
+    double peakForce=0,peakTorque=0; // Maximum resultant demand in the completed fixed step.
+};
 class DeformableInstance {
 public:
     std::shared_ptr<const DeformableAsset> asset;
@@ -97,6 +105,7 @@ public:
     std::vector<glm::dvec3> positions,previous,velocities;
     std::vector<glm::dmat3> plasticRest;
     std::vector<uint8_t> released;
+    std::vector<DeformableAttachmentState> attachmentState;
     bool sleeping=false;double quietSeconds=0;
     std::string error;
     DeformableStats stats;
@@ -116,7 +125,7 @@ public:
     void Step(double dt,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&);
     void MapRender(double alpha,MeshData&)const;
     DeformableHit Raycast(glm::dvec3 origin,glm::dvec3 direction,double maximum)const;
-    void Persist(SaveArchive&,bool materialFrame=true);
+    void Persist(SaveArchive&,bool materialFrame=true,bool attachmentLimits=true);
     glm::dvec3 Minimum()const;
     glm::dvec3 Maximum()const;
     double Mass()const;
@@ -126,6 +135,8 @@ public:
 private:
     std::vector<double> inverseMass,mass,lambda,volumeLambda;
     std::vector<glm::dvec3> start,forces,lastGravity;
+    std::vector<glm::dvec3> attachmentImpulse,attachmentMoment;
+    std::vector<uint8_t> attachmentPending;
     glm::dmat4 initial{1};
     struct SurfaceNode {glm::dvec3 low{0},high{0};unsigned left=~0u,right=~0u,primitive=~0u;};
     std::vector<SurfaceNode> faceTree,edgeTree;

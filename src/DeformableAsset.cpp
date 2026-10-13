@@ -70,7 +70,7 @@ bool ValidDeformableSettings(const DeformableSettings& s,std::string& error){
         return false;
         }
     std::set<std::string> groups;
-    for(auto& a:s.attachments)if(a.group.empty()||!groups.insert(a.group).second||int(a.kind)<0||int(a.kind)>2||!finite(a.offset)||(a.kind!=DeformableAttachment::Kind::World&&!a.target)||(a.kind==DeformableAttachment::Kind::Bone&&a.joint.empty())){error="invalid/duplicate deformable attachment";
+    for(auto& a:s.attachments)if(a.group.empty()||!groups.insert(a.group).second||int(a.kind)<0||int(a.kind)>2||!finite(a.offset)||(a.kind!=DeformableAttachment::Kind::World&&!a.target)||(a.kind==DeformableAttachment::Kind::Bone&&a.joint.empty())||!std::isfinite(a.forceLimit)||!std::isfinite(a.torqueLimit)||a.forceLimit<0||a.torqueLimit<0||((a.forceLimit>0||a.torqueLimit>0)&&a.kind!=DeformableAttachment::Kind::Body)){error="invalid/duplicate deformable attachment or finite strength";
         return false;
         }
     return true;
@@ -105,13 +105,18 @@ std::map<std::string,std::string> DeformableProperties(const SceneObject& o){
     a<<std::setprecision(17)<<s.attachments.size();
     for(auto& x:s.attachments)a<<' '<<std::quoted(x.group)<<' '<<int(x.kind)<<' '<<x.target<<' '<<std::quoted(x.joint)<<' '<<x.offset.x<<' '<<x.offset.y<<' '<<x.offset.z<<' '<<x.enabled;
     p["deformable.attachments"]=a.str();
+    unsigned finiteCount=0;for(const auto& x:s.attachments)if(x.forceLimit>0||x.torqueLimit>0)++finiteCount;
+    if(finiteCount){std::ostringstream limits;limits<<std::setprecision(17)<<finiteCount;
+        for(const auto& x:s.attachments)if(x.forceLimit>0||x.torqueLimit>0)limits<<' '<<std::quoted(x.group)<<' '<<x.forceLimit<<' '<<x.torqueLimit;
+        p["deformable.attachmentLimits"]=limits.str();
+    }
     return p;
 }
 bool ApplyDeformableProperties(const std::map<std::string,std::string>& p,SceneObject& o,std::string& error){
     if(p.empty()){o.deformable.reset();
         return true;
         }DeformableSettings s;
-    SceneObject probe;probe.deformable=s;auto known=DeformableProperties(probe);for(const auto& [key,value]:p){(void)value;if(!known.count(key)){error="unknown deformable property: "+key;return false;}}
+    SceneObject probe;probe.deformable=s;auto known=DeformableProperties(probe);known["deformable.attachmentLimits"]={};for(const auto& [key,value]:p){(void)value;if(!known.count(key)){error="unknown deformable property: "+key;return false;}}
     auto read=[&](const char* key,auto& v){auto it=p.find(key);
         if(it==p.end()){error=std::string("missing ")+key;
             return false;
@@ -160,7 +165,19 @@ bool ApplyDeformableProperties(const std::map<std::string,std::string>& p,SceneO
         if(!(in>>std::quoted(a.group)>>kind>>a.target>>std::quoted(a.joint)>>a.offset.x>>a.offset.y>>a.offset.z>>a.enabled))return false;
         a.kind=DeformableAttachment::Kind(kind);
         }in>>std::ws;
-    if(!in.eof()||!ValidDeformableSettings(s,error))return false;
+    if(!in.eof())return false;
+    if(auto limits=p.find("deformable.attachmentLimits");limits!=p.end()){
+        std::istringstream values(limits->second);unsigned count=0;std::set<std::string> seen;
+        if(!(values>>count)||count==0||count>s.attachments.size()){error="invalid material attachment strength count";return false;}
+        for(unsigned i=0;i<count;++i){std::string group;double force=0,torque=0;
+            if(!(values>>std::quoted(group)>>force>>torque)||!seen.insert(group).second){error="invalid/duplicate material attachment strength";return false;}
+            auto found=std::find_if(s.attachments.begin(),s.attachments.end(),[&](const auto& a){return a.group==group;});
+            if(found==s.attachments.end()){error="material attachment strength names an unknown group";return false;}
+            found->forceLimit=force;found->torqueLimit=torque;
+        }
+        values>>std::ws;if(!values.eof()){error="trailing material attachment strength fields";return false;}
+    }
+    if(!ValidDeformableSettings(s,error))return false;
     o.deformable=s;
     if(DeformableProperties(o).size()!=p.size()){error="unknown deformable property";
         return false;

@@ -1,0 +1,1558 @@
+JudasScene 3
+settings
+  name "Mechanical damage / oblique"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 3000
+end
+object 1 "Ordinary selected uniform gravity"
+  position 0 0 0
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 250
+end
+
+object 3 "Ordinary collision floor"
+  position 0.181555922 -0.23882514 0
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 25 0.3 28
+  render.color 0.12 0.19 0.23
+  body static box
+  body.half-extents 25 0.3 28
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Project-owned loading, driving, camera and UI"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "83838383838383838383838300000002"
+  script.0.enabled true
+  script.0.properties "{}"
+  ui.asset "83838383838383838383838300000004"
+  ui.name "lab"
+  ui.enabled true
+end
+
+object 100 "Plastic suspension bench"
+  position -6.23829164 -3.36061266 0
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 1.1 0.45
+  render.color 0.3 0.37 0.43
+  body static box
+  body.half-extents 0.65 1.1 0.45
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.25,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"100\",\"axis\":[1,0,0]},{\"name\":\"wheel\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"103\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":8,\"maxPower\":250,\"starterTorque\":0}],\"links\":[{\"name\":\"drive\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":40,\"connection\":{\"owner\":\"102\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel\",\"shaft\":1,\"maxTorque\":30}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 101 "Dynamic bearing and real wheel carrier"
+  parent 100
+  position 1.8 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.14 0.2
+  render.color 0.48 0.55 0.61
+  body dynamic box
+  body.half-extents 0.12 0.14 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 102 "Plastic material path"
+  parent 100
+  position 1.2 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.96 0.52 0.14
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 100 \"\" 1.2 -0.35 0 1 \"right\" 1 101 \"\" -0.6 0 0 1"
+  deformable.attachmentLimits "1 \"right\" 180 0"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 103 "Wheel contact follows bending bearing"
+  parent 101
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .07 .09
+  wheel.enabled true
+  wheel.chassis 101
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .30
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1000
+  wheel.damping 80
+  wheel.spinInertia .15
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 104 "Visible physical axle orientation"
+  parent 103
+  position 0.16 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.2 0.035
+  render.color 0.95 0.85 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 200 "Strong material comparison bench"
+  position -0.665705046 0.875692178 0
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 1.1 0.45
+  render.color 0.3 0.37 0.43
+  body static box
+  body.half-extents 0.65 1.1 0.45
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.25,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"200\",\"axis\":[1,0,0]},{\"name\":\"wheel\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"203\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":8,\"maxPower\":250,\"starterTorque\":0}],\"links\":[{\"name\":\"drive\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":40,\"connection\":{\"owner\":\"202\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel\",\"shaft\":1,\"maxTorque\":30}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 201 "Dynamic bearing and real wheel carrier"
+  parent 200
+  position 1.8 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.14 0.2
+  render.color 0.48 0.55 0.61
+  body dynamic box
+  body.half-extents 0.12 0.14 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 202 "Elastic control"
+  parent 200
+  position 1.2 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.15 0.69 0.6
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 200 \"\" 1.2 -0.35 0 1 \"right\" 1 201 \"\" -0.6 0 0 1"
+  deformable.attachmentLimits "1 \"right\" 3000 0"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 203 "Wheel contact follows bending bearing"
+  parent 201
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .07 .09
+  wheel.enabled true
+  wheel.chassis 201
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .30
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1000
+  wheel.damping 80
+  wheel.spinInertia .15
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 204 "Visible physical axle orientation"
+  parent 203
+  position 0.16 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.2 0.035
+  render.color 0.95 0.85 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 300 "Cohesive load path bench"
+  position 4.90688154 5.11199702 0
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 1.1 0.45
+  render.color 0.3 0.37 0.43
+  body static box
+  body.half-extents 0.65 1.1 0.45
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.25,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"300\",\"axis\":[1,0,0]},{\"name\":\"wheel\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"303\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":8,\"maxPower\":250,\"starterTorque\":0}],\"links\":[{\"name\":\"drive\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":40,\"connection\":{\"owner\":\"302\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel\",\"shaft\":1,\"maxTorque\":30}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 301 "Dynamic bearing and real wheel carrier"
+  parent 300
+  position 1.8 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.14 0.2
+  render.color 0.48 0.55 0.61
+  body dynamic box
+  body.half-extents 0.12 0.14 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 302 "Cohesive material path"
+  parent 300
+  position 1.05 -0.35 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.13 0.18
+  render.color 0.65 0.34 0.81
+  deformable.asset "83838383838383838383838300000007"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 300 \"\" 1.05 -0.35 0 1 \"right\" 1 301 \"\" -0.75 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 303 "Wheel contact follows bending bearing"
+  parent 301
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .07 .09
+  wheel.enabled true
+  wheel.chassis 301
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .30
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1000
+  wheel.damping 80
+  wheel.spinInertia .15
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 304 "Visible physical axle orientation"
+  parent 303
+  position 0.16 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.2 0.035
+  render.color 0.95 0.85 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 500 "Yielding suspension buggy"
+  position -4.54929421 -2.27761326 12
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 0.62 0.18 1.05
+  render.color 0.94 0.49 0.16
+  body dynamic box
+  body.half-extents 0.62 0.18 1.05
+  body.mass 100
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.3,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"500\",\"axis\":[1,0,0]},{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"501\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"502\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"503\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"504\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":30,\"maxPower\":1800,\"starterTorque\":0}],\"links\":[{\"name\":\"drive1\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"520\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive2\",\"kind\":\"clutch\",\"input\":0,\"output\":2,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"521\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}},{\"name\":\"drive3\",\"kind\":\"clutch\",\"input\":0,\"output\":3,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"522\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive4\",\"kind\":\"clutch\",\"input\":0,\"output\":4,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"523\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":1,\"maxTorque\":60},{\"name\":\"wheel2\",\"shaft\":2,\"maxTorque\":60},{\"name\":\"wheel3\",\"shaft\":3,\"maxTorque\":60},{\"name\":\"wheel4\",\"shaft\":4,\"maxTorque\":60}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 510 "Finite suspension carrier / wheel bearing"
+  parent 500
+  position -1.38 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 520 "Plastic arm / limited carrier mount"
+  parent 500
+  position -0.78 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.94 0.49 0.16
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 500 \"\" -0.78 -0.05 -0.8 1 \"left\" 1 510 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 350 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 501 "Wheel / bearing follows actual carrier body"
+  parent 510
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 510
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 540 "Wheel rotation stripe"
+  parent 501
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 511 "Finite suspension carrier / wheel bearing"
+  parent 500
+  position 1.38 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 521 "Plastic arm / limited carrier mount"
+  parent 500
+  position 0.78 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.94 0.49 0.16
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 500 \"\" 0.78 -0.05 -0.8 1 \"right\" 1 511 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 350 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 502 "Wheel / bearing follows actual carrier body"
+  parent 511
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 511
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 541 "Wheel rotation stripe"
+  parent 502
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 512 "Finite suspension carrier / wheel bearing"
+  parent 500
+  position -1.38 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 522 "Plastic arm / limited carrier mount"
+  parent 500
+  position -0.78 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.94 0.49 0.16
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 500 \"\" -0.78 -0.05 0.8 1 \"left\" 1 512 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 350 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 503 "Wheel / bearing follows actual carrier body"
+  parent 512
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 512
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 542 "Wheel rotation stripe"
+  parent 503
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 513 "Finite suspension carrier / wheel bearing"
+  parent 500
+  position 1.38 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 523 "Plastic arm / limited carrier mount"
+  parent 500
+  position 0.78 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.94 0.49 0.16
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "5e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0.04"
+  deformable.material.plasticRate "1.5"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 500 \"\" 0.78 -0.05 0.8 1 \"right\" 1 513 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 350 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 504 "Wheel / bearing follows actual carrier body"
+  parent 513
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 513
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 543 "Wheel rotation stripe"
+  parent 504
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 530 "Cabin visual"
+  parent 500
+  position 0 0.42 0.15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.23 0.48
+  render.color 0.24 0.34 0.42
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 531 "Forward marker"
+  parent 500
+  position 0 0.21 -0.99
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.04 0.035
+  render.color 0.98 0.9 0.52
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 700 "High-strength control buggy"
+  position 3.41154377 3.7742508 12
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 0.62 0.18 1.05
+  render.color 0.16 0.7 0.56
+  body dynamic box
+  body.half-extents 0.62 0.18 1.05
+  body.mass 100
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.3,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"700\",\"axis\":[1,0,0]},{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"701\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"702\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"703\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"704\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":30,\"maxPower\":1800,\"starterTorque\":0}],\"links\":[{\"name\":\"drive1\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"720\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive2\",\"kind\":\"clutch\",\"input\":0,\"output\":2,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"721\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}},{\"name\":\"drive3\",\"kind\":\"clutch\",\"input\":0,\"output\":3,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"722\",\"attachment\":\"left\",\"rootAttachment\":\"right\"}},{\"name\":\"drive4\",\"kind\":\"clutch\",\"input\":0,\"output\":4,\"outputB\":0,\"ratio\":0.2,\"maxTorque\":80,\"connection\":{\"owner\":\"723\",\"attachment\":\"right\",\"rootAttachment\":\"left\"}}],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":1,\"maxTorque\":60},{\"name\":\"wheel2\",\"shaft\":2,\"maxTorque\":60},{\"name\":\"wheel3\",\"shaft\":3,\"maxTorque\":60},{\"name\":\"wheel4\",\"shaft\":4,\"maxTorque\":60}]}"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 710 "Finite suspension carrier / wheel bearing"
+  parent 700
+  position -1.38 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 720 "Strong arm"
+  parent 700
+  position -0.78 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.16 0.7 0.56
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 700 \"\" -0.78 -0.05 -0.8 1 \"left\" 1 710 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 3000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 701 "Wheel / bearing follows actual carrier body"
+  parent 710
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 710
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 740 "Wheel rotation stripe"
+  parent 701
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 711 "Finite suspension carrier / wheel bearing"
+  parent 700
+  position 1.38 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 721 "Strong arm"
+  parent 700
+  position 0.78 -0.05 -0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.16 0.7 0.56
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 700 \"\" 0.78 -0.05 -0.8 1 \"right\" 1 711 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 3000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 702 "Wheel / bearing follows actual carrier body"
+  parent 711
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 711
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 741 "Wheel rotation stripe"
+  parent 702
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 712 "Finite suspension carrier / wheel bearing"
+  parent 700
+  position -1.38 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 722 "Strong arm"
+  parent 700
+  position -0.78 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.16 0.7 0.56
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"right\" 1 700 \"\" -0.78 -0.05 0.8 1 \"left\" 1 712 \"\" 0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"left\" 3000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 703 "Wheel / bearing follows actual carrier body"
+  parent 712
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 712
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 742 "Wheel rotation stripe"
+  parent 703
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 713 "Finite suspension carrier / wheel bearing"
+  parent 700
+  position 1.38 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.12 0.12 0.2
+  render.color 0.38 0.45 0.51
+  body dynamic box
+  body.half-extents 0.12 0.12 0.2
+  body.mass 8
+  body.friction 0.75
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 1
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 723 "Strong arm"
+  parent 700
+  position 0.78 -0.05 0.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.13 0.18
+  render.color 0.16 0.7 0.56
+  deformable.asset "83838383838383838383838300000006"
+  deformable.enabled "1"
+  deformable.selfContact "0"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "1"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "2"
+  deformable.material.thickness "0.015"
+  deformable.material.friction "0.4"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.45"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 1 700 \"\" 0.78 -0.05 0.8 1 \"right\" 1 713 \"\" -0.6 0 0 1"
+  render.materials "2 \"83838383838383838383838300000008\" 0 \"83838383838383838383838300000009\" 0"
+  deformable.attachmentLimits "1 \"right\" 3000 0"
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 704 "Wheel / bearing follows actual carrier body"
+  parent 713
+  position 0 -0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383838300000001"
+  render.color .06 .075 .09
+  wheel.enabled true
+  wheel.chassis 713
+  wheel.mount 0 0 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 1800
+  wheel.damping 120
+  wheel.spinInertia .2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 743 "Wheel rotation stripe"
+  parent 704
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.02 0.04 0.24
+  render.color 0.9 0.84 0.59
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 730 "Cabin visual"
+  parent 700
+  position 0 0.42 0.15
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.23 0.48
+  render.color 0.24 0.34 0.42
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 731 "Forward marker"
+  parent 700
+  position 0 0.21 -0.99
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.04 0.035
+  render.color 0.98 0.9 0.52
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 400 "Station color / comparison marker"
+  position -4.79163245 -3.61121634 1.6
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 1.7 0.025 0.1
+  render.color 0.96 0.52 0.14
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 401 "Station color / comparison marker"
+  position 0.780954138 0.625088501 1.6
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 1.7 0.025 0.1
+  render.color 0.15 0.69 0.6
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 402 "Station color / comparison marker"
+  position 6.35354073 4.86139334 1.6
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  render box
+  render.half-extents 1.7 0.025 0.1
+  render.color 0.65 0.34 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 12 "Compatibility camera seed only"
+  position -6.01936983 2.96094357 8
+  rotation 0.947650726 0 0 0.319308786
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end

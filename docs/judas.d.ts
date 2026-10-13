@@ -322,11 +322,17 @@ declare module "judas" {
     name:string;shaft:number;kind:'combustion'|'electric'|'custom';
     torqueCurve:[number,number][];maxTorque:number;maxPower:number;starterTorque:number;
   }
+  export interface PowertrainConnection {
+    /** Deformable owner entity identity, not a native body slot. */
+    owner:EntityId;attachment:string;rootAttachment?:string;
+  }
   export interface PowertrainLinkSettings {
     name:string;kind:'gear'|'clutch'|'differential';
     input:number;output:number;outputB:number;
     /** output = ratio * input; differential average output = ratio * input. */
     ratio:number;maxTorque:number;
+    /** Optional physical attachment/material-path prerequisite. */
+    connection?:PowertrainConnection;
   }
   export interface PowertrainBrakeSettings {name:string;shaft:number;maxTorque:number;}
   export interface PowertrainSettings {
@@ -350,7 +356,7 @@ declare module "judas" {
     iterations:number;residual:number;kineticEnergy:number;constraintEnergyChange:number;
     shafts:{name:string;available:boolean;angularVelocity:number;rpm:number;angle:number;torque:number}[];
     sources:{name:string;torque:number}[];
-    links:{name:string;active:boolean;saturated:boolean;impulse:number;torque:number;slip:number}[];
+    links:{name:string;active:boolean;connected:boolean;saturated:boolean;impulse:number;torque:number;slip:number}[];
     brakes:{name:string;torque:number}[];
   }
   export class Powertrain {
@@ -410,8 +416,20 @@ declare module "judas" {
   }
   export interface DeformableLocation {epoch:string;triangle:number;weights:Vec3;revision:number}
   export interface DeformableHit {point:Vec3;normal:Vec3;distance:number;location:DeformableLocation}
-  export interface DeformableState {enabled:boolean;sleeping:boolean;error:string;mass:number;minimum:Vec3;maximum:Vec3;nodes:number;contacts:number;minimumJacobian:number;maximumStrain:number;groups:string[]}
-  export interface DeformableAttachmentOptions {kind:'world'|'body'|'bone';target?:Entity;joint?:string;offset?:Vec3}
+  export interface DeformableAttachmentState {
+    group:string;enabled:boolean;released:boolean;active:boolean;
+    forceLimit:number;torqueLimit:number;
+    /** Last substep actual reaction in world/simulation space: N and N m. */
+    force:Vec3;moment:Vec3;
+    /** Maximum signed resultant demand in the last evaluated step; partial on error. */
+    peakForce:number;peakTorque:number;
+  }
+  export interface DeformableState {enabled:boolean;sleeping:boolean;error:string;mass:number;minimum:Vec3;maximum:Vec3;nodes:number;contacts:number;minimumJacobian:number;maximumStrain:number;groups:string[];attachments:DeformableAttachmentState[]}
+  export interface DeformableAttachmentOptions {
+    kind:'world'|'body'|'bone';target?:Entity;joint?:string;offset?:Vec3;
+    /** Dynamic Body targets only. Zero/omitted = unlimited; N and N m. */
+    forceLimit?:number;torqueLimit?:number;
+  }
   export interface FracturePartState {key:string;index:number;component:number|null;removed:boolean;entity:Entity|null;mass:number}
   export interface FractureInterfaceState {key:string;a:number;b:number;broken:boolean;cause:'physical'|'explicit'|null;tension:number;shear:number}
   export interface FractureState {revision:number;rigid:boolean;error:string;parts:FracturePartState[];interfaces:FractureInterfaceState[];tensileStrength:number;shearStrength:number}

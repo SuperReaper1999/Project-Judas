@@ -26,11 +26,19 @@ struct PowertrainSource {
     std::vector<PowertrainTorquePoint> torqueCurve;
     double maxTorque=200, maxPower=100000, starterTorque=0;
 };
+// Optional physical continuity, expressed through existing material attachment
+// identities. Commands remain driver policy; a released/cut physical mount
+// cannot be reconnected merely by enabling its transmission link in JS.
+struct PowertrainConnection {
+    uint64_t owner=0;
+    std::string attachment,rootAttachment;
+};
 struct PowertrainLink {
     std::string name;
     PowertrainLinkKind kind=PowertrainLinkKind::Gear;
     unsigned input=0, output=1, outputB=2;
     double ratio=1, maxTorque=200;
+    PowertrainConnection connection;
     // Gear/clutch: output speed = ratio * input speed. Differential:
     // (left + right)/2 = ratio * input. maxTorque is OUTPUT torque capacity
     // for a clutch; an ideal gear/differential does not have a hidden limiter.
@@ -52,7 +60,7 @@ struct PowertrainCommand {
     std::vector<PowertrainBrakeCommand> brakes;
 };
 struct PowertrainShaftState { double angularVelocity=0, angle=0, torque=0; bool available=false; };
-struct PowertrainLinkState { double impulse=0, torque=0, slip=0; bool active=false, saturated=false; };
+struct PowertrainLinkState { double impulse=0, torque=0, slip=0; bool active=false, saturated=false,connected=true; };
 struct PowertrainState {
     bool available=false, converged=true;
     std::string diagnostic;
@@ -84,7 +92,7 @@ public:
     // state holds omega + W * impulse. Sources/drag integrate only when true.
     std::vector<double> Step(double dt,const std::vector<double>& velocity,
         const std::vector<double>& inverseMass,const std::vector<bool>& available,
-        bool integrateSources=true);
+        bool integrateSources=true,const std::vector<bool>& linkConnected={});
     // Call once, after the interval's final contact/load projection. Repeated
     // constraint projections themselves never advance time or drive sources.
     void AdvanceAngles(double dt);

@@ -70,10 +70,10 @@ double effective(PhysicsWorld& p,BodyHandle b,V point,V normal){
     if(!p.IsDynamicBody(b))return 0;
         double m=p.GetMass(b);
         if(m<=0)return 0;
-        V r=point-V(p.GetTransform(b).position),rn=glm::cross(r,normal);
+        V r=point-V(p.GetCenterOfMass(b)),rn=glm::cross(r,normal);
         return 1/m+glm::dot(rn,M(glm::inverse(p.GetInertiaWorld(b)))*rn);
 }
-V pointVelocity(PhysicsWorld& p,BodyHandle b,V point){return V(p.GetLinearVelocity(b))+glm::cross(V(p.GetAngularVelocity(b)),point-V(p.GetTransform(b).position));
+V pointVelocity(PhysicsWorld& p,BodyHandle b,V point){return V(p.GetLinearVelocity(b))+glm::cross(V(p.GetAngularVelocity(b)),point-V(p.GetCenterOfMass(b)));
         }
 }
 void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,const DeformableSettings& config,const glm::dmat4& transform,uint64_t epoch){
@@ -81,6 +81,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     if(!data||!ValidDeformableSettings(config,e))throw std::invalid_argument(e.empty()?"missing deformable asset":e);
     if(data->nodes.size()!=data->measures.size()||data->nodes.size()!=data->massWeights.size()||data->neighbors.size()!=data->nodes.size())throw std::invalid_argument("deformable topology is not prepared");
     if(!validMasses(*data,config.material.density))throw std::invalid_argument("deformable derived mass is not finite and positive");
+    if(data->fracture&&data->fracture->rigid&&std::any_of(config.attachments.begin(),config.attachments.end(),[](const auto& a){return a.forceLimit>0||a.torqueLimit>0;}))throw std::invalid_argument("finite material attachment strength requires deformable material; rigid fracture uses section bonds");
     asset=std::move(data);
     settings=config;
     generation=epoch;
@@ -98,6 +99,7 @@ void DeformableInstance::Initialize(std::shared_ptr<const DeformableAsset> data,
     volumeLambda.resize(asset->solids.size());
     plasticRest.resize(asset->solids.size());
     released.resize(config.attachments.size());
+    attachmentState.resize(config.attachments.size());
     candidates.reserve(std::max(asset->triangles.size(),asset->edges.size()));
     InitializeSurfaceTree(faceTree,false);InitializeSurfaceTree(edgeTree,true);
     faceExcluded.resize(asset->triangles.size());edgeExcluded.resize(asset->edges.size());
@@ -118,6 +120,7 @@ void DeformableInstance::Reset(const glm::dmat4& transform){
         }
     for(size_t i=0;i<plasticRest.size();++i)plasticRest[i]=M(transform)*asset->solids[i].rest;
     std::fill(released.begin(),released.end(),false);
+    attachmentState.assign(settings.attachments.size(),{});
     Wake();
 }
 bool DeformableInstance::SetMaterial(const DeformableMaterial& m,std::string& e){if(asset->fracture&&asset->fracture->rigid){e="rigid fracture material is authored; reload to change mass/contact properties";return false;}auto s=settings;
@@ -261,8 +264,19 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
         auto group=asset->groups.find(attachment.group);
         if(group==asset->groups.end())continue;
         const auto& t=targets[a];
+        const bool dynamicTarget=t.body.IsValid()&&physics.IsDynamicBody(t.body);
+        // Keep the moment origin inside the patch, independently of its world
+        // placement. A pure couple must remain a torque when its net force is
+        // zero; summing per-node impulse magnitudes would invent a force.
+        V centre(0);
+        if(dynamicTarget){V localCentre(0);unsigned activeNodes=0;
+            for(unsigned n:group->second)if(!asset->fracture||!fracture.removed[asset->fracture->nodePart[n]]){localCentre+=asset->nodes[n]+attachment.offset;++activeNodes;}
+            if(!activeNodes)continue;
+            localCentre/=activeNodes;
+            centre=target(t.previous,localCentre)*(1-fraction)+target(t.current,localCentre)*fraction;
+        }
         for(unsigned n:group->second){if(asset->fracture&&fracture.removed[asset->fracture->nodePart[n]])continue;V local=asset->nodes[n]+attachment.offset,destination=target(t.previous,local)*(1-fraction)+target(t.current,local)*fraction;
-            if(!t.body.IsValid()||!physics.IsDynamicBody(t.body)){positions[n]=destination;
+            if(!dynamicTarget){positions[n]=destination;
                 continue;
                 }
             // Velocity-level bilateral constraint. Body point velocity is read
@@ -277,7 +291,16 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
                 if(den<=0)continue;
                 double impulse=-(relative[axis]+.1*(start[n]-priorDestination)[axis]/h)/den;
                 positions[n]+=normal*inverseMass[n]*impulse*h;
-                physics.ApplyImpulseAtPoint(t.body,glm::vec3(-normal*impulse),glm::vec3(destination));
+                const V reaction=-normal*impulse;
+                // The constraint denominator and point velocity use a double
+                // lever arm. Preserve that same arm for the actual reaction;
+                // rounding an absolute world point to float before subtracting
+                // the COM would alter a small patch's torque at large origins.
+                const V arm=destination-V(physics.GetCenterOfMass(t.body));
+                physics.ApplyLinearImpulse(t.body,glm::vec3(reaction));
+                physics.ApplyAngularImpulse(t.body,glm::vec3(glm::cross(arm,reaction)));
+                attachmentImpulse[a]+=reaction;
+                attachmentMoment[a]+=glm::cross(destination-centre,reaction);
             }
         }
     }
@@ -510,7 +533,18 @@ void DeformableInstance::SurfaceContacts(DeformableInstance& a,DeformableInstanc
 }
 void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField& gravity,const std::vector<DeformableTarget>& targets){
     if(!asset||!settings.enabled||!error.empty()||dt<=0){std::fill(forces.begin(),forces.end(),V(0));return;}
+    // A prescribed world/bone/static frame has no finite dynamic reaction in
+    // this solver. Refuse a finite-strength claim rather than silently treating
+    // such a target as an infinite-strength connection. Unlimited legacy roots
+    // continue through exactly the original prescribed-target path.
+    for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];
+        if(!released[i]&&a.enabled&&(a.forceLimit>0||a.torqueLimit>0)&&i<targets.size()&&targets[i].valid&&!physics.IsDynamicBody(targets[i].body)){
+            error="finite attachment strength requires a dynamic body target";std::fill(forces.begin(),forces.end(),V(0));return;
+        }
+    }
     JUDAS_PROFILE_SCOPE("Deformable fixed step");
+    attachmentState.assign(settings.attachments.size(),{});
+    attachmentImpulse.resize(settings.attachments.size());attachmentMoment.resize(settings.attachments.size());attachmentPending.assign(settings.attachments.size(),0);
     stats={};
     stats.nodes=positions.size();
     stats.triangles=asset->triangles.size();
@@ -541,6 +575,8 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
     previous=positions;
     double h=dt/settings.substeps;
     for(unsigned sub=0;sub<settings.substeps;++sub){
+        std::fill(attachmentImpulse.begin(),attachmentImpulse.end(),V(0));
+        std::fill(attachmentMoment.begin(),attachmentMoment.end(),V(0));
         {JUDAS_PROFILE_SCOPE("Deformable force prediction");
             start=positions;
             for(size_t n=0;n<positions.size();++n){if(asset->fracture&&fracture.removed[asset->fracture->nodePart[n]]){velocities[n]=V(0);continue;}V g=gravity.Sample(glm::vec3(positions[n]));
@@ -564,6 +600,14 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
             SurfaceContacts(*this,*this,h);
             Attach(h,fraction,physics,targets);
             }
+        for(size_t a=0;a<settings.attachments.size();++a){auto& state=attachmentState[a];
+            state.force=attachmentImpulse[a]/h;state.moment=attachmentMoment[a]/h;
+            const double force=glm::length(state.force),torque=glm::length(state.moment);
+            if(!std::isfinite(force)||!std::isfinite(torque)){error="nonfinite material attachment reaction; instance stopped";return;}
+            state.peakForce=std::max(state.peakForce,force);state.peakTorque=std::max(state.peakTorque,torque);
+            const auto& setting=settings.attachments[a];
+            if((setting.forceLimit>0&&force>setting.forceLimit)||(setting.torqueLimit>0&&torque>setting.torqueLimit))attachmentPending[a]=1;
+        }
         for(size_t i=0;i<asset->solids.size();++i){if(asset->fracture&&fracture.removed[asset->fracture->nodePart[asset->solids[i].nodes.x]])continue;double J=glm::determinant(columns(positions,asset->solids[i].nodes)*glm::inverse(plasticRest[i]));if(!std::isfinite(J)||J<=0){error="deformable element inversion; outside supported deformation envelope; instance stopped";return;}}
         if(asset->fracture){const auto& c=*asset->fracture;
             for(unsigned b=0;b<c.bonds.size();++b){const auto& bond=c.bonds[b];
@@ -596,6 +640,10 @@ void DeformableInstance::Step(double dt,PhysicsWorld& physics,const GravityField
             return;
             }
     }
+    // Failure is an irreversible change of connection ownership at the fixed
+    // step boundary. Both material and body retain their already solved real
+    // velocities; release adds no impulse, transform correction or reset.
+    for(size_t a=0;a<released.size();++a)if(attachmentPending[a])released[a]=1;
     std::fill(forces.begin(),forces.end(),V(0));
     double speed=0;
     for(auto v:velocities)speed=std::max(speed,glm::length(v));
@@ -661,7 +709,7 @@ DeformableHit DeformableInstance::Raycast(V origin,V direction,double maximum)co
         hit.location={generation,t,V(1-u-v,u,v),asset->fracture?fracture.revision:0};
     }return hit;
 }
-void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame){
+void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame,bool attachmentLimits){
     if(asset->fracture)fracture.Persist(ar,*asset->fracture);
     ar(settings.enabled,sleeping,quietSeconds);
     settings.material.Save(ar);
@@ -669,6 +717,11 @@ void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame){
     ar.Require(ValidDeformableSettings(settings,validation),"invalid saved deformable material");
     ar.Require(validMasses(*asset,settings.material.density),"invalid saved deformable derived mass");
     ar(settings.attachments,positions,velocities,plasticRest,released);
+    // Attachment::Save deliberately retains its original field layout. Only
+    // State.2 / participant.4 carries optional strength fields; legacy formats
+    // keep unlimited connections rather than inventing historical strength.
+    if(attachmentLimits)for(auto& attachment:settings.attachments)ar(attachment.forceLimit,attachment.torqueLimit);
+    else if(ar.reading)for(auto& attachment:settings.attachments)attachment.forceLimit=attachment.torqueLimit=0;
     ar.Require(ValidDeformableSettings(settings,validation),"invalid saved deformable attachments");
     for(const auto& attachment:settings.attachments)ar.Require(asset->groups.count(attachment.group),"saved attachment group missing");
     ar.Require(positions.size()==asset->nodes.size()&&velocities.size()==positions.size()&&plasticRest.size()==asset->solids.size()&&released.size()==settings.attachments.size(),"deformable snapshot topology mismatch");
@@ -684,6 +737,7 @@ void DeformableInstance::Persist(SaveArchive& ar,bool materialFrame){
         if(ar.reading)for(int k=0;k<3;++k)initial[k]=glm::dvec4(reference[k],0);
     }
     if(ar.reading){selfCandidatesValid=false;previous=start=positions;
+        attachmentState.assign(settings.attachments.size(),{});attachmentPending.clear();attachmentImpulse.clear();attachmentMoment.clear();
         forces.assign(positions.size(),V(0));
         lastGravity.assign(positions.size(),V(0));
         for(size_t i=0;i<mass.size();++i){mass[i]=asset->measures[i]*asset->massWeights[i]*settings.material.density;

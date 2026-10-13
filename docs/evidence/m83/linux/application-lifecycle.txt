@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / flat (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async resources share immutable geometry with independently authored material strength
+PASS bench and mobile vehicle wheels terminate in actual finite material-supported bearing bodies
+PASS third powered bench uses existing M79 cohesive material load topology
+WORKLOAD bodies=17 dynamic_bodies=13 wheels=11 powertrains=5 materials=11 nodes=232 tets=264 material_substeps=4 material_iterations=4 fixed_hz=60
+PASS normal JS camera, input, UI and coupled physical assemblies execute without diagnostics
+PASS normal resting load leaves the authored mount and drive path intact
+PASS complete runtime prefab independently remaps material, bearing, wheel and physical connection identities
+PASS registered retained region publishes actual material-supported mechanical assembly
+PASS actual finite endpoint impact damages a streamed mount before retention
+PASS region suspension retires identities and retains durable damage without hidden simulation
+PASS stream revisit preserves exact damaged geometry and drive commands with fresh remapped identities
+PASS material support and transmission continuity references point to the new physical region entities
+PASS retained physical mount and mechanically disconnected path do not heal on revisit
+PASS hierarchy destruction retires material-supported prefab without stale endpoint ownership
+PASS ordinary reload cleans old damage, scripts and mechanical handles
+PASS normal application startup and shutdown
+PERF samples=195 fixed_median_ms=8.971442 p95_ms=11.155520 max_ms=19.716013 frame_median_ms=10.548787 frame_p95_ms=13.347068
+M83 application lifecycle checks=15 failures=0

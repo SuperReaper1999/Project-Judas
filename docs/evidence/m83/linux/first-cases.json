@@ -1,0 +1,27 @@
+[
+  {
+    "label": "damage",
+    "args": [
+      "build/judas_mechanical_damage_tests"
+    ],
+    "exit": 1,
+    "seconds": 0.014560473002347862
+  },
+  {
+    "label": "connections",
+    "args": [
+      "build/judas_mechanical_connection_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03897779500039178
+  },
+  {
+    "label": "damage-js",
+    "args": [
+      "build/judas_mechanical_damage_script_tests",
+      "/tmp/judas-m83-js"
+    ],
+    "exit": 1,
+    "seconds": 0.014058420001674676
+  }
+]

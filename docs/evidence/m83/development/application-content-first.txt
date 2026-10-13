@@ -1,0 +1,27 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Mechanical Damage Lab (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/damage_lab.judasproj)
+Scene: Mechanical damage / flat (/home/conner/Documents/GitHub/Project-Judas/projects/damage_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async resources share immutable geometry with independently authored material strength
+PASS bench and mobile vehicle wheels terminate in actual finite material-supported bearing bodies
+PASS third powered bench uses existing M79 cohesive material load topology
+PASS normal JS camera, input, UI and coupled physical assemblies execute without diagnostics
+PASS normal resting load leaves the authored mount and drive path intact
+LOADED plastic_rest_m=0.143401896 strong_rest_m=0 bearing_delta_m=3.75772786 alignment=0.999957919 control_alignment=0.990240693 contact=0
+PASS equal sustained physical loads yield soft material while stronger control retains its rest geometry
+FAIL deformed material moves and rotates the real carrier rather than a renderer-only wheel mount
+FAIL unloading preserves plastic material rest and leaves the still-connected mechanism operational
+DRIVEN motor_radps=44.164251 wheel_radps=0.114766479 link_torque_nm=0 body_speed_mps=4.30407141e-07
+FAIL actual source torque still reaches the misaligned wheel through the surviving mechanical link
+FAILURE released=1 section_broken=1 active=0 torque=0 command_enabled=1 motor_radps=76.6968337 wheel_radps=0.113543898
+PASS overload irreversibly breaks a real mount and stops transmitted torque without gameplay disabling its link
+PASS otherwise equivalent stronger material and mount change the physical outcome
+PASS M79 fracture interrupts the actual attachment-to-root material path and connected drive
+PASS detached carrier retains ordinary collision, wheel contact and finite rigid-body ownership
+PASS project-spawned finite ram strikes the carrier through actual solved rigid-body contact
+PASS post-failure source responds to removed reflected load while detached output remains disconnected
+PASS coupled plastic and fractured material retains valid authoritative physical geometry
+PASS normal application startup and shutdown
+PERF samples=630 fixed_median_ms=9.134078 p95_ms=12.702501 max_ms=32.196863 frame_median_ms=42.091396 frame_p95_ms=66.198112
+M83 application probe checks=17 failures=3

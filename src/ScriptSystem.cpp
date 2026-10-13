@@ -794,7 +794,26 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(op=="deformableValid")return JS_NewBool(c,valid);
         if(!valid)return JS_ThrowReferenceError(c,"stale/not ready deformable handle");
         if(op=="deformableState"){
-            auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"enabled",JS_NewBool(c,d->settings.enabled));JS_SetPropertyStr(c,v,"sleeping",JS_NewBool(c,d->sleeping));JS_SetPropertyStr(c,v,"error",JS_NewString(c,d->error.c_str()));JS_SetPropertyStr(c,v,"mass",JS_NewFloat64(c,d->Mass()));JS_SetPropertyStr(c,v,"minimum",Vec(c,glm::vec3(d->Minimum())));JS_SetPropertyStr(c,v,"maximum",Vec(c,glm::vec3(d->Maximum())));JS_SetPropertyStr(c,v,"nodes",JS_NewUint32(c,unsigned(d->positions.size())));JS_SetPropertyStr(c,v,"contacts",JS_NewUint32(c,unsigned(d->stats.contacts)));JS_SetPropertyStr(c,v,"minimumJacobian",JS_NewFloat64(c,d->stats.minimumJacobian));JS_SetPropertyStr(c,v,"maximumStrain",JS_NewFloat64(c,d->stats.maximumStrain));auto groups=JS_NewArray(c);uint32_t n=0;for(auto& [name,_]:d->asset->groups)JS_SetPropertyUint32(c,groups,n++,JS_NewString(c,name.c_str()));JS_SetPropertyStr(c,v,"groups",groups);return v;
+            auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"enabled",JS_NewBool(c,d->settings.enabled));JS_SetPropertyStr(c,v,"sleeping",JS_NewBool(c,d->sleeping));JS_SetPropertyStr(c,v,"error",JS_NewString(c,d->error.c_str()));JS_SetPropertyStr(c,v,"mass",JS_NewFloat64(c,d->Mass()));JS_SetPropertyStr(c,v,"minimum",Vec(c,glm::vec3(d->Minimum())));JS_SetPropertyStr(c,v,"maximum",Vec(c,glm::vec3(d->Maximum())));JS_SetPropertyStr(c,v,"nodes",JS_NewUint32(c,unsigned(d->positions.size())));JS_SetPropertyStr(c,v,"contacts",JS_NewUint32(c,unsigned(d->stats.contacts)));JS_SetPropertyStr(c,v,"minimumJacobian",JS_NewFloat64(c,d->stats.minimumJacobian));JS_SetPropertyStr(c,v,"maximumStrain",JS_NewFloat64(c,d->stats.maximumStrain));auto groups=JS_NewArray(c);uint32_t n=0;for(auto& [name,_]:d->asset->groups)JS_SetPropertyUint32(c,groups,n++,JS_NewString(c,name.c_str()));JS_SetPropertyStr(c,v,"groups",groups);
+            auto attachments=JS_NewArray(c);
+            for(size_t i=0;i<d->settings.attachments.size();++i){
+                const auto& a=d->settings.attachments[i];
+                const auto observed=i<d->attachmentState.size()?d->attachmentState[i]:DeformableAttachmentState{};
+                auto item=JS_NewObject(c);
+                JS_SetPropertyStr(c,item,"group",JS_NewString(c,a.group.c_str()));
+                JS_SetPropertyStr(c,item,"enabled",JS_NewBool(c,a.enabled));
+                const bool released=i<d->released.size()&&d->released[i]!=0;
+                JS_SetPropertyStr(c,item,"released",JS_NewBool(c,released));
+                JS_SetPropertyStr(c,item,"active",JS_NewBool(c,d->settings.enabled&&a.enabled&&!released));
+                JS_SetPropertyStr(c,item,"forceLimit",JS_NewFloat64(c,a.forceLimit));
+                JS_SetPropertyStr(c,item,"torqueLimit",JS_NewFloat64(c,a.torqueLimit));
+                JS_SetPropertyStr(c,item,"force",Vec(c,glm::vec3(observed.force)));
+                JS_SetPropertyStr(c,item,"moment",Vec(c,glm::vec3(observed.moment)));
+                JS_SetPropertyStr(c,item,"peakForce",JS_NewFloat64(c,observed.peakForce));
+                JS_SetPropertyStr(c,item,"peakTorque",JS_NewFloat64(c,observed.peakTorque));
+                JS_SetPropertyUint32(c,attachments,uint32_t(i),item);
+            }
+            JS_SetPropertyStr(c,v,"attachments",attachments);return v;
         }
         if(op=="deformableRaycast"){
             glm::vec3 origin,direction;double maximum;if(!ReadVec(c,arg(3),origin)||!ReadVec(c,arg(4),direction)||JS_ToFloat64(c,&maximum,arg(5))||!std::isfinite(maximum)||maximum<0||glm::length(direction)<1e-8f)return JS_ThrowTypeError(c,"finite ray and nonnegative range required");auto hit=d->Raycast(origin,direction,maximum);if(!hit.hit)return JS_NULL;auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"point",Vec(c,glm::vec3(hit.point)));JS_SetPropertyStr(c,v,"normal",Vec(c,glm::vec3(hit.normal)));JS_SetPropertyStr(c,v,"distance",JS_NewFloat64(c,hit.distance));auto location=JS_NewObject(c);JS_SetPropertyStr(c,location,"revision",JS_NewFloat64(c,double(hit.location.topologyRevision)));JS_SetPropertyStr(c,location,"epoch",JS_NewString(c,std::to_string(hit.location.generation).c_str()));JS_SetPropertyStr(c,location,"triangle",JS_NewUint32(c,hit.location.triangle));JS_SetPropertyStr(c,location,"weights",Vec(c,glm::vec3(hit.location.weights)));JS_SetPropertyStr(c,v,"location",location);return v;
@@ -810,7 +829,33 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         }
         if(op=="deformableAttach"){
             if(d->asset->fracture&&d->asset->fracture->rigid)return JS_ThrowTypeError(c,"rigid fracture supports are authored; runtime release and ordinary piece joints remain available");
-            DeformableAttachment a;a.group=String(c,arg(3));if(!d->asset->groups.count(a.group))return JS_ThrowTypeError(c,"unknown attachment group");auto kind=JS_GetPropertyStr(c,arg(4),"kind"),entity=JS_GetPropertyStr(c,arg(4),"targetId"),joint=JS_GetPropertyStr(c,arg(4),"joint"),offset=JS_GetPropertyStr(c,arg(4),"offset");auto name=String(c,kind);bool ok=name=="world"||name=="body"||name=="bone";a.kind=name=="body"?DeformableAttachment::Kind::Body:name=="bone"?DeformableAttachment::Kind::Bone:DeformableAttachment::Kind::World;if(a.kind!=DeformableAttachment::Kind::World){try{a.target=std::stoull(String(c,entity));}catch(...){ok=false;}ok=ok&&world.RuntimeDefinition(a.target);if(a.kind==DeformableAttachment::Kind::Body)ok=ok&&world.Physics().IsBodyEnabled(world.RuntimeBody(a.target));if(a.kind==DeformableAttachment::Kind::Bone){a.joint=String(c,joint);auto* animation=world.RuntimeAnimation(a.target);ok=ok&&animation&&animation->asset&&FindSkeletonJoint(animation->asset->skeleton,a.joint)>=0;}}glm::vec3 v;if(!JS_IsUndefined(offset)){ok=ok&&ReadVec(c,offset,v);a.offset=v;}JS_FreeValue(c,kind);JS_FreeValue(c,entity);JS_FreeValue(c,joint);JS_FreeValue(c,offset);if(!ok)return JS_ThrowTypeError(c,"invalid attachment target/options");auto config=d->settings;size_t index=0;while(index<config.attachments.size()&&config.attachments[index].group!=a.group)++index;if(index==config.attachments.size())config.attachments.push_back(a);else config.attachments[index]=a;if(!ValidDeformableSettings(config,error))return JS_ThrowTypeError(c,"%s",error.c_str());d->settings=config;d->released.resize(config.attachments.size());d->released[index]=0;d->Wake();world.InvalidateDeformableTargets(id);return JS_TRUE;
+            DeformableAttachment a;a.group=String(c,arg(3));
+            if(!d->asset->groups.count(a.group))return JS_ThrowTypeError(c,"unknown attachment group");
+            auto kind=JS_GetPropertyStr(c,arg(4),"kind"),entity=JS_GetPropertyStr(c,arg(4),"targetId"),joint=JS_GetPropertyStr(c,arg(4),"joint"),offset=JS_GetPropertyStr(c,arg(4),"offset");
+            auto name=String(c,kind);bool ok=name=="world"||name=="body"||name=="bone";
+            a.kind=name=="body"?DeformableAttachment::Kind::Body:name=="bone"?DeformableAttachment::Kind::Bone:DeformableAttachment::Kind::World;
+            if(a.kind!=DeformableAttachment::Kind::World){
+                try{a.target=std::stoull(String(c,entity));}catch(...){ok=false;}
+                ok=ok&&world.RuntimeDefinition(a.target);
+                if(a.kind==DeformableAttachment::Kind::Body)ok=ok&&world.Physics().IsBodyEnabled(world.RuntimeBody(a.target));
+                if(a.kind==DeformableAttachment::Kind::Bone){a.joint=String(c,joint);auto* animation=world.RuntimeAnimation(a.target);ok=ok&&animation&&animation->asset&&FindSkeletonJoint(animation->asset->skeleton,a.joint)>=0;}
+            }
+            glm::vec3 v{0};if(!JS_IsUndefined(offset)){ok=ok&&ReadVec(c,offset,v);a.offset=v;}
+            JS_FreeValue(c,kind);JS_FreeValue(c,entity);JS_FreeValue(c,joint);JS_FreeValue(c,offset);
+            for(auto field:{std::pair<const char*,double*>{"forceLimit",&a.forceLimit},{"torqueLimit",&a.torqueLimit}}){
+                auto number=JS_GetPropertyStr(c,arg(4),field.first);
+                if(!JS_IsUndefined(number))ok=ok&&JS_IsNumber(number)&&JS_ToFloat64(c,field.second,number)==0;
+                JS_FreeValue(c,number);
+            }
+            if(a.forceLimit>0||a.torqueLimit>0)ok=ok&&a.kind==DeformableAttachment::Kind::Body&&world.Physics().IsDynamicBody(world.RuntimeBody(a.target));
+            if(!ok)return JS_ThrowTypeError(c,"invalid attachment target/options; finite strengths require a dynamic body");
+            auto config=d->settings;size_t index=0;
+            while(index<config.attachments.size()&&config.attachments[index].group!=a.group)++index;
+            if(index==config.attachments.size())config.attachments.push_back(a);else config.attachments[index]=a;
+            if(!ValidDeformableSettings(config,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            d->settings=std::move(config);d->released.resize(d->settings.attachments.size());d->released[index]=0;
+            d->attachmentState.resize(d->settings.attachments.size());d->attachmentState[index]={};
+            d->Wake();world.InvalidateDeformableTargets(id);return JS_TRUE;
         }
         return JS_ThrowTypeError(c,"unknown deformable operation");
     }
@@ -917,7 +962,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             value["shafts"]=Json::array();value["sources"]=Json::array();value["links"]=Json::array();value["brakes"]=Json::array();
             for(size_t i=0;i<state.shafts.size();++i){const auto& shaft=state.shafts[i];value["shafts"].push_back({{"name",power->settings.shafts[i].name},{"available",shaft.available},{"angularVelocity",shaft.angularVelocity},{"rpm",shaft.angularVelocity*60/(2*3.14159265358979323846)},{"angle",shaft.angle},{"torque",shaft.torque}});}
             for(size_t i=0;i<state.sourceTorque.size();++i)value["sources"].push_back({{"name",power->settings.sources[i].name},{"torque",state.sourceTorque[i]}});
-            for(size_t i=0;i<state.links.size();++i){const auto& link=state.links[i];value["links"].push_back({{"name",power->settings.links[i].name},{"active",link.active},{"saturated",link.saturated},{"impulse",link.impulse},{"torque",link.torque},{"slip",link.slip}});}
+            for(size_t i=0;i<state.links.size();++i){const auto& link=state.links[i];value["links"].push_back({{"name",power->settings.links[i].name},{"active",link.active},{"connected",link.connected},{"saturated",link.saturated},{"impulse",link.impulse},{"torque",link.torque},{"slip",link.slip}});}
             for(size_t i=0;i<state.brakeTorque.size();++i)value["brakes"].push_back({{"name",power->settings.brakes[i].name},{"torque",state.brakeTorque[i]}});
             bytes=value.dump();
         }else return JS_ThrowTypeError(c,"unknown powertrain operation");

@@ -1,0 +1,36 @@
+JudasScene 3
+settings
+  name "Ordinary finite-mass impact ram"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 2
+end
+object 1 "Physical bearing impact ram"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.2 0.25 0.25
+  render.color 0.9 0.81 0.44
+  body dynamic box
+  body.half-extents 0.2 0.25 0.25
+  body.mass 12
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end

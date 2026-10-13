@@ -173,7 +173,32 @@ void DrawPowertrain(EditorDocument& doc,SceneObject& object,EditorPanelState& st
         if(ImGui::Button("Remove source")){doc.BeginEdit();train.sources.erase(train.sources.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
     if(!train.shafts.empty()&&train.sources.size()<32&&ImGui::Button("Add custom source")){doc.BeginEdit();PowertrainSource v;v.name="source_"+std::to_string(train.sources.size());train.sources.push_back(v);doc.CommitEdit();}
     const char* linkKinds[]={"Ideal gear","Torque-limited clutch","Open differential"};
-    for(size_t i=0;i<train.links.size();++i){ImGui::PushID(200+int(i));auto& v=train.links[i];if(ImGui::TreeNode("link","Coupling: %s",v.name.c_str())){TextField(doc,"Coupling name",v.name);Combo(doc,"Coupling mechanism",v.kind,linkKinds,3);shaft("Input shaft",v.input);shaft("Output shaft",v.output);if(v.kind==PowertrainLinkKind::Differential)shaft("Second output shaft",v.outputB);PowertrainNumber(doc,"Output / input speed ratio",v.ratio);if(v.kind==PowertrainLinkKind::Clutch)PowertrainNumber(doc,"Clutch output torque capacity N m",v.maxTorque);if(ImGui::Button("Remove coupling")){doc.BeginEdit();train.links.erase(train.links.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
+    for(size_t i=0;i<train.links.size();++i){ImGui::PushID(200+int(i));auto& v=train.links[i];if(ImGui::TreeNode("link","Coupling: %s",v.name.c_str())){TextField(doc,"Coupling name",v.name);Combo(doc,"Coupling mechanism",v.kind,linkKinds,3);shaft("Input shaft",v.input);shaft("Output shaft",v.output);if(v.kind==PowertrainLinkKind::Differential)shaft("Second output shaft",v.outputB);PowertrainNumber(doc,"Output / input speed ratio",v.ratio);if(v.kind==PowertrainLinkKind::Clutch)PowertrainNumber(doc,"Clutch output torque capacity N m",v.maxTorque);if(ImGui::TreeNode("Physical connection prerequisite (optional)")){
+            auto& connection=v.connection;
+            const auto* owner=doc.GetScene().Find(connection.owner);
+            if(ImGui::BeginCombo("Material owner",owner?owner->name.c_str():"None (M82 independent link)")){
+                if(ImGui::Selectable("None",connection.owner==0)){doc.BeginEdit();connection={};doc.CommitEdit();}
+                for(const auto& candidate:doc.GetScene().Objects())if(candidate.deformable&&ImGui::Selectable((candidate.name+" ##material"+std::to_string(candidate.id)).c_str(),candidate.id==connection.owner)){
+                    doc.BeginEdit();connection={};connection.owner=candidate.id;doc.CommitEdit();
+                }
+                ImGui::EndCombo();
+            }
+            if(connection.owner){
+                owner=doc.GetScene().Find(connection.owner);
+                auto group=[&](const char* label,std::string& key,bool optional){
+                    if(ImGui::BeginCombo(label,key.empty()?(optional?"None (attachment only)":"Select attachment"):key.c_str())){
+                        if(optional&&ImGui::Selectable("None",key.empty())){doc.BeginEdit();key.clear();doc.CommitEdit();}
+                        if(owner&&owner->deformable)for(const auto& attachment:owner->deformable->attachments)if(ImGui::Selectable(attachment.group.c_str(),attachment.group==key)){doc.BeginEdit();key=attachment.group;doc.CommitEdit();}
+                        ImGui::EndCombo();
+                    }
+                };
+                group("Physical terminal attachment",connection.attachment,false);
+                group("Material path to root attachment",connection.rootAttachment,true);
+                ImGui::TextWrapped("Released, disabled or missing attachments disconnect this link. A root also requires an intact material path. Commands do not heal damage.");
+            }
+            ImGui::TreePop();
+        }
+        if(ImGui::Button("Remove coupling")){doc.BeginEdit();train.links.erase(train.links.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
     if(train.shafts.size()>=2&&train.links.size()<64&&ImGui::Button("Add gear / coupling")){doc.BeginEdit();PowertrainLink v;v.name="coupling_"+std::to_string(train.links.size());train.links.push_back(v);doc.CommitEdit();}
     for(size_t i=0;i<train.brakes.size();++i){ImGui::PushID(300+int(i));auto& v=train.brakes[i];if(ImGui::TreeNode("brake","Brake: %s",v.name.c_str())){TextField(doc,"Brake name",v.name);shaft("Braked shaft",v.shaft);PowertrainNumber(doc,"Brake torque capacity N m",v.maxTorque);if(ImGui::Button("Remove brake")){doc.BeginEdit();train.brakes.erase(train.brakes.begin()+i);doc.CommitEdit();ImGui::TreePop();ImGui::PopID();break;}ImGui::TreePop();}ImGui::PopID();}
     if(!train.shafts.empty()&&train.brakes.size()<32&&ImGui::Button("Add mechanical brake")){doc.BeginEdit();PowertrainBrake v;v.name="brake_"+std::to_string(train.brakes.size());train.brakes.push_back(v);doc.CommitEdit();}
@@ -797,6 +822,18 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     for(size_t i=0;i<d.attachments.size();){auto& a=d.attachments[i];ImGui::PushID(int(i));ImGui::Separator();ImGui::Text("Attachment %s",a.group.c_str());Checkbox(doc,"Attachment enabled",a.enabled);const char* kinds[]={"world (authored root anchor)","rigid body (finite mass)","skeleton joint (prescribed)"};Combo(doc,"Target kind",a.kind,kinds,3);
         if(a.kind!=DeformableAttachment::Kind::World){std::vector<std::string> labels,values;for(auto& target:doc.GetScene().Objects())if(a.kind==DeformableAttachment::Kind::Body?bool(target.body):bool(target.animation)){labels.push_back(target.name);values.push_back(std::to_string(target.id));}std::string id=std::to_string(a.target);if(LabelledCombo(doc,"Target entity",id,labels,values,false))a.target=std::stoull(id);if(a.kind==DeformableAttachment::Kind::Bone)TextField(doc,"Stable skeleton joint key",a.joint);}
         glm::vec3 offset(a.offset);if(DragVec3(doc,"Target-local offset",offset))a.offset=offset;
+        LiquidNumber(doc,"Attachment force limit N (0 = unlimited)",a.forceLimit);
+        LiquidNumber(doc,"Attachment moment limit N m (0 = unlimited)",a.torqueLimit);
+        if(a.forceLimit>0||a.torqueLimit>0){
+            const auto* target=doc.GetScene().Find(a.target);
+            if(a.kind!=DeformableAttachment::Kind::Body||!target||!target->body||target->body->motion!=SceneBodyMotion::Dynamic)
+                ImGui::TextColored(ImVec4(1,.3f,.2f,1),"Finite strength requires a dynamic Body target.");
+            ImGui::TextWrapped("Limits measure the actual signed patch reaction, including moment about its centroid. Exceeding either releases after the completed step; no position or velocity reset.");
+        }
+        if(state.runtime){std::string diagnostic;if(const auto* runtime=state.runtime->RuntimeDeformable(o.id,diagnostic))if(i<runtime->attachmentState.size()){
+            const auto& observation=runtime->attachmentState[i];
+            ImGui::Text("Demand %.3g N / %.3g N m | %s",observation.peakForce,observation.peakTorque,i<runtime->released.size()&&runtime->released[i]?"released":"retained");
+        }}
         bool remove=ImGui::Button("Remove attachment");ImGui::PopID();if(remove){doc.BeginEdit();d.attachments.erase(d.attachments.begin()+i);doc.CommitEdit();}else ++i;
     }
     if(state.mode==EditorMode::Edit&&state.project&&state.assets&&ImGui::CollapsingHeader("Create/import deformable asset")){

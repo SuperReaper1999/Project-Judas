@@ -1,0 +1,20 @@
+{
+  "sourceBaseline": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "branch": "Experimental",
+  "candidateHumanValidation": "pending",
+  "checks": {
+    "FINAL_SOURCE_SHA256.txt": {
+      "entries": 66,
+      "allMatch": true
+    },
+    "VALIDATED_INPUTS_SHA256.txt": {
+      "entries": 62,
+      "allMatch": true
+    },
+    "FINAL_BINARIES_SHA256.txt": {
+      "entries": 10,
+      "allMatch": true
+    }
+  },
+  "packagePayloads": "exact; exporter canonicalizes metadata source path only; moved copy bytes exact"
+}

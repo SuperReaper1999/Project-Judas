@@ -81,7 +81,7 @@ Version 1 snapshot: `enabled`, `shafts`, `sources`, `links`, `brakes`.
   `torqueCurve` pairs `[rpm, torqueNm]`, `maxTorque` (N m), `maxPower` (W),
   `starterTorque` (N m).
 - Links: `name`, `kind` (`gear`, `clutch`, `differential`), `input`, `output`,
-  `outputB` indices, `ratio`, `maxTorque` (clutch output cap).
+  `outputB` indices, `ratio`, `maxTorque` (clutch output cap), optional `connection`.
 - Brakes: `name`, `shaft` index, `maxTorque`.
 
 `axis` is the canonical authored `[x,y,z]` tuple, unlike public world-vector
@@ -105,7 +105,7 @@ during mechanical evaluation; reading it does not advance their pose or command.
   angular speed is measured in rad/s; RPM is its signed conversion, not scripted
   display state. `angle` is in radians; `torque` is interval net mechanical torque.
 - `sources`: `{name, torque}` in N m.
-- `links`: `{name, active, saturated, impulse, torque, slip}`. Angular impulse in
+- `links`: `{name, active, connected, saturated, impulse, torque, slip}`. Angular impulse in
   N m s, torque in N m, relative velocity residual/slip in rad/s.
 - `brakes`: `{name, torque}` in N m.
 
@@ -123,3 +123,42 @@ rigid integration is approximate. See M82 for measured checks and bounds.
 Separate graphs execute in ascending owner entity-ID order, with one simultaneous
 mechanical solve per graph. Shared bearings couple physically across graphs;
 place tightly coupled shaft networks in one authored graph.
+
+## Physical connection prerequisite
+
+M83 adds an optional authored link record:
+
+```json
+"connection": {"owner":"102", "attachment":"right", "rootAttachment":"left"}
+```
+
+`owner` is the existing Deformable entity identity. `attachment` is its named
+physical attachment group. Optional `rootAttachment` requires a second enabled,
+live attachment and a continuous current material path between the groups.
+For cohesive M79 cooks, every surviving patch node must belong to the same
+unbroken component as the root. Removed material or committed bond breaks open
+the transmission only when they invalidate that patch or its required root path;
+unrelated cuts and surviving alternate paths do not. Released/disabled attachments,
+disabled/failed material or unavailable targets also open it. Without a root,
+the selected patch is the prerequisite.
+For an unpartitioned solid there is no authored internal fracture topology;
+material continues through the intact unpartitioned mesh.
+
+There is no automatic endpoint inference: the developer explicitly authors which
+material path supports which coupling. This can model wheel bearings, shaft
+mounts, structural machine supports or other machinery. It is not a vehicle rule.
+Scene validation rejects missing owners/groups; ordinary prefab remapping,
+qualified region references, save identity and dependency retention apply.
+The qualified streamed reference is `powertrain-link:<link-name>:connection`.
+
+`state.links[i].connected` reports this physical prerequisite independently of the
+held JS `enabled` command. A failed prerequisite suppresses that link's impulses;
+it does not destroy shafts/wheels, discard momentum, turn off independent
+sources/brakes or overwrite driver commands. Enabling the link cannot heal it.
+No prerequisite means `connected: true` and unchanged M82 mechanics. The optional
+record is omitted from default authored graphs, preserving their fingerprints.
+Connection availability is reconstructed, not saved as a second damage truth.
+Committed material changes are observed at the next mechanical interval.
+
+See [Deformable strength and observations](deformables.md#m83-materialbody-connection-strength)
+and [M83 model/authoring](../M83_MECHANICAL_DAMAGE.md).
