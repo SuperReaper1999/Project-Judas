@@ -1,0 +1,24 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Fracture Lab (/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/fracture_lab.judasproj)
+Scene: Fracture Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+BEAM initial revision=1 peak=804.804
+PASS normal asynchronous fracture asset publication
+PASS logical family owner has no duplicate collider/mass
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS published cells partition material mass exactly once
+PASS modest supported gravity load survives
+PASS multi-supported structure holds modest load
+PASS ordinary right support release
+PASS remaining load path fails from solved redistribution after support release
+PASS ordinary startup and clean shutdown
+SUMMARY mode=support checks=17 failures=0

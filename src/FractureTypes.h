@@ -18,10 +18,17 @@ struct FractureBond {
     std::vector<glm::uvec2> pairs;
     glm::dvec3 normal{1,0,0},centroid{0};
     double area=1;
+    // M79 optional authored strengths; zero inherits the family material.
+    double tension=0,shear=0,compression=0;
+    // Derived area moments, never mutable solver state or serialized caches.
+    glm::dmat3 sectionInverse{0};
+    double polarMoment=0;
+    std::vector<glm::dvec3> sectionPoints;
     void Save(SaveArchive&);
 };
 struct FractureCook {
     bool rigid=false;
+    bool structural=false; // Opt-in section stress model; legacy cooks stay unchanged.
     double tension=10000,shear=10000,compression=0,compliance=1e-8;
     unsigned pieceBudget=256;
     std::vector<FracturePart> parts;
@@ -30,6 +37,7 @@ struct FractureCook {
     std::vector<int> faceBond;
     std::vector<unsigned> nodePart;
     void Save(SaveArchive&);
+    void SaveStructural(SaveArchive&);
 };
 bool PrepareFractureCook(DeformableAsset&,std::string&);
 bool ImportFracturePartition(const std::string&,DeformableAsset&,std::string&);
@@ -47,6 +55,7 @@ struct FractureState {
     void Initialize(const FractureCook&);
     void BeginSubstep();
     void Observe(const FractureCook&,unsigned bond,glm::dvec3 force,glm::dvec3 normal);
+    void ObserveSection(const FractureCook&,unsigned bond,glm::dvec3 localForce,glm::dvec3 localMoment);
     bool Request(const FractureCook&,unsigned bond,uint64_t expectedRevision);
     bool RequestRemoval(const FractureCook&,unsigned part,uint64_t expectedRevision);
     bool Commit(const FractureCook&);

@@ -1,0 +1,512 @@
+JudasScene 3
+settings
+  name "Structural lab / FaithfulGravity"
+  world-origin 0 0 0
+  sun-color 1 0.98 0.92
+  sun-direction -0.3 0.8 0.5
+  ambient 0.3 0.32 0.35
+  fluid-scale 1
+  fidelity-policy none
+  next-id 1000
+end
+object 5 "Oblique uniform region"
+  position -12 5 -6
+  rotation 0.921060994 0 0 0.389418342
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 6 8 4
+end
+
+object 1 "Actual gravity field"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 400
+end
+
+object 3 "Laboratory floor"
+  position 8 -0.3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 27 0.3 27
+  render.color 0.13 0.19 0.23
+  body static box
+  body.half-extents 27 0.3 27
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 10 "Script-controlled visitor"
+  position 12 1.1 22
+  rotation 1 0 0 0
+  scale 1 1 1
+  motor.enabled true
+  motor.radius .3
+  motor.halfHeight .6
+  scripts 1
+  script.0.id 1
+  script.0.asset "79797979797979797979797979790003"
+  script.0.enabled true
+  script.0.properties "{}"
+  ui.asset "79797979797979797979797979790005"
+  ui.name "lab"
+  ui.enabled true
+  motor.offset 0 0 0
+  motor.stepHeight 0.5
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+end
+
+object 11 "Load controls"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "79797979797979797979797979790004"
+  script.0.enabled true
+  script.0.properties "{}"
+end
+
+object 12 "View seed"
+  position 12 1.1 22
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end
+
+object 100 "A: two supports / 120 kPa"
+  position 0 4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 4 0.3 1
+  render.color 0.22 0.64 0.75
+  deformable.asset "79797979797979797979797979790001"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "0.7"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 0 0 \"\" 0 0 0 1 \"right\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"79797979797979797979797979790008\" 0 \"79797979797979797979797979790009\" 0"
+end
+
+object 500 "Authored support pedestal"
+  position -3.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.32 0.36 0.4
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 501 "Authored support pedestal"
+  position 3.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.32 0.36 0.4
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 550 "Physical proof load"
+  position 0 4.9 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 0.85 0.35 0.12
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 20
+  body.friction 0.6
+  body.restitution 0
+  tags 1
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 200 "B: same bridge / 1 MPa"
+  position 12 4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 4 0.3 1
+  render.color 0.78 0.57 0.2
+  deformable.asset "79797979797979797979797979790002"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "0.7"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 0 0 \"\" 0 0 0 1 \"right\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"79797979797979797979797979790008\" 0 \"79797979797979797979797979790009\" 0"
+end
+
+object 510 "Authored support pedestal"
+  position 8.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.32 0.36 0.4
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 511 "Authored support pedestal"
+  position 15.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.32 0.36 0.4
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 551 "Physical proof load"
+  position 12 4.9 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 0.85 0.35 0.12
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 20
+  body.friction 0.6
+  body.restitution 0
+  tags 1
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 300 "C: same strength / middle pier"
+  position 24 4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 4 0.3 1
+  render.color 0.22 0.64 0.75
+  deformable.asset "79797979797979797979797979790001"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "0.7"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "3 \"left\" 0 0 \"\" 0 0 0 1 \"right\" 0 0 \"\" 0 0 0 1 \"middle\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"79797979797979797979797979790008\" 0 \"79797979797979797979797979790009\" 0"
+end
+
+object 520 "Authored support pedestal"
+  position 20.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.32 0.36 0.4
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 521 "Authored support pedestal"
+  position 27.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.32 0.36 0.4
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 523 "Middle support pedestal"
+  position 24.5 1.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 1.7 1.1
+  render.color 0.3 0.48 0.36
+  body static box
+  body.half-extents 0.5 1.7 1.1
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 552 "Physical proof load"
+  position 24 4.9 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 0.4 0.4
+  render.color 0.85 0.35 0.12
+  body dynamic box
+  body.half-extents 0.4 0.4 0.4
+  body.mass 20
+  body.friction 0.6
+  body.restitution 0
+  tags 1
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 400 "D: rotated bridge"
+  position -12 5 -6
+  rotation 0.921060994 0 0 0.389418342
+  scale 1 1 1
+  render box
+  render.half-extents 4 0.3 1
+  render.color 0.22 0.64 0.75
+  deformable.asset "79797979797979797979797979790001"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "4"
+  deformable.iterations "4"
+  deformable.collisionLayer "0"
+  deformable.collisionMask "18446744073709551615"
+  deformable.material.density "80"
+  deformable.material.stretchCompliance "1e-06"
+  deformable.material.shearCompliance "1e-05"
+  deformable.material.bendCompliance "0.0004"
+  deformable.material.volumeCompliance "1e-07"
+  deformable.material.damping "0.7"
+  deformable.material.thickness "0.035"
+  deformable.material.friction "0.5"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0.4"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"left\" 0 0 \"\" 0 0 0 1 \"right\" 0 0 \"\" 0 0 0 1"
+  render.radius 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.materials "2 \"79797979797979797979797979790008\" 0 \"79797979797979797979797979790009\" 0"
+end

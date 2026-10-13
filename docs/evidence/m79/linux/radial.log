@@ -1,0 +1,60 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Structural Lab (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/structural_lab.judasproj)
+Scene: Structural lab / RadicalGravity (projects/structural_lab/Scenes/radial.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async structural resource publication
+PASS family has no duplicate body or mass
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS independent density times volume mass oracle
+TOPOLOGY step=0 broken=0 revision=1
+PASS oblique independent structure carries gravity without world-up stress assumptions
+PASS ordinary authored oblique field rotates with its structural section
+PASS actual spatial radial acceleration used away from oblique zone
+PASS all bridges carry self weight and actual 20kg contact load
+CALM peak_tension=37614.4428 broken=0
+CALM peak_tension=37332.7036 broken=0
+CALM peak_tension=7676.54718 broken=0
+PASS public project JS including camera, input and UI runs
+TOPOLOGY step=131 broken=1 revision=2
+TOPOLOGY step=172 broken=2 revision=3
+TOPOLOGY step=175 broken=3 revision=4
+TOPOLOGY step=178 broken=5 revision=5
+DEMAND family=100 bond=0 broken=1 tension=140585.353 shear=4755.06858
+DEMAND family=100 bond=1 broken=0 tension=97233.5135 shear=51444.0605
+DEMAND family=100 bond=2 broken=1 tension=122630.745 shear=36616.499
+DEMAND family=100 bond=3 broken=1 tension=137638.297 shear=65802.7038
+DEMAND family=100 bond=4 broken=1 tension=137836.409 shear=48583.3041
+DEMAND family=100 bond=5 broken=0 tension=117707.96 shear=68512.0377
+DEMAND family=100 bond=6 broken=1 tension=125475.358 shear=87589.0222
+DEMAND family=200 bond=0 broken=1 tension=1002302.44 shear=20094.4475
+DEMAND family=200 bond=1 broken=0 tension=811236.829 shear=132112.291
+DEMAND family=200 bond=2 broken=1 tension=618984.541 shear=155791.952
+DEMAND family=200 bond=3 broken=0 tension=434182.929 shear=142654.91
+DEMAND family=200 bond=4 broken=0 tension=376887.893 shear=118568.039
+DEMAND family=200 bond=5 broken=0 tension=220539.373 shear=97150.1475
+DEMAND family=200 bond=6 broken=0 tension=187321.282 shear=134564.906
+DEMAND family=300 bond=0 broken=0 tension=12381.8901 shear=12101.187
+DEMAND family=300 bond=1 broken=0 tension=27912.6867 shear=10930.6426
+DEMAND family=300 bond=2 broken=0 tension=53580.3126 shear=10695.9623
+DEMAND family=300 bond=3 broken=0 tension=68952.2278 shear=9578.43578
+DEMAND family=300 bond=4 broken=1 tension=130659.34 shear=9106.04799
+DEMAND family=300 bond=5 broken=0 tension=66560.4757 shear=26552.6968
+DEMAND family=300 bond=6 broken=0 tension=49861.0748 shear=57126.2821
+REDISTRIBUTION weak=5 strong=2 middle=1
+PASS support loss alone causes physical failure under unchanged normal gravity
+PASS changing strength reduces failed connections under the same support loss
+PASS extra support reduces failed connections at the same strength
+PASS collapse retains original material mass with no decorative debris
+PASS detached colliders really fall and settle rather than disappearing or becoming decorative debris
+PASS simulation and public JS remain healthy
+PERF bodies=41 fixed_median_ms=0.529012 p95_ms=1.716689 max_ms=7.498108 draws=29 frames=340
+PASS normal application startup and shutdown
+M79 radial checks=23 failures=0

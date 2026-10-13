@@ -9653,3 +9653,21 @@ while worlds/jobs use them. Changes apply at fresh session boundaries. Nonempty
 loadouts extend strict modern save context with exact mod/contract/resolution
 identity; empty/unmodded v2 semantics remain. See [modding guide](MODDING.md),
 [catalog API](judasjs/mods.md) and [M76 evidence](M76.md).
+
+## M79 — optional load-driven structural sections (Experimental; human review pending)
+
+M79 extends M63 rigid fracture rather than introducing another solver. Opted-in
+JudasDeformable3 assets carry per-interface material-strength overrides. Bake/load
+integrates planar section area moments; normal fixed-joint reaction force and
+anchor-centred moment produce combined axial/bending and approximate shear/torsion
+stress. Failure retires constraints after the fixed step. Normal PhysicsWorld
+then redistributes loads and moves the original collidable, finite-mass pieces.
+Legacy version 1/2 cooks and their failure estimate remain unchanged.
+
+Existing editor, scene/prefab, save continuation, explicit region retention and
+export paths own these same families. JS applies gameplay loads and releases
+authored supports; it does not schedule collapse. World pins are ideal supports;
+finite-strength support connections must be authored as ordinary interfaces.
+This is a bounded brittle resultant model, not continuum engineering certification.
+See [M79 authoring/equations/lab/limitations](M79_STRUCTURES.md) and
+[focused evidence](evidence/m79/RESULTS.md).

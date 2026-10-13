@@ -1625,3 +1625,11 @@ judas_warnings(judas_navigation_dependency_tests)
 add_executable(judas_motor_runtime_tags_tests tests/MotorRuntimeTagsTests.cpp)
 target_link_libraries(judas_motor_runtime_tags_tests PRIVATE judas_engine)
 judas_warnings(judas_motor_runtime_tags_tests -Wpedantic)
+
+# M79 optional structural section model and actual ordinary project lifecycle.
+add_executable(judas_structural_tests tests/StructuralTests.cpp)
+target_link_libraries(judas_structural_tests PRIVATE judas_engine)
+judas_warnings(judas_structural_tests -Wpedantic)
+add_executable(judas_structural_application_tests tests/StructuralApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_structural_application_tests PRIVATE judas_engine)
+judas_warnings(judas_structural_application_tests -Wpedantic)

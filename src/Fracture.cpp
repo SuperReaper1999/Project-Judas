@@ -14,12 +14,17 @@ bool finite(glm::dvec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::is
 void FracturePart::Save(SaveArchive& a){a(key,nodes,tets,proxyCenter,proxyHalf);}
 void FractureBond::Save(SaveArchive& s){s(key,a,b,pairs,normal,centroid,area);}
 void FractureCook::Save(SaveArchive& s){s(rigid,tension,shear,compression,compliance,pieceBudget,parts,bonds);}
+void FractureCook::SaveStructural(SaveArchive& s){
+    s(structural);
+    for(auto& b:bonds)s(b.tension,b.shear,b.compression);
+}
 bool PrepareFractureCook(DeformableAsset& a,std::string& error){
     if(!a.fracture)return true;
     auto& c=*a.fracture;
     auto fail=[&](const char* message){error=message;return false;};
     if(a.kind!=DeformableKind::Solid||c.parts.size()<2||c.parts.size()>256||c.bonds.size()>1024||c.pieceBudget<c.parts.size()||c.pieceBudget>256)return fail("fracture partition/piece budget invalid");
     for(double x:{c.tension,c.shear,c.compression,c.compliance})if(!std::isfinite(x)||x<0)return fail("invalid fracture strengths/compliance");
+    if(c.structural&&!c.rigid)return fail("section stress model requires rigid fracture cells");
     if(c.tension<=0||c.shear<=0)return fail("fracture tension/shear must be positive Pa");
     c.nodePart.assign(a.nodes.size(),~0u);std::vector<unsigned> tetPart(a.tetrahedra.size(),~0u);std::set<std::string> keys;
     for(unsigned p=0;p<c.parts.size();++p){auto& part=c.parts[p];
@@ -38,15 +43,35 @@ bool PrepareFractureCook(DeformableAsset& a,std::string& error){
         if(bond.key.empty()||!keys.insert(bond.key).second||bond.a>=c.parts.size()||bond.b>=c.parts.size()||bond.a==bond.b||!interfaces.insert(std::minmax(bond.a,bond.b)).second||bond.pairs.size()<3||bond.pairs.size()>16||!finite(bond.normal)||glm::length(bond.normal)<.999||glm::length(bond.normal)>1.001||!finite(bond.centroid)||!std::isfinite(bond.area)||bond.area<=0)return fail("invalid/duplicate fracture interface");
         std::set<unsigned> sideA,sideB;
         for(auto pair:bond.pairs){if(pair.x>=a.nodes.size()||pair.y>=a.nodes.size()||c.nodePart[pair.x]!=bond.a||c.nodePart[pair.y]!=bond.b||!sideA.insert(pair.x).second||!sideB.insert(pair.y).second||glm::length(a.nodes[pair.x]-a.nodes[pair.y])>1e-7)return fail("invalid fracture interface node correspondence");}
-        double areaA=0,areaB=0;
+        for(double strength:{bond.tension,bond.shear,bond.compression})if(!std::isfinite(strength)||strength<0)return fail("invalid interface strength");
+        if(!c.structural&&(bond.tension||bond.shear||bond.compression))return fail("interface strengths require section stress model");
+        bond.sectionPoints.clear();bond.sectionInverse=glm::dmat3(0);bond.polarMoment=0;
+        double areaA=0,areaB=0;glm::dmat3 second(0);glm::dvec3 first(0);
         for(unsigned f=0;f<a.triangles.size();++f){auto n=a.triangles[f];bool left=sideA.count(n.x)&&sideA.count(n.y)&&sideA.count(n.z),right=sideB.count(n.x)&&sideB.count(n.y)&&sideB.count(n.z);
             if(!left&&!right)continue;
             if(c.faceBond[f]>=0)return fail("overlapping fracture interfaces");
             c.faceBond[f]=int(b);
             auto cross=glm::cross(a.nodes[n.y]-a.nodes[n.x],a.nodes[n.z]-a.nodes[n.x]);double area=.5*glm::length(cross);
             if(glm::dot(glm::normalize(cross),bond.normal)*(left?1.:-1.)<.999||std::abs(glm::dot((a.nodes[n.x]+a.nodes[n.y]+a.nodes[n.z])/3.-bond.centroid,bond.normal))>1e-7)return fail("fracture interface normal/centroid does not match material faces");
-            if(left)areaA+=area;else areaB+=area;}
+            if(left){areaA+=area;
+                if(c.structural){glm::dvec3 r[3]={a.nodes[n.x]-bond.centroid,a.nodes[n.y]-bond.centroid,a.nodes[n.z]-bond.centroid};
+                    auto sum=r[0]+r[1]+r[2];first+=area*sum/3.;
+                    second+=area/12.*(glm::outerProduct(sum,sum)+glm::outerProduct(r[0],r[0])+glm::outerProduct(r[1],r[1])+glm::outerProduct(r[2],r[2]));
+                }
+            }else areaB+=area;}
         if(std::abs(areaA-bond.area)>1e-6*bond.area||std::abs(areaB-bond.area)>1e-6*bond.area)return fail("fracture interface area/face coverage mismatch");
+        if(c.structural){
+            if(glm::length(first)>1e-7*bond.area)return fail("structural interface must use its area centroid");
+            // Invert only the two in-plane modes; the added normal mode is
+            // algebraic regularization, never artificial physical stiffness.
+            bond.polarMoment=second[0][0]+second[1][1]+second[2][2];
+            // Dimensionless conditioning test: centimetre and metre sections
+            // must not acquire different validity merely from unit scale.
+            auto augmented=second/bond.polarMoment+glm::outerProduct(bond.normal,bond.normal);
+            if(!std::isfinite(glm::determinant(augmented))||glm::determinant(augmented)<=1e-12)return fail("degenerate structural section");
+            bond.sectionInverse=glm::inverse(augmented)/bond.polarMoment;
+            for(auto pair:bond.pairs)bond.sectionPoints.push_back(a.nodes[pair.x]-bond.centroid);
+        }
     }
     return true;
 }
@@ -83,6 +108,26 @@ void FractureState::Observe(const FractureCook& c,unsigned b,glm::dvec3 force,gl
     tensionDemand[b]=std::max(tensionDemand[b],std::max(traction,0.));shearDemand[b]=std::max(shearDemand[b],shear);
     if(traction>c.tension||shear>c.shear||(c.compression>0&&-traction>c.compression))pending[b]=1;
 }
+// Resultant traction model on the actual authored planar section. Linear
+// normal stress satisfies axial force and both bending moments exactly. Shear
+// uses a uniform resultant plus a polar-moment torsion approximation (not a
+// Saint-Venant continuum solution). Evaluate extrema at section vertices.
+void FractureState::ObserveSection(const FractureCook& c,unsigned b,glm::dvec3 force,glm::dvec3 moment){
+    if(!c.structural||b>=c.bonds.size()||broken[b]||removed[c.bonds[b].a]||removed[c.bonds[b].b])return;
+    const auto& section=c.bonds[b];auto n=section.normal;
+    double axial=glm::dot(force,n)/section.area;
+    auto gradient=section.sectionInverse*glm::cross(n,moment);
+    auto shearForce=(force-n*glm::dot(force,n))/section.area;
+    double twist=glm::dot(moment,n)/section.polarMoment;
+    double tensile=0,compressive=0,shearPeak=0;
+    for(auto r:section.sectionPoints){double stress=axial+glm::dot(gradient,r);
+        tensile=std::max(tensile,stress);compressive=std::max(compressive,-stress);
+        shearPeak=std::max(shearPeak,glm::length(shearForce+twist*glm::cross(n,r)));
+    }
+    tensionDemand[b]=std::max(tensionDemand[b],tensile);shearDemand[b]=std::max(shearDemand[b],shearPeak);
+    double ts=section.tension>0?section.tension:c.tension,ss=section.shear>0?section.shear:c.shear,cs=section.compression>0?section.compression:c.compression;
+    if(tensile>ts||shearPeak>ss||(cs>0&&compressive>cs))pending[b]=1;
+}
 bool FractureState::Request(const FractureCook& c,unsigned b,uint64_t expected){if(expected!=revision||b>=broken.size()||broken[b]||removed[c.bonds[b].a]||removed[c.bonds[b].b])return false;pending[b]=2;return true;}
 void FractureState::Connectivity(const FractureCook& c){JUDAS_PROFILE_SCOPE("Fracture connectivity");component.resize(c.parts.size());std::iota(component.begin(),component.end(),0);auto root=[&](unsigned p){while(component[p]!=p)p=component[p];return p;};
     for(unsigned b=0;b<c.bonds.size();++b)if(!broken[b]&&!removed[c.bonds[b].a]&&!removed[c.bonds[b].b]){auto a=root(c.bonds[b].a),d=root(c.bonds[b].b);component[std::max(a,d)]=std::min(a,d);}
@@ -112,6 +157,12 @@ bool ImportFracturePartition(const std::string& text,DeformableAsset& output,std
             else if(token=="bond"){FractureBond b;unsigned n=0;in>>std::quoted(b.key)>>b.a>>b.b;vector(b.normal);vector(b.centroid);in>>b.area>>n;if(n>16)throw std::runtime_error("interface correspondence limit");b.pairs.resize(n);for(auto& p:b.pairs)in>>p.x>>p.y;c.bonds.push_back(std::move(b));if(c.bonds.size()>1024)throw std::runtime_error("interface limit");}
             else if(token=="group"){std::string name;std::vector<unsigned> nodes;in>>std::quoted(name);list(nodes);if(!a.groups.emplace(name,std::move(nodes)).second)throw std::runtime_error("duplicate group");}
             else if(token=="settings"){in>>c.rigid>>c.tension>>c.shear>>c.compression>>c.compliance>>c.pieceBudget;}
+            else if(token=="structural"){in>>c.structural;}
+            else if(token=="strength"){std::string key;double tension,shear,compression;in>>std::quoted(key)>>tension>>shear>>compression;
+                auto b=std::find_if(c.bonds.begin(),c.bonds.end(),[&](const auto& x){return x.key==key;});
+                if(b==c.bonds.end())throw std::runtime_error("strength requires an already authored interface");
+                b->tension=tension;b->shear=shear;b->compression=compression;
+            }
             else if(token=="end"){end=true;break;}else throw std::runtime_error("unknown partition record: "+token);
             if(!in)throw std::runtime_error("truncated partition record: "+token);
         }

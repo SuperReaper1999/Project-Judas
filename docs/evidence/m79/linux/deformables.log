@@ -1,0 +1,79 @@
+PASS denser cloth render binding
+PASS block six tetrahedra per cell
+PASS independent unit cube volume reference
+PASS asset versioned roundtrip
+PASS degenerate tetrahedron rejects
+PASS strain/volume rest state is stationary
+PASS density derives surface and volume masses
+PASS shared immutable solid independent motion
+PASS normal authored component roundtrip
+PASS stored weights map render surface and normals
+PASS current deformed surface ray query
+PASS validated location accepts physical impulse
+PASS stale deformable location rejects
+PASS authoritative state persists with fresh generation
+PASS elastic solid contacts ordinary static box
+COUPLING momentum=-4.33527079e-11 4.21247469e-10 -0.800000171 initialEnergy=0.4 maximumKineticEnergy=0.400000006
+PASS two-way contact conserves closed linear momentum
+PASS unforced finite-mass contact has no unexplained kinetic growth
+PASS normal finite rigid body reacts to cloth
+PLASTIC retainedRest=0.074932972 belowYieldRest=0 jacobian=0.992608282 maximumStrain=0.260991503
+PASS physical force induces bounded irreversible material rest flow
+PASS below-yield physical force leaves rest state unchanged
+PASS deformation remains after unloading without a script pose swap
+PASS plastic rule preserves each rest volume
+PASS render UV seam shares deliberate source topology
+PASS coincident separate source layers never position-weld
+PASS arbitrary orientation and gravity rotate free motion equivalently
+PASS actual radial gravity pulls deformable toward field centre
+PASS independent surface fixture prepares
+PASS swept vertex/face detects crossing beyond particle-centre contacts
+PASS disconnected cloth pieces preserve topology
+PASS cloth self-contact excludes adjacency but retains folded surface crossing
+PASS M39 paired deformable mask rejects contact
+PASS moving group pin samples target at fixed-step boundary
+PASS release retains physically observed anchor motion
+PASS explicit reset coherently clears interpolation and velocity
+PASS quiescent deformable sleeps independently of visibility
+PASS ordinary impulse wakes sleeping deformable
+QUALITY dt=0.016666667 substeps=4 iterations=4 extension=0.0437825524 maxStrain=0.0475569859 minJ=0.998532283
+QUALITY dt=0.0083333333 substeps=8 iterations=6 extension=0.0440308603 maxStrain=0.0482980538 minJ=0.99853433
+PASS practical timestep/quality variants remain in bounded deformation envelope
+PASS snapshot retains permanent rest change and attachment state
+PASS presentation mapping never mutates authoritative simulation
+DYNAMIC_ATTACHMENT max_energy=0.0112194903 carrier_speed=0.00561582856
+PASS free rigid support receives finite cloth attachment reaction
+PASS unforced dynamic attachment remains in bounded energy envelope
+PASS physical load fixture uses valid unique attachment groups
+PASS solid physically deforms while resisting volumetric collapse
+ELASTIC mode=0 loaded=0.0068803 unloaded=0.000463538 minJ=1
+PASS elastic specimen recovers after physical compression/bend/twist load removal
+PASS solid physically deforms while resisting volumetric collapse
+ELASTIC mode=1 loaded=0.0184297 unloaded=0.000214343 minJ=1
+PASS elastic specimen recovers after physical compression/bend/twist load removal
+PASS solid physically deforms while resisting volumetric collapse
+ELASTIC mode=2 loaded=0.00824925 unloaded=0.000384476 minJ=1
+PASS elastic specimen recovers after physical compression/bend/twist load removal
+PASS cloth/volumetric surface contact moves both finite-mass participants
+PASS inverted unsupported solid stops diagnostically
+PASS fixed-origin large absolute placement preserves precise local simulation
+MOVING_CONTACT mean_cloth_vx=0.496923 support_vx=0.498781
+PASS friction transfers actual moving support velocity to cloth
+PASS collision mask rejects ordinary rigid primitive contact
+MATERIAL_CONTROL mode=0 stiffCorrection=0.348688 softCorrection=3.11567e-09
+PASS independent stretch/shear/bend parameter changes physical response
+MATERIAL_CONTROL mode=1 stiffCorrection=0.170673 softCorrection=2.40082e-09
+PASS independent stretch/shear/bend parameter changes physical response
+MATERIAL_CONTROL mode=2 stiffCorrection=0.0857864 softCorrection=2.05835e-09
+PASS independent stretch/shear/bend parameter changes physical response
+PASS destroyed support handle cannot alias reused rigid slot
+PASS disabled deformable rejects accumulated force submission
+PASS disabled deformation remains frozen independent of presentation
+PASS bake diagnoses render index payload bound before export
+PASS finite coordinates with overflowing derived cloth area reject
+PASS finite coordinates with overflowing derived tet volume reject
+PASS finite authored mass weights prepare normally
+PASS overflowing derived node mass rejects instance initialization
+PASS overflowing runtime material is diagnosed
+PASS rejected material change leaves existing mass and configuration unchanged
+SUMMARY 66 checks 0 failures

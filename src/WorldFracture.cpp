@@ -47,10 +47,12 @@ void RuntimeWorld::UpdateRigidFracture(EntityId owner,double dt){
         auto pose=m_physics.GetTransform(body);V com=center(*s.asset,c.parts[p]);V velocity=m_physics.GetLinearVelocity(body),omega=m_physics.GetAngularVelocity(body);for(auto n:c.parts[p].nodes){V arm=glm::dquat(pose.rotation)*(s.asset->nodes[n]-com);s.positions[n]=V(pose.position)+arm;s.velocities[n]=velocity+glm::cross(omega,arm);}
 
     }
-    for(unsigned b=0;b<c.bonds.size();++b)if(!s.fracture.broken[b]){JointState joint;if(m_physics.GetJoint(record.rigid.bonds[b],joint)){auto pose=m_physics.GetTransform(joint.settings.bodyA);V normal=glm::dquat(pose.rotation)*c.bonds[b].normal;s.fracture.Observe(c,b,V(joint.reactionImpulse)/dt,normal);
-            // Fixed rows also resist bending. Moment/section modulus supplies
-            // the conservative peak tensile traction of the authored box face.
-            V moment=V(joint.reactionAngularImpulse)-glm::cross(glm::dquat(pose.rotation)*V(joint.settings.anchorA),V(joint.reactionImpulse));double bending=glm::length(moment-normal*glm::dot(moment,normal))/dt;double span=std::sqrt(c.bonds[b].area);s.fracture.Observe(c,b,normal*(bending*6/span),normal);
+    for(unsigned b=0;b<c.bonds.size();++b)if(!s.fracture.broken[b]){JointState joint;if(m_physics.GetJoint(record.rigid.bonds[b],joint)){auto pose=m_physics.GetTransform(joint.settings.bodyA);V normal=glm::dquat(pose.rotation)*c.bonds[b].normal;
+            V moment=V(joint.reactionAngularImpulse)-glm::cross(glm::dquat(pose.rotation)*V(joint.settings.anchorA),V(joint.reactionImpulse));
+            if(c.structural){auto inverse=glm::inverse(glm::dquat(pose.rotation));s.fracture.ObserveSection(c,b,inverse*V(joint.reactionImpulse)/dt,inverse*moment/dt);}
+            else {s.fracture.Observe(c,b,V(joint.reactionImpulse)/dt,normal);
+                double bending=glm::length(moment-normal*glm::dot(moment,normal))/dt;double span=std::sqrt(c.bonds[b].area);s.fracture.Observe(c,b,normal*(bending*6/span),normal);
+            }
         }}
     if(!s.settings.enabled)return;
     s.fracture.Commit(c);

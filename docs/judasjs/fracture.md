@@ -34,6 +34,13 @@ A snapshot, not mutable storage:
   `cause` is `physical`, `explicit`, or null. Demand numbers are observed peak
   tractions in Pa, not current health or a calibrated engineering damage measure.
 
+M79 additionally offers an opt-in rigid **structural section stress** cook with
+geometry-integrated bending, combined axial/bending stress and approximate torsion.
+Per-interface strengths can be authored in the editor or partition source; the
+state's top-level strength fields remain family defaults. Existing methods,
+callbacks, safe handles and legacy asset behaviour are unchanged. See
+[structural authoring, equations, limitations and lab](../M79_STRUCTURES.md).
+
 Assets/strengths are authored offline. Elastic compliance and plastic yield are
 separate. Default compression does not crush; an optional positive cooked
 compression threshold enables brittle compression failure. No fatigue accumulation.

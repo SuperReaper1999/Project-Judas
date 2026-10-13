@@ -1,0 +1,9 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Structural Lab (/tmp/judas-m79-moved/Structural Lab/game.judasproj)
+Scene: Structural lab / FaithfulGravity (/tmp/judas-m79-moved/Structural Lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ
+[TestHarness] Wrote screenshot: /tmp/m79-initial.png
+[TestHarness] Wrote screenshot: /tmp/m79-export.png
+[TestHarness] service scene ready after 0 wait frames at frame 310

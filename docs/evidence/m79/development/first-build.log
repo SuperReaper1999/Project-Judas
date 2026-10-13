@@ -1,0 +1,106 @@
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1517:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1517 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1517:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1517 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1534:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1534 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1534:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1534 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 56%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_deformable_bake.dir/tools/DeformableBake.cpp.o
+[100%] Linking CXX executable judas_deformable_bake
+[100%] Built target judas_deformable_bake
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (0.9s)
+CMake Error at CMakeLists.txt:1633 (add_executable):
+  Cannot find source file:
+
+    tests/StructuralApplicationTests.cpp
+
+
+CMake Error at CMakeLists.txt:1633 (add_executable):
+  No SOURCES given to target: judas_structural_application_tests
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
+gmake[1]: *** [CMakeFiles/Makefile2:10384: cmake_check_build_system] Error 1
+gmake: *** [Makefile:2295: judas_fracture_tests] Error 2

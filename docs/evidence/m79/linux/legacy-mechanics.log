@@ -1,0 +1,43 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Fracture Lab (/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/fracture_lab.judasproj)
+Scene: Fracture Lab / uniform (/home/conner/Documents/GitHub/Project-Judas/projects/fracture_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+BEAM initial revision=1 peak=804.804
+PASS normal asynchronous fracture asset publication
+PASS logical family owner has no duplicate collider/mass
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS every stiff part is an ordinary safe rigid body
+PASS published cells partition material mass exactly once
+PASS modest supported gravity load survives
+PASS independent runtime family shares immutable cook
+PASS finite rigid ownership publication prepares all cells
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+PASS child receives source point and angular velocity without a new impulse
+MOMENTUM mass=108 com_error=1.42108689e-14 linear_error=2.57889079e-06 angular_error=2.33168389e-05
+PASS lumped material mass COM linear/angular momentum preserved by rigid fit
+PASS save preflight rejects omitted required physical material
+PASS unforced complete cut retains current positions/motion and exact mass
+PASS ordinary attachment on surviving material remains valid after another part is removed
+PASS family disable immediately disables descendant colliders
+PASS family enable resumes retained material
+PASS disabled soft family defers topology publication
+PASS reenabled soft family publishes pending cut at normal fixed boundary
+PASS family destruction removes bodies and attached constraints safely
+PASS body slot reuse cannot alias old generation
+PASS ordinary startup and clean shutdown
+SUMMARY mode=mechanics checks=35 failures=0

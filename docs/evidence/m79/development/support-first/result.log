@@ -1,0 +1,34 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Structural Lab (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/structural_lab.judasproj)
+Scene: Structural lab / FaithfulGravity (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async structural resource publication
+PASS family has no duplicate body or mass
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS independent density times volume mass oracle
+PASS all bridges carry self weight and actual 20kg contact load
+CALM peak_tension=37641.7488 broken=0
+CALM peak_tension=37641.7304 broken=0
+CALM peak_tension=7992.70304 broken=0
+PASS public project JS including camera, input and UI runs
+PASS ordinary authored support release
+PASS ordinary authored support release
+PASS ordinary authored support release
+REDISTRIBUTION weak=5 strong=1 middle=1
+PASS support loss alone causes physical failure under unchanged normal gravity
+FAIL changing strength changes physical outcome
+FAIL extra support changes physical outcome at same strength
+PASS collapse retains original material mass with no decorative debris
+FAIL detached colliders continue with real inherited dynamics
+PASS simulation and public JS remain healthy
+PERF bodies=41 fixed_median_ms=0.719363 p95_ms=2.431061 max_ms=9.908880 draws=21 frames=340
+PASS normal application startup and shutdown
+M79 support checks=23 failures=3

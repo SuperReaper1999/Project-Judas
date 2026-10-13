@@ -1,0 +1,33 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Structural Lab (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/structural_lab.judasproj)
+Scene: Structural lab / FaithfulGravity (/home/conner/Documents/GitHub/Project-Judas/projects/structural_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary async structural resource publication
+PASS family has no duplicate body or mass
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS real safe dynamic fragment
+PASS independent density times volume mass oracle
+TOPOLOGY step=0 broken=0 revision=1
+PASS oblique independent structure carries gravity without world-up stress assumptions
+PASS ordinary authored oblique field rotates with its structural section
+PASS all bridges carry self weight and actual 20kg contact load
+CALM peak_tension=37641.7488 broken=0
+CALM peak_tension=37641.7304 broken=0
+CALM peak_tension=7992.70304 broken=0
+PASS public project JS including camera, input and UI runs
+PASS real impact impulse at point
+TOPOLOGY step=121 broken=1 revision=2
+TOPOLOGY step=122 broken=3 revision=3
+TOPOLOGY step=278 broken=4 revision=4
+PASS applied physical load exceeds real material capacity
+PASS simulation and public JS remain healthy
+PERF bodies=44 fixed_median_ms=0.434282 p95_ms=0.916562 max_ms=1.672495 draws=31 frames=340
+PASS normal application startup and shutdown
+M79 impact checks=19 failures=0

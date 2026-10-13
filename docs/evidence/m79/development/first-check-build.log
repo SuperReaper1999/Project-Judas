@@ -1,0 +1,64 @@
+[  0%] Built target judas_app_icon
+[  5%] Built target judas_icu_build
+[ 16%] Built target freetype
+[ 22%] Built target judas_quickjs
+[ 27%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 38%] Built target judas_profiler
+[ 38%] Built target judas_audio_backend
+[ 38%] Built target harfbuzz
+[ 44%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_structural_tests.dir/tests/StructuralTests.cpp.o
+[100%] Linking CXX executable judas_structural_tests
+[100%] Built target judas_structural_tests
+[  0%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 15%] Built target judas_icu_build
+[ 21%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 36%] Built target judas_profiler
+[ 36%] Built target judas_audio_backend
+[ 36%] Built target harfbuzz
+[ 42%] Built target judas_materials
+[ 94%] Built target judas_engine
+[ 94%] Building CXX object CMakeFiles/judas_structural_application_tests.dir/src/Application.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_structural_application_tests.dir/tests/StructuralApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp:33:34: error: ‘class RuntimeWorld’ has no member named ‘ScriptStates’; did you mean ‘ScriptSlots’?
+   33 |   bool healthy=true;for(auto s:w.ScriptStates())healthy&=s.state=="running"||s.state=="disabled";
+      |                                  ^~~~~~~~~~~~
+      |                                  ScriptSlots
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp:43:68: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long int’ [-Wformat=]
+   43 |     for(auto s:{a,b,d})std::printf("CALM peak_tension=%.9g broken=%d\n",*std::max_element(s->fracture.tensionDemand.begin(),s->fracture.tensionDemand.end()),broken(s));
+      |                                                                   ~^                                                                                         ~~~~~~~~~
+      |                                                                    |                                                                                               |
+      |                                                                    int                                                                                             long int
+      |                                                                   %ld
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp:46:166: error: invalid use of void expression
+   46 |     if(mode=="impact"){auto id=w.FracturePartEntity(100,4);auto body=w.RuntimeBody(id);auto pose=w.Physics().GetTransform(body);check(w.Physics().ApplyImpulseAtPoint(body,{0,-1200,0},pose.position+glm::vec3(.4f,.3f,0)),"real impact impulse at point");}
+      |                                                                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp:52:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘long int’ [-Wformat=]
+   52 |     std::printf("REDISTRIBUTION weak=%d strong=%d middle=%d\n",broken(a),broken(b),broken(d));
+      |                                      ~^                        ~~~~~~~~~
+      |                                       |                              |
+      |                                       int                            long int
+      |                                      %ld
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp:52:49: warning: format ‘%d’ expects argument of type ‘int’, but argument 3 has type ‘long int’ [-Wformat=]
+   52 |     std::printf("REDISTRIBUTION weak=%d strong=%d middle=%d\n",broken(a),broken(b),broken(d));
+      |                                                ~^                        ~~~~~~~~~
+      |                                                 |                              |
+      |                                                 int                            long int
+      |                                                %ld
+/home/conner/Documents/GitHub/Project-Judas/tests/StructuralApplicationTests.cpp:52:59: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘long int’ [-Wformat=]
+   52 |     std::printf("REDISTRIBUTION weak=%d strong=%d middle=%d\n",broken(a),broken(b),broken(d));
+      |                                                          ~^                        ~~~~~~~~~
+      |                                                           |                              |
+      |                                                           int                            long int
+      |                                                          %ld
+gmake[3]: *** [CMakeFiles/judas_structural_application_tests.dir/build.make:79: CMakeFiles/judas_structural_application_tests.dir/tests/StructuralApplicationTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:10377: CMakeFiles/judas_structural_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:10384: CMakeFiles/judas_structural_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:3231: judas_structural_application_tests] Error 2
