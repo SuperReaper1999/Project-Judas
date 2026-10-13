@@ -1,0 +1,22 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Wheel Lab (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj)
+Scene: Wheel lab / flat (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary four-wheel and six-wheel assemblies use the same component
+PASS visual tyre has no duplicate rigid-body mass or contact owner
+CALM contacts=4 length_m=0.270171165 load_N=6368.44238 speed_mps=0.0614256188
+PASS actual query contacts compress suspension under chassis self-weight
+PASS public wheel JS, logical input, UI and presentation camera execute
+DRIVEN forward_m=4.32506514 speed_mps=4.81815815 spin_rps=12.7784634
+PASS logical W input drives real chassis displacement through rolling traction
+PASS project JS supplies direct torque rather than moving chassis transforms
+BRAKED speed_mps=0.0593708493
+PASS ordinary wheel brake torque reduces actual vehicle speed
+PAYLOAD length_m=0.221433163 load_N=8666.80371
+PASS real finite-mass payload changes suspension load and travel
+PASS runtime tyre configuration uses the public fixed-update API
+PASS public JS saves wheel commands and spin with physical chassis state
+PASS normal application startup and shutdown
+PERF mode=write samples=373 fixed_median_ms=0.348024 p95_ms=0.606852 max_ms=1.526413 frame_median_ms=22.913660 frame_p95_ms=32.789343
+M81 application write checks=11 failures=0

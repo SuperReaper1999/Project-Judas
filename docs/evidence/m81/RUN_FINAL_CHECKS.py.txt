@@ -1,0 +1,27 @@
+from pathlib import Path
+import os, subprocess, time, json
+ROOT=Path.cwd()
+OUT=ROOT/'docs/evidence/m81/linux'
+OUT.mkdir(parents=True,exist_ok=True)
+env=dict(os.environ,SDL_VIDEODRIVER='offscreen',SDL_AUDIODRIVER='dummy',XDG_DATA_HOME='/tmp/judas-m81-final-user')
+results=[]
+def run(label,args,timeout=180):
+    path=OUT/(label+'.txt');start=time.monotonic()
+    with path.open('w') as log:
+        try:r=subprocess.run([str(x) for x in args],cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=timeout);code=r.returncode
+        except subprocess.TimeoutExpired:code=124
+    results.append(dict(label=label,args=[str(x) for x in args],exit=code,seconds=time.monotonic()-start))
+    print(label,code,flush=True)
+    (OUT/'final-cases.json').write_text(json.dumps(results,indent=2)+'\n')
+    return code
+for name in ['wheel','wheel_lifecycle','physics','collision','physics_cast','joint','joint_authoring','character_motor','kinematic','physics_continuation','save_storage','bending','structural','gravity_selection','uniform_gravity_scene']:
+    run(name,[ROOT/'build'/('judas_'+name+'_tests')])
+run('save-exclusion',[ROOT/'build/judas_save_exclusion_tests','/tmp/judas-m81-save-exclusion-fresh',ROOT])
+run('wheel_js',[ROOT/'build/judas_wheel_script_tests','/tmp/judas-m81-final-script'])
+project=ROOT/'projects/wheel_lab/wheel_lab.judasproj'
+for mode in ['contracts','probe','oblique','radial','steer','lifecycle','write','read']:
+    run('application-'+mode,[ROOT/'build/judas_wheel_application_tests',project,mode,OUT/('application-'+mode)])
+stream=ROOT/'projects/streamed_range/streamed_range.judasproj'
+for mode in ['write','read']:
+    run('regression-stream-'+mode,[ROOT/'build/judas_save_streaming_tests',stream,mode,OUT/('regression-stream-'+mode)],300)
+raise SystemExit(any(r['exit'] for r in results))

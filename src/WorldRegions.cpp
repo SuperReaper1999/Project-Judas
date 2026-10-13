@@ -20,6 +20,18 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
     Scene batch;batch.Settings()=m_settings;batch.Objects().push_back(stage);
     const auto before=m_referencedAssets.size();FidelityPolicyContext context;
     bool ok=AppendSceneObjects(batch,false,context,error);
+    if(ok&&definition.wheel){
+        // Registration is bounded per object, so a managed chassis can have
+        // entered a reduced representation before its first wheel was staged.
+        // Reconstruct through the normal fidelity mechanism while private;
+        // the reverse registration order already retains Full at creation.
+        const auto chassisId=definition.wheel->chassis;
+        if(const auto* chassis=FindEntity(chassisId);chassis&&chassis->definition.body&&
+           chassis->lifecycle!=EntityLifecycle::Destroyed&&chassis->fidelity!=SimulationFidelity::Full){
+            ok=SetEntityFidelity(chassisId,SimulationFidelity::Full,&error);
+            if(ok&&m_regionPending.count(chassisId))m_physics.SetBodyEnabled(m_entityCategories.at(chassisId).body,false);
+        }
+    }
     if(ok&&stage.body&&stage.body->motion==SceneBodyMotion::Kinematic){
         const auto body=m_entityCategories.at(definition.id).body;
         if(definition.body->enabled){SaveArchive command;m_physics.PersistKinematic(command,body);m_regionKinematicCommands[definition.id]=std::move(command.bytes);}
@@ -58,6 +70,7 @@ void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
         // authored state before callbacks can observe the published region.
         if(auto* motor=RuntimeCharacter(id))m_physics.SetBodyEnabled(motor->observationBody,motor->settings.enabled);
     }
+    for(auto id:ids)if(auto* wheel=RuntimeWheel(id)){const auto chassis=RuntimeBody(wheel->settings.chassis);wheel->state.available=wheel->settings.enabled&&m_physics.IsBodyEnabled(chassis)&&m_physics.IsDynamicBody(chassis);wheel->Publish(m_physics,chassis);wheel->previous=wheel->state;}
     for(auto& e:m_audioEmitters)if(std::find(ids.begin(),ids.end(),e.id)!=ids.end())e.wantPlay=e.settings.playOnStart;
     ++m_entityVersion;
 }
@@ -103,6 +116,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     erase(m_entities);erase(m_extraEntities);m_entityIndexVersion=~0u;erase(m_staticBodies);erase(m_staticRenderables);erase(m_staticLights);
     erase(m_audioZones);erase(m_audioEmitters);erase(m_particleEmitters);erase(m_renderCameras);
     if(auto character=m_characters.find(id);character!=m_characters.end())m_physics.DestroyBody(character->second.motor.observationBody);
+    m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
     RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_physicalAnimations.erase(id);CancelPhysicalBalance(id);m_balances.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
     m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_characterOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
     if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end()){

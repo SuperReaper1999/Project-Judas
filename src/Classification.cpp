@@ -54,6 +54,7 @@ bool ProjectClassification::Parse(const std::string& text,ProjectClassification&
 bool ValidateSceneClassification(const Scene& scene,const ProjectClassification& categories,std::string& error){
     if(!categories.Validate(error))return false;
     for(const auto& o:scene.Objects()){
+        if(o.wheel&&(!categories.collision.names.count(o.wheel->collisionLayer)||((o.wheel->requiredTags|o.wheel->excludedTags)&~categories.tags.ActiveMask()))){error="unregistered wheel layer/tags";return false;}
         if(o.characterMotor&&(!categories.collision.names.count(o.characterMotor->collisionLayer)||((o.characterMotor->requiredTags|o.characterMotor->excludedTags)&~categories.tags.ActiveMask()))){error="unregistered motor layer/tags";return false;}
         if(o.ragdoll)for(const auto& bone:o.ragdoll->bones)if(!categories.collision.names.count(bone.collisionLayer)){error="unregistered ragdoll collision layer";return false;}
         if((o.tags&~categories.tags.ActiveMask())||!categories.render.names.count(o.renderLayer)||

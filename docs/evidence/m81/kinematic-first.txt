@@ -1,0 +1,2 @@
+new command=1 m/s contact=1 reportedGroundX=0 chassisX=0
+published ground velocity X=1

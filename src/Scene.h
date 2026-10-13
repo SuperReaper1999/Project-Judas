@@ -15,6 +15,7 @@
 #include <map>
 #include <optional>
 #include "CharacterMotor.h"
+#include "Wheel.h"
 #include "VisualParticles.h"
 #include <string>
 #include <vector>
@@ -317,6 +318,7 @@ struct SceneObject {
     std::optional<NavigationLinkSettings> navigationLink;
     std::optional<NavigationModifierSettings> navigationModifier;
     std::optional<CharacterMotorSettings> characterMotor;
+    std::optional<WheelSettings> wheel;
     std::optional<RagdollDefinition> ragdoll;
     std::optional<SceneJointComponent> joint;
     std::optional<SceneAnimationComponent> animation;

@@ -1,0 +1,22 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Wheel Lab (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj)
+Scene: Wheel lab / flat (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/Scenes/contracts.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary four-wheel and six-wheel assemblies use the same component
+PASS visual tyre has no duplicate rigid-body mass or contact owner
+PASS valid
+PASS startMutationBlocked
+PASS invalidConfigBlocked
+PASS invalidCommandBlocked
+PASS unknownFieldBlocked
+PASS positiveConfig
+PASS disabled
+PASS positiveCommand
+PASS contacts
+PASS staleInvalid
+PASS staleReadBlocked
+PASS staleWriteBlocked
+PASS public binding negative cases isolate errors without disabling scripts
+PASS normal application startup and shutdown
+M81 application contracts checks=16 failures=0

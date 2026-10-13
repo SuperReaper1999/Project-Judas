@@ -132,6 +132,8 @@ target_include_directories(judas_materials PUBLIC src)
 target_link_libraries(judas_materials PUBLIC ${JUDAS_GLM} judas_profiler)
 
 add_library(judas_engine STATIC
+    src/Wheel.cpp
+    src/WorldWheels.cpp
     src/modding/ModContent.cpp
     src/modding/ContentStorage.cpp
     src/modding/ModStore.cpp
@@ -1641,3 +1643,17 @@ judas_warnings(judas_bending_tests -Wpedantic)
 add_executable(judas_bending_application_tests tests/BendingApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_bending_application_tests PRIVATE judas_engine)
 judas_warnings(judas_bending_application_tests -Wpedantic)
+
+# M81 independent wheel contact/suspension and ordinary project integration.
+add_executable(judas_wheel_tests tests/WheelTests.cpp)
+target_link_libraries(judas_wheel_tests PRIVATE judas_engine)
+judas_warnings(judas_wheel_tests -Wpedantic)
+add_executable(judas_wheel_script_tests tests/WheelScriptTests.cpp)
+target_link_libraries(judas_wheel_script_tests PRIVATE judas_engine)
+judas_warnings(judas_wheel_script_tests -Wpedantic)
+add_executable(judas_wheel_lifecycle_tests tests/WheelLifecycleTests.cpp)
+target_link_libraries(judas_wheel_lifecycle_tests PRIVATE judas_engine)
+judas_warnings(judas_wheel_lifecycle_tests -Wpedantic)
+add_executable(judas_wheel_application_tests tests/WheelApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_wheel_application_tests PRIVATE judas_engine)
+judas_warnings(judas_wheel_application_tests -Wpedantic)

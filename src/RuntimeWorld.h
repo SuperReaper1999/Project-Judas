@@ -338,6 +338,11 @@ public:
     bool SetRuntimeJoint(EntityId owner,const SceneJointComponent&,bool remove,std::string& error);
     bool SetBodyMaterial(EntityId,const std::string&,const PhysicalMaterial*,std::string& error);
     CharacterMotor* RuntimeCharacter(EntityId id);
+    WheelInstance* RuntimeWheel(EntityId id);
+    const WheelInstance* RuntimeWheel(EntityId id)const;
+    bool SetWheelSettings(EntityId,const WheelSettings&);
+    void UpdateWheels(float dt);
+    void PublishWheels();
     void UpdateCharacters(float dt,bool onlyM70=false,bool skipM70=false);
     LiquidSystem& Liquids(){return *m_liquid;}
     const LiquidSystem& Liquids()const{return *m_liquid;}
@@ -572,6 +577,9 @@ private:
     std::set<EntityId> m_animationOwners,m_deformableOwners;
     std::map<EntityId,DeformableRecord> m_deformables;
     std::map<EntityId,CharacterInstance> m_characters;
+    std::map<EntityId,WheelInstance> m_wheels;
+    std::set<EntityId> m_wheelOwners,m_wheelParticipants;
+    void RefreshWheelParticipants();
     std::map<EntityId,AnimationInstance> m_animationInstances;
     std::map<EntityId,RagdollInstance> m_ragdolls;
     std::map<EntityId,BalanceRuntime> m_balances;

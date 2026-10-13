@@ -137,6 +137,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
         if (legacy && !session.IsPiloting() && window.IsActionActive(Action::AddTerrainWater)) world.EmitFluidParticle();
         world.FluidCoupling().PrepareRigidStep(world, fixedDeltaTime);
     } else player.SetFluidSample({});
+    world.UpdateWheels(fixedDeltaTime);
     physics.Step(fixedDeltaTime);
     if (world.HasFluid()) {
         // Liquid walls follow the already resolved rigid trajectory, including
@@ -179,6 +180,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
                              fixedDeltaTime);
     world.UpdateCharacters(fixedDeltaTime,false,true);
     SyncDynamicBodiesFromPhysics(world.DynamicBodies(), physics);
+    world.PublishWheels();
     world.UpdateAnimations(fixedDeltaTime);
     world.UpdateRagdolls(fixedDeltaTime);
     world.UpdateSockets();

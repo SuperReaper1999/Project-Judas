@@ -1,0 +1,30 @@
+from pathlib import Path
+import os,subprocess,time,json,shutil,re
+ROOT=Path.cwd();OUT=ROOT/'docs/evidence/m81/linux';results=[]
+env=dict(os.environ,SDL_VIDEODRIVER='offscreen',SDL_AUDIODRIVER='dummy',XDG_DATA_HOME='/tmp/judas-m81-followup-user')
+def run(label,args,timeout=240,extra=None,cwd=ROOT):
+    start=time.monotonic();settings=dict(env);settings.update(extra or {})
+    with (OUT/(label+'.txt')).open('w') as log:
+        try:r=subprocess.run([str(x) for x in args],cwd=cwd,env=settings,stdout=log,stderr=subprocess.STDOUT,timeout=timeout);code=r.returncode
+        except subprocess.TimeoutExpired:code=124
+    results.append(dict(label=label,args=[str(x) for x in args],exit=code,seconds=time.monotonic()-start));print(label,code,flush=True)
+    (OUT/'publication-followup-cases.json').write_text(json.dumps(results,indent=2)+'\n')
+for name in ['wheel','wheel_lifecycle','wheel_script','physics_continuation','character_motor']:
+    args=[ROOT/'build'/('judas_'+name+'_tests')]
+    if name=='wheel_script':args+=['/tmp/judas-m81-publication-script']
+    run('followup-'+name,args)
+run('followup-save-exclusion',[ROOT/'build/judas_save_exclusion_tests','/tmp/judas-m81-publication-exclusion',ROOT])
+project=ROOT/'projects/wheel_lab/wheel_lab.judasproj'
+for mode in ['probe','radial','lifecycle','write','read']:
+    run('followup-application-'+mode,[ROOT/'build/judas_wheel_application_tests',project,mode,OUT/('followup-application-'+mode)])
+for mode in ['write','read']:
+    run('followup-stream-'+mode,[ROOT/'build/judas_save_streaming_tests',ROOT/'projects/streamed_range/streamed_range.judasproj',mode,OUT/('followup-stream-'+mode)],300)
+run('export',[ROOT/'build/judas_export',project,'/tmp/judas-m81-wheel-lab-20261013',ROOT/'build/judas'])
+scratch=Path('/tmp/judas-m81-editor-project');shutil.copytree(ROOT/'projects/wheel_lab',scratch)
+# Select a real Wheel in the generic editor automation by reordering only the scratch file.
+scene=scratch/'Scenes/flat.judas';text=scene.read_text();match=re.search(r'^object 101 .*?^end\n',text,re.M|re.S)
+if not match:raise RuntimeError('authored Wheel fixture missing')
+block=match.group();remaining=text[:match.start()]+text[match.end():];first=remaining.index('object ')
+scene.write_text(remaining[:first]+block+'\n'+remaining[first:])
+run('editor',[ROOT/'build/judas_editor',scratch/'wheel_lab.judasproj'],extra={'JUDAS_EDITOR_AUTOTEST':str(OUT/'editor'),'XDG_DATA_HOME':'/tmp/judas-m81-editor-data'})
+raise SystemExit(any(r['exit'] for r in results))

@@ -1,0 +1,19 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Wheel Lab (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj)
+Scene: Wheel lab / flat (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary four-wheel and six-wheel assemblies use the same component
+PASS visual tyre has no duplicate rigid-body mass or contact owner
+CALM contacts=4 length_m=0.270171165 load_N=6368.44238 speed_mps=0.0614256188
+PASS actual query contacts compress suspension under chassis self-weight
+PASS public wheel JS, logical input, UI and presentation camera execute
+PASS runtime prefab remaps wheel/chassis references to independent safe entities
+PASS registered streamed region constructs a complete assembly
+PASS stream suspension invalidates old entity identities and retains wheel state
+PASS stream revisit restores exact durable spin/command state with remapped chassis identity
+PASS assembly root destruction releases wheel children safely
+PASS reload restores authored assembly with no stale wheel commands
+PASS normal application startup and shutdown
+PERF mode=lifecycle samples=113 fixed_median_ms=0.436796 p95_ms=0.789833 max_ms=3.686090 frame_median_ms=25.411104 frame_p95_ms=33.396593
+M81 application lifecycle checks=11 failures=0

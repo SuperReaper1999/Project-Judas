@@ -1052,31 +1052,35 @@ struct PhysicsWorld::Impl {
         }
     }
 
+    static void KinematicVelocity(const Body& body,float dt,glm::vec3& linear,glm::vec3& angular,double& duration) {
+        linear=angular=glm::vec3(0);duration=0;
+        const auto& rigid=body.rigidBody;const auto& command=body.kinematic;
+        if(!body.enabled||!(dt>0))return;
+        if(command.control==KinematicControl::Velocity){
+            linear=command.linearVelocity;angular=command.angularVelocity;duration=dt;
+        }else if(command.control==KinematicControl::Target){
+            const float remaining=command.targetNextStep?dt:command.remainingSeconds;
+            if(remaining>0){
+                const auto targetCenter=command.target.position+command.target.rotation*body.shape.pivotOffset;
+                linear=(targetCenter-rigid.position)/remaining;
+                glm::quat delta=command.target.rotation*glm::conjugate(rigid.orientation);
+                if(delta.w<0)delta=-delta;
+                const double sine=glm::length(glm::dvec3(delta.x,delta.y,delta.z));
+                if(sine>0&&!SameRotation(command.target.rotation,rigid.orientation)){
+                    const double angle=2*std::atan2(sine,double(delta.w));
+                    angular=glm::vec3(glm::dvec3(delta.x,delta.y,delta.z)*(angle/(sine*remaining)));
+                }
+                duration=std::min(double(dt),double(remaining));
+            }
+        }
+    }
     void PublishKinematics(float dt) {
         for(auto slot:aliveSlots){auto& body=bodies[slot];if(!body.isKinematic)continue;
             auto& rigid=body.rigidBody;auto& command=body.kinematic;
             body.previousPosition=rigid.position;body.previousOrientation=rigid.orientation;
             CurrentBound(body);body.previousBound=body.currentBound;
-            rigid.linearVelocity=rigid.angularVelocity=glm::vec3(0);
-            body.kinematicActiveDuration=0;
-            if(body.enabled&&command.control==KinematicControl::Velocity){
-                rigid.linearVelocity=command.linearVelocity;rigid.angularVelocity=command.angularVelocity;
-                body.kinematicActiveDuration=dt;
-            }else if(body.enabled&&command.control==KinematicControl::Target){
-                if(command.targetNextStep){command.remainingSeconds=dt;command.targetNextStep=false;}
-                if(command.remainingSeconds>0){
-                    const auto targetCenter=command.target.position+command.target.rotation*body.shape.pivotOffset;
-                    rigid.linearVelocity=(targetCenter-rigid.position)/command.remainingSeconds;
-                    // World-relative shortest arc. Equivalent quaternion signs
-                    // are the same target; full spins use velocity control.
-                    glm::quat delta=command.target.rotation*glm::conjugate(rigid.orientation);
-                    if(delta.w<0)delta=-delta;
-                    const double sine=glm::length(glm::dvec3(delta.x,delta.y,delta.z));
-                    if(sine>0&&!SameRotation(command.target.rotation,rigid.orientation)){const double angle=2*std::atan2(sine,double(delta.w));
-                        rigid.angularVelocity=glm::vec3(glm::dvec3(delta.x,delta.y,delta.z)*(angle/(sine*command.remainingSeconds)));}
-                    body.kinematicActiveDuration=std::min(double(dt),double(command.remainingSeconds));
-                }
-            }
+            KinematicVelocity(body,dt,rigid.linearVelocity,rigid.angularVelocity,body.kinematicActiveDuration);
+            if(body.enabled&&command.control==KinematicControl::Target&&command.targetNextStep){command.remainingSeconds=dt;command.targetNextStep=false;}
             rigid.ClearAccumulators();body.deferredAcceleration=false;
             body.motion.BeginPrescribed(MakeHandle(slot).id,rigid,dt,body.kinematicActiveDuration);
             InvalidateImpactPose(slot);
@@ -1664,6 +1668,14 @@ glm::vec3 PhysicsWorld::GetPointVelocity(BodyHandle handle,const glm::vec3& poin
     const auto* body=m_impl->Get(handle);if(!body||!body->enabled||!FiniteVector(point))return glm::vec3(0);
     return body->rigidBody.linearVelocity+glm::cross(body->rigidBody.angularVelocity,point-body->rigidBody.position);
 }
+glm::vec3 PhysicsWorld::GetStepPointVelocity(BodyHandle handle,const glm::vec3& point,float dt) const {
+    const auto* body=m_impl->Get(handle);
+    if(!body||!body->enabled||!FiniteVector(point)||!std::isfinite(dt)||dt<=0)return glm::vec3(0);
+    if(!body->isKinematic)return GetPointVelocity(handle,point);
+    glm::vec3 linear,angular;double duration=0;
+    Impl::KinematicVelocity(*body,dt,linear,angular,duration);
+    return linear+glm::cross(angular,point-body->rigidBody.position);
+}
 glm::vec3 PhysicsWorld::GetPreviousPointVelocity(BodyHandle handle,const glm::vec3& point) const {
     const auto* body=m_impl->Get(handle);if(!body||!body->enabled||!FiniteVector(point))return glm::vec3(0);
     return body->rigidBody.linearVelocity+glm::cross(body->rigidBody.angularVelocity,point-(body->HasMotion()?body->previousPosition:body->rigidBody.position));
@@ -1681,11 +1693,18 @@ glm::vec3 PhysicsWorld::GetCenterOfMass(BodyHandle handle) const {
     return body?body->rigidBody.position:glm::vec3(0);
 }
 
-void PhysicsWorld::ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse) {
+void PhysicsWorld::ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse,bool wake) {
     Impl::Body* body = m_impl->Get(handle);
     if (!body || !body->isDynamic) return;
-    if(glm::length(impulse)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
+    if(wake&&glm::length(impulse)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->rigidBody.ApplyLinearImpulse(impulse);
+}
+
+void PhysicsWorld::ApplyAngularImpulse(BodyHandle handle, const glm::vec3& impulse,bool wake) {
+    Impl::Body* body = m_impl->Get(handle);
+    if (!body || !body->isDynamic || !FiniteVector(impulse)) return;
+    if(wake&&glm::length(impulse)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
+    body->rigidBody.ApplyAngularImpulse(impulse);
 }
 
 void PhysicsWorld::ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,

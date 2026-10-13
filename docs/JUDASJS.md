@@ -1,4 +1,10 @@
-# JudasJS — current API reference (M73; M74 authoring candidate)
+# JudasJS — current API reference (M81 Experimental candidate)
+
+M81 adds optional [Wheel components](judasjs/wheels.md): independent suspension,
+rolling/traction and torque/brake/steering control on ordinary rigid-body
+chassis. Game-specific vehicle behaviour remains project JavaScript. M80 has
+Linux human acceptance; M81 awaits operator review. The subsystem records below
+retain their original validation scope.
 
 ## Terrain content
 
@@ -62,6 +68,7 @@ calling an API does not silently construct missing gameplay machinery.
 | saves, durable references, restore lifecycle | [Project save slots](judasjs/saves.md) |
 | Animation.crossFade/layers, configureIK/ikTargets/ikStatus, Ragdoll.configurePhysical/setMode/physicalState | [Animation/ragdolls](judasjs/animation-ragdolls.md) |
 | entity.character / CharacterMotor | [Character](judasjs/character.md) |
+| entity.wheel / Wheel suspension, torque, brake, steering and contact state | [Wheels](judasjs/wheels.md) |
 | navigation / NavigationAgent | [Navigation](judasjs/navigation.md) |
 | liquid / LiquidVolume / conserved reservoirs | [Liquid](judasjs/liquid.md) |
 | Entity.material whole/slot/part patches; world sun, ambient and environment controls | [Materials and appearance](judasjs/materials.md) |

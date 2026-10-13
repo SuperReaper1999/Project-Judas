@@ -146,6 +146,17 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("gravity-selection.mode",Quote(s.mode==GravitySelection::Mode::Uniform?"uniform":"field"));
         w.Line("gravity-selection.source",std::to_string(s.source));
         w.Line("gravity-selection.acceleration",V(s.acceleration));}
+    if(o.wheel){const auto& v=*o.wheel;
+        w.Line("wheel.enabled",B(v.enabled));w.Line("wheel.chassis",std::to_string(v.chassis));
+        w.Line("wheel.mount",V(v.mount));w.Line("wheel.orientation",Q(v.orientation));
+        w.Line("wheel.radius",F(v.radius));w.Line("wheel.minLength",F(v.minLength));
+        w.Line("wheel.restLength",F(v.restLength));w.Line("wheel.maxLength",F(v.maxLength));
+        w.Line("wheel.springStiffness",F(v.springStiffness));w.Line("wheel.damping",F(v.damping));
+        w.Line("wheel.spinInertia",F(v.spinInertia));w.Line("wheel.friction",F(v.friction));
+        w.Line("wheel.rollingResistance",F(v.rollingResistance));
+        w.Line("wheel.collisionLayer",std::to_string(v.collisionLayer));w.Line("wheel.collisionMask",std::to_string(v.collisionMask));
+        w.Line("wheel.requiredTags",std::to_string(v.requiredTags));w.Line("wheel.excludedTags",std::to_string(v.excludedTags));
+    }
     if(o.characterMotor){const auto& m=*o.characterMotor;
         w.Line("motor.enabled",B(m.enabled));
         w.Line("motor.radius",F(m.radius));
@@ -774,6 +785,13 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if(!ValidGravitySelection(s,error))return reader.Fail(error);
         o.gravitySelection=s;
     }else if(p.Has("gravity-selection.source")||p.Has("gravity-selection.acceleration"))return reader.Fail("gravity selection has no mode");
+    if(p.Has("wheel.enabled")){WheelSettings v;
+        if(!p.Bool("wheel.enabled",v.enabled)||!p.Id("wheel.chassis",v.chassis)||!p.Vec3("wheel.mount",v.mount)||!p.Quat("wheel.orientation",v.orientation)||
+           !p.Float("wheel.radius",v.radius)||!p.Float("wheel.minLength",v.minLength)||!p.Float("wheel.restLength",v.restLength)||!p.Float("wheel.maxLength",v.maxLength)||
+           !p.Float("wheel.springStiffness",v.springStiffness)||!p.Float("wheel.damping",v.damping)||!p.Float("wheel.spinInertia",v.spinInertia)||!p.Float("wheel.friction",v.friction)||!p.Float("wheel.rollingResistance",v.rollingResistance)||
+           !p.Layer("wheel.collisionLayer",v.collisionLayer)||!p.Mask("wheel.collisionMask",v.collisionMask)||!p.Mask("wheel.requiredTags",v.requiredTags)||!p.Mask("wheel.excludedTags",v.excludedTags))return false;
+        std::string error;if(!ValidateWheelSettings(v,error))return reader.Fail(error);o.wheel=v;
+    }
     if(p.Has("motor.enabled")){CharacterMotorSettings m;
         if(!p.Bool("motor.enabled",m.enabled)||!p.Float("motor.radius",m.radius)||!p.Float("motor.halfHeight",m.halfHeight)||!p.Vec3("motor.offset",m.offset)||!p.Float("motor.stepHeight",m.stepHeight)||!p.Float("motor.supportDistance",m.supportDistance)||!p.Float("motor.skin",m.skin)||!p.Float("motor.maxSlopeDegrees",m.maxSlopeDegrees)||!p.Float("motor.gravityScale",m.gravityScale)||!p.Float("motor.reorientationDegreesPerSecond",m.reorientationDegreesPerSecond)||!p.Float("motor.interactionMass",m.interactionMass)||!p.Float("motor.maxPushImpulse",m.maxPushImpulse))return false;
         if(!p.Layer("motor.collisionLayer",m.collisionLayer)||!p.Mask("motor.collisionMask",m.collisionMask)||!p.Mask("motor.requiredTags",m.requiredTags)||!p.Mask("motor.excludedTags",m.excludedTags))return false;

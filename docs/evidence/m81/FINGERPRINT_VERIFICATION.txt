@@ -1,0 +1,10 @@
+2026-10-13 pre-checkpoint verification
+Source 73 files PASS
+Binary 25 files PASS
+Intended changed files 192
+Existing unrelated untracked entries 74 preserved/excluded
+Experimental and origin/Experimental still bc1fd286d75b6db843fa9942b8d21c946c2e5c2a
+Stable/origin/Stable unchanged bc1fd286d75b6db843fa9942b8d21c946c2e5c2a
+main/origin/main unchanged 3102bf6c6e4b5c57eb3ab66a71fa502f8fc423f6
+Protected prior evidence/research and existing projects absent from intended changes
+No M81 human validation claimed

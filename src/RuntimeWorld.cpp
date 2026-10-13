@@ -51,7 +51,7 @@ RuntimeWorld::~RuntimeWorld() {
 }
 
 bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
-    if (o.vehicle || o.combustible || o.characterMotor || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
+    if (o.vehicle || o.combustible || o.characterMotor || o.wheel || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
     if (o.body && o.body->shape == SceneShape::Compound) return true;
     if (o.body && o.body->motion != SceneBodyMotion::Dynamic) return true;
     return false;
@@ -199,7 +199,7 @@ bool RuntimeWorld::AppendEntitySlot(const SceneObject& o, bool authored, const E
     record.requiresFull = EntityRequiresFull(o)||m_jointParticipants.count(o.id);
     record.state = state;
     record.slot = m_dynamicBodies.size();
-    if (record.requiresFull) fidelity = SimulationFidelity::Full;
+    if (record.requiresFull||m_wheelParticipants.count(o.id)) fidelity = SimulationFidelity::Full;
     record.fidelity = fidelity;
     record.lifecycle = fidelity == SimulationFidelity::Dormant ? EntityLifecycle::Unloaded : EntityLifecycle::Active;
     if (fidelity == SimulationFidelity::Dormant) record.dormantSinceSeconds = m_simulationTime;
@@ -332,6 +332,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
         return false;
     }
     m_built = true;
+    for(const auto& o:scene.Objects())if(o.wheel)m_wheelParticipants.insert(o.wheel->chassis);
     for(const auto& o:scene.Objects())if(o.joint){m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
 
     if (!(m_settings.fluidScale > 0.0f)) {
@@ -363,7 +364,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.deformable||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.deformable||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         if(o.scripts.empty()&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
@@ -377,6 +378,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
 
 bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     const FidelityPolicyContext& loadContext, std::string& outError) {
+    for(const auto& o:scene.Objects())if(o.wheel){m_wheelOwners.insert(o.id);m_wheelParticipants.insert(o.wheel->chassis);}
     for(const auto& o:scene.Objects())if(o.deformable)m_deformableOwners.insert(o.id);
     for(const auto& o:scene.Objects())if(o.animation)m_animationOwners.insert(o.id);
     for(const auto& o:scene.Objects())if(o.joint){m_jointOwners.insert(o.id);m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
@@ -398,6 +400,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         m_scriptDefinitions[o.id]=o;
         if(!o.scripts.empty())m_scriptOwners.insert(o.id);
         if(o.characterMotor)m_characterOwners.insert(o.id);
+        if(o.wheel){std::string error;if(!ValidateWheelSettings(*o.wheel,error))return fail(o,error);if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))return fail(o,"wheel owns visual placement; no other motion producer or non-unit scale is allowed");}
         m_entityCategories[o.id]={o.tags,o.tags,o.renderLayer,{}};
         const glm::vec3 position = o.transform.position;
         const glm::quat rotation = glm::normalize(o.transform.rotation);
@@ -460,7 +463,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
                 isDynamic = true;
                 const EntityPhysicalState state = StateFromDefinition(o);
                 SimulationFidelity fidelity = SimulationFidelity::Full;
-                if (m_policy && b.managed && !EntityRequiresFull(o)) {
+                if (m_policy && b.managed && !EntityRequiresFull(o)&&!m_wheelParticipants.count(o.id)) {
                     FidelityPolicyEntity view;
                     view.id = o.id;
                     view.current = SimulationFidelity::Dormant;  // nothing exists yet
@@ -786,7 +789,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
     m_scripts.reset();spawnStates.clear();
-    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
+    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
     for(const auto& o:ScriptObjects())if(o.ui&&o.ui->enabled){std::string error;UI().Load(o.ui->asset,o.ui->name,o.id,error);}
@@ -819,7 +822,7 @@ void RuntimeWorld::RestoreAuthoredState() {
             ++e.reconstructions;
         }
     }
-    if(m_hasScripts||std::any_of(m_extraEntities.begin(),m_extraEntities.end(),[](const auto& e){return bool(e.definition.characterMotor);})){
+    if(m_hasScripts||std::any_of(m_extraEntities.begin(),m_extraEntities.end(),[](const auto& e){return bool(e.definition.characterMotor)||bool(e.definition.wheel);})){
         for(auto& e:m_extraEntities)if(e.authored&&e.lifecycle!=EntityLifecycle::Destroyed){
             SetEntityState(e.id,StateFromDefinition(e.definition));SetRuntimeTransform(e.id,e.definition.transform);
         }
@@ -834,6 +837,8 @@ void RuntimeWorld::RestoreAuthoredState() {
             o.transform=local;
         }
     }
+    for(auto& [id,d]:m_scriptDefinitions)if(const auto* record=FindEntity(id))if(record->authored&&record->definition.wheel)d.wheel=record->definition.wheel;
+    RefreshWheelParticipants();
     for(auto& [id,d]:m_scriptDefinitions)if(const auto* record=FindEntity(id))if(record->authored&&record->definition.body&&d.body){
         d.body->enabled=record->definition.body->enabled;d.body->motion=record->definition.body->motion;
         m_physics.SetBodyEnabled(RuntimeBody(id),d.body->enabled);
@@ -950,7 +955,7 @@ bool RuntimeWorld::SetEntityFidelity(EntityId id, SimulationFidelity fidelity, s
         if (outError) *outError = "entity " + std::to_string(id) + " is destroyed";
         return false;
     }
-    if (fidelity != SimulationFidelity::Full && e->requiresFull) {
+    if (fidelity != SimulationFidelity::Full && (e->requiresFull||m_wheelParticipants.count(id))) {
         if (outError) *outError = "entity " + std::to_string(id) + " (" + e->name + ") has no reduced representation";
         return false;
     }
@@ -1012,6 +1017,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     std::string error;
     if (!ValidateEntityDestruction(id, error)) { if (outError) *outError = error; return false; }
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
+    m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
     RemoveDeformable(id);m_deformableOwners.erase(id);
     m_liquid->Remove(m_liquid->Handle(id));
     LeaveRagdoll(id,0,error);m_physicalAnimations.erase(id);m_balances.erase(id);
@@ -1035,6 +1041,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     m_staticLights.erase(std::remove_if(m_staticLights.begin(),m_staticLights.end(),[id](const auto& light){return light.id==id;}),m_staticLights.end());
     e->fidelity = SimulationFidelity::Dormant;
     if(!extra)m_dynamicVisuals[e->slot].hasRender = false;
+    m_wheels.erase(id);
     ++m_entityVersion;
     if (e->definition.celestial) RebuildCelestialParticipants();
     return true;
@@ -1064,10 +1071,12 @@ bool RuntimeWorld::ValidateEntityDefinition(const SceneObject& definition, std::
     // Check the smaller subset runtime creation can actually instantiate below.
     Scene validation;
     if(definition.joint&&(!definition.joint->bodyA||definition.joint->bodyA==definition.joint->bodyB||!ValidJointSettings(definition.joint->settings))){error="invalid runtime joint settings";return false;}
+    if(definition.wheel){if(!ValidateWheelSettings(*definition.wheel,error))return false;if(definition.body||definition.characterMotor||definition.ragdoll||definition.deformable||definition.socket||definition.transform.scale!=glm::vec3(1)){error="wheel owns visual placement; no other motion producer or non-unit scale is allowed";return false;}}
     SceneObject copy = definition;
     // Cross-body references are checked at scene/batch/save preflight, not in
     // this one-object component validator.
     copy.joint.reset();
+    copy.wheel.reset();
     copy.id = 1;
     validation.InsertObject(copy);
     std::string fingerprint;
@@ -1199,6 +1208,7 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
         o.prefabAsset.clear();o.prefabRoot=o.prefabSource=0;o.prefabIds.clear();o.prefabOverrides.clear();
         if(!ValidateCollisionPlacement(o,error)||!ValidateCollisionFluid(o,!m_fluidVolumes.empty(),error)||!ValidateEntityDefinition(o,error)||!ValidateVisualAssets(o,error))return 0;
     }
+    for(const auto& o:instance.Objects())if(o.wheel)m_wheelParticipants.insert(o.wheel->chassis);
     for(const auto& o:instance.Objects())if(o.joint){m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
     std::vector<EntityId> created;
     std::set<SceneObjectId> pending;
@@ -1221,6 +1231,10 @@ EntityId RuntimeWorld::SpawnPrefab(const AssetId& asset,const SceneTransform& pl
 }
 
 SceneTransform RuntimeWorld::PresentedTransform(SceneObjectId id,const SceneTransform& fallback,float alpha) const {
+    if(auto wheel=m_wheels.find(id);wheel!=m_wheels.end()&&wheel->second.state.available){
+        const auto& v=wheel->second;auto t=fallback;const float fraction=std::clamp(alpha,0.f,1.f);
+        t.position=glm::mix(v.previous.center,v.state.center,fraction);t.rotation=glm::normalize(glm::slerp(v.previous.rotation,v.state.rotation,fraction));return t;
+    }
     if(const auto* d=RuntimeDefinition(id);d&&d->socket&&d->socket->enabled){
         const auto& socket=*d->socket;auto it=m_animationInstances.find(socket.target);
         if(it!=m_animationInstances.end()&&it->second.asset){const auto& s=it->second.asset->skeleton;int n=FindSkeletonJoint(s,socket.joint);
@@ -1278,7 +1292,7 @@ void RuntimeWorld::EvaluateFidelityPolicy(const FidelityPolicyContext& context, 
     m_transitionsThisStep = 0;
     if (!m_policy) return;
     for (EntityRecord& e : m_entities) {
-        if (e.lifecycle == EntityLifecycle::Destroyed || !e.managed || e.requiresFull || e.forcedFidelity) continue;
+        if (e.lifecycle == EntityLifecycle::Destroyed || !e.managed || e.requiresFull || m_wheelParticipants.count(e.id) || e.forcedFidelity) continue;
         if (std::find(pinned.begin(), pinned.end(), e.id) != pinned.end()) {
             if (e.fidelity != SimulationFidelity::Full) SetEntityFidelity(e.id, SimulationFidelity::Full);
             continue;
@@ -1331,7 +1345,7 @@ void RuntimeWorld::Destroy() {
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
     m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
-    m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();
+    m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();
     m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
     EndAudio();
     m_particleEmitters.clear();

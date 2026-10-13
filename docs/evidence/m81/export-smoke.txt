@@ -1,0 +1,24 @@
+FRAMES 500
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ENTITY 100
+AXIS throttle 0.7 70 135
+ACTION brake 1 140 170
+ACTION select 1 175 176
+ACTION autopilot 1 180 181
+SCREENSHOT 205 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/standalone-flat.png
+ACTION pause 1 215 216
+EXPECT_PAUSED 1 219
+ACTION pause 1 225 226
+EXPECT_PAUSED 0 230
+ACTION oblique 1 240 241
+WAIT_SERVICES scene 4000 242
+EXPECT_SCENE Scenes/oblique.judas 245
+SCREENSHOT 290 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/standalone-oblique.png
+ACTION radial 1 310 311
+WAIT_SERVICES scene 4000 312
+EXPECT_SCENE Scenes/radial.judas 315
+SCREENSHOT 390 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/standalone-radial.png
+ACTION restart 1 425 426
+WAIT_SERVICES scene 4000 427
+EXPECT_SCENE Scenes/radial.judas 430

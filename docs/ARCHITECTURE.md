@@ -1,6 +1,13 @@
 # Architecture
 
-## Current checkpoint — M80 human validated
+## Current checkpoint — M81 Experimental candidate; M80 human validated
+
+[M81 wheels](M81_WHEELS.md) adds optional per-wheel query-contact suspension and
+scalar spin on ordinary dynamic chassis. RuntimeWorld owns independent wheel
+state; M44 supplies contact geometry and normal PhysicsWorld impulses move the
+chassis/ground. Project JS supplies direct torque/brake/steering commands.
+There is no engine-owned vehicle layout, drivetrain, input or camera policy.
+M81 awaits human review; Stable retains the accepted M80 checkpoint.
 
 M79 is **human validated** at `3745787d0732a05e82aba9496e592bc2233564f0`.
 [M80 bending](M80_BENDING.md) extends tetrahedral
@@ -7590,9 +7597,9 @@ energy conservation. See [executed FTFT7 evidence](evidence/stabilization/ftft7/
 
 **Current ordering:** navigation → liquid BeginStep → JS fixedUpdate → opted-in
 M70 CharacterMotors/reference pose/physical-drive preparation → conserved liquid
-update/loading → ordinary gravity/forces and enabled legacy adapters → rigid
-physics/legacy fluid coupling → combustion/coarse integration → legacy
-observer/player → remaining CharacterMotors → dynamic-body sync → animation →
+update/loading → ordinary gravity/forces and enabled legacy adapters →
+wheel suspension/tyre impulses → rigid physics/legacy fluid coupling → combustion/coarse integration → legacy
+observer/player → remaining CharacterMotors → dynamic-body sync/wheel visual publication → animation →
 ragdolls → sockets → deformables/fracture →
 visual particles → simulation clock/contact and fracture events → fidelity policy.
 The world advances once;

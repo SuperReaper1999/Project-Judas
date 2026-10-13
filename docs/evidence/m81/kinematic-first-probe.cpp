@@ -1,0 +1,3 @@
+#include "Wheel.h"
+#include <cstdio>
+int main(){PhysicsWorld p;p.Init();auto ground=p.CreateDynamicBox({0,-.2f,0},{10,.2f,10},1000,1,0);p.SetMotionType(ground,BodyMotionType::Kinematic);auto chassis=p.CreateDynamicBox({0,.6f,0},{.4f,.1f,.4f},100,1,0);WheelInstance wheel;wheel.settings.chassis=1;p.SetKinematicVelocity(ground,{1,0,0},{0,0,0});wheel.Step(p,chassis,1.f/60);std::printf("new command=1 m/s contact=%d reportedGroundX=%.9g chassisX=%.9g\n",wheel.state.contact,wheel.state.groundVelocity.x,p.GetLinearVelocity(chassis).x);p.Step(1.f/60);std::printf("published ground velocity X=%.9g\n",p.GetPointVelocity(ground,{0,0,0}).x);return wheel.state.groundVelocity.x==1?0:1;}

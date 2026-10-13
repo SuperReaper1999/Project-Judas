@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M77 uncommitted candidate public module based on checkpoint `ab3dfbab13585680a9e6cc92fa318c8d95012979`. M67 human authoring review remains deferred.
+Current M81 Experimental candidate public module based on checkpoint `bc1fd286d75b6db843fa9942b8d21c946c2e5c2a`. M81 human validation is pending; M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -128,6 +128,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.velocity` | `setVelocity`, `velocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.wheel` | `wheelExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `EntityGravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `EntityGravity.acceleration` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `EntityGravity.clear` | `entityGravityClear` | [declaration](../judas.d.ts) | [reference](physics.md) |
@@ -228,6 +229,15 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.texture` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.value` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.visible` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `Wheel` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.configure` | `wheelConfigure` | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.enabled` | `wheelEnabled` | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.set` | `wheelSet` | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.settings` | `wheelSettings` | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.state` | `wheelState` | [declaration](../judas.d.ts) | [reference](wheels.md) |
+| `Wheel.valid` | `wheelValid` | [declaration](../judas.d.ts) | [reference](wheels.md) |
 | `audio` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `audio.diagnostics` | `audioDiagnostics` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `audio.group` | `audioGroup` | [declaration](../judas.d.ts) | [reference](audio.md) |

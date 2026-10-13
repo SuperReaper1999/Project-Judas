@@ -1,0 +1,32 @@
+PASS valid generic wheel settings
+PASS zero spin inertia rejected
+PASS inverted travel rejected
+PASS negative brake rejected
+REST y 0.768239 speed 0.002839 load 3923.999756
+PASS four independent springs support actual chassis load
+PASS suspension load agrees with independent mg expectation
+PASS sustained external load increases real suspension compression
+DRIVE z -4.225922 velocity -4.224604
+PASS drive torque moves chassis forward through tyre contact
+PASS braking removes actual chassis motion
+PASS zero grip spins wheels without decorative chassis propulsion
+PASS lateral tyre grip resists sideways slip
+PASS steering rotates contact frame and turns rigid chassis
+PASS whole-scene rotation preserves wheel behaviour without world-up
+PASS independent wheel travel accommodates uneven collision geometry
+FAIL real radial gravity and curved surface support rolling travel
+PASS single-wheel assembly uses same solver without wheel-count assumptions
+PASS airborne drive spins wheel with opposite chassis torque
+PASS airborne shaft reaction conserves angular momentum at fixed axis
+PASS dynamic ground receives paired impulses and linear momentum is conserved
+PASS bilateral M39 mask rejects wheel layer
+PASS bilateral M39 mask admits configured wheel layer
+PASS required tag rejects unclassified ground
+PASS normal tag classification enables ground
+PASS disabled collider supplies no wheel support
+PASS stale chassis cannot alias reused body slot
+PASS durable spin/command state roundtrips without raw contact handles
+PERF 4 wheels/1 chassis/4 contacts wheel_p50 0.006031 ms p95 0.016415 ms max 0.078075 ms rigid_p95 0.006053 ms
+PERF 24 wheels/6 chassis/24 contacts wheel_p50 0.036540 ms p95 0.077604 ms max 0.164150 ms rigid_p95 0.024976 ms
+PERF 100 wheels/25 chassis/100 contacts wheel_p50 0.170524 ms p95 0.294795 ms max 0.389525 ms rigid_p95 0.092363 ms
+SUMMARY 26 checks 1 failures

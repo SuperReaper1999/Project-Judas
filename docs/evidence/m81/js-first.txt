@@ -1,0 +1,11 @@
+PASS registered wheel script
+PASS ordinary world constructs wheel component
+PASS partial commands preserve values and failed command is atomic
+PASS runtime configuration matches actual physics component
+PASS real VM reads contact and enforces phase/argument/snapshot contracts
+PASS public command produces real chassis traction
+PASS registered lifetime probe
+PASS independent wheel lifetime world
+PASS normal destruction retires wheel owner
+PASS retained public wheel never aliases a retired component
+M81 wheel scripts: 10 checks PASS

@@ -1,0 +1,150 @@
+[
+  {
+    "label": "followup-wheel",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16535339099937119
+  },
+  {
+    "label": "followup-wheel_lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03296850000151608
+  },
+  {
+    "label": "followup-wheel_script",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_script_tests",
+      "/tmp/judas-m81-publication-script"
+    ],
+    "exit": 0,
+    "seconds": 0.06427795100171352
+  },
+  {
+    "label": "followup-physics_continuation",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.016133072998854914
+  },
+  {
+    "label": "followup-character_motor",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.5656645519993617
+  },
+  {
+    "label": "followup-save-exclusion",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_exclusion_tests",
+      "/tmp/judas-m81-publication-exclusion",
+      "/home/conner/Documents/GitHub/Project-Judas"
+    ],
+    "exit": 0,
+    "seconds": 0.032765586000095936
+  },
+  {
+    "label": "followup-application-probe",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "probe",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-application-probe"
+    ],
+    "exit": 0,
+    "seconds": 11.828400577000139
+  },
+  {
+    "label": "followup-application-radial",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "radial",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-application-radial"
+    ],
+    "exit": 0,
+    "seconds": 7.891214123999816
+  },
+  {
+    "label": "followup-application-lifecycle",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "lifecycle",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-application-lifecycle"
+    ],
+    "exit": 0,
+    "seconds": 4.705964772001607
+  },
+  {
+    "label": "followup-application-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-application-write"
+    ],
+    "exit": 0,
+    "seconds": 11.115330775000984
+  },
+  {
+    "label": "followup-application-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-application-read"
+    ],
+    "exit": 0,
+    "seconds": 2.2762264360007975
+  },
+  {
+    "label": "followup-stream-write",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-stream-write"
+    ],
+    "exit": 0,
+    "seconds": 5.711521948998779
+  },
+  {
+    "label": "followup-stream-read",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/m81/linux/followup-stream-read"
+    ],
+    "exit": 0,
+    "seconds": 5.053590229999827
+  },
+  {
+    "label": "export",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj",
+      "/tmp/judas-m81-wheel-lab-20261013",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "exit": 0,
+    "seconds": 0.1215573929985112
+  },
+  {
+    "label": "editor",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/tmp/judas-m81-editor-project/wheel_lab.judasproj"
+    ],
+    "exit": 0,
+    "seconds": 6.6748287369991885
+  }
+]

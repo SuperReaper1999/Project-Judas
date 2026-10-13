@@ -1,0 +1,26 @@
+{
+  "original_region_source_sha256": "73ed0b4da73748e779a98999d680dfca139fe6062ab10136584cb01bda12d43d",
+  "original_engine_archive_sha256": "2c4072e9e27e6391929dcd1746752addc65b13c26842d6126dfacf528e174a8e",
+  "original_reproduction_binary_sha256": "8c75d661874ae900021185b643780c71b2794388554a61632a6f57c964d9de8b",
+  "test_source_sha256": "325e5fc46ed8a067eac2ab19a0b30ddc1fc60c84373633d377cc51b85b109bf3",
+  "platform": "native Linux Release",
+  "checks": 50,
+  "failures": 1,
+  "mechanism": "Per-object region registration selected Dormant for a distant managed chassis before a later wheel introduced its Full-fidelity dependency. No reconstruction followed, and the derived retention caused policy evaluation to skip the chassis.",
+  "unchanged_inputs": {
+    "fidelityFullRadius": 10,
+    "fidelityCoarseRadius": 25,
+    "chassisPosition": [
+      1000,
+      0.55,
+      0
+    ],
+    "chassisManaged": true,
+    "wheelBeforeChassisControl": true,
+    "unreferencedBodyNegativeControl": true
+  },
+  "commands": [
+    "Compile managed-stream-original-test.cpp.txt as C++17 with Release flags and the pre-correction M81 engine archive, using the judas_wheel_lifecycle_tests link dependencies.",
+    "Run the resulting lifecycle binary; original result is 50 checks / 1 failure."
+  ]
+}

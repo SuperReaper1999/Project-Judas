@@ -1,0 +1,11 @@
+{
+  "publicSymbols": 355,
+  "topLevelExports": 31,
+  "nativeOperations": 246,
+  "callbacks": 16,
+  "typeChecker": "5.9.3",
+  "examples": 40,
+  "negativeDriftChecks": 3,
+  "runtimeEnumeration": true,
+  "pass": true
+}

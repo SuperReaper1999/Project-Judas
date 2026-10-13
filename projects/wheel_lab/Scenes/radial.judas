@@ -1,0 +1,1118 @@
+JudasScene 3
+settings
+  name "Wheel lab / radial"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .3 .34 .38
+  fluid-scale 1
+  fidelity-policy none
+  next-id 3000
+end
+object 1 "Ordinary RadicalGravity"
+  position 0 -80 0
+  rotation 1 0 0 -0
+  scale 1 1 1
+  gravity radial 9.81
+  gravity.region sphere 200
+end
+
+object 10 "Project-owned driver, camera and lab UI"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "81818181818181818181818100000002"
+  script.0.enabled true
+  script.0.properties "{}"
+  ui.asset "81818181818181818181818100000004"
+  ui.name "lab"
+  ui.enabled true
+end
+
+object 3 "Real spherical collision surface, radius 80 m"
+  position 0 -80 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.radius 80
+  render.color .13 .22 .24
+  body static sphere
+  body.radius 80
+  render.half-extents .5 .5 .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.half-extents .5 .5 .5
+  body.terrain ""
+  body.mass 1
+  body.friction .75
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 100 "Four-wheel buggy"
+  position -6.0705 -0.927999357 16.188
+  rotation 0.994213555 0.100582012 0 0.0377182546
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.24 1.2
+  render.color 0.1 0.67 0.71
+  body dynamic box
+  body.half-extents 0.85 0.24 1.2
+  body.mass 650
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 101 "Independent suspension and rolling contact"
+  parent 100
+  position -1.02 -0.55 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount -1.02 -0.15 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 131 "Visible rolling marker / no collider"
+  parent 101
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 102 "Independent suspension and rolling contact"
+  parent 100
+  position 1.02 -0.55 -0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount 1.02 -0.15 -0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 132 "Visible rolling marker / no collider"
+  parent 102
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 103 "Independent suspension and rolling contact"
+  parent 100
+  position -1.02 -0.55 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount -1.02 -0.15 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 133 "Visible rolling marker / no collider"
+  parent 103
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 104 "Independent suspension and rolling contact"
+  parent 100
+  position 1.02 -0.55 0.95
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 100
+  wheel.mount 1.02 -0.15 0.95
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 14000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 134 "Visible rolling marker / no collider"
+  parent 104
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 120 "Cabin visual / chassis collision stays separate"
+  parent 100
+  position 0 0.5 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 0.3 0.55
+  render.color 0.25 0.36 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 121 "Forward marker"
+  parent 100
+  position 0 0.31 -1.14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.96 0.89 0.42
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 122 "Rear marker"
+  parent 100
+  position 0 0.31 1.14
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.8 0.19 0.16
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 200 "Six-wheel exploration rover"
+  position 6.0705 -0.927999357 16.188
+  rotation 0.994213555 0.100582012 0 -0.0377182546
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.24 1.65
+  render.color 0.93 0.5 0.14
+  body dynamic box
+  body.half-extents 0.85 0.24 1.65
+  body.mass 950
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 201 "Independent suspension and rolling contact"
+  parent 200
+  position -1.02 -0.55 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -1.02 -0.15 -1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 231 "Visible rolling marker / no collider"
+  parent 201
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 202 "Independent suspension and rolling contact"
+  parent 200
+  position 1.02 -0.55 -1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 1.02 -0.15 -1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 232 "Visible rolling marker / no collider"
+  parent 202
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 203 "Independent suspension and rolling contact"
+  parent 200
+  position -1.02 -0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -1.02 -0.15 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 233 "Visible rolling marker / no collider"
+  parent 203
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 204 "Independent suspension and rolling contact"
+  parent 200
+  position 1.02 -0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 1.02 -0.15 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 234 "Visible rolling marker / no collider"
+  parent 204
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 205 "Independent suspension and rolling contact"
+  parent 200
+  position -1.02 -0.55 1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount -1.02 -0.15 1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 235 "Visible rolling marker / no collider"
+  parent 205
+  position -0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 206 "Independent suspension and rolling contact"
+  parent 200
+  position 1.02 -0.55 1.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "81818181818181818181818100000001"
+  render.color .055 .075 .095
+  wheel.enabled true
+  wheel.chassis 200
+  wheel.mount 1.02 -0.15 1.35
+  wheel.orientation 1 0 0 0
+  wheel.radius .38
+  wheel.minLength .1
+  wheel.restLength .4
+  wheel.maxLength .65
+  wheel.springStiffness 16000
+  wheel.damping 1600
+  wheel.spinInertia 1.2
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+end
+object 236 "Visible rolling marker / no collider"
+  parent 206
+  position 0.155 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.018 0.035 0.28
+  render.color 0.72 0.78 0.81
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 220 "Cabin visual / chassis collision stays separate"
+  parent 200
+  position 0 0.5 0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 0.3 0.55
+  render.color 0.25 0.36 0.45
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 221 "Forward marker"
+  parent 200
+  position 0 0.31 -1.59
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.96 0.89 0.42
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 222 "Rear marker"
+  parent 200
+  position 0 0.31 1.59
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.065 0.035
+  render.color 0.8 0.19 0.16
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 400 "Uneven load-bearing track obstacle"
+  position -6.009 -0.735846097 10.015
+  rotation 0.997325911 0.0626675787 0 0.0376005472
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.12 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.12 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 401 "Uneven load-bearing track obstacle"
+  position -5.21105 -0.156606441 5.010625
+  rotation 0.998981 0.0312818762 0 0.0325331513
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.17 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.17 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 402 "Uneven load-bearing track obstacle"
+  position -6.7125625 -0.131583184 0
+  rotation 0.999121313 0 0 0.0419118274
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.15 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.15 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 403 "Uneven load-bearing track obstacle"
+  position 6.00975 -0.725952917 10.01625
+  rotation 0.997325911 0.0626675787 0 -0.0376005472
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.13 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.13 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 404 "Uneven load-bearing track obstacle"
+  position 5.3125875 -0.143293187 5.011875
+  rotation 0.998960386 0.0312825217 0 -0.033159473
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.19 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.19 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 405 "Uneven load-bearing track obstacle"
+  position 6.715075 -0.10168858 0
+  rotation 0.999121313 0 0 -0.0419118274
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.18 0.18
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.18 0.18
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 406 "Uneven load-bearing track obstacle"
+  position -6.02625 -0.185357715 -7.030625
+  rotation 0.999164251 0.0161198414 0.00225240522 0.037495028
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.35 2.5
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.35 2.5
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 407 "Uneven load-bearing track obstacle"
+  position 6.02625 -0.185357715 -7.030625
+  rotation 0.999164251 0.0161198414 -0.00225240522 -0.037495028
+  scale 1 1 1
+  render box
+  render.half-extents 1.4 0.35 2.5
+  render.color 0.43 0.51 0.53
+  body static box
+  body.half-extents 1.4 0.35 2.5
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 500 "Track center marking"
+  position 0 -3.06523302 -22.0055
+  rotation 0.990314149 -0.13884483 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 501 "Track center marking"
+  position 0 -2.03181175 -18.0045
+  rotation 0.993569012 -0.113228169 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 502 "Track center marking"
+  position 0 -1.21483396 -14.0035
+  rotation 0.996134638 -0.0878395316 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 503 "Track center marking"
+  position 0 -0.607617533 -10.0025
+  rotation 0.998037259 -0.0626229125 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 504 "Track center marking"
+  position 0 -0.205373629 -6.0015
+  rotation 0.999295635 -0.0375264323 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 505 "Track center marking"
+  position 0 -0.00501015845 -2.0005
+  rotation 0.99992186 -0.0125009768 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 506 "Track center marking"
+  position 0 -0.00501015845 2.0005
+  rotation 0.99992186 0.0125009768 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 507 "Track center marking"
+  position 0 -0.205373629 6.0015
+  rotation 0.999295635 0.0375264323 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 508 "Track center marking"
+  position 0 -0.607617533 10.0025
+  rotation 0.998037259 0.0626229125 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 509 "Track center marking"
+  position 0 -1.21483396 14.0035
+  rotation 0.996134638 0.0878395316 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 510 "Track center marking"
+  position 0 -2.03181175 18.0045
+  rotation 0.993569012 0.113228169 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 511 "Track center marking"
+  position 0 -3.06523302 22.0055
+  rotation 0.990314149 0.13884483 0 -0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.015 1.2
+  render.color 0.85 0.77 0.34
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 600 "Freestanding track guide"
+  position -12.27 0.459770693 -8.18
+  rotation 0.995895521 -0.0502060697 0 0.0753091046
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 1.8 0.15
+  render.color 0.26 0.63 0.71
+  body static box
+  body.half-extents 0.15 1.8 0.15
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 601 "Freestanding track guide"
+  position 12.27 0.459770693 -8.18
+  rotation 0.995895521 -0.0502060697 0 -0.0753091046
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 1.8 0.15
+  render.color 0.26 0.63 0.71
+  body static box
+  body.half-extents 0.15 1.8 0.15
+  body.mass 1
+  body.friction 0.75
+  body.restitution 0
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+
+object 12 "Compatibility camera seed only"
+  position -6.3 -0.117148273 25.2
+  rotation 0.987670575 0.151872501 0 0.0379681251
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end

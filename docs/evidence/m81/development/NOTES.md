@@ -1,0 +1,13 @@
+# Genuine development failures and follow-ups
+
+- `../core-first.txt`: the first radial assertion required 2 m travel in 2 s at four 35 N m wheels. Independently, even the ideal no-slip flat acceleration gives only 1.8490566 m: `s = (t²/2)*(sum(T/r))/(m+sum(I/r²))`, with m=400 kg, r=.35 m and I=1 kg m² each. The corrected fixture uses that physical reference and checks curved contact normal as well. No engine tuning was used to meet the impossible original expectation.
+- `../kinematic-first-probe.cpp` / `../kinematic-first.txt`: a newly commanded 1 m/s support returned the preceding 0 m/s published velocity to pre-step wheel coupling. The final generic read-only interval velocity sampler shares exactly the prescribed-motion calculation used by PhysicsWorld.Step. Start, stop, rotation/target and immutability checks pass.
+- `write.log` / `read.log`: initial application cold tests used an unwritable sandbox HOME. A dedicated writable XDG_DATA_HOME corrected the test environment, without changing save semantics.
+- `read-user.log`: a SaveService object had been compiled while its source was still being edited, leaving an older no-wheel participant validator in the first executable. The exact same saved snapshot succeeds after final-source rebuild (`read-final.log`, stronger `read-final-settings.log`). This is a build/source-overlap failure, not a hidden save-data repair. Exact wheel participant bytes are retained here.
+- `../js-cookbook-input-first.txt`: the direct unit helper invoked fixed scripts without the normal BeginFixedStep input publication. Axis reads worked but the copied cookbook's held brake action did not. The helper now follows the actual fixed-input boundary; exact unchanged cookbook passes.
+- `../save-exclusion-invocation-first.txt`: the broad focused driver omitted the pre-existing test's required fresh output-directory argument. Correct invocation passes77 checks; the driver's reproduction command is corrected. No production acceptance criterion changed.
+
+The late managed-stream publication failure and its unchanged negative/positive fixture are recorded separately by the integration review. Protected prior milestone evidence and independent research are untouched.
+
+- `moved-standalone-input-first.txt`: the initial smoke input file labelled the throttle axis as ACTION. The existing harness correctly rejected the type mismatch before simulation. Only the smoke directive changed to AXIS; normal moved-package launch and all assertions then passed.
+- The intermediate build driver requested nonexistent `judas_save_tests`; its completed preceding targets succeeded and the driver stopped. Correct existing save targets were built separately. No runtime source correction was required.

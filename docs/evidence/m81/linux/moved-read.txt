@@ -1,0 +1,13 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Wheel Lab (/tmp/judas-m81-moved/Wheel Lab/game.judasproj)
+Scene: Wheel lab / flat (/tmp/judas-m81-moved/Wheel Lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary four-wheel and six-wheel assemblies use the same component
+PASS visual tyre has no duplicate rigid-body mass or contact owner
+PASS fresh process reads committed wheel save bytes
+PASS cold-save observation precedes any resumed physical step
+PASS cold restore exactly preserves runtime tyre settings, commands, spin and travel
+PASS cold-restored physical endpoint genuinely moves under new wheel input
+PASS normal application startup and shutdown
+M81 application read checks=7 failures=0

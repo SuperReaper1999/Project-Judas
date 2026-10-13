@@ -1,5 +1,5 @@
 {
-  "checkpoint": "ab3dfbab13585680a9e6cc92fa318c8d95012979",
+  "checkpoint": "bc1fd286d75b6db843fa9942b8d21c946c2e5c2a",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "symbols": [
     {
@@ -1306,6 +1306,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.wheel",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.wheel",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "EntityGravity",
       "kinds": [
         "class"
@@ -2361,6 +2372,100 @@
       ],
       "type": "docs/judas.d.ts:UIElement.visible",
       "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "Wheel",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Wheel",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "wheelConfigure"
+      ],
+      "type": "docs/judas.d.ts:Wheel.configure",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Wheel.constructor",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "wheelEnabled"
+      ],
+      "type": "docs/judas.d.ts:Wheel.enabled",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Wheel.id",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.set",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "wheelSet"
+      ],
+      "type": "docs/judas.d.ts:Wheel.set",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.settings",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelSettings"
+      ],
+      "type": "docs/judas.d.ts:Wheel.settings",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelState"
+      ],
+      "type": "docs/judas.d.ts:Wheel.state",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelValid"
+      ],
+      "type": "docs/judas.d.ts:Wheel.valid",
+      "reference": "docs/judasjs/wheels.md"
     },
     {
       "symbol": "audio",
@@ -3922,7 +4027,14 @@
     "vector",
     "velocity",
     "viewRay",
-    "viewportSize"
+    "viewportSize",
+    "wheelConfigure",
+    "wheelEnabled",
+    "wheelExists",
+    "wheelSet",
+    "wheelSettings",
+    "wheelState",
+    "wheelValid"
   ],
   "callbacks": [
     "onSignal",

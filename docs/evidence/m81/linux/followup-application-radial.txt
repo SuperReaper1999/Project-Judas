@@ -1,0 +1,22 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Wheel Lab (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/wheel_lab.judasproj)
+Scene: Wheel lab / radial (/home/conner/Documents/GitHub/Project-Judas/projects/wheel_lab/Scenes/radial.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary four-wheel and six-wheel assemblies use the same component
+PASS visual tyre has no duplicate rigid-body mass or contact owner
+CALM contacts=4 length_m=0.271208346 load_N=6313.92041 speed_mps=0.0622557737
+PASS actual query contacts compress suspension under chassis self-weight
+PASS public wheel JS, logical input, UI and presentation camera execute
+PASS radial scene samples the real spatial field on spherical collision geometry
+DRIVEN forward_m=4.28296804 speed_mps=4.77497005 spin_rps=12.5993862
+PASS logical W input drives real chassis displacement through rolling traction
+PASS project JS supplies direct torque rather than moving chassis transforms
+BRAKED speed_mps=0.726516664
+PASS ordinary wheel brake torque reduces actual vehicle speed
+PAYLOAD length_m=0.223140687 load_N=8590.12695
+PASS real finite-mass payload changes suspension load and travel
+PASS runtime tyre configuration uses the public fixed-update API
+PASS normal application startup and shutdown
+PERF mode=radial samples=370 fixed_median_ms=0.361252 p95_ms=0.633882 max_ms=3.566396 frame_median_ms=15.537405 frame_p95_ms=20.800983
+M81 application radial checks=11 failures=0

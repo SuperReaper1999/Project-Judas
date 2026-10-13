@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "cwd": "/tmp",
+  "executable": "/tmp/judas-m81-moved/Wheel Lab/judas",
+  "harness": "docs/evidence/m81/export-smoke.txt",
+  "checks": "500-frame ordinary no-argument launch; real input, flat/oblique/radial, pause/resume, reload, screenshots",
+  "prior_failure": "development/moved-standalone-input-first.txt: ACTION supplied for an axis; harness correctly rejected the bad command. AXIS correction only."
+}

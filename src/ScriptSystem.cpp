@@ -82,6 +82,7 @@ export class Entity {
  get deformable(){const epoch=call('deformableExists',this.id);return epoch?new Deformable(this.id,epoch):null}
  get gravity(){return new EntityGravity(this.id)}
  get character(){return call("characterExists",this.id)?new Character(this.id):null}
+ get wheel(){return call('wheelExists',this.id)?new Wheel(this.id):null}
  get ragdoll(){return call('ragdollExists',this.id)?new Ragdoll(this.id):null}
  get audio(){return call('audioInfo',this.id)}
  setAudio(settings){return call('audioSettings',this.id,settings)}
@@ -187,6 +188,16 @@ export class Character {
  configure(v){return call('characterConfigure',this.id,v)}
  accelerate(v){return call('characterAcceleration',this.id,v)}
  ignore(entities){return call('characterIgnore',this.id,entities.map(e=>e.id))}
+}
+export class Wheel {
+ constructor(id){this.id=String(id)}
+ get valid(){return call('wheelValid',this.id)}
+ get enabled(){return this.settings.enabled}
+ set enabled(value){call('wheelEnabled',this.id,value)}
+ get settings(){const v=call('wheelSettings',this.id);return {...v,chassis:entity(v.chassisId)}}
+ get state(){const v=call('wheelState',this.id);return {...v,contactEntity:entity(v.contactEntityId)}}
+ set(commands){return call('wheelSet',this.id,commands)}
+ configure(settings){return call('wheelConfigure',this.id,settings)}
 }
 export class LiquidVolume {
  constructor(handle){this.handle=handle}
@@ -829,6 +840,66 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         JS_SetPropertyStr(c,o,"supported",JS_NewBool(c,r.supported));JS_SetPropertyStr(c,o,"collided",JS_NewBool(c,r.collided));
         JS_SetPropertyStr(c,o,"supportEntityId",JS_NewString(c,std::to_string(world.EntityIdOfBody(r.support)).c_str()));
         return o;
+    }
+    if(op.rfind("wheel",0)==0){
+        EntityId owner=0;try{auto text=String(c,arg(1));size_t end=0;owner=std::stoull(text,&end);if(end!=text.size())owner=0;}catch(...){owner=0;}
+        auto* wheel=world.RuntimeWheel(owner);
+        if(op=="wheelExists"||op=="wheelValid")return JS_NewBool(c,wheel!=nullptr);
+        if(!wheel)return JS_ThrowReferenceError(c,"stale entity or missing wheel component");
+        if(op=="wheelSet"||op=="wheelConfigure"||op=="wheelEnabled"){
+            if(!s->fixed)return JS_ThrowTypeError(c,"wheel mutation belongs in fixedUpdate");
+            std::string error;
+            if(op=="wheelSet"){
+                if(JS_IsArray(arg(2))||!KnownOptions(c,arg(2),{"driveTorque","brakeTorque","steeringAngle"}))return JS_ThrowTypeError(c,"wheel commands accept driveTorque/brakeTorque/steeringAngle only");
+                auto next=wheel->command;
+                const char* names[]={"driveTorque","brakeTorque","steeringAngle"};float* values[]={&next.driveTorque,&next.brakeTorque,&next.steeringAngle};
+                for(unsigned i=0;i<3;++i){auto v=JS_GetPropertyStr(c,arg(2),names[i]);bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);if(present&&!Number(c,arg(2),names[i],*values[i]))return JS_ThrowTypeError(c,"finite wheel command required");}
+                if(!ValidateWheelCommand(next,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+                wheel->command=next;return JS_TRUE;
+            }
+            auto next=wheel->settings;
+            if(op=="wheelEnabled"){
+                if(!JS_IsBool(arg(2)))return JS_ThrowTypeError(c,"wheel enabled requires boolean");
+                next.enabled=JS_ToBool(c,arg(2));
+            }else{
+                if(JS_IsArray(arg(2))||!KnownOptions(c,arg(2),{"friction","springStiffness","damping","rollingResistance"}))return JS_ThrowTypeError(c,"wheel configuration accepts friction/springStiffness/damping/rollingResistance only");
+                const char* names[]={"friction","springStiffness","damping","rollingResistance"};float* values[]={&next.friction,&next.springStiffness,&next.damping,&next.rollingResistance};
+                for(unsigned i=0;i<4;++i){auto v=JS_GetPropertyStr(c,arg(2),names[i]);bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);if(present&&!Number(c,arg(2),names[i],*values[i]))return JS_ThrowTypeError(c,"finite wheel setting required");}
+            }
+            if(!ValidateWheelSettings(next,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            if(!world.SetWheelSettings(owner,next))return JS_ThrowTypeError(c,"wheel configuration unavailable or rejected");
+            return JS_TRUE;
+        }
+        auto result=JS_NewObject(c);
+        auto number=[&](const char* key,float value){JS_SetPropertyStr(c,result,key,JS_NewFloat64(c,value));};
+        auto vector=[&](const char* key,glm::vec3 value){JS_SetPropertyStr(c,result,key,Vec(c,value));};
+        auto quaternion=[&](const char* key,glm::quat value){auto q=JS_NewObject(c);JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,value.w));JS_SetPropertyStr(c,q,"x",JS_NewFloat64(c,value.x));JS_SetPropertyStr(c,q,"y",JS_NewFloat64(c,value.y));JS_SetPropertyStr(c,q,"z",JS_NewFloat64(c,value.z));JS_SetPropertyStr(c,result,key,q);};
+        if(op=="wheelSettings"){
+            const auto& config=wheel->settings;
+            JS_SetPropertyStr(c,result,"enabled",JS_NewBool(c,config.enabled));
+            JS_SetPropertyStr(c,result,"chassisId",JS_NewString(c,std::to_string(config.chassis).c_str()));
+            vector("mount",config.mount);quaternion("orientation",config.orientation);
+            number("radius",config.radius);number("minLength",config.minLength);number("restLength",config.restLength);number("maxLength",config.maxLength);
+            number("springStiffness",config.springStiffness);number("damping",config.damping);number("spinInertia",config.spinInertia);
+            number("friction",config.friction);number("rollingResistance",config.rollingResistance);
+            const auto& categories=world.Categories();
+            auto layer=categories.collision.names.find(config.collisionLayer);
+            JS_SetPropertyStr(c,result,"collisionLayer",layer==categories.collision.names.end()?JS_NULL:JS_NewString(c,layer->second.c_str()));
+            auto names=[&](const CategoryRegistry& registry,CategoryMask mask){auto array=JS_NewArray(c);uint32_t n=0;for(const auto& [id,name]:registry.names)if(mask&CategoryBit(id))JS_SetPropertyUint32(c,array,n++,JS_NewString(c,name.c_str()));return array;};
+            JS_SetPropertyStr(c,result,"collisionMask",names(categories.collision,config.collisionMask));
+            JS_SetPropertyStr(c,result,"requiredTags",names(categories.tags,config.requiredTags));JS_SetPropertyStr(c,result,"excludedTags",names(categories.tags,config.excludedTags));
+            return result;
+        }
+        if(op=="wheelState"){
+            const auto& state=wheel->state;
+            JS_SetPropertyStr(c,result,"available",JS_NewBool(c,state.available));JS_SetPropertyStr(c,result,"contact",JS_NewBool(c,state.contact));JS_SetPropertyStr(c,result,"initialOverlap",JS_NewBool(c,state.initialOverlap));
+            JS_SetPropertyStr(c,result,"contactEntityId",JS_NewString(c,std::to_string(world.EntityIdOfBody(state.body)).c_str()));
+            vector("point",state.point);vector("normal",state.normal);vector("groundVelocity",state.groundVelocity);vector("center",state.center);quaternion("rotation",state.rotation);
+            number("length",state.length);number("normalForce",state.normalForce);number("angularVelocity",state.angularVelocity);number("angle",state.angle);
+            number("longitudinalSlip",state.longitudinalSlip);number("lateralSlip",state.lateralSlip);number("longitudinalImpulse",state.longitudinalImpulse);number("lateralImpulse",state.lateralImpulse);
+            return result;
+        }
+        JS_FreeValue(c,result);return JS_ThrowTypeError(c,"unknown wheel operation");
     }
     if(op=="queryTags"){CategoryMask required,excluded;if(!tagMask(arg(1),required)||!tagMask(arg(2),excluded))return JS_ThrowTypeError(c,"unknown tag");return ids(world.QueryEntities(required,excluded));}
     if(op=="spawn"){SceneTransform t;if(!readTransform(arg(2),t))return JS_ThrowTypeError(c,"invalid transform");RuntimeWorld::PrefabSpawnOptions options;auto config=arg(3);if(!KnownOptions(c,config,{"velocity","angularVelocity","scripts"}))return JS_ThrowTypeError(c,"spawn options accept velocity/angularVelocity/scripts only");for(auto [key,destination]:{std::pair<const char*,std::optional<glm::vec3>*>{"velocity",&options.velocity},{"angularVelocity",&options.angularVelocity}}){auto v=JS_GetPropertyStr(c,config,key);if(!JS_IsUndefined(v)){glm::vec3 motion;if(!ReadVec(c,v,motion)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"finite prefab motion required");}*destination=motion;}JS_FreeValue(c,v);}auto list=JS_GetPropertyStr(c,config,"scripts");std::string error;if(!JS_IsUndefined(list)){if(!JS_IsArray(list)){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"scripts array required");}auto len=JS_GetPropertyStr(c,list,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256){JS_FreeValue(c,list);return JS_ThrowRangeError(c,"script init limit");}for(uint32_t i=0;i<n;++i){auto value=JS_GetPropertyUint32(c,list,i);RuntimeWorld::PrefabScriptInit init;auto src=JS_GetPropertyStr(c,value,"source"),slot=JS_GetPropertyStr(c,value,"slot"),props=JS_GetPropertyStr(c,value,"properties"),state=JS_GetPropertyStr(c,value,"state");bool valid=KnownOptions(c,value,{"source","slot","properties","state"});try{auto decimal=[&](JSValueConst v){auto text=String(c,v);if(text.empty()||text.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("decimal ID required");return std::stoull(text);};if(!JS_IsUndefined(src))init.source=decimal(src);init.slot=decimal(slot);}catch(...){valid=false;}if(!JS_IsUndefined(props))valid&=s->Json(props,init.properties,error);if(!JS_IsUndefined(state))valid&=s->Json(state,init.state,error);JS_FreeValue(c,src);JS_FreeValue(c,slot);JS_FreeValue(c,props);JS_FreeValue(c,state);JS_FreeValue(c,value);if(!valid){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"invalid prefab script initialization: %s",error.c_str());}options.scripts.push_back(init);}}JS_FreeValue(c,list);auto id=world.SpawnPrefab(String(c,arg(1)),t,error,options);if(!id)return JS_ThrowTypeError(c,"spawn: %s",error.c_str());return JS_NewString(c,std::to_string(id).c_str());}

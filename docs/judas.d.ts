@@ -1,4 +1,4 @@
-/** Current JudasJS through M73 candidate. M72 has Linux human acceptance.
+/** Current JudasJS through M81 Experimental candidate. M80 has Linux human acceptance.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -189,6 +189,7 @@ declare module "judas" {
     readonly navigationLink: NavigationLinkInfo | null;
     setNavigationEnabled(component: "agent" | "obstacle" | "link", enabled: boolean): boolean;
     readonly character: Character | null;
+    readonly wheel: Wheel | null;
     readonly fracture:Fracture|null;
     readonly deformable: Deformable | null;
     readonly ragdoll: Ragdoll | null;
@@ -259,6 +260,53 @@ declare module "judas" {
     velocity: Vec3; actualDisplacement: Vec3; supportNormal: Vec3; supportVelocity: Vec3;
     gravity: Vec3; up: Vec3; supported: boolean; collided: boolean;
     supportEntityId: EntityId; supportEntity: Entity | null;
+  }
+  export interface WheelCommandPatch {
+    /** Signed torque in N m, held until replaced. */
+    driveTorque?:number;
+    /** Nonnegative braking torque in N m, held until replaced. */
+    brakeTorque?:number;
+    /** Steering around the mount's local +Y axis, in radians. */
+    steeringAngle?:number;
+  }
+  export interface WheelSettingsPatch {
+    friction?:number;springStiffness?:number;damping?:number;
+    /** Torque = coefficient * normal load * radius. */
+    rollingResistance?:number;
+  }
+  export interface WheelSettings {
+    enabled:boolean;chassisId:EntityId;chassis:Entity|null;
+    /** Chassis-local mount (metres) and orientation; down -Y, axle +X, forward -Z. */
+    mount:Vec3;orientation:Quat;
+    radius:number;minLength:number;restLength:number;maxLength:number;
+    /** N/m, N s/m, and kg m² respectively. */
+    springStiffness:number;damping:number;spinInertia:number;
+    friction:number;rollingResistance:number;
+    collisionLayer:string|null;collisionMask:string[];requiredTags:string[];excludedTags:string[];
+  }
+  export interface WheelState {
+    /** Whether a usable enabled dynamic chassis exists; wheel.enabled is independent. */
+    available:boolean;contact:boolean;initialOverlap:boolean;
+    contactEntityId:EntityId;contactEntity:Entity|null;
+    /** World-space contact witness, surface normal and ground point velocity. */
+    point:Vec3;normal:Vec3;groundVelocity:Vec3;
+    /** Authoritative world-space wheel pose, distinct from presentedTransform. */
+    center:Vec3;rotation:Quat;
+    length:number;normalForce:number;
+    /** Absolute axle spin in rad/s; angle is visual spin relative to chassis, radians. */
+    angularVelocity:number;angle:number;
+    /** Slip velocities (m/s) and applied tangential impulses (N s). */
+    longitudinalSlip:number;lateralSlip:number;longitudinalImpulse:number;lateralImpulse:number;
+  }
+  export class Wheel {
+    constructor(id:EntityId);id:EntityId;
+    readonly valid:boolean;
+    get enabled():boolean;
+    /** Mutations must run in fixedUpdate. */
+    set enabled(value:boolean);
+    readonly settings:WheelSettings;readonly state:WheelState;
+    set(commands:WheelCommandPatch):boolean;
+    configure(settings:WheelSettingsPatch):boolean;
   }
   export interface NavigationFilter {
     profile?: number | string; includeAreas?: string[]; excludeAreas?: string[];

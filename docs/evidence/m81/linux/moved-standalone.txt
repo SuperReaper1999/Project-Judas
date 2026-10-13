@@ -1,0 +1,6 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Wheel Lab (/tmp/judas-m81-moved/Wheel Lab/game.judasproj)
+Scene: Wheel lab / flat (/tmp/judas-m81-moved/Wheel Lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+[TestHarness] input kind mismatch throttle

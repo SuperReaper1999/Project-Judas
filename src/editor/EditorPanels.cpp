@@ -1502,6 +1502,7 @@ SceneObjectId DuplicateObject(EditorDocument& doc, SceneObjectId id) {
         for(auto& o:prefab.Objects()){
             o.id=reverse.at(o.id);if(o.parent)o.parent=reverse.at(o.parent);
             if(o.gravitySelection&&o.gravitySelection->source)o.gravitySelection->source=reverse.at(o.gravitySelection->source);
+            if(o.wheel)o.wheel->chassis=reverse.at(o.wheel->chassis);
             if(o.render&&o.render->textureCamera)o.render->textureCamera=reverse.at(o.render->textureCamera);
         }
         prefab.SetNextId(1);doc.BeginEdit();SceneObjectId root=0;

@@ -329,6 +329,9 @@ public:
     bool GetKinematicMotion(BodyHandle,KinematicMotionState&) const;
     void PersistKinematic(class SaveArchive&,BodyHandle);
     glm::vec3 GetPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
+    // Command-aware current-interval velocity for pre-step couplers. Shares
+    // Step's prescribed motion evaluation without advancing pose or intent.
+    glm::vec3 GetStepPointVelocity(BodyHandle,const glm::vec3& worldPoint,float dt) const;
     glm::vec3 GetPreviousPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
     float GetMass(BodyHandle handle) const;
     glm::vec3 GetCenterOfMass(BodyHandle handle) const;
@@ -343,7 +346,9 @@ public:
         const std::function<bool(BodyHandle)>& include = {});
     bool HasRestoredCompletedContactObservations(float fixedDeltaTime) const;
 
-    void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse);    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
+    void ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse,bool wake=true);
+    void ApplyAngularImpulse(BodyHandle handle, const glm::vec3& impulse,bool wake=true);
+    void ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
                              const glm::vec3& worldPoint);
 
     // FTFT9 finite-mass normal coupling. One batch shares the ordinary

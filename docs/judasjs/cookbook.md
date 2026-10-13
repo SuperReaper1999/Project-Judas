@@ -31,6 +31,7 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [physical-animation.js](examples/physical-animation.js) | Same full rig with ordinary mapped bodies and CharacterMotor; partial impulse, explicit full handoff, passive release and collision-validated animation return. |
 | [physical-balance.js](examples/physical-balance.js) | Explicitly mapped original Balance Lab rig; human stand/recover/passive requests and copied actual support/status. Executed by `judas_balance_lab_tests` cookbook mode. |
 | [character.js](examples/character.js) | CharacterMotor, `move_x/move_y/jump` map; generic JS acceleration/launch. No camera ownership. |
+| [wheel.js](examples/wheel.js) | Authored Wheel referencing a dynamic chassis; `drive`/`steer` axes and `brake` action. Executed by `judas_wheel_script_tests`; torque and suspension remain engine primitives. |
 | [stale-handle.js](examples/stale-handle.js) | Prefab ID; validates stale Entity and retained Character behaviour. UI/Joint lifetime differences are documented separately. |
 | [surface.js](examples/surface.js) | Any entity; reflects actual module/class surface for drift verification, not game behaviour. |
 

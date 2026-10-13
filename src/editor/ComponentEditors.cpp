@@ -129,6 +129,28 @@ void DrawUIComponent(EditorDocument& doc,SceneObject& o,EditorPanelState& state)
     TextField(doc,"Runtime document name",u.name);
     ImGui::TextWrapped("Select the UI asset in the Asset Browser to edit its hierarchy. Runtime changes never edit this source.");
 }
+void DrawWheel(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
+    auto& v=*object.wheel;Checkbox(doc,"Wheel enabled",v.enabled);
+    const auto* chassis=doc.GetScene().Find(v.chassis);
+    if(ImGui::BeginCombo("Chassis",chassis?chassis->name.c_str():"Select dynamic body")){
+        for(const auto& candidate:doc.GetScene().Objects())if(candidate.body&&candidate.body->motion==SceneBodyMotion::Dynamic&&candidate.id!=object.id&&ImGui::Selectable((candidate.name+" ##"+std::to_string(candidate.id)).c_str(),candidate.id==v.chassis)){
+            doc.BeginEdit();v.chassis=candidate.id;doc.CommitEdit();}
+        ImGui::EndCombo();
+    }
+    DragVec3(doc,"Mount (chassis local)",v.mount);
+    auto degrees=glm::degrees(glm::eulerAngles(glm::normalize(v.orientation)));
+    if(ImGui::DragFloat3("Frame rotation degrees",&degrees.x,.5f))v.orientation=glm::normalize(glm::quat(glm::radians(degrees)));
+    TrackEdit(doc);
+    DragScalar(doc,"Wheel radius m",v.radius,.01f);
+    DragScalar(doc,"Minimum suspension m",v.minLength,.01f);DragScalar(doc,"Rest suspension m",v.restLength,.01f);DragScalar(doc,"Maximum suspension m",v.maxLength,.01f);
+    DragScalar(doc,"Spring N/m",v.springStiffness,100);DragScalar(doc,"Damping N s/m",v.damping,20);
+    DragScalar(doc,"Spin inertia kg m2",v.spinInertia,.1f);DragScalar(doc,"Tyre friction",v.friction,.05f);DragScalar(doc,"Rolling resistance",v.rollingResistance,.001f);
+    if(state.project){const auto& categories=state.project->Settings().classification;
+        DrawCategoryLayer(doc,"Wheel collision layer",v.collisionLayer,categories.collision);DrawCategoryMask(doc,"Wheel collision mask",v.collisionMask,categories.collision);
+        DrawCategoryMask(doc,"Wheel required tags",v.requiredTags,categories.tags,false);DrawCategoryMask(doc,"Wheel excluded tags",v.excludedTags,categories.tags,false);}
+    ImGui::TextWrapped("Local frame: suspension -Y, axle +X, rolling forward -Z. Mount and frame are relative to the chassis; no world-up assumption. This entity presents the wheel only. fixedUpdate supplies torque, brake and steering.");
+    std::string error;if(!ValidateWheelSettings(v,error))ImGui::TextColored(ImVec4(1,.3f,.2f,1),"%s",error.c_str());
+}
 void DrawCharacter(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
     auto& m=*object.characterMotor;Checkbox(doc,"Motor enabled",m.enabled);
     DragScalar(doc,"Radius",m.radius,.01f);DragScalar(doc,"Cylinder half height",m.halfHeight,.01f);
@@ -834,6 +856,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<SceneRenderCameraComponent>("Render camera", 'K', &SceneObject::renderCamera, DrawRenderCamera),
         Make<SceneRenderComponent>("Render", 'R', &SceneObject::render, DrawRender),
         Make<GravitySelection>("Gravity selection",'G',&SceneObject::gravitySelection,DrawGravitySelection),
+        Make<WheelSettings>("Wheel",'W',&SceneObject::wheel,DrawWheel),
         Make<CharacterMotorSettings>("Character motor",'M',&SceneObject::characterMotor,DrawCharacter),
         Make<SceneAnimationComponent>("Animation",'A',&SceneObject::animation,DrawAnimation),
         Make<SceneSocketComponent>("Visual socket",'S',&SceneObject::socket,DrawSocket),

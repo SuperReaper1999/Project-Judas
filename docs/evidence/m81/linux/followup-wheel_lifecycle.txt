@@ -1,0 +1,51 @@
+PASS wheel settings survive ordinary scene serialization
+PASS wheel scene has an authored physical fingerprint
+PASS tyre setting changes authored fingerprint
+PASS missing chassis reference is rejected by authored validation
+PASS wheel and rigid body cannot compete for owner motion
+PASS wheel owner non-unit scale is rejected rather than changing physical radius
+PASS ordinary hierarchy can become a wheel assembly prefab
+PASS first normal wheel prefab instance
+PASS second normal wheel prefab instance
+PASS wheel chassis references remap independently for each prefab instance
+PASS headless generic wheel world builds without player or vehicle policy
+PASS wheel runtime state is independently owned
+PASS wheel queries authoritative geometry in the normal world
+PASS commanding one wheel does not alter another wheel
+PASS visual wheel interpolation uses published fixed poses
+PASS live wheel reference retains a full physical chassis
+PASS required chassis cannot be excluded from a durable save
+PASS invalid wheel configuration has no partial runtime mutation
+PASS valid wheel configuration uses normal component setter
+PASS durable save adds only its optional wheel participant
+PASS fresh world restores ordinary physical state and wheel participant
+PASS new process wheel continuation restores exact command, spin, phase and travel
+PASS restored configuration and physical presentation have no zero-pose flash
+PASS missing wheel participant fails explicitly instead of resetting spin
+PASS save envelope admits all existing optional participants plus wheels
+PASS authored reset discards spin, controls and runtime wheel configuration
+PASS single wheel owner can be destroyed independently
+PASS single wheel owner can be destroyed independently
+PASS single wheel owner can be destroyed independently
+PASS single wheel owner can be destroyed independently
+PASS last wheel removal releases only its derived fidelity requirement
+PASS last wheel removal releases the required-save dependency
+PASS reference replacement fixture builds
+PASS changing chassis references releases the old body and retains the new body
+PASS chassis destruction fixture builds
+PASS native one-entity destruction removes chassis only
+PASS destroyed chassis reference never aliases a reused body slot
+PASS orphaned wheel save fails with its missing required chassis
+PASS explicit hierarchy destruction retires every wheel owner
+PASS world stop discards wheel state and safe access
+PASS distance-policy region publication fixture builds
+PASS private distant managed chassis initially follows the ordinary distance policy
+PASS wheel is staged after its reduced chassis
+PASS published wheel assembly reconstructs its distant managed chassis at full fidelity
+PASS published wheel dependency remains full
+PASS removing streamed wheel releases its derived retention
+PASS the opposite wheel-before-chassis staging order is accepted
+PASS wheel-before-chassis publication also retains the real physical body
+PASS unreferenced distant ordinary body is staged
+PASS no-wheel region keeps its ordinary reduced-fidelity policy
+SUMMARY 50 checks 0 failures
