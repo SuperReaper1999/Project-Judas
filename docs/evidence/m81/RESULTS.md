@@ -1,9 +1,12 @@
-# M81 — reusable wheels / final Linux candidate
+# M81 — reusable wheels / accepted Linux implementation
 
-**2026-10-13. Experimental; human review pending.** Baseline is accepted M80
-`bc1fd286d75b6db843fa9942b8d21c946c2e5c2a`. Stable remains there; main remains
-`3102bf6c6e4b5c57eb3ab66a71fa502f8fc423f6`. No milestone tag or human acceptance
-is implied by automated checks.
+**2026-10-13. Operator human acceptance recorded.** Accepted implementation is
+`7489a902d7e8158dbaed3328ffe96e29fe0936a8`; Stable promotion is explicitly
+authorized. Development baseline was accepted M80
+`bc1fd286d75b6db843fa9942b8d21c946c2e5c2a`. Main remains
+`3102bf6c6e4b5c57eb3ab66a71fa502f8fc423f6`. See
+[the acceptance record](HUMAN_VALIDATION.md). Human acceptance comes from the
+operator's statement, not the automated checks below. No milestone tag is created.
 
 ## Inspection and coherent scope
 
@@ -87,8 +90,9 @@ wheel/editor/test warnings were removed. No unrelated full production/research
 marathon was run.
 
 Offscreen SDL cannot implement desktop relative capture and logs that limitation;
-logical input and pause behavior are checked, actual mouse feel remains human
-review. Windows VM was off: **M81 Windows not run, informational/nonblocking**.
+logical input and pause behavior are checked. Subsequent operator desktop
+acceptance is recorded separately without inventing individual checklist results.
+Windows VM was off: **M81 Windows not run, informational/nonblocking**.
 
 ## Representative Linux performance
 
@@ -147,4 +151,5 @@ reference; these are explicit engineering bounds, not hidden car policy.
 
 Protected history, existing game project source, accepted fluid implementation
 and independent research are unchanged. Deferred unrelated defects were not
-retuned. Stable/main are not promoted, and no human acceptance is claimed.
+retuned. The operator authorized Stable promotion after human testing; main remains
+unchanged. Original numerical receipts and failure evidence remain unchanged.

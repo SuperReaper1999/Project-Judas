@@ -1,13 +1,16 @@
 # Architecture
 
-## Current checkpoint — M81 Experimental candidate; M80 human validated
+## Current checkpoint — M81 human validated
 
 [M81 wheels](M81_WHEELS.md) adds optional per-wheel query-contact suspension and
 scalar spin on ordinary dynamic chassis. RuntimeWorld owns independent wheel
 state; M44 supplies contact geometry and normal PhysicsWorld impulses move the
 chassis/ground. Project JS supplies direct torque/brake/steering commands.
 There is no engine-owned vehicle layout, drivetrain, input or camera policy.
-M81 awaits human review; Stable retains the accepted M80 checkpoint.
+The operator human validated implementation
+`7489a902d7e8158dbaed3328ffe96e29fe0936a8` on Linux on 2026-10-13 and
+authorized Stable promotion. See the [acceptance record](evidence/m81/HUMAN_VALIDATION.md).
+Native Windows M81 validation remains outstanding and nonblocking.
 
 M79 is **human validated** at `3745787d0732a05e82aba9496e592bc2233564f0`.
 [M80 bending](M80_BENDING.md) extends tetrahedral

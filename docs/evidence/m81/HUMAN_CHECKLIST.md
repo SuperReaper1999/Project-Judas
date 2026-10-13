@@ -1,4 +1,9 @@
-# M81 human review — pending
+# M81 human review — accepted 2026-10-13
+
+The operator accepted implementation `7489a902d7e8158dbaed3328ffe96e29fe0936a8`
+after the Linux desktop autopilot demonstration and authorized Stable promotion.
+See [the acceptance record](HUMAN_VALIDATION.md). The checklist below remains a
+reusable review guide; no individual result or Windows acceptance is invented.
 
 Open `projects/wheel_lab/wheel_lab.judasproj` in the editor or launch the ordinary exported package. Automated checks do not constitute human acceptance.
 
@@ -24,4 +29,4 @@ W/S torque, A/D steer, Space brake; Tab selects buggy/rover/spawned assemblies. 
 
 Model limits: swept sphere contact, scalar axle spin, no separate unsprung body, no automatic two-wheel balancing or full gyroscopic transport. Very thin/high-speed/lateral terrain exceeds the wheel-specific contact approximation. Windows M81 remains untested and nonblocking; do not infer physical hardware acceptance.
 
-Stable promotion requires explicit acceptance of the exact Experimental candidate.
+Stable promotion was explicitly authorized for this exact Experimental candidate.

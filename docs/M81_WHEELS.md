@@ -1,6 +1,9 @@
 # M81 — Judas learns to roll
 
-**Experimental candidate; human validation pending.** Development starts from
+**Human validated on Linux, 2026-10-13.** Accepted implementation is
+`7489a902d7e8158dbaed3328ffe96e29fe0936a8`; the operator authorized Stable
+promotion. See the [acceptance record](evidence/m81/HUMAN_VALIDATION.md).
+Development starts from
 M80's accepted checkpoint `bc1fd286d75b6db843fa9942b8d21c946c2e5c2a`.
 Linux is the automated acceptance platform. Windows evidence is informational
 and does not imply hardware acceptance. Results and measured performance belong
@@ -143,8 +146,8 @@ save/load, region residency and scene switches use public project APIs. The
 project scripts are inspectable content, not engine demo modes.
 
 Controls and the combined human checklist are recorded in the lab documentation
-and [candidate evidence](evidence/m81/RESULTS.md). Human review remains pending
-until the operator tests this exact candidate.
+and [validation evidence](evidence/m81/RESULTS.md). Operator acceptance is recorded
+separately; individual checklist results and Windows acceptance are not inferred.
 
 ## Limitations
 
@@ -172,5 +175,5 @@ until the operator tests this exact candidate.
   on a newly allocated body slot.
 
 Protected history, independent fluid research and unrelated deferred physics
-findings are unchanged. M81 does not imply new human acceptance or Stable
-promotion.
+findings are unchanged. M81 acceptance does not close unrelated deferred findings
+or outstanding Windows validation.

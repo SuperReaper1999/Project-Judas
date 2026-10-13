@@ -17,14 +17,17 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current status — M81 Experimental candidate; M80 human validated
+## Current status — M81 human validated
 
 [M81 reusable wheels](docs/M81_WHEELS.md) adds independently authored suspension,
 tyre contact, spin, torque/braking and steering on ordinary rigid bodies.
 The [editable wheel lab](projects/wheel_lab/wheel_lab.judasproj) uses project
 JavaScript for vehicle input/cameras and exercises four-wheel, six-wheel,
-oblique and radial configurations. M81 human validation is pending; Stable
-retains the accepted M80 checkpoint.
+oblique and radial configurations. The operator human validated implementation
+`7489a902d7e8158dbaed3328ffe96e29fe0936a8` on Linux on 2026-10-13 and
+authorized Stable promotion; see the
+[acceptance record](docs/evidence/m81/HUMAN_VALIDATION.md).
+M81 Windows validation remains outstanding and nonblocking.
 
 [M79 load-driven structures](docs/M79_STRUCTURES.md) is human validated at
 `3745787d0732a05e82aba9496e592bc2233564f0`.
@@ -1581,7 +1584,7 @@ current scripting API for all of them is [JUDASJS.md](docs/JUDASJS.md).
 | M77 (human pending) | Default-off two-chain physical balance, bounded corrective steps and recovery | [M77.md](docs/M77.md), [M78 final audit handoff](docs/M78_COMPLETION.md) | `projects/balance_lab` |
 | M79 (human accepted) | Load-driven material connections, support loss and progressive fracture | [M79_STRUCTURES.md](docs/M79_STRUCTURES.md) | `projects/structural_lab` |
 | M80 (human accepted) | Elastic/plastic solid deformation and soft section-based failure | [M80_BENDING.md](docs/M80_BENDING.md) | `projects/bending_lab` |
-| M81 (Experimental; human pending) | Generic suspension, tyre contact, traction/slip and direct wheel torque control | [M81_WHEELS.md](docs/M81_WHEELS.md) | `projects/wheel_lab` |
+| M81 (human validated) | Generic suspension, tyre contact, traction/slip and direct wheel torque control | [M81_WHEELS.md](docs/M81_WHEELS.md) | `projects/wheel_lab` |
 
 M78 has a [completed audit handoff](docs/M78_COMPLETION.md) with explicit coverage
 limits and unresolved defects; it is not comprehensive certification or new human

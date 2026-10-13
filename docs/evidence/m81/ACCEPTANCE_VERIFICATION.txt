@@ -1,0 +1,11 @@
+2026-10-13 operator acceptance checkpoint verification
+Accepted implementation 7489a902d7e8158dbaed3328ffe96e29fe0936a8
+Pre-update source 73, binary 25 and evidence 118 fingerprints PASS
+Documentation-only acceptance inventory: 10 files
+Source manifest: only README.md, docs/ARCHITECTURE.md and docs/M81_WHEELS.md hashes refreshed
+Evidence manifest: only changed documentation hashes refreshed; three acceptance records added
+Original implementation inventory, pre-checkpoint receipt and numerical/failure receipts preserved
+Runtime, tests, project content and binaries unchanged
+Windows M81 outstanding, informational/nonblocking
+Operator authorized fast-forward Stable promotion; main unchanged
+No validation reruns, tag or new milestone
