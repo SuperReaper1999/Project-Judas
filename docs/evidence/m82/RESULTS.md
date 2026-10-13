@@ -223,6 +223,10 @@ final candidate, while local binaries/packages stay outside the committed
 source inventory. Verification status is the actual receipt, not inferred from
 a successful compilation.
 
+The raw initial untracked listing includes one newly created M82 header;
+[CONTINUITY_NOTE.md](CONTINUITY_NOTE.md) records that classification correction
+and confirms preservation of all actual unrelated entries.
+
 Authoring review also found a **preexisting, source-traced streaming limitation**:
 an explicit hard qualified reference from an installing region back into that
 same region uses the public active-region resolver before publication. Normal

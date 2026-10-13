@@ -3,12 +3,15 @@
   "verified": {
     "SOURCE_SHA256.txt": 71,
     "BINARY_SHA256.txt": 13,
-    "EVIDENCE_SHA256.txt": 104
+    "EVIDENCE_SHA256.txt": 105
   },
-  "intendedChangedFiles": 177,
+  "intendedChangedFiles": 178,
   "trackedHistoricalEvidenceOrExistingProjectsModified": [],
   "humanValidation": "pending",
   "windowsM82Validation": "not run; informational/nonblocking",
   "stagedContentMatchesCandidate": true,
-  "diffWhitespaceException": "Two inherited trailing spaces in verbatim DejaVu/Bitstream license copy; exact bytes match the existing wheel_lab font license."
+  "diffWhitespaceException": "Two inherited trailing spaces in verbatim DejaVu/Bitstream license copy; exact bytes match the existing wheel_lab font license.",
+  "unrelatedInitialEntriesPreserved": 74,
+  "initialInventoryClarification": "Raw initial listing also contains new M82 src/Powertrain.h; see CONTINUITY_NOTE.md.",
+  "implementationSourceMatchesCommit": "23b75969480e5f48ff916d3a0d46d7f5ed366795"
 }

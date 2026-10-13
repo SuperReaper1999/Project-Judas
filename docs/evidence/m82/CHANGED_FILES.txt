@@ -5,6 +5,7 @@ docs/JUDASJS.md
 docs/M82_POWERTRAINS.md
 docs/evidence/m82/BINARY_SHA256.txt
 docs/evidence/m82/CHANGED_FILES.txt
+docs/evidence/m82/CONTINUITY_NOTE.md
 docs/evidence/m82/EVIDENCE_SHA256.txt
 docs/evidence/m82/HUMAN_CHECKLIST.md
 docs/evidence/m82/REPRODUCE.md
