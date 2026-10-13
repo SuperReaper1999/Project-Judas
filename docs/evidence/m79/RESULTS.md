@@ -1,7 +1,11 @@
 # M79 focused Linux handoff — 2026-10-13
 
 Starting Experimental: `e49099e37820c5cf97cf0fb123cbf8b303c3d751`.
-Human validation **pending**. Stable/main remain at the branch-split baseline.
+Human validation **accepted by the operator on 2026-10-13** for implementation
+`0a89226f6f91a9dc1ce18ba83cb0f66f820a30b8`, after desktop demonstration.
+The watch-only export used timed ordinary project controls for overload and
+support removal, with scene reload every 40 seconds; engine/source assets were
+unchanged. Stable/main remain at the branch-split baseline.
 
 ## Implemented scope
 
@@ -116,7 +120,8 @@ uncompressed hashes. Protected historical failures were not modified.
 
 Windows VM `win10` was checked and is shut off. Native M79 Windows compilation and
 functional smoke **not run**, outstanding and nonblocking; no Windows pass claimed.
-Linux is the acceptance platform. No Stable promotion or human validation claimed.
+Linux is the acceptance platform. Operator human acceptance is recorded above;
+Windows validation remains outstanding. No Stable promotion performed.
 
 Brittle section resultants, rigid authored boxes, ideal world pins; torsion and
 transverse shear are approximations. No FEM, fatigue, fracture-energy accounting,
@@ -147,5 +152,6 @@ separate processes. Radial mode uses `projects/structural_lab/Scenes/radial.juda
 `export-smoke.txt` runs through JUDAS_TEST_SCRIPT; its screenshots go to `/tmp`.
 Editor automation used a copied project so the tracked authored scene was preserved.
 
-Commit-ready for Experimental on focused Linux evidence. Human checklist remains
-pending; these receipts do not promote Stable or close unrelated audit limitations.
+Checkpointed on Experimental with focused Linux evidence and subsequent operator
+human acceptance. This does not close outstanding Windows or unrelated audit
+limitations, or promote Stable.

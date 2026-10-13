@@ -1,6 +1,6 @@
 # M79 — practical load-driven structures
 
-Current implementation on Experimental; **human validation pending**. This is an
+Current implementation on Experimental; **human validated by the operator on 2026-10-13**. This is an
 optional extension of M63 fracture, not a second structural physics solver.
 
 ## Ownership and authoring
