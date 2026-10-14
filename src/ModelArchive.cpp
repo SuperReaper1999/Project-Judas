@@ -93,9 +93,10 @@ bool VerifyImportedModelFresh(const std::string& root,const std::string& path,st
  auto j=Json::parse(record);auto base=std::filesystem::weakly_canonical(root);
  auto owned=[&](const std::string& p){auto file=std::filesystem::weakly_canonical(base/p);auto relative=file.lexically_relative(base);if(relative.empty()||relative.is_absolute()||*relative.begin()=="..")throw std::runtime_error("import record outside project");return file;};
  // Terrain provenance is authoring/export-only. Painting keeps geometry hashes stable.
- if(j.value("kind",std::string())=="terrain"){
+ if(j.value("kind",std::string())=="terrain"||j.value("kind",std::string())=="volume-terrain"){
+ const bool volume=j.value("kind",std::string())=="volume-terrain";
   auto receiptPath=owned(j.at("receipt"));if(!std::filesystem::is_regular_file(receiptPath)||std::filesystem::file_size(receiptPath)>1024*1024)throw std::runtime_error("missing/bounded terrain cook receipt");
-  std::ifstream file(receiptPath);auto receipt=Json::parse(file,[](int depth,Json::parse_event_t,const Json&){if(depth>=16)throw std::runtime_error("terrain receipt nesting bound");return true;});if(receipt.at("format")!="JudasTerrainCook"||receipt.at("version")!=1||receipt.at("revision")!="M75-1")throw std::runtime_error("terrain cook revision; recook before export");
+  std::ifstream file(receiptPath);auto receipt=Json::parse(file,[](int depth,Json::parse_event_t,const Json&){if(depth>=16)throw std::runtime_error("terrain receipt nesting bound");return true;});if(receipt.at("format")!=(volume?"JudasVolumeTerrainCook":"JudasTerrainCook")||receipt.at("version")!=1||receipt.at("revision")!=(volume?"M84-1":"M75-1"))throw std::runtime_error("terrain cook revision; recook before export");
   for(const char* group:{"inputs","products"}){if(receipt.at(group).size()>16)throw std::runtime_error("terrain receipt bounds");for(auto it=receipt.at(group).begin();it!=receipt.at(group).end();++it){std::string digest;if(!SceneFingerprintSha256File(owned(it.key()).string(),digest,error)||digest!=it.value())throw std::runtime_error("stale terrain source/product: "+it.key()+"; save and recook before export");}}
   error.clear();return true;
  }

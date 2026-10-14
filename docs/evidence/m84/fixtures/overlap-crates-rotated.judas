@@ -1,0 +1,594 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Dig Lab - arbitrarily rotated terrain and gravity",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.16,
+        0.17,
+        0.19
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Editable volumetric rock / select then View > Volumetric terrain",
+        "fields": {
+          "position": [
+            -2.6591842,
+            3.9168096,
+            1.6085216
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.52,
+            0.43,
+            0.32
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "457b2a103bb193731760653e57080873",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "triangle-mesh"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.collision-asset": "2bac78442c6fad3e6313ae32895f5678",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Uniform lab gravity",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "box"
+            },
+            "halfExtents": [
+              16,
+              12,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Ordinary script-driven terrain traveller",
+        "fields": {
+          "motor.enabled": true,
+          "motor.radius": 0.3,
+          "motor.halfHeight": 0.6,
+          "motor.offset": [
+            0,
+            0,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 80,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "ui.asset": "12a0688c2d345b907bec3326c74b2550",
+          "ui.name": "terrain_lab",
+          "ui.enabled": true,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "500075e4a6da9cdff9c79cd0d29c8e16",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "position": [
+            5.0850754,
+            0.29410437,
+            12.042238
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 20,
+        "name": "Ordinary dynamic crate 0",
+        "fields": {
+          "position": [
+            1.7451591,
+            -0.39099902,
+            6.945613
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 21,
+        "name": "Ordinary dynamic crate 1",
+        "fields": {
+          "position": [
+            0.9745525,
+            0.28901055,
+            4.0158086
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 22,
+        "name": "Ordinary dynamic crate 2",
+        "fields": {
+          "position": [
+            0.20394576,
+            0.9690201,
+            1.0860046
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 23,
+        "name": "Ordinary dynamic crate 3",
+        "fields": {
+          "position": [
+            -0.56666094,
+            1.6490297,
+            -1.8437995
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 85,
+        "name": "Advisory terrain navigation",
+        "fields": {
+          "nav.surface.asset": "a041d947b13653037b8278fa936d8865",
+          "nav.surface.cellHeight": "0.100000001",
+          "nav.surface.cellSize": "0.200000003",
+          "nav.surface.enabled": "1",
+          "nav.surface.halfExtents": "24 12 24",
+          "nav.surface.includeDynamic": "0",
+          "nav.surface.minRegion": "2",
+          "nav.surface.profile": "0",
+          "nav.surface.simplification": "1.29999995",
+          "nav.surface.sources": "18446744073709551615",
+          "nav.surface.tileSize": "32",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 70,
+        "name": "Approach apron / ordinary rigid geometry",
+        "fields": {
+          "position": [
+            0.15955105,
+            -0.23500858,
+            -0.0965113
+          ],
+          "rotation": [
+            0.921061,
+            0.10407643,
+            0.20815286,
+            0.31222928
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            15,
+            0.3,
+            15
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.19,
+            0.25,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            15,
+            0.3,
+            15
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.8,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    ]
+  }
+}

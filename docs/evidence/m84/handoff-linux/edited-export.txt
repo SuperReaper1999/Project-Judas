@@ -1,0 +1,30 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Volumetric Terrain Lab (/tmp/judas-m84-edited-proof-package/game.judasproj)
+Scene: Dig Lab - caves, tunnel and enclosed pocket (/tmp/judas-m84-edited-proof-package/Scenes/cave.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS actual editor-excavated pocket replaces old solid-front collision
+PASS ordinary project has no missing/malformed asset registration
+PASS volume uses normal cooked static collision rather than hidden heightfield
+PASS actual rendered cave screenshot
+TRAVELLER local=-0.003,-3.781,-2.037 supported=1
+PASS JS-driven character enters and walks through real cave
+PASS actual overhang collision exists above the player
+PASS actual rendered cave screenshot
+script asset=500075e4a6da9cdff9c79cd0d29c8e16 entity=10 slot=1 update: TypeError: spawn: missing or wrong-type prefab asset: ca7848d55e08f6bb5a042f38dbc8a311
+    at __judas (native)
+    at call (judas:2:51)
+    at spawnPrefab (judas:87:83)
+    at update (Assets/scripts/controller.js:25:209)
+
+SCRIPT TypeError: spawn: missing or wrong-type prefab asset: ca7848d55e08f6bb5a042f38dbc8a311
+    at __judas (native)
+    at call (judas:2:51)
+    at spawnPrefab (judas:87:83)
+    at update (Assets/scripts/controller.js:25:209)
+
+FAIL public game script remains healthy
+PASS ordinary application startup/shutdown
+PERF fixed_p95_ms=4.666498 fixed_max_ms=6.462377 render_p95_ms=0.761055 frame_p95_ms=6.527688 frames=179
+PERF interaction_fixed_p95_ms=0.000000 interaction_fixed_max_ms=0.000000 frames=0
+SUMMARY case=cave mode=edited checks=9 failures=1

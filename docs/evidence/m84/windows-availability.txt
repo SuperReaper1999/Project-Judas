@@ -1,0 +1,4 @@
+ Id   Name    State
+------------------------
+ -    win10   shut off
+

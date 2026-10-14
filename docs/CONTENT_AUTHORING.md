@@ -101,3 +101,7 @@ and world-manifest region scenes must remain included; excluding either fails ex
 Registered runtime assets remain available for dynamic loading. This is an explicit
 scene policy, not JavaScript dependency analysis. The editor Project panel authors
 these settings through the normal project serializer.
+
+## Volumetric terrain sources
+
+[Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md) adds project-owned `.judasvolume` scalar sources and a dedicated editor/CLI authoring workflow. It cooks ordinary models/colliders and uses the existing navigation dependency, prefab, save, region and export paths. It is not a runtime brush API or a new asset pipeline.

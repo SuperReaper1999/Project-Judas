@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "seconds": 4.15232892000131,
+  "package": "/tmp/Judas_M60_M84VolumeAcceptedCandidate20261014",
+  "cwd": "/tmp",
+  "installation_read_only": true,
+  "closed_own_window": "0x1e0000a",
+  "package_bytes": 62364137,
+  "checks": "normal standalone project startup, no script/asset fault, clean own-window close",
+  "human_listening": "NOT CLAIMED"
+}

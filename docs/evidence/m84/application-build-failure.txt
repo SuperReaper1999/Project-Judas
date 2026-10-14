@@ -1,0 +1,31 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[  0%] Built target judas_quickjs
+[  5%] Built target judas_glad
+[  5%] Built target judas_profiler
+[ 11%] Built target judas_navigation_backend
+[ 29%] Built target freetype
+[ 35%] Built target judas_materials
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_volume_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_volume_application_tests.dir/tests/VolumeTerrainApplicationTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_volume_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_volume_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_volume_application_tests.dir/src/TestHarness.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/VolumeTerrainApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/VolumeTerrainApplicationTests.cpp:28:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   28 |   if(!started)return;++tick;auto placement=w.Physics().GetTransform(w.RuntimeBody(1));auto local=glm::inverse(placement.rotation)*(motor->position-placement.position);
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/tests/VolumeTerrainApplicationTests.cpp:28:22: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   28 |   if(!started)return;++tick;auto placement=w.Physics().GetTransform(w.RuntimeBody(1));auto local=glm::inverse(placement.rotation)*(motor->position-placement.position);
+      |                      ^~
+/home/conner/Documents/GitHub/Project-Judas/tests/VolumeTerrainApplicationTests.cpp:35:84: error: operands to ‘?:’ have different types ‘std::optional<RegionStatus>’ and ‘std::nullptr_t’
+   35 |   if(phase>=3){auto* stream=w.SceneControl()->Streaming(w,error);auto status=stream?stream->Status(region):nullptr;if(status&&status->state=="failed"){std::printf("REGION_ERROR %s\n",status->error.c_str());Check(false,"volume region remains healthy");complete=true;w.UI().RequestQuit();return;}
+      |                                                                              ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_volume_application_tests.dir/build.make:79: CMakeFiles/judas_volume_application_tests.dir/tests/VolumeTerrainApplicationTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:11326: CMakeFiles/judas_volume_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11333: CMakeFiles/judas_volume_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:3504: judas_volume_application_tests] Error 2

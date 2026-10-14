@@ -44,6 +44,7 @@ public:
 private:
     EditorMilestoneNotice m_milestoneNotice;
     std::unique_ptr<struct TerrainEditor> m_terrain;
+    std::unique_ptr<struct VolumeTerrainEditor> m_volumeTerrain;
     std::unique_ptr<struct ModTools> m_modTools;
     std::vector<Scene> m_regionPreview;
     std::string m_regionPreviewKey;

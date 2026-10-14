@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "2bac78442c6fad3e6313ae32895f5678"
+type collision
+source "volume-terrain-authoring"

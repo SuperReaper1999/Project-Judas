@@ -1,0 +1,74 @@
+PASS bounded solid source
+PASS exact versioned source roundtrip
+PASS solid outer boundary rejected
+PASS nonfinite sample rejected
+PASS fractional resolution fails rather than narrowing
+PASS allocation bound checked before grid allocation
+PASS minimum supported grid creates a genuine nonempty solid
+PASS minimum supported grid creates a genuine nonempty solid
+PASS largest editor-created solid fits the normal collision triangle budget
+PASS initial solid extraction
+PASS initial solid collision cook
+PASS negative excavation control is physically blocked before carving
+PASS foreign output directory rejected
+PASS invalid brush cannot mutate source
+PASS fork has independent stable products
+PASS 3D remove gesture excavates through solid
+PASS one gesture undo
+PASS gesture redo
+PASS cancel restores entire gesture
+PASS add solid restores tunnel obstruction
+PASS adding material is undoable
+PASS arc-length gesture independent of pointer sample frequency
+PASS enclosed underground pocket can be authored explicitly
+PASS 
+PASS deterministic indexed extraction
+PASS cancelled extraction does not publish partial output
+PASS 
+PASS closed outward solid, cavity and tunnel mesh has no open collision seam
+PASS grid-aligned zero-isovalue sphere subtraction
+PASS zero-sample geometry cooks without duplicate degenerates
+PASS zero-sample extraction has closed collision topology
+PASS actual tunnel permits full through-ray under arbitrary rigid placement
+PASS real floor and overhanging ceiling enclose air under rotated coordinates
+PASS enclosed pocket has real collision walls
+MOTOR endpoint=-0.00827599,-1.47025,1.50106 supported=1
+PASS collision-aware character travels on the tunnel floor
+PASS original accelerating route leaves the finite cave rather than receiving a hidden floor
+BALL endpoint=0.416784,-2.10194,-0.0980721 speed=1.50512 velocity=1.49596,0.151772,-0.0667265
+PASS ordinary rolling sphere receives actual excavated-floor contact impulses
+PASS actual tunnel permits full through-ray under arbitrary rigid placement
+PASS real floor and overhanging ceiling enclose air under rotated coordinates
+PASS enclosed pocket has real collision walls
+MOTOR endpoint=-0.00831342,-1.47024,1.50116 supported=1
+PASS collision-aware character travels on the tunnel floor
+PASS original accelerating route leaves the finite cave rather than receiving a hidden floor
+BALL endpoint=0.416766,-2.10195,-0.0981032 speed=1.50512 velocity=0.96401,1.04825,-0.487064
+PASS ordinary rolling sphere receives actual excavated-floor contact impulses
+PASS 
+PASS 
+PASS normal mesh/collider registration
+PASS source/product receipt verifies export freshness
+PASS concurrent product replacement retains external edit and rejects stale publication
+PASS cancelled cook preserves last good products
+PASS unsaved-to-products source changes fail freshness
+PASS stale captured source cannot cook
+PASS saved edit recooks exact real collision
+PASS reload preserves exact edit
+PASS concurrent external source edits are not overwritten
+PASS 
+PASS Recast bakes actual underground and top-surface triangles
+PASS 
+PASS Detour finds an actual path through the cave
+PASS 
+PASS collision/geometry edits invalidate old navigation
+PASS ordinary navigation rebuild consumes updated volume
+PASS 3D smoothing changes surface density and retains valid air boundary
+PASS volume authors through existing prefab infrastructure
+PASS ordinary volume prefab saved
+PASS normal prefab asset registration
+PASS independent prefab instance keeps normal cooked collision reference
+PASS scene persistence preserves ordinary volume identities
+PASS navigation volume extraction supports arbitrary local frames
+PERF samples=27225 triangles=39048 extract_ms=24.4165 cook_ms=441.106
+SUMMARY 68 checks PASS

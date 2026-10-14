@@ -1,0 +1,55 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[  0%] Built target judas_quickjs
+[ 15%] Built target freetype
+[ 20%] Built target judas_glad
+[ 20%] Built target judas_profiler
+[ 25%] Built target judas_navigation_backend
+[ 30%] Built target judas_audio_backend
+[ 30%] Built target judas_ufbx
+[ 30%] Built target harfbuzz
+[ 35%] Built target judas_imgui
+[ 35%] Built target judas_materials
+[ 85%] Built target judas_engine
+[ 85%] Built target judas_model_import
+[ 90%] Built target judas_navigation_baker
+[ 95%] Built target judas_world_authoring
+[ 95%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/VolumeTerrainTools.cpp.o
+[ 95%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  0%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_glad
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_profiler
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_materials
+[ 35%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[100%] Built target judas_volume_application_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 31%] Built target judas_navigation_backend
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target judas_materials
+[ 37%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Built target judas_export
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  0%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas

@@ -1,0 +1,17 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Asset problem: /tmp/judas-m84-application-project/Assets/world/terrain.judasworld.judasmeta: /tmp/judas-m84-application-project/Assets/world/terrain.judasworld.judasmeta: missing id, type or source
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Volumetric Terrain Lab (/tmp/judas-m84-application-project/volume_terrain_lab.judasproj)
+Scene: Dig Lab - caves, tunnel and enclosed pocket (/tmp/judas-m84-application-project/Scenes/cave.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS volume uses normal cooked static collision rather than hidden heightfield
+PASS actual rendered cave screenshot
+TRAVELLER local=-0.026,-3.779,-0.279 supported=1
+PASS JS-driven character enters and walks through real cave
+PASS actual overhang collision exists above the player
+PASS actual rendered cave screenshot
+FAIL normal region request schedules volume assets
+FAIL bounded application deadline
+PASS ordinary application startup/shutdown
+PERF fixed_p95_ms=10.466789 fixed_max_ms=17.164277 render_p95_ms=0.892101 frame_p95_ms=11.735202 frames=179
+SUMMARY case=cave mode=watch checks=8 failures=2

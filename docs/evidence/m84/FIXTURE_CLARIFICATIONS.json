@@ -1,0 +1,76 @@
+{
+  "original_accelerating_motor": {
+    "start_local": [
+      0,
+      -1.3,
+      6
+    ],
+    "velocity_increment_per_step": [
+      0,
+      0,
+      -0.06
+    ],
+    "steps": 180,
+    "dt": 0.016666666666666666,
+    "observed_local": [
+      -0.0145264,
+      -2.15216,
+      -10.2509
+    ],
+    "supported": false,
+    "classification": "route leaves the bounded source; retained unchanged as explicit negative control; no engine physics or historical test changed"
+  },
+  "original_sphere_settling_check": {
+    "radius": 0.25,
+    "mass": 2,
+    "start_local": [
+      0.5,
+      0,
+      0
+    ],
+    "steps": 180,
+    "dt": 0.016666666666666666,
+    "gravity_local": [
+      0,
+      -9.81,
+      0
+    ],
+    "original_speed_threshold": 0.5,
+    "observed_speed": 1.50512,
+    "observed_velocity": [
+      1.49596,
+      0.151772,
+      -0.0667265
+    ],
+    "observed_position": [
+      0.416784,
+      -2.10194,
+      -0.0980721
+    ],
+    "classification": "sphere is rolling on curved floor; final test checks actual terrain contact impulse and position, not an unjustified rest claim; original failed measurement preserved"
+  },
+  "rotated_cluttered_motor": {
+    "motion": "W held tick60..240; exact60Hz",
+    "original_check_tick": 260,
+    "floor_distance": 0.92576021,
+    "gravity_local": [
+      2e-06,
+      -9.81,
+      -1e-06
+    ],
+    "support_probe_body": 20,
+    "support_probe_normal_local": [
+      -0.772604,
+      0,
+      -0.634888
+    ],
+    "support_probe_distance": 0,
+    "classification": "existing motor first-hit support sweep is masked by overlapping crate side; not repaired or claimed fixed; old scenes/probes preserved; current authoring moves initial props aside and exercises real thrown-body interaction separately"
+  },
+  "editor_activation_followup": {
+    "classification": "automation profiler overlay covered later viewport clicks; disable that overlay only in the M84 editor test, as the existing M75 test already does; actual app pointer ownership was correct"
+  },
+  "export_followup": {
+    "classification": "generator omitted dynamically referenced prefab from runtimeAssets; add the ordinary explicit project declaration; exporter/runtime unchanged"
+  }
+}

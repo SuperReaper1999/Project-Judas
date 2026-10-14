@@ -1,0 +1,22 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[  5%] Built target judas_app_icon
+[  5%] Built target judas_glad
+[ 11%] Built target judas_navigation_backend
+[ 11%] Built target judas_profiler
+[ 27%] Built target freetype
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_materials
+[ 33%] Built target harfbuzz
+[ 88%] Built target judas_engine
+[ 94%] Built target judas_navigation_baker
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_volume_terrain_tests.dir/tests/VolumeTerrainTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/VolumeTerrainTests.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/VolumeTerrainTests.cpp:24:929: error: ‘TriangleMesh’ is not a member of ‘Shape’
+   24 |  t=d.source;brush.radius=1.4f;Check(ApplyVolumeBrush(t,{-4,2,0},brush,e),"enclosed underground pocket can be authored explicitly");MeshData mesh,second;auto start=std::chrono::steady_clock::now();Check(BuildVolumeTerrainMesh(t,mesh,e),e);double extract=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();Check(BuildVolumeTerrainMesh(t,second,e)&&mesh.indices==second.indices&&mesh.vertices.size()==second.vertices.size(),"deterministic indexed extraction");Check(!BuildVolumeTerrainMesh(t,second,e,[]{return true;}),"cancelled extraction does not publish partial output");CollisionAsset cooked;Check(CookCollision(mesh,{},cooked,e),e);Check(!cooked.faces.empty()&&std::all_of(cooked.faces.begin(),cooked.faces.end(),[](const auto& f){return f.adjacent[0]>=0&&f.adjacent[1]>=0&&f.adjacent[2]>=0;}),"closed outward solid, cavity and tunnel mesh has no open collision seam");auto shape=Shape::TriangleMesh(std::make_shared<CollisionAsset>(cooked));
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_volume_terrain_tests.dir/build.make:79: CMakeFiles/judas_volume_terrain_tests.dir/tests/VolumeTerrainTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:11281: CMakeFiles/judas_volume_terrain_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11288: CMakeFiles/judas_volume_terrain_tests.dir/rule] Error 2
+gmake: *** [Makefile:3491: judas_volume_terrain_tests] Error 2

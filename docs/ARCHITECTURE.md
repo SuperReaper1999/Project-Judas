@@ -9765,3 +9765,23 @@ Default content keeps its single-step route. Finite material saves use participa
 retained families stage their generated bodies and remap identities before publication.
 The dense implicit-node experiment is archived, not part of the runtime build.
 See [current equations, authoring, limitations and lab](M83_COARSE_CRASH.md).
+
+## M84 bounded volumetric terrain authoring
+
+`VolumeTerrainSource` stores a bounded, asset-local implicit solid (negative material,
+positive air), separate from runtime physics and gravity. Add/remove/smooth gestures
+operate on author-owned source drafts with bounded undo and conflict-checked save.
+Shared tetrahedral extraction generates indexed surfaces with outward collision
+winding. The existing model archive, collision cooker, asset IDs and publication
+transaction produce immutable ordinary models/colliders and source/product receipts.
+Editor previews/cooks use the existing job pool; Renderer alone uploads/draws meshes.
+
+There is no new runtime density grid, terrain solver or JudasJS brush namespace.
+Existing static triangle geometry supplies real cave/overhang contacts and queries.
+Recast consumes those same surfaces through the normal navigation dependency path.
+Scene/prefab, full save, retained regions and export preserve ordinary resource
+references. Authoring sources are not required by packaged games. Unit-scale rigid
+placement and local navigation frames preserve arbitrary-gravity independence.
+This is editable finite-volume world authoring, not seamless LOD chunks, runtime
+excavation, material-mass accounting or soil dynamics.
+See [M84 workflow, numerical representation, limits and lab](M84_VOLUMETRIC_TERRAIN.md).

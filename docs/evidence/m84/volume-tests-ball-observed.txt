@@ -1,0 +1,28 @@
+PASS bounded solid source
+PASS exact versioned source roundtrip
+PASS solid outer boundary rejected
+PASS nonfinite sample rejected
+PASS fractional resolution fails rather than narrowing
+PASS allocation bound checked before grid allocation
+PASS fork has independent stable products
+PASS 3D remove gesture excavates through solid
+PASS one gesture undo
+PASS gesture redo
+PASS cancel restores entire gesture
+PASS add solid restores tunnel obstruction
+PASS adding material is undoable
+PASS arc-length gesture independent of pointer sample frequency
+PASS enclosed underground pocket can be authored explicitly
+PASS 
+PASS deterministic indexed extraction
+PASS cancelled extraction does not publish partial output
+PASS 
+PASS closed outward solid, cavity and tunnel mesh has no open collision seam
+PASS actual tunnel permits full through-ray under arbitrary rigid placement
+PASS real floor and overhanging ceiling enclose air under rotated coordinates
+PASS enclosed pocket has real collision walls
+MOTOR endpoint=-0.00827599,-1.47025,1.50106 supported=1
+PASS collision-aware character travels on the tunnel floor
+PASS original accelerating route leaves the finite cave rather than receiving a hidden floor
+BALL endpoint=0.416784,-2.10194,-0.0980721 speed=1.50512
+FAIL ordinary dynamic body rests on excavated geometry after 26 checks

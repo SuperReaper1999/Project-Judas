@@ -1,0 +1,2 @@
+PERF grid=33 samples=35937 radius=0.1 path=2m stroke_ms=13.123010 end_ms=3.214030
+PERF grid=65 samples=274625 radius=0.1 path=2m stroke_ms=95.979300 end_ms=25.435154

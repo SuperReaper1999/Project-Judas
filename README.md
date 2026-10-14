@@ -17,20 +17,29 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current Experimental — M83 candidate; human review pending
+## Current Experimental — M84 candidate; human review pending
 
-[M83 coupled mechanical damage](docs/M83_MECHANICAL_DAMAGE.md) connects real
-elastic/plastic material geometry, finite-strength body mounts and explicit
-transmission prerequisites. The editable [Mechanical Damage Lab](projects/damage_lab/damage_lab.judasproj)
-starts with two wheel-driven cars hitting solid walls, then offers the original
-material/strength, bearing misalignment and drive-loss fixtures.
-Project JavaScript supplies loads, driver controls and the watch tour. Linux
-validation and limits are recorded in [M83 evidence](docs/evidence/m83/RESULTS.md),
-the [crash follow-up](docs/evidence/m83-crash-followup/RESULTS.md) and
-[finite-triangle contact correction](docs/evidence/m83-collision-followup/INVESTIGATION.md).
-This does not promote Experimental to main or certify Windows/human acceptance.
+[M84 volumetric terrain authoring](docs/M84_VOLUMETRIC_TERRAIN.md) adds editable
+3D solid sources, add/remove/smooth brushes and real cave/overhang mesh and collision.
+The [editable Dig Lab](projects/volume_terrain_lab/volume_terrain_lab.judasproj)
+uses ordinary CharacterMotor gameplay, navigation, saves, retained regions and export.
+This is authoring/edit-and-cook functionality, not a live gameplay digging API.
+Focused Linux results and remaining limits are in [M84 evidence](docs/evidence/m84/REPORT.md).
+Experimental is not promoted automatically; human and Windows M84 validation are pending.
 
-## Latest accepted release — M82 human validated
+## Latest accepted release — M83 physical crash sections
+
+The operator accepted the tested coarse-section crash lab and promoted
+`18413e3bde8c61f79339a37fd40ee32400e110d1` to main on 2026-10-14.
+[M83 practical physical sections](docs/M83_COARSE_CRASH.md) use real bodies and
+finite elastic/plastic connections, moving wheel mounts and broken drive paths.
+The [crash lab](projects/coarse_crash_lab/coarse_crash_lab.judasproj) and
+[correction report](docs/evidence/m83-structural-corrective/FINAL_REPORT.md)
+preserve the numerical research, passing four-car workload, tighter single-car
+budget misses and Windows limitations. This acceptance does not certify the
+retired implicit-node experiment or every performance/platform target.
+
+## Previous accepted mechanics — M82 human validated
 
 [M82 modular powertrains](docs/M82_POWERTRAINS.md) adds physical rotational
 shafts, torque sources, gearing, clutches, open differentials and brakes, with

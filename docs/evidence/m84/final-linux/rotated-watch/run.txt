@@ -1,0 +1,26 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Volumetric Terrain Lab (/tmp/judas-m84-clear-application-final/volume_terrain_lab.judasproj)
+Scene: Dig Lab - arbitrarily rotated terrain and gravity (/tmp/judas-m84-clear-application-final/Scenes/rotated.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary project has no missing/malformed asset registration
+PASS volume uses normal cooked static collision rather than hidden heightfield
+PASS actual rendered cave screenshot
+TRAVELLER local=-0.003,-3.781,-2.037 supported=1
+PASS JS-driven character enters and walks through real cave
+PASS actual overhang collision exists above the player
+PASS actual rendered cave screenshot
+PASS public project JS spawns and throws an ordinary rigid prefab inside the cave
+PASS script-thrown physical body receives real cave contact without a helper floor
+PASS normal region request schedules volume assets
+PASS streamed region exposes actual retained volume floor
+PASS volume region permits lossless suspension
+PASS suspended collision actor is retired
+PASS fresh streamed identity retains exact cooked volume edits
+PASS reloaded streamed floor remains real collision
+PASS normal scene reload preserves volume asset and resets gameplay
+PASS actual rendered cave screenshot
+PASS ordinary application startup/shutdown
+PERF fixed_p95_ms=9.649664 fixed_max_ms=14.384483 render_p95_ms=0.651495 frame_p95_ms=10.380765 frames=179
+PERF interaction_fixed_p95_ms=9.105142 interaction_fixed_max_ms=10.240001 frames=160
+SUMMARY case=rotated mode=watch checks=17 failures=0

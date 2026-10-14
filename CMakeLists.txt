@@ -338,6 +338,7 @@ add_executable(judas_editor
     src/editor/RetargetPanel.cpp
     src/editor/WorldTools.cpp
     src/editor/TerrainTools.cpp
+    src/editor/VolumeTerrainTools.cpp
     src/editor/ModTools.cpp
     src/editor/ProfilerView.cpp
     src/editor/EditorWidgets.cpp
@@ -1436,7 +1437,7 @@ add_executable(judas_world_building_tests tests/WorldBuildingTests.cpp src/edito
 target_link_libraries(judas_world_building_tests PRIVATE judas_engine)
 judas_warnings(judas_world_building_tests)
 
-add_library(judas_world_authoring STATIC src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/ModAuthoring.cpp)
+add_library(judas_world_authoring STATIC src/authoring/NavigationDependencies.cpp src/authoring/ContentReferences.cpp src/authoring/WorldBuilder.cpp src/authoring/AuthoringDocument.cpp src/authoring/SkeletonAuthoring.cpp src/authoring/RecipePreview.cpp src/authoring/TerrainAuthoring.cpp src/authoring/VolumeTerrain.cpp src/authoring/ModAuthoring.cpp)
 target_include_directories(judas_world_authoring PUBLIC src/authoring)
 target_link_libraries(judas_world_authoring PUBLIC judas_engine judas_navigation_baker)
 judas_warnings(judas_world_authoring)
@@ -1702,3 +1703,17 @@ judas_warnings(judas_section_material_tests -Wpedantic)
 add_executable(judas_coarse_crash_application_tests tests/CoarseCrashApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_coarse_crash_application_tests PRIVATE judas_engine)
 judas_warnings(judas_coarse_crash_application_tests -Wpedantic)
+
+# M84 bounded editable volumes cook into the existing runtime asset pipeline.
+add_executable(judas_volume_author tools/VolumeTerrainAuthor.cpp)
+target_link_libraries(judas_volume_author PRIVATE judas_world_authoring)
+judas_warnings(judas_volume_author)
+add_executable(judas_volume_terrain_tests tests/VolumeTerrainTests.cpp)
+target_link_libraries(judas_volume_terrain_tests PRIVATE judas_world_authoring judas_navigation_baker)
+judas_warnings(judas_volume_terrain_tests)
+add_executable(judas_volume_application_tests tests/VolumeTerrainApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_volume_application_tests PRIVATE judas_engine)
+judas_warnings(judas_volume_application_tests)
+add_executable(judas_volume_performance_tests tests/VolumeTerrainPerformanceTests.cpp)
+target_link_libraries(judas_volume_performance_tests PRIVATE judas_world_authoring)
+judas_warnings(judas_volume_performance_tests)

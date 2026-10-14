@@ -1,0 +1,231 @@
+JudasScene 3
+settings
+  name "Dig Lab - caves, tunnel and enclosed pocket"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 1000
+end
+
+object 1 "Editable volumetric rock / select then View > Volumetric terrain"
+  position 0 5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 12 0.15 8
+  render.radius 0.5
+  render.color 0.52 0.43 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "457b2a103bb193731760653e57080873"
+  render.texture-asset ""
+  body static triangle-mesh
+  body.half-extents 12 0.15 8
+  body.radius 0.5
+  body.terrain ""
+  body.collision-asset "2bac78442c6fad3e6313ae32895f5678"
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Uniform lab gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 100 100 100
+end
+
+object 10 "Ordinary script-driven terrain traveller"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.55
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  ui.asset "12a0688c2d345b907bec3326c74b2550"
+  ui.name "terrain_lab"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "500075e4a6da9cdff9c79cd0d29c8e16"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 1.4 13
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 20 "Ordinary dynamic crate 0"
+  position -1.2 1 7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.74 0.42 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 8
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 21 "Ordinary dynamic crate 1"
+  position -0.4 1 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.74 0.42 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 8
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 22 "Ordinary dynamic crate 2"
+  position 0.4 1 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.74 0.42 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 8
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23 "Ordinary dynamic crate 3"
+  position 1.2 1 -2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.74 0.42 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 8
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 84 "Advisory terrain navigation"
+  nav.surface.asset "894243c195b9caafcb37af697a7ac136"
+  nav.surface.cellHeight "0.100000001"
+  nav.surface.cellSize "0.200000003"
+  nav.surface.enabled "1"
+  nav.surface.halfExtents "24 12 24"
+  nav.surface.includeDynamic "0"
+  nav.surface.minRegion "2"
+  nav.surface.profile "0"
+  nav.surface.simplification "1.29999995"
+  nav.surface.sources "18446744073709551615"
+  nav.surface.tileSize "32"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 70 "Approach apron / ordinary rigid geometry"
+  position 0 -0.3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 15 0.3 15
+  render.radius 0.5
+  render.color 0.19 0.25 0.22
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 15 0.3 15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 8
+  body.friction 0.8
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end

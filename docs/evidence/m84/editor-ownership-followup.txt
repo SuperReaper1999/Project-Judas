@@ -1,0 +1,28 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[M84 editor volume] PASS: real panel click opens selected volume and activates brush
+[M84 editor volume] PASS: button opened selected model's exact author-owned source
+[M84 editor volume] PASS: native viewport press removes real 3D material
+[M84 editor volume] PASS: release commits one volume gesture
+[M84 editor volume] PASS: one undo restores complete field
+[M84 editor volume] PASS: redo restores volumetric edit
+[M84 editor volume] PASS: add gesture changes material before cancellation
+[M84 editor volume] PASS: Escape restores in-flight volume gesture
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[M84 editor volume] PASS: focus loss commits an actually changed material gesture
+[M84 editor volume] PASS: one undo removes the focus-ended add gesture
+[M84 editor volume] PASS: save actual viewport volume edit
+[M84 editor volume] PASS: normal cook publishes edited model and physical collider
+[M84 editor volume] PASS: actual GL volume mesh agrees with edited field extraction
+[M84 editor volume] PASS: rebake navigation against edited cave geometry
+[M84 editor volume] PASS: save refreshed navigation reference
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m84/editor-ownership-followup.edit.png
+[editor autotest] edit frame: 6 draw calls, 55556 triangles, 359 debug lines
+[M84 editor volume] PASS: saved edited volume enters ordinary Play
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m84/editor-ownership-followup.play.png
+[editor autotest] play frame: 0 steps, step 0.171 ms, 7 bodies, 0 contacts, 9 draw calls, 110880 triangles, 1 shadow passes, 3 lights, 293 debug lines, 0 particles
+[editor autotest] resources: 1 meshes, 0 textures, 0 terrain meshes, hits 639, misses 4, failed 0, uploads 1, resident 15909816 bytes
+[editor autotest] jobs: 7 workers, 13 completed, 0 failed, 0 cancelled
+[M84 editor volume] PASS: Stop preserves saved 3D edit without stale gameplay state
+[M84 editor volume] failures 0
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

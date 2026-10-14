@@ -414,6 +414,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     if (ImGui::BeginMenu("View")) {
         ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
         ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
+        ImGui::MenuItem("Volumetric terrain - dig / build", nullptr, &state.showVolumeTerrain);
         ImGui::MenuItem("Local mods / game kits", nullptr, &state.showMods);
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);

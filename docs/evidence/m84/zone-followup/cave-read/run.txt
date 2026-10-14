@@ -1,0 +1,12 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Volumetric Terrain Lab (/tmp/judas-m84-application-zone-final/volume_terrain_lab.judasproj)
+Scene: Dig Lab - caves, tunnel and enclosed pocket (/tmp/judas-m84-application-zone-final/Scenes/cave.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh process requests ordinary cave save
+PASS fresh-process actual physical endpoint restores before advancement
+PASS actual rendered cave screenshot
+PASS restored character continues on actual excavated floor
+PASS ordinary application startup/shutdown
+PERF fixed_p95_ms=0.000000 fixed_max_ms=0.000000 render_p95_ms=0.000000 frame_p95_ms=0.000000 frames=0
+SUMMARY case=cave mode=read checks=5 failures=0
