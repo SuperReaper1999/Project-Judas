@@ -11,6 +11,13 @@ int main(int argc,char** argv){
         DeformableAsset asset;std::string error,kind=argv[1];
         if(kind=="sheet"&&argc==8)asset=MakeDeformableSheet(std::stoul(argv[3]),std::stoul(argv[4]),std::stod(argv[5]),std::stod(argv[6]),std::stoul(argv[7]));
         else if((kind=="fracture"||kind=="fracture-rigid"||kind=="structure"||kind=="flex-structure")&&(argc==9||argc==12))asset=MakeFractureBlock({std::stoul(argv[3]),std::stoul(argv[4]),std::stoul(argv[5])},{std::stod(argv[6]),std::stod(argv[7]),std::stod(argv[8])},kind!="fracture"&&kind!="flex-structure");
+        else if(kind=="material-sections"&&(argc==10||argc==11)){
+            asset=MakeFractureBlock({std::stoul(argv[3]),std::stoul(argv[4]),std::stoul(argv[5])},{std::stod(argv[6]),std::stod(argv[7]),std::stod(argv[8])},true);
+            float strength=std::stof(argv[9]);if(!std::isfinite(strength)||strength<=0)throw std::runtime_error("positive material strength factor required");
+            asset.fracture->filterNeighbours=true;
+            for(const auto& p:asset.fracture->parts)asset.groups[p.key]=p.nodes;
+            for(auto& b:asset.fracture->bonds){auto& m=b.material;m.enabled=true;m.yieldForce=55000*strength;m.yieldTorque=9000*strength;m.hardeningForce=15000*strength;m.hardeningTorque=2000*strength;m.maximumTranslation=argc==11?std::stof(argv[10]):.38f;m.maximumAngle=.8f;}
+        }
         else if(kind=="partition"&&argc==4){std::ifstream source(argv[3]);std::string text{std::istreambuf_iterator<char>(source),{}};if(!source||!ImportFracturePartition(text,asset,error))throw std::runtime_error("partition import: "+error);}
         else if(kind=="block"&&argc==9)asset=MakeDeformableBlock({std::stoul(argv[3]),std::stoul(argv[4]),std::stoul(argv[5])},{std::stod(argv[6]),std::stod(argv[7]),std::stod(argv[8])});
         else if(kind=="cloth"&&(argc==4||argc==5)){MeshData mesh;if(!LoadModelMesh(argv[3],mesh,error)||!ImportDeformableCloth(mesh,asset,error))throw std::runtime_error(error);if(argc==5){asset.sourceAsset=argv[4];if(!SceneFingerprintSha256File(argv[3],asset.sourceFingerprint,error))throw std::runtime_error(error);}}

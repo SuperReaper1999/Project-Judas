@@ -1,0 +1,21 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual six-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=5 position=-0.003,0.631,90.020 speed=0.606 native_ms=0.543 broad_ms=0.027 narrow_ms=0.144 solver_ms=0.363 queries=92 iterations=92 events=0 contacts=0 pairs=22 plastic=0.000000
+STEP tick=20 position=0.004,0.382,90.003 speed=-0.023 native_ms=0.743 broad_ms=0.039 narrow_ms=0.209 solver_ms=0.486 queries=90 iterations=92 events=0 contacts=8 pairs=22 plastic=0.000000
+STEP tick=60 position=0.008,0.443,90.003 speed=0.007 native_ms=0.649 broad_ms=0.042 narrow_ms=0.167 solver_ms=0.433 queries=92 iterations=92 events=0 contacts=0 pairs=22 plastic=0.000000
+STEP tick=120 position=0.016,0.445,89.985 speed=0.021 native_ms=0.875 broad_ms=0.035 narrow_ms=0.282 solver_ms=0.549 queries=92 iterations=92 events=0 contacts=0 pairs=22 plastic=0.000000
+STEP tick=240 position=0.010,0.441,89.437 speed=2.015 native_ms=0.591 broad_ms=0.025 narrow_ms=0.200 solver_ms=0.357 queries=92 iterations=92 events=0 contacts=0 pairs=22 plastic=0.000000
+STEP tick=360 position=-0.708,0.443,77.414 speed=9.963 native_ms=0.612 broad_ms=0.027 narrow_ms=0.152 solver_ms=0.424 queries=92 iterations=92 events=0 contacts=0 pairs=22 plastic=0.000000
+STEP tick=480 position=-3.298,0.445,51.117 speed=14.727 native_ms=0.761 broad_ms=0.041 narrow_ms=0.225 solver_ms=0.454 queries=92 iterations=92 events=0 contacts=0 pairs=22 plastic=0.000000
+PASS rendered physical scene screenshot captured
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=509 physics_p95_ms=1.889151 physics_max_ms=11.123311 native_p95_ms=1.116633 frame_p95_ms=3.968241 frame_max_ms=13.086531 render_p95_ms=0.943047
+SUMMARY case=medium mode=support-control checks=5 failures=0

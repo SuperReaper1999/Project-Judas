@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "JointTypes.h"
 #include <string>
 #include <vector>
 #include <cstdint>
@@ -20,6 +21,7 @@ struct FractureBond {
     double area=1;
     // M79 optional authored strengths; zero inherits the family material.
     double tension=0,shear=0,compression=0;
+    JointMaterial material;
     // Derived area moments, never mutable solver state or serialized caches.
     glm::dmat3 sectionInverse{0};
     double polarMoment=0;
@@ -29,6 +31,8 @@ struct FractureBond {
 };
 struct FractureCook {
     bool rigid=false;
+    bool filterNeighbours=false; // Authored continuum partition: suppress intact edge/vertex neighbours.
+    std::vector<glm::uvec2> contactNeighbours; // Derived; distant self-collision remains ordinary.
     bool structural=false; // Opt-in section stress model; legacy cooks stay unchanged.
     double tension=10000,shear=10000,compression=0,compliance=1e-8;
     unsigned pieceBudget=256;
@@ -39,6 +43,8 @@ struct FractureCook {
     std::vector<unsigned> nodePart;
     void Save(SaveArchive&);
     void SaveStructural(SaveArchive&);
+    void SaveMaterials(SaveArchive&);
+    bool HasMaterials()const;
 };
 bool PrepareFractureCook(DeformableAsset&,std::string&);
 bool ImportFracturePartition(const std::string&,DeformableAsset&,std::string&);
@@ -50,6 +56,8 @@ struct FractureState {
     std::vector<uint8_t> broken,removed,pending,pendingRemoved;
     std::vector<glm::dvec3> multipliers;
     std::vector<double> tensionDemand,shearDemand;
+    std::vector<glm::vec3> plasticTranslation,plasticRotation;
+    std::vector<double> plasticWork;
     std::vector<unsigned> component;
     std::vector<unsigned> committed;
     std::string error;

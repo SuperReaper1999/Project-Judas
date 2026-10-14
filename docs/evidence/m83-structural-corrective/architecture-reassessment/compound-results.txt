@@ -1,0 +1,11 @@
+COMPOUND_STAGE cars=1 children_each=13 dynamic_bodies=1 mass_each_kg=576 state=rest rotated=0 stage=rest samples=600 median_ms=0.000986 p95_ms=0.427371 max_ms=5.762405 finite=1 first_wall_contact_step=0
+COMPOUND_STAGE cars=1 children_each=13 dynamic_bodies=1 mass_each_kg=576 state=impact rotated=0 stage=approach samples=23 median_ms=0.01153 p95_ms=0.067362 max_ms=0.727816 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=1 children_each=13 dynamic_bodies=1 mass_each_kg=576 state=impact rotated=0 stage=impact-window samples=60 median_ms=0.760815 p95_ms=1.756378 max_ms=2.507392 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=1 children_each=13 dynamic_bodies=1 mass_each_kg=576 state=impact rotated=0 stage=post-contact samples=517 median_ms=0.001851 p95_ms=0.974051 max_ms=1.88667 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=rest rotated=0 stage=rest samples=600 median_ms=0.0031 p95_ms=1.622759 max_ms=5.176638 finite=1 first_wall_contact_step=0
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=impact rotated=0 stage=approach samples=23 median_ms=0.010578 p95_ms=0.154928 max_ms=6.612601 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=impact rotated=0 stage=impact-window samples=60 median_ms=10.578949 p95_ms=23.390104 max_ms=33.823201 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=impact rotated=0 stage=post-contact samples=517 median_ms=0.003343 p95_ms=14.838384 max_ms=26.410648 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=impact rotated=1 stage=approach samples=23 median_ms=0.255269 p95_ms=0.681121 max_ms=11.585984 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=impact rotated=1 stage=impact-window samples=60 median_ms=5.311749 p95_ms=8.068685 max_ms=35.230983 finite=1 first_wall_contact_step=24
+COMPOUND_STAGE cars=4 children_each=13 dynamic_bodies=4 mass_each_kg=576 state=impact rotated=1 stage=post-contact samples=517 median_ms=0.003379 p95_ms=2.071074 max_ms=6.503809 finite=1 first_wall_contact_step=24

@@ -288,18 +288,20 @@ std::string EncodeDeformableAsset(const DeformableAsset& input){auto a=input;
     if(!PrepareDeformableAsset(a,error))throw std::invalid_argument(error);
     SaveArchive ar;
     payload(ar,a);
+    if(a.fracture&&a.fracture->HasMaterials()){a.fracture->Save(ar);a.fracture->SaveStructural(ar);a.fracture->SaveMaterials(ar);return "JudasDeformable5\n"+ar.bytes;}
     if(a.fracture){a.fracture->Save(ar);if(a.fracture->structural){a.fracture->SaveStructural(ar);return "JudasDeformable3\n"+ar.bytes;}return "JudasDeformable2\n"+ar.bytes;}
     return "JudasDeformable1\n"+ar.bytes;
     }
 bool DecodeDeformableAsset(const std::vector<unsigned char>& bytes,DeformableAsset& out,std::string& error){try{std::string b(bytes.begin(),bytes.end());
         const std::string magic="JudasDeformable1\n";
-        bool structural=b.rfind("JudasDeformable3\n",0)==0;
+        bool material=b.rfind("JudasDeformable5\n",0)==0;
+        bool structural=material||b.rfind("JudasDeformable3\n",0)==0;
         bool fracture=structural||b.rfind("JudasDeformable2\n",0)==0;
         if(!fracture&&b.rfind(magic,0)!=0)throw std::runtime_error("invalid deformable asset version");
         DeformableAsset a;
         SaveArchive ar(b.substr(magic.size()));
         payload(ar,a);
-        if(fracture){a.fracture=std::make_shared<FractureCook>();a.fracture->Save(ar);if(structural)a.fracture->SaveStructural(ar);}
+        if(fracture){a.fracture=std::make_shared<FractureCook>();a.fracture->Save(ar);if(structural)a.fracture->SaveStructural(ar);if(material)a.fracture->SaveMaterials(ar);}
         ar.Finish();
         if(!PrepareDeformableAsset(a,error))return false;
         out=std::move(a);

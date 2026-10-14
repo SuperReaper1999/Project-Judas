@@ -8,6 +8,7 @@
 struct WheelSettings {
     bool enabled=true;
     uint64_t chassis=0;
+    std::string part; // Optional stable rigid-fracture part key; chassis then identifies its owner.
     glm::vec3 mount{0};
     glm::quat orientation{1,0,0,0}; // down -Y, axle +X, forward -Z
     float radius=.35f, minLength=.1f, restLength=.35f, maxLength=.6f;

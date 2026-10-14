@@ -1694,3 +1694,11 @@ judas_warnings(judas_vehicle_damage_application_tests -Wpedantic)
 add_executable(judas_mechanical_damage_script_tests tests/MechanicalDamageScriptTests.cpp)
 target_link_libraries(judas_mechanical_damage_script_tests PRIVATE judas_engine)
 judas_warnings(judas_mechanical_damage_script_tests -Wpedantic)
+
+# M83 finite material sections; the rejected implicit node experiment is archived.
+add_executable(judas_section_material_tests tests/SectionMaterialTests.cpp)
+target_link_libraries(judas_section_material_tests PRIVATE judas_engine)
+judas_warnings(judas_section_material_tests -Wpedantic)
+add_executable(judas_coarse_crash_application_tests tests/CoarseCrashApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_coarse_crash_application_tests PRIVATE judas_engine)
+judas_warnings(judas_coarse_crash_application_tests -Wpedantic)

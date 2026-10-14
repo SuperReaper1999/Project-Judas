@@ -9753,3 +9753,15 @@ components contact normally. Extreme intact folds remain outside the supported
 envelope.
 See [M80 equations/authoring/limits](M80_BENDING.md) and
 [JudasJS deformables](judasjs/deformables.md).
+
+## M83 practical finite material sections
+
+The current crash representation extends the existing M79 rigid partition path:
+ordinary bodies, native six-axis elastic/plastic material connections, real
+collision, M81 part-mounted wheels and M82 material-path prerequisites. Physics
+owns strain/failure and motion; project JS supplies driver commands, loads and views.
+Optional bounded native intervals preserve macro-step force and motion ownership.
+Default content keeps its single-step route. Finite material saves use participant6;
+retained families stage their generated bodies and remap identities before publication.
+The dense implicit-node experiment is archived, not part of the runtime build.
+See [current equations, authoring, limitations and lab](M83_COARSE_CRASH.md).

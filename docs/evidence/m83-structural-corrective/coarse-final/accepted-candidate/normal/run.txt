@@ -1,0 +1,29 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / normal (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/normal.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual four-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=5 position=0.000,0.633,90.000 speed=-0.000 native_ms=0.320 broad_ms=0.022 narrow_ms=0.082 solver_ms=0.207 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=20 position=0.000,0.431,89.996 speed=0.036 native_ms=0.491 broad_ms=0.028 narrow_ms=0.132 solver_ms=0.322 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=60 position=0.000,0.471,89.988 speed=0.013 native_ms=0.372 broad_ms=0.022 narrow_ms=0.090 solver_ms=0.255 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=120 position=0.000,0.474,89.987 speed=-0.001 native_ms=0.325 broad_ms=0.019 narrow_ms=0.107 solver_ms=0.195 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=240 position=-0.001,0.476,89.478 speed=1.936 native_ms=0.541 broad_ms=0.034 narrow_ms=0.121 solver_ms=0.375 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=360 position=-0.007,0.474,77.613 speed=9.168 native_ms=0.306 broad_ms=0.020 narrow_ms=0.078 solver_ms=0.202 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=480 position=-0.000,0.474,58.120 speed=9.916 native_ms=0.320 broad_ms=0.021 narrow_ms=0.079 solver_ms=0.213 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=600 position=0.058,0.474,38.264 speed=9.931 native_ms=0.394 broad_ms=0.023 narrow_ms=0.082 solver_ms=0.278 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=720 position=-0.129,0.474,18.401 speed=9.932 native_ms=0.306 broad_ms=0.020 narrow_ms=0.076 solver_ms=0.206 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=840 position=-0.291,0.474,-1.464 speed=9.932 native_ms=0.370 broad_ms=0.036 narrow_ms=0.073 solver_ms=0.256 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+PASS all current physical owners remain finite and conserve the authored576kg per car
+CAR index=0 speed_mps=9.711807 plastic_translation_m=0.000000000 broken=0 left=0.000000000 right=0.000000000
+PASS normal drive and uneven-road loading do not permanently yield
+PASS rendered physical scene screenshot captured
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=810 physics_p95_ms=1.322651 physics_max_ms=4.464111 native_p95_ms=0.622508 frame_p95_ms=3.017105 frame_max_ms=14.163782 render_p95_ms=0.795920
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+SUMMARY case=normal mode=watch checks=9 failures=0

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <cmath>
+#include <initializer_list>
 enum class JointType {Fixed,Hinge,Ball,Slider};
 struct JointSettings {
     JointType type=JointType::Fixed;
@@ -23,7 +24,25 @@ struct JointAngularDrive {
     glm::vec3 relativeAngularVelocity{0}; // B-A target angular rate in world rad/s
     glm::vec3 impulses{0}; // disposable warm history, N m s
 };
-struct JointState {JointSettings settings;bool active=false;float coordinate=0,motorImpulse=0;glm::vec3 reactionImpulse{0},reactionAngularImpulse{0};JointAngularDrive angularDrive;};
+// Optional finite material connection. Independent of hinge motors and game
+// damage policy; rest offsets are constitutive history, never body teleports.
+struct JointMaterial {
+ bool enabled=false;
+ float stiffness=1200000,angularStiffness=50000,damping=1500,angularDamping=600;
+ float yieldForce=60000,yieldTorque=10000,hardeningForce=10000,hardeningTorque=1000;
+ float maximumTranslation=.4f,maximumAngle=.7f;
+};
+inline bool ValidJointMaterial(const JointMaterial& m){
+ for(float x:{m.stiffness,m.angularStiffness,m.damping,m.angularDamping,m.yieldForce,m.yieldTorque,m.hardeningForce,m.hardeningTorque,m.maximumTranslation,m.maximumAngle})if(!std::isfinite(x)||x<0)return false;
+ return !m.enabled||(m.stiffness>0&&m.angularStiffness>0&&m.yieldForce>0&&m.yieldTorque>0&&m.maximumTranslation>0&&m.maximumAngle>0&&m.maximumAngle<=3.1415927f);
+}
+struct JointMaterialState {
+ JointMaterial material;
+ glm::vec3 translation{0},rotation{0},translationTravel{0},rotationTravel{0};
+ double plasticWork=0;
+ bool failed=false;
+};
+struct JointState {JointSettings settings;bool active=false;float coordinate=0,motorImpulse=0;glm::vec3 reactionImpulse{0},reactionAngularImpulse{0};JointAngularDrive angularDrive;JointMaterialState constitutive;};
 inline bool ValidJointSettings(const JointSettings& s){
  auto finite=[](glm::vec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);};
  auto quat=[&](glm::quat q){return finite({q.x,q.y,q.z})&&std::isfinite(q.w)&&glm::dot(q,q)>1e-12f&&std::isfinite(glm::dot(q,q));};

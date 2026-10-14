@@ -134,11 +134,12 @@ void DrawWheel(EditorDocument& doc,SceneObject& object,EditorPanelState& state){
     auto& v=*object.wheel;Checkbox(doc,"Wheel enabled",v.enabled);
     const auto* chassis=doc.GetScene().Find(v.chassis);
     if(ImGui::BeginCombo("Chassis",chassis?chassis->name.c_str():"Select dynamic body")){
-        for(const auto& candidate:doc.GetScene().Objects())if(candidate.body&&candidate.body->motion==SceneBodyMotion::Dynamic&&candidate.id!=object.id&&ImGui::Selectable((candidate.name+" ##"+std::to_string(candidate.id)).c_str(),candidate.id==v.chassis)){
+        for(const auto& candidate:doc.GetScene().Objects())if(((candidate.body&&candidate.body->motion==SceneBodyMotion::Dynamic)||candidate.deformable)&&candidate.id!=object.id&&ImGui::Selectable((candidate.name+" ##"+std::to_string(candidate.id)).c_str(),candidate.id==v.chassis)){
             doc.BeginEdit();v.chassis=candidate.id;doc.CommitEdit();}
         ImGui::EndCombo();
     }
-    DragVec3(doc,"Mount (chassis local)",v.mount);
+    TextField(doc,"Rigid partition part key (optional)",v.part);
+    DragVec3(doc,"Mount (chassis/part COM local)",v.mount);
     auto degrees=glm::degrees(glm::eulerAngles(glm::normalize(v.orientation)));
     if(ImGui::DragFloat3("Frame rotation degrees",&degrees.x,.5f))v.orientation=glm::normalize(glm::quat(glm::radians(degrees)));
     TrackEdit(doc);
@@ -185,10 +186,12 @@ void DrawPowertrain(EditorDocument& doc,SceneObject& object,EditorPanelState& st
             }
             if(connection.owner){
                 owner=doc.GetScene().Find(connection.owner);
+                Checkbox(doc,"Use material groups (no attachment constraint)",connection.groups);
                 auto group=[&](const char* label,std::string& key,bool optional){
                     if(ImGui::BeginCombo(label,key.empty()?(optional?"None (attachment only)":"Select attachment"):key.c_str())){
                         if(optional&&ImGui::Selectable("None",key.empty())){doc.BeginEdit();key.clear();doc.CommitEdit();}
-                        if(owner&&owner->deformable)for(const auto& attachment:owner->deformable->attachments)if(ImGui::Selectable(attachment.group.c_str(),attachment.group==key)){doc.BeginEdit();key=attachment.group;doc.CommitEdit();}
+                        if(connection.groups)TextField(doc,label,key);
+                        if(!connection.groups&&owner&&owner->deformable)for(const auto& attachment:owner->deformable->attachments)if(ImGui::Selectable(attachment.group.c_str(),attachment.group==key)){doc.BeginEdit();key=attachment.group;doc.CommitEdit();}
                         ImGui::EndCombo();
                     }
                 };
@@ -808,6 +811,18 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
                 ImGui::TextWrapped("Interface overrides: 0 inherits family strength. Capacity follows actual area and bending section.");
                 changed|=ImGui::InputDouble("Interface tension (Pa)",&bond.tension)|ImGui::InputDouble("Interface shear (Pa)",&bond.shear)|ImGui::InputDouble("Interface compression (Pa)",&bond.compression);
                 ImGui::Text("Area %.4g m2 | polar moment %.4g m4",bond.area,bond.polarMoment);
+            }
+            if(cook.rigid&&cook.HasMaterials())changed|=ImGui::Checkbox("Filter intact material and rigid support neighbours",&cook.filterNeighbours);
+            if(cook.rigid&&!state.fractureInterface.empty())for(auto& bond:cook.bonds)if(bond.key==state.fractureInterface){
+                auto& m=bond.material;changed|=ImGui::Checkbox("Finite elastic/plastic connection (M83)",&m.enabled);
+                if(m.enabled){
+                    ImGui::TextWrapped("Six physical spring/damper axes. Plastic rest strain changes collider/mount geometry; capacity failure releases ordinary rigid pieces. Values are per connection, not a vehicle preset.");
+                    changed|=ImGui::InputFloat("Translation stiffness N/m",&m.stiffness)|ImGui::InputFloat("Rotation stiffness N m/rad",&m.angularStiffness);
+                    changed|=ImGui::InputFloat("Translation damping N s/m",&m.damping)|ImGui::InputFloat("Rotation damping N m s/rad",&m.angularDamping);
+                    changed|=ImGui::InputFloat("Yield force N",&m.yieldForce)|ImGui::InputFloat("Yield torque N m",&m.yieldTorque);
+                    changed|=ImGui::InputFloat("Force hardening N/m",&m.hardeningForce)|ImGui::InputFloat("Torque hardening N m/rad",&m.hardeningTorque);
+                    changed|=ImGui::InputFloat("Plastic travel capacity m",&m.maximumTranslation)|ImGui::InputFloat("Plastic angle capacity rad",&m.maximumAngle);
+                }
             }
             if(changed&&state.mode==EditorMode::Edit){auto baked=*asset;baked.fracture=std::make_shared<FractureCook>(cook);auto* record=state.assets->Find(d.asset);if(record&&PrepareDeformableAsset(baked,error)){std::ofstream output(record->path,std::ios::binary);auto bytes=EncodeDeformableAsset(baked);output.write(bytes.data(),std::streamsize(bytes.size()));output.close();if(output){state.resources->Invalidate(d.asset);state.status="Fracture material baked; asset content changes save compatibility.";}}else state.status=error;}
             if(ImGui::Button("Preview physical cells / interfaces / interiors")){state.deformablePreview.Clear();auto point=[&](glm::dvec3 v){return o.transform.position+o.transform.rotation*glm::vec3(v);};for(auto& part:cook.parts)state.deformablePreview.Box(point(part.proxyCenter),o.transform.rotation,glm::vec3(part.proxyHalf),{.2f,.8f,.6f});for(auto& bond:cook.bonds){if(!state.fractureInterface.empty()&&state.fractureInterface!=bond.key)continue;auto c=point(bond.centroid);state.deformablePreview.Line(c,c+o.transform.rotation*glm::vec3(bond.normal)*.35f,{1,.3f,.1f});}for(unsigned f=0;f<asset->triangles.size();++f)if(cook.faceBond[f]>=0&&(state.fractureInterface.empty()||cook.bonds[cook.faceBond[f]].key==state.fractureInterface)){auto face=asset->triangles[f];for(int k=0;k<3;++k)state.deformablePreview.Line(point(asset->nodes[face[k]]),point(asset->nodes[face[(k+1)%3]]),{1,.6f,.1f});}}

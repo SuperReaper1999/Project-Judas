@@ -1,0 +1,162 @@
+JudasScene 3
+settings
+  name "Generic elastic/plastic material cantilever"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .34 .37 .40
+  fluid-scale 1
+  fidelity-policy none
+  next-id 10000
+end
+object 1 "Zero gravity specimen frame"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 0
+  gravity.region sphere 200
+end
+object 10 "Public force controls"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "83838383838383838383c83d00000001"
+  script.0.enabled true
+  script.0.properties "{\"case\": \"specimen\"}"
+  ui.asset "83838383838383838383c83d00000003"
+  ui.name "lab"
+  ui.enabled true
+end
+object 500 "Physical clamp"
+  position 0 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static compound
+  body.mass 1
+  body.friction .7
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 7
+  body.compound-count 1
+  body.compound-box 0 0 0.6 0.3 0.3 0.25
+  body.half-extents .5 .5 .5
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+end
+object 501 "Clamp shell"
+  parent 500
+  position 0 0 0.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.3 0.25
+  render.color 0.24 0.3 0.36
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 520 "Generic three-section beam"
+  parent 500
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  deformable.asset "83838383838383838383c83d00000008"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "2"
+  deformable.iterations "12"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "7"
+  deformable.material.density "1000"
+  deformable.material.stretchCompliance "1e-07"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "1e-05"
+  deformable.material.volumeCompliance "1e-08"
+  deformable.material.damping "0"
+  deformable.material.thickness "0.025"
+  deformable.material.friction "0.6"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "1 \"part-2\" 1 500 \"\" 0 0 0 1"
+  render box
+  render.half-extents 0.15 0.15 0.9
+  render.color 0.18 0.6 0.8
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 550 "Ordinary contact prop"
+  position 0.25 0.45 -0.7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.2 0.2 0.2
+  render.color 0.65 0.55 0.22
+  body dynamic box
+  body.half-extents 0.2 0.2 0.2
+  body.mass 12
+  body.friction .7
+  body.restitution 0
+  body.collision-layer 0
+  body.collision-mask 7
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 3 "Specimen contact floor"
+  position 0 -0.2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 5 0.2 5
+  render.color 0.1 0.14 0.18
+  body static box
+  body.half-extents 5 0.2 5
+  body.mass 1
+  body.friction .7
+  body.restitution 0
+  body.collision-layer 0
+  body.collision-mask 7
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 60 "Observer"
+  position 3 3 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end

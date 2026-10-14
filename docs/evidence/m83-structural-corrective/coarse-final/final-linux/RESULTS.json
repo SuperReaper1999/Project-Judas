@@ -1,0 +1,14 @@
+[
+  {
+    "case": "comparison",
+    "exit": 0
+  },
+  {
+    "case": "rotated",
+    "exit": 0
+  },
+  {
+    "case": "specimen",
+    "exit": 1
+  }
+]

@@ -125,7 +125,7 @@ bool ValidatePowertrainSettings(const PowertrainSettings& s,std::string& error){
             (link.kind==PowertrainLinkKind::Differential&&(link.outputB>=n||link.outputB==link.input||link.outputB==link.output))||
             !Finite(link.ratio)||std::abs(link.ratio)<1e-6||std::abs(link.ratio)>1e6||!Finite(link.maxTorque)||link.maxTorque<0){error="invalid powertrain gear, clutch or differential";return false;}
         if((link.connection.owner&&(!Name(link.connection.attachment)||(!link.connection.rootAttachment.empty()&&!Name(link.connection.rootAttachment))))||
-            (!link.connection.owner&&(!link.connection.attachment.empty()||!link.connection.rootAttachment.empty()))){error="invalid powertrain material connection identity";return false;}
+            (link.connection.groups&&link.connection.rootAttachment.empty())||(!link.connection.owner&&(!link.connection.attachment.empty()||!link.connection.rootAttachment.empty()||link.connection.groups))){error="invalid powertrain material connection identity";return false;}
     }
     for(const auto& brake:s.brakes)if(!Name(brake.name)||!brakeNames.insert(brake.name).second||brake.shaft>=n||!Finite(brake.maxTorque)||brake.maxTorque<0){error="invalid powertrain brake";return false;}
     return true;
@@ -147,12 +147,12 @@ bool PowertrainSettingsEqual(const PowertrainSettings& a,const PowertrainSetting
     if(a.enabled!=b.enabled||a.shafts.size()!=b.shafts.size()||a.sources.size()!=b.sources.size()||a.links.size()!=b.links.size()||a.brakes.size()!=b.brakes.size())return false;
     for(unsigned i=0;i<a.shafts.size();++i){const auto& x=a.shafts[i];const auto& y=b.shafts[i];if(x.name!=y.name||x.kind!=y.kind||x.inertia!=y.inertia||x.initialAngularVelocity!=y.initialAngularVelocity||x.viscousDrag!=y.viscousDrag||x.target!=y.target||x.bearing!=y.bearing||x.axis!=y.axis)return false;}
     for(unsigned i=0;i<a.sources.size();++i){const auto& x=a.sources[i];const auto& y=b.sources[i];if(x.name!=y.name||x.shaft!=y.shaft||x.kind!=y.kind||x.maxTorque!=y.maxTorque||x.maxPower!=y.maxPower||x.starterTorque!=y.starterTorque||x.torqueCurve.size()!=y.torqueCurve.size())return false;for(unsigned j=0;j<x.torqueCurve.size();++j)if(x.torqueCurve[j].rpm!=y.torqueCurve[j].rpm||x.torqueCurve[j].torque!=y.torqueCurve[j].torque)return false;}
-    for(unsigned i=0;i<a.links.size();++i){const auto& x=a.links[i];const auto& y=b.links[i];if(x.name!=y.name||x.kind!=y.kind||x.input!=y.input||x.output!=y.output||x.outputB!=y.outputB||x.ratio!=y.ratio||x.maxTorque!=y.maxTorque||x.connection.owner!=y.connection.owner||x.connection.attachment!=y.connection.attachment||x.connection.rootAttachment!=y.connection.rootAttachment)return false;}
+    for(unsigned i=0;i<a.links.size();++i){const auto& x=a.links[i];const auto& y=b.links[i];if(x.name!=y.name||x.kind!=y.kind||x.input!=y.input||x.output!=y.output||x.outputB!=y.outputB||x.ratio!=y.ratio||x.maxTorque!=y.maxTorque||x.connection.owner!=y.connection.owner||x.connection.attachment!=y.connection.attachment||x.connection.rootAttachment!=y.connection.rootAttachment||x.connection.groups!=y.connection.groups)return false;}
     for(unsigned i=0;i<a.brakes.size();++i){const auto& x=a.brakes[i];const auto& y=b.brakes[i];if(x.name!=y.name||x.shaft!=y.shaft||x.maxTorque!=y.maxTorque)return false;}return true;
 }
 
 void PowertrainInstance::Reset(const PowertrainSettings& value){
-    settings=value;command={};state={};std::string error;
+    settings=value;command={};state={};suppliedWork=0;std::string error;
     if(!ValidatePowertrainSettings(settings,error)){state.converged=false;state.diagnostic=error;absoluteSpin.clear();internalInitialized.clear();return;}
     const auto n=settings.shafts.size();
     state.shafts.resize(n);absoluteSpin.resize(n);internalInitialized.assign(n,false);
@@ -186,6 +186,7 @@ std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>
     for(unsigned i=0;i<n;++i)if(!available[i])for(unsigned j=0;j<n;++j)if(w[i*n+j]!=0||w[j*n+i]!=0)return fail("unavailable shaft has a nonzero inverse mass row");
     if(!PositiveDefinite(w,active,n))return fail("powertrain inverse mass must be symmetric positive definite on available shafts");
     state.available=!active.empty();if(!settings.enabled||active.empty())return zero;
+    double sourceWork=0;
     std::vector<double> sourceImpulse(n,0),omega=velocity;
     if(integrateSources){
         for(unsigned i=0;i<settings.sources.size();++i){const auto& source=settings.sources[i];const auto& control=command.sources[i];if(!available[source.shaft])continue;
@@ -203,7 +204,10 @@ std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>
             for(unsigned j=0;j<n;++j)rhs[i]+=w[index*n+j]*sourceImpulse[j];
             for(unsigned j=0;j<m;++j)a[i*m+j]=(i==j?1:0)+dt*w[index*n+active[j]]*settings.shafts[active[j]].viscousDrag;}
         if(!LinearSolve(std::move(a),std::move(rhs),resolved,m))return fail("powertrain drag solve failed");
-        for(unsigned i=0;i<m;++i){const auto index=active[i];omega[index]=resolved[i];sourceImpulse[index]-=dt*settings.shafts[index].viscousDrag*resolved[i];}
+        // Work of the actual source impulse at midpoint shaft rate. Bearing
+        // drag is a distinct passive impulse. This diagnostic changes no row,
+        // torque, solve order or physical state.
+        for(unsigned i=0;i<m;++i){const auto index=active[i];omega[index]=resolved[i];sourceWork+=sourceImpulse[index]*(velocity[index]+omega[index])*.5;sourceImpulse[index]-=dt*settings.shafts[index].viscousDrag*resolved[i];}
     }
     std::vector<Row> rows;
     auto add=[&](Row row){double inverse=0;for(unsigned i=0;i<n;++i)for(unsigned j=0;j<n;++j)inverse+=row.j[i]*w[i*n+j]*row.j[j];
@@ -253,6 +257,7 @@ std::vector<double> PowertrainInstance::Step(double dt,const std::vector<double>
     for(unsigned i=0;i<count;++i){speed[i]=state.shafts[active[i]].angularVelocity;for(unsigned j=0;j<count;++j)metric[i*count+j]=w[active[i]*n+active[j]];}
     state.kineticEnergy=0;if(LinearSolve(std::move(metric),speed,momentum,count))for(unsigned i=0;i<count;++i)state.kineticEnergy+=.5*speed[i]*momentum[i];
     if(!Finite(state.kineticEnergy)||!Finite(state.constraintEnergyChange))return fail("nonfinite powertrain energy metric");
+    if(integrateSources)suppliedWork+=sourceWork;
     return impulse;
 }
 void PowertrainInstance::AdvanceAngles(double dt){
@@ -272,6 +277,6 @@ void PowertrainInstance::Persist(SaveArchive& archive){
     for(auto& value:command.links)archive(value.enabled,value.overrideRatio,value.engagement,value.ratio);
     for(auto& value:command.brakes)archive(value.engagement);
     std::string error;const bool valid=ValidatePowertrainCommand(settings,command,error);archive.Require(valid,error);
-    if(archive.reading){state.available=false;state.converged=true;state.diagnostic.clear();state.iterations=0;state.residual=0;state.kineticEnergy=0;state.constraintEnergyChange=0;
+    if(archive.reading){suppliedWork=0;state.available=false;state.converged=true;state.diagnostic.clear();state.iterations=0;state.residual=0;state.kineticEnergy=0;state.constraintEnergyChange=0;
         state.sourceTorque.assign(sources,0);state.links.assign(links,{});state.brakeTorque.assign(brakes,0);linkBudgetUsed.assign(links,0);brakeBudgetUsed.assign(brakes,0);for(auto& shaft:state.shafts){shaft.available=false;shaft.angularVelocity=0;shaft.torque=0;}}
 }

@@ -1,0 +1,12 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 10000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-structural-corrective/coarse-final/closure-linux/editor.edit.png
+[editor autotest] edit frame: 20 draw calls, 792 triangles, 451 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/m83-structural-corrective/coarse-final/closure-linux/editor.play.png
+[editor autotest] play frame: 1 steps, step 0.951 ms, 7 bodies, 0 contacts, 36 draw calls, 1612 triangles, 1 shadow passes, 0 lights, 458 debug lines, 0 particles
+[editor autotest] resources: 1 meshes, 0 textures, 0 terrain meshes, hits 1714, misses 3, failed 0, uploads 1, resident 820959 bytes
+[editor autotest] jobs: 7 workers, 4 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

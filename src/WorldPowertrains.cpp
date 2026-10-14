@@ -27,7 +27,7 @@ std::vector<ShaftRow> Rows(RuntimeWorld& world,PowertrainInstance& train,float d
  for(size_t i=0;i<rows.size();++i){auto& row=rows[i];const auto& shaft=train.settings.shafts[i];
   const auto bearing=world.RuntimeBody(shaft.bearing);const bool bearingPresent=!shaft.bearing||physics.IsBodyEnabled(bearing);
   row.axis=glm::normalize(shaft.axis);if(shaft.bearing&&bearingPresent)row.axis=physics.GetTransform(bearing).rotation*row.axis;
-  if(shaft.kind==PowertrainShaftKind::Wheel){row.wheel=world.RuntimeWheel(shaft.target);if(!row.wheel)continue;const auto chassis=world.RuntimeBody(row.wheel->settings.chassis);row.available=row.wheel->settings.enabled&&physics.IsBodyEnabled(chassis)&&physics.IsDynamicBody(chassis);if(!row.available)continue;
+  if(shaft.kind==PowertrainShaftKind::Wheel){row.wheel=world.RuntimeWheel(shaft.target);if(!row.wheel)continue;const auto chassis=world.RuntimeBody(world.WheelChassisEntity(row.wheel->settings));row.available=row.wheel->settings.enabled&&physics.IsBodyEnabled(chassis)&&physics.IsDynamicBody(chassis);if(!row.available)continue;
    row.axis=glm::normalize(physics.GetTransform(chassis).rotation*row.wheel->settings.orientation*glm::angleAxis(row.wheel->command.steeringAngle,glm::vec3(0,1,0)))*glm::vec3(-1,0,0);
    row.ownInverse=1.0/row.wheel->settings.spinInertia;row.velocity=row.wheel->state.angularVelocity-glm::dot(physics.GetAngularVelocity(chassis),row.axis);Add(row,chassis,-row.axis);
   }else if(shaft.kind==PowertrainShaftKind::Body){const auto rotor=world.RuntimeBody(shaft.target);row.available=bearingPresent&&physics.IsBodyEnabled(rotor)&&physics.IsDynamicBody(rotor);if(!row.available)continue;row.velocity=glm::dot(physics.GetAngularVelocity(rotor),row.axis)-AxialSpeed(physics,bearing,row.axis,dt);Add(row,rotor,row.axis);Add(row,bearing,-row.axis);
@@ -46,6 +46,7 @@ bool RuntimeWorld::PowertrainConnectionIntact(const PowertrainConnection& connec
  if(!material||!error.empty()||!material->settings.enabled)return false;
  const auto mount=[&](const std::string& name)->const std::vector<unsigned>*{
   const auto group=material->asset->groups.find(name);if(group==material->asset->groups.end())return nullptr;
+  if(connection.groups)return bool(material->asset->fracture)?&group->second:nullptr;
   for(size_t i=0;i<material->settings.attachments.size();++i){const auto& attachment=material->settings.attachments[i];
    if(attachment.group!=name)continue;
    if(!attachment.enabled||i>=material->released.size()||material->released[i])return nullptr;
@@ -92,7 +93,7 @@ void RuntimeWorld::StepPowertrains(float dt,bool sources){
  for(auto id:m_powertrainOwners){auto* train=RuntimePowertrain(id);if(!train)continue;if(!sources&&!train->state.converged)continue;auto rows=Rows(*this,*train,dt);const auto n=rows.size();std::vector<double> velocities(n),mass(n*n);std::vector<bool> available(n);
   for(size_t i=0;i<n;++i){velocities[i]=rows[i].velocity;available[i]=rows[i].available;mass[i*n+i]=rows[i].ownInverse;for(size_t j=0;j<n;++j)for(const auto& [body,a]:rows[i].bodies){auto other=rows[j].bodies.find(body);if(other!=rows[j].bodies.end())mass[i*n+j]+=glm::dot(glm::dvec3(a.axis),InverseInertia(m_physics,a.body)*glm::dvec3(other->second.axis));}}
   std::vector<bool> connected;connected.reserve(train->settings.links.size());for(const auto& link:train->settings.links)connected.push_back(PowertrainConnectionIntact(link.connection));
-  PowertrainState prior;if(!sources)prior=train->state;const double previousEnergy=train->state.kineticEnergy;auto impulses=train->Step(dt,velocities,mass,available,sources,connected);if(impulses.size()!=n)continue;
+  PowertrainState prior;if(!sources)prior=train->state;const double previousEnergy=train->state.kineticEnergy,previousSuppliedWork=train->suppliedWork;auto impulses=train->Step(dt,velocities,mass,available,sources,connected);if(impulses.size()!=n)continue;
   std::map<uint64_t,BodyRow> physical;bool finite=true;
   for(size_t i=0;i<n;++i)if(available[i]){
    const double impulse=impulses[i];finite&=std::isfinite(impulse);
@@ -101,7 +102,7 @@ void RuntimeWorld::StepPowertrains(float dt,bool sources){
    for(auto [key,body]:rows[i].bodies){auto& sum=physical[key];sum.body=body.body;sum.axis+=body.axis*float(impulse);}
   }
   for(const auto& [_,impulse]:physical){const auto velocity=m_physics.GetAngularVelocity(impulse.body)+glm::vec3(InverseInertia(m_physics,impulse.body)*glm::dvec3(impulse.axis));for(unsigned k=0;k<3;++k)finite&=std::isfinite(impulse.axis[k])&&std::isfinite(velocity[k]);}
-  if(!finite){if(!sources)train->state=std::move(prior);else{train->state.sourceTorque.assign(train->settings.sources.size(),0);train->state.brakeTorque.assign(train->settings.brakes.size(),0);train->state.links.assign(train->settings.links.size(),{});train->state.kineticEnergy=previousEnergy;train->state.constraintEnergyChange=0;}train->state.converged=false;train->state.available=false;train->state.diagnostic="mechanical impulse exceeds physical numeric representation";for(size_t i=0;i<n;++i){train->state.shafts[i].angularVelocity=rows[i].velocity;if(sources)train->state.shafts[i].torque=0;train->state.shafts[i].available=false;}continue;}
+  if(!finite){train->suppliedWork=previousSuppliedWork;if(!sources)train->state=std::move(prior);else{train->state.sourceTorque.assign(train->settings.sources.size(),0);train->state.brakeTorque.assign(train->settings.brakes.size(),0);train->state.links.assign(train->settings.links.size(),{});train->state.kineticEnergy=previousEnergy;train->state.constraintEnergyChange=0;}train->state.converged=false;train->state.available=false;train->state.diagnostic="mechanical impulse exceeds physical numeric representation";for(size_t i=0;i<n;++i){train->state.shafts[i].angularVelocity=rows[i].velocity;if(sources)train->state.shafts[i].torque=0;train->state.shafts[i].available=false;}continue;}
   // Preflight the complete assembly before publishing any physical impulse.
   // No clamped torque or partially driven endpoint is substituted on failure.
   for(size_t i=0;i<n;++i)if(available[i]){if(rows[i].wheel)rows[i].wheel->state.angularVelocity=float(double(rows[i].wheel->state.angularVelocity)+impulses[i]*rows[i].ownInverse);else if(train->settings.shafts[i].kind==PowertrainShaftKind::Internal)train->absoluteSpin[i]+=impulses[i]*rows[i].ownInverse;}

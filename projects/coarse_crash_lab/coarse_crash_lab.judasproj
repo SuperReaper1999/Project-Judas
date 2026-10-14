@@ -1,0 +1,10 @@
+JudasProject 1
+name "Physical Crash Lab"
+startup-scene "Scenes/medium.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"
+classification "JudasClassification 1 0 0 3 3 0 \"Environment\" 1 \"Assembly\" 2 \"Material\" 1 1 0 \"Default\""
+input-map "1 30 \"brake\" 0 1 \"key:Space\" 1 0 \"select\" 0 1 \"key:Tab\" 1 0 \"watch\" 0 1 \"key:V\" 1 0 \"spawn\" 0 1 \"key:P\" 1 0 \"tour\" 0 1 \"key:T\" 1 0 \"region\" 0 1 \"key:F3\" 1 0 \"normal\" 0 1 \"key:1\" 1 0 \"low\" 0 1 \"key:2\" 1 0 \"medium\" 0 1 \"key:3\" 1 0 \"high\" 0 1 \"key:4\" 1 0 \"offset\" 0 1 \"key:5\" 1 0 \"comparison\" 0 1 \"key:6\" 1 0 \"specimen\" 0 1 \"key:7\" 1 0 \"rotated\" 0 1 \"key:8\" 1 0 \"structure\" 0 1 \"key:G\" 1 0 \"contacts\" 0 1 \"key:J\" 1 0 \"load\" 0 1 \"key:B\" 1 0 \"overload\" 0 1 \"key:H\" 1 0 \"save_game\" 0 1 \"key:F5\" 1 0 \"load_game\" 0 1 \"key:F8\" 1 0 \"restart\" 0 1 \"key:R\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"throttle\" 1 2 \"key:S\" -1 0 \"key:W\" 1 0 \"steer\" 1 2 \"key:D\" -1 0 \"key:A\" 1 0 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 "
+world-manifest "83838383838383838383c83d0000000f"

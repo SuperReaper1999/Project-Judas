@@ -111,7 +111,7 @@ bool ValidatePrefab(const Scene& prefab,std::string& error) {
     if(prefab.Objects().empty()||!ValidateHierarchy(prefab,error)){if(error.empty())error="empty prefab";return false;}
     for(const auto& o:prefab.Objects())if(o.gravitySelection&&o.gravitySelection->mode==GravitySelection::Mode::Field){
         auto* source=prefab.Find(o.gravitySelection->source);if(!source||!source->gravity){error="prefab gravity selection source must be an internal gravity field";return false;}}
-    for(const auto& o:prefab.Objects())if(o.wheel){auto* chassis=prefab.Find(o.wheel->chassis);if(!chassis||!chassis->body){error="prefab wheel requires an internal chassis body";return false;}}
+    for(const auto& o:prefab.Objects())if(o.wheel){auto* chassis=prefab.Find(o.wheel->chassis);if(!chassis||(o.wheel->part.empty()?!chassis->body:!chassis->deformable)){error="prefab wheel requires an internal chassis body or partition owner";return false;}}
     for(const auto& o:prefab.Objects())if(o.joint){auto a=prefab.Find(o.joint->bodyA),b=prefab.Find(o.joint->bodyB);if(!a||!a->body||(o.joint->bodyB&&(!b||!b->body))){error="prefab joint references missing body";return false;}}
     for(const auto& o:prefab.Objects())if(o.liquidConnection){auto a=prefab.Find(o.liquidConnection->source),b=prefab.Find(o.liquidConnection->destination);if(!a||!b||!a->liquidBasin||!b->liquidBasin){error="prefab liquid connection references missing basin";return false;}}
     int roots=0;for(const auto& o:prefab.Objects()){

@@ -1,0 +1,482 @@
+{
+  "head": "694ffa97c71717aaf2f62ba28eea4a2866deb844",
+  "branch": "Experimental",
+  "state": "uncommitted full-implicit research candidate, not accepted",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 88202,
+      "sha256": "44ce7a726268459a6f468a55851623feb9f1b0510c48dfb371b44284ff0ca935"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 601596,
+      "sha256": "696af0b72d5242571e592fd1d2d5da14df51fa423f6526a5ee725b64c929dd3d"
+    },
+    {
+      "path": "docs/JUDASJS.md",
+      "bytes": 12578,
+      "sha256": "60ec3654144c1657b134553e44c2d2ac647dd4ed62df8e8d22ba407ba23521ea"
+    },
+    {
+      "path": "docs/M83_MECHANICAL_DAMAGE.md",
+      "bytes": 11209,
+      "sha256": "4bdca64fdcff6238ad62d6cec83cfacfbcbcb6e211246b04a76a16bf6f0ed634"
+    },
+    {
+      "path": "docs/M83_STRUCTURAL_CRASH.md",
+      "bytes": 14033,
+      "sha256": "24aab5697d783c7740a5cceaa97622a2930f2a3fab2e543acf019eb596c5dbd1"
+    },
+    {
+      "path": "docs/judas.d.ts",
+      "bytes": 49958,
+      "sha256": "ae67d33646ae0ed97bcc229b8fc1c5b378be35b81a5fa58dcc96af9b298e6b47"
+    },
+    {
+      "path": "docs/judasjs/API_INVENTORY.md",
+      "bytes": 39175,
+      "sha256": "8ee68cd8d453204cdb5a6754c9d34346b815cdc50545bd2f4f0ec2a91a2b3714"
+    },
+    {
+      "path": "docs/judasjs/api-inventory.json",
+      "bytes": 92448,
+      "sha256": "d005f76bace41384576ec51ae75974528b2170b02d85a7d53c2c336ec8698f1a"
+    },
+    {
+      "path": "docs/judasjs/deformables.md",
+      "bytes": 15654,
+      "sha256": "8e7e10ad9290bc5fdbc085df82befb78c46a59dad3523436a8e4327cbac46553"
+    },
+    {
+      "path": "docs/judasjs/entities.md",
+      "bytes": 23420,
+      "sha256": "d668e6d510af369f7c314b0eec57e488f997d658e74257e2a6d2f7e48ee5c38c"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/nominal.judasdeform",
+      "bytes": 35348,
+      "sha256": "63f8a8ff1cc0104b629cac1883d5cfae6c32c11c2086be9ee4a69fca8a931bc5"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/nominal.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "88ddc1eb41c434f95c5916f85608fe220a277ddfc36cf25e1a1f80e3201156c9"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/nominal.source",
+      "bytes": 19422,
+      "sha256": "1250a091dd277ea2a21411baf67bdef55682e24ecc53691e5bbbacf1cc2b4f92"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/specimen.judasdeform",
+      "bytes": 16136,
+      "sha256": "c20332ae26fc02710ed68c01cff6d71a30eb58407ce303ab7a8295c3cb275cee"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/specimen.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "bcaa5a9ade82a8979eeb71da3e11375f595a579d2461b86d849e30411b931682"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/specimen.source",
+      "bytes": 4615,
+      "sha256": "1302b81d0aedb0fb8ba5eab0751f2dcb28e5e0f7e74d516d60f3ff59d09f0708"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/strong.judasdeform",
+      "bytes": 35348,
+      "sha256": "898f30bb85c2aa33f4a75b62f746614c6642a68e29d3a81b869300029be554fd"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/strong.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "876f79de4007799ed2f46f30e103982f5579caabf89aff4560a28a6114798411"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/strong.source",
+      "bytes": 19422,
+      "sha256": "192d16e757dc59d36b6d1c5d4784824601a5395e2b49dfec7b6469961b5ab301"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/weak.judasdeform",
+      "bytes": 35348,
+      "sha256": "8ce4d4608f735cd663f53bf3be3bfbfbb70337f4d52ffa81931d33c53541da7b"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/weak.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "2b2d2051fab804e397a0efb59b9af9abd00fb118a2d720440ee512b74b306537"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/deformables/weak.source",
+      "bytes": 19421,
+      "sha256": "0a19481173c631f3a4bd7c2302e890b19b10241c977488a5fc2078be118418b7"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "bytes": 75,
+      "sha256": "598c47d8f6d4569dacb33fedf423d45ff5f27af245a0cd3624d3fb2dd107e374"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/fonts/LICENSE.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/models/wheel.obj",
+      "bytes": 3791,
+      "sha256": "20aa6073cc317dfe385d0f923a612f6882e93a83152dd213e6e6f16bc1d937a9"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/models/wheel.obj.judasmeta",
+      "bytes": 75,
+      "sha256": "71c37372c851ac97ff225493311389ea5314d7096b922541b586c07b35d26b5a"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/prefabs/car.judasprefab",
+      "bytes": 16556,
+      "sha256": "6eb3243af376d5e4b0a9ddc37890f5465c74f71721c61a65d0ee45963f30d9af"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/prefabs/car.judasprefab.judasmeta",
+      "bytes": 77,
+      "sha256": "d59ba0ca833fce6c17f64886a31f8752536483564976fc1516b94c0441313788"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/prefabs/specimen.judasprefab",
+      "bytes": 4607,
+      "sha256": "a30c576540e21d781525390e22a634db2e2c5ed8223f9ecad0a5eac160f4e7bb"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/prefabs/specimen.judasprefab.judasmeta",
+      "bytes": 77,
+      "sha256": "c19e61f18085e932e0c8e49769ca6a8e7aede1b84e8adb80af55e8f05f56ec7b"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/scripts/controller.js",
+      "bytes": 12225,
+      "sha256": "1e1cde8fe592310a61f87ab3dba831bbb7ba225c9d5250e10dd1ba859e5a2ccf"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/scripts/controller.js.judasmeta",
+      "bytes": 77,
+      "sha256": "e07962aadcc897d26f27a34d1c7eee9b72b39e506031fc81e4218e8f7bd8b698"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/scripts/math.js",
+      "bytes": 1050,
+      "sha256": "a1755da3b2fb7e9c56b981e461affe817a9d98478676c5f78d1daa83c2f32173"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/scripts/math.js.judasmeta",
+      "bytes": 77,
+      "sha256": "d6c518d70e928322f5dc899a2f44ba2cdd5ec3c3959d910f32437759c9eaeec5"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/ui/lab.judasui",
+      "bytes": 3685,
+      "sha256": "9a75beea2ff8ae1c80c1cf3f5ec22745a92426559757056a12bd5b0a7ca0fbfd"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/ui/lab.judasui.judasmeta",
+      "bytes": 73,
+      "sha256": "1d91a6a9473faf64b947c7dcfcb7b483d2ad1069dedce628d19c1c75bbd8b903"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/worlds/lab.judasworld",
+      "bytes": 141,
+      "sha256": "263dbfc8006e74df3895666699413e8664151bcd916b4e5f21bc65231975dd40"
+    },
+    {
+      "path": "projects/structural_crash_lab/Assets/worlds/lab.judasworld.judasmeta",
+      "bytes": 76,
+      "sha256": "43c773cdde2890c211c1f5c72eb23a8bbbc2d99f7ce1a0da211db66ffa67255b"
+    },
+    {
+      "path": "projects/structural_crash_lab/Authoring/compact-hatch.json",
+      "bytes": 4706,
+      "sha256": "fa100dbcf395e408fd6edc387f809ae6e77d02344d33f54db95c2922e0f9b280"
+    },
+    {
+      "path": "projects/structural_crash_lab/README.md",
+      "bytes": 8797,
+      "sha256": "da39a076e0350c5a361c1e7999aacf0933995acbb386c266cc99dc4af3eaa296"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/annex.judas",
+      "bytes": 18330,
+      "sha256": "087947e2d82c7b5e1ad0ad240ccbc6638673d3d6c65dc1b0c3d05f20a7627fc9"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/comparison.judas",
+      "bytes": 86451,
+      "sha256": "da2160dd8d3849838de5ebaa9a8efa413263d008256e2151ef910aa5c41fc555"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/group.judas",
+      "bytes": 86441,
+      "sha256": "fff99562ec269607444b904568ccc56831e09895809b264af0d53c45afdc0c0b"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/high.judas",
+      "bytes": 29723,
+      "sha256": "4c4e514b2885fb61850ddc192c6b08014d962d6df2c9bf40af4673b0d2f8ad6a"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/low.judas",
+      "bytes": 29721,
+      "sha256": "cdca25da5d8520507e897d44899cab55793b0f1a243103e7d347548d6ae6cac1"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/medium.judas",
+      "bytes": 29727,
+      "sha256": "8e3a43f0883cfa7adc02511d4e129b750354bdbcb20a8886cf2be787a86ab5ba"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/normal.judas",
+      "bytes": 34019,
+      "sha256": "a115e0b245002afe728e0c87007c4aeb2b3cb3ee06154de3a78a301c3c095575"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/offset.judas",
+      "bytes": 29735,
+      "sha256": "7b09ff2bbc7a355a2e337518a07a495ff31d73272a9c7ce07f30f46c23a7656b"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/rotated.judas",
+      "bytes": 31244,
+      "sha256": "043580584e8e09088e201ab0f2661ae969fc5674061d8994cade97e48da52d56"
+    },
+    {
+      "path": "projects/structural_crash_lab/Scenes/specimen.judas",
+      "bytes": 5696,
+      "sha256": "b3b0c1083284d983d49c905b7358cf26426a1d865b27853903b4b40299e6486b"
+    },
+    {
+      "path": "projects/structural_crash_lab/structural_crash_lab.judasproj",
+      "bytes": 1292,
+      "sha256": "4c825b52aedde46b5870b4a07ab9e68fb0e01bfb529999de12e4f4192cd50f4f"
+    },
+    {
+      "path": "scripts/check_judasjs_api.mjs",
+      "bytes": 14605,
+      "sha256": "321259438475a3407a12a348790e061f20fc3ed6b9f7ebbff527b63374358937"
+    },
+    {
+      "path": "scripts/m83_structural_corrective.py",
+      "bytes": 21758,
+      "sha256": "90ffeab9060b4ec2aac625881a9d7d7fa9a97a4d3b861c68904ea5e7511e0a23"
+    },
+    {
+      "path": "src/Deformable.cpp",
+      "bytes": 131527,
+      "sha256": "80b91f29f90dc29c22a66183bdd14604b5afa3e2c1ad75d1b6611df6b1b0c1f0"
+    },
+    {
+      "path": "src/Deformable.h",
+      "bytes": 13411,
+      "sha256": "07be27cd59a4c4e4a0241c7a55635e63331b0783f98917e420132d7e265e23bb"
+    },
+    {
+      "path": "src/DeformableAsset.cpp",
+      "bytes": 25097,
+      "sha256": "6bd4dbf5c82750c9ddefa8a418ad47f69af2e3a642c635b1ed9cde841bc349cf"
+    },
+    {
+      "path": "src/DeformableContacts.cpp",
+      "bytes": 63876,
+      "sha256": "0ef5e393a2ebc194a912edee2971df130d19be3666772c430253a5cd29fe7b9b"
+    },
+    {
+      "path": "src/DeformableSkin.cpp",
+      "bytes": 3632,
+      "sha256": "083c49d6756125735ccc12115acb9d61a5b6ed8577bc71de2d81ef407f9311c1"
+    },
+    {
+      "path": "src/JointSolver.cpp",
+      "bytes": 8706,
+      "sha256": "fb050dbcfc3133fc30810895ee2e67a1266b2df844bb906b0f15a5491efb1a99"
+    },
+    {
+      "path": "src/JointSolver.h",
+      "bytes": 1310,
+      "sha256": "a20347fe7ba295e60482114cb400d9c14ef16741d2daac19bd1e6b6fab4bc4e2"
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "bytes": 225859,
+      "sha256": "c71eea677702288674ea2841b4c3f8114a97accad74c969945109ce2c6429bec"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "bytes": 36190,
+      "sha256": "bce917e386dae67e47c3c8c45f4954b61a8544216bb140fda581460ba63d6751"
+    },
+    {
+      "path": "src/Powertrain.cpp",
+      "bytes": 25684,
+      "sha256": "1da62ffcb1529c038bc611a09dc99ee7e8d8c6808e3fd25cfce70235c3f19f80"
+    },
+    {
+      "path": "src/Powertrain.h",
+      "bytes": 5256,
+      "sha256": "030d65dafbb6fab1b374f0605abe69599555999316a95a6abdc1f295ec7f0980"
+    },
+    {
+      "path": "src/RigidBody.cpp",
+      "bytes": 5983,
+      "sha256": "d0ca65dd2767f2da9c47e1c3d20b5aec336095a456526ff37295c74450e5b466"
+    },
+    {
+      "path": "src/RigidBody.h",
+      "bytes": 6092,
+      "sha256": "7ee2fefe389999cf7038be96f293c12b1b45198fbf45f9b82cd0cb1a754318f5"
+    },
+    {
+      "path": "src/RigidMotion.h",
+      "bytes": 6500,
+      "sha256": "356e68f283f06c5413e5736f07a5c1e51fa765372d06a3954a65f3a56b85d931"
+    },
+    {
+      "path": "src/RuntimeWorld.h",
+      "bytes": 39010,
+      "sha256": "873e29ea57d3e305096019e4b13969bae434951d057f83de3a38abc689593e98"
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "bytes": 221680,
+      "sha256": "a1a4996a70c0b046db8f9bafa04f34111ac627735e9ebac6440e1bfeeb14a6be"
+    },
+    {
+      "path": "src/Simulation.cpp",
+      "bytes": 12749,
+      "sha256": "f445beeeeb760e266f5ce51c41b3a01855e0e3fbc364c67879a580ce910eb6d1"
+    },
+    {
+      "path": "src/StructuralContactGeometry.cpp",
+      "bytes": 7488,
+      "sha256": "71a6317492f36cd73e08089924f42eed88dad2db0442572e407463638afd1310"
+    },
+    {
+      "path": "src/StructuralContactGeometry.h",
+      "bytes": 1264,
+      "sha256": "18dab2bd7df17fa6ea426b8a59f150dc64db8928cd578f1128a92e5fec04a21d"
+    },
+    {
+      "path": "src/StructuralContactQP.cpp",
+      "bytes": 22671,
+      "sha256": "6d6b1d833adf8e53e63392a3b9e5f6208cd88f91087dda8309b1bf81f632bcce"
+    },
+    {
+      "path": "src/StructuralContactQP.h",
+      "bytes": 5056,
+      "sha256": "6cac073854e2f91e9b7acf00dd666c3b4a93de0abf7078e3ad7c97aa18ee475f"
+    },
+    {
+      "path": "src/StructuralNetwork.cpp",
+      "bytes": 39711,
+      "sha256": "a15a1297079221e237cc7fbd889500663430531759dc0cc6fc5fbe267348ff38"
+    },
+    {
+      "path": "src/StructuralNetwork.h",
+      "bytes": 8289,
+      "sha256": "42de2484e9987c15c1729a1dff850ff2b4a303640620d5992bba4bc8377482ac"
+    },
+    {
+      "path": "src/WorldDebugView.cpp",
+      "bytes": 19953,
+      "sha256": "936ab1e14f8f1b8c33d49f82dfd1dac4899def98b4ae35cc7d16f6f84b945dba"
+    },
+    {
+      "path": "src/WorldDebugView.h",
+      "bytes": 3738,
+      "sha256": "14818979d6c3646af7cc2119dabe75ba7c6cbbc88a8f91efbaa2c25b7b662e21"
+    },
+    {
+      "path": "src/WorldDeformables.cpp",
+      "bytes": 19514,
+      "sha256": "4d49b2735d0383950c9fb23fc7a433f3a00315a1923446776950af4e465fddbb"
+    },
+    {
+      "path": "src/WorldPersistence.cpp",
+      "bytes": 52258,
+      "sha256": "64e736309bfb2f7fe5fabd02d1e7691c2bba7d68c907569144818294891306d8"
+    },
+    {
+      "path": "src/WorldPersistence.h",
+      "bytes": 2381,
+      "sha256": "ef40de9dbb4ef54cb68eef568dee904f5f1d153ba8b4af22ae3c55f04084a8b0"
+    },
+    {
+      "path": "src/WorldPowertrains.cpp",
+      "bytes": 14001,
+      "sha256": "142ff1b4ae8a337c1babf7146294d03dbcb9fbcf8896b7bdead69014377f7dc3"
+    },
+    {
+      "path": "src/WorldPresentation.cpp",
+      "bytes": 36549,
+      "sha256": "fe028026cb659fc1f8a1bdc643b19cba8a745639d5bb1f6f005009ff8ec9469a"
+    },
+    {
+      "path": "src/editor/ComponentEditors.cpp",
+      "bytes": 116963,
+      "sha256": "721902cefdb1edafd6585ca4a7d04043fb2e4f53ee714b0a116741e251b76d82"
+    },
+    {
+      "path": "src/editor/EditorPanels.cpp",
+      "bytes": 135398,
+      "sha256": "58f43c6728cdde1a327e649c46d8f5aac1322b6261fc774eb702d5e485130c06"
+    },
+    {
+      "path": "tests/CoupledPhysicsTests.cpp",
+      "bytes": 26139,
+      "sha256": "12a2ab4ce51f1945fede759b1d47e7ad0fd4ed1be41dd3d0de36de5f33e6635f"
+    },
+    {
+      "path": "tests/PowertrainTests.cpp",
+      "bytes": 19622,
+      "sha256": "9cdbd689b78fb36dc7abe2010b68763a3d0f8875f5646d117ac3670b755288b0"
+    },
+    {
+      "path": "tests/StructuralContactQPTests.cpp",
+      "bytes": 18530,
+      "sha256": "d188bfc40bfd903ae84d1884b8805a6cb328e42b28b04be81fa1aa1731b489a6"
+    },
+    {
+      "path": "tests/StructuralContactSkinTests.cpp",
+      "bytes": 101929,
+      "sha256": "ce1984d95265a212a3f497add65800d89dfb82aa272c11abac5ae5ee0babe5d0"
+    },
+    {
+      "path": "tests/StructuralCrashApplicationTests.cpp",
+      "bytes": 47404,
+      "sha256": "f3ea1b024a51934692890291abf52ecfebf45b749fe7f3282b6e1dc4fa01fecc"
+    },
+    {
+      "path": "tests/StructuralNetworkTests.cpp",
+      "bytes": 40340,
+      "sha256": "d8e01017b85ad9c13c5c7ccfd67482b0fff9a2d7b8b76e68a42dbb388525fb1f"
+    },
+    {
+      "path": "tests/StructuralWorldCouplingTests.cpp",
+      "bytes": 37107,
+      "sha256": "f740ca2bcde3943ba3098e77ed02f7e2fea5ecfb76e4cac2a7471bb4cf6d346a"
+    },
+    {
+      "path": "tools/CreateStructuralCrashLab.py",
+      "bytes": 32925,
+      "sha256": "2626efb4737aa85b7982de296c13574e1cfef97c2745dbe5a892b3c35af2838c"
+    },
+    {
+      "path": "tools/DeformableBake.cpp",
+      "bytes": 3358,
+      "sha256": "39d264c1c488ebb84f8bc743b089da00f69fa030870ee57df31755340256540d"
+    }
+  ]
+}

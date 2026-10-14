@@ -1,0 +1,28 @@
+NATIVE_ASSEMBLY cars=1 bodies=13 joints=12 mode=fixed state=rest rotated=0 median_ms=0.169769 p95_ms=1.077336 max_ms=6.188735 finite=1 max_relative_motion_m=0.93101424
+NATIVE_STAGE cars=1 mode=fixed state=rest rotated=0 stage=rest samples=600 median_ms=0.169769 p95_ms=1.077336 max_ms=6.188735 first_wall_contact_step=0
+NATIVE_ASSEMBLY cars=1 bodies=13 joints=12 mode=fixed state=impact rotated=0 median_ms=0.181552 p95_ms=1.182167 max_ms=3.27943 finite=1 max_relative_motion_m=1.50790572
+NATIVE_STAGE cars=1 mode=fixed state=impact rotated=0 stage=approach samples=23 median_ms=0.079846 p95_ms=0.127398 max_ms=0.910115 first_wall_contact_step=24
+NATIVE_STAGE cars=1 mode=fixed state=impact rotated=0 stage=impact-window samples=60 median_ms=0.141689 p95_ms=1.546485 max_ms=2.681109 first_wall_contact_step=24
+NATIVE_STAGE cars=1 mode=fixed state=impact rotated=0 stage=post-contact samples=517 median_ms=0.189955 p95_ms=1.145277 max_ms=3.27943 first_wall_contact_step=24
+NATIVE_ASSEMBLY cars=1 bodies=13 joints=12 mode=spring-slider state=rest rotated=0 median_ms=0.163203 p95_ms=0.947993 max_ms=2.804979 finite=1 max_relative_motion_m=0.99895978
+NATIVE_STAGE cars=1 mode=spring-slider state=rest rotated=0 stage=rest samples=600 median_ms=0.163203 p95_ms=0.947993 max_ms=2.804979 first_wall_contact_step=0
+NATIVE_ASSEMBLY cars=1 bodies=13 joints=12 mode=spring-slider state=impact rotated=0 median_ms=0.208228 p95_ms=1.306315 max_ms=4.930903 finite=1 max_relative_motion_m=2.69378161
+NATIVE_STAGE cars=1 mode=spring-slider state=impact rotated=0 stage=approach samples=23 median_ms=0.074428 p95_ms=0.130687 max_ms=0.923544 first_wall_contact_step=24
+NATIVE_STAGE cars=1 mode=spring-slider state=impact rotated=0 stage=impact-window samples=60 median_ms=0.268685 p95_ms=2.143265 max_ms=4.052623 first_wall_contact_step=24
+NATIVE_STAGE cars=1 mode=spring-slider state=impact rotated=0 stage=post-contact samples=517 median_ms=0.210381 p95_ms=1.089568 max_ms=4.930903 first_wall_contact_step=24
+NATIVE_ASSEMBLY cars=4 bodies=52 joints=48 mode=fixed state=rest rotated=0 median_ms=1.13022 p95_ms=3.236969 max_ms=5.311163 finite=1 max_relative_motion_m=0.984351575
+NATIVE_STAGE cars=4 mode=fixed state=rest rotated=0 stage=rest samples=600 median_ms=1.13022 p95_ms=3.236969 max_ms=5.311163 first_wall_contact_step=0
+NATIVE_ASSEMBLY cars=4 bodies=52 joints=48 mode=fixed state=impact rotated=0 median_ms=1.340479 p95_ms=3.596843 max_ms=10.558856 finite=1 max_relative_motion_m=2.01210356
+NATIVE_STAGE cars=4 mode=fixed state=impact rotated=0 stage=approach samples=23 median_ms=0.321253 p95_ms=0.829808 max_ms=3.697424 first_wall_contact_step=24
+NATIVE_STAGE cars=4 mode=fixed state=impact rotated=0 stage=impact-window samples=60 median_ms=0.930848 p95_ms=5.958952 max_ms=10.558856 first_wall_contact_step=24
+NATIVE_STAGE cars=4 mode=fixed state=impact rotated=0 stage=post-contact samples=517 median_ms=1.383406 p95_ms=3.329915 max_ms=7.719359 first_wall_contact_step=24
+NATIVE_ASSEMBLY cars=4 bodies=52 joints=48 mode=spring-slider state=rest rotated=0 median_ms=1.039904 p95_ms=3.21001 max_ms=6.625337 finite=1 max_relative_motion_m=1.25635564
+NATIVE_STAGE cars=4 mode=spring-slider state=rest rotated=0 stage=rest samples=600 median_ms=1.039904 p95_ms=3.21001 max_ms=6.625337 first_wall_contact_step=0
+NATIVE_ASSEMBLY cars=4 bodies=52 joints=48 mode=spring-slider state=impact rotated=0 median_ms=1.550414 p95_ms=4.691866 max_ms=18.827044 finite=1 max_relative_motion_m=2.69378781
+NATIVE_STAGE cars=4 mode=spring-slider state=impact rotated=0 stage=approach samples=23 median_ms=0.316649 p95_ms=0.533381 max_ms=4.445823 first_wall_contact_step=24
+NATIVE_STAGE cars=4 mode=spring-slider state=impact rotated=0 stage=impact-window samples=60 median_ms=2.389917 p95_ms=8.850293 max_ms=18.827044 first_wall_contact_step=24
+NATIVE_STAGE cars=4 mode=spring-slider state=impact rotated=0 stage=post-contact samples=517 median_ms=1.550414 p95_ms=4.494539 max_ms=9.361773 first_wall_contact_step=24
+NATIVE_ASSEMBLY cars=4 bodies=52 joints=48 mode=spring-slider state=impact rotated=1 median_ms=1.846683 p95_ms=5.190436 max_ms=28.043928 finite=1 max_relative_motion_m=2.98002124
+NATIVE_STAGE cars=4 mode=spring-slider state=impact rotated=1 stage=approach samples=23 median_ms=0.645213 p95_ms=1.060189 max_ms=5.297758 first_wall_contact_step=24
+NATIVE_STAGE cars=4 mode=spring-slider state=impact rotated=1 stage=impact-window samples=60 median_ms=2.558246 p95_ms=9.758865 max_ms=28.043928 first_wall_contact_step=24
+NATIVE_STAGE cars=4 mode=spring-slider state=impact rotated=1 stage=post-contact samples=517 median_ms=1.86849 p95_ms=4.595073 max_ms=17.116649 first_wall_contact_step=24

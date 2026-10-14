@@ -49,7 +49,8 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     if (world.GetVehicle() && world.GetVehicle()->component.gravity == SceneVehicleGravity::Celestial) {
         excludedFromLocalGravity = world.GetVehicle()->handle;
     }
-    PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
+    const unsigned structuralIntervals=world.MechanicalSubsteps();
+    if(structuralIntervals==1)PrepareDynamicBodiesForStep(world.DynamicBodies(), gravity, physics, fixedDeltaTime,
                                 excludedFromLocalGravity,[&world](size_t slot,glm::vec3 position){
                                     return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,position);
                                 });
@@ -139,10 +140,23 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     } else player.SetFluidSample({});
     // Mechanical sources advance once; wheel contacts then feed their actual
     // axle load back into the same rotational network before rigid integration.
-    world.UpdatePowertrains(fixedDeltaTime);
-    world.UpdateWheels(fixedDeltaTime);
-    world.ResolvePowertrainLoads(fixedDeltaTime);
-    physics.Step(fixedDeltaTime);
+    if(world.MechanicalIterations()==0){
+        world.UpdatePowertrains(fixedDeltaTime);
+        world.UpdateWheels(fixedDeltaTime);
+        world.ResolvePowertrainLoads(fixedDeltaTime);
+        physics.Step(fixedDeltaTime);
+    }else {
+        std::map<EntityId,WheelState> wheelPrevious;
+        for(const auto& object:world.ScriptObjects(false))if(object.wheel)if(auto* wheel=world.RuntimeWheel(object.id))wheelPrevious.emplace(object.id,wheel->state);
+        PhysicsWorld::VelocityCoupling materialPhase;materialPhase.iterations=world.MechanicalIterations();
+        physics.StepCoupled(fixedDeltaTime,structuralIntervals,
+        [&](float h,unsigned){
+            if(structuralIntervals>1)PrepareDynamicBodiesForStep(world.DynamicBodies(),gravity,physics,h,
+                excludedFromLocalGravity,[&world,&physics](size_t slot,glm::vec3){const auto position=physics.GetTransform(world.DynamicBodies()[slot].Handle()).position;return world.SampleEntityGravity(world.DynamicVisuals()[slot].id,position);});
+            world.UpdatePowertrains(h);world.UpdateWheels(h);world.ResolvePowertrainLoads(h);
+        },[&](float,unsigned){world.PublishPowertrainConnections();},&materialPhase);
+        for(const auto& [id,state]:wheelPrevious)if(auto* wheel=world.RuntimeWheel(id))wheel->previous=state;
+    }
     if (world.HasFluid()) {
         // Liquid walls follow the already resolved rigid trajectory, including
         // impacts and support correction, never a gravity-only endpoint guess.

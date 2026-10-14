@@ -1,0 +1,39 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / rotated (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/rotated.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual four-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=5 position=35.221,-5.899,82.614 speed=0.000 native_ms=0.369 broad_ms=0.020 narrow_ms=0.095 solver_ms=0.250 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=20 position=35.317,-6.066,82.555 speed=0.036 native_ms=0.340 broad_ms=0.020 narrow_ms=0.089 solver_ms=0.227 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=60 position=35.295,-6.032,82.559 speed=0.013 native_ms=0.432 broad_ms=0.021 narrow_ms=0.127 solver_ms=0.279 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=120 position=35.293,-6.030,82.558 speed=-0.001 native_ms=0.377 broad_ms=0.019 narrow_ms=0.089 solver_ms=0.264 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=240 position=35.090,-5.993,82.093 speed=1.936 native_ms=0.699 broad_ms=0.039 narrow_ms=0.210 solver_ms=0.441 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=360 position=30.342,-5.139,71.086 speed=9.910 native_ms=0.570 broad_ms=0.030 narrow_ms=0.126 solver_ms=0.404 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=480 position=19.945,-3.255,46.947 speed=14.745 native_ms=0.745 broad_ms=0.040 narrow_ms=0.204 solver_ms=0.486 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=600 position=8.198,-1.129,19.683 speed=14.922 native_ms=0.407 broad_ms=0.021 narrow_ms=0.103 solver_ms=0.256 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+IMPACT tick=679 speed=14.925551
+PASS rendered physical scene screenshot captured
+STEP tick=720 position=0.530,0.261,1.854 speed=14.926 native_ms=0.584 broad_ms=0.031 narrow_ms=0.198 solver_ms=0.349 queries=72 iterations=72 events=0 contacts=0 pairs=24 plastic=0.199231
+STEP tick=840 position=0.532,0.265,1.864 speed=14.926 native_ms=0.500 broad_ms=0.019 narrow_ms=0.131 solver_ms=0.345 queries=72 iterations=72 events=0 contacts=0 pairs=24 plastic=0.199231
+STEP tick=960 position=0.534,0.265,1.869 speed=14.926 native_ms=0.494 broad_ms=0.022 narrow_ms=0.132 solver_ms=0.333 queries=72 iterations=72 events=0 contacts=0 pairs=24 plastic=0.199231
+PASS all current physical owners remain finite and conserve the authored576kg per car
+CAR index=0 speed_mps=14.925551 plastic_translation_m=0.199231222 broken=0 left=0.199231222 right=0.195903420
+PASS real torque-driven vehicle reaches the declared impact range and actual wall contact
+PASS actual crash leaves local permanent material strain
+PASS rendered physical scene screenshot captured
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=588 physics_p95_ms=1.519601 physics_max_ms=4.240152 native_p95_ms=0.758718 frame_p95_ms=3.646865 frame_max_ms=9.201178 render_p95_ms=0.926414
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+PERF stage=damaged n=271 physics_p95_ms=1.601768 physics_max_ms=4.755363 native_p95_ms=0.914508 frame_p95_ms=3.207156 frame_max_ms=9.670929 render_p95_ms=0.832491
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+PERF stage=impact n=90 physics_p95_ms=1.740689 physics_max_ms=2.071646 native_p95_ms=0.997319 frame_p95_ms=3.688395 frame_max_ms=50.092531 render_p95_ms=0.908357
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+SUMMARY case=rotated mode=watch checks=15 failures=0

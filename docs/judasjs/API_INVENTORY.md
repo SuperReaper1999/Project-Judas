@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M83 Experimental candidate public module based on checkpoint `7bfa1ac3f11221ecdc450a5778023f8aff380c52`. M83 human validation is pending; M82 has operator acceptance and M67 human authoring review remains deferred.
+Current M83 Experimental candidate public module based on checkpoint `694ffa97c71717aaf2f62ba28eea4a2866deb844`. M83 human validation is pending; M82 has operator acceptance and M67 human authoring review remains deferred.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

@@ -1,0 +1,14 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Generic elastic/plastic material cantilever (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/specimen.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS rendered physical scene screenshot captured
+SPECIMEN elastic_peak_m=0.010173963 unloaded_m=0.001488877 early_plastic=0.000000000 final_plastic=0.600390851 broken=1
+PASS generic force-loaded beam bends elastically and returns without permanent strain
+PASS generic sustained overload retains physical plastic strain and eventually fails
+PASS rendered physical scene screenshot captured
+PASS ordinary project startup and shutdown complete
+SUMMARY case=specimen mode=watch checks=5 failures=0

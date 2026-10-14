@@ -1,0 +1,35 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/tmp/judas-m83-coarse-lifecycle-final/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/tmp/judas-m83-coarse-lifecycle-final/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual four-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=5 position=0.000,0.633,90.000 speed=-0.000 native_ms=0.369 broad_ms=0.023 narrow_ms=0.104 solver_ms=0.232 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=20 position=0.000,0.431,89.996 speed=0.036 native_ms=0.318 broad_ms=0.021 narrow_ms=0.080 solver_ms=0.212 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=60 position=0.000,0.471,89.988 speed=0.013 native_ms=0.293 broad_ms=0.019 narrow_ms=0.075 solver_ms=0.195 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=120 position=0.000,0.474,89.987 speed=-0.001 native_ms=0.424 broad_ms=0.025 narrow_ms=0.101 solver_ms=0.293 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=240 position=-0.001,0.476,89.478 speed=1.936 native_ms=0.311 broad_ms=0.020 narrow_ms=0.079 solver_ms=0.207 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=360 position=-0.007,0.475,77.460 speed=9.910 native_ms=0.557 broad_ms=0.032 narrow_ms=0.129 solver_ms=0.381 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=480 position=-0.002,0.474,51.110 speed=14.745 native_ms=0.418 broad_ms=0.026 narrow_ms=0.092 solver_ms=0.293 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=600 position=0.001,0.474,21.347 speed=14.922 native_ms=0.308 broad_ms=0.020 narrow_ms=0.078 solver_ms=0.205 queries=50 iterations=50 events=0 contacts=0 pairs=14 plastic=0.000000
+IMPACT tick=679 speed=14.925552
+PASS rendered physical scene screenshot captured
+STEP tick=720 position=0.013,0.467,1.889 speed=14.926 native_ms=0.455 broad_ms=0.029 narrow_ms=0.112 solver_ms=0.306 queries=68 iterations=68 events=0 contacts=0 pairs=20 plastic=0.199004
+STEP tick=840 position=0.014,0.472,1.899 speed=14.926 native_ms=0.376 broad_ms=0.020 narrow_ms=0.094 solver_ms=0.258 queries=68 iterations=68 events=0 contacts=0 pairs=20 plastic=0.199004
+STEP tick=960 position=0.014,0.472,1.904 speed=14.926 native_ms=0.352 broad_ms=0.019 narrow_ms=0.091 solver_ms=0.238 queries=68 iterations=68 events=0 contacts=0 pairs=20 plastic=0.199004
+PASS all current physical owners remain finite and conserve the authored576kg per car
+CAR index=0 speed_mps=14.925552 plastic_translation_m=0.199004099 broken=0 left=0.199004099 right=0.195687190
+PASS real torque-driven vehicle reaches the declared impact range and actual wall contact
+PASS actual crash leaves local permanent material strain
+PASS rendered physical scene screenshot captured
+PASS ordinary save request captures damaged assembly
+PASS ordinary durable save completes
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=588 physics_p95_ms=1.387282 physics_max_ms=4.889270 native_p95_ms=0.625732 frame_p95_ms=3.108225 frame_max_ms=21.408594 render_p95_ms=0.809752
+PERF stage=damaged n=281 physics_p95_ms=1.655812 physics_max_ms=2.038988 native_p95_ms=0.820749 frame_p95_ms=3.118978 frame_max_ms=10.992648 render_p95_ms=0.852250
+PERF stage=impact n=90 physics_p95_ms=1.319932 physics_max_ms=2.340667 native_p95_ms=0.697805 frame_p95_ms=2.936769 frame_max_ms=56.259858 render_p95_ms=0.774285
+SUMMARY case=medium mode=write checks=11 failures=0

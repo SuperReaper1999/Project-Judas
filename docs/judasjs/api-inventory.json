@@ -1,6 +1,50 @@
 {
-  "checkpoint": "7bfa1ac3f11221ecdc450a5778023f8aff380c52",
+  "checkpoint": "694ffa97c71717aaf2f62ba28eea4a2866deb844",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
+  "resultShapes": [
+    {
+      "binding": "Fracture.state.interfaces",
+      "declaration": "FractureInterfaceState",
+      "fields": [
+        "material",
+        "plasticTranslation",
+        "plasticRotation",
+        "plasticWork"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,v,\"material\"",
+        "JS_SetPropertyStr(c,v,\"plasticTranslation\"",
+        "JS_SetPropertyStr(c,v,\"plasticRotation\"",
+        "JS_SetPropertyStr(c,v,\"plasticWork\""
+      ],
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "binding": "Wheel.settings",
+      "declaration": "WheelSettings",
+      "fields": [
+        "part"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"part\""
+      ],
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "binding": "Powertrain.settings.links[].connection",
+      "declaration": "PowertrainConnection",
+      "fields": [
+        "groups"
+      ],
+      "nativeFile": "src/PowertrainAuthoring.cpp",
+      "needles": [
+        "connection[\"groups\"]"
+      ],
+      "reference": "docs/judasjs/powertrains.md"
+    }
+  ],
   "symbols": [
     {
       "symbol": "Animation",

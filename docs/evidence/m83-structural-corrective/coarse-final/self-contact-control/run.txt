@@ -1,0 +1,18 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual six-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=120 position=0.016,0.445,89.985 speed=0.020 native_ms=0.204 broad_ms=0.023 narrow_ms=0.033 solver_ms=0.142 queries=28 iterations=28 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=240 position=0.010,0.441,89.437 speed=2.015 native_ms=0.205 broad_ms=0.024 narrow_ms=0.034 solver_ms=0.141 queries=28 iterations=28 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=360 position=-0.708,0.443,77.414 speed=9.963 native_ms=0.450 broad_ms=0.057 narrow_ms=0.097 solver_ms=0.279 queries=28 iterations=28 events=0 contacts=0 pairs=14 plastic=0.000000
+STEP tick=480 position=-3.298,0.445,51.117 speed=14.727 native_ms=0.361 broad_ms=0.034 narrow_ms=0.097 solver_ms=0.212 queries=28 iterations=28 events=0 contacts=0 pairs=14 plastic=0.000000
+PASS rendered physical scene screenshot captured
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=509 physics_p95_ms=1.036282 physics_max_ms=4.323949 native_p95_ms=0.389373 frame_p95_ms=2.492836 frame_max_ms=12.611007 render_p95_ms=0.780591
+SUMMARY case=medium mode=control checks=5 failures=0

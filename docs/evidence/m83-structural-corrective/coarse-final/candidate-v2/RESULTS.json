@@ -1,0 +1,22 @@
+[
+  {
+    "case": "medium",
+    "exit": 0
+  },
+  {
+    "case": "group",
+    "exit": 0
+  },
+  {
+    "case": "normal",
+    "exit": 0
+  },
+  {
+    "case": "low",
+    "exit": 0
+  },
+  {
+    "case": "high",
+    "exit": 1
+  }
+]

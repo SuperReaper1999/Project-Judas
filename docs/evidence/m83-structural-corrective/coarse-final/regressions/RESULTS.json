@@ -1,0 +1,46 @@
+[
+  {
+    "test": "section_material",
+    "exit": 0
+  },
+  {
+    "test": "joint",
+    "exit": 0
+  },
+  {
+    "test": "fracture",
+    "exit": 0
+  },
+  {
+    "test": "structural",
+    "exit": 0
+  },
+  {
+    "test": "bending",
+    "exit": 0
+  },
+  {
+    "test": "wheel",
+    "exit": 0
+  },
+  {
+    "test": "wheel_lifecycle",
+    "exit": 0
+  },
+  {
+    "test": "powertrain",
+    "exit": 0
+  },
+  {
+    "test": "mechanical_connection",
+    "exit": 0
+  },
+  {
+    "test": "rigid_contact",
+    "exit": 0
+  },
+  {
+    "test": "collision_geometry",
+    "exit": 0
+  }
+]

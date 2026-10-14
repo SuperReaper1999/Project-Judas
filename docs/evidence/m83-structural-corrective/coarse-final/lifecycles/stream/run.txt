@@ -1,0 +1,16 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/tmp/judas-m83-coarse-lifecycle-final/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/tmp/judas-m83-coarse-lifecycle-final/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual four-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+PASS streamed part-mounted wheel resolves the remapped physical section
+PASS complete physical section family can suspend after demand release
+PASS suspension destroys old physical family
+FAIL bounded application deadline
+PASS ordinary project startup and shutdown complete
+SUMMARY case=medium mode=stream checks=8 failures=1

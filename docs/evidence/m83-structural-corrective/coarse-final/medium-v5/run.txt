@@ -1,0 +1,25 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual six-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=120 position=0.028,0.451,90.842 speed=1.592 native_ms=1.126 broad_ms=0.028 narrow_ms=0.369 solver_ms=0.720 queries=122 iterations=128 events=0 contacts=30 pairs=34 plastic=0.000000
+STEP tick=240 position=-7.375,0.476,105.331 speed=-4.811 native_ms=15.042 broad_ms=0.028 narrow_ms=0.385 solver_ms=14.613 queries=118 iterations=162 events=2 contacts=14 pairs=22 plastic=0.444857
+STEP tick=360 position=-45.218,281.278,-64.452 speed=151.132 native_ms=25.614 broad_ms=0.031 narrow_ms=0.389 solver_ms=25.182 queries=114 iterations=239 events=6 contacts=12 pairs=18 plastic=0.444857
+STEP tick=480 position=-110.807,754.957,-362.905 speed=146.601 native_ms=17.917 broad_ms=0.024 narrow_ms=0.339 solver_ms=17.545 queries=112 iterations=222 events=4 contacts=12 pairs=18 plastic=0.444857
+STEP tick=600 position=-175.258,1230.719,-664.426 speed=133.157 native_ms=30.427 broad_ms=0.025 narrow_ms=0.284 solver_ms=30.105 queries=110 iterations=186 events=4 contacts=20 pairs=18 plastic=0.444857
+STEP tick=720 position=-239.835,1703.889,-963.679 speed=145.614 native_ms=23.218 broad_ms=0.028 narrow_ms=0.293 solver_ms=22.886 queries=82 iterations=169 events=4 contacts=20 pairs=18 plastic=0.444857
+STEP tick=840 position=-302.624,2177.854,-1265.408 speed=161.529 native_ms=20.264 broad_ms=0.030 narrow_ms=0.212 solver_ms=20.012 queries=82 iterations=151 events=4 contacts=20 pairs=18 plastic=0.444857
+STEP tick=960 position=-368.179,2652.075,-1564.678 speed=154.927 native_ms=19.987 broad_ms=0.031 narrow_ms=0.222 solver_ms=19.724 queries=82 iterations=153 events=4 contacts=20 pairs=18 plastic=0.444857
+STEP tick=1080 position=-431.820,3127.443,-1866.751 speed=154.714 native_ms=17.919 broad_ms=0.031 narrow_ms=0.226 solver_ms=17.652 queries=82 iterations=109 events=4 contacts=14 pairs=18 plastic=0.444857
+STEP tick=1200 position=-496.413,3601.914,-2167.202 speed=154.098 native_ms=15.442 broad_ms=0.031 narrow_ms=0.219 solver_ms=15.182 queries=82 iterations=99 events=4 contacts=14 pairs=18 plastic=0.444857
+STEP tick=1320 position=-561.589,4075.199,-2466.157 speed=156.407 native_ms=8.230 broad_ms=0.028 narrow_ms=0.199 solver_ms=7.993 queries=80 iterations=104 events=4 contacts=6 pairs=18 plastic=0.444857
+STEP tick=1440 position=-626.703,4551.844,-2767.765 speed=144.473 native_ms=9.395 broad_ms=0.043 narrow_ms=0.302 solver_ms=9.036 queries=80 iterations=112 events=4 contacts=6 pairs=18 plastic=0.444857
+FAIL ordinary project startup and shutdown complete
+PERF stage=approach n=1440 physics_p95_ms=40.217081 physics_max_ms=781.804257 native_p95_ms=39.613592 frame_p95_ms=41.441625 frame_max_ms=782.954315 render_p95_ms=0.787106
+SUMMARY case=medium mode=watch checks=4 failures=1

@@ -150,6 +150,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("gravity-selection.acceleration",V(s.acceleration));}
     if(o.wheel){const auto& v=*o.wheel;
         w.Line("wheel.enabled",B(v.enabled));w.Line("wheel.chassis",std::to_string(v.chassis));
+        if(!v.part.empty())w.Line("wheel.part",Quote(v.part));
         w.Line("wheel.mount",V(v.mount));w.Line("wheel.orientation",Q(v.orientation));
         w.Line("wheel.radius",F(v.radius));w.Line("wheel.minLength",F(v.minLength));
         w.Line("wheel.restLength",F(v.restLength));w.Line("wheel.maxLength",F(v.maxLength));
@@ -793,6 +794,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
            !p.Float("wheel.radius",v.radius)||!p.Float("wheel.minLength",v.minLength)||!p.Float("wheel.restLength",v.restLength)||!p.Float("wheel.maxLength",v.maxLength)||
            !p.Float("wheel.springStiffness",v.springStiffness)||!p.Float("wheel.damping",v.damping)||!p.Float("wheel.spinInertia",v.spinInertia)||!p.Float("wheel.friction",v.friction)||!p.Float("wheel.rollingResistance",v.rollingResistance)||
            !p.Layer("wheel.collisionLayer",v.collisionLayer)||!p.Mask("wheel.collisionMask",v.collisionMask)||!p.Mask("wheel.requiredTags",v.requiredTags)||!p.Mask("wheel.excludedTags",v.excludedTags))return false;
+        if(p.Has("wheel.part")&&!p.String("wheel.part",v.part))return false;
         std::string error;if(!ValidateWheelSettings(v,error))return reader.Fail(error);o.wheel=v;
     }
     if(p.Has("motor.enabled")){CharacterMotorSettings m;

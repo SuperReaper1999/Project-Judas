@@ -414,11 +414,12 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     if(wheels){w.Text("Judas.Wheel.1");w.U64(wheels);for(const auto& o:scene.Objects())if(o.wheel){const auto& v=*o.wheel;
         std::string error;if(!ValidateWheelSettings(v,error))w.Fail(error);
         if(o.body||o.characterMotor||o.ragdoll||o.deformable||o.socket||o.transform.scale!=glm::vec3(1))w.Fail("wheel owns visual placement and requires unit scale without another motion producer");
-        const auto* chassis=scene.Find(v.chassis);if(!chassis||!chassis->body||chassis->characterMotor||chassis->deformable)w.Fail("wheel chassis must reference an ordinary body");
+        const auto* chassis=scene.Find(v.chassis);if(!chassis||(v.part.empty()?(!chassis->body||chassis->characterMotor||chassis->deformable):(!chassis->deformable||chassis->body)))w.Fail("wheel chassis must reference an ordinary body or a rigid partition owner with a part key");
         w.U64(o.id);w.Boolean(v.enabled);w.U64(v.chassis);w.Vector(v.mount);w.Quaternion(v.orientation);
         w.Number(v.radius);w.Number(v.minLength);w.Number(v.restLength);w.Number(v.maxLength);w.Number(v.springStiffness);w.Number(v.damping);
         w.Number(v.spinInertia);w.Number(v.friction);w.Number(v.rollingResistance);w.U32(v.collisionLayer);w.U64(v.collisionMask);w.U64(v.requiredTags);w.U64(v.excludedTags);
     }}
+    for(const auto& o:scene.Objects())if(o.wheel&&!o.wheel->part.empty()){w.Text("Judas.Wheel.Part.1");w.U64(o.id);w.Text(o.wheel->part);}
     size_t motors=0;for(const auto& o:scene.Objects())motors+=o.characterMotor.has_value();
     if(motors){w.Text("Judas.CharacterMotor.1");w.U64(motors);for(const auto& o:scene.Objects())if(o.characterMotor){const auto& m=*o.characterMotor;
         std::string error;if(!ValidCharacterMotor(m,error))w.Fail(error);if(o.body||(o.ragdoll&&!o.ragdoll->physicalAnimation&&!o.ragdoll->balance))w.Fail("character motor cannot also own a root body/legacy ragdoll; an explicit physical-animation authority policy is required");

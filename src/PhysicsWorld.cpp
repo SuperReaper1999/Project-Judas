@@ -220,7 +220,7 @@ struct PhysicsWorld::Impl {
     std::vector<PhysicsWorld::DebugContact> lastStepContacts;
     using TouchKey=std::pair<unsigned,unsigned>;
     std::map<TouchKey,PhysicsWorld::TouchEvent> previousTouches,stepTouches,preStepQueryTouches;
-    bool queryTouchesPending=false,collectingPreStepQueries=false;
+    bool queryTouchesPending=false,collectingPreStepQueries=false,coupledStep=false;
     std::vector<PhysicsWorld::TouchEvent> touchEvents;
     void Observe(unsigned a,unsigned b,const Contact& c,float impulse=0,bool preStep=false) {
         auto ha=MakeHandle(a),hb=MakeHandle(b);
@@ -842,7 +842,7 @@ struct PhysicsWorld::Impl {
         }
     }
 
-    void AdvanceImpacts(float dt) {
+    void AdvanceImpacts(float dt,bool coupledVelocityChanged=false) {
         stepDuration=dt;
         impactPoseEvaluations=impactPoseReuses=impactOrientationBuilds=impactTruthRequests=impactTruthReuses=impactBoundsRejected=0;
         for(auto slot:aliveSlots)InvalidateImpactPose(slot);
@@ -854,7 +854,7 @@ struct PhysicsWorld::Impl {
         }
         // Initial touching impacts can launch a previously stationary body.
         // Refresh those trajectories before searching for a separated event.
-        if(stats.impactEvents) {
+        if(stats.impactEvents||coupledVelocityChanged) {
             for(auto slot:aliveSlots) if(bodies[slot].isDynamic) CoverStepReach(bodies[slot],dt);
             GenerateCandidatePairs(); separatedPairs.clear();
             for(const auto& pair:candidatePairs)
@@ -1095,7 +1095,7 @@ struct PhysicsWorld::Impl {
     // untouched load-bearing contacts from the completed physical step.
     std::vector<CachedContact> completedContactObservations;
     uint64_t completedObservationEpoch=0;
-    float completedObservationDt=0;
+    float completedObservationDt=0,completedSolverDt=0;
     bool completedObservationsReady=false,restoredCompletedObservations=false;
 
     std::vector<CachedContact> pendingCache;
@@ -2168,6 +2168,10 @@ void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3& angula
 }
 
 void PhysicsWorld::Step(float fixedDeltaTime) {
+    Step(fixedDeltaTime,nullptr);
+}
+void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
+    if(coupling&&(!coupling->iterations||coupling->iterations>64))throw std::invalid_argument("invalid velocity coupling quality");
     JUDAS_PROFILE_SCOPE("Rigid physics");
     Impl& w = *m_impl;
     const Clock::time_point stepStart = Clock::now();
@@ -2185,7 +2189,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
         // A safe authority handoff may disable an observer after its motor move.
         for(auto it=w.stepTouches.begin();it!=w.stepTouches.end();){auto* a=w.Get(it->second.a);auto* b=w.Get(it->second.b);
             if(!a||!b||!a->enabled||!b->enabled)it=w.stepTouches.erase(it);else ++it;}
-    }else w.stepTouches.clear();
+    }else if(!w.coupledStep)w.stepTouches.clear();
     const auto cachesBefore = w.cacheCounters;
     const ContactGeometryDiagnostics geometryBefore = GetContactGeometryDiagnostics();
 
@@ -2366,7 +2370,34 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     std::sort(w.supportPairs.begin(),w.supportPairs.end());
     w.supportPairs.erase(std::unique(w.supportPairs.begin(),w.supportPairs.end()),w.supportPairs.end());
     w.solver.Prepare(fixedDeltaTime);
-    if(w.joints.empty())w.solver.SolveVelocities();
+    if(coupling){
+        if(coupling->begin)coupling->begin(fixedDeltaTime);
+        // Material participants may have awakened their connected island.
+        // Consume deferred gravity and include those joints at THIS boundary.
+        for(auto slot:w.aliveSlots){auto& body=w.bodies[slot];if(body.isDynamic&&!body.sleeping&&body.deferredAcceleration){body.rigidBody.linearVelocity+=body.lastAcceleration*fixedDeltaTime;body.deferredAcceleration=false;}}
+        if(!w.joints.empty())w.jointSolver.Prepare(w.JointInputs(),fixedDeltaTime);
+        const unsigned rounds=std::max(unsigned(ContactSolver::kVelocityIterations),coupling->iterations);
+        std::vector<unsigned char> awake(w.bodies.size(),0);
+        for(auto slot:w.aliveSlots)awake[slot]=!w.bodies[slot].sleeping;
+        for(unsigned iteration=0;iteration<rounds;++iteration){
+            w.solver.SolveVelocities(1);
+            if(!w.joints.empty())w.jointSolver.SolveIteration();
+            if(coupling->solve)coupling->solve(fixedDeltaTime,iteration);
+            // A real material contact may wake a previously unmapped island.
+            // Include that island's native joints without warm-starting the
+            // already solved rows twice, and consume only deferred gravity.
+            bool newlyAwake=false;
+            for(auto slot:w.aliveSlots){auto& body=w.bodies[slot];
+                if(!awake[slot]&&!body.sleeping){awake[slot]=1;newlyAwake=true;}
+                if(body.isDynamic&&!body.sleeping&&body.deferredAcceleration){body.rigidBody.linearVelocity+=body.lastAcceleration*fixedDeltaTime;body.deferredAcceleration=false;}
+            }
+            if(newlyAwake&&!w.joints.empty()){
+                const auto oldRows=w.jointSolver.RowCount();
+                w.jointSolver.Prepare(w.JointInputs(),fixedDeltaTime,true,false,true);
+                w.jointSolver.SolveIteration(oldRows);
+            }
+        }
+    }else if(w.joints.empty())w.solver.SolveVelocities();
     else {w.jointSolver.Prepare(w.JointInputs(),fixedDeltaTime);for(int i=0;i<ContactSolver::kVelocityIterations;++i){w.solver.SolveVelocities(1);w.jointSolver.SolveIteration();}}
     // Remember this step's converged impulses for the next step's warm start.
     const std::vector<ContactConstraint>& solved = w.solver.Constraints();
@@ -2385,7 +2416,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     w.completedContactObservations=w.contactCache;
     velocityScope.End();
     ProfileScope continuousImpactsScope(continuousImpactsLabel);
-    w.AdvanceImpacts(fixedDeltaTime);
+    w.AdvanceImpacts(fixedDeltaTime,coupling!=nullptr);
     continuousImpactsScope.End();
     ProfileScope positionsScope(positionsLabel);
     for (const unsigned int slot:w.aliveSlots) {
@@ -2393,6 +2424,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
         if(body.HasMotion()) w.solver.UpdatePreparedRotation(body.rigidBody,w.Orientation(body).rotation);
     }
     w.solver.SolvePositions();
+    if(coupling&&coupling->finish)coupling->finish(fixedDeltaTime);
     positionsScope.End();
     ProfileScope settleScope(settleLabel);
     w.Settle(fixedDeltaTime);
@@ -2407,7 +2439,7 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
         if (body.HasMotion()) w.RefreshProxy(body);
     }
     w.queryTouchesPending=std::any_of(w.aliveSlots.begin(),w.aliveSlots.end(),[&](unsigned i){return w.bodies[i].queryOnly;});
-    if(!w.queryTouchesPending)w.FinishTouches();
+    if(!w.queryTouchesPending&&!w.coupledStep)w.FinishTouches();
     w.stats.proxyReinsertions = w.reinsertionsSinceStep;
     w.reinsertionsSinceStep = 0;
     w.stats.treeHeight = w.tree.Height();
@@ -2452,15 +2484,97 @@ void PhysicsWorld::Step(float fixedDeltaTime) {
     w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks;
     w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved;
     w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks;
-    ++w.completedObservationEpoch;w.completedObservationDt=fixedDeltaTime;
+    ++w.completedObservationEpoch;w.completedObservationDt=w.completedSolverDt=fixedDeltaTime;
     w.completedObservationsReady=true;
 
+}
+
+void PhysicsWorld::StepCoupled(float dt,unsigned intervals,
+    const std::function<void(float,unsigned)>& before,
+    const std::function<void(float,unsigned)>& after,
+    const VelocityCoupling* coupling) {
+    if(!std::isfinite(dt)||dt<=0||!intervals||intervals>32)
+        throw std::invalid_argument("invalid coupled physics interval");
+    if(coupling&&(!coupling->iterations||coupling->iterations>64))throw std::invalid_argument("invalid velocity coupling quality");
+    if(intervals==1){if(before)before(dt,0);Step(dt,coupling);if(after)after(dt,0);return;}
+    Impl& w=*m_impl;
+    if(w.coupledStep)throw std::logic_error("nested coupled physics step");
+    struct Snapshot {BodyHandle handle;glm::vec3 position{0},force{0},torque{0};glm::quat rotation{1,0,0,0};std::vector<RigidMotionSegment> motion;};
+    std::map<unsigned,Snapshot> saved;
+    for(auto slot:w.aliveSlots){auto& b=w.bodies[slot];if(!b.HasMotion())continue;
+        const auto handle=w.MakeHandle(slot);
+        saved.emplace(handle.id,Snapshot{handle,b.rigidBody.position,b.rigidBody.forceAccumulator,b.rigidBody.torqueAccumulator,b.rigidBody.orientation,{}});
+        // A next-fixed-step target still finishes at the original macro end.
+        if(b.isKinematic&&b.kinematic.targetNextStep){b.kinematic.remainingSeconds=dt;b.kinematic.targetNextStep=false;}
+    }
+    const auto epoch=w.completedObservationEpoch;
+    const float h=dt/float(intervals);
+    std::vector<DebugContact> contacts;
+    struct Reaction {glm::vec3 linear{0},angular{0};float motor=0;};
+    std::map<uint64_t,Reaction> jointReactions;
+    std::vector<CachedContact> observations;
+    StepStats totals{};
+    w.coupledStep=true;
+    if(!w.collectingPreStepQueries)w.stepTouches.clear();
+    try{
+        for(unsigned interval=0;interval<intervals;++interval){
+            // Force producers run once per fixed update. Retain their force
+            // (not their impulse) over all subintervals; interval producers such
+            // as wheel contact add only their own current-geometry reactions.
+            if(interval)for(auto& [_,s]:saved)if(auto* b=w.Get(s.handle)){
+                b->rigidBody.forceAccumulator+=s.force;b->rigidBody.torqueAccumulator+=s.torque;
+            }
+            if(before)before(h,interval);
+            // These are completed-interval observations, not warm-start
+            // inputs. JointInputs deliberately skips sleeping/inactive rows;
+            // without clearing them here a prior macro publication would be
+            // counted once per interval and grow on every sleeping macro.
+            // Keep joint.warm and angularDrive.impulses in their last-h units.
+            for(auto& joint:w.joints){joint.state.reactionImpulse={0,0,0};joint.state.reactionAngularImpulse={0,0,0};joint.state.motorImpulse=0;}
+            Step(h,coupling);
+            for(const auto& joint:w.joints){auto& reaction=jointReactions[joint.handle.id];reaction.linear+=joint.state.reactionImpulse;reaction.angular+=joint.state.reactionAngularImpulse;reaction.motor+=joint.state.motorImpulse;}
+            const auto& a=w.stats;
+#define SUM(field) totals.field+=a.field
+            SUM(possiblePairs);SUM(candidatePairs);SUM(layerRejectedPairs);SUM(collidingPairs);SUM(contactPoints);SUM(proxyReinsertions);
+            SUM(geometryPredicates);SUM(geometryExactFallbacks);SUM(geometryUnresolved);SUM(geometryNumericGapFallbacks);
+            SUM(orientationCacheHits);SUM(orientationCacheRebuilds);SUM(boundCacheHits);SUM(boundCacheRebuilds);SUM(shapeCacheRebuilds);SUM(solverFrameBuilds);
+            SUM(geometryCacheAllocations);SUM(geometryCacheAllocatedBytes);SUM(solverFrameNodeRequests);
+            SUM(impactEvents);SUM(impactSafetyFallback);SUM(impactEventCapFallback);SUM(impactQueries);SUM(impactSearchIterations);SUM(impactSearchLimit);
+            SUM(impactUncertifiedAdvances);SUM(impactSearchStalls);SUM(impactSamplingFallbacks);SUM(impactSamplingTests);SUM(impactSamplingResolutionCaps);
+            SUM(broadphaseMilliseconds);SUM(narrowphaseMilliseconds);SUM(solverMilliseconds);SUM(totalMilliseconds);
+#undef SUM
+            totals.bodies=a.bodies;totals.dynamicBodies=a.dynamicBodies;totals.sleepingBodies=a.sleepingBodies;totals.sleepingIslands=a.sleepingIslands;totals.awakeBodies=a.awakeBodies;
+            totals.treeHeight=std::max(totals.treeHeight,a.treeHeight);totals.geometryCacheBytes=a.geometryCacheBytes;
+            totals.impactPeakIterations=std::max(totals.impactPeakIterations,a.impactPeakIterations);totals.impactSamplingMaxInterval=std::max(totals.impactSamplingMaxInterval,a.impactSamplingMaxInterval);
+            contacts.insert(contacts.end(),w.lastStepContacts.begin(),w.lastStepContacts.end());
+            const size_t oldRows=observations.size();std::vector<bool> matched(oldRows,false);
+            for(const auto& c:w.completedContactObservations){size_t best=oldRows;double distance=kWarmStartAnchorDistance;
+                for(size_t i=0;i<oldRows;++i){const auto& prior=observations[i];if(matched[i]||!prior.key.SameBodies(c.key)||glm::dot(prior.normal,c.normal)<kWarmStartNormalDot)continue;const double gap=glm::length(prior.localAnchorA-c.localAnchorA);if(gap<distance){distance=gap;best=i;}}
+                if(best==oldRows)observations.push_back(c);
+                else{matched[best]=true;auto& prior=observations[best];const auto normal=prior.normalImpulse+c.normalImpulse;const auto tangent=prior.tangentImpulse+c.tangentImpulse;prior=c;prior.normalImpulse=normal;prior.tangentImpulse=tangent;}}
+            for(auto& [_,s]:saved)if(auto* b=w.Get(s.handle))for(auto segment:b->motion.Segments()){
+                segment.begin+=double(interval)*h;segment.end+=double(interval)*h;s.motion.push_back(segment);
+            }
+            if(after)after(h,interval);
+        }
+    }catch(...){w.coupledStep=false;throw;}
+    w.coupledStep=false;
+    w.lastStepContacts=std::move(contacts);
+    std::stable_sort(observations.begin(),observations.end(),[](const auto& a,const auto& b){return a.key<b.key;});w.completedContactObservations=std::move(observations);
+    w.completedObservationEpoch=epoch+1;w.completedObservationDt=dt;w.stepDuration=double(h)*intervals;
+    for(auto& [_,s]:saved)if(auto* b=w.Get(s.handle)){
+        b->previousPosition=s.position;b->previousOrientation=s.rotation;b->previousBound.valid=false;
+        b->motion.SetRecorded(std::move(s.motion));w.RefreshProxy(*b);
+        totals.motionSegments+=b->motion.Segments().size();totals.motionStorageBytes+=b->motion.StorageBytes();
+    }
+    for(auto& joint:w.joints)if(auto it=jointReactions.find(joint.handle.id);it!=jointReactions.end()){joint.state.reactionImpulse=it->second.linear;joint.state.reactionAngularImpulse=it->second.angular;joint.state.motorImpulse=it->second.motor;}
+    w.stats=totals;
+    if(!w.queryTouchesPending)w.FinishTouches();
 }
 
 const PhysicsWorld::StepStats& PhysicsWorld::LastStepStats() const { return m_impl->stats; }
 
 void PhysicsWorld::QueryBodiesInAabbInto(const glm::vec3& min,const glm::vec3& max,std::vector<BodyHandle>& output,const PhysicsQueryFilter& filter)const{output.clear();for(auto slot:m_impl->QuerySlots(Aabb{glm::min(min,max),glm::max(min,max)}))if(m_impl->MatchesQuery(slot,filter))output.push_back(m_impl->MakeHandle(slot));}
-
 std::vector<BodyHandle> PhysicsWorld::QueryBodiesInAabb(const glm::vec3& min, const glm::vec3& max, const PhysicsQueryFilter& filter) const {
     std::vector<BodyHandle> result;
     for (const unsigned int slot : m_impl->QuerySlots(Aabb{glm::min(min, max), glm::max(min, max)})) {
@@ -2543,7 +2657,6 @@ BodyTransform PhysicsWorld::GetTransform(BodyHandle handle) const {
     result.rotation = body->rigidBody.orientation;
     return result;
 }
-
 BodyTransform PhysicsWorld::GetPreviousTransform(BodyHandle handle) const {
     BodyTransform result;
     const Impl::Body* body = m_impl->Get(handle);
@@ -2936,7 +3049,7 @@ void PhysicsWorld::PersistJointContinuation(SaveArchive& a,JointHandle handle) {
     a.Require(found!=m_impl->joints.end(),"stale joint continuation handle");
     auto& joint=*found;auto context=m_impl->ContinuationJointContext(joint);
     const auto expectedContext=context;uint32_t version=1;
-    float dt=m_impl->completedObservationsReady?m_impl->completedObservationDt:0;
+    float dt=m_impl->completedObservationsReady?m_impl->completedSolverDt:0;
     auto warm=joint.warm;auto drive=joint.state.angularDrive;
     a(version,context,dt);a.Require(version==1,"newer joint continuation format");
     a.Require(context==expectedContext,"joint continuation physical context differs");
@@ -2952,7 +3065,7 @@ void PhysicsWorld::PersistJointContinuation(SaveArchive& a,JointHandle handle) {
         // Preserve the actual completed producer command, including its target
         // deadband, rather than recomputing a slightly different quaternion.
         joint.state.angularDrive=drive;joint.warm=warm;
-        joint.restoredContinuationDt=dt;
+        joint.restoredContinuationDt=dt;m_impl->completedSolverDt=dt;
     }
 }
 
@@ -3028,6 +3141,21 @@ void PhysicsWorld::PersistCompletedContactObservations(SaveArchive& a,
         w.completedContactObservations=std::move(restored);w.completedObservationEpoch=epoch;
         w.completedObservationDt=dt;w.completedObservationsReady=ready;w.restoredCompletedObservations=ready;
     }
+}
+
+bool PhysicsWorld::ConfigureJointMaterial(JointHandle h,const JointMaterial& material){
+ if(!m_impl||!ValidJointMaterial(material))return false;
+ for(auto& j:m_impl->joints)if(j.handle.id==h.id){if(j.state.settings.type!=JointType::Fixed||j.state.angularDrive.enabled)return false;
+  j.state.constitutive={};j.state.constitutive.material=material;j.warm.fill(0);Wake(j.state.settings.bodyA);if(j.state.settings.bodyB.IsValid())Wake(j.state.settings.bodyB);return true;}return false;
+}
+void PhysicsWorld::PersistJointMaterial(SaveArchive& a,JointHandle h){
+ a.Require(m_impl!=nullptr,"material history physics unavailable");
+ for(auto& j:m_impl->joints)if(j.handle.id==h.id){auto& c=j.state.constitutive;
+  a.Require(c.material.enabled,"material history requires a material connection");
+  a(c.translation,c.rotation,c.translationTravel,c.rotationTravel,c.plasticWork,c.failed);
+  for(auto v:{c.translation,c.rotation,c.translationTravel,c.rotationTravel})for(int k=0;k<3;++k)a.Require(std::isfinite(v[k]),"nonfinite material connection history");
+  a.Require(glm::all(glm::greaterThanEqual(c.translationTravel,glm::vec3(0)))&&glm::all(glm::greaterThanEqual(c.rotationTravel,glm::vec3(0)))&&std::isfinite(c.plasticWork)&&c.plasticWork>=0,"invalid material connection history");return;
+ }throw std::runtime_error("stale material joint history");
 }
 
 void PhysicsWorld::PersistJointSolverState(SaveArchive& a,JointHandle h){for(auto& j:m_impl->joints)if(j.handle.id==h.id){for(auto& x:j.warm){a(x);a.Require(std::isfinite(x),"nonfinite fracture joint history");}a(j.state.reactionImpulse,j.state.reactionAngularImpulse);for(auto v:{j.state.reactionImpulse,j.state.reactionAngularImpulse})for(int k=0;k<3;++k)a.Require(std::isfinite(v[k]),"nonfinite fracture reaction history");return;}throw std::runtime_error("stale fracture solver history");}

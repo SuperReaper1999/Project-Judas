@@ -1,0 +1,1 @@
+Native Linux prototype exited 134: std::runtime_error: inelastic impact energy guard failed. The prototype incorrectly added elastic spring position bias to the instantaneous impact rows; existing M45 spring rows are normally excluded from that path. This is a prototype defect, not proof of a preexisting engine defect.

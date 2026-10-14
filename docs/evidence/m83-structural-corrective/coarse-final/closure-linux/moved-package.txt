@@ -1,0 +1,21 @@
+Authorization required, but no authorization protocol specified
+
+xwininfo: error: unable to open display ":0"
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m60_package_smoke.py", line 41, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m60_package_smoke.py", line 35, in main
+    time.sleep(4);assert process.poll() is None,'Standalone exited before close';window=close_window(process.pid);code=process.wait(timeout=15)
+                                                                                        ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m60_package_smoke.py", line 13, in close_window
+    tree=subprocess.check_output(['xwininfo','-root','-tree'],text=True)
+  File "/usr/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['xwininfo', '-root', '-tree']' returned non-zero exit status 1.

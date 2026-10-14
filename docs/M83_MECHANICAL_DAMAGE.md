@@ -181,3 +181,11 @@ save/load/reload controls exercise normal lifetime. See [controls](../projects/d
 - Native Windows M83 checks and operator acceptance remain outstanding unless
   separately recorded in the evidence. Existing deferred fluid/research and
   unrelated physics tails are unchanged.
+
+## Current practical crash representation
+
+The corrected current vehicle lab is `projects/coarse_crash_lab`; finite physical
+sections replace the rejected dense implicit-node experiment. See
+[M83 coarse physical sections](M83_COARSE_CRASH.md) for the actual current equations,
+collision policy, authoring, persistence and limitations. Original development
+failures and successful numerical work remain preserved in the evidence archives.

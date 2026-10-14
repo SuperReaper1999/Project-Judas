@@ -1,0 +1,14 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual six-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+FAIL bounded application deadline
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=3909 physics_p95_ms=34.207549 physics_max_ms=813.505123 native_p95_ms=33.610687 frame_p95_ms=35.284727 frame_max_ms=814.588694 render_p95_ms=0.737110
+SUMMARY case=medium mode=watch checks=5 failures=1

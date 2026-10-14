@@ -1,0 +1,93 @@
+{
+  "kind": "research and prototype identity, not final candidate signoff",
+  "files": {
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/NativeAssemblyBenchmark.cpp": {
+      "bytes": 4963,
+      "sha256": "92fda6ec1d4c66f4112c719aa78a2601bf2dc6a136e77d27d7c10d563f7e7497"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/native-assembly-results.txt": {
+      "bytes": 4679,
+      "sha256": "6f8ac2bc90ef0acf408304363158af791e77cfbf6c44ce283d2f7aa7e897b694"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/CompoundBenchmark.cpp": {
+      "bytes": 3005,
+      "sha256": "23cb5cfa1ecc97fe224c37ac9e032b436a0fa599bbbd788411c043b8ae8d6ea1"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/DECISION.json": {
+      "bytes": 13821,
+      "sha256": "f74437bc07097065c60d5c271eb615a68a607a5bf4b42917d457c93ea1fdb080"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/reproduce.py": {
+      "bytes": 2945,
+      "sha256": "9a1a82f936c437b24b277621f424ad99c8134a94ba0007c3d02b24c0068a831c"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-results.txt": {
+      "bytes": 5461,
+      "sha256": "53fec3bc28143732f6dc14bfdc666a8d4e0511ce2ff463db16e9fc1a85b19e0e"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-results.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/compound-results.txt": {
+      "bytes": 2320,
+      "sha256": "2a00b99c4c2e572fdaa3a6b88a408c67bb6f9193d537e899ea89d1cbe988f986"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/full-implicit-source.zip": {
+      "bytes": 1212651,
+      "sha256": "3fd9e1145112db7939813ce8af21f666f78090e15e6aef98dc3e3a4522a3c959"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-followup.txt": {
+      "bytes": 113,
+      "sha256": "490d0a73680b127e09c319065375ce8cc10624a2ce0a5667a63e203ab7c2e22e"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/FULL_IMPLICIT_SOURCE_MANIFEST.json": {
+      "bytes": 16847,
+      "sha256": "0b4df0dae9a1a602cf3ff7146cd746105c0e333177ec305fa62d5c512431a5e0"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-sections/JointSolver.cpp": {
+      "bytes": 8929,
+      "sha256": "ae72f9a7f84967f1034428cbf0f00376f1dde433121cff019d3ff8ba99c9b6a3"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-sections/Benchmark.cpp": {
+      "bytes": 4607,
+      "sha256": "0d5b92873b972582b9a30423f3eb1a7c777f18de17d617595b262bd0af5c35b5"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/NativeAssemblyBenchmark.cpp": {
+      "bytes": 5250,
+      "sha256": "0b3b07e70e34e721a70e2ffe8e77d0837d36b5e4abb7cf5726cb4d40faa66e9a"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/JointSolver.cpp": {
+      "bytes": 8803,
+      "sha256": "106fe337b9078d0712ab70a4b53c77e86b2ee2e63aed762c47f465b658513c1c"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/biased-impact-failure/FAILURE.txt": {
+      "bytes": 321,
+      "sha256": "5c8df7e068fa884f2aaaf2be5877189c20a2c309bdfe9801a9c7213f8b2bd643"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/biased-impact-failure/NativeAssemblyBenchmark.cpp": {
+      "bytes": 5218,
+      "sha256": "7c4b3555ab38f92420036f44483b82d941e21d63895be787513a949411b0d8ff"
+    },
+    "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/biased-impact-failure/JointSolver.cpp": {
+      "bytes": 8794,
+      "sha256": "34ad5daf1f6977783587fb9789829ddb2851b35c2adb90c47e8d049a29b3642e"
+    },
+    "build/libjudas_engine.a": {
+      "bytes": 24289736,
+      "sha256": "c5b2bde40180bece65837d8691e5073af81a8bda26b0d9a1984ad3eb25466f2c"
+    },
+    "/tmp/m83-coarse-benchmark": {
+      "bytes": 1189008,
+      "sha256": "41ab4351492e7f52a9a187cb194287faf2d1f5f50531bd403df448c0f796b775"
+    },
+    "/tmp/m83-native-assembly-benchmark": {
+      "bytes": 1188472,
+      "sha256": "5d2f8f6450c44d566125d794f2d6673addae8c7c2e1f80eeb32a4399705db9f1"
+    },
+    "/tmp/m83-compound-benchmark": {
+      "bytes": 1183832,
+      "sha256": "8e02e04c75e224f58469a11018cc00d794220be72d26d568d1a3c38b36bfa8af"
+    }
+  }
+}

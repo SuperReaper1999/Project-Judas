@@ -1,0 +1,18 @@
+[
+  {
+    "mode": "write",
+    "exit": 0
+  },
+  {
+    "mode": "read",
+    "exit": 0
+  },
+  {
+    "mode": "lifecycle",
+    "exit": 0
+  },
+  {
+    "mode": "stream",
+    "exit": 1
+  }
+]

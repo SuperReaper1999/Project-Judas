@@ -33,7 +33,7 @@ bool connectionTarget(const SceneObject& object,const std::string& field,const S
     const auto split=field.rfind(':');const auto name=field.substr(16,split-16);
     for(const auto& link:object.powertrain->links)if(link.name==name){
         const auto mounted=[&](const std::string& group){return std::any_of(material->deformable->attachments.begin(),material->deformable->attachments.end(),[&](const auto& attachment){return attachment.group==group;});};
-        if(!mounted(link.connection.attachment)||(!link.connection.rootAttachment.empty()&&!mounted(link.connection.rootAttachment))){error="qualified powertrain connection names an absent material attachment";return false;}
+        if(!link.connection.groups&&(!mounted(link.connection.attachment)||(!link.connection.rootAttachment.empty()&&!mounted(link.connection.rootAttachment)))){error="qualified powertrain connection names an absent material attachment";return false;}
     }
     return true;
 }
@@ -173,8 +173,8 @@ struct WorldStreaming::Impl {
         if(manifest.regions.at(id).policy=="resident")add("authored resident policy");
         for(auto owner:pinObjects){
             const auto* definition=world.RuntimeDefinition(owner);if(!definition)continue;const auto& o=*definition;
-            auto own=owners.find(o.id);bool here=own!=owners.end()&&own->second==id;
-            if(o.deformable){std::string error;auto* deform=world.RuntimeDeformable(o.id,error);if(here&&deform&&deform->asset->fracture)add("live fracture family: physical pieces retained; remove/adopt family before suspension");if(!here&&deform&&deform->asset->fracture&&deform->asset->fracture->rigid)for(unsigned p=0;p<deform->asset->fracture->parts.size();++p){auto child=world.FracturePartEntity(o.id,p,true);if(child&&Owner(child)==id){add("material piece owned by an external fracture family");break;}}const auto& settings=deform?deform->settings:*o.deformable;for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];if(a.enabled&&(!deform||!deform->released[i])&&a.target&&Owner(a.target)==id&&Owner(o.id)!=id)add("external deformable attachment");}}
+            bool here=Owner(o.id)==id;
+            if(o.deformable){std::string error;auto* deform=world.RuntimeDeformable(o.id,error);if(here&&deform&&deform->asset->fracture&&!deform->asset->fracture->HasMaterials())add("live fracture family: physical pieces retained; remove/adopt family before suspension");if(!here&&deform&&deform->asset->fracture&&deform->asset->fracture->rigid)for(unsigned p=0;p<deform->asset->fracture->parts.size();++p){auto child=world.FracturePartEntity(o.id,p,true);if(child&&Owner(child)==id){add("material piece owned by an external fracture family");break;}}const auto& settings=deform?deform->settings:*o.deformable;for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];if(a.enabled&&(!deform||!deform->released[i])&&a.target&&Owner(a.target)==id&&Owner(o.id)!=id)add("external deformable attachment");}}
             if(here&&(o.liquidBasin||o.liquidContainer||o.liquidConnection))add("conserved liquid group: no lossless suspension");
             if(!here&&o.parent&&Owner(o.parent)==id)add("external hierarchy parent");
             if(!here&&o.gravitySelection&&o.gravitySelection->source&&Owner(o.gravitySelection->source)==id)add("external selected gravity field");
@@ -185,7 +185,7 @@ struct WorldStreaming::Impl {
             if(scriptReferencePins.count(id))add("external script entity property");
             if(here)if(auto* agent=world.Navigation().Agent(o.id);agent&&(agent->hasDestination||agent->onLink||agent->stopped))add("navigation intent in use: adopt or clear before suspension");
             if(here&&(o.animation||o.ragdoll)&&!WorldPersistence::CanSuspendAnimation(world,o.id))add("active articulation/return: suspend after physics authority ends");
-            if(here&&std::find_if(r.mapping.begin(),r.mapping.end(),[&](auto& mapping){return mapping.second==o.id;})==r.mapping.end())add("adopted runtime member: transfer to root before suspension");
+            if(here&&!world.FracturePartOwner(o.id)&&std::find_if(r.mapping.begin(),r.mapping.end(),[&](auto& mapping){return mapping.second==o.id;})==r.mapping.end())add("adopted runtime member: transfer to root before suspension");
             if(world.PhysicalBalanceOwnsJoints(o.id)){const auto& h=world.PhysicalBalanceSnapshot(o.id)->controller.History();for(auto body:{h.frameSupport,h.stanceSupport,h.plannedSupport}){auto support=world.EntityIdOfBody(body);if(support&&Owner(support)==id&&Owner(o.id)!=id)add("external physical balance support/foothold");}}
             if(o.characterMotor)if(auto* motor=world.RuntimeCharacter(o.id)){auto support=world.EntityIdOfBody(motor->result.support);if(support&&Owner(support)==id&&Owner(o.id)!=id)add("active character support");}
             if(o.joint){if(Owner(o.joint->bodyA)==id&&Owner(o.id)!=id)add("external joint body A");if(Owner(o.joint->bodyB)==id&&Owner(o.id)!=id)add("external joint body B");}
@@ -203,7 +203,7 @@ struct WorldStreaming::Impl {
         }
         for(auto& [other,def]:manifest.regions)if(other!=id&&regions.at(other).status.state=="active"&&std::find(def.dependencies.begin(),def.dependencies.end(),id)!=def.dependencies.end())add("active dependent "+other);
     }
-    std::string Owner(EntityId id)const{auto it=owners.find(id);if(it!=owners.end())return it->second;if(world.IsTransientEntity(id)){auto articulation=world.ArticulatedIdentity(id).first;if(articulation){auto owner=owners.find(articulation);if(owner!=owners.end())return owner->second;}}return "root";}
+    std::string Owner(EntityId id)const{auto it=owners.find(id);if(it!=owners.end())return it->second;if(auto family=world.FracturePartOwner(id))return Owner(family);if(world.IsTransientEntity(id)){auto articulation=world.ArticulatedIdentity(id).first;if(articulation){auto owner=owners.find(articulation);if(owner!=owners.end())return owner->second;}}return "root";}
     bool snapshot(Region& r,std::string& error){auto records=world.Scripts()?world.Scripts()->Capture(false,&r.members):std::vector<ScriptStateRecord>{};auto result=r.saved;
         for(auto& [local,id]:r.mapping){Snapshot s;const auto* def=world.RuntimeDefinition(id);s.destroyed=!def;if(def){s.definition=*def;s.definition.tags=world.TagsOf(id);if(!WorldPersistence::CaptureKinematic(world,id,s.kinematic,error)||!WorldPersistence::CaptureWheel(world,id,s.wheel,error)||!WorldPersistence::CapturePowertrain(world,id,s.powertrain,error))return false;if((def->animation||def->ragdoll)&&!WorldPersistence::CaptureAnimation(world,id,s.animation,error))return false;if(def->deformable){auto* deform=world.RuntimeDeformable(id,error);if(!deform||!world.CaptureDeformable(id,s.deformable,error))return false;s.definition.deformable=deform->settings;}world.GetEntityState(id,s.state);if(s.definition.joint){JointState joint;if(world.Physics().GetJoint(world.RuntimeJoint(id),joint)){s.definition.joint->settings=joint.settings;
                     // Native world anchors are already in the simulation frame; authored
@@ -365,7 +365,7 @@ void WorldStreaming::Advance(bool paused){
                 while(budget()&&r.restoreNext<r.restoreKeys.size()&&ok)unit([&]{JUDAS_PROFILE_SCOPE("Streaming retained entity restoration");
                     auto source=r.restoreKeys[r.restoreNext++];const auto& snap=r.saved.at(source);if(snap.destroyed)return;auto runtime=r.mapping.at(source);
                     if(!snap.deformable.empty()){
-                        if(!m->world.RestoreDeformable(runtime,snap.deformable,error,true)){ok=false;return;}
+                        if(!m->world.RestoreDeformable(runtime,snap.deformable,error,true,r.savedReplacements)){ok=false;return;}
                         auto* deform=m->world.RuntimeDeformable(runtime,error,true);
                         for(auto& attachment:deform->settings.attachments)if(auto it=r.savedReplacements.find(attachment.target);it!=r.savedReplacements.end())attachment.target=it->second;
                         for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==source&&ref.field.rfind("deformable:",0)==0)for(auto& attachment:deform->settings.attachments)if(attachment.group==ref.field.substr(11))attachment.target=Resolve(ref.target,ref.targetLocal);

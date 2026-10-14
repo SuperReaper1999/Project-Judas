@@ -1,0 +1,14 @@
+{
+  "joint": 0,
+  "fracture": 0,
+  "structural": 0,
+  "bending": 0,
+  "wheel": 0,
+  "wheel_lifecycle": 0,
+  "powertrain": 0,
+  "mechanical_connection": 0,
+  "write": 0,
+  "read": 0,
+  "lifecycle": 0,
+  "stream": 0
+}

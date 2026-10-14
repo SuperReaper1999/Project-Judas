@@ -1,0 +1,49 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / group_high (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/group_high.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual four-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=5 position=-6.750,0.633,90.000 speed=-0.000 native_ms=2.271 broad_ms=0.069 narrow_ms=0.610 solver_ms=1.576 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=20 position=-6.750,0.431,89.996 speed=0.036 native_ms=2.435 broad_ms=0.072 narrow_ms=0.628 solver_ms=1.711 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=60 position=-6.750,0.471,89.988 speed=0.013 native_ms=4.495 broad_ms=0.144 narrow_ms=1.264 solver_ms=3.052 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=120 position=-6.750,0.474,89.987 speed=-0.001 native_ms=2.303 broad_ms=0.071 narrow_ms=0.624 solver_ms=1.586 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=240 position=-6.751,0.476,89.478 speed=1.936 native_ms=2.501 broad_ms=0.071 narrow_ms=0.758 solver_ms=1.650 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=360 position=-6.757,0.475,77.460 speed=9.910 native_ms=2.482 broad_ms=0.075 narrow_ms=0.737 solver_ms=1.632 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=480 position=-6.754,0.475,49.532 speed=17.847 native_ms=2.291 broad_ms=0.069 narrow_ms=0.620 solver_ms=1.577 queries=494 iterations=494 events=0 contacts=0 pairs=62 plastic=0.000000
+STEP tick=600 position=-6.751,0.474,6.152 speed=24.416 native_ms=2.732 broad_ms=0.069 narrow_ms=0.803 solver_ms=1.837 queries=494 iterations=526 events=0 contacts=0 pairs=62 plastic=0.000000
+IMPACT tick=611 speed=24.564302
+PASS rendered physical scene screenshot captured
+STEP tick=720 position=-6.754,0.359,4.117 speed=24.564 native_ms=4.192 broad_ms=0.100 narrow_ms=1.578 solver_ms=2.480 queries=478 iterations=478 events=0 contacts=56 pairs=78 plastic=0.234141
+STEP tick=840 position=-6.754,0.359,4.117 speed=24.564 native_ms=2.551 broad_ms=0.066 narrow_ms=0.832 solver_ms=1.632 queries=478 iterations=478 events=0 contacts=56 pairs=78 plastic=0.234141
+STEP tick=960 position=-6.754,0.359,4.117 speed=24.564 native_ms=3.046 broad_ms=0.095 narrow_ms=1.194 solver_ms=1.728 queries=478 iterations=478 events=0 contacts=56 pairs=78 plastic=0.234141
+PASS all current physical owners remain finite and conserve the authored576kg per car
+CAR index=0 speed_mps=24.564302 plastic_translation_m=0.234141007 broken=2 left=0.233730257 right=0.234141007
+CAR index=1 speed_mps=24.564301 plastic_translation_m=0.234514445 broken=2 left=0.234108895 right=0.234514445
+CAR index=2 speed_mps=24.564308 plastic_translation_m=0.234060422 broken=2 left=0.233648241 right=0.234060422
+CAR index=3 speed_mps=24.564302 plastic_translation_m=0.234141007 broken=2 left=0.233730257 right=0.234141007
+PASS real torque-driven vehicle reaches the declared impact range and actual wall contact
+PASS actual crash leaves local permanent material strain
+PASS high impact accumulates physical plastic work before capacity failure
+PASS actual crash topology disconnects a front driveline link
+PASS damaged front wheel still mounts to its actual physical section
+PASS actual crash topology disconnects a front driveline link
+PASS damaged front wheel still mounts to its actual physical section
+PASS actual crash topology disconnects a front driveline link
+PASS damaged front wheel still mounts to its actual physical section
+PASS actual crash topology disconnects a front driveline link
+PASS damaged front wheel still mounts to its actual physical section
+PASS rendered physical scene screenshot captured
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=520 physics_p95_ms=7.576699 physics_max_ms=11.482227 native_p95_ms=5.023361 frame_p95_ms=10.160916 frame_max_ms=13.777767 render_p95_ms=1.534837
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+PERF stage=damaged n=271 physics_p95_ms=7.489120 physics_max_ms=13.960339 native_p95_ms=5.040136 frame_p95_ms=9.328770 frame_max_ms=19.042348 render_p95_ms=1.530939
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+PERF stage=impact n=90 physics_p95_ms=7.292675 physics_max_ms=10.634079 native_p95_ms=4.828266 frame_p95_ms=9.461021 frame_max_ms=54.492282 render_p95_ms=1.515238
+PASS declared native host p95 fixed-step budget
+PASS declared native host p95 engine frame-work budget
+SUMMARY case=group_high mode=watch checks=24 failures=0

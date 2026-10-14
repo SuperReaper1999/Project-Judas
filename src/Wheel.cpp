@@ -60,7 +60,7 @@ bool ValidateWheelSettings(const WheelSettings& s,std::string& error) {
         s.spinInertia,s.friction,s.rollingResistance,s.orientation.w,s.orientation.x,s.orientation.y,s.orientation.z};
     for(float x:values)if(!std::isfinite(x)){error="nonfinite wheel setting";return false;}
     const double norm=glm::dot(glm::dquat(s.orientation),glm::dquat(s.orientation));
-    if(!s.chassis||!Finite(s.mount)||!std::isfinite(glm::length(s.mount))||norm<1e-12||norm>1e12||s.radius<=0||
+    if(s.part.size()>128||!s.chassis||!Finite(s.mount)||!std::isfinite(glm::length(s.mount))||norm<1e-12||norm>1e12||s.radius<=0||
        s.minLength<0||s.restLength<=s.minLength||s.maxLength<s.restLength||
        s.springStiffness<=0||s.damping<0||s.spinInertia<=1e-8f||s.friction<0||
        s.rollingResistance<0||s.collisionLayer>=64) {

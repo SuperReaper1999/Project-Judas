@@ -338,6 +338,7 @@ public:
     bool SetRuntimeJoint(EntityId owner,const SceneJointComponent&,bool remove,std::string& error);
     bool SetBodyMaterial(EntityId,const std::string&,const PhysicalMaterial*,std::string& error);
     CharacterMotor* RuntimeCharacter(EntityId id);
+    EntityId WheelChassisEntity(const WheelSettings&)const;
     WheelInstance* RuntimeWheel(EntityId id);
     const WheelInstance* RuntimeWheel(EntityId id)const;
     bool SetWheelSettings(EntityId,const WheelSettings&);
@@ -387,14 +388,18 @@ public:
     void UpdateDeformables(double dt);
     bool PrepareRigidFracture(EntityId,std::string&);
     void UpdateRigidFracture(EntityId,double);
-    void PersistRigidFracture(EntityId,SaveArchive&);
+    void PersistRigidFracture(EntityId,SaveArchive&,const std::map<EntityId,EntityId>* remap=nullptr);
+    void PersistFractureBundle(EntityId,SaveArchive&,bool staged=false,const std::map<EntityId,EntityId>& remap={});
+    EntityId FracturePartOwner(EntityId)const;
+    unsigned MechanicalSubsteps();
+    unsigned MechanicalIterations();
     void DispatchFractureEvents();
     bool LoadFracturePart(EntityId,unsigned,glm::vec3,bool impulse);
     EntityId FracturePartEntity(EntityId,unsigned,bool includeDisabled=false)const;
     void DrawDeformables(Renderer&,float alpha)const;
     void RemoveDeformable(EntityId);
     void ClearDeformables();
-    bool RestoreDeformable(EntityId,const std::string&,std::string&,bool staged=false);
+    bool RestoreDeformable(EntityId,const std::string&,std::string&,bool staged=false,const std::map<EntityId,EntityId>& remap={});
     bool CaptureDeformable(EntityId,std::string&,std::string&);
     void SetDeformableEnabled(EntityId,bool);
     bool ResetDeformable(EntityId,std::string&);

@@ -162,3 +162,12 @@ Committed material changes are observed at the next mechanical interval.
 
 See [Deformable strength and observations](deformables.md#m83-materialbody-connection-strength)
 and [M83 model/authoring](../M83_MECHANICAL_DAMAGE.md).
+
+## Material group prerequisites (M83)
+
+A connection can opt in to `groups: true`. `attachment` and required
+`rootAttachment` then identify cooked material node groups, rather than attachment
+constraints. The link requires an intact physical material path between them.
+Default false retains the attachment/release semantics described above.
+There is no health flag or script-driven drivetrain damage calculation.
+See [physical section integration](../M83_COARSE_CRASH.md).

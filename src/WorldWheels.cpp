@@ -2,6 +2,13 @@
 #include "PerformanceProfiler.h"
 #include <algorithm>
 
+EntityId RuntimeWorld::WheelChassisEntity(const WheelSettings& settings)const{
+ if(settings.part.empty())return settings.chassis;
+ auto found=m_deformables.find(settings.chassis);if(found==m_deformables.end())return 0;
+ const auto& asset=found->second.simulation.asset;if(!asset||!asset->fracture||!asset->fracture->rigid)return 0;
+ for(unsigned p=0;p<asset->fracture->parts.size();++p)if(asset->fracture->parts[p].key==settings.part)return FracturePartEntity(settings.chassis,p);
+ return 0;
+}
 WheelInstance* RuntimeWorld::RuntimeWheel(EntityId id){
     const auto* definition=RuntimeDefinition(id);
     if(!definition||!definition->wheel)return nullptr;
@@ -10,8 +17,8 @@ WheelInstance* RuntimeWorld::RuntimeWheel(EntityId id){
     wheel.settings=*definition->wheel;
     if(added){
         wheel.state.length=wheel.settings.restLength;
-        const auto chassis=RuntimeBody(wheel.settings.chassis);wheel.state.available=m_physics.IsDynamicBody(chassis)&&m_physics.IsBodyEnabled(chassis);
-        wheel.Publish(m_physics,RuntimeBody(wheel.settings.chassis));
+        const auto chassis=RuntimeBody(WheelChassisEntity(wheel.settings));wheel.state.available=m_physics.IsDynamicBody(chassis)&&m_physics.IsBodyEnabled(chassis);
+        wheel.Publish(m_physics,RuntimeBody(WheelChassisEntity(wheel.settings)));
         wheel.previous=wheel.state;
     }
     return &wheel;
@@ -25,13 +32,13 @@ const WheelInstance* RuntimeWorld::RuntimeWheel(EntityId id)const{
 bool RuntimeWorld::SetWheelSettings(EntityId id,const WheelSettings& settings){
     auto* wheel=RuntimeWheel(id);std::string error;
     if(!wheel||!ValidateWheelSettings(settings,error))return false;
-    const auto* chassis=RuntimeDefinition(settings.chassis);
-    if(!chassis||!chassis->body||IsTransientEntity(settings.chassis)||!RuntimeBody(settings.chassis).IsValid())return false;
+    const auto* chassis=RuntimeDefinition(WheelChassisEntity(settings));
+    if(!chassis||!chassis->body||IsTransientEntity(WheelChassisEntity(settings))||!RuntimeBody(WheelChassisEntity(settings)).IsValid())return false;
     m_scriptDefinitions.at(id).wheel=settings;wheel->settings=settings;
     RefreshWheelParticipants();
     wheel->state.length=std::clamp(wheel->state.length,settings.minLength,settings.maxLength);
     if(!settings.enabled){wheel->state.contact=false;wheel->state.body={};wheel->state.normalForce=0;wheel->state.longitudinalImpulse=wheel->state.lateralImpulse=0;}
-    wheel->Publish(m_physics,RuntimeBody(settings.chassis));wheel->previous=wheel->state;
+    wheel->Publish(m_physics,RuntimeBody(WheelChassisEntity(settings)));wheel->previous=wheel->state;
     return true;
 }
 void RuntimeWorld::UpdateWheels(float dt){
@@ -41,13 +48,13 @@ void RuntimeWorld::UpdateWheels(float dt){
         auto* wheel=RuntimeWheel(id);if(!wheel)continue;
         // Entity identity is resolved every step. A destroyed/reused native slot
         // never substitutes for the authored chassis reference.
-        wheel->Step(m_physics,RuntimeBody(wheel->settings.chassis),dt);
+        wheel->Step(m_physics,RuntimeBody(WheelChassisEntity(wheel->settings)),dt);
     }
 }
 void RuntimeWorld::PublishWheels(){
     for(auto id:m_wheelOwners){
         auto* wheel=RuntimeWheel(id);if(!wheel)continue;
-        wheel->Publish(m_physics,RuntimeBody(wheel->settings.chassis));
+        wheel->Publish(m_physics,RuntimeBody(WheelChassisEntity(wheel->settings)));
         if(!wheel->state.available)continue;
         auto& definition=m_scriptDefinitions.at(id);
         definition.transform.position=wheel->state.center;definition.transform.rotation=wheel->state.rotation;

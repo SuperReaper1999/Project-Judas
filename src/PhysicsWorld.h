@@ -44,7 +44,6 @@ struct BodyTransform {
     glm::vec3 position{0.0f, 0.0f, 0.0f};
     glm::quat rotation{1.0f, 0.0f, 0.0f, 0.0f};  // identity
 };
-
 // Motion authority is separate from inverse mass: a prescribed body supplies
 // external work but receives no force/contact impulse integration of its own.
 enum class BodyMotionType { Static, Dynamic, Kinematic };
@@ -336,6 +335,8 @@ public:
     float GetMass(BodyHandle handle) const;
     glm::vec3 GetCenterOfMass(BodyHandle handle) const;
     bool SetMassDistribution(BodyHandle,float,const glm::mat3&);
+    bool ConfigureJointMaterial(JointHandle,const JointMaterial&);
+    void PersistJointMaterial(SaveArchive&,JointHandle);
     void PersistJointSolverState(SaveArchive&,JointHandle);
     // Versioned, bounded continuation of the existing iterative joint solve.
     // This is native save state, not a scripting API or contact warm cache.
@@ -471,6 +472,22 @@ public:
     // applied this step compose into the same integration pass, in the
     // order they were applied, with no double-counting.
     void Step(float fixedDeltaTime);
+    // Optional native constraint participant. Reactions share rigid velocities
+    // BEFORE their one authoritative CCD/pose advance; no transform writes.
+    struct VelocityCoupling {
+        unsigned iterations=1;
+        std::function<void(float)> begin;
+        std::function<void(float,unsigned)> solve;
+        std::function<void(float)> finish;
+    };
+    void Step(float fixedDeltaTime,const VelocityCoupling*);
+    // Optional coupled material integration. Scripts and event publication stay
+    // at the macro boundary; forces, motion history and contact impulses span
+    // the whole interval. A single interval is exactly the ordinary Step path.
+    void StepCoupled(float fixedDeltaTime,unsigned intervals,
+        const std::function<void(float,unsigned)>& beforeInterval,
+        const std::function<void(float,unsigned)>& afterInterval,
+        const VelocityCoupling* velocityCoupling=nullptr);
     bool IsSleeping(BodyHandle) const;
     void Wake(BodyHandle);
     void SetSleepingEnabled(bool enabled); // diagnostic reference; default enabled

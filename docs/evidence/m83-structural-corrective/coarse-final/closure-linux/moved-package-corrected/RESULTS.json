@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "seconds": 4.157342776001315,
+  "package": "/tmp/Judas_M60_M83CoarseFinalAuth20261014",
+  "cwd": "/tmp",
+  "installation_read_only": true,
+  "closed_own_window": "0x1e0000a",
+  "package_bytes": 54921685,
+  "checks": "normal standalone project startup, no script/asset fault, clean own-window close",
+  "human_listening": "NOT CLAIMED"
+}

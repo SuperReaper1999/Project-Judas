@@ -1,0 +1,1723 @@
+{
+  "schema": 1,
+  "starting_head": "694ffa97c71717aaf2f62ba28eea4a2866deb844",
+  "branch": "Experimental",
+  "human_validation": "pending",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 87121,
+      "sha256": "a8dc8b0c58ca6372b23f7a2825ccc82ef6eeedb726ca41de2d0e404c26ad6336"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 598813,
+      "sha256": "eb7ad38c1e375d98033e6246974288bc00b4ccc273107c1875ff422cdeac387d"
+    },
+    {
+      "path": "docs/JUDASJS.md",
+      "bytes": 12735,
+      "sha256": "31318fac30096d60fb0c6d784e5040be7a5c2dd4e7c994af4a2240893ca23813"
+    },
+    {
+      "path": "docs/M83_COARSE_CRASH.md",
+      "bytes": 8772,
+      "sha256": "1d451f3b0f0cb0abda0d19fb4a64465c0ee8d7ae49ae22088bd24d0fda352029"
+    },
+    {
+      "path": "docs/M83_MECHANICAL_DAMAGE.md",
+      "bytes": 11382,
+      "sha256": "c2a515df66d7f727fab0bdce80f1a3f1d4f5461fbf8c0188e536af84d4d70ce7"
+    },
+    {
+      "path": "docs/M83_STRUCTURAL_CRASH.md",
+      "bytes": 17228,
+      "sha256": "71820d753b3a34b0a9a642aa2a62b3492bc6cebe1ca89f4714e4cc60ba1540a6"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/FINAL_REPORT.md",
+      "bytes": 10246,
+      "sha256": "d5d46b5a7eb2a752fb33150bd07b18def2dd8ba7a2f0dc593fec74740f1dc644"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/PRESERVED_INVESTIGATION_MANIFEST.json",
+      "bytes": 141085,
+      "sha256": "071d6ede34dfb6511a7bdedbcfb7196f6083cd597e00eb3e68f8ab1313ffad8e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/CompoundBenchmark.cpp",
+      "bytes": 3005,
+      "sha256": "23cb5cfa1ecc97fe224c37ac9e032b436a0fa599bbbd788411c043b8ae8d6ea1"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/DECISION.json",
+      "bytes": 13821,
+      "sha256": "f74437bc07097065c60d5c271eb615a68a607a5bf4b42917d457c93ea1fdb080"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/FULL_IMPLICIT_SOURCE_MANIFEST.json",
+      "bytes": 16847,
+      "sha256": "0b4df0dae9a1a602cf3ff7146cd746105c0e333177ec305fa62d5c512431a5e0"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/NativeAssemblyBenchmark.cpp",
+      "bytes": 4963,
+      "sha256": "92fda6ec1d4c66f4112c719aa78a2601bf2dc6a136e77d27d7c10d563f7e7497"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/PHASE_FINGERPRINTS.json",
+      "bytes": 4647,
+      "sha256": "4be266b3d0dd10198db1cfcf8c381dfbd2b1bf5487c0947743a2fce86e3de93f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-development-before-retirement.zip",
+      "bytes": 699904,
+      "sha256": "3793d99c262ba8cc84859e986e048acdc41f4311f8c872ddfd5493a5e45f7e33"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-results.txt",
+      "bytes": 5461,
+      "sha256": "53fec3bc28143732f6dc14bfdc666a8d4e0511ce2ff463db16e9fc1a85b19e0e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-sections/Benchmark.cpp",
+      "bytes": 4607,
+      "sha256": "0d5b92873b972582b9a30423f3eb1a7c777f18de17d617595b262bd0af5c35b5"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/coarse-sections/JointSolver.cpp",
+      "bytes": 8929,
+      "sha256": "ae72f9a7f84967f1034428cbf0f00376f1dde433121cff019d3ff8ba99c9b6a3"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/compound-results.txt",
+      "bytes": 2320,
+      "sha256": "2a00b99c4c2e572fdaa3a6b88a408c67bb6f9193d537e899ea89d1cbe988f986"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/full-implicit-source.zip",
+      "bytes": 1212651,
+      "sha256": "3fd9e1145112db7939813ce8af21f666f78090e15e6aef98dc3e3a4522a3c959"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/native-assembly-results.txt",
+      "bytes": 4679,
+      "sha256": "6f8ac2bc90ef0acf408304363158af791e77cfbf6c44ce283d2f7aa7e897b694"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/reproduce.py",
+      "bytes": 2945,
+      "sha256": "9a1a82f936c437b24b277621f424ad99c8134a94ba0007c3d02b24c0068a831c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-followup.txt",
+      "bytes": 113,
+      "sha256": "490d0a73680b127e09c319065375ce8cc10624a2ce0a5667a63e203ab7c2e22e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/JointSolver.cpp",
+      "bytes": 8803,
+      "sha256": "106fe337b9078d0712ab70a4b53c77e86b2ee2e63aed762c47f465b658513c1c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/NativeAssemblyBenchmark.cpp",
+      "bytes": 5250,
+      "sha256": "0b3b07e70e34e721a70e2ffe8e77d0837d36b5e4abb7cf5726cb4d40faa66e9a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/biased-impact-failure/FAILURE.txt",
+      "bytes": 321,
+      "sha256": "5c8df7e068fa884f2aaaf2be5877189c20a2c309bdfe9801a9c7213f8b2bd643"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/biased-impact-failure/JointSolver.cpp",
+      "bytes": 8794,
+      "sha256": "34ad5daf1f6977783587fb9789829ddb2851b35c2adb90c47e8d049a29b3642e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-prototype/biased-impact-failure/NativeAssemblyBenchmark.cpp",
+      "bytes": 5218,
+      "sha256": "7c4b3555ab38f92420036f44483b82d941e21d63895be787513a949411b0d8ff"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/architecture-reassessment/soft-section-results.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/RESULTS.json",
+      "bytes": 365,
+      "sha256": "e119ebb735f4b27f6367f55be51aa6029a63fcc0206f0c86b24ef01c6a6f2d1e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/comparison/after.png",
+      "bytes": 73016,
+      "sha256": "be38ed4391e19df3cad65e75e5cd4b0edfc35243f7373233c1a295cc83a02441"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/comparison/before.png",
+      "bytes": 69109,
+      "sha256": "469b2cb0fe2dd033d4b310b30080d5c4ef773234e6bc3bf2d224507672ee060c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/comparison/impact.png",
+      "bytes": 69785,
+      "sha256": "622be7abd989663f48905a776c8f1e25bec9aa3a839042d4981a38641a009fcd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/comparison/run.txt",
+      "bytes": 4499,
+      "sha256": "bd445744b237e34fc8371c1e8b36e95f6d7515f82fe3ef9b590a3aa020e1ba7e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group/after.png",
+      "bytes": 72520,
+      "sha256": "2aec310b9f9a7f6297908f565bf53b4e0f24f10ca15f68a68406f4b52babcd2a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group/before.png",
+      "bytes": 67954,
+      "sha256": "ead0701ae9cea8d156206dfbe6df79b2e46ef0376e1fa9697acddc04ecfadeb9"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group/impact.png",
+      "bytes": 68842,
+      "sha256": "24aa56680b019b3be4d5a12fdf6356e6f2d0458c1a630c452343c87b6e515663"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group/run.txt",
+      "bytes": 4528,
+      "sha256": "a38842d3f754737072836cfe0f5e9b59a73d16bf9b19638f7533cac20c8f7d39"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group_high/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group_high/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group_high/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/group_high/run.txt",
+      "bytes": 4617,
+      "sha256": "2baf74602bbb76231a618ad9427b0cbdc538b84f1642a53d5e11f277212f983b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/high/after.png",
+      "bytes": 66551,
+      "sha256": "78081e8ac427227ffe0edfdeccc25e467c79f1825acbb148b63532578b9507e2"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/high/before.png",
+      "bytes": 64944,
+      "sha256": "9845589a149665c94496a31dadbc497790b22bf877588a5e8afa17673c11ed06"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/high/impact.png",
+      "bytes": 65607,
+      "sha256": "12c3d18a3c5abe4313d92fd253e91bcb926a9fa89600043156912a054ddb2195"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/high/run.txt",
+      "bytes": 4239,
+      "sha256": "649aec54124dadbb1b8090dcd0ff8b8f032f97ebdc8647b378919e8b54189be8"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/low/after.png",
+      "bytes": 65535,
+      "sha256": "ff5a749914c361df0319909a71a76f923dd46abce694a341a3e9d5e457db0ffc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/low/before.png",
+      "bytes": 65203,
+      "sha256": "a56fd4f513328a7edfa50da194e4ab976b187d84adddec8228a25b677aa9db8c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/low/impact.png",
+      "bytes": 65568,
+      "sha256": "b28d8974b4c777794ffe18483dafe91ccc2fbb94c856303cae5ecee4d67ff144"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/low/run.txt",
+      "bytes": 5228,
+      "sha256": "417ac4cb619fbbfb2e08383b0239e558023db8c510fe9a90462e2f638fe7fa60"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/medium/after.png",
+      "bytes": 68088,
+      "sha256": "384e892e37dcd3078320394eb9518fee4138bbcc300cb0315a2f69037b1f29bc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/medium/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/medium/impact.png",
+      "bytes": 66569,
+      "sha256": "b6e1623032cbd95aaa56f535398ec27abfb4978a3709b150b0bda8031de9df1a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/medium/run.txt",
+      "bytes": 4166,
+      "sha256": "54d12299aaf8b1ce8eb9d4ad8ebb250fde9e2478270e2b1f19081e78913637cd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/normal/after.png",
+      "bytes": 67826,
+      "sha256": "6ce878780321a2a4387bef983fb4853a7578980edc9fb3bb482b360c68b3e8ea"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/normal/before.png",
+      "bytes": 65731,
+      "sha256": "a15a9d31bbf7cfc4bb7e761e3e750335a42056b807bc382b0af794950d482e8f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/normal/run.txt",
+      "bytes": 3283,
+      "sha256": "da3b0cd3b03b16d78fbcf79917a84fdf8ecf85879e6b6726af77c4d2974229ad"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/offset/after.png",
+      "bytes": 67251,
+      "sha256": "c059886f94faa2b0edbb3edd13f041155316f4a1d11b66b777aaeadc4dff0337"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/offset/before.png",
+      "bytes": 65271,
+      "sha256": "1875e68b22ea02de423941d9c2fee96babf0be73c526a72abd15ad457f92d863"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/offset/impact.png",
+      "bytes": 65904,
+      "sha256": "a885709c2a673ceeb83df7b125010ef0b2dc73a38df85bae859a35d0efc93379"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/accepted-candidate/offset/run.txt",
+      "bytes": 4231,
+      "sha256": "f17030abd90733e4604824a595ed2d6fd1ba53b8ce9086dca8f7235ca7c436d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/RESULTS.json",
+      "bytes": 222,
+      "sha256": "966be0d30c96e483a184b7973de173ce126d198a5ee4c56130efc9c013946283"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/group/after.png",
+      "bytes": 68965,
+      "sha256": "aa237aff622a1752ee331f1928a7563c62d1f7c9ca556e9fbf742cdd61337bbd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/group/before.png",
+      "bytes": 68024,
+      "sha256": "07e3d8e3f37a99e3c5403e67eb2adde321f5919e6ef719733b44b43f7d41fca1"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/group/impact.png",
+      "bytes": 69101,
+      "sha256": "4713cb8ed9c32246c98b1b6888f946e8449706cb905aa90cd85ed9d0fc82e1a4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/group/run.txt",
+      "bytes": 4528,
+      "sha256": "18a9f308d5a07719734e3efe61c2da40f910f77a0c4b7fd9519b2cefda837e9f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/high/after.png",
+      "bytes": 65852,
+      "sha256": "46a9929c05d43c1c462e1c18e8af6a22927287e092c290b27a604101c9123dfd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/high/before.png",
+      "bytes": 64987,
+      "sha256": "7084d9c541bda52e2c7bd7f7939440c6c525c5db6a532e19f6a6de07d823a34a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/high/impact.png",
+      "bytes": 66634,
+      "sha256": "0ffd6d98a66a8346c08af269e851b98580e3f5fd80fb1089a6fd5e1216d8c8ca"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/high/run.txt",
+      "bytes": 4221,
+      "sha256": "13bca28110062ed553e63b26290127d0b85ee3e89e39a8480be746498e7358ca"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/low/after.png",
+      "bytes": 66954,
+      "sha256": "9a00d4c186d709cc6e61e6868fb64dd2408fe2ff3a339c2e50d61f82c3444e14"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/low/before.png",
+      "bytes": 65256,
+      "sha256": "032612806850dfb7b8dd6c8c4a20f3f011282d1c5a8b9641d18cfb6f2e373607"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/low/impact.png",
+      "bytes": 66672,
+      "sha256": "cea7c0c543ffdd65179f12130ab681e9334ce1af6b6b39b7468fb19f02555e22"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/low/run.txt",
+      "bytes": 5230,
+      "sha256": "51ff1a453d707c2ae0894b5828eb5737fb47e98e49a83482af64672469f1f81e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/medium/after.png",
+      "bytes": 67052,
+      "sha256": "1393d12e42166fc1f546b3e05d90fa7a46fd728cc5c35f283189da104707b415"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/medium/before.png",
+      "bytes": 65464,
+      "sha256": "7083a84c91dbb3a820488d7777e1d271b529c1f744e96eaad7d303a28273f73e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/medium/impact.png",
+      "bytes": 67003,
+      "sha256": "9938a75f2f107b8881a4822fd861053d30ca3a46789b15d4a22123d1d97cabe5"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/medium/run.txt",
+      "bytes": 4167,
+      "sha256": "0b3e6e8f6c5f2f08b51100c13058d034d3b80352f1a565f15521d400efc6392b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/normal/after.png",
+      "bytes": 67843,
+      "sha256": "ff101e6b143d7c42116d2fa77d7f02b88186143cf2374edabb0d874dfe202156"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/normal/before.png",
+      "bytes": 65776,
+      "sha256": "b5eb61bcff6e772faf22d9358de58207756efd246c6e395a298ec39080823d8b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate-v2/normal/run.txt",
+      "bytes": 3279,
+      "sha256": "e2934a60f42b970cddbd2719a2a33fd55e569ca557fd65761e42e2b1317875cd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate/RESULTS.json",
+      "bytes": 48,
+      "sha256": "75deab443bd411be3a81885b370651abca5c241f137fffc6c4814aeffc645139"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate/medium/after.png",
+      "bytes": 67052,
+      "sha256": "1393d12e42166fc1f546b3e05d90fa7a46fd728cc5c35f283189da104707b415"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate/medium/before.png",
+      "bytes": 65464,
+      "sha256": "7083a84c91dbb3a820488d7777e1d271b529c1f744e96eaad7d303a28273f73e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate/medium/impact.png",
+      "bytes": 67003,
+      "sha256": "9938a75f2f107b8881a4822fd861053d30ca3a46789b15d4a22123d1d97cabe5"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/candidate/medium/run.txt",
+      "bytes": 4168,
+      "sha256": "c37d75a9548101f3712a09f1e1d7d6efd91db94bb1a7c29a9254ecfb60c1ae50"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/FINAL_REGRESSIONS.json",
+      "bytes": 215,
+      "sha256": "1af2284754c597759c8526188deb09beda2b98ca79090a5999330e8426abebf1"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/MECHANICAL_RESULTS.json",
+      "bytes": 75,
+      "sha256": "88fc4b0548470b3b72302671fa1d56f575d512039f5a7ad017be9e8a0ac16b4b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/PACKAGE_RESULTS.json",
+      "bytes": 86,
+      "sha256": "978d9da9719cf75c3517c95b58b993f4f01d9bc050b9bf5c42746a936fbb5570"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/RESULTS.json",
+      "bytes": 105,
+      "sha256": "4fccc7835b1d49c0b72bf9786ce8521743169b20884873666a3023f8b7ee194e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/api.txt",
+      "bytes": 247,
+      "sha256": "83bbadbf4eccf5406b66e69597b4db51b78c58526b173c96f0de6e9ab7caf0ff"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/bending.txt",
+      "bytes": 3896,
+      "sha256": "7c406caf509c99e1c632fd28532ac3afca6791be240b13e5198a6134f5f0c340"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/cookbook-surface.txt",
+      "bytes": 7458,
+      "sha256": "559ea8c443041f9ac0a87446ff6c539090cc8fb46777dbe99152db8b8240bb21"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/cookbook/surface.json",
+      "bytes": 7004,
+      "sha256": "79246a30709227b2422ecf09faf870e10e0b79aae04b7696c59a199cb639ca89"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/editor.edit.png",
+      "bytes": 174354,
+      "sha256": "23f3d667e4333982c2eb78a1e68baea2e845e4ff407195d99169c4c6091af70f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/editor.play.png",
+      "bytes": 125813,
+      "sha256": "6e0c4c47d5ad5db45a0dc1bde9368dccb3574dda090211d189e5f25d91beaf7f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/editor.saved.judas",
+      "bytes": 12946,
+      "sha256": "b9280d18ac8387fa795d12d899c8f3be3e8527085bd3e93b325dec74824b044b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/editor.txt",
+      "bytes": 1045,
+      "sha256": "4fd02b433fcaa13e2e6897f22721107d78c4fe8adad0454ef2dd7a4d79b32c30"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/export.txt",
+      "bytes": 98,
+      "sha256": "247c72f3d2ac06170a9b993b9782e34004bbf73b1575f0608952c28e77b6e001"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four-corrected.txt",
+      "bytes": 4534,
+      "sha256": "23b6b033a494acfbcb7783b38bdd1e95a46eb615e38eab4d7eb819c0ec3c4776"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four-corrected/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four-corrected/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four-corrected/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four.txt",
+      "bytes": 4535,
+      "sha256": "2229fc4fd1b11b7ace74f8486dc5241ff5ca5b76482aee16f3425f8d3da5689e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-four/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-mechanics/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-mechanics/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-mechanics/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/exported-mechanics/run.txt",
+      "bytes": 5000,
+      "sha256": "51a6411459888adc9a47c80deaedb5dc20e7a623ca07bdcad3daceb2a75fa1af"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-lifecycle/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-lifecycle/run.txt",
+      "bytes": 906,
+      "sha256": "72f56f8216bccf060c1f46f7ced5ef555644199d507c7412480734821a2a245c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-read/restored.png",
+      "bytes": 66517,
+      "sha256": "3fff86b99813fc2db8bf8fd5b6d991a06e1d61ad99ae257e8b8e74ad7e1038d5"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-read/run.txt",
+      "bytes": 1521,
+      "sha256": "95b9496b68b81b8a5663f990b6862b7ba12201ab3d612ba76c0404c8ad93e7a6"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-stream/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-stream/run.txt",
+      "bytes": 1020,
+      "sha256": "bbe4a08c920a27e20f958d8321c0c50ccc17e604931c17b64aaff685222b0b89"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-write/after.png",
+      "bytes": 66517,
+      "sha256": "f8d437a21f4f4c03e48ed4073da18b65e8afc62e4e6b41452d081f59ccf50fce"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-write/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-write/expected-physical.bin",
+      "bytes": 2313,
+      "sha256": "818357191dca68f5b74ecc6005678c2e9e5101e229f98d798935a7c13bc79b43"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-write/impact.png",
+      "bytes": 66569,
+      "sha256": "b6e1623032cbd95aaa56f535398ec27abfb4978a3709b150b0bda8031de9df1a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/final-write/run.txt",
+      "bytes": 3818,
+      "sha256": "bc9068c7d723f64e2d5b339f5ab890084c46d22b1559a83122eaf35cb2b8824e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/four-mechanics/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/four-mechanics/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/four-mechanics/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/four-mechanics/run.txt",
+      "bytes": 5078,
+      "sha256": "44e12da8619685fb3acce8b9e628b499ea29e8332500ffbe1cfebb1b1de00552"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/fracture.txt",
+      "bytes": 320,
+      "sha256": "a618be906a168f88b6a5a346cd25dae2d22e50060cfaa877c0b5e4f9405f28f1"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group/after.png",
+      "bytes": 68880,
+      "sha256": "31cd8449d84e8d04898b0aa530d2d2d4fe53f5b9838bcad562549271619d2fb7"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group/before.png",
+      "bytes": 67954,
+      "sha256": "ead0701ae9cea8d156206dfbe6df79b2e46ef0376e1fa9697acddc04ecfadeb9"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group/impact.png",
+      "bytes": 68842,
+      "sha256": "24aa56680b019b3be4d5a12fdf6356e6f2d0458c1a630c452343c87b6e515663"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group/run.txt",
+      "bytes": 4525,
+      "sha256": "3f2918b18796e7cc83d9ea8967829db0d37946defcce2a2acadfe05d4692d1a7"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group_high/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group_high/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group_high/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/group_high/run.txt",
+      "bytes": 4615,
+      "sha256": "0cc86e44879919335da96b4d52c8cdbc3f78248f188b2a54d71586cce448f934"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics-repeat.txt",
+      "bytes": 4307,
+      "sha256": "4dc5b2f585e78292a78585a2d0cde355f9934c2d99095368b7229a2fcc9d3373"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics-repeat/after.png",
+      "bytes": 66551,
+      "sha256": "78081e8ac427227ffe0edfdeccc25e467c79f1825acbb148b63532578b9507e2"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics-repeat/before.png",
+      "bytes": 64944,
+      "sha256": "9845589a149665c94496a31dadbc497790b22bf877588a5e8afa17673c11ed06"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics-repeat/impact.png",
+      "bytes": 65607,
+      "sha256": "12c3d18a3c5abe4313d92fd253e91bcb926a9fa89600043156912a054ddb2195"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics/after.png",
+      "bytes": 66551,
+      "sha256": "78081e8ac427227ffe0edfdeccc25e467c79f1825acbb148b63532578b9507e2"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics/before.png",
+      "bytes": 64944,
+      "sha256": "9845589a149665c94496a31dadbc497790b22bf877588a5e8afa17673c11ed06"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics/impact.png",
+      "bytes": 65607,
+      "sha256": "12c3d18a3c5abe4313d92fd253e91bcb926a9fa89600043156912a054ddb2195"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high-mechanics/run.txt",
+      "bytes": 4307,
+      "sha256": "0f8fca98f195e9df73626b79428aa361f7b645fec1fdfd0952165daf2e17a7f9"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high/after.png",
+      "bytes": 66551,
+      "sha256": "78081e8ac427227ffe0edfdeccc25e467c79f1825acbb148b63532578b9507e2"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high/before.png",
+      "bytes": 64944,
+      "sha256": "9845589a149665c94496a31dadbc497790b22bf877588a5e8afa17673c11ed06"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high/impact.png",
+      "bytes": 65607,
+      "sha256": "12c3d18a3c5abe4313d92fd253e91bcb926a9fa89600043156912a054ddb2195"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/high/run.txt",
+      "bytes": 4240,
+      "sha256": "cd470cb1d2e0fc2aa2159c1633f98c98e474f5c4457d8d4614ffc7023f712f1e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/joint.txt",
+      "bytes": 1437,
+      "sha256": "72ba295443b6a80377a96657fb37ddae6db885f7acf565a144b57d55c8600ab8"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/low/after.png",
+      "bytes": 65535,
+      "sha256": "ff5a749914c361df0319909a71a76f923dd46abce694a341a3e9d5e457db0ffc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/low/before.png",
+      "bytes": 65203,
+      "sha256": "a56fd4f513328a7edfa50da194e4ab976b187d84adddec8228a25b677aa9db8c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/low/impact.png",
+      "bytes": 65568,
+      "sha256": "b28d8974b4c777794ffe18483dafe91ccc2fbb94c856303cae5ecee4d67ff144"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/low/run.txt",
+      "bytes": 5227,
+      "sha256": "c25ef58ee2f1656ecae0dd58f72a76ede480726874b3ca0a6bfffcac1339db8d"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/mechanical_connection.txt",
+      "bytes": 2658,
+      "sha256": "fcf91abe838b72976ee5ab6da9d1aa4126e0f0b660e5fe2a23d8b2dea06e5735"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/medium/after.png",
+      "bytes": 66517,
+      "sha256": "f8d437a21f4f4c03e48ed4073da18b65e8afc62e4e6b41452d081f59ccf50fce"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/medium/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/medium/impact.png",
+      "bytes": 66569,
+      "sha256": "b6e1623032cbd95aaa56f535398ec27abfb4978a3709b150b0bda8031de9df1a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/medium/run.txt",
+      "bytes": 4165,
+      "sha256": "24282de398c4158e3a9101c8966eca0d61ceb344eba7fe0c1824208c0cc331f0"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package-corrected.txt",
+      "bytes": 359,
+      "sha256": "033251025ab5ac03b944e24df8f26729fbbb2718030d995a53c75b002bbbb50a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package-corrected/RESULTS.json",
+      "bytes": 359,
+      "sha256": "033251025ab5ac03b944e24df8f26729fbbb2718030d995a53c75b002bbbb50a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package-corrected/profile.json",
+      "bytes": 2421594,
+      "sha256": "98551cf7ba59cdb1c07cff8af7c4dba277159b168380f015bb438acb66e450d6"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package-corrected/runtime.log",
+      "bytes": 398,
+      "sha256": "aefd969f8cf9a0b082b95a19760353169c512905cb2e6e4e5963f5bb0904a043"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package.txt",
+      "bytes": 1400,
+      "sha256": "656afc44b5773d8b89acc47875067f4dbc1885df761e16e3b837f74583d744df"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package/profile.json",
+      "bytes": 2472401,
+      "sha256": "8e65cc8dcd7f594f478f3f461c6a4d964d3d9da206915cd8f6cec6b8faa37116"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/moved-package/runtime.log",
+      "bytes": 455,
+      "sha256": "4909f67bdd58e94947557145e1253737d01cb78f77b1c73f3abb8043d2c2700e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/normal/after.png",
+      "bytes": 67826,
+      "sha256": "6ce878780321a2a4387bef983fb4853a7578980edc9fb3bb482b360c68b3e8ea"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/normal/before.png",
+      "bytes": 65731,
+      "sha256": "a15a9d31bbf7cfc4bb7e761e3e750335a42056b807bc382b0af794950d482e8f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/normal/run.txt",
+      "bytes": 3283,
+      "sha256": "014880427f747a60bbfe660878fa6b99eefec8d41b9c2897d2f540ad7e2aa3be"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/offset/after.png",
+      "bytes": 66995,
+      "sha256": "94fbe6f183f38e99ea3892f5ead58749dc2fac1a66752674c770595c23870fad"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/offset/before.png",
+      "bytes": 65271,
+      "sha256": "1875e68b22ea02de423941d9c2fee96babf0be73c526a72abd15ad457f92d863"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/offset/impact.png",
+      "bytes": 65904,
+      "sha256": "a885709c2a673ceeb83df7b125010ef0b2dc73a38df85bae859a35d0efc93379"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/offset/run.txt",
+      "bytes": 4231,
+      "sha256": "a5cdedd032916c1fc1f18b566cff4dc7c05fb42015b5a3850493995ddba5f8b9"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/powertrain.txt",
+      "bytes": 4167,
+      "sha256": "e58e816d30e8eebe98b0ecd0e96c30e3f261d602b48e9a495d8bf5a2ecd23186"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/section-material.txt",
+      "bytes": 1379,
+      "sha256": "fb5d69c4fa9a042b8a7b6d21c69cb77675417868502bf26ee2960ed52bf49950"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/structural.txt",
+      "bytes": 27,
+      "sha256": "22fa2e884270d7b6443c665a0cfb41696b0fcf0e31df46e6300b65c7ea92b741"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/wheel.txt",
+      "bytes": 2302,
+      "sha256": "77f725b43ea53abd54f892556b94acf2b8afc184f079e0f068c2c8f969ae71e2"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/closure-linux/wheel_lifecycle.txt",
+      "bytes": 3190,
+      "sha256": "cdcba6afbcfbebae96bdb3bd11f8ed40702cadc8e892694a650f961a3ba2e456"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux-followup/RESULTS.json",
+      "bytes": 50,
+      "sha256": "470c8ed94f599633dc7732087ea9768604946d0be28a9eea4fe069f78ab124dc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux-followup/specimen/after.png",
+      "bytes": 66892,
+      "sha256": "252d17f04732e56a36326364393dd0a2aaf162f5f91f29422afe42cf7c95d265"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux-followup/specimen/before.png",
+      "bytes": 65602,
+      "sha256": "2ef52f7f9d4dfcca705514bee0a653f023907f4489f6f93556ab9621123fe5b4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux-followup/specimen/run.txt",
+      "bytes": 1039,
+      "sha256": "8b9ccc188e6506b7256976970af97ce1bb1cf9365442dd1b8d54dbc4fdeaa837"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/RESULTS.json",
+      "bytes": 145,
+      "sha256": "357a5568879b85888fdec86d2d12a9059db60096d1d9fac214b81b5e3fe76d13"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/comparison/after.png",
+      "bytes": 71691,
+      "sha256": "443c82458e9230ce0d6c0162e6f15c0aa64c03d84d1e2b2e8a532af9f3e7e1fb"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/comparison/before.png",
+      "bytes": 69109,
+      "sha256": "469b2cb0fe2dd033d4b310b30080d5c4ef773234e6bc3bf2d224507672ee060c"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/comparison/impact.png",
+      "bytes": 69785,
+      "sha256": "622be7abd989663f48905a776c8f1e25bec9aa3a839042d4981a38641a009fcd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/comparison/run.txt",
+      "bytes": 4499,
+      "sha256": "c61d0972277af7ef92dd973cef3ecfbeb86307e6b4321ea7080e519b3cc0741f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/rotated/after.png",
+      "bytes": 72959,
+      "sha256": "e63917d4a9ac250c0eec5522ad93a9212f4a3ab5f210494e0816064f83c944a9"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/rotated/before.png",
+      "bytes": 71474,
+      "sha256": "9f76fed48bac58f5925c361b7f2e6f0a90fed946dda78290ac9867872e3bfeec"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/rotated/impact.png",
+      "bytes": 72534,
+      "sha256": "ba639c195354e989f108ba55f58bc69069fcb1680172358dced3177a9bc01e76"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/rotated/run.txt",
+      "bytes": 4178,
+      "sha256": "55448312f7bb43ba242050d86a25de8eced8e74da3ed78548bbc4d8a0183bfdc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-linux/specimen/run.txt",
+      "bytes": 1238,
+      "sha256": "d7f0c881676baf1312d36adbc987c6d28bf372a5a4192aca3d6001b3455305bb"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-matrix/RESULTS.json",
+      "bytes": 46,
+      "sha256": "25b7e784476dba7ef092b6981c7e4db5f8cab03c007bb47c3e103bad76b6ecab"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-matrix/high/after.png",
+      "bytes": 66718,
+      "sha256": "6632833a1da0e0f1336030a09c9caa4b70f4c9ffc44683bc78e8507bd607e15f"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-matrix/high/before.png",
+      "bytes": 64987,
+      "sha256": "7084d9c541bda52e2c7bd7f7939440c6c525c5db6a532e19f6a6de07d823a34a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-matrix/high/impact.png",
+      "bytes": 66634,
+      "sha256": "0ffd6d98a66a8346c08af269e851b98580e3f5fd80fb1089a6fd5e1216d8c8ca"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/final-matrix/high/run.txt",
+      "bytes": 4224,
+      "sha256": "e26312fc92af4645820cace6b2ed6ad317532a6169b8b212ac580797bf90b89d"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/first-medium/run.txt",
+      "bytes": 260,
+      "sha256": "a5f551bde46eea66dcb214d80c2a2e9ab50f1ba5f58f4573f4e2597fd7e7eb8b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/five-body-high/after.png",
+      "bytes": 71480,
+      "sha256": "499f146b2244e3ff4e8ccd41d36dc7f4b7d3ed2580ba88076b3e5638ab4ac481"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/five-body-high/before.png",
+      "bytes": 68573,
+      "sha256": "235328390352ea2e28c599b6f2b4ef6058de2e4ba7275af0175c529255d7e9d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/five-body-high/impact.png",
+      "bytes": 68955,
+      "sha256": "717769b2ea09dbafa286e60a3d913b06bddb4796a8bb3108acf08cfd933a80db"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/five-body-high/run.txt",
+      "bytes": 4601,
+      "sha256": "00512a7a7df5f22e0e1c8a6a31fe40ef95031b99ad54b3a2253763ec2966fb68"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/four-high/after.png",
+      "bytes": 70684,
+      "sha256": "5775bb77236d634d57f558da711a61cd3d6f5c6fd1ccbf7b2d267a531d6241fc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/four-high/before.png",
+      "bytes": 68643,
+      "sha256": "266ed578f05ef752df671f33cc0eb91685a544caf1c9a4e53daf6d315d6aef5b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/four-high/impact.png",
+      "bytes": 69748,
+      "sha256": "ac959674d52bdd9a99ee9afec36c113b65330fb08515222d4feab2aaa0814588"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/four-high/run.txt",
+      "bytes": 4616,
+      "sha256": "1a9050a889020f379d8bde3b9b491f3a2fff1c31bbc284c24cfef0de8bf71b90"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/high-profile/after.png",
+      "bytes": 70684,
+      "sha256": "5775bb77236d634d57f558da711a61cd3d6f5c6fd1ccbf7b2d267a531d6241fc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/high-profile/before.png",
+      "bytes": 68643,
+      "sha256": "266ed578f05ef752df671f33cc0eb91685a544caf1c9a4e53daf6d315d6aef5b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/high-profile/impact-profile.json",
+      "bytes": 4874659,
+      "sha256": "4d85de57cf120699225cd5e12835862fa60c9fef07fc5e45117e9d6a25cc4967"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/high-profile/impact.png",
+      "bytes": 69748,
+      "sha256": "ac959674d52bdd9a99ee9afec36c113b65330fb08515222d4feab2aaa0814588"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/high-profile/post-profile.json",
+      "bytes": 5921354,
+      "sha256": "9b2b35364f7ec083349c5edc5efcac3f8fbecad13ddb19c36bb370a96b260186"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/high-profile/run.txt",
+      "bytes": 4346,
+      "sha256": "14d0c3f8ccc63e0f12cdf75fb5787a1594c828d46382ab52b9b65e321e5966de"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lean-medium/after.png",
+      "bytes": 64714,
+      "sha256": "8ba28ced7c120bd5d6bf9be76de591d06eb44934fb26a7fa3934514b86036de6"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lean-medium/before.png",
+      "bytes": 65464,
+      "sha256": "7083a84c91dbb3a820488d7777e1d271b529c1f744e96eaad7d303a28273f73e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lean-medium/impact.png",
+      "bytes": 66573,
+      "sha256": "c28e6e9c87d5a4664a93d81296266b20250027593956eb770dbbaa4a10b5ed97"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lean-medium/run.txt",
+      "bytes": 3865,
+      "sha256": "41022cae4d65ccf236addf5f4919ea17d1e74b7e3de0eb1c977e97fe477cac8a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/RESULTS.json",
+      "bytes": 183,
+      "sha256": "92d9511f35bfbf8ca41aa41bafbf66e47dc88f27e10c465a546a765706da25cc"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/lifecycle/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/lifecycle/run.txt",
+      "bytes": 971,
+      "sha256": "9816209b29ca33fe2d6fd121c9a1249ff9828cceb822b468cae23065b311c6be"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/read/restored.png",
+      "bytes": 66517,
+      "sha256": "3fff86b99813fc2db8bf8fd5b6d991a06e1d61ad99ae257e8b8e74ad7e1038d5"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/read/run.txt",
+      "bytes": 1585,
+      "sha256": "c4dd5088580e365f226238dcf23f4381ec9d86918814c14ba1b955980e105909"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/stream/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/stream/run.txt",
+      "bytes": 980,
+      "sha256": "08c395f06b56994f87a0e728d392729f7f289b032d9d856e5a6caf7371a96c79"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/write/after.png",
+      "bytes": 66517,
+      "sha256": "f8d437a21f4f4c03e48ed4073da18b65e8afc62e4e6b41452d081f59ccf50fce"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/write/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/write/expected-physical.bin",
+      "bytes": 2313,
+      "sha256": "818357191dca68f5b74ecc6005678c2e9e5101e229f98d798935a7c13bc79b43"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/write/impact.png",
+      "bytes": 66569,
+      "sha256": "b6e1623032cbd95aaa56f535398ec27abfb4978a3709b150b0bda8031de9df1a"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/lifecycles/write/run.txt",
+      "bytes": 3883,
+      "sha256": "839e96d380087d759e109139606f95fe472b7b88d412234b195aa89a81853956"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/local-neighbours/before.png",
+      "bytes": 65170,
+      "sha256": "db5692946c016e60ba5d79039151f4472d4b522caf20265b132ceb60219e72d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/local-neighbours/run.txt",
+      "bytes": 7559,
+      "sha256": "d69cd7c50398e9042cb3b68f42b347d4975a7765b2fbd2c39519fa0c5029f4b1"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/medium-v2/run.txt",
+      "bytes": 265,
+      "sha256": "1e1151b50a54853913ae06ef790a493f85f643f66151a3c53f24d37d9b547742"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/medium-v3/run.txt",
+      "bytes": 463,
+      "sha256": "0cae0481e40e08613f299c1e2e9efc32d826cdd845dd9cb48151b80663ff5826"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/medium-v4/before.png",
+      "bytes": 65170,
+      "sha256": "db5692946c016e60ba5d79039151f4472d4b522caf20265b132ceb60219e72d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/medium-v4/run.txt",
+      "bytes": 1026,
+      "sha256": "577acd68642a9d029593bacec9d37b2d149f8a62e4652826d601d397dd20823b"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/medium-v5/before.png",
+      "bytes": 65170,
+      "sha256": "db5692946c016e60ba5d79039151f4472d4b522caf20265b132ceb60219e72d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/medium-v5/run.txt",
+      "bytes": 3401,
+      "sha256": "e8f61abe13f83813a2b175c9df2ee459be668df1cb815c2e3d9f51427669df9e"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/RESULTS.json",
+      "bytes": 560,
+      "sha256": "4d053725174543337f832b0d7d1ab0c2e9cb84aa10dc642b635d24b01abe7b7d"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/bending.txt",
+      "bytes": 3897,
+      "sha256": "f37d18a16a620f84ef88c4fc9a50f35a82696dc8ede9f02dbfba5c9801a43bfd"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/collision_geometry.txt",
+      "bytes": 3177,
+      "sha256": "549f29f971e06bb2dd382d45a83657ae97ba37d6edfc5acdcf23e9cef6f47f60"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/fracture.txt",
+      "bytes": 320,
+      "sha256": "a618be906a168f88b6a5a346cd25dae2d22e50060cfaa877c0b5e4f9405f28f1"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/joint.txt",
+      "bytes": 1437,
+      "sha256": "52b0241c018c448847d129790528732a772c0f32afdbaaa111377b701006c187"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/mechanical_connection.txt",
+      "bytes": 2658,
+      "sha256": "fcf91abe838b72976ee5ab6da9d1aa4126e0f0b660e5fe2a23d8b2dea06e5735"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/powertrain.txt",
+      "bytes": 4167,
+      "sha256": "1f8ab74ec6771e5780218fc034929dcd2dd2d10b1b4784c51c47b7a36e44ca06"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/rigid_contact.txt",
+      "bytes": 3627,
+      "sha256": "933cce03c849e65788ccf342a44465459236c4f3671c27a637ae1fa8173c7f73"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/section_material.txt",
+      "bytes": 1379,
+      "sha256": "fb5d69c4fa9a042b8a7b6d21c69cb77675417868502bf26ee2960ed52bf49950"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/structural.txt",
+      "bytes": 27,
+      "sha256": "22fa2e884270d7b6443c665a0cfb41696b0fcf0e31df46e6300b65c7ea92b741"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/wheel.txt",
+      "bytes": 2302,
+      "sha256": "c8882ab7ea2265262f0f3c091540154e3edcc91c9703b90cd4ab98d849a0f2e0"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/regressions/wheel_lifecycle.txt",
+      "bytes": 3190,
+      "sha256": "cdcba6afbcfbebae96bdb3bd11f8ed40702cadc8e892694a650f961a3ba2e456"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/self-contact-control/before.png",
+      "bytes": 65170,
+      "sha256": "db5692946c016e60ba5d79039151f4472d4b522caf20265b132ceb60219e72d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/self-contact-control/diagnostic.png",
+      "bytes": 65610,
+      "sha256": "8050ee13d31d4c115903e0e5f1874ea65266d9e55036130ced33ac975dd4a556"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/self-contact-control/run.txt",
+      "bytes": 1791,
+      "sha256": "5c2f31f36bc2b5faddfd7a2f957c422009120283256a282a30326da538b616b0"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/specimen-corrected/after.png",
+      "bytes": 64840,
+      "sha256": "1889d58c7f1943a427036a8e19ea349fb480a86e8a1c4910d2af8ae900f3a608"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/specimen-corrected/before.png",
+      "bytes": 60294,
+      "sha256": "aa0f8449e41a85d069d2eeb463a8a0856e7d3251fff527c35c25b8b72fabd9cf"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/specimen-corrected/run.txt",
+      "bytes": 1039,
+      "sha256": "d0a02c746d8568cddacaa7b12ea44aba6011c00606e50be33815a2dd5b3cb9c6"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/stream-corrected/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/stream-corrected/run.txt",
+      "bytes": 1085,
+      "sha256": "c7ff057abeb5c4beb5fe3677ee0765a6f1b49264a9a8a6195df56d4028849f90"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/stream-observed/before.png",
+      "bytes": 65411,
+      "sha256": "c4912e3b96b9d4518bcd9c33cf59c27e5c02f9841e16ea9036f062d27b378ced"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/stream-observed/run.txt",
+      "bytes": 1051,
+      "sha256": "27885a160616a0832d226819108fdfd6a2b0524afa8043f4b51f2f72d99dfc04"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/support-control/before.png",
+      "bytes": 65170,
+      "sha256": "db5692946c016e60ba5d79039151f4472d4b522caf20265b132ceb60219e72d4"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/support-control/diagnostic.png",
+      "bytes": 65587,
+      "sha256": "e3571eb286fc8630c94fe141af002a63bbea3714c6994d88a9df8a6bf433b834"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/coarse-final/support-control/run.txt",
+      "bytes": 2362,
+      "sha256": "b7643c263cd54617840f1f8bd2699dc2647394cc293a202e8f31d3d954fc2b60"
+    },
+    {
+      "path": "docs/evidence/m83-structural-corrective/preserved-investigation.zip",
+      "bytes": 64952143,
+      "sha256": "b71b62b410eaf8ab1783849924026c219fcc38456070249b0a73075003700dff"
+    },
+    {
+      "path": "docs/judas.d.ts",
+      "bytes": 48764,
+      "sha256": "f9784099769e589d20f3229790004a7e225002048479f7ba072407cf3b56a15d"
+    },
+    {
+      "path": "docs/judasjs/API_INVENTORY.md",
+      "bytes": 38107,
+      "sha256": "3b60a7acdb08b9c2ab82aa436aa841e6cdc8411b27703f1f34f0a48721e74cc4"
+    },
+    {
+      "path": "docs/judasjs/api-inventory.json",
+      "bytes": 92116,
+      "sha256": "3f15b68274c435379c44f00d49b555cff21fec38e7c475021fb4dce58bcfbf88"
+    },
+    {
+      "path": "docs/judasjs/fracture.md",
+      "bytes": 7468,
+      "sha256": "596d6416e70ee93fddfd5188aeb2a44cb655015333530b768014e988d04a5b2f"
+    },
+    {
+      "path": "docs/judasjs/powertrains.md",
+      "bytes": 9718,
+      "sha256": "ecdce45a1898e68171ae19409a66d0fbfc45e449a87a719b4135993077a4362c"
+    },
+    {
+      "path": "docs/judasjs/wheels.md",
+      "bytes": 7222,
+      "sha256": "ab72dc6499fb0da7f76fa5be499fd6f727ffc956f2b11ad81b2be8f6a33de5a5"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/nominal.judasdeform",
+      "bytes": 18055,
+      "sha256": "6e55d958d75f6b767375526f016459336f04bc68d656ccae717a449797134fce"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/nominal.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "7749d647391d6a2ef8639f1a69e12cf8c033906f5944ae4c4519fea3bfee0e7f"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/specimen.judasdeform",
+      "bytes": 13264,
+      "sha256": "ad3e1010d2ce31c50186d05ce3d936353888f53ca67ce30ee9a5c72a4cfd585c"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/specimen.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "9462334843b5467fe5c67a64877cfa92f3d18daba9df24f4fb07357a2e3f98fe"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/specimen.source",
+      "bytes": 1424,
+      "sha256": "93ef3a40e61e2c780638ac38f5aa623a91243039bee1b11281fda1306a96f893"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/strong.judasdeform",
+      "bytes": 18055,
+      "sha256": "01f98d07dde0c53cabbb7553d514f0c2b33f93dfdcf9e5f7a4af65bea1edf208"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/strong.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "2048a867b6c573dc9576c612f741fe52fcfe30f37e97fc7eb83c79a75751f27a"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/weak.judasdeform",
+      "bytes": 18055,
+      "sha256": "97a01663e8ce6c9d0176b76e28a0f3c51244b4858371748cb948de94a3515b2e"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/deformables/weak.judasdeform.judasmeta",
+      "bytes": 81,
+      "sha256": "ff9b1dfe9ea5fc2c79ceac1b96d9d651743f7baae5aab7352cbf90f6bf1ab0e3"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/fonts/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "bytes": 75,
+      "sha256": "d8733c4253b239080c0eab36a78213da03243c7e187e27c2ea2ec48af30f168f"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/fonts/LICENSE.txt",
+      "bytes": 3859,
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/models/wheel.obj",
+      "bytes": 3791,
+      "sha256": "20aa6073cc317dfe385d0f923a612f6882e93a83152dd213e6e6f16bc1d937a9"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/models/wheel.obj.judasmeta",
+      "bytes": 75,
+      "sha256": "fd6a854692b7fa866f635c7d411a2a0c1b2e079fca5258c40aaed17404237e23"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/prefabs/car.judasprefab",
+      "bytes": 10637,
+      "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/prefabs/car.judasprefab.judasmeta",
+      "bytes": 77,
+      "sha256": "1e14b167a8ce188216cd0ec9d19ff66731100a0e892712c0b4f870b4e186ba0c"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/scripts/controller.js",
+      "bytes": 8217,
+      "sha256": "4f5fab6c655d18b4f90acd972b1b8fbccd58edf408d545d5df43140bced60e21"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/scripts/controller.js.judasmeta",
+      "bytes": 77,
+      "sha256": "5e38d2c69e4cf3627eee06ce4dcb247f0dfde586403fa91431f9c021ad1b6d49"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/scripts/math.js",
+      "bytes": 1050,
+      "sha256": "a1755da3b2fb7e9c56b981e461affe817a9d98478676c5f78d1daa83c2f32173"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/scripts/math.js.judasmeta",
+      "bytes": 77,
+      "sha256": "006e6415a3a179d76f1ddfabfa89666ecd6b025d74c9ff91a4b70071655e6cb3"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/ui/lab.judasui",
+      "bytes": 3701,
+      "sha256": "2b344c7dca0c36a077f9c19cdffe0cddc6fe677d2fe838933034d86a009db86b"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/ui/lab.judasui.judasmeta",
+      "bytes": 73,
+      "sha256": "01cfdd4f0a3162caa087fee2198e3fd57a3d089e313b427ea0e13a369cd1517a"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/worlds/lab.judasworld",
+      "bytes": 141,
+      "sha256": "263dbfc8006e74df3895666699413e8664151bcd916b4e5f21bc65231975dd40"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Assets/worlds/lab.judasworld.judasmeta",
+      "bytes": 76,
+      "sha256": "dbb45bb6fde62e3bef1a92d9c67835ce33fb65929085c30b6fd8cca8c39bac7e"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/annex.judas",
+      "bytes": 11242,
+      "sha256": "e890e6a510974514dc489fda621f4d690c277060c7edbf2232273463d24b0ac9"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/comparison.judas",
+      "bytes": 33373,
+      "sha256": "4beb6cc1c0b4e2e27b68a1c6cc6ef6b97aee98da686464d4df2f61af5d2fdd45"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/group.judas",
+      "bytes": 43852,
+      "sha256": "2bb96a2046b61a915dd1fc926439a5a7b46f29bfe903cb8c3f296befdcbb2acf"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/group_high.judas",
+      "bytes": 43862,
+      "sha256": "4b27d6f0e79a2a9f80875758af623178a1267e0fd06dc6354c73231ecb10de0a"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/high.judas",
+      "bytes": 12420,
+      "sha256": "2bf1daf61cbedf6e5d0f4fa724a5c63f388ab838ae4555ef2f3fe5f4a0cf27dc"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/low.judas",
+      "bytes": 12418,
+      "sha256": "a538724e2e501824375f13ad7cadba7cc27cd1b1165446841889e4724a8f90fa"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/medium.judas",
+      "bytes": 12424,
+      "sha256": "c7e457c371e866fcbb650fc60279064153121b7bb0a49baea02f1d29828d7f0b"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/normal.judas",
+      "bytes": 12426,
+      "sha256": "a7651bc8eac97cc99533203788b64cff4a44c4451d252f110f2ae9e5f19ab40e"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/offset.judas",
+      "bytes": 12429,
+      "sha256": "6f9df9b59695d3494f1be9ea28ff81070115a7398fb90bee6396a6822ee0a9be"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/rotated.judas",
+      "bytes": 12619,
+      "sha256": "0247801bfaa9dffa348a9e9350b81046d08a2aab17d560e1ede51f9396d377bd"
+    },
+    {
+      "path": "projects/coarse_crash_lab/Scenes/specimen.judas",
+      "bytes": 3877,
+      "sha256": "1643d208893f50c3d941c65a91a0fae6afaef34eeea39ee13b0958aea442f1a6"
+    },
+    {
+      "path": "projects/coarse_crash_lab/coarse_crash_lab.judasproj",
+      "bytes": 1290,
+      "sha256": "7e3113631662c553663b2504a9bc12d0fcd111960f12e8680a8b80d9ee354eef"
+    },
+    {
+      "path": "scripts/check_judasjs_api.mjs",
+      "bytes": 13427,
+      "sha256": "7fcbd030f42e82fdb15cd8ac3bc1c737f5ad2fb1bfab6ff2183607d7ea1620e6"
+    },
+    {
+      "path": "src/DeformableAsset.cpp",
+      "bytes": 22694,
+      "sha256": "ba530e448a6cc96e0b94c29841e84e76cce64dfd326602c54eeb9a9ba978a758"
+    },
+    {
+      "path": "src/Fracture.cpp",
+      "bytes": 21241,
+      "sha256": "d440d35d445343263b83a7c4343b638dd2e6aa32969001c41889424a9744f96c"
+    },
+    {
+      "path": "src/FractureTypes.h",
+      "bytes": 3171,
+      "sha256": "d3c36a86aa09a943da241f979df73d587f2ef8b358350e5571af53f9553fa61f"
+    },
+    {
+      "path": "src/JointSolver.cpp",
+      "bytes": 11383,
+      "sha256": "d3ce69287e5c1e143f04afc91fd450bcfcf513f1ebdebd85535882b781d29fca"
+    },
+    {
+      "path": "src/JointSolver.h",
+      "bytes": 1310,
+      "sha256": "a20347fe7ba295e60482114cb400d9c14ef16741d2daac19bd1e6b6fab4bc4e2"
+    },
+    {
+      "path": "src/JointTypes.h",
+      "bytes": 3750,
+      "sha256": "392d773a0d9de9a77d32b712836bac84094eb53efd2006d928473816edbe590e"
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "bytes": 211587,
+      "sha256": "0f66086aa9e33cbf7efbb8c6a7926206f389d1f3d791a0f7805c61219854f52b"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "bytes": 33126,
+      "sha256": "3b789b843162ed2d23f44d7daa0b0c79e2764eb9316bccde7e2dce08ccf52026"
+    },
+    {
+      "path": "src/Powertrain.cpp",
+      "bytes": 25816,
+      "sha256": "49938b1a47e0c9fb32323c855f4c69011482cba433dd898f86edc6e63a2e6572"
+    },
+    {
+      "path": "src/Powertrain.h",
+      "bytes": 5354,
+      "sha256": "dbe7643e04a2707f2d27b007c52fa7ffc6b8931a2ac9ac7a803e712c681b8bd1"
+    },
+    {
+      "path": "src/PowertrainAuthoring.cpp",
+      "bytes": 10515,
+      "sha256": "0527e5a5d8a1c366144efb0ec8acb8e2200cb06be2c488a29cdbff3365b0dee2"
+    },
+    {
+      "path": "src/Prefab.cpp",
+      "bytes": 21305,
+      "sha256": "b6002250b2fa8bad7580d81b77aa7f6e1363ad804c4e6afcbd0618828f8957d3"
+    },
+    {
+      "path": "src/RigidMotion.h",
+      "bytes": 6500,
+      "sha256": "356e68f283f06c5413e5736f07a5c1e51fa765372d06a3954a65f3a56b85d931"
+    },
+    {
+      "path": "src/RuntimeWorld.h",
+      "bytes": 38872,
+      "sha256": "f8b9cdd5ec49815935d34ff053b4b9eb2bdefc83d7824bae4a25ae8acda05bbd"
+    },
+    {
+      "path": "src/Scene.cpp",
+      "bytes": 16941,
+      "sha256": "6a86c5f99aa6b0daca65eaf427e0ef060baacb568371d4f661502d2098936ea6"
+    },
+    {
+      "path": "src/SceneFingerprint.cpp",
+      "bytes": 36409,
+      "sha256": "da2583cad8fa25e4fb31618ae41fbc7186ecc311e4056d422ad008e3bef12855"
+    },
+    {
+      "path": "src/SceneSerialization.cpp",
+      "bytes": 90161,
+      "sha256": "9c8c25cd1122170b80ce5846f638aa5bf9f1b03a97c0f982c957c86764e80a17"
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "bytes": 218968,
+      "sha256": "795720bc6bf14915445389c1dc86af7edf27ee8de94d100e2e866fca2aad396d"
+    },
+    {
+      "path": "src/Simulation.cpp",
+      "bytes": 12673,
+      "sha256": "3886a4c1fb8f14bbc8dc792a3749c3a7b8c76070a441600ac1d6a1632f589201"
+    },
+    {
+      "path": "src/Wheel.cpp",
+      "bytes": 13103,
+      "sha256": "e1e19d299c5bdccb6b9860fb98d975da2e3f03cf4c827214c68f13927719464c"
+    },
+    {
+      "path": "src/Wheel.h",
+      "bytes": 2213,
+      "sha256": "6bb34871d327be268be16471c9ada3bbc0a4d52f21170db8822574271f1a0a63"
+    },
+    {
+      "path": "src/WorldDeformables.cpp",
+      "bytes": 13530,
+      "sha256": "7d9ea132dc2a8987ac9fde0ebb0d3c95d166a8e2f3cd0a0801c3d2ada5bfc3af"
+    },
+    {
+      "path": "src/WorldFracture.cpp",
+      "bytes": 18581,
+      "sha256": "bcf6159baef399731a8f08c0fbaf21a786f62d6c02fd6e422f48d1c51394aec6"
+    },
+    {
+      "path": "src/WorldPersistence.cpp",
+      "bytes": 52395,
+      "sha256": "25c58ed12f56d5872ec023e375584def9ade83f19ca02ece9a663581bdbac204"
+    },
+    {
+      "path": "src/WorldPowertrains.cpp",
+      "bytes": 14019,
+      "sha256": "a396be440d5138308d02c46508106e4f0d60cea3f242fb0bece9976b51431dbc"
+    },
+    {
+      "path": "src/WorldRegions.cpp",
+      "bytes": 11994,
+      "sha256": "c6e26018bfeb2e8ed1305297874d939f226c3492dedee9551f82601f657f1edd"
+    },
+    {
+      "path": "src/WorldStreaming.cpp",
+      "bytes": 64009,
+      "sha256": "f897d4ba009b1022d5fdf99e38cfb15f15e7ea3dc4ccee50231f92c24c304942"
+    },
+    {
+      "path": "src/WorldWheels.cpp",
+      "bytes": 4496,
+      "sha256": "b371b343e27bb89874a7ee163e08d1d4703dba78899755ab24ae9ac7334914bc"
+    },
+    {
+      "path": "src/editor/ComponentEditors.cpp",
+      "bytes": 116422,
+      "sha256": "595f7598cf83a746102f030dcb9514d04c01d917db5c4a1638608b1c7168f8a3"
+    },
+    {
+      "path": "tests/CoarseCrashApplicationTests.cpp",
+      "bytes": 17879,
+      "sha256": "723e03eed4eb49f957e445b6fda32aafcfe27b850458082f3e305d62656798a1"
+    },
+    {
+      "path": "tests/PowertrainTests.cpp",
+      "bytes": 19622,
+      "sha256": "9cdbd689b78fb36dc7abe2010b68763a3d0f8875f5646d117ac3670b755288b0"
+    },
+    {
+      "path": "tests/SectionMaterialTests.cpp",
+      "bytes": 5970,
+      "sha256": "82ced39d07bbfa8406f63f41b5b8b9b735dc2db8e478f0a36bb84a7d19a382fd"
+    },
+    {
+      "path": "tools/CreateCoarseCrashLab.py",
+      "bytes": 16327,
+      "sha256": "4d644644fd8b3819294bf748a98340caa18df092f441cefabe38f85ab047b43e"
+    },
+    {
+      "path": "tools/DeformableBake.cpp",
+      "bytes": 3869,
+      "sha256": "9a8d2399791f0b0d4d55a10c39b60307ae021b40b2a2af327413192ac93e958f"
+    }
+  ],
+  "binaries_not_committed": [
+    {
+      "path": "build/judas",
+      "bytes": 52441272,
+      "sha256": "5293d216d62a0bc77973200d0f6c80e2fa6396e273235e9aee319e4b037eab9e"
+    },
+    {
+      "path": "build/judas_editor",
+      "bytes": 57435936,
+      "sha256": "ae51bd099bcd1326ce861b06fba55c5d6a2c0a5c8eb22cd7f08ff05bba8d6ec7"
+    },
+    {
+      "path": "build/judas_export",
+      "bytes": 52264440,
+      "sha256": "067487d70a5ecc42c9f6f0a2c9cee826b4fc5cf44d2447feee566c518bde6395"
+    },
+    {
+      "path": "build/judas_coarse_crash_application_tests",
+      "bytes": 52544488,
+      "sha256": "70c0abe83cd8dec2bcfd399944504216cdf4479c63e85f9abbb5617d41009bc5"
+    },
+    {
+      "path": "build/judas_section_material_tests",
+      "bytes": 51577320,
+      "sha256": "2d20cfad23ddb5a4e935b99ee5ab7619daf2cf36f121a2ddac0cc878281d5a6c"
+    },
+    {
+      "path": "build/libjudas_engine.a",
+      "bytes": 23507374,
+      "sha256": "5dc99b85103d420af34f9a9f1bcfd0de8ca9fea46f8f600f34ab8caf73b20d2a"
+    }
+  ],
+  "package": "/tmp/judas-m83-coarse-final-package",
+  "protected_paths_changed": false,
+  "single_car_tight_3ms_goal": "missed in two later runs; functional and four-car budgets passed"
+}

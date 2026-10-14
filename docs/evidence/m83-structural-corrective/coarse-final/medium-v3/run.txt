@@ -1,0 +1,6 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+Scene '/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/medium.judas' could not be instantiated: authored scene fingerprint: object 60 player start: powertrain connection names an absent material attachment
+FAIL ordinary project startup and shutdown complete
+SUMMARY case=medium mode=watch checks=1 failures=1

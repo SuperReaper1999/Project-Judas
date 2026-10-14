@@ -91,6 +91,9 @@ public:
         Append(owner, next, time, finish);
     }
     void Clear() { segments.clear(); }
+    // Concatenate already resolved coupled intervals without restarting their
+    // angular integrators. The same generation owner must span every segment.
+    void SetRecorded(std::vector<RigidMotionSegment> values) { segments=std::move(values); }
     std::size_t StorageBytes() const { return segments.capacity()*sizeof(RigidMotionSegment); }
     const std::vector<RigidMotionSegment>& Segments() const { return segments; }
 private:

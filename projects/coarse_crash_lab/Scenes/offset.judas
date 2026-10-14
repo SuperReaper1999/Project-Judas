@@ -1,0 +1,451 @@
+JudasScene 3
+settings
+  name "Physical section crash / offset"
+  world-origin 0 0 0
+  sun-color 1 .97 .91
+  sun-direction -.3 .8 .5
+  ambient .34 .37 .40
+  fluid-scale 1
+  fidelity-policy none
+  next-id 10000
+end
+object 1 "Gravity frame"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 200
+end
+object 3 "Ground"
+  parent 1
+  position 0 -0.15 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 40 0.15 150
+  render.color 0.11 0.16 0.2
+  body static box
+  body.half-extents 40 0.15 150
+  body.mass 1
+  body.friction .7
+  body.restitution 0
+  body.collision-layer 0
+  body.collision-mask 7
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 5000 "Impact wall"
+  parent 1
+  position 0.57 1.3 -0.3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.4 1.3 0.3
+  render.color 0.4 0.47 0.51
+  body static box
+  body.half-extents 0.4 1.3 0.3
+  body.mass 1
+  body.friction .7
+  body.restitution 0
+  body.collision-layer 0
+  body.collision-mask 7
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+end
+object 10 "Inputs and public JS"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  scripts 1
+  script.0.id 1
+  script.0.asset "83838383838383838383c83d00000001"
+  script.0.enabled true
+  script.0.properties "{\"case\": \"offset\"}"
+  ui.asset "83838383838383838383c83d00000003"
+  ui.name "lab"
+  ui.enabled true
+end
+object 900 "Supported hollow cabin"
+  position 0 0.67 90
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic compound
+  body.mass 336
+  body.friction .7
+  body.restitution 0
+  body.collision-layer 1
+  body.collision-mask 7
+  body.compound-count 7
+  body.compound-box 0 0 1.2 0.8 0.28 0.6
+  body.compound-box 0 0.77 0.52 0.75 0.035 0.98
+  body.compound-box 0 0.2 1.72 0.75 0.2 0.06
+  body.compound-box -0.74 0.55 -0.34 0.035 0.25 0.035
+  body.compound-box 0.74 0.55 -0.34 0.035 0.25 0.035
+  body.compound-box -0.74 0.55 1.42 0.035 0.25 0.035
+  body.compound-box 0.74 0.55 1.42 0.035 0.25 0.035
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"motor\",\"kind\":\"internal\",\"inertia\":0.4,\"initialAngularVelocity\":0,\"viscousDrag\":0.01,\"target\":\"0\",\"bearing\":\"900\",\"axis\":[1,0,0]},{\"name\":\"wheel1\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"901\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel2\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"902\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel3\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"903\",\"bearing\":\"0\",\"axis\":[1,0,0]},{\"name\":\"wheel4\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0,\"viscousDrag\":0,\"target\":\"904\",\"bearing\":\"0\",\"axis\":[1,0,0]}],\"sources\":[{\"name\":\"motor\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":220,\"maxPower\":75000,\"starterTorque\":0}],\"links\":[{\"name\":\"drive1\",\"kind\":\"clutch\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":350,\"connection\":{\"owner\":\"920\",\"attachment\":\"part-0\",\"rootAttachment\":\"part-2\",\"groups\":true}},{\"name\":\"drive2\",\"kind\":\"clutch\",\"input\":0,\"output\":2,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":350,\"connection\":{\"owner\":\"920\",\"attachment\":\"part-1\",\"rootAttachment\":\"part-3\",\"groups\":true}},{\"name\":\"drive3\",\"kind\":\"clutch\",\"input\":0,\"output\":3,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":350},{\"name\":\"drive4\",\"kind\":\"clutch\",\"input\":0,\"output\":4,\"outputB\":0,\"ratio\":0.25,\"maxTorque\":350}],\"brakes\":[{\"name\":\"wheel1\",\"shaft\":1,\"maxTorque\":500},{\"name\":\"wheel2\",\"shaft\":2,\"maxTorque\":500},{\"name\":\"wheel3\",\"shaft\":3,\"maxTorque\":500},{\"name\":\"wheel4\",\"shaft\":4,\"maxTorque\":500}]}"
+  body.half-extents .5 .5 .5
+  body.radius .5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+end
+object 1000 "rear floor"
+  parent 900
+  position 0 0 1.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.8 0.28 0.6
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1001 "roof"
+  parent 900
+  position 0 0.77 0.52
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.035 0.98
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1002 "rear rail"
+  parent 900
+  position 0 0.2 1.72
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.2 0.06
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1003 "left A"
+  parent 900
+  position -0.74 0.55 -0.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.25 0.035
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1004 "right A"
+  parent 900
+  position 0.74 0.55 -0.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.25 0.035
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1005 "left C"
+  parent 900
+  position -0.74 0.55 1.42
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.25 0.035
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1006 "right C"
+  parent 900
+  position 0.74 0.55 1.42
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.035 0.25 0.035
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1020 "Cabin glass"
+  parent 900
+  position 0 0.48 -0.35
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.68 0.24 0.012
+  render.color 0.05 0.23 0.3
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1021 "Cabin glass"
+  parent 900
+  position 0 0.48 1.44
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.68 0.24 0.012
+  render.color 0.05 0.23 0.3
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1022 "Cabin glass"
+  parent 900
+  position -0.76 0.48 0.55
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.01 0.24 0.83
+  render.color 0.05 0.23 0.3
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 1023 "Cabin glass"
+  parent 900
+  position 0.76 0.48 0.55
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.01 0.24 0.83
+  render.color 0.05 0.23 0.3
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 920 "Four physical crush sections"
+  parent 900
+  position 0 0 -0.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  deformable.asset "83838383838383838383c83d00000005"
+  deformable.enabled "1"
+  deformable.selfContact "1"
+  deformable.substeps "2"
+  deformable.iterations "12"
+  deformable.collisionLayer "1"
+  deformable.collisionMask "7"
+  deformable.material.density "111.60714285714285"
+  deformable.material.stretchCompliance "1e-07"
+  deformable.material.shearCompliance "1e-07"
+  deformable.material.bendCompliance "1e-05"
+  deformable.material.volumeCompliance "1e-08"
+  deformable.material.damping "0"
+  deformable.material.thickness "0.025"
+  deformable.material.friction "0.6"
+  deformable.material.airDrag "0"
+  deformable.material.yieldStrain "0"
+  deformable.material.plasticRate "0"
+  deformable.material.maximumPlasticStrain "0"
+  deformable.airVelocity "0 0 0"
+  deformable.attachments "2 \"part-2\" 1 900 \"\" 0 0 -.6 1 \"part-3\" 1 900 \"\" 0 0 -.6 1"
+  render box
+  render.half-extents 0.8 0.28 1.8
+  render.color 0.95 0.35 0.12
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+object 901 "Tyre"
+  parent 900
+  position -0.83 -0.2 -1.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383c83d0000000c"
+  render.color .055 .06 .075
+  wheel.enabled true
+  wheel.chassis 920
+  wheel.mount -0.43 0.12 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .10
+  wheel.restLength .35
+  wheel.maxLength .53
+  wheel.springStiffness 26000
+  wheel.damping 1900
+  wheel.spinInertia .8
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.part "part-0"
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+end
+object 902 "Tyre"
+  parent 900
+  position 0.83 -0.2 -1.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383c83d0000000c"
+  render.color .055 .06 .075
+  wheel.enabled true
+  wheel.chassis 920
+  wheel.mount 0.43 0.12 0
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .10
+  wheel.restLength .35
+  wheel.maxLength .53
+  wheel.springStiffness 26000
+  wheel.damping 1900
+  wheel.spinInertia .8
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  wheel.part "part-1"
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+end
+object 903 "Tyre"
+  parent 900
+  position -0.83 -0.2 1.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383c83d0000000c"
+  render.color .055 .06 .075
+  wheel.enabled true
+  wheel.chassis 900
+  wheel.mount -0.83 0.12 1.2
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .10
+  wheel.restLength .35
+  wheel.maxLength .53
+  wheel.springStiffness 26000
+  wheel.damping 1900
+  wheel.spinInertia .8
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+end
+object 904 "Tyre"
+  parent 900
+  position 0.83 -0.2 1.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.mesh-asset "83838383838383838383c83d0000000c"
+  render.color .055 .06 .075
+  wheel.enabled true
+  wheel.chassis 900
+  wheel.mount 0.83 0.12 1.2
+  wheel.orientation 1 0 0 0
+  wheel.radius .32
+  wheel.minLength .10
+  wheel.restLength .35
+  wheel.maxLength .53
+  wheel.springStiffness 26000
+  wheel.damping 1900
+  wheel.spinInertia .8
+  wheel.friction 1
+  wheel.rollingResistance .012
+  wheel.collisionLayer 1
+  wheel.collisionMask 1
+  render.half-extents .5 .5 .5
+  render.radius .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.texture-asset ""
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+end
+object 60 "Observer start"
+  position 7 3 96
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+end

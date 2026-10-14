@@ -12,6 +12,7 @@
 namespace {
 std::atomic<uint64_t> epochs{1};
 constexpr const char* stateHeader="Judas.DeformableState.1\n";
+constexpr const char* materialStateHeader="Judas.DeformableState.4\n";
 constexpr const char* strengthStateHeader="Judas.DeformableState.2\n";
 glm::dmat4 matrix(const SceneTransform& t){return glm::translate(glm::dmat4(1),glm::dvec3(t.position))*glm::mat4_cast(glm::dquat(t.rotation));
         }
@@ -49,7 +50,14 @@ DeformableInstance* RuntimeWorld::RuntimeDeformable(EntityId id,std::string& err
         return nullptr;
         }
     auto& record=m_deformables[id];
-    try{record.simulation.Initialize(asset,*definition->deformable,matrix(definition->transform),epochs.fetch_add(1));}
+    try{
+        const bool physicalParts=asset->fracture&&asset->fracture->HasMaterials();
+        // Lazy resource publication must use the current physical parent frame,
+        // not a stale authored world transform after that parent has moved.
+        auto pose=physicalParts?PresentedTransform(id,definition->transform,1):definition->transform;
+        record.simulation.Initialize(asset,*definition->deformable,matrix(pose),epochs.fetch_add(1));
+        if(physicalParts)if(const auto* local=m_hierarchy.Find(id);local&&local->parent){auto body=RuntimeBody(local->parent);if(m_physics.IsBodyEnabled(body))for(size_t n=0;n<record.simulation.positions.size();++n)record.simulation.velocities[n]=glm::dvec3(m_physics.GetPointVelocity(body,glm::vec3(record.simulation.positions[n])));}
+    }
     catch(const std::exception& failure){error=failure.what();m_deformables.erase(id);return nullptr;}
     record.targets.resize(definition->deformable->attachments.size());
     error.clear();
@@ -131,7 +139,7 @@ void RuntimeWorld::RemoveDeformable(EntityId id){auto it=m_deformables.find(id);
     for(auto joint:it->second.rigid.supports)m_physics.DestroyJoint(joint);
     if(m_assets&&m_assets->GetRenderer()&&it->second.mesh.IsValid())m_assets->GetRenderer()->DestroyMesh(it->second.mesh);
     m_deformables.erase(it);
-    for(auto child:children)if(child&&RuntimeDefinition(child))DestroyEntity(child);
+    for(auto child:children)if(child&&FindEntity(child)){if(m_regionPending.count(child))RemoveRegionObject(child);else DestroyEntity(child);}
     }
 void RuntimeWorld::ClearDeformables(){while(!m_deformables.empty())RemoveDeformable(m_deformables.begin()->first);
     }
@@ -147,24 +155,27 @@ bool RuntimeWorld::ResetDeformable(EntityId id,std::string& error){auto* s=Runti
 bool RuntimeWorld::CaptureDeformable(EntityId id,std::string& bytes,std::string& error){auto* s=RuntimeDeformable(id,error);
     if(!s)return false;
     try{SaveArchive a;
+        const bool materials=s->asset->fracture&&s->asset->fracture->HasMaterials();
         const bool strengths=std::any_of(s->settings.attachments.begin(),s->settings.attachments.end(),[](const auto& attachment){return attachment.forceLimit>0||attachment.torqueLimit>0;});
-        s->Persist(a,true,strengths);
-        if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
-        bytes=(strengths?strengthStateHeader:stateHeader)+std::move(a.bytes);
+        s->Persist(a,true,strengths||materials);
+        if(materials)PersistFractureBundle(id,a);else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
+        bytes=(materials?materialStateHeader:strengths?strengthStateHeader:stateHeader)+std::move(a.bytes);
         return true;
         }catch(const std::exception& e){error=e.what();
         return false;
         }}
-bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged){auto* s=RuntimeDeformable(id,error,staged);
+bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged,const std::map<EntityId,EntityId>& remap){auto* s=RuntimeDeformable(id,error,staged);
     if(!s)return false;
-    try{const bool strengths=bytes.rfind(strengthStateHeader,0)==0;
+    try{const bool materials=bytes.rfind(materialStateHeader,0)==0;
+        if(s->asset->fracture&&s->asset->fracture->HasMaterials()&&!materials)throw std::runtime_error("material partition requires retained state4");
+        const bool strengths=materials||bytes.rfind(strengthStateHeader,0)==0;
         const bool framed=strengths||bytes.rfind(stateHeader,0)==0;
         if(bytes.rfind("Judas.DeformableState.",0)==0&&!framed)throw std::runtime_error("unsupported deformable state version");
         SaveArchive a(framed?bytes.substr(std::char_traits<char>::length(stateHeader)):bytes);
         s->Persist(a,framed,strengths);
-        if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
+        if(materials){for(auto& attachment:s->settings.attachments)if(remap.count(attachment.target))attachment.target=remap.at(attachment.target);PersistFractureBundle(id,a,staged,remap);}else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
         a.Finish();
-        ++m_deformables.at(id).revision;
+        ++m_deformables.at(id).revision;m_deformables.at(id).meshTopology=~uint64_t(0);
         for(auto& t:m_deformables.at(id).targets)t.valid=false;
         return true;
         }catch(const std::exception& e){error=e.what();
@@ -172,3 +183,7 @@ bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::s
         }}
 
 void RuntimeWorld::SetDeformableEnabled(EntityId id,bool enabled){auto it=m_deformables.find(id);if(it==m_deformables.end())return;auto& s=it->second.simulation;if(s.settings.enabled==enabled)return;s.settings.enabled=enabled;s.Wake();for(auto child:it->second.rigid.parts)if(RuntimeDefinition(child))SetColliderEnabled(child,enabled);}
+
+// Bounded native mechanical intervals. Legacy content retains its original single step.
+unsigned RuntimeWorld::MechanicalSubsteps(){unsigned count=1;for(auto id:m_deformableOwners)if(IsPublished(id)){std::string error;auto* s=RuntimeDeformable(id,error);if(s&&s->asset->fracture&&s->asset->fracture->HasMaterials()&&s->settings.enabled&&s->error.empty()){if(!m_restoreConstruction&&!m_deformables.at(id).rigid.initialized&&!PrepareRigidFracture(id,error)){s->error=error;continue;}count=std::max(count,s->settings.substeps);}}return count;}
+unsigned RuntimeWorld::MechanicalIterations(){unsigned count=0;for(const auto& [_,r]:m_deformables){const auto& s=r.simulation;if(s.asset->fracture&&s.asset->fracture->HasMaterials()&&s.settings.enabled&&s.error.empty())count=std::max(count,s.settings.iterations);}return count;}

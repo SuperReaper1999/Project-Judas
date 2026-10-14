@@ -125,3 +125,13 @@ The strict save path requires a surviving, non-transient chassis reference.
 Destroy the wheel owners with their required chassis (normally one authored
 prefab hierarchy); retaining dangling wheel references causes explicit save
 rejection instead of silently dropping physical state.
+
+## Rigid material section mounts (M83)
+
+An optional authored `wheel.part` names a stable rigid-fracture part key.
+`wheel.chassis` then identifies the partition owner. Its mount/frame follow that
+part's ordinary physical body, including plastic displacement and detachment.
+`wheel.settings.part` returns this string (empty for an ordinary chassis).
+Missing/unpublished/removed parts make the wheel unavailable; no body-slot alias
+is substituted. This is an authored source selection, not a new gameplay controller.
+See [physical section authoring](../M83_COARSE_CRASH.md).

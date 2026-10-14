@@ -1,0 +1,47 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS current authored2 physical intervals and12 native rounds at60Hz
+PASS actual six-section geometry supplies the front suspension body
+PASS rendered physical scene screenshot captured
+STEP tick=120 position=1.102,3.855,88.304 speed=8.971 native_ms=5.280 broad_ms=0.025 narrow_ms=0.297 solver_ms=4.949 queries=210 iterations=223 events=2 contacts=2 pairs=21 plastic=0.390294
+STEP tick=240 position=19.811,13.611,64.404 speed=10.823 native_ms=4.156 broad_ms=0.024 narrow_ms=0.177 solver_ms=3.948 queries=72 iterations=85 events=2 contacts=8 pairs=8 plastic=0.390294
+STEP tick=360 position=37.515,2.989,41.060 speed=6.735 native_ms=9.249 broad_ms=0.030 narrow_ms=0.215 solver_ms=8.993 queries=80 iterations=125 events=4 contacts=16 pairs=12 plastic=0.390294
+STEP tick=480 position=48.506,-18.418,22.400 speed=9.382 native_ms=9.264 broad_ms=0.033 narrow_ms=0.222 solver_ms=8.987 queries=80 iterations=96 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=600 position=60.346,-78.978,2.074 speed=7.258 native_ms=8.714 broad_ms=0.029 narrow_ms=0.220 solver_ms=8.453 queries=80 iterations=92 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=720 position=72.304,-178.336,-18.060 speed=10.482 native_ms=10.958 broad_ms=0.038 narrow_ms=0.235 solver_ms=10.669 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=840 position=84.517,-300.430,-37.588 speed=7.526 native_ms=11.740 broad_ms=0.035 narrow_ms=0.219 solver_ms=11.475 queries=80 iterations=100 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=960 position=96.641,-422.091,-57.500 speed=4.322 native_ms=12.415 broad_ms=0.036 narrow_ms=0.207 solver_ms=12.163 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1080 position=108.862,-543.005,-78.129 speed=14.735 native_ms=12.432 broad_ms=0.028 narrow_ms=0.234 solver_ms=12.154 queries=80 iterations=89 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1200 position=120.930,-664.740,-98.004 speed=10.581 native_ms=12.071 broad_ms=0.037 narrow_ms=0.207 solver_ms=11.818 queries=80 iterations=88 events=3 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1320 position=132.939,-786.340,-116.913 speed=13.322 native_ms=12.600 broad_ms=0.034 narrow_ms=0.274 solver_ms=12.281 queries=80 iterations=88 events=4 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1440 position=145.427,-908.628,-137.722 speed=6.863 native_ms=10.940 broad_ms=0.036 narrow_ms=0.216 solver_ms=10.678 queries=80 iterations=88 events=4 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1560 position=157.207,-1030.123,-156.816 speed=6.305 native_ms=12.647 broad_ms=0.070 narrow_ms=0.216 solver_ms=12.346 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1680 position=169.658,-1151.007,-177.729 speed=16.926 native_ms=12.046 broad_ms=0.065 narrow_ms=0.230 solver_ms=11.728 queries=80 iterations=100 events=4 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1800 position=181.669,-1273.550,-197.665 speed=9.793 native_ms=11.511 broad_ms=0.034 narrow_ms=0.269 solver_ms=11.198 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=1920 position=194.250,-1395.911,-217.248 speed=1.104 native_ms=3.478 broad_ms=0.036 narrow_ms=0.228 solver_ms=3.204 queries=76 iterations=130 events=2 contacts=2 pairs=16 plastic=0.390294
+STEP tick=2040 position=207.202,-1517.623,-238.074 speed=3.377 native_ms=3.616 broad_ms=0.027 narrow_ms=0.247 solver_ms=3.329 queries=76 iterations=114 events=2 contacts=2 pairs=16 plastic=0.390294
+STEP tick=2160 position=218.477,-1637.656,-257.299 speed=18.418 native_ms=8.107 broad_ms=0.033 narrow_ms=0.224 solver_ms=7.837 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=2280 position=231.406,-1759.995,-278.245 speed=12.119 native_ms=10.513 broad_ms=0.028 narrow_ms=0.218 solver_ms=10.256 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=2400 position=243.219,-1883.097,-297.167 speed=1.510 native_ms=10.834 broad_ms=0.047 narrow_ms=0.320 solver_ms=10.453 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=2520 position=255.494,-2003.215,-318.251 speed=16.968 native_ms=8.557 broad_ms=0.041 narrow_ms=0.322 solver_ms=8.181 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=2640 position=267.445,-2126.066,-336.893 speed=7.870 native_ms=9.749 broad_ms=0.038 narrow_ms=0.252 solver_ms=9.448 queries=80 iterations=90 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=2760 position=280.651,-2248.364,-358.187 speed=0.642 native_ms=10.486 broad_ms=0.037 narrow_ms=0.273 solver_ms=10.152 queries=80 iterations=92 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=2880 position=292.555,-2369.335,-379.021 speed=10.697 native_ms=15.519 broad_ms=0.065 narrow_ms=0.334 solver_ms=15.092 queries=80 iterations=88 events=4 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3000 position=303.848,-2490.518,-398.089 speed=17.422 native_ms=12.020 broad_ms=0.050 narrow_ms=0.370 solver_ms=11.578 queries=80 iterations=90 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3120 position=316.293,-2613.066,-417.398 speed=10.747 native_ms=9.427 broad_ms=0.038 narrow_ms=0.231 solver_ms=9.145 queries=80 iterations=92 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3240 position=328.424,-2735.493,-437.829 speed=6.761 native_ms=10.367 broad_ms=0.031 narrow_ms=0.265 solver_ms=10.059 queries=80 iterations=88 events=4 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3360 position=341.693,-2857.663,-458.412 speed=-1.248 native_ms=11.937 broad_ms=0.034 narrow_ms=0.245 solver_ms=11.637 queries=80 iterations=90 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3480 position=353.906,-2979.595,-478.938 speed=0.349 native_ms=10.136 broad_ms=0.038 narrow_ms=0.274 solver_ms=9.813 queries=80 iterations=88 events=4 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3600 position=366.163,-3100.586,-499.685 speed=9.870 native_ms=9.714 broad_ms=0.031 narrow_ms=0.224 solver_ms=9.446 queries=80 iterations=90 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3720 position=378.090,-3221.929,-519.585 speed=18.442 native_ms=10.668 broad_ms=0.036 narrow_ms=0.214 solver_ms=10.407 queries=80 iterations=90 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3840 position=389.438,-3344.118,-539.308 speed=16.950 native_ms=8.665 broad_ms=0.068 narrow_ms=0.293 solver_ms=8.289 queries=80 iterations=88 events=2 contacts=18 pairs=16 plastic=0.390294
+STEP tick=3960 position=402.000,-3467.070,-558.628 speed=9.633 native_ms=16.108 broad_ms=0.084 narrow_ms=0.362 solver_ms=15.642 queries=80 iterations=92 events=2 contacts=18 pairs=16 plastic=0.390294
+FAIL bounded application deadline
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=3909 physics_p95_ms=14.093227 physics_max_ms=45.279669 native_p95_ms=13.553040 frame_p95_ms=15.313133 frame_max_ms=46.716896 render_p95_ms=0.760565
+SUMMARY case=medium mode=watch checks=5 failures=1

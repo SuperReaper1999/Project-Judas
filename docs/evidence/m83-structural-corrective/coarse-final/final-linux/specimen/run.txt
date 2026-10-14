@@ -1,0 +1,24 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/coarse_crash_lab.judasproj)
+Scene: Generic elastic/plastic material cantilever (/home/conner/Documents/GitHub/Project-Judas/projects/coarse_crash_lab/Scenes/specimen.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=83838383838383838383c83d00000001 entity=10 slot=1 uiUpdate: TypeError: entity has no active dynamic body
+    at __judas (native)
+    at call (judas:2:51)
+    at get velocity (judas:64:24)
+    at speed (Assets/scripts/controller.js:16:24)
+    at uiUpdate (Assets/scripts/controller.js:47:274)
+
+SCRIPT TypeError: entity has no active dynamic body
+    at __judas (native)
+    at call (judas:2:51)
+    at get velocity (judas:64:24)
+    at speed (Assets/scripts/controller.js:16:24)
+    at uiUpdate (Assets/scripts/controller.js:47:274)
+
+FAIL ordinary driver JS has no diagnostic
+PASS ordinary project startup and shutdown complete
+SUMMARY case=specimen mode=watch checks=2 failures=1

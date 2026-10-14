@@ -1,0 +1,34 @@
+[
+  {
+    "case": "high",
+    "exit": 0
+  },
+  {
+    "case": "group_high",
+    "exit": 0
+  },
+  {
+    "case": "medium",
+    "exit": 0
+  },
+  {
+    "case": "group",
+    "exit": 0
+  },
+  {
+    "case": "normal",
+    "exit": 0
+  },
+  {
+    "case": "low",
+    "exit": 0
+  },
+  {
+    "case": "offset",
+    "exit": 0
+  },
+  {
+    "case": "comparison",
+    "exit": 1
+  }
+]

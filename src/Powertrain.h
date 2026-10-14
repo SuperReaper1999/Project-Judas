@@ -32,6 +32,7 @@ struct PowertrainSource {
 struct PowertrainConnection {
     uint64_t owner=0;
     std::string attachment,rootAttachment;
+    bool groups=false; // Explicit material group connectivity, without an attachment constraint.
 };
 struct PowertrainLink {
     std::string name;
@@ -81,6 +82,10 @@ public:
     PowertrainSettings settings;
     PowertrainCommand command;
     PowertrainState state;
+    // Native diagnostic: source rotational impulse work since construction.
+    // Read-only observation, not simulated energy or durable powertrain state.
+    // Includes every coupled interval; resets on cold reconstruction.
+    double suppliedWork=0;
     std::vector<double> absoluteSpin; // durable internal rotor momentum coordinate
     std::vector<bool> internalInitialized; // first publication includes bearing motion once
     void Reset(const PowertrainSettings&);

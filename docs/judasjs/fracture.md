@@ -106,3 +106,17 @@ See [M63 architecture/authoring](../M63_FRACTURE.md), [deformables](deformables.
 Pending topology requests on a disabled family are deferred until it is enabled.
 Required material/owner entities marked transient cannot be silently omitted from
 an M61 save; capture fails with a diagnostic before replacing a good slot.
+
+## M83 finite physical material sections
+
+A rigid partition can additionally author a finite elastic/plastic law on each
+interface. The current implementation and practical lab are documented in
+[M83 physical sections](../M83_COARSE_CRASH.md). This changes physical collider and
+mount geometry through ordinary body motion; it is not a visual crush animation.
+
+Interface snapshots also contain `material` (boolean), `plasticTranslation`
+and `plasticRotation` (joint-local m/rad vectors), and `plasticWork` (J).
+Legacy interfaces report false/zero. These are copied observations, including
+final observations retained after failure. The existing methods and callback
+continue to report ordinary physical cuts. A finite partition's retained-region
+bundle owns its generated bodies; private restoration cannot expose their handles.

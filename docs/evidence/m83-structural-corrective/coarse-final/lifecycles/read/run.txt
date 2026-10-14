@@ -1,0 +1,18 @@
+Authorization required, but no authorization protocol specified
+
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Physical Crash Lab (/tmp/judas-m83-coarse-lifecycle-final/coarse_crash_lab.judasproj)
+Scene: Physical section crash / medium (/tmp/judas-m83-coarse-lifecycle-final/Scenes/medium.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh process requests ordinary saved game
+PASS fresh process restores before physical advancement
+PASS exact physical poses, plastic history, wheels and shafts restore
+PASS rendered physical scene screenshot captured
+STEP tick=5 position=0.014,0.472,1.908 speed=-0.003 native_ms=0.396 broad_ms=0.019 narrow_ms=0.107 solver_ms=0.264 queries=68 iterations=68 events=0 contacts=0 pairs=20 plastic=0.199004
+STEP tick=20 position=0.014,0.472,1.909 speed=-0.003 native_ms=0.389 broad_ms=0.021 narrow_ms=0.102 solver_ms=0.260 queries=68 iterations=68 events=0 contacts=0 pairs=20 plastic=0.199004
+STEP tick=60 position=0.014,0.472,1.911 speed=-0.003 native_ms=0.375 broad_ms=0.019 narrow_ms=0.100 solver_ms=0.251 queries=68 iterations=68 events=0 contacts=0 pairs=20 plastic=0.199004
+PASS cold physical material and mechanical continuation stays healthy
+PASS ordinary project startup and shutdown complete
+PERF stage=approach n=29 physics_p95_ms=1.334907 physics_max_ms=1.583654 native_p95_ms=0.721574 frame_p95_ms=2.956345 frame_max_ms=3.199982 render_p95_ms=0.824746
+SUMMARY case=medium mode=read checks=6 failures=0

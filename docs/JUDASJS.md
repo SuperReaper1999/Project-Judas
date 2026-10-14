@@ -191,3 +191,8 @@ keeps simulation alive while hiding supported submissions. Grouped updates valid
 before publication. Authored defaults, runtime patches, resource status and reset
 semantics are explicit. No new runtime exports or native day/night policy are added.
 See [M72 design, lifecycle and review status](M72.md).
+
+M83 adds authored [physical section connections](M83_COARSE_CRASH.md), optional
+[part-mounted wheels](judasjs/wheels.md#rigid-material-section-mounts-m83), explicit
+[material-group drive prerequisites](judasjs/powertrains.md#material-group-prerequisites-m83)
+and copied plastic observations on [fracture interfaces](judasjs/fracture.md#m83-finite-physical-material-sections).

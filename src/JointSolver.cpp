@@ -3,9 +3,15 @@
 #include <limits>
 void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=r.linearA*(p*r.a->inverseMass);r.b->linearVelocity+=r.linearB*(p*r.b->inverseMass);
  r.a->angularVelocity+=r.inertiaA*r.angularA*p;r.b->angularVelocity+=r.inertiaB*r.angularB*p;}
-void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact){
- m_rows.clear();m_bodies.clear();const float inf=std::numeric_limits<float>::infinity();
- for(auto& input:inputs){auto& s=input.state->settings;auto& a=*input.a;auto& b=*input.b;if(!impact){input.state->motorImpulse=0;input.state->reactionImpulse={0,0,0};input.state->reactionAngularImpulse={0,0,0};}
+void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append){
+ if(!append){m_rows.clear();m_bodies.clear();m_prepared.clear();}const float inf=std::numeric_limits<float>::infinity();
+ for(auto& input:inputs){
+  // A material contact may awaken a formerly sleeping articulation midway
+  // through the velocity rounds. Its joints must join this boundary without
+  // applying old warm starts twice or erasing already solved reactions.
+  if(append&&std::find(m_prepared.begin(),m_prepared.end(),input.state)!=m_prepared.end())continue;
+  m_prepared.push_back(input.state);
+  auto& s=input.state->settings;auto& a=*input.a;auto& b=*input.b;if(!impact){input.state->motorImpulse=0;input.state->reactionImpulse={0,0,0};input.state->reactionAngularImpulse={0,0,0};}
   for(auto* body:{&a,&b})if(std::find(m_bodies.begin(),m_bodies.end(),body)==m_bodies.end())m_bodies.push_back(body);
   glm::quat qa=glm::normalize(a.orientation),qb=glm::normalize(b.orientation),fa=qa*glm::normalize(s.frameA),fb=qb*glm::normalize(s.frameB);
   auto basis=glm::mat3_cast(fa);auto ra=qa*(s.anchorA-input.pivotOffsetA),rb=qb*(s.anchorB-input.pivotOffsetB),delta=(b.position-a.position)+rb-ra;
@@ -23,6 +29,39 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
   };
   auto linear=[&](glm::vec3 n,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false){row(-n,n,-glm::cross(ra,n)+glm::cross(n,delta),glm::cross(rb,n),error,low,high,soft,motor);};
   auto angular=[&](glm::vec3 n,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false){row({0,0,0},{0,0,0},-n,n,error,low,high,soft,motor);};
+  auto& constitutive=input.state->constitutive;
+  if(constitutive.material.enabled){
+   auto& m=constitutive.material;
+   // A finite spring/damper cannot supply an instantaneous rigid weld impulse.
+   // Impact is resolved by the ordinary collider CCD path; material efforts are
+   // integrated over the normal physical interval, with no impact position bias.
+   if(impact||constitutive.failed)continue;
+   auto q=glm::normalize(glm::inverse(fa)*fb);if(q.w<0)q=-q;
+   glm::vec3 v(q.x,q.y,q.z);float l=glm::length(v);
+   auto angle=l>1e-7f?v*(2*std::atan2(l,q.w)/l):2.f*v;
+   auto local=glm::transpose(basis)*delta;
+   auto materialReturn=[&](glm::vec3 value,glm::vec3& rest,glm::vec3& travel,float k,float yield,float hardening){
+    for(int axis=0;axis<3;++axis){float e=value[axis]-rest[axis],excess=k*std::abs(e)-yield-hardening*travel[axis];
+     if(excess>0){float increment=excess/(k+hardening);rest[axis]+=std::copysign(increment,e);constitutive.plasticWork+=double(yield+hardening*(travel[axis]+.5f*increment))*increment;travel[axis]+=increment;}}
+   };
+   materialReturn(local,constitutive.translation,constitutive.translationTravel,m.stiffness,m.yieldForce,m.hardeningForce);
+   materialReturn(angle,constitutive.rotation,constitutive.rotationTravel,m.angularStiffness,m.yieldTorque,m.hardeningTorque);
+   if(glm::length(constitutive.translationTravel)>=m.maximumTranslation||glm::length(constitutive.rotationTravel)>=m.maximumAngle){constitutive.failed=true;input.warm->fill(0);continue;}
+   // Six implicit Kelvin-Voigt rows. The return map owns only rest strain;
+   // Jacobians apply equal/opposite impulses at the actual attachment frames.
+   auto materialRow=[&](glm::vec3 n,float error,float k,float damping,bool angularAxis){
+    auto la=angularAxis?glm::vec3(0):-n,lb=angularAxis?glm::vec3(0):n;
+    auto aa=angularAxis?-n:-glm::cross(ra,n)+glm::cross(n,delta),ab=angularAxis?n:glm::cross(rb,n);
+    float gamma=1/(dt*(damping+dt*k)),bias=error*dt*k*gamma;
+    float effective=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
+    auto* cache=&(*input.warm)[index++];float lambda=warm?*cache:0;
+    m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(effective+gamma),bias,gamma,-inf,inf,lambda,cache,nullptr,input.state});
+    if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
+   };
+   for(int k=0;k<3;++k)materialRow(basis[k],local[k]-constitutive.translation[k],m.stiffness,m.damping,false);
+   for(int k=0;k<3;++k)materialRow(basis[k],angle[k]-constitutive.rotation[k],m.angularStiffness,m.angularDamping,true);
+   continue;
+  }
   if(s.type==JointType::Slider){
    // Perpendicular rows measured at B's anchor give body A a lever arm |delta| that
    // grows with travel; Gauss-Seidel against the orientation rows then converges too
@@ -83,6 +122,6 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
   }
  }
 }
-void JointSolver::SolveIteration(){for(auto& r:m_rows){float velocity=glm::dot(r.linearA,r.a->linearVelocity)+glm::dot(r.linearB,r.b->linearVelocity)+glm::dot(r.angularA,r.a->angularVelocity)+glm::dot(r.angularB,r.b->angularVelocity);
+void JointSolver::SolveIteration(std::size_t first){for(std::size_t i=first;i<m_rows.size();++i){auto& r=m_rows[i];float velocity=glm::dot(r.linearA,r.a->linearVelocity)+glm::dot(r.linearB,r.b->linearVelocity)+glm::dot(r.angularA,r.a->angularVelocity)+glm::dot(r.angularB,r.b->angularVelocity);
  float total=std::clamp(r.impulse-(velocity+r.bias+r.gamma*r.impulse)*r.mass,r.low,r.high),change=total-r.impulse;r.impulse=total;Apply(r,change);r.observation->reactionImpulse+=r.linearA*change;r.observation->reactionAngularImpulse+=r.angularA*change;if(r.cache)*r.cache=total;if(r.motor)*r.motor=total;}}
 void JointSolver::ResetImpulses(){for(auto& r:m_rows)r.impulse=0;}

@@ -60,10 +60,12 @@ void RuntimeWorld::BindRegionCameraReference(EntityId id,EntityId target) {
     for(auto& r:m_dynamicVisuals)if(r.id==id)r.render.textureCamera=target;
 }
 void RuntimeWorld::HideRegion(const std::vector<EntityId>& ids) {
-    for(auto id:ids){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_regionPending.insert(id);}
+    auto all=ids;for(auto id:ids)if(auto r=m_deformables.find(id);r!=m_deformables.end()&&r->second.simulation.asset->fracture&&r->second.simulation.asset->fracture->HasMaterials())for(auto child:r->second.rigid.parts)if(child&&FindEntity(child))all.push_back(child);
+    for(auto id:all){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_regionPending.insert(id);}
 }
 void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
-    for(auto id:ids){
+    auto all=ids;for(auto id:ids)if(auto r=m_deformables.find(id);r!=m_deformables.end()&&r->second.simulation.asset->fracture&&r->second.simulation.asset->fracture->HasMaterials())for(auto child:r->second.rigid.parts)if(child&&FindEntity(child))all.push_back(child);
+    for(auto id:all){
         m_regionPending.erase(id);
         if(auto* e=FindEntity(id))e->requiresFull|=EntityRequiresFull(e->definition)||m_jointParticipants.count(id);
         if(auto* d=RuntimeDefinition(id))if(d->body){
@@ -77,7 +79,7 @@ void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
         // authored state before callbacks can observe the published region.
         if(auto* motor=RuntimeCharacter(id))m_physics.SetBodyEnabled(motor->observationBody,motor->settings.enabled);
     }
-    for(auto id:ids)if(auto* wheel=RuntimeWheel(id)){const auto chassis=RuntimeBody(wheel->settings.chassis);wheel->state.available=wheel->settings.enabled&&m_physics.IsBodyEnabled(chassis)&&m_physics.IsDynamicBody(chassis);wheel->Publish(m_physics,chassis);wheel->previous=wheel->state;}
+    for(auto id:ids)if(auto* wheel=RuntimeWheel(id)){const auto chassis=RuntimeBody(WheelChassisEntity(wheel->settings));wheel->state.available=wheel->settings.enabled&&m_physics.IsBodyEnabled(chassis)&&m_physics.IsDynamicBody(chassis);wheel->Publish(m_physics,chassis);wheel->previous=wheel->state;}
     // Mechanical observations become usable at the same atomic publication
     // boundary as their bodies and wheel endpoints; no simulation is advanced.
     PublishPowertrains(0);

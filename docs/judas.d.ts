@@ -277,6 +277,8 @@ declare module "judas" {
   }
   export interface WheelSettings {
     enabled:boolean;chassisId:EntityId;chassis:Entity|null;
+    /** Stable rigid-fracture part key; chassis then identifies its owner. Empty uses an ordinary body. */
+    part:string;
     /** Chassis-local mount (metres) and orientation; down -Y, axle +X, forward -Z. */
     mount:Vec3;orientation:Quat;
     radius:number;minLength:number;restLength:number;maxLength:number;
@@ -325,6 +327,8 @@ declare module "judas" {
   export interface PowertrainConnection {
     /** Deformable owner entity identity, not a native body slot. */
     owner:EntityId;attachment:string;rootAttachment?:string;
+    /** Opt in to cooked material group connectivity; requires rootAttachment. */
+    groups?:boolean;
   }
   export interface PowertrainLinkSettings {
     name:string;kind:'gear'|'clutch'|'differential';
@@ -431,7 +435,7 @@ declare module "judas" {
     forceLimit?:number;torqueLimit?:number;
   }
   export interface FracturePartState {key:string;index:number;component:number|null;removed:boolean;entity:Entity|null;mass:number}
-  export interface FractureInterfaceState {key:string;a:number;b:number;broken:boolean;cause:'physical'|'explicit'|null;tension:number;shear:number}
+  export interface FractureInterfaceState {key:string;a:number;b:number;broken:boolean;cause:'physical'|'explicit'|null;tension:number;shear:number;material:boolean;plasticTranslation:Vec3;plasticRotation:Vec3;plasticWork:number}
   export interface FractureState {revision:number;rigid:boolean;error:string;parts:FracturePartState[];interfaces:FractureInterfaceState[];tensileStrength:number;shearStrength:number}
   export interface FractureEvent {revision:number;interfaces:{key:string;cause:'physical'|'explicit'}[]}
   export class Fracture {

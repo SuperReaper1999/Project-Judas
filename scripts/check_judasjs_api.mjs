@@ -54,7 +54,15 @@ const symbols=[...runtime.keys()].sort();
 const nativeOps=[...new Set([...library.matchAll(/call\(['"]([^'"]+)['"]/g)].map(m=>m[1]))].sort();
 for(const op of nativeOps)if(!source.slice(source.indexOf('JSValue ScriptSystem::Impl::Native')).match(new RegExp('op\\s*(?:==|!=)\\s*"'+op+'"')))throw Error('Unimplemented native operation '+op);
 const mapPath=path.join(root,'docs/judasjs/api-inventory.json');
-const schema={checkpoint:'7bfa1ac3f11221ecdc450a5778023f8aff380c52',authority:'src/ScriptSystem.cpp::library + Impl::Native',symbols:symbols.map(k=>{
+const resultShapes=[
+ {binding:'Fracture.state.interfaces',declaration:'FractureInterfaceState',fields:['material','plasticTranslation','plasticRotation','plasticWork'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,v,"material"','JS_SetPropertyStr(c,v,"plasticTranslation"','JS_SetPropertyStr(c,v,"plasticRotation"','JS_SetPropertyStr(c,v,"plasticWork"'],reference:'docs/judasjs/fracture.md'},
+ {binding:'Wheel.settings',declaration:'WheelSettings',fields:['part'],nativeFile:'src/ScriptSystem.cpp',needles:['JS_SetPropertyStr(c,result,"part"'],reference:'docs/judasjs/wheels.md'},
+ {binding:'Powertrain.settings.links[].connection',declaration:'PowertrainConnection',fields:['groups'],nativeFile:'src/PowertrainAuthoring.cpp',needles:['connection["groups"]'],reference:'docs/judasjs/powertrains.md'}
+];
+function checkResultShapes(shapes){for(const row of shapes){let members=null;const visit=n=>{if(ts.isInterfaceDeclaration(n)&&name(n.name)===row.declaration)members=new Set(n.members.map(m=>name(m.name)));ts.forEachChild(n,visit);};visit(decl);if(!members||row.fields.some(k=>!members.has(k)))throw Error('Structured declaration drift: '+row.binding);const native=fs.readFileSync(path.join(root,row.nativeFile),'utf8');if(row.needles.some(k=>!native.includes(k)))throw Error('Structured native field drift: '+row.binding);}}
+checkResultShapes(resultShapes);
+let rejectedShape=false;try{checkResultShapes([{...resultShapes[0],fields:['inventedMaterialField']}]);}catch{rejectedShape=true;}if(!rejectedShape)throw Error('Structured field negative control accepted');
+const schema={checkpoint:'694ffa97c71717aaf2f62ba28eea4a2866deb844',authority:'src/ScriptSystem.cpp::library + Impl::Native',resultShapes,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];
@@ -93,4 +101,4 @@ const examples=fs.readdirSync(path.join(root,'docs/judasjs/examples')).filter(n=
 const program=ts.createProgram([dtsPath,...examples],{allowJs:true,checkJs:true,noEmit:true,strict:true,target:ts.ScriptTarget.ES2020,lib:['lib.es2020.d.ts'],module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,skipLibCheck:false});
 const diagnostics=ts.getPreEmitDiagnostics(program);
 if(diagnostics.length){console.error(ts.formatDiagnosticsWithColorAndContext(diagnostics,{getCanonicalFileName:n=>n,getCurrentDirectory:()=>root,getNewLine:()=> '\n'}));process.exit(1);}
-console.log(JSON.stringify({publicSymbols:symbols.length,topLevelExports:rt.statements.filter(n=>n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword)).length,nativeOperations:nativeOps.length,callbacks:stored.callbacks.length,typeChecker:ts.version,examples:examples.length,negativeDriftChecks:negativeChecks,runtimeEnumeration:!!runtimeFile,pass:true},null,2));
+console.log(JSON.stringify({publicSymbols:symbols.length,topLevelExports:rt.statements.filter(n=>n.modifiers?.some(m=>m.kind===ts.SyntaxKind.ExportKeyword)).length,nativeOperations:nativeOps.length,callbacks:stored.callbacks.length,typeChecker:ts.version,examples:examples.length,negativeDriftChecks:negativeChecks+1,structuredResultShapes:resultShapes.length,runtimeEnumeration:!!runtimeFile,pass:true},null,2));

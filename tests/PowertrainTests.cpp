@@ -37,10 +37,12 @@ int main(){
     invalid=settings;invalid.shafts[0].axis={0,0,0};Check(!ValidatePowertrainSettings(invalid,error),"degenerate physical axis rejected");
     settings=Shafts(1,2);settings.sources={Custom()};Rig free(settings);free.instance.command.sources[0].customTorque=12;free.Step();
     Check(Near(free.velocity[0],.6)&&Near(free.instance.state.sourceTorque[0],12),"free rotor obeys I domega = torque dt");
+    Check(Near(free.instance.suppliedWork,.36),"source work uses actual impulse and midpoint rotational rate");
     free.instance.AdvanceAngles(.1);Check(Near(free.instance.state.shafts[0].angle,.06),"angle advances from resolved physical spin only when requested");
     auto heavier=settings;heavier.shafts[0].inertia=4;Rig heavy(heavier);heavy.instance.command.sources[0].customTorque=12;heavy.Step();
     Check(Near(heavy.velocity[0],.3),"rotational inertia changes actual acceleration");
     const auto firstSpin=free.velocity[0];free.Step(.1,false);
+    Check(Near(free.instance.suppliedWork,.36),"post-load projection does not duplicate measured source work");
     Check(Near(free.velocity[0],firstSpin)&&Near(free.instance.state.sourceTorque[0],12)&&Near(free.instance.state.shafts[0].torque,12),"post-load projection retains source telemetry without integrating source twice");
     free.instance.command.sources[0].customTorque=101;const auto beforeRejected=free.velocity[0];const auto rejected=free.Step();
     Check(Near(rejected[0],0)&&Near(free.velocity[0],beforeRejected)&&!free.instance.state.converged&&Near(free.instance.state.sourceTorque[0],0),"over-cap custom command is transactional and reports no applied source work");
