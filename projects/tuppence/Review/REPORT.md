@@ -1,5 +1,7 @@
 # Tuppence review — 15 October 2026
 
+**Gameplay follow-up:** the initial shelf cleared the whole bed after one drop. See `pusher-followup/REPORT.md` for the reproduced failure, corrected short-stroke content and updated measurements. Original receipts below are retained.
+
 ## Release boundary
 
 M84 human acceptance and Planetfall release authorization were recorded in `59f8b70ac372cd68be4c587f8f28111a132555ff`, promoted normally to main. This new arcade project and its collision corrections are Experimental, awaiting human review. No Windows or human acceptance is claimed for Tuppence.

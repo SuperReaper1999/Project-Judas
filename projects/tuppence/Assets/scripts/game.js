@@ -46,7 +46,7 @@ export default class {
   // Prescribed machinery supplies work; all ball response comes from native contacts.
   const shelf=world.entity('6');
   if(this.coins){const target=-.825+.35*(1-Math.cos(s.time*.6));physics.joint(world.entity('16')).setMotor(-clamp((target-shelf.transform.position.z)*2,-.3,.3),3);}
-  else shelf.moveKinematic({position:v(0,1.6,-1.5+.65*(1-Math.cos(s.time*1.65))),rotation:identity});
+  else shelf.moveKinematic({position:v(0,1.6,-.9+.12*(1-Math.cos(s.time*.8))),rotation:identity});
   world.entity('7').transform={position:v(s.chute,this.coins?3.2:5.3,this.coins?-.8:-.5)};
   const remain=[];
   for(const b of this.balls){const e=b.entity;if(!e?.valid)continue;const p=e.transform.position;

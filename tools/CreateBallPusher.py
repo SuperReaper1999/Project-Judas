@@ -40,7 +40,7 @@ obj(2,'Red cabinet back',(0,3.2,-3.0),(3.9,3.2,.25),(.45,.055,.08))
 obj(3,'Felt playfield',(0,1.25,.55),(3.25,.15,3.15),(.025,.24,.23)) # lip z=3.7
 obj(4,'Left physical rail',(-3.38,1.75,.6),(.13,.55,3.3),(.07,.1,.16))
 obj(5,'Right physical rail',(3.38,1.75,.6),(.13,.55,3.3),(.07,.1,.16))
-obj(6,'PUSHER / prescribed physical body',(0,1.6,-1.5),(3.22,.2,.7),(.85,.63,.2),'kinematic')
+obj(6,'PUSHER / short-stroke physical shelf',(0,1.6,-.9),(3.22,.2,.7),(.85,.63,.2),'kinematic')
 obj(7,'Ball drop nozzle',(0,5.3,-.5),(.32,.16,.3),(.9,.7,.3),physical=False)
 obj(8,'Marquee',(0,6,-2.7),(3.65,.5,.15),(.04,.14,.2),physical=False)
 for i,x in enumerate([-3.65,3.65]):
@@ -87,7 +87,7 @@ if (A/'collision/coin.judascollision').exists():
   if 'body.half-extents' in f:f['body.half-extents'][0]*=.4;f['body.half-extents'][2]*=.55
   if o['id']==10:f['script.0.properties']=json.dumps({'coins':True})
   if o['id']==7:f['position']=[0,3.2,-.8]
-  if o['id']==6:f['body']['motion']={'symbol':'dynamic'};f['body.mass']=.5;f['position'][1]=1.61
+  if o['id']==6:o['name']='PUSHER / prescribed physical body';f['body']['motion']={'symbol':'dynamic'};f['body.mass']=.5;f['position']=[0.0,1.61,-1.5*.55]
  coinObjects.append({'id':16,'name':'Force-limited shelf motor / native M45 slider','fields':{'position':[0,0,0],'rotation':[1,0,0,0],'scale':[1,1,1],'joint':3,'joint.body-a':6,'joint.body-b':0,'joint.anchor-a':[0,0,0],'joint.anchor-b':[0,1.61,-.825],'joint.frame-a':[math.sqrt(.5),0,-math.sqrt(.5),0],'joint.frame-b':[math.sqrt(.5),0,-math.sqrt(.5),0],'joint.enabled':True,'joint.limits':True,'joint.lower':-.75,'joint.upper':.05,'joint.motor':True,'joint.speed':0,'joint.max-force':3,'joint.spring':False,'joint.rest':0,'joint.stiffness':0,'joint.damping':0}})
  for i in range(24):
   o=copy.deepcopy(token);o['id']=1000+i

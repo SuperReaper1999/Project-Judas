@@ -24,15 +24,17 @@ c.afterFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay& p){++frames;if(f
  auto click=[&](const char* id){auto doc=w.UI().Find("tuppence");w.UI().Layout(window->Width(),window->Height());auto* l=w.UI().LayoutOf(doc,id);check(l&&l->visible&&l->enabled,"authored button visible/enabled");if(l&&l->visible&&l->enabled){window->SetTestPointer(int(l->rect.position.x+l->rect.size.x*.5f),int(l->rect.position.y+l->rect.size.y*.5f));window->QueueTestPhysical("mouse:Left",1);release=true;}};
  auto shot=[&](const char* name){std::vector<unsigned char> pixels;h.GetRenderer().CaptureFrame(window->Width(),window->Height(),pixels);check(WriteRgbPng((out/name).string(),window->Width(),window->Height(),pixels),"actual gameplay screenshot");};
  if(tick==20){if(mode=="coins")check(w.RuntimeDefinition(1000)->body->shape==SceneShape::ConvexHull,"2p pieces use physical flat convex coin geometry");check(h.Assets().Problems().empty(),"all project assets registered");check(s["balls"].size()==(mode=="stress"?208:mode=="coins"?24:112),"real initial physical population");check(w.RuntimeDefinition(6)->body->motion==(mode=="coins"?SceneBodyMotion::Dynamic:SceneBodyMotion::Kinematic),"pusher uses the authored native body authority");}
+ if(mode=="idle"){if(tick==600){check(s.value("collected",0)==0&&s["balls"].size()==112,"untouched ball bed remains in machine for ten seconds");shot("idle.png");complete=true;w.UI().RequestQuit();}return;}
  if(tick==40){shot("ready.png");if(mode=="stress"){check(!w.UI().Element(w.UI().Find("tuppence"),"drop")->enabled,"full physical tray refuses additional paid drops");window->QueueTestPhysical("key:Space",1);}else click("drop");}
  if(tick==43&&mode=="stress")window->QueueTestPhysical("key:Space",0);
- if(tick==50){check(s.value("dropped",0)==(mode=="stress"?0:1)&&s.value("bank",0)==60-s.value("dropped",0)+s.value("score",0)/(mode=="coins"?2:10),"drop spends one credit on success and none on refusal");click("auto");}
- if(tick==70)check(s.value("autoplay",false),"UI autopilot runs ordinary drop policy");
+ if(tick==50){check(s.value("dropped",0)==(mode=="stress"?0:1)&&s.value("bank",0)==60-s.value("dropped",0)+s.value("score",0)/(mode=="coins"?2:10),"drop spends one credit on success and none on refusal");if(mode!="single")click("auto");}
+ if(tick==70&&mode!="single")check(s.value("autoplay",false),"UI autopilot runs ordinary drop policy");
  if(tick==100)click("pause_button");
  if(tick==110){check(w.UI().Paused(),"pause owns simulation");shot("pause.png");click("resume");}
  if(tick>=120&&p.LastFixedStepsThisFrame()){
   const auto& st=w.Physics().LastStepStats();double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();fixed.push_back(p.LastFixedStepMilliseconds());work.push_back(ms);csv<<tick<<','<<s["balls"].size()<<','<<st.awakeBodies<<','<<st.candidatePairs<<','<<st.contactPoints<<','<<st.impactEvents<<','<<st.impactQueries<<','<<st.broadphaseMilliseconds<<','<<st.narrowphaseMilliseconds<<','<<st.solverMilliseconds<<','<<st.totalMilliseconds<<','<<p.LastFixedStepMilliseconds()<<','<<ms<<'\n';if(tick%60==0)csv.flush();
  }
+ if(mode=="single"&&tick==850){printf("SINGLE population=%zu collected=%d dropped=%d\n",s["balls"].size(),s.value("collected",0),s.value("dropped",0));check(s["balls"].size()>=84,"one inserted ball does not clear the starting bed");complete=true;w.UI().RequestQuit();return;}
  if(tick==900){shot("playing.png");check(s.value("collected",0)>0&&s.value("score",0)>0,"actual falling balls reach pockets and score");check(s["balls"].size()+s.value("collected",0)+s.value("lost",0)==size_t((mode=="stress"?208:mode=="coins"?24:112)+s.value("dropped",0)),"spawn/collection ledger accounts for every real ball");check(s["balls"].size()<=208,"paid spawning respects physical cabinet capacity");
   if(mode!="stress")click("pause_button");else{verified=true;complete=true;w.UI().RequestQuit();}}
  if(mode!="stress"&&tick==910)click("save");

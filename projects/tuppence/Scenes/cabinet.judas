@@ -370,12 +370,12 @@
       },
       {
         "id": 6,
-        "name": "PUSHER / prescribed physical body",
+        "name": "PUSHER / short-stroke physical shelf",
         "fields": {
           "position": [
             0,
             1.6,
-            -1.5
+            -0.9
           ],
           "rotation": [
             1,

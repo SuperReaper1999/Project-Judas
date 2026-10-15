@@ -9,7 +9,7 @@ An ordinary JudasJS arcade project with two physical machines. Open `tuppence.ju
 - **Autoplay**: watch ordinary scripted input drive the machine.
 - **Escape / Modes / Menu**: switch machines, pause, resume, save, load, restart or quit.
 
-**Ball Pusher** starts with 112 brass balls. The centre pocket pays double. Reach 500 points, then continue playing.
+**Ball Pusher** starts with 112 brass balls. Its short, slow shelf nudges the bed instead of sweeping it clear. The centre pocket pays double. Reach 500 points, then continue playing.
 
 **2p Coin Pusher** is a compact tabletop cabinet with 24 flat copper tokens, a reciprocating upper shelf and lower payout edge. Insert coins onto the shelf; native contact pushes coins over the front to return them. Every returned token pays 2p in virtual score and restores one token credit. Reach 100p, then continue. The native slider motor has finite force: a blocked shelf can slow down. Tokens use original embossed render meshes and 12-sided convex physical geometry, not spheres. This is an arcade approximation, not a dimensionally exact commercial cabinet or gambling simulator.
 
