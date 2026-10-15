@@ -1,0 +1,3 @@
+REFERENCE FACE forward=4 reversed=4
+SAT edges=36 representative_directions=7
+SUMMARY checks=3849 failures=0

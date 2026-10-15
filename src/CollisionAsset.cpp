@@ -63,6 +63,18 @@ void convexFaces(CollisionAsset& a){
   a.polygons.push_back(std::move(polygon));
  }a.edges.assign(edges.begin(),edges.end());
 }
+void edgeAxes(CollisionAsset& a){
+ a.satEdges.clear();
+ for(uint32_t i=0;i<a.edges.size();++i){
+  const auto e=a.edges[i];const auto direction=a.vertices[e[1]]-a.vertices[e[0]];
+  bool redundant=false;
+  for(auto index:a.satEdges){const auto prior=a.edges[index];const auto other=a.vertices[prior[1]]-a.vertices[prior[0]];
+   // Exact local parallelism only: no angular merge tolerance. A rotation
+   // preserves parallelism; testing their cross axes again adds no SAT axis.
+   if(direction!=glm::dvec3(0)&&other!=glm::dvec3(0)&&glm::cross(direction,other)==glm::dvec3(0)){redundant=true;break;}}
+  if(!redundant)a.satEdges.push_back(i);
+ }
+}
 void mass(CollisionAsset& a){
  V first(0);glm::dmat3 second(0);a.volume=0;
  for(auto& f:a.faces){auto p=a.vertices[f.vertices[0]],q=a.vertices[f.vertices[1]],r=a.vertices[f.vertices[2]];double volume=glm::dot(p,glm::cross(q,r))/6;V s=p+q+r;a.volume+=volume;first+=volume*s/4.;second+=volume*(glm::outerProduct(s,s)+glm::outerProduct(p,p)+glm::outerProduct(q,q)+glm::outerProduct(r,r))/20.;}
@@ -98,7 +110,7 @@ bool CookCollision(const MeshData& mesh,const CollisionCookSettings& settings,Co
    V interior(0);for(auto p:a.vertices)interior+=p;interior/=double(a.vertices.size());
    for(auto& f:a.faces){auto p=a.vertices[f.vertices[0]],q=a.vertices[f.vertices[1]],r=a.vertices[f.vertices[2]];if(glm::dot(glm::cross(q-p,r-p),p-interior)<0)std::swap(f.vertices[1],f.vertices[2]);}
   }
-  topology(a,&mesh,diagnostic,settings.transform);if(a.convex){for(auto& f:a.faces)for(auto n:f.adjacent)if(n<0)throw std::runtime_error("convex cook not closed");mass(a);convexFaces(a);}build(a);out=std::move(a);error.clear();return true;
+  topology(a,&mesh,diagnostic,settings.transform);if(a.convex){for(auto& f:a.faces)for(auto n:f.adjacent)if(n<0)throw std::runtime_error("convex cook not closed");mass(a);convexFaces(a);edgeAxes(a);}build(a);out=std::move(a);error.clear();return true;
  }catch(const std::exception& e){error=e.what();return false;}
 }
 // Versioned cooked file stores acceleration/adjacency, never rebuilds it at runtime.
@@ -140,7 +152,7 @@ bool DecodeCollisionAsset(const std::vector<uint8_t>& bytes,CollisionAsset& out,
   }
   for(auto v:a.vertices)if(glm::dot(v-base,p.normal)>1e-7)throw std::runtime_error("nonconvex cooked hull");
  }}
- s>>std::ws;if(!s.eof())throw std::runtime_error("trailing collision asset records");out=std::move(a);return true;
+ s>>std::ws;if(!s.eof())throw std::runtime_error("trailing collision asset records");edgeAxes(a);out=std::move(a);return true;
  }catch(const std::exception& e){error=e.what();return false;}
 }
 bool LoadCollisionAsset(const std::string& path,CollisionAsset& out,std::string& error){std::ifstream file(path,std::ios::binary);if(!file){error="cannot open cooked collision "+path;return false;}return DecodeCollisionAsset(std::vector<uint8_t>{std::istreambuf_iterator<char>(file),{}},out,error);}

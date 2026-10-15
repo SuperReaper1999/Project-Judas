@@ -1,0 +1,17 @@
+final-balls
+PERF fixed_p50_ms=0.7158 fixed_p95_ms=2.8081 fixed_max_ms=24.4233 frame_work_p95_ms=5.8445 samples=1048
+SUMMARY checks=28 failures=0
+
+final-coins
+PERF fixed_p50_ms=2.7265 fixed_p95_ms=17.4282 fixed_max_ms=53.3165 frame_work_p95_ms=18.9396 samples=1048
+SUMMARY checks=29 failures=0
+
+final-stress
+PERF fixed_p50_ms=2.3190 fixed_p95_ms=25.4196 fixed_max_ms=177.7909 frame_work_p95_ms=31.6591 samples=781
+SUMMARY checks=17 failures=0
+
+Moved package: native graphical harness 29/0, both scene modes; direct packaged runtime startup from /tmp, intentionally bounded with timeout (124).
+ca621a3ffafa1591bfa8f36feaa411a6a5e04e87ed803d034343e0cec53e9812  build/judas
+09163f161b81fb66146b91b24f46c94dd845a2fe5b3f0cf810dace1aa22c12e8  build/judas_ball_pusher_application_tests
+50af77fb3ffa8a5581a59712886b3816ca4293dab47dc56dd5978a31efc389eb  build/judas_export
+ca621a3ffafa1591bfa8f36feaa411a6a5e04e87ed803d034343e0cec53e9812  .cache/Tuppence-Package/judas

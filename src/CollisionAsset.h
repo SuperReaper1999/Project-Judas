@@ -27,6 +27,9 @@ struct CollisionAsset {
     std::vector<CollisionFace> faces;
     std::vector<CollisionPolygon> polygons;
     std::vector<std::array<uint32_t,2>> edges;
+    // Derived exact-parallel SAT classes; all original witness edges remain.
+    // Rebuilt from vertices on cook/load, never serialized or gameplay-owned.
+    std::vector<uint32_t> satEdges;
     std::vector<CollisionNode> nodes;
     std::vector<uint32_t> order;
     glm::dvec3 minimum{0},maximum{0},centerOfMass{0};

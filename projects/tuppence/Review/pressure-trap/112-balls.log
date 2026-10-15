@@ -1,0 +1,31 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Saves/cabinet.judasstate (none saved)
+Project: Tuppence (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/tuppence.judasproj)
+Scene: TUPPENCE / Ball Pusher (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/cabinet.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS all project assets registered
+PASS real initial physical population
+PASS pusher is ordinary prescribed rigid body
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+PASS drop spends one credit on success and none on refusal
+PASS authored button visible/enabled
+PASS UI autopilot runs ordinary drop policy
+PASS authored button visible/enabled
+PASS pause owns simulation
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+PASS actual gameplay screenshot
+PASS actual falling balls reach pockets and score
+PASS spawn/collection ledger accounts for every real ball
+PASS paid spawning respects physical cabinet capacity
+PASS authored button visible/enabled
+PASS authored button visible/enabled
+PASS real machine save completes
+PASS authored button visible/enabled
+PASS authored button visible/enabled
+PASS load restores exact script-referenced physical population
+PASS load restores earned score
+PASS ordinary startup/lifecycle/shutdown
+PERF fixed_p50_ms=8.3125 fixed_p95_ms=35.6862 fixed_max_ms=222.7940 frame_work_p95_ms=38.2336 samples=979
+SUMMARY checks=24 failures=0

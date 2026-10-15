@@ -1,0 +1,3427 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "TUPPENCE / physical 2p coin pusher",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.8,
+        0.3
+      ],
+      "sun-color": [
+        0.9,
+        0.95,
+        1
+      ],
+      "ambient": [
+        0.3,
+        0.32,
+        0.38
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 10000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Midnight plinth",
+        "fields": {
+          "position": [
+            0.0,
+            -0.65,
+            0.165
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.56,
+            0.65,
+            2.4200000000000004
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.035,
+            0.055,
+            0.09
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 2,
+        "name": "Red cabinet back",
+        "fields": {
+          "position": [
+            0.0,
+            3.2,
+            -1.6500000000000001
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.56,
+            3.2,
+            0.1375
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.45,
+            0.055,
+            0.08
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.56,
+            3.2,
+            0.1375
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 3,
+        "name": "Felt playfield",
+        "fields": {
+          "position": [
+            0.0,
+            1.25,
+            0.30250000000000005
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            0.15,
+            1.7325000000000002
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.025,
+            0.24,
+            0.23
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.3,
+            0.15,
+            1.7325000000000002
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Left physical rail",
+        "fields": {
+          "position": [
+            -1.352,
+            1.75,
+            0.33
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.052000000000000005,
+            0.55,
+            1.815
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.07,
+            0.1,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.052000000000000005,
+            0.55,
+            1.815
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 5,
+        "name": "Right physical rail",
+        "fields": {
+          "position": [
+            1.352,
+            1.75,
+            0.33
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.052000000000000005,
+            0.55,
+            1.815
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.07,
+            0.1,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.052000000000000005,
+            0.55,
+            1.815
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 6,
+        "name": "PUSHER / prescribed physical body",
+        "fields": {
+          "position": [
+            0.0,
+            1.61,
+            -0.8250000000000001
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.2880000000000003,
+            0.2,
+            0.385
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.85,
+            0.63,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.2880000000000003,
+            0.2,
+            0.385
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 0.5,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 7,
+        "name": "Ball drop nozzle",
+        "fields": {
+          "position": [
+            0,
+            3.2,
+            -0.8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.128,
+            0.16,
+            0.165
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.9,
+            0.7,
+            0.3
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 8,
+        "name": "Marquee",
+        "fields": {
+          "position": [
+            0.0,
+            6,
+            -1.4850000000000003
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.46,
+            0.5,
+            0.0825
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.04,
+            0.14,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 30,
+        "name": "Cabinet upright",
+        "fields": {
+          "position": [
+            -1.46,
+            2.7,
+            -0.22000000000000003
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.064,
+            3,
+            1.7050000000000003
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.42,
+            0.045,
+            0.08
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 32,
+        "name": "Gold edge",
+        "fields": {
+          "position": [
+            -1.46,
+            2.3,
+            1.54
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.022000000000000002,
+            2.7,
+            0.030250000000000003
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.95,
+            0.67,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 31,
+        "name": "Cabinet upright",
+        "fields": {
+          "position": [
+            1.46,
+            2.7,
+            -0.22000000000000003
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.064,
+            3,
+            1.7050000000000003
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.42,
+            0.045,
+            0.08
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 33,
+        "name": "Gold edge",
+        "fields": {
+          "position": [
+            1.46,
+            2.3,
+            1.54
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.022000000000000002,
+            2.7,
+            0.030250000000000003
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.95,
+            0.67,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 9,
+        "name": "Collection tray",
+        "fields": {
+          "position": [
+            0.0,
+            -0.25,
+            2.4475000000000002
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3800000000000001,
+            0.12,
+            0.4675
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.06,
+            0.1,
+            0.15
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.3800000000000001,
+            0.12,
+            0.4675
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 11,
+        "name": "Collection end",
+        "fields": {
+          "position": [
+            0.0,
+            0.15,
+            2.8875
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3800000000000001,
+            0.4,
+            0.05500000000000001
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.1,
+            0.18,
+            0.23
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.3800000000000001,
+            0.4,
+            0.05500000000000001
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 12,
+        "name": "Pocket divider",
+        "fields": {
+          "position": [
+            -1.3800000000000001,
+            0.28,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.85,
+            0.65,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 13,
+        "name": "Pocket divider",
+        "fields": {
+          "position": [
+            -0.32000000000000006,
+            0.28,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.85,
+            0.65,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 14,
+        "name": "Pocket divider",
+        "fields": {
+          "position": [
+            0.32000000000000006,
+            0.28,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.85,
+            0.65,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 15,
+        "name": "Pocket divider",
+        "fields": {
+          "position": [
+            1.3800000000000001,
+            0.28,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.85,
+            0.65,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.024,
+            0.45,
+            0.396
+          ],
+          "body.radius": 0.35,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.38,
+          "body.restitution": 0.08,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 18,
+        "name": "Prize pocket",
+        "fields": {
+          "position": [
+            -0.8400000000000001,
+            -0.11,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.025,
+            0.35750000000000004
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.07,
+            0.4,
+            0.42
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 19,
+        "name": "Prize pocket",
+        "fields": {
+          "position": [
+            0.0,
+            -0.11,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.292,
+            0.025,
+            0.35750000000000004
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.95,
+            0.58,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 20,
+        "name": "Prize pocket",
+        "fields": {
+          "position": [
+            0.8400000000000001,
+            -0.11,
+            2.475
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.025,
+            0.35750000000000004
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.07,
+            0.4,
+            0.42
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 24,
+        "name": "Start button pedestal",
+        "fields": {
+          "position": [
+            0.0,
+            0.5,
+            3.3000000000000003
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.4800000000000002,
+            0.5,
+            0.24750000000000003
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.4,
+            0.04,
+            0.07
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 25,
+        "name": "Glowing start button",
+        "fields": {
+          "position": [
+            0.0,
+            1.08,
+            3.2725000000000004
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.168,
+            0.08,
+            0.1375
+          ],
+          "render.radius": 0.35,
+          "render.color": [
+            0.95,
+            0.65,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 80,
+        "name": "Ordinary faithful gravity",
+        "fields": {
+          "position": [
+            0.0,
+            0,
+            0.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "box"
+            },
+            "halfExtents": [
+              30,
+              30,
+              30
+            ]
+          },
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 90,
+        "name": "drop sound",
+        "fields": {
+          "position": [
+            0.0,
+            2,
+            1.1
+          ],
+          "audio.asset": "8bfdb532233a29a4fc94839334350d1f",
+          "audio.enabled": true,
+          "audio.loop": false,
+          "audio-emitter": [],
+          "audio.volume": 0.25,
+          "audio.play-on-start": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false,
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 91,
+        "name": "win sound",
+        "fields": {
+          "position": [
+            0.0,
+            2,
+            1.1
+          ],
+          "audio.asset": "37a50e2da4f399ea275ac44051496fcb",
+          "audio.enabled": true,
+          "audio.loop": false,
+          "audio-emitter": [],
+          "audio.volume": 0.25,
+          "audio.play-on-start": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false,
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 92,
+        "name": "jackpot sound",
+        "fields": {
+          "position": [
+            0.0,
+            2,
+            1.1
+          ],
+          "audio.asset": "507c8b41c97f0987adb01678f6b76fc4",
+          "audio.enabled": true,
+          "audio.loop": false,
+          "audio-emitter": [],
+          "audio.volume": 0.25,
+          "audio.play-on-start": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false,
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 10,
+        "name": "Tuppence game / ordinary JS",
+        "fields": {
+          "position": [
+            0.0,
+            0,
+            0.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "2daa5c2492c6e3cfe9ce010000e67a64",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"coins\": true}",
+          "ui.asset": "382721fe884853587aeefa55b7b88fd5",
+          "ui.name": "tuppence",
+          "ui.enabled": true,
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 16,
+        "name": "Force-limited shelf motor / native M45 slider",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "joint": 3,
+          "joint.body-a": 6,
+          "joint.body-b": 0,
+          "joint.anchor-a": [
+            0,
+            0,
+            0
+          ],
+          "joint.anchor-b": [
+            0,
+            1.61,
+            -0.825
+          ],
+          "joint.frame-a": [
+            0.7071067811865476,
+            0,
+            -0.7071067811865476,
+            0
+          ],
+          "joint.frame-b": [
+            0.7071067811865476,
+            0,
+            -0.7071067811865476,
+            0
+          ],
+          "joint.enabled": true,
+          "joint.limits": true,
+          "joint.lower": -0.75,
+          "joint.upper": 0.05,
+          "joint.motor": true,
+          "joint.speed": 0,
+          "joint.max-force": 3,
+          "joint.spring": false,
+          "joint.rest": 0,
+          "joint.stiffness": 0,
+          "joint.damping": 0
+        }
+      },
+      {
+        "id": 1000,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.6525,
+            1.422,
+            0.31
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1001,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.2175,
+            1.422,
+            0.31
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1002,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.2175,
+            1.422,
+            0.31
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1003,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.6525,
+            1.422,
+            0.31
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1004,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.6525,
+            1.422,
+            0.745
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1005,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.2175,
+            1.422,
+            0.745
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1006,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.2175,
+            1.422,
+            0.745
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1007,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.6525,
+            1.422,
+            0.745
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1008,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.6525,
+            1.422,
+            1.18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1009,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.2175,
+            1.422,
+            1.18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1010,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.2175,
+            1.422,
+            1.18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1011,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.6525,
+            1.422,
+            1.18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1012,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.6525,
+            1.422,
+            1.615
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1013,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.2175,
+            1.422,
+            1.615
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1014,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.2175,
+            1.422,
+            1.615
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1015,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.6525,
+            1.422,
+            1.615
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1016,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.6525,
+            1.422,
+            2.05
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1017,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.2175,
+            1.422,
+            2.05
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1018,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.2175,
+            1.422,
+            2.05
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1019,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.6525,
+            1.422,
+            2.05
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1020,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.6525,
+            1.832,
+            -0.8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1021,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            -0.2175,
+            1.832,
+            -0.8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1022,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.2175,
+            1.832,
+            -0.8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 1023,
+        "name": "Physical copper 2p token",
+        "fields": {
+          "position": [
+            0.6525,
+            1.832,
+            -0.8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "hull"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.21,
+          "body.terrain": "",
+          "body.mass": 0.00712,
+          "body.friction": 0.42,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 1,
+          "body.collision-asset": "d63437e05b382782eed4fdde89b230cb"
+        }
+      },
+      {
+        "id": 75,
+        "name": "Original 2p marquee emblem",
+        "fields": {
+          "position": [
+            0,
+            4.4,
+            -2.65
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0.7071067811865476,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            4,
+            4
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.21,
+          "render.color": [
+            0.75,
+            0.34,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "2ca4ff9bca222eff881577bb980d8b7b",
+          "render.texture-asset": ""
+        }
+      }
+    ]
+  }
+}

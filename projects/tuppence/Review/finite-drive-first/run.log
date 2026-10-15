@@ -1,0 +1,21 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Saves/coins.judasstate (none saved)
+Project: Tuppence (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/tuppence.judasproj)
+Scene: TUPPENCE / physical 2p coin pusher (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/coins.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS 2p pieces use physical flat convex coin geometry
+PASS all project assets registered
+PASS real initial physical population
+PASS pusher uses the authored native body authority
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+PASS drop spends one credit on success and none on refusal
+PASS authored button visible/enabled
+PASS UI autopilot runs ordinary drop policy
+PASS authored button visible/enabled
+PASS pause owns simulation
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+FAIL ordinary startup/lifecycle/shutdown
+PERF fixed_p50_ms=472.3246 fixed_p95_ms=823.4856 fixed_max_ms=1102.0558 frame_work_p95_ms=827.0778 samples=138
+SUMMARY checks=14 failures=1

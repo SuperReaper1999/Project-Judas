@@ -1,0 +1,5 @@
+REFERENCE FACE forward=4 reversed=1
+FAIL swapping body order must retain a face support patch
+FAIL face witnesses must lie under the actual coin footprint
+SAT edges=36 representative_directions=7
+SUMMARY checks=3846 failures=2

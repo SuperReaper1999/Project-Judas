@@ -514,6 +514,13 @@ struct PhysicsWorld::Impl {
             deepest=std::max(deepest,c.hasLocalAnchors?-c.signedSeparation:double(c.penetration));}
         return deepest;
     }
+    bool PairPenetrationExceeds(unsigned a,unsigned b,int pa,int pb,double time,double target) {
+        const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+        const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
+        const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
+        if(posa.shape.asset||posb.shape.asset)return CookedHasPenetrationBeyond(posa,posb,target);
+        return PairPenetration(a,b,pa,pb,time)>target;
+    }
     bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time) {
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
@@ -614,15 +621,56 @@ struct PhysicsWorld::Impl {
     // thickness, the pair stays under continuous search with a penetration
     // target instead. (A lower bound also catches ragdoll limbs knocked about
     // on the ground, and changes how they come to rest.)
-    bool SpinsThroughSupport(const std::array<unsigned,4>& key,double remaining) const {
+    bool SpinsThroughSupport(const std::array<unsigned,4>& key,double remaining,
+                             double time=0,bool changedVelocity=false) {
+        const auto convex=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::Sphere||type==ShapeType::ConvexHull;};
+        const auto typeA=PrimitiveAt(bodies[key[0]].shape,bodies[key[0]].rigidBody,int(key[2])).shape.type;
+        const auto typeB=PrimitiveAt(bodies[key[1]].shape,bodies[key[1]].rigidBody,int(key[3])).shape.type;
+        // A mesh/terrain contact normal is only a LOCAL triangle plane, not a
+        // separating plane for the whole concave primitive. Keep its old rule.
+        if(!convex(typeA)||!convex(typeB)){
+            double oldSweep=0;
+            for(int side=0;side<2;++side){const auto& body=bodies[key[side]];
+                if(body.HasMotion()&&(side?typeB:typeA)!=ShapeType::Sphere)
+                    oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
+            }
+            const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+            return std::isfinite(feature)&&oldSweep>feature;
+        }
+        std::array<glm::dvec3,2> omega{};
         double sweep=0;
         for(int side=0;side<2;++side){
             const unsigned slot=key[std::size_t(side)];const auto& body=bodies[slot];
             if(!body.HasMotion()||PrimitiveAt(body.shape,body.rigidBody,int(key[std::size_t(2+side)])).shape.type==ShapeType::Sphere)continue;
+            // Use the same anchored geometric generator as the trajectory.
+            // Immediately after an impulse the replacement segment has not
+            // been published yet; predict exactly what Append will retain.
+            omega[side]=glm::dvec3(changedVelocity
+                ? body.isKinematic?body.rigidBody.angularVelocity:
+                    AngularDriftGenerator(body.rigidBody.inverseInertiaLocal,body.rigidBody.orientation,
+                                          body.rigidBody.angularVelocity,float(remaining))
+                : DriftGenerator(slot,time));
             sweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
         }
         const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
-        return std::isfinite(feature)&&sweep>feature;
+        if(!std::isfinite(feature)||sweep<=feature)return false;
+        // A fixed support plane also bounds penetration after rotation. For
+        // anchored drift about omega, projected vertex speed is bounded by
+        // |n x omega|*R. In particular, rotation ABOUT n cannot penetrate that
+        // plane. The old all-direction bound sent flat yaw-spinning bodies
+        // through thousands of samples despite invariant support geometry.
+        // Proximity supplies a separating plane only; no impulse is introduced.
+        const auto manifold=PairAt(key[0],key[1],int(key[2]),int(key[3]),time,float(feature));
+        if(!manifold.count)return true; // retain the conservative old decision
+        const auto& contact=manifold.points[0];
+        auto normal=contact.hasLocalAnchors?contact.preciseNormal:glm::dvec3(contact.normal);
+        const double magnitude=glm::length(normal);
+        if(!(magnitude>0)||!std::isfinite(magnitude))return true;
+        normal/=magnitude;
+        double projected=0;
+        for(int side=0;side<2;++side)
+            projected+=glm::length(glm::cross(normal,omega[side]))*bodies[key[side]].boundingRadius*remaining;
+        return projected>feature;
     }
     // A quarter of the existing half-dimension feature (one eighth of the
     // full thickness for boxes), measured relative to the current overlap.
@@ -673,7 +721,7 @@ struct PhysicsWorld::Impl {
             const std::array<float,14> represented={aa.position.x,aa.position.y,aa.position.z,aa.orientation.w,aa.orientation.x,aa.orientation.y,aa.orientation.z,
                 bb.position.x,bb.position.y,bb.position.z,bb.orientation.w,bb.orientation.x,bb.orientation.y,bb.orientation.z};
             for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++impactTruthReuses;return old.touching;}
-            const bool touching=target>0?PairPenetration(a,b,pa,pb,at)>target:PairTouches(a,b,pa,pb,at);
+            const bool touching=target>0?PairPenetrationExceeds(a,b,pa,pb,at,target):PairTouches(a,b,pa,pb,at);
             actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
         };
         double time=start, previous=start;
@@ -699,7 +747,7 @@ struct PhysicsWorld::Impl {
                 // A pair touching at the start is left to the contact solver,
                 // unless its spin can turn another feature through the support
                 // before the interval ends: then search to a penetration target.
-                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start) ?
+                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start) ?
                     ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)})) : finish+1;
                 double lo=previous,hi=time;
                 for(int k=0;k<32;++k) {
@@ -996,7 +1044,7 @@ struct PhysicsWorld::Impl {
                 // support pair unless its new spin can still turn a feature
                 // through the support before the step ends.
                 for(const auto& key:eventPairs){
-                    const bool spinning=SpinsThroughSupport(key,double(dt)-now);
+                    const bool spinning=SpinsThroughSupport(key,double(dt)-now,now,true);
                     auto& into=spinning?spinningPairs:supportPairs;auto& from=spinning?supportPairs:spinningPairs;
                     from.erase(std::remove(from.begin(),from.end(),key),from.end());
                     into.insert(std::upper_bound(into.begin(),into.end(),key),key);

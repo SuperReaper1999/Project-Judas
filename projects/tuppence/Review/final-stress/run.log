@@ -1,0 +1,24 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Saves/crowded.judasstate (none saved)
+Project: Tuppence (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/tuppence.judasproj)
+Scene: Tuppence / crowded physical cabinet (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/crowded.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS all project assets registered
+PASS real initial physical population
+PASS pusher uses the authored native body authority
+PASS actual gameplay screenshot
+PASS full physical tray refuses additional paid drops
+PASS drop spends one credit on success and none on refusal
+PASS authored button visible/enabled
+PASS UI autopilot runs ordinary drop policy
+PASS authored button visible/enabled
+PASS pause owns simulation
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+PASS actual gameplay screenshot
+PASS actual falling balls reach pockets and score
+PASS spawn/collection ledger accounts for every real ball
+PASS paid spawning respects physical cabinet capacity
+PASS ordinary startup/lifecycle/shutdown
+PERF fixed_p50_ms=2.3190 fixed_p95_ms=25.4196 fixed_max_ms=177.7909 frame_work_p95_ms=31.6591 samples=781
+SUMMARY checks=17 failures=0

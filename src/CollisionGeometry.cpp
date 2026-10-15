@@ -12,7 +12,7 @@ using V=glm::dvec3;using M=glm::dmat3;
 thread_local CollisionGeometryStats stats;
 constexpr double eps=1e-10;
 V unit(V v,V fallback=V(1,0,0)){double l=glm::length(v);return l>eps?v/l:fallback;}
-struct Poly {std::vector<V> points;std::vector<std::vector<unsigned>> faces;std::vector<V> normals;std::vector<std::pair<unsigned,unsigned>> edges;bool triangle=false;std::array<bool,3> active{{true,true,true}};};
+struct Poly {std::vector<V> points;std::vector<std::vector<unsigned>> faces;std::vector<V> normals;std::vector<std::pair<unsigned,unsigned>> edges;std::vector<unsigned> satEdges;bool triangle=false;std::array<bool,3> active{{true,true,true}};};
 V nearestTriangle(V p,V a,V b,V c) {
  const V ab=b-a,ac=c-a,ap=p-a;const double d1=glm::dot(ab,ap),d2=glm::dot(ac,ap);
  if(d1<=0&&d2<=0)return a;
@@ -39,9 +39,9 @@ std::pair<V,V> segmentTriangle(V a,V b,V x,V y,V z) {
 Poly poly(const PrimitivePose& pose,V origin=V(0)) {
  Poly p;M r=PrimitiveRotation(pose);V center=PrimitiveCenter(pose)-origin;
  if(pose.shape.type==ShapeType::Box){V h(pose.shape.halfExtents);for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})p.points.push_back(center+r*V(x*h.x,y*h.y,z*h.z));p.faces={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};}
- else if(pose.shape.type==ShapeType::ConvexHull&&pose.shape.asset){for(V v:pose.shape.asset->vertices)p.points.push_back(center+r*v);for(auto& f:pose.shape.asset->polygons){p.faces.emplace_back(f.vertices.begin(),f.vertices.end());p.normals.push_back(r*f.normal);}for(auto e:pose.shape.asset->edges)p.edges.push_back({e[0],e[1]});return p;}
+ else if(pose.shape.type==ShapeType::ConvexHull&&pose.shape.asset){for(V v:pose.shape.asset->vertices)p.points.push_back(center+r*v);for(auto& f:pose.shape.asset->polygons){p.faces.emplace_back(f.vertices.begin(),f.vertices.end());p.normals.push_back(r*f.normal);}for(auto e:pose.shape.asset->edges)p.edges.push_back({e[0],e[1]});p.satEdges.assign(pose.shape.asset->satEdges.begin(),pose.shape.asset->satEdges.end());if(p.satEdges.empty())for(unsigned i=0;i<p.edges.size();++i)p.satEdges.push_back(i);return p;}
  else throw std::invalid_argument("poly geometry requires box or cooked convex hull");
- std::set<std::pair<unsigned,unsigned>> edges;for(auto& f:p.faces){p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));for(unsigned i=0;i<f.size();++i)edges.insert(std::minmax(f[i],f[(i+1)%f.size()]));}p.edges.assign(edges.begin(),edges.end());
+ std::set<std::pair<unsigned,unsigned>> edges;for(auto& f:p.faces){p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));for(unsigned i=0;i<f.size();++i)edges.insert(std::minmax(f[i],f[(i+1)%f.size()]));}p.edges.assign(edges.begin(),edges.end());p.satEdges={0,1,2};
  return p;
 }
 // Writes the same triangle Poly as triangle() into storage reused across a mesh's
@@ -50,7 +50,7 @@ Poly poly(const PrimitivePose& pose,V origin=V(0)) {
 void triangleInto(Poly& p,const CollisionAsset& a,unsigned feature,const M& r,V center) {
  const auto& f=a.faces[feature];p.triangle=true;p.active=f.active;
  p.points.resize(3);for(unsigned k=0;k<3;++k)p.points[k]=center+r*a.vertices[f.vertices[k]];
- p.faces.resize(1);p.faces[0].assign({0,1,2});p.normals.assign(1,r*f.normal);p.edges.assign({{0,1},{1,2},{0,2}});
+ p.faces.resize(1);p.faces[0].assign({0,1,2});p.normals.assign(1,r*f.normal);p.edges.assign({{0,1},{1,2},{0,2}});p.satEdges={0,1,2};
 }
 Poly triangle(const PrimitivePose& pose,unsigned feature,V origin) {
  Poly p;triangleInto(p,*pose.shape.asset,feature,PrimitiveRotation(pose),PrimitiveCenter(pose)-origin);return p;
@@ -85,7 +85,7 @@ Separation sat(const Poly& a,const Poly& b,bool edgeAware=true) {
   for(V p:a.points){double x=glm::dot(p,n);alo=std::min(alo,x);ahi=std::max(ahi,x);}for(V p:b.points){double x=glm::dot(p,n);blo=std::min(blo,x);bhi=std::max(bhi,x);}double gap=alo-bhi;V direction=n;if(blo-ahi>gap){gap=blo-ahi;direction=-n;}actual=std::max(actual,gap);if(allowed&&gap>best.gap){best={gap,direction,edge};}};
  for(V n:a.normals)axis(n,true,false);
  for(V n:b.normals)axis(n,true,false);
- for(auto e:a.edges)for(unsigned i=0;i<b.edges.size();++i){auto f=b.edges[i];bool active=!edgeAware||!b.triangle||b.active[i==2?2:i];axis(glm::cross(a.points[e.second]-a.points[e.first],b.points[f.second]-b.points[f.first]),active,true);}
+ for(auto index:a.satEdges)for(unsigned i:b.satEdges){auto e=a.edges[index];auto f=b.edges[i];bool active=!edgeAware||!b.triangle||b.active[i==2?2:i];axis(glm::cross(a.points[e.second]-a.points[e.first],b.points[f.second]-b.points[f.first]),active,true);}
  // An inactive triangle edge still bounds its patch; it cannot supply a
  // blocking solver normal. Positive separation remains a real geometric miss.
  if(actual>0&&actual>best.gap)best.gap=actual;
@@ -101,6 +101,17 @@ std::vector<std::pair<V,V>> witnesses(const Poly& a,const Poly& b,const Separati
  for(unsigned i=0;i<a.normals.size();++i)if(glm::dot(a.normals[i],s.normal)<opposite){opposite=glm::dot(a.normals[i],s.normal);incident=i;}
  std::vector<std::pair<V,V>> result;
  if(alignment>1-1e-6&&!s.edge){auto& face=b.faces[reference];V n=b.normals[reference];std::vector<V> polygon;for(auto v:a.faces[incident])polygon.push_back(a.points[v]);for(unsigned i=0;i<face.size();++i){V x=b.points[face[i]],y=b.points[face[(i+1)%face.size()]];V side=unit(glm::cross(y-x,n));polygon=clip(std::move(polygon),side,glm::dot(side,x));}double plane=glm::dot(n,b.points[face[0]]);for(V p:polygon)result.push_back({p,p-n*(glm::dot(n,p)-plane)});}
+ // SAT may select A's face just as legitimately as B's. Falling back to
+ // an edge/edge witness here loses a real face patch and can put the support
+ // point at a distant floor edge. Keep all concave-triangle handling intact.
+ if(result.empty()&&!s.edge&&!a.triangle&&!b.triangle&&opposite< -1+1e-6){
+  const auto& face=a.faces[incident];const V n=a.normals[incident];
+  std::vector<V> polygon;for(auto v:b.faces[reference])polygon.push_back(b.points[v]);
+  for(unsigned i=0;i<face.size();++i){const V x=a.points[face[i]],y=a.points[face[(i+1)%face.size()]];
+   const V side=unit(glm::cross(y-x,n));polygon=clip(std::move(polygon),side,glm::dot(side,x));}
+  const double plane=glm::dot(n,a.points[face[0]]);
+  for(V p:polygon)result.push_back({p-n*(glm::dot(n,p)-plane),p});
+ }
  if(clippedFace)*clippedFace=!result.empty();
  if(result.empty()){
   double supportA=INFINITY,supportB=-INFINITY;V pa=a.points[0],pb=b.points[0];for(V p:a.points)if(glm::dot(p,s.normal)<supportA){supportA=glm::dot(p,s.normal);pa=p;}for(V p:b.points)if(glm::dot(p,s.normal)>supportB){supportB=glm::dot(p,s.normal);pb=p;}
@@ -128,8 +139,20 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
 // stop after the first accepted witness; it never changes SAT, clipping, margins,
 // sidedness, crease handling or the contacts used by a physical solver.
 template<class Consumer>
-bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume) {
+bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY) {
  V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](const Poly& pb){
+  // A face axis is already a valid SAT axis. Reject shallow convex pairs
+  // before enumerating edge axes/clipping; preserve the original full path
+  // near the threshold and for every concave triangle response.
+  if(!pb.triangle){
+   double guard=eps;
+   if(std::isfinite(penetrationThreshold)){
+    for(V p:pa.points)guard=std::max(guard,eps*glm::length(p));
+    for(V p:pb.points)guard=std::max(guard,eps*glm::length(p));
+   }
+   const double reject=std::isfinite(penetrationThreshold)?-penetrationThreshold+guard:margin;
+   if(faceAxesSeparate(pa,pb,reject)){++stats.convexTests;return false;}
+  }
   auto s=sat(pa,pb);
   // SAT separation is authoritative. Choosing a response normal must never
   // turn an edge-separated finite triangle into an overlapping infinite plane.
@@ -236,6 +259,18 @@ bool CookedHasContacts(const PrimitivePose& a,const PrimitivePose& b,double marg
  if(!a.shape.asset&&!b.shape.asset)throw std::invalid_argument("CookedContacts called without cooked geometry");
  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
  return visitCookedPolyContacts(a,b,margin,[](V,V,V,double){return true;});
+}
+bool CookedHasPenetrationBeyond(const PrimitivePose& a,const PrimitivePose& b,double threshold) {
+ if(!std::isfinite(threshold)||threshold<0)throw std::invalid_argument("invalid penetration threshold");
+ const auto polyType=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::ConvexHull;};
+ if(!polyType(a.shape.type)||!polyType(b.shape.type)){
+  const auto manifold=CookedContacts(a,b,0);
+  for(int k=0;k<manifold.count;++k)if(-manifold.points[k].signedSeparation>threshold)return true;
+  return false;
+ }
+ // reduce() retains the deepest witness first. Existence over the same
+ // accepted witnesses is therefore exactly the full manifold's maximum test.
+ return visitCookedPolyContacts(a,b,0,[&](V,V,V,double gap){return -gap>threshold;},threshold);
 }
 CollisionMassProperties ShapeMassProperties(const Shape& shape) {
  CollisionMassProperties out;
