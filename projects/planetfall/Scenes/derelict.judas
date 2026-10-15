@@ -1,0 +1,1899 @@
+JudasScene 3
+settings
+  name "Planetfall / derelict"
+  world-origin 0 806375 0
+  sun-direction -0.4 0.8 0.3
+  sun-color 2 1.65 1.35
+  ambient 0.38 0.43 0.5
+  background-color 0.34 0.43 0.54
+  linear-rendering true
+  exposure 1
+  environment ""
+  environment-intensity 1
+  environment-rotation 1 0 0 0
+  environment-background false
+  fluid-scale 13
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 40105
+end
+
+object 10 "Town defender"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0.9 0
+  motor.stepHeight 0.35
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 48
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 15
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  ui.asset "190ec72163f70c2646ba1ba13de1ba9a"
+  ui.name "lastlight_ui"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "b6c5ffa39b9a3370bd26ecf5094a9cd7"
+  script.0.enabled true
+  script.0.properties "{\"zombie\":\"53ff5373d983fc570354e18b5244850b\",\"rocket\":\"8576e18507d3ae36c8f7906b3b7df1bf\",\"grenade\":\"9f351a43ff7a39eb0107070afa2d37fb\",\"framewalkBoots\":\"e034213e96fbe9ca349fd2704f6be878\",\"rocketsPickup\":\"2520bf890f78b65666086a82645ed7e8\",\"grenadesPickup\":\"597965bfb383e01e5e0be2f766dcc29d\",\"building\":\"a1b36649c2208c062167f9b0fd1068ca\"}"
+  position 0 0.08 18
+  rotation 1 0 0 0
+  scale 1 1 1
+  audio-emitter 
+  audio.asset "ddd5040358a78158682760391900771b"
+  audio.enabled true
+  audio.play-on-start false
+  audio.loop false
+  audio.spatial false
+  audio.volume 0.28
+  audio.pitch 1
+  audio.reference-distance 2
+  audio.maximum-distance 45
+  audio.rolloff 1
+  audio.attenuation inverse
+  audio-listener 
+  listener.enabled true
+  listener.follow-view true
+end
+
+object 11 "Defender avatar"
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "Idle"
+  animation.speed 1
+  animation.time 0
+  position 0 0 18
+  rotation 6.12323426e-17 0 1 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "308328cd7957bfdc9ad886b5eb0eeee1"
+  render.texture-asset ""
+end
+
+object 12 "Defender rifle"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "4b3c46f834e6c6868d01da048c866632"
+  render.texture-asset ""
+end
+
+object 13 "Combat fist 13"
+  render-visible false
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "385744dcb65347839bd2332cff855221"
+  render.texture-asset ""
+end
+
+object 14 "Combat fist 14"
+  render-visible false
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "385744dcb65347839bd2332cff855221"
+  render.texture-asset ""
+end
+
+object 15 "Defender launcher"
+  render-visible false
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "43c306b7547ca4536510834be1b3f7ba"
+  render.texture-asset ""
+end
+
+object 20 "Feedback 20"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  particle-emitter 
+  particle.enabled true
+  particle.loop false
+  particle.local-space false
+  particle.gravity false
+  particle.rate 0
+  particle.lifetime 0.18
+  particle.size 0.07
+  particle.end-size 0.01
+  particle.burst 0
+  particle.capacity 160
+  particle.spread 0.04 0.04 0.04
+  particle.velocity 0 0.8 0
+  particle.variation 1.8 1.8 1.8
+  particle.acceleration 0 0 0
+  particle.texture "50e1d136923552f614a543314b89cc14"
+  particle.color 1 0.55 0.1
+  particle.alpha 1
+  particle.end-color 0.9 0.1 0.04
+  particle.end-alpha 0
+  particle.seed 20
+  audio-emitter 
+  audio.asset "cd7cd991332df58b4e171724f405a4c1"
+  audio.enabled true
+  audio.play-on-start false
+  audio.loop false
+  audio.spatial true
+  audio.volume 0.28
+  audio.pitch 1
+  audio.reference-distance 2
+  audio.maximum-distance 45
+  audio.rolloff 1
+  audio.attenuation inverse
+end
+
+object 21 "Feedback 21"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  particle-emitter 
+  particle.enabled true
+  particle.loop false
+  particle.local-space false
+  particle.gravity false
+  particle.rate 0
+  particle.lifetime 0.18
+  particle.size 0.07
+  particle.end-size 0.01
+  particle.burst 0
+  particle.capacity 160
+  particle.spread 0.04 0.04 0.04
+  particle.velocity 0 0.8 0
+  particle.variation 1.8 1.8 1.8
+  particle.acceleration 0 0 0
+  particle.texture "50e1d136923552f614a543314b89cc14"
+  particle.color 1 0.85 0.4
+  particle.alpha 1
+  particle.end-color 0.9 0.1 0.04
+  particle.end-alpha 0
+  particle.seed 21
+end
+
+object 22 "Feedback 22"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  particle-emitter 
+  particle.enabled true
+  particle.loop false
+  particle.local-space false
+  particle.gravity false
+  particle.rate 0
+  particle.lifetime 0.18
+  particle.size 0.07
+  particle.end-size 0.01
+  particle.burst 0
+  particle.capacity 160
+  particle.spread 0.04 0.04 0.04
+  particle.velocity 0 0.8 0
+  particle.variation 1.8 1.8 1.8
+  particle.acceleration 0 0 0
+  particle.texture "50e1d136923552f614a543314b89cc14"
+  particle.color 1 0.18 0.08
+  particle.alpha 1
+  particle.end-color 0.9 0.1 0.04
+  particle.end-alpha 0
+  particle.seed 22
+end
+
+object 23 "Reload Click cue"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  audio-emitter 
+  audio.asset "0f79b04706106209b8bcef685c28bdf0"
+  audio.enabled true
+  audio.play-on-start false
+  audio.loop false
+  audio.spatial false
+  audio.volume 0.28
+  audio.pitch 1
+  audio.reference-distance 2
+  audio.maximum-distance 45
+  audio.rolloff 1
+  audio.attenuation inverse
+end
+
+object 24 "Melee Thud cue"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  audio-emitter 
+  audio.asset "b0dd4fdfddba891758631ed04b9a3331"
+  audio.enabled true
+  audio.play-on-start false
+  audio.loop false
+  audio.spatial true
+  audio.volume 0.28
+  audio.pitch 1
+  audio.reference-distance 2
+  audio.maximum-distance 45
+  audio.rolloff 1
+  audio.attenuation inverse
+end
+
+object 25 "Empty Click cue"
+  position 0 -100 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  audio-emitter 
+  audio.asset "61603490c3d59e1497786d9620e485f3"
+  audio.enabled true
+  audio.play-on-start false
+  audio.loop false
+  audio.spatial false
+  audio.volume 0.28
+  audio.pitch 1
+  audio.reference-distance 2
+  audio.maximum-distance 45
+  audio.rolloff 1
+  audio.attenuation inverse
+end
+
+object 3000 "WAYFARER / walkable spacecraft"
+  position 0 0.18 48
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic compound
+  body.half-extents 2.4 1.5 4
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1200
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 17
+  body.compound-box 0 0 0 2.4 0.15 4
+  body.compound-box -2.3 1.5 0 0.1 1.35 4
+  body.compound-box 2.3 1.5 0 0.1 1.35 4
+  body.compound-box 0 3 0 2.4 0.12 4
+  body.compound-box -1.68 1.5 3.9 0.58 1.35 0.1
+  body.compound-box 1.68 1.5 3.9 0.58 1.35 0.1
+  body.compound-box 0 2.7 3.9 1.1 0.15 0.1
+  body.compound-box 0 0.42 -3.9 2.3 0.27 0.1
+  body.compound-box 0 2.7 -3.9 2.3 0.3 0.1
+  body.compound-box -2.05 1.5 -3.9 0.25 0.95 0.1
+  body.compound-box 2.05 1.5 -3.9 0.25 0.95 0.1
+  body.compound-box 0 1.5 -3.9 1.8 0.95 0.1
+  body.compound-box 0 0.68 -2.85 0.85 0.53 0.4
+  body.compound-box 0 0.5 -1.65 0.42 0.13 0.42
+  body.compound-box 0 0.92 -1.22 0.42 0.43 0.1
+  body.compound-box -1.35 0.55 1 0.5 0.2 1.05
+  body.compound-box 1.35 0.55 1 0.5 0.2 1.05
+  body.fluid-cavity-count 0
+end
+
+object 3020 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.4 0.15 4
+  render.radius 0.5
+  render.color 0.26 0.32 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3021 "Wayfarer cabin hull"
+  parent 3000
+  position -2.3 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.35 4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3022 "Wayfarer cabin hull"
+  parent 3000
+  position 2.3 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 1.35 4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3023 "Wayfarer cabin hull"
+  parent 3000
+  position 0 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.4 0.12 4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3024 "Wayfarer cabin hull"
+  parent 3000
+  position -1.68 1.5 3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 1.35 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3025 "Wayfarer cabin hull"
+  parent 3000
+  position 1.68 1.5 3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.58 1.35 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3026 "Wayfarer cabin hull"
+  parent 3000
+  position 0 2.7 3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.1 0.15 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3027 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.42 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.3 0.27 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3028 "Wayfarer cabin hull"
+  parent 3000
+  position 0 2.7 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2.3 0.3 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3029 "Wayfarer cabin hull"
+  parent 3000
+  position -2.05 1.5 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.95 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3030 "Wayfarer cabin hull"
+  parent 3000
+  position 2.05 1.5 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.95 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3031 "Wayfarer windshield"
+  parent 3000
+  position 0 1.5 -3.9
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.8 0.95 0.1
+  render.radius 0.5
+  render.color 0.38 0.68 0.78
+  render.alpha 0.18
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3032 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.68 -2.85
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.85 0.53 0.4
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3033 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.5 -1.65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.13 0.42
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3034 "Wayfarer cabin hull"
+  parent 3000
+  position 0 0.92 -1.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.43 0.1
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3035 "Wayfarer cabin hull"
+  parent 3000
+  position -1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3036 "Wayfarer cabin hull"
+  parent 3000
+  position 1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.18 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3037 "Copper hull stripe"
+  parent 3000
+  position -2.42 1.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.03 0.13 3.7
+  render.radius 0.5
+  render.color 0.92 0.48 0.17
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3038 "Engine nacelle"
+  parent 3000
+  position -3.025 0.35 1.3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.5 1.65
+  render.radius 0.5
+  render.color 0.12 0.19 0.24
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3039 "Engine cyan exhaust"
+  parent 3000
+  position -3.025 0.35 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.3 0.04
+  render.radius 0.5
+  render.color 0.18 0.8 0.95
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3040 "Copper hull stripe"
+  parent 3000
+  position 2.42 1.8 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.03 0.13 3.7
+  render.radius 0.5
+  render.color 0.92 0.48 0.17
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3041 "Engine nacelle"
+  parent 3000
+  position 3.025 0.35 1.3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.45 0.5 1.65
+  render.radius 0.5
+  render.color 0.12 0.19 0.24
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3042 "Engine cyan exhaust"
+  parent 3000
+  position 3.025 0.35 3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.3 0.04
+  render.radius 0.5
+  render.color 0.18 0.8 0.95
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3043 "Deck aisle lighting"
+  parent 3000
+  position 0 0.157 -3.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 0.006 0.13
+  render.radius 0.5
+  render.color 0.35 0.8 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3044 "Deck aisle lighting"
+  parent 3000
+  position 0 0.157 2.7
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.65 0.006 0.13
+  render.radius 0.5
+  render.color 0.35 0.8 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3045 "Captain chair seat"
+  parent 3000
+  position 0 0.5 -1.65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.13 0.42
+  render.radius 0.5
+  render.color 0.63 0.3 0.16
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3046 "Captain chair back"
+  parent 3000
+  position 0 0.92 -1.22
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.42 0.43 0.1
+  render.radius 0.5
+  render.color 0.63 0.3 0.16
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3047 "Cabin bench"
+  parent 3000
+  position -1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.48 0.56 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3048 "Cabin bench back"
+  parent 3000
+  position -1.89 1.1 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.5 1.05
+  render.radius 0.5
+  render.color 0.3 0.4 0.38
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3049 "Cabin bench"
+  parent 3000
+  position 1.35 0.55 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.5 0.2 1.05
+  render.radius 0.5
+  render.color 0.48 0.56 0.5
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3050 "Cabin bench back"
+  parent 3000
+  position 1.89 1.1 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.08 0.5 1.05
+  render.radius 0.5
+  render.color 0.3 0.4 0.38
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3004 "Seated captain"
+  parent 3000
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "Seat"
+  animation.speed 1
+  animation.time 0
+  position 0 0 -1.7
+  rotation 0 0 1 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "308328cd7957bfdc9ad886b5eb0eeee1"
+  render.texture-asset ""
+  render.visible false
+end
+
+object 3003 "Command console / E to sit"
+  parent 3000
+  position 0 1.3 -2.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.75 0.08 0.35
+  render.radius 0.5
+  render.color 0.22 0.8 0.78
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 3001 "Wayfarer boarding door"
+  position 0 1.53 51.96
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.98 1.17 0.08
+  render.radius 0.5
+  render.color 0.77 0.44 0.17
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.98 1.17 0.08
+  body.radius 0.5
+  body.terrain ""
+  body.mass 22
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3002 "Wayfarer ordinary physical door hinge"
+  joint 1
+  joint.body-a 3001
+  joint.body-b 3000
+  joint.anchor-a 1 0 0
+  joint.anchor-b 1 1.35 3.96
+  joint.frame-a 0.70710677 0 0 0.70710677
+  joint.frame-b 0.70710677 0 0 0.70710677
+  joint.enabled true
+  joint.limits true
+  joint.motor false
+  joint.spring true
+  joint.lower -0.05
+  joint.upper 1.6
+  joint.speed 0
+  joint.max-force 0
+  joint.rest 0
+  joint.stiffness 450
+  joint.damping 90
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 3051 "Cedar landing plaza"
+  position 260 17.12 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static box
+  body.half-extents 6 0.12 5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3052 "Cedar landing beacon"
+  position 254.5 17.4 4.5
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 3053 "Cedar landing beacon"
+  position 265.5 17.4 4.5
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 3054 "Cedar refuge floor"
+  position 249.976 14.615175 -4.0096
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  body static box
+  body.half-extents 3 0.12 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3055 "Cedar refuge roof"
+  position 248.72 17.44884 -4.512
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  body static box
+  body.half-extents 3.2 0.16 3.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3056 "Cedar refuge wall"
+  position 246.6839 14.890057 -4.166441
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3057 "Cedar refuge wall"
+  position 251.99611 17.210056 -4.361559
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  body static box
+  body.half-extents 0.1 1.5 3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3058 "Cedar refuge rear wall"
+  position 249.43756 15.586056 -7.1249766
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  body static box
+  body.half-extents 3 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 3059 "Cedar refuge open doorway"
+  position 247.45644 15.734056 -1.3374236
+  rotation 0.9753054 -0.082025595 0 0.20506398
+  scale 1 1 1
+  body static box
+  body.half-extents 1.05 1.5 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.mass 10
+  body.friction 0.8
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 26003 "Flight recorder"
+  position 0 1 -72
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.3 0.3 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 50 "Town navigation"
+  nav.surface.asset "61e36ff99c5173f764e4737a863a00b4"
+  nav.surface.cellHeight "0.100000001"
+  nav.surface.cellSize "0.5"
+  nav.surface.enabled "1"
+  nav.surface.halfExtents "160 30 160"
+  nav.surface.includeDynamic "0"
+  nav.surface.minRegion "2"
+  nav.surface.profile "0"
+  nav.surface.simplification "1.29999995"
+  nav.surface.sources "18446744073709551615"
+  nav.surface.tileSize "32"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 2 "Derelict artificial gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 300
+end
+
+object 40000 "Hull deck and bulkhead"
+  position 0 -0.2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 24 0.2 80
+  render.radius 0.5
+  render.color 0.18 0.22 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 24 0.2 80
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40001 "Hull deck and bulkhead"
+  position 0 7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 24 0.15 80
+  render.radius 0.5
+  render.color 0.23 0.28 0.32
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 24 0.15 80
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40002 "Hull deck and bulkhead"
+  position -24 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.2 3.5 80
+  render.radius 0.5
+  render.color 0.24 0.31 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.2 3.5 80
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40003 "Hull deck and bulkhead"
+  position 24 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.2 3.5 80
+  render.radius 0.5
+  render.color 0.24 0.31 0.35
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.2 3.5 80
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40004 "Hull deck and bulkhead"
+  position 0 3.5 -80
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 24 3.5 0.2
+  render.radius 0.5
+  render.color 0.2 0.3 0.34
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 24 3.5 0.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40005 "Hull deck and bulkhead"
+  position 0 3.5 80
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 24 3.5 0.2
+  render.radius 0.5
+  render.color 0.2 0.3 0.34
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 24 3.5 0.2
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40010 "Room divider with broad central doorway"
+  position -16 2.5 -55
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40011 "Room divider with broad central doorway"
+  position 16 2.5 -55
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40012 "Room divider with broad central doorway"
+  position -16 2.5 -30
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40013 "Room divider with broad central doorway"
+  position 16 2.5 -30
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40014 "Room divider with broad central doorway"
+  position -16 2.5 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40015 "Room divider with broad central doorway"
+  position 16 2.5 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40016 "Room divider with broad central doorway"
+  position -16 2.5 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40017 "Room divider with broad central doorway"
+  position 16 2.5 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 8 2.5 0.15
+  render.radius 0.5
+  render.color 0.3 0.38 0.42
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 8 2.5 0.15
+  body.radius 0.5
+  body.terrain ""
+  body.mass 100
+  body.friction 0.7
+  body.restitution 0
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 40100 "Crew habitat bed"
+  position -12 0.02 -65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "53c739da6a7658dcd24f0b8e2bbc7619"
+  render.texture-asset ""
+end
+
+object 40101 "Crew habitat computer_terminal"
+  position -7 0.02 -65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "c7f7bb924d798e158c3057e53d5e377e"
+  render.texture-asset ""
+end
+
+object 40102 "Crew habitat bookshelf"
+  position -2 0.02 -65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "bdc897670a9b3914f3df6810d85b8de2"
+  render.texture-asset ""
+end
+
+object 40103 "Crew habitat chair"
+  position 3 0.02 -65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "bb0cb506eddcd59a6f41aee51e0f3e33"
+  render.texture-asset ""
+end
+
+object 40104 "Crew habitat table"
+  position 8 0.02 -65
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "db5144377bde29bb8bdae39431147f2d"
+  render.texture-asset ""
+end
+
+object 23000 "Finite salvage supply"
+  position -14 0.55 40
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23001 "Finite salvage supply"
+  position -6 0.55 40
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23002 "Finite salvage supply"
+  position 2 0.55 40
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23003 "Finite salvage supply"
+  position 10 0.55 40
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23004 "Finite salvage supply"
+  position -14 0.55 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23005 "Finite salvage supply"
+  position -6 0.55 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23006 "Finite salvage supply"
+  position 2 0.55 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23007 "Finite salvage supply"
+  position 10 0.55 20
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23008 "Finite salvage supply"
+  position -14 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23009 "Finite salvage supply"
+  position -6 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23010 "Finite salvage supply"
+  position 2 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 23011 "Finite salvage supply"
+  position 10 0.55 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "dc952588e44f27d8605540fe05738d54"
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 20
+  body.friction 0.7
+  body.restitution 0.05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 39020 "Campaign waypoint / presentation only"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.18
+  render.color 1 0.7 0.2
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset "4b3c46f834e6c6868d01da048c866632"
+  render.texture-asset ""
+end

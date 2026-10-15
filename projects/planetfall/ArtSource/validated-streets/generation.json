@@ -1,0 +1,171 @@
+[
+  {
+    "category": "shop",
+    "confidence": 1.0,
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "type": "supermarket",
+      "floors": null,
+      "count": 1
+    },
+    "spans": [
+      {
+        "slot": "type",
+        "text": "supermarket"
+      },
+      {
+        "slot": "feature",
+        "text": "aisles"
+      },
+      {
+        "slot": "feature",
+        "text": "checkout"
+      }
+    ],
+    "tokens": [
+      "a",
+      "supermarket",
+      "with",
+      "aisles",
+      "and",
+      "checkout",
+      "counters"
+    ],
+    "prompt": "a supermarket with aisles and checkout counters",
+    "dimensions_m": [
+      38.0,
+      7.074999999999,
+      50.2
+    ],
+    "seed": 710,
+    "route": "current NLU parameters + existing procedural backend; bypass library substitution"
+  },
+  {
+    "category": "road",
+    "confidence": 1.0,
+    "params": {
+      "features": {
+        "streetlights": true
+      },
+      "size": 1.0,
+      "length": 30,
+      "material": "stone",
+      "lanes": null,
+      "count": 1
+    },
+    "spans": [
+      {
+        "slot": "length",
+        "text": "30 metre"
+      },
+      {
+        "slot": "material",
+        "text": "cobblestone"
+      },
+      {
+        "slot": "feature",
+        "text": "street lights"
+      }
+    ],
+    "tokens": [
+      "a",
+      "30",
+      "metre",
+      "cobblestone",
+      "road",
+      "with",
+      "street",
+      "lights"
+    ],
+    "prompt": "a 30 metre cobblestone road with street lights",
+    "dimensions_m": [
+      11.5999999999971,
+      6.389100322347195,
+      30.0
+    ],
+    "seed": 711,
+    "route": "current NLU parameters + existing procedural backend; bypass library substitution"
+  },
+  {
+    "category": "railing",
+    "confidence": 1.0,
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "length": 8,
+      "material": "wood",
+      "height": null,
+      "count": 1
+    },
+    "spans": [
+      {
+        "slot": "length",
+        "text": "8 metre"
+      },
+      {
+        "slot": "material",
+        "text": "wooden",
+        "backoff": true
+      }
+    ],
+    "tokens": [
+      "an",
+      "8",
+      "metre",
+      "wooden",
+      "railing"
+    ],
+    "prompt": "an 8 metre wooden railing",
+    "dimensions_m": [
+      8.099999999998,
+      0.9999999999989999,
+      0.11999999999987998
+    ],
+    "seed": 712,
+    "route": "current NLU parameters + existing procedural backend; bypass library substitution"
+  },
+  {
+    "category": "stairs",
+    "confidence": 1.0,
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "type": "straight",
+      "material": "stone",
+      "steps": 10,
+      "count": 1
+    },
+    "spans": [
+      {
+        "slot": "type",
+        "text": "straight"
+      },
+      {
+        "slot": "material",
+        "text": "stone"
+      },
+      {
+        "slot": "steps",
+        "text": "10 steps"
+      }
+    ],
+    "tokens": [
+      "a",
+      "straight",
+      "stone",
+      "staircase",
+      "with",
+      "10",
+      "steps"
+    ],
+    "prompt": "a straight stone staircase with 10 steps",
+    "dimensions_m": [
+      1.299999999998,
+      1.7999999999979996,
+      2.8199999999980006
+    ],
+    "seed": 713,
+    "route": "current NLU parameters + existing procedural backend; bypass library substitution"
+  }
+]

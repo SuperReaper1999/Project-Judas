@@ -1,0 +1,2261 @@
+{
+  "starting_head": "e738f727ab49ad044a0d47015adee5ddda7ce6dc",
+  "scope": "Planetfall game, documentation/evidence and focused test target; runtime engine source unchanged",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "a4ec9ad772dad4483652ffbe2540732a981ddb3909782d067e9078a2a0d6efa4",
+      "bytes": 88571
+    },
+    {
+      "path": "projects/planetfall/.gitignore",
+      "sha256": "506e58f50622533005af997329470d6489a1ad9a90bbcae88d6533b9c12ea135",
+      "bytes": 50
+    },
+    {
+      "path": "projects/planetfall/ANIMATIONS.md",
+      "sha256": "74e69ee5a2c73bd636faf9746219db18c94c2204297d685a7d47081c2c7702d2",
+      "bytes": 1251
+    },
+    {
+      "path": "projects/planetfall/ArtSource/conner-animation.json",
+      "sha256": "b938742ebd02f40bb28f0ea70f9c45bdc28900ef5ae4616aa285e66c4a693649",
+      "bytes": 327
+    },
+    {
+      "path": "projects/planetfall/ArtSource/conner_planetfall.blend",
+      "sha256": "97a6e5d285d50aff79f044e729a266ea112f1150d0b359d9d50e97a85bdaf938",
+      "bytes": 234561
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-30-metre-cobblestone-road-with-street-lights-511-lib.glb",
+      "sha256": "d71e8bad8e431e6b2af9b39f66d2b615f37d1273fe525821bb3dcd22e9134112",
+      "bytes": 5876
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-30-metre-cobblestone-road-with-street-lights-511-lib.json",
+      "sha256": "08ffab77e40b7e9a3e0518a5f0abb1517ecd95fcedafcb5fd8dabc4e138eed59",
+      "bytes": 1049
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-9-m-tall-stone-research-building-with-an-antenna-181-lowpoly.glb",
+      "sha256": "0aea526a0a819404d2fcfc732c32350101b742f8ca188785f410bdee6a9088be",
+      "bytes": 466956
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-9-m-tall-stone-research-building-with-an-antenna-181-lowpoly.json",
+      "sha256": "1b63089de6bdee3678f6f572b66a62d523f6075b28090efe76d82921b3cc3143",
+      "bytes": 961
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-astronaut-with-a-backpack-183-lowpoly.glb",
+      "sha256": "2e0c12355bfda521bcdb319b65c32ecb2841e3e8312d27f345494b4090bcd49a",
+      "bytes": 317640
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-astronaut-with-a-backpack-183-lowpoly.json",
+      "sha256": "3840f6ba0bf067dd5d6a52bd70e2fd505a05f367931ed9dc22826edd3b3004a8",
+      "bytes": 831
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-oak-tree-187-lib.glb",
+      "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b",
+      "bytes": 47696
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-oak-tree-187-lib.json",
+      "sha256": "044db64356cd445435d2fc65f7f169666c5da59e1f14e2a6200a4e560e611712",
+      "bytes": 886
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-orange-pickup-truck-with-a-roof-rack-180-lowpoly.glb",
+      "sha256": "8b49047c4633e5ee9c11c1ce9f6f8628bb20de6952ec69f46b96ffe04b510b7e",
+      "bytes": 295544
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-orange-pickup-truck-with-a-roof-rack-180-lowpoly.json",
+      "sha256": "aafc93bec1f99416d1c269762d560e04a5747a699606b17f05be7e7eb3bfc9be",
+      "bytes": 929
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-pine-tree-182-lib.glb",
+      "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589",
+      "bytes": 26976
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-pine-tree-182-lib.json",
+      "sha256": "92a6410c5f3d7443993dc196ea4119e61aeb5b5f940625483f5e6f105ac1c6ba",
+      "bytes": 869
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-pirate-with-a-black-coat-184-stylized.glb",
+      "sha256": "3ee5bbbd7401cce717580f005e18b2bfc170919b515821119ba25127aac59c9e",
+      "bytes": 281356
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-pirate-with-a-black-coat-184-stylized.json",
+      "sha256": "795a147b5344543dd0c03a380556713a23a42aeba876cd511bbc970d2258ff5a",
+      "bytes": 785
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-rocket-with-3-fins-186-lowpoly.glb",
+      "sha256": "2ea62dd55cf62d3748a29f7879cc6aa50ca3e44502244dbd1436575b063baff1",
+      "bytes": 140716
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-rocket-with-3-fins-186-lowpoly.json",
+      "sha256": "ddf751deed5d1106aa7917f624d833eec2e63f00ca7a4bf64c075e9a9e30413f",
+      "bytes": 732
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-stone-research-building-with-3-floors-and-an-ante-181-lowpoly.json",
+      "sha256": "2b0d95af751eb186f480ff3bd371044e670cc431d41dcde10b7671e696626eac",
+      "bytes": 1024
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-supermarket-called-lantern-supply-510-lib.glb",
+      "sha256": "d299d7c0df8fa876127e6ab4267593c9bf89dcc4464de8eddc8970db53438b0a",
+      "bytes": 141428
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-supermarket-called-lantern-supply-510-lib.json",
+      "sha256": "2c90e91f4feb997f2dfe3a1a9eca0380ad7e14214e8fca622c6740b8cefc8fcb",
+      "bytes": 1067
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb",
+      "sha256": "15111f05d18e050f59d21c1359cde530d724b51d9a0e33b76bdde9e851cd7976",
+      "bytes": 1163180
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.json",
+      "sha256": "744fb667f21addb88fdfdbe75ae17294fe4dc347c7af93d6c1f45ab5416b6b28",
+      "bytes": 1216
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-wooden-railing-8-metres-long-512-lib.glb",
+      "sha256": "7ce362b8361d48597f6c8267dbf14ebbda6e6682ac735b30505607114bb08543",
+      "bytes": 384136
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-wooden-railing-8-metres-long-512-lib.json",
+      "sha256": "575127aaa3b63782573246c4bf27108ec41461f46201bb111df2f71bc4d8cedf",
+      "bytes": 954
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-wooden-stairs-with-10-steps-and-railings-513-stylized.glb",
+      "sha256": "726c2dc352b821361e46bf397e88098f2d2a7b827e8902736ebc2fac6ff18fdb",
+      "bytes": 547184
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-wooden-stairs-with-10-steps-and-railings-513-stylized.json",
+      "sha256": "a7225b3ae5edf5b6b3e0d63c1c130aacc846348d85d9e1a3f38dc5fa708dbdaa",
+      "bytes": 1030
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-wooden-windmill-185-lowpoly.glb",
+      "sha256": "14fe019c6115f29061aaf9daba8a9b360dcb3a68d5d3a200d6c552fd95155388",
+      "bytes": 113628
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/a-low-poly-wooden-windmill-185-lowpoly.json",
+      "sha256": "1ff434ae042b2d7779dda071cf272fa239d8ca56aa92fc44ebaec4f6d9ad5009",
+      "bytes": 783
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/generation.json",
+      "sha256": "591bbb4c9adca55b558f3fa54d30a9fd71bad81b61243107dbc56dbd11650176",
+      "bytes": 7561
+    },
+    {
+      "path": "projects/planetfall/ArtSource/generated/street-generation.json",
+      "sha256": "aced7e4a849c8548f1422d371f57aa8b0f8054441735d4a51cbeb13ac51cde0a",
+      "bytes": 4436
+    },
+    {
+      "path": "projects/planetfall/ArtSource/validated-streets/generation.json",
+      "sha256": "81c5babf8d6a5879e07e5ed381a47489b9062bee47b870a92a28e031cf929841",
+      "bytes": 3282
+    },
+    {
+      "path": "projects/planetfall/ArtSource/validated-streets/stone_road.glb",
+      "sha256": "60328ea8e865ced934f6db51c23a4c09748ea316f7cc2ba803f511c22a90fd17",
+      "bytes": 113624
+    },
+    {
+      "path": "projects/planetfall/ArtSource/validated-streets/stone_stairs.glb",
+      "sha256": "22c14d97e8de0db003629c5923d50eaab204ec1e7cf630c862fa6e8548cb4223",
+      "bytes": 93272
+    },
+    {
+      "path": "projects/planetfall/ArtSource/validated-streets/supply_shop.glb",
+      "sha256": "39583bfdd1002b651626bc741d8f430bba8433b6f99b270dce51b9f6f7c97fb6",
+      "bytes": 1295068
+    },
+    {
+      "path": "projects/planetfall/ArtSource/validated-streets/wood_railing.glb",
+      "sha256": "ba1fed2a22c8b80ab9388d64492bf33e127009d575e60d70c7ad2c9b570771db",
+      "bytes": 146476
+    },
+    {
+      "path": "projects/planetfall/Assets/AUDIO_PROVENANCE.txt",
+      "sha256": "2e2b36d35bad72a8bca4c3f91db10865278865cea7902d73bad29021304c929f",
+      "bytes": 429
+    },
+    {
+      "path": "projects/planetfall/Assets/STARTER_PACK_PROVENANCE.md",
+      "sha256": "1b34e2268562e258d54124baee4afe500f5d3fb1a7c8789ca6a314d8a6265723",
+      "bytes": 14218
+    },
+    {
+      "path": "projects/planetfall/Assets/Volumes/cave/volume.judascollision",
+      "sha256": "9f2a10d08c0e0383c62bb5675460553400cf34d23a6a9a15ae996dfa4babda0f",
+      "bytes": 5377070
+    },
+    {
+      "path": "projects/planetfall/Assets/Volumes/cave/volume.judascollision.judasmeta",
+      "sha256": "4597fc6cc12e41639bfad3cabe93a0aa0e082effbcff82eed62edc7e4f96cf1b",
+      "bytes": 104
+    },
+    {
+      "path": "projects/planetfall/Assets/Volumes/cave/volume.judasmodel",
+      "sha256": "cd32832c423d6928f7f75eaf48eb88809ed7a66c656c48d701bc1a852d6003cd",
+      "bytes": 2048717
+    },
+    {
+      "path": "projects/planetfall/Assets/Volumes/cave/volume.judasmodel.judasmeta",
+      "sha256": "7b72a37c2c75d5fefcd19830db01fb11ed61eb90b0536514678d2d073e9e394f",
+      "bytes": 99
+    },
+    {
+      "path": "projects/planetfall/Assets/Volumes/cave/volume.receipt.json",
+      "sha256": "17655cd9a0bca3b60c3e5dc35548ee0b80f3aa718b7ee4cf9cd55f93e870b8d3",
+      "bytes": 448
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/empty_click.wav",
+      "sha256": "246e6106adb201e80c88ffdc3b4b226e7c2bfa14389e3facdaf051d1881796e0",
+      "bytes": 6658
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/empty_click.wav.judasmeta",
+      "sha256": "33cb45fe86afc29534587626f5e3d8459ab57a3d7eec5c804e6d6e99aae2c3b5",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/explosion.wav",
+      "sha256": "d0affbfa764714b41b4b7b0fa353e6a9e876c85a4cd468fc47673b9a90403ee4",
+      "bytes": 75014
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/explosion.wav.judasmeta",
+      "sha256": "1a58ca3e558dcd76d16c10f292a163f23af8c6c4c55034cfcaf1f92c8146c75b",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/impact.wav",
+      "sha256": "e2a9c7b3b9ad7da025554afdabdab508d94ad612d046a52427dc4aec8722d7c3",
+      "bytes": 9746
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/impact.wav.judasmeta",
+      "sha256": "43de4f55b98e71f0631f74f5745142c4998fd734c0ffab572b925853219b4cc0",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/melee_thud.wav",
+      "sha256": "ad084c93c3be1880009b8570f85e98acdd781fc684d0569abbdfce1828d757f9",
+      "bytes": 17684
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/melee_thud.wav.judasmeta",
+      "sha256": "fb235d793be60d34e5f1a099a538e92275f0ed1c41f2dfc6c71aa46b913b7997",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/reload_click.wav",
+      "sha256": "1f64c05c0d9f586d2d7cc92a0a49ca47c27ba4c215c387c999d6d3acfc70877f",
+      "bytes": 17684
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/reload_click.wav.judasmeta",
+      "sha256": "729397810336718bdb6f6add4209aead8b4a37d27dd0bb7e25eb6d9cffbca575",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/rifle_fire.wav",
+      "sha256": "6d37cb9237716aa7459e1bd88dafbd7e88802c2bb24b3b94e9bece212573b4a9",
+      "bytes": 21212
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/rifle_fire.wav.judasmeta",
+      "sha256": "1959e03c8ed56c7cf25c587e96447a9397362bc8c55865ef1e726b6735e44228",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/shot.wav",
+      "sha256": "822256c344afb6cbc66a424833d30039350a8ed95f3b8de0177c3edc04eb4a0d",
+      "bytes": 5776
+    },
+    {
+      "path": "projects/planetfall/Assets/audio/shot.wav.judasmeta",
+      "sha256": "b62da784c9fc58b1ae3d78ee438c5a85a1db1b4d889bb1b987a03791293774f6",
+      "bytes": 76
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/bridge.judasdeform",
+      "sha256": "4851a102a00590e0879ae75637c8d697ec7d1750320864c827e866008984a2ed",
+      "bytes": 35073
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/bridge.judasdeform.judasmeta",
+      "sha256": "c26060d7ae0dc50882f1724393e9064a1af0b853b54847d9d14e472b1d231d3c",
+      "bytes": 81
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/nominal.judasdeform",
+      "sha256": "6e55d958d75f6b767375526f016459336f04bc68d656ccae717a449797134fce",
+      "bytes": 18055
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/nominal.judasdeform.judasmeta",
+      "sha256": "7749d647391d6a2ef8639f1a69e12cf8c033906f5944ae4c4519fea3bfee0e7f",
+      "bytes": 81
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/specimen.judasdeform",
+      "sha256": "ad3e1010d2ce31c50186d05ce3d936353888f53ca67ce30ee9a5c72a4cfd585c",
+      "bytes": 13264
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/specimen.judasdeform.judasmeta",
+      "sha256": "9462334843b5467fe5c67a64877cfa92f3d18daba9df24f4fb07357a2e3f98fe",
+      "bytes": 81
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/specimen.source",
+      "sha256": "93ef3a40e61e2c780638ac38f5aa623a91243039bee1b11281fda1306a96f893",
+      "bytes": 1424
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/strong.judasdeform",
+      "sha256": "01f98d07dde0c53cabbb7553d514f0c2b33f93dfdcf9e5f7a4af65bea1edf208",
+      "bytes": 18055
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/strong.judasdeform.judasmeta",
+      "sha256": "2048a867b6c573dc9576c612f741fe52fcfe30f37e97fc7eb83c79a75751f27a",
+      "bytes": 81
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/weak.judasdeform",
+      "sha256": "97a01663e8ce6c9d0176b76e28a0f3c51244b4858371748cb948de94a3515b2e",
+      "bytes": 18055
+    },
+    {
+      "path": "projects/planetfall/Assets/deformables/weak.judasdeform.judasmeta",
+      "sha256": "ff9b1dfe9ea5fc2c79ceac1b96d9d651743f7baae5aab7352cbf90f6bf1ab0e3",
+      "bytes": 81
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/DejaVuSans.ttf",
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+      "bytes": 759720
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/DejaVuSans.ttf.judasmeta",
+      "sha256": "1a4bc046b8392ad699ffe641abd3c6bf430e0db16a2fe1a8cba3dcecf2e548b5",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/DejaVuSansCondensed-Bold.ttf",
+      "sha256": "5a3bb1f72d8861c272498b80f1fe075163b4ea37bb27dd9cdd7b985e59b0286e",
+      "bytes": 667844
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/DejaVuSansCondensed-Bold.ttf.judasmeta",
+      "sha256": "2cfb6c6f7ed5a666205c9d8c925fdedcb2f56acf65841bff715b81ba5ffd0266",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/DejaVuSansMono.ttf",
+      "sha256": "a54dca07c76d6289e717e75e0a58c0128f6d7269ef3faf76417c9d7d3bba37ab",
+      "bytes": 343140
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/DejaVuSansMono.ttf.judasmeta",
+      "sha256": "e0563273c16a965926de62a92be777034cb2a11266b69e07be060bea83dc5398",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/fonts/LICENSE.txt",
+      "sha256": "24e651498ac4c2e6ca80c8a3de05101f33aef9584fdff5035908100eb75fae51",
+      "bytes": 12621
+    },
+    {
+      "path": "projects/planetfall/Assets/ids.json",
+      "sha256": "78a89d092bb72bdfd633d0963329357fb53955ba685b54a9774a2b9023aeab27",
+      "bytes": 6193
+    },
+    {
+      "path": "projects/planetfall/Assets/materials/inner.judasmat",
+      "sha256": "4bd1bda679b58c1607495b64697cf30b46c7d98b046bcb1e6fc05c8172e45d5a",
+      "bytes": 323
+    },
+    {
+      "path": "projects/planetfall/Assets/materials/inner.judasmat.judasmeta",
+      "sha256": "b8ade549b7e3fbfa9712865bed57df8ad28dc86205ef6f8314fbf92dc74e9af6",
+      "bytes": 79
+    },
+    {
+      "path": "projects/planetfall/Assets/materials/outer.judasmat",
+      "sha256": "1f837857470b601099c532c6fdfac907211a52c528e27511e401964a60dd0873",
+      "bytes": 315
+    },
+    {
+      "path": "projects/planetfall/Assets/materials/outer.judasmat.judasmeta",
+      "sha256": "198ddb0193db67aa9e71de1cba212287a23dca6879f2264d605168003dc8634b",
+      "bytes": 79
+    },
+    {
+      "path": "projects/planetfall/Assets/models/aether.glb",
+      "sha256": "b4e4a4553ab31f45a95efe77e951a4131923f524805231c85cfcc04b149f2b51",
+      "bytes": 16228
+    },
+    {
+      "path": "projects/planetfall/Assets/models/aether.glb.judasmeta",
+      "sha256": "c33d45b4f34be947f3f0227c338bda04f8785f753f52b1658ac171db345865b6",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/astronaut.glb",
+      "sha256": "2e0c12355bfda521bcdb319b65c32ecb2841e3e8312d27f345494b4090bcd49a",
+      "bytes": 317640
+    },
+    {
+      "path": "projects/planetfall/Assets/models/astronaut.glb.judasmeta",
+      "sha256": "ff96461cc91d9721b9de86092df7a23a2eda727ecc8c15b5cbcd78171a8c6a77",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/barrel.glb",
+      "sha256": "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8",
+      "bytes": 30808
+    },
+    {
+      "path": "projects/planetfall/Assets/models/barrel.glb.judasmeta",
+      "sha256": "d274d0f576cb058f28a584f58d06aecfddbefe383dd946cea76e1f21a9f6511c",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bed.glb",
+      "sha256": "2f475c54c697a28e3f2542e1677bb4523cfdb86eec8ccf671a10c26efc6050ef",
+      "bytes": 77360
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bed.glb.judasmeta",
+      "sha256": "fb7370874f28a4e2247bc56460980a87a44f8c0e55ff6e8f2b684a1a0ff1e8c2",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bench.glb",
+      "sha256": "5b8892253e9cbc57c6a2b430d9070fbb76aaa2c2b522fd3f6b8e04528455a962",
+      "bytes": 37952
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bench.glb.judasmeta",
+      "sha256": "824ae7858ee1bf0c48c172c474b13c4dfccaaf88ec7ac519e0f97310ce43dd00",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bookshelf.glb",
+      "sha256": "0f3f62dc89488a6b14cc8ce274fd3943a353384195c875ef21672daf7cd3ea72",
+      "bytes": 137668
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bookshelf.glb.judasmeta",
+      "sha256": "e318db3ce7fd32a223a5bf736e30b802f94390ef2b6c1344176d4f7e7aaade62",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/Assets/models/broadleaf_tree.glb",
+      "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b",
+      "bytes": 47696
+    },
+    {
+      "path": "projects/planetfall/Assets/models/broadleaf_tree.glb.judasmeta",
+      "sha256": "38937a6bf9bd0f7301266cea076d1dd4e8c69db405af36013deae04d406e7fec",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bus_stop_shelter.glb",
+      "sha256": "908c647146bef0a4aeefd4827ff4f63118297c80a4193c9f6e8959836e3b5246",
+      "bytes": 160780
+    },
+    {
+      "path": "projects/planetfall/Assets/models/bus_stop_shelter.glb.judasmeta",
+      "sha256": "b1400cea7c9df2ae43af6ec6c063176979ff317a01efce04c0f37b825066964a",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/chair.glb",
+      "sha256": "a3d36c982d079fe55b691ce8fba82c8ffc4b6fbfe88e881741ca4cf502757333",
+      "bytes": 61812
+    },
+    {
+      "path": "projects/planetfall/Assets/models/chair.glb.judasmeta",
+      "sha256": "eb97283bb4df5af29f4eedd1f53efd26b18637a55aaae67aa9e186db4a61ab77",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_adventurer.glb",
+      "sha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3",
+      "bytes": 209448
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_adventurer.glb.judasmeta",
+      "sha256": "3fca8cd71bc8faa49037d5295b4a0a604e92c4ab38a6e5caddd52e66b097f0b3",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_fighter.glb",
+      "sha256": "40542fbc7e6236978090e52d5371d023a619438d0f42c9faa501a68417f78b08",
+      "bytes": 233284
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_fighter.glb.judasmeta",
+      "sha256": "51eface4517d86dea4e4798800d402a7aafb9ccca778ec60640e0913e1117782",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_soldier.glb",
+      "sha256": "47a86a3b354102bd2bdd4be7e2b19401c429d70ef353647143555fb9f526c1dc",
+      "bytes": 209316
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_soldier.glb.judasmeta",
+      "sha256": "09cfae873933d0d53368936c2d1283c0914f6031fabc3fa586af1a034de87d3f",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_zombie.glb",
+      "sha256": "77d22d71722efc3ff5241f5ac0e07ca84b75e02f68084caa2540d2678ec3fd7f",
+      "bytes": 209316
+    },
+    {
+      "path": "projects/planetfall/Assets/models/character_zombie.glb.judasmeta",
+      "sha256": "68f2534c1ac92e84c4e31c2a4076e1be68b9ecbe1fb385fc94fe266383e2c37b",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/cloth_laundry_line.glb",
+      "sha256": "ec72922fdd787fb0ed0beefe63789f515f0d41efab777af4416ff0478733a2d2",
+      "bytes": 51032
+    },
+    {
+      "path": "projects/planetfall/Assets/models/cloth_laundry_line.glb.judasmeta",
+      "sha256": "cc41719f21e8fdfac400c66c0ed87185c2ee5990477007f38d3de697876b6a52",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/cloth_market_canopy.glb",
+      "sha256": "1c3b671ecbbeae54ff49e7d1acf797a28583c95d174fbfa8f47784a0b0aacc56",
+      "bytes": 44164
+    },
+    {
+      "path": "projects/planetfall/Assets/models/cloth_market_canopy.glb.judasmeta",
+      "sha256": "4ca63b2d32c318503840e34acf305e3a0aea2a15ed35f09c583121ac696eedb2",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/computer_terminal.glb",
+      "sha256": "fa5ab43b6fc631197015d9c7c09068f60123457501d2a6066a9053daba619a65",
+      "bytes": 71924
+    },
+    {
+      "path": "projects/planetfall/Assets/models/computer_terminal.glb.judasmeta",
+      "sha256": "38be53ded86c8f7367fb82132fbff7f7e5ec1ad8c0be5f6294fa7e22802e3ac7",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/Assets/models/conner_player.glb",
+      "sha256": "9c8df72f901aafc7af9afb25e3a236d21712fa30cbc435e45aa0b0a68b1d2c98",
+      "bytes": 560588
+    },
+    {
+      "path": "projects/planetfall/Assets/models/conner_player.glb.judasmeta",
+      "sha256": "4b376c9e84c41e4a2c4059b739ef68b42227b0bff21d28834672437c6bd71afe",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/Assets/models/crash_wheel.obj",
+      "sha256": "20aa6073cc317dfe385d0f923a612f6882e93a83152dd213e6e6f16bc1d937a9",
+      "bytes": 3791
+    },
+    {
+      "path": "projects/planetfall/Assets/models/crash_wheel.obj.judasmeta",
+      "sha256": "fd6a854692b7fa866f635c7d411a2a0c1b2e079fca5258c40aaed17404237e23",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_scenery.glb",
+      "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584",
+      "bytes": 13543748
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_scenery.glb.judasmeta",
+      "sha256": "9d712117d086dfb92b2150104cc366f06791269ffd030dd6d655300508c3c778",
+      "bytes": 100
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_surface.glb",
+      "sha256": "6929696fccb32f5bf6564ce4ea8c8d84e7d57991035ce7ab46b989cd75878994",
+      "bytes": 1076276
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_surface.glb.judasmeta",
+      "sha256": "3d127ca078262beb7787400fcd9b69a0280e5904ae428de610dccce7c1f16935",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_surface.judascollision",
+      "sha256": "94e865abfa03aaa07b0a19b11a850594da99534cf3fe162d112f3fb79ad8da45",
+      "bytes": 1883672
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_surface.judascollision.cleanup.json",
+      "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565",
+      "bytes": 136
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_surface.judascollision.judasmeta",
+      "sha256": "adc7aa0a8e623c31c1a2de0995637c4656a9c24bbce9a211900012346cbc9630",
+      "bytes": 107
+    },
+    {
+      "path": "projects/planetfall/Assets/models/derelict_surface.judascollision.report.json",
+      "sha256": "c97e6ab574b5580e231a7b5858136f97d1ab2512cc12c33898444d69554f99bf",
+      "bytes": 610
+    },
+    {
+      "path": "projects/planetfall/Assets/models/door.glb",
+      "sha256": "cf8b30a7c5aef8059978e6277035572eba39c1bec1e3077f2c3132559fbb7f99",
+      "bytes": 72640
+    },
+    {
+      "path": "projects/planetfall/Assets/models/door.glb.judasmeta",
+      "sha256": "199fc435b53cf288c06f315ea6a7a432f4f0b718673d0cfc5c429afd7b70d032",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/dumpster.glb",
+      "sha256": "1ea20edec99a341136f17e48d180489e281d4510ffe90f76b6ee9ab956e4988f",
+      "bytes": 67768
+    },
+    {
+      "path": "projects/planetfall/Assets/models/dumpster.glb.judasmeta",
+      "sha256": "60fbbb20c0c22a80ade7f5b3b865084208d2ad95f8805110788ad3261b8a8941",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth-frontier_scenery.glb",
+      "sha256": "4a3427172d933f6a85e3aa1930c4359f993c7c8798ee0c03a7a5831bfc36eaca",
+      "bytes": 13713128
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth-frontier_scenery.glb.judasmeta",
+      "sha256": "014d833fbb3cefe3eadcb5f2edbc2dda2e0fe04052456c0c060dc47b73c10f40",
+      "bytes": 100
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_scenery.glb",
+      "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584",
+      "bytes": 13543748
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_scenery.glb.judasmeta",
+      "sha256": "fd36e9b8732f5f16030624d59ef1b2b82669deb30a4c9e30660e85e8acf2b425",
+      "bytes": 100
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_surface.glb",
+      "sha256": "ec7d28705b61c83f25d661fe1c82a1f0da88977451cba75ce285e5c0d9f219d8",
+      "bytes": 1076276
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_surface.glb.judasmeta",
+      "sha256": "91fa350355c0433ad825721af27d22a4828bc54bdc96f6ab1d36660c66c78d11",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_surface.judascollision",
+      "sha256": "7444217a664eb5960fd899dfb157d7bdbd314964ad2ae3bc296ecf064614ee43",
+      "bytes": 1883672
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_surface.judascollision.cleanup.json",
+      "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565",
+      "bytes": 136
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_surface.judascollision.judasmeta",
+      "sha256": "c519b65e89ceb211b460bd6afda935faea5bb8600672abcb6316fbf049cd0478",
+      "bytes": 107
+    },
+    {
+      "path": "projects/planetfall/Assets/models/earth_surface.judascollision.report.json",
+      "sha256": "e5282ae196f16dab9147716dfa77c29a0fd9bb824e452f3ebbfccd9977e5e749",
+      "bytes": 604
+    },
+    {
+      "path": "projects/planetfall/Assets/models/fire_hydrant.glb",
+      "sha256": "3f996932d2e4a10ccc4f41df65266b5f7d5b135cb5fdae2b141ffab21d6b75f5",
+      "bytes": 56064
+    },
+    {
+      "path": "projects/planetfall/Assets/models/fire_hydrant.glb.judasmeta",
+      "sha256": "747ade3a53ffe2eed961c506a688ab43f2414b1b806c36ce74990fa93eba84b0",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/fist_forearm.glb",
+      "sha256": "6cdf05c7c66a354bd394beaf0d61c045f759cbcc5e6aaca742089a68adc56c8e",
+      "bytes": 31724
+    },
+    {
+      "path": "projects/planetfall/Assets/models/fist_forearm.glb.judasmeta",
+      "sha256": "67767ccd60a399e9d147bbed13ac6e0de79c4ebd180a28d9e1f4adf2f888e2e0",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/frontier_house.glb",
+      "sha256": "5abd68534cbe06909fc49c6616d1f94e22158d11c60a67fbd1cd52b79f8f0b15",
+      "bytes": 1160788
+    },
+    {
+      "path": "projects/planetfall/Assets/models/frontier_house.glb.judasmeta",
+      "sha256": "c8afda5fa42530cc7161d29761f26a9a47780c8ddfa2c3ccde5ea383e6fe6abd",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/frontier_house.judascollision.report.json",
+      "sha256": "9084d188fa3f7354e7db992029e03be65ad19813bfbbd42b35a9defd906fe4a2",
+      "bytes": 842
+    },
+    {
+      "path": "projects/planetfall/Assets/models/frontier_house.judasmodel",
+      "sha256": "a160b35c88f55c97065c6f2fcc6bc693243c9d5c9586f4ad6768d50bbbb5eec0",
+      "bytes": 2831257
+    },
+    {
+      "path": "projects/planetfall/Assets/models/frontier_house.judasmodel.import-report.json",
+      "sha256": "3a6b91a64ef1037afbdbac23914107a9c459223d40dbb452b9e3ed36f65787e0",
+      "bytes": 10457
+    },
+    {
+      "path": "projects/planetfall/Assets/models/frontier_house.judasmodel.judasmeta",
+      "sha256": "ffcedd71e70c75fb467a19a4de2d0a3b4c5bca568c11d0ac971f485584459f19",
+      "bytes": 88
+    },
+    {
+      "path": "projects/planetfall/Assets/models/generated_oak.glb",
+      "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b",
+      "bytes": 47696
+    },
+    {
+      "path": "projects/planetfall/Assets/models/generated_oak.glb.judasmeta",
+      "sha256": "9ed224c79426223bd17931f9e3b67d71e0d6df6c3184f308e4812b9c81762feb",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/generated_pine.glb",
+      "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589",
+      "bytes": 26976
+    },
+    {
+      "path": "projects/planetfall/Assets/models/generated_pine.glb.judasmeta",
+      "sha256": "b00cdb6af03d76c07c12e7233463b77bd3e9981471a9317e10a8ffa565c191a2",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/grenade.glb",
+      "sha256": "296d5432944f28db4da9dc2c63f4e11a0a118548ae3559e7483dc3e4cb0813b2",
+      "bytes": 26020
+    },
+    {
+      "path": "projects/planetfall/Assets/models/grenade.glb.judasmeta",
+      "sha256": "5f8254426ecae87a70b41477107ff720f21f65fb94b15b455699cad49c2b184d",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/ladder.glb",
+      "sha256": "4755426638588c07050bbefe4e85c5bdfc20bd422eff936d1306f022a0107ba8",
+      "bytes": 87644
+    },
+    {
+      "path": "projects/planetfall/Assets/models/ladder.glb.judasmeta",
+      "sha256": "542c5e7a113fa0581cdae83f6b0cae0aa4e75cf40a38a341bbcb476cd9856974",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_scenery.glb",
+      "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584",
+      "bytes": 13543748
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_scenery.glb.judasmeta",
+      "sha256": "6da140a4a780e52d99801fcbc3125f6d9c905ed4f1a05f7bb23b386d5c311147",
+      "bytes": 100
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_surface.glb",
+      "sha256": "bdb69c73218e8c5bbae88bc39a080648bdafc2440d7b7c766fc1c7946e98f2d5",
+      "bytes": 1076272
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_surface.glb.judasmeta",
+      "sha256": "b577662869a5b2021bb9bd2768c8f4df5deb73c0a614160b1c67e589ac021488",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_surface.judascollision",
+      "sha256": "63ca11b0834c4fd115404bf004280ebcc93e7e4e7e79089a6253c0e8d292b75a",
+      "bytes": 1883569
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_surface.judascollision.cleanup.json",
+      "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565",
+      "bytes": 136
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_surface.judascollision.judasmeta",
+      "sha256": "4148b5203b9ed23fbdcc6c51ef7447171c50967c5744b938950a6082eaddd346",
+      "bytes": 107
+    },
+    {
+      "path": "projects/planetfall/Assets/models/mars_surface.judascollision.report.json",
+      "sha256": "40f53be12b48dd691d5d42c2b2ddca525b67b1e0b99a5b4fac09c92c5a9564a7",
+      "bytes": 602
+    },
+    {
+      "path": "projects/planetfall/Assets/models/metal_crate.glb",
+      "sha256": "f87ffe0b8f60798fe4600c9f0fb779df99c9d67a612e3fafb1a06909cb2b1ea4",
+      "bytes": 65220
+    },
+    {
+      "path": "projects/planetfall/Assets/models/metal_crate.glb.judasmeta",
+      "sha256": "b2e986a173c403e4f9826580dc2c139ae5cab619e19ea07e0101850414e24f0f",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_scenery.glb",
+      "sha256": "438e5afacf76495f6d66466d38195c4744990c901364646b03c335d78381b678",
+      "bytes": 13683768
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_scenery.glb.judasmeta",
+      "sha256": "63512ed1d2495597a6de9cf3adcf3ecc7083a32ca78e700660a1a116a4736bcf",
+      "bytes": 100
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_surface.glb",
+      "sha256": "d54a6689b5ef84a95bd595e885356dc5cd1c25d19ea882355adb69a24b804435",
+      "bytes": 1076272
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_surface.glb.judasmeta",
+      "sha256": "b561c3b83daff1d979d4c4bbe53eebcaac73458e6b26d59b930819965a1cb30a",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_surface.judascollision",
+      "sha256": "97adf8338e5a23e27296d19e99265308348f910632370dc9ac742233a3821a69",
+      "bytes": 1882191
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_surface.judascollision.cleanup.json",
+      "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565",
+      "bytes": 136
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_surface.judascollision.judasmeta",
+      "sha256": "555aa155840c2a7a954aff4865ae11b96ebc278223dd74abf92cbd3cd45df106",
+      "bytes": 107
+    },
+    {
+      "path": "projects/planetfall/Assets/models/moon_surface.judascollision.report.json",
+      "sha256": "64db4d1624297921a5380420b7dad89c0f37c00a4f5692cab52d32d362817233",
+      "bytes": 602
+    },
+    {
+      "path": "projects/planetfall/Assets/models/pilot_seated.glb",
+      "sha256": "2224e0daf0f9e772a1e7dea558a5e24dfa4a8d44e686c68d523ea6b23f2b8b2c",
+      "bytes": 178544
+    },
+    {
+      "path": "projects/planetfall/Assets/models/pilot_seated.glb.judasmeta",
+      "sha256": "b62616787cb0296caf7628e36ae1277587b34c5bb3cd3a927f6d8f7b49c79363",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/pine_tree.glb",
+      "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589",
+      "bytes": 26976
+    },
+    {
+      "path": "projects/planetfall/Assets/models/pine_tree.glb.judasmeta",
+      "sha256": "3f9f174093cb71a667ca6462b8f1cb0e1f0e8aedf627e0febde026337735bfe3",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/pirate.glb",
+      "sha256": "3ee5bbbd7401cce717580f005e18b2bfc170919b515821119ba25127aac59c9e",
+      "bytes": 281356
+    },
+    {
+      "path": "projects/planetfall/Assets/models/pirate.glb.judasmeta",
+      "sha256": "fe9875e5acaf2a6285ef14828e7db8f6c6749941bc7aec94c3dd74c2f724b89c",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/planter.glb",
+      "sha256": "e63e5786c64fd41e63ed5be148f2eea79227375e412a2f28a18492c7c9c72054",
+      "bytes": 31980
+    },
+    {
+      "path": "projects/planetfall/Assets/models/planter.glb.judasmeta",
+      "sha256": "a7ea4c47ef08f6cd1798abd5099b6c0fabf3d1c279fc28c1dbc554bf025fc228",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/produce_crate.glb",
+      "sha256": "213b2495b123761f8698058483d668e25784bea6428dbf3bcfbabf610bb0eeb1",
+      "bytes": 106556
+    },
+    {
+      "path": "projects/planetfall/Assets/models/produce_crate.glb.judasmeta",
+      "sha256": "f82c32e8b22a6caeda7c5665de384b2cc66cd258fcefd4aa661aa9be5d1fe0ef",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/relay_rocket.glb",
+      "sha256": "2ea62dd55cf62d3748a29f7879cc6aa50ca3e44502244dbd1436575b063baff1",
+      "bytes": 140716
+    },
+    {
+      "path": "projects/planetfall/Assets/models/relay_rocket.glb.judasmeta",
+      "sha256": "6c9f72fbdea159b99b2601b7f9fd0841a1a3fdaeab2b8704eb796a476cc5bc94",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/research_tower.glb",
+      "sha256": "0aea526a0a819404d2fcfc732c32350101b742f8ca188785f410bdee6a9088be",
+      "bytes": 466956
+    },
+    {
+      "path": "projects/planetfall/Assets/models/research_tower.glb.judasmeta",
+      "sha256": "2fa61a8b0e5c2d870a0b664b9968d179622bf56c0cce1c4e440f3f93617e2bcf",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/road_barrier.glb",
+      "sha256": "b923ea6047d699b42c988b8885c9061603c407dd68b7bab4976fe48aff538e8f",
+      "bytes": 62192
+    },
+    {
+      "path": "projects/planetfall/Assets/models/road_barrier.glb.judasmeta",
+      "sha256": "08cda00f85c50249d811001986415d12b5c032c45fd2a24efdce3dcc7cfd4216",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rocket.glb",
+      "sha256": "4c43ebf57c9547403d3740a85f90ab1d07642a97ef32f00476f737475797f200",
+      "bytes": 25616
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rocket.glb.judasmeta",
+      "sha256": "16885702e180f779698d998d0b6ed8f1b31b7f7f665d911a15017fa1d15df81b",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rocket_launcher.glb",
+      "sha256": "b950da78a0b6aa97576297fdd6bb4e4cb14b6809d736e0658bab454d7db7c7e0",
+      "bytes": 43368
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rocket_launcher.glb.judasmeta",
+      "sha256": "e8fd1149b8172b7d769d3b846adcf684c848af3d24c0c5f0eff1a39b01fcd9e4",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rover_body.glb",
+      "sha256": "8b49047c4633e5ee9c11c1ce9f6f8628bb20de6952ec69f46b96ffe04b510b7e",
+      "bytes": 295544
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rover_body.glb.judasmeta",
+      "sha256": "60432547780fb7081b5da8e75c95fe95955e84cd35ab7d6baf5ec815bf505f40",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rover_shell.glb",
+      "sha256": "5c11e9eb78991e19e24e5785ea56b72a9bd7b63981a388d437ad30ce29cc1b1f",
+      "bytes": 180256
+    },
+    {
+      "path": "projects/planetfall/Assets/models/rover_shell.glb.judasmeta",
+      "sha256": "fa5b1d2e3c62ff3a390a0841ef9514abb8e5b774d5de79f48f2c0fdfc4452b09",
+      "bytes": 110
+    },
+    {
+      "path": "projects/planetfall/Assets/models/shopfront_small.glb",
+      "sha256": "664f9641a283abc23196fb5b5b8faa353bca6aae19685e5657bbcd59f25fd72a",
+      "bytes": 96056
+    },
+    {
+      "path": "projects/planetfall/Assets/models/shopfront_small.glb.judasmeta",
+      "sha256": "f86b8a7b789f1b5e88169aa8b097df714e56e75f4062d922febfc53070d6a8fb",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/stairs_5step.glb",
+      "sha256": "648066d8a56fe2a00d4c49835cf32683c1cf7c5951e7bf99c9f0158d415001e3",
+      "bytes": 22728
+    },
+    {
+      "path": "projects/planetfall/Assets/models/stairs_5step.glb.judasmeta",
+      "sha256": "39883d2a3c87546e6511ea9fb5b4059f1943dec5eb398bf4802266cf87ce17fa",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/stone_road.glb",
+      "sha256": "60328ea8e865ced934f6db51c23a4c09748ea316f7cc2ba803f511c22a90fd17",
+      "bytes": 113624
+    },
+    {
+      "path": "projects/planetfall/Assets/models/stone_road.glb.judasmeta",
+      "sha256": "581c094d8cebab5265acf45f2b1e469b775656319b80e6877db9250d3306bbc9",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/stone_stairs.glb",
+      "sha256": "22c14d97e8de0db003629c5923d50eaab204ec1e7cf630c862fa6e8548cb4223",
+      "bytes": 93272
+    },
+    {
+      "path": "projects/planetfall/Assets/models/stone_stairs.glb.judasmeta",
+      "sha256": "2ecd6a078a0e82aada61f67a5037d1535e9b7a88335f4bb323d0c69fc4878f07",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/street_lamp.glb",
+      "sha256": "f474135a6510ce8feb13c4b11074222769252be6e150f54fc6b2c05a4309adb7",
+      "bytes": 25964
+    },
+    {
+      "path": "projects/planetfall/Assets/models/street_lamp.glb.judasmeta",
+      "sha256": "9c3ac00b284696193ea8183f8cd91c165d4464f01f71e96f641c6ded53b6b39a",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/supply_shop.glb",
+      "sha256": "39d6b04a2e02425fdbeac3ba0f7937b091817544c99f4719687b98b4c6d099fc",
+      "bytes": 1293524
+    },
+    {
+      "path": "projects/planetfall/Assets/models/supply_shop.glb.judasmeta",
+      "sha256": "d24294f9d493eb3382dee3c087ea5700752f2c55715875ec7abdb5d3a76f70bd",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/table.glb",
+      "sha256": "96af6eba068756abf6a0f5aada1d1c3a9126d23ff43403326414d744b5e83551",
+      "bytes": 52716
+    },
+    {
+      "path": "projects/planetfall/Assets/models/table.glb.judasmeta",
+      "sha256": "20f4f50d8459b82f856fd47b132262adb3cfe1d8d237f250191382e7c56de8f3",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/Assets/models/traffic_cone.glb",
+      "sha256": "271b5061e33b60becd20b21425596f3f4b8049a62ecb481adb5c4235d6a72efb",
+      "bytes": 17852
+    },
+    {
+      "path": "projects/planetfall/Assets/models/traffic_cone.glb.judasmeta",
+      "sha256": "2ab8c4c2b0b1a74bf0bf442e89c90b4b00ab14c75d01d67904916e0fe9b2edb0",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/trash_bin.glb",
+      "sha256": "47ebb70b78757584be74d6bf49b1e93923dd5a1ac4ab504251f38aa55396c4d5",
+      "bytes": 52492
+    },
+    {
+      "path": "projects/planetfall/Assets/models/trash_bin.glb.judasmeta",
+      "sha256": "ab6b14a761d83d327f49040c130cd8418f79e3154fdaa18a8b91c07cb53d6a96",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/utility_box.glb",
+      "sha256": "cac78cf0e7e71f1995b9b72dd5ae908f10de7b5463055969a19796f8a95876be",
+      "bytes": 102668
+    },
+    {
+      "path": "projects/planetfall/Assets/models/utility_box.glb.judasmeta",
+      "sha256": "922ae9b2b449927bcd0414084175c9116f224822ccc344630e70a55fadf8d0d3",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/weapon_compact_rifle.glb",
+      "sha256": "bb4f2855009ea83ea28a8a5e9e35c81d03c8bfb96fea9bdb343f5feb0f7b7357",
+      "bytes": 78224
+    },
+    {
+      "path": "projects/planetfall/Assets/models/weapon_compact_rifle.glb.judasmeta",
+      "sha256": "f63503cfcac0265ada6abdf6bcf4958caebebe496760c1ac2b723b50a240447c",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/wheel.obj",
+      "sha256": "9185b8b54847303a1b313bd762bbdc37fe625a0c1d60948d9ff115dae87ca63e",
+      "bytes": 3431
+    },
+    {
+      "path": "projects/planetfall/Assets/models/wheel.obj.judasmeta",
+      "sha256": "663c120570dbfa5cf02efefba9571a80291df9a5378fe73b1fec22037a0d9579",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/windmill.glb",
+      "sha256": "14fe019c6115f29061aaf9daba8a9b360dcb3a68d5d3a200d6c552fd95155388",
+      "bytes": 113628
+    },
+    {
+      "path": "projects/planetfall/Assets/models/windmill.glb.judasmeta",
+      "sha256": "15a487af7dfb705a81c915a3bc247c34160a9d448268dad9faaf1fd69a2a207f",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/wood_crate.glb",
+      "sha256": "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539",
+      "bytes": 83352
+    },
+    {
+      "path": "projects/planetfall/Assets/models/wood_crate.glb.judasmeta",
+      "sha256": "a3955295302c1bdbe950e270300a2f28555c215edf20c65b4c65b84e42f6dbad",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/models/wood_railing.glb",
+      "sha256": "ba1fed2a22c8b80ab9388d64492bf33e127009d575e60d70c7ad2c9b570771db",
+      "bytes": 146476
+    },
+    {
+      "path": "projects/planetfall/Assets/models/wood_railing.glb.judasmeta",
+      "sha256": "61925a6e4ae5f6886a465ffc3b1bf9a21d429e73975d535a2c3b48310500f7d3",
+      "bytes": 102
+    },
+    {
+      "path": "projects/planetfall/Assets/models/zombie_animation.glb",
+      "sha256": "9725982d7799f75d84e4988c9713b55f7a5564f68e519081859d9fcae0e7a22b",
+      "bytes": 265136
+    },
+    {
+      "path": "projects/planetfall/Assets/models/zombie_animation.glb.judasmeta",
+      "sha256": "e17520bb505f8539e5459d69a724205dc8e0126c28e1e39fa2f1f78b9e2bc9b7",
+      "bytes": 75
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-0bcdc47ed5ffd8d539b25e68648dc0a1.judasnav",
+      "sha256": "0a354d65fa6cf5b568162a517dda574567829ad02e3fbf9015ed39d68aeaf73d",
+      "bytes": 1541116
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-0bcdc47ed5ffd8d539b25e68648dc0a1.judasnav.judasmeta",
+      "sha256": "5411f42b350df31b1862ebbbbe79ea3977e634e554af4b30b80592d9a60f85b2",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-521ced6a575becbaf537e09dc7325dc6.judasnav",
+      "sha256": "e66a18369d2ec8908022bb0cc0808e9ad8e7c54d6e6fc1e13750d438f4a8bf21",
+      "bytes": 1541116
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-521ced6a575becbaf537e09dc7325dc6.judasnav.judasmeta",
+      "sha256": "546ec7a5d6d4b7b9d74981c6486f13b1784e1e1b88faa9e537ad796071cc100d",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-588c2ab44d8549fe470a5edbdf4acfdb.judasnav",
+      "sha256": "7eb2dd823d736c72109b7708fabffd0f1247d5248cf53162f1c42dcd34a20c85",
+      "bytes": 1541116
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-588c2ab44d8549fe470a5edbdf4acfdb.judasnav.judasmeta",
+      "sha256": "7085f7641f3a669f87d103fae92551610be8a262cee4844bb01b38a8b4cb2d51",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-61e36ff99c5173f764e4737a863a00b4.judasnav",
+      "sha256": "b6ba4b55ced2de663ef7ddbe88b2c524af2923801df893e9120422b4fc26f414",
+      "bytes": 250732
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-61e36ff99c5173f764e4737a863a00b4.judasnav.judasmeta",
+      "sha256": "0dc2c738f0d4367ad141c870275350c5afd010abc8f0d4c59925e77051dafc54",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-a3b06894d0c8feabe58da8859d223677.judasnav",
+      "sha256": "025bfb51b2c215dc91ec8ca1e9d3bd98f76fd85602a4019bcf91cb8b4b656b9a",
+      "bytes": 1541116
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-a3b06894d0c8feabe58da8859d223677.judasnav.judasmeta",
+      "sha256": "6aeb7c6421d9b0eb051bf3b438f5d430086858d7e0579a437ce1fbc5a69cfd8e",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-bd57c154ffe65ae1820fb79e8b6ee7e0.judasnav",
+      "sha256": "9772b7dea069a8765556f4294ef169ef36ff4e92512d746d71f5b435b7b566f6",
+      "bytes": 1541116
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-bd57c154ffe65ae1820fb79e8b6ee7e0.judasnav.judasmeta",
+      "sha256": "31ecb8a986276b1d340e609375c53babc749b8e256683ca955f5c11c6e6474aa",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-fcc07ed0d609844218a740c385915fd5.judasnav",
+      "sha256": "11f56537925028b227e9bfe9b36c0f037360c14cc0b775eb41429f786effd6fa",
+      "bytes": 1541116
+    },
+    {
+      "path": "projects/planetfall/Assets/navigation/rebake-fcc07ed0d609844218a740c385915fd5.judasnav.judasmeta",
+      "sha256": "01fed350079da8c56da0d8bf863bba2a8fadec6e425da25a8cfa39edce8b159a",
+      "bytes": 211
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/barrel_debris.judasprefab",
+      "sha256": "11b653f4dc93ebf66141cf2c0555d23952dbfe72b846b9b199a370cbcc1e8787",
+      "bytes": 7105
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/barrel_debris.judasprefab.judasmeta",
+      "sha256": "80fcc79e9c552418c32073cea8730978a5c05f40827bd48e0c4b7830573d7277",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/base_build.judasprefab",
+      "sha256": "9c446e47e2fd55b5947c380556687e858de23799d6de8914f69dda858cbcde98",
+      "bytes": 3412
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/base_build.judasprefab.judasmeta",
+      "sha256": "c11f2926a901e3245695a43cdf378f67dbcc847651d3ab5711bbfbf05fbabd6f",
+      "bytes": 104
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/breakable_barrel.judasprefab",
+      "sha256": "b1f51cf944969a589c704d0af10703c15497aa7a2ce346ea48dc2ed844ded0ea",
+      "bytes": 1233
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/breakable_barrel.judasprefab.judasmeta",
+      "sha256": "3b83b7fdcdf0eee9cf074ae9c6b2c481714d9e6cf77457a1279ffd5b60f92272",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/breakable_crate.judasprefab",
+      "sha256": "2785c2545f2b0ab905728fe4f3e34f0e55a50f6b2239836b618987a291c847d4",
+      "bytes": 1225
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/breakable_crate.judasprefab.judasmeta",
+      "sha256": "63b50a428c7ba43d45a99c62dfc11689edfb58d604fc9284ef717e21323a1b90",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/bridge.judasprefab",
+      "sha256": "2df0e9d0a61f72ca86902ac910860ae58fab974ad3c1b68f1eec09e069928f23",
+      "bytes": 1473
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/bridge.judasprefab.judasmeta",
+      "sha256": "b0c59d7d714368df3498e8a468d66b3dbcd74fbf56928e48bb428376910eea1a",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/crate_debris.judasprefab",
+      "sha256": "d521fe71f36bcf6ad0c8fff79a4c80fe5eba5d00afa717d1c2245deda4de6ec6",
+      "bytes": 4189
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/crate_debris.judasprefab.judasmeta",
+      "sha256": "21c1c5b88f20b32739e3536f7b7b6e652345749ac4bc6eb3fbe65475a6a37deb",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/damaged_rover.judasprefab",
+      "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7",
+      "bytes": 10637
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/damaged_rover.judasprefab.judasmeta",
+      "sha256": "1e14b167a8ce188216cd0ec9d19ff66731100a0e892712c0b4f870b4e186ba0c",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/framewalk_boots_pickup.judasprefab",
+      "sha256": "f284e81a66e65fbd134458b41468b2400ba0689a64bff990c5d495d53f337220",
+      "bytes": 3549
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/framewalk_boots_pickup.judasprefab.judasmeta",
+      "sha256": "b53fe2ff8b3714ce0588026f3e413d82418b258747b38eaaff90149e3681b68b",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/framewalk_door.judasprefab",
+      "sha256": "bfe7aa4e508bafdbd174ea10f546a3cf8ec9fd8bf9ad27bfb72fa7c8f0b8afed",
+      "bytes": 1111
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/framewalk_door.judasprefab.judasmeta",
+      "sha256": "3a314821dca23d50f2ea2cca336233aa05fd3dadf882dda0a8b2380c2b82cf12",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/framewalk_door_debris.judasprefab",
+      "sha256": "ecc26a245ca178b8275ddc1fe70a08a70aff88fe5f3e174d556ffa802f46aef9",
+      "bytes": 4303
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/framewalk_door_debris.judasprefab.judasmeta",
+      "sha256": "63d217db619c0e80e85794a4ddeb99e7d419aa969103a93c27634bb073a47358",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/grenade_projectile.judasprefab",
+      "sha256": "5496f9a79a3b4b413651c4a70f8fa9c00262ed6028a7465338b20e90c7719e3e",
+      "bytes": 1232
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/grenade_projectile.judasprefab.judasmeta",
+      "sha256": "231d358a70320c4c6d1510c09c9fac69bf819f26748a64412382c708f3028be1",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/grenades_pickup.judasprefab",
+      "sha256": "49c9ed103f917073f8aa671310afffa61cee7dad9c16ed427a154567f17ca97c",
+      "bytes": 1895
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/grenades_pickup.judasprefab.judasmeta",
+      "sha256": "fdbcd5a7d83e9a10b2fbaab9dadfadad433d14dce4dccca0e4c41bac0ecdeed0",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/rocket_projectile.judasprefab",
+      "sha256": "4f92f38dfac930f3dedd97e59405aadb16ed228bafc7d9af46ae3b0c37f85a06",
+      "bytes": 1221
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/rocket_projectile.judasprefab.judasmeta",
+      "sha256": "d0834029504983b7f851c89bf64f36f623016af872a26452230acbce29255685",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/rockets_pickup.judasprefab",
+      "sha256": "ea72de0ae8aeab75376fa0dc464af1c6bf10c70ee0eed1b5b9c127bd4fdfdfd5",
+      "bytes": 1894
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/rockets_pickup.judasprefab.judasmeta",
+      "sha256": "9d3f4a876a22e3b920f58dfb8bb5c2437d59050847d4ff453f0ba2570036103d",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/soldier.judasprefab",
+      "sha256": "afe1680cbb4bd4850f387cea409c7852f800dee7361d1c1eb25c70401039c9aa",
+      "bytes": 7929
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/soldier.judasprefab.judasmeta",
+      "sha256": "71fdc83c108f3a7d94cbabc7b5f021fdeb27283970ac12ffb6a2533607d5b3a3",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/zombie.judasprefab",
+      "sha256": "2be8db7cf02060b4fba8515f6716ecd6b75a1c199ddc85c61b132ff8caccaa66",
+      "bytes": 7306
+    },
+    {
+      "path": "projects/planetfall/Assets/prefabs/zombie.judasprefab.judasmeta",
+      "sha256": "8ee6338b7f446cedef6c649b7f4b004abf912caa8782412aee61844c6fceaeac",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/camera.js",
+      "sha256": "71dd08ac28e531c388c9d2ba91176540e3061c8375e9058faa4e370009c8c12f",
+      "bytes": 1183
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/camera.js.judasmeta",
+      "sha256": "164f2f829a0bf96064652317ac6e4207d0ef735324b75e7ea416f00154d16e7e",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/campaign-core.js",
+      "sha256": "81f7e6cae009af308b945a4c9105b96f2dec1c9263a23acf8ca53272468d6fea",
+      "bytes": 4623
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/campaign-core.js.judasmeta",
+      "sha256": "cb7465624093a2cabae4977107c1478b8d7cc90cb7c7d335f62bf4c987b6d5d5",
+      "bytes": 104
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/climb.js",
+      "sha256": "daa4c0096ecc769e27ee6218caaa7ad90cc081a063449864fee37edd5a028429",
+      "bytes": 2017
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/climb.js.judasmeta",
+      "sha256": "a9cdda2f688067a1cb9d79549c38a93a0d0b3dda61942df1912492761e5c5f36",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/combat.js",
+      "sha256": "9047ac199d632c727620e5358a23888c2c25cbe89e497597df93fdb4b0ea42f1",
+      "bytes": 1432
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/combat.js.judasmeta",
+      "sha256": "01d05e374b4e3bf81e615dae915d0b87fb12eea2d32a6eef989ad572132be80e",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/destructible.js",
+      "sha256": "b6d46a04609b563b7698df9b6bc49156f933ab660f41f70ce35d2cf6ef7d68dd",
+      "bytes": 2817
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/destructible.js.judasmeta",
+      "sha256": "ea48ab12791bc689ad0ab8dc57776b83895cc15f544a9299b1c7e50a1ad3c3f2",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/enemy.js",
+      "sha256": "3b75d010a55683311edfc2338355b043db1d510f4fb1e615c1b800fe44f20ee9",
+      "bytes": 17748
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/enemy.js.judasmeta",
+      "sha256": "9c285f2995347719f47f475f3559bb7a2f651559b82c8737465b521e7865d10d",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/expedition.js",
+      "sha256": "11c463ede671a1f4aa332b092ccc89eb90c0d89fe879b2d35a12befa45537d97",
+      "bytes": 1404
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/expedition.js.judasmeta",
+      "sha256": "7d6c7da2fda5423627b56d8d1fe4e8bb01da52d6db76dbf40020e57c3e9cbb96",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/explosive.js",
+      "sha256": "865bf3cfa31c161248302730c1f0b878d05f564072b08714e59a61bdfcf83f5e",
+      "bytes": 1463
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/explosive.js.judasmeta",
+      "sha256": "8612af617cee90e43ef7d6f9370f2b932dc6b9b02191ffb705f31aabf5a3c8ef",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/explosives.js",
+      "sha256": "4ec02846644b334e12a99c865e2eec2cf1c9e301e0b7c9989cb20fea9e345e62",
+      "bytes": 6182
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/explosives.js.judasmeta",
+      "sha256": "db2b257d828b90df9e88487989aa16002a32324ddf4869ee5c2d53477c877df9",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/framewalk.js",
+      "sha256": "a3534ed0d3345695f32f9a4f6f35797a787c9056da9ab304b3b1a527cdb1569c",
+      "bytes": 10432
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/framewalk.js.judasmeta",
+      "sha256": "1099ed39fc71f376bc2cf7c47d8cd4c83b0de02f29316b8fdf83125eacdb35a9",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/game.js",
+      "sha256": "e5412e7634f566b52276b2c3fbfc5843fe367dbe767938d661687844806228a7",
+      "bytes": 540
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/game.js.judasmeta",
+      "sha256": "a82506476a1d248d5265c8eb5beaa85bd89860e55fb2837c2b0b51892ea17706",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/grab.js",
+      "sha256": "5840c9d1e7f33fa7183d18415f525c74cd72566eabcf615190f249b14e4f6537",
+      "bytes": 4156
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/grab.js.judasmeta",
+      "sha256": "cf71d28deb822132d7b73764130b982c9659d6a0700ab23ad8f7e2f7279287b1",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/hud.js",
+      "sha256": "b3aeddd564ac25ca2fa7652b0e4c82ac90a5db044ccf428ee33fc143ae686c4a",
+      "bytes": 6936
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/hud.js.judasmeta",
+      "sha256": "27d4beb1173125b340bc5811ab65f152ae20c18b5b41fffd834ed797783f36b3",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/inventory.js",
+      "sha256": "e05d6263be8552f6f908809c0625757658523feef0bb0fcdbc0715a4c7346d97",
+      "bytes": 7796
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/inventory.js.judasmeta",
+      "sha256": "9561ac487c4563cd26976ca852b4817f62d7b3e4ef8f4708461fd441aa64e375",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/inventory_ui.js",
+      "sha256": "3e52eff2572dea8091f0230ee601120ea5f09bbe973130a07c8ca1bb95fc2e23",
+      "bytes": 5397
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/inventory_ui.js.judasmeta",
+      "sha256": "7ad3a00981ebaa81cb5438f5889b727e6d3e170c3e7284ae352cc3f9a2dae1fa",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/items.js",
+      "sha256": "ccf389007fef610b586dd2978de9764e4c2f53e9822dedeb62e3fa05d827dbc1",
+      "bytes": 1998
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/items.js.judasmeta",
+      "sha256": "7e87fbc1cb695179c83f2372d80027433d527b5b0e5a5174e50dc481ed3f0d9f",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/math.js",
+      "sha256": "b939fb4f8b935eb1f6461268b4e783caf696e82a3b4cfc76d4acbf1a6427f349",
+      "bytes": 797
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/math.js.judasmeta",
+      "sha256": "6dd97d57842dcb15f18587fab7bfe286792da833f0ba3377e60bd764276476ff",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/melee.js",
+      "sha256": "da777d4d8e2d8e83bd7ebe187ec26520b64ab95589258c5eb0f22a9ee5ca9fc6",
+      "bytes": 3838
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/melee.js.judasmeta",
+      "sha256": "aaa00a3cd9f8677dd45c71014cd5c87382ac305d399db9e35c28bf676b2ea315",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/planetfall.js",
+      "sha256": "25ab7d49265f97de9a0b2dc9c5c3e2160e2b5bd3aa58d1b158572d9a4c58993f",
+      "bytes": 12814
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/planetfall.js.judasmeta",
+      "sha256": "b85b8e0cde09ac2b1dda37c683202a3b84bb202186e848f8e876d8c6e11a3053",
+      "bytes": 104
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/player.js",
+      "sha256": "ad795615ddece6995d179f81b995d9c0d1cf821d3db3e553bb3ca00df96d03ad",
+      "bytes": 7952
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/player.js.judasmeta",
+      "sha256": "b33830116f61de879d33d367f6653b8726e1ff913f645540b7a69ccdc7bc9c6c",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/regions.js",
+      "sha256": "2040cb808fda49c2138575585089e47d1d9728607b4324a08c2e275c02fef759",
+      "bytes": 516
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/regions.js.judasmeta",
+      "sha256": "d5eaa533720af8c5692764d336434420293d6bfc9032165b5af3a2ca91294bf8",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/rover.js",
+      "sha256": "64edf33aa32dc9e68845d567c86cdd7e9bb3ade06a26c243b7f097a28b9ed6bc",
+      "bytes": 1799
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/rover.js.judasmeta",
+      "sha256": "30f651a214abc409f5e56ec58236d674beb094fbe7912d0091cb035c17a49738",
+      "bytes": 104
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/ship.js",
+      "sha256": "5aefc27bf7f237b6db5c2fd5177c11a9d0e90c66e681e2d13cf544b80a81db77",
+      "bytes": 8326
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/ship.js.judasmeta",
+      "sha256": "d65030eb58c4732cd76c74ce98b3a14b871a8bf5468d03b3c86f1ee9bcf4d993",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/side-jobs.js",
+      "sha256": "131814a2bf2ee33e1d963fa2b1aa74e3f8b1f562a297d5dd0824b7dede732ed2",
+      "bytes": 4290
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/side-jobs.js.judasmeta",
+      "sha256": "620b3f460b8b4af54b241d07e10d2664c716c1da0061b61ea7e057b372f510d7",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/vendor.js",
+      "sha256": "67e582a828f25d0cbc47c9d231cb4894af1e189984d22591623813b714ce72d6",
+      "bytes": 1094
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/vendor.js.judasmeta",
+      "sha256": "fb36c69128279a12de3dcc61397a8e9d933733b93a3e8a0c78aaa244a92c2c6c",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/weapon.js",
+      "sha256": "5808a49d8f48fb76eb6339df76bae55c88488020cf75e9c8e31ef52586577c52",
+      "bytes": 7459
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/weapon.js.judasmeta",
+      "sha256": "2a8dc6404e8dc09cda47e917340a0662533161bf7ee60579f4365bf8cb25909d",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/zombie_ai.js",
+      "sha256": "0ca067e2499765a877557b569b961232207420f46210faa2e73f1e827565fbf7",
+      "bytes": 9875
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/zombie_ai.js.judasmeta",
+      "sha256": "0604422034550297f8a393589af53a47cec7b3dd6b4b7289c931275481d9464d",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/zombie_framewalk.js",
+      "sha256": "3bef81f2bcf1326f4ed536c4d9a50ed4a5bf223719ce81f9fc36bd6e116e8ac4",
+      "bytes": 12297
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/zombie_framewalk.js.judasmeta",
+      "sha256": "f7bb2b5a1e1c5b1285c779f3eaab0d77c2c2b5ba16c0a54ec5a82dedad68d3dc",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/soft.png",
+      "sha256": "c3da842f99dd9d6d4d82f5b4745523b262df0d540032639d181eb6a1a7b23b96",
+      "bytes": 692
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/soft.png.judasmeta",
+      "sha256": "cc58ed524117ba753b24f8bff6c0332bacf340ab705a740fa8240b185cfcc0e2",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/field_canvas.png",
+      "sha256": "949198d9e54cf3d7a2bf496b8f0a96218aa05d5a9a13c13e8b58ca14f867303a",
+      "bytes": 3071344
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/field_canvas.png.judasmeta",
+      "sha256": "c78cab85182fd05b37ce8cecccf79c7436832cfbd574f5fa186b4e7d2af0251c",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/hud_canvas.png",
+      "sha256": "c0605c6e9ca716c7c70e3ccc90fab1c52789941c9af4a39fc619f78cc06f56aa",
+      "bytes": 2507684
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/hud_canvas.png.judasmeta",
+      "sha256": "287cebed50da3208bbdcee68c768a07be61ecbb42579138bad2010b8445eccd5",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_boots.png",
+      "sha256": "077e60558f5c036c6f50570c2f2e184437fa7639385683110ac5acd066a5e576",
+      "bytes": 1726066
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_boots.png.judasmeta",
+      "sha256": "a1305d4cfcb8d11646ff8b66a8879441d87c72cee01ec856621e63f70b54b46c",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_grenade.png",
+      "sha256": "1d3f1c8ab62bc15b3425b3a7bf672a8a3726f9f3a2fddfa881820be42af3e83c",
+      "bytes": 1687274
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_grenade.png.judasmeta",
+      "sha256": "c717f4f23d2fa27271e2a3cc843612794c9616450e2603d1574476ac05750e4a",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_launcher.png",
+      "sha256": "e4c13dfd819a89b0a54a510b7ffaa846aa9c2b9d437e8a6fe187103efb490b4a",
+      "bytes": 1772559
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_launcher.png.judasmeta",
+      "sha256": "2da411bb41322c8080184639d14d4debd605898412463891a65d03857caad5e5",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_rifle.png",
+      "sha256": "1431c8ea80428e17e7073b329fc1e10e7ccfc9b33a5d1a888ed11e712a24301c",
+      "bytes": 1619993
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_rifle.png.judasmeta",
+      "sha256": "98d2ef0a9d13f81889084c6e507d264a6b06367dc68092a1eb57ec25b2d083c7",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_rocket.png",
+      "sha256": "36184f8303ee78d7c13ec66b9c48c03428583318d032a823eee74a61aa479c46",
+      "bytes": 850080
+    },
+    {
+      "path": "projects/planetfall/Assets/textures/ui/item_rocket.png.judasmeta",
+      "sha256": "87cbc11ea64e542cca8a36b50e8e2e9f0ae8188fcd9d887108cfcbc08595b9df",
+      "bytes": 78
+    },
+    {
+      "path": "projects/planetfall/Assets/ui/lastlight.judasui",
+      "sha256": "562450e88f18442d510fa40c9922df1dd7b0dcdd383999c746bc86655e55523c",
+      "bytes": 18696
+    },
+    {
+      "path": "projects/planetfall/Assets/ui/lastlight.judasui.judasmeta",
+      "sha256": "8ad2c2c0ebbec254dba33eff1c3790e96cdcf7bc377c867a661f79df6d4fdf7d",
+      "bytes": 73
+    },
+    {
+      "path": "projects/planetfall/Assets/worlds/planetfall.judasworld",
+      "sha256": "a27a1c2d80189eb595992fd3c413043343548bc65c4de009a1d0a9c6d7c36908",
+      "bytes": 173
+    },
+    {
+      "path": "projects/planetfall/Assets/worlds/planetfall.judasworld.judasmeta",
+      "sha256": "bcc58f5fd6e5dba5d2a900ff1d4034ecdd210981a38e78f8db70df8b43ad2bb3",
+      "bytes": 105
+    },
+    {
+      "path": "projects/planetfall/CAMPAIGN.md",
+      "sha256": "7de16c3198036ea0c847290ee9011cd3390054b9f3e0da1f728850b891952d81",
+      "bytes": 2312
+    },
+    {
+      "path": "projects/planetfall/Imports/cave.judasvolume",
+      "sha256": "92ca8ce8436ddac33cf68087ae140ba0d17ec4ba40a93b0d1ec93c2481552828",
+      "bytes": 425010
+    },
+    {
+      "path": "projects/planetfall/Imports/frontier_house.judasimport",
+      "sha256": "4d0497bcf94f40dfd30451c2d0e16395820dc7af2d84b2fede975b26256499aa",
+      "bytes": 418
+    },
+    {
+      "path": "projects/planetfall/README.md",
+      "sha256": "67fcc7b46a2564be349995f9f4ae69f2eb63958ba38d313319ffceb8b7deebe5",
+      "bytes": 4193
+    },
+    {
+      "path": "projects/planetfall/REPORT.md",
+      "sha256": "aa4f09855437ea85e7fb1e1108ebb923413ea4aae8fb7e3d9729e4e3f88ea234",
+      "bytes": 9410
+    },
+    {
+      "path": "projects/planetfall/Research/empty-scenery-export.glb",
+      "sha256": "565ec90a732088e753c497db8c422a7eb3d3aa4deeed4bd361a0789075428519",
+      "bytes": 288
+    },
+    {
+      "path": "projects/planetfall/Research/empty-scenery-export.meta",
+      "sha256": "4f9e9b84cb6524bdc83a4d7c756aa944c167cfb344bab93a3bd228f7e41baa7e",
+      "bytes": 100
+    },
+    {
+      "path": "projects/planetfall/Research/nonmanifold-house.glb",
+      "sha256": "34e9bae7e58f870aac820f75235d6b299115393b1975d79c885deeeaab173b90",
+      "bytes": 1134452
+    },
+    {
+      "path": "projects/planetfall/Research/soldier-eleven-body-reference.judasprefab",
+      "sha256": "e2452024b98277f470a6e47d4c9808eb61dacff5ef838f99a528edf68e74cf56",
+      "bytes": 11308
+    },
+    {
+      "path": "projects/planetfall/Research/tower-first-generation.glb",
+      "sha256": "c5f2d64656fdeabe85aeae7363f9f9f43039cc5fe322b4b9d8f61c23d7552eb2",
+      "bytes": 494164
+    },
+    {
+      "path": "projects/planetfall/Research/zombie-eleven-body-reference.judasprefab",
+      "sha256": "18691dd6eb51249566f60a1fbbc5f4ff7e41003a8a3911cb97d48be879f265ba",
+      "bytes": 10685
+    },
+    {
+      "path": "projects/planetfall/Review/ACCESS_FIXTURE_FOLLOWUP.md",
+      "sha256": "cd2aeabe2b4df8d06a591cf159de1a9288cbbcab928425b659ccdc5592b402bb",
+      "bytes": 494
+    },
+    {
+      "path": "projects/planetfall/Review/CHANGED_FILES.txt",
+      "sha256": "7a64bba0fb6078cd2ef47e0aff051eb8a60b7929f7ada8e670616c4a45635fe0",
+      "bytes": 26793
+    },
+    {
+      "path": "projects/planetfall/Review/PACKAGE_FINGERPRINTS.json",
+      "sha256": "1ea5615c8420ad09b951b5f99cfd82ec9d8d2049b66a7ecfb6b0781d09d56264",
+      "bytes": 52160
+    },
+    {
+      "path": "projects/planetfall/Review/SCAFFOLD_FAILURE.md",
+      "sha256": "551f3111c37257de5b33988ec260578b294f2c656b97a75a5efbe00d4b3da8a2",
+      "bytes": 925
+    },
+    {
+      "path": "projects/planetfall/Review/corpse-baseline-record-only-failure.log",
+      "sha256": "b13510782bcb2386e551236e52a9d4a91a89deb85cb4bab0b1956b10e8912aee",
+      "bytes": 1511
+    },
+    {
+      "path": "projects/planetfall/Review/corpse-canonical-ownership-followup.log",
+      "sha256": "a8949d45352ee482c273d83a2c35b85f72d6bae4daff7c8bf89286b2396a4b11",
+      "bytes": 1532
+    },
+    {
+      "path": "projects/planetfall/Review/export-empty-product-failure.log",
+      "sha256": "23f1298c0d078622f716204a7cea418de3d9bd463fe0d9890eb7c11e36d9096e",
+      "bytes": 79
+    },
+    {
+      "path": "projects/planetfall/Review/final-avatar.log",
+      "sha256": "217304c83bd7fbd6a61c3dc1fb366dea6107fa3ae89764e4ff06b960db8afa22",
+      "bytes": 1243
+    },
+    {
+      "path": "projects/planetfall/Review/final-cold.log",
+      "sha256": "5173a34439aef1708523c1f2f9b3922b42a6b4e687ffedf3eff213ad349b4958",
+      "bytes": 1782
+    },
+    {
+      "path": "projects/planetfall/Review/final-combat.log",
+      "sha256": "81988268569c49714c4e3098103d7b872487d720e66aeff32c8ed5ddac9c84f7",
+      "bytes": 1768
+    },
+    {
+      "path": "projects/planetfall/Review/final-combat.profile.json.gz",
+      "sha256": "08953089ad0d55b947d5bdd969bc9e87ef141795dd642ae1fcb18fb21c068fbf",
+      "bytes": 1464974
+    },
+    {
+      "path": "projects/planetfall/Review/final-derelict.log",
+      "sha256": "e9d2d3c5d83da662493749c6d7e9ed74a7365273f6ae3ee906a4091365414bfc",
+      "bytes": 1196
+    },
+    {
+      "path": "projects/planetfall/Review/final-earth.log",
+      "sha256": "e0abf19eca1ecb50929a89a74caab1cd6d99f22e7d972cbe4caa8dcbbf1b06b3",
+      "bytes": 1426
+    },
+    {
+      "path": "projects/planetfall/Review/final-export.log",
+      "sha256": "e685231670d486c886bc800bd143730ccee67e4c35e9207a48d83dc43c0122cd",
+      "bytes": 134
+    },
+    {
+      "path": "projects/planetfall/Review/final-flight-block.log",
+      "sha256": "cd7944196d976679940a1a995c8e148ab7f558bb955a6e076fe2ca06d393de53",
+      "bytes": 1368
+    },
+    {
+      "path": "projects/planetfall/Review/final-flight.log",
+      "sha256": "a54d0da1d826c3d1079389b2ed9a0e582c4944abcffd787230646556cd5282fd",
+      "bytes": 1797
+    },
+    {
+      "path": "projects/planetfall/Review/final-flight.profile.json.gz",
+      "sha256": "51faa2f77c6e6b5162fb3796aae0a81bda4bb01f0ecaa92065ee971996880130",
+      "bytes": 1244638
+    },
+    {
+      "path": "projects/planetfall/Review/final-mars.log",
+      "sha256": "c9c71deaa1aedf8dabbd3b3139a5b3ebc18340cd4273c18d52f734997e5dc0c2",
+      "bytes": 1250
+    },
+    {
+      "path": "projects/planetfall/Review/final-moon.log",
+      "sha256": "ed9338ee52d2c5b2c4617a337c7034403487eb6734450d7ce3e867fd7f00f9c0",
+      "bytes": 1248
+    },
+    {
+      "path": "projects/planetfall/Review/final-native-results.json",
+      "sha256": "4351991b3621239eac3e8eb78e123387b4b0cdcccb3a0d9687174f524446510f",
+      "bytes": 2457
+    },
+    {
+      "path": "projects/planetfall/Review/final-package-cold.log",
+      "sha256": "f77369cc1540bc6e9ce785ccd8fed16be1b7c6256eddfa854d73c2a6e14a65ca",
+      "bytes": 1787
+    },
+    {
+      "path": "projects/planetfall/Review/final-pirates.log",
+      "sha256": "0a5357ad3796a6604ce5b52359c9dfb4a7d7c255fc38f774a72262ad28b8fe8d",
+      "bytes": 1808
+    },
+    {
+      "path": "projects/planetfall/Review/final-pirates.profile.json.gz",
+      "sha256": "08ba4d4ea00a4dce7999a9053811977c2eef7a599ec9aa5b490a7be9a44494f0",
+      "bytes": 1462784
+    },
+    {
+      "path": "projects/planetfall/Review/final-portable-save.log",
+      "sha256": "10c2b825b4b769f350b0adc510cf535b2180a609f43c2dfeba549bfdd40ed153",
+      "bytes": 1830
+    },
+    {
+      "path": "projects/planetfall/Review/final-roof.log",
+      "sha256": "e8777ae37fab90d6562ae808092d70080802c1b4f18ee217c7c4653bc2b78143",
+      "bytes": 1540
+    },
+    {
+      "path": "projects/planetfall/Review/final-save.log",
+      "sha256": "4ad86da893103e974b6bd1df048734e2bab0c93535499ca4f56e56b34dc02ef6",
+      "bytes": 1829
+    },
+    {
+      "path": "projects/planetfall/Review/final-stream.log",
+      "sha256": "e2a318ee41ae662ad1fc8714c7097fddb7af3d89eabad8732f6f702f30dc224d",
+      "bytes": 1838
+    },
+    {
+      "path": "projects/planetfall/Review/final-stream.profile.json.gz",
+      "sha256": "64b52fe441f5eff69a981e202ad8710daa4b22d7cdf7c2f689b04eb995a982dd",
+      "bytes": 1319573
+    },
+    {
+      "path": "projects/planetfall/Review/first-native-failure.log",
+      "sha256": "cc27f6c71710192a8f5439a60386fc64b1f79bcc3b74145f1de7ffa41d6668d4",
+      "bytes": 1395
+    },
+    {
+      "path": "projects/planetfall/Review/moved-package-results.json",
+      "sha256": "f1a72af9f8717b2c110436b1182b60dbe0e178d3675fcfe92271d4c2b9f9c1ec",
+      "bytes": 358
+    },
+    {
+      "path": "projects/planetfall/Review/moved-package-runtime.log",
+      "sha256": "326f9b9c67d20884edad3c0297ddd7b038c80429a9563e15869a982765ca7ee6",
+      "bytes": 642
+    },
+    {
+      "path": "projects/planetfall/Review/moved-package.profile.json.gz",
+      "sha256": "b7bc67c8eac7862421f1a755c4b9d4ae5d3d675d90521d7314f5e8d70a5b79c3",
+      "bytes": 1396407
+    },
+    {
+      "path": "projects/planetfall/Review/overlapping-corpses-stress.profile.json.gz",
+      "sha256": "3331a747450a20c574023f56ad8f957bd743229a22e2baf82db7e67c71e920f3",
+      "bytes": 1512976
+    },
+    {
+      "path": "projects/planetfall/Review/overlapping-corpses-stress.scopes.json",
+      "sha256": "6650326bed8316a583a7011ae494727e41c53f81c3f34431ff97b87e143b2181",
+      "bytes": 8220
+    },
+    {
+      "path": "projects/planetfall/Review/permanent-damage-without-break.log",
+      "sha256": "e1c9836e348a0573a094826b1112efaeda208ce0396149dccb8955a8468133d1",
+      "bytes": 8957
+    },
+    {
+      "path": "projects/planetfall/Review/pirate-eleven-body-performance.log",
+      "sha256": "853222224540c1b807bc2d94d6423ac6b447d6e46472dd31b4159a01989b2e11",
+      "bytes": 1518
+    },
+    {
+      "path": "projects/planetfall/Review/pirate-eleven-body.profile.json.gz",
+      "sha256": "834b88c68d292d351505361c7e80221de68f8fd6736c8435cb6fbbb910796026",
+      "bytes": 1526208
+    },
+    {
+      "path": "projects/planetfall/Review/pirate-seven-body-51kg-performance.log",
+      "sha256": "dc9d64812a0cf0e8ae7d5e6eb6920fed26f3566e688c8d1dd90986d30aea17c9",
+      "bytes": 1808
+    },
+    {
+      "path": "projects/planetfall/Review/pirate-seven-body-51kg.profile.json.gz",
+      "sha256": "287936be9c1aad4d34df04a2459b431a873c0ccd1359522dd1c5dfdb0e20add1",
+      "bytes": 1446543
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-combat-profile.log",
+      "sha256": "3c9d68ff4b4d16029233dada28c9fe407b06dcf46177f314ab18ff62fbe12d7a",
+      "bytes": 1502
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-combat-v2.log",
+      "sha256": "1ef0ac0e1fe03ac2001bfd7309ff8298a86c09c3b00ec60f1fd2406029ecf726",
+      "bytes": 1503
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-final-save-followup.log",
+      "sha256": "d91326964a4d9c5e8a4df96f009635bd78ed395906218da4dac6e5a49d0f49a0",
+      "bytes": 1767
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-final-save.log",
+      "sha256": "0d3e74d25d499c05292df06d1d4f762cea04395bf7d9569b75304e27c2dd7995",
+      "bytes": 1269
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-roof-access-v2.log",
+      "sha256": "f56646f74d6fcc737b7b753fc1e5d2b64e2e531d76d1258ae59abe4eda7450c1",
+      "bytes": 1400
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-roof-access.log",
+      "sha256": "8209ded9ba14e977e07bdebe1b74bf1187f649f3d68c9be335cefd591dc8b1b7",
+      "bytes": 1400
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-roof-input-lifetime.log",
+      "sha256": "3c07f3174ecae9d4a0a45b3919ee43115849227a93aec84fdb832035d7d429c3",
+      "bytes": 1540
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-roof-probe.log",
+      "sha256": "b8bd5df180b099114dbb2d9101ba36fd3169fb0935e3c22d2c09e29dd5c3e372",
+      "bytes": 1648
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-save-status.log",
+      "sha256": "d7eb446847a9b25ab96b1a3af258af65c13b8dbae3363e0ed77115464089049d",
+      "bytes": 2010
+    },
+    {
+      "path": "projects/planetfall/Review/planetfall-separated-combat.log",
+      "sha256": "48dc26e72fa9badb05e853b1277528771177b7d5ac476e8718c0fafe5e163875",
+      "bytes": 1502
+    },
+    {
+      "path": "projects/planetfall/Review/pre-final-runtime-fingerprints.json",
+      "sha256": "7c1f3a905ca8529448cfd648ff25f1255f14cfcef5ad3d9e0bb07bbfad771478",
+      "bytes": 46829
+    },
+    {
+      "path": "projects/planetfall/Review/rejected-nonmatching-mass-performance.log",
+      "sha256": "c6bc3f55b2b7f5dfb0c68f3d2fc95c0d83dd794b4203d4f6278239d0fd216506",
+      "bytes": 1518
+    },
+    {
+      "path": "projects/planetfall/Review/rover.png",
+      "sha256": "c3ac32726f9100fa2cbb52367a80a59a4ce47d880cd185eb50f39b97949f55a5",
+      "bytes": 202743
+    },
+    {
+      "path": "projects/planetfall/Review/runtime-candidate-fingerprints.json",
+      "sha256": "2055dc44af19128d9ec21b4df86df0d6843634a650e42c126d9c6c3a66c4d10b",
+      "bytes": 46529
+    },
+    {
+      "path": "projects/planetfall/Review/scenery-followup.log",
+      "sha256": "3f855e95ed231a8d215e2228e0ec3d5b1ed7a07f44df746647bd7ddae81182e2",
+      "bytes": 1396
+    },
+    {
+      "path": "projects/planetfall/Review/separated-combat.profile.json.gz",
+      "sha256": "b0c3b5a29bd3f163b44ce978fc70de0ed323a0a158be6ebeeaec5eabae6b5162",
+      "bytes": 1437827
+    },
+    {
+      "path": "projects/planetfall/Review/separated-combat.scopes.json",
+      "sha256": "87a71cf701eeab11d634578ed5809d6b586ce43f1a6d4564c2e54159c777ef11",
+      "bytes": 8201
+    },
+    {
+      "path": "projects/planetfall/Review/standalone-frame-times.json",
+      "sha256": "c8afa63bd6194ddf556d5d7e6d2ec6aa0ada04f5811efaa6a7d18c9ce56db17b",
+      "bytes": 209
+    },
+    {
+      "path": "projects/planetfall/Review/streamed-launcher-first-failure.log",
+      "sha256": "dee839eb415f3d444be8b37f3439d2667e1c3c126508aec7d4fd1d8c733409f5",
+      "bytes": 1331
+    },
+    {
+      "path": "projects/planetfall/Review/unreferenced-bake-cleanup.json",
+      "sha256": "7d8813a9c0b96482ddefd48c923c56dce5ed22d3e2ceaa5878151526af84e915",
+      "bytes": 8229
+    },
+    {
+      "path": "projects/planetfall/Scenes/derelict.judas",
+      "sha256": "e85c49ef93354b7499da05e2d1704bab5ac86ce82129ba86b3b96f2be786f331",
+      "bytes": 42791
+    },
+    {
+      "path": "projects/planetfall/Scenes/earth-coast.judas",
+      "sha256": "6daa680c11955a9a21025be50dd46a87c595dda22e71b0c75ab437d650920c2a",
+      "bytes": 554410
+    },
+    {
+      "path": "projects/planetfall/Scenes/earth-frontier.judas",
+      "sha256": "d966da8e9645b07429023f242518cf5952ac3b79f2c4dfff78953c5663e4a8ae",
+      "bytes": 559008
+    },
+    {
+      "path": "projects/planetfall/Scenes/earth-highlands.judas",
+      "sha256": "46805885cfc57cd8deaf98da78324d00ecd2dc2713a05cfac2d8fa3775fe860b",
+      "bytes": 558229
+    },
+    {
+      "path": "projects/planetfall/Scenes/earth.judas",
+      "sha256": "bdffe1912e370455a5aa324956ea8ea518dfe4f96422baab1f17fa31a40d30e5",
+      "bytes": 540198
+    },
+    {
+      "path": "projects/planetfall/Scenes/mars.judas",
+      "sha256": "545e3634df7b39ce4f28c91943968dcfb123230a6d0072b518c9ed50ae3c8b35",
+      "bytes": 540210
+    },
+    {
+      "path": "projects/planetfall/Scenes/moon.judas",
+      "sha256": "82ba405b77c696028908d57b1d6b1cb16eb1ee6bf43f101fc496cdaf2a755cfb",
+      "bytes": 540675
+    },
+    {
+      "path": "projects/planetfall/Scenes/salvage-rover.judas",
+      "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7",
+      "bytes": 10637
+    },
+    {
+      "path": "projects/planetfall/Sources/0402f153efc0b8fa3ecd6dc16d9ee058/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb",
+      "sha256": "15111f05d18e050f59d21c1359cde530d724b51d9a0e33b76bdde9e851cd7976",
+      "bytes": 1163180
+    },
+    {
+      "path": "projects/planetfall/Tools/adapt_rover.py",
+      "sha256": "157b67691ce7dca6b41deb138407b187aac5edbc0119ce2209c981af8ffda546",
+      "bytes": 1272
+    },
+    {
+      "path": "projects/planetfall/Tools/add_landmarks.py",
+      "sha256": "882c6f886fee1db40136f6bbc11639225930ec21fbaa73ef2ad20dbaafeec536",
+      "bytes": 2569
+    },
+    {
+      "path": "projects/planetfall/Tools/author_derelict.py",
+      "sha256": "3b66aefa0585f6d0f1b49f036c65739f2bd184f2b99584fd28552b23181e3170",
+      "bytes": 3026
+    },
+    {
+      "path": "projects/planetfall/Tools/author_world.py",
+      "sha256": "5ef60e7b052f09a76bf3b7b87b156205e9ae613ff20cb6808276199bf8616dee",
+      "bytes": 15737
+    },
+    {
+      "path": "projects/planetfall/Tools/batch_scenery.py",
+      "sha256": "dcd6ebf1624411bc46c8f625e1ab8e07ea2f8224edb2053b65f981311f54f47e",
+      "bytes": 2944
+    },
+    {
+      "path": "projects/planetfall/Tools/check_campaign.mjs",
+      "sha256": "6b9fd1c9076012b3ce843a10da5154b9aa60a870dd44b1f27027c5fc678a1c9b",
+      "bytes": 2265
+    },
+    {
+      "path": "projects/planetfall/Tools/create_conner_player.py",
+      "sha256": "c19000b18b8f82286b0fe3385057165d68233e3a93ad4c3bcaa858e585554afe",
+      "bytes": 3906
+    },
+    {
+      "path": "projects/planetfall/Tools/earth_regions.py",
+      "sha256": "1b2684ec5d0a3451ed6260093a736deed19ae972292b8d7f4659b1a73390146a",
+      "bytes": 1869
+    },
+    {
+      "path": "projects/planetfall/Tools/generate_surface.py",
+      "sha256": "623dfc8cb07b3de133bf32cf4df7dd79fbbb27f92c10a614e99262cf602bc0f7",
+      "bytes": 1450
+    },
+    {
+      "path": "projects/planetfall/Tools/rebuild.py",
+      "sha256": "14c71c2a85923098a79f13e19dc0bf4dad64c2c5947407a933e3c11df74ceefb",
+      "bytes": 1957
+    },
+    {
+      "path": "projects/planetfall/Tools/streaming_setup.py",
+      "sha256": "998fb3adf211e2f91ffd415a8cff85a4498cd6354cf741f556f86285d2cc1181",
+      "bytes": 1685
+    },
+    {
+      "path": "projects/planetfall/Tools/validate_native.py",
+      "sha256": "95b25dbb620d0110cdb98fa74c097ff50e1910fcb0fcafd03c3c5f61800d05e0",
+      "bytes": 1186
+    },
+    {
+      "path": "projects/planetfall/jsconfig.json",
+      "sha256": "c15c0d977144e730b10bbb900a2c276078a99d6629ed6a72891290573b52c453",
+      "bytes": 183
+    },
+    {
+      "path": "projects/planetfall/planetfall.judasproj",
+      "sha256": "9577a54a8a86893f39e83b1cbfca0df2ae1087f0c5223eb230275ca5ada95eea",
+      "bytes": 2589
+    },
+    {
+      "path": "tests/PlanetfallApplicationTests.cpp",
+      "sha256": "71b4cfa450a2297f325984f78b7809ad959039e9e855a9ff5e8044cafd765466",
+      "bytes": 18155
+    }
+  ],
+  "binaries": [
+    {
+      "path": "build/judas",
+      "sha256": "65a1937f881b57dd70c792b332dc6fff653f4092a4e80dbba450d82367b28c50"
+    },
+    {
+      "path": "build/judas_planetfall_application_tests",
+      "sha256": "00efc506bd23f0ecea10a681dd3303a887db49a617ecddc6e3c15226ee1eb950"
+    }
+  ]
+}

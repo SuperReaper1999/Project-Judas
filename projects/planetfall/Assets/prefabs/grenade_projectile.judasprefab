@@ -1,0 +1,54 @@
+JudasScene 3
+settings
+  name "Lastlight"
+  world-origin 0 0 0
+  sun-direction -.4 .8 .3
+  sun-color 2.0 1.65 1.35
+  ambient .38 .43 .5
+  background-color .34 .43 .54
+  fluid-scale 13
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 2000
+  linear-rendering true
+  exposure 1
+end
+object 1 "Grenade projectile"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic sphere
+  body.half-extents 0.09 0.09 0.09
+  body.radius 0.09
+  body.terrain ""
+  body.mass 0.45
+  body.friction .5
+  body.restitution 0.45
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  scripts 1
+  script.0.id 1
+  script.0.asset "dd7201062ae14c1717b8689487a2d4dd"
+  script.0.enabled true
+  script.0.properties "{\"kind\":\"grenade\",\"fuse\":2.4,\"radius\":5.5,\"damage\":100}"
+  tags 2
+end
+object 2 "Grenade visual"
+  position 0 -0.075 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents 0.5 0.5 0.5
+  render.radius .5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color .25 .14 .06
+  render.secondary-alpha 1
+  render.mesh-asset "a57f5804de3abb66f36afcffe12024a0"
+  render.texture-asset ""
+  parent 1
+end

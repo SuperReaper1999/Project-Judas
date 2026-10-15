@@ -1,0 +1,46 @@
+{
+  "prompt": "a low poly wooden stairs with 10 steps and railings",
+  "category": "library",
+  "confidence": 1.0,
+  "params": {
+    "objects": "stairs 5step; stairs 5step next to the stairs 5step; railing next to the stairs 5step",
+    "style": "stylized"
+  },
+  "understood": [
+    {
+      "slot": "object 1",
+      "text": "a low poly wooden stairs"
+    },
+    {
+      "slot": "object 2",
+      "text": "10 steps"
+    },
+    {
+      "slot": "object 3",
+      "text": "railings"
+    }
+  ],
+  "skipped": [],
+  "seed": 513,
+  "style": "stylized",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-wooden-stairs-with-10-steps-and-railings-513-stylized.glb"
+  },
+  "stats": {
+    "vertices": 7316,
+    "triangles": 4112,
+    "groups": 67
+  },
+  "objects": [
+    "stairs 5step",
+    "stairs 5step next to the stairs 5step",
+    "railing next to the stairs 5step"
+  ],
+  "environment": null,
+  "dimensions_m": [
+    14.96,
+    1.03,
+    5.5
+  ],
+  "seconds": 0.2
+}

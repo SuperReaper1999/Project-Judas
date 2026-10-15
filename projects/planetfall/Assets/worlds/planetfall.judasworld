@@ -1,0 +1,3 @@
+JudasWorld 1
+budget 2 16 2 33554432 134217728 16777216 134217728
+region "salvage-rover" "Scenes/salvage-rover.judas" 145 796374.932 65 0 0 0 1 6 6 8 5 "snapshot" 2097152 ""

@@ -1,0 +1,28 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetfall (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/planetfall.judasproj)
+Scene: Planetfall / earth (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Scenes/earth.judas)
+World origin (m): 0.000, 796375.000, 0.000
+PASS normal session seeds controlled campaign fixture
+JS: Planetfall: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+PASS true large double-precision planetary origin
+PASS ordinary authored Judas gravity governs motor
+PASS normal wheel and powertrain assembly exists
+PASS campaign state belongs to ordinary script owner
+PASS streamed mechanical salvage begins genuinely intact
+PASS intact physical section cannot be harvested for a reward
+PASS actual launcher impact causes physical permanent deformation
+PASS physical section removal commits before salvage reward
+PASS dismantled section has no active collision body
+PASS departure retains a real owned physical snapshot
+PASS return reconstructs irreversible dismantling and connectivity
+PASS return preserves actual permanent deformation history
+PASS return restores actual physical chassis endpoint
+PASS restored physical assembly has live collision bodies
+PASS actual game screenshot captured
+PASS normal game input and lifetime stay fault-free
+BODIES 1181
+PASS ordinary startup and shutdown
+PASS M56 native profile exported
+PERF fixed_p95_ms=12.2075 render_p95_ms=5.2427 frame_work_p95_ms=18.8073 frame_work_max_ms=62.1744
+SUMMARY checks=19 failures=0

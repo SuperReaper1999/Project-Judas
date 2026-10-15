@@ -1,0 +1,43 @@
+{
+  "prompt": "a low poly wooden windmill",
+  "category": "prop",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "lowpoly",
+    "material": "wood",
+    "type": "windmill",
+    "count": 1
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "material",
+      "text": "wooden"
+    },
+    {
+      "slot": "type",
+      "text": "windmill"
+    }
+  ],
+  "seed": 185,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-wooden-windmill-185-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 1180,
+    "triangles": 1300,
+    "groups": 1
+  },
+  "dimensions_m": [
+    11.41,
+    14.41,
+    4.8
+  ],
+  "seconds": 0.02
+}

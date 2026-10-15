@@ -1,0 +1,39 @@
+{
+  "prompt": "a low poly 30 metre cobblestone road with street lights",
+  "category": "library",
+  "confidence": 1.0,
+  "params": {
+    "asset": "road_straight_4m",
+    "count": 1,
+    "size": 1.0,
+    "color": null,
+    "style": "lowpoly"
+  },
+  "understood": [
+    {
+      "slot": "asset",
+      "text": "road_straight_4m (low_poly_starter, search)"
+    }
+  ],
+  "seed": 511,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-30-metre-cobblestone-road-with-street-lights-511-lib.glb"
+  },
+  "stats": {
+    "vertices": 32,
+    "triangles": 16,
+    "groups": 8
+  },
+  "asset": {
+    "id": "low_poly_starter/road_straight_4m",
+    "description": "4 x 4 m road surface with lanes along Y and ground surface at Z=0. Centre pivot, bounds X/Y +/-2 m; repeat on a 4 m grid. Three centre dashes and continuous edge paint sit 1.5 mm above the road surface.",
+    "pack": "low_poly_starter"
+  },
+  "dimensions_m": [
+    4.0,
+    0.0,
+    4.0
+  ],
+  "seconds": 0.0
+}

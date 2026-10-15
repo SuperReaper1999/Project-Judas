@@ -1,0 +1,122 @@
+[
+  {
+    "scenario": "avatar",
+    "checks": 9,
+    "failures": 0,
+    "bodies": 1177,
+    "fixed_p95_ms": 6.4474,
+    "render_p95_ms": 10.9917,
+    "frame_work_p95_ms": 18.083,
+    "max_ms": 64.6668
+  },
+  {
+    "scenario": "cold",
+    "checks": 12,
+    "failures": 0,
+    "bodies": 1177,
+    "fixed_p95_ms": 6.5701,
+    "render_p95_ms": 10.3788,
+    "frame_work_p95_ms": 17.2513,
+    "max_ms": 58.5775
+  },
+  {
+    "scenario": "combat",
+    "checks": 17,
+    "failures": 0,
+    "bodies": 1209,
+    "fixed_p95_ms": 13.3358,
+    "render_p95_ms": 8.407,
+    "frame_work_p95_ms": 22.4527,
+    "max_ms": 62.4902
+  },
+  {
+    "scenario": "derelict",
+    "checks": 8,
+    "failures": 0,
+    "bodies": 37,
+    "fixed_p95_ms": 1.2152,
+    "render_p95_ms": 4.7095,
+    "frame_work_p95_ms": 6.8004,
+    "max_ms": 56.9238
+  },
+  {
+    "scenario": "earth",
+    "checks": 12,
+    "failures": 0,
+    "bodies": 1178,
+    "fixed_p95_ms": 6.9259,
+    "render_p95_ms": 11.9579,
+    "frame_work_p95_ms": 18.866,
+    "max_ms": 61.9201
+  },
+  {
+    "scenario": "flight-block",
+    "checks": 11,
+    "failures": 0,
+    "bodies": 1177,
+    "fixed_p95_ms": 5.9181,
+    "render_p95_ms": 12.78,
+    "frame_work_p95_ms": 19.2944,
+    "max_ms": 71.1326
+  },
+  {
+    "scenario": "flight",
+    "checks": 14,
+    "failures": 0,
+    "bodies": 1178,
+    "fixed_p95_ms": 8.3339,
+    "render_p95_ms": 22.2769,
+    "frame_work_p95_ms": 33.2069,
+    "max_ms": 512.7824
+  },
+  {
+    "scenario": "mars",
+    "checks": 9,
+    "failures": 0,
+    "bodies": 1177,
+    "fixed_p95_ms": 6.3709,
+    "render_p95_ms": 9.6459,
+    "frame_work_p95_ms": 16.6951,
+    "max_ms": 60.3158
+  },
+  {
+    "scenario": "moon",
+    "checks": 9,
+    "failures": 0,
+    "bodies": 1178,
+    "fixed_p95_ms": 6.3827,
+    "render_p95_ms": 10.0552,
+    "frame_work_p95_ms": 17.1016,
+    "max_ms": 62.4094
+  },
+  {
+    "scenario": "pirates",
+    "checks": 18,
+    "failures": 0,
+    "bodies": 1218,
+    "fixed_p95_ms": 13.591,
+    "render_p95_ms": 7.5605,
+    "frame_work_p95_ms": 23.041,
+    "max_ms": 60.7361
+  },
+  {
+    "scenario": "roof",
+    "checks": 13,
+    "failures": 0,
+    "bodies": 1176,
+    "fixed_p95_ms": 8.1512,
+    "render_p95_ms": 6.3423,
+    "frame_work_p95_ms": 15.556,
+    "max_ms": 59.8566
+  },
+  {
+    "scenario": "stream",
+    "checks": 19,
+    "failures": 0,
+    "bodies": 1181,
+    "fixed_p95_ms": 12.2075,
+    "render_p95_ms": 5.2427,
+    "frame_work_p95_ms": 18.8073,
+    "max_ms": 62.1744
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "prompt": "a low poly rocket with 3 fins",
+  "category": "rocket",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "lowpoly",
+    "fins": 3,
+    "stages": 2,
+    "height": null,
+    "count": 1
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "fins",
+      "text": "3 fins"
+    }
+  ],
+  "seed": 186,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-rocket-with-3-fins-186-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 1359,
+    "triangles": 1620,
+    "groups": 1
+  },
+  "dimensions_m": [
+    16.67,
+    50.4,
+    16.67
+  ],
+  "seconds": 0.02
+}

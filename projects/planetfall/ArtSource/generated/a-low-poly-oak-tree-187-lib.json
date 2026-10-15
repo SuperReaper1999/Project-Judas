@@ -1,0 +1,39 @@
+{
+  "prompt": "a low poly oak tree",
+  "category": "library",
+  "confidence": 1.0,
+  "params": {
+    "asset": "broadleaf_tree",
+    "count": 1,
+    "size": 1.0,
+    "color": null,
+    "style": "lowpoly"
+  },
+  "understood": [
+    {
+      "slot": "asset",
+      "text": "broadleaf_tree (low_poly_starter, low poly tree)"
+    }
+  ],
+  "seed": 187,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-oak-tree-187-lib.glb"
+  },
+  "stats": {
+    "vertices": 1356,
+    "triangles": 666,
+    "groups": 15
+  },
+  "asset": {
+    "id": "low_poly_starter/broadleaf_tree",
+    "description": "A roughly three metre broadleaf tree with flared roots, a forked trunk and five asymmetric crown lobes.",
+    "pack": "low_poly_starter"
+  },
+  "dimensions_m": [
+    2.24,
+    3.34,
+    1.92
+  ],
+  "seconds": 0.0
+}

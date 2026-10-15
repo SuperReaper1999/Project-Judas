@@ -1,0 +1,39 @@
+{
+  "prompt": "a low poly wooden railing 8 metres long",
+  "category": "library",
+  "confidence": 1.0,
+  "params": {
+    "asset": "table",
+    "count": 6,
+    "size": 1.25,
+    "color": null,
+    "style": "lowpoly"
+  },
+  "understood": [
+    {
+      "slot": "asset",
+      "text": "table (low_poly_starter, low poly table)"
+    }
+  ],
+  "seed": 512,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-wooden-railing-8-metres-long-512-lib.glb"
+  },
+  "stats": {
+    "vertices": 7488,
+    "triangles": 3720,
+    "groups": 102
+  },
+  "asset": {
+    "id": "low_poly_starter/table",
+    "description": "1.60 x 0.90 x 0.78 m timber work table with five chamfered top planks, splayed legs, open underside and visible fasteners. Centred ground pivot; front -Y.",
+    "pack": "low_poly_starter"
+  },
+  "dimensions_m": [
+    7.2,
+    0.98,
+    3.72
+  ],
+  "seconds": 0.03
+}

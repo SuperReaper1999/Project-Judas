@@ -1,0 +1,354 @@
+[
+  {
+    "prompt": "a low poly orange pickup truck with a roof rack",
+    "category": "car",
+    "confidence": 1.0,
+    "params": {
+      "features": {
+        "roofrack": true
+      },
+      "size": 1.0,
+      "style": "lowpoly",
+      "color": "#ff8c00",
+      "type": "truck",
+      "doors": 4,
+      "count": 1
+    },
+    "understood": [
+      {
+        "slot": "style",
+        "text": "low poly"
+      },
+      {
+        "slot": "color",
+        "text": "orange"
+      },
+      {
+        "slot": "type",
+        "text": "pickup truck"
+      },
+      {
+        "slot": "feature",
+        "text": "a roof rack"
+      }
+    ],
+    "seed": 180,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-orange-pickup-truck-with-a-roof-rack-180-lowpoly.glb"
+    },
+    "stats": {
+      "vertices": 3394,
+      "triangles": 3436,
+      "groups": 1
+    },
+    "dimensions_m": [
+      5.7,
+      2.02,
+      2.2
+    ],
+    "seconds": 0.64
+  },
+  {
+    "prompt": "a low poly stone research building with 3 floors and an antenna",
+    "category": "building",
+    "confidence": 1.0,
+    "params": {
+      "features": {
+        "antenna": true
+      },
+      "size": 1.0,
+      "style": "lowpoly",
+      "material": "stone",
+      "floors": 3,
+      "height": null,
+      "count": 1
+    },
+    "understood": [
+      {
+        "slot": "style",
+        "text": "low poly"
+      },
+      {
+        "slot": "material",
+        "text": "stone"
+      },
+      {
+        "slot": "type",
+        "text": "research"
+      },
+      {
+        "slot": "floors",
+        "text": "3 floors"
+      },
+      {
+        "slot": "feature",
+        "text": "an antenna"
+      }
+    ],
+    "seed": 181,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-stone-research-building-with-3-floors-and-an-ante-181-lowpoly.glb"
+    },
+    "stats": {
+      "vertices": 5192,
+      "triangles": 5820,
+      "groups": 1
+    },
+    "dimensions_m": [
+      44.0,
+      31.3,
+      44.0
+    ],
+    "seconds": 0.08
+  },
+  {
+    "prompt": "a low poly pine tree",
+    "category": "library",
+    "confidence": 1.0,
+    "params": {
+      "asset": "pine_tree",
+      "count": 1,
+      "size": 1.0,
+      "color": null,
+      "style": "lowpoly"
+    },
+    "understood": [
+      {
+        "slot": "asset",
+        "text": "pine_tree (low_poly_starter, low poly tree)"
+      }
+    ],
+    "seed": 182,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-pine-tree-182-lib.glb"
+    },
+    "stats": {
+      "vertices": 654,
+      "triangles": 332,
+      "groups": 13
+    },
+    "asset": {
+      "id": "low_poly_starter/pine_tree",
+      "description": "A 3.4 metre evergreen with a tapered trunk, exposed angular branches and four irregular foliage tiers.",
+      "pack": "low_poly_starter"
+    },
+    "dimensions_m": [
+      1.62,
+      3.4,
+      1.4
+    ],
+    "seconds": 0.0
+  },
+  {
+    "prompt": "a low poly astronaut with a backpack",
+    "category": "person",
+    "confidence": 1.0,
+    "params": {
+      "features": {
+        "backpack": true
+      },
+      "size": 1.0,
+      "style": "lowpoly",
+      "type": "astronaut",
+      "count": 1,
+      "pose": null
+    },
+    "understood": [
+      {
+        "slot": "style",
+        "text": "low poly"
+      },
+      {
+        "slot": "type",
+        "text": "astronaut"
+      },
+      {
+        "slot": "feature",
+        "text": "a backpack"
+      }
+    ],
+    "seed": 183,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-astronaut-with-a-backpack-183-lowpoly.glb"
+    },
+    "stats": {
+      "vertices": 2419,
+      "triangles": 3692,
+      "groups": 1
+    },
+    "dimensions_m": [
+      0.59,
+      1.81,
+      0.42
+    ],
+    "seconds": 0.03
+  },
+  {
+    "prompt": "a low poly pirate with a black coat",
+    "category": "person",
+    "confidence": 1.0,
+    "params": {
+      "objects": "person",
+      "style": "stylized"
+    },
+    "understood": [
+      {
+        "slot": "object 1",
+        "text": "a low poly pirate"
+      },
+      {
+        "slot": "can't build yet",
+        "text": "black coat"
+      }
+    ],
+    "skipped": [
+      "black coat"
+    ],
+    "seed": 184,
+    "style": "stylized",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-pirate-with-a-black-coat-184-stylized.glb"
+    },
+    "stats": {
+      "vertices": 4733,
+      "triangles": 7864,
+      "groups": 1
+    },
+    "objects": [
+      "person"
+    ],
+    "environment": null,
+    "dimensions_m": [
+      0.59,
+      1.78,
+      0.35
+    ],
+    "seconds": 0.12
+  },
+  {
+    "prompt": "a low poly wooden windmill",
+    "category": "prop",
+    "confidence": 1.0,
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "lowpoly",
+      "material": "wood",
+      "type": "windmill",
+      "count": 1
+    },
+    "understood": [
+      {
+        "slot": "style",
+        "text": "low poly"
+      },
+      {
+        "slot": "material",
+        "text": "wooden"
+      },
+      {
+        "slot": "type",
+        "text": "windmill"
+      }
+    ],
+    "seed": 185,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-wooden-windmill-185-lowpoly.glb"
+    },
+    "stats": {
+      "vertices": 1180,
+      "triangles": 1300,
+      "groups": 1
+    },
+    "dimensions_m": [
+      11.41,
+      14.41,
+      4.8
+    ],
+    "seconds": 0.02
+  },
+  {
+    "prompt": "a low poly rocket with 3 fins",
+    "category": "rocket",
+    "confidence": 1.0,
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "lowpoly",
+      "fins": 3,
+      "stages": 2,
+      "height": null,
+      "count": 1
+    },
+    "understood": [
+      {
+        "slot": "style",
+        "text": "low poly"
+      },
+      {
+        "slot": "fins",
+        "text": "3 fins"
+      }
+    ],
+    "seed": 186,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-rocket-with-3-fins-186-lowpoly.glb"
+    },
+    "stats": {
+      "vertices": 1359,
+      "triangles": 1620,
+      "groups": 1
+    },
+    "dimensions_m": [
+      16.67,
+      50.4,
+      16.67
+    ],
+    "seconds": 0.02
+  },
+  {
+    "prompt": "a low poly oak tree",
+    "category": "library",
+    "confidence": 1.0,
+    "params": {
+      "asset": "broadleaf_tree",
+      "count": 1,
+      "size": 1.0,
+      "color": null,
+      "style": "lowpoly"
+    },
+    "understood": [
+      {
+        "slot": "asset",
+        "text": "broadleaf_tree (low_poly_starter, low poly tree)"
+      }
+    ],
+    "seed": 187,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-oak-tree-187-lib.glb"
+    },
+    "stats": {
+      "vertices": 1356,
+      "triangles": 666,
+      "groups": 15
+    },
+    "asset": {
+      "id": "low_poly_starter/broadleaf_tree",
+      "description": "A roughly three metre broadleaf tree with flared roots, a forked trunk and five asymmetric crown lobes.",
+      "pack": "low_poly_starter"
+    },
+    "dimensions_m": [
+      2.24,
+      3.34,
+      1.92
+    ],
+    "seconds": 0.0
+  }
+]

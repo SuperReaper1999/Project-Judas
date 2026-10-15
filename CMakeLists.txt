@@ -1717,3 +1717,8 @@ judas_warnings(judas_volume_application_tests)
 add_executable(judas_volume_performance_tests tests/VolumeTerrainPerformanceTests.cpp)
 target_link_libraries(judas_volume_performance_tests PRIVATE judas_world_authoring)
 judas_warnings(judas_volume_performance_tests)
+
+# Ordinary consumer-game integration; no Planetfall policy links into the engine.
+add_executable(judas_planetfall_application_tests tests/PlanetfallApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_planetfall_application_tests PRIVATE judas_engine)
+judas_warnings(judas_planetfall_application_tests)

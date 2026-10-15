@@ -1,0 +1,30 @@
+{
+  "cleanup": {
+    "flipped": 0,
+    "orientPatches": false,
+    "removeDegenerates": false,
+    "removed": 0,
+    "weldTolerance": 0.0,
+    "welded": 0
+  },
+  "diagnostic": {
+    "action": "Select the reported source location; use explicit collision cleanup or a separate physical source. Visual import remains valid.",
+    "code": "t-junction",
+    "face": 324,
+    "node": "",
+    "point": [
+      -5.224999904632568,
+      6.25,
+      -2.0
+    ],
+    "vertices": [
+      973,
+      974,
+      13082
+    ]
+  },
+  "error": "T-junction in collision source; triangulate connected topology before cooking [node=, original face=324, location=(-5.225, 6.25, -2)]",
+  "output": "projects/planetfall/Assets/models/frontier_house.judascollision",
+  "source": "projects/planetfall/Assets/models/frontier_house_collision.glb",
+  "success": false
+}

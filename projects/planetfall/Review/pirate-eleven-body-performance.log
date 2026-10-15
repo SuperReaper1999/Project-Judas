@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetfall (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/planetfall.judasproj)
+Scene: Planetfall / moon (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Scenes/moon.judas)
+World origin (m): 48050000.000, 217175.000, 0.000
+PASS normal session seeds controlled campaign fixture
+JS: Planetfall: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+PASS true large double-precision planetary origin
+PASS ordinary authored Judas gravity governs motor
+PASS normal wheel and powertrain assembly exists
+PASS campaign state belongs to ordinary script owner
+PASS combat fixture reaches actual mission director
+PASS actual game screenshot captured
+PASS mission independently spawns expected actual enemies
+PASS real hits and deaths complete mission rather than a fake counter
+ACTUAL CORPSE RIGS 5
+PASS actual killed actors own live articulated physical corpses
+PASS normal game input and lifetime stay fault-free
+BODIES 1238
+PASS ordinary startup and shutdown
+PASS M56 native profile exported
+PERF fixed_p95_ms=26.4919 render_p95_ms=8.5514 frame_work_p95_ms=34.3948 frame_work_max_ms=89.9321
+SUMMARY checks=13 failures=0

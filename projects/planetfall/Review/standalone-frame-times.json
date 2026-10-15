@@ -1,0 +1,8 @@
+{
+  "scope": "real wall-clock moved standalone, idle startup window, not combat certification",
+  "samples": 117,
+  "median_ms": 17.90365,
+  "p95_ms": 31.013714,
+  "maximum_ms": 520.292581,
+  "fixed_caps": 1
+}

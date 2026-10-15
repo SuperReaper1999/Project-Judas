@@ -1,0 +1,14 @@
+{
+  "assetId": "0402f153efc0b8fa3ecd6dc16d9ee058",
+  "format": "JudasImport",
+  "motions": [],
+  "output": "Assets/models/frontier_house.judasmodel",
+  "settings": {
+    "allowBaseMesh": false,
+    "dependencyRemaps": {},
+    "sampleRate": 60,
+    "unitMeters": 0
+  },
+  "source": "Sources/0402f153efc0b8fa3ecd6dc16d9ee058/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb",
+  "version": 1
+}

@@ -1,0 +1,246 @@
+{
+  "assetId": "0402f153efc0b8fa3ecd6dc16d9ee058",
+  "clips": [],
+  "diagnostics": [],
+  "hierarchyNodes": 0,
+  "importRecord": "{\"digest\":\"11d8d0a950710a51f060213358675a9c66810d15670270f60f0ebf75eac92896\",\"inputs\":{\"Sources/0402f153efc0b8fa3ecd6dc16d9ee058/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb\":\"15111f05d18e050f59d21c1359cde530d724b51d9a0e33b76bdde9e851cd7976\"},\"manifest\":{\"assetId\":\"0402f153efc0b8fa3ecd6dc16d9ee058\",\"clips\":[],\"diagnostics\":[],\"hierarchyNodes\":0,\"inputs\":{\"Sources/0402f153efc0b8fa3ecd6dc16d9ee058/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb\":\"15111f05d18e050f59d21c1359cde530d724b51d9a0e33b76bdde9e851cd7976\"},\"materialKeys\":[\"floor_b88a5a\",\"floor_c2a98a\",\"floor_c7b293\",\"floor_c9b79c\",\"floor_d8d2c4\",\"floor_dfe6ea\",\"furn_counter\",\"furn_fabric\",\"furn_linen\",\"furn_rug\",\"furn_steel\",\"furn_tv\",\"furn_water\",\"furn_white\",\"furn_wood\",\"house_chimney\",\"house_chimney_cap\",\"house_door\",\"house_glass\",\"house_grass\",\"house_inner_wall\",\"house_path\",\"house_porch_wood\",\"house_rail\",\"house_roof_6b4a3a\",\"house_slab\",\"house_stair\",\"house_trim_3f5e3a\",\"house_wall_paint_f1e7cf\"],\"parts\":[{\"identity\":\"house/floor_0/material/floor_b88a5a\",\"node\":1,\"triangles\":108},{\"identity\":\"house/floor_0/material/floor_c7b293\",\"node\":1,\"triangles\":108},{\"identity\":\"house/floor_0/material/floor_d8d2c4\",\"node\":1,\"triangles\":108},{\"identity\":\"house/floor_0/material/furn_counter\",\"node\":1,\"triangles\":216},{\"identity\":\"house/floor_0/material/furn_fabric\",\"node\":1,\"triangles\":432},{\"identity\":\"house/floor_0/material/furn_rug\",\"node\":1,\"triangles\":12},{\"identity\":\"house/floor_0/material/furn_steel\",\"node\":1,\"triangles\":108},{\"identity\":\"house/floor_0/material/furn_tv\",\"node\":1,\"triangles\":108},{\"identity\":\"house/floor_0/material/furn_wood\",\"node\":1,\"triangles\":432},{\"identity\":\"house/floor_0/material/house_door\",\"node\":1,\"triangles\":12},{\"identity\":\"house/floor_0/material/house_glass\",\"node\":1,\"triangles\":96},{\"identity\":\"house/floor_0/material/house_inner_wall\",\"node\":1,\"triangles\":72},{\"identity\":\"house/floor_0/material/house_porch_wood\",\"node\":1,\"triangles\":108},{\"identity\":\"house/floor_0/material/house_stair\",\"node\":1,\"triangles\":1836},{\"identity\":\"house/floor_0/material/house_trim_3f5e3a\",\"node\":1,\"triangles\":732},{\"identity\":\"house/floor_0/material/house_wall_paint_f1e7cf\",\"node\":1,\"triangles\":360},{\"identity\":\"house/floor_1/material/floor_c2a98a\",\"node\":2,\"triangles\":108},{\"identity\":\"house/floor_1/material/floor_c9b79c\",\"node\":2,\"triangles\":108},{\"identity\":\"house/floor_1/material/floor_dfe6ea\",\"node\":2,\"triangles\":108},{\"identity\":\"house/floor_1/material/furn_fabric\",\"node\":2,\"triangles\":216},{\"identity\":\"house/floor_1/material/furn_linen\",\"node\":2,\"triangles\":216},{\"identity\":\"house/floor_1/material/furn_water\",\"node\":2,\"triangles\":108},{\"identity\":\"house/floor_1/material/furn_white\",\"node\":2,\"triangles\":864},{\"identity\":\"house/floor_1/material/furn_wood\",\"node\":2,\"triangles\":972},{\"identity\":\"house/floor_1/material/house_glass\",\"node\":2,\"triangles\":120},{\"identity\":\"house/floor_1/material/house_inner_wall\",\"node\":2,\"triangles\":108},{\"identity\":\"house/floor_1/material/house_rail\",\"node\":2,\"triangles\":3672},{\"identity\":\"house/floor_1/material/house_slab\",\"node\":2,\"triangles\":48},{\"identity\":\"house/floor_1/material/house_trim_3f5e3a\",\"node\":2,\"triangles\":600},{\"identity\":\"house/floor_1/material/house_wall_paint_f1e7cf\",\"node\":2,\"triangles\":408},{\"identity\":\"house/roof/material/house_chimney\",\"node\":3,\"triangles\":108},{\"identity\":\"house/roof/material/house_chimney_cap\",\"node\":3,\"triangles\":108},{\"identity\":\"house/roof/material/house_roof_6b4a3a\",\"node\":3,\"triangles\":216},{\"identity\":\"house/roof/material/house_slab\",\"node\":3,\"triangles\":108},{\"identity\":\"house/roof/material/house_wall_paint_f1e7cf\",\"node\":3,\"triangles\":16},{\"identity\":\"house/site/material/house_grass\",\"node\":0,\"triangles\":108},{\"identity\":\"house/site/material/house_path\",\"node\":0,\"triangles\":108},{\"identity\":\"house/site/material/house_porch_wood\",\"node\":0,\"triangles\":108},{\"identity\":\"house/site/material/house_slab\",\"node\":0,\"triangles\":108}],\"recipeDigest\":\"11d8d0a950710a51f060213358675a9c66810d15670270f60f0ebf75eac92896\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\",\"skinPaletteEntries\":0,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":40476},\"recipe\":\"Imports/frontier_house.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\"}",
+  "inputs": {
+    "Sources/0402f153efc0b8fa3ecd6dc16d9ee058/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb": "15111f05d18e050f59d21c1359cde530d724b51d9a0e33b76bdde9e851cd7976"
+  },
+  "materialKeys": [
+    "floor_b88a5a",
+    "floor_c2a98a",
+    "floor_c7b293",
+    "floor_c9b79c",
+    "floor_d8d2c4",
+    "floor_dfe6ea",
+    "furn_counter",
+    "furn_fabric",
+    "furn_linen",
+    "furn_rug",
+    "furn_steel",
+    "furn_tv",
+    "furn_water",
+    "furn_white",
+    "furn_wood",
+    "house_chimney",
+    "house_chimney_cap",
+    "house_door",
+    "house_glass",
+    "house_grass",
+    "house_inner_wall",
+    "house_path",
+    "house_porch_wood",
+    "house_rail",
+    "house_roof_6b4a3a",
+    "house_slab",
+    "house_stair",
+    "house_trim_3f5e3a",
+    "house_wall_paint_f1e7cf"
+  ],
+  "outputHash": "a160b35c88f55c97065c6f2fcc6bc693243c9d5c9586f4ad6768d50bbbb5eec0",
+  "parts": [
+    {
+      "identity": "house/floor_0/material/floor_b88a5a",
+      "node": 1,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_0/material/floor_c7b293",
+      "node": 1,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_0/material/floor_d8d2c4",
+      "node": 1,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_0/material/furn_counter",
+      "node": 1,
+      "triangles": 216
+    },
+    {
+      "identity": "house/floor_0/material/furn_fabric",
+      "node": 1,
+      "triangles": 432
+    },
+    {
+      "identity": "house/floor_0/material/furn_rug",
+      "node": 1,
+      "triangles": 12
+    },
+    {
+      "identity": "house/floor_0/material/furn_steel",
+      "node": 1,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_0/material/furn_tv",
+      "node": 1,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_0/material/furn_wood",
+      "node": 1,
+      "triangles": 432
+    },
+    {
+      "identity": "house/floor_0/material/house_door",
+      "node": 1,
+      "triangles": 12
+    },
+    {
+      "identity": "house/floor_0/material/house_glass",
+      "node": 1,
+      "triangles": 96
+    },
+    {
+      "identity": "house/floor_0/material/house_inner_wall",
+      "node": 1,
+      "triangles": 72
+    },
+    {
+      "identity": "house/floor_0/material/house_porch_wood",
+      "node": 1,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_0/material/house_stair",
+      "node": 1,
+      "triangles": 1836
+    },
+    {
+      "identity": "house/floor_0/material/house_trim_3f5e3a",
+      "node": 1,
+      "triangles": 732
+    },
+    {
+      "identity": "house/floor_0/material/house_wall_paint_f1e7cf",
+      "node": 1,
+      "triangles": 360
+    },
+    {
+      "identity": "house/floor_1/material/floor_c2a98a",
+      "node": 2,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_1/material/floor_c9b79c",
+      "node": 2,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_1/material/floor_dfe6ea",
+      "node": 2,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_1/material/furn_fabric",
+      "node": 2,
+      "triangles": 216
+    },
+    {
+      "identity": "house/floor_1/material/furn_linen",
+      "node": 2,
+      "triangles": 216
+    },
+    {
+      "identity": "house/floor_1/material/furn_water",
+      "node": 2,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_1/material/furn_white",
+      "node": 2,
+      "triangles": 864
+    },
+    {
+      "identity": "house/floor_1/material/furn_wood",
+      "node": 2,
+      "triangles": 972
+    },
+    {
+      "identity": "house/floor_1/material/house_glass",
+      "node": 2,
+      "triangles": 120
+    },
+    {
+      "identity": "house/floor_1/material/house_inner_wall",
+      "node": 2,
+      "triangles": 108
+    },
+    {
+      "identity": "house/floor_1/material/house_rail",
+      "node": 2,
+      "triangles": 3672
+    },
+    {
+      "identity": "house/floor_1/material/house_slab",
+      "node": 2,
+      "triangles": 48
+    },
+    {
+      "identity": "house/floor_1/material/house_trim_3f5e3a",
+      "node": 2,
+      "triangles": 600
+    },
+    {
+      "identity": "house/floor_1/material/house_wall_paint_f1e7cf",
+      "node": 2,
+      "triangles": 408
+    },
+    {
+      "identity": "house/roof/material/house_chimney",
+      "node": 3,
+      "triangles": 108
+    },
+    {
+      "identity": "house/roof/material/house_chimney_cap",
+      "node": 3,
+      "triangles": 108
+    },
+    {
+      "identity": "house/roof/material/house_roof_6b4a3a",
+      "node": 3,
+      "triangles": 216
+    },
+    {
+      "identity": "house/roof/material/house_slab",
+      "node": 3,
+      "triangles": 108
+    },
+    {
+      "identity": "house/roof/material/house_wall_paint_f1e7cf",
+      "node": 3,
+      "triangles": 16
+    },
+    {
+      "identity": "house/site/material/house_grass",
+      "node": 0,
+      "triangles": 108
+    },
+    {
+      "identity": "house/site/material/house_path",
+      "node": 0,
+      "triangles": 108
+    },
+    {
+      "identity": "house/site/material/house_porch_wood",
+      "node": 0,
+      "triangles": 108
+    },
+    {
+      "identity": "house/site/material/house_slab",
+      "node": 0,
+      "triangles": 108
+    }
+  ],
+  "recipeDigest": "11d8d0a950710a51f060213358675a9c66810d15670270f60f0ebf75eac92896",
+  "recordHash": "6e5070ad34c5b7401fe89f955b1b27fbe4419443a1315175fee0430f50753d43",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1",
+  "skinPaletteEntries": 0,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 40476
+}

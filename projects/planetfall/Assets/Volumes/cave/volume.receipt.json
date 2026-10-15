@@ -1,0 +1,12 @@
+{
+  "format": "JudasVolumeTerrainCook",
+  "inputs": {
+    "Imports/cave.judasvolume": "92ca8ce8436ddac33cf68087ae140ba0d17ec4ba40a93b0d1ec93c2481552828"
+  },
+  "products": {
+    "Assets/Volumes/cave/volume.judascollision": "9f2a10d08c0e0383c62bb5675460553400cf34d23a6a9a15ae996dfa4babda0f",
+    "Assets/Volumes/cave/volume.judasmodel": "cd32832c423d6928f7f75eaf48eb88809ed7a66c656c48d701bc1a852d6003cd"
+  },
+  "revision": "M84-1",
+  "version": 1
+}

@@ -1,0 +1,20 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Saves/earth.judasstate (none saved)
+Project: Planetfall (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/planetfall.judasproj)
+Scene: Planetfall / earth (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Scenes/earth.judas)
+World origin (m): 0.000, 796375.000, 0.000
+JS: Lastlight: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+PASS true large double-precision planetary origin
+PASS ordinary spatial RadicalGravity governs motor
+PASS normal wheel and powertrain assembly exists
+PASS campaign state belongs to ordinary script owner
+PASS actual character advances using JS and motor
+PASS actual H interaction completes Mara conversation
+FAIL actual workbench spends reward and advances build mission
+PASS engine torque, gearbox and wheels move actual rover chassis
+PASS actual game screenshot captured
+PASS normal game input and lifetime stay fault-free
+BODIES 1093
+PASS ordinary startup and shutdown
+PERF fixed_p95_ms=5.3961 render_p95_ms=23.8595 frame_work_p95_ms=29.7137 frame_work_max_ms=72.8770
+SUMMARY checks=11 failures=1

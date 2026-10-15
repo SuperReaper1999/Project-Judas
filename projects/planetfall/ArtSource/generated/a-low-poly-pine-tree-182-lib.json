@@ -1,0 +1,39 @@
+{
+  "prompt": "a low poly pine tree",
+  "category": "library",
+  "confidence": 1.0,
+  "params": {
+    "asset": "pine_tree",
+    "count": 1,
+    "size": 1.0,
+    "color": null,
+    "style": "lowpoly"
+  },
+  "understood": [
+    {
+      "slot": "asset",
+      "text": "pine_tree (low_poly_starter, low poly tree)"
+    }
+  ],
+  "seed": 182,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-pine-tree-182-lib.glb"
+  },
+  "stats": {
+    "vertices": 654,
+    "triangles": 332,
+    "groups": 13
+  },
+  "asset": {
+    "id": "low_poly_starter/pine_tree",
+    "description": "A 3.4 metre evergreen with a tapered trunk, exposed angular branches and four irregular foliage tiers.",
+    "pack": "low_poly_starter"
+  },
+  "dimensions_m": [
+    1.62,
+    3.4,
+    1.4
+  ],
+  "seconds": 0.0
+}

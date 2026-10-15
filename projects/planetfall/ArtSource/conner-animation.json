@@ -1,0 +1,16 @@
+{
+  "source": "conner-stylised.blend",
+  "rig": "Conner_RecordedRig",
+  "joints": 21,
+  "meshPieces": 43,
+  "gameClips": [
+    "Idle",
+    "Run",
+    "Jump",
+    "Punch",
+    "HeavyPunch",
+    "Shove",
+    "Seat"
+  ],
+  "limitations": "Segmented single-bone weights; procedural locomotion and melee clips, not polished mocap"
+}

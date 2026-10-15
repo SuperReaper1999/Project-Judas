@@ -1,0 +1,50 @@
+{
+  "prompt": "a low poly 9 m tall stone research building with an antenna",
+  "category": "building",
+  "confidence": 1.0,
+  "params": {
+    "features": {
+      "antenna": true
+    },
+    "size": 1.0,
+    "style": "lowpoly",
+    "height": 9.0,
+    "material": "stone",
+    "floors": null,
+    "count": 1
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "height",
+      "text": "9 m tall"
+    },
+    {
+      "slot": "material",
+      "text": "stone"
+    },
+    {
+      "slot": "feature",
+      "text": "an antenna"
+    }
+  ],
+  "seed": 181,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-9-m-tall-stone-research-building-with-an-antenna-181-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 4904,
+    "triangles": 5496,
+    "groups": 1
+  },
+  "dimensions_m": [
+    44.0,
+    27.5,
+    44.0
+  ],
+  "seconds": 0.65
+}

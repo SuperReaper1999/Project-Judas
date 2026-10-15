@@ -1,0 +1,1617 @@
+[
+  {
+    "path": "ANIMATIONS.md",
+    "bytes": 1251,
+    "sha256": "74e69ee5a2c73bd636faf9746219db18c94c2204297d685a7d47081c2c7702d2"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judascollision",
+    "bytes": 5377070,
+    "sha256": "9f2a10d08c0e0383c62bb5675460553400cf34d23a6a9a15ae996dfa4babda0f"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judascollision.judasmeta",
+    "bytes": 121,
+    "sha256": "6e95c3fc58dc8dcee1f9c9402921a720d8eaa094427ca038e538f22a130f87bb"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judasmodel",
+    "bytes": 2048717,
+    "sha256": "cd32832c423d6928f7f75eaf48eb88809ed7a66c656c48d701bc1a852d6003cd"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judasmodel.judasmeta",
+    "bytes": 112,
+    "sha256": "b19b638636b70c593deea1f3c2d1a93ae78fe67a746650cece513169540824c7"
+  },
+  {
+    "path": "Assets/audio/empty_click.wav",
+    "bytes": 6658,
+    "sha256": "246e6106adb201e80c88ffdc3b4b226e7c2bfa14389e3facdaf051d1881796e0"
+  },
+  {
+    "path": "Assets/audio/empty_click.wav.judasmeta",
+    "bytes": 104,
+    "sha256": "18f1baef325f06d6a052c2999bc61150b442076b9fc006dc9045c5a02e76c253"
+  },
+  {
+    "path": "Assets/audio/explosion.wav",
+    "bytes": 75014,
+    "sha256": "d0affbfa764714b41b4b7b0fa353e6a9e876c85a4cd468fc47673b9a90403ee4"
+  },
+  {
+    "path": "Assets/audio/explosion.wav.judasmeta",
+    "bytes": 102,
+    "sha256": "f32d6bd12f72c3435c5f73e5bf58d60bb20627730c9b4f056e480c9ab7a83480"
+  },
+  {
+    "path": "Assets/audio/impact.wav",
+    "bytes": 9746,
+    "sha256": "e2a9c7b3b9ad7da025554afdabdab508d94ad612d046a52427dc4aec8722d7c3"
+  },
+  {
+    "path": "Assets/audio/impact.wav.judasmeta",
+    "bytes": 99,
+    "sha256": "e14258cebf3ae7ceb5460b6ae91bb5c3ce6c3fde47ccbe43657be0c98bce920c"
+  },
+  {
+    "path": "Assets/audio/melee_thud.wav",
+    "bytes": 17684,
+    "sha256": "ad084c93c3be1880009b8570f85e98acdd781fc684d0569abbdfce1828d757f9"
+  },
+  {
+    "path": "Assets/audio/melee_thud.wav.judasmeta",
+    "bytes": 103,
+    "sha256": "f1e09ae6d8b062fbbebab61b8c0849bf6aa8aaff45c6d5adcacc99bcecfc1079"
+  },
+  {
+    "path": "Assets/audio/reload_click.wav",
+    "bytes": 17684,
+    "sha256": "1f64c05c0d9f586d2d7cc92a0a49ca47c27ba4c215c387c999d6d3acfc70877f"
+  },
+  {
+    "path": "Assets/audio/reload_click.wav.judasmeta",
+    "bytes": 105,
+    "sha256": "8198092fefdbdf6c979f6717228f7d85286ce7e810d57f9ba5861c09c376a3e9"
+  },
+  {
+    "path": "Assets/audio/rifle_fire.wav",
+    "bytes": 21212,
+    "sha256": "6d37cb9237716aa7459e1bd88dafbd7e88802c2bb24b3b94e9bece212573b4a9"
+  },
+  {
+    "path": "Assets/audio/rifle_fire.wav.judasmeta",
+    "bytes": 103,
+    "sha256": "6f818827c44d157bd3560c3f3fe75f6e95a5e0d69c750979da3a8485f25ac92f"
+  },
+  {
+    "path": "Assets/audio/shot.wav",
+    "bytes": 5776,
+    "sha256": "822256c344afb6cbc66a424833d30039350a8ed95f3b8de0177c3edc04eb4a0d"
+  },
+  {
+    "path": "Assets/audio/shot.wav.judasmeta",
+    "bytes": 97,
+    "sha256": "59572feea9286bc51618107ce03fc36a9296d75bb6d7e22d4185b0f355448a25"
+  },
+  {
+    "path": "Assets/deformables/bridge.judasdeform",
+    "bytes": 35073,
+    "sha256": "4851a102a00590e0879ae75637c8d697ec7d1750320864c827e866008984a2ed"
+  },
+  {
+    "path": "Assets/deformables/bridge.judasdeform.judasmeta",
+    "bytes": 118,
+    "sha256": "bc4a4643bcf62684a5965cfe7713d7edb1eb53cd52e1994477c5ecfb4a7773de"
+  },
+  {
+    "path": "Assets/deformables/nominal.judasdeform",
+    "bytes": 18055,
+    "sha256": "6e55d958d75f6b767375526f016459336f04bc68d656ccae717a449797134fce"
+  },
+  {
+    "path": "Assets/deformables/nominal.judasdeform.judasmeta",
+    "bytes": 119,
+    "sha256": "a8bff782b4c2521cc0e00abdce7dc27f1b074d38fe71299c4f68f495f8c4fad1"
+  },
+  {
+    "path": "Assets/deformables/specimen.judasdeform",
+    "bytes": 13264,
+    "sha256": "ad3e1010d2ce31c50186d05ce3d936353888f53ca67ce30ee9a5c72a4cfd585c"
+  },
+  {
+    "path": "Assets/deformables/specimen.judasdeform.judasmeta",
+    "bytes": 120,
+    "sha256": "5f48ca4285744ee5254f5c2eb136860e05b78d2ce1ef611061f1971e8c8a269c"
+  },
+  {
+    "path": "Assets/deformables/strong.judasdeform",
+    "bytes": 18055,
+    "sha256": "01f98d07dde0c53cabbb7553d514f0c2b33f93dfdcf9e5f7a4af65bea1edf208"
+  },
+  {
+    "path": "Assets/deformables/strong.judasdeform.judasmeta",
+    "bytes": 118,
+    "sha256": "b68530dc96368527f2c1121395d90071e1cce9f97299ad25bb4d591f4a343c41"
+  },
+  {
+    "path": "Assets/deformables/weak.judasdeform",
+    "bytes": 18055,
+    "sha256": "97a01663e8ce6c9d0176b76e28a0f3c51244b4858371748cb948de94a3515b2e"
+  },
+  {
+    "path": "Assets/deformables/weak.judasdeform.judasmeta",
+    "bytes": 116,
+    "sha256": "4201f2d681bc8faae73a39b6841376ad97fa0865c52d70da304a55df4563eaa1"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSans.ttf",
+    "bytes": 759720,
+    "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+    "bytes": 102,
+    "sha256": "2db5b45b7d406d4edad68755e5a2fb901d4137134d7f9fa83e11d84c9cf5f9ee"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansCondensed-Bold.ttf",
+    "bytes": 667844,
+    "sha256": "5a3bb1f72d8861c272498b80f1fe075163b4ea37bb27dd9cdd7b985e59b0286e"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansCondensed-Bold.ttf.judasmeta",
+    "bytes": 116,
+    "sha256": "4c8a85f195e620a7d3c13da7537eb062c6e5d009687c26fba1f822801f15c437"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansMono.ttf",
+    "bytes": 343140,
+    "sha256": "a54dca07c76d6289e717e75e0a58c0128f6d7269ef3faf76417c9d7d3bba37ab"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansMono.ttf.judasmeta",
+    "bytes": 106,
+    "sha256": "babb6a58d3ad012fdfa8d8717d1499855770278ba76361d519c7b45cfdc6a349"
+  },
+  {
+    "path": "Assets/fonts/LICENSE.txt",
+    "bytes": 12621,
+    "sha256": "24e651498ac4c2e6ca80c8a3de05101f33aef9584fdff5035908100eb75fae51"
+  },
+  {
+    "path": "Assets/materials/inner.judasmat",
+    "bytes": 323,
+    "sha256": "4bd1bda679b58c1607495b64697cf30b46c7d98b046bcb1e6fc05c8172e45d5a"
+  },
+  {
+    "path": "Assets/materials/inner.judasmat.judasmeta",
+    "bytes": 110,
+    "sha256": "0a85f2e0d7c374012c648831420c16e93e73d8594c10a0338e5c6fff3f2eea60"
+  },
+  {
+    "path": "Assets/materials/outer.judasmat",
+    "bytes": 315,
+    "sha256": "1f837857470b601099c532c6fdfac907211a52c528e27511e401964a60dd0873"
+  },
+  {
+    "path": "Assets/materials/outer.judasmat.judasmeta",
+    "bytes": 110,
+    "sha256": "7cad82f20477cfa4c015cf1cbebdf734be1d45e004700fc1cdf08e4c7ad7e669"
+  },
+  {
+    "path": "Assets/models/aether.glb",
+    "bytes": 16228,
+    "sha256": "b4e4a4553ab31f45a95efe77e951a4131923f524805231c85cfcc04b149f2b51"
+  },
+  {
+    "path": "Assets/models/aether.glb.judasmeta",
+    "bytes": 99,
+    "sha256": "f902c6c3e09e91d1615385c58d182a219df725b39c194791626178bc6735df86"
+  },
+  {
+    "path": "Assets/models/astronaut.glb",
+    "bytes": 317640,
+    "sha256": "2e0c12355bfda521bcdb319b65c32ecb2841e3e8312d27f345494b4090bcd49a"
+  },
+  {
+    "path": "Assets/models/astronaut.glb.judasmeta",
+    "bytes": 102,
+    "sha256": "55abb764f9880019dd4faddab08f98e7ed50727ad55a43ab593272acb0bce2f2"
+  },
+  {
+    "path": "Assets/models/barrel.glb",
+    "bytes": 30808,
+    "sha256": "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8"
+  },
+  {
+    "path": "Assets/models/barrel.glb.judasmeta",
+    "bytes": 99,
+    "sha256": "487f430a19b7bf8965ed9de2ea08f725ea54823af1648b46e9c86cb8b699c665"
+  },
+  {
+    "path": "Assets/models/bed.glb",
+    "bytes": 77360,
+    "sha256": "2f475c54c697a28e3f2542e1677bb4523cfdb86eec8ccf671a10c26efc6050ef"
+  },
+  {
+    "path": "Assets/models/bed.glb.judasmeta",
+    "bytes": 96,
+    "sha256": "ed793ee1ff4725d1f86fe8211d7ae420c00ce42469d2fb9fc12f4531da37cf9b"
+  },
+  {
+    "path": "Assets/models/bench.glb",
+    "bytes": 37952,
+    "sha256": "5b8892253e9cbc57c6a2b430d9070fbb76aaa2c2b522fd3f6b8e04528455a962"
+  },
+  {
+    "path": "Assets/models/bench.glb.judasmeta",
+    "bytes": 98,
+    "sha256": "06b5cfd3b1f1325cd88747ab1f655552d4b83b5b58cebab1e0a07a844cf9f796"
+  },
+  {
+    "path": "Assets/models/bookshelf.glb",
+    "bytes": 137668,
+    "sha256": "0f3f62dc89488a6b14cc8ce274fd3943a353384195c875ef21672daf7cd3ea72"
+  },
+  {
+    "path": "Assets/models/bookshelf.glb.judasmeta",
+    "bytes": 102,
+    "sha256": "a578974d5dc426a14693544db50fa80034fee7b9417aec3c74cb3788f69e2227"
+  },
+  {
+    "path": "Assets/models/broadleaf_tree.glb",
+    "bytes": 47696,
+    "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b"
+  },
+  {
+    "path": "Assets/models/broadleaf_tree.glb.judasmeta",
+    "bytes": 107,
+    "sha256": "32e0d04f9dce473f7587ce30b1753dd2b566e7903a1d29ad79526b8d9b9af255"
+  },
+  {
+    "path": "Assets/models/bus_stop_shelter.glb",
+    "bytes": 160780,
+    "sha256": "908c647146bef0a4aeefd4827ff4f63118297c80a4193c9f6e8959836e3b5246"
+  },
+  {
+    "path": "Assets/models/bus_stop_shelter.glb.judasmeta",
+    "bytes": 109,
+    "sha256": "a209e48247a88a036cac5d0b296ad8d1a3f176c010e9ad9c6b33ff10c38c4c4c"
+  },
+  {
+    "path": "Assets/models/chair.glb",
+    "bytes": 61812,
+    "sha256": "a3d36c982d079fe55b691ce8fba82c8ffc4b6fbfe88e881741ca4cf502757333"
+  },
+  {
+    "path": "Assets/models/chair.glb.judasmeta",
+    "bytes": 98,
+    "sha256": "91d8de696573df6b42b264a37bf03cda1bb7639788c0c91107affdaa11a28dee"
+  },
+  {
+    "path": "Assets/models/character_adventurer.glb",
+    "bytes": 209448,
+    "sha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3"
+  },
+  {
+    "path": "Assets/models/character_adventurer.glb.judasmeta",
+    "bytes": 113,
+    "sha256": "6d3bb92b71083c7f0a9eefecfbaa6c1b8a4c4579873cda06b6a7dff9d6a7519a"
+  },
+  {
+    "path": "Assets/models/character_fighter.glb",
+    "bytes": 233284,
+    "sha256": "40542fbc7e6236978090e52d5371d023a619438d0f42c9faa501a68417f78b08"
+  },
+  {
+    "path": "Assets/models/character_fighter.glb.judasmeta",
+    "bytes": 110,
+    "sha256": "fc4dc8959a1518c1cd794d1017a07b1ae6fb8213dea5ad9cc8356a19924bf7e0"
+  },
+  {
+    "path": "Assets/models/character_soldier.glb",
+    "bytes": 209316,
+    "sha256": "47a86a3b354102bd2bdd4be7e2b19401c429d70ef353647143555fb9f526c1dc"
+  },
+  {
+    "path": "Assets/models/character_soldier.glb.judasmeta",
+    "bytes": 110,
+    "sha256": "b36daaa11aa81fbe8a8d7b032f4327fe48e2a45c9c38617616614cb055003d5e"
+  },
+  {
+    "path": "Assets/models/character_zombie.glb",
+    "bytes": 209316,
+    "sha256": "77d22d71722efc3ff5241f5ac0e07ca84b75e02f68084caa2540d2678ec3fd7f"
+  },
+  {
+    "path": "Assets/models/character_zombie.glb.judasmeta",
+    "bytes": 109,
+    "sha256": "2681e4ddb8905349cd76226b244fa2d06f36a96524a6ce27cdf40cd5dd515045"
+  },
+  {
+    "path": "Assets/models/cloth_laundry_line.glb",
+    "bytes": 51032,
+    "sha256": "ec72922fdd787fb0ed0beefe63789f515f0d41efab777af4416ff0478733a2d2"
+  },
+  {
+    "path": "Assets/models/cloth_laundry_line.glb.judasmeta",
+    "bytes": 111,
+    "sha256": "daa99d61c167dda1e31d2c90fe1b9dd787e2e05fc5f2fa99dd24dd90948f6109"
+  },
+  {
+    "path": "Assets/models/cloth_market_canopy.glb",
+    "bytes": 44164,
+    "sha256": "1c3b671ecbbeae54ff49e7d1acf797a28583c95d174fbfa8f47784a0b0aacc56"
+  },
+  {
+    "path": "Assets/models/cloth_market_canopy.glb.judasmeta",
+    "bytes": 112,
+    "sha256": "475b5b29a54c306bec411242776d6b82b3b40f13a1c9f15ad33d67883b631586"
+  },
+  {
+    "path": "Assets/models/computer_terminal.glb",
+    "bytes": 71924,
+    "sha256": "fa5ab43b6fc631197015d9c7c09068f60123457501d2a6066a9053daba619a65"
+  },
+  {
+    "path": "Assets/models/computer_terminal.glb.judasmeta",
+    "bytes": 110,
+    "sha256": "692547096f64a1fd782f290f18ce2c543c61376deb67ad39647a6d4a24e719c9"
+  },
+  {
+    "path": "Assets/models/conner_player.glb",
+    "bytes": 560588,
+    "sha256": "9c8df72f901aafc7af9afb25e3a236d21712fa30cbc435e45aa0b0a68b1d2c98"
+  },
+  {
+    "path": "Assets/models/conner_player.glb.judasmeta",
+    "bytes": 106,
+    "sha256": "9383599a3fe8ab2591eee6e5e722499bc796dae1e9f2017a2925e54ea96dcc95"
+  },
+  {
+    "path": "Assets/models/crash_wheel.obj",
+    "bytes": 3791,
+    "sha256": "20aa6073cc317dfe385d0f923a612f6882e93a83152dd213e6e6f16bc1d937a9"
+  },
+  {
+    "path": "Assets/models/crash_wheel.obj.judasmeta",
+    "bytes": 104,
+    "sha256": "cbb566b013eb7d5ef31741d7dfe6c25ec1d33fb1a2228904290cf7d9014ad148"
+  },
+  {
+    "path": "Assets/models/derelict_scenery.glb",
+    "bytes": 13543748,
+    "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584"
+  },
+  {
+    "path": "Assets/models/derelict_scenery.glb.judasmeta",
+    "bytes": 109,
+    "sha256": "9dd631f9ded6f32f93118293b91d9fea2b76ccf2142cb7e78ce84472bb34f2dc"
+  },
+  {
+    "path": "Assets/models/derelict_surface.glb",
+    "bytes": 1076276,
+    "sha256": "6929696fccb32f5bf6564ce4ea8c8d84e7d57991035ce7ab46b989cd75878994"
+  },
+  {
+    "path": "Assets/models/derelict_surface.glb.judasmeta",
+    "bytes": 109,
+    "sha256": "dc55d79b26fca04d56d3370a02b631cb732a37589507b5cf3dbb4d4899bb40ea"
+  },
+  {
+    "path": "Assets/models/derelict_surface.judascollision",
+    "bytes": 1883672,
+    "sha256": "94e865abfa03aaa07b0a19b11a850594da99534cf3fe162d112f3fb79ad8da45"
+  },
+  {
+    "path": "Assets/models/derelict_surface.judascollision.judasmeta",
+    "bytes": 125,
+    "sha256": "ba2d22c4d15003c3f85809394c6556fc07f77b900c08c7b5dfb18e3bd77f96c6"
+  },
+  {
+    "path": "Assets/models/door.glb",
+    "bytes": 72640,
+    "sha256": "cf8b30a7c5aef8059978e6277035572eba39c1bec1e3077f2c3132559fbb7f99"
+  },
+  {
+    "path": "Assets/models/door.glb.judasmeta",
+    "bytes": 97,
+    "sha256": "d544262a1d102941b8a9cc9e1f295c627295e74909a8cc563c14b9048603e3b4"
+  },
+  {
+    "path": "Assets/models/dumpster.glb",
+    "bytes": 67768,
+    "sha256": "1ea20edec99a341136f17e48d180489e281d4510ffe90f76b6ee9ab956e4988f"
+  },
+  {
+    "path": "Assets/models/dumpster.glb.judasmeta",
+    "bytes": 101,
+    "sha256": "856bdb6c7684c3cd066b5661a77f6cb78e4dec6ee5edafc29423bc370ff81a9f"
+  },
+  {
+    "path": "Assets/models/earth-frontier_scenery.glb",
+    "bytes": 13713128,
+    "sha256": "4a3427172d933f6a85e3aa1930c4359f993c7c8798ee0c03a7a5831bfc36eaca"
+  },
+  {
+    "path": "Assets/models/earth-frontier_scenery.glb.judasmeta",
+    "bytes": 115,
+    "sha256": "37d08956d4105c7a2fdd0aded5c4362df69b08c0c5f82eeb5bddfe8808f370cd"
+  },
+  {
+    "path": "Assets/models/earth_scenery.glb",
+    "bytes": 13543748,
+    "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584"
+  },
+  {
+    "path": "Assets/models/earth_scenery.glb.judasmeta",
+    "bytes": 106,
+    "sha256": "b1127b7f3ffa699f81fe5fcfe06480edcd0602cd46a7dc99528ad7b60149df12"
+  },
+  {
+    "path": "Assets/models/earth_surface.glb",
+    "bytes": 1076276,
+    "sha256": "ec7d28705b61c83f25d661fe1c82a1f0da88977451cba75ce285e5c0d9f219d8"
+  },
+  {
+    "path": "Assets/models/earth_surface.glb.judasmeta",
+    "bytes": 106,
+    "sha256": "467123e7a8f6d9dd18fe07db4d1c3e39905ca52287be3c214d6a2df10e511db8"
+  },
+  {
+    "path": "Assets/models/earth_surface.judascollision",
+    "bytes": 1883672,
+    "sha256": "7444217a664eb5960fd899dfb157d7bdbd314964ad2ae3bc296ecf064614ee43"
+  },
+  {
+    "path": "Assets/models/earth_surface.judascollision.judasmeta",
+    "bytes": 122,
+    "sha256": "faeffb4b27d02314802fdda0bf5427e3bbe60cab9692317f647efba3526af4ac"
+  },
+  {
+    "path": "Assets/models/fire_hydrant.glb",
+    "bytes": 56064,
+    "sha256": "3f996932d2e4a10ccc4f41df65266b5f7d5b135cb5fdae2b141ffab21d6b75f5"
+  },
+  {
+    "path": "Assets/models/fire_hydrant.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "9fe02e3f87febba3d0b25e9a8844b1d99e05bd5027a65f05a7e2bd4a24b4257a"
+  },
+  {
+    "path": "Assets/models/fist_forearm.glb",
+    "bytes": 31724,
+    "sha256": "6cdf05c7c66a354bd394beaf0d61c045f759cbcc5e6aaca742089a68adc56c8e"
+  },
+  {
+    "path": "Assets/models/fist_forearm.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "82f381558716852a03b2009dccef4ae6b94471d3d2c0e612ee83550179d18666"
+  },
+  {
+    "path": "Assets/models/frontier_house.glb",
+    "bytes": 1160788,
+    "sha256": "5abd68534cbe06909fc49c6616d1f94e22158d11c60a67fbd1cd52b79f8f0b15"
+  },
+  {
+    "path": "Assets/models/frontier_house.glb.judasmeta",
+    "bytes": 107,
+    "sha256": "77c862088ddbfe0424e2c5967b8f27a81a5c1e21a353729f7e4e80bb2504f6dc"
+  },
+  {
+    "path": "Assets/models/frontier_house.judasmodel",
+    "bytes": 2831257,
+    "sha256": "a160b35c88f55c97065c6f2fcc6bc693243c9d5c9586f4ad6768d50bbbb5eec0"
+  },
+  {
+    "path": "Assets/models/frontier_house.judasmodel.judasmeta",
+    "bytes": 114,
+    "sha256": "f224fae0a6cb4720e77af9e15ea1f3f21387a0c9056b48d277937d98614a291c"
+  },
+  {
+    "path": "Assets/models/generated_oak.glb",
+    "bytes": 47696,
+    "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b"
+  },
+  {
+    "path": "Assets/models/generated_oak.glb.judasmeta",
+    "bytes": 106,
+    "sha256": "ffbdee5bb519d15ec70f35c8c3e9595633b4dba6dd56aa390f435ec554944e91"
+  },
+  {
+    "path": "Assets/models/generated_pine.glb",
+    "bytes": 26976,
+    "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589"
+  },
+  {
+    "path": "Assets/models/generated_pine.glb.judasmeta",
+    "bytes": 107,
+    "sha256": "d00aa2900b07540190636a0413880800c29cca7f257a907bc915d668be5d442e"
+  },
+  {
+    "path": "Assets/models/grenade.glb",
+    "bytes": 26020,
+    "sha256": "296d5432944f28db4da9dc2c63f4e11a0a118548ae3559e7483dc3e4cb0813b2"
+  },
+  {
+    "path": "Assets/models/grenade.glb.judasmeta",
+    "bytes": 100,
+    "sha256": "4813746d2299ac090c35f4845fc1c65e9c01be23d5f6745523e88dfb5b5fd5c2"
+  },
+  {
+    "path": "Assets/models/ladder.glb",
+    "bytes": 87644,
+    "sha256": "4755426638588c07050bbefe4e85c5bdfc20bd422eff936d1306f022a0107ba8"
+  },
+  {
+    "path": "Assets/models/ladder.glb.judasmeta",
+    "bytes": 99,
+    "sha256": "4d675fb1cff5ae0d6afcdc755e572dd35bd6ac02bc745533c56ee0ec16096286"
+  },
+  {
+    "path": "Assets/models/mars_scenery.glb",
+    "bytes": 13543748,
+    "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584"
+  },
+  {
+    "path": "Assets/models/mars_scenery.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "569ee6def55b87554864ed2993223787620bc64c7a23b15864bff58916b6f56c"
+  },
+  {
+    "path": "Assets/models/mars_surface.glb",
+    "bytes": 1076272,
+    "sha256": "bdb69c73218e8c5bbae88bc39a080648bdafc2440d7b7c766fc1c7946e98f2d5"
+  },
+  {
+    "path": "Assets/models/mars_surface.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "860f0c737dab043e28a9aab622991fbec9a96bcfc4403e0a6fd028d63dbdb6ab"
+  },
+  {
+    "path": "Assets/models/mars_surface.judascollision",
+    "bytes": 1883569,
+    "sha256": "63ca11b0834c4fd115404bf004280ebcc93e7e4e7e79089a6253c0e8d292b75a"
+  },
+  {
+    "path": "Assets/models/mars_surface.judascollision.judasmeta",
+    "bytes": 121,
+    "sha256": "74bd47d62333b302b1ee38bc2f72026656d7137ea223f9d544f3b116afab4d87"
+  },
+  {
+    "path": "Assets/models/metal_crate.glb",
+    "bytes": 65220,
+    "sha256": "f87ffe0b8f60798fe4600c9f0fb779df99c9d67a612e3fafb1a06909cb2b1ea4"
+  },
+  {
+    "path": "Assets/models/metal_crate.glb.judasmeta",
+    "bytes": 104,
+    "sha256": "7b1eb6ef7ebcfaefee1cb9c5b411dc0e6f8d082748df1f52afc1eac85fcd4471"
+  },
+  {
+    "path": "Assets/models/moon_scenery.glb",
+    "bytes": 13683768,
+    "sha256": "438e5afacf76495f6d66466d38195c4744990c901364646b03c335d78381b678"
+  },
+  {
+    "path": "Assets/models/moon_scenery.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "dc5d4b368203f54a0013742a76c345272adf3254c5848c2b0831d6130948ad70"
+  },
+  {
+    "path": "Assets/models/moon_surface.glb",
+    "bytes": 1076272,
+    "sha256": "d54a6689b5ef84a95bd595e885356dc5cd1c25d19ea882355adb69a24b804435"
+  },
+  {
+    "path": "Assets/models/moon_surface.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "3479d4da0099b8738274aa00db33a71b522114761299bc7604b3ff7262e0c43c"
+  },
+  {
+    "path": "Assets/models/moon_surface.judascollision",
+    "bytes": 1882191,
+    "sha256": "97adf8338e5a23e27296d19e99265308348f910632370dc9ac742233a3821a69"
+  },
+  {
+    "path": "Assets/models/moon_surface.judascollision.judasmeta",
+    "bytes": 121,
+    "sha256": "1fac6ef9b5b7f46ae89bfd0cb75f5994642258b7e8427002406a56f581624426"
+  },
+  {
+    "path": "Assets/models/pilot_seated.glb",
+    "bytes": 178544,
+    "sha256": "2224e0daf0f9e772a1e7dea558a5e24dfa4a8d44e686c68d523ea6b23f2b8b2c"
+  },
+  {
+    "path": "Assets/models/pilot_seated.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "511df9e562bedf590af54d5c9d4ae789031f1965e5b3329202f6e69aef037604"
+  },
+  {
+    "path": "Assets/models/pine_tree.glb",
+    "bytes": 26976,
+    "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589"
+  },
+  {
+    "path": "Assets/models/pine_tree.glb.judasmeta",
+    "bytes": 102,
+    "sha256": "4ba7a7796c22d63adc99f69079aa5a94325b2c8d572b19c4c41482c8c22600fd"
+  },
+  {
+    "path": "Assets/models/pirate.glb",
+    "bytes": 281356,
+    "sha256": "3ee5bbbd7401cce717580f005e18b2bfc170919b515821119ba25127aac59c9e"
+  },
+  {
+    "path": "Assets/models/pirate.glb.judasmeta",
+    "bytes": 99,
+    "sha256": "d6d086791f96892192d643f8a35b82deacab07ac0104fc4574a4ad2928c2b88a"
+  },
+  {
+    "path": "Assets/models/planter.glb",
+    "bytes": 31980,
+    "sha256": "e63e5786c64fd41e63ed5be148f2eea79227375e412a2f28a18492c7c9c72054"
+  },
+  {
+    "path": "Assets/models/planter.glb.judasmeta",
+    "bytes": 100,
+    "sha256": "4d82d63f6d8744d7e468361f2e75aacf8f487632482e11fbd56435ed03ab407e"
+  },
+  {
+    "path": "Assets/models/produce_crate.glb",
+    "bytes": 106556,
+    "sha256": "213b2495b123761f8698058483d668e25784bea6428dbf3bcfbabf610bb0eeb1"
+  },
+  {
+    "path": "Assets/models/produce_crate.glb.judasmeta",
+    "bytes": 106,
+    "sha256": "41b56117a62509985000afa48e4be62e87cc0f83835c0affd75513b6877b63d0"
+  },
+  {
+    "path": "Assets/models/relay_rocket.glb",
+    "bytes": 140716,
+    "sha256": "2ea62dd55cf62d3748a29f7879cc6aa50ca3e44502244dbd1436575b063baff1"
+  },
+  {
+    "path": "Assets/models/relay_rocket.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "8233cca8d72db0625d3f39c9ac2e13704a678a2f8a8a8f4cb9e800d9feb790fe"
+  },
+  {
+    "path": "Assets/models/research_tower.glb",
+    "bytes": 466956,
+    "sha256": "0aea526a0a819404d2fcfc732c32350101b742f8ca188785f410bdee6a9088be"
+  },
+  {
+    "path": "Assets/models/research_tower.glb.judasmeta",
+    "bytes": 107,
+    "sha256": "648ceb5d2636cbdd25eea750627a971a1d6490561a976b9af9f760519537ff8c"
+  },
+  {
+    "path": "Assets/models/road_barrier.glb",
+    "bytes": 62192,
+    "sha256": "b923ea6047d699b42c988b8885c9061603c407dd68b7bab4976fe48aff538e8f"
+  },
+  {
+    "path": "Assets/models/road_barrier.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "e5642737cacb0038b0aea64cfe990129fc9b25a32dbccdf84ff07d0d6de3e240"
+  },
+  {
+    "path": "Assets/models/rocket.glb",
+    "bytes": 25616,
+    "sha256": "4c43ebf57c9547403d3740a85f90ab1d07642a97ef32f00476f737475797f200"
+  },
+  {
+    "path": "Assets/models/rocket.glb.judasmeta",
+    "bytes": 99,
+    "sha256": "099ed3c0204b0bedee57ebfdc9cbd8b5b8ee384e0e5c65a8b27c6154f7a2f03e"
+  },
+  {
+    "path": "Assets/models/rocket_launcher.glb",
+    "bytes": 43368,
+    "sha256": "b950da78a0b6aa97576297fdd6bb4e4cb14b6809d736e0658bab454d7db7c7e0"
+  },
+  {
+    "path": "Assets/models/rocket_launcher.glb.judasmeta",
+    "bytes": 108,
+    "sha256": "3ec5d5c94e04664c86e1084464af9b7e3b1e0bd54309a691453b1c7435167d46"
+  },
+  {
+    "path": "Assets/models/rover_body.glb",
+    "bytes": 295544,
+    "sha256": "8b49047c4633e5ee9c11c1ce9f6f8628bb20de6952ec69f46b96ffe04b510b7e"
+  },
+  {
+    "path": "Assets/models/rover_body.glb.judasmeta",
+    "bytes": 103,
+    "sha256": "15ff299aed01d01d2debcb5139ff7f7ec0a70371f3d74a9850505125588c9382"
+  },
+  {
+    "path": "Assets/models/rover_shell.glb",
+    "bytes": 180256,
+    "sha256": "5c11e9eb78991e19e24e5785ea56b72a9bd7b63981a388d437ad30ce29cc1b1f"
+  },
+  {
+    "path": "Assets/models/rover_shell.glb.judasmeta",
+    "bytes": 104,
+    "sha256": "0ffec389d457df1a02399fb9d1001c37e769869ed483474c213859d532a16a36"
+  },
+  {
+    "path": "Assets/models/shopfront_small.glb",
+    "bytes": 96056,
+    "sha256": "664f9641a283abc23196fb5b5b8faa353bca6aae19685e5657bbcd59f25fd72a"
+  },
+  {
+    "path": "Assets/models/shopfront_small.glb.judasmeta",
+    "bytes": 108,
+    "sha256": "242956a3fe33c3c60a1c5ec390e667aa4331ab8a56fca1ea2a35fc730ae93452"
+  },
+  {
+    "path": "Assets/models/stairs_5step.glb",
+    "bytes": 22728,
+    "sha256": "648066d8a56fe2a00d4c49835cf32683c1cf7c5951e7bf99c9f0158d415001e3"
+  },
+  {
+    "path": "Assets/models/stairs_5step.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "a8a62af2c8b47f26cd4279b633fdbdb5a12a9f0d9394d3658abc374fec5c2b47"
+  },
+  {
+    "path": "Assets/models/stone_road.glb",
+    "bytes": 113624,
+    "sha256": "60328ea8e865ced934f6db51c23a4c09748ea316f7cc2ba803f511c22a90fd17"
+  },
+  {
+    "path": "Assets/models/stone_road.glb.judasmeta",
+    "bytes": 103,
+    "sha256": "6a5885d615a834419ef216c97a8b480e2276aa183876bd9be7e0dd09d6839713"
+  },
+  {
+    "path": "Assets/models/stone_stairs.glb",
+    "bytes": 93272,
+    "sha256": "22c14d97e8de0db003629c5923d50eaab204ec1e7cf630c862fa6e8548cb4223"
+  },
+  {
+    "path": "Assets/models/stone_stairs.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "6d675dd1753fbd3ac5c7dde578b0e6ae2e20c1e05eb0a4f485c93e053c6d3d12"
+  },
+  {
+    "path": "Assets/models/street_lamp.glb",
+    "bytes": 25964,
+    "sha256": "f474135a6510ce8feb13c4b11074222769252be6e150f54fc6b2c05a4309adb7"
+  },
+  {
+    "path": "Assets/models/street_lamp.glb.judasmeta",
+    "bytes": 104,
+    "sha256": "27f939a79b02091c1187b49e6571f4e5c48ceb2e24d5c83324e53d1aa99395de"
+  },
+  {
+    "path": "Assets/models/supply_shop.glb",
+    "bytes": 1293524,
+    "sha256": "39d6b04a2e02425fdbeac3ba0f7937b091817544c99f4719687b98b4c6d099fc"
+  },
+  {
+    "path": "Assets/models/supply_shop.glb.judasmeta",
+    "bytes": 104,
+    "sha256": "88fcbcdd3afaee85ad445d26ed9f694f7da2a988e02c363db080ba15bea23e82"
+  },
+  {
+    "path": "Assets/models/table.glb",
+    "bytes": 52716,
+    "sha256": "96af6eba068756abf6a0f5aada1d1c3a9126d23ff43403326414d744b5e83551"
+  },
+  {
+    "path": "Assets/models/table.glb.judasmeta",
+    "bytes": 98,
+    "sha256": "fc1f4996b30140a0f99670e4de1478515e92fd0ceb08e07055934c732da2db12"
+  },
+  {
+    "path": "Assets/models/traffic_cone.glb",
+    "bytes": 17852,
+    "sha256": "271b5061e33b60becd20b21425596f3f4b8049a62ecb481adb5c4235d6a72efb"
+  },
+  {
+    "path": "Assets/models/traffic_cone.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "6f5721723ac7ee9fd5923cc457d7379b12ad71b8297d5700327a0b9e52fedebe"
+  },
+  {
+    "path": "Assets/models/trash_bin.glb",
+    "bytes": 52492,
+    "sha256": "47ebb70b78757584be74d6bf49b1e93923dd5a1ac4ab504251f38aa55396c4d5"
+  },
+  {
+    "path": "Assets/models/trash_bin.glb.judasmeta",
+    "bytes": 102,
+    "sha256": "a6dd3a62dcd9ae463ab2886328a61e1eee2b2752084c102534e50289198f285d"
+  },
+  {
+    "path": "Assets/models/utility_box.glb",
+    "bytes": 102668,
+    "sha256": "cac78cf0e7e71f1995b9b72dd5ae908f10de7b5463055969a19796f8a95876be"
+  },
+  {
+    "path": "Assets/models/utility_box.glb.judasmeta",
+    "bytes": 104,
+    "sha256": "cdf45c9f0cd6f1983beb77744f0e54f6b9b2179c19b10e81d7fba13638f29a03"
+  },
+  {
+    "path": "Assets/models/weapon_compact_rifle.glb",
+    "bytes": 78224,
+    "sha256": "bb4f2855009ea83ea28a8a5e9e35c81d03c8bfb96fea9bdb343f5feb0f7b7357"
+  },
+  {
+    "path": "Assets/models/weapon_compact_rifle.glb.judasmeta",
+    "bytes": 113,
+    "sha256": "6f0bbe445cca857af26b4f77faf32dbf55fe45417fba13e3156323e129f31172"
+  },
+  {
+    "path": "Assets/models/wheel.obj",
+    "bytes": 3431,
+    "sha256": "9185b8b54847303a1b313bd762bbdc37fe625a0c1d60948d9ff115dae87ca63e"
+  },
+  {
+    "path": "Assets/models/wheel.obj.judasmeta",
+    "bytes": 98,
+    "sha256": "225a1abb8136ac54e1567ecf7985f095f202f7a6e20b7c94ab6b30f55e9df30c"
+  },
+  {
+    "path": "Assets/models/windmill.glb",
+    "bytes": 113628,
+    "sha256": "14fe019c6115f29061aaf9daba8a9b360dcb3a68d5d3a200d6c552fd95155388"
+  },
+  {
+    "path": "Assets/models/windmill.glb.judasmeta",
+    "bytes": 101,
+    "sha256": "ab03a445af281da02402f1f1a94544679361a0b2c49bc00c3712ac039158303a"
+  },
+  {
+    "path": "Assets/models/wood_crate.glb",
+    "bytes": 83352,
+    "sha256": "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539"
+  },
+  {
+    "path": "Assets/models/wood_crate.glb.judasmeta",
+    "bytes": 103,
+    "sha256": "c61b3be344e7071fead257abb0fa948250a52a48878e7a80a6ef02090753955e"
+  },
+  {
+    "path": "Assets/models/wood_railing.glb",
+    "bytes": 146476,
+    "sha256": "ba1fed2a22c8b80ab9388d64492bf33e127009d575e60d70c7ad2c9b570771db"
+  },
+  {
+    "path": "Assets/models/wood_railing.glb.judasmeta",
+    "bytes": 105,
+    "sha256": "83045250c52c7b82fafe4e8350221e391652e3553522ae4174d04aa37a8b8425"
+  },
+  {
+    "path": "Assets/models/zombie_animation.glb",
+    "bytes": 265136,
+    "sha256": "9725982d7799f75d84e4988c9713b55f7a5564f68e519081859d9fcae0e7a22b"
+  },
+  {
+    "path": "Assets/models/zombie_animation.glb.judasmeta",
+    "bytes": 109,
+    "sha256": "b27708a0d33bba408a98c009c7d53eea339d84c0b5cfd5c607c6686f5d5529a7"
+  },
+  {
+    "path": "Assets/navigation/rebake-0bcdc47ed5ffd8d539b25e68648dc0a1.judasnav",
+    "bytes": 1541116,
+    "sha256": "0a354d65fa6cf5b568162a517dda574567829ad02e3fbf9015ed39d68aeaf73d"
+  },
+  {
+    "path": "Assets/navigation/rebake-0bcdc47ed5ffd8d539b25e68648dc0a1.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "872d6c470d0db1356cdefbb2b1007371d00630270c88a55d434ea3576de17b57"
+  },
+  {
+    "path": "Assets/navigation/rebake-521ced6a575becbaf537e09dc7325dc6.judasnav",
+    "bytes": 1541116,
+    "sha256": "e66a18369d2ec8908022bb0cc0808e9ad8e7c54d6e6fc1e13750d438f4a8bf21"
+  },
+  {
+    "path": "Assets/navigation/rebake-521ced6a575becbaf537e09dc7325dc6.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "72eb06daa351e9a1306d4e137c21063fe9d26ac17f072528843edef02d7d9bde"
+  },
+  {
+    "path": "Assets/navigation/rebake-588c2ab44d8549fe470a5edbdf4acfdb.judasnav",
+    "bytes": 1541116,
+    "sha256": "7eb2dd823d736c72109b7708fabffd0f1247d5248cf53162f1c42dcd34a20c85"
+  },
+  {
+    "path": "Assets/navigation/rebake-588c2ab44d8549fe470a5edbdf4acfdb.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "6f89e4f003b403c47804c692c64f282ab694bc37cfe8efacd6a3c254c9445c98"
+  },
+  {
+    "path": "Assets/navigation/rebake-61e36ff99c5173f764e4737a863a00b4.judasnav",
+    "bytes": 250732,
+    "sha256": "b6ba4b55ced2de663ef7ddbe88b2c524af2923801df893e9120422b4fc26f414"
+  },
+  {
+    "path": "Assets/navigation/rebake-61e36ff99c5173f764e4737a863a00b4.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "9ab1346c5e595c206658faec5d3ee332b4e8b77ee0be0bb6de3ecec8f72645c3"
+  },
+  {
+    "path": "Assets/navigation/rebake-a3b06894d0c8feabe58da8859d223677.judasnav",
+    "bytes": 1541116,
+    "sha256": "025bfb51b2c215dc91ec8ca1e9d3bd98f76fd85602a4019bcf91cb8b4b656b9a"
+  },
+  {
+    "path": "Assets/navigation/rebake-a3b06894d0c8feabe58da8859d223677.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "d32b19de558473e918d3435e7a99db914554d68962d3c9f6f3ee9462bd8a2add"
+  },
+  {
+    "path": "Assets/navigation/rebake-bd57c154ffe65ae1820fb79e8b6ee7e0.judasnav",
+    "bytes": 1541116,
+    "sha256": "9772b7dea069a8765556f4294ef169ef36ff4e92512d746d71f5b435b7b566f6"
+  },
+  {
+    "path": "Assets/navigation/rebake-bd57c154ffe65ae1820fb79e8b6ee7e0.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "7141e31c985246816ce009284af2d7a92337196274678f295853834f16d4988a"
+  },
+  {
+    "path": "Assets/navigation/rebake-fcc07ed0d609844218a740c385915fd5.judasnav",
+    "bytes": 1541116,
+    "sha256": "11f56537925028b227e9bfe9b36c0f037360c14cc0b775eb41429f786effd6fa"
+  },
+  {
+    "path": "Assets/navigation/rebake-fcc07ed0d609844218a740c385915fd5.judasnav.judasmeta",
+    "bytes": 147,
+    "sha256": "35deda535de12d8eacfeed239690171956bfec4373aa1066e50bc054688c56c4"
+  },
+  {
+    "path": "Assets/prefabs/barrel_debris.judasprefab",
+    "bytes": 7105,
+    "sha256": "11b653f4dc93ebf66141cf2c0555d23952dbfe72b846b9b199a370cbcc1e8787"
+  },
+  {
+    "path": "Assets/prefabs/barrel_debris.judasprefab.judasmeta",
+    "bytes": 117,
+    "sha256": "9a3043bf4771b1c41cdd27ec3fd448599764fc25a76cf41236702bd376af43ad"
+  },
+  {
+    "path": "Assets/prefabs/base_build.judasprefab",
+    "bytes": 3412,
+    "sha256": "9c446e47e2fd55b5947c380556687e858de23799d6de8914f69dda858cbcde98"
+  },
+  {
+    "path": "Assets/prefabs/base_build.judasprefab.judasmeta",
+    "bytes": 114,
+    "sha256": "3dff4f4e46a1f16d8c10ace977f6fe344587bd901257483ca2c9baca9f6ed09a"
+  },
+  {
+    "path": "Assets/prefabs/breakable_barrel.judasprefab",
+    "bytes": 1233,
+    "sha256": "b1f51cf944969a589c704d0af10703c15497aa7a2ce346ea48dc2ed844ded0ea"
+  },
+  {
+    "path": "Assets/prefabs/breakable_barrel.judasprefab.judasmeta",
+    "bytes": 120,
+    "sha256": "17f2046073ffdf84916bd6cb28c79fd57bfe6258f8bad18efb1be05cabce1a21"
+  },
+  {
+    "path": "Assets/prefabs/breakable_crate.judasprefab",
+    "bytes": 1225,
+    "sha256": "2785c2545f2b0ab905728fe4f3e34f0e55a50f6b2239836b618987a291c847d4"
+  },
+  {
+    "path": "Assets/prefabs/breakable_crate.judasprefab.judasmeta",
+    "bytes": 119,
+    "sha256": "9693fa32aeb2a210d482d87360cfb23f7631235ecb1b8a9ce52e4def9252ca22"
+  },
+  {
+    "path": "Assets/prefabs/bridge.judasprefab",
+    "bytes": 1473,
+    "sha256": "2df0e9d0a61f72ca86902ac910860ae58fab974ad3c1b68f1eec09e069928f23"
+  },
+  {
+    "path": "Assets/prefabs/bridge.judasprefab.judasmeta",
+    "bytes": 110,
+    "sha256": "2f7e10e2a92806fcf95e8dc470cf9871e0c542e2ddcd069f70dcc390280fda48"
+  },
+  {
+    "path": "Assets/prefabs/crate_debris.judasprefab",
+    "bytes": 4189,
+    "sha256": "d521fe71f36bcf6ad0c8fff79a4c80fe5eba5d00afa717d1c2245deda4de6ec6"
+  },
+  {
+    "path": "Assets/prefabs/crate_debris.judasprefab.judasmeta",
+    "bytes": 116,
+    "sha256": "99b068eceb1e7c35b212933b63b055683a2970b9bf9e36388d9f7219a26937c0"
+  },
+  {
+    "path": "Assets/prefabs/damaged_rover.judasprefab",
+    "bytes": 10637,
+    "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7"
+  },
+  {
+    "path": "Assets/prefabs/damaged_rover.judasprefab.judasmeta",
+    "bytes": 117,
+    "sha256": "dabf2d3a2427d4e2b6179bec26398e235c44ff96fa5ae309125ab4e5cbbf9deb"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_boots_pickup.judasprefab",
+    "bytes": 3549,
+    "sha256": "f284e81a66e65fbd134458b41468b2400ba0689a64bff990c5d495d53f337220"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_boots_pickup.judasprefab.judasmeta",
+    "bytes": 126,
+    "sha256": "780661909527b61277be1ac9f9ed5de78e59dea64f285812fd868e8ed0cc846a"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door.judasprefab",
+    "bytes": 1111,
+    "sha256": "bfe7aa4e508bafdbd174ea10f546a3cf8ec9fd8bf9ad27bfb72fa7c8f0b8afed"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door.judasprefab.judasmeta",
+    "bytes": 118,
+    "sha256": "b48d3c7a9c7fc46acb6a568ff7c04dc72157cc5f767769df20b770dfe0f396c4"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door_debris.judasprefab",
+    "bytes": 4303,
+    "sha256": "ecc26a245ca178b8275ddc1fe70a08a70aff88fe5f3e174d556ffa802f46aef9"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door_debris.judasprefab.judasmeta",
+    "bytes": 125,
+    "sha256": "68cb67880f2a415083c847fe86f281b3d19f3dbf7d4df69b4d2a761d659c408c"
+  },
+  {
+    "path": "Assets/prefabs/grenade_projectile.judasprefab",
+    "bytes": 1232,
+    "sha256": "5496f9a79a3b4b413651c4a70f8fa9c00262ed6028a7465338b20e90c7719e3e"
+  },
+  {
+    "path": "Assets/prefabs/grenade_projectile.judasprefab.judasmeta",
+    "bytes": 122,
+    "sha256": "4b75a6017705265338b32c356c2cccd879658da04dea21ca0046124769c71bed"
+  },
+  {
+    "path": "Assets/prefabs/grenades_pickup.judasprefab",
+    "bytes": 1895,
+    "sha256": "49c9ed103f917073f8aa671310afffa61cee7dad9c16ed427a154567f17ca97c"
+  },
+  {
+    "path": "Assets/prefabs/grenades_pickup.judasprefab.judasmeta",
+    "bytes": 119,
+    "sha256": "668c6dc1b57d15b29e1ea46e73323064ef77347b0a44e9932c7c66b206da9cef"
+  },
+  {
+    "path": "Assets/prefabs/rocket_projectile.judasprefab",
+    "bytes": 1221,
+    "sha256": "4f92f38dfac930f3dedd97e59405aadb16ed228bafc7d9af46ae3b0c37f85a06"
+  },
+  {
+    "path": "Assets/prefabs/rocket_projectile.judasprefab.judasmeta",
+    "bytes": 121,
+    "sha256": "45242df5d67c8ea0950cf61212b575a354de50802b06ad5de5518ca4fbd894b7"
+  },
+  {
+    "path": "Assets/prefabs/rockets_pickup.judasprefab",
+    "bytes": 1894,
+    "sha256": "ea72de0ae8aeab75376fa0dc464af1c6bf10c70ee0eed1b5b9c127bd4fdfdfd5"
+  },
+  {
+    "path": "Assets/prefabs/rockets_pickup.judasprefab.judasmeta",
+    "bytes": 118,
+    "sha256": "704258f634b9616ab52ad7a9dd032971b69cc2b2d1cee18fb94681c65b92308b"
+  },
+  {
+    "path": "Assets/prefabs/soldier.judasprefab",
+    "bytes": 7929,
+    "sha256": "afe1680cbb4bd4850f387cea409c7852f800dee7361d1c1eb25c70401039c9aa"
+  },
+  {
+    "path": "Assets/prefabs/soldier.judasprefab.judasmeta",
+    "bytes": 111,
+    "sha256": "51ab56551f3f29355ac9a4d9062cb681e937a84b6287af6e5304f4c5b917fe67"
+  },
+  {
+    "path": "Assets/prefabs/zombie.judasprefab",
+    "bytes": 7306,
+    "sha256": "2be8db7cf02060b4fba8515f6716ecd6b75a1c199ddc85c61b132ff8caccaa66"
+  },
+  {
+    "path": "Assets/prefabs/zombie.judasprefab.judasmeta",
+    "bytes": 110,
+    "sha256": "ea2707aa53c7763dc511a9ab37f1ba2916f2c56d2f599ec13bf01c7e140c3689"
+  },
+  {
+    "path": "Assets/scripts/camera.js",
+    "bytes": 1183,
+    "sha256": "71dd08ac28e531c388c9d2ba91176540e3061c8375e9058faa4e370009c8c12f"
+  },
+  {
+    "path": "Assets/scripts/camera.js.judasmeta",
+    "bytes": 101,
+    "sha256": "91b0584ae47339b5b0f06fa7fc82922195bce89423f52778fa0bdca15b03bb6c"
+  },
+  {
+    "path": "Assets/scripts/campaign-core.js",
+    "bytes": 4623,
+    "sha256": "81f7e6cae009af308b945a4c9105b96f2dec1c9263a23acf8ca53272468d6fea"
+  },
+  {
+    "path": "Assets/scripts/campaign-core.js.judasmeta",
+    "bytes": 108,
+    "sha256": "057d373ed08cf1e304e2d89feb4f2460295fd5393362de8cf1e868fe14cb12b5"
+  },
+  {
+    "path": "Assets/scripts/climb.js",
+    "bytes": 2017,
+    "sha256": "daa4c0096ecc769e27ee6218caaa7ad90cc081a063449864fee37edd5a028429"
+  },
+  {
+    "path": "Assets/scripts/climb.js.judasmeta",
+    "bytes": 100,
+    "sha256": "191972f2b6bcf982180cfe7996c64284f0b055114987a92159560b7d6c55d8a8"
+  },
+  {
+    "path": "Assets/scripts/combat.js",
+    "bytes": 1432,
+    "sha256": "9047ac199d632c727620e5358a23888c2c25cbe89e497597df93fdb4b0ea42f1"
+  },
+  {
+    "path": "Assets/scripts/combat.js.judasmeta",
+    "bytes": 101,
+    "sha256": "aebe91ab63e4c391b14661916ef04b45bcddd924b593451c3b247ad47a9805b1"
+  },
+  {
+    "path": "Assets/scripts/destructible.js",
+    "bytes": 2817,
+    "sha256": "b6d46a04609b563b7698df9b6bc49156f933ab660f41f70ce35d2cf6ef7d68dd"
+  },
+  {
+    "path": "Assets/scripts/destructible.js.judasmeta",
+    "bytes": 107,
+    "sha256": "a5a2861ddbf5f976c81f5c01614f8cd5442a28d012657f25a8195150bdd4e51f"
+  },
+  {
+    "path": "Assets/scripts/enemy.js",
+    "bytes": 17748,
+    "sha256": "3b75d010a55683311edfc2338355b043db1d510f4fb1e615c1b800fe44f20ee9"
+  },
+  {
+    "path": "Assets/scripts/enemy.js.judasmeta",
+    "bytes": 100,
+    "sha256": "fa6976730c43d9b21b4bc6059060019a052326b6466d65dbc275c20b320e0ddd"
+  },
+  {
+    "path": "Assets/scripts/expedition.js",
+    "bytes": 1404,
+    "sha256": "11c463ede671a1f4aa332b092ccc89eb90c0d89fe879b2d35a12befa45537d97"
+  },
+  {
+    "path": "Assets/scripts/expedition.js.judasmeta",
+    "bytes": 105,
+    "sha256": "473140a522e68f1af4a4b5a19d35d86a97d3acf2eb71670f7b1966a96cb708d5"
+  },
+  {
+    "path": "Assets/scripts/explosive.js",
+    "bytes": 1463,
+    "sha256": "865bf3cfa31c161248302730c1f0b878d05f564072b08714e59a61bdfcf83f5e"
+  },
+  {
+    "path": "Assets/scripts/explosive.js.judasmeta",
+    "bytes": 104,
+    "sha256": "e3e217e82865c7057e2698f36e22b9d61388750ac25d69522d41fd42f746e478"
+  },
+  {
+    "path": "Assets/scripts/explosives.js",
+    "bytes": 6182,
+    "sha256": "4ec02846644b334e12a99c865e2eec2cf1c9e301e0b7c9989cb20fea9e345e62"
+  },
+  {
+    "path": "Assets/scripts/explosives.js.judasmeta",
+    "bytes": 105,
+    "sha256": "f333a1bc7ebd9477ce2d8f0dfab71a4c8f8047345dcdea2c38e24d479f8644eb"
+  },
+  {
+    "path": "Assets/scripts/framewalk.js",
+    "bytes": 10432,
+    "sha256": "a3534ed0d3345695f32f9a4f6f35797a787c9056da9ab304b3b1a527cdb1569c"
+  },
+  {
+    "path": "Assets/scripts/framewalk.js.judasmeta",
+    "bytes": 104,
+    "sha256": "0b1d2f717eb1c112dc055b69fd1f5a0a963f6c0025a6abc7326913f916c5d810"
+  },
+  {
+    "path": "Assets/scripts/game.js",
+    "bytes": 540,
+    "sha256": "e5412e7634f566b52276b2c3fbfc5843fe367dbe767938d661687844806228a7"
+  },
+  {
+    "path": "Assets/scripts/game.js.judasmeta",
+    "bytes": 99,
+    "sha256": "ff72398d0cf090188ea7863eb1ba60189a892386184ab6c84107ed5dcdcb722c"
+  },
+  {
+    "path": "Assets/scripts/grab.js",
+    "bytes": 4156,
+    "sha256": "5840c9d1e7f33fa7183d18415f525c74cd72566eabcf615190f249b14e4f6537"
+  },
+  {
+    "path": "Assets/scripts/grab.js.judasmeta",
+    "bytes": 99,
+    "sha256": "bb72c1d5aa0167941eaca8e6267e6a113032c3c719dee9d56e296bd67d7b5875"
+  },
+  {
+    "path": "Assets/scripts/hud.js",
+    "bytes": 6936,
+    "sha256": "b3aeddd564ac25ca2fa7652b0e4c82ac90a5db044ccf428ee33fc143ae686c4a"
+  },
+  {
+    "path": "Assets/scripts/hud.js.judasmeta",
+    "bytes": 98,
+    "sha256": "5c93b34da135ea97430d2c3ac9c8bed0fecbe7a5fd21420de139ab266a0079da"
+  },
+  {
+    "path": "Assets/scripts/inventory.js",
+    "bytes": 7796,
+    "sha256": "e05d6263be8552f6f908809c0625757658523feef0bb0fcdbc0715a4c7346d97"
+  },
+  {
+    "path": "Assets/scripts/inventory.js.judasmeta",
+    "bytes": 104,
+    "sha256": "5ce92ce41aa4c8f7fd61ec9c3a82965ce770fdadf2abb3b1c592287117c5a2b6"
+  },
+  {
+    "path": "Assets/scripts/inventory_ui.js",
+    "bytes": 5397,
+    "sha256": "3e52eff2572dea8091f0230ee601120ea5f09bbe973130a07c8ca1bb95fc2e23"
+  },
+  {
+    "path": "Assets/scripts/inventory_ui.js.judasmeta",
+    "bytes": 107,
+    "sha256": "91af2f929ca013f002ec5b938f1f1b54a43685ba7c849d2f39623ba2f6172c2d"
+  },
+  {
+    "path": "Assets/scripts/items.js",
+    "bytes": 1998,
+    "sha256": "ccf389007fef610b586dd2978de9764e4c2f53e9822dedeb62e3fa05d827dbc1"
+  },
+  {
+    "path": "Assets/scripts/items.js.judasmeta",
+    "bytes": 100,
+    "sha256": "11bc8fdc45d26517bbfdd2ff3799e5cee17343028662e061aa70764b115824ae"
+  },
+  {
+    "path": "Assets/scripts/math.js",
+    "bytes": 797,
+    "sha256": "b939fb4f8b935eb1f6461268b4e783caf696e82a3b4cfc76d4acbf1a6427f349"
+  },
+  {
+    "path": "Assets/scripts/math.js.judasmeta",
+    "bytes": 99,
+    "sha256": "6d9a30293d14cde4c83b903270d63ae3236882aa8afa3f286611be35699e9a7c"
+  },
+  {
+    "path": "Assets/scripts/melee.js",
+    "bytes": 3838,
+    "sha256": "da777d4d8e2d8e83bd7ebe187ec26520b64ab95589258c5eb0f22a9ee5ca9fc6"
+  },
+  {
+    "path": "Assets/scripts/melee.js.judasmeta",
+    "bytes": 100,
+    "sha256": "92252d00851143bebbf0a0f93690396b7ffb7788a4dfa23d7eacae147f721bf1"
+  },
+  {
+    "path": "Assets/scripts/planetfall.js",
+    "bytes": 12814,
+    "sha256": "25ab7d49265f97de9a0b2dc9c5c3e2160e2b5bd3aa58d1b158572d9a4c58993f"
+  },
+  {
+    "path": "Assets/scripts/planetfall.js.judasmeta",
+    "bytes": 105,
+    "sha256": "9b18ec62f5130aa53f66d3128d45fbc4ad325cb3d48d141ce03d7af9fd4978d7"
+  },
+  {
+    "path": "Assets/scripts/player.js",
+    "bytes": 7952,
+    "sha256": "ad795615ddece6995d179f81b995d9c0d1cf821d3db3e553bb3ca00df96d03ad"
+  },
+  {
+    "path": "Assets/scripts/player.js.judasmeta",
+    "bytes": 101,
+    "sha256": "17d4725cb80b53f609e39eaac3b909722b5d65d73a6b7e7a7eb35cf27bca9274"
+  },
+  {
+    "path": "Assets/scripts/regions.js",
+    "bytes": 516,
+    "sha256": "2040cb808fda49c2138575585089e47d1d9728607b4324a08c2e275c02fef759"
+  },
+  {
+    "path": "Assets/scripts/regions.js.judasmeta",
+    "bytes": 102,
+    "sha256": "bf333e33c084698177878b52bcd6e873c2bb47e6cbfb9e725b68ee0563530959"
+  },
+  {
+    "path": "Assets/scripts/rover.js",
+    "bytes": 1799,
+    "sha256": "64edf33aa32dc9e68845d567c86cdd7e9bb3ade06a26c243b7f097a28b9ed6bc"
+  },
+  {
+    "path": "Assets/scripts/rover.js.judasmeta",
+    "bytes": 100,
+    "sha256": "36ecf34aa8b90ec88a168ee5245d7bdd245f4d6eadaa96458ab8c15345651001"
+  },
+  {
+    "path": "Assets/scripts/ship.js",
+    "bytes": 8326,
+    "sha256": "5aefc27bf7f237b6db5c2fd5177c11a9d0e90c66e681e2d13cf544b80a81db77"
+  },
+  {
+    "path": "Assets/scripts/ship.js.judasmeta",
+    "bytes": 99,
+    "sha256": "e014cc41793c7f8ea4f184a962f20ef5ec2445aac4daac1c81bcad683f817ae0"
+  },
+  {
+    "path": "Assets/scripts/side-jobs.js",
+    "bytes": 4290,
+    "sha256": "131814a2bf2ee33e1d963fa2b1aa74e3f8b1f562a297d5dd0824b7dede732ed2"
+  },
+  {
+    "path": "Assets/scripts/side-jobs.js.judasmeta",
+    "bytes": 104,
+    "sha256": "7d9270e2b8e64d03842dd6e3167585f53bc7528afdbcd5ec1efb3816722008e9"
+  },
+  {
+    "path": "Assets/scripts/vendor.js",
+    "bytes": 1094,
+    "sha256": "67e582a828f25d0cbc47c9d231cb4894af1e189984d22591623813b714ce72d6"
+  },
+  {
+    "path": "Assets/scripts/vendor.js.judasmeta",
+    "bytes": 101,
+    "sha256": "1e95bc3fad8d897fee220e814621c35cdb0c3a7ae03c2a6fcaa0ed083031ff2c"
+  },
+  {
+    "path": "Assets/scripts/weapon.js",
+    "bytes": 7459,
+    "sha256": "5808a49d8f48fb76eb6339df76bae55c88488020cf75e9c8e31ef52586577c52"
+  },
+  {
+    "path": "Assets/scripts/weapon.js.judasmeta",
+    "bytes": 101,
+    "sha256": "23bec0ddb475e19ab63c9a24238c244963d92c5ff791257309a641d10e530ce7"
+  },
+  {
+    "path": "Assets/scripts/zombie_ai.js",
+    "bytes": 9875,
+    "sha256": "0ca067e2499765a877557b569b961232207420f46210faa2e73f1e827565fbf7"
+  },
+  {
+    "path": "Assets/scripts/zombie_ai.js.judasmeta",
+    "bytes": 104,
+    "sha256": "7abddeedba988589e2822629b1528c257921fd7ae3690b748b733ecdf6ef6421"
+  },
+  {
+    "path": "Assets/scripts/zombie_framewalk.js",
+    "bytes": 12297,
+    "sha256": "3bef81f2bcf1326f4ed536c4d9a50ed4a5bf223719ce81f9fc36bd6e116e8ac4"
+  },
+  {
+    "path": "Assets/scripts/zombie_framewalk.js.judasmeta",
+    "bytes": 111,
+    "sha256": "d013b9f15c74ae4d0c97fec32a02b4aa37a8b810986b2c79f60a157b5aca7d01"
+  },
+  {
+    "path": "Assets/textures/soft.png",
+    "bytes": 692,
+    "sha256": "c3da842f99dd9d6d4d82f5b4745523b262df0d540032639d181eb6a1a7b23b96"
+  },
+  {
+    "path": "Assets/textures/soft.png.judasmeta",
+    "bytes": 102,
+    "sha256": "3afdd471c471ca17b9f1357f4a75f6feadd0b1e8e40ef392a0df2b9efca1fa30"
+  },
+  {
+    "path": "Assets/textures/ui/field_canvas.png",
+    "bytes": 3071344,
+    "sha256": "949198d9e54cf3d7a2bf496b8f0a96218aa05d5a9a13c13e8b58ca14f867303a"
+  },
+  {
+    "path": "Assets/textures/ui/field_canvas.png.judasmeta",
+    "bytes": 113,
+    "sha256": "d4b26cbb2244b813df62025e1a3619f5efea59d87d7e1cf2a9a11c5805109021"
+  },
+  {
+    "path": "Assets/textures/ui/hud_canvas.png",
+    "bytes": 2507684,
+    "sha256": "c0605c6e9ca716c7c70e3ccc90fab1c52789941c9af4a39fc619f78cc06f56aa"
+  },
+  {
+    "path": "Assets/textures/ui/hud_canvas.png.judasmeta",
+    "bytes": 111,
+    "sha256": "c8e6d01a36bfaba7a787053f1f9f81da866f9bda044d31df99c8aba56ad44cd5"
+  },
+  {
+    "path": "Assets/textures/ui/item_boots.png",
+    "bytes": 1726066,
+    "sha256": "077e60558f5c036c6f50570c2f2e184437fa7639385683110ac5acd066a5e576"
+  },
+  {
+    "path": "Assets/textures/ui/item_boots.png.judasmeta",
+    "bytes": 111,
+    "sha256": "460222e4652914331fbc33f87910e1588fbadd774058e0cddcb57cf3c5549fdd"
+  },
+  {
+    "path": "Assets/textures/ui/item_grenade.png",
+    "bytes": 1687274,
+    "sha256": "1d3f1c8ab62bc15b3425b3a7bf672a8a3726f9f3a2fddfa881820be42af3e83c"
+  },
+  {
+    "path": "Assets/textures/ui/item_grenade.png.judasmeta",
+    "bytes": 113,
+    "sha256": "e116279b0bf91f09c1db5729a3585b3165a3a4c891e17dcca15e13b8698e605e"
+  },
+  {
+    "path": "Assets/textures/ui/item_launcher.png",
+    "bytes": 1772559,
+    "sha256": "e4c13dfd819a89b0a54a510b7ffaa846aa9c2b9d437e8a6fe187103efb490b4a"
+  },
+  {
+    "path": "Assets/textures/ui/item_launcher.png.judasmeta",
+    "bytes": 114,
+    "sha256": "362c6be98da38e736943752d65e25f8bffb66f752c016d90e4e8bda0a457bdd1"
+  },
+  {
+    "path": "Assets/textures/ui/item_rifle.png",
+    "bytes": 1619993,
+    "sha256": "1431c8ea80428e17e7073b329fc1e10e7ccfc9b33a5d1a888ed11e712a24301c"
+  },
+  {
+    "path": "Assets/textures/ui/item_rifle.png.judasmeta",
+    "bytes": 111,
+    "sha256": "257615ef75c96577a463896bf9cf5bd8a0d521f6242f893ed7421d80dd029e36"
+  },
+  {
+    "path": "Assets/textures/ui/item_rocket.png",
+    "bytes": 850080,
+    "sha256": "36184f8303ee78d7c13ec66b9c48c03428583318d032a823eee74a61aa479c46"
+  },
+  {
+    "path": "Assets/textures/ui/item_rocket.png.judasmeta",
+    "bytes": 112,
+    "sha256": "cbd878eb86dce20a2e4d1550fcc2a80bb69b284b793613b43a9d2a3a96a06dcd"
+  },
+  {
+    "path": "Assets/ui/lastlight.judasui",
+    "bytes": 18696,
+    "sha256": "562450e88f18442d510fa40c9922df1dd7b0dcdd383999c746bc86655e55523c"
+  },
+  {
+    "path": "Assets/ui/lastlight.judasui.judasmeta",
+    "bytes": 100,
+    "sha256": "64a56e65ffce08088e153f076c8e2b5cab412e6c4f98fadb17534bfa29d10605"
+  },
+  {
+    "path": "Assets/worlds/planetfall.judasworld",
+    "bytes": 173,
+    "sha256": "a27a1c2d80189eb595992fd3c413043343548bc65c4de009a1d0a9c6d7c36908"
+  },
+  {
+    "path": "Assets/worlds/planetfall.judasworld.judasmeta",
+    "bytes": 111,
+    "sha256": "378b0ad171b4ddecb477d90412b227f9b6833634965f18e906c24b38f3ad377c"
+  },
+  {
+    "path": "CAMPAIGN.md",
+    "bytes": 2312,
+    "sha256": "7de16c3198036ea0c847290ee9011cd3390054b9f3e0da1f728850b891952d81"
+  },
+  {
+    "path": "DEPENDENCIES.json",
+    "bytes": 65966,
+    "sha256": "2137fce5725b1c0bbe39e3d3860182cd70ab1e2d16dca46cea5ff99d8718babc"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4193,
+    "sha256": "67fcc7b46a2564be349995f9f4ae69f2eb63958ba38d313319ffceb8b7deebe5"
+  },
+  {
+    "path": "REPORT.md",
+    "bytes": 9410,
+    "sha256": "aa4f09855437ea85e7fb1e1108ebb923413ea4aae8fb7e3d9729e4e3f88ea234"
+  },
+  {
+    "path": "RUNTIME_REQUIREMENTS.txt",
+    "bytes": 747,
+    "sha256": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416"
+  },
+  {
+    "path": "Scenes/derelict.judas",
+    "bytes": 42791,
+    "sha256": "e85c49ef93354b7499da05e2d1704bab5ac86ce82129ba86b3b96f2be786f331"
+  },
+  {
+    "path": "Scenes/earth-coast.judas",
+    "bytes": 554410,
+    "sha256": "6daa680c11955a9a21025be50dd46a87c595dda22e71b0c75ab437d650920c2a"
+  },
+  {
+    "path": "Scenes/earth-frontier.judas",
+    "bytes": 559008,
+    "sha256": "d966da8e9645b07429023f242518cf5952ac3b79f2c4dfff78953c5663e4a8ae"
+  },
+  {
+    "path": "Scenes/earth-highlands.judas",
+    "bytes": 558229,
+    "sha256": "46805885cfc57cd8deaf98da78324d00ecd2dc2713a05cfac2d8fa3775fe860b"
+  },
+  {
+    "path": "Scenes/earth.judas",
+    "bytes": 540198,
+    "sha256": "bdffe1912e370455a5aa324956ea8ea518dfe4f96422baab1f17fa31a40d30e5"
+  },
+  {
+    "path": "Scenes/mars.judas",
+    "bytes": 540210,
+    "sha256": "545e3634df7b39ce4f28c91943968dcfb123230a6d0072b518c9ed50ae3c8b35"
+  },
+  {
+    "path": "Scenes/moon.judas",
+    "bytes": 540675,
+    "sha256": "82ba405b77c696028908d57b1d6b1cb16eb1ee6bf43f101fc496cdaf2a755cfb"
+  },
+  {
+    "path": "Scenes/salvage-rover.judas",
+    "bytes": 10637,
+    "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7"
+  },
+  {
+    "path": "engine/assets/fonts/DejaVuSans.ttf",
+    "bytes": 759720,
+    "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+  },
+  {
+    "path": "engine/licenses/DejaVuSans.txt",
+    "bytes": 3859,
+    "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+  },
+  {
+    "path": "engine/licenses/Judas.txt",
+    "bytes": 1079,
+    "sha256": "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d"
+  },
+  {
+    "path": "engine/third_party/RUNTIME_NOTICES.txt",
+    "bytes": 59157,
+    "sha256": "298b2be9c04894dddf24b6c337b7c31e110ec0b99a2f59b74967b9835d3f2536"
+  },
+  {
+    "path": "game-icon.png",
+    "bytes": 577211,
+    "sha256": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14"
+  },
+  {
+    "path": "game.judasproj",
+    "bytes": 2742,
+    "sha256": "16dc9311441aa6ddc7a075fe674f3147da9bcb14eaa87f2546235719bdffc132"
+  },
+  {
+    "path": "judas",
+    "bytes": 52441480,
+    "sha256": "65a1937f881b57dd70c792b332dc6fff653f4092a4e80dbba450d82367b28c50"
+  },
+  {
+    "path": "judas-package.txt",
+    "bytes": 115,
+    "sha256": "ba4e8117347e0d48085c65da4d7fa2a2e8a2b066b445f3eb339da89efe6303e2"
+  }
+]

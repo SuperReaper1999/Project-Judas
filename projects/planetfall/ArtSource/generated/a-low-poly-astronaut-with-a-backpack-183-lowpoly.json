@@ -1,0 +1,45 @@
+{
+  "prompt": "a low poly astronaut with a backpack",
+  "category": "person",
+  "confidence": 1.0,
+  "params": {
+    "features": {
+      "backpack": true
+    },
+    "size": 1.0,
+    "style": "lowpoly",
+    "type": "astronaut",
+    "count": 1,
+    "pose": null
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "type",
+      "text": "astronaut"
+    },
+    {
+      "slot": "feature",
+      "text": "a backpack"
+    }
+  ],
+  "seed": 183,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-astronaut-with-a-backpack-183-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 2419,
+    "triangles": 3692,
+    "groups": 1
+  },
+  "dimensions_m": [
+    0.59,
+    1.81,
+    0.42
+  ],
+  "seconds": 0.03
+}

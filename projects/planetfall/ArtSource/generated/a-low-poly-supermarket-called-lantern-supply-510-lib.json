@@ -1,0 +1,39 @@
+{
+  "prompt": "a low poly supermarket called Lantern Supply",
+  "category": "library",
+  "confidence": 1.0,
+  "params": {
+    "asset": "market_stall",
+    "count": 1,
+    "size": 1.0,
+    "color": null,
+    "style": "lowpoly"
+  },
+  "understood": [
+    {
+      "slot": "asset",
+      "text": "market_stall (low_poly_starter, low poly shop)"
+    }
+  ],
+  "seed": 510,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-supermarket-called-lantern-supply-510-lib.glb"
+  },
+  "stats": {
+    "vertices": 3360,
+    "triangles": 1660,
+    "groups": 61
+  },
+  "asset": {
+    "id": "low_poly_starter/market_stall",
+    "description": "2.50 m wide market stall; canopy bounds X=+/-1.25 m, Y=-0.90..0.80 m, highest Z=2.46 m. Centre ground pivot. Counter top Z=1.04 m faces -Y; striped solid canopy, framed timber counter, two shallow produce baskets and original faceted fruit.",
+    "pack": "low_poly_starter"
+  },
+  "dimensions_m": [
+    2.5,
+    2.46,
+    1.7
+  ],
+  "seconds": 0.01
+}

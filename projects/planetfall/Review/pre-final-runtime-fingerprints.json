@@ -1,0 +1,1306 @@
+[
+  {
+    "path": "Assets/AUDIO_PROVENANCE.txt",
+    "sha256": "2e2b36d35bad72a8bca4c3f91db10865278865cea7902d73bad29021304c929f"
+  },
+  {
+    "path": "Assets/STARTER_PACK_PROVENANCE.md",
+    "sha256": "1b34e2268562e258d54124baee4afe500f5d3fb1a7c8789ca6a314d8a6265723"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judascollision",
+    "sha256": "9f2a10d08c0e0383c62bb5675460553400cf34d23a6a9a15ae996dfa4babda0f"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judascollision.judasmeta",
+    "sha256": "4597fc6cc12e41639bfad3cabe93a0aa0e082effbcff82eed62edc7e4f96cf1b"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judasmodel",
+    "sha256": "cd32832c423d6928f7f75eaf48eb88809ed7a66c656c48d701bc1a852d6003cd"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.judasmodel.judasmeta",
+    "sha256": "7b72a37c2c75d5fefcd19830db01fb11ed61eb90b0536514678d2d073e9e394f"
+  },
+  {
+    "path": "Assets/Volumes/cave/volume.receipt.json",
+    "sha256": "17655cd9a0bca3b60c3e5dc35548ee0b80f3aa718b7ee4cf9cd55f93e870b8d3"
+  },
+  {
+    "path": "Assets/audio/empty_click.wav",
+    "sha256": "246e6106adb201e80c88ffdc3b4b226e7c2bfa14389e3facdaf051d1881796e0"
+  },
+  {
+    "path": "Assets/audio/empty_click.wav.judasmeta",
+    "sha256": "33cb45fe86afc29534587626f5e3d8459ab57a3d7eec5c804e6d6e99aae2c3b5"
+  },
+  {
+    "path": "Assets/audio/explosion.wav",
+    "sha256": "d0affbfa764714b41b4b7b0fa353e6a9e876c85a4cd468fc47673b9a90403ee4"
+  },
+  {
+    "path": "Assets/audio/explosion.wav.judasmeta",
+    "sha256": "1a58ca3e558dcd76d16c10f292a163f23af8c6c4c55034cfcaf1f92c8146c75b"
+  },
+  {
+    "path": "Assets/audio/impact.wav",
+    "sha256": "e2a9c7b3b9ad7da025554afdabdab508d94ad612d046a52427dc4aec8722d7c3"
+  },
+  {
+    "path": "Assets/audio/impact.wav.judasmeta",
+    "sha256": "43de4f55b98e71f0631f74f5745142c4998fd734c0ffab572b925853219b4cc0"
+  },
+  {
+    "path": "Assets/audio/melee_thud.wav",
+    "sha256": "ad084c93c3be1880009b8570f85e98acdd781fc684d0569abbdfce1828d757f9"
+  },
+  {
+    "path": "Assets/audio/melee_thud.wav.judasmeta",
+    "sha256": "fb235d793be60d34e5f1a099a538e92275f0ed1c41f2dfc6c71aa46b913b7997"
+  },
+  {
+    "path": "Assets/audio/reload_click.wav",
+    "sha256": "1f64c05c0d9f586d2d7cc92a0a49ca47c27ba4c215c387c999d6d3acfc70877f"
+  },
+  {
+    "path": "Assets/audio/reload_click.wav.judasmeta",
+    "sha256": "729397810336718bdb6f6add4209aead8b4a37d27dd0bb7e25eb6d9cffbca575"
+  },
+  {
+    "path": "Assets/audio/rifle_fire.wav",
+    "sha256": "6d37cb9237716aa7459e1bd88dafbd7e88802c2bb24b3b94e9bece212573b4a9"
+  },
+  {
+    "path": "Assets/audio/rifle_fire.wav.judasmeta",
+    "sha256": "1959e03c8ed56c7cf25c587e96447a9397362bc8c55865ef1e726b6735e44228"
+  },
+  {
+    "path": "Assets/audio/shot.wav",
+    "sha256": "822256c344afb6cbc66a424833d30039350a8ed95f3b8de0177c3edc04eb4a0d"
+  },
+  {
+    "path": "Assets/audio/shot.wav.judasmeta",
+    "sha256": "b62da784c9fc58b1ae3d78ee438c5a85a1db1b4d889bb1b987a03791293774f6"
+  },
+  {
+    "path": "Assets/deformables/bridge.judasdeform",
+    "sha256": "4851a102a00590e0879ae75637c8d697ec7d1750320864c827e866008984a2ed"
+  },
+  {
+    "path": "Assets/deformables/bridge.judasdeform.judasmeta",
+    "sha256": "c26060d7ae0dc50882f1724393e9064a1af0b853b54847d9d14e472b1d231d3c"
+  },
+  {
+    "path": "Assets/deformables/nominal.judasdeform",
+    "sha256": "6e55d958d75f6b767375526f016459336f04bc68d656ccae717a449797134fce"
+  },
+  {
+    "path": "Assets/deformables/nominal.judasdeform.judasmeta",
+    "sha256": "7749d647391d6a2ef8639f1a69e12cf8c033906f5944ae4c4519fea3bfee0e7f"
+  },
+  {
+    "path": "Assets/deformables/specimen.judasdeform",
+    "sha256": "ad3e1010d2ce31c50186d05ce3d936353888f53ca67ce30ee9a5c72a4cfd585c"
+  },
+  {
+    "path": "Assets/deformables/specimen.judasdeform.judasmeta",
+    "sha256": "9462334843b5467fe5c67a64877cfa92f3d18daba9df24f4fb07357a2e3f98fe"
+  },
+  {
+    "path": "Assets/deformables/specimen.source",
+    "sha256": "93ef3a40e61e2c780638ac38f5aa623a91243039bee1b11281fda1306a96f893"
+  },
+  {
+    "path": "Assets/deformables/strong.judasdeform",
+    "sha256": "01f98d07dde0c53cabbb7553d514f0c2b33f93dfdcf9e5f7a4af65bea1edf208"
+  },
+  {
+    "path": "Assets/deformables/strong.judasdeform.judasmeta",
+    "sha256": "2048a867b6c573dc9576c612f741fe52fcfe30f37e97fc7eb83c79a75751f27a"
+  },
+  {
+    "path": "Assets/deformables/weak.judasdeform",
+    "sha256": "97a01663e8ce6c9d0176b76e28a0f3c51244b4858371748cb948de94a3515b2e"
+  },
+  {
+    "path": "Assets/deformables/weak.judasdeform.judasmeta",
+    "sha256": "ff9b1dfe9ea5fc2c79ceac1b96d9d651743f7baae5aab7352cbf90f6bf1ab0e3"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSans.ttf",
+    "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSans.ttf.judasmeta",
+    "sha256": "1a4bc046b8392ad699ffe641abd3c6bf430e0db16a2fe1a8cba3dcecf2e548b5"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansCondensed-Bold.ttf",
+    "sha256": "5a3bb1f72d8861c272498b80f1fe075163b4ea37bb27dd9cdd7b985e59b0286e"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansCondensed-Bold.ttf.judasmeta",
+    "sha256": "2cfb6c6f7ed5a666205c9d8c925fdedcb2f56acf65841bff715b81ba5ffd0266"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansMono.ttf",
+    "sha256": "a54dca07c76d6289e717e75e0a58c0128f6d7269ef3faf76417c9d7d3bba37ab"
+  },
+  {
+    "path": "Assets/fonts/DejaVuSansMono.ttf.judasmeta",
+    "sha256": "e0563273c16a965926de62a92be777034cb2a11266b69e07be060bea83dc5398"
+  },
+  {
+    "path": "Assets/fonts/LICENSE.txt",
+    "sha256": "24e651498ac4c2e6ca80c8a3de05101f33aef9584fdff5035908100eb75fae51"
+  },
+  {
+    "path": "Assets/ids.json",
+    "sha256": "78a89d092bb72bdfd633d0963329357fb53955ba685b54a9774a2b9023aeab27"
+  },
+  {
+    "path": "Assets/materials/inner.judasmat",
+    "sha256": "4bd1bda679b58c1607495b64697cf30b46c7d98b046bcb1e6fc05c8172e45d5a"
+  },
+  {
+    "path": "Assets/materials/inner.judasmat.judasmeta",
+    "sha256": "b8ade549b7e3fbfa9712865bed57df8ad28dc86205ef6f8314fbf92dc74e9af6"
+  },
+  {
+    "path": "Assets/materials/outer.judasmat",
+    "sha256": "1f837857470b601099c532c6fdfac907211a52c528e27511e401964a60dd0873"
+  },
+  {
+    "path": "Assets/materials/outer.judasmat.judasmeta",
+    "sha256": "198ddb0193db67aa9e71de1cba212287a23dca6879f2264d605168003dc8634b"
+  },
+  {
+    "path": "Assets/models/aether.glb",
+    "sha256": "b4e4a4553ab31f45a95efe77e951a4131923f524805231c85cfcc04b149f2b51"
+  },
+  {
+    "path": "Assets/models/aether.glb.judasmeta",
+    "sha256": "c33d45b4f34be947f3f0227c338bda04f8785f753f52b1658ac171db345865b6"
+  },
+  {
+    "path": "Assets/models/astronaut.glb",
+    "sha256": "2e0c12355bfda521bcdb319b65c32ecb2841e3e8312d27f345494b4090bcd49a"
+  },
+  {
+    "path": "Assets/models/astronaut.glb.judasmeta",
+    "sha256": "ff96461cc91d9721b9de86092df7a23a2eda727ecc8c15b5cbcd78171a8c6a77"
+  },
+  {
+    "path": "Assets/models/barrel.glb",
+    "sha256": "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8"
+  },
+  {
+    "path": "Assets/models/barrel.glb.judasmeta",
+    "sha256": "d274d0f576cb058f28a584f58d06aecfddbefe383dd946cea76e1f21a9f6511c"
+  },
+  {
+    "path": "Assets/models/bed.glb",
+    "sha256": "2f475c54c697a28e3f2542e1677bb4523cfdb86eec8ccf671a10c26efc6050ef"
+  },
+  {
+    "path": "Assets/models/bed.glb.judasmeta",
+    "sha256": "fb7370874f28a4e2247bc56460980a87a44f8c0e55ff6e8f2b684a1a0ff1e8c2"
+  },
+  {
+    "path": "Assets/models/bench.glb",
+    "sha256": "5b8892253e9cbc57c6a2b430d9070fbb76aaa2c2b522fd3f6b8e04528455a962"
+  },
+  {
+    "path": "Assets/models/bench.glb.judasmeta",
+    "sha256": "824ae7858ee1bf0c48c172c474b13c4dfccaaf88ec7ac519e0f97310ce43dd00"
+  },
+  {
+    "path": "Assets/models/bookshelf.glb",
+    "sha256": "0f3f62dc89488a6b14cc8ce274fd3943a353384195c875ef21672daf7cd3ea72"
+  },
+  {
+    "path": "Assets/models/bookshelf.glb.judasmeta",
+    "sha256": "e318db3ce7fd32a223a5bf736e30b802f94390ef2b6c1344176d4f7e7aaade62"
+  },
+  {
+    "path": "Assets/models/broadleaf_tree.glb",
+    "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b"
+  },
+  {
+    "path": "Assets/models/broadleaf_tree.glb.judasmeta",
+    "sha256": "38937a6bf9bd0f7301266cea076d1dd4e8c69db405af36013deae04d406e7fec"
+  },
+  {
+    "path": "Assets/models/bus_stop_shelter.glb",
+    "sha256": "908c647146bef0a4aeefd4827ff4f63118297c80a4193c9f6e8959836e3b5246"
+  },
+  {
+    "path": "Assets/models/bus_stop_shelter.glb.judasmeta",
+    "sha256": "b1400cea7c9df2ae43af6ec6c063176979ff317a01efce04c0f37b825066964a"
+  },
+  {
+    "path": "Assets/models/chair.glb",
+    "sha256": "a3d36c982d079fe55b691ce8fba82c8ffc4b6fbfe88e881741ca4cf502757333"
+  },
+  {
+    "path": "Assets/models/chair.glb.judasmeta",
+    "sha256": "eb97283bb4df5af29f4eedd1f53efd26b18637a55aaae67aa9e186db4a61ab77"
+  },
+  {
+    "path": "Assets/models/character_adventurer.glb",
+    "sha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3"
+  },
+  {
+    "path": "Assets/models/character_adventurer.glb.judasmeta",
+    "sha256": "3fca8cd71bc8faa49037d5295b4a0a604e92c4ab38a6e5caddd52e66b097f0b3"
+  },
+  {
+    "path": "Assets/models/character_fighter.glb",
+    "sha256": "40542fbc7e6236978090e52d5371d023a619438d0f42c9faa501a68417f78b08"
+  },
+  {
+    "path": "Assets/models/character_fighter.glb.judasmeta",
+    "sha256": "51eface4517d86dea4e4798800d402a7aafb9ccca778ec60640e0913e1117782"
+  },
+  {
+    "path": "Assets/models/character_soldier.glb",
+    "sha256": "47a86a3b354102bd2bdd4be7e2b19401c429d70ef353647143555fb9f526c1dc"
+  },
+  {
+    "path": "Assets/models/character_soldier.glb.judasmeta",
+    "sha256": "09cfae873933d0d53368936c2d1283c0914f6031fabc3fa586af1a034de87d3f"
+  },
+  {
+    "path": "Assets/models/character_zombie.glb",
+    "sha256": "77d22d71722efc3ff5241f5ac0e07ca84b75e02f68084caa2540d2678ec3fd7f"
+  },
+  {
+    "path": "Assets/models/character_zombie.glb.judasmeta",
+    "sha256": "68f2534c1ac92e84c4e31c2a4076e1be68b9ecbe1fb385fc94fe266383e2c37b"
+  },
+  {
+    "path": "Assets/models/cloth_laundry_line.glb",
+    "sha256": "ec72922fdd787fb0ed0beefe63789f515f0d41efab777af4416ff0478733a2d2"
+  },
+  {
+    "path": "Assets/models/cloth_laundry_line.glb.judasmeta",
+    "sha256": "cc41719f21e8fdfac400c66c0ed87185c2ee5990477007f38d3de697876b6a52"
+  },
+  {
+    "path": "Assets/models/cloth_market_canopy.glb",
+    "sha256": "1c3b671ecbbeae54ff49e7d1acf797a28583c95d174fbfa8f47784a0b0aacc56"
+  },
+  {
+    "path": "Assets/models/cloth_market_canopy.glb.judasmeta",
+    "sha256": "4ca63b2d32c318503840e34acf305e3a0aea2a15ed35f09c583121ac696eedb2"
+  },
+  {
+    "path": "Assets/models/computer_terminal.glb",
+    "sha256": "fa5ab43b6fc631197015d9c7c09068f60123457501d2a6066a9053daba619a65"
+  },
+  {
+    "path": "Assets/models/computer_terminal.glb.judasmeta",
+    "sha256": "38be53ded86c8f7367fb82132fbff7f7e5ec1ad8c0be5f6294fa7e22802e3ac7"
+  },
+  {
+    "path": "Assets/models/conner_player.glb",
+    "sha256": "9c8df72f901aafc7af9afb25e3a236d21712fa30cbc435e45aa0b0a68b1d2c98"
+  },
+  {
+    "path": "Assets/models/conner_player.glb.judasmeta",
+    "sha256": "4b376c9e84c41e4a2c4059b739ef68b42227b0bff21d28834672437c6bd71afe"
+  },
+  {
+    "path": "Assets/models/crash_wheel.obj",
+    "sha256": "20aa6073cc317dfe385d0f923a612f6882e93a83152dd213e6e6f16bc1d937a9"
+  },
+  {
+    "path": "Assets/models/crash_wheel.obj.judasmeta",
+    "sha256": "fd6a854692b7fa866f635c7d411a2a0c1b2e079fca5258c40aaed17404237e23"
+  },
+  {
+    "path": "Assets/models/derelict_scenery.glb",
+    "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584"
+  },
+  {
+    "path": "Assets/models/derelict_scenery.glb.judasmeta",
+    "sha256": "9d712117d086dfb92b2150104cc366f06791269ffd030dd6d655300508c3c778"
+  },
+  {
+    "path": "Assets/models/derelict_surface.glb",
+    "sha256": "6929696fccb32f5bf6564ce4ea8c8d84e7d57991035ce7ab46b989cd75878994"
+  },
+  {
+    "path": "Assets/models/derelict_surface.glb.judasmeta",
+    "sha256": "3d127ca078262beb7787400fcd9b69a0280e5904ae428de610dccce7c1f16935"
+  },
+  {
+    "path": "Assets/models/derelict_surface.judascollision",
+    "sha256": "94e865abfa03aaa07b0a19b11a850594da99534cf3fe162d112f3fb79ad8da45"
+  },
+  {
+    "path": "Assets/models/derelict_surface.judascollision.cleanup.json",
+    "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565"
+  },
+  {
+    "path": "Assets/models/derelict_surface.judascollision.judasmeta",
+    "sha256": "adc7aa0a8e623c31c1a2de0995637c4656a9c24bbce9a211900012346cbc9630"
+  },
+  {
+    "path": "Assets/models/derelict_surface.judascollision.report.json",
+    "sha256": "c97e6ab574b5580e231a7b5858136f97d1ab2512cc12c33898444d69554f99bf"
+  },
+  {
+    "path": "Assets/models/door.glb",
+    "sha256": "cf8b30a7c5aef8059978e6277035572eba39c1bec1e3077f2c3132559fbb7f99"
+  },
+  {
+    "path": "Assets/models/door.glb.judasmeta",
+    "sha256": "199fc435b53cf288c06f315ea6a7a432f4f0b718673d0cfc5c429afd7b70d032"
+  },
+  {
+    "path": "Assets/models/dumpster.glb",
+    "sha256": "1ea20edec99a341136f17e48d180489e281d4510ffe90f76b6ee9ab956e4988f"
+  },
+  {
+    "path": "Assets/models/dumpster.glb.judasmeta",
+    "sha256": "60fbbb20c0c22a80ade7f5b3b865084208d2ad95f8805110788ad3261b8a8941"
+  },
+  {
+    "path": "Assets/models/earth-frontier_scenery.glb",
+    "sha256": "4a3427172d933f6a85e3aa1930c4359f993c7c8798ee0c03a7a5831bfc36eaca"
+  },
+  {
+    "path": "Assets/models/earth-frontier_scenery.glb.judasmeta",
+    "sha256": "014d833fbb3cefe3eadcb5f2edbc2dda2e0fe04052456c0c060dc47b73c10f40"
+  },
+  {
+    "path": "Assets/models/earth_scenery.glb",
+    "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584"
+  },
+  {
+    "path": "Assets/models/earth_scenery.glb.judasmeta",
+    "sha256": "fd36e9b8732f5f16030624d59ef1b2b82669deb30a4c9e30660e85e8acf2b425"
+  },
+  {
+    "path": "Assets/models/earth_surface.glb",
+    "sha256": "ec7d28705b61c83f25d661fe1c82a1f0da88977451cba75ce285e5c0d9f219d8"
+  },
+  {
+    "path": "Assets/models/earth_surface.glb.judasmeta",
+    "sha256": "91fa350355c0433ad825721af27d22a4828bc54bdc96f6ab1d36660c66c78d11"
+  },
+  {
+    "path": "Assets/models/earth_surface.judascollision",
+    "sha256": "7444217a664eb5960fd899dfb157d7bdbd314964ad2ae3bc296ecf064614ee43"
+  },
+  {
+    "path": "Assets/models/earth_surface.judascollision.cleanup.json",
+    "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565"
+  },
+  {
+    "path": "Assets/models/earth_surface.judascollision.judasmeta",
+    "sha256": "c519b65e89ceb211b460bd6afda935faea5bb8600672abcb6316fbf049cd0478"
+  },
+  {
+    "path": "Assets/models/earth_surface.judascollision.report.json",
+    "sha256": "e5282ae196f16dab9147716dfa77c29a0fd9bb824e452f3ebbfccd9977e5e749"
+  },
+  {
+    "path": "Assets/models/fire_hydrant.glb",
+    "sha256": "3f996932d2e4a10ccc4f41df65266b5f7d5b135cb5fdae2b141ffab21d6b75f5"
+  },
+  {
+    "path": "Assets/models/fire_hydrant.glb.judasmeta",
+    "sha256": "747ade3a53ffe2eed961c506a688ab43f2414b1b806c36ce74990fa93eba84b0"
+  },
+  {
+    "path": "Assets/models/fist_forearm.glb",
+    "sha256": "6cdf05c7c66a354bd394beaf0d61c045f759cbcc5e6aaca742089a68adc56c8e"
+  },
+  {
+    "path": "Assets/models/fist_forearm.glb.judasmeta",
+    "sha256": "67767ccd60a399e9d147bbed13ac6e0de79c4ebd180a28d9e1f4adf2f888e2e0"
+  },
+  {
+    "path": "Assets/models/frontier_house.glb",
+    "sha256": "5abd68534cbe06909fc49c6616d1f94e22158d11c60a67fbd1cd52b79f8f0b15"
+  },
+  {
+    "path": "Assets/models/frontier_house.glb.judasmeta",
+    "sha256": "c8afda5fa42530cc7161d29761f26a9a47780c8ddfa2c3ccde5ea383e6fe6abd"
+  },
+  {
+    "path": "Assets/models/frontier_house.judascollision.report.json",
+    "sha256": "9084d188fa3f7354e7db992029e03be65ad19813bfbbd42b35a9defd906fe4a2"
+  },
+  {
+    "path": "Assets/models/frontier_house.judasmodel",
+    "sha256": "a160b35c88f55c97065c6f2fcc6bc693243c9d5c9586f4ad6768d50bbbb5eec0"
+  },
+  {
+    "path": "Assets/models/frontier_house.judasmodel.import-report.json",
+    "sha256": "3a6b91a64ef1037afbdbac23914107a9c459223d40dbb452b9e3ed36f65787e0"
+  },
+  {
+    "path": "Assets/models/frontier_house.judasmodel.judasmeta",
+    "sha256": "ffcedd71e70c75fb467a19a4de2d0a3b4c5bca568c11d0ac971f485584459f19"
+  },
+  {
+    "path": "Assets/models/generated_oak.glb",
+    "sha256": "e3bdccde848aaedd611e17f1360049d60276325839b75997527aed964f53dc6b"
+  },
+  {
+    "path": "Assets/models/generated_oak.glb.judasmeta",
+    "sha256": "9ed224c79426223bd17931f9e3b67d71e0d6df6c3184f308e4812b9c81762feb"
+  },
+  {
+    "path": "Assets/models/generated_pine.glb",
+    "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589"
+  },
+  {
+    "path": "Assets/models/generated_pine.glb.judasmeta",
+    "sha256": "b00cdb6af03d76c07c12e7233463b77bd3e9981471a9317e10a8ffa565c191a2"
+  },
+  {
+    "path": "Assets/models/grenade.glb",
+    "sha256": "296d5432944f28db4da9dc2c63f4e11a0a118548ae3559e7483dc3e4cb0813b2"
+  },
+  {
+    "path": "Assets/models/grenade.glb.judasmeta",
+    "sha256": "5f8254426ecae87a70b41477107ff720f21f65fb94b15b455699cad49c2b184d"
+  },
+  {
+    "path": "Assets/models/ladder.glb",
+    "sha256": "4755426638588c07050bbefe4e85c5bdfc20bd422eff936d1306f022a0107ba8"
+  },
+  {
+    "path": "Assets/models/ladder.glb.judasmeta",
+    "sha256": "542c5e7a113fa0581cdae83f6b0cae0aa4e75cf40a38a341bbcb476cd9856974"
+  },
+  {
+    "path": "Assets/models/mars_scenery.glb",
+    "sha256": "df3f1dc75d2abddcd1747ede084ad9cf23f0da11861260f72c374babcf177584"
+  },
+  {
+    "path": "Assets/models/mars_scenery.glb.judasmeta",
+    "sha256": "6da140a4a780e52d99801fcbc3125f6d9c905ed4f1a05f7bb23b386d5c311147"
+  },
+  {
+    "path": "Assets/models/mars_surface.glb",
+    "sha256": "bdb69c73218e8c5bbae88bc39a080648bdafc2440d7b7c766fc1c7946e98f2d5"
+  },
+  {
+    "path": "Assets/models/mars_surface.glb.judasmeta",
+    "sha256": "b577662869a5b2021bb9bd2768c8f4df5deb73c0a614160b1c67e589ac021488"
+  },
+  {
+    "path": "Assets/models/mars_surface.judascollision",
+    "sha256": "63ca11b0834c4fd115404bf004280ebcc93e7e4e7e79089a6253c0e8d292b75a"
+  },
+  {
+    "path": "Assets/models/mars_surface.judascollision.cleanup.json",
+    "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565"
+  },
+  {
+    "path": "Assets/models/mars_surface.judascollision.judasmeta",
+    "sha256": "4148b5203b9ed23fbdcc6c51ef7447171c50967c5744b938950a6082eaddd346"
+  },
+  {
+    "path": "Assets/models/mars_surface.judascollision.report.json",
+    "sha256": "40f53be12b48dd691d5d42c2b2ddca525b67b1e0b99a5b4fac09c92c5a9564a7"
+  },
+  {
+    "path": "Assets/models/metal_crate.glb",
+    "sha256": "f87ffe0b8f60798fe4600c9f0fb779df99c9d67a612e3fafb1a06909cb2b1ea4"
+  },
+  {
+    "path": "Assets/models/metal_crate.glb.judasmeta",
+    "sha256": "b2e986a173c403e4f9826580dc2c139ae5cab619e19ea07e0101850414e24f0f"
+  },
+  {
+    "path": "Assets/models/moon_scenery.glb",
+    "sha256": "438e5afacf76495f6d66466d38195c4744990c901364646b03c335d78381b678"
+  },
+  {
+    "path": "Assets/models/moon_scenery.glb.judasmeta",
+    "sha256": "63512ed1d2495597a6de9cf3adcf3ecc7083a32ca78e700660a1a116a4736bcf"
+  },
+  {
+    "path": "Assets/models/moon_surface.glb",
+    "sha256": "d54a6689b5ef84a95bd595e885356dc5cd1c25d19ea882355adb69a24b804435"
+  },
+  {
+    "path": "Assets/models/moon_surface.glb.judasmeta",
+    "sha256": "b561c3b83daff1d979d4c4bbe53eebcaac73458e6b26d59b930819965a1cb30a"
+  },
+  {
+    "path": "Assets/models/moon_surface.judascollision",
+    "sha256": "97adf8338e5a23e27296d19e99265308348f910632370dc9ac742233a3821a69"
+  },
+  {
+    "path": "Assets/models/moon_surface.judascollision.cleanup.json",
+    "sha256": "3b615adbcd973acab26b8ab21cde7f8b8410ccd61c7c1726cf0002c1606d8565"
+  },
+  {
+    "path": "Assets/models/moon_surface.judascollision.judasmeta",
+    "sha256": "555aa155840c2a7a954aff4865ae11b96ebc278223dd74abf92cbd3cd45df106"
+  },
+  {
+    "path": "Assets/models/moon_surface.judascollision.report.json",
+    "sha256": "64db4d1624297921a5380420b7dad89c0f37c00a4f5692cab52d32d362817233"
+  },
+  {
+    "path": "Assets/models/pilot_seated.glb",
+    "sha256": "2224e0daf0f9e772a1e7dea558a5e24dfa4a8d44e686c68d523ea6b23f2b8b2c"
+  },
+  {
+    "path": "Assets/models/pilot_seated.glb.judasmeta",
+    "sha256": "b62616787cb0296caf7628e36ae1277587b34c5bb3cd3a927f6d8f7b49c79363"
+  },
+  {
+    "path": "Assets/models/pine_tree.glb",
+    "sha256": "6be51cbfcb7f00edec43504ce36bc89b754f7bc363fb89645a12f00c5e777589"
+  },
+  {
+    "path": "Assets/models/pine_tree.glb.judasmeta",
+    "sha256": "3f9f174093cb71a667ca6462b8f1cb0e1f0e8aedf627e0febde026337735bfe3"
+  },
+  {
+    "path": "Assets/models/pirate.glb",
+    "sha256": "3ee5bbbd7401cce717580f005e18b2bfc170919b515821119ba25127aac59c9e"
+  },
+  {
+    "path": "Assets/models/pirate.glb.judasmeta",
+    "sha256": "fe9875e5acaf2a6285ef14828e7db8f6c6749941bc7aec94c3dd74c2f724b89c"
+  },
+  {
+    "path": "Assets/models/planter.glb",
+    "sha256": "e63e5786c64fd41e63ed5be148f2eea79227375e412a2f28a18492c7c9c72054"
+  },
+  {
+    "path": "Assets/models/planter.glb.judasmeta",
+    "sha256": "a7ea4c47ef08f6cd1798abd5099b6c0fabf3d1c279fc28c1dbc554bf025fc228"
+  },
+  {
+    "path": "Assets/models/produce_crate.glb",
+    "sha256": "213b2495b123761f8698058483d668e25784bea6428dbf3bcfbabf610bb0eeb1"
+  },
+  {
+    "path": "Assets/models/produce_crate.glb.judasmeta",
+    "sha256": "f82c32e8b22a6caeda7c5665de384b2cc66cd258fcefd4aa661aa9be5d1fe0ef"
+  },
+  {
+    "path": "Assets/models/relay_rocket.glb",
+    "sha256": "2ea62dd55cf62d3748a29f7879cc6aa50ca3e44502244dbd1436575b063baff1"
+  },
+  {
+    "path": "Assets/models/relay_rocket.glb.judasmeta",
+    "sha256": "6c9f72fbdea159b99b2601b7f9fd0841a1a3fdaeab2b8704eb796a476cc5bc94"
+  },
+  {
+    "path": "Assets/models/research_tower.glb",
+    "sha256": "0aea526a0a819404d2fcfc732c32350101b742f8ca188785f410bdee6a9088be"
+  },
+  {
+    "path": "Assets/models/research_tower.glb.judasmeta",
+    "sha256": "2fa61a8b0e5c2d870a0b664b9968d179622bf56c0cce1c4e440f3f93617e2bcf"
+  },
+  {
+    "path": "Assets/models/road_barrier.glb",
+    "sha256": "b923ea6047d699b42c988b8885c9061603c407dd68b7bab4976fe48aff538e8f"
+  },
+  {
+    "path": "Assets/models/road_barrier.glb.judasmeta",
+    "sha256": "08cda00f85c50249d811001986415d12b5c032c45fd2a24efdce3dcc7cfd4216"
+  },
+  {
+    "path": "Assets/models/rocket.glb",
+    "sha256": "4c43ebf57c9547403d3740a85f90ab1d07642a97ef32f00476f737475797f200"
+  },
+  {
+    "path": "Assets/models/rocket.glb.judasmeta",
+    "sha256": "16885702e180f779698d998d0b6ed8f1b31b7f7f665d911a15017fa1d15df81b"
+  },
+  {
+    "path": "Assets/models/rocket_launcher.glb",
+    "sha256": "b950da78a0b6aa97576297fdd6bb4e4cb14b6809d736e0658bab454d7db7c7e0"
+  },
+  {
+    "path": "Assets/models/rocket_launcher.glb.judasmeta",
+    "sha256": "e8fd1149b8172b7d769d3b846adcf684c848af3d24c0c5f0eff1a39b01fcd9e4"
+  },
+  {
+    "path": "Assets/models/rover_body.glb",
+    "sha256": "8b49047c4633e5ee9c11c1ce9f6f8628bb20de6952ec69f46b96ffe04b510b7e"
+  },
+  {
+    "path": "Assets/models/rover_body.glb.judasmeta",
+    "sha256": "60432547780fb7081b5da8e75c95fe95955e84cd35ab7d6baf5ec815bf505f40"
+  },
+  {
+    "path": "Assets/models/rover_shell.glb",
+    "sha256": "5c11e9eb78991e19e24e5785ea56b72a9bd7b63981a388d437ad30ce29cc1b1f"
+  },
+  {
+    "path": "Assets/models/rover_shell.glb.judasmeta",
+    "sha256": "fa5b1d2e3c62ff3a390a0841ef9514abb8e5b774d5de79f48f2c0fdfc4452b09"
+  },
+  {
+    "path": "Assets/models/salvage-rover_scenery.glb",
+    "sha256": "565ec90a732088e753c497db8c422a7eb3d3aa4deeed4bd361a0789075428519"
+  },
+  {
+    "path": "Assets/models/salvage-rover_scenery.glb.judasmeta",
+    "sha256": "4f9e9b84cb6524bdc83a4d7c756aa944c167cfb344bab93a3bd228f7e41baa7e"
+  },
+  {
+    "path": "Assets/models/shopfront_small.glb",
+    "sha256": "664f9641a283abc23196fb5b5b8faa353bca6aae19685e5657bbcd59f25fd72a"
+  },
+  {
+    "path": "Assets/models/shopfront_small.glb.judasmeta",
+    "sha256": "f86b8a7b789f1b5e88169aa8b097df714e56e75f4062d922febfc53070d6a8fb"
+  },
+  {
+    "path": "Assets/models/stairs_5step.glb",
+    "sha256": "648066d8a56fe2a00d4c49835cf32683c1cf7c5951e7bf99c9f0158d415001e3"
+  },
+  {
+    "path": "Assets/models/stairs_5step.glb.judasmeta",
+    "sha256": "39883d2a3c87546e6511ea9fb5b4059f1943dec5eb398bf4802266cf87ce17fa"
+  },
+  {
+    "path": "Assets/models/stone_road.glb",
+    "sha256": "60328ea8e865ced934f6db51c23a4c09748ea316f7cc2ba803f511c22a90fd17"
+  },
+  {
+    "path": "Assets/models/stone_road.glb.judasmeta",
+    "sha256": "581c094d8cebab5265acf45f2b1e469b775656319b80e6877db9250d3306bbc9"
+  },
+  {
+    "path": "Assets/models/stone_stairs.glb",
+    "sha256": "22c14d97e8de0db003629c5923d50eaab204ec1e7cf630c862fa6e8548cb4223"
+  },
+  {
+    "path": "Assets/models/stone_stairs.glb.judasmeta",
+    "sha256": "2ecd6a078a0e82aada61f67a5037d1535e9b7a88335f4bb323d0c69fc4878f07"
+  },
+  {
+    "path": "Assets/models/street_lamp.glb",
+    "sha256": "f474135a6510ce8feb13c4b11074222769252be6e150f54fc6b2c05a4309adb7"
+  },
+  {
+    "path": "Assets/models/street_lamp.glb.judasmeta",
+    "sha256": "9c3ac00b284696193ea8183f8cd91c165d4464f01f71e96f641c6ded53b6b39a"
+  },
+  {
+    "path": "Assets/models/supply_shop.glb",
+    "sha256": "39d6b04a2e02425fdbeac3ba0f7937b091817544c99f4719687b98b4c6d099fc"
+  },
+  {
+    "path": "Assets/models/supply_shop.glb.judasmeta",
+    "sha256": "d24294f9d493eb3382dee3c087ea5700752f2c55715875ec7abdb5d3a76f70bd"
+  },
+  {
+    "path": "Assets/models/table.glb",
+    "sha256": "96af6eba068756abf6a0f5aada1d1c3a9126d23ff43403326414d744b5e83551"
+  },
+  {
+    "path": "Assets/models/table.glb.judasmeta",
+    "sha256": "20f4f50d8459b82f856fd47b132262adb3cfe1d8d237f250191382e7c56de8f3"
+  },
+  {
+    "path": "Assets/models/traffic_cone.glb",
+    "sha256": "271b5061e33b60becd20b21425596f3f4b8049a62ecb481adb5c4235d6a72efb"
+  },
+  {
+    "path": "Assets/models/traffic_cone.glb.judasmeta",
+    "sha256": "2ab8c4c2b0b1a74bf0bf442e89c90b4b00ab14c75d01d67904916e0fe9b2edb0"
+  },
+  {
+    "path": "Assets/models/trash_bin.glb",
+    "sha256": "47ebb70b78757584be74d6bf49b1e93923dd5a1ac4ab504251f38aa55396c4d5"
+  },
+  {
+    "path": "Assets/models/trash_bin.glb.judasmeta",
+    "sha256": "ab6b14a761d83d327f49040c130cd8418f79e3154fdaa18a8b91c07cb53d6a96"
+  },
+  {
+    "path": "Assets/models/utility_box.glb",
+    "sha256": "cac78cf0e7e71f1995b9b72dd5ae908f10de7b5463055969a19796f8a95876be"
+  },
+  {
+    "path": "Assets/models/utility_box.glb.judasmeta",
+    "sha256": "922ae9b2b449927bcd0414084175c9116f224822ccc344630e70a55fadf8d0d3"
+  },
+  {
+    "path": "Assets/models/weapon_compact_rifle.glb",
+    "sha256": "bb4f2855009ea83ea28a8a5e9e35c81d03c8bfb96fea9bdb343f5feb0f7b7357"
+  },
+  {
+    "path": "Assets/models/weapon_compact_rifle.glb.judasmeta",
+    "sha256": "f63503cfcac0265ada6abdf6bcf4958caebebe496760c1ac2b723b50a240447c"
+  },
+  {
+    "path": "Assets/models/wheel.obj",
+    "sha256": "9185b8b54847303a1b313bd762bbdc37fe625a0c1d60948d9ff115dae87ca63e"
+  },
+  {
+    "path": "Assets/models/wheel.obj.judasmeta",
+    "sha256": "663c120570dbfa5cf02efefba9571a80291df9a5378fe73b1fec22037a0d9579"
+  },
+  {
+    "path": "Assets/models/windmill.glb",
+    "sha256": "14fe019c6115f29061aaf9daba8a9b360dcb3a68d5d3a200d6c552fd95155388"
+  },
+  {
+    "path": "Assets/models/windmill.glb.judasmeta",
+    "sha256": "15a487af7dfb705a81c915a3bc247c34160a9d448268dad9faaf1fd69a2a207f"
+  },
+  {
+    "path": "Assets/models/wood_crate.glb",
+    "sha256": "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539"
+  },
+  {
+    "path": "Assets/models/wood_crate.glb.judasmeta",
+    "sha256": "a3955295302c1bdbe950e270300a2f28555c215edf20c65b4c65b84e42f6dbad"
+  },
+  {
+    "path": "Assets/models/wood_railing.glb",
+    "sha256": "ba1fed2a22c8b80ab9388d64492bf33e127009d575e60d70c7ad2c9b570771db"
+  },
+  {
+    "path": "Assets/models/wood_railing.glb.judasmeta",
+    "sha256": "61925a6e4ae5f6886a465ffc3b1bf9a21d429e73975d535a2c3b48310500f7d3"
+  },
+  {
+    "path": "Assets/models/zombie_animation.glb",
+    "sha256": "9725982d7799f75d84e4988c9713b55f7a5564f68e519081859d9fcae0e7a22b"
+  },
+  {
+    "path": "Assets/models/zombie_animation.glb.judasmeta",
+    "sha256": "e17520bb505f8539e5459d69a724205dc8e0126c28e1e39fa2f1f78b9e2bc9b7"
+  },
+  {
+    "path": "Assets/navigation/rebake-0bcdc47ed5ffd8d539b25e68648dc0a1.judasnav",
+    "sha256": "0a354d65fa6cf5b568162a517dda574567829ad02e3fbf9015ed39d68aeaf73d"
+  },
+  {
+    "path": "Assets/navigation/rebake-0bcdc47ed5ffd8d539b25e68648dc0a1.judasnav.judasmeta",
+    "sha256": "5411f42b350df31b1862ebbbbe79ea3977e634e554af4b30b80592d9a60f85b2"
+  },
+  {
+    "path": "Assets/navigation/rebake-521ced6a575becbaf537e09dc7325dc6.judasnav",
+    "sha256": "e66a18369d2ec8908022bb0cc0808e9ad8e7c54d6e6fc1e13750d438f4a8bf21"
+  },
+  {
+    "path": "Assets/navigation/rebake-521ced6a575becbaf537e09dc7325dc6.judasnav.judasmeta",
+    "sha256": "546ec7a5d6d4b7b9d74981c6486f13b1784e1e1b88faa9e537ad796071cc100d"
+  },
+  {
+    "path": "Assets/navigation/rebake-588c2ab44d8549fe470a5edbdf4acfdb.judasnav",
+    "sha256": "7eb2dd823d736c72109b7708fabffd0f1247d5248cf53162f1c42dcd34a20c85"
+  },
+  {
+    "path": "Assets/navigation/rebake-588c2ab44d8549fe470a5edbdf4acfdb.judasnav.judasmeta",
+    "sha256": "7085f7641f3a669f87d103fae92551610be8a262cee4844bb01b38a8b4cb2d51"
+  },
+  {
+    "path": "Assets/navigation/rebake-61e36ff99c5173f764e4737a863a00b4.judasnav",
+    "sha256": "b6ba4b55ced2de663ef7ddbe88b2c524af2923801df893e9120422b4fc26f414"
+  },
+  {
+    "path": "Assets/navigation/rebake-61e36ff99c5173f764e4737a863a00b4.judasnav.judasmeta",
+    "sha256": "0dc2c738f0d4367ad141c870275350c5afd010abc8f0d4c59925e77051dafc54"
+  },
+  {
+    "path": "Assets/navigation/rebake-a3b06894d0c8feabe58da8859d223677.judasnav",
+    "sha256": "025bfb51b2c215dc91ec8ca1e9d3bd98f76fd85602a4019bcf91cb8b4b656b9a"
+  },
+  {
+    "path": "Assets/navigation/rebake-a3b06894d0c8feabe58da8859d223677.judasnav.judasmeta",
+    "sha256": "6aeb7c6421d9b0eb051bf3b438f5d430086858d7e0579a437ce1fbc5a69cfd8e"
+  },
+  {
+    "path": "Assets/navigation/rebake-bd57c154ffe65ae1820fb79e8b6ee7e0.judasnav",
+    "sha256": "9772b7dea069a8765556f4294ef169ef36ff4e92512d746d71f5b435b7b566f6"
+  },
+  {
+    "path": "Assets/navigation/rebake-bd57c154ffe65ae1820fb79e8b6ee7e0.judasnav.judasmeta",
+    "sha256": "31ecb8a986276b1d340e609375c53babc749b8e256683ca955f5c11c6e6474aa"
+  },
+  {
+    "path": "Assets/navigation/rebake-fcc07ed0d609844218a740c385915fd5.judasnav",
+    "sha256": "11f56537925028b227e9bfe9b36c0f037360c14cc0b775eb41429f786effd6fa"
+  },
+  {
+    "path": "Assets/navigation/rebake-fcc07ed0d609844218a740c385915fd5.judasnav.judasmeta",
+    "sha256": "01fed350079da8c56da0d8bf863bba2a8fadec6e425da25a8cfa39edce8b159a"
+  },
+  {
+    "path": "Assets/prefabs/barrel_debris.judasprefab",
+    "sha256": "11b653f4dc93ebf66141cf2c0555d23952dbfe72b846b9b199a370cbcc1e8787"
+  },
+  {
+    "path": "Assets/prefabs/barrel_debris.judasprefab.judasmeta",
+    "sha256": "80fcc79e9c552418c32073cea8730978a5c05f40827bd48e0c4b7830573d7277"
+  },
+  {
+    "path": "Assets/prefabs/base_build.judasprefab",
+    "sha256": "9c446e47e2fd55b5947c380556687e858de23799d6de8914f69dda858cbcde98"
+  },
+  {
+    "path": "Assets/prefabs/base_build.judasprefab.judasmeta",
+    "sha256": "c11f2926a901e3245695a43cdf378f67dbcc847651d3ab5711bbfbf05fbabd6f"
+  },
+  {
+    "path": "Assets/prefabs/breakable_barrel.judasprefab",
+    "sha256": "b1f51cf944969a589c704d0af10703c15497aa7a2ce346ea48dc2ed844ded0ea"
+  },
+  {
+    "path": "Assets/prefabs/breakable_barrel.judasprefab.judasmeta",
+    "sha256": "3b83b7fdcdf0eee9cf074ae9c6b2c481714d9e6cf77457a1279ffd5b60f92272"
+  },
+  {
+    "path": "Assets/prefabs/breakable_crate.judasprefab",
+    "sha256": "2785c2545f2b0ab905728fe4f3e34f0e55a50f6b2239836b618987a291c847d4"
+  },
+  {
+    "path": "Assets/prefabs/breakable_crate.judasprefab.judasmeta",
+    "sha256": "63b50a428c7ba43d45a99c62dfc11689edfb58d604fc9284ef717e21323a1b90"
+  },
+  {
+    "path": "Assets/prefabs/bridge.judasprefab",
+    "sha256": "2df0e9d0a61f72ca86902ac910860ae58fab974ad3c1b68f1eec09e069928f23"
+  },
+  {
+    "path": "Assets/prefabs/bridge.judasprefab.judasmeta",
+    "sha256": "b0c59d7d714368df3498e8a468d66b3dbcd74fbf56928e48bb428376910eea1a"
+  },
+  {
+    "path": "Assets/prefabs/crate_debris.judasprefab",
+    "sha256": "d521fe71f36bcf6ad0c8fff79a4c80fe5eba5d00afa717d1c2245deda4de6ec6"
+  },
+  {
+    "path": "Assets/prefabs/crate_debris.judasprefab.judasmeta",
+    "sha256": "21c1c5b88f20b32739e3536f7b7b6e652345749ac4bc6eb3fbe65475a6a37deb"
+  },
+  {
+    "path": "Assets/prefabs/damaged_rover.judasprefab",
+    "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7"
+  },
+  {
+    "path": "Assets/prefabs/damaged_rover.judasprefab.judasmeta",
+    "sha256": "1e14b167a8ce188216cd0ec9d19ff66731100a0e892712c0b4f870b4e186ba0c"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_boots_pickup.judasprefab",
+    "sha256": "f284e81a66e65fbd134458b41468b2400ba0689a64bff990c5d495d53f337220"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_boots_pickup.judasprefab.judasmeta",
+    "sha256": "b53fe2ff8b3714ce0588026f3e413d82418b258747b38eaaff90149e3681b68b"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door.judasprefab",
+    "sha256": "bfe7aa4e508bafdbd174ea10f546a3cf8ec9fd8bf9ad27bfb72fa7c8f0b8afed"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door.judasprefab.judasmeta",
+    "sha256": "3a314821dca23d50f2ea2cca336233aa05fd3dadf882dda0a8b2380c2b82cf12"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door_debris.judasprefab",
+    "sha256": "ecc26a245ca178b8275ddc1fe70a08a70aff88fe5f3e174d556ffa802f46aef9"
+  },
+  {
+    "path": "Assets/prefabs/framewalk_door_debris.judasprefab.judasmeta",
+    "sha256": "63d217db619c0e80e85794a4ddeb99e7d419aa969103a93c27634bb073a47358"
+  },
+  {
+    "path": "Assets/prefabs/grenade_projectile.judasprefab",
+    "sha256": "5496f9a79a3b4b413651c4a70f8fa9c00262ed6028a7465338b20e90c7719e3e"
+  },
+  {
+    "path": "Assets/prefabs/grenade_projectile.judasprefab.judasmeta",
+    "sha256": "231d358a70320c4c6d1510c09c9fac69bf819f26748a64412382c708f3028be1"
+  },
+  {
+    "path": "Assets/prefabs/grenades_pickup.judasprefab",
+    "sha256": "49c9ed103f917073f8aa671310afffa61cee7dad9c16ed427a154567f17ca97c"
+  },
+  {
+    "path": "Assets/prefabs/grenades_pickup.judasprefab.judasmeta",
+    "sha256": "fdbcd5a7d83e9a10b2fbaab9dadfadad433d14dce4dccca0e4c41bac0ecdeed0"
+  },
+  {
+    "path": "Assets/prefabs/rocket_projectile.judasprefab",
+    "sha256": "4f92f38dfac930f3dedd97e59405aadb16ed228bafc7d9af46ae3b0c37f85a06"
+  },
+  {
+    "path": "Assets/prefabs/rocket_projectile.judasprefab.judasmeta",
+    "sha256": "d0834029504983b7f851c89bf64f36f623016af872a26452230acbce29255685"
+  },
+  {
+    "path": "Assets/prefabs/rockets_pickup.judasprefab",
+    "sha256": "ea72de0ae8aeab75376fa0dc464af1c6bf10c70ee0eed1b5b9c127bd4fdfdfd5"
+  },
+  {
+    "path": "Assets/prefabs/rockets_pickup.judasprefab.judasmeta",
+    "sha256": "9d3f4a876a22e3b920f58dfb8bb5c2437d59050847d4ff453f0ba2570036103d"
+  },
+  {
+    "path": "Assets/prefabs/soldier.judasprefab",
+    "sha256": "afe1680cbb4bd4850f387cea409c7852f800dee7361d1c1eb25c70401039c9aa"
+  },
+  {
+    "path": "Assets/prefabs/soldier.judasprefab.judasmeta",
+    "sha256": "71fdc83c108f3a7d94cbabc7b5f021fdeb27283970ac12ffb6a2533607d5b3a3"
+  },
+  {
+    "path": "Assets/prefabs/zombie.judasprefab",
+    "sha256": "2be8db7cf02060b4fba8515f6716ecd6b75a1c199ddc85c61b132ff8caccaa66"
+  },
+  {
+    "path": "Assets/prefabs/zombie.judasprefab.judasmeta",
+    "sha256": "8ee6338b7f446cedef6c649b7f4b004abf912caa8782412aee61844c6fceaeac"
+  },
+  {
+    "path": "Assets/scripts/camera.js",
+    "sha256": "71dd08ac28e531c388c9d2ba91176540e3061c8375e9058faa4e370009c8c12f"
+  },
+  {
+    "path": "Assets/scripts/camera.js.judasmeta",
+    "sha256": "164f2f829a0bf96064652317ac6e4207d0ef735324b75e7ea416f00154d16e7e"
+  },
+  {
+    "path": "Assets/scripts/campaign-core.js",
+    "sha256": "81f7e6cae009af308b945a4c9105b96f2dec1c9263a23acf8ca53272468d6fea"
+  },
+  {
+    "path": "Assets/scripts/campaign-core.js.judasmeta",
+    "sha256": "cb7465624093a2cabae4977107c1478b8d7cc90cb7c7d335f62bf4c987b6d5d5"
+  },
+  {
+    "path": "Assets/scripts/climb.js",
+    "sha256": "daa4c0096ecc769e27ee6218caaa7ad90cc081a063449864fee37edd5a028429"
+  },
+  {
+    "path": "Assets/scripts/climb.js.judasmeta",
+    "sha256": "a9cdda2f688067a1cb9d79549c38a93a0d0b3dda61942df1912492761e5c5f36"
+  },
+  {
+    "path": "Assets/scripts/combat.js",
+    "sha256": "9047ac199d632c727620e5358a23888c2c25cbe89e497597df93fdb4b0ea42f1"
+  },
+  {
+    "path": "Assets/scripts/combat.js.judasmeta",
+    "sha256": "01d05e374b4e3bf81e615dae915d0b87fb12eea2d32a6eef989ad572132be80e"
+  },
+  {
+    "path": "Assets/scripts/destructible.js",
+    "sha256": "b6d46a04609b563b7698df9b6bc49156f933ab660f41f70ce35d2cf6ef7d68dd"
+  },
+  {
+    "path": "Assets/scripts/destructible.js.judasmeta",
+    "sha256": "ea48ab12791bc689ad0ab8dc57776b83895cc15f544a9299b1c7e50a1ad3c3f2"
+  },
+  {
+    "path": "Assets/scripts/enemy.js",
+    "sha256": "3b75d010a55683311edfc2338355b043db1d510f4fb1e615c1b800fe44f20ee9"
+  },
+  {
+    "path": "Assets/scripts/enemy.js.judasmeta",
+    "sha256": "9c285f2995347719f47f475f3559bb7a2f651559b82c8737465b521e7865d10d"
+  },
+  {
+    "path": "Assets/scripts/expedition.js",
+    "sha256": "11c463ede671a1f4aa332b092ccc89eb90c0d89fe879b2d35a12befa45537d97"
+  },
+  {
+    "path": "Assets/scripts/expedition.js.judasmeta",
+    "sha256": "7d6c7da2fda5423627b56d8d1fe4e8bb01da52d6db76dbf40020e57c3e9cbb96"
+  },
+  {
+    "path": "Assets/scripts/explosive.js",
+    "sha256": "865bf3cfa31c161248302730c1f0b878d05f564072b08714e59a61bdfcf83f5e"
+  },
+  {
+    "path": "Assets/scripts/explosive.js.judasmeta",
+    "sha256": "8612af617cee90e43ef7d6f9370f2b932dc6b9b02191ffb705f31aabf5a3c8ef"
+  },
+  {
+    "path": "Assets/scripts/explosives.js",
+    "sha256": "4ec02846644b334e12a99c865e2eec2cf1c9e301e0b7c9989cb20fea9e345e62"
+  },
+  {
+    "path": "Assets/scripts/explosives.js.judasmeta",
+    "sha256": "db2b257d828b90df9e88487989aa16002a32324ddf4869ee5c2d53477c877df9"
+  },
+  {
+    "path": "Assets/scripts/framewalk.js",
+    "sha256": "a3534ed0d3345695f32f9a4f6f35797a787c9056da9ab304b3b1a527cdb1569c"
+  },
+  {
+    "path": "Assets/scripts/framewalk.js.judasmeta",
+    "sha256": "1099ed39fc71f376bc2cf7c47d8cd4c83b0de02f29316b8fdf83125eacdb35a9"
+  },
+  {
+    "path": "Assets/scripts/game.js",
+    "sha256": "e5412e7634f566b52276b2c3fbfc5843fe367dbe767938d661687844806228a7"
+  },
+  {
+    "path": "Assets/scripts/game.js.judasmeta",
+    "sha256": "a82506476a1d248d5265c8eb5beaa85bd89860e55fb2837c2b0b51892ea17706"
+  },
+  {
+    "path": "Assets/scripts/grab.js",
+    "sha256": "5840c9d1e7f33fa7183d18415f525c74cd72566eabcf615190f249b14e4f6537"
+  },
+  {
+    "path": "Assets/scripts/grab.js.judasmeta",
+    "sha256": "cf71d28deb822132d7b73764130b982c9659d6a0700ab23ad8f7e2f7279287b1"
+  },
+  {
+    "path": "Assets/scripts/hud.js",
+    "sha256": "b3aeddd564ac25ca2fa7652b0e4c82ac90a5db044ccf428ee33fc143ae686c4a"
+  },
+  {
+    "path": "Assets/scripts/hud.js.judasmeta",
+    "sha256": "27d4beb1173125b340bc5811ab65f152ae20c18b5b41fffd834ed797783f36b3"
+  },
+  {
+    "path": "Assets/scripts/inventory.js",
+    "sha256": "e05d6263be8552f6f908809c0625757658523feef0bb0fcdbc0715a4c7346d97"
+  },
+  {
+    "path": "Assets/scripts/inventory.js.judasmeta",
+    "sha256": "9561ac487c4563cd26976ca852b4817f62d7b3e4ef8f4708461fd441aa64e375"
+  },
+  {
+    "path": "Assets/scripts/inventory_ui.js",
+    "sha256": "3e52eff2572dea8091f0230ee601120ea5f09bbe973130a07c8ca1bb95fc2e23"
+  },
+  {
+    "path": "Assets/scripts/inventory_ui.js.judasmeta",
+    "sha256": "7ad3a00981ebaa81cb5438f5889b727e6d3e170c3e7284ae352cc3f9a2dae1fa"
+  },
+  {
+    "path": "Assets/scripts/items.js",
+    "sha256": "ccf389007fef610b586dd2978de9764e4c2f53e9822dedeb62e3fa05d827dbc1"
+  },
+  {
+    "path": "Assets/scripts/items.js.judasmeta",
+    "sha256": "7e87fbc1cb695179c83f2372d80027433d527b5b0e5a5174e50dc481ed3f0d9f"
+  },
+  {
+    "path": "Assets/scripts/math.js",
+    "sha256": "b939fb4f8b935eb1f6461268b4e783caf696e82a3b4cfc76d4acbf1a6427f349"
+  },
+  {
+    "path": "Assets/scripts/math.js.judasmeta",
+    "sha256": "6dd97d57842dcb15f18587fab7bfe286792da833f0ba3377e60bd764276476ff"
+  },
+  {
+    "path": "Assets/scripts/melee.js",
+    "sha256": "da777d4d8e2d8e83bd7ebe187ec26520b64ab95589258c5eb0f22a9ee5ca9fc6"
+  },
+  {
+    "path": "Assets/scripts/melee.js.judasmeta",
+    "sha256": "aaa00a3cd9f8677dd45c71014cd5c87382ac305d399db9e35c28bf676b2ea315"
+  },
+  {
+    "path": "Assets/scripts/planetfall.js",
+    "sha256": "25ab7d49265f97de9a0b2dc9c5c3e2160e2b5bd3aa58d1b158572d9a4c58993f"
+  },
+  {
+    "path": "Assets/scripts/planetfall.js.judasmeta",
+    "sha256": "b85b8e0cde09ac2b1dda37c683202a3b84bb202186e848f8e876d8c6e11a3053"
+  },
+  {
+    "path": "Assets/scripts/player.js",
+    "sha256": "ad795615ddece6995d179f81b995d9c0d1cf821d3db3e553bb3ca00df96d03ad"
+  },
+  {
+    "path": "Assets/scripts/player.js.judasmeta",
+    "sha256": "b33830116f61de879d33d367f6653b8726e1ff913f645540b7a69ccdc7bc9c6c"
+  },
+  {
+    "path": "Assets/scripts/regions.js",
+    "sha256": "2040cb808fda49c2138575585089e47d1d9728607b4324a08c2e275c02fef759"
+  },
+  {
+    "path": "Assets/scripts/regions.js.judasmeta",
+    "sha256": "d5eaa533720af8c5692764d336434420293d6bfc9032165b5af3a2ca91294bf8"
+  },
+  {
+    "path": "Assets/scripts/rover.js",
+    "sha256": "64edf33aa32dc9e68845d567c86cdd7e9bb3ade06a26c243b7f097a28b9ed6bc"
+  },
+  {
+    "path": "Assets/scripts/rover.js.judasmeta",
+    "sha256": "30f651a214abc409f5e56ec58236d674beb094fbe7912d0091cb035c17a49738"
+  },
+  {
+    "path": "Assets/scripts/ship.js",
+    "sha256": "5aefc27bf7f237b6db5c2fd5177c11a9d0e90c66e681e2d13cf544b80a81db77"
+  },
+  {
+    "path": "Assets/scripts/ship.js.judasmeta",
+    "sha256": "d65030eb58c4732cd76c74ce98b3a14b871a8bf5468d03b3c86f1ee9bcf4d993"
+  },
+  {
+    "path": "Assets/scripts/side-jobs.js",
+    "sha256": "131814a2bf2ee33e1d963fa2b1aa74e3f8b1f562a297d5dd0824b7dede732ed2"
+  },
+  {
+    "path": "Assets/scripts/side-jobs.js.judasmeta",
+    "sha256": "620b3f460b8b4af54b241d07e10d2664c716c1da0061b61ea7e057b372f510d7"
+  },
+  {
+    "path": "Assets/scripts/vendor.js",
+    "sha256": "67e582a828f25d0cbc47c9d231cb4894af1e189984d22591623813b714ce72d6"
+  },
+  {
+    "path": "Assets/scripts/vendor.js.judasmeta",
+    "sha256": "fb36c69128279a12de3dcc61397a8e9d933733b93a3e8a0c78aaa244a92c2c6c"
+  },
+  {
+    "path": "Assets/scripts/weapon.js",
+    "sha256": "5808a49d8f48fb76eb6339df76bae55c88488020cf75e9c8e31ef52586577c52"
+  },
+  {
+    "path": "Assets/scripts/weapon.js.judasmeta",
+    "sha256": "2a8dc6404e8dc09cda47e917340a0662533161bf7ee60579f4365bf8cb25909d"
+  },
+  {
+    "path": "Assets/scripts/zombie_ai.js",
+    "sha256": "0ca067e2499765a877557b569b961232207420f46210faa2e73f1e827565fbf7"
+  },
+  {
+    "path": "Assets/scripts/zombie_ai.js.judasmeta",
+    "sha256": "0604422034550297f8a393589af53a47cec7b3dd6b4b7289c931275481d9464d"
+  },
+  {
+    "path": "Assets/scripts/zombie_framewalk.js",
+    "sha256": "3bef81f2bcf1326f4ed536c4d9a50ed4a5bf223719ce81f9fc36bd6e116e8ac4"
+  },
+  {
+    "path": "Assets/scripts/zombie_framewalk.js.judasmeta",
+    "sha256": "f7bb2b5a1e1c5b1285c779f3eaab0d77c2c2b5ba16c0a54ec5a82dedad68d3dc"
+  },
+  {
+    "path": "Assets/textures/soft.png",
+    "sha256": "c3da842f99dd9d6d4d82f5b4745523b262df0d540032639d181eb6a1a7b23b96"
+  },
+  {
+    "path": "Assets/textures/soft.png.judasmeta",
+    "sha256": "cc58ed524117ba753b24f8bff6c0332bacf340ab705a740fa8240b185cfcc0e2"
+  },
+  {
+    "path": "Assets/textures/ui/field_canvas.png",
+    "sha256": "949198d9e54cf3d7a2bf496b8f0a96218aa05d5a9a13c13e8b58ca14f867303a"
+  },
+  {
+    "path": "Assets/textures/ui/field_canvas.png.judasmeta",
+    "sha256": "c78cab85182fd05b37ce8cecccf79c7436832cfbd574f5fa186b4e7d2af0251c"
+  },
+  {
+    "path": "Assets/textures/ui/hud_canvas.png",
+    "sha256": "c0605c6e9ca716c7c70e3ccc90fab1c52789941c9af4a39fc619f78cc06f56aa"
+  },
+  {
+    "path": "Assets/textures/ui/hud_canvas.png.judasmeta",
+    "sha256": "287cebed50da3208bbdcee68c768a07be61ecbb42579138bad2010b8445eccd5"
+  },
+  {
+    "path": "Assets/textures/ui/item_boots.png",
+    "sha256": "077e60558f5c036c6f50570c2f2e184437fa7639385683110ac5acd066a5e576"
+  },
+  {
+    "path": "Assets/textures/ui/item_boots.png.judasmeta",
+    "sha256": "a1305d4cfcb8d11646ff8b66a8879441d87c72cee01ec856621e63f70b54b46c"
+  },
+  {
+    "path": "Assets/textures/ui/item_grenade.png",
+    "sha256": "1d3f1c8ab62bc15b3425b3a7bf672a8a3726f9f3a2fddfa881820be42af3e83c"
+  },
+  {
+    "path": "Assets/textures/ui/item_grenade.png.judasmeta",
+    "sha256": "c717f4f23d2fa27271e2a3cc843612794c9616450e2603d1574476ac05750e4a"
+  },
+  {
+    "path": "Assets/textures/ui/item_launcher.png",
+    "sha256": "e4c13dfd819a89b0a54a510b7ffaa846aa9c2b9d437e8a6fe187103efb490b4a"
+  },
+  {
+    "path": "Assets/textures/ui/item_launcher.png.judasmeta",
+    "sha256": "2da411bb41322c8080184639d14d4debd605898412463891a65d03857caad5e5"
+  },
+  {
+    "path": "Assets/textures/ui/item_rifle.png",
+    "sha256": "1431c8ea80428e17e7073b329fc1e10e7ccfc9b33a5d1a888ed11e712a24301c"
+  },
+  {
+    "path": "Assets/textures/ui/item_rifle.png.judasmeta",
+    "sha256": "98d2ef0a9d13f81889084c6e507d264a6b06367dc68092a1eb57ec25b2d083c7"
+  },
+  {
+    "path": "Assets/textures/ui/item_rocket.png",
+    "sha256": "36184f8303ee78d7c13ec66b9c48c03428583318d032a823eee74a61aa479c46"
+  },
+  {
+    "path": "Assets/textures/ui/item_rocket.png.judasmeta",
+    "sha256": "87cbc11ea64e542cca8a36b50e8e2e9f0ae8188fcd9d887108cfcbc08595b9df"
+  },
+  {
+    "path": "Assets/ui/lastlight.judasui",
+    "sha256": "562450e88f18442d510fa40c9922df1dd7b0dcdd383999c746bc86655e55523c"
+  },
+  {
+    "path": "Assets/ui/lastlight.judasui.judasmeta",
+    "sha256": "8ad2c2c0ebbec254dba33eff1c3790e96cdcf7bc377c867a661f79df6d4fdf7d"
+  },
+  {
+    "path": "Assets/worlds/planetfall.judasworld",
+    "sha256": "a27a1c2d80189eb595992fd3c413043343548bc65c4de009a1d0a9c6d7c36908"
+  },
+  {
+    "path": "Assets/worlds/planetfall.judasworld.judasmeta",
+    "sha256": "bcc58f5fd6e5dba5d2a900ff1d4034ecdd210981a38e78f8db70df8b43ad2bb3"
+  },
+  {
+    "path": "Scenes/derelict.judas",
+    "sha256": "e85c49ef93354b7499da05e2d1704bab5ac86ce82129ba86b3b96f2be786f331"
+  },
+  {
+    "path": "Scenes/earth-coast.judas",
+    "sha256": "6daa680c11955a9a21025be50dd46a87c595dda22e71b0c75ab437d650920c2a"
+  },
+  {
+    "path": "Scenes/earth-frontier.judas",
+    "sha256": "d966da8e9645b07429023f242518cf5952ac3b79f2c4dfff78953c5663e4a8ae"
+  },
+  {
+    "path": "Scenes/earth-highlands.judas",
+    "sha256": "46805885cfc57cd8deaf98da78324d00ecd2dc2713a05cfac2d8fa3775fe860b"
+  },
+  {
+    "path": "Scenes/earth.judas",
+    "sha256": "bdffe1912e370455a5aa324956ea8ea518dfe4f96422baab1f17fa31a40d30e5"
+  },
+  {
+    "path": "Scenes/mars.judas",
+    "sha256": "545e3634df7b39ce4f28c91943968dcfb123230a6d0072b518c9ed50ae3c8b35"
+  },
+  {
+    "path": "Scenes/moon.judas",
+    "sha256": "82ba405b77c696028908d57b1d6b1cb16eb1ee6bf43f101fc496cdaf2a755cfb"
+  },
+  {
+    "path": "Scenes/salvage-rover.judas",
+    "sha256": "a57ba3bd97adac37e33d987cdb10b9e427bba4c9cf27ed9eb3597989a3eccfb7"
+  }
+]

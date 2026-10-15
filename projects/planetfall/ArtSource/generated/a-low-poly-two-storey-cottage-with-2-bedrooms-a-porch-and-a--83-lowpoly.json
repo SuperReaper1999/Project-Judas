@@ -1,0 +1,64 @@
+{
+  "prompt": "a low poly two storey cottage with 2 bedrooms a porch and a chimney",
+  "category": "house",
+  "confidence": 1.0,
+  "params": {
+    "features": {
+      "porch": true,
+      "chimney": true
+    },
+    "size": 1.0,
+    "style": "lowpoly",
+    "floors": 2,
+    "type": "cottage",
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "kitchens": 1,
+    "living_rooms": 1,
+    "dining_rooms": 0,
+    "offices": 0,
+    "garages": 0
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "floors",
+      "text": "two storey"
+    },
+    {
+      "slot": "type",
+      "text": "cottage"
+    },
+    {
+      "slot": "bedrooms",
+      "text": "2 bedrooms"
+    },
+    {
+      "slot": "feature",
+      "text": "a porch"
+    },
+    {
+      "slot": "feature",
+      "text": "a chimney"
+    }
+  ],
+  "seed": 83,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-two-storey-cottage-with-2-bedrooms-a-porch-and-a--83-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 14628,
+    "triangles": 13492,
+    "groups": 4
+  },
+  "dimensions_m": [
+    16.7,
+    10.92,
+    18.8
+  ],
+  "seconds": 0.77
+}

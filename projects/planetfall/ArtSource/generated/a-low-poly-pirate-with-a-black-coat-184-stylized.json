@@ -1,0 +1,42 @@
+{
+  "prompt": "a low poly pirate with a black coat",
+  "category": "person",
+  "confidence": 1.0,
+  "params": {
+    "objects": "person",
+    "style": "stylized"
+  },
+  "understood": [
+    {
+      "slot": "object 1",
+      "text": "a low poly pirate"
+    },
+    {
+      "slot": "can't build yet",
+      "text": "black coat"
+    }
+  ],
+  "skipped": [
+    "black coat"
+  ],
+  "seed": 184,
+  "style": "stylized",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-pirate-with-a-black-coat-184-stylized.glb"
+  },
+  "stats": {
+    "vertices": 4733,
+    "triangles": 7864,
+    "groups": 1
+  },
+  "objects": [
+    "person"
+  ],
+  "environment": null,
+  "dimensions_m": [
+    0.59,
+    1.78,
+    0.35
+  ],
+  "seconds": 0.12
+}

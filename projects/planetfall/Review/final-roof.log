@@ -1,0 +1,23 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetfall (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/planetfall.judasproj)
+Scene: Planetfall / earth-coast (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Scenes/earth-coast.judas)
+World origin (m): 689680.981, 398187.500, 0.000
+PASS normal session seeds controlled campaign fixture
+JS: Planetfall: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.
+PASS true large double-precision planetary origin
+PASS ordinary authored Judas gravity governs motor
+PASS normal wheel and powertrain assembly exists
+PASS campaign state belongs to ordinary script owner
+PASS actual character advances using JS and motor
+PASS actual game screenshot captured
+ACCESS phase=0 position=(128.503 10.250 -78.284) supported=1
+PASS ordinary JS motor walks actual physical service ramp
+PASS actual roof recorder interaction advances campaign
+PASS recovered roof recorder leaves physical world
+PASS normal game input and lifetime stay fault-free
+BODIES 1176
+PASS ordinary startup and shutdown
+PASS M56 native profile exported
+PERF fixed_p95_ms=8.1512 render_p95_ms=6.3423 frame_work_p95_ms=15.5560 frame_work_max_ms=59.8566
+SUMMARY checks=13 failures=0

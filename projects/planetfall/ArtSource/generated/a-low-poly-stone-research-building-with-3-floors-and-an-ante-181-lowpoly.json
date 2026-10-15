@@ -1,0 +1,54 @@
+{
+  "prompt": "a low poly stone research building with 3 floors and an antenna",
+  "category": "building",
+  "confidence": 1.0,
+  "params": {
+    "features": {
+      "antenna": true
+    },
+    "size": 1.0,
+    "style": "lowpoly",
+    "material": "stone",
+    "floors": 3,
+    "height": null,
+    "count": 1
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "material",
+      "text": "stone"
+    },
+    {
+      "slot": "type",
+      "text": "research"
+    },
+    {
+      "slot": "floors",
+      "text": "3 floors"
+    },
+    {
+      "slot": "feature",
+      "text": "an antenna"
+    }
+  ],
+  "seed": 181,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-stone-research-building-with-3-floors-and-an-ante-181-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 5192,
+    "triangles": 5820,
+    "groups": 1
+  },
+  "dimensions_m": [
+    44.0,
+    31.3,
+    44.0
+  ],
+  "seconds": 0.08
+}

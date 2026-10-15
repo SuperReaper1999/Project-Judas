@@ -1,0 +1,165 @@
+[
+  {
+    "prompt": "a low poly supermarket called Lantern Supply",
+    "category": "library",
+    "confidence": 1.0,
+    "params": {
+      "asset": "market_stall",
+      "count": 1,
+      "size": 1.0,
+      "color": null,
+      "style": "lowpoly"
+    },
+    "understood": [
+      {
+        "slot": "asset",
+        "text": "market_stall (low_poly_starter, low poly shop)"
+      }
+    ],
+    "seed": 510,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-supermarket-called-lantern-supply-510-lib.glb"
+    },
+    "stats": {
+      "vertices": 3360,
+      "triangles": 1660,
+      "groups": 61
+    },
+    "asset": {
+      "id": "low_poly_starter/market_stall",
+      "description": "2.50 m wide market stall; canopy bounds X=+/-1.25 m, Y=-0.90..0.80 m, highest Z=2.46 m. Centre ground pivot. Counter top Z=1.04 m faces -Y; striped solid canopy, framed timber counter, two shallow produce baskets and original faceted fruit.",
+      "pack": "low_poly_starter"
+    },
+    "dimensions_m": [
+      2.5,
+      2.46,
+      1.7
+    ],
+    "seconds": 0.01
+  },
+  {
+    "prompt": "a low poly 30 metre cobblestone road with street lights",
+    "category": "library",
+    "confidence": 1.0,
+    "params": {
+      "asset": "road_straight_4m",
+      "count": 1,
+      "size": 1.0,
+      "color": null,
+      "style": "lowpoly"
+    },
+    "understood": [
+      {
+        "slot": "asset",
+        "text": "road_straight_4m (low_poly_starter, search)"
+      }
+    ],
+    "seed": 511,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-30-metre-cobblestone-road-with-street-lights-511-lib.glb"
+    },
+    "stats": {
+      "vertices": 32,
+      "triangles": 16,
+      "groups": 8
+    },
+    "asset": {
+      "id": "low_poly_starter/road_straight_4m",
+      "description": "4 x 4 m road surface with lanes along Y and ground surface at Z=0. Centre pivot, bounds X/Y +/-2 m; repeat on a 4 m grid. Three centre dashes and continuous edge paint sit 1.5 mm above the road surface.",
+      "pack": "low_poly_starter"
+    },
+    "dimensions_m": [
+      4.0,
+      0.0,
+      4.0
+    ],
+    "seconds": 0.0
+  },
+  {
+    "prompt": "a low poly wooden railing 8 metres long",
+    "category": "library",
+    "confidence": 1.0,
+    "params": {
+      "asset": "table",
+      "count": 6,
+      "size": 1.25,
+      "color": null,
+      "style": "lowpoly"
+    },
+    "understood": [
+      {
+        "slot": "asset",
+        "text": "table (low_poly_starter, low poly table)"
+      }
+    ],
+    "seed": 512,
+    "style": "lowpoly",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-wooden-railing-8-metres-long-512-lib.glb"
+    },
+    "stats": {
+      "vertices": 7488,
+      "triangles": 3720,
+      "groups": 102
+    },
+    "asset": {
+      "id": "low_poly_starter/table",
+      "description": "1.60 x 0.90 x 0.78 m timber work table with five chamfered top planks, splayed legs, open underside and visible fasteners. Centred ground pivot; front -Y.",
+      "pack": "low_poly_starter"
+    },
+    "dimensions_m": [
+      7.2,
+      0.98,
+      3.72
+    ],
+    "seconds": 0.03
+  },
+  {
+    "prompt": "a low poly wooden stairs with 10 steps and railings",
+    "category": "library",
+    "confidence": 1.0,
+    "params": {
+      "objects": "stairs 5step; stairs 5step next to the stairs 5step; railing next to the stairs 5step",
+      "style": "stylized"
+    },
+    "understood": [
+      {
+        "slot": "object 1",
+        "text": "a low poly wooden stairs"
+      },
+      {
+        "slot": "object 2",
+        "text": "10 steps"
+      },
+      {
+        "slot": "object 3",
+        "text": "railings"
+      }
+    ],
+    "skipped": [],
+    "seed": 513,
+    "style": "stylized",
+    "files": {
+      "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-wooden-stairs-with-10-steps-and-railings-513-stylized.glb"
+    },
+    "stats": {
+      "vertices": 7316,
+      "triangles": 4112,
+      "groups": 67
+    },
+    "objects": [
+      "stairs 5step",
+      "stairs 5step next to the stairs 5step",
+      "railing next to the stairs 5step"
+    ],
+    "environment": null,
+    "dimensions_m": [
+      14.96,
+      1.03,
+      5.5
+    ],
+    "seconds": 0.2
+  }
+]

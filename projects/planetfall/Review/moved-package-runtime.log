@@ -1,0 +1,6 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetfall (/tmp/Judas_M60_Planetfall_20261015_Final/game.judasproj)
+Scene: Planetfall / earth (/tmp/Judas_M60_Planetfall_20261015_Final/Scenes/earth.judas)
+World origin (m): 0.000, 796375.000, 0.000
+JS: Planetfall: WASD, mouse, Ctrl aim, LMB fire, 1 rifle / 2 RPG, G grenade, N stall, I inventory, C collect, X normal gravity, B carry/drop, T turn, Space jump + airborne Space framewalk, E mantle, Shift, V view, R reload, RMB punch, F heavy, Q shove, Esc menu.

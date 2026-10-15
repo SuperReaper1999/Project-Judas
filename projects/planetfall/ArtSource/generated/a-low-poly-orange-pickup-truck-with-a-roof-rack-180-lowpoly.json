@@ -1,0 +1,50 @@
+{
+  "prompt": "a low poly orange pickup truck with a roof rack",
+  "category": "car",
+  "confidence": 1.0,
+  "params": {
+    "features": {
+      "roofrack": true
+    },
+    "size": 1.0,
+    "style": "lowpoly",
+    "color": "#ff8c00",
+    "type": "truck",
+    "doors": 4,
+    "count": 1
+  },
+  "understood": [
+    {
+      "slot": "style",
+      "text": "low poly"
+    },
+    {
+      "slot": "color",
+      "text": "orange"
+    },
+    {
+      "slot": "type",
+      "text": "pickup truck"
+    },
+    {
+      "slot": "feature",
+      "text": "a roof rack"
+    }
+  ],
+  "seed": 180,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/ArtSource/generated/a-low-poly-orange-pickup-truck-with-a-roof-rack-180-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 3394,
+    "triangles": 3436,
+    "groups": 1
+  },
+  "dimensions_m": [
+    5.7,
+    2.02,
+    2.2
+  ],
+  "seconds": 0.64
+}

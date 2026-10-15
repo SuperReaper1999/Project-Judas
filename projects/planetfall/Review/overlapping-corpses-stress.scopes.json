@@ -1,0 +1,362 @@
+{
+  "Input events": {
+    "mean_ms": 0.038376436974789915,
+    "max_ms": 0.134554,
+    "frames": 119
+  },
+  "Resource completion and budget": {
+    "mean_ms": 0.0007916386554621849,
+    "max_ms": 0.010852,
+    "frames": 119
+  },
+  "Audio control and retirement": {
+    "mean_ms": 0.007061067226890756,
+    "max_ms": 0.016409,
+    "frames": 119
+  },
+  "Resource pump": {
+    "mean_ms": 0.005015957983193277,
+    "max_ms": 0.014425,
+    "frames": 119
+  },
+  "Script synchronization": {
+    "mean_ms": 0.056931361344537815,
+    "max_ms": 0.113231,
+    "frames": 119
+  },
+  "Script asset: Assets/scripts/player.js": {
+    "mean_ms": 1.5733413613445377,
+    "max_ms": 9.310582999999998,
+    "frames": 119
+  },
+  "Script lifecycle callback": {
+    "mean_ms": 1.8101309411764708,
+    "max_ms": 11.033124000000006,
+    "frames": 119
+  },
+  "Script asset: Assets/scripts/destructible.js": {
+    "mean_ms": 0.03385415966386555,
+    "max_ms": 0.12543800000000002,
+    "frames": 119
+  },
+  "Script asset: Assets/scripts/items.js": {
+    "mean_ms": 0.003660016806722689,
+    "max_ms": 0.01306,
+    "frames": 119
+  },
+  "Script asset: Assets/scripts/enemy.js": {
+    "mean_ms": 0.21331271428571427,
+    "max_ms": 3.9830829999999997,
+    "frames": 119
+  },
+  "JavaScript UI update": {
+    "mean_ms": 0.16523864705882352,
+    "max_ms": 0.351366,
+    "frames": 119
+  },
+  "Runtime UI layout": {
+    "mean_ms": 0.11254582352941177,
+    "max_ms": 0.286643,
+    "frames": 119
+  },
+  "Runtime UI input": {
+    "mean_ms": 0.0597785462184874,
+    "max_ms": 0.239789,
+    "frames": 119
+  },
+  "JavaScript UI events": {
+    "mean_ms": 0.00022718487394957984,
+    "max_ms": 0.00064,
+    "frames": 119
+  },
+  "JavaScript update": {
+    "mean_ms": 0.040342823529411764,
+    "max_ms": 0.101515,
+    "frames": 119
+  },
+  "Navigation obstacles and tile cache": {
+    "mean_ms": 0.015217596638655462,
+    "max_ms": 0.051203,
+    "frames": 119
+  },
+  "Navigation update": {
+    "mean_ms": 3.1499858403361345,
+    "max_ms": 5.596348,
+    "frames": 119
+  },
+  "JavaScript fixedUpdate": {
+    "mean_ms": 1.415734974789916,
+    "max_ms": 9.103096,
+    "frames": 119
+  },
+  "Character motors": {
+    "mean_ms": 0.9793230504201681,
+    "max_ms": 7.453112,
+    "frames": 119
+  },
+  "Physical animation drives": {
+    "mean_ms": 0.0010463361344537816,
+    "max_ms": 0.002054,
+    "frames": 119
+  },
+  "Mechanical powertrains": {
+    "mean_ms": 0.044358621848739496,
+    "max_ms": 0.21285900000000002,
+    "frames": 119
+  },
+  "Physics shape query": {
+    "mean_ms": 0.041911042016806725,
+    "max_ms": 0.104039,
+    "frames": 119
+  },
+  "Wheel contact/suspension": {
+    "mean_ms": 0.0731057731092437,
+    "max_ms": 0.150811,
+    "frames": 119
+  },
+  "Wheel suspension and tyres": {
+    "mean_ms": 0.07626812605042017,
+    "max_ms": 0.156904,
+    "frames": 119
+  },
+  "Physics broadphase": {
+    "mean_ms": 0.12251205042016806,
+    "max_ms": 0.549031,
+    "frames": 119
+  },
+  "Physics contacts": {
+    "mean_ms": 1.0147007731092437,
+    "max_ms": 1.832353,
+    "frames": 119
+  },
+  "Physics initial impacts": {
+    "mean_ms": 0.007221462184873949,
+    "max_ms": 0.210869,
+    "frames": 119
+  },
+  "Physics velocity constraints": {
+    "mean_ms": 0.16531861344537815,
+    "max_ms": 0.262605,
+    "frames": 119
+  },
+  "Physics continuous impacts": {
+    "mean_ms": 13.809352529411766,
+    "max_ms": 74.6778,
+    "frames": 119
+  },
+  "Physics position constraints": {
+    "mean_ms": 0.053002487394957984,
+    "max_ms": 0.123037,
+    "frames": 119
+  },
+  "Physics sleeping assessment": {
+    "mean_ms": 0.1894623025210084,
+    "max_ms": 0.390991,
+    "frames": 119
+  },
+  "Physics contact and joint solver": {
+    "mean_ms": 14.232953588235295,
+    "max_ms": 75.091629,
+    "frames": 119
+  },
+  "Physics proxy refresh": {
+    "mean_ms": 0.05671042857142857,
+    "max_ms": 0.125508,
+    "frames": 119
+  },
+  "Rigid physics": {
+    "mean_ms": 15.627186672268907,
+    "max_ms": 76.453564,
+    "frames": 119
+  },
+  "Character motor": {
+    "mean_ms": 0.8459893949579832,
+    "max_ms": 7.191161,
+    "frames": 119
+  },
+  "Animation clip sampling": {
+    "mean_ms": 0.030222873949579832,
+    "max_ms": 0.12428099999999999,
+    "frames": 119
+  },
+  "Pose clip mixing": {
+    "mean_ms": 0.039156697478991594,
+    "max_ms": 0.136334,
+    "frames": 119
+  },
+  "Pose skin matrices": {
+    "mean_ms": 0.04705927731092437,
+    "max_ms": 0.079243,
+    "frames": 119
+  },
+  "Final pose resolution": {
+    "mean_ms": 0.09696195798319328,
+    "max_ms": 0.21987799999999996,
+    "frames": 119
+  },
+  "Animation instances": {
+    "mean_ms": 0.21642582352941178,
+    "max_ms": 0.403954,
+    "frames": 119
+  },
+  "Ragdoll physics to pose": {
+    "mean_ms": 0.1110153193277311,
+    "max_ms": 0.257448,
+    "frames": 119
+  },
+  "Fracture topology commit": {
+    "mean_ms": 0.0004026890756302521,
+    "max_ms": 0.001058,
+    "frames": 119
+  },
+  "Fracture connectivity": {
+    "mean_ms": 0.0003015714285714286,
+    "max_ms": 0.000655,
+    "frames": 119
+  },
+  "Fracture rigid observations": {
+    "mean_ms": 0.013797327731092438,
+    "max_ms": 0.082907,
+    "frames": 119
+  },
+  "World deformables": {
+    "mean_ms": 0.01620687394957983,
+    "max_ms": 0.085961,
+    "frames": 119
+  },
+  "Visual particle simulation": {
+    "mean_ms": 0.006693268907563025,
+    "max_ms": 0.019868,
+    "frames": 119
+  },
+  "JavaScript contact events": {
+    "mean_ms": 0.05929281512605042,
+    "max_ms": 0.15343900000000008,
+    "frames": 119
+  },
+  "Fixed simulation step": {
+    "mean_ms": 22.137400226890755,
+    "max_ms": 87.997407,
+    "frames": 119
+  },
+  "Simulation systems": {
+    "mean_ms": 22.13768585714286,
+    "max_ms": 87.997882,
+    "frames": 119
+  },
+  "JavaScript presentation": {
+    "mean_ms": 0.2625840084033613,
+    "max_ms": 1.855013,
+    "frames": 119
+  },
+  "Audio main update": {
+    "mean_ms": 0.02695563025210084,
+    "max_ms": 0.05509,
+    "frames": 119
+  },
+  "Legacy fluid surface update": {
+    "mean_ms": 0.00013250420168067228,
+    "max_ms": 0.00022,
+    "frames": 119
+  },
+  "Deformable render mapping": {
+    "mean_ms": 0.012458848739495798,
+    "max_ms": 0.030151,
+    "frames": 119
+  },
+  "World culling and opaque submission": {
+    "mean_ms": 3.70915331092437,
+    "max_ms": 7.4241209999999995,
+    "frames": 119
+  },
+  "Shadow pass submission": {
+    "mean_ms": 1.6857418235294117,
+    "max_ms": 3.511964,
+    "frames": 119
+  },
+  "Water optical paths": {
+    "mean_ms": 0.009870521008403361,
+    "max_ms": 0.026398,
+    "frames": 119
+  },
+  "Water boundary upload": {
+    "mean_ms": 0.014298764705882355,
+    "max_ms": 0.051379,
+    "frames": 119
+  },
+  "Particles and water presentation": {
+    "mean_ms": 0.021560420168067227,
+    "max_ms": 0.222223,
+    "frames": 119
+  },
+  "Display resolve": {
+    "mean_ms": 0.11932343697478992,
+    "max_ms": 0.192483,
+    "frames": 119
+  },
+  "Main camera": {
+    "mean_ms": 2.292108386554622,
+    "max_ms": 4.870856,
+    "frames": 119
+  },
+  "World render submission": {
+    "mean_ms": 4.031160050420168,
+    "max_ms": 7.972207,
+    "frames": 119
+  },
+  "Text layout": {
+    "mean_ms": 0.015736344537815125,
+    "max_ms": 0.168174,
+    "frames": 119
+  },
+  "Shaped text submission": {
+    "mean_ms": 0.11845008403361346,
+    "max_ms": 0.480763,
+    "frames": 119
+  },
+  "Runtime UI drawing": {
+    "mean_ms": 0.2580338655462185,
+    "max_ms": 0.772271,
+    "frames": 119
+  },
+  "Play frame": {
+    "mean_ms": 27.082314336134456,
+    "max_ms": 95.705299,
+    "frames": 119
+  },
+  "Swap present wait": {
+    "mean_ms": 0.9332995210084033,
+    "max_ms": 6.274216,
+    "frames": 119
+  },
+  "Streaming outer integration": {
+    "mean_ms": 0.07364343697478992,
+    "max_ms": 0.356276,
+    "frames": 119
+  },
+  "Physics query geometry": {
+    "mean_ms": 0.04207215384615385,
+    "max_ms": 0.07533000000000001,
+    "frames": 13
+  },
+  "Text glyph raster": {
+    "mean_ms": 0.16147825,
+    "max_ms": 0.360164,
+    "frames": 4
+  },
+  "Signals API": {
+    "mean_ms": 0.0193895,
+    "max_ms": 0.02355,
+    "frames": 6
+  },
+  "Signals handler": {
+    "mean_ms": 0.40976300000000004,
+    "max_ms": 1.837401,
+    "frames": 5
+  },
+  "Signals routing and delivery": {
+    "mean_ms": 0.4405996,
+    "max_ms": 1.872476,
+    "frames": 5
+  }
+}
