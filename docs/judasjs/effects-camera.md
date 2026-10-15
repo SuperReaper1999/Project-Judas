@@ -57,6 +57,28 @@ Use sampled liquid acceleration with Judas gravity for project-specific swimming
 behaviour; the motor provides geometric motion, not a built-in swim mode.
 Existing 20 Hz demo/coarse-fluid limitations remain [documented](../FLUID_DEMO.md).
 
+## Portal views: off-axis frustum and oblique clip plane
+
+`entity.setCameraProjection({near, far, frustum, clipPlane})` also accepts two optional
+render-target camera settings for see-through surfaces (portals, windows, mirrors):
+
+- `frustum: {left, right, bottom, top}` is an asymmetric (off-axis) frustum, in metres at the
+  near plane in camera space (`left < right`, `bottom < top`). It replaces the authored vertical FOV
+  and aspect. Aim the camera perpendicular to a planar opening and pass the opening's corners scaled
+  to the near plane: the image then covers exactly that opening, so the surface showing it can use
+  plain planar UVs (the image depends only on the eye position, as in a real window).
+- `clipPlane: {normal, point}` is a world plane that becomes the near plane (oblique near-plane
+  clipping, Lengyel). Everything on the side the normal points away from is clipped; the image
+  (x/y) is unchanged. It applies only while the camera is on the clipped side; otherwise the
+  ordinary near plane is used.
+
+Omitting either key keeps its current value; `null` clears it. Both are runtime presentation
+settings: they are not authored, saved or restored, so scripts set them each `presentationUpdate`
+(typically right after publishing the main view). `entity.camera` reports them as `frustum` and
+`clipPlane` (or null). One render target cannot show itself: a portal camera that sees its own
+surface still gets the M33 white fallback, and portals seen inside another portal show that portal's
+previous image (no recursive passes).
+
 ## CameraRange, world.project and world.viewport (M67)
 
 `world.setView(pose, fov=70, range={near:0.1,far:500})` accepts a partial transform and optional clipping range. Omitted clipping members retain these defaults on that call; set both each presentation update to keep a longer range. Both values must be finite and positive with `near < far`. Unknown range keys throw `TypeError`. `entity.setCameraProjection({near,far})` changes an existing secondary/render-target camera, returning false if the entity has no camera; `entity.camera` includes the current `near` and `far`. These are runtime settings, captured by the existing camera/world save participants.

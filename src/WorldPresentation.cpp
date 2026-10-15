@@ -1,3 +1,4 @@
+#include "CameraProjection.h"
 #include "PerformanceProfiler.h"
 #include "WorldPresentation.h"
 
@@ -487,8 +488,10 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             if (!camera.error.empty() || !renderer.BeginRenderTarget(camera.target)) continue;
             JUDAS_PROFILE_SCOPE("Secondary camera");
             RendererProfileScope cameraGPU(renderer,"Secondary camera",camera.id);
-            renderer.SetCamera(glm::lookAt(position, position + rotation * glm::vec3(0,0,-1), rotation * glm::vec3(0,1,0)),
-                glm::perspective(glm::radians(c.verticalFovDegrees), static_cast<float>(c.width)/c.height, c.nearPlane, c.farPlane));
+            const glm::mat4 cameraView=glm::lookAt(position, position + rotation * glm::vec3(0,0,-1), rotation * glm::vec3(0,1,0));
+            const glm::vec4 viewPlane=camera.hasClipPlane?ViewSpacePlane(cameraView,camera.clipNormal,camera.clipPoint):glm::vec4(0);
+            renderer.SetCamera(cameraView,SecondaryCameraProjection(c.verticalFovDegrees,static_cast<float>(c.width)/c.height,c.nearPlane,c.farPlane,
+                camera.hasFrustum?&camera.frustum:nullptr,camera.hasClipPlane?&viewPlane:nullptr));
             renderer.SetRenderMask(c.renderMask);
             renderer.SetDynamicLights(lights);
             renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
