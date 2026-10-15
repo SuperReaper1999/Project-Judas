@@ -1,0 +1,114 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-m87-final/application-observation-followup/lab/project/Saves/room128.judasstate (none saved)
+Project: Judas Physics Stress Lab (/tmp/judas-m87-final/application-observation-followup/lab/project/physics_stress_lab.judasproj)
+Scene: Physics Stress Lab / 128 loose bodies (/tmp/judas-m87-final/application-observation-followup/lab/project/Scenes/room128.judas)
+World origin (m): 0.000, 0.000, 0.000
+FIXTURE normal project copy; only saveIdentity differs from /home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj
+PASS normal startup constructs exact physical room population
+PASS one project script owns lab intent and the presentation camera
+PASS initial mechanisms keep real springs and limits with drive power off
+PASS all 96 unpowered articulated bodies sleep through normal physics
+PASS the 128 separated grounded pieces naturally sleep without script intervention
+PASS capture actual rendered lab frame
+PHASE 1 frame=91
+PASS logical M input enables native finite-force slider motors
+PASS motor commands move the actual articulated shelf
+PASS moving native joints wake bodies while preserving limits and anchors
+PASS capture actual rendered lab frame
+PHASE 2 frame=141
+PASS logical P input spawns 32 ordinary persistent dynamic prefabs
+PASS spawned pieces actually fall under gravity rather than existing only in script inventory
+PHASE 3 frame=186
+PASS logical F6 produces a completed ordinary durable save
+PASS read the actual played scene and native participant archive
+PASS save captured running motor policy and runtime entity references
+PHASE 4 frame=194
+PASS cold load restores the exact archived lab state before callbacks
+PASS recapture native continuation at the real load publication boundary
+PASS cold load preserves actual articulation continuation bytes
+PASS cold load preserves actual contacts continuation bytes
+PASS cold load preserves actual sleep continuation bytes
+PASS cold load restores all 288 physical endpoints, including runtime prefabs
+PASS old body and joint handles cannot alias the fresh loaded world
+PHASE 5 frame=201
+RESTORED_MOTION frame=1 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.2963126e-07,7.91624188e-09,-1.44200456e-07 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=2 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42764137e-07,1.30385152e-08,2.08511097e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=3 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43519699e-07,1.86264459e-09,2.14711804e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=4 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43749432e-07,5.58793545e-09,2.56489185e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=5 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43591592e-07,1.11758709e-08,1.52640811e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=6 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43701556e-07,4.53875299e-16,5.44597589e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=7 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43611658e-07,-1.3038516e-08,5.51294677e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=8 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43549855e-07,-9.31322663e-09,1.16842946e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=9 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43233081e-07,-5.58793545e-09,1.48379642e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=10 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43370187e-07,9.31322486e-09,3.24052229e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=11 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42656049e-07,-1.86264426e-09,-1.01322839e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=12 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43381641e-07,-1.3038516e-08,3.84533405e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=13 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42798356e-07,-9.31322663e-09,1.13459975e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=14 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43288332e-07,-3.72528985e-09,-5.86186238e-11 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=15 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43451913e-07,7.4505806e-09,7.33060834e-11 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=16 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43625314e-07,1.3038516e-08,-2.56277499e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=17 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43513034e-07,1.86264559e-09,-3.32788824e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=18 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.4372678e-07,-1.49011612e-08,8.90342453e-11 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=19 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43529235e-07,-1.11758718e-08,3.89681898e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=20 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43655527e-07,-3.72528963e-09,-3.46273232e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=21 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42196825e-07,7.45057971e-09,9.64561542e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=22 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43633315e-07,1.11758709e-08,5.24874588e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=23 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43517198e-07,1.86264515e-09,9.60674318e-11 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=24 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43521859e-07,5.58793545e-09,-3.99027165e-11 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=25 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43005622e-07,9.31322575e-09,-9.38562339e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=26 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43341623e-07,3.7252903e-09,-1.02626474e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=27 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43531167e-07,5.58793545e-09,1.23008848e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=28 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.4341451e-07,9.31322575e-09,5.52277724e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=29 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42818465e-07,3.72529074e-09,-8.18623336e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=30 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43367373e-07,-1.49011612e-08,-9.87932292e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=31 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43616873e-07,-1.11758718e-08,5.07266007e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=32 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.4331988e-07,-3.72529008e-09,1.02618403e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=33 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43458038e-07,7.45057971e-09,5.59318203e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=34 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43082517e-07,1.11758709e-08,-6.48549991e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=35 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43429673e-07,1.86264515e-09,2.60614863e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=36 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42987616e-07,7.4505806e-09,5.5249727e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=37 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43428679e-07,5.58793545e-09,1.15300314e-09 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=38 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.43448062e-07,-5.587935e-09,4.38641623e-11 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=39 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.42696734e-07,3.72528985e-09,-7.99948552e-10 motor=1 speed_mps=0.280000001
+RESTORED_MOTION frame=40 excursion_m=0 max_excursion_m=0 coordinate_m=0.100002304 velocity_mps=1.4341029e-07,7.4505806e-09,2.21752575e-10 motor=1 speed_mps=0.280000001
+FAIL loaded physical machinery genuinely continues moving under restored control
+PASS load reconstructs prefab handles with one independent script instance
+PHASE 6 frame=241
+PASS removing power after motion permits ordinary physical sleep again
+PHASE 7 frame=545
+PASS a real impulse wakes every connected member while a different assembly stays asleep
+PASS the impulsed articulation physically moves while its joints remain connected
+PHASE 8 frame=570
+PASS modal pause stops simulation and blocks motor input leaking through the menu
+PHASE 9 frame=595
+PASS resume advances ordinary physics without replaying the paused motor input
+PASS watch tour resolves the actual ordinary tagged assembly list
+TOUR_TARGET selected_index=1 target_entity=1024 unrelated_entity=1044
+PHASE 10 frame=615
+PASS logical F5 starts the real shared-script watch tour
+PASS the timed watch tour removes native motor power without disabling bodies
+PASS unattended tour reaches natural sleeping state before its impulse stage
+TOUR_MOTION target_entity=1024 max_excursion_m=0.119394302 unrelated_entity=1044 max_unrelated_excursion_m=0
+PASS tour impulse changes real physical state after the quiet interval
+PASS unrelated unpowered tour assembly remains physically asleep and unmoved
+PASS combined drive, rest, impulse and save lifecycle retains finite connected physics
+PHASE 11 frame=1825
+PASS registered 512-piece scene changes real population and cleans the former world
+PASS scene transition resets gameplay state and old runtime additions
+PASS larger ordinary scene produces actual finite physical contacts
+PHASE 12 frame=1861
+PASS registered 1024-piece scene builds its full physical population
+PASS the largest lab population remains finite with real contact response
+PASS capture actual rendered lab frame
+PHASE 13 frame=1897
+PASS rotated scene samples the authored non-world-Y gravity vector
+PASS actual rotated floor collision supplies the corresponding support normal
+PASS rotated mechanisms retain native joint geometry and natural sleeping
+PASS arbitrary-up population remains finite
+PASS capture actual rendered lab frame
+PHASE 14 frame=1988
+PASS authored reload restores clean native and shared-script state
+PASS reloaded world rejects prior body handles
+PHASE 15 frame=2009
+PASS ordinary lab application, physical lifecycle and shutdown finish successfully
+M87 application checks=50 failures=1 frames=2009

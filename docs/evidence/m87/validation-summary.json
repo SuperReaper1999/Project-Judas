@@ -1,0 +1,33 @@
+{
+  "engine_archive_sha256": "1cb3e2a74bfb2d2e2d5fa9b14c79158eadd4b974b8036ae758f59a4e4c8a5b15",
+  "original_core_receipt": "validation/results.json",
+  "final_core_evidence_targets": 30,
+  "passing_targets_with_documented_narrow_followup": 29,
+  "preexisting_failed_targets": [
+    {
+      "name": "judas_physical_balance_foundation_tests",
+      "checks": 34,
+      "failures": 1,
+      "cause": "unchanged stale 17-participant limit assertion; baseline already supports21",
+      "original_and_candidate_logs_identical": true
+    }
+  ],
+  "corrected_new_fixture": {
+    "name": "judas_physics_scaling_tests",
+    "checks": 130,
+    "failures": 0,
+    "evidence": "failures/late-wake-fixture/corrected-130-checks.log"
+  },
+  "joint_scaling": {
+    "checks": 25,
+    "failures": 0
+  },
+  "application": {
+    "checks": 51,
+    "failures": 0,
+    "evidence": "application/RECEIPT.json"
+  },
+  "cold": "cold/RECEIPT.json",
+  "human_acceptance": false,
+  "no_full_production_suite": true
+}

@@ -1,0 +1,381 @@
+{
+  "schema": "judas.m87.pooled_per_step_summary.v1",
+  "quantile": "lower empirical floor(q*(N-1)); two separate120measuredstep processes pooled per workload/count",
+  "rows": [
+    {
+      "case": "free-64",
+      "dynamic_bodies": 64,
+      "all_bodies": 64,
+      "joints": 0,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.032688,
+          "p95": 0.049768,
+          "maximum": 0.87306
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.024582,
+          "p95": 0.04262,
+          "maximum": 0.066628
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "free-256",
+      "dynamic_bodies": 256,
+      "all_bodies": 256,
+      "joints": 0,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.165342,
+          "p95": 0.212998,
+          "maximum": 0.239482
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.114633,
+          "p95": 0.166661,
+          "maximum": 0.224592
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "free-1024",
+      "dynamic_bodies": 1024,
+      "all_bodies": 1024,
+      "joints": 0,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.888048,
+          "p95": 1.041475,
+          "maximum": 1.202998
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.699521,
+          "p95": 0.856616,
+          "maximum": 0.975167
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "pile-64",
+      "dynamic_bodies": 64,
+      "all_bodies": 65,
+      "joints": 0,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.077928,
+          "p95": 0.940962,
+          "maximum": 1.042288
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.057978,
+          "p95": 0.868692,
+          "maximum": 1.033929
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "pile-256",
+      "dynamic_bodies": 256,
+      "all_bodies": 257,
+      "joints": 0,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.828283,
+          "p95": 4.364163,
+          "maximum": 5.109733
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.354101,
+          "p95": 3.798473,
+          "maximum": 5.268752
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "pile-1024",
+      "dynamic_bodies": 1024,
+      "all_bodies": 1025,
+      "joints": 0,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 11.352939,
+          "p95": 26.221627,
+          "maximum": 28.002546
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 28450816
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 1.938385,
+          "p95": 15.885601,
+          "maximum": 16.655138
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 28655616
+      }
+    },
+    {
+      "case": "mesh-64",
+      "dynamic_bodies": 64,
+      "all_bodies": 65,
+      "joints": 0,
+      "triangles": 1800,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.190641,
+          "p95": 0.709756,
+          "maximum": 2.097861
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.045402,
+          "p95": 0.576062,
+          "maximum": 1.487617
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "mesh-256",
+      "dynamic_bodies": 256,
+      "all_bodies": 257,
+      "joints": 0,
+      "triangles": 5832,
+      "baseline": {
+        "timing_ms": {
+          "median": 2.66267,
+          "p95": 4.547755,
+          "maximum": 9.795954
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.378739,
+          "p95": 1.87887,
+          "maximum": 6.082611
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "mesh-1024",
+      "dynamic_bodies": 1024,
+      "all_bodies": 1025,
+      "joints": 0,
+      "triangles": 20808,
+      "baseline": {
+        "timing_ms": {
+          "median": 46.603242,
+          "p95": 54.092944,
+          "maximum": 75.725716
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 30572544
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 2.660132,
+          "p95": 9.427974,
+          "maximum": 25.983208
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 30539776
+      }
+    },
+    {
+      "case": "machines_active-64",
+      "dynamic_bodies": 64,
+      "all_bodies": 65,
+      "joints": 32,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.191104,
+          "p95": 0.224476,
+          "maximum": 0.364487
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.126084,
+          "p95": 0.146427,
+          "maximum": 0.19047
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "machines_active-256",
+      "dynamic_bodies": 256,
+      "all_bodies": 257,
+      "joints": 128,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 1.481789,
+          "p95": 1.824295,
+          "maximum": 2.267193
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.589588,
+          "p95": 0.661493,
+          "maximum": 0.80829
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "machines_active-1024",
+      "dynamic_bodies": 1024,
+      "all_bodies": 1025,
+      "joints": 512,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 21.710525,
+          "p95": 24.741342,
+          "maximum": 31.182832
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 26296320
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 2.564713,
+          "p95": 2.839174,
+          "maximum": 5.970842
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 26370048
+      }
+    },
+    {
+      "case": "machines_sleeping-64",
+      "dynamic_bodies": 64,
+      "all_bodies": 65,
+      "joints": 32,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 0.088447,
+          "p95": 0.171575,
+          "maximum": 0.195338
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.030429,
+          "p95": 0.034653,
+          "maximum": 0.056965
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "machines_sleeping-256",
+      "dynamic_bodies": 256,
+      "all_bodies": 257,
+      "joints": 128,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 1.050595,
+          "p95": 1.446795,
+          "maximum": 1.968561
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24014848
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.192165,
+          "p95": 0.222858,
+          "maximum": 0.295134
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 24006656
+      }
+    },
+    {
+      "case": "machines_sleeping-1024",
+      "dynamic_bodies": 1024,
+      "all_bodies": 1025,
+      "joints": 512,
+      "triangles": 0,
+      "baseline": {
+        "timing_ms": {
+          "median": 20.017417,
+          "p95": 22.024281,
+          "maximum": 31.778305
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 26275840
+      },
+      "candidate": {
+        "timing_ms": {
+          "median": 0.902914,
+          "p95": 0.976142,
+          "maximum": 1.025271
+        },
+        "samples": 240,
+        "maximum_peak_rss_bytes": 26509312
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "started_utc": "2026-10-15T18:35:57.136013+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+    "/tmp/judas-m87-final/application-clearance-followup/lab"
+  ],
+  "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+  "exit_code": 1,
+  "seconds": 16.547228458999598,
+  "fingerprints_before": {
+    "/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingApplicationTests.cpp": "0d697da17883c3e06c74e4cf542c8994779c310218dc7ba9ad27e25515b2f8b8",
+    "/home/conner/Documents/GitHub/Project-Judas/tools/CreatePhysicsStressLab.py": "4a21548aba8c6ecf2e93225ff8eb2e4a6d3af6682beeb67cca65505cf0bbff89",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests": "184579bb2eb0925adde510ce48dff6b8f69e94f50e644f0c16fef4cfe0d0e629",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a": "1cb3e2a74bfb2d2e2d5fa9b14c79158eadd4b974b8036ae758f59a4e4c8a5b15",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room128.judas": "bc085c2f425f4df278a2ae94cfe033aee4a5797343b46c1b4ee7bf1923cf6920",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room512.judas": "d511b95421566bbd6cc8e31bf62508870a7af726bbd9eb3bb3e13bae4c3ad72c",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/rotated.judas": "dccd717e8ddb4699a68213e596de4ae4ffdee3b21a781984ebb356ee98862a49"
+  },
+  "fingerprints_after": {
+    "/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingApplicationTests.cpp": "0d697da17883c3e06c74e4cf542c8994779c310218dc7ba9ad27e25515b2f8b8",
+    "/home/conner/Documents/GitHub/Project-Judas/tools/CreatePhysicsStressLab.py": "4a21548aba8c6ecf2e93225ff8eb2e4a6d3af6682beeb67cca65505cf0bbff89",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests": "184579bb2eb0925adde510ce48dff6b8f69e94f50e644f0c16fef4cfe0d0e629",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a": "1cb3e2a74bfb2d2e2d5fa9b14c79158eadd4b974b8036ae758f59a4e4c8a5b15",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room128.judas": "bc085c2f425f4df278a2ae94cfe033aee4a5797343b46c1b4ee7bf1923cf6920",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room512.judas": "d511b95421566bbd6cc8e31bf62508870a7af726bbd9eb3bb3e13bae4c3ad72c",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/rotated.judas": "dccd717e8ddb4699a68213e596de4ae4ffdee3b21a781984ebb356ee98862a49"
+  },
+  "human_acceptance": false
+}

@@ -1,0 +1,22 @@
+{
+  "head": "4fada67c3228d37301faffa33e79fff65c695461",
+  "started_utc": "2026-10-15T18:31:21.143563+00:00",
+  "graphics": true,
+  "tests": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+        "/tmp/judas-m87-final/application/lab"
+      ],
+      "binary_sha256_before": "ec6862b109fdc758a5e0a3151832bc48fcd9cdb514ee3622e770e21dafede372",
+      "exit_code": 1,
+      "seconds": 16.70450217600228,
+      "binary_sha256_after": "ec6862b109fdc758a5e0a3151832bc48fcd9cdb514ee3622e770e21dafede372",
+      "pass": false
+    }
+  ],
+  "human_acceptance": false,
+  "finished_utc": "2026-10-15T18:31:38.097304+00:00",
+  "pass": false
+}

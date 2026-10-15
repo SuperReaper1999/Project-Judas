@@ -1,0 +1,60 @@
+[  5%] Built target judas_icu_build
+[ 11%] Built target judas_app_icon
+[ 11%] Built target judas_quickjs
+[ 23%] Built target freetype
+[ 29%] Built target judas_profiler
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_glad
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_materials
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_scaling_benchmarks.dir/tests/PhysicsScalingBenchmarks.cpp.o
+[100%] Linking CXX executable judas_physics_scaling_benchmarks
+[100%] Built target judas_physics_scaling_benchmarks
+[ 11%] Built target judas_quickjs
+[ 11%] Built target judas_icu_build
+[ 11%] Built target judas_app_icon
+[ 22%] Built target freetype
+[ 22%] Built target judas_glad
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_profiler
+[ 38%] Built target harfbuzz
+[ 38%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o
+[100%] Linking CXX executable judas_physics_scaling_diagnostics
+[100%] Built target judas_physics_scaling_diagnostics
+[  5%] Built target judas_icu_build
+[ 11%] Built target judas_app_icon
+[ 11%] Built target judas_quickjs
+[ 23%] Built target freetype
+[ 23%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_materials
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_ball_pusher_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_ball_pusher_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_ball_pusher_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_ball_pusher_application_tests.dir/src/TestHarness.cpp.o
+[100%] Building CXX object CMakeFiles/judas_ball_pusher_application_tests.dir/tests/BallPusherApplicationTests.cpp.o
+[100%] Linking CXX executable judas_ball_pusher_application_tests
+[100%] Built target judas_ball_pusher_application_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_quickjs
+[ 23%] Built target freetype
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_glad
+[ 35%] Built target judas_materials
+[ 35%] Built target judas_audio_backend
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_impact_mesh_cost_tests.dir/tests/ImpactMeshCostTests.cpp.o
+[100%] Linking CXX executable judas_impact_mesh_cost_tests
+[100%] Built target judas_impact_mesh_cost_tests

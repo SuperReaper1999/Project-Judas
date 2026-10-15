@@ -1,0 +1,14 @@
+{
+  "captured_utc": "2026-10-15T18:28:29.645826+00:00",
+  "hashes": {
+    "judas_ball_pusher_application_tests": "f6785746e0217506125619be628bac3cad4a3fb3ebc19c5f271ed65ba7505dfa",
+    "judas_physics_scaling_diagnostics": "708c3c7b1d0a96bb9bb314bbaae78552c9c914d5504c4d9e5689cdf6a601ad63",
+    "judas_physics_scaling_benchmarks": "0c4c48b3303baae0501077d4a4c0aad454341fb4dd500293684482c346a664ae",
+    "judas_character_motor_tests": "94b5329d30f697325958e125e3ab3839c63d62832fff430341f2e50aa870eb8d",
+    "judas_impact_mesh_cost_tests": "caf8532414bac3b0c430df417256f64e48614e6343d0255474446c9ba9706e06",
+    "judas_export": "50088e8d9d8b8560de1e1d53b6b286da02920a2223ea86b0e593b3fb9660dcc7",
+    "judas_editor": "de033fc9b3ec04cb2d9862596e0e856c65c2e0baca67e2a70f45137cf8963c2b",
+    "judas": "0e166251ac718aa31485bd9aff3e7411a5b854fd58b870d5ba347a76e8a47a1c"
+  },
+  "note": "provenance.json preserves the initial inspection hashes. Rebuilt baseline benchmark, consumer and impact-mesh executables were linked against the unchanged starting engine before optimization; these are their frozen measured identities. No baseline binary is distributed in evidence."
+}

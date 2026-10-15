@@ -1,0 +1,7 @@
+{
+  "checks": 50,
+  "failures": 2,
+  "fixtureSaveIdentity": "f4ca12fae40c39778391ab204795915935219673c8f988f7165e9af7e919f569",
+  "frames": 2126,
+  "performanceBenchmark": false
+}

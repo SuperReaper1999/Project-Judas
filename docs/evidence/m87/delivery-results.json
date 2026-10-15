@@ -1,0 +1,43 @@
+{
+  "utc": "2026-10-15T18:51:09.163841+00:00",
+  "human_acceptance": false,
+  "windows": "not run; informational and nonblocking",
+  "release_build": {
+    "log": "build-logs/m87-final-build.log",
+    "exit": 0,
+    "warnings": 0
+  },
+  "export": {
+    "exit": 0,
+    "assets": 6,
+    "scenes": 4,
+    "bytes": 60340214,
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m87-physics-stress-lab"
+  },
+  "editor": {
+    "exit": 0,
+    "private_project": true,
+    "duplicate_undo_identical": true,
+    "live_cursor_and_frozen_capture_while_simulation_continues": true,
+    "closing_profiler_restores_capture": true,
+    "authored_scene_after_play_stop_identical": true,
+    "resources_failed": 0
+  },
+  "standalone": {
+    "exit": 0,
+    "frames": 1500,
+    "all_four_scenes": true,
+    "pause_resume": true,
+    "reload": true,
+    "script": "delivery/normal.script"
+  },
+  "moved_package": {
+    "exit": 0,
+    "frames": 1500,
+    "path": "/tmp/judas-m87-relocated",
+    "cwd": "/tmp/judas-m87-unrelated",
+    "no_project_argument": true,
+    "pre_run_package_files_identical": true,
+    "script": "delivery/moved.script"
+  }
+}

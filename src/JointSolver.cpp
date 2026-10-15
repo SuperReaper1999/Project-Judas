@@ -1,18 +1,43 @@
 #include "JointSolver.h"
 #include <algorithm>
+#include <cstdint>
 #include <limits>
+std::size_t JointSolver::PointerMembership::Hash(const void* pointer){
+ // Allocation alignment leaves low address bits empty; mix all pointer bits
+ // before selecting a power-of-two bucket. Hash order has no physical meaning.
+ auto key=std::uint64_t(reinterpret_cast<std::uintptr_t>(pointer));
+ key^=key>>33;key*=UINT64_C(0xff51afd7ed558ccd);key^=key>>33;
+ key*=UINT64_C(0xc4ceb9fe1a85ec53);key^=key>>33;
+ return std::size_t(key);
+}
+void JointSolver::PointerMembership::Clear(){if(used){std::fill(slots.begin(),slots.end(),nullptr);used=0;}}
+void JointSolver::PointerMembership::Grow(){
+ std::vector<const void*> next(slots.empty()?16:slots.size()*2,nullptr);
+ for(auto pointer:slots)if(pointer){auto bucket=Hash(pointer)&(next.size()-1);while(next[bucket])bucket=(bucket+1)&(next.size()-1);next[bucket]=pointer;}
+ slots.swap(next);
+}
+bool JointSolver::PointerMembership::Insert(const void* pointer){
+ if(slots.empty())Grow();
+ auto bucket=Hash(pointer)&(slots.size()-1);
+ while(slots[bucket]){if(slots[bucket]==pointer)return false;bucket=(bucket+1)&(slots.size()-1);}
+ if((used+1)*2>slots.size()){
+  Grow();bucket=Hash(pointer)&(slots.size()-1);
+  while(slots[bucket])bucket=(bucket+1)&(slots.size()-1);
+ }
+ slots[bucket]=pointer;++used;return true;
+}
 void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=r.linearA*(p*r.a->inverseMass);r.b->linearVelocity+=r.linearB*(p*r.b->inverseMass);
  r.a->angularVelocity+=r.inertiaA*r.angularA*p;r.b->angularVelocity+=r.inertiaB*r.angularB*p;}
 void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append){
- if(!append){m_rows.clear();m_bodies.clear();m_prepared.clear();}const float inf=std::numeric_limits<float>::infinity();
+ if(!append){m_rows.clear();m_bodies.clear();m_bodyMembership.Clear();m_preparedMembership.Clear();}const float inf=std::numeric_limits<float>::infinity();
  for(auto& input:inputs){
   // A material contact may awaken a formerly sleeping articulation midway
   // through the velocity rounds. Its joints must join this boundary without
   // applying old warm starts twice or erasing already solved reactions.
-  if(append&&std::find(m_prepared.begin(),m_prepared.end(),input.state)!=m_prepared.end())continue;
-  m_prepared.push_back(input.state);
+  const bool newlyPrepared=m_preparedMembership.Insert(input.state);
+  if(append&&!newlyPrepared)continue;
   auto& s=input.state->settings;auto& a=*input.a;auto& b=*input.b;if(!impact){input.state->motorImpulse=0;input.state->reactionImpulse={0,0,0};input.state->reactionAngularImpulse={0,0,0};}
-  for(auto* body:{&a,&b})if(std::find(m_bodies.begin(),m_bodies.end(),body)==m_bodies.end())m_bodies.push_back(body);
+  for(auto* body:{&a,&b})if(m_bodyMembership.Insert(body))m_bodies.push_back(body);
   glm::quat qa=glm::normalize(a.orientation),qb=glm::normalize(b.orientation),fa=qa*glm::normalize(s.frameA),fb=qb*glm::normalize(s.frameB);
   auto basis=glm::mat3_cast(fa);auto ra=qa*(s.anchorA-input.pivotOffsetA),rb=qb*(s.anchorB-input.pivotOffsetB),delta=(b.position-a.position)+rb-ra;
   auto ia=a.InverseInertiaWorld(),ib=b.InverseInertiaWorld();int index=0;

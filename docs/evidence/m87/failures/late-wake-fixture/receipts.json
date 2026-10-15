@@ -1,0 +1,140 @@
+[
+  {
+    "name": "compile-probe",
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++17",
+      "-Isrc",
+      "-c",
+      "/tmp/m87-late-wake-baseline/LateWakeFixtureProbe.cpp",
+      "-o",
+      "/tmp/m87-late-wake-baseline/LateWakeFixtureProbe.cpp.o"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "started": "2026-10-15T18:28:46.372514+00:00",
+    "exit": 0
+  },
+  {
+    "name": "link-baseline",
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/tmp/m87-late-wake-baseline/LateWakeFixtureProbe.cpp.o",
+      "/tmp/m87-late-wake-baseline/PhysicsWorld.cpp.o",
+      "/tmp/m87-joint-baseline/JointSolver.cpp.o",
+      "-o",
+      "/tmp/m87-late-wake-baseline/late-wake-baseline",
+      "libjudas_engine.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "libjudas_profiler.a",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+    "started": "2026-10-15T18:28:47.166984+00:00",
+    "exit": 0
+  },
+  {
+    "name": "run-baseline",
+    "command": [
+      "/tmp/m87-late-wake-baseline/late-wake-baseline"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "started": "2026-10-15T18:28:47.325971+00:00",
+    "exit": 0
+  },
+  {
+    "name": "link-candidate",
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/tmp/m87-late-wake-baseline/LateWakeFixtureProbe.cpp.o",
+      "-o",
+      "/tmp/m87-late-wake-baseline/late-wake-candidate",
+      "libjudas_engine.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "libjudas_profiler.a",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+    "started": "2026-10-15T18:28:47.344034+00:00",
+    "exit": 0
+  },
+  {
+    "name": "run-candidate",
+    "command": [
+      "/tmp/m87-late-wake-baseline/late-wake-candidate"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "started": "2026-10-15T18:28:47.525548+00:00",
+    "exit": 0
+  },
+  {
+    "name": "link-foundation",
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_physical_balance_foundation_tests.dir/tests/PhysicalBalanceFoundationTests.cpp.o",
+      "/tmp/m87-late-wake-baseline/PhysicsWorld.cpp.o",
+      "/tmp/m87-joint-baseline/JointSolver.cpp.o",
+      "-o",
+      "/tmp/m87-late-wake-baseline/foundation-baseline",
+      "libjudas_engine.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "libjudas_profiler.a",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+    "started": "2026-10-15T18:28:47.539285+00:00",
+    "exit": 0
+  },
+  {
+    "name": "run-foundation-baseline",
+    "command": [
+      "/tmp/m87-late-wake-baseline/foundation-baseline"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "started": "2026-10-15T18:28:48.203502+00:00",
+    "exit": 1
+  }
+]

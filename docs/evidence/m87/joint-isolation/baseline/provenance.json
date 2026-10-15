@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-15T18:11:16.278606+00:00",
+  "head": "4fada67c3228d37301faffa33e79fff65c695461",
+  "compiler": "/usr/bin/c++ -O3 -DNDEBUG -std=gnu++17 -Wall -Wextra",
+  "command": "/tmp/m87-joint-baseline/judas_joint_scaling_tests --benchmark /tmp/m87-joint-baseline/prepare-probe",
+  "files": {
+    "JointScalingTests.cpp": "c7ac949db3a38368c64647641a4c080b1d775d61cae6213e3058e74427440e93",
+    "judas_joint_scaling_tests": "ab1e2ea2e580937745f76501d3f55043bd553ad13e8d992cf3f9a2fd48e52f04",
+    "JointSolver.cpp": "d3ce69287e5c1e143f04afc91fd450bcfcf513f1ebdebd85535882b781d29fca",
+    "JointSolver.h": "a20347fe7ba295e60482114cb400d9c14ef16741d2daac19bd1e6b6fab4bc4e2",
+    "RigidBody.cpp.o": "dbfcc98ebf459bcf3d26d689bb4e7ae526815d7a7ca24e7c50e60317164343f4",
+    "JointSolver.cpp.o": "d7a1268011c4ae7540b45343ab885ae319b84009e42cb082891997c2bbc0afd4"
+  }
+}

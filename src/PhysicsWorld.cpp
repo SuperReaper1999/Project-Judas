@@ -52,6 +52,21 @@ double MillisecondsBetween(Clock::time_point a, Clock::time_point b) {
     return std::chrono::duration<double, std::milli>(b - a).count();
 }
 
+// Per-step aggregate diagnostics keep CCD searches bounded in M56: recording a
+// scope for every predicate would overflow a frame's event lane. Nested work in
+// the same category is counted once; categories are inclusive, not additive.
+struct PhysicsWorkSample {std::uint64_t nanoseconds=0,calls=0;unsigned depth=0;};
+class PhysicsWorkTimer {
+public:
+    PhysicsWorkTimer(PhysicsWorkSample& value,bool enabled):sample(enabled?&value:nullptr){
+        if(sample){outer=sample->depth++==0;++sample->calls;if(outer)start=Clock::now();}
+    }
+    ~PhysicsWorkTimer(){if(sample&&--sample->depth==0&&outer)
+        sample->nanoseconds+=std::uint64_t(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count());}
+    PhysicsWorkTimer(const PhysicsWorkTimer&)=delete;
+private:PhysicsWorkSample* sample;bool outer=false;Clock::time_point start{};
+};
+
 bool FiniteVector(glm::vec3 v) {return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);}
 bool UsableVelocity(glm::vec3 v) {return FiniteVector(v)&&std::isfinite(glm::length(v));}
 bool UsableKinematicPose(const BodyTransform& pose) {
@@ -367,46 +382,94 @@ struct PhysicsWorld::Impl {
         }
     }
     uint64_t sleepTraceStep=0;
+    static constexpr unsigned kNoSleepMember=std::numeric_limits<unsigned>::max();
+    struct SleepIsland {
+        unsigned first=kNoSleepMember,last=kNoSleepMember,count=0;
+        bool quiet=true,anchored=false;
+        float seconds=1000;
+    };
+    // Derived, step-local graph data. Capacities survive, but every logical
+    // member/edge is rebuilt from current generation-validated physical state.
+    std::vector<unsigned> sleepParents,sleepNext,sleepRoots;
+    std::vector<SleepIsland> sleepIslands;
+    std::size_t sleepGraphEdges=0,sleepIslandCount=0,sleepScratchBytes=0;
     void Settle(float dt){
         ++sleepTraceStep;
+        sleepGraphEdges=sleepIslandCount=0;
         if(!sleepingEnabled){for(auto i:aliveSlots)if(bodies[i].isDynamic)++stats.awakeBodies;return;}
-        std::vector<unsigned> parent(bodies.size());for(unsigned i=0;i<parent.size();++i)parent[i]=i;
-        auto root=[&](unsigned i){while(parent[i]!=i){parent[i]=parent[parent[i]];i=parent[i];}return i;};
-        auto unite=[&](unsigned a,unsigned b){if(bodies[a].isDynamic&&bodies[b].isDynamic)parent[root(b)]=root(a);};
-        // Positive solver impulses also represent speculative resting support.
-        // Touch callbacks alone deliberately omit positive-gap contact rows.
+        sleepParents.resize(bodies.size());
+        for(unsigned i=0;i<sleepParents.size();++i)sleepParents[i]=i;
+        sleepNext.assign(bodies.size(),kNoSleepMember);
+        sleepIslands.assign(bodies.size(),SleepIsland{});
+        sleepRoots.clear();
+        auto root=[&](unsigned i){while(sleepParents[i]!=i){sleepParents[i]=sleepParents[sleepParents[i]];i=sleepParents[i];}return i;};
+        auto unite=[&](unsigned a,unsigned b){++sleepGraphEdges;if(bodies[a].isDynamic&&bodies[b].isDynamic)sleepParents[root(b)]=root(a);};
+        // Preserve the original union and row order: changing roots or solver
+        // order is unnecessary for eliminating the per-island global rescans.
         auto validSupport=[&](const CachedContact& c){return c.normalImpulse>0&&c.key.slotA<bodies.size()&&c.key.slotB<bodies.size()&&bodies[c.key.slotA].alive&&bodies[c.key.slotB].alive&&bodies[c.key.slotA].generation==c.key.generationA&&bodies[c.key.slotB].generation==c.key.generationB;};
         for(const auto& c:contactCache)if(validSupport(c))unite(c.key.slotA,c.key.slotB);
         for(const auto& [_,e]:stepTouches)if(!e.sensor&&Get(e.a)&&Get(e.b))unite(e.a.id&kSlotMask,e.b.id&kSlotMask);
         for(const auto& j:joints)if(JointActive(j)&&Get(j.state.settings.bodyB))unite(j.state.settings.bodyA.id&kSlotMask,j.state.settings.bodyB.id&kSlotMask);
-        std::map<unsigned,std::vector<unsigned>> islands;for(auto i:aliveSlots)if(bodies[i].isDynamic&&bodies[i].enabled&&!bodies[i].sensor)islands[root(i)].push_back(i);
-        for(auto& [_,slots]:islands){bool quiet=true,anchored=false;float seconds=1000;
-            for(const auto& c:contactCache)if(validSupport(c)){auto a=c.key.slotA,b=c.key.slotB;anchored|=(root(a)==root(slots.front())&&bodies[b].rigidBody.IsStatic())||(root(b)==root(slots.front())&&bodies[a].rigidBody.IsStatic());}
-            for(const auto& [_,e]:stepTouches)if(!e.sensor&&Get(e.a)&&Get(e.b)){auto a=e.a.id&kSlotMask,b=e.b.id&kSlotMask;anchored|=(root(a)==root(slots.front())&&bodies[b].rigidBody.IsStatic())||(root(b)==root(slots.front())&&bodies[a].rigidBody.IsStatic());}
-            for(const auto& j:joints)if(JointActive(j)){auto a=j.state.settings.bodyA.id&kSlotMask;auto* b=Get(j.state.settings.bodyB);anchored|=root(a)==root(slots.front())&&(!b||b->rigidBody.IsStatic());}
-            for(auto i:slots){auto& b=bodies[i];quiet&=glm::length(b.rigidBody.linearVelocity)<.03f&&glm::length(b.rigidBody.angularVelocity)<.03f&&glm::length(b.rigidBody.position-b.previousPosition)<.002f&&glm::abs(glm::dot(b.rigidBody.orientation,b.previousOrientation))>.999999f;seconds=std::min(seconds,b.quietSeconds);}
-            for(const auto& j:joints)if(JointActive(j)&&root(j.state.settings.bodyA.id&kSlotMask)==root(slots.front())){
-                const auto& s=j.state.settings;auto* a=Get(s.bodyA);auto* b=Get(s.bodyB);auto pa=a->rigidBody.position+a->rigidBody.orientation*(s.anchorA-a->shape.pivotOffset);auto pb=b?b->rigidBody.position+b->rigidBody.orientation*(s.anchorB-b->shape.pivotOffset):s.anchorB;
-                auto error=pb-pa;if(s.type==JointType::Slider){auto axis=a->rigidBody.orientation*s.frameA*glm::vec3(1,0,0);error-=axis*glm::dot(error,axis);}quiet&=glm::length(error)<.02f;quiet&=!s.motor||s.speed==0;
-                auto qa=glm::normalize(a->rigidBody.orientation*s.frameA),qb=b?glm::normalize(b->rigidBody.orientation*s.frameB):glm::normalize(s.frameB);
-                if(s.type==JointType::Fixed||s.type==JointType::Slider)quiet&=2*std::acos(std::clamp(glm::abs(glm::dot(qa,qb)),0.f,1.f))<.01f;
-                if(s.type==JointType::Hinge)quiet&=glm::length(qa*glm::vec3(1,0,0)-qb*glm::vec3(1,0,0))<.01f;
-                if(s.spring)quiet&=std::abs(j.state.coordinate-j.previousCoordinate)<.002f; // gravity can balance a spring away from its rest coordinate
-                if(s.limits)quiet&=j.state.coordinate>=s.lower-.01f&&j.state.coordinate<=s.upper+.01f;
-            }
-            for(const auto& c:lastStepContacts)if(c.penetration>.02f){ // only invalidate the contacting island
-                for(auto i:slots)if(glm::length(c.point-bodies[i].rigidBody.position)<bodies[i].boundingRadius+.1f)quiet=false;
-            }
-            if(std::getenv("JUDAS_SLEEP_TRACE")&&sleepTraceStep%60==0){
+        for(auto i:aliveSlots)if(bodies[i].isDynamic&&bodies[i].enabled&&!bodies[i].sensor){
+            const auto r=root(i);auto& island=sleepIslands[r];
+            if(island.first==kNoSleepMember){island.first=i;sleepRoots.push_back(r);}
+            else sleepNext[island.last]=i;
+            island.last=i;++island.count;
+        }
+        // std::map previously visited roots in ascending order and members in
+        // alive-slot order. Keep both orders, without allocating a map/vector
+        // for every independent machine on every fixed step.
+        std::sort(sleepRoots.begin(),sleepRoots.end());
+        sleepIslandCount=sleepRoots.size();
+        sleepScratchBytes=(sleepParents.capacity()+sleepNext.capacity()+sleepRoots.capacity())*sizeof(unsigned)+sleepIslands.capacity()*sizeof(SleepIsland);
+        auto anchorPair=[&](unsigned a,unsigned b){
+            if(bodies[b].rigidBody.IsStatic())sleepIslands[root(a)].anchored=true;
+            if(bodies[a].rigidBody.IsStatic())sleepIslands[root(b)].anchored=true;
+        };
+        for(const auto& c:contactCache)if(validSupport(c))anchorPair(c.key.slotA,c.key.slotB);
+        for(const auto& [_,e]:stepTouches)if(!e.sensor&&Get(e.a)&&Get(e.b))anchorPair(e.a.id&kSlotMask,e.b.id&kSlotMask);
+        for(const auto& j:joints)if(JointActive(j)){
+            const auto& s=j.state.settings;auto* a=Get(s.bodyA);auto* b=Get(s.bodyB);
+            auto& island=sleepIslands[root(s.bodyA.id&kSlotMask)];
+            // This deliberately retains the established body-A anchor policy;
+            // a performance pass must not silently change sleep semantics.
+            island.anchored|=!b||b->rigidBody.IsStatic();
+            if(island.first==kNoSleepMember)continue;
+            auto pa=a->rigidBody.position+a->rigidBody.orientation*(s.anchorA-a->shape.pivotOffset);auto pb=b?b->rigidBody.position+b->rigidBody.orientation*(s.anchorB-b->shape.pivotOffset):s.anchorB;
+            auto error=pb-pa;if(s.type==JointType::Slider){auto axis=a->rigidBody.orientation*s.frameA*glm::vec3(1,0,0);error-=axis*glm::dot(error,axis);}island.quiet&=glm::length(error)<.02f;island.quiet&=!s.motor||s.speed==0;
+            auto qa=glm::normalize(a->rigidBody.orientation*s.frameA),qb=b?glm::normalize(b->rigidBody.orientation*s.frameB):glm::normalize(s.frameB);
+            if(s.type==JointType::Fixed||s.type==JointType::Slider)island.quiet&=2*std::acos(std::clamp(glm::abs(glm::dot(qa,qb)),0.f,1.f))<.01f;
+            if(s.type==JointType::Hinge)island.quiet&=glm::length(qa*glm::vec3(1,0,0)-qb*glm::vec3(1,0,0))<.01f;
+            if(s.spring)island.quiet&=std::abs(j.state.coordinate-j.previousCoordinate)<.002f;
+            if(s.limits)island.quiet&=j.state.coordinate>=s.lower-.01f&&j.state.coordinate<=s.upper+.01f;
+        }
+        for(auto i:aliveSlots)if(bodies[i].isDynamic&&bodies[i].enabled&&!bodies[i].sensor){
+            auto& b=bodies[i];auto& island=sleepIslands[root(i)];
+            island.quiet&=glm::length(b.rigidBody.linearVelocity)<.03f&&glm::length(b.rigidBody.angularVelocity)<.03f&&glm::length(b.rigidBody.position-b.previousPosition)<.002f&&glm::abs(glm::dot(b.rigidBody.orientation,b.previousOrientation))>.999999f;
+            island.seconds=std::min(island.seconds,b.quietSeconds);
+        }
+        // Retain the existing geometric neighbourhood test exactly. Debug
+        // contacts do not carry body identity; proximity must not be replaced
+        // with guessed ownership. Only genuinely deep rows take this path.
+        for(const auto& c:lastStepContacts)if(c.penetration>.02f){
+            for(auto i:aliveSlots)if(bodies[i].isDynamic&&bodies[i].enabled&&!bodies[i].sensor&&glm::length(c.point-bodies[i].rigidBody.position)<bodies[i].boundingRadius+.1f)sleepIslands[root(i)].quiet=false;
+        }
+        const bool trace=std::getenv("JUDAS_SLEEP_TRACE")&&sleepTraceStep%60==0;
+        for(auto r:sleepRoots){auto& island=sleepIslands[r];
+            if(trace){
                 float linear=0,angular=0,travel=0,anchorError=0,angularError=0,penetration=0;bool drive=false,limit=true;
-                for(auto i:slots){const auto& b=bodies[i];linear=std::max(linear,glm::length(b.rigidBody.linearVelocity));angular=std::max(angular,glm::length(b.rigidBody.angularVelocity));travel=std::max(travel,glm::length(b.rigidBody.position-b.previousPosition));}
-                for(const auto& j:joints)if(JointActive(j)&&root(j.state.settings.bodyA.id&kSlotMask)==root(slots.front())){const auto& x=j.state.settings;auto* a=Get(x.bodyA);auto* b=Get(x.bodyB);auto pa=a->rigidBody.position+a->rigidBody.orientation*(x.anchorA-a->shape.pivotOffset),pb=b?b->rigidBody.position+b->rigidBody.orientation*(x.anchorB-b->shape.pivotOffset):x.anchorB;anchorError=std::max(anchorError,glm::length(pa-pb));drive|=x.motor&&x.speed!=0;limit&=!x.limits||(j.state.coordinate>=x.lower-.01f&&j.state.coordinate<=x.upper+.01f);auto qa=glm::normalize(a->rigidBody.orientation*x.frameA),qb=b?glm::normalize(b->rigidBody.orientation*x.frameB):glm::normalize(x.frameB);if(x.type==JointType::Hinge)angularError=std::max(angularError,glm::length(qa*glm::vec3(1,0,0)-qb*glm::vec3(1,0,0)));}
-                for(const auto& c:lastStepContacts)for(auto i:slots)if(glm::length(c.point-bodies[i].rigidBody.position)<bodies[i].boundingRadius+.1f)penetration=std::max(penetration,c.penetration);
-                std::fprintf(stderr,"SLEEP step=%llu root=%u members=%zu v=%g w=%g travel=%g anchor=%g axis=%g penetration=%g drive=%d limits=%d quiet=%d time=%g supported=%d\n",(unsigned long long)sleepTraceStep,slots.front(),slots.size(),linear,angular,travel,anchorError,angularError,penetration,drive,limit,quiet,seconds,anchored);
+                for(auto i=island.first;i!=kNoSleepMember;i=sleepNext[i]){const auto& b=bodies[i];linear=std::max(linear,glm::length(b.rigidBody.linearVelocity));angular=std::max(angular,glm::length(b.rigidBody.angularVelocity));travel=std::max(travel,glm::length(b.rigidBody.position-b.previousPosition));}
+                for(const auto& j:joints)if(JointActive(j)&&root(j.state.settings.bodyA.id&kSlotMask)==r){const auto& x=j.state.settings;auto* a=Get(x.bodyA);auto* b=Get(x.bodyB);auto pa=a->rigidBody.position+a->rigidBody.orientation*(x.anchorA-a->shape.pivotOffset),pb=b?b->rigidBody.position+b->rigidBody.orientation*(x.anchorB-b->shape.pivotOffset):x.anchorB;anchorError=std::max(anchorError,glm::length(pa-pb));drive|=x.motor&&x.speed!=0;limit&=!x.limits||(j.state.coordinate>=x.lower-.01f&&j.state.coordinate<=x.upper+.01f);auto qa=glm::normalize(a->rigidBody.orientation*x.frameA),qb=b?glm::normalize(b->rigidBody.orientation*x.frameB):glm::normalize(x.frameB);if(x.type==JointType::Hinge)angularError=std::max(angularError,glm::length(qa*glm::vec3(1,0,0)-qb*glm::vec3(1,0,0)));}
+                for(const auto& c:lastStepContacts)for(auto i=island.first;i!=kNoSleepMember;i=sleepNext[i])if(glm::length(c.point-bodies[i].rigidBody.position)<bodies[i].boundingRadius+.1f)penetration=std::max(penetration,c.penetration);
+                std::fprintf(stderr,"SLEEP step=%llu root=%u members=%zu v=%g w=%g travel=%g anchor=%g axis=%g penetration=%g drive=%d limits=%d quiet=%d time=%g supported=%d\n",(unsigned long long)sleepTraceStep,island.first,std::size_t(island.count),linear,angular,travel,anchorError,angularError,penetration,drive,limit,island.quiet,island.seconds,island.anchored);
             }
-            seconds=quiet?seconds+dt:0;
-            const bool asleep=quiet&&seconds>=.75f&&(anchored||std::all_of(slots.begin(),slots.end(),[&](unsigned i){return glm::length(bodies[i].lastAcceleration)<1e-6f&&glm::length(bodies[i].rigidBody.linearVelocity)<1e-6f&&glm::length(bodies[i].rigidBody.angularVelocity)<1e-6f;}));
-            for(auto i:slots){auto& b=bodies[i];b.quietSeconds=seconds;b.sleeping=asleep;if(asleep){b.rigidBody.linearVelocity={0,0,0};b.rigidBody.angularVelocity={0,0,0};}}
+            island.seconds=island.quiet?island.seconds+dt:0;
+            bool freeAtRest=true;
+            if(island.quiet&&island.seconds>=.75f&&!island.anchored){
+                for(auto i=island.first;i!=kNoSleepMember;i=sleepNext[i])if(!(glm::length(bodies[i].lastAcceleration)<1e-6f&&glm::length(bodies[i].rigidBody.linearVelocity)<1e-6f&&glm::length(bodies[i].rigidBody.angularVelocity)<1e-6f)){freeAtRest=false;break;}
+            }
+            const bool asleep=island.quiet&&island.seconds>=.75f&&(island.anchored||freeAtRest);
+            for(auto i=island.first;i!=kNoSleepMember;i=sleepNext[i]){auto& b=bodies[i];b.quietSeconds=island.seconds;b.sleeping=asleep;if(asleep){b.rigidBody.linearVelocity={0,0,0};b.rigidBody.angularVelocity={0,0,0};}}
             stats.sleepingIslands+=asleep;
         }
         for(auto& j:joints)j.previousCoordinate=j.state.coordinate;
@@ -449,6 +512,16 @@ struct PhysicsWorld::Impl {
     };
     std::vector<ImpactPoseSample> impactPoseSamples;
     std::size_t impactPoseEvaluations=0,impactPoseReuses=0,impactOrientationBuilds=0,impactTruthRequests=0,impactTruthReuses=0,impactBoundsRejected=0;
+    struct WorkDiagnostics {
+        bool active=false;
+        PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation;
+        std::size_t candidatePasses=0,candidateQueries=0,candidateLeaves=0;
+    } work;
+    void PrepareJoints(JointSolver& target,const std::vector<JointInput>& inputs,float dt,
+                       bool warm=true,bool impact=false,bool append=false){
+        PhysicsWorkTimer timer(work.jointPreparation,work.active);
+        target.Prepare(inputs,dt,warm,impact,append);
+    }
     void InvalidateImpactPose(unsigned slot){
         if(slot<impactPoseSamples.size()){
             impactPoseSamples[slot].time=std::numeric_limits<double>::quiet_NaN();
@@ -503,6 +576,7 @@ struct PhysicsWorld::Impl {
         sample.boundStart=start;sample.boundFinish=finish;sample.boundGeneration=body.generation;return sample.remainingBound;
     }
     ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) {
+        PhysicsWorkTimer timer(work.geometry,work.active);
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
         return ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
             PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation),margin,&*aa.orientation,&*bb.orientation);
@@ -515,6 +589,7 @@ struct PhysicsWorld::Impl {
         return deepest;
     }
     bool PairPenetrationExceeds(unsigned a,unsigned b,int pa,int pb,double time,double target) {
+        PhysicsWorkTimer timer(work.geometry,work.active);
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
         const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
@@ -522,6 +597,7 @@ struct PhysicsWorld::Impl {
         return PairPenetration(a,b,pa,pb,time)>target;
     }
     bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time) {
+        PhysicsWorkTimer timer(work.geometry,work.active);
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
         const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
@@ -682,6 +758,7 @@ struct PhysicsWorld::Impl {
     // on one corner), rather than the first touch. Measuring from the start
     // depth lets the search continue after an event that ended at the target.
     double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
+        PhysicsWorkTimer timer(work.toi,work.active);
         // A target can finish inside the step. Never certify a plane across
         // its velocity discontinuity; search the two real ledger intervals.
         for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
@@ -871,8 +948,9 @@ struct PhysicsWorld::Impl {
                 }
                 std::vector<unsigned char> included(bodies.size(),0);
                 for(unsigned slot:aliveSlots)if(root(slot)==order[begin].first)included[slot]=1;
-                eventJointSolver.Prepare(JointInputs(&included),dt,false,true);
-                const auto result=impactSolver.Solve(rows,dt,false,eventJointSolver.Empty()?nullptr:&eventJointSolver);
+                PrepareJoints(eventJointSolver,JointInputs(&included),dt,false,true);
+                const auto result=[&]{PhysicsWorkTimer timer(work.impactSolve,work.active);
+                    return impactSolver.Solve(rows,dt,false,eventJointSolver.Empty()?nullptr:&eventJointSolver);}();
                 if(!result.energyBudgetSatisfied) throw std::runtime_error("inelastic impact energy guard failed");
                 if(result.effectiveRestitution==0) for(auto k=begin;k<end;++k) startContacts[order[k].second].newImpact=false;
                 ++stats.impactEvents; stats.impactSafetyFallback+=result.safetyFallback;
@@ -954,6 +1032,8 @@ struct PhysicsWorld::Impl {
                 included[slot]=1;island.push_back(slot);}};
             include(seedA);include(seedB);
             std::vector<std::pair<unsigned,unsigned>> touching;
+            {
+            PhysicsWorkTimer timer(work.impactIslands,work.active);
             for (std::size_t next=0;next<island.size();++next) {
                 const unsigned a=island[next]; const auto pose=PoseAt(a,now);
                 for(const auto& joint:joints)if(JointActive(joint)&&joint.state.settings.bodyB.IsValid()){
@@ -972,6 +1052,7 @@ struct PhysicsWorld::Impl {
                             hit=hit||PairTouches(a,b,pa,pb,now);
                     if(hit) {touching.emplace_back(pair);include(b);}
                 }
+            }
             }
             // A supported body's incoming impact is mechanically coupled even
             // when a cached support point currently has a small positive gap.
@@ -1020,8 +1101,9 @@ struct PhysicsWorld::Impl {
                     }
             }
             if(rows.empty()) throw std::runtime_error("impact bracket lost contact geometry");
-            eventJointSolver.Prepare(JointInputs(&included),dt,false,true);
-            const auto result=impactSolver.Solve(rows,dt,capture,eventJointSolver.Empty()?nullptr:&eventJointSolver);
+            PrepareJoints(eventJointSolver,JointInputs(&included),dt,false,true);
+            const auto result=[&]{PhysicsWorkTimer timer(work.impactSolve,work.active);
+                return impactSolver.Solve(rows,dt,capture,eventJointSolver.Empty()?nullptr:&eventJointSolver);}();
             if(!result.energyBudgetSatisfied) throw std::runtime_error("inelastic impact energy guard failed");
             // Replace only primitive groups for which actual TOI geometry
             // was solved. Never replay warm impulses or duplicate repeated
@@ -1303,11 +1385,15 @@ struct PhysicsWorld::Impl {
         return true;
     }
     void GenerateCandidatePairs() {
+        JUDAS_PROFILE_SCOPE("Physics candidate generation");
+        if(work.active)++work.candidatePasses;
         candidatePairs.clear();
         for (const unsigned int slot : aliveSlots) {
             const Body& a = bodies[slot];
             if (!a.enabled || (!a.HasMotion()&&!a.sensor&&!a.queryOnly)) continue;
+            if(work.active)++work.candidateQueries;
             tree.Query(tree.FatAabb(a.proxy), [&](int proxy) {
+                if(work.active)++work.candidateLeaves;
                 const unsigned int other = tree.UserData(proxy);
                 if (other == slot) return;
                 const Body& b = bodies[other];
@@ -2234,6 +2320,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     }
 
     w.stats = StepStats{};
+    w.work={};w.work.active=PerformanceProfiler::Get().Active();
     if(w.collectingPreStepQueries){
         w.stepTouches=std::move(w.preStepQueryTouches);w.preStepQueryTouches.clear();w.collectingPreStepQueries=false;
         // A safe authority handoff may disable an observer after its motor move.
@@ -2242,10 +2329,13 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     }else if(!w.coupledStep)w.stepTouches.clear();
     const auto cachesBefore = w.cacheCounters;
     const ContactGeometryDiagnostics geometryBefore = GetContactGeometryDiagnostics();
+    const auto collisionBefore=GetCollisionGeometryStats();
 
-    w.PublishKinematics(fixedDeltaTime);
+    {JUDAS_PROFILE_SCOPE("Physics kinematic publication");w.PublishKinematics(fixedDeltaTime);}
 
     // Awaken connected state before velocity integration for predicted impacts.
+    static ProfileLabel predictionLabel("Physics prediction and wake"),integrationLabel("Physics velocity integration");
+    ProfileScope predictionScope(predictionLabel);
     for(auto i:w.aliveSlots)if(w.bodies[i].HasMotion()&&!w.bodies[i].sleeping)w.CoverStepReach(w.bodies[i],fixedDeltaTime);
     w.GenerateCandidatePairs();
     for(auto [a,b]:w.candidatePairs){auto& aa=w.bodies[a];auto& bb=w.bodies[b];if(aa.sensor||bb.sensor||aa.queryOnly||bb.queryOnly)continue;
@@ -2255,6 +2345,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
         if(aa.sleeping&&moving(bb))w.Wake(a);
         if(bb.sleeping&&moving(aa))w.Wake(b);
     }
+    predictionScope.End();ProfileScope integrationScope(integrationLabel);
     // 1) Velocity from this step's force/torque accumulators (M12). Gravity
     // is already in linearVelocity via the caller's ApplyLinearAcceleration.
     // The start-of-step pose is kept for player sweeps and presentation.
@@ -2279,6 +2370,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     w.stats.dynamicBodies = movable;
     w.stats.possiblePairs = movable * (movable - (movable > 0 ? 1 : 0)) / 2 +
                             movable * (w.aliveSlots.size() - movable);
+    integrationScope.End();
 
     // 2) Broadphase: every fat bound contains its body's current pose
     // (refreshed at the end of the previous Step and by ResetBody), so every
@@ -2419,13 +2511,13 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     }
     std::sort(w.supportPairs.begin(),w.supportPairs.end());
     w.supportPairs.erase(std::unique(w.supportPairs.begin(),w.supportPairs.end()),w.supportPairs.end());
-    w.solver.Prepare(fixedDeltaTime);
+    {JUDAS_PROFILE_SCOPE("Physics contact row preparation");w.solver.Prepare(fixedDeltaTime);}
     if(coupling){
         if(coupling->begin)coupling->begin(fixedDeltaTime);
         // Material participants may have awakened their connected island.
         // Consume deferred gravity and include those joints at THIS boundary.
         for(auto slot:w.aliveSlots){auto& body=w.bodies[slot];if(body.isDynamic&&!body.sleeping&&body.deferredAcceleration){body.rigidBody.linearVelocity+=body.lastAcceleration*fixedDeltaTime;body.deferredAcceleration=false;}}
-        if(!w.joints.empty())w.jointSolver.Prepare(w.JointInputs(),fixedDeltaTime);
+        if(!w.joints.empty())w.PrepareJoints(w.jointSolver,w.JointInputs(),fixedDeltaTime);
         const unsigned rounds=std::max(unsigned(ContactSolver::kVelocityIterations),coupling->iterations);
         std::vector<unsigned char> awake(w.bodies.size(),0);
         for(auto slot:w.aliveSlots)awake[slot]=!w.bodies[slot].sleeping;
@@ -2443,13 +2535,15 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
             }
             if(newlyAwake&&!w.joints.empty()){
                 const auto oldRows=w.jointSolver.RowCount();
-                w.jointSolver.Prepare(w.JointInputs(),fixedDeltaTime,true,false,true);
+                w.PrepareJoints(w.jointSolver,w.JointInputs(),fixedDeltaTime,true,false,true);
                 w.jointSolver.SolveIteration(oldRows);
             }
         }
     }else if(w.joints.empty())w.solver.SolveVelocities();
-    else {w.jointSolver.Prepare(w.JointInputs(),fixedDeltaTime);for(int i=0;i<ContactSolver::kVelocityIterations;++i){w.solver.SolveVelocities(1);w.jointSolver.SolveIteration();}}
+    else {w.PrepareJoints(w.jointSolver,w.JointInputs(),fixedDeltaTime);for(int i=0;i<ContactSolver::kVelocityIterations;++i){w.solver.SolveVelocities(1);w.jointSolver.SolveIteration();}}
     // Remember this step's converged impulses for the next step's warm start.
+    static ProfileLabel historyLabel("Physics contact history publication");
+    ProfileScope historyScope(historyLabel);
     const std::vector<ContactConstraint>& solved = w.solver.Constraints();
     for (std::size_t i = 0; i < solved.size() && i < w.pendingCache.size(); ++i) {
         const auto& key=w.pendingCache[i].key;
@@ -2464,6 +2558,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
                      [](const CachedContact& x, const CachedContact& y) { return x.key < y.key; });
     std::swap(w.contactCache, w.pendingCache);
     w.completedContactObservations=w.contactCache;
+    historyScope.End();
     velocityScope.End();
     ProfileScope continuousImpactsScope(continuousImpactsLabel);
     w.AdvanceImpacts(fixedDeltaTime,coupling!=nullptr);
@@ -2488,8 +2583,11 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
         Impl::Body& body = w.bodies[slot];
         if (body.HasMotion()) w.RefreshProxy(body);
     }
+    static ProfileLabel touchesLabel("Physics endpoint contact publication");
+    ProfileScope touchesScope(touchesLabel);
     w.queryTouchesPending=std::any_of(w.aliveSlots.begin(),w.aliveSlots.end(),[&](unsigned i){return w.bodies[i].queryOnly;});
     if(!w.queryTouchesPending&&!w.coupledStep)w.FinishTouches();
+    touchesScope.End();
     w.stats.proxyReinsertions = w.reinsertionsSinceStep;
     w.reinsertionsSinceStep = 0;
     w.stats.treeHeight = w.tree.Height();
@@ -2527,6 +2625,25 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     JUDAS_PROFILE_COUNTER("Physics impact actual-contact requests",double(w.impactTruthRequests),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact actual-contact reuses",double(w.impactTruthReuses),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact remaining-bound rejections",double(w.impactBoundsRejected),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics broadphase passes",double(w.work.candidatePasses),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics broadphase root queries",double(w.work.candidateQueries),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics broadphase overlapping leaves",double(w.work.candidateLeaves),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics sleep graph edges",double(w.sleepGraphEdges),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics sleep islands",double(w.sleepIslandCount),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics sleep scratch bytes",double(w.sleepScratchBytes),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics persistent contact rows",double(w.solver.Constraints().size()),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics joint rows",double(w.joints.empty()?0:w.jointSolver.RowCount()),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD search inclusive ms",double(w.work.toi.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD geometry inclusive ms",double(w.work.geometry.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics CCD geometry calls",double(w.work.geometry.calls),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics impact island discovery ms",double(w.work.impactIslands.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics impact solve ms",double(w.work.impactSolve.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics joint preparation ms",double(w.work.jointPreparation.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics joint preparation calls",double(w.work.jointPreparation.calls),ProfileCounterMode::Sum);
+    const auto collisionAfter=GetCollisionGeometryStats();
+    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests),ProfileCounterMode::Sum);
     w.stats.solverMilliseconds = MillisecondsBetween(solverStart, solverEnd);
     w.stats.totalMilliseconds = MillisecondsBetween(stepStart, stepEnd);
     const ContactGeometryDiagnostics geometryAfter = GetContactGeometryDiagnostics();

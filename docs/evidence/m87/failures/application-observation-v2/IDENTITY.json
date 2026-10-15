@@ -1,0 +1,25 @@
+{
+  "status": "50 checks / 1 failure; unchanged physical thresholds; root cause authoring interference",
+  "files": [
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingApplicationTests.cpp",
+      "preserved": "PhysicsScalingApplicationTests.cpp",
+      "sha256": "0d697da17883c3e06c74e4cf542c8994779c310218dc7ba9ad27e25515b2f8b8"
+    },
+    {
+      "source": "/tmp/judas-m87-final/application-observation-followup/application.log",
+      "preserved": "application.log",
+      "sha256": "0880edb84887320a43d6f9de82f26f3fb2fc50cffaf050b462825ff786a23cc2"
+    },
+    {
+      "source": "/tmp/judas-m87-final/application-observation-followup/RECEIPT.json",
+      "preserved": "RECEIPT.json",
+      "sha256": "9cce586b95ef06c1ae2e7324eed74a49de1673c24a20d0920501c3fcc83f2c3f"
+    },
+    {
+      "source": "/tmp/judas-m87-final/application-observation-followup/lab/results.json",
+      "preserved": "fixture-results.json",
+      "sha256": "09e1ac2484dae194ad28eba86966dcac845e50d16bdd57be11a1f30d0a089701"
+    }
+  ]
+}

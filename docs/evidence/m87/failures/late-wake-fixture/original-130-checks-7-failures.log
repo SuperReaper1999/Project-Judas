@@ -1,0 +1,8 @@
+FAIL late-wake fixture begins with a genuinely sleeping physical articulation
+FAIL late-wake fixture begins with a genuinely sleeping physical articulation
+FAIL late-wake fixture begins with a genuinely sleeping physical articulation
+FAIL material callback reaches unchanged velocity rounds before its authored late impulse
+FAIL no-wake material control leaves genuinely inactive mechanisms sleeping
+FAIL late-woken articulation receives deferred gravity and actual joint restraint in the same physical boundary
+FAIL late wake matches ordinary pre-step wake at actual body endpoints without replaying warm-start rows
+Physics scaling semantics: 130 checks, 7 failures

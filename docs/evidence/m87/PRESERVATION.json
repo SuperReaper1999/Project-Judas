@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-15T18:55:18.317476+00:00",
+  "starting_checkpoint": "4fada67c3228d37301faffa33e79fff65c695461",
+  "baseline_source_files": 389,
+  "allowed_engine_build_changes": [
+    "CMakeLists.txt",
+    "src/CollisionGeometry.cpp",
+    "src/JointSolver.cpp",
+    "src/JointSolver.h",
+    "src/PhysicsWorld.cpp"
+  ],
+  "all_other_baseline_source_hashes_match": true,
+  "tracked_changes_outside_M87": [],
+  "independent_fluid_research": "not modified by this task; independent running research jobs left untouched",
+  "protected_history": "No tracked pre-M87 evidence/prototype changes; checked Git diff inventory.",
+  "main": "4fada67c3228d37301faffa33e79fff65c695461",
+  "origin_main": "4fada67c3228d37301faffa33e79fff65c695461",
+  "windows": "M87 not validated; informational/nonblocking"
+}

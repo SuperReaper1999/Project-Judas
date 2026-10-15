@@ -1,0 +1,25 @@
+{
+  "status": "48 checks / 2 failed predicates; exact first application run preserved",
+  "files": [
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingApplicationTests.cpp",
+      "preserved": "PhysicsScalingApplicationTests.cpp",
+      "sha256": "028a356e0254fea83ecdff045b77252d9617a509aa7e0fcb858a6fbdc5f71c75"
+    },
+    {
+      "source": "/tmp/judas-m87-final/application/judas_physics_scaling_application_tests.log",
+      "preserved": "application.log",
+      "sha256": "bfcbf5b890666c04831259314b93cf0e2abd44f9c3cd0b7c06267b98bbee0213"
+    },
+    {
+      "source": "/tmp/judas-m87-final/application/results.json",
+      "preserved": "runner-results.json",
+      "sha256": "6134806562974571266197b445f36a76925e4ad986d56cab76985c775d43f3bb"
+    },
+    {
+      "source": "/tmp/judas-m87-final/application/lab/results.json",
+      "preserved": "fixture-results.json",
+      "sha256": "b5c9a96cf8a38bca2e513be8d1ad26617b314a8ac62d906ce794d1e5fa5a75b0"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-m87-final/application/lab/project/Saves/room128.judasstate (none saved)
+Project: Judas Physics Stress Lab (/tmp/judas-m87-final/application/lab/project/physics_stress_lab.judasproj)
+Scene: Physics Stress Lab / 128 loose bodies (/tmp/judas-m87-final/application/lab/project/Scenes/room128.judas)
+World origin (m): 0.000, 0.000, 0.000
+FIXTURE normal project copy; only saveIdentity differs from /home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj
+PASS normal startup constructs exact physical room population
+PASS one project script owns lab intent and the presentation camera
+PASS initial mechanisms keep real springs and limits with drive power off
+PASS all 96 unpowered articulated bodies sleep through normal physics
+PASS the 128 separated grounded pieces naturally sleep without script intervention
+PASS capture actual rendered lab frame
+PHASE 1 frame=91
+PASS logical M input enables native finite-force slider motors
+PASS motor commands move the actual articulated shelf
+PASS moving native joints wake bodies while preserving limits and anchors
+PASS capture actual rendered lab frame
+PHASE 2 frame=141
+PASS logical P input spawns 32 ordinary persistent dynamic prefabs
+PASS spawned pieces actually fall under gravity rather than existing only in script inventory
+PHASE 3 frame=186
+PASS logical F6 produces a completed ordinary durable save
+PASS read the actual played scene and native participant archive
+PASS save captured running motor policy and runtime entity references
+PHASE 4 frame=195
+PASS cold load restores the exact archived lab state before callbacks
+PASS recapture native continuation at the real load publication boundary
+PASS cold load preserves actual articulation continuation bytes
+PASS cold load preserves actual contacts continuation bytes
+PASS cold load preserves actual sleep continuation bytes
+PASS cold load restores all 288 physical endpoints, including runtime prefabs
+PASS old body and joint handles cannot alias the fresh loaded world
+PHASE 5 frame=202
+FAIL loaded physical machinery genuinely continues moving under restored control
+PASS load reconstructs prefab handles with one independent script instance
+PHASE 6 frame=242
+PASS removing power after motion permits ordinary physical sleep again
+PHASE 7 frame=546
+PASS a real impulse wakes every connected member while a different assembly stays asleep
+PASS the impulsed articulation physically moves while its joints remain connected
+PHASE 8 frame=571
+PASS modal pause stops simulation and blocks motor input leaking through the menu
+PHASE 9 frame=596
+PASS resume advances ordinary physics without replaying the paused motor input
+PHASE 10 frame=616
+PASS logical F5 starts the real shared-script watch tour
+PASS the timed watch tour removes native motor power without disabling bodies
+PASS unattended tour reaches natural sleeping state before its impulse stage
+FAIL tour impulse changes real physical state after the quiet interval
+PASS combined drive, rest, impulse and save lifecycle retains finite connected physics
+PHASE 11 frame=1826
+PASS registered 512-piece scene changes real population and cleans the former world
+PASS scene transition resets gameplay state and old runtime additions
+PASS larger ordinary scene produces actual finite physical contacts
+PHASE 12 frame=1862
+PASS registered 1024-piece scene builds its full physical population
+PASS the largest lab population remains finite with real contact response
+PASS capture actual rendered lab frame
+PHASE 13 frame=1898
+PASS rotated scene samples the authored non-world-Y gravity vector
+PASS actual rotated floor collision supplies the corresponding support normal
+PASS rotated mechanisms retain native joint geometry and natural sleeping
+PASS arbitrary-up population remains finite
+PASS capture actual rendered lab frame
+PHASE 14 frame=1989
+PASS authored reload restores clean native and shared-script state
+PASS reloaded world rejects prior body handles
+PHASE 15 frame=2010
+PASS ordinary lab application, physical lifecycle and shutdown finish successfully
+M87 application checks=48 failures=2 frames=2010

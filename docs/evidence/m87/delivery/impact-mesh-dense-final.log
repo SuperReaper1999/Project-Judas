@@ -1,0 +1,2 @@
+SCENARIO "trough 60x60 dense" triangles 7200 steps 300 totalMs 1108.45 worstStepMs 44.87 maxPenetrationMm 21.48 atStep 30 meanDeepestMm 4.56 impactQueries 2003 searchIterations 10656 searchLimits 0 searchStalls 740 samplingFallbacks 746 samplingTests 6704 impactEvents 234 convexTests 4255695 meshTriangles 4682134 bvhNodes 3647451 fastBoxesThrough 24 fastBoxesThrew 0 digest c007331aa912b5d9
+checks 52 failures 0

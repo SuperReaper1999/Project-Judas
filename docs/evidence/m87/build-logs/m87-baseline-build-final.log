@@ -1,0 +1,20 @@
+[  5%] Built target judas_app_icon
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_icu_build
+[ 11%] Built target judas_glad
+[ 11%] Built target judas_profiler
+[ 23%] Built target freetype
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_materials
+[ 35%] Built target judas_audio_backend
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_scaling_benchmarks.dir/tests/PhysicsScalingBenchmarks.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingBenchmarks.cpp:9:10: fatal error: nlohmann/json.hpp: No such file or directory
+    9 | #include <nlohmann/json.hpp>
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[3]: *** [CMakeFiles/judas_physics_scaling_benchmarks.dir/build.make:79: CMakeFiles/judas_physics_scaling_benchmarks.dir/tests/PhysicsScalingBenchmarks.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:12221: CMakeFiles/judas_physics_scaling_benchmarks.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:12228: CMakeFiles/judas_physics_scaling_benchmarks.dir/rule] Error 2
+gmake: *** [Makefile:3764: judas_physics_scaling_benchmarks] Error 2

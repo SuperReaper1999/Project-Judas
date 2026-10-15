@@ -1,0 +1,22 @@
+{
+  "started_utc": "2026-10-15T18:34:01.663608+00:00",
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+    "/tmp/judas-m87-final/application-observation-followup/lab"
+  ],
+  "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+  "exit_code": 1,
+  "seconds": 15.49712535299841,
+  "fingerprints_before": {
+    "/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingApplicationTests.cpp": "0d697da17883c3e06c74e4cf542c8994779c310218dc7ba9ad27e25515b2f8b8",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests": "184579bb2eb0925adde510ce48dff6b8f69e94f50e644f0c16fef4cfe0d0e629",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a": "1cb3e2a74bfb2d2e2d5fa9b14c79158eadd4b974b8036ae758f59a4e4c8a5b15"
+  },
+  "fingerprints_after": {
+    "/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsScalingApplicationTests.cpp": "0d697da17883c3e06c74e4cf542c8994779c310218dc7ba9ad27e25515b2f8b8",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_application_tests": "184579bb2eb0925adde510ce48dff6b8f69e94f50e644f0c16fef4cfe0d0e629",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a": "1cb3e2a74bfb2d2e2d5fa9b14c79158eadd4b974b8036ae758f59a4e4c8a5b15"
+  },
+  "human_acceptance": false
+}

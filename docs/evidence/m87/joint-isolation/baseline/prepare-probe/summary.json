@@ -1,0 +1,71 @@
+[
+  {
+    "bodies": 129,
+    "duplicate_append_ms": {
+      "maximum": 0.013476,
+      "median": 0.002143,
+      "p95": 0.003807
+    },
+    "joints": 128,
+    "measured_samples": 100,
+    "physical_digest": 4691719070565289091,
+    "physical_pass": true,
+    "prepare_ms": {
+      "maximum": 0.114425,
+      "median": 0.055211,
+      "p95": 0.085721
+    },
+    "solve10_ms": {
+      "maximum": 0.350403,
+      "median": 0.169017,
+      "p95": 0.246507
+    },
+    "warm_samples": 100
+  },
+  {
+    "bodies": 513,
+    "duplicate_append_ms": {
+      "maximum": 0.075373,
+      "median": 0.0299,
+      "p95": 0.049572
+    },
+    "joints": 512,
+    "measured_samples": 100,
+    "physical_digest": 14005194073120883843,
+    "physical_pass": true,
+    "prepare_ms": {
+      "maximum": 0.539899,
+      "median": 0.246758,
+      "p95": 0.324145
+    },
+    "solve10_ms": {
+      "maximum": 1.331814,
+      "median": 0.678578,
+      "p95": 0.907812
+    },
+    "warm_samples": 100
+  },
+  {
+    "bodies": 2049,
+    "duplicate_append_ms": {
+      "maximum": 0.761597,
+      "median": 0.438553,
+      "p95": 0.537439
+    },
+    "joints": 2048,
+    "measured_samples": 100,
+    "physical_digest": 15964357224856331395,
+    "physical_pass": true,
+    "prepare_ms": {
+      "maximum": 1.95194,
+      "median": 1.446478,
+      "p95": 1.795063
+    },
+    "solve10_ms": {
+      "maximum": 4.433194,
+      "median": 2.862856,
+      "p95": 3.675115
+    },
+    "warm_samples": 100
+  }
+]

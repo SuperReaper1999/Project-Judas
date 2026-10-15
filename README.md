@@ -17,6 +17,15 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
+## Current Experimental — M87 physics scaling
+
+[M87](docs/M87_PHYSICS_SCALING.md) improves sleep-island assessment, joint
+preparation and cooked-box allocation, with expanded bounded physics profiling.
+The editable [Mechanical Arcade](projects/physics_stress_lab/README.md) exercises
+32 independent mechanisms and up to 1,152 authored dynamic bodies. Matched
+[measurements and limitations](docs/evidence/m87/REPORT.md) distinguish Linux
+automation from pending human review and unperformed Windows validation.
+
 ## Latest accepted release — M86 weather
 
 [M86 prescribed weather](docs/M86_WEATHER.md) provides optional volumetric clouds,

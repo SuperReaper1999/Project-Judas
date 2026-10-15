@@ -1,0 +1,310 @@
+{
+  "head": "4fada67c3228d37301faffa33e79fff65c695461",
+  "started_utc": "2026-10-15T18:26:12.319415+00:00",
+  "graphics": false,
+  "tests": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_tests"
+      ],
+      "binary_sha256_before": "621815bedc0a878085b20f4e076a66aff7d6c40952a23b6f08179e5cb422dc40",
+      "exit_code": 1,
+      "seconds": 0.11452049499712302,
+      "binary_sha256_after": "621815bedc0a878085b20f4e076a66aff7d6c40952a23b6f08179e5cb422dc40",
+      "pass": false
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_scaling_tests"
+      ],
+      "binary_sha256_before": "a568efecc2d0d7c50b0e715dba49ad07134f7c77687e29da14291728c0aebd3b",
+      "exit_code": 0,
+      "seconds": 0.016152359999978216,
+      "binary_sha256_after": "a568efecc2d0d7c50b0e715dba49ad07134f7c77687e29da14291728c0aebd3b",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_broadphase_tests"
+      ],
+      "binary_sha256_before": "e32a1eb527c73c69fd4e31be94aceda00ca33beb28d8ee988d0ad337b5e6ced9",
+      "exit_code": 0,
+      "seconds": 22.312957576999906,
+      "binary_sha256_after": "e32a1eb527c73c69fd4e31be94aceda00ca33beb28d8ee988d0ad337b5e6ced9",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_geometry_tests"
+      ],
+      "binary_sha256_before": "3b8080b0a442e4cfaae7673d8ba17d768352b6b59423fd9de98ca2f1d7adab1b",
+      "exit_code": 0,
+      "seconds": 0.5152193030007766,
+      "binary_sha256_after": "3b8080b0a442e4cfaae7673d8ba17d768352b6b59423fd9de98ca2f1d7adab1b",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+      ],
+      "binary_sha256_before": "bec56224f7b5c981e5b235269674396c40a1df84d358a10070d8e38aa3e8a289",
+      "exit_code": 0,
+      "seconds": 1.8680851480021374,
+      "binary_sha256_after": "bec56224f7b5c981e5b235269674396c40a1df84d358a10070d8e38aa3e8a289",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+      ],
+      "binary_sha256_before": "33c856624dc5c5bdbb76588fed6c8304c562e0427520bb1d21245d0eebbf06cd",
+      "exit_code": 0,
+      "seconds": 0.03207167399887112,
+      "binary_sha256_after": "33c856624dc5c5bdbb76588fed6c8304c562e0427520bb1d21245d0eebbf06cd",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_cache_tests"
+      ],
+      "binary_sha256_before": "6b9f4e7990c829c9057d6db643c75cd5ea9b7dc8fc08810d12a6927e3db032fd",
+      "exit_code": 0,
+      "seconds": 0.032508255000720965,
+      "binary_sha256_after": "6b9f4e7990c829c9057d6db643c75cd5ea9b7dc8fc08810d12a6927e3db032fd",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_storage_tests"
+      ],
+      "binary_sha256_before": "b06edabe1b46c156d4ecedf2710454d333ccd419b9f2a78ef708b063aaabb7b4",
+      "exit_code": 0,
+      "seconds": 0.11428775300009875,
+      "binary_sha256_after": "b06edabe1b46c156d4ecedf2710454d333ccd419b9f2a78ef708b063aaabb7b4",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+      ],
+      "binary_sha256_before": "13b828fa0ce33a483e452d2b361fe51aac382591d4671f1824c1c8bbc0396712",
+      "exit_code": 0,
+      "seconds": 0.032130444997164886,
+      "binary_sha256_after": "13b828fa0ce33a483e452d2b361fe51aac382591d4671f1824c1c8bbc0396712",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+      ],
+      "binary_sha256_before": "a20a36e7d50ec16115dcbb5162bd3b41bc95b55f217649c58eeb6af9eb110fe3",
+      "exit_code": 0,
+      "seconds": 0.03209726700151805,
+      "binary_sha256_after": "a20a36e7d50ec16115dcbb5162bd3b41bc95b55f217649c58eeb6af9eb110fe3",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+      ],
+      "binary_sha256_before": "6c2ec494957ca467b6e5282c39c2278685bc1e9a60735e3372c21cfc76f5e324",
+      "exit_code": 0,
+      "seconds": 0.015989485000318382,
+      "binary_sha256_after": "6c2ec494957ca467b6e5282c39c2278685bc1e9a60735e3372c21cfc76f5e324",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "binary_sha256_before": "cb9bba28b380c9fe26823c71fb8e008c03842b30d4850ab319fc2aa192633ff7",
+      "exit_code": 0,
+      "seconds": 0.11423022400049376,
+      "binary_sha256_after": "cb9bba28b380c9fe26823c71fb8e008c03842b30d4850ab319fc2aa192633ff7",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_foundation_tests"
+      ],
+      "binary_sha256_before": "369f6ec1448eb50511887baf7912a30b5b45ea3c80deddd1760cd67adc7f494f",
+      "exit_code": 1,
+      "seconds": 0.016012317999411607,
+      "binary_sha256_after": "369f6ec1448eb50511887baf7912a30b5b45ea3c80deddd1760cd67adc7f494f",
+      "pass": false
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+      ],
+      "binary_sha256_before": "c0870b5166d5dec291de47520ede9b7f980ebf0037809dd3a9c4875a62b6dc7d",
+      "exit_code": 0,
+      "seconds": 2.923165670999879,
+      "binary_sha256_after": "c0870b5166d5dec291de47520ede9b7f980ebf0037809dd3a9c4875a62b6dc7d",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "binary_sha256_before": "57c0b1fed4196757966ffa6eff667e1741ea34ed75f733fe94747ef35b9e1f96",
+      "exit_code": 0,
+      "seconds": 0.5152760320015659,
+      "binary_sha256_after": "57c0b1fed4196757966ffa6eff667e1741ea34ed75f733fe94747ef35b9e1f96",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_ragdoll_tests"
+      ],
+      "binary_sha256_before": "e004d0c7ff52058c7fdffa0dc58c44aedd9b2a473889d7dc9563cacd330b8ed6",
+      "exit_code": 0,
+      "seconds": 23.51532266200229,
+      "binary_sha256_after": "e004d0c7ff52058c7fdffa0dc58c44aedd9b2a473889d7dc9563cacd330b8ed6",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_solver_tests"
+      ],
+      "binary_sha256_before": "3dff1bd89ffca98b29fef7ccbf1d7ba5549ec0c29fe73849bd63a76e9ea1e37f",
+      "exit_code": 0,
+      "seconds": 0.0037084819996380247,
+      "binary_sha256_after": "3dff1bd89ffca98b29fef7ccbf1d7ba5549ec0c29fe73849bd63a76e9ea1e37f",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+      ],
+      "binary_sha256_before": "828580184b159ba9ec571d21e6fb1088c44b4560a8b245b4bfc6785a785cd696",
+      "exit_code": 0,
+      "seconds": 0.01580117499906919,
+      "binary_sha256_after": "828580184b159ba9ec571d21e6fb1088c44b4560a8b245b4bfc6785a785cd696",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests"
+      ],
+      "binary_sha256_before": "87f6eac51e410a497f7a87b21ea11aea6ebce8711009292c3ac216a34ca251d2",
+      "exit_code": 0,
+      "seconds": 10.990817710000556,
+      "binary_sha256_after": "87f6eac51e410a497f7a87b21ea11aea6ebce8711009292c3ac216a34ca251d2",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+      ],
+      "binary_sha256_before": "e461d04380ed458716cd86cca4fbe5160b2296ad21d92c7da4ea785435c093f7",
+      "exit_code": 0,
+      "seconds": 0.916369960999873,
+      "binary_sha256_after": "e461d04380ed458716cd86cca4fbe5160b2296ad21d92c7da4ea785435c093f7",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_sphere_impact_bounds_tests"
+      ],
+      "binary_sha256_before": "297c45ccffcf0fa804f427ac19dd91765fca092afdf971b921aa06620d0eb708",
+      "exit_code": 0,
+      "seconds": 0.016422022999904584,
+      "binary_sha256_after": "297c45ccffcf0fa804f427ac19dd91765fca092afdf971b921aa06620d0eb708",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cooked_penetration_tests"
+      ],
+      "binary_sha256_before": "de48c12c12570340f5aa68f7619c58b7ae588b0786d2252cf447e69aa31a92a3",
+      "exit_code": 0,
+      "seconds": 0.11431891100073699,
+      "binary_sha256_after": "de48c12c12570340f5aa68f7619c58b7ae588b0786d2252cf447e69aa31a92a3",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"
+      ],
+      "binary_sha256_before": "7088d74233bfdcb6364a646c66e49ed40721f2f915e2070e0194d3c71deea8b4",
+      "exit_code": 0,
+      "seconds": 0.01592361100119888,
+      "binary_sha256_after": "7088d74233bfdcb6364a646c66e49ed40721f2f915e2070e0194d3c71deea8b4",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mechanical_connection_tests"
+      ],
+      "binary_sha256_before": "b101822eea36866334f3ae4749eff165e3b178199a50e0b7f2a57f1b7bff8d32",
+      "exit_code": 0,
+      "seconds": 0.06426176999957534,
+      "binary_sha256_after": "b101822eea36866334f3ae4749eff165e3b178199a50e0b7f2a57f1b7bff8d32",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_section_material_tests"
+      ],
+      "binary_sha256_before": "1d5b486f86145a643e5b77a4d3040c104a7a594ac68dda37321d9bac44eaae94",
+      "exit_code": 0,
+      "seconds": 0.03213763300300343,
+      "binary_sha256_after": "1d5b486f86145a643e5b77a4d3040c104a7a594ac68dda37321d9bac44eaae94",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_tests"
+      ],
+      "binary_sha256_before": "300a49040f62c7754af28f22db80eca8da472afe6bb32706d4e6edd2a4582758",
+      "exit_code": 0,
+      "seconds": 0.11411847999988822,
+      "binary_sha256_after": "300a49040f62c7754af28f22db80eca8da472afe6bb32706d4e6edd2a4582758",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_tests"
+      ],
+      "binary_sha256_before": "1e924e1934673990964f74fc1921548de5a214496befa9448d09337114287996",
+      "exit_code": 0,
+      "seconds": 0.21432882899898686,
+      "binary_sha256_after": "1e924e1934673990964f74fc1921548de5a214496befa9448d09337114287996",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_deformable_tests"
+      ],
+      "binary_sha256_before": "8735b5de937eca9e410a4a4b0e4d9bc5a4512041d542760bc1a1c229cccb988a",
+      "exit_code": 0,
+      "seconds": 0.4661813450002228,
+      "binary_sha256_after": "8735b5de937eca9e410a4a4b0e4d9bc5a4512041d542760bc1a1c229cccb988a",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_fracture_tests"
+      ],
+      "binary_sha256_before": "9b1956505e5793d06ef8a760390211e7e4fedd6ec8e91db0cd22c2be01bc3144",
+      "exit_code": 0,
+      "seconds": 0.0640692279994255,
+      "binary_sha256_after": "9b1956505e5793d06ef8a760390211e7e4fedd6ec8e91db0cd22c2be01bc3144",
+      "pass": true
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_profiler_tests"
+      ],
+      "binary_sha256_before": "721ccc88a18bf73c05bf3d57d85369a9a21d1c895cbb2f463e113adbb35116af",
+      "exit_code": 0,
+      "seconds": 0.06414194399985718,
+      "binary_sha256_after": "721ccc88a18bf73c05bf3d57d85369a9a21d1c895cbb2f463e113adbb35116af",
+      "pass": true
+    }
+  ],
+  "human_acceptance": false,
+  "finished_utc": "2026-10-15T18:27:20.110609+00:00",
+  "pass": false
+}

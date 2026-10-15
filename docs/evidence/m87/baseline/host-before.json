@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-15T18:02:52.122474+00:00",
+  "loadavg": "2.68 2.22 1.67 3/980 825494\n",
+  "governors": {
+    "scaling_governor": "schedutil"
+  },
+  "cpu_freq_khz": {
+    "scaling_cur_freq": "3800064",
+    "scaling_min_freq": "800000",
+    "scaling_max_freq": "4000000"
+  },
+  "processes": [
+    "    PID %CPU COMMAND",
+    " 825494  100 python3",
+    " 821295 99.7 python3",
+    " 825380 99.0 python3",
+    "  57302 16.1 ChatGPT",
+    "  55722 12.5 ChatGPT",
+    "   1795  6.3 kwin_wayland",
+    "  55525  2.8 ChatGPT",
+    "   1838  2.1 Xwayland",
+    "  57349  2.0 codex",
+    "  58466  0.7 ChatGPT",
+    "   1900  0.4 plasmashell",
+    "  58654  0.4 ChatGPT",
+    "  60197  0.3 codex",
+    "  60123  0.2 ChatGPT",
+    "    867  0.2 nvidia-modeset/kthread_q"
+  ]
+}

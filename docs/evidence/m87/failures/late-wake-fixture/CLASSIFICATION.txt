@@ -1,0 +1,43 @@
+M87 new-test fixture follow-up (15 October 2026)
+
+The first new late-wake fixture used two .1-m half-extent boxes with a
+1-m fixed-link separation, masses 2 and 1 kg, ordinary 60-Hz cadence,
+unchanged ten velocity rounds and normal gravity. It did not become quiet,
+so seven downstream new late-wake assertions failed (130 checks / 7).
+The exact original test source and log are retained here.
+
+An isolated source override compiles PhysicsWorld.cpp and JointSolver.h
+byte-for-byte from starting commit 4fada67c3228d37301faffa33e79fff65c695461,
+using the separately preserved original JointSolver.cpp.o ahead of the
+current engine archive. PhysicsWorld has unchanged public ABI. The preserved
+source/provenance identifies the exact original joint object. No production
+files or original tests were modified to perform this experiment.
+
+The original physics and the M87 candidate print byte-identical physical
+probe outputs. The .1-m fixture becomes unstable (arm speed >50 m/s) and
+never meets the original quiet criteria. This original thin, long-lever
+fixed-assembly limitation is not introduced by M87; it is not repaired here.
+The same setup with .2-m half extents, already used successfully by the new
+independent-assembly fixture, genuinely sleeps on both implementations with
+identical actual endpoints and quiet clock.
+
+Only the NEW late-wake test's authored half extents changed to .2 m. No
+physics, cadence, iteration budget, acceptance threshold or existing test
+was changed. The complete final new test passes 130 checks / 0 failures,
+including the original 118 checks, 2,112 independent impact events, diagnostic
+on/off exact endpoint equality, and no-wake / late-wake / ordinary-wake
+controls that compare actual physical positions, velocities and reactions.
+
+A second unchanged regression, PhysicalBalanceFoundationTests.cpp, reports
+34 checks / 1 failure on both the original-physics override and candidate.
+Its M77-era assertion expects an eighteenth save participant to reject,
+whereas SaveStorage.cpp in the starting commit already accepts up to 21.
+This is a stale pre-existing fixture expectation. The original assertion
+and failure remain unchanged; no M87 save-limit change was made.
+
+Reproduction commands, source hashes, stdout and build logs are included.
+Object files/executables are deliberately excluded; their hashes remain in
+the receipts. The current archive differs from the original only in the
+M87 candidate; explicit old PhysicsWorld/JointSolver objects resolve ahead
+of it for the isolated mechanism comparison. These probes contain no
+cooked collision geometry and do not exercise M87's cooked-box topology change.

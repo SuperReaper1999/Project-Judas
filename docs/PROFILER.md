@@ -81,6 +81,40 @@ registration/clock machinery not certified for that real-time callback.
 The legacy specialized diagnostics remain in a labelled collapsible section.
 The lightweight runtime FPS/debug HUD remains intact.
 
+### M87 physics stages and work counters
+
+Physics now separates kinematic publication, predicted reach/wake, velocity
+integration, candidate generation, contact row preparation, contact-history
+publication and endpoint contact publication. Candidate generation may run more
+than once in a step; root-query/overlapping-leaf/pass counters cover those passes.
+The old `StepStats.broadphaseMilliseconds` retains its existing definition, which
+includes final proxy/publication work and excludes the early prediction pass.
+Use the hierarchy to attribute those operations rather than adding that legacy
+field to nested scope times.
+
+Sleep graph counters expose current islands/edges and retained scratch capacity.
+Joint preparation has aggregate elapsed/call counters, including impact events;
+it measures `JointSolver::Prepare`, excluding construction of its input vector
+(covered by the enclosing stage). It never emits a scope per joint or impact
+island. `Latest` counters describe the
+last native step in a frame; `Sum` counters accumulate substeps. A coupled
+macro-step's final contact publication follows its last native-step diagnostics,
+so that final scoped work is not included in the preceding step counters.
+Cooked collision counters report visited BVH nodes, triangles and convex tests
+within the rigid step. They do not include independent caller queries outside it.
+`Physics CCD search inclusive ms`, `Physics CCD geometry inclusive ms`, impact
+island discovery and impact solve costs are aggregate counters, with constant
+storage per world. Timers run only during active collection. Recursive searches
+do not double-count their own category; geometry includes work inside searches
+and contact-island discovery, so these categories **overlap**. Do not sum them.
+This avoids emitting one scope event per contact/search predicate. The aggregate
+geometry-call counter counts nested calls; it is work, not unique body pairs.
+
+These diagnostics do not change solver iterations, physical thresholds, wake
+semantics or scheduling. The [M87 scaling report](M87_PHYSICS_SCALING.md) explains
+the separate owner-thread allocation probe used by its benchmark; ordinary M56
+capture is not a general-purpose heap-allocation tracer.
+
 ## GPU and memory
 
 Renderer owns a fixed pool of **128 timestamp pairs** (256 GL queries), created

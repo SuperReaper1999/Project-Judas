@@ -1,0 +1,355 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Judas Physics Stress Lab",
+    "legacyGameplay": false,
+    "saveIdentity": "317517ccb7462d4379370eff1453c07d42388a98a9916d4a981946d4188dec65",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/room128.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "closure",
+    "runtimeAssets": [
+      "248ca2c01ae1684d44885237c41f24d2",
+      "31cd485353e68fdea03c2473cad25025"
+    ],
+    "exportScenes": [
+      "Scenes/room128.judas",
+      "Scenes/room512.judas",
+      "Scenes/room1024.judas",
+      "Scenes/rotated.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "count_128",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:1",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "count_512",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:2",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "count_1024",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:3",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "rotated",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:4",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "motors",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:M",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "kick_one",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:J",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "kick_all",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:K",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "spawn",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:P",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "watch",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F5",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F7",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dx",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dy",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:D",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_z",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:S",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:W",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:Q",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:E",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_click",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_activate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Return",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Up",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "ui_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Down",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 4,
+        "entries": [
+          {
+            "id": 0,
+            "name": "stress_dynamic"
+          },
+          {
+            "id": 1,
+            "name": "arcade_drive"
+          },
+          {
+            "id": 2,
+            "name": "arcade_chassis"
+          },
+          {
+            "id": 3,
+            "name": "loose_piece"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {}
+  }
+}

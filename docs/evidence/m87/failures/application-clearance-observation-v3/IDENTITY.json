@@ -1,0 +1,21 @@
+{
+  "status": "50 checks / 2 failures after real clearance repair; original fixed 7-second sleep observation deadline inadequate or mechanism under investigation",
+  "files": [
+    {
+      "path": "PhysicsScalingApplicationTests.cpp",
+      "sha256": "0d697da17883c3e06c74e4cf542c8994779c310218dc7ba9ad27e25515b2f8b8"
+    },
+    {
+      "path": "application.log",
+      "sha256": "3ec834d36892707bed00eca3dec444ef9a9db276ecf725ab2ea1cfff0f7e0cf2"
+    },
+    {
+      "path": "RECEIPT.json",
+      "sha256": "568b3801bf156acc9a9f737c324927cbf0ffc753354227b0841419bcba498111"
+    },
+    {
+      "path": "fixture-results.json",
+      "sha256": "aaead97898709296d1c3120762c6f49f4e504a666f942dd3b01e9fcaea36c464"
+    }
+  ]
+}

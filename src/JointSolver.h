@@ -18,8 +18,22 @@ public:
  bool Empty()const{return m_rows.empty();}
  std::size_t RowCount()const{return m_rows.size();}
 private:
+ // Membership only: this table is never traversed to build or solve rows.
+ // Retained flat storage avoids both quadratic pointer scans and a separate
+ // allocation for every participant at every preparation boundary.
+ class PointerMembership {
+ public:
+  void Clear();
+  bool Insert(const void* pointer);
+ private:
+  void Grow();
+  static std::size_t Hash(const void* pointer);
+  std::vector<const void*> slots;
+  std::size_t used=0;
+ };
  struct Row {RigidBody* a;RigidBody* b;glm::vec3 linearA,linearB,angularA,angularB;glm::mat3 inertiaA,inertiaB;
   float mass,bias,gamma,low,high,impulse;float* cache=nullptr;float* motor=nullptr;JointState* observation=nullptr;};
  void Apply(Row& r,float impulse);
- std::vector<Row> m_rows;std::vector<RigidBody*> m_bodies;std::vector<JointState*> m_prepared;
+ std::vector<Row> m_rows;std::vector<RigidBody*> m_bodies;
+ PointerMembership m_bodyMembership,m_preparedMembership;
 };

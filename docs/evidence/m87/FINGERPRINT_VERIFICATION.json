@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-15T18:55:22.535084+00:00",
+  "sources": 37,
+  "binaries": 40,
+  "all_source_hashes_match": true,
+  "all_binary_hashes_match": true,
+  "benchmark_source_and_timing_binary_match_final": true,
+  "cold_and_application_archive_match_final": true,
+  "raw_archives_verified_entries": 456,
+  "package_runtime_matches_final": true,
+  "no_executable_or_build_outputs_in_intended_changes": true,
+  "stage_verification": {
+    "utc": "2026-10-15T18:56:57.133869+00:00",
+    "files": 191,
+    "scope_exact": true,
+    "all_staged_bytes_match_worktree": true,
+    "all37_final_source_hashes_match_staged": true,
+    "no_executables_or_build_outputs": true,
+    "raw_log_and_third_party_license_whitespace_preserved": true
+  }
+}

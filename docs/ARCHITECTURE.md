@@ -1,5 +1,24 @@
 # Architecture
 
+## Current Experimental — M87 physics scaling
+
+[M87](M87_PHYSICS_SCALING.md) keeps the existing single-owner rigid solver and
+deterministic row order. Sleep assessment builds a retained, step-local disjoint
+set/member graph and classifies contacts/joints once, rather than rescanning all
+edges for every independent island. Roots and members retain their previous
+publication order; quiet clocks, support eligibility, wake propagation and the
+deep-contact neighbourhood rule are unchanged. Scratch is derived, not saved.
+
+Joint preparation uses retained pointer-membership tables solely for lookup;
+ordered vectors still control row creation and body traversal. Cooked box queries
+reuse canonical edge topology without changing transformed geometry or SAT.
+No reduced collision fidelity, altered cadence, distance-based freezing or new
+parallel solver is introduced. [M56 profiler](PROFILER.md) stages and bounded CCD
+aggregate counters distinguish preparation, collision search, island discovery
+and solving. The ordinary [Mechanical Arcade](../projects/physics_stress_lab/README.md)
+and matched before/after fixtures provide scaling evidence; their timings and
+remaining limits are recorded separately from human acceptance.
+
 ## Current Experimental — M86 optional prescribed weather candidate
 
 [Current M86 weather](M86_WEATHER.md) adds owner-authored profiles/regions,

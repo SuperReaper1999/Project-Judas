@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-15T18:13:57.788441+00:00",
+  "head": "4fada67c3228d37301faffa33e79fff65c695461",
+  "compiler": "/usr/bin/c++ -O3 -DNDEBUG -std=gnu++17 -Wall -Wextra",
+  "command": "/tmp/m87-joint-candidate/judas_joint_scaling_tests --benchmark /tmp/m87-joint-candidate/prepare-probe",
+  "files": {
+    "JointScalingTests.cpp": "c7ac949db3a38368c64647641a4c080b1d775d61cae6213e3058e74427440e93",
+    "JointSolver.cpp": "936232c5088fc956a6923ba64a4faf3e8561acd3c553695b813e3347c3a78685",
+    "JointSolver.h": "2798c1f8fd2efe852d479b28194f277dfddf2f229c2bcd9986b96dc682c2b4c6",
+    "probe.log": "c05ff18b9229e55d6e3908df7ebb435f25a3921fc5ecb0e42dc82146eccaf575",
+    "focused.log": "70ed612781639efa2f74b7a094c5f57647fb3cd838e7d5d7ad7ba14168b9d59d",
+    "judas_joint_scaling_tests": "a158505f477983acfab444ec0948b7e21e56b419d94a0ca09ebc403fa5ae00cb"
+  },
+  "exact_physical_digests_match": true,
+  "focused_checks": 25,
+  "focused_failures": 0
+}

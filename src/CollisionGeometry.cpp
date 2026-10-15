@@ -5,7 +5,6 @@
 #include <array>
 #include <cmath>
 #include <stdexcept>
-#include <set>
 
 namespace {
 using V=glm::dvec3;using M=glm::dmat3;
@@ -38,10 +37,15 @@ std::pair<V,V> segmentTriangle(V a,V b,V x,V y,V z) {
 }
 Poly poly(const PrimitivePose& pose,V origin=V(0)) {
  Poly p;M r=PrimitiveRotation(pose);V center=PrimitiveCenter(pose)-origin;
- if(pose.shape.type==ShapeType::Box){V h(pose.shape.halfExtents);for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})p.points.push_back(center+r*V(x*h.x,y*h.y,z*h.z));p.faces={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};}
+ if(pose.shape.type==ShapeType::Box){p.points.reserve(8);p.normals.reserve(6);V h(pose.shape.halfExtents);for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})p.points.push_back(center+r*V(x*h.x,y*h.y,z*h.z));p.faces={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};}
  else if(pose.shape.type==ShapeType::ConvexHull&&pose.shape.asset){for(V v:pose.shape.asset->vertices)p.points.push_back(center+r*v);for(auto& f:pose.shape.asset->polygons){p.faces.emplace_back(f.vertices.begin(),f.vertices.end());p.normals.push_back(r*f.normal);}for(auto e:pose.shape.asset->edges)p.edges.push_back({e[0],e[1]});p.satEdges.assign(pose.shape.asset->satEdges.begin(),pose.shape.asset->satEdges.end());if(p.satEdges.empty())for(unsigned i=0;i<p.edges.size();++i)p.satEdges.push_back(i);return p;}
  else throw std::invalid_argument("poly geometry requires box or cooked convex hull");
- std::set<std::pair<unsigned,unsigned>> edges;for(auto& f:p.faces){p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));for(unsigned i=0;i<f.size();++i)edges.insert(std::minmax(f[i],f[(i+1)%f.size()]));}p.edges.assign(edges.begin(),edges.end());p.satEdges={0,1,2};
+ for(auto& f:p.faces)p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));
+ // Immutable box topology, in exactly the lexicographic order produced by the
+ // former set over these same faces. Witness traversal and SAT axis identities
+ // therefore remain unchanged without rebuilding twelve tree nodes per query.
+ static constexpr std::array<std::pair<unsigned,unsigned>,12> edges{{{0,1},{0,2},{0,4},{1,3},{1,5},{2,3},{2,6},{3,7},{4,5},{4,6},{5,7},{6,7}}};
+ p.edges.assign(edges.begin(),edges.end());p.satEdges={0,1,2};
  return p;
 }
 // Writes the same triangle Poly as triangle() into storage reused across a mesh's

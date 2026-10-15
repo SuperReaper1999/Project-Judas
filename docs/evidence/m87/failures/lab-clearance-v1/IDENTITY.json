@@ -1,0 +1,912 @@
+{
+  "status": "Exact authored scenes before physical shelf-clearance repair; no baseline benchmark content changed",
+  "files": [
+    {
+      "path": "projects/physics_stress_lab/Scenes/room1024.judas",
+      "sha256": "e9bead7c0c993122b34b9801d400b58169cb51864b7ccab0708281bc731d966a",
+      "bytes": 2198498,
+      "shelfExample": {
+        "id": 1004,
+        "name": "Articulated translating shelf",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            0.95,
+            -28.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "render.radius": 1.12,
+          "render.color": [
+            0.75,
+            0.63,
+            0.33
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 5,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "body.radius": 1.12,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "rearExample": {
+        "id": 1000,
+        "name": "Cabinet rear / physical wall",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            1.14,
+            -29.27
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "frontExample": {
+        "id": 1003,
+        "name": "Cabinet front / physical rim",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            0.8,
+            -26.72
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    },
+    {
+      "path": "projects/physics_stress_lab/Scenes/room128.judas",
+      "sha256": "a9dc91ee20a660fc298890fa9c549f029ae4f3eb64dafab860e54d560554d5ef",
+      "bytes": 780461,
+      "shelfExample": {
+        "id": 1004,
+        "name": "Articulated translating shelf",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            0.95,
+            -28.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "render.radius": 1.12,
+          "render.color": [
+            0.75,
+            0.63,
+            0.33
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 5,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "body.radius": 1.12,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "rearExample": {
+        "id": 1000,
+        "name": "Cabinet rear / physical wall",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            1.14,
+            -29.27
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "frontExample": {
+        "id": 1003,
+        "name": "Cabinet front / physical rim",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            0.8,
+            -26.72
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    },
+    {
+      "path": "projects/physics_stress_lab/Scenes/room512.judas",
+      "sha256": "0c98c57bd008c13baa16a33ac792b4164ff07ed92a250390abe29d312445f36a",
+      "bytes": 1386653,
+      "shelfExample": {
+        "id": 1004,
+        "name": "Articulated translating shelf",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            0.95,
+            -28.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "render.radius": 1.12,
+          "render.color": [
+            0.75,
+            0.63,
+            0.33
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 5,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "body.radius": 1.12,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "rearExample": {
+        "id": 1000,
+        "name": "Cabinet rear / physical wall",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            1.14,
+            -29.27
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "frontExample": {
+        "id": 1003,
+        "name": "Cabinet front / physical rim",
+        "fields": {
+          "position": [
+            -25.900000000000002,
+            0.8,
+            -26.72
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    },
+    {
+      "path": "projects/physics_stress_lab/Scenes/rotated.judas",
+      "sha256": "0e251efc198f648fcb18061e052fe746102ffbed4952ebf149701fac6ebd83b7",
+      "bytes": 808005,
+      "shelfExample": {
+        "id": 1004,
+        "name": "Articulated translating shelf",
+        "fields": {
+          "position": [
+            -20.73648678846658,
+            -15.547045239264957,
+            -28.0
+          ],
+          "rotation": [
+            0.9427546655283462,
+            0,
+            0,
+            0.3334870921408144
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "render.radius": 1.12,
+          "render.color": [
+            0.75,
+            0.63,
+            0.33
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 5,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.12,
+            0.12,
+            1.05
+          ],
+          "body.radius": 1.12,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "rearExample": {
+        "id": 1000,
+        "name": "Cabinet rear / physical wall",
+        "fields": {
+          "position": [
+            -20.855957463030087,
+            -15.399306422702281,
+            -29.27
+          ],
+          "rotation": [
+            0.9427546655283462,
+            0,
+            0,
+            0.3334870921408144
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            1.14,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      "frontExample": {
+        "id": 1003,
+        "name": "Cabinet front / physical rim",
+        "fields": {
+          "position": [
+            -20.64216783486381,
+            -15.663681147077597,
+            -26.72
+          ],
+          "rotation": [
+            0.9427546655283462,
+            0,
+            0,
+            0.3334870921408144
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "render.radius": 1.35,
+          "render.color": [
+            0.22,
+            0.55,
+            0.64
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "tags": 0,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.35,
+            0.12,
+            0.12
+          ],
+          "body.radius": 1.35,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.65,
+          "body.restitution": 0.025,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    },
+    {
+      "path": "tools/CreatePhysicsStressLab.py",
+      "sha256": "e0f9bc69e6b388670e67c43bbf9f0db55977074333baba69fa7be1c9b630a981",
+      "bytes": 11899
+    },
+    {
+      "path": "projects/physics_stress_lab/Assets/scripts/lab.js",
+      "sha256": "de4d913d8b41781d3e8b001e47c9c7fce093b28ec58e4657c930c3264d290fc9",
+      "bytes": 7474
+    }
+  ],
+  "archiveSHA256": "49135cb8cb947b6af6429d532b866d76227754d26d57a7a814ab9c0f2f23b6a1"
+}
