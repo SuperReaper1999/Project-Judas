@@ -1,6 +1,6 @@
 # JudasJS — current API reference (M85 Experimental candidate)
 
-M85 adds [precision-safe planetary terrain and explicit local-origin APIs](judasjs/planetary-terrain.md). M85 human validation is pending.
+M85 adds [precision-safe planetary terrain and explicit local-origin APIs](judasjs/planetary-terrain.md). M85 Linux operator acceptance is [recorded](evidence/m85/HUMAN_VALIDATION.md); Windows remains untested.
 
 M83 adds finite [Deformable attachment strengths/observations](judasjs/deformables.md#m83-materialbody-connection-strength)
 and authored [Powertrain physical prerequisites](judasjs/powertrains.md#physical-connection-prerequisite).

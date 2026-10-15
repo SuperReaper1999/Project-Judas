@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M85 Experimental candidate public module based on checkpoint `e421645b3c310508ff618fe1e880a1b8cdbc019b`. M85 human validation is pending. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M85 Experimental candidate public module based on checkpoint `e421645b3c310508ff618fe1e880a1b8cdbc019b`. M85 Linux operator acceptance is recorded in docs/evidence/m85/HUMAN_VALIDATION.md; Windows remains untested. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

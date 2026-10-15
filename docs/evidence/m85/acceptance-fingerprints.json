@@ -1,0 +1,15 @@
+{
+  "acceptedImplementation": "2ea9587b2fbc734cbe2ec906ba344cd6d9ae2a67",
+  "sourceAndBinaryBaseline": "docs/evidence/pr15/fingerprints.json",
+  "changes": "documentation/status only; no tested implementation changes",
+  "files": {
+    "docs/ARCHITECTURE.md": "9087c2ff34fdf0fa7b072dec00d914ba8580cbb82d0eaa896548c8c5b81e565a",
+    "docs/JUDASJS.md": "52f1732535962e1b425d702016368f8fcc57fd4278941eb5943da344d8e2fc55",
+    "docs/M85_PLANETARY_TERRAIN.md": "31fdb0991d049d8cc257b5c289b98bb7d943ebf206abbe7e07072dd3d99c7133",
+    "docs/evidence/m85/HUMAN_VALIDATION.md": "2c71e93afdc07777176e2ebaf4ce3668c8004681b50e0163904ecb5162205b30",
+    "docs/judas.d.ts": "1d06c649c3f1f3e594d0d47873b3d08cb4e27287555ac32b6b07c752ddcff4ca",
+    "docs/judasjs/API_INVENTORY.md": "d511765c31175f75a755697f846c22fc5cc67447a1246413c1c3920c4ebce924",
+    "projects/planetary_terrain_lab/README.md": "57e86c952b04935ed263258615ca46417b7c8642310981f1192bedef92b91c1a",
+    "scripts/check_judasjs_api.mjs": "d49ce252478ac08a340145c2963f4ac624dacdee5a79ca72d3c6676bee128e71"
+  }
+}

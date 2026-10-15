@@ -1,6 +1,6 @@
 # M85 — precision-safe planetary terrain
 
-Experimental implementation; human review pending. Linux measurements and exact
+Linux operator acceptance is [recorded](evidence/m85/HUMAN_VALIDATION.md). Windows remains untested. Linux measurements and exact
 candidate hashes are in `docs/evidence/m85/`. Existing `RadialTerrain` and small
 flat scenes retain their old paths. This adds an optional **Planet terrain**
 component, not an Earth-specific branch or a replacement global physics solver.
@@ -191,7 +191,7 @@ authored reset, motor, cold saves; origin physics and streaming; 37 real graphic
 application assertions; 12 relevant existing regression executables; TypeScript
 5.9.3 and API drift. Per-vertex assertions are not separate engine capabilities.
 Editor, export and moved-package receipts are recorded separately in the evidence
-report. Windows M85 validation and operator visual acceptance remain outstanding.
+report. Windows M85 validation remains outstanding; Linux operator acceptance is recorded above.
 
 Generated colliders currently use default collision layer 0/all-layers and the
 planet owner's runtime tags. They are anonymous derived bodies, not individually

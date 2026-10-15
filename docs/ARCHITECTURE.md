@@ -12,7 +12,7 @@ M59 retained records carry their capture origin when needed; save slots reconstr
 derived collision before resuming. Unsupported component combinations explicitly
 reject live origin shifts. This is a bounded local-chart foundation, not universal
 rebasing of every subsystem or a global streamed DEM/volumetric planet database.
-Human M85 acceptance and Windows M85 validation remain pending.
+[M85 Linux operator acceptance](evidence/m85/HUMAN_VALIDATION.md) is recorded; Windows M85 validation remains unperformed.
 
 The following milestone sections are retained context; consult their individual
 acceptance records rather than interpreting an old candidate heading as current

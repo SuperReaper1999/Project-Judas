@@ -1,4 +1,4 @@
-/** Current JudasJS through M85 Experimental candidate. M85 human review is pending.
+/** Current JudasJS through M85. M85 Linux operator acceptance is recorded.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.

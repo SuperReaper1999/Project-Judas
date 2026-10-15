@@ -42,5 +42,5 @@ claimed. Live rebasing currently supports a checked component subset; see
 7. Edit one band or raster sample, undo/redo, save, Play/Stop and reload.
 8. Launch the moved standalone package and repeat the key traversal/save checks.
 
-Human validation is pending. Windows is untested for M85 and nonblocking.
+M85 Linux human acceptance is [recorded](../../docs/evidence/m85/HUMAN_VALIDATION.md), with the reported horizontal-look issue. Windows is untested for M85 and nonblocking.
 DejaVu font licensing is preserved in `Assets/fonts/LICENSE.txt`.
