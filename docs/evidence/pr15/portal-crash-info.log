@@ -1,0 +1,147 @@
+           PID: 531760 (judas_portal_ca)
+           UID: 1000 (conner)
+           GID: 1000 (conner)
+        Signal: 11 (SEGV)
+     Timestamp: Thu 2026-10-15 16:27:02 BST (15s ago)
+  Command Line: ./build/judas_portal_camera_tests
+    Executable: /home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests
+ Control Group: /user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-55525.scope
+          Unit: user@1000.service
+     User Unit: app-org.chromium.Chromium-55525.scope
+         Slice: user-1000.slice
+     Owner UID: 1000 (conner)
+       Boot ID: 5de567974c6d4282b970532e59082a14
+    Machine ID: a3a100c173fd4feb8dc378149d36fd09
+      Hostname: conner-ms7850
+       Storage: /var/lib/systemd/coredump/core.judas_portal_ca.1000.5de567974c6d4282b970532e59082a14.531760.1792078022000000.zst (present)
+  Size on Disk: 2.8M
+       Message: Process 531760 (judas_portal_ca) of user 1000 dumped core.
+                
+                Module linux-vdso.so.1 from deb linux-7.0.0-38.38.amd64
+                Module libxcb-xfixes.so.0 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libxcb-sync.so.1 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libxcb-present.so.0 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libxcb-dri3.so.0 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libxcb-randr.so.0 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libxcb-glx.so.0 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libGLX.so.0 from deb libglvnd-1.7.0-3.amd64
+                Module libGLdispatch.so.0 from deb libglvnd-1.7.0-3.amd64
+                Module libGL.so.1 from deb libglvnd-1.7.0-3.amd64
+                Module libudev.so.1 from deb systemd-259.5-0ubuntu3.4.amd64
+                Module libmp3lame.so.0 from deb lame-3.101~svn6525+dfsg-2ubuntu0.1.amd64
+                Module libmpg123.so.0 from deb mpg123-1.33.3-2.amd64
+                Module libogg.so.0 from deb libogg-1.3.6-2.amd64
+                Module libopus.so.0 from deb opus-1.6.1-1.amd64
+                Module libvorbisenc.so.2 from deb libvorbis-1.3.7-3build2.amd64
+                Module libvorbis.so.0 from deb libvorbis-1.3.7-3build2.amd64
+                Module libFLAC.so.14 from deb flac-1.5.0+ds-5.amd64
+                Module libXdmcp.so.6 from deb libxdmcp-1:1.1.5-2.amd64
+                Module libXau.so.6 from deb libxau-1:1.0.11-1build2.amd64
+                Module libapparmor.so.1 from deb apparmor-5.0.2-0ubuntu1~26.04.1.amd64
+                Module libasyncns.so.0 from deb libasyncns-0.8-7.amd64
+                Module libsystemd.so.0 from deb systemd-259.5-0ubuntu3.4.amd64
+                Module libX11-xcb.so.1 from deb libx11-2:1.8.13-1ubuntu0.1.amd64
+                Module libsndfile.so.1 from deb libsndfile-1.2.2-4.amd64
+                Module libffi.so.8 from deb libffi-3.5.2-4.amd64
+                Module libexpat.so.1 from deb expat-2.7.4-1ubuntu0.2.amd64
+                Module libXrender.so.1 from deb libxrender-1:0.9.12-1build1.amd64
+                Module libxcb.so.1 from deb libxcb-1.17.0-2ubuntu1.amd64
+                Module libdbus-1.so.3 from deb dbus-1.16.2-2ubuntu4.amd64
+                Module libpulsecommon-17.0.so from deb pulseaudio-1:17.0+dfsg1-2ubuntu4.amd64
+                Module libdecor-0.so.0 from deb libdecor-0-0.2.5-1.amd64
+                Module libxkbcommon.so.0 from deb libxkbcommon-1.13.1-1.amd64
+                Module libwayland-cursor.so.0 from deb wayland-1.24.0-2.amd64
+                Module libwayland-client.so.0 from deb wayland-1.24.0-2.amd64
+                Module libwayland-egl.so.1 from deb wayland-1.24.0-2.amd64
+                Module libgbm.so.1 from deb mesa-26.0.8-1ubuntu0.3.amd64
+                Module libdrm.so.2 from deb libdrm-2.4.131-1.amd64
+                Module libXss.so.1 from deb libxss-1:1.2.3-1build4.amd64
+                Module libXrandr.so.2 from deb libxrandr-2:1.5.4-1build1.amd64
+                Module libXfixes.so.3 from deb libxfixes-1:6.0.0-2build2.amd64
+                Module libXi.so.6 from deb libxi-2:1.8.2-2.amd64
+                Module libXcursor.so.1 from deb libxcursor-1:1.2.3-1build1.amd64
+                Module libXext.so.6 from deb libxext-2:1.3.4-1build3.amd64
+                Module libX11.so.6 from deb libx11-2:1.8.13-1ubuntu0.1.amd64
+                Module libsamplerate.so.0 from deb libsamplerate-0.2.2-4build2.amd64
+                Module libpulse.so.0 from deb pulseaudio-1:17.0+dfsg1-2ubuntu4.amd64
+                Module libasound.so.2 from deb alsa-lib-1.2.15.3-1ubuntu1.1.amd64
+                Module libgcc_s.so.1 from deb gcc-16-16-20260322-1ubuntu1.amd64
+                Module libstdc++.so.6 from deb gcc-16-16-20260322-1ubuntu1.amd64
+                Module libSDL2-2.0.so.0 from deb libsdl2-2.32.10+dfsg-6.amd64
+                Stack trace of thread 531760:
+                #0  0x000062ac618ba381 _ZNK12ScriptSystem7CaptureEbPKSt6vectorImSaImEE (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x183381)
+                #1  0x000062ac6185af42 main (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x123f42)
+                #2  0x00007dd17ea2a601 __libc_start_call_main (libc.so.6 + 0x2a601)
+                #3  0x00007dd17ea2a718 __libc_start_main_impl (libc.so.6 + 0x2a718)
+                #4  0x000062ac6185b325 _start (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x124325)
+                
+                Stack trace of thread 531766:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                
+                Stack trace of thread 531764:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                
+                Stack trace of thread 531762:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                
+                Stack trace of thread 531763:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                
+                Stack trace of thread 531765:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                
+                Stack trace of thread 531767:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                
+                Stack trace of thread 531768:
+                #0  0x00007dd17eaac802 __syscall_cancel_arch (libc.so.6 + 0xac802)
+                #1  0x00007dd17eaa030c __internal_syscall_cancel (libc.so.6 + 0xa030c)
+                #2  0x00007dd17eaa06e7 __futex_abstimed_wait_common64 (libc.so.6 + 0xa06e7)
+                #3  0x00007dd17eaa30c7 __pthread_cond_wait_common (libc.so.6 + 0xa30c7)
+                #4  0x000062ac61a45515 _ZN9JobSystem10WorkerLoopEj (/home/conner/Documents/GitHub/Project-Judas/build/judas_portal_camera_tests + 0x30e515)
+                #5  0x00007dd17eef5ef9 n/a (libstdc++.so.6 + 0xf5ef9)
+                #6  0x00007dd17eaa3dfa start_thread (libc.so.6 + 0xa3dfa)
+                #7  0x00007dd17eb375cc __clone3 (libc.so.6 + 0x1375cc)
+                ELF object binary architecture: AMD x86-64

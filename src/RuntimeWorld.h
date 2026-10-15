@@ -135,6 +135,10 @@ public:
         bool allocationAttempted = false,attemptedLinear=false;
         int attemptedWidth = 0, attemptedHeight = 0;
         std::uint64_t updates = 0;
+        // Portal-view runtime presentation overrides (JS setCameraProjection); not authored or saved.
+        bool hasFrustum = false, hasClipPlane = false;
+        glm::vec4 frustum{0};            // left, right, bottom, top at the near plane (camera space)
+        glm::vec3 clipNormal{0,0,1}, clipPoint{0};   // world plane; the side the normal faces is kept
     };
     // Presentation-only resources: lazy, discarded on Stop/world destruction.
     std::vector<RenderCamera>& PresentationCameras() const { return m_renderCameras; }

@@ -42,7 +42,7 @@ Stale/non-planet handles throw ReferenceError; invalid positions throw TypeError
 
 | Method/property | Result |
 |---|---|
-| `entity.planetSample(absolute)` | `{position,normal,height,distance}`. Position is absolute, normal is outward world direction, height is radial elevation above reference radius, distance is signed radial distance to the sampled surface. This is source sampling, **not** a physics hit. |
+| `entity.planetSample(absolute)` | `{position,normal,height,distance}`. Position is absolute, normal is outward world direction, height is radial elevation above reference radius, distance is signed displacement projected onto that sampled normal (not an exact closest-point distance). This is source sampling, **not** a physics hit. |
 | `entity.preparePlanetCollision(absolute)` | Prepare up to two missing cooks for the bounded nearby collision interest. Returns false while preparing, true only when all required immutable meshes are installed. Throws on budget/precision/cook failure; existing support is retained. Call before moving/spawning into a newly requested area. |
 | `entity.clearPlanetCollision()` | Retire that planet's current collision interest. Do not clear underneath active actors. |
 | `entity.planetState` | Read-only snapshot: `radius`, absolute `center`, visual `leaves`, `resident`, `triangles`, `colliders`, target-selection `maximumPixelError`, `budgetLimited`, last `prepareMs`, `collisionMs`, `collisionReady`, `error`. |

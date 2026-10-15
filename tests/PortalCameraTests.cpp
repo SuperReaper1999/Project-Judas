@@ -1,0 +1,118 @@
+// Portal views: render-target camera off-axis frustum and oblique near plane (portal views).
+#include <cmath>
+#include <cstdio>
+#include <string>
+#include <filesystem>
+#include <fstream>
+#include "AssetDatabase.h"
+#include "ResourceManager.h"
+#include "ScriptSystem.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include "CameraProjection.h"
+#include "EngineHost.h"
+#include "Renderer.h"
+#include "RuntimeWorld.h"
+#include "Scene.h"
+#include "WorldPresentation.h"
+namespace {
+int checks=0,failures=0;
+void Check(bool ok,const char* text){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",text);}
+glm::vec3 Ndc(const glm::mat4& p,glm::vec3 v){auto c=p*glm::vec4(v,1);return glm::vec3(c)/c.w;}
+bool Close(float a,float b,float e=1e-4f){return std::abs(a-b)<=e;}
+
+void MathChecks(){
+    // Off-axis frustum: the near-plane window corners land exactly on the NDC corners.
+    const glm::vec4 f{-.1f,.3f,-.1f,.2f};
+    const auto p=SecondaryCameraProjection(60,1,.1f,50,&f,nullptr);
+    auto a=Ndc(p,{.3f,.2f,-.1f}),b=Ndc(p,{-.1f,-.1f,-.1f});
+    Check(Close(a.x,1)&&Close(a.y,1)&&Close(a.z,-1)&&Close(b.x,-1)&&Close(b.y,-1),"off-axis frustum maps the near window corners to the NDC corners");
+    // The same window seen further away scales with distance (a real perspective, not a shifted image).
+    auto far=Ndc(p,{3.f,2.f,-1.f});Check(Close(far.x,1,1e-3f)&&Close(far.y,1,1e-3f),"off-axis frustum keeps perspective through the window");
+    Check(!ValidCameraFrustum({.2f,.1f,0,1})&&!ValidCameraFrustum({0,1,1,1})&&ValidCameraFrustum(f),"inverted or empty frustums are rejected");
+    // Oblique near plane: camera at the origin looking down -Z; keep everything beyond z=-2.
+    const glm::mat4 view(1);
+    const auto plane=ViewSpacePlane(view,{0,0,-1},{0,0,-2});
+    Check(Close(plane.x,0)&&Close(plane.y,0)&&Close(plane.z,-1)&&Close(plane.w,-2),"world plane converts to view space with the kept side positive");
+    const auto base=glm::perspective(glm::radians(60.f),1.f,.1f,50.f);
+    const auto o=SecondaryCameraProjection(60,1,.1f,50,nullptr,&plane);
+    Check(Close(Ndc(o,{0,0,-2}).z,-1,1e-3f)&&Close(Ndc(o,{.5f,.3f,-2}).z,-1,1e-3f),"points on the clip plane sit exactly on the new near plane");
+    Check(Ndc(o,{0,0,-1.5f}).z<-1,"geometry between the eye and the plane is clipped");
+    const float z=Ndc(o,{0,0,-10}).z;Check(z>-1&&z<1,"geometry beyond the plane stays inside the depth range");
+    const auto px=Ndc(o,{1,.5f,-4}),bx=Ndc(base,{1,.5f,-4});
+    Check(Close(px.x,bx.x)&&Close(px.y,bx.y),"oblique clipping leaves the image (x/y) unchanged");
+    const auto behind=ViewSpacePlane(view,{0,0,1},{0,0,-2});
+    Check(SecondaryCameraProjection(60,1,.1f,50,nullptr,&behind)==base,"a plane with the eye on its kept side leaves the projection unchanged");
+}
+
+Scene Fixture(){
+    Scene s;s.Settings().name="Portal camera";s.Settings().ambientColor=glm::vec3(1);s.Settings().sunColor=glm::vec3(0);
+    auto box=[&](const char* name,glm::vec3 at,glm::vec3 colour){auto& o=s.CreateObject(name);o.transform.position=at;o.render=SceneRenderComponent{};o.render->halfExtents={1,1,.1f};o.render->color=colour;};
+    box("Red occluder",{0,0,-3},{1,0,0});
+    box("Green beyond",{0,0,-8},{0,1,0});
+    box("Blue to the right",{6,0,-6},{0,0,1});
+    auto& c=s.CreateObject("Portal view");c.renderCamera=SceneRenderCameraComponent{};
+    c.renderCamera->width=64;c.renderCamera->height=64;c.renderCamera->verticalFovDegrees=60;c.renderCamera->farPlane=50;
+    return s;
+}
+glm::vec3 Centre(Renderer& r,RuntimeWorld& w){
+    RenderWorldFrame(r,64,64,w,nullptr,glm::lookAt(glm::vec3(0,20,0),glm::vec3(0),glm::vec3(0,0,-1)),glm::perspective(1.f,1.f,.1f,50.f),{0,1,0},1);
+    TextureData t;if(!r.ReadTextureForDiagnostics(w.CameraTexture(4),t)||t.width!=64)return glm::vec3(-1);
+    const int k=(32*64+32)*4;return {t.pixels[k]/255.f,t.pixels[k+1]/255.f,t.pixels[k+2]/255.f};
+}
+bool Is(glm::vec3 c,glm::vec3 want){return glm::length(c-want)<.35f;}
+}
+
+int main(){
+    std::setvbuf(stdout,nullptr,_IOLBF,0);
+    MathChecks();
+    std::string error;EngineHost host;
+    Check(host.Init("Portal cameras",64,64,false,error),"EngineHost creates a GL context");if(failures)return 1;
+    Renderer& renderer=host.GetRenderer();
+    RuntimeWorld world;Check(world.Build(Fixture(),nullptr,error),"portal camera fixture builds");
+    auto& cam=world.PresentationCameras()[0];
+    Check(Is(Centre(renderer,world),{1,0,0}),"plain camera sees the near occluder");
+    cam.hasClipPlane=true;cam.clipNormal={0,0,-1};cam.clipPoint={0,0,-4};
+    Check(Is(Centre(renderer,world),{0,1,0}),"oblique clip plane removes the occluder in front of the window");
+    world.legacyGameplay=false;
+    Check(world.RequestOrigin({512,0,512},error)&&world.CommitOrigin(),"explicit chart change accepts ordinary camera scene");
+    Check(cam.clipPoint==glm::vec3(-512,0,-516)&&cam.clipNormal==glm::vec3(0,0,-1)&&Is(Centre(renderer,world),{0,1,0}),"origin translation preserves the actual oblique-camera image and plane");
+    const auto translatedPlane=cam.clipPoint;cam.clipPoint={0,0,-4};
+    Check(Is(Centre(renderer,world),{1,0,0}),"negative control: an untranslated plane exposes the occluder after rebasing");cam.clipPoint=translatedPlane;
+    cam.hasClipPlane=false;cam.hasFrustum=true;cam.frustum={.05f,.15f,-.05f,.05f};
+    Check(Is(Centre(renderer,world),{0,0,1}),"off-axis frustum looks through a window to the right");
+    cam.hasFrustum=false;
+    Check(Is(Centre(renderer,world),{1,0,0}),"clearing both restores the ordinary symmetric view");
+    world.Destroy();
+    // Exercise the public wrapper in an ordinary registered QuickJS instance;
+    // direct C++ camera configuration cannot prove keep/clear or atomic errors.
+    namespace fs=std::filesystem;
+    const auto root=fs::absolute("build/pr15-portal-script");fs::remove_all(root);fs::create_directories(root/"Assets");
+    std::ofstream(root/"Assets/check.js")<<R"JS(import {world} from 'judas';
+export default class {
+ constructor({entity}){this.entity=entity;this.state={};}
+ start(){const c=this.entity;
+  const verify=(v,t)=>{if(!v)throw Error(t)};
+  verify(c.camera.frustum===null&&c.camera.clipPlane===null,'initial null');
+  verify(world.entity('1').setCameraProjection({near:.1,far:50})===false,'no implicit camera');
+  c.setCameraProjection({near:.1,far:50,frustum:{left:.05,right:.15,bottom:-.05,top:.05},clipPlane:{normal:{x:0,y:0,z:-2},point:{x:0,y:0,z:-4}}});
+  verify(c.camera.frustum.left>.049&&c.camera.clipPlane.normal.z===-1,'readback');
+  c.setCameraProjection({near:.2,far:70});
+  verify(c.camera.frustum!==null&&c.camera.clipPlane.point.z===-4,'omitted keeps');
+  const snapshot=c.camera;snapshot.clipPlane.point.z=99;verify(c.camera.clipPlane.point.z===-4,'detached');
+  for(const patch of [{frustum:{left:1,right:0,bottom:0,top:1}},{clipPlane:{normal:{x:0,y:0,z:0},point:{x:0,y:0,z:0}}},{clipPlane:{normal:{x:0,y:0,z:1},point:{x:NaN,y:0,z:0}}}]){
+   let caught=false;try{c.setCameraProjection({near:.3,far:100,...patch})}catch(e){caught=e instanceof TypeError}
+   verify(caught&&Math.abs(c.camera.near-.2)<1e-6&&c.camera.frustum!==null,'atomic rejection');
+  }
+  c.setCameraProjection({near:.2,far:70,frustum:null,clipPlane:null});verify(c.camera.frustum===null&&c.camera.clipPlane===null,'null clears');
+  this.state.checked=true;
+ }
+})JS";
+    AssetDatabase assets;assets.Scan(root.string(),(root/"Assets").string());AssetRecord script;
+    Check(assets.Track((root/"Assets/check.js").string(),script,error),"portal API fixture uses registered script asset");
+    ResourceManager resources(nullptr,&assets);Scene scripted=Fixture();scripted.Find(4)->scripts.push_back({1,script.id,true,"{}"});
+    RuntimeWorld vm;vm.legacyGameplay=false;const bool built=vm.Build(scripted,&resources,error);Check(built,"ordinary scripted camera world builds");if(!built){std::printf("BUILD %s\n",error.c_str());return 1;}vm.UpdateScripts(nullptr,.01f);
+    const auto states=vm.Scripts()->Capture();for(const auto& d:vm.Scripts()->Diagnostics())std::printf("SCRIPT %s\n",d.message.c_str());
+    Check(vm.Scripts()->Diagnostics().empty()&&states.size()==1&&states[0].json.find("\"checked\":true")!=std::string::npos,"public JS set/read/keep/clear/detached/atomic-invalid camera contracts execute");vm.Destroy();
+    std::printf("%d checks, %d failures\n",checks,failures);
+    return failures?1:0;
+}

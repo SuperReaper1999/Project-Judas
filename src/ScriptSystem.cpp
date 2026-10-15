@@ -1424,8 +1424,29 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto value=JS_GetPropertyStr(c,it->second.value,"state");std::string text,error;bool ok=s->Json(value,text,error);JS_FreeValue(c,value);
         if(!ok)return JS_ThrowTypeError(c,"state: %s",error.c_str());
         return JS_ParseJSON(c,text.data(),text.size(),"state snapshot");}
-    if(op=="cameraProjection"){float nearPlane=0,farPlane=0;if(!Number(c,arg(2),"near",nearPlane)||!Number(c,arg(2),"far",farPlane)||!ValidCameraRange(nearPlane,farPlane))return JS_ThrowTypeError(c,"valid near/far range required");for(auto& camera:world.PresentationCameras())if(camera.id==id){camera.settings.nearPlane=nearPlane;camera.settings.farPlane=farPlane;return JS_TRUE;}return JS_FALSE;}
-    if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));return o;}return JS_NULL;}
+    if(op=="cameraProjection"){
+        float nearPlane=0,farPlane=0;auto range=arg(2);
+        if(!Number(c,range,"near",nearPlane)||!Number(c,range,"far",farPlane)||!ValidCameraRange(nearPlane,farPlane))return JS_ThrowTypeError(c,"valid near/far range required");
+        // Portal views: optional off-axis frustum and oblique clip plane. Omitted keeps the current value, null clears.
+        int frustumMode=0,planeMode=0;glm::vec4 frustum{0};glm::vec3 normal{0,0,1},point{0};
+        {auto v=JS_GetPropertyStr(c,range,"frustum");bool ok=true;
+         if(JS_IsNull(v))frustumMode=1;
+         else if(!JS_IsUndefined(v)){frustumMode=2;ok=KnownOptions(c,v,{"left","right","bottom","top"})&&Number(c,v,"left",frustum.x)&&Number(c,v,"right",frustum.y)&&Number(c,v,"bottom",frustum.z)&&Number(c,v,"top",frustum.w)&&ValidCameraFrustum(frustum);}
+         JS_FreeValue(c,v);if(!ok)return JS_ThrowTypeError(c,"frustum requires finite left<right and bottom<top at the near plane");}
+        {auto v=JS_GetPropertyStr(c,range,"clipPlane");bool ok=true;
+         if(JS_IsNull(v))planeMode=1;
+         else if(!JS_IsUndefined(v)){planeMode=2;auto n=JS_GetPropertyStr(c,v,"normal"),q=JS_GetPropertyStr(c,v,"point");ok=KnownOptions(c,v,{"normal","point"})&&ReadVec(c,n,normal)&&ReadVec(c,q,point)&&ValidCameraPlane(glm::vec4(normal,0));JS_FreeValue(c,n);JS_FreeValue(c,q);}
+         JS_FreeValue(c,v);if(!ok)return JS_ThrowTypeError(c,"clipPlane requires finite {normal,point} with a non-zero normal");}
+        for(auto& camera:world.PresentationCameras())if(camera.id==id){
+            camera.settings.nearPlane=nearPlane;camera.settings.farPlane=farPlane;
+            if(frustumMode==1)camera.hasFrustum=false;else if(frustumMode==2){camera.hasFrustum=true;camera.frustum=frustum;}
+            if(planeMode==1)camera.hasClipPlane=false;else if(planeMode==2){camera.hasClipPlane=true;camera.clipNormal=glm::normalize(normal);camera.clipPoint=point;}
+            return JS_TRUE;}
+        return JS_FALSE;}
+    if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
+        if(camera.hasFrustum){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"left",JS_NewFloat64(c,camera.frustum.x));JS_SetPropertyStr(c,f,"right",JS_NewFloat64(c,camera.frustum.y));JS_SetPropertyStr(c,f,"bottom",JS_NewFloat64(c,camera.frustum.z));JS_SetPropertyStr(c,f,"top",JS_NewFloat64(c,camera.frustum.w));JS_SetPropertyStr(c,o,"frustum",f);}else JS_SetPropertyStr(c,o,"frustum",JS_NULL);
+        if(camera.hasClipPlane){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"normal",Vec(c,camera.clipNormal));JS_SetPropertyStr(c,f,"point",Vec(c,camera.clipPoint));JS_SetPropertyStr(c,o,"clipPlane",f);}else JS_SetPropertyStr(c,o,"clipPlane",JS_NULL);
+        return o;}return JS_NULL;}
     if(op=="parent")return JS_NewString(c,std::to_string(definition->parent).c_str());
     if(op=="children"){std::vector<EntityId> result;for(const auto& o:world.ScriptObjects())if(o.parent==id)result.push_back(o.id);return ids(result);}
     if(op=="destroy"){std::string error;if(!world.DestroyHierarchy(id,error))return JS_ThrowTypeError(c,"destroy: %s",error.c_str());return JS_TRUE;}

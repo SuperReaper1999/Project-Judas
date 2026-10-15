@@ -3,6 +3,25 @@
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "resultShapes": [
     {
+      "binding": "Entity.camera",
+      "declaration": "CameraInfo",
+      "fields": [
+        "near",
+        "far",
+        "enabled",
+        "width",
+        "height",
+        "frustum",
+        "clipPlane"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"frustum\"",
+        "JS_SetPropertyStr(c,o,\"clipPlane\""
+      ],
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
       "binding": "Entity.planetSample",
       "declaration": "PlanetSample",
       "fields": [

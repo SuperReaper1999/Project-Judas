@@ -1,0 +1,46 @@
+[
+  {
+    "check": "portal",
+    "exit": 0
+  },
+  {
+    "check": "render_camera",
+    "exit": 0
+  },
+  {
+    "check": "planet_world",
+    "exit": 0
+  },
+  {
+    "check": "origin_physics",
+    "exit": 0
+  },
+  {
+    "check": "planet_streaming",
+    "exit": 0
+  },
+  {
+    "check": "planet_application",
+    "exit": 0
+  },
+  {
+    "check": "api_drift",
+    "exit": 0
+  },
+  {
+    "check": "portal_final_negative_control",
+    "exit": 0
+  },
+  {
+    "check": "portal_repeatability",
+    "exit": 0
+  },
+  {
+    "check": "final_moved_package",
+    "exit": 0
+  },
+  {
+    "check": "final_moved_package_save",
+    "exit": 0
+  }
+]

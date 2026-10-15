@@ -62,7 +62,7 @@ bool RuntimeWorld::CommitOrigin(){
  for(auto& r:m_staticRenderables)shift(r.position);
  for(auto& t:m_terrains)shift(t.position);
  for(auto& l:m_staticLights)shift(l.position);
- for(auto& c:m_renderCameras)shift(c.transform.position);
+ for(auto& c:m_renderCameras){shift(c.transform.position);if(c.hasClipPlane)shift(c.clipPoint);}
  if(view)shift(view->pose.position);
  for(auto& source:m_pointMassSources)shift(source.position);
  // Publish translated fields in exactly their previous precedence order.

@@ -59,7 +59,13 @@ declare module "judas" {
   export interface UIElementLayout {offset:{x:number;y:number};size:{x:number;y:number};anchorMin:{x:number;y:number};anchorMax:{x:number;y:number};relativeSize:{x:number;y:number};align:{x:number;y:number}}
   export interface PrefabScriptInit {source?:EntityId;slot:string|number;properties?:Record<string,number|boolean|string|{entity:EntityId}|null>;state?:JSONValue}
   export interface PrefabSpawnOptions {velocity?:Vec3;angularVelocity?:Vec3;scripts?:PrefabScriptInit[]}
-  export interface CameraInfo { near:number;far:number; enabled: boolean; width: number; height: number }
+  /** Portal views: off-axis frustum at the near plane, camera space (metres). */
+  export interface CameraFrustum {left:number;right:number;bottom:number;top:number}
+  /** Portal views: world clip plane; the side `normal` faces is kept (oblique near plane). */
+  export interface CameraClipPlane {normal:Vec3;point:Vec3}
+  /** Render-target camera projection: near/far plus optional frustum/clipPlane (omitted keeps, null clears). */
+  export interface CameraProjection extends CameraRange {frustum?:CameraFrustum|null;clipPlane?:CameraClipPlane|null}
+  export interface CameraInfo { near:number;far:number; enabled: boolean; width: number; height: number; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
   export interface AudioInfo {
     enabled:boolean;playing:boolean;requested:boolean;ready:boolean;streamed:boolean;loop:boolean;starved:boolean;
     state:"loading"|"seeking"|"ready"|"playing"|"paused"|"ended"|"starved"|"failed";
@@ -233,7 +239,7 @@ declare module "judas" {
     burst(count: number): boolean;
     setParticles(settings: ParticleSettingsPatch): boolean;
     setCameraEnabled(enabled: boolean): boolean;
-    setCameraProjection(range:CameraRange):boolean;
+    setCameraProjection(range:CameraProjection):boolean;
   }
   /** Does not check existence; null for absent/falsy input or string "0". Use .valid. */
   export function entity(id: string | number | bigint | null | undefined): Entity | null;
