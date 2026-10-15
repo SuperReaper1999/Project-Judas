@@ -18,16 +18,17 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Experimental — M88 native Android games
+## Latest accepted release — M88 native Android games
 
 [Native Android build/export](docs/ANDROID.md) targets Android 16 with ARM64 and
 x86_64 APKs, touch/multitouch snapshots, existing logical gamepad input, private
 saves and lifecycle handling. [Breakwater](projects/breakwater/README.md) is the
-same physics block-breaker project on desktop and Android. Emulator evidence is
-separate from physical-phone acceptance, which remains pending. Main remains the
-accepted M87 release until operator promotion.
+same physics block-breaker project on desktop and Android. The operator
+[accepted the installed phone build](docs/evidence/m88/HUMAN_VALIDATION.md) on
+16 October 2026 and authorized main promotion. Emulator measurements remain
+separate from phone performance; wider device/controller coverage remains outstanding.
 
-## Latest accepted release — M87 physics scaling
+## Previous accepted release — M87 physics scaling
 
 [M87](docs/M87_PHYSICS_SCALING.md) improves sleep-island assessment, joint
 preparation and cooked-box allocation, with expanded bounded physics profiling,

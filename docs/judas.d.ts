@@ -1,4 +1,4 @@
-/** Current JudasJS through M88 Experimental. M88 operator/Android hardware acceptance is pending.
+/** Current JudasJS through M88, accepted on the operator phone. See evidence/m88/HUMAN_VALIDATION.md.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.

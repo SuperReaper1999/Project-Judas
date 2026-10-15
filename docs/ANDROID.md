@@ -8,9 +8,11 @@ adapter; this is not a browser, remote desktop or streaming client.
 
 **Current scope:** Android 16 / API 36 target, minimum API 26, OpenGL ES 3,
 arm64-v8a phones/tablets and x86_64 emulators. Linux is the supported APK build
-host for this first toolchain. An editor on Android is not included. Physical
-phone/tablet, thermal/battery, vendor-driver and real controller acceptance remain
-pending. Emulator results are recorded separately in [M88 evidence](evidence/m88/REPORT.md).
+host for this first toolchain. An editor on Android is not included. The operator
+[accepted Breakwater on their phone](evidence/m88/HUMAN_VALIDATION.md) on
+16 October 2026. Tablet, broad vendor-driver, sustained thermal/battery, physical
+16 KiB and real-controller coverage remain outstanding. Emulator measurements
+remain separate from phone results in [M88 evidence](evidence/m88/REPORT.md).
 
 ## Build and export
 

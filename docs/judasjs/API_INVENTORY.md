@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M88 Experimental candidate public module based on checkpoint `16c40f08986486ef3d88aca50cefe0dde572b95b`. M88 human and physical Android acceptance are pending; emulator validation is distinct from device validation. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M88 public module based on checkpoint `16c40f08986486ef3d88aca50cefe0dde572b95b`. M88 operator phone acceptance is recorded in docs/evidence/m88/HUMAN_VALIDATION.md; emulator measurements and remaining device coverage are distinct. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

@@ -1,14 +1,15 @@
-# JudasJS — current API reference (M88 Experimental candidate)
+# JudasJS — current API reference (M88 accepted release)
 
 M88 adds [normalized touch/pointer snapshots](judasjs/input.md#touch-and-pointer-snapshots-m88)
 for the optional [native Android runtime](ANDROID.md). Existing gameplay APIs and
 logical gamepad bindings are shared with desktop; mobile controls remain project JS.
-M88 human and physical Android acceptance remain pending.
+M88 [operator phone acceptance](evidence/m88/HUMAN_VALIDATION.md) is recorded;
+remaining device/controller coverage is distinct from that acceptance.
 
 
 M86 adds optional [weather profiles, transitions, spatial wind and opt-in physical
 response](judasjs/weather.md). Its Linux operator acceptance is
-[recorded](evidence/m86/HUMAN_VALIDATION.md); this does not certify M88.
+[recorded](evidence/m86/HUMAN_VALIDATION.md) separately from M88 acceptance.
 
 M85 adds [precision-safe planetary terrain and explicit local-origin APIs](judasjs/planetary-terrain.md). M85 Linux operator acceptance is [recorded](evidence/m85/HUMAN_VALIDATION.md); Windows remains untested.
 

@@ -1,6 +1,16 @@
 # Architecture
 
-## Current accepted release — M87 physics scaling
+## Current accepted release — M88 native Android runtime
+
+The operator [accepted the installed Breakwater phone build](evidence/m88/HUMAN_VALIDATION.md)
+on 16 October 2026 and authorized promotion to main. The optional Android runtime
+uses the same engine and JudasJS gameplay with GLES 3, native input/audio/lifecycle
+and private storage. See [the integration boundary](#m88-optional-native-android-runtime)
+and [build/export instructions](ANDROID.md). This acceptance does not imply broad
+phone/tablet/controller, 16 KiB execution or sustained thermal/performance coverage.
+Emulator timings remain separate from physical-phone observations.
+
+## Previous accepted release — M87 physics scaling
 
 The operator [accepted the M87 Linux candidate](evidence/m87/HUMAN_VALIDATION.md)
 on 15 October 2026 and authorized promotion to main. The 1,024-piece mixed-pile
