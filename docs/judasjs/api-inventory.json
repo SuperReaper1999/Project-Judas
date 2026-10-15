@@ -1,5 +1,5 @@
 {
-  "checkpoint": "7d1110ee323e3f7d6a7b5d84be338edf144546dc",
+  "checkpoint": "16c40f08986486ef3d88aca50cefe0dde572b95b",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "resultShapes": [
     {
@@ -2941,6 +2941,17 @@
       "reference": "docs/judasjs/input.md"
     },
     {
+      "symbol": "input.pointer",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "pointer"
+      ],
+      "type": "docs/judas.d.ts:input.pointer",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
       "symbol": "input.pointerCapture",
       "kinds": [
         "get",
@@ -3006,6 +3017,17 @@
         "stickSamples"
       ],
       "type": "docs/judas.d.ts:input.stickSamples",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.touches",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "touches"
+      ],
+      "type": "docs/judas.d.ts:input.touches",
       "reference": "docs/judasjs/input.md"
     },
     {
@@ -4401,6 +4423,7 @@
     "planetSample",
     "playAudio",
     "pointVelocity",
+    "pointer",
     "pointerCapture",
     "powertrainEnabled",
     "powertrainExists",
@@ -4482,6 +4505,7 @@
     "stopAudio",
     "sweep",
     "torque",
+    "touches",
     "transform",
     "uiDiagnostics",
     "uiFind",

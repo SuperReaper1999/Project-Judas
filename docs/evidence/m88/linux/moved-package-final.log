@@ -1,0 +1,10 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/d94c72b149fa28880eab950953ef2151f7937cb7f2066defed0da2e7e1cb7267/Saves/arcade.judasstate (none saved)
+Project: Breakwater (/home/conner/Documents/GitHub/Project-Judas/.cache/m88/moved-package-final/game.judasproj)
+Scene: BREAKWATER (/home/conner/Documents/GitHub/Project-Judas/.cache/m88/moved-package-final/Scenes/arcade.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m88/package-menu.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m88/package-game.png

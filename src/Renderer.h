@@ -20,7 +20,7 @@
 #include "ResourceTrace.h"
 #include "Visibility.h"
 #include "VisualParticles.h"
-#include <glad/gl.h>
+#include "GraphicsApi.h"
 
 struct WeatherSample;
 struct WeatherShelterGrid;
@@ -287,6 +287,7 @@ public:
     void EndShadowPass();
     // Makes an omitted light's old map unreachable without a GPU allocation.
     void InvalidateShadowSlot(int shadowSlot);
+    bool ShadowsEnabled() const {return m_shadowsEnabled;}
 
     // --- Milestone 13: UI overlay rendering ---
     //
@@ -441,6 +442,7 @@ private:
 
     std::vector<GpuMesh> m_meshes;
     std::vector<GpuTexture> m_textures;
+    bool m_shadowsEnabled=true;
 
     struct GpuMaterial {bool alive=false;MaterialDefinition definition;std::array<TextureHandle,5> textures;std::array<GLuint,5> samplers{};};
     struct GpuEnvironment {bool alive=false;GLuint diffuse=0,specular=0,brdf=0;unsigned levels=0;std::size_t bytes=0;};

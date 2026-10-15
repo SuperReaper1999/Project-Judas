@@ -1,0 +1,125 @@
+--------- beginning of main
+10-15 22:40:28.221  2619  2619 V SDL     : Device: emu64xa
+10-15 22:40:28.221  2619  2619 V SDL     : Model: sdk_gphone64_x86_64
+10-15 22:40:28.221  2619  2619 V SDL     : onCreate()
+10-15 22:40:28.336  2619  2619 V SDL     : nativeSetupJNI()
+10-15 22:40:28.338  2619  2619 V SDL     : AUDIO nativeSetupJNI()
+10-15 22:40:28.338  2619  2619 V SDL     : CONTROLLER nativeSetupJNI()
+10-15 22:40:28.398  2619  2619 V SDL     : onStart()
+10-15 22:40:28.399  2619  2619 V SDL     : onResume()
+10-15 22:40:28.498  2619  2619 V SDL     : surfaceCreated()
+10-15 22:40:28.498  2619  2619 V SDL     : surfaceChanged()
+10-15 22:40:28.498  2619  2619 V SDL     : Window size: 720x1280
+10-15 22:40:28.498  2619  2619 V SDL     : Device size: 720x1280
+10-15 22:40:28.580  2619  2682 V SDL     : Running main function SDL_main from library /data/app/~~qGJjaGi5FRa7T3_fsgtbiw==/org.projectjudas.breakwater-JVGlFYMDhIKlTcXXKCUYJA==/lib/x86_64/libmain.so
+10-15 22:40:28.580  2619  2682 V SDL     : nativeRunMain()
+10-15 22:40:28.657  2619  2619 V SDL     : onWindowFocusChanged(): true
+10-15 22:40:29.097  2619  2682 V SDL     : setOrientation() requestedOrientation=13 width=1024 height=768 resizable=true hint=
+10-15 22:43:51.328  3837  3837 V SDL     : Device: emu64xa
+10-15 22:43:51.328  3837  3837 V SDL     : Model: sdk_gphone64_x86_64
+10-15 22:43:51.328  3837  3837 V SDL     : onCreate()
+10-15 22:43:51.407  3837  3837 V SDL     : nativeSetupJNI()
+10-15 22:43:51.407  3837  3837 V SDL     : AUDIO nativeSetupJNI()
+10-15 22:43:51.408  3837  3837 V SDL     : CONTROLLER nativeSetupJNI()
+10-15 22:43:51.539  3837  3837 V SDL     : onStart()
+10-15 22:43:51.542  3837  3837 V SDL     : onResume()
+10-15 22:43:51.692  3837  3837 V SDL     : surfaceCreated()
+10-15 22:43:51.692  3837  3837 V SDL     : surfaceChanged()
+10-15 22:43:51.692  3837  3837 V SDL     : Window size: 720x1280
+10-15 22:43:51.692  3837  3837 V SDL     : Device size: 720x1280
+10-15 22:43:51.730  3837  3891 V SDL     : Running main function SDL_main from library /data/app/~~FwfSsf0o74U7wvZ-A25oHw==/org.projectjudas.breakwater-cJ0uWxSsJJZkslWilGrpGg==/lib/x86_64/libmain.so
+10-15 22:43:51.730  3837  3891 V SDL     : nativeRunMain()
+10-15 22:43:51.773  3837  3837 V SDL     : onWindowFocusChanged(): true
+10-15 22:43:51.865  3837  3891 V SDL     : setOrientation() requestedOrientation=13 width=720 height=1280 resizable=true hint=
+10-15 22:43:51.906  3837  3893 I Judas.Native: INFO: pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-15 22:43:52.096  3837  3893 I Judas.Native: Graphics: OpenGL ES 3.1 (4.5.0 NVIDIA 580.178.04) / Android Emulator OpenGL ES Translator (NVIDIA GeForce GTX 970/PCIe/SSE2)
+10-15 22:43:52.100  3837  3893 I Judas.Native: Renderer fragment texture units: 32 (material path uses 12)
+10-15 22:43:52.343  3837  3893 I Judas.Native: World state: /data/data/org.projectjudas.breakwater/files/judas/games/d94c72b149fa28880eab950953ef2151f7937cb7f2066defed0da2e7e1cb7267/Saves/arcade.judasstate (none saved)
+10-15 22:43:52.347  3837  3893 I Judas.Native: Project: Breakwater (/data/user/0/org.projectjudas.breakwater/files/judas-content/d0a8926c4de6d93fc3d872b46ee1dc1557181c77adf5b44473c95223396a6598/game.judasproj)
+10-15 22:43:52.347  3837  3893 I Judas.Native: Scene: BREAKWATER (/data/user/0/org.projectjudas.breakwater/files/judas-content/d0a8926c4de6d93fc3d872b46ee1dc1557181c77adf5b44473c95223396a6598/Scenes/arcade.judas)
+10-15 22:43:52.347  3837  3893 I Judas.Native: World origin (m): 0.000, 0.000, 0.000
+10-15 22:43:52.775  3837  3837 V SDL     : onWindowFocusChanged(): false
+10-15 22:43:52.775  3837  3837 V SDL     : nativeFocusChanged()
+10-15 22:46:40.960  3837  3837 V SDL     : onWindowFocusChanged(): true
+10-15 22:46:40.960  3837  3837 V SDL     : nativeFocusChanged()
+10-15 22:48:18.065  3837  3893 I Judas.Native: Runtime outer services: open root: Permission denied
+10-15 22:51:54.205  4238  4238 V SDL     : Device: emu64xa
+10-15 22:51:54.205  4238  4238 V SDL     : Model: sdk_gphone64_x86_64
+10-15 22:51:54.205  4238  4238 V SDL     : onCreate()
+10-15 22:51:54.249  4238  4238 V SDL     : nativeSetupJNI()
+10-15 22:51:54.249  4238  4238 V SDL     : AUDIO nativeSetupJNI()
+10-15 22:51:54.250  4238  4238 V SDL     : CONTROLLER nativeSetupJNI()
+10-15 22:51:54.353  4238  4238 V SDL     : onStart()
+10-15 22:51:54.355  4238  4238 V SDL     : onResume()
+10-15 22:51:54.544  4238  4238 V SDL     : surfaceCreated()
+10-15 22:51:54.544  4238  4238 V SDL     : surfaceChanged()
+10-15 22:51:54.544  4238  4238 V SDL     : Window size: 720x1280
+10-15 22:51:54.544  4238  4238 V SDL     : Device size: 720x1280
+10-15 22:51:54.673  4238  4238 V SDL     : onWindowFocusChanged(): true
+10-15 22:51:55.073  4238  4294 V SDL     : Running main function SDL_main from library /data/app/~~Oj70Ec_2KPcgwj4q2mrv1w==/org.projectjudas.breakwater-sZan8h3AupkG_UitKI9fHQ==/lib/x86_64/libmain.so
+10-15 22:51:55.073  4238  4294 V SDL     : nativeRunMain()
+10-15 22:51:55.142  4238  4294 V SDL     : setOrientation() requestedOrientation=13 width=720 height=1280 resizable=true hint=
+10-15 22:51:55.178  4238  4297 I Judas.Native: INFO: pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-15 22:51:55.267  4238  4297 I Judas.Native: Graphics: OpenGL ES 3.1 (4.5.0 NVIDIA 580.178.04) / Android Emulator OpenGL ES Translator (NVIDIA GeForce GTX 970/PCIe/SSE2)
+10-15 22:51:55.267  4238  4297 I Judas.Native: Renderer fragment texture units: 32 (material path uses 12)
+10-15 22:51:55.350  4238  4297 I Judas.Native: World state: /data/data/org.projectjudas.breakwater/files/judas/games/d94c72b149fa28880eab950953ef2151f7937cb7f2066defed0da2e7e1cb7267/Saves/arcade.judasstate (none saved)
+10-15 22:51:55.350  4238  4297 I Judas.Native: Project: Breakwater (/data/user/0/org.projectjudas.breakwater/files/judas-content/d7bdeb9004e401cfe61494f48def4a6c80475fa2409021b65a6edc67c63390ea/game.judasproj)
+10-15 22:51:55.350  4238  4297 I Judas.Native: Scene: BREAKWATER (/data/user/0/org.projectjudas.breakwater/files/judas-content/d7bdeb9004e401cfe61494f48def4a6c80475fa2409021b65a6edc67c63390ea/Scenes/arcade.judas)
+10-15 22:51:55.351  4238  4297 I Judas.Native: World origin (m): 0.000, 0.000, 0.000
+10-15 22:53:32.385  4342  4342 V SDL     : Device: emu64xa
+10-15 22:53:32.385  4342  4342 V SDL     : Model: sdk_gphone64_x86_64
+10-15 22:53:32.385  4342  4342 V SDL     : onCreate()
+10-15 22:53:32.405  4342  4342 V SDL     : nativeSetupJNI()
+10-15 22:53:32.406  4342  4342 V SDL     : AUDIO nativeSetupJNI()
+10-15 22:53:32.406  4342  4342 V SDL     : CONTROLLER nativeSetupJNI()
+10-15 22:53:32.471  4342  4342 V SDL     : onStart()
+10-15 22:53:32.472  4342  4342 V SDL     : onResume()
+10-15 22:53:32.564  4342  4342 V SDL     : surfaceCreated()
+10-15 22:53:32.564  4342  4342 V SDL     : surfaceChanged()
+10-15 22:53:32.564  4342  4342 V SDL     : Window size: 720x1280
+10-15 22:53:32.564  4342  4342 V SDL     : Device size: 720x1280
+10-15 22:53:32.583  4342  4364 V SDL     : Running main function SDL_main from library /data/app/~~Oj70Ec_2KPcgwj4q2mrv1w==/org.projectjudas.breakwater-sZan8h3AupkG_UitKI9fHQ==/lib/x86_64/libmain.so
+10-15 22:53:32.583  4342  4364 V SDL     : nativeRunMain()
+10-15 22:53:32.625  4342  4342 V SDL     : onWindowFocusChanged(): true
+10-15 22:53:32.643  4342  4364 V SDL     : setOrientation() requestedOrientation=13 width=720 height=1280 resizable=true hint=
+10-15 22:53:32.672  4342  4367 I Judas.Native: INFO: pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-15 22:53:32.741  4342  4367 I Judas.Native: Graphics: OpenGL ES 3.1 (4.5.0 NVIDIA 580.178.04) / Android Emulator OpenGL ES Translator (NVIDIA GeForce GTX 970/PCIe/SSE2)
+10-15 22:53:32.741  4342  4367 I Judas.Native: Renderer fragment texture units: 32 (material path uses 12)
+10-15 22:53:32.823  4342  4367 I Judas.Native: World state: /data/data/org.projectjudas.breakwater/files/judas/games/d94c72b149fa28880eab950953ef2151f7937cb7f2066defed0da2e7e1cb7267/Saves/arcade.judasstate (none saved)
+10-15 22:53:32.823  4342  4367 I Judas.Native: Project: Breakwater (/data/user/0/org.projectjudas.breakwater/files/judas-content/d7bdeb9004e401cfe61494f48def4a6c80475fa2409021b65a6edc67c63390ea/game.judasproj)
+10-15 22:53:32.823  4342  4367 I Judas.Native: Scene: BREAKWATER (/data/user/0/org.projectjudas.breakwater/files/judas-content/d7bdeb9004e401cfe61494f48def4a6c80475fa2409021b65a6edc67c63390ea/Scenes/arcade.judas)
+10-15 22:53:32.823  4342  4367 I Judas.Native: World origin (m): 0.000, 0.000, 0.000
+10-15 22:53:35.137  4342  4342 V SDL     : onConfigurationChanged()
+10-15 22:53:35.164  4342  4342 V SDL     : surfaceChanged()
+10-15 22:53:35.164  4342  4342 V SDL     : Window size: 1280x720
+10-15 22:53:35.164  4342  4342 V SDL     : Device size: 1280x720
+10-15 22:53:35.227  4342  4342 V SDL     : onWindowFocusChanged(): false
+10-15 22:53:35.227  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:35.348  4342  4342 V SDL     : onWindowFocusChanged(): true
+10-15 22:53:35.348  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:36.172  4342  4342 V SDL     : onPause()
+10-15 22:53:36.205  4342  4342 V SDL     : onWindowFocusChanged(): false
+10-15 22:53:36.205  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:36.607  4342  4342 V SDL     : surfaceDestroyed()
+10-15 22:53:36.607  4342  4342 V SDL     : nativePause()
+10-15 22:53:37.379  4342  4342 V SDL     : onResume()
+10-15 22:53:37.379  4342  4342 V SDL     : onWindowFocusChanged(): true
+10-15 22:53:37.380  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:37.444  4342  4342 V SDL     : onConfigurationChanged()
+10-15 22:53:37.454  4342  4342 V SDL     : surfaceCreated()
+10-15 22:53:37.456  4342  4342 V SDL     : surfaceChanged()
+10-15 22:53:37.456  4342  4342 V SDL     : Window size: 720x1280
+10-15 22:53:37.456  4342  4342 V SDL     : Device size: 720x1280
+10-15 22:53:37.470  4342  4342 V SDL     : nativeResume()
+10-15 22:53:37.470  4342  4367 I Judas.Native: INFO: pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-15 22:53:37.487  4342  4342 V SDL     : surfaceChanged()
+10-15 22:53:37.487  4342  4342 V SDL     : Window size: 720x1280
+10-15 22:53:37.487  4342  4342 V SDL     : Device size: 720x1280
+10-15 22:53:37.492  4342  4342 V SDL     : onWindowFocusChanged(): false
+10-15 22:53:37.495  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:37.541  4342  4342 V SDL     : onWindowFocusChanged(): true
+10-15 22:53:37.541  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:37.760  4342  4342 V SDL     : onWindowFocusChanged(): false
+10-15 22:53:37.760  4342  4342 V SDL     : nativeFocusChanged()
+10-15 22:53:37.858  4342  4342 V SDL     : onWindowFocusChanged(): true
+10-15 22:53:37.858  4342  4342 V SDL     : nativeFocusChanged()

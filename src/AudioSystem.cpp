@@ -1,4 +1,7 @@
 #include "AudioSystem.h"
+#ifdef __ANDROID__
+#include "AndroidPlatform.h"
+#endif
 #include "AudioStream.h"
 #include "PerformanceProfiler.h"
 #include "miniaudio.h"
@@ -31,7 +34,7 @@ float AudioSystem::DopplerRatio(const glm::vec3& source,const glm::vec3& listene
  return glm::clamp((speed-b)/(speed-a),.5f,2.f);
 }
 struct AudioSystem::Impl {
- ma_engine engine{};bool initialized=false,noDevice=false;std::string initFailure;JobSystem* jobs=nullptr;
+ ma_engine engine{};bool initialized=false,noDevice=false,applicationSuspended=false,deviceSuspended=false;std::string initFailure;JobSystem* jobs=nullptr;
  std::uint64_t nextClip=1,nextVoice=1;
  std::map<std::uint64_t,std::shared_ptr<const AudioData>> clips;
  std::map<std::string,std::shared_ptr<AudioStreamMetadata>> metadata;
@@ -40,7 +43,15 @@ struct AudioSystem::Impl {
  glm::vec3 listenerVelocity{0};AudioListenerSnapshot listener;
  struct Output {
   ma_node_base base{};Impl* owner=nullptr;float gain=1,target=1;std::uint64_t left=0;
-  static void Process(ma_node* n,const float** in,ma_uint32*,float** out,ma_uint32* count){auto& o=*reinterpret_cast<Output*>(n);float next=o.owner->groups[0].gain.load();if(next!=o.target){o.target=next;o.left=o.owner->groups[0].fade.load();}for(unsigned i=0;i<*count;++i){if(o.left){o.gain+=(o.target-o.gain)/float(o.left);--o.left;}else o.gain=o.target;for(unsigned c=0;c<2;++c)out[0][i*2+c]=(in[0]?in[0][i*2+c]:0)*o.gain;}}
+  static void Process(ma_node* n,const float** in,ma_uint32*,float** out,ma_uint32* count){auto& o=*reinterpret_cast<Output*>(n);
+#ifdef __ANDROID__
+   // Focus-only interruption mutes the final mix while consuming media. This
+   // prevents paused one-shots accumulating and bursting when focus returns.
+   const float platformGain=AndroidAudioFocused()?1.f:0.f;
+#else
+   constexpr float platformGain=1.f;
+#endif
+   float next=o.owner->groups[0].gain.load();if(next!=o.target){o.target=next;o.left=o.owner->groups[0].fade.load();}for(unsigned i=0;i<*count;++i){if(o.left){o.gain+=(o.target-o.gain)/float(o.left);--o.left;}else o.gain=o.target;for(unsigned c=0;c<2;++c)out[0][i*2+c]=(in[0]?in[0][i*2+c]:0)*o.gain*platformGain;}}
  } output;
  bool outputReady=false;
  struct Effect {
@@ -138,7 +149,7 @@ bool AudioSystem::Init(std::string& error,bool noDevice){
  auto result=ma_engine_init(&config,&m->engine);if(result!=MA_SUCCESS){error="audio device/engine initialization failed: "+std::to_string(result);m->initFailure=error;return false;}
  m->output.owner=m.get();static const ma_node_vtable table={Impl::Output::Process,nullptr,1,1,0};const ma_uint32 channels[]={2};auto node=ma_node_config_init();node.vtable=&table;node.pInputChannels=channels;node.pOutputChannels=channels;
  if(ma_node_init(ma_engine_get_node_graph(&m->engine),&node,nullptr,&m->output.base)!=MA_SUCCESS){ma_engine_uninit(&m->engine);error="Master output node failed";return false;}m->outputReady=true;ma_node_attach_output_bus(&m->output.base,0,ma_node_graph_get_endpoint(ma_engine_get_node_graph(&m->engine)),0);
- m->initialized=true;m->noDevice=noDevice;error.clear();return true;
+ m->initialized=true;m->noDevice=noDevice;m->deviceSuspended=false;SetApplicationSuspended(m->applicationSuspended);error.clear();return true;
 }
 void AudioSystem::Shutdown(){
  StopAll();m->clips.clear();
@@ -262,3 +273,11 @@ AudioDiagnostics AudioSystem::Diagnostics()const{AudioDiagnostics d;d.voices=m->
 bool AudioSystem::ReadWithoutDevice(float* out,std::uint64_t frames){return m->initialized&&m->noDevice&&out&&ma_engine_read_pcm_frames(&m->engine,out,frames,nullptr)==MA_SUCCESS;}
 bool AudioSystem::AdvanceWithoutDevice(std::uint64_t frames){float scratch[512*2];while(frames){auto n=std::min<std::uint64_t>(frames,512);if(!ReadWithoutDevice(scratch,n))return false;frames-=n;}return true;}
 bool AudioSystem::SetStreamDecodeDelay(AudioVoiceHandle h,unsigned ms){auto it=m->voices.find(h.id);if(it==m->voices.end()||!it->second->stream||ms>500)return false;it->second->stream->delayMilliseconds.store(ms);return true;}
+
+void AudioSystem::SetApplicationSuspended(bool suspended){
+ m->applicationSuspended=suspended;
+ if(!m->initialized||suspended==m->deviceSuspended)return;
+ const auto result=suspended?ma_engine_stop(&m->engine):ma_engine_start(&m->engine);
+ if(result==MA_SUCCESS)m->deviceSuspended=suspended;
+ else std::fprintf(stderr,"Audio device suspend/resume failed: %d\n",int(result));
+}

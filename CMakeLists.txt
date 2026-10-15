@@ -30,7 +30,12 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-find_package(SDL2 REQUIRED)
+if(ANDROID)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    include(cmake/JudasAndroidDependencies.cmake)
+else()
+    find_package(SDL2 REQUIRED)
+endif()
 if(WIN32 AND TARGET SDL2::SDL2-static)
     # Keep the existing consumer target while using the static Windows port.
     if(NOT TARGET SDL2::SDL2)
@@ -50,7 +55,9 @@ target_link_libraries(judas_app_icon PUBLIC SDL2::SDL2)
 judas_warnings(judas_app_icon)
 include_directories(SYSTEM third_party/quickhull)
 set_source_files_properties(third_party/quickhull/QuickHull.cpp PROPERTIES COMPILE_OPTIONS "$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wno-unused-parameter>")
-find_package(glm REQUIRED)
+if(NOT ANDROID)
+    find_package(glm REQUIRED)
+endif()
 include(cmake/JudasTextDependencies.cmake)
 
 # GLM is header-only, but the imported target it exports depends on the
@@ -116,9 +123,14 @@ target_include_directories(judas_navigation_baker PUBLIC src)
 target_link_libraries(judas_navigation_baker PUBLIC judas_engine judas_navigation_backend)
 
 # GLAD 2 loader generated for precisely OpenGL 3.3 Core, no extensions.
-add_library(judas_glad STATIC third_party/glad/src/gl.c)
-target_include_directories(judas_glad PUBLIC third_party/glad/include)
-judas_warnings(judas_glad)
+if(ANDROID)
+    add_library(judas_glad INTERFACE)
+    target_link_libraries(judas_glad INTERFACE GLESv3)
+else()
+    add_library(judas_glad STATIC third_party/glad/src/gl.c)
+    target_include_directories(judas_glad PUBLIC third_party/glad/include)
+    judas_warnings(judas_glad)
+endif()
 
 # Milestone 28: engine sources shared by the runtime, the editor and the
 # scene/runtime test suites. Neither executable reimplements engine
@@ -284,6 +296,20 @@ if(UNIX)
 endif()
 target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend)
 judas_warnings(judas_engine)
+
+# Android builds the same engine and application, loaded by SDL's native Activity.
+# Host editor, import/bake tools and test executables remain desktop-only.
+if(ANDROID)
+    target_sources(judas_engine PRIVATE src/AndroidPlatform.cpp)
+    target_include_directories(judas_engine SYSTEM PRIVATE third_party/cgltf)
+    target_link_libraries(judas_engine PUBLIC judas_quickjs judas_unicode judas_profiler judas_jobs android log)
+    add_library(main SHARED src/main.cpp src/Application.cpp src/RuntimeOptions.cpp
+        src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+    target_link_libraries(main PRIVATE judas_engine SDL2::SDL2main)
+    target_compile_definitions(main PRIVATE JUDAS_RUNTIME_BUILD_CONFIG="$<CONFIG>")
+    judas_warnings(main)
+    return()
+endif()
 
 add_executable(judas
     src/main.cpp
@@ -1843,3 +1869,16 @@ foreach(judas_current_target IN LISTS judas_current_targets)
         target_link_libraries(${judas_current_target} PRIVATE judas_jobs)
     endif()
 endforeach()
+
+# M88 device-independent touch snapshot contract.
+add_executable(judas_touch_input_tests tests/TouchInputTests.cpp src/InputSystem.cpp)
+target_include_directories(judas_touch_input_tests PRIVATE src)
+judas_warnings(judas_touch_input_tests)
+add_executable(judas_breakwater_application_tests tests/BreakwaterApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_breakwater_application_tests PRIVATE judas_engine)
+judas_warnings(judas_breakwater_application_tests)
+if(UNIX AND NOT ANDROID)
+add_executable(judas_breakwater_performance tests/BreakwaterPerformance.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_breakwater_performance PRIVATE judas_engine)
+judas_warnings(judas_breakwater_performance)
+endif()

@@ -1,0 +1,26 @@
+{
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/Breakwater.apk",
+  "sha256": "a88e57b08e9b163ac29aa70e9f2bbd385175e1c0eee3305fc3f58fd7c8355603",
+  "abis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "developmentSigning": true,
+  "shadows": "off",
+  "contentFiles": 41,
+  "contentBytes": 2347197,
+  "native": {
+    "arm64-v8a": {
+      "libmain.so": "e15fdf2bcbff5a7d4dc5f52232b2b5b56dfe05f5a378f1d9db955b2efd3c2603",
+      "_deps/judas_sdl-build/libSDL2.so": "d048971681a427c0f04d500242df835b9a67696cbf38502def13fcded72c2306"
+    },
+    "x86_64": {
+      "libmain.so": "89ca3780ab3e8772bb48d6a36db87c922cf779671002e10c633cf5be7803b3cf",
+      "_deps/judas_sdl-build/libSDL2.so": "4f6db30f48d8be8af0fd10a80c9d160e195f1d7bd02498f4d2c61c3f83948a1e"
+    }
+  }
+}

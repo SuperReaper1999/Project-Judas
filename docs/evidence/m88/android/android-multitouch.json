@@ -1,0 +1,7 @@
+{
+  "firstFingerPaddleX": 178.61750446542484,
+  "twoHeldPaddleX": 178.61750446542484,
+  "afterFirstReleasePaddleX": 578.2704960835509,
+  "passes": true,
+  "method": "Two native kernel MT slots -> Android MotionEvent -> SDL -> public input.touches -> JS kinematic paddle; visual centroid measured in captured frame"
+}

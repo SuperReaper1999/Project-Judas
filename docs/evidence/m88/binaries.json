@@ -1,0 +1,47 @@
+[
+  {
+    "path": ".cache/m88/Breakwater.apk",
+    "bytes": 103924246,
+    "sha256": "a88e57b08e9b163ac29aa70e9f2bbd385175e1c0eee3305fc3f58fd7c8355603"
+  },
+  {
+    "path": ".cache/m88/Breakwater-Linux-x86_64.zip",
+    "bytes": 23266779,
+    "sha256": "a6e127f5fa7b4d6ba37213e5622671bc2a8397a64e8af5744e71a0af153b9a9a"
+  },
+  {
+    "path": "build/judas",
+    "bytes": 53035400,
+    "sha256": "70c32c9ddf3f31481175b2e28eadb41af4ba9b421a6ddf7bd9d6d6af3244751f"
+  },
+  {
+    "path": "build/judas_editor",
+    "bytes": 58316464,
+    "sha256": "840d91b5eb3839ef6bd5414435165d7987f963c176d93f6feb7924fea989dde5"
+  },
+  {
+    "path": "build/judas_export",
+    "bytes": 52850344,
+    "sha256": "70e23778c1a9af32207d80bb34680b08b56d6f8517d743723d073320f13a664f"
+  },
+  {
+    "path": "build/judas_breakwater_application_tests",
+    "bytes": 53084512,
+    "sha256": "b7dd9130506b1f2fc6599ba80ea9b0ec7f58d971bd1c4915d7353b0500aa3ecc"
+  },
+  {
+    "path": "build/judas_breakwater_performance",
+    "bytes": 53077904,
+    "sha256": "7eb002f673ff7caca1c2da2619e95976fb55201f61e2ffd6ae9daf6f67622345"
+  },
+  {
+    "path": ".cache/m88/Pose-probe.apk",
+    "bytes": 53492734,
+    "sha256": "33835a0b0c36569628e530d0c3054f0ab6dd763dc50195123910f632c63d08cf"
+  },
+  {
+    "path": ".cache/m88/virtual-gamepad",
+    "bytes": 8128,
+    "sha256": "102dcb8d78625dbe5deb37c60c6df300155c52e6ce3df88d3de8414cf5961be6"
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "capturedUtc": "2026-10-15T22:36:18.361482+00:00",
+  "startingCommit": "16c40f08986486ef3d88aca50cefe0dde572b95b",
+  "branch": "Experimental",
+  "host": {
+    "cpu": "Intel Core i7-4790 @ 3.60GHz, 4 cores / 8 logical CPUs",
+    "ramGiB": 15,
+    "gpu": "NVIDIA GeForce GTX 970, 4 GB, driver 580.178.04",
+    "kernel": "7.0.0-38-generic"
+  },
+  "build": {
+    "host": "GCC, Release, C++17, -O3 -DNDEBUG",
+    "android": "NDK 28.2.13676358 Clang, Release; SDL2 2.32.10; GLM 1.0.1; same pinned ICU76.1/FreeType/HarfBuzz/QuickJS/Recast as engine",
+    "jdk": "Local Temurin 17.0.20.1+1 complete JDK",
+    "sdk": 36,
+    "buildTools": "36.0.0",
+    "emulator": "37.1.11, Android16/API36 Google APIs x86_64 revision7, KVM, host GL, Vulkan disabled, 2560 MiB guest RAM, 2 vCPUs, 720x1280 density240, 4096-byte pages"
+  },
+  "acceptance": {
+    "Linux": "focused automated validation",
+    "Android": "native x86_64 emulator functional validation",
+    "ARM64": "compiled, linked, packaged; NOT executed",
+    "physicalAndroid": "not available; pending",
+    "WindowsM88": "not run; informational/nonblocking"
+  },
+  "notes": [
+    "No physics solver, cadence, quality, sleep or CCD setting changed.",
+    "Profiling includes bounded collection overhead and host scheduling; no CPU affinity or clock lock.",
+    "No physical-device GPU, thermal, battery, audible output or real-controller certification.",
+    "Android profiles retain at most 120 frames; startup and menu-paused frames excluded from reported frame statistics."
+  ]
+}

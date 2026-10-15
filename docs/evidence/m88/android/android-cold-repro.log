@@ -1,0 +1,32 @@
+{
+  "gameBefore": {
+    "score": 100,
+    "lives": 2,
+    "hits": 1,
+    "powers": 0,
+    "phase": "ready",
+    "wideUntil": 0,
+    "time": 4.066666878759861
+  },
+  "gameAfter": {
+    "score": 100,
+    "lives": 2,
+    "hits": 1,
+    "powers": 0,
+    "phase": "ready",
+    "wideUntil": 0,
+    "time": 5.1333336010575294
+  },
+  "bodies": {
+    "static": 44,
+    "kinematic": 1,
+    "dynamic": 1
+  },
+  "tagCounts": {
+    "0": 1,
+    "3": 41,
+    "1": 1,
+    "2": 1
+  },
+  "pass": true
+}

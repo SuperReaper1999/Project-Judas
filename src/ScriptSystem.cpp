@@ -342,7 +342,7 @@ export const scenes={get current(){return call('sceneCurrent')},get registered()
 export const localization={get locale(){return call('localeInfo').locale},get available(){return call('localeInfo').available},get revision(){return call('localeInfo').revision},get direction(){return call('localeInfo').direction},setLocale:locale=>call('localeChoose',locale),format:(key,args={})=>call('localeFormat',key,args),number:(value,options={})=>call('localeNumber',value,options),reload:()=>call('localeReload')};
 export const saves={save:(slot,options={})=>call('saveRequest','save',slot,options),load:slot=>call('saveRequest','load',slot,{}),delete:slot=>call('saveRequest','delete',slot,{}),refresh:()=>call('saveRequest','list','',{}),list:()=>call('saveList'),exists:slot=>call('saveList').some(s=>s.id===slot),status:request=>call('saveStatus',request),cancel:request=>call('saveCancel',request),exclude:(entity,excluded=true)=>call('saveExclude',entity.id,excluded),reference:entity=>call('saveReference',entity.id),resolve:key=>entity(call('saveResolve',key))};
 export const session={get:key=>call('sessionGet',key),set:(key,value)=>call('sessionSet',key,value),delete:key=>call('sessionDelete',key)};
-export const input={get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
+export const input={get touches(){return call('touches')},get pointer(){return call('pointer')},get pointerCapture(){return call('pointerCapture')},set pointerCapture(value){call('setPointerCapture',value)},held:name=>call('held',name),pressed:name=>call('pressed',name),released:name=>call('released',name),axis:name=>call('axis',name),stick:side=>call('stick',side),stickDelta:side=>call('stickDelta',side),vector:name=>call('vector',name),stickSamples:(side,after=0)=>call('stickSamples',side,after)};
 export const profiler={scope:(label,callback)=>call("profileScope",label,callback),counter:(label,value,mode="sum")=>call("profileCounter",label,value,mode)};
 export const mods={get active(){return call('modCatalog').active},contributions:point=>call('modCatalog').contributions.filter(c=>c.point===point),resolve:(owner,name)=>call('modCatalog').exports[owner]?.[name]??null};
 export const time={get elapsed(){return call('elapsed')},get delta(){return call('delta')},get fixed(){return call('fixed')}};
@@ -790,6 +790,13 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="elapsed")return JS_NewFloat64(c,world.SimulationTimeSeconds());
     if(op=="delta")return JS_NewFloat64(c,s->delta);
     if(op=="fixed")return JS_NewBool(c,s->fixed);
+    if(op=="touches"||op=="pointer"){
+        auto point=[&](float x,float y){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,y));return o;};
+        if(op=="pointer"){auto p=s->input?s->input->Pointer():InputPointer{};auto o=point(p.x,p.y);JS_SetPropertyStr(c,o,"down",JS_NewBool(c,p.down));return o;}
+        auto out=JS_NewArray(c);uint32_t i=0;
+        if(s->input){for(const auto& t:s->input->Touches()){auto o=point(t.x,t.y);JS_SetPropertyStr(c,o,"id",JS_NewFloat64(c,double(t.id)));JS_SetPropertyStr(c,o,"pressure",JS_NewFloat64(c,t.pressure));JS_SetPropertyUint32(c,out,i++,o);}}
+        return out;
+    }
     if(op=="pointerCapture")return JS_NewBool(c,world.pointerCapture);
     if(op=="setPointerCapture"){if(!JS_IsBool(arg(1)))return JS_ThrowTypeError(c,"pointerCapture must be boolean");world.pointerCapture=JS_ToBool(c,arg(1));return JS_TRUE;}
     if(op=="stick"||op=="stickDelta"||op=="vector"||op=="stickSamples"){

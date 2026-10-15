@@ -1,0 +1,12 @@
++ /home/conner/Android/Sdk/build-tools/36.0.0/apksigner verify --verbose /home/conner/Documents/GitHub/Project-Judas/.cache/m88/Breakwater.apk
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
++ /home/conner/Android/Sdk/build-tools/36.0.0/zipalign -c -P 16 4 /home/conner/Documents/GitHub/Project-Judas/.cache/m88/Breakwater.apk
+APK: /home/conner/Documents/GitHub/Project-Judas/.cache/m88/Breakwater.apk
+SHA256: a88e57b08e9b163ac29aa70e9f2bbd385175e1c0eee3305fc3f58fd7c8355603

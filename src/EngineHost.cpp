@@ -2,15 +2,17 @@
 #include "EngineHost.h"
 
 #include <SDL2/SDL.h>
-#include <glad/gl.h>
+#include "GraphicsApi.h"
 
 #include "EnginePaths.h"
 
 namespace {
+#ifndef __ANDROID__
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
     return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
 }
 
+#endif
 // Default packaged DejaVu font serves compatibility HUD/menu calls. M58
 // shapes/rasterizes on demand through the same path as authored runtime UI.
 const char* const kUIFontPath = "assets/fonts/DejaVuSans.ttf";
@@ -30,10 +32,14 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
         outError = "Window initialization failed.";
         return false;
     }
+#ifdef __ANDROID__
+    if (!glGetString(GL_VERSION)) { outError = "OpenGL ES 3 context unavailable"; return false; }
+#else
     if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
         outError = "Failed to load the required OpenGL 3.3 Core entry points.";
         return false;
     }
+#endif
     if (!m_renderer.Init()) {
         outError = "Renderer initialization failed.";
         return false;

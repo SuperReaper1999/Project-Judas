@@ -1,0 +1,70 @@
+[
+  {
+    "path": "lib/arm64-v8a/libmain.so",
+    "bytes": 47838232,
+    "sha256": "b5445ffb848d114227375492f36e2e53589d5387a54860c390c1096425ff8f59",
+    "loadAlignment": [
+      "0x4000",
+      "0x4000",
+      "0x4000"
+    ],
+    "uncompressed": true
+  },
+  {
+    "path": "lib/arm64-v8a/libSDL2.so",
+    "bytes": 1257024,
+    "sha256": "88190d99f493db104a691c2217f7220956362e37fabcf2105df640bc85cc586a",
+    "loadAlignment": [
+      "0x4000",
+      "0x4000",
+      "0x4000"
+    ],
+    "uncompressed": true
+  },
+  {
+    "path": "lib/arm64-v8a/libc++_shared.so",
+    "bytes": 1253544,
+    "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+    "loadAlignment": [
+      "0x4000",
+      "0x4000",
+      "0x4000",
+      "0x4000"
+    ],
+    "uncompressed": true
+  },
+  {
+    "path": "lib/x86_64/libmain.so",
+    "bytes": 48948752,
+    "sha256": "a577a4b57a99f328515a31c8766906589d49cfc3f8b053820348da77c1e01f1a",
+    "loadAlignment": [
+      "0x4000",
+      "0x4000",
+      "0x4000"
+    ],
+    "uncompressed": true
+  },
+  {
+    "path": "lib/x86_64/libSDL2.so",
+    "bytes": 1370928,
+    "sha256": "d3d64eb41ae152a042927e44937806cecf19cad59307a5e428184c0c125164a9",
+    "loadAlignment": [
+      "0x4000",
+      "0x4000",
+      "0x4000"
+    ],
+    "uncompressed": true
+  },
+  {
+    "path": "lib/x86_64/libc++_shared.so",
+    "bytes": 1229808,
+    "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+    "loadAlignment": [
+      "0x4000",
+      "0x4000",
+      "0x4000",
+      "0x4000"
+    ],
+    "uncompressed": true
+  }
+]

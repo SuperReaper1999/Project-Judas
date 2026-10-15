@@ -1,0 +1,70 @@
+[
+  {
+    "receipt": "final-audio-tests.log",
+    "summary": "SUMMARY checks=59 failures=0",
+    "failLines": []
+  },
+  {
+    "receipt": "final-game-tests.log",
+    "summary": "31 checks 0 failures",
+    "failLines": []
+  },
+  {
+    "receipt": "final-render-camera-tests.log",
+    "summary": "SUMMARY checks=52 failures=0",
+    "failLines": []
+  },
+  {
+    "receipt": "final-text-render-tests.log",
+    "summary": "SUMMARY 48 checks 0 failures",
+    "failLines": []
+  },
+  {
+    "receipt": "judas_input_tests.log",
+    "summary": "SUMMARY checks=40 failures=0",
+    "failLines": []
+  },
+  {
+    "receipt": "judas_mod_content_tests.log",
+    "summary": "127 mod content checks passed",
+    "failLines": []
+  },
+  {
+    "receipt": "judas_paired_input_script_tests.log",
+    "summary": "SUMMARY 21 checks 0 failures",
+    "failLines": []
+  },
+  {
+    "receipt": "judas_paired_input_tests.log",
+    "summary": "SUMMARY checks=43 failures=0",
+    "failLines": []
+  },
+  {
+    "receipt": "judas_save_storage_tests.log",
+    "summary": "SUMMARY checks=36 failures=0",
+    "failLines": []
+  },
+  {
+    "receipt": "judas_script_tests.log",
+    "summary": "SUMMARY 35 checks 0 failures",
+    "failLines": []
+  },
+  {
+    "receipt": "shadows-off-game-tests.log",
+    "summary": "31 checks 0 failures",
+    "failLines": []
+  },
+  {
+    "receipt": "touch-tests.log",
+    "summary": "17 checks, 0 failures",
+    "failLines": []
+  },
+  {
+    "receipt": "save-write.log",
+    "summary": "SUMMARY mode=write checks=13 failures=0 frames=52"
+  },
+  {
+    "receipt": "save-read.log",
+    "summary": "SUMMARY mode=read checks=20 failures=0 frames=77"
+  }
+]

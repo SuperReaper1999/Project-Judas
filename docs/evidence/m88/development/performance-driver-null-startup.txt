@@ -1,0 +1,9 @@
+                Stack trace of thread 964546:
+                #0  0x00005bcd45c3a711 _ZNK12ScriptSystem7CaptureEbPKSt6vectorImSaImEE (/home/conner/Documents/GitHub/Project-Judas/build/judas_breakwater_performance + 0x27a711)
+                #1  0x00005bcd45b1034a _ZZ4mainENKUlR10EngineHostR12RuntimeWorldR15InteractivePlayE_clES0_S2_S4_.isra.0 (/home/conner/Documents/GitHub/Project-Judas/build/judas_breakwater_performance + 0x15034a)
+                #2  0x00005bcd45b26d70 _ZN11Application3RunEiPPcP18ApplicationControl (/home/conner/Documents/GitHub/Project-Judas/build/judas_breakwater_performance + 0x166d70)
+                #3  0x00005bcd45b0c060 main (/home/conner/Documents/GitHub/Project-Judas/build/judas_breakwater_performance + 0x14c060)
+                #4  0x0000798ff322a601 __libc_start_call_main (libc.so.6 + 0x2a601)
+                #5  0x0000798ff322a718 __libc_start_main_impl (libc.so.6 + 0x2a718)
+                #6  0x00005bcd45b0ce65 _start (/home/conner/Documents/GitHub/Project-Judas/build/judas_breakwater_performance + 0x14ce65)
+                

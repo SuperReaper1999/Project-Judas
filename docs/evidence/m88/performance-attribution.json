@@ -1,0 +1,467 @@
+{
+  "Linux": {
+    "retainedFrames": 120,
+    "gpuAvailable": null,
+    "scopeTotalsPerFrameMs": {
+      "JavaScript UI update": {
+        "meanOnFramesPresent": 0.027887974789915965,
+        "worst": 0.062718,
+        "framesPresent": 119
+      },
+      "JavaScript UI events": {
+        "meanOnFramesPresent": 0.00010978991596638655,
+        "worst": 0.00017,
+        "framesPresent": 119
+      },
+      "JavaScript update": {
+        "meanOnFramesPresent": 0.016149327731092438,
+        "worst": 0.076119,
+        "framesPresent": 119
+      },
+      "JavaScript presentation": {
+        "meanOnFramesPresent": 0.0018813613445378152,
+        "worst": 0.012765,
+        "framesPresent": 119
+      },
+      "Shadow pass submission": {
+        "meanOnFramesPresent": 0.3009679411764706,
+        "worst": 0.578904,
+        "framesPresent": 119
+      },
+      "Main camera": {
+        "meanOnFramesPresent": 0.4344692773109244,
+        "worst": 0.817166,
+        "framesPresent": 119
+      },
+      "Swap present wait": {
+        "meanOnFramesPresent": 0.08159213445378151,
+        "worst": 0.185957,
+        "framesPresent": 119
+      },
+      "JavaScript fixedUpdate": {
+        "meanOnFramesPresent": 0.0582535,
+        "worst": 0.095591,
+        "framesPresent": 8
+      },
+      "JavaScript contact events": {
+        "meanOnFramesPresent": 0.00333925,
+        "worst": 0.004281,
+        "framesPresent": 8
+      }
+    },
+    "scopeNames": [
+      "Animation instances",
+      "Audio control and retirement",
+      "Audio main update",
+      "Character motors",
+      "Fixed simulation step",
+      "Host shutdown",
+      "Input events",
+      "JavaScript UI events",
+      "JavaScript UI update",
+      "JavaScript contact events",
+      "JavaScript fixedUpdate",
+      "JavaScript presentation",
+      "JavaScript update",
+      "Legacy fluid surface update",
+      "Main camera",
+      "Mechanical powertrains",
+      "Particles and water presentation",
+      "Physical animation drives",
+      "Physics broadphase",
+      "Physics candidate generation",
+      "Physics contact and joint solver",
+      "Physics contact history publication",
+      "Physics contact row preparation",
+      "Physics contacts",
+      "Physics continuous impacts",
+      "Physics endpoint contact publication",
+      "Physics initial impacts",
+      "Physics kinematic publication",
+      "Physics position constraints",
+      "Physics prediction and wake",
+      "Physics proxy refresh",
+      "Physics sleeping assessment",
+      "Physics velocity constraints",
+      "Physics velocity integration",
+      "Play frame",
+      "Ragdoll physics to pose",
+      "Resource completion and budget",
+      "Resource pump",
+      "Resource release",
+      "Rigid physics",
+      "Runtime UI drawing",
+      "Runtime UI input",
+      "Runtime UI layout",
+      "Script asset: Assets/scripts/ball.js",
+      "Script asset: Assets/scripts/drop.js",
+      "Script asset: Assets/scripts/game.js",
+      "Script lifecycle callback",
+      "Script synchronization",
+      "Shadow pass submission",
+      "Shaped text submission",
+      "Simulation systems",
+      "Swap present wait",
+      "Text layout",
+      "Visual particle simulation",
+      "Water boundary upload",
+      "Water optical paths",
+      "Wheel suspension and tyres",
+      "Worker queue wait",
+      "World culling and opaque submission",
+      "World destroy",
+      "World render submission"
+    ]
+  },
+  "Android ready shadows on": {
+    "retainedFrames": 62,
+    "gpuAvailable": null,
+    "scopeTotalsPerFrameMs": {
+      "JavaScript UI update": {
+        "meanOnFramesPresent": 0.10541603278688524,
+        "worst": 2.049663,
+        "framesPresent": 61
+      },
+      "JavaScript UI events": {
+        "meanOnFramesPresent": 0.0002714918032786885,
+        "worst": 0.000677,
+        "framesPresent": 61
+      },
+      "JavaScript update": {
+        "meanOnFramesPresent": 0.031041524590163936,
+        "worst": 0.103717,
+        "framesPresent": 61
+      },
+      "JavaScript presentation": {
+        "meanOnFramesPresent": 0.004568311475409836,
+        "worst": 0.099583,
+        "framesPresent": 61
+      },
+      "Shadow pass submission": {
+        "meanOnFramesPresent": 75.59668790163934,
+        "worst": 391.451614,
+        "framesPresent": 61
+      },
+      "Main camera": {
+        "meanOnFramesPresent": 1.622083213114754,
+        "worst": 11.145817,
+        "framesPresent": 61
+      },
+      "Swap present wait": {
+        "meanOnFramesPresent": 0.9423284098360656,
+        "worst": 13.667155,
+        "framesPresent": 61
+      },
+      "JavaScript fixedUpdate": {
+        "meanOnFramesPresent": 0.2262481,
+        "worst": 1.1237810000000001,
+        "framesPresent": 60
+      },
+      "JavaScript contact events": {
+        "meanOnFramesPresent": 0.010915633333333332,
+        "worst": 0.04378,
+        "framesPresent": 60
+      }
+    },
+    "scopeNames": [
+      "Animation instances",
+      "Audio control and retirement",
+      "Audio main update",
+      "Character motors",
+      "Fixed simulation step",
+      "Host shutdown",
+      "Input events",
+      "JavaScript UI events",
+      "JavaScript UI update",
+      "JavaScript contact events",
+      "JavaScript fixedUpdate",
+      "JavaScript presentation",
+      "JavaScript update",
+      "Legacy fluid surface update",
+      "Main camera",
+      "Mechanical powertrains",
+      "Particles and water presentation",
+      "Physical animation drives",
+      "Physics broadphase",
+      "Physics candidate generation",
+      "Physics contact and joint solver",
+      "Physics contact history publication",
+      "Physics contact row preparation",
+      "Physics contacts",
+      "Physics continuous impacts",
+      "Physics endpoint contact publication",
+      "Physics initial impacts",
+      "Physics kinematic publication",
+      "Physics position constraints",
+      "Physics prediction and wake",
+      "Physics proxy refresh",
+      "Physics sleeping assessment",
+      "Physics velocity constraints",
+      "Physics velocity integration",
+      "Play frame",
+      "Ragdoll physics to pose",
+      "Resource completion and budget",
+      "Resource decode",
+      "Resource file IO",
+      "Resource installation",
+      "Resource load",
+      "Resource pump",
+      "Resource release",
+      "Resource worker job",
+      "Rigid physics",
+      "Runtime UI drawing",
+      "Runtime UI input",
+      "Runtime UI layout",
+      "Script asset: Assets/scripts/ball.js",
+      "Script asset: Assets/scripts/game.js",
+      "Script lifecycle callback",
+      "Script synchronization",
+      "Shadow pass submission",
+      "Shaped text submission",
+      "Signals API",
+      "Simulation systems",
+      "Swap present wait",
+      "Text glyph raster",
+      "Text layout",
+      "Texture driver mipmap generation",
+      "Texture driver texel upload",
+      "Visual particle simulation",
+      "Water boundary upload",
+      "Water optical paths",
+      "Wheel suspension and tyres",
+      "Worker queue wait",
+      "World culling and opaque submission",
+      "World destroy",
+      "World render submission"
+    ]
+  },
+  "Android ready shadows off": {
+    "retainedFrames": 94,
+    "gpuAvailable": null,
+    "scopeTotalsPerFrameMs": {
+      "JavaScript UI update": {
+        "meanOnFramesPresent": 0.08469720430107527,
+        "worst": 0.239616,
+        "framesPresent": 93
+      },
+      "JavaScript UI events": {
+        "meanOnFramesPresent": 0.00028159139784946234,
+        "worst": 0.000713,
+        "framesPresent": 93
+      },
+      "JavaScript update": {
+        "meanOnFramesPresent": 0.033262806451612906,
+        "worst": 0.115811,
+        "framesPresent": 93
+      },
+      "JavaScript fixedUpdate": {
+        "meanOnFramesPresent": 0.08920001075268817,
+        "worst": 0.252111,
+        "framesPresent": 93
+      },
+      "JavaScript contact events": {
+        "meanOnFramesPresent": 0.0045665806451612905,
+        "worst": 0.022556,
+        "framesPresent": 93
+      },
+      "JavaScript presentation": {
+        "meanOnFramesPresent": 0.003789763440860215,
+        "worst": 0.011655,
+        "framesPresent": 93
+      },
+      "Shadow pass submission": {
+        "meanOnFramesPresent": 0.0006903655913978495,
+        "worst": 0.012339,
+        "framesPresent": 93
+      },
+      "Main camera": {
+        "meanOnFramesPresent": 1.7459383548387097,
+        "worst": 4.661579,
+        "framesPresent": 93
+      },
+      "Swap present wait": {
+        "meanOnFramesPresent": 12.831300580645161,
+        "worst": 16.099209,
+        "framesPresent": 93
+      }
+    },
+    "scopeNames": [
+      "Animation instances",
+      "Audio control and retirement",
+      "Audio main update",
+      "Character motors",
+      "Fixed simulation step",
+      "Host shutdown",
+      "Input events",
+      "JavaScript UI events",
+      "JavaScript UI update",
+      "JavaScript contact events",
+      "JavaScript fixedUpdate",
+      "JavaScript presentation",
+      "JavaScript update",
+      "Legacy fluid surface update",
+      "Main camera",
+      "Mechanical powertrains",
+      "Particles and water presentation",
+      "Physical animation drives",
+      "Physics broadphase",
+      "Physics candidate generation",
+      "Physics contact and joint solver",
+      "Physics contact history publication",
+      "Physics contact row preparation",
+      "Physics contacts",
+      "Physics continuous impacts",
+      "Physics endpoint contact publication",
+      "Physics initial impacts",
+      "Physics kinematic publication",
+      "Physics position constraints",
+      "Physics prediction and wake",
+      "Physics proxy refresh",
+      "Physics sleeping assessment",
+      "Physics velocity constraints",
+      "Physics velocity integration",
+      "Play frame",
+      "Ragdoll physics to pose",
+      "Resource completion and budget",
+      "Resource pump",
+      "Resource release",
+      "Rigid physics",
+      "Runtime UI drawing",
+      "Runtime UI input",
+      "Runtime UI layout",
+      "Script asset: Assets/scripts/ball.js",
+      "Script asset: Assets/scripts/game.js",
+      "Script lifecycle callback",
+      "Script synchronization",
+      "Shadow pass submission",
+      "Shaped text submission",
+      "Simulation systems",
+      "Swap present wait",
+      "Text layout",
+      "Visual particle simulation",
+      "Water boundary upload",
+      "Water optical paths",
+      "Wheel suspension and tyres",
+      "Worker queue wait",
+      "World culling and opaque submission",
+      "World destroy",
+      "World render submission"
+    ]
+  },
+  "Android active shadows off": {
+    "retainedFrames": 95,
+    "gpuAvailable": null,
+    "scopeTotalsPerFrameMs": {
+      "JavaScript UI update": {
+        "meanOnFramesPresent": 0.09904397872340426,
+        "worst": 0.229112,
+        "framesPresent": 94
+      },
+      "JavaScript UI events": {
+        "meanOnFramesPresent": 0.0003854574468085106,
+        "worst": 0.001637,
+        "framesPresent": 94
+      },
+      "JavaScript update": {
+        "meanOnFramesPresent": 0.040750968085106386,
+        "worst": 0.115734,
+        "framesPresent": 94
+      },
+      "JavaScript fixedUpdate": {
+        "meanOnFramesPresent": 0.11616187234042553,
+        "worst": 0.359614,
+        "framesPresent": 94
+      },
+      "JavaScript contact events": {
+        "meanOnFramesPresent": 0.007351521276595744,
+        "worst": 0.103848,
+        "framesPresent": 94
+      },
+      "JavaScript presentation": {
+        "meanOnFramesPresent": 0.00860713829787234,
+        "worst": 0.178471,
+        "framesPresent": 94
+      },
+      "Shadow pass submission": {
+        "meanOnFramesPresent": 0.000641031914893617,
+        "worst": 0.010102,
+        "framesPresent": 94
+      },
+      "Main camera": {
+        "meanOnFramesPresent": 2.191976670212766,
+        "worst": 4.999907,
+        "framesPresent": 94
+      },
+      "Swap present wait": {
+        "meanOnFramesPresent": 11.993731063829788,
+        "worst": 17.52304,
+        "framesPresent": 94
+      }
+    },
+    "scopeNames": [
+      "Animation instances",
+      "Audio control and retirement",
+      "Audio main update",
+      "Character motors",
+      "Fixed simulation step",
+      "Host shutdown",
+      "Input events",
+      "JavaScript UI events",
+      "JavaScript UI update",
+      "JavaScript contact events",
+      "JavaScript fixedUpdate",
+      "JavaScript presentation",
+      "JavaScript update",
+      "Legacy fluid surface update",
+      "Main camera",
+      "Mechanical powertrains",
+      "Particles and water presentation",
+      "Physical animation drives",
+      "Physics broadphase",
+      "Physics candidate generation",
+      "Physics contact and joint solver",
+      "Physics contact history publication",
+      "Physics contact row preparation",
+      "Physics contacts",
+      "Physics continuous impacts",
+      "Physics endpoint contact publication",
+      "Physics initial impacts",
+      "Physics kinematic publication",
+      "Physics position constraints",
+      "Physics prediction and wake",
+      "Physics proxy refresh",
+      "Physics sleeping assessment",
+      "Physics velocity constraints",
+      "Physics velocity integration",
+      "Play frame",
+      "Ragdoll physics to pose",
+      "Resource completion and budget",
+      "Resource pump",
+      "Resource release",
+      "Rigid physics",
+      "Runtime UI drawing",
+      "Runtime UI input",
+      "Runtime UI layout",
+      "Script asset: Assets/scripts/ball.js",
+      "Script asset: Assets/scripts/game.js",
+      "Script lifecycle callback",
+      "Script synchronization",
+      "Shadow pass submission",
+      "Shaped text submission",
+      "Signals API",
+      "Signals handler",
+      "Signals routing and delivery",
+      "Simulation systems",
+      "Swap present wait",
+      "Text layout",
+      "Visual particle simulation",
+      "Water boundary upload",
+      "Water optical paths",
+      "Wheel suspension and tyres",
+      "Worker queue wait",
+      "World culling and opaque submission",
+      "World destroy",
+      "World render submission"
+    ]
+  }
+}

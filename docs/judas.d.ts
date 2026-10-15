@@ -1,4 +1,4 @@
-/** Current JudasJS through M86 Experimental. M86 operator acceptance is pending.
+/** Current JudasJS through M88 Experimental. M88 operator/Android hardware acceptance is pending.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -767,7 +767,12 @@ declare module "judas" {
     overflow: boolean;
     capacity: 128;
   }
+  /** Active contacts in normalized top-left window coordinates, bounded to ten. */
+  export interface TouchContact { readonly id:number; readonly x:number; readonly y:number; readonly pressure:number; }
+  export interface PointerSnapshot { readonly x:number; readonly y:number; readonly down:boolean; }
   export const input: {
+    readonly touches: readonly TouchContact[];
+    readonly pointer: PointerSnapshot;
     pointerCapture: boolean;
     held(name: string): boolean; pressed(name: string): boolean; released(name: string): boolean; axis(name: string): number;
     /** Raw normalized components, before Judas processing. X right+, Y down+; no unit-circle clamp. */

@@ -192,6 +192,29 @@ someone with no prior context on this project. It is updated in place as
 milestones land, rather than kept as a per-milestone snapshot — see
 "Milestone history" below for how to recover an earlier milestone exactly.
 
+## M88 optional native Android runtime
+
+The Android CMake branch builds the existing engine and Application as an NDK
+shared library loaded by SDLActivity. Desktop editor/import tools are host-only;
+Linux/Windows never require the Android SDK. The optional SDK packaging command
+uses normal M38 content/dependency validation, a checked private content generation,
+and APK resource/DEX/native alignment/signing. See [ANDROID.md](ANDROID.md).
+
+Renderer owns the ES 3 adaptation: precision-qualified GLSL, 2D skin palettes,
+portable readback, optional smaller mobile shadows (off by default) and explicit absence of GPU timestamps.
+Desktop GL 3.3 remains intact. M35 receives normalized bounded touch/pointer
+snapshots; SDL's OS controller route feeds the same logical bindings. Neither
+input nor native bootstrap owns gameplay. Breakwater is ordinary project JS.
+
+Background/resume gates simulation/presentation/audio and resets the input clock;
+rotation uses actual window dimensions. Private app data separates immutable
+versioned APK content from M61 saves. Android storage walks begin at the trusted
+OS private-data anchor because untrusted apps cannot open `/`; descendant
+openat/O_NOFOLLOW, slot validation, atomic publication and checksum rules remain.
+An actual EGL loss exits the session safely; transparent live GPU reconstruction
+is not claimed. Native Android emulator validation is distinct from physical
+hardware acceptance. M88 does not certify every heavy desktop scene on mobile.
+
 ## Platform acceptance boundaries
 
 The operator reports that the earlier Windows update was validated and pushed.

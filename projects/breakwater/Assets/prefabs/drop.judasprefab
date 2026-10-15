@@ -1,0 +1,118 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "BREAKWATER",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.2,
+        0.4,
+        0.9
+      ],
+      "sun-color": [
+        0.9,
+        0.95,
+        1
+      ],
+      "ambient": [
+        0.48,
+        0.5,
+        0.55
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Power capsule",
+        "fields": {
+          "render.half-extents": [
+            0.36,
+            0.36,
+            0.36
+          ],
+          "render.radius": 0.36,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            0.36,
+            0.36,
+            0.36
+          ],
+          "body.radius": 0.36,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 0.15,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "sphere"
+          },
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "sphere"
+            }
+          },
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "c8a017456150fc9da0f08232adda404a",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "tags": 16
+        }
+      }
+    ]
+  }
+}

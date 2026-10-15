@@ -1,0 +1,9 @@
+FRAMES 160
+LOG_EVERY 0
+ACTION launch 1 25 27
+ACTION pause 1 80 82
+EXPECT_PAUSED 1 84
+SCREENSHOT 85 /home/conner/Documents/GitHub/Project-Judas/.cache/m88/package-menu.png
+ACTION pause 1 100 102
+EXPECT_PAUSED 0 104
+SCREENSHOT 145 /home/conner/Documents/GitHub/Project-Judas/.cache/m88/package-game.png

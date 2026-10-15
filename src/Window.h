@@ -43,6 +43,8 @@ public:
     const InputSystem& Input() const { return m_input; }
     float InputAxis(const std::string& name) const;
     bool ConsumeNamedAction(const std::string& name);
+    bool ConsumeLifecycleClockReset(){const bool reset=m_lifecycleClockReset;m_lifecycleClockReset=false;return reset;}
+    bool ApplicationActive() const {return m_applicationActive;}
     bool ShouldClose() const { return m_shouldClose; }
     // Desktop applications may defer a close request while an unsaved-document
     // dialog is shown. Runtime games retain the normal close behavior.
@@ -114,6 +116,7 @@ public:
     void RequestTestSasToggle();
 
 private:
+    bool m_applicationActive=true,m_lifecycleClockReset=false;
     InputSystem m_input;
     std::set<std::string> m_consumed;
     SDL_GameController* m_controller=nullptr;

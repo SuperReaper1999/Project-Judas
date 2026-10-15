@@ -1,0 +1,31 @@
+{
+  "method": "Native Android 16 emulator, host GL, 720x1280; M56 enabled; no physical-device claim",
+  "mode": "ready",
+  "shadows": "off",
+  "frame": {
+    "samples": 94,
+    "medianMs": 16.674258000000002,
+    "p95Ms": 18.545506,
+    "worstMs": 19.38671
+  },
+  "fixed": {
+    "samples": 93,
+    "medianMs": 0.129403,
+    "p95Ms": 0.290786,
+    "worstMs": 0.402557
+  },
+  "capFrames": 0,
+  "discardedSimulationSeconds": 0,
+  "diagnostics": {
+    "dropped_events": 0,
+    "exhausted_labels": 0,
+    "exhausted_nodes": 0,
+    "exhausted_threads": 0,
+    "incomplete_scopes": 0,
+    "open_scopes": 0,
+    "truncated_records": 0,
+    "gpu_dropped": 0,
+    "nested_frames": 0
+  },
+  "memory": "Applications Memory Usage (in Kilobytes):\nUptime: 3080761 Realtime: 3080761\n\n** MEMINFO in pid 5672 [org.projectjudas.breakwater] **\n                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap\n                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free\n                ------   ------   ------   ------   ------   ------   ------   ------\n  Native Heap    44287    44260        8       46    45232   108384   100572     2271\n  Dalvik Heap      944      908        0      147     2324     3703     1852     1851\n Dalvik Other     5458     2464        0        3     8896                           \n        Stack      892      892        0        0      900                           \n       Ashmem       45        0        0        0      668                           \n    Other dev       17        0       12        0      316                           \n     .so mmap     4158      292     1316       12    35840                           \n    .jar mmap     2164        0      132        0    43752                           \n    .apk mmap    15904      344    15508        0    16932                           \n    .dex mmap       11        0        0        0      848                           \n    .oat mmap       28        0        0        0     1864                           \n    .art mmap     9144     8680      148       89    26196                           \n   Other mmap     1181        4        0        0     3324                           \n      Unknown      624      620        0        1     1104                           \n        TOTAL    85155    58464    17124      298   188196   112087   102424     4122\n \n App Summary\n                       Pss(KB)                        Rss(KB)\n                        ------                         ------\n           Java Heap:     9736                          28520\n         Native Heap:    44260                          45232\n                Code:    19264                         106888\n               Stack:      892                            900\n            Graphics:        0                              0\n       Private Other:     1436\n              System:     9567\n             Unknown:                                    6656\n \n           TOTAL PSS:    85155            TOTAL RSS:   188196       TOTAL SWAP PSS:      298\n \n Objects\n               Views:        6         ViewRootImpl:        1\n         AppContexts:        6           Activities:        1\n              Assets:       20        AssetManagers:        0\n       Local Binders:       19        Proxy Binders:       68\n       Parcel memory:        6         Parcel count:       26\n    Death Recipients:        0             WebViews:        0\n \n Native Allocations\n                         Count                       Total(kB)\n                        ------                         ------\n    Other (malloced):      320                             29\n Other (nonmalloced):       83                             61\n \n SQL\n         MEMORY_USED:        0\n  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:        0"
+}

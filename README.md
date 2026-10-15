@@ -12,10 +12,20 @@ doors and other objects you will meet below are the engine's **technology
 demonstration**: scene content that validates engine capabilities, not the
 engine itself and not "the Judas game."
 
-Rendering targets **OpenGL 3.3 Core / GLSL 330**. OpenGL entry points are
+Desktop rendering targets **OpenGL 3.3 Core / GLSL 330**; the optional
+[M88 native Android runtime](docs/ANDROID.md) uses OpenGL ES 3 / GLSL ES 300. Desktop OpenGL entry points are
 loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
+
+## Experimental — M88 native Android games
+
+[Native Android build/export](docs/ANDROID.md) targets Android 16 with ARM64 and
+x86_64 APKs, touch/multitouch snapshots, existing logical gamepad input, private
+saves and lifecycle handling. [Breakwater](projects/breakwater/README.md) is the
+same physics block-breaker project on desktop and Android. Emulator evidence is
+separate from physical-phone acceptance, which remains pending. Main remains the
+accepted M87 release until operator promotion.
 
 ## Latest accepted release — M87 physics scaling
 

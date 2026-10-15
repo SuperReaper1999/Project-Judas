@@ -1,0 +1,9 @@
+usage: build_android.py [-h] --output OUTPUT [--sdk SDK] [--cache CACHE]
+                        [--abis ABIS] [--shadows {off,on}] [--jobs JOBS]
+                        [--id ID] [--name NAME] [--version-code VERSION_CODE]
+                        [--exporter EXPORTER]
+                        [--desktop-runtime DESKTOP_RUNTIME]
+                        [--keystore KEYSTORE] [--key-alias KEY_ALIAS]
+                        [--password-env PASSWORD_ENV]
+                        project
+build_android.py: error: Another Android build owns this cache; wait or use --cache elsewhere

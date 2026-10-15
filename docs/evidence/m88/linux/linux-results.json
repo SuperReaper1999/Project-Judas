@@ -1,0 +1,57 @@
+[
+  {
+    "test": "judas_input_tests",
+    "exit": 0,
+    "seconds": 0.7669073639990529
+  },
+  {
+    "test": "judas_paired_input_tests",
+    "exit": 0,
+    "seconds": 0.2723757359999581
+  },
+  {
+    "test": "judas_paired_input_script_tests",
+    "exit": 0,
+    "seconds": 0.4311513799984823
+  },
+  {
+    "test": "judas_save_storage_tests",
+    "exit": 0,
+    "seconds": 0.11980324399701203
+  },
+  {
+    "test": "judas_save_application_tests",
+    "exit": 2,
+    "seconds": 0.007256917000631802
+  },
+  {
+    "test": "judas_audio_tests",
+    "exit": 0,
+    "seconds": 0.4816278329999477
+  },
+  {
+    "test": "judas_text_render_tests",
+    "exit": 0,
+    "seconds": 0.868230809999659
+  },
+  {
+    "test": "judas_script_tests",
+    "exit": 0,
+    "seconds": 0.847332217002986
+  },
+  {
+    "test": "judas_mod_content_tests",
+    "exit": 0,
+    "seconds": 0.015409838000778109
+  },
+  {
+    "test": "judas_touch_input_tests",
+    "exit": 0,
+    "seconds": 0.003092478000326082
+  },
+  {
+    "test": "judas_breakwater_application_tests",
+    "exit": 0,
+    "seconds": 0.8573425360009423
+  }
+]

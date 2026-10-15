@@ -1,0 +1,53 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[  5%] Built target judas_app_icon
+[ 17%] Built target freetype
+[ 23%] Built target judas_glad
+[ 23%] Built target judas_profiler
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_jobs
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target judas_materials
+[ 35%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[100%] Built target judas
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 18%] Built target freetype
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_jobs
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_export
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 18%] Built target freetype
+[ 25%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_jobs
+[ 31%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_breakwater_performance
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 18%] Built target freetype
+[ 25%] Built target judas_navigation_backend
+[ 31%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_jobs
+[ 37%] Built target judas_materials
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Built target judas_audio_tests
+Built target judas_touch_input_tests

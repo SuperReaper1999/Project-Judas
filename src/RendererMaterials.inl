@@ -97,7 +97,11 @@ void Renderer::BeginLinearPass(int width,int height){
   m_linearTargets.push_back(target);existing=m_linearTargets.end()-1;
  }
  m_hdrFbo=existing->fbo;m_hdrColor=existing->color;m_hdrDepth=existing->depth;m_hdrWidth=width;m_hdrHeight=height;
- glBindFramebuffer(GL_FRAMEBUFFER,m_hdrFbo);glDisable(GL_FRAMEBUFFER_SRGB);glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);m_linearPass=true;
+ glBindFramebuffer(GL_FRAMEBUFFER,m_hdrFbo);
+#ifndef __ANDROID__
+ glDisable(GL_FRAMEBUFFER_SRGB);
+#endif
+glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);m_linearPass=true;
 }
 void Renderer::ResolveLinearPass(bool sceneLinear){
  if(!m_linearPass)return;
@@ -110,7 +114,11 @@ vec3 encode(vec3 c){return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec
 void main(){vec3 colour=texture(image,uv).rgb;if(background&&texture(depthImage,uv).r>=0.999999){vec4 w=inverseViewProjection*vec4(uv*2.0-1.0,1,1);vec3 d=environmentInverse*normalize(w.xyz/w.w-eye);vec2 e=vec2(atan(d.z,d.x)/6.28318530718,acos(clamp(d.y,-1.0,1.0))/3.14159265359);colour=textureLod(environment,e,0.0).rgb*intensity;}if(linearOutput){result=vec4(max(colour,vec3(0.0)),1);return;}colour=max(colour,vec3(0.0))*exposure;float luminance=dot(colour,vec3(.2126,.7152,.0722));colour/=1.0+luminance;result=vec4(encode(clamp(colour,0.0,1.0)),1.0);})";
  GLuint v=0,f=0;if(!CompileShader(GL_VERTEX_SHADER,vs,v)||!CompileShader(GL_FRAGMENT_SHADER,fs,f)||!LinkProgram(v,f,m_outputProgram)){glDeleteShader(v);glDeleteShader(f);m_linearPass=false;return;}glDeleteShader(v);glDeleteShader(f);glGenVertexArrays(1,&m_outputVao);
  }
- glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_outputFramebuffer));glViewport(0,0,m_hdrWidth,m_hdrHeight);glDisable(GL_DEPTH_TEST);glDisable(GL_BLEND);glDisable(GL_CULL_FACE);glDisable(GL_FRAMEBUFFER_SRGB);glUseProgram(m_outputProgram);
+ glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_outputFramebuffer));glViewport(0,0,m_hdrWidth,m_hdrHeight);glDisable(GL_DEPTH_TEST);glDisable(GL_BLEND);glDisable(GL_CULL_FACE);
+#ifndef __ANDROID__
+ glDisable(GL_FRAMEBUFFER_SRGB);
+#endif
+glUseProgram(m_outputProgram);
  auto loc=[&](const char* n){return glGetUniformLocation(m_outputProgram,n);};
  glActiveTexture(GL_TEXTURE0);glBindSampler(0,0);glBindTexture(GL_TEXTURE_2D,m_hdrColor);glUniform1i(loc("image"),0);glActiveTexture(GL_TEXTURE1);glBindTexture(GL_TEXTURE_2D,m_hdrDepth);glBindSampler(1,0);glUniform1i(loc("depthImage"),1);
  const GpuEnvironment* e=m_environment.IsValid()&&m_environment.id<m_environments.size()&&m_environments[m_environment.id].alive?&m_environments[m_environment.id]:nullptr;glActiveTexture(GL_TEXTURE2);glBindSampler(2,0);glBindTexture(GL_TEXTURE_2D,e?e->specular:0);glUniform1i(loc("environment"),2);glUniform1i(loc("background"),m_environmentBackground&&e);glUniform1i(loc("linearOutput"),sceneLinear);glUniform1f(loc("exposure"),m_exposure);glUniform1f(loc("intensity"),m_environmentIntensity);auto inv=glm::inverse(m_projection*m_view);auto rotation=glm::mat3_cast(glm::conjugate(m_environmentRotation));auto eye=glm::vec3(glm::inverse(m_view)[3]);glUniformMatrix4fv(loc("inverseViewProjection"),1,GL_FALSE,glm::value_ptr(inv));glUniformMatrix3fv(loc("environmentInverse"),1,GL_FALSE,glm::value_ptr(rotation));glUniform3fv(loc("eye"),1,glm::value_ptr(eye));glBindVertexArray(m_outputVao);glDrawArrays(GL_TRIANGLES,0,3);glBindVertexArray(0);

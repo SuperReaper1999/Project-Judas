@@ -1,0 +1,41 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: .cache/m88/application/legacy.worldstate (none saved)
+Project: Breakwater (/home/conner/Documents/GitHub/Project-Judas/projects/breakwater/breakwater.judasproj)
+Scene: BREAKWATER (/home/conner/Documents/GitHub/Project-Judas/projects/breakwater/Scenes/arcade.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS logical Back/Escape opens menu once without immediately closing it
+PASS second logical Back resumes without input leakage
+PASS menu confirm consumes its shared launch binding
+PASS renderer shadow quality changes submission only
+PASS 42 real physical blocks published
+PASS JS begins ready with a physical ball
+Audio device suspend/resume failed: -3
+PASS OS background freezes authoritative physics
+PASS resume continues without catch-up spiral
+PASS capture real desktop game frame
+PASS normalized touch drives real kinematic paddle
+PASS logical launch starts the physical ball
+PASS miss/no impact cannot score
+PASS ball survived ordinary launch
+PASS actual native sphere/block contact delivers JS destruction and score
+PASS hit removes real block collision
+PASS normal project save accepted
+SAVE writing 
+PASS normal project load accepted
+PASS save restores actual gameplay score
+PASS save restores actual remaining collision population
+PASS save restores one paddle rather than spawning a duplicate
+PASS normal scene reload resets round and physical blocks
+PASS no script exceptions after input/contact/save/reload
+PASS save/load/reload lifecycle completed
+PASS winning round removes all real collision blocks
+PASS winning score and modal end screen
+PASS physical capsule/paddle contacts award all three power-up types
+PASS wide power-up changes actual collider geometry
+PASS multiball creates independently simulated physical balls
+PASS three physical misses produce one loss screen with zero lives
+PASS no faults through complete winning and losing rounds
+PASS ordinary game application exits cleanly
+31 checks 0 failures

@@ -1,0 +1,20 @@
+{
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/Pose-probe.apk",
+  "sha256": "33835a0b0c36569628e530d0c3054f0ab6dd763dc50195123910f632c63d08cf",
+  "abis": [
+    "x86_64"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "developmentSigning": true,
+  "contentFiles": 26,
+  "contentBytes": 2199683,
+  "native": {
+    "x86_64": {
+      "libmain.so": "b2422d58aeb16a695043d4ad4a1b089b3452b04052d5f1e12d84b9868836f66a",
+      "_deps/judas_sdl-build/libSDL2.so": "4f6db30f48d8be8af0fd10a80c9d160e195f1d7bd02498f4d2c61c3f83948a1e"
+    }
+  }
+}

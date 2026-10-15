@@ -1,0 +1,3576 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "BREAKWATER",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.2,
+        0.4,
+        0.9
+      ],
+      "sun-color": [
+        0.9,
+        0.95,
+        1
+      ],
+      "ambient": [
+        0.48,
+        0.5,
+        0.55
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Slate backboard",
+        "fields": {
+          "render.half-extents": [
+            9.5,
+            13,
+            0.3
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.025,
+            0.045,
+            0.08
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "position": [
+            0,
+            0,
+            -0.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary gravity",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 6
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "sphere"
+            },
+            "radius": 1000
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Solid boundary",
+        "fields": {
+          "render.half-extents": [
+            0.35,
+            12.5,
+            1
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.13,
+            0.28,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            0.35,
+            12.5,
+            1
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -8.6,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          }
+        }
+      },
+      {
+        "id": 11,
+        "name": "Solid boundary",
+        "fields": {
+          "render.half-extents": [
+            0.35,
+            12.5,
+            1
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.13,
+            0.28,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            0.35,
+            12.5,
+            1
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            8.6,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          }
+        }
+      },
+      {
+        "id": 12,
+        "name": "Solid boundary",
+        "fields": {
+          "render.half-extents": [
+            8.6,
+            0.35,
+            1
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.13,
+            0.28,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            8.6,
+            0.35,
+            1
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0,
+            12.4,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          }
+        }
+      },
+      {
+        "id": 100,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -6.84,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 101,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -4.56,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 102,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -2.28,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 103,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0.0,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 104,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            2.28,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 105,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            4.56,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 106,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.22,
+            0.85,
+            0.76
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            6.84,
+            9.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 107,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -6.84,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 108,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -4.56,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 109,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -2.28,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 110,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0.0,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 111,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            2.28,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 112,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            4.56,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 113,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.3,
+            0.65,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            6.84,
+            8.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 114,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -6.84,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 115,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -4.56,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 116,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -2.28,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 117,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0.0,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 118,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            2.28,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 119,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            4.56,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 120,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.68,
+            0.45,
+            0.96
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            6.84,
+            7.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 121,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -6.84,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 122,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -4.56,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 123,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -2.28,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 124,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0.0,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 125,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            2.28,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 126,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            4.56,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 127,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.42,
+            0.38
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            6.84,
+            5.85,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 128,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -6.84,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 129,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -4.56,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 130,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -2.28,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 131,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0.0,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 132,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            2.28,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 133,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            4.56,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 134,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            1,
+            0.69,
+            0.26
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            6.84,
+            4.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 135,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -6.84,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 136,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -4.56,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 137,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            -2.28,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 138,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0.0,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 139,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            2.28,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 140,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            4.56,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 141,
+        "name": "Ceramic block",
+        "fields": {
+          "render.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "render.radius": 0.3,
+          "render.color": [
+            0.93,
+            0.84,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            1.02,
+            0.48,
+            0.42
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0,
+          "body.restitution": 1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            6.84,
+            3.3499999999999996,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "tags": 8
+        }
+      },
+      {
+        "id": 50,
+        "name": "Breakwater game",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "ff6d2ffb81f410ea35888299d66007b8",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "tags": 1,
+          "ui.asset": "16831b6d81bf2a4a0f6760c2147c5ca2",
+          "ui.name": "breakwater",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 600,
+        "name": "hit audio",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio.asset": "e67cb26cfeea577600293a291300acf8",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio-emitter": [],
+          "audio.volume": 0.22,
+          "audio.loop": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false
+        }
+      },
+      {
+        "id": 601,
+        "name": "power audio",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio.asset": "29e1f069768e1cabaa7fc76472d4f5e0",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio-emitter": [],
+          "audio.volume": 0.22,
+          "audio.loop": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false
+        }
+      },
+      {
+        "id": 602,
+        "name": "lost audio",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio.asset": "bcc387271ea6f3bc15f9b7afee833619",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio-emitter": [],
+          "audio.volume": 0.22,
+          "audio.loop": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false
+        }
+      },
+      {
+        "id": 603,
+        "name": "launch audio",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio.asset": "49f64c3a65c6250a78d4b244e84970a5",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio-emitter": [],
+          "audio.volume": 0.22,
+          "audio.loop": false,
+          "audio.pitch": 1,
+          "audio.reference-distance": 1,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          },
+          "audio.spatial": false
+        }
+      }
+    ]
+  }
+}

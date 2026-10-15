@@ -15,7 +15,10 @@
 namespace fs = std::filesystem;
 
 std::string EngineExecutableDir() {
-#if defined(__linux__)
+#if defined(__ANDROID__)
+    if(const char* root=std::getenv("JUDAS_ANDROID_CONTENT"))return root;
+    return {};
+#elif defined(__linux__)
     char buffer[4096];
     const ssize_t length = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
     if (length > 0) {

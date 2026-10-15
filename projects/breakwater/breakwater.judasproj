@@ -1,0 +1,269 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Breakwater",
+    "legacyGameplay": false,
+    "saveIdentity": "d94c72b149fa28880eab950953ef2151f7937cb7f2066defed0da2e7e1cb7267",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/arcade.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "all",
+    "runtimeAssets": [],
+    "exportScenes": [
+      "Scenes/arcade.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "move",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": -1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:D",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:Left",
+            "scale": -1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:Right",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "stick:LeftX",
+            "scale": 1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "launch",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Space",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:South",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:AC Back",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:Start",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "restart",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:Back",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_click",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_activate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Return",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:Space",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:South",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_back",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:AC Back",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:East",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Down",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadDown",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Up",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadUp",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 6,
+        "entries": [
+          {
+            "id": 0,
+            "name": "controller"
+          },
+          {
+            "id": 1,
+            "name": "paddle"
+          },
+          {
+            "id": 2,
+            "name": "ball"
+          },
+          {
+            "id": 3,
+            "name": "brick"
+          },
+          {
+            "id": 4,
+            "name": "drop"
+          },
+          {
+            "id": 5,
+            "name": "shard"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {}
+  }
+}

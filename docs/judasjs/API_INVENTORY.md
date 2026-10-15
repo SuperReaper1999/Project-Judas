@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M86 Experimental candidate public module based on checkpoint `7d1110ee323e3f7d6a7b5d84be338edf144546dc`. M86 human acceptance is pending; Windows remains informational and untested for this candidate. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M88 Experimental candidate public module based on checkpoint `16c40f08986486ef3d88aca50cefe0dde572b95b`. M88 human and physical Android acceptance are pending; emulator validation is distinct from device validation. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -270,12 +270,14 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `input` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.axis` | `axis` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.held` | `held` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.pointer` | `pointer` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.pointerCapture` | `pointerCapture`, `setPointerCapture` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.pressed` | `pressed` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.released` | `released` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.stick` | `stick` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.stickDelta` | `stickDelta` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.stickSamples` | `stickSamples` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `input.touches` | `touches` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.vector` | `vector` | [declaration](../judas.d.ts) | [reference](input.md) |
 | `liquid` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `liquid.accounting` | `liquidAccounting` | [declaration](../judas.d.ts) | [reference](liquid.md) |

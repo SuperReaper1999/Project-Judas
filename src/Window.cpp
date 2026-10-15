@@ -7,19 +7,35 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
 #ifdef _WIN32
     SDL_SetMainReady();
 #endif
+#ifdef __ANDROID__
+    SDL_SetHint(SDL_HINT_ANDROID_BLOCK_ON_PAUSE,"0");
+    SDL_SetHint(SDL_HINT_TOUCH_MOUSE_EVENTS,"1");
+    SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS,"0");
+#endif
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0) {
         std::fprintf(stderr, "SDL_Init failed: %s\n", SDL_GetError());
         return false;
     }
     m_sdlInitialized = true;
 
+#ifdef __ANDROID__
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+#else
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+#ifdef __ANDROID__
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#else
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+#endif
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
     Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+#ifdef __ANDROID__
+    windowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+#endif
     windowFlags |= visible ? SDL_WINDOW_SHOWN : SDL_WINDOW_HIDDEN;
 
     m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width,
@@ -41,8 +57,7 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
 
     SDL_GL_SetSwapInterval(1);
 
-    m_width = width;
-    m_height = height;
+    SDL_GetWindowSize(m_window,&m_width,&m_height);
     return true;
 }
 
@@ -141,13 +156,25 @@ void Window::PollEvents(){
     for(const auto& [control,value]:m_testPhysical){m_input.SetPhysical(control,value);}
     m_testPhysical.clear();
     if(m_keyboardClaimed)m_input.ClearDevice("key:");
-    if(m_mouseClaimed)m_input.ClearDevice("mouse:");
+    if(m_mouseClaimed){m_input.ClearDevice("mouse:");m_input.ClearDevice("touch:");}
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         // Harness input is injected into InputSystem; real devices must not mix in.
-        if(m_testInputMode&&event.type!=SDL_QUIT&&event.type!=SDL_WINDOWEVENT)continue;
+        if(m_testInputMode&&event.type!=SDL_QUIT&&event.type!=SDL_WINDOWEVENT&&
+           !(event.type>=SDL_APP_TERMINATING&&event.type<=SDL_APP_DIDENTERFOREGROUND)&&event.type!=SDL_RENDER_DEVICE_RESET)continue;
         if(m_eventHook)m_eventHook(event);
         if(event.type==SDL_QUIT)m_shouldClose=true;
+        else if(event.type==SDL_APP_WILLENTERBACKGROUND){m_applicationActive=false;m_lifecycleClockReset=true;m_input.Reset();ClearPendingRequests();}
+        else if(event.type==SDL_APP_DIDENTERFOREGROUND){m_applicationActive=true;m_lifecycleClockReset=true;m_input.Reset();ClearPendingRequests();}
+        else if(event.type==SDL_RENDER_DEVICE_RESET){
+            // Context loss cannot leave stale native GPU handles in a live world.
+            // Android normally preserves EGL across pause; a lost context exits
+            // cleanly so a subsequent launch rebuilds resources from content.
+            std::fprintf(stderr,"Graphics context lost; restart the application\n");m_shouldClose=true;
+        }
+        else if(event.type==SDL_FINGERDOWN||event.type==SDL_FINGERMOTION||event.type==SDL_FINGERUP){
+            if((!m_mouseClaimed||event.type==SDL_FINGERUP)&&m_applicationActive)m_input.SetTouch(event.tfinger.touchId,event.tfinger.fingerId,event.tfinger.x,event.tfinger.y,event.tfinger.pressure,event.type!=SDL_FINGERUP);
+        }
         else if(event.type==SDL_WINDOWEVENT){
             if(event.window.event==SDL_WINDOWEVENT_CLOSE)m_shouldClose=true;
             if(event.window.event==SDL_WINDOWEVENT_SIZE_CHANGED){m_width=event.window.data1;m_height=event.window.data2;}
@@ -170,6 +197,8 @@ void Window::PollEvents(){
         }else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_mouseCaptured){m_input.AddDelta("mouse:dx",float(event.motion.xrel));m_input.AddDelta("mouse:dy",float(event.motion.yrel));}
         else if(event.type==SDL_MOUSEWHEEL&&!m_mouseClaimed){const float sign=event.wheel.direction==SDL_MOUSEWHEEL_FLIPPED?-1.f:1.f;m_input.AddDelta("mouse:wheelX",sign*event.wheel.x);m_input.AddDelta("mouse:wheelY",sign*event.wheel.y);}
     }
+    if(!m_testInputMode){int x=0,y=0;const auto buttons=SDL_GetMouseState(&x,&y);
+        m_input.SetPointer(float(x)/std::max(1,m_width),float(y)/std::max(1,m_height),!m_mouseClaimed&&m_applicationActive&&(buttons&SDL_BUTTON_LMASK));}
     // Restore held physical keys after UI ownership ends without stale edges.
     if(!m_testInputMode&&!m_keyboardClaimed&&m_inputFocused){const auto* keys=SDL_GetKeyboardState(nullptr);for(int i=0;i<SDL_NUM_SCANCODES;++i)if(keys[i])m_input.SetPhysical(std::string("key:")+SDL_GetScancodeName(static_cast<SDL_Scancode>(i)),1);}
     if(!m_testInputMode)RefreshController();

@@ -47,12 +47,20 @@ struct InputStickSnapshot {
     bool reset=false,overflow=false;
     std::size_t capacity=128;
 };
+// Normalized top-left window coordinates; pressure is clamped to [0,1].
+// IDs are process-local monotonic safe integers, never SDL pointer values.
+struct InputTouch {std::uint64_t id=0;float x=0,y=0,pressure=0;};
+struct InputPointer {float x=0,y=0;bool down=false;};
 class InputSystem {
 public:
     InputSystem();
     bool SetMap(const InputMap& map,std::string& error);
     const InputMap& Map() const {return m_map;}
     void BeginFrame();
+    void SetTouch(std::int64_t device,std::int64_t finger,float x,float y,float pressure,bool down);
+    const std::vector<InputTouch>& Touches() const {return m_touches;}
+    void SetPointer(float x,float y,bool down);
+    InputPointer Pointer() const {return m_pointer;}
     void SetPhysical(const std::string& control,float value);
     void AddDelta(const std::string& control,float delta);
     void ClearDevice(const std::string& prefix);
@@ -80,6 +88,11 @@ public:
     InputActionState FixedAction(const std::string& name) const;
     static float Deadzone(float value,float deadzone);
 private:
+    struct TouchKey {std::int64_t device,finger;std::uint64_t id;};
+    std::vector<TouchKey> m_touchKeys;
+    std::vector<InputTouch> m_touches;
+    std::uint64_t m_nextTouch=1;
+    InputPointer m_pointer;
     void Evaluate();
     bool StickConsumed(const std::string& side) const;
     std::vector<std::string> m_consumed;

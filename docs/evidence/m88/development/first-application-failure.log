@@ -1,0 +1,35 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: .cache/m88/application/legacy.worldstate (none saved)
+Project: Breakwater (/home/conner/Documents/GitHub/Project-Judas/projects/breakwater/breakwater.judasproj)
+Scene: BREAKWATER (/home/conner/Documents/GitHub/Project-Judas/projects/breakwater/Scenes/arcade.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=ff6d2ffb81f410ea35888299d66007b8 entity=50 slot=1 fixedUpdate: TypeError: complete finite target and seconds in [0,60] required
+    at __judas (native)
+    at call (judas:2:51)
+    at moveKinematic (judas:85:79)
+    at fixedUpdate (Assets/scripts/game.js:41:52)
+
+PASS 42 real physical blocks published
+FAIL JS begins ready with a physical ball
+PASS OS background freezes authoritative physics
+PASS resume continues without catch-up spiral
+PASS capture real desktop game frame
+FAIL normalized touch drives real kinematic paddle
+FAIL logical launch starts the physical ball
+FAIL miss/no impact cannot score
+PASS ball survived ordinary launch
+FAIL actual native sphere/block contact delivers JS destruction and score
+FAIL hit removes real block collision
+PASS normal project save accepted
+Runtime outer services: required script state capture failed: entity 50 slot 1: 
+FAIL normal scene reload resets round and physical blocks
+SCRIPT fixedUpdate TypeError: complete finite target and seconds in [0,60] required
+    at __judas (native)
+    at call (judas:2:51)
+    at moveKinematic (judas:85:79)
+    at fixedUpdate (Assets/scripts/game.js:41:52)
+
+FAIL no script exceptions after input/contact/save/reload
+FAIL save/load/reload lifecycle completed
+PASS ordinary game application exits cleanly
+16 checks 9 failures

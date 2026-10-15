@@ -432,13 +432,14 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         world.view ? world.view->pose.position : shadowFocus, settings.sunDirection, kDirShadowHalfExtent, kDirShadowDistance);
     static ProfileLabel shadowLabel("Shadow pass submission");
     ProfileScope shadowScope(shadowLabel);
-    if(settings.sunEnabled){renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadow);
+    if(settings.sunEnabled&&renderer.ShadowsEnabled()){renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadow);
         DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
         renderer.EndShadowPass();
     }else renderer.InvalidateShadowSlot(kDirectionalShadowSlot);
     shadowScope.End();
     for (const DynamicLight& light : lights) {
         if (light.shadowMapIndex != kTorchShadowSlot && light.shadowMapIndex != kShipHeadlightShadowSlot) continue;
+        if(!renderer.ShadowsEnabled()){renderer.InvalidateShadowSlot(light.shadowMapIndex);continue;}
         ProfileScope spotlightScope(shadowLabel);
         const glm::mat4 spotShadow = ComputeSpotShadowMatrix(light.position, light.direction,
                                                              light.outerConeDegrees, light.range);

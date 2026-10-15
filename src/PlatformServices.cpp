@@ -1,5 +1,8 @@
 #include "PlatformServices.h"
 #include <atomic>
+#ifdef __ANDROID__
+#include <SDL2/SDL_system.h>
+#endif
 #include <cstdlib>
 #include <cwchar>
 #include <stdexcept>
@@ -19,14 +22,20 @@ const char* RuntimeExecutableName() {
 #endif
 }
 const char* RuntimePlatformName() {
-#ifdef _WIN32
+#ifdef __ANDROID__
+    return "Android";
+#elif defined(_WIN32)
     return "Windows";
 #else
     return "Linux";
 #endif
 }
 std::string PlatformUserDataDirectory(std::string& error) {
-#ifdef _WIN32
+#ifdef __ANDROID__
+    const char* root=SDL_AndroidGetInternalStoragePath();
+    if(!root||!*root){error="Android private storage unavailable";return {};}
+    return root;
+#elif defined(_WIN32)
     PWSTR path = nullptr;
     const HRESULT result = SHGetKnownFolderPath(FOLDERID_LocalAppData, KF_FLAG_CREATE, nullptr, &path);
     if (FAILED(result)) { error = "Cannot locate writable Windows LocalAppData"; return {}; }
@@ -191,3 +200,17 @@ std::string CreateExportStagingDirectory(const fs::path& parent) {
     return pattern;
 #endif
 }
+
+#ifdef __ANDROID__
+bool AndroidStorageAnchor(const fs::path& requested,fs::path& anchor,fs::path& relative,std::string& error){
+    const auto root=fs::u8path(PlatformUserDataDirectory(error));if(root.empty())return false;
+    std::error_code ec;const auto canonical=fs::canonical(root,ec);
+    const auto path=fs::absolute(requested).lexically_normal();
+    for(const auto& candidate:{root.lexically_normal(),ec?root:canonical}){
+        auto tail=path.lexically_relative(candidate);
+        if(tail.empty()||tail.is_absolute()||*tail.begin()=="..")continue;
+        anchor=candidate;relative=tail;error.clear();return true;
+    }
+    error="Android storage path is outside the application's private directory";return false;
+}
+#endif

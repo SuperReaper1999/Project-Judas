@@ -1,0 +1,11 @@
+10-15 22:40:28.666  2619  2619 D InsetsController: hide(ime(), fromIme=false)
+10-15 22:40:28.666  2619  2619 I ImeTracker: org.projectjudas.breakwater:e498798d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-15 22:40:29.069  2619  2682 V hidapi  : initialize(true, false)
+10-15 22:40:29.078  2619  2682 E hidapi  : hid_init threw an exception: org.projectjudas.breakwater: One of RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED should be specified when a receiver isn't being registered exclusively for system broadcasts
+10-15 22:40:29.097  2619  2682 V SDL     : setOrientation() requestedOrientation=13 width=1024 height=768 resizable=true hint=
+10-15 22:40:29.143  2619  2682 I SDL/APP : pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-15 22:40:29.605  2619  2682 I AAudio  : AAudioStreamBuilder_openStream() called ----------------------------------------
+10-15 22:40:29.606  2619  2682 I AudioStreamBuilder: rate   =  48000, channels  = 2, channelMask = 0x80000003, format   = 5, sharing = SH, dir = OUTPUT
+10-15 22:40:29.606  2619  2682 I AudioStreamBuilder: devices = AUDIO_PORT_HANDLE_NONE, sessionId = -1, perfMode = 12, callback: ON with frames = 0
+10-15 22:40:29.606  2619  2682 I AudioStreamBuilder: usage  =      0, contentType = 0, inputPreset = 0, allowedCapturePolicy = 0
+10-15 22:40:29.606  2619  2682 I AudioStreamBuilder: privacy sensitive = false, opPackageName = (null), attributionTag = (null)

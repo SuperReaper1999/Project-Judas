@@ -169,11 +169,23 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     const Uint64 frequency = SDL_GetPerformanceFrequency();
     Uint64 previousCounter = SDL_GetPerformanceCounter();
     startupProfile.End();
+    bool applicationSuspended=false;
     while (!window.ShouldClose() && !play.QuitRequested()) {
         ProfileFrame outerProfile("standalone");
         RuntimeWorld& world=*worldOwner;
         if (control && control->beforeFrame) control->beforeFrame(host, world, play);
         { JUDAS_PROFILE_SCOPE("Input events"); window.PollEvents(); }
+        if(window.ShouldClose())break;
+        if(window.ConsumeLifecycleClockReset())previousCounter=SDL_GetPerformanceCounter();
+        const bool suspended=!window.ApplicationActive();
+        if(suspended!=applicationSuspended){host.Audio().SetApplicationSuspended(suspended);applicationSuspended=suspended;}
+        if(suspended){
+            // No physics catch-up, rendering or input leakage while backgrounded.
+            // Dispatched immutable save writes may finish on workers. Defer
+            // owner publication/load/resource work until a foreground boundary.
+            previousCounter=SDL_GetPerformanceCounter();
+            SDL_Delay(16);continue;
+        }
         // Milestone 31: finished background loads are installed here, on
         // the GL thread, before the frame that will draw them.
         host.PumpResources();

@@ -124,8 +124,8 @@ void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline
     Evaluate();
 }
 void InputSystem::AddDelta(const std::string& c,float v){if(std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
-void InputSystem::ClearDevice(const std::string& prefix){for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
-void InputSystem::Reset(){m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
+void InputSystem::ClearDevice(const std::string& prefix){if(prefix=="touch:"){m_touchKeys.clear();m_touches.clear();}for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
+void InputSystem::Reset(){m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
 void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}DiscardStickHistory();}
 void InputSystem::DiscardStickHistory(){
     m_stickResetSequence=++m_stickSequence;
@@ -171,4 +171,21 @@ void InputSystem::ConsumeBindings(const std::vector<std::string>& names){
         m_pending.erase(e.name);m_fixed.erase(e.name);
     }
     if(std::any_of(controls.begin(),controls.end(),[](const auto& c){return c=="stick:Left"||c=="stick:LeftX"||c=="stick:LeftY"||c=="stick:Right"||c=="stick:RightX"||c=="stick:RightY";}))DiscardStickHistory();
+}
+
+void InputSystem::SetPointer(float x,float y,bool down){
+    if(!std::isfinite(x)||!std::isfinite(y))return;
+    m_pointer={std::clamp(x,0.f,1.f),std::clamp(y,0.f,1.f),down};
+}
+void InputSystem::SetTouch(std::int64_t device,std::int64_t finger,float x,float y,float pressure,bool down){
+    if(!std::isfinite(x)||!std::isfinite(y)||!std::isfinite(pressure))return;
+    auto it=std::find_if(m_touchKeys.begin(),m_touchKeys.end(),[&](const TouchKey& k){return k.device==device&&k.finger==finger;});
+    if(it==m_touchKeys.end()){
+        if(!down||m_touches.size()>=10||m_nextTouch>9007199254740991ull)return;
+        const auto id=m_nextTouch++;m_touchKeys.push_back({device,finger,id});
+        m_touches.push_back({id,0,0,0});it=m_touchKeys.end()-1;
+    }
+    const auto index=std::size_t(it-m_touchKeys.begin());
+    if(!down){m_touchKeys.erase(it);m_touches.erase(m_touches.begin()+index);return;}
+    m_touches[index]={it->id,std::clamp(x,0.f,1.f),std::clamp(y,0.f,1.f),std::clamp(pressure,0.f,1.f)};
 }

@@ -163,3 +163,23 @@ Modal UI temporarily releases actual capture; the getter reports script intent,
 not device state. The request resets at world destruction/authored reset.
 New projects start uncaptured until a script requests capture. Historical projects
 with `legacy-gameplay "true"` retain their compatibility capture policy.
+
+## Touch and pointer snapshots (M88)
+
+`input.touches` is a copied array of up to ten currently active contacts. Each
+`{id,x,y,pressure}` uses normalized [0,1] top-left **window** coordinates. IDs are
+process-local monotonic safe integers, distinct across device/finger pairs and
+not durable save references. Track an ID while held; disappearance means release
+or cancellation. Pressure is clamped [0,1], and may be synthetic on devices with
+no pressure sensor. Invalid/nonfinite backend input is ignored. Snapshots do not
+consume contacts and are available in frame/fixed callbacks. Multiple fixed
+steps can observe the same contact. No historical touch-edge queue is implied.
+
+`input.pointer` is a copied `{x,y,down}` normalized primary mouse/pointer snapshot.
+Desktop projects can implement the same drag policy without raw keyboard/mouse
+polling. Android's primary touch also drives ordinary UI clicks through SDL;
+additional fingers remain independently visible through `touches`. Coordinate
+mapping is project policy: use `world.project`/`world.viewport` for a physical board
+or camera. Modal menus must gate a game's touch behaviour just as other input.
+Focus loss, OS backgrounding and input reset clear held contacts. Handle rotation
+by reading current coordinates/viewport rather than caching pixel dimensions.

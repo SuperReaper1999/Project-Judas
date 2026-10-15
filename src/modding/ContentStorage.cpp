@@ -1,4 +1,7 @@
 #include "ContentStorage.h"
+#ifdef __ANDROID__
+#include "../PlatformServices.h"
+#endif
 #include "ModContent.h"
 #include <filesystem>
 #include <atomic>
@@ -43,14 +46,18 @@ std::string ContentStorage::Path(const std::string& name)const{Name(name);return
 bool ContentStorage::Open(std::string& error){try{
 #ifndef _WIN32
  if(m->directory>=0)return true;
- FD parent(open("/",O_RDONLY|O_DIRECTORY|O_CLOEXEC));Need(parent.value>=0,"cannot open filesystem root");
- for(auto& part:fs::u8path(m->root).relative_path()){auto name=part.u8string();Need(name!=".."&&!name.empty(),"invalid storage root component");Need(!mkdirat(parent.value,name.c_str(),0700)||errno==EEXIST,"cannot create content directory");int child=openat(parent.value,name.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);Need(child>=0,"storage root contains link/inaccessible component");close(parent.value);parent.value=child;}
+ fs::path anchor="/",relative=fs::u8path(m->root).relative_path();
+#ifdef __ANDROID__
+ Need(AndroidStorageAnchor(fs::u8path(m->root),anchor,relative,error),error);
+#endif
+ FD parent(open(anchor.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC));Need(parent.value>=0,"cannot open filesystem root");
+ for(const auto& part:relative){auto name=part.u8string();Need(name!=".."&&!name.empty(),"invalid storage root component");Need(!mkdirat(parent.value,name.c_str(),0700)||errno==EEXIST,"cannot create content directory");int child=openat(parent.value,name.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);Need(child>=0,"storage root contains link/inaccessible component");close(parent.value);parent.value=child;}
  m->directory=parent.value;parent.value=-1;
 #else
  if(!m->directories.empty())return true;
  auto path=fs::u8path(m->root);Need(!path.root_name().empty()&&path.root_name().u8string().rfind("\\\\",0)!=0,"local Windows content root required");auto current=path.root_path();std::vector<std::shared_ptr<Handle>> pinned;
  auto pin=[&]{auto h=std::make_shared<Handle>(CreateFileW(current.c_str(),FILE_READ_ATTRIBUTES,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS|FILE_FLAG_OPEN_REPARSE_POINT,nullptr));FILE_ATTRIBUTE_TAG_INFO info{};Need(h->value!=INVALID_HANDLE_VALUE&&GetFileInformationByHandleEx(h->value,FileAttributeTagInfo,&info,sizeof(info))&&(info.FileAttributes&FILE_ATTRIBUTE_DIRECTORY)&&!(info.FileAttributes&FILE_ATTRIBUTE_REPARSE_POINT),"storage root contains Windows reparse/inaccessible component");pinned.push_back(h);};pin();
- for(auto& part:path.relative_path()){Need(part!=L"..","invalid storage root");current/=part;Need(CreateDirectoryW(current.c_str(),nullptr)||GetLastError()==ERROR_ALREADY_EXISTS,"cannot create Windows content directory");pin();}m->directories=std::move(pinned);
+ for(const auto& part:path.relative_path()){Need(part!=L"..","invalid storage root");current/=part;Need(CreateDirectoryW(current.c_str(),nullptr)||GetLastError()==ERROR_ALREADY_EXISTS,"cannot create Windows content directory");pin();}m->directories=std::move(pinned);
 #endif
  error.clear();return true;}catch(const std::exception& e){error=e.what();return false;}}
 bool ContentStorage::Read(const std::string& name,std::string& out,size_t limit,std::string& error){try{Name(name);Need(Open(error),error);
@@ -110,8 +117,12 @@ bool ContentStorage::List(std::vector<std::string>& out,size_t limit,std::string
 bool ReadRegularContentFile(const std::string& source,std::string& out,size_t limit,std::string& error){try{
  auto path=fs::absolute(fs::u8path(source)).lexically_normal();
 #ifndef _WIN32
- FD parent(open("/",O_RDONLY|O_DIRECTORY|O_CLOEXEC));Need(parent.value>=0,"cannot open input root");for(auto& part:path.parent_path().relative_path()){int child=openat(parent.value,part.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);Need(child>=0,"input parent contains link/inaccessible component");close(parent.value);parent.value=child;}FD file(openat(parent.value,path.filename().c_str(),O_RDONLY|O_NOFOLLOW|O_CLOEXEC));Regular(file.value,limit);struct stat st{};Need(!fstat(file.value,&st),"input stat failed");std::string bytes(size_t(st.st_size),'\0');size_t at=0;while(at<bytes.size()){auto n=read(file.value,bytes.data()+at,bytes.size()-at);if(n<0&&errno==EINTR)continue;Need(n>0,"truncated input");at+=size_t(n);}char extra;Need(read(file.value,&extra,1)==0,"input grew during read");
+ fs::path anchor="/",relative=path.relative_path();
+#ifdef __ANDROID__
+ std::string anchorError;Need(AndroidStorageAnchor(path,anchor,relative,anchorError),anchorError);
+#endif
+ FD parent(open(anchor.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC));Need(parent.value>=0,"cannot open input root");for(const auto& part:relative.parent_path()){int child=openat(parent.value,part.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);Need(child>=0,"input parent contains link/inaccessible component");close(parent.value);parent.value=child;}FD file(openat(parent.value,path.filename().c_str(),O_RDONLY|O_NOFOLLOW|O_CLOEXEC));Regular(file.value,limit);struct stat st{};Need(!fstat(file.value,&st),"input stat failed");std::string bytes(size_t(st.st_size),'\0');size_t at=0;while(at<bytes.size()){auto n=read(file.value,bytes.data()+at,bytes.size()-at);if(n<0&&errno==EINTR)continue;Need(n>0,"truncated input");at+=size_t(n);}char extra;Need(read(file.value,&extra,1)==0,"input grew during read");
 #else
- std::vector<std::shared_ptr<Handle>> parents;auto current=path.root_path();auto pin=[&]{auto handle=std::make_shared<Handle>(CreateFileW(current.c_str(),FILE_READ_ATTRIBUTES,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS|FILE_FLAG_OPEN_REPARSE_POINT,nullptr));FILE_ATTRIBUTE_TAG_INFO info{};Need(handle->value!=INVALID_HANDLE_VALUE&&GetFileInformationByHandleEx(handle->value,FileAttributeTagInfo,&info,sizeof(info))&&(info.FileAttributes&FILE_ATTRIBUTE_DIRECTORY)&&!(info.FileAttributes&FILE_ATTRIBUTE_REPARSE_POINT),"input parent contains reparse/inaccessible component");parents.push_back(handle);};pin();for(auto& part:path.parent_path().relative_path()){current/=part;pin();}Handle file(CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_FLAG_OPEN_REPARSE_POINT,nullptr));Regular(file.value,limit);LARGE_INTEGER size{};Need(GetFileSizeEx(file.value,&size),"input stat failed");std::string bytes(size_t(size.QuadPart),'\0');size_t at=0;while(at<bytes.size()){DWORD n=0;Need(ReadFile(file.value,bytes.data()+at,DWORD(std::min<size_t>(bytes.size()-at,1024*1024)),&n,nullptr)&&n>0,"truncated input");at+=n;}
+ std::vector<std::shared_ptr<Handle>> parents;auto current=path.root_path();auto pin=[&]{auto handle=std::make_shared<Handle>(CreateFileW(current.c_str(),FILE_READ_ATTRIBUTES,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS|FILE_FLAG_OPEN_REPARSE_POINT,nullptr));FILE_ATTRIBUTE_TAG_INFO info{};Need(handle->value!=INVALID_HANDLE_VALUE&&GetFileInformationByHandleEx(handle->value,FileAttributeTagInfo,&info,sizeof(info))&&(info.FileAttributes&FILE_ATTRIBUTE_DIRECTORY)&&!(info.FileAttributes&FILE_ATTRIBUTE_REPARSE_POINT),"input parent contains reparse/inaccessible component");parents.push_back(handle);};pin();for(const auto& part:path.parent_path().relative_path()){current/=part;pin();}Handle file(CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_FLAG_OPEN_REPARSE_POINT,nullptr));Regular(file.value,limit);LARGE_INTEGER size{};Need(GetFileSizeEx(file.value,&size),"input stat failed");std::string bytes(size_t(size.QuadPart),'\0');size_t at=0;while(at<bytes.size()){DWORD n=0;Need(ReadFile(file.value,bytes.data()+at,DWORD(std::min<size_t>(bytes.size()-at,1024*1024)),&n,nullptr)&&n>0,"truncated input");at+=n;}
 #endif
  out=std::move(bytes);error.clear();return true;}catch(const std::exception& e){error=e.what();return false;}}

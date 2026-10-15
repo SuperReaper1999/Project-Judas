@@ -1,0 +1,9 @@
+--------- beginning of main
+10-15 22:43:51.906  3837  3893 I Judas.Native: INFO: pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-15 22:43:52.096  3837  3893 I Judas.Native: Graphics: OpenGL ES 3.1 (4.5.0 NVIDIA 580.178.04) / Android Emulator OpenGL ES Translator (NVIDIA GeForce GTX 970/PCIe/SSE2)
+10-15 22:43:52.100  3837  3893 I Judas.Native: Renderer fragment texture units: 32 (material path uses 12)
+10-15 22:43:52.343  3837  3893 I Judas.Native: World state: /data/data/org.projectjudas.breakwater/files/judas/games/d94c72b149fa28880eab950953ef2151f7937cb7f2066defed0da2e7e1cb7267/Saves/arcade.judasstate (none saved)
+10-15 22:43:52.347  3837  3893 I Judas.Native: Project: Breakwater (/data/user/0/org.projectjudas.breakwater/files/judas-content/d0a8926c4de6d93fc3d872b46ee1dc1557181c77adf5b44473c95223396a6598/game.judasproj)
+10-15 22:43:52.347  3837  3893 I Judas.Native: Scene: BREAKWATER (/data/user/0/org.projectjudas.breakwater/files/judas-content/d0a8926c4de6d93fc3d872b46ee1dc1557181c77adf5b44473c95223396a6598/Scenes/arcade.judas)
+10-15 22:43:52.347  3837  3893 I Judas.Native: World origin (m): 0.000, 0.000, 0.000
+10-15 22:48:18.065  3837  3893 I Judas.Native: Runtime outer services: open root: Permission denied

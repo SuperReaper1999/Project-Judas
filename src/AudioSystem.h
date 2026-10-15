@@ -37,6 +37,7 @@ public:
     AudioVoiceHandle PlayOneShot(AudioClipHandle clip,const AudioSettings& settings,const glm::vec3& position,std::string& error);
     void DestroyVoice(AudioVoiceHandle voice);
     bool Play(AudioVoiceHandle voice);bool Stop(AudioVoiceHandle voice);
+    void SetApplicationSuspended(bool suspended);
     bool Pause(AudioVoiceHandle voice);bool Resume(AudioVoiceHandle voice);
     bool SetSettings(AudioVoiceHandle voice,const AudioSettings& settings);
     bool SetPosition(AudioVoiceHandle voice,const glm::vec3& position);

@@ -8,6 +8,8 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdio>
+#include <cstring>
+#include <cstdlib>
 #include <vector>
 
 #include <SDL2/SDL.h>
@@ -354,6 +356,19 @@ void main() {
 )";
 
 bool CompileShader(GLenum type, const char* source, GLuint& outShader) {
+#ifdef __ANDROID__
+    // ES 3 has the same shader language facilities used here, with explicit
+    // precision and a 2D palette instead of desktop-only texture buffers.
+    std::string es(source);
+    auto replaceAll=[&](const std::string& from,const std::string& to){
+        std::size_t at=0;while((at=es.find(from,at))!=std::string::npos){es.replace(at,from.size(),to);at+=to.size();}
+    };
+    replaceAll("#version 330 core", "#version 300 es\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision highp sampler3D;\nprecision highp sampler2DShadow;");
+    replaceAll("samplerBuffer uBones", "sampler2D uBones");
+    for(int i=0;i<4;++i){const std::string b=i?"b+"+std::to_string(i):"b";
+        replaceAll("texelFetch(uBones,"+b+")", "texelFetch(uBones,ivec2("+std::to_string(i)+",b/4),0)");}
+    source=es.c_str();
+#endif
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &source, nullptr);
     glCompileShader(shader);
@@ -509,7 +524,11 @@ constexpr int kSphereLongitudeSegments = 24;
 // "Milestone 15," for why 1024x1024 was judged sufficient (and not
 // excessive) for this demo's world scale, for all three shadow slots
 // alike (no separate resolution per light).
+#ifdef __ANDROID__
+constexpr int kShadowMapResolution = 512;
+#else
 constexpr int kShadowMapResolution = 1024;
+#endif
 
 // Milestone 13: the UI overlay's own tiny shader — deliberately separate
 // from kVertexShaderSource/kFragmentShaderSource above rather than a
@@ -589,6 +608,9 @@ void main() {
 }  // namespace
 
 bool Renderer::Init() {
+    const char* shadows=std::getenv("JUDAS_SHADOWS");m_shadowsEnabled=!(shadows&&std::string(shadows)=="0");
+    std::fprintf(stderr,"Shadow maps: %s\n",m_shadowsEnabled?"on":"off");
+    std::fprintf(stderr,"Graphics: %s / %s\n",glGetString(GL_VERSION),glGetString(GL_RENDERER));
     GLint units=0;glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS,&units);m_textureUnitLimit=unsigned(units);std::fprintf(stderr,"Renderer fragment texture units: %d (material path uses 12)\n",units);if(units<12){std::fprintf(stderr,"M57 requires 12 fragment texture units, available %d\n",units);return false;}
     GLuint vertexShader = 0;
     if (!CompileShader(GL_VERTEX_SHADER, kVertexShaderSource, vertexShader)) {
@@ -732,11 +754,11 @@ bool Renderer::Init() {
     // GL_CLAMP_TO_BORDER with a border color) keeps this to GL surface
     // this engine already has — see ComputeShadowFactor's own "outside
     // the shadow map's coverage counts as fully lit" comment.
-    for (int slot = 0; slot < kShadowMapCount; ++slot) {
+    for (int slot = 0; m_shadowsEnabled && slot < kShadowMapCount; ++slot) {
         glGenTextures(1, &m_shadowMapTexture[slot]);
         glBindTexture(GL_TEXTURE_2D, m_shadowMapTexture[slot]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, kShadowMapResolution, kShadowMapResolution, 0,
-                     GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, kShadowMapResolution, kShadowMapResolution, 0,
+                     GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -749,7 +771,7 @@ bool Renderer::Init() {
         // No color attachment exists for this FBO at all — tell GL not to
         // expect or provide one, or GL_FRAMEBUFFER_COMPLETE would
         // (correctly) fail on some drivers.
-        glDrawBuffer(GL_NONE);
+        const GLenum noColor=GL_NONE;glDrawBuffers(1,&noColor);
         glReadBuffer(GL_NONE);
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             std::fprintf(stderr, "Shadow framebuffer %d is incomplete.\n", slot);
@@ -875,12 +897,21 @@ void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int han
 }
 
 void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
+#ifdef __ANDROID__
+    if(!m_poseTexture)glGenTextures(1,&m_poseTexture);
+    glActiveTexture(GL_TEXTURE15);glBindTexture(GL_TEXTURE_2D,m_poseTexture);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA32F,4,GLsizei(pose.size()),0,GL_RGBA,GL_FLOAT,pose.data());
+    glActiveTexture(GL_TEXTURE0);
+#else
     if(!m_poseBuffer)glGenBuffers(1,&m_poseBuffer);
     if(!m_poseTexture)glGenTextures(1,&m_poseTexture);
     glBindBuffer(GL_TEXTURE_BUFFER,m_poseBuffer);
     glBufferData(GL_TEXTURE_BUFFER,GLsizeiptr(pose.size()*sizeof(glm::mat4)),pose.data(),GL_STREAM_DRAW);
     glActiveTexture(GL_TEXTURE15);glBindTexture(GL_TEXTURE_BUFFER,m_poseTexture);
     glTexBuffer(GL_TEXTURE_BUFFER,GL_RGBA32F,m_poseBuffer);glActiveTexture(GL_TEXTURE0);
+#endif
 }
 void Renderer::Shutdown() {
     ShutdownWeather();
@@ -1093,7 +1124,12 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
     JUDAS_PROFILE_SCOPE("Mesh geometry upload");
     if (data.skeletal) {
         const auto count=data.skeletal->skeleton.skinNodes.size();
-        GLint texels=0;glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE,&texels);
+        GLint texels=0;
+#ifdef __ANDROID__
+        glGetIntegerv(GL_MAX_TEXTURE_SIZE,&texels);texels*=4;
+#else
+        glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE,&texels);
+#endif
         if(count==0||count>size_t(texels/4)||count>kModelPaletteLimit||data.skinVertices.size()!=data.vertices.size())return {};
         for(const auto& v:data.skinVertices){float sum=0;
             for(int i=0;i<4;++i){if(v.joints[i]>=count||!std::isfinite(v.weights[i])||v.weights[i]<0)return {};sum+=v.weights[i];if(v.joints1[i]>=count||!std::isfinite(v.weights1[i])||v.weights1[i]<0)return {};sum+=v.weights1[i];}
@@ -1250,7 +1286,15 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
         return false;
     }
     data.vertices.resize(static_cast<std::size_t>(vertexBytes) / sizeof(MeshVertex));
-    if (vertexBytes) glGetBufferSubData(GL_COPY_READ_BUFFER, 0, static_cast<GLsizeiptr>(vertexBytes), data.vertices.data());
+    if (vertexBytes) {
+#ifdef __ANDROID__
+        const void* mapped=glMapBufferRange(GL_COPY_READ_BUFFER,0,GLsizeiptr(vertexBytes),GL_MAP_READ_BIT);
+        if(!mapped){glBindBuffer(GL_COPY_READ_BUFFER,GLuint(previousBuffer));return false;}
+        std::memcpy(data.vertices.data(),mapped,std::size_t(vertexBytes));glUnmapBuffer(GL_COPY_READ_BUFFER);
+#else
+        glGetBufferSubData(GL_COPY_READ_BUFFER,0,GLsizeiptr(vertexBytes),data.vertices.data());
+#endif
+    }
     if (mesh.ebo) {
         glBindBuffer(GL_COPY_READ_BUFFER, mesh.ebo);
         GLint64 indexBytes = 0;
@@ -1260,7 +1304,15 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
             return false;
         }
         data.indices.resize(static_cast<std::size_t>(indexBytes) / sizeof(std::uint32_t));
-        if (indexBytes) glGetBufferSubData(GL_COPY_READ_BUFFER, 0, static_cast<GLsizeiptr>(indexBytes), data.indices.data());
+        if (indexBytes) {
+#ifdef __ANDROID__
+            const void* mapped=glMapBufferRange(GL_COPY_READ_BUFFER,0,GLsizeiptr(indexBytes),GL_MAP_READ_BIT);
+            if(!mapped){glBindBuffer(GL_COPY_READ_BUFFER,GLuint(previousBuffer));return false;}
+            std::memcpy(data.indices.data(),mapped,std::size_t(indexBytes));glUnmapBuffer(GL_COPY_READ_BUFFER);
+#else
+            glGetBufferSubData(GL_COPY_READ_BUFFER,0,GLsizeiptr(indexBytes),data.indices.data());
+#endif
+        }
     }
     glBindBuffer(GL_COPY_READ_BUFFER, static_cast<GLuint>(previousBuffer));
     outData = std::move(data);
@@ -1281,8 +1333,7 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
     glGetIntegerv(GL_PACK_SKIP_PIXELS, &skipPixels);
     glBindTexture(GL_TEXTURE_2D, texture.textureId);
     TextureData data;
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &data.width);
-    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &data.height);
+    data.width=texture.width;data.height=texture.height;
     if (data.width <= 0 || data.height <= 0) {
         glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(previousTexture));
         return false;
@@ -1293,13 +1344,25 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
     glPixelStorei(GL_PACK_ROW_LENGTH, 0);
     glPixelStorei(GL_PACK_SKIP_ROWS, 0);
     glPixelStorei(GL_PACK_SKIP_PIXELS, 0);
-    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.pixels.data());
+#ifdef __ANDROID__
+    GLint previousRead=0;glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&previousRead);
+    GLuint fbo=0;glGenFramebuffers(1,&fbo);glBindFramebuffer(GL_READ_FRAMEBUFFER,fbo);
+    glFramebufferTexture2D(GL_READ_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,texture.textureId,0);
+    const bool complete=glCheckFramebufferStatus(GL_READ_FRAMEBUFFER)==GL_FRAMEBUFFER_COMPLETE;
+    if(complete)glReadPixels(0,0,data.width,data.height,GL_RGBA,GL_UNSIGNED_BYTE,data.pixels.data());
+    glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(previousRead));glDeleteFramebuffers(1,&fbo);
+#else
+    glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_UNSIGNED_BYTE,data.pixels.data());
+#endif
     glPixelStorei(GL_PACK_ALIGNMENT, alignment);
     glPixelStorei(GL_PACK_ROW_LENGTH, rowLength);
     glPixelStorei(GL_PACK_SKIP_ROWS, skipRows);
     glPixelStorei(GL_PACK_SKIP_PIXELS, skipPixels);
     glBindBuffer(GL_PIXEL_PACK_BUFFER, static_cast<GLuint>(previousPackBuffer));
     glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(previousTexture));
+#ifdef __ANDROID__
+    if(!complete)return false;
+#endif
     outData = std::move(data);
     return true;
 }
@@ -1684,6 +1747,13 @@ void Renderer::DrawTransientSurface(const MeshData& data,const glm::vec3& tint,f
  if(cull)glEnable(GL_CULL_FACE);
 }
 
+#ifdef __ANDROID__
+unsigned Renderer::BeginProfilePass(const char*,std::uint64_t){
+    PerformanceProfiler::Get().GPUAvailability(false,"ES 3 timestamp queries not enabled");return 0;
+}
+void Renderer::EndProfilePass(unsigned){}
+void Renderer::PollProfileGPU(){}
+#else
 unsigned Renderer::BeginProfilePass(const char* name,std::uint64_t camera){
     auto& p=PerformanceProfiler::Get();if(!p.Active())return 0;
     if(!glQueryCounter||!glGetQueryObjectui64v){p.GPUAvailability(false,"GL timestamp entry points unavailable");return 0;}
@@ -1705,6 +1775,8 @@ void Renderer::PollProfileGPU(){
         p.GPUComplete(q.frame,q.record,double(b>=a?b-a:0)/1e6);q.pending=q.ended=false;
     }
 }
+
+#endif
 
 #include "RendererMaterials.inl"
 
