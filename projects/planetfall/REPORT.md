@@ -4,6 +4,10 @@
 
 Starting engine checkpoint: `e738f727ab49ad044a0d47015adee5ddda7ce6dc` (M84). Main remains the accepted M83 release. No runtime engine implementation or public API was changed. The only existing tracked source change is a CMake target for focused consumer-game tests.
 
+## UX corrective pass — 15 October 2026
+
+The original keyboard-heavy interface was rejected by the operator. Current controls are in README; the UX change and scoped validation are in [UX review](Review/ux/REPORT.md). Initial delivery fingerprints/results remain preserved as the original `29ea41a` snapshot, not claims about the changed candidate. Human acceptance of this UX revision is pending.
+
 ## Implemented
 
 - Twenty linked campaign missions and five optional contracts, with four named companions, dialogue, rewards, discoveries and two consequential endings. See [mission overview](CAMPAIGN.md).
@@ -63,7 +67,7 @@ The same five-pirate lunar workload measured 26.49 ms fixed-step p95 with eleven
 
 This is a regional authored adventure, not a fully populated geographic Earth, seamless global rebasing or orbital flight simulation. Pirates are fought on foot/aboard the derelict; there is no orbital dogfight system. Region travel is ship-gated loading, while local ship motion is physical.
 
-Campaign/base facts persist between regions. Manual saves retain the current physical world, including owned streamed damage. Arbitrary physics changes across every previously visited region are not a persistent-universe database. Development content changes can invalidate strict save compatibility; use F5 before quitting.
+Campaign/base facts persist between regions. Manual saves retain the current physical world, including owned streamed damage. Arbitrary physics changes across every previously visited region are not a persistent-universe database. Development content changes can invalidate strict save compatibility; use Escape > Save game before quitting.
 
 Hero/enemy animations are prototype-quality. Some decorative furniture has simplified/no collision; walls, floors, terrain, vehicles, interactive props and the tested assemblies are physical. Seven-body corpse fidelity is deliberately modest. Construction offers authored upgrades and physical barricade placement, not a free-form architectural editor. Full mission pacing, balance and human gameplay acceptance remain outstanding.
 
@@ -71,18 +75,18 @@ Protected historical evidence, existing games, independent fluid research and ru
 
 ## Human checklist
 
-1. H with Mara, build shelter, open J and follow the campaign marker.
+1. E with Mara, build shelter, open Tab > Journal and follow the campaign marker.
 2. Move/jump/mantle, switch V, and inspect Conner's character.
-3. K board the rover; drive/brake/steer and cross the raised bridge.
-4. Open the ship door, walk inside, sit at the console, fly locally and use T/N for charted travel.
-5. Mine actual deposits with M; collect physical supplies with C; build/upkeep the outpost.
+3. E board the rover; drive/brake/steer and cross the raised bridge.
+4. Open the ship door, walk inside, sit at the console, fly locally and use Tab > Map / Travel for charted travel.
+5. Mine actual deposits with E; collect physical supplies with E; build/upkeep the outpost.
 6. Fight zombies and ranged pirates; inspect physical corpses and explosion reactions.
-7. Use P for Scarred Bearings; damage a section, approach it, H dismantle and check actual removal/reward.
+7. Use Journal > Next side contract for Scarred Bearings; damage a section, approach it, E dismantle and check actual removal/reward.
 8. Walk the service ramp and recover the physical roof recorder.
 9. Explore the cave and derelict; complete the blocked-passage rescue.
 10. Visit the differently oriented Earth regions, Moon and Mars; inspect local gravity and optional framewalk boots.
-11. F5, move away, F9; quit/relaunch/load and check resources, physical position and view mode.
+11. Escape > Save game, move away, Escape > Load game; quit/relaunch/load and check resources, physical position and view mode.
 12. Pause/resume, inventory/purchases, and test the moved standalone.
 13. Play through all twenty chapters; save before the final council to compare both choices.
 
-Project: `projects/planetfall/planetfall.judasproj`. Standalone: `.cache/Planetfall-Package`. Rebuild/export/reproduction instructions are in Tools and README. Commit/push state is reported by the final handoff, not inferred from this document.
+Project: `projects/planetfall/planetfall.judasproj`. Standalone: `.cache/Planetfall-UX-Package`. Rebuild/export/reproduction instructions are in Tools and README. Commit/push state is reported by the final handoff, not inferred from this document.

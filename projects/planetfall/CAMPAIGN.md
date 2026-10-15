@@ -31,4 +31,4 @@ Cycle with P. Scarred Bearings requires native permanent deformation or physical
 
 ## Final choice
 
-At the final council, H contains the crystal and improves healing near Lantern. Shift+H reconnects the network, reducing interplanetary fuel costs. Neither choice moves planets or implements a new gravity solver.
+At the final council, the Journal’s “Contain the crystal” button contains it and improves healing near Lantern. “Reconnect the network” reconnects it, reducing interplanetary fuel costs. Neither choice moves planets or implements a new gravity solver.

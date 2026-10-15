@@ -97,7 +97,7 @@ export default class Inventory {
   // Dropping the equipped pair is one equipment change. The gravity mechanic
   // observes it on this fixed step and owns clearing its real gravity override.
   if(type.slot&&this.equipped(type.slot)===key)this.state.equipment[type.slot]=null;
-  game.message=`DROPPED ${type.name.toUpperCase()} - C to collect`;return true;
+  game.message=`DROPPED ${type.name.toUpperCase()} - E to collect`;return true;
  }
  collect(){
   const view=this.player.camera.pose(),filter={ignored:[this.player.entity]};
@@ -113,13 +113,13 @@ export default class Inventory {
   const item=entity.scriptState(1);
   if(!item?.pickup||!itemTypes[item.item]||!integer(item.quantity))return false;
   if(!this.accepts(item.item,item.quantity)){
-   game.message=itemTypes[item.item].stock?'AMMUNITION FULL - room needed for the whole pickup':'PACK FULL - drop an item with I';return false;
+   game.message=itemTypes[item.item].stock?'AMMUNITION FULL - room needed for the whole pickup':'PACK FULL - drop an item with TAB';return false;
   }
   // Destroy first only after the bounded transfer has been accepted. Failure
   // to destroy leaves storage untouched; ordinary reload recreates authored loot.
   if(!entity.destroy())return false;
   this.add(item.item,item.quantity,item.prefab);
-  game.message=`COLLECTED ${itemTypes[item.item].name.toUpperCase()}${item.quantity>1?` x${item.quantity}`:''}${itemTypes[item.item].slot?' - I to equip':''}`;
+  game.message=`COLLECTED ${itemTypes[item.item].name.toUpperCase()}${item.quantity>1?` x${item.quantity}`:''}${itemTypes[item.item].slot?' - TAB to equip':''}`;
   return true;
  }
  tick(){
@@ -127,6 +127,6 @@ export default class Inventory {
   // UI may pause fixed simulation. Its drop button records plain intent and
   // closes the menu; spawning is done here, once normal physics has resumed.
   if(this.state.pendingDrop){const pending=this.state.pendingDrop;this.state.pendingDrop=null;this.drop(pending.item);}
-  if(input.pressed('collect')&&!this.player.hud.doc.modal&&!this.player.climb.active&&!this.player.melee.busy&&!this.player.grab.held)this.collect();
+  if((input.pressed('collect')||this.player.interaction?.consume('pickup'))&&!this.player.hud.doc.modal&&!this.player.climb.active&&!this.player.melee.busy&&!this.player.grab.held)this.collect();
  }
 }

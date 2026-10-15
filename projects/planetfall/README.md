@@ -4,19 +4,30 @@ An ordinary JudasJS consumer game on Experimental. Human playthrough acceptance 
 
 ## Play
 
-Open `planetfall.judasproj`, then play `Scenes/earth.judas`. Find Mara at the outpost and press H. J opens the journal; a gold marker identifies the current objective when it is in this region.
+Open `planetfall.judasproj`, then play `Scenes/earth.judas`. Follow the gold marker to Mara. **E** uses the exact action shown on screen. **Tab** opens Equipment, Journal, Map / Travel and Controls.
 
 ## Controls
 
-- WASD move, mouse look, Shift faster, Space jump, E mantle or interact with the ship door/console.
-- V first/third person. Left mouse fire, Ctrl aim, R reload, 1 rifle, 2 launcher, G grenade.
-- Right mouse punch, F heavy punch, Q shove. B grab/drop a physical crate, T rotate it, C salvage nearby supply crates.
-- H objective interaction, M mine the actual deposit under the reticle, J journal, P cycle side contracts, O flight chart, Y eat a ration.
-- K board/leave the rover near its chassis. WASD drive/steer; release throttle to brake. The engine, gearbox, differential and tyres are physical. Shift+H beside the rover spends 8 iron and 6 scrap on taller transmission gearing.
-- Enter the Wayfarer through its physical door, walk to the console and E to sit. WASD thrust, mouse attitude, Space/Ctrl rise/descend, Shift boost, V cockpit/chase, R level. E leaves the chair after stopping.
-- While piloting: T selects a destination; N spools a regional travel transition. Earth-region travel is available before drive repair; interplanetary travel requires the repaired drive. It costs real campaign fuel.
-- F5 save, F9 load; Escape pause. I opens equipment. Framewalk boots allow airborne Space surface switching; X releases the personal gravity override.
-- At the final council: H contains the mineral; Shift+H reconnects the reference network.
+| Action | Control |
+|---|---|
+| Move / look | WASD / mouse |
+| Move faster | Shift |
+| Jump / mantle a low ledge | Space |
+| Interact | E — follow the contextual prompt |
+| Shoot / aim | Left / right mouse |
+| Reload / melee / shove / grenade | R / F / Q / G |
+| First / third person | V |
+| Equipment, journal, contracts, rations and travel | Tab |
+| Pause, save and load | Escape, then click a button |
+
+E talks, builds, recovers items, mines, collects salvage, picks up or puts down a light physical prop, trades, boards/leaves the rover, or uses the ship door/console. Only the displayed action executes. Equipment selects the weapon; 1/2 are optional shortcuts.
+
+- **Rover:** WASD drive/steer; Space brake; E leave. Journal offers a nearby transmission upgrade for 8 iron + 6 scrap.
+- **Wayfarer:** E opens its door and seats you at the console. WASD thrust; mouse steer; Space/right mouse rise/descend; Shift boost; R level; V cockpit/chase; E leave after stopping. Release controls to hover. Tab > Map / Travel selects a destination and offers Depart / auto-land. Interplanetary travel needs the repaired drive and fuel.
+- **Framewalk equipment:** a second airborne Space switches personal gravity. Tab > Controls releases it and rotates a carried prop.
+- **Final council:** E opens Journal with two explicitly labelled decision buttons. No hidden Shift combination.
+
+Menus pause gameplay and release the pointer. Tab or Escape closes them. Menu clicks cannot fire the weapon when gameplay resumes. Save/load requests execute after the menu releases authoritative updates.
 
 ## World and precision
 
@@ -32,7 +43,7 @@ The abandoned salvage rover is an ordinary snapshot-owned streamed region. Its d
 
 ## Persistence boundaries
 
-Campaign resources, collected supplies, upgrades, mission progress and equipment carry between regions. Built outpost structures are reconstructed from those game facts when returning to Lantern. A fueled generator provides slow healing inside the outpost; its game-side fuel accounting remains distinct from the vehicle’s native mechanical powertrain. F5 stores the current physical world and script state through the normal save service. Arbitrary physical changes in every previously visited region are not yet a persistent universe database; do not assume all loose objects survive a scene change.
+Campaign resources, collected supplies, upgrades, mission progress and equipment carry between regions. Built outpost structures are reconstructed from those game facts when returning to Lantern. A fueled generator provides slow healing inside the outpost; its game-side fuel accounting remains distinct from the vehicle’s native mechanical powertrain. Escape > Save game stores the current physical world and script state through the normal save service. Arbitrary physical changes in every previously visited region are not yet a persistent universe database; do not assume all loose objects survive a scene change.
 
 ## Art
 

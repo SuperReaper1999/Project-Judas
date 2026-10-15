@@ -1,0 +1,34 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetfall (/home/conner/Documents/GitHub/Project-Judas/.cache/Planetfall-UX-Package/game.judasproj)
+Scene: Planetfall / earth (/home/conner/Documents/GitHub/Project-Judas/.cache/Planetfall-UX-Package/Scenes/earth.judas)
+World origin (m): 0.000, 796375.000, 0.000
+JS: Planetfall: WASD move, mouse look, Space jump/mantle, E contextual action, Tab expedition menu, Escape pause.
+PASS true large double-precision planetary origin
+PASS ordinary authored Judas gravity governs motor
+PASS normal wheel and powertrain assembly exists
+PASS campaign state belongs to ordinary script owner
+PASS actual character advances using JS and motor
+PASS Tab opens a genuinely paused expedition menu
+PASS journal shows actual first objective
+PASS menu action is visible and enabled
+PASS map tab opens through real UI click
+PASS menu action is visible and enabled
+PASS equipment tab opens real authored inventory
+PASS menu action is visible and enabled
+PASS equipment links back to common controls
+PASS menu action is visible and enabled
+PASS closing expedition menu resumes simulation
+PASS menu clicks and resume do not fire the weapon
+PASS one E conversation advances real campaign
+PASS Escape opens pause
+PASS menu action is visible and enabled
+PASS save button resumes to authoritative save boundary
+PASS visible save button completes real durable save
+PASS actual game screenshot captured
+PASS normal game input and lifetime stay fault-free
+BODIES 1177
+PASS ordinary startup and shutdown
+PASS M56 native profile exported
+PERF fixed_p95_ms=6.5145 render_p95_ms=10.3045 frame_work_p95_ms=17.7490 frame_work_max_ms=59.4089
+SUMMARY checks=25 failures=0

@@ -1,0 +1,205 @@
+{
+  "starting_head": "29ea41a22c3bdac73e9851a2c38ebeb8ac25fb1b",
+  "scope": "UX changes and scoped evidence; manifest excludes its own recursive hash",
+  "files": [
+    {
+      "path": "projects/planetfall/Assets/scripts/framewalk.js",
+      "sha256": "1b1578a306dd41314fd80c281cf74ee182833beb7fc5771f33d7b07b52baef4e",
+      "bytes": 10479
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/grab.js",
+      "sha256": "144a6d4b7f54c6aa9dea0361971bf038660372807ac19cf1e0cd59019d076d6f",
+      "bytes": 4245
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/hud.js",
+      "sha256": "d2422aaccd5b80fff800c42eed145742cbc1627057d0255d5dcaeae59361948e",
+      "bytes": 10606
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/interaction.js",
+      "sha256": "3c0c5b4e42c26330f7dee710361081c3dbfbe5740af7eb7cdc5acfafeec6904b",
+      "bytes": 3662
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/interaction.js.judasmeta",
+      "sha256": "6ced497a45559cbcc3f231a33117bc867a80f4b2ab225e97de5f6267dbb4c616",
+      "bytes": 77
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/inventory.js",
+      "sha256": "4e3a6b5f8308b3af70914bf03a3b2bbb9094fc8a817ed1a7fcf849e64812ca8c",
+      "bytes": 7846
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/inventory_ui.js",
+      "sha256": "d57598c1a5eb469349ffb19aae19b63d09bb532e0f44fc3d4ecfd17dc0a48fcc",
+      "bytes": 5407
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/planetfall.js",
+      "sha256": "b679ad7d992b9fb4ca6c02f94b0c44276b372b9bb7afe795d331f0e7ce5f66ac",
+      "bytes": 13068
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/player.js",
+      "sha256": "0a01fc35216e40e04e6e77142d17f10f5de2f3f183a3560ab3e5a4da74e50854",
+      "bytes": 7972
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/rover.js",
+      "sha256": "750fb94d7517301c41fc34075528a297144ec3565c6ad087acc9037fb493e539",
+      "bytes": 1839
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/ship.js",
+      "sha256": "a143a26b889d2fdff2fd5c5a3e1a46412f2370e871dd4c6ea1975a38105faeaa",
+      "bytes": 8478
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/side-jobs.js",
+      "sha256": "906daca78e25982712fef8185adac912c4c586ef59e6a9ac8daf3ef5acb415ce",
+      "bytes": 4409
+    },
+    {
+      "path": "projects/planetfall/Assets/scripts/vendor.js",
+      "sha256": "a0930d684e1c9b755bb6a4cda1a70437b8019d6ac936b10e0f246213815290bf",
+      "bytes": 1140
+    },
+    {
+      "path": "projects/planetfall/Assets/ui/lastlight.judasui",
+      "sha256": "23ba770c6d62e51c91353ee6dd40e9904efb5d55cbdbf23286bc888abb313a20",
+      "bytes": 22790
+    },
+    {
+      "path": "projects/planetfall/CAMPAIGN.md",
+      "sha256": "204dd6f4c8fe6b2f96cf8b1644c23f024f640531843c716f415837fb5642f014",
+      "bytes": 2361
+    },
+    {
+      "path": "projects/planetfall/README.md",
+      "sha256": "3cfafaf8427747b8f746952bd0f0b2121bf89daf1dfb144b2d5ca916f18ac136",
+      "bytes": 4448
+    },
+    {
+      "path": "projects/planetfall/REPORT.md",
+      "sha256": "19f5ea8d5dc35e7f9c0591748d488c636c1b254e580c81daf1803d9a524d3843",
+      "bytes": 9916
+    },
+    {
+      "path": "projects/planetfall/Review/ux/CHANGED_FILES.txt",
+      "sha256": "913fde776b2be0344e50c7f3ee882b8920752497386b18496c3fcccd9741ea6d",
+      "bytes": 1673
+    },
+    {
+      "path": "projects/planetfall/Review/ux/REPORT.md",
+      "sha256": "d069f7d27cbf1440656530108bf88598ce436cea293f436de5dbd62ae8f7ddb6",
+      "bytes": 4218
+    },
+    {
+      "path": "projects/planetfall/Review/ux/avatar.log",
+      "sha256": "094e52266dfeaeee1a4ce0a75837a87ca0b15e98d0941414a79a975220174525",
+      "bytes": 1094
+    },
+    {
+      "path": "projects/planetfall/Review/ux/build.log",
+      "sha256": "4e0274e45002ebb79bd8e7b3570fd46b4f9f88ac2ea2f8bba7ecf5975945cd12",
+      "bytes": 619
+    },
+    {
+      "path": "projects/planetfall/Review/ux/cold.log",
+      "sha256": "50c0d78df162e13d8615847a7fff9bce477cd508d5e2516185e2607f9947b8fe",
+      "bytes": 1524
+    },
+    {
+      "path": "projects/planetfall/Review/ux/controls.png",
+      "sha256": "edc16a5704b9a2d1f0c8b746f33831fa292b46ff707a1ce7bbc17115c5eee211",
+      "bytes": 154378
+    },
+    {
+      "path": "projects/planetfall/Review/ux/earth.log",
+      "sha256": "9eadfaf5b1d9f9134b405d34be0c56674f64e7be3061b9f72ff96df4eb232c94",
+      "bytes": 1281
+    },
+    {
+      "path": "projects/planetfall/Review/ux/export.log",
+      "sha256": "c93eacda06fb5a1938723e37acf89e75bce3d68d994938e92725e7c4b8c051f7",
+      "bytes": 137
+    },
+    {
+      "path": "projects/planetfall/Review/ux/first-missing-import.log",
+      "sha256": "fd5db745f2d4e21fb43eced944dfc794c8e948633c55157a6a9a9066e3cca4e1",
+      "bytes": 1148
+    },
+    {
+      "path": "projects/planetfall/Review/ux/first-save-observation.log",
+      "sha256": "f37cd2184cfaa77cd8be641755d7ffe12a8a88e9b3f42c073a42d73a1054e1f9",
+      "bytes": 1741
+    },
+    {
+      "path": "projects/planetfall/Review/ux/flight-block.log",
+      "sha256": "b93c265871bbc92bd00de2249057ec620fb7b4183e679a61535195d7bcc4bd8c",
+      "bytes": 1419
+    },
+    {
+      "path": "projects/planetfall/Review/ux/flight.log",
+      "sha256": "317028b96aec11f852936e811584acaf0cfce6f63558b70f32f88aebcf308adb",
+      "bytes": 1699
+    },
+    {
+      "path": "projects/planetfall/Review/ux/menu-final.log",
+      "sha256": "9eec8f7776142babf2961f9600dddb79e3011c4924f45054c9317fbfc8a65a79",
+      "bytes": 1801
+    },
+    {
+      "path": "projects/planetfall/Review/ux/package.log",
+      "sha256": "4ee157b5dc5b21f7141110db2586cf5ad4f863c82a77d05ba5f35202d922c070",
+      "bytes": 1813
+    },
+    {
+      "path": "projects/planetfall/Review/ux/save.log",
+      "sha256": "e55de4934b102ee18d79d80d03c0a758a078ede861ec71851847b664d4c4d275",
+      "bytes": 1610
+    },
+    {
+      "path": "projects/planetfall/Tools/author_world.py",
+      "sha256": "ca7a9d2cbef0c357dadb019fc1a8d984ae6ab0533bbc66b9452af3e4beedcadd",
+      "bytes": 15516
+    },
+    {
+      "path": "projects/planetfall/Tools/input-map.txt",
+      "sha256": "70a6f82330958a9804054c16a8c1c3c3ceb26de6c065a68db5cfe1e91d88e272",
+      "bytes": 1132
+    },
+    {
+      "path": "projects/planetfall/Tools/validate_native.py",
+      "sha256": "6ce7c5cfd0054a05d4274a3444dac8141356650350a1d9573e77f928b85098a7",
+      "bytes": 1203
+    },
+    {
+      "path": "projects/planetfall/planetfall.judasproj",
+      "sha256": "8ac2fa888e21c53b02725d184ad3b26c2978f376ff1f3582e30b4fb43773b66a",
+      "bytes": 2383
+    },
+    {
+      "path": "tests/PlanetfallApplicationTests.cpp",
+      "sha256": "82a0ed65663a7dfecfeaa9825052a7e4c85770a871eed16d861ce56ee80eb6c0",
+      "bytes": 21063
+    }
+  ],
+  "binaries": [
+    {
+      "path": "build/judas",
+      "sha256": "65a1937f881b57dd70c792b332dc6fff653f4092a4e80dbba450d82367b28c50"
+    },
+    {
+      "path": "build/judas_planetfall_application_tests",
+      "sha256": "4afa1010bc25f5ea09e359125d3487968f654f8c7cafa66c51f6078295e256f6"
+    },
+    {
+      "path": ".cache/Planetfall-UX-Package/judas",
+      "sha256": "65a1937f881b57dd70c792b332dc6fff653f4092a4e80dbba450d82367b28c50"
+    }
+  ]
+}

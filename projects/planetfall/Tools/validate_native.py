@@ -3,7 +3,7 @@ from pathlib import Path
 import os,subprocess,sys
 P=Path(__file__).resolve().parents[1];ROOT=P.parents[1]
 out=Path(sys.argv[1] if len(sys.argv)>1 else '/tmp/planetfall-final-native');out.mkdir(parents=True,exist_ok=True)
-cases=[('cold','earth'),('earth','earth'),('avatar','earth'),('moon','moon'),('mars','mars'),('derelict','derelict'),('combat','earth-frontier'),('pirates','moon'),('roof','earth-coast'),('flight','earth'),('flight-block','earth'),('stream','earth')]
+cases=[('save','earth'),('cold','earth'),('earth','earth'),('avatar','earth'),('moon','moon'),('mars','mars'),('derelict','derelict'),('combat','earth-frontier'),('pirates','moon'),('roof','earth-coast'),('flight','earth'),('flight-block','earth'),('stream','earth')]
 for mode,scene in cases:
  log=out/(mode+'.log')
  with log.open('w') as f:

@@ -93,7 +93,7 @@ export default class Framewalk {
    this.airTime=0;this.armed=false;}else this.airTime+=dt;
   this.wasSupported=m.supported;this.previousVelocity=m.velocity;
   if(!this.equipped){if(this.active)this.clear('unequipped');return;}
-  if(input.pressed('gravity_reset')){this.clear('released');game.message='FRAMEWALK released - normal authored gravity';return;}
+  if((input.pressed('gravity_reset')||this.player.interaction?.consume('release'))){this.clear('released');game.message='FRAMEWALK released - normal authored gravity';return;}
   if(!this.active)return;this.age+=dt;this.scanTime-=dt;
   if(!this.target?.entity.valid||!this.target.entity.collider?.enabled){this.recovery();return;}
   const reference=this.target.entity.transform;this.target.normal=norm(rotate(reference.rotation,this.target.localNormal));

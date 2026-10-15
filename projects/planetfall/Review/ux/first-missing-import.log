@@ -1,0 +1,15 @@
+Renderer fragment texture units: 32 (material path uses 12)
+Asset problem: /home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Assets/scripts/interaction.js.judasmeta: /home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Assets/scripts/interaction.js.judasmeta: missing id, type or source
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetfall (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/planetfall.judasproj)
+Scene: Planetfall / earth (/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/Scenes/earth.judas)
+World origin (m): 0.000, 796375.000, 0.000
+script asset=b6c5ffa39b9a3370bd26ecf5094a9cd7 entity=10 slot=1 module: ReferenceError: unregistered script import: Assets/scripts/interaction.js
+
+SCRIPT ReferenceError: unregistered script import: Assets/scripts/interaction.js
+
+FAIL ordinary project scripts remain healthy
+PASS ordinary startup and shutdown
+PASS M56 native profile exported
+PERF fixed_p95_ms=0.0000 render_p95_ms=0.0000 frame_work_p95_ms=0.0000 frame_work_max_ms=0.0000
+SUMMARY checks=3 failures=1

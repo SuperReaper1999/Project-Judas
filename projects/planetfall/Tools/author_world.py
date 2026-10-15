@@ -148,8 +148,7 @@ for region,R,origin in [('earth',796375,(0,796375,0)),('moon',217175,(48050000,2
  nav=parsed[50].replace('nav.surface.halfExtents "48 12 54"','nav.surface.halfExtents "160 30 160"').replace('nav.surface.cellSize "0.25"','nav.surface.cellSize "0.5"');aid=hashlib.md5(('planetfall/nav/'+region).encode()).hexdigest();nav=re.sub(r'nav.surface.asset ".*?"',f'nav.surface.asset "{aid}"',nav);nf=A/'navigation'/f'{region}.judasnav';nf.with_name(nf.name+'.judasmeta').write_text(f'JudasAssetMeta 1\nid "{aid}"\ntype navigation\nsource ""\n')
  (P/'Scenes'/f'{region}.judas').write_text(h+extra+''.join(keep.values())+nav)
 # Project-only controls use the existing logical input machinery.
-project=(ROOT/'projects/lastlight/lastlight.judasproj').read_text().replace('name \"Lastlight\"','name \"Planetfall\"').replace('Scenes/town.judas','Scenes/earth.judas');match=re.search(r'input-map (".*")',project);im=json.loads(match.group(1));im=im.replace('1 30 ','1 39 ',1)
-for action,key in [('journal','J'),('quest_use','H'),('mine','M'),('save_game','F5'),('load_game','F9'),('drive_use','K'),('atlas','O'),('eat','Y'),('side_quest','P')]:im+=f' "{action}" 0 1 "key:{key}" 1 0'
+project=(ROOT/'projects/lastlight/lastlight.judasproj').read_text().replace('name \"Lastlight\"','name \"Planetfall\"').replace('Scenes/town.judas','Scenes/earth.judas');match=re.search(r'input-map (".*")',project);im=(P/'Tools/input-map.txt').read_text().strip()
 project=project[:match.start(1)]+json.dumps(im)+project[match.end(1):];(P/'planetfall.judasproj').write_text(project)
 (A/'ids.json').write_text(json.dumps(ids,indent=2))
 print('Planetfall authored: four regions, curved collision terrain, campaign and physical rover')

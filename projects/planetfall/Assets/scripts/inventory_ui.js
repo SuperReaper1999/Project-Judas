@@ -7,7 +7,7 @@ export const INVENTORY_ROWS=6;
 const fieldNotes={
  rifle:{use:'24-round magazine. Unlimited reserve ammunition.',controls:'1 select  |  LEFT MOUSE fire  |  R reload'},
  rpg:{use:'Uses your carried rockets. Keep the muzzle clear.',controls:'2 select  |  LEFT MOUSE fire'},
- framewalk_boots:{use:'Jump, then press SPACE again in the air toward a surface.',controls:'SPACE choose a surface  |  X release gravity frame'},
+ framewalk_boots:{use:'Jump, then press SPACE again in the air toward a surface.',controls:'SPACE choose a surface  |  TAB > Controls releases gravity'},
  rockets:{use:'Ammunition for the RPG launcher.',controls:'2 select launcher  |  LEFT MOUSE fire'},
  grenades:{use:'A thrown explosive. Keep clear of the blast.',controls:'G throw'}
 };
@@ -31,7 +31,7 @@ export default class InventoryUI {
   if(!entries.some(e=>e.item===this.selected))this.selected=entries[0]?.item||null;
   const weapon=itemTypes[inventory.equipped('weapon')]?.name||'None';
   const feet=inventory.equipped('feet')?'Framewalk boots':'Ordinary shoes';
-  this.doc.get('inventory_hint').text=`PACK ${inventory.state.slots.length} / ${inventory.state.capacity} slots  |  ${weapon}  |  ${feet}\nC collect an aimed pickup  /  I close pack. Ammunition has its own stock.`;
+  this.doc.get('inventory_hint').text=`PACK ${inventory.state.slots.length} / ${inventory.state.capacity} slots  |  ${weapon}  |  ${feet}\nE collect an aimed pickup  /  TAB close pack. Ammunition has its own stock.`;
   for(let i=0;i<INVENTORY_ROWS;i++){const element=this.doc.get(`inventory_row_${i}`),entry=this.rows[i];
    this.doc.get(`inventory_row_selected_${i}`).visible=!!entry&&entry.item===this.selected;
    element.visible=!!entry;if(entry){const type=itemTypes[entry.item];
@@ -47,7 +47,7 @@ export default class InventoryUI {
   this.doc.get('inventory_item_status').text=selected?status:'NO ITEM SELECTED';
   this.doc.get('inventory_detail').text=selected?
    `${note?.use||type.description}\n\n${note?.controls||''}`:
-   'Aim at a nearby pickup and press C.';
+   'Aim at a nearby pickup and press E.';
   const image=this.doc.get('inventory_item_image'),asset=selected?itemImages[selected.item]||'':'';
   image.visible=!!asset;
   if(this.imageAsset!==asset){image.texture=asset;this.imageAsset=asset;}

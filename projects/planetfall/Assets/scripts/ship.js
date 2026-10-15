@@ -23,16 +23,16 @@ export default class Ship {
   if(inside||this.piloting)this.p.entity.gravity.setUniform(rotate(t.rotation,{x:0,y:-9.81,z:0}));else if(this.inside)this.restore();this.inside=inside;
   this.prompt='';this.exitWait=Math.max(0,(this.exitWait||0)-dt);let used=false;
   if(this.piloting){
-   if(input.pressed('climb')){this.stand();used=true;}
+   if((input.pressed('climb')||this.p.interaction?.consume('ship'))){this.stand();used=true;}
    if(input.pressed('rotate')){this.destination=(this.destination+1)%destinations.length;this.cruise=false;}
-   if(input.pressed('vendor')&&destinations[this.destination].scene!==scenes.current){const c=this.p.campaign;if(!(destinations[this.destination].scene.includes('earth')&&scenes.current.includes('earth'))&&!c.state.built.includes('ship'))c.dialogue='Repair the drive at Lantern first.';else if(c.state.resources.fuel<(destinations[this.destination].scene.includes('earth')&&scenes.current.includes('earth')?.2:c.state.choice==='reconnect'?.5:1))c.dialogue='No jump fuel. Complete mining contracts.';else this.jumpTime=8;}
-   if(input.pressed('vendor')&&destinations[this.destination].scene===scenes.current){this.cruise=!this.cruise;this.stage='rise';this.rise=add(t.position,mul(rotate(t.rotation,Y),12));}
+   if((input.pressed('vendor')||this.p.interaction?.consume('travel'))&&destinations[this.destination].scene!==scenes.current){const c=this.p.campaign;if(!(destinations[this.destination].scene.includes('earth')&&scenes.current.includes('earth'))&&!c.state.built.includes('ship'))c.dialogue='Repair the drive at Lantern first.';else if(c.state.resources.fuel<(destinations[this.destination].scene.includes('earth')&&scenes.current.includes('earth')?.2:c.state.choice==='reconnect'?.5:1))c.dialogue='No jump fuel. Complete mining contracts.';else this.jumpTime=8;}
+   if((input.pressed('vendor')||this.p.interaction?.consume('travel'))&&destinations[this.destination].scene===scenes.current){this.cruise=!this.cruise;this.stage='rise';this.rise=add(t.position,mul(rotate(t.rotation,Y),12));}
    if(input.pressed('reload')){const up=norm(mul(physics.gravity(t.position),-1));if(length(up)>.5)this.attitude=qm(align(rotate(t.rotation,Y),up),this.attitude);}
   }else{
    const nearDoor=length(sub(position,this.door.transform.position))<3.3;
    const nearSeat=inside&&length(sub(position,this.point({x:0,y:.2,z:-1.7})))<2;
    if(nearSeat)this.prompt='E  SIT AT COMMAND CONSOLE / PILOT';else if(nearDoor)this.prompt=`E  ${this.open?'CLOSE':'OPEN'} SHIP DOOR / WALK ABOARD`;
-   if(input.pressed('climb')&&(nearSeat||nearDoor)){used=true;if(nearSeat)this.seat();else{this.open=!this.open;this.hinge.setSpring(this.open?1.5:0,450,90);}}
+   if((input.pressed('climb')||this.p.interaction?.consume('ship'))&&(nearSeat||nearDoor)){used=true;if(nearSeat)this.seat();else{this.open=!this.open;this.hinge.setSpring(this.open?1.5:0,450,90);}}
   }
   if(this.jumpTime){this.jumpTime=Math.max(0,this.jumpTime-dt);this.hold=add(t.position,rotate(t.rotation,{x:0,y:1,z:0}));this.p.campaign.dialogue=`Jump spool ${Math.ceil(this.jumpTime)}s / ${destinations[this.destination].name}`;if(this.jumpTime===0){this.p.campaign.state.resources.fuel-=destinations[this.destination].scene.includes('earth')&&scenes.current.includes('earth')?.2:this.p.campaign.state.choice==='reconnect'?.5:1;this.p.campaign.publish();session.set('planetfall-arrival',true);scenes.load(destinations[this.destination].scene);}}
   let desired={x:0,y:0,z:0};const moving=this.piloting&&(Math.abs(input.axis('move_x'))+Math.abs(input.axis('move_y'))>.08||input.held('jump')||input.held('aim'));
@@ -50,7 +50,7 @@ export default class Ship {
   let error=qm(this.attitude,inverse(t.rotation));if(error.w<0)error=mulQuaternion(error,-1);
   const angular=clamp(sub(mul({x:error.x,y:error.y,z:error.z},18),mul(hull.angularVelocity,7)),10);
   hull.applyTorque(matrix(hull.inertiaWorld,angular));
-  if(this.piloting){this.p.entity.transform={position:this.point({x:0,y:.2,z:-1.7}),rotation:t.rotation};const d=destinations[this.destination];this.prompt=this.exitWait>0?'RELEASE CONTROLS TO STOP, THEN E TO STAND':'E STAND | WASD | SPACE/CTRL LIFT | N CRUISE | T NEXT';}
+  if(this.piloting){this.p.entity.transform={position:this.point({x:0,y:.2,z:-1.7}),rotation:t.rotation};const d=destinations[this.destination];this.prompt=this.exitWait>0?'RELEASE CONTROLS TO STOP, THEN E TO STAND':'E STAND | WASD | SPACE/RMB LIFT | TAB TRAVEL';}
   return this.piloting||used;
  }
  get status(){const d=destinations[this.destination];return `${d.name} / ${Math.round(length(sub(d.dock,this.hull.transform.position)))}m / ${Math.round(length(this.hull.velocity))}m/s${this.cruise?' / AUTO '+this.stage.toUpperCase():''}`;}

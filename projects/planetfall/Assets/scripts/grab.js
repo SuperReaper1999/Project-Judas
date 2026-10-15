@@ -17,11 +17,11 @@ export default class Grab {
  acquire(){const view=this.player.camera.pose(),filter={ignored:[this.player.entity]};
   const sight=physics.raycast(view.position,view.direction,4.5,filter),target=sight?sight.point:add(view.eye,mul(view.direction,3.2));
   const direction=norm(sub(target,view.eye)),hit=physics.raycast(view.eye,direction,3.2,filter),e=hit?.entity;
-  if(!e?.valid||!e.hasTag('physical')||e.motionType!=='dynamic'||e.mass>35||e.collider.sensor){game.message='B: aim at a nearby crate or barrel to carry it';return false;}
+  if(!e?.valid||!e.hasTag('physical')||e.motionType!=='dynamic'||e.mass>35||e.collider.sensor){game.message='E: aim at a nearby crate or barrel to carry it';return false;}
   this.held=e;this.player.entity.character.ignore([e]);this.startYaw=this.player.state.yaw;this.startRotation=e.transform.rotation;this.startHeading=qm(this.player.entity.transform.rotation,axis({x:0,y:1,z:0},this.startYaw));this.savedGravity=e.gravity.state;this.gravityInherited=false;this.direction=view.direction;this.turn=0;this.player.state.holding=e.id;
-  game.message='CARRYING - look down to drag / B drop / T quarter turn';return true;
+  game.message='CARRYING - look down to drag / E drop / TAB to rotate';return true;
  }
- tick(dt){if(input.pressed('interact')){if(this.held)this.drop();else if(!this.player.melee.busy&&!this.player.climb.active)this.acquire();}
+ tick(dt){if((input.pressed('interact')||this.player.interaction?.consume('grab'))){if(this.held)this.drop();else if(!this.player.melee.busy&&!this.player.climb.active)this.acquire();}
   const e=this.held;if(!e)return;
   if(!e.valid||e.motionType!=='dynamic'||!e.collider.enabled){this.drop();return;}
   const view=this.player.camera.pose(),u=this.player.entity.character.up;
@@ -33,7 +33,7 @@ export default class Grab {
   if(angle>.001)this.direction=norm(rotate(axis(turnAxis,Math.min(angle,3.6*dt)),this.direction));
   this.target=add(add(view.eye,mul(this.direction,2.05)),mul(u,-.35));
   if(length(sub(e.transform.position,this.target))>4.5){this.drop();return;}
-  if(input.pressed('rotate'))this.turn+=Math.PI/2;
+  if((input.pressed('rotate')||this.player.interaction?.consume('rotate')))this.turn+=Math.PI/2;
   const error=sub(this.target,e.transform.position),relative=sub(this.player.entity.character.velocity,e.velocity);
   const acceleration=bounded(sub(add(mul(error,70),mul(relative,17)),e.gravity.acceleration),45);
   e.applyForce(mul(acceleration,e.mass));

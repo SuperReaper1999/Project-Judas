@@ -2,7 +2,7 @@ import {world,input} from 'judas';import {game} from './game.js';import {length,
 export default class Vendor {
  constructor(player){this.player=player;this.near=false;}
  tick(){this.near=world.queryTags(['vendor']).some(e=>e.valid&&length(sub(e.transform.position,this.player.entity.transform.position))<3.6);
-  if(this.near&&input.pressed('vendor')&&!this.player.climb.active&&!this.player.grab.held)this.player.hud.shop(true);
+  if(this.near&&(input.pressed('vendor')||this.player.interaction?.consume('vendor'))&&!this.player.climb.active&&!this.player.grab.held)this.player.hud.shop(true);
  }
  buy(item){let price=0;if(item==='buy_rockets')price=250;else if(item==='buy_grenades')price=150;else if(item==='buy_heal')price=100;else return;
   if(game.points<price)return;
