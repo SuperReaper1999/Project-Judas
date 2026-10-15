@@ -17,7 +17,7 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current Experimental — M86 weather candidate
+## Latest accepted release — M86 weather
 
 [M86 prescribed weather](docs/M86_WEATHER.md) provides optional volumetric clouds,
 wind/gusts, rain, snow/blizzards, fog, lightning/thunder and moving tornadoes.
@@ -25,9 +25,10 @@ The editable [Weather Lab](projects/weather_lab/README.md) has flat and planetar
 scenes, direct controls, a watch tour, physical shelter and opted-in wind props.
 Project JavaScript chooses weather; Renderer owns its bounded GPU presentation.
 See [M86 evidence](docs/evidence/m86/REPORT.md) for actual Linux measurements and
-remaining limits. Human acceptance is pending; Windows M86 is untested.
+remaining limits. The operator's [M86 Linux acceptance record](docs/evidence/m86/HUMAN_VALIDATION.md)
+authorizes promotion of the tested candidate to main. Windows M86 remains untested.
 
-## Latest accepted release — M85 planetary terrain
+## Previous accepted capability — M85 planetary terrain
 
 The [M85 Linux acceptance record](docs/evidence/m85/HUMAN_VALIDATION.md) identifies
 the exact accepted terrain/portal candidate and main promotion. M85 uses
