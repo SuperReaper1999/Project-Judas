@@ -367,7 +367,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
         if(o.scripts.empty()&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
@@ -416,6 +416,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         if((o.liquidBasin||o.liquidContainer)&&m_assets){std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestLiquid(id);}}
         m_hasNavigation|=o.navigationSurface.has_value()||o.navigationAgent.has_value()||o.navigationObstacle.has_value()||o.navigationLink.has_value()||o.navigationModifier.has_value();
         m_scriptDefinitions[o.id]=o;
+        if(!RegisterWeather(o,outError))return fail(o,outError);
         if(!o.scripts.empty())m_scriptOwners.insert(o.id);
         if(o.characterMotor)m_characterOwners.insert(o.id);
         if(o.powertrain){std::string error;if(!ValidatePowertrainSettings(*o.powertrain,error))return fail(o,error);}
@@ -820,6 +821,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
     m_scripts.reset();spawnStates.clear();
+    EndWeatherAudio();m_weather.clear();m_weatherResponses.clear();m_weatherShelter={};
     m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_powertrains.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
@@ -853,7 +855,7 @@ void RuntimeWorld::RestoreAuthoredState() {
             ++e.reconstructions;
         }
     }
-    if(m_hasScripts||std::any_of(m_extraEntities.begin(),m_extraEntities.end(),[](const auto& e){return bool(e.definition.characterMotor)||bool(e.definition.wheel)||bool(e.definition.powertrain);})){
+    if(m_hasScripts||std::any_of(m_extraEntities.begin(),m_extraEntities.end(),[](const auto& e){return bool(e.definition.characterMotor)||bool(e.definition.wheel)||bool(e.definition.powertrain)||bool(e.definition.weather);})){
         for(auto& e:m_extraEntities)if(e.authored&&e.lifecycle!=EntityLifecycle::Destroyed){
             SetEntityState(e.id,StateFromDefinition(e.definition));SetRuntimeTransform(e.id,e.definition.transform);
         }
@@ -881,6 +883,9 @@ void RuntimeWorld::RestoreAuthoredState() {
     m_combustion.Reset();
     m_liquid=std::make_unique<LiquidSystem>();
     PopulateFluid();
+    // Weather is reconstructed after authored owner poses and hierarchy have
+    // been restored, so immediate queries see the reset field.
+    for(const auto& o:ScriptObjects()){std::string error;RegisterWeather(o,error);}
 }
 
 std::string RuntimeWorld::NameOfBody(BodyHandle handle) const {
@@ -1049,7 +1054,7 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
 bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     std::string error;
     if (!ValidateEntityDestruction(id, error)) { if (outError) *outError = error; return false; }
-    m_planets.erase(id);
+    m_planets.erase(id);m_weather.erase(id);m_weatherResponses.erase(id);
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
     m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
@@ -1385,6 +1390,7 @@ void RuntimeWorld::Destroy() {
     m_regionPending.clear();m_regionKinematicCommands.clear();m_regionAssets.clear();m_composed=false;
  JUDAS_PROFILE_SCOPE("World destroy"); PerformanceProfiler::Get().Boundary("World destroy");
     m_scripts.reset();m_planets.clear();
+    EndWeatherAudio();m_weather.clear();m_weatherResponses.clear();m_weatherShelter={};weatherQuality=1;m_weatherWork={};
     m_pendingOrigin.reset();m_originRevision=0;m_originError.clear();spawnStates.clear();
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();
     ClearDeformables();m_deformableOwners.clear();

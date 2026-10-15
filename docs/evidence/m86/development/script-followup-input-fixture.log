@@ -1,0 +1,30 @@
+PASS public wrapper and exact cookbook assets registered in clean project
+PASS actual QuickJS world builds independent authored weather components
+PASS frame-phase rejection remains caught and isolated in ordinary JS
+PASS valid
+PASS absent
+PASS invalid
+PASS phase
+FAIL input
+PASS negatives
+PASS immediate
+PASS quality
+PASS coordinates
+PASS disable
+PASS strike
+PASS detached
+PASS transition
+PASS interruption
+PASS endpoint
+PASS actual public weather operations execute without uncaught diagnostic
+PASS exact documented weather cookbook executes with real fixed input/callbacks
+PASS two scripted weather instances keep independent native transition state
+PASS ordinary destruction retires retained weather target
+PASS retained public wrapper detects destruction and fails safely
+PASS composed save captures real script and weather continuation
+PASS saved composed scene decodes
+PASS fresh runtime restores public script state and weather before resuming
+PASS restoration reconstructs actual native fields rather than script-cached status
+PASS first resumed native weather boundary matches uninterrupted instance
+PASS cookbook state and lifecycle continue without replaying initial transition
+Weather JS 29 checks 1 failures

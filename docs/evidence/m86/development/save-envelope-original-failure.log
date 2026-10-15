@@ -1,0 +1,40 @@
+PASS first slot durably commits
+PASS Unicode metadata round trip
+PASS independent second slot
+PASS bounded metadata listing
+PASS slot path traversal rejected
+PASS overwrite publishes previous-good first
+PASS corruption recovers previous committed generation explicitly
+PASS corrupt current repaired without destroying previous good
+PASS controlled prepublication failure reported
+PASS failed overwrite leaves current valid
+PASS payload checksum detects corruption
+PASS truncation rejected
+PASS oversized string rejected before allocation
+PASS concurrent process lock conflict explicit
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS delete selected slot includes recovery generation
+PASS delete preserves other slot
+PASS abandoned temporary not advertised as slot
+PASS unknown/newer container rejects
+PASS explicit seconds-to-milliseconds envelope migration retains semantic records
+PASS intermediate directory symlink rejected
+PASS slot symlink rejected for write/delete
+PASS post-rename uncertainty reported honestly
+PASS late publication remains validated readable state
+PARTICIPANTS count=19 write=accepted diagnostic=
+PASS supported 19-participant envelope durably encodes
+PASS independent 19-participant envelope decodes and round-trips exactly
+PARTICIPANTS count=20 write=rejected diagnostic=invalid save metadata: 
+FAIL supported 20-participant envelope durably encodes
+FAIL independent 20-participant envelope decodes and round-trips exactly
+PARTICIPANTS count=21 write=rejected diagnostic=invalid save metadata: 
+FAIL supported 21-participant envelope durably encodes
+FAIL independent 21-participant envelope decodes and round-trips exactly
+PASS 22-participant envelope remains outside the bounded supported schema
+PASS oversized checksum-valid decoder input rejects atomically without mutating output
+SUMMARY checks=36 failures=4

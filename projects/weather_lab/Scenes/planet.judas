@@ -1,0 +1,175 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Weather Lab / Earth-scale planetary shell",
+      "world-origin": [
+        0,
+        6371000,
+        0
+      ],
+      "sun-direction": [
+        -0.5,
+        0.68,
+        0.48
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.23,
+        0.29,
+        0.34
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 100
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Double precision Earth / edit Planet terrain component",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "planet.surface": "{\"version\":1,\"radius\":6371000,\"center\":[0,0,0],\"segments\":16,\"maxLevel\":24,\"maxTiles\":384,\"maxResident\":768,\"buildsPerFrame\":4,\"pixelError\":2,\"morphSeconds\":0.2,\"collisionSpacing\":0.5,\"collisionRadius\":18,\"maxCollisionTiles\":96,\"bands\":[{\"amplitude\":1100,\"wave\":[8e-06,0,1.2e-05]},{\"amplitude\":75,\"wave\":[0.00013,0,8e-05]},{\"amplitude\":0.025,\"wave\":[1.1,0,1.4]}],\"patches\":[{\"direction\":[0,1,0],\"extent\":20,\"resolution\":5,\"heights\":[0,0,0,0,0,0,0,0.04,0,0,0,0.04,0.12,0.04,0,0,0,0.04,0,0,0,0,0,0,0]}]}"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary RadicalGravity / independent from terrain normals",
+        "fields": {
+          "position": [
+            0,
+            -6371000,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "radial"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "sphere"
+            },
+            "radius": 20000000
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Project-owned exploration, watch tour and UI",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "5ab6e2f0bca84510f3d5b1aa8496dbfa",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"planet\": true}",
+          "ui.asset": "3e8c3543c682346bd9628e867d49f4f5",
+          "ui.name": "weather_lab",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 20,
+        "name": "Editable weather profile / F1-F9 are project JS",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "weather.region": "{\"version\":1,\"enabled\":true,\"seed\":860013,\"priority\":0,\"profile\":{\"cloudCoverage\":0.12,\"cloudDensity\":0.65,\"cloudBase\":1000,\"cloudThickness\":1200,\"rain\":0,\"snow\":0,\"fog\":0,\"wind\":[3,0,1],\"gust\":1,\"lightningRate\":0,\"tornado\":0,\"tornadoRadius\":17,\"tornadoHeight\":320,\"tornadoSpeed\":2},\"frame\":{\"radial\":true,\"center\":[0,0,0],\"up\":[0,1,0],\"north\":[0,0,-1],\"radius\":6371000},\"regionShape\":\"global\",\"regionCenter\":[0,0,0],\"regionHalfExtents\":[100,100,100],\"regionRotation\":[1,0,0,0],\"regionRadius\":100,\"blendDistance\":10,\"topAltitude\":16000,\"tornadoOffset\":[60,45],\"tornadoDirection\":[-1,0,0.2]}"
+        }
+      },
+      {
+        "id": 32,
+        "name": "Presentation audio listener",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-listener": [],
+          "listener.enabled": true,
+          "listener.follow-view": true
+        }
+      }
+    ]
+  }
+}

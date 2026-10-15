@@ -38,7 +38,7 @@ bool RuntimeWorld::PlayAudioOneShot(SceneObjectId id,std::string& error){
   auto h=m_audioSystem->PlayOneShot(clip,e.settings,p,error);if(!h.IsValid())return false;m_audioOneShots.push_back({id,h});return true;}
  error="entity has no audio emitter";return false;
 }
-void RuntimeWorld::EndAudio(){for(auto& shot:m_audioOneShots)if(m_audioSystem)m_audioSystem->DestroyVoice(shot.second);m_audioOneShots.clear();for(auto& e:m_audioEmitters){if(m_audioSystem)m_audioSystem->DestroyVoice(e.voice);e.voice={};}if(m_audioSystem&&m_audioRunning)m_audioSystem->ResetEnvironment();m_audioRunning=false;ResetAudioMotion();}
+void RuntimeWorld::EndAudio(){EndWeatherAudio();for(auto& shot:m_audioOneShots)if(m_audioSystem)m_audioSystem->DestroyVoice(shot.second);m_audioOneShots.clear();for(auto& e:m_audioEmitters){if(m_audioSystem)m_audioSystem->DestroyVoice(e.voice);e.voice={};}if(m_audioSystem&&m_audioRunning)m_audioSystem->ResetEnvironment();m_audioRunning=false;ResetAudioMotion();}
 void RuntimeWorld::UpdateAudio(const glm::mat4& activeView,float alpha,float dt){
  JUDAS_PROFILE_SCOPE("Audio main update");
  if(!m_audioRunning||!m_audioSystem||!m_assets)return;
@@ -46,6 +46,7 @@ void RuntimeWorld::UpdateAudio(const glm::mat4& activeView,float alpha,float dt)
  if(m_audioListener&&m_audioListener->settings.enabled){auto& l=*m_audioListener;listener=Pose(*this,l.id,l.transform,alpha,lp,lq);if(listener&&l.settings.followActiveView){auto t=glm::inverse(activeView);lp=glm::vec3(t[3]);lq=glm::normalize(glm::quat_cast(glm::mat3(t)));}}
  glm::vec3 lv{0};if(listener){if(m_audioListener->settings.followActiveView)lv=Motion(*this,0,lp,m_lastListenerPosition,dt,m_listenerMotionValid);else lv=Motion(*this,m_audioListener->id,lp,m_lastListenerPosition,dt,m_listenerMotionValid);m_lastListenerPosition=lp;}m_listenerMotionValid=listener;
  if(listener){m_audioSystem->SetListener(lp,lq);m_audioSystem->SetListenerMotion(lv);}
+ UpdateWeatherAudio(m_settings.worldOrigin+glm::dvec3(lp),listener);
  std::vector<AudioEmitter*> eligible;
  for(auto& e:m_audioEmitters){if(!IsPublished(e.id))continue;
   glm::vec3 p;glm::quat q;const bool active=e.settings.enabled&&Pose(*this,e.id,e.transform,alpha,p,q)&&(!e.settings.spatial||listener);

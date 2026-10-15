@@ -31,6 +31,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     world.UpdateNavigation(fixedDeltaTime);
     world.Liquids().BeginStep();
     world.FixedScripts(&window.Input(),fixedDeltaTime);
+    world.UpdateWeather(fixedDeltaTime);
     // Only opted-in M70 instances advance references before dynamics. Legacy
     // animation stays in its established post-physics phase.
     world.UpdateCharacters(fixedDeltaTime,true,false);

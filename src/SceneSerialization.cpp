@@ -141,6 +141,8 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("prefab.overrides", Quote(EncodePrefabOverrides(o.prefabOverrides)));
     }
     if(o.planet)w.Line("planet.surface",Quote(EncodePlanetSettings(*o.planet)));
+    if(o.weather)w.Line("weather.region",Quote(EncodeWeatherSettings(*o.weather)));
+    if(o.weatherResponse)w.Line("weather.response",Quote(EncodeWeatherResponseSettings(*o.weatherResponse)));
     for(const auto& [key,value]:DeformableProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:LiquidProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:NavigationProperties(o))w.Line(key,Quote(value));
@@ -782,6 +784,8 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     for(const auto& [key,tokens]:block.values)if(key.rfind("nav.",0)==0){std::string value;if(!p.String(key,value))return false;navFields[key]=value;}
     std::string navError;if(!ApplyNavigationProperties(navFields,o,navError))return reader.Fail(navError);
     if(p.Has("planet.surface")){std::string value,error;PlanetSettings settings;if(!p.String("planet.surface",value)||!DecodePlanetSettings(value,settings,error))return reader.Fail(error);o.planet=std::move(settings);}
+    if(p.Has("weather.region")){std::string value,error;WeatherSettings settings;if(!p.String("weather.region",value)||!DecodeWeatherSettings(value,settings,error))return reader.Fail(error);o.weather=std::move(settings);}
+    if(p.Has("weather.response")){std::string value,error;WeatherResponseSettings settings;if(!p.String("weather.response",value)||!DecodeWeatherResponseSettings(value,settings,error))return reader.Fail(error);o.weatherResponse=std::move(settings);}
     if(p.Has("powertrain.graph")){std::string value,error;PowertrainSettings settings;if(!p.String("powertrain.graph",value)||!DecodePowertrainSettings(value,settings,error))return reader.Fail(error);o.powertrain=std::move(settings);}
     if(p.Has("gravity-selection.mode")){
         GravitySelection s;std::string mode,error;

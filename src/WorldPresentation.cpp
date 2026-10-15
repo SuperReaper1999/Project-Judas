@@ -411,6 +411,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
                       const GameSession* session, const glm::mat4& view, const glm::mat4& projection,
                       const glm::vec3& shadowFocus, float alpha,float frameSeconds) {
     JUDAS_PROFILE_SCOPE("World render submission");
+    renderer.ClearWeather();
     // Existing runtime statistics may accumulate across frames. Observe this
     // submission's delta without resetting the engine's diagnostic state.
     auto planetEye=world.view?world.view->pose.position:glm::vec3(glm::inverse(view)[3]);
@@ -496,11 +497,13 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             const glm::vec4 viewPlane=camera.hasClipPlane?ViewSpacePlane(cameraView,camera.clipNormal,camera.clipPoint):glm::vec4(0);
             renderer.SetCamera(cameraView,SecondaryCameraProjection(c.verticalFovDegrees,static_cast<float>(c.width)/c.height,c.nearPlane,c.farPlane,
                 camera.hasFrustum?&camera.frustum:nullptr,camera.hasClipPlane?&viewPlane:nullptr));
+            world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(position),camera.id);
             renderer.SetRenderMask(c.renderMask);
             renderer.SetDynamicLights(lights);
             renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
             DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
             DrawWorldTransparents(renderer, world, session, alpha);
+            renderer.DrawWeather(true);
             renderer.EndRenderTarget(); ++camera.updates;
         }
     }
@@ -510,11 +513,13 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     if(world.view){const auto& v=*world.view;auto q=v.pose.rotation;
         renderer.SetCamera(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(width)/height,v.nearPlane,v.farPlane));
     }else renderer.SetCamera(view, projection);
+    world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]));
     renderer.SetRenderMask(settings.mainCameraRenderMask);
     renderer.SetDynamicLights(lights);
     renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
     DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
     DrawWorldTransparents(renderer, world, session, alpha);
+    renderer.DrawWeather();
     renderer.EndFrame();
     const auto& stats=renderer.Stats();
     JUDAS_PROFILE_COUNTER("Submitted draws all passes",stats.drawCalls-beforeStats.drawCalls,ProfileCounterMode::Sum);
@@ -600,4 +605,14 @@ std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene) {
         lights.push_back(light);
     }
     return lights;
+}
+
+// Authored edit preview is deliberately clock-zero. Playing creates independent
+// deterministic field state; drawing the inspector never advances simulation.
+WeatherSample SampleAuthoredWeather(const Scene& scene,glm::dvec3 eye){
+    std::vector<const SceneObject*> owners;for(const auto& o:scene.Objects())if(o.weather&&o.weather->enabled)owners.push_back(&o);
+    std::sort(owners.begin(),owners.end(),[](const auto* a,const auto* b){return a->weather->priority==b->weather->priority?a->id<b->id:a->weather->priority<b->weather->priority;});
+    WeatherSample result;result.profile.cloudCoverage=0;result.profile.cloudDensity=0;result.profile.wind=glm::dvec3(0);result.profile.gust=0;
+    for(const auto* o:owners){std::string error;auto settings=RuntimeWorld::ResolveWeatherSettings(*o,scene.Settings().worldOrigin);if(!ValidateWeatherSettings(settings,error))continue;auto next=WeatherRuntime(settings).Sample(eye);if(!next.active)continue;const double w=next.weight;auto previous=result;result=next;result.profile=BlendWeatherProfiles(previous.profile,next.profile,w);result.cloudOffset=glm::mix(previous.cloudOffset,next.cloudOffset,w);result.wind=glm::mix(previous.wind,next.wind/w,w);result.airDensity=glm::mix(previous.airDensity,next.airDensity/w,w);result.weight=previous.weight+(1-previous.weight)*w;}
+    return result;
 }

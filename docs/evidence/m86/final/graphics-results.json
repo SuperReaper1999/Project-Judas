@@ -1,0 +1,22 @@
+[
+  {
+    "check": "render",
+    "exit": 0,
+    "seconds": 1.4737048149108887
+  },
+  {
+    "check": "render-camera",
+    "exit": 0,
+    "seconds": 0.4669036865234375
+  },
+  {
+    "check": "portal-camera",
+    "exit": 0,
+    "seconds": 0.36529541015625
+  },
+  {
+    "check": "application",
+    "exit": 0,
+    "seconds": 54.35319805145264
+  }
+]

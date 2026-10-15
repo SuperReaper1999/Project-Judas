@@ -52,6 +52,14 @@ bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     if((authored->liquidContainer||authored->deformable)&&t.scale!=glm::vec3(1))return false;
     if(!std::isfinite(glm::dot(t.position,t.position))||!std::isfinite(glm::dot(t.scale,t.scale))||
        !std::isfinite(glm::dot(t.rotation,t.rotation))||glm::dot(t.rotation,t.rotation)<1e-12f)return false;
+    // Optional weather resolves owner placement before publication. Reject an
+    // invalid region/frame here, inside the caller's error boundary, rather than
+    // allowing a later fixed-step reconstruction to throw.
+    if(authored->weather){
+        if(glm::any(glm::lessThanEqual(glm::abs(t.scale),glm::vec3(1e-6f))))return false;
+        auto candidate=*authored;candidate.transform=t;
+        if(!ValidateWeatherSettings(ResolveWeatherSettings(candidate,m_settings.worldOrigin),placementError))return false;
+    }
     if(auto it=m_characters.find(id);it!=m_characters.end()){
         it->second.motor.Reset(t.position,t.rotation);it->second.previous=t;
     }

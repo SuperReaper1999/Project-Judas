@@ -1,0 +1,33 @@
+Started UTC: 2026-10-15T17:15:23.790014+00:00
+Command: ["/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_authoring_tests"]
+PASS known preset supplies ordinary profile values
+PASS unknown preset is rejected without replacing a profile
+PASS rotated radial profile with absolute binary64 centre is valid
+PASS weather and wind response round-trip through ordinary scene serialization
+PASS weather scene save-load-save is byte-identical
+PASS Earth-scale and larger absolute weather anchors retain binary64 detail
+PASS shelter mask preserves high M39 collision-layer bits
+PASS flattening retains owner-local descriptor rather than double-transforming weather
+PASS named component properties restore a weather region
+PASS wind response uses the same prefab property path
+PASS unknown region fields reject transactionally
+PASS unknown descriptor version cannot partially mutate the destination
+PASS invalid normalized profile intensity is rejected
+PASS negative region extent is rejected
+PASS non-finite absolute frame is rejected
+PASS negative physical response area is rejected
+PASS non-finite wind acceleration limit is rejected
+PASS malformed prefab weather edit leaves the source object unchanged
+PASS weather region and physical prop form an ordinary prefab
+PASS weather prefab saves through the normal scene writer
+PASS weather prefab uses ordinary asset metadata
+PASS two weather prefab instances have independent normal entity identities
+PASS ordinary prefab override captures an independently edited profile
+PASS source profile can be edited without replacing prefab identity
+PASS one profile override remains independent while the other instance receives the source edit
+PASS weather edits participate in normal editor history
+PASS undo restores the complete authored profile
+PASS redo restores the weather profile edit
+PASS weather component removal uses normal authoring semantics
+PASS undo restores removed weather and its prefab override
+SUMMARY 30 checks 0 failures

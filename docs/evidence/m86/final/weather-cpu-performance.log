@@ -1,0 +1,43 @@
+WORKLOAD native CPU only; same initial scene and fixed60Hz; 100 warmup + 700 measured steps; PhysicsWorld::Step timed separately from RuntimeWorld::UpdateWeather. No rendering/GPU claim.
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS disabled fields or absent opt-in produce no wind casts/forces
+MEASURE weather_cpu fields=1 bodies=64 opt_in=64 enabled=0 visual_quality=0 steps=700 weather_p50_ms=0.011092000 weather_p95_ms=0.012561000 weather_max_ms=0.025190000 physics_p50_ms=0.028439000 physics_p95_ms=0.033595000 physics_max_ms=0.072689000 casts=0 forces=0
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS disabled fields or absent opt-in produce no wind casts/forces
+MEASURE weather_cpu fields=1 bodies=64 opt_in=0 enabled=1 visual_quality=0 steps=700 weather_p50_ms=0.000315000 weather_p95_ms=0.000439000 weather_max_ms=0.001566000 physics_p50_ms=0.028077000 physics_p95_ms=0.046288000 physics_max_ms=0.078961000 casts=0 forces=0
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS enabled workload exercises real collision queries and body force accumulation
+MEASURE weather_cpu fields=1 bodies=64 opt_in=64 enabled=1 visual_quality=0 steps=700 weather_p50_ms=0.070168000 weather_p95_ms=0.143475000 weather_max_ms=0.320249000 physics_p50_ms=0.602681000 physics_p95_ms=1.186111000 physics_max_ms=3.612247000 casts=44800 forces=44780
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS enabled workload exercises real collision queries and body force accumulation
+MEASURE weather_cpu fields=1 bodies=64 opt_in=64 enabled=1 visual_quality=2 steps=700 weather_p50_ms=0.064880000 weather_p95_ms=0.091420000 weather_max_ms=0.204564000 physics_p50_ms=0.555471000 physics_p95_ms=0.681716000 physics_max_ms=1.055463000 casts=44800 forces=44780
+PASS visual quality off/high preserves actual physical endpoints and bounded work
+MEASURE quality_invariance maximum_position_difference_m=0 maximum_velocity_difference_m_s=0
+PASS enabled wind changes real body motion relative to the matched disabled field
+MEASURE weather_reference fields=1 disabled_p95_ms=0.012561000 fields_only_p95_ms=0.000439000 full_p95_ms=0.143475000 displacement_vs_disabled_m=136.483154297
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS disabled fields or absent opt-in produce no wind casts/forces
+MEASURE weather_cpu fields=4 bodies=64 opt_in=64 enabled=0 visual_quality=0 steps=700 weather_p50_ms=0.017277000 weather_p95_ms=0.027793000 weather_max_ms=0.043378000 physics_p50_ms=0.029210000 physics_p95_ms=0.043532000 physics_max_ms=0.067733000 casts=0 forces=0
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS disabled fields or absent opt-in produce no wind casts/forces
+MEASURE weather_cpu fields=4 bodies=64 opt_in=0 enabled=1 visual_quality=0 steps=700 weather_p50_ms=0.000804000 weather_p95_ms=0.001122000 weather_max_ms=0.012253000 physics_p50_ms=0.028168000 physics_p95_ms=0.045877000 physics_max_ms=0.067079000 casts=0 forces=0
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS enabled workload exercises real collision queries and body force accumulation
+MEASURE weather_cpu fields=4 bodies=64 opt_in=64 enabled=1 visual_quality=0 steps=700 weather_p50_ms=0.133097000 weather_p95_ms=0.170041000 weather_max_ms=0.264789000 physics_p50_ms=0.555824000 physics_p95_ms=0.720259000 physics_max_ms=1.109994000 casts=44800 forces=44776
+PASS ordinary headless weather workload builds
+PASS actual wind query work remains at most one cast per opted-in body per fixed step
+PASS enabled workload exercises real collision queries and body force accumulation
+MEASURE weather_cpu fields=4 bodies=64 opt_in=64 enabled=1 visual_quality=2 steps=700 weather_p50_ms=0.133218000 weather_p95_ms=0.166887000 weather_max_ms=0.247865000 physics_p50_ms=0.552840000 physics_p95_ms=0.645923000 physics_max_ms=0.958638000 casts=44800 forces=44776
+PASS visual quality off/high preserves actual physical endpoints and bounded work
+MEASURE quality_invariance maximum_position_difference_m=0 maximum_velocity_difference_m_s=0
+PASS enabled wind changes real body motion relative to the matched disabled field
+MEASURE weather_reference fields=4 disabled_p95_ms=0.027793000 fields_only_p95_ms=0.001122000 full_p95_ms=0.170041000 displacement_vs_disabled_m=136.728027344
+NOTE fields-only and full timings are separate real workloads; their difference is not claimed as an exact isolated force profiler. Disabled means SetEnabled(false) on the same authored regions; no response bodies or physics quality are removed.
+SUMMARY 28 checks 0 failures

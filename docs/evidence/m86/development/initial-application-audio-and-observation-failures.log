@@ -1,0 +1,102 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Judas Weather Lab (/home/conner/Documents/GitHub/Project-Judas/projects/weather_lab/weather_lab.judasproj)
+Scene: Weather Lab / Flat meadow (/home/conner/Documents/GitHub/Project-Judas/projects/weather_lab/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal project JS spawns a supported flat-world CharacterMotor
+PASS actual cloud targets initialize within bounded dimensions
+PASS actual application weather screenshot captured
+PHASE 1 frame=101
+PASS logical profile input produces actual gathering clouds
+PASS actual application weather screenshot captured
+PHASE 2 frame=292
+PASS rain profile drives bounded GPU precipitation
+PASS actual application populates the staggered shelter atlas through physics queries
+PASS actual application weather screenshot captured
+PHASE 3 frame=483
+PASS normal input walks the real motor below the pavilion
+PASS shelter is ordinary roof collision above the character
+PASS actual application weather screenshot captured
+PHASE 4 frame=758
+PASS script-owned presentation camera follows the returning traveller
+PASS explicit public weather strike creates a real source event
+THUNDER fixture_distance_m=343.3 expected_delay_s=1.0 source_time=17.216667565
+PHASE 5 frame=1033
+PASS actual application weather screenshot captured
+PASS thunder is not played before the actual propagation delay
+FAIL existing audio mixer receives thunder after distance propagation
+PASS opted-in wind moves an actual ordinary physical prop
+PHASE 6 frame=1124
+PASS thunderstorm parameters coordinate rain, clouds, wind and source rate
+PASS actual application weather screenshot captured
+PHASE 7 frame=1315
+PASS tornado profile has a moving three-dimensional wind source
+PASS actual application weather screenshot captured
+PHASE 8 frame=1506
+PASS snow profile drives actual bounded precipitation
+PASS actual application weather screenshot captured
+PHASE 9 frame=1697
+PASS blizzard combines snow, visibility and coherent strong wind
+PASS actual application weather screenshot captured
+PHASE 10 frame=1888
+PASS fog profile is independently usable
+PASS actual application weather screenshot captured
+PHASE 11 frame=2079
+PASS flat save is requested during a live transition
+PASS ordinary save service accepts the played weather scene
+PHASE 12 frame=2144
+PASS durable weather save completes
+PASS read actual archived weather, script and physical endpoint participants
+PASS ordinary cold-load request accepted
+PHASE 13 frame=2152
+PASS fresh published world restores the exact native weather before its first resumed step
+FAIL fresh published world restores actual project script state without replaying defaults
+PASS cold save restores the actual CharacterMotor physical endpoint
+PASS cold save restores the actual wind-driven rigid body endpoint
+PASS flat cold load resumes real supported movement
+PHASE 14 frame=2183
+PASS pause UI stops the authoritative weather clock
+PHASE 15 frame=2203
+PASS resume restarts weather without replacing it
+PHASE 16 frame=2223
+PASS registered F9 transition lands on actual Earth-scale physical terrain
+PASS planet weather samples radial altitude independently of support
+PASS actual application weather screenshot captured
+PHASE 17 frame=2304
+PHASE 18 frame=2495
+PASS actual F1 input continuously ascends from the ground
+VIEW controlled sampling: subsequent cloud/orbit captures use public script-state restore to shorten a naturally longer trip
+PASS explicit public script-state restoration selects an accelerated diagnostic view
+PHASE 19 frame=2645
+PASS M85 chart changes keep the radial weather field at its absolute planet anchor
+PASS actual renderer visits the three-dimensional planetary cloud layer
+PASS actual application weather screenshot captured
+PASS explicit public script-state restoration selects an accelerated diagnostic view
+PHASE 20 frame=2685
+PASS orbit retains cloud-shell presentation while physical air fades to zero
+PASS same bounded renderer remains valid in the orbital chart
+PASS actual application weather screenshot captured
+PHASE 21 frame=2745
+PASS actual F2 input begins a continuous descent
+PASS explicit public script-state restoration selects an accelerated diagnostic view
+PASS accelerated return finishes with real terrain collision and motor support
+PHASE 22 frame=2856
+PASS ordinary save service accepts the played weather scene
+PHASE 23 frame=2921
+PASS durable weather save completes
+PASS read actual archived weather, script and physical endpoint participants
+PASS ordinary cold-load request accepted
+PHASE 24 frame=2927
+PASS fresh published world restores the exact native weather before its first resumed step
+FAIL fresh published world restores actual project script state without replaying defaults
+PASS cold save restores the actual CharacterMotor physical endpoint
+PASS planet cold load resumes actual supported physical and weather state
+PHASE 25 frame=2958
+PASS whole-scene replacement cleans old planet weather and creates the flat source
+PHASE 26 frame=3039
+PASS authored reload resets profile, clock, script state and old thunder work
+PASS actual application weather screenshot captured
+PHASE 27 frame=3110
+PASS ordinary application startup, transitions, cold saves, reload and shutdown complete
+MEASURE frames=3110 fixed_p95_ms=1.605298 fixed_max_ms=9.003583 render_p95_ms=9.350408 cpu_frame_p50_ms=2.428775 cpu_frame_p95_ms=11.962614 cpu_frame_max_ms=253.306441
+SUMMARY 66 checks 3 failures

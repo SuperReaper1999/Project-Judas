@@ -1,4 +1,4 @@
-/** Current JudasJS through M85. M85 Linux operator acceptance is recorded.
+/** Current JudasJS through M86 Experimental. M86 operator acceptance is pending.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -157,7 +157,44 @@ declare module "judas" {
     setUniform(acceleration:Vec3):boolean;
     clear():boolean;
   }
+  export interface WeatherProfile {
+    cloudCoverage:number;cloudDensity:number;cloudBase:number;cloudThickness:number;
+    rain:number;snow:number;fog:number;
+    /** World-space m/s in JS; authored component wind is owner-local. */
+    wind:Vec3;
+    gust:number;lightningRate:number;
+    tornado:number;tornadoRadius:number;tornadoHeight:number;tornadoSpeed:number;
+  }
+  export interface WeatherState {
+    readonly current:WeatherProfile;readonly target:WeatherProfile;
+    readonly time:number;readonly transitionElapsed:number;readonly transitionDuration:number;
+    /** Current local simulation metres, not absolute planet coordinates. */
+    readonly tornadoPosition:Vec3;
+    readonly lightningSequence:string;readonly lightningPosition:Vec3;readonly lightningFlash:number;
+  }
+  export interface WeatherQuery {
+    readonly wind:Vec3;readonly up:Vec3;readonly altitude:number;readonly airDensity:number;
+    readonly rain:number;readonly snow:number;readonly fog:number;readonly cloudCoverage:number;
+    readonly tornadoPosition:Vec3;readonly lightningFlash:number;
+  }
+  export class Weather {
+    constructor(id:EntityId);id:EntityId;
+    readonly valid:boolean;
+    /** Authoritative mutation: call in fixedUpdate. */
+    enabled:boolean;
+    readonly state:WeatherState;
+    /** Smooth from the current profile; duration 0 immediately replaces it. */
+    transition(profile:Partial<WeatherProfile>,duration?:number):boolean;
+    /** Explicit strike at a local-world point; omission uses the configured frame's ground anchor. */
+    strike(position?:Vec3):boolean;
+  }
+  export const weather:{
+    sample(point:Vec3):WeatherQuery|null;
+    /** Presentation quality only; never modifies sampled wind or physical forces. */
+    quality:0|1|2;
+  };
   export class Entity {
+    readonly weather:Weather|null;
     readonly planetState:PlanetState;
     planetSample(absolute:Vec3):PlanetSample;
     preparePlanetCollision(absolute:Vec3):boolean;

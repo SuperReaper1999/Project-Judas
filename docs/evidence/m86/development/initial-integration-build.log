@@ -1,0 +1,176 @@
+Built target judas_weather_tests
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 18%] Built target freetype
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target judas_materials
+[ 31%] Built target harfbuzz
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp: In static member function ‘static JSValue ScriptSystem::Impl::Native(JSContext*, JSValue, int, JSValue*)’:
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:555:9: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+  555 |         for(const auto& field:std::vector<std::pair<const char*,double>>{{"altitude",sample.altitude},{"airDensity",sample.airDensity},{"rain",sample.profile.rain},{"snow",sample.profile.snow},{"fog",sample.profile.fog},{"cloudCoverage",sample.profile.cloudCoverage},{"lightningFlash",sample.lightningFlash}})JS_SetPropertyStr(c,result,field.first,JS_NewFloat64(c,field.second));return result;
+      |         ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:555:380: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+  555 |         for(const auto& field:std::vector<std::pair<const char*,double>>{{"altitude",sample.altitude},{"airDensity",sample.airDensity},{"rain",sample.profile.rain},{"snow",sample.profile.snow},{"fog",sample.profile.fog},{"cloudCoverage",sample.profile.cloudCoverage},{"lightningFlash",sample.lightningFlash}})JS_SetPropertyStr(c,result,field.first,JS_NewFloat64(c,field.second));return result;
+      |                                                                                                                                                                                                                                                                                                                                                                                            ^~~~~~
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/Weather.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp: In member function ‘void RuntimeWorld::UpdateWeather(float)’:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp:69:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   69 |         if(!IsPublished(id))continue;const auto* o=RuntimeDefinition(id);if(!o)continue;
+      |         ^~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp:69:38: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   69 |         if(!IsPublished(id))continue;const auto* o=RuntimeDefinition(id);if(!o)continue;
+      |                                      ^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp: In member function ‘bool RuntimeWorld::RestoreWeather(EntityId, const std::string&, std::string&, bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp:125:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  125 |         if(text.size()>65536)throw std::runtime_error("weather continuation byte bound");const auto j=J::parse(text);if(j.at("version")!=1||j.size()!=4||!j.at("thunder").is_array()||j.at("thunder").size()>8)throw std::runtime_error("weather continuation version/shape");
+      |         ^~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp:125:90: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  125 |         if(text.size()>65536)throw std::runtime_error("weather continuation byte bound");const auto j=J::parse(text);if(j.at("version")!=1||j.size()!=4||!j.at("thunder").is_array()||j.at("thunder").size()>8)throw std::runtime_error("weather continuation version/shape");
+      |                                                                                          ^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp: In member function ‘void RuntimeWorld::UpdateWeatherAudio({anonymous}::V, bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp:137:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  137 |     if(!valid||!m_audioSystem||!m_audioRunning||m_weather.empty())return;m_weatherListener=listener;
+      |     ^~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldWeather.cpp:137:74: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  137 |     if(!valid||!m_audioSystem||!m_audioRunning||m_weather.empty())return;m_weatherListener=listener;
+      |                                                                          ^~~~~~~~~~~~~~~~~
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 56%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1582:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1582 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1582:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1582 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1599:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1599 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1599:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1599 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 62%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 75%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_weather_world_tests.dir/tests/WeatherWorldTests.cpp.o
+[100%] Linking CXX executable judas_weather_world_tests
+[100%] Built target judas_weather_world_tests
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (0.9s)
+CMake Error at CMakeLists.txt:1787 (add_executable):
+  Cannot find source file:
+
+    tests/WeatherApplicationTests.cpp
+
+
+CMake Error at CMakeLists.txt:1787 (add_executable):
+  No SOURCES given to target: judas_weather_application_tests
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
+gmake[1]: *** [CMakeFiles/Makefile2:12135: cmake_check_build_system] Error 1
+gmake: *** [Makefile:3712: judas_weather_streaming_tests] Error 2

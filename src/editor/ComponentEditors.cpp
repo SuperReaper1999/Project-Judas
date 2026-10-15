@@ -918,6 +918,105 @@ ComponentEditor Make(const char* name, char indicator, std::optional<T> SceneObj
 }  // namespace
 
 namespace {
+void DrawWeather(EditorDocument& doc,SceneObject& o,EditorPanelState&) {
+    auto candidate=*o.weather;
+    bool changed=false;
+    changed|=ImGui::Checkbox("Enabled##weather",&candidate.enabled);
+    if(ImGui::BeginCombo("Apply profile preset","Choose explicit starting values")) {
+        for(const char* preset:{"sunny","cloudy","rain","snow","blizzard","thunderstorm","tornado","fog"}) {
+            if(ImGui::Selectable(preset))changed|=WeatherPreset(preset,candidate.profile);
+        }
+        ImGui::EndCombo();
+    }
+    ImGui::TextWrapped("Presets populate the profile below. Regions and transitions use these ordinary values; no weather sequence runs automatically.");
+    auto number=[&](const char* name,double& value,double step=.01) {
+        changed|=ImGui::InputDouble(name,&value,step,step*10,"%.8g");
+    };
+    auto vector=[&](const char* name,glm::dvec3& value) {
+        changed|=ImGui::InputScalarN(name,ImGuiDataType_Double,&value.x,3,nullptr,nullptr,"%.8g");
+    };
+    if(ImGui::TreeNodeEx("Region and coordinate frame",ImGuiTreeNodeFlags_DefaultOpen)) {
+        changed|=ImGui::InputInt("Region priority",&candidate.priority);
+        changed|=ImGui::InputScalar("Deterministic seed",ImGuiDataType_U32,&candidate.seed);
+        int shape=int(candidate.regionShape);
+        if(ImGui::Combo("Region shape",&shape,"Global\0Sphere\0Box\0")) {
+            candidate.regionShape=WeatherRegionShape(shape);changed=true;
+        }
+        if(candidate.regionShape!=WeatherRegionShape::Global) {
+            vector("Region centre (owner local metres)",candidate.regionCenter);
+            if(candidate.regionShape==WeatherRegionShape::Sphere)number("Region radius (m)",candidate.regionRadius,1);
+            else {
+                vector("Region half extents (local m)",candidate.regionHalfExtents);
+                glm::vec3 degrees=glm::degrees(glm::eulerAngles(glm::quat(candidate.regionRotation)));
+                if(ImGui::DragFloat3("Region rotation (local degrees)",&degrees.x,.5f)) {
+                    candidate.regionRotation=glm::dquat(glm::quat(glm::radians(degrees)));changed=true;
+                }
+            }
+            number("Boundary blend distance (m)",candidate.blendDistance,1);
+        }
+        changed|=ImGui::Checkbox("Radial weather frame",&candidate.frame.radial);
+        vector(candidate.frame.radial?"Planet centre (absolute metres)":"Ground-plane anchor (owner local m)",candidate.frame.center);
+        if(candidate.frame.radial)number("Planet reference radius (m)",candidate.frame.radius,100);
+        else vector("Frame up (owner local direction)",candidate.frame.up);
+        vector("Frame north (owner local direction)",candidate.frame.north);
+        number("Maximum weather altitude (m)",candidate.topAltitude,100);
+        ImGui::TextWrapped("Region bounds follow this entity's transform. A flat frame follows its owner; a radial frame references an absolute planet centre. Weather does not select or replace gravity.");
+        ImGui::TreePop();
+    }
+    auto& p=candidate.profile;
+    if(ImGui::TreeNodeEx("Clouds",ImGuiTreeNodeFlags_DefaultOpen)) {
+        number("Cloud coverage (0..1)",p.cloudCoverage);
+        number("Cloud density (0..2)",p.cloudDensity);
+        number("Cloud base altitude (m)",p.cloudBase,10);
+        number("Cloud thickness (m)",p.cloudThickness,10);
+        ImGui::TreePop();
+    }
+    if(ImGui::TreeNodeEx("Wind and gusts",ImGuiTreeNodeFlags_DefaultOpen)) {
+        vector("Wind (owner local m/s)",p.wind);
+        number("Peak gust speed (m/s)",p.gust,.5);
+        ImGui::TextWrapped("The sampled field also drives opted-in physical bodies. Graphics quality does not change wind forces.");
+        ImGui::TreePop();
+    }
+    if(ImGui::TreeNodeEx("Rain, snow and fog",ImGuiTreeNodeFlags_DefaultOpen)) {
+        number("Rain intensity (0..1)",p.rain);
+        number("Snow intensity (0..1)",p.snow);
+        number("Fog intensity (0..1)",p.fog);
+        ImGui::TreePop();
+    }
+    if(ImGui::TreeNode("Lightning and tornado")) {
+        number("Lightning strikes per minute",p.lightningRate,1);
+        number("Tornado intensity (0..1)",p.tornado);
+        number("Tornado radius (m)",p.tornadoRadius,1);
+        number("Tornado height (m)",p.tornadoHeight,10);
+        number("Tornado travel speed (m/s)",p.tornadoSpeed,.5);
+        changed|=ImGui::InputScalarN("Tornado north/east offset (m)",ImGuiDataType_Double,&candidate.tornadoOffset.x,2,nullptr,nullptr,"%.8g");
+        vector("Tornado travel direction (owner local)",candidate.tornadoDirection);
+        ImGui::TreePop();
+    }
+    static SceneObjectId errorOwner=0;static std::string error;
+    if(errorOwner!=o.id){errorOwner=o.id;error.clear();}
+    if(changed&&ValidateWeatherSettings(candidate,error)) {
+        doc.BeginEdit();o.weather=std::move(candidate);doc.CommitEdit();error.clear();
+    }
+    if(!error.empty())ImGui::TextWrapped("Weather edit rejected: %s",error.c_str());
+}
+
+void DrawWeatherResponse(EditorDocument& doc,SceneObject& o,EditorPanelState& state) {
+    auto candidate=*o.weatherResponse;
+    bool changed=ImGui::Checkbox("Enabled##weather-response",&candidate.enabled);
+    changed|=ImGui::InputDouble("Effective wind area (m2)",&candidate.area,.1,1,"%.6g");
+    changed|=ImGui::InputDouble("Wind drag coefficient",&candidate.dragCoefficient,.1,1,"%.6g");
+    changed|=ImGui::InputDouble("Maximum wind acceleration (m/s2)",&candidate.maxAcceleration,1,10,"%.6g");
+    static SceneObjectId errorOwner=0;static std::string error;
+    if(errorOwner!=o.id){errorOwner=o.id;error.clear();}
+    if(changed&&ValidateWeatherResponseSettings(candidate,error)) {
+        doc.BeginEdit();o.weatherResponse=candidate;doc.CommitEdit();error.clear();
+    }
+    if(state.project)DrawCategoryMask(doc,"Wind shelter collision layers",o.weatherResponse->occlusionMask,state.project->Settings().classification.collision);
+    if(!error.empty())ImGui::TextWrapped("Wind response edit rejected: %s",error.c_str());
+    ImGui::TextWrapped("Opt-in centred pressure drag on an ordinary dynamic body. This component does not create a rigid body or replace gravity. Avoid applying equivalent atmospheric drag twice.");
+}
+
 void DrawPlanet(EditorDocument& doc,SceneObject& o,EditorPanelState&){
  auto candidate=*o.planet;bool changed=false;
  changed|=ImGui::InputDouble("Radius (m)",&candidate.radius,10,1000,"%.8f");
@@ -943,6 +1042,8 @@ void DrawPlanet(EditorDocument& doc,SceneObject& o,EditorPanelState&){
 }
 const std::vector<ComponentEditor>& ComponentEditorRegistry() {
     static const std::vector<ComponentEditor> registry = {
+        Make<WeatherSettings>("Weather region",'W',&SceneObject::weather,DrawWeather),
+        Make<WeatherResponseSettings>("Weather wind response",'W',&SceneObject::weatherResponse,DrawWeatherResponse),
         Make<PlanetSettings>("Planet terrain",'T',&SceneObject::planet,DrawPlanet),
         Make<DeformableSettings>("Deformable",'D',&SceneObject::deformable,DrawDeformable),
         Make<LiquidBasinSettings>("Liquid basin",'Q',&SceneObject::liquidBasin,DrawLiquidBasin),

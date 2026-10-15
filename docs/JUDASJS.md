@@ -1,4 +1,8 @@
-# JudasJS — current API reference (M85 Experimental candidate)
+# JudasJS — current API reference (M86 Experimental candidate)
+
+M86 adds optional [weather profiles, transitions, spatial wind and opt-in physical
+response](judasjs/weather.md). M86 operator acceptance is pending; previous
+milestone acceptance does not certify this candidate.
 
 M85 adds [precision-safe planetary terrain and explicit local-origin APIs](judasjs/planetary-terrain.md). M85 Linux operator acceptance is [recorded](evidence/m85/HUMAN_VALIDATION.md); Windows remains untested.
 
@@ -65,6 +69,7 @@ calling an API does not silently construct missing gameplay machinery.
 
 | Topic | Reference |
 |---|---|
+| Weather profiles, sampled wind, transitions and storms | [Weather](judasjs/weather.md) |
 | Owned queued messages | [signals](judasjs/signals.md) |
 | Create a project, attach JS, edit properties, set up completion, export | [Making a game by hand](judasjs/getting-started.md) |
 | Imports, properties, start/restore/update/fixedUpdate/presentationUpdate/uiUpdate/destroy | [Lifecycle](judasjs/lifecycle.md) |

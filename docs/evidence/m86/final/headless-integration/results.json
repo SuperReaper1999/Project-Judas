@@ -1,0 +1,247 @@
+{
+  "startingCheckpoint": "7d1110ee323e3f7d6a7b5d84be338edf144546dc",
+  "capturedHEAD": "7d1110ee323e3f7d6a7b5d84be338edf144546dc",
+  "host": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "python": "3.14.4",
+  "finishedAtUTC": "2026-10-15T17:15:33.288980+00:00",
+  "checks": [
+    {
+      "check": "judas_weather_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.756365+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.789908+00:00",
+      "durationSeconds": 0.033536234999701264,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_weather_tests.log"
+    },
+    {
+      "check": "judas_weather_authoring_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.790014+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.805544+00:00",
+      "durationSeconds": 0.015538169000137714,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_authoring_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_weather_authoring_tests.log"
+    },
+    {
+      "check": "judas_weather_world_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.805623+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.826727+00:00",
+      "durationSeconds": 0.021114903000125196,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_world_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_weather_world_tests.log"
+    },
+    {
+      "check": "judas_weather_streaming_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.826823+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.913100+00:00",
+      "durationSeconds": 0.08629709399974672,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_streaming_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_weather_streaming_tests.log"
+    },
+    {
+      "check": "judas_weather_script_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.913271+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.936861+00:00",
+      "durationSeconds": 0.023595347000082256,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_script_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_weather_script_tests.log"
+    },
+    {
+      "check": "judas_atmosphere_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.936960+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.946354+00:00",
+      "durationSeconds": 0.009402482999576023,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_atmosphere_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_atmosphere_tests.log"
+    },
+    {
+      "check": "judas_atmospheric_flight_tests",
+      "exit": 1,
+      "startedAtUTC": "2026-10-15T17:15:23.946438+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:23.964259+00:00",
+      "durationSeconds": 0.017830935001256876,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_atmospheric_flight_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_atmospheric_flight_tests.log"
+    },
+    {
+      "check": "judas_character_motor_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:23.964347+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:24.441823+00:00",
+      "durationSeconds": 0.477487807000216,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_character_motor_tests.log"
+    },
+    {
+      "check": "judas_gravity_selection_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:24.441935+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:24.886157+00:00",
+      "durationSeconds": 0.44423476600059075,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_gravity_selection_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_gravity_selection_tests.log"
+    },
+    {
+      "check": "judas_planet_world_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:24.886257+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:25.136762+00:00",
+      "durationSeconds": 0.2505180379994272,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_planet_world_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_planet_world_tests.log"
+    },
+    {
+      "check": "judas_planet_streaming_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:25.136868+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:25.158516+00:00",
+      "durationSeconds": 0.021658337998815114,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_planet_streaming_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_planet_streaming_tests.log"
+    },
+    {
+      "check": "judas_origin_physics_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:25.158615+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:25.170402+00:00",
+      "durationSeconds": 0.01180039199971361,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_origin_physics_tests.log"
+    },
+    {
+      "check": "judas_rigid_contact_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:25.170520+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:27.013318+00:00",
+      "durationSeconds": 1.8428093519996764,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_rigid_contact_tests.log"
+    },
+    {
+      "check": "judas_streaming_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:27.013417+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:27.552200+00:00",
+      "durationSeconds": 0.5387941150002007,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_streaming_tests.log"
+    },
+    {
+      "check": "judas_save_storage_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:27.552292+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:27.641726+00:00",
+      "durationSeconds": 0.08944910399986838,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_save_storage_tests.log"
+    },
+    {
+      "check": "judas_audio_world_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:27.641849+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:29.011609+00:00",
+      "durationSeconds": 1.3697702690005826,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_audio_world_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_audio_world_tests.log"
+    },
+    {
+      "check": "judas_prefab_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:29.011744+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:29.070820+00:00",
+      "durationSeconds": 0.05908884400014358,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_prefab_tests.log"
+    },
+    {
+      "check": "judas_script_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:29.070919+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:29.878763+00:00",
+      "durationSeconds": 0.807856305000314,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_script_tests.log"
+    },
+    {
+      "check": "judas_save_exclusion_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:29.878872+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:29.899431+00:00",
+      "durationSeconds": 0.02056898799855844,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_exclusion_tests",
+        "/tmp/judas-m86-final-headless/save-exclusions-14550682168832"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_save_exclusion_tests.log"
+    },
+    {
+      "check": "api_drift",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:29.899523+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:30.966847+00:00",
+      "durationSeconds": 1.067336592999709,
+      "command": [
+        "node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/tmp/judas-m85-types/node_modules/typescript/lib/typescript.js"
+      ],
+      "log": "/tmp/judas-m86-final-headless/api_drift.log"
+    },
+    {
+      "check": "judas_weather_performance_tests",
+      "exit": 0,
+      "startedAtUTC": "2026-10-15T17:15:30.966954+00:00",
+      "finishedAtUTC": "2026-10-15T17:15:33.285633+00:00",
+      "durationSeconds": 2.3186904989997856,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_performance_tests"
+      ],
+      "log": "/tmp/judas-m86-final-headless/judas_weather_performance_tests.log"
+    }
+  ],
+  "cpuPerformanceStartedAtUTC": "2026-10-15T17:15:30.966954+00:00",
+  "cpuPerformanceFinishedAtUTC": "2026-10-15T17:15:33.285633+00:00",
+  "performanceNote": "Sequential native Linux reference; Windows VM is not a performance acceptance platform."
+}

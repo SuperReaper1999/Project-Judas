@@ -1,0 +1,40 @@
+FRAMES 2150
+FRAME_SECONDS 0.03333333333333333
+ENTITY 10
+LOG_EVERY 200
+ACTION weather_2 1 20 21
+ACTION weather_3 1 120 121
+ACTION weather_4 1 220 221
+ACTION weather_5 1 320 321
+ACTION weather_6 1 420 421
+ACTION weather_7 1 520 521
+ACTION weather_8 1 620 621
+ACTION save 1 730 731
+ACTION load 1 750 751
+ACTION pause 1 780 781
+ACTION pause 1 790 791
+ACTION switch_scene 1 820 821
+ACTION weather_2 1 850 851
+ACTION orbit 1 950 951
+ACTION land 1 1300 1301
+ACTION switch_scene 1 2090 2091
+WAIT_SERVICES save 30000 731
+WAIT_SERVICES save 30000 751
+WAIT_SERVICES scene 30000 821
+WAIT_SERVICES stream 30000 840
+WAIT_SERVICES stream 30000 1250
+WAIT_SERVICES stream 30000 1980
+WAIT_SERVICES scene 30000 2091
+EXPECT_PAUSED 1 782
+EXPECT_PAUSED 0 792
+EXPECT_SCENE Scenes/planet.judas 822
+EXPECT_SCENE Scenes/flat.judas 2092
+SCREENSHOT 10 /tmp/judas-m86-package-check/sunny.png
+SCREENSHOT 211 /tmp/judas-m86-package-check/rain.png
+SCREENSHOT 311 /tmp/judas-m86-package-check/storm.png
+SCREENSHOT 411 /tmp/judas-m86-package-check/tornado.png
+SCREENSHOT 611 /tmp/judas-m86-package-check/blizzard.png
+SCREENSHOT 781 /tmp/judas-m86-package-check/pause.png
+SCREENSHOT 1290 /tmp/judas-m86-package-check/orbital-clouds.png
+SCREENSHOT 2050 /tmp/judas-m86-package-check/landed.png
+SCREENSHOT 2120 /tmp/judas-m86-package-check/reloaded-flat.png

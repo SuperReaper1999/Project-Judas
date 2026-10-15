@@ -22,6 +22,9 @@
 #include "VisualParticles.h"
 #include <glad/gl.h>
 
+struct WeatherSample;
+struct WeatherShelterGrid;
+
 // Opaque handles into Renderer's own GPU resource tables — the same
 // convention PhysicsWorld::BodyHandle already established (a small integer
 // id, kInvalid sentinel, no concrete type exposed to callers). Deliberately
@@ -121,6 +124,18 @@ public:
     // reacting to a resize event) is what keeps the projection's aspect
     // ratio correct across window resizes.
     void SetCamera(const glm::mat4& view, const glm::mat4& projection);
+    // M86 presentation only. Absolute binary64 input is reduced to a camera
+    // chart before GPU upload. Quality never participates in weather forces.
+    // 0 disables visuals, 1 uses quarter-resolution clouds, 2 half resolution.
+    void SetWeather(const WeatherSample&, glm::dvec3 absoluteEye, unsigned quality=1);
+    void ClearWeather();
+    void SetWeatherShelter(const WeatherShelterGrid&);
+    void DrawWeather(bool secondary=false);
+    struct WeatherDiagnostics {
+        std::size_t bytes=0; unsigned cloudWidth=0,cloudHeight=0,marchSteps=0,particles=0,allocations=0,cachedTargets=0;
+        bool enabled=false,ready=false; std::string error;
+    };
+    WeatherDiagnostics WeatherStats()const;
     const glm::mat4& ViewMatrix()const{return m_view;}
     const glm::mat4& ProjectionMatrix()const{return m_projection;}
     void SetWaterPaths(unsigned columns,unsigned rows,const std::vector<glm::vec2>& paths);
@@ -359,6 +374,27 @@ public:
     void CaptureFrame(int width, int height, std::vector<unsigned char>& outRgbPixels) const;
 
 private:
+    struct WeatherGPU {
+        struct Scratch { GLuint framebuffer=0,colour=0,depth=0;int width=0,height=0,cloudWidth=0,cloudHeight=0;std::uint64_t used=0; };
+        std::vector<Scratch> targets;std::uint64_t targetClock=0;
+        GLuint clouds=0,composite=0,precipitation=0,vao=0,noise=0;
+        GLuint framebuffer=0,colour=0,depth=0,shelterTexture=0;
+        int width=0,height=0,cloudWidth=0,cloudHeight=0;
+        bool enabled=false,failed=false,radial=false,sheltered=false;
+        unsigned quality=1,steps=0,particles=0,allocations=0; std::string error;
+        glm::vec3 eye{0},up{0,1,0},east{1,0,0},north{0,0,-1},wind{0},noisePhase{0},particlePhase{0};
+        glm::vec3 tornado{0},tornadoUp{0,1,0},lightning{0};
+        glm::vec3 shelterCenter{0},shelterUp{0,1,0},shelterRight{1,0,0},shelterForward{0,0,-1};
+        glm::dvec3 absoluteEye{0},shelterAbsolute{0}; double absoluteTime=0;
+        float altitude=0,radius=0,coverage=0,density=0,base=1000,thickness=1200,rain=0,snow=0,fog=0;
+        float tornadoStrength=0,tornadoRadius=25,tornadoHeight=500,flash=0,time=0,shelterExtent=32;
+        std::array<float,256> shelterHeights{};
+    } m_weather;
+    glm::vec3 m_weatherSun{.3f,.8f,.2f},m_weatherSunColour{1};
+    bool InitWeather();
+    bool ResizeWeather(int width,int height,int cloudWidth,int cloudHeight);
+    void WeatherUniforms(GLuint program);
+    void ShutdownWeather();
     struct ProfileQuery {unsigned begin=0,end=0;std::uint64_t frame=0,record=0;bool pending=false,ended=false;};
     std::array<ProfileQuery,128> m_profileQueries{};
     bool m_profileQueriesReady=false;

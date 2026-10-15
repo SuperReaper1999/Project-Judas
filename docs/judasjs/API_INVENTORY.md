@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M85 Experimental candidate public module based on checkpoint `e421645b3c310508ff618fe1e880a1b8cdbc019b`. M85 Linux operator acceptance is recorded in docs/evidence/m85/HUMAN_VALIDATION.md; Windows remains untested. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M86 Experimental candidate public module based on checkpoint `7d1110ee323e3f7d6a7b5d84be338edf144546dc`. M86 human acceptance is pending; Windows remains informational and untested for this candidate. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -133,6 +133,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.velocity` | `setVelocity`, `velocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.weather` | `weatherExists` | [declaration](../judas.d.ts) | [reference](weather.md) |
 | `Entity.wheel` | `wheelExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `EntityGravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `EntityGravity.acceleration` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
@@ -242,6 +243,14 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.texture` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.value` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.visible` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `Weather` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.enabled` | `weatherEnabled` | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.state` | `weatherState` | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.strike` | `weatherStrike` | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.transition` | `weatherTransition` | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `Weather.valid` | `weatherExists` | [declaration](../judas.d.ts) | [reference](weather.md) |
 | `Wheel` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](wheels.md) |
 | `Wheel.configure` | `wheelConfigure` | [declaration](../judas.d.ts) | [reference](wheels.md) |
 | `Wheel.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](wheels.md) |
@@ -359,6 +368,9 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `ui.get` | `uiFind` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `ui.load` | `uiLoad` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `ui.quit` | `uiQuit` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `weather` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `weather.quality` | `weatherQuality` | [declaration](../judas.d.ts) | [reference](weather.md) |
+| `weather.sample` | `weatherSample` | [declaration](../judas.d.ts) | [reference](weather.md) |
 | `world` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.appearance` | `appearanceInfo` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.clearView` | `clearView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |

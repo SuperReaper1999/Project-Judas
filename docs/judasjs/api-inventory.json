@@ -1,7 +1,65 @@
 {
-  "checkpoint": "e421645b3c310508ff618fe1e880a1b8cdbc019b",
+  "checkpoint": "7d1110ee323e3f7d6a7b5d84be338edf144546dc",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "resultShapes": [
+    {
+      "binding": "Weather.state",
+      "declaration": "WeatherState",
+      "fields": [
+        "current",
+        "target",
+        "time",
+        "transitionElapsed",
+        "transitionDuration",
+        "tornadoPosition",
+        "lightningSequence",
+        "lightningPosition",
+        "lightningFlash"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"current\",weatherProfileValue(field->Current()))",
+        "JS_SetPropertyStr(c,result,\"target\",weatherProfileValue(state.to))",
+        "JS_SetPropertyStr(c,result,\"time\",JS_NewFloat64(c,state.time))",
+        "JS_SetPropertyStr(c,result,\"transitionElapsed\",JS_NewFloat64(c,state.transitionElapsed))",
+        "JS_SetPropertyStr(c,result,\"transitionDuration\",JS_NewFloat64(c,state.transitionDuration))",
+        "JS_SetPropertyStr(c,result,\"lightningSequence\",JS_NewString(c,std::to_string(state.lightning.sequence).c_str()))",
+        "JS_SetPropertyStr(c,result,\"lightningPosition\",preciseVector(state.lightning.position-world.Settings().worldOrigin))",
+        "JS_SetPropertyStr(c,result,\"tornadoPosition\",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))",
+        "JS_SetPropertyStr(c,result,\"lightningFlash\",JS_NewFloat64(c,sample.lightningFlash))"
+      ],
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "binding": "weather.sample",
+      "declaration": "WeatherQuery",
+      "fields": [
+        "wind",
+        "up",
+        "altitude",
+        "airDensity",
+        "rain",
+        "snow",
+        "fog",
+        "cloudCoverage",
+        "tornadoPosition",
+        "lightningFlash"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"wind\",preciseVector(sample.wind))",
+        "JS_SetPropertyStr(c,result,\"up\",preciseVector(sample.up))",
+        "JS_SetPropertyStr(c,result,\"tornadoPosition\",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))",
+        "{\"altitude\",sample.altitude}",
+        "{\"airDensity\",sample.airDensity}",
+        "{\"rain\",sample.profile.rain}",
+        "{\"snow\",sample.profile.snow}",
+        "{\"fog\",sample.profile.fog}",
+        "{\"cloudCoverage\",sample.profile.cloudCoverage}",
+        "{\"lightningFlash\",sample.lightningFlash}"
+      ],
+      "reference": "docs/judasjs/weather.md"
+    },
     {
       "binding": "Entity.camera",
       "declaration": "CameraInfo",
@@ -1442,6 +1500,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.weather",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "weatherExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.weather",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
       "symbol": "Entity.wheel",
       "kinds": [
         "get"
@@ -2591,6 +2660,89 @@
       ],
       "type": "docs/judas.d.ts:UIElement.visible",
       "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "Weather",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Weather",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Weather.constructor",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "weatherEnabled"
+      ],
+      "type": "docs/judas.d.ts:Weather.enabled",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Weather.id",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "weatherState"
+      ],
+      "type": "docs/judas.d.ts:Weather.state",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.strike",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "weatherStrike"
+      ],
+      "type": "docs/judas.d.ts:Weather.strike",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.transition",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "weatherTransition"
+      ],
+      "type": "docs/judas.d.ts:Weather.transition",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "weatherExists"
+      ],
+      "type": "docs/judas.d.ts:Weather.valid",
+      "reference": "docs/judasjs/weather.md"
     },
     {
       "symbol": "Wheel",
@@ -3846,6 +3998,38 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
+      "symbol": "weather",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:weather",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "weather.quality",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "weatherQuality"
+      ],
+      "type": "docs/judas.d.ts:weather.quality",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "weather.sample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "weatherSample"
+      ],
+      "type": "docs/judas.d.ts:weather.sample",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
       "symbol": "world",
       "kinds": [
         "namespace"
@@ -4312,6 +4496,13 @@
     "velocity",
     "viewRay",
     "viewportSize",
+    "weatherEnabled",
+    "weatherExists",
+    "weatherQuality",
+    "weatherSample",
+    "weatherState",
+    "weatherStrike",
+    "weatherTransition",
     "wheelConfigure",
     "wheelEnabled",
     "wheelExists",

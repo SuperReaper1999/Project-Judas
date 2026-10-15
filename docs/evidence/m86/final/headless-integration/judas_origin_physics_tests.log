@@ -1,0 +1,16 @@
+Started UTC: 2026-10-15T17:15:25.158615+00:00
+Command: ["/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"]
+PASS origin change preserves linear/angular velocity exactly
+PASS origin change does not wake or freeze bodies
+PASS completed touch publication is retained
+PASS actual floor contact event points translate with the chart
+PASS warm contact/hinge/moving platform endpoints agree with unshifted control
+PASS continued resolved velocities agree with independent unshifted control
+PASS warm contact/hinge/moving platform endpoints agree with unshifted control
+PASS continued resolved velocities agree with independent unshifted control
+PASS warm contact/hinge/moving platform endpoints agree with unshifted control
+PASS continued resolved velocities agree with independent unshifted control
+PASS world-anchor hinge continuation preserves actual physical coordinate
+PASS translated broadphase retains real ground queries after continued integration
+PASS nonfinite native origin shifts fail before mutation
+SUMMARY 13 checks 0 failures

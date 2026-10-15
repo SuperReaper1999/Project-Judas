@@ -246,6 +246,8 @@ add_library(judas_engine STATIC
     src/PlanetTerrain.cpp
     src/PlanetTiles.cpp
     src/WorldPlanets.cpp
+    src/Weather.cpp
+    src/WorldWeather.cpp
     src/WorldOrigin.cpp
     src/RuntimeWorld.cpp
     src/GameSession.cpp
@@ -1758,3 +1760,33 @@ judas_warnings(judas_planet_streaming_tests)
 add_executable(judas_origin_physics_tests tests/OriginPhysicsTests.cpp)
 target_link_libraries(judas_origin_physics_tests PRIVATE judas_engine)
 judas_warnings(judas_origin_physics_tests)
+
+# M86 optional prescribed weather; no renderer dependency in its numerical core.
+add_executable(judas_weather_tests tests/WeatherTests.cpp src/Weather.cpp)
+target_include_directories(judas_weather_tests PRIVATE src)
+target_link_libraries(judas_weather_tests PRIVATE ${JUDAS_GLM})
+target_compile_definitions(judas_weather_tests PRIVATE GLM_ENABLE_EXPERIMENTAL)
+judas_warnings(judas_weather_tests)
+add_executable(judas_weather_authoring_tests tests/WeatherAuthoringTests.cpp src/editor/EditorHistory.cpp)
+target_link_libraries(judas_weather_authoring_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_authoring_tests)
+add_executable(judas_weather_render_tests tests/WeatherRenderTests.cpp)
+target_link_libraries(judas_weather_render_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_render_tests)
+
+add_executable(judas_weather_world_tests tests/WeatherWorldTests.cpp)
+target_link_libraries(judas_weather_world_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_world_tests)
+add_executable(judas_weather_streaming_tests tests/WeatherStreamingTests.cpp)
+target_link_libraries(judas_weather_streaming_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_streaming_tests)
+
+add_executable(judas_weather_script_tests tests/WeatherScriptTests.cpp)
+target_link_libraries(judas_weather_script_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_script_tests)
+add_executable(judas_weather_application_tests tests/WeatherApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_weather_application_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_application_tests)
+add_executable(judas_weather_performance_tests tests/WeatherPerformanceTests.cpp)
+target_link_libraries(judas_weather_performance_tests PRIVATE judas_engine)
+judas_warnings(judas_weather_performance_tests)

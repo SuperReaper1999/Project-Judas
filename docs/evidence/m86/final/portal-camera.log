@@ -1,0 +1,23 @@
+PASS off-axis frustum maps the near window corners to the NDC corners
+PASS off-axis frustum keeps perspective through the window
+PASS inverted or empty frustums are rejected
+PASS world plane converts to view space with the kept side positive
+PASS points on the clip plane sit exactly on the new near plane
+PASS geometry between the eye and the plane is clipped
+PASS geometry beyond the plane stays inside the depth range
+PASS oblique clipping leaves the image (x/y) unchanged
+PASS a plane with the eye on its kept side leaves the projection unchanged
+Renderer fragment texture units: 32 (material path uses 12)
+PASS EngineHost creates a GL context
+PASS portal camera fixture builds
+PASS plain camera sees the near occluder
+PASS oblique clip plane removes the occluder in front of the window
+PASS explicit chart change accepts ordinary camera scene
+PASS origin translation preserves the actual oblique-camera image and plane
+PASS negative control: an untranslated plane exposes the occluder after rebasing
+PASS off-axis frustum looks through a window to the right
+PASS clearing both restores the ordinary symmetric view
+PASS portal API fixture uses registered script asset
+PASS ordinary scripted camera world builds
+PASS public JS set/read/keep/clear/detached/atomic-invalid camera contracts execute
+21 checks, 0 failures

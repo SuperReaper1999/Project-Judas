@@ -1,5 +1,32 @@
 # Architecture
 
+## Current Experimental — M86 optional prescribed weather candidate
+
+[Current M86 weather](M86_WEATHER.md) adds owner-authored profiles/regions,
+fixed-step transitions, spatial gust/vortex samples and opt-in ordinary rigid-body
+forces. `Weather.h/.cpp` owns the pure absolute-double field/state contract;
+`WorldWeather.cpp` composes published regions, issues bounded collision queries,
+applies centred drag and schedules thunder through existing physics/audio owners.
+Gravity, support and M26 hydrostatic atmosphere remain separate. Existing M26
+celestial vehicle drag is not applied a second time by weather response.
+
+Renderer alone owns the new lazy OpenGL resources in `RendererWeather.inl`:
+3D density marching in flat/radial layers, inexpensive cloud shadows, local GPU
+precipitation/funnel debris and fog/material appearance. Graphics quality does
+not change wind, forces, event generation or saved state. A coarse staggered
+shelter atlas is an explicit visual approximation; no droplet bodies, flooding,
+snowpack or atmospheric fluid solver is introduced. Secondary/portal views are
+cheaper and have no temporal weather history to alias another camera.
+
+Scene/editor/prefab properties use the existing component path. Full saves own
+explicit weather continuation; M59 retained records use archive version 8 and
+restore privately before atomic publication. Absolute weather anchoring survives
+M85 chart shifts; only follow-active-view audio listeners receive the additional
+narrow audio origin contract. Project JS controls weather intent and the ordinary
+[Weather Lab](../projects/weather_lab/README.md) tour. Final Linux measurements,
+Windows status and human acceptance must be read from the M86 evidence; this
+candidate section itself makes no validation claim.
+
 ## Current Experimental — M85 planetary terrain candidate
 
 [M85](M85_PLANETARY_TERRAIN.md) adds an optional absolute binary64 cube-sphere

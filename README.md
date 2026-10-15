@@ -17,17 +17,35 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current Experimental — M84 candidate; human review pending
+## Current Experimental — M86 weather candidate
 
-[M84 volumetric terrain authoring](docs/M84_VOLUMETRIC_TERRAIN.md) adds editable
-3D solid sources, add/remove/smooth brushes and real cave/overhang mesh and collision.
-The [editable Dig Lab](projects/volume_terrain_lab/volume_terrain_lab.judasproj)
-uses ordinary CharacterMotor gameplay, navigation, saves, retained regions and export.
+[M86 prescribed weather](docs/M86_WEATHER.md) provides optional volumetric clouds,
+wind/gusts, rain, snow/blizzards, fog, lightning/thunder and moving tornadoes.
+The editable [Weather Lab](projects/weather_lab/README.md) has flat and planetary
+scenes, direct controls, a watch tour, physical shelter and opted-in wind props.
+Project JavaScript chooses weather; Renderer owns its bounded GPU presentation.
+See [M86 evidence](docs/evidence/m86/REPORT.md) for actual Linux measurements and
+remaining limits. Human acceptance is pending; Windows M86 is untested.
+
+## Latest accepted release — M85 planetary terrain
+
+The [M85 Linux acceptance record](docs/evidence/m85/HUMAN_VALIDATION.md) identifies
+the exact accepted terrain/portal candidate and main promotion. M85 uses
+precision-safe local terrain tiles and view-dependent LOD for Earth-sized planets.
+[Planetary Terrain Lab](projects/planetary_terrain_lab/planetary_terrain_lab.judasproj)
+and [current terrain documentation](docs/M85_PLANETARY_TERRAIN.md) explain its
+bounded local physics chart and remaining limits. The accepted lab's horizontal
+mouse sign was corrected separately on Experimental; that correction does not
+acquire human acceptance from the earlier M85 record. Windows M85 remains untested.
+
+[M84 volumetric terrain authoring](docs/M84_VOLUMETRIC_TERRAIN.md) supplies editable
+3D solids, add/remove/smooth brushes and real cave/overhang mesh and collision.
+Its [Dig Lab](projects/volume_terrain_lab/volume_terrain_lab.judasproj) uses ordinary
+CharacterMotor gameplay, navigation, saves, retained regions and export.
 This is authoring/edit-and-cook functionality, not a live gameplay digging API.
-Focused Linux results and remaining limits are in [M84 evidence](docs/evidence/m84/REPORT.md).
-Experimental is not promoted automatically; human and Windows M84 validation are pending.
+Original [M84 receipts](docs/evidence/m84/REPORT.md) remain historical evidence.
 
-## Latest accepted release — M83 physical crash sections
+## Previous accepted mechanics — M83 physical crash sections
 
 The operator accepted the tested coarse-section crash lab and promoted
 `18413e3bde8c61f79339a37fd40ee32400e110d1` to main on 2026-10-14.

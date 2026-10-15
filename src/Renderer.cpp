@@ -2,6 +2,7 @@
 #include "Tangents.h"
 #include "Renderer.h"
 #include "SkeletalAnimation.h"
+#include "Weather.h"
 
 #include <algorithm>
 #include <cmath>
@@ -113,6 +114,17 @@ uniform mat4 uWaterInverseViewProjection;
 uniform vec3 uLightDirection;  // world-space, normalized, points FROM the surface TOWARD the light
 uniform vec3 uLightColor;
 uniform vec3 uAmbientColor;
+
+// Prescribed weather shares its cloud map and wind phase with the sky pass.
+// This is an inexpensive projected cloud shadow and artistic surface response,
+// not a replacement for authored physical materials or accumulated snow mass.
+uniform bool uWeatherEnabled;
+uniform sampler3D uWeatherNoise;
+uniform vec3 uWeatherEye,uWeatherUp,uWeatherPhase;
+uniform vec4 uWeatherAmounts; // coverage,density,rain,snow
+uniform vec4 uWeatherLayer; // base,thickness,eye altitude,radial radius
+uniform float uWeatherFlash;
+float weatherCloud(vec3 p){return texture(uWeatherNoise,p/262144.0).r*.65+texture(uWeatherNoise,p/65536.0).r*.35;}
 
 // Milestone 15: one depth texture per shadow slot (see src/Light.h) —
 // slot 0 is the directional "sun," slot 1 the player torch, slot 2 the
@@ -275,6 +287,23 @@ void main() {
         float waterLength = max(0.0,min(distance,path.y)-path.x);
         vec3 transmission = exp(-vec3(.32,.12,.075)*waterLength);
         FragColor.rgb = FragColor.rgb*transmission + vec3(.025,.18,.24)*(vec3(1.0)-transmission);
+    }
+    if(uWeatherEnabled){
+        vec3 relative=vWorldPos-uWeatherEye;
+        float altitude=uWeatherLayer.z+dot(relative,uWeatherUp);
+        float sunUp=dot(uLightDirection,uWeatherUp);
+        float travel=max(0.0,uWeatherLayer.x-altitude)/max(sunUp,.12);
+        float map=weatherCloud(uWeatherPhase+relative+uLightDirection*min(travel,30000.0));
+        float shadow=smoothstep(1.0-uWeatherAmounts.x*.82,1.0,map)*min(.72,uWeatherAmounts.y*.65);
+        FragColor.rgb*=1.0-shadow;
+        float facing=max(0.0,dot(normal,uWeatherUp));
+        float wet=uWeatherAmounts.z*(.2+.8*facing);
+        FragColor.rgb*=1.0-wet*.28;
+        vec3 eyeDirection=normalize(uWeatherEye-vWorldPos);
+        FragColor.rgb+=vec3(.08,.1,.12)*wet*pow(max(0.0,dot(reflect(-uLightDirection,normal),eyeDirection)),48.0);
+        float snow=uWeatherAmounts.w*smoothstep(.3,.8,facing);
+        FragColor.rgb=mix(FragColor.rgb,vec3(.78,.84,.9)*(.4+.6*diffuseFactor),snow*.88);
+        FragColor.rgb+=vec3(.38,.43,.52)*uWeatherFlash*(.2+.8*facing);
     }
     if(uModern||uMaterialModel!=0)FragColor.rgb=clamp(FragColor.rgb,vec3(0.0),vec3(60000.0));
     if(!uModern&&uMaterialModel!=0){vec3 c=max(FragColor.rgb,vec3(0.0));if(uMaterialModel==1)c/=1.0+dot(c,vec3(.2126,.7152,.0722));FragColor.rgb=mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(.0031308),c));}
@@ -636,6 +665,7 @@ bool Renderer::Init() {
     // Initialize this before the first ordinary draw; a project need not
     // render a skeleton first to make its boxes and spheres valid GL draws.
     glUniform1i(m_uBones, 15);
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uWeatherNoise"),13);
     glUniform1i(m_uShadowMapSampler[0], 1);
     glUniform1i(m_uShadowMapSampler[1], 2);
     glUniform1i(m_uShadowMapSampler[2], 3);
@@ -853,6 +883,7 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
     glTexBuffer(GL_TEXTURE_BUFFER,GL_RGBA32F,m_poseBuffer);glActiveTexture(GL_TEXTURE0);
 }
 void Renderer::Shutdown() {
+    ShutdownWeather();
     if(m_poseTexture){glDeleteTextures(1,&m_poseTexture);m_poseTexture=0;}
     if(m_poseBuffer){glDeleteBuffers(1,&m_poseBuffer);m_poseBuffer=0;}
     ResetProjectText();
@@ -981,6 +1012,8 @@ void Renderer::SetWaterPaths(unsigned columns,unsigned rows,const std::vector<gl
 
 void Renderer::SetLighting(const glm::vec3& direction, const glm::vec3& lightColor,
                             const glm::vec3& ambientColor) {
+    m_weatherSun=glm::length(direction)>1.e-6f?glm::normalize(direction):glm::vec3(0,1,0);
+    m_weatherSunColour=lightColor;
     glUseProgram(m_shaderProgram);
     const glm::vec3 normalizedDirection =
         glm::length(direction) > 1.0e-6f ? glm::normalize(direction) : glm::vec3(0.0f, 1.0f, 0.0f);
@@ -1410,7 +1443,9 @@ void Renderer::CaptureFrame(int width, int height, std::vector<unsigned char>& o
 }
 
 void Renderer::EndFrame() {
-    FlushMaterialBlends();ResolveLinearPass();
+    FlushMaterialBlends();const bool background=m_environmentBackground;
+    if(m_weather.enabled)m_environmentBackground=false;
+    ResolveLinearPass();m_environmentBackground=background;
     // Nothing to do yet; kept as an explicit boundary for future per-frame
     // work (batching, multiple draw calls, etc.) rather than for any
     // behavior this milestone needs.
@@ -1542,7 +1577,9 @@ bool Renderer::BeginRenderTarget(RenderTargetHandle target) {
 
 void Renderer::EndRenderTarget() {
     if (!m_activeTarget.IsValid()) return;
-    FlushMaterialBlends();ResolveLinearPass(m_textures[m_targets[m_activeTarget.id].color.id].sceneLinear);
+    FlushMaterialBlends();const bool background=m_environmentBackground;
+    if(m_weather.enabled)m_environmentBackground=false;
+    ResolveLinearPass(m_textures[m_targets[m_activeTarget.id].color.id].sceneLinear);m_environmentBackground=background;
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(m_savedDrawFramebuffer));
     glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(m_savedReadFramebuffer));
     glViewport(m_savedViewport[0], m_savedViewport[1], m_savedViewport[2], m_savedViewport[3]);
@@ -1672,3 +1709,5 @@ void Renderer::PollProfileGPU(){
 #include "RendererMaterials.inl"
 
 #include "RendererText.inl"
+
+#include "RendererWeather.inl"

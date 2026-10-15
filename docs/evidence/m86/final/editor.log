@@ -1,0 +1,10 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/judas-m86-editor-check/editor.edit.png
+[editor autotest] edit frame: 36 draw calls, 386 triangles, 854 debug lines
+[editor autotest] wrote: /tmp/judas-m86-editor-check/editor.play.png
+[editor autotest] play frame: 1 steps, step 0.583 ms, 45 bodies, 72 contacts, 57 draw calls, 650 triangles, 1 shadow passes, 0 lights, 1549 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes
+[editor autotest] jobs: 7 workers, 2 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

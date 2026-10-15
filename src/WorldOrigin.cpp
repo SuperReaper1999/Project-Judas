@@ -18,7 +18,7 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin,std::string& error)const {
  if(m_hasLiquid||!m_fluidVolumes.empty()||m_emittedParticles||m_atmosphere||!m_combustibles.empty()) {error="active liquid/fluid/atmosphere/combustion has no live-origin contract";return false;}
  for(const auto& [id,o]:m_scriptDefinitions){
   if(!RuntimeDefinition(id))continue;
-  if(o.deformable||o.ragdoll||o.wheel||o.powertrain||o.navigationSurface||o.navigationAgent||o.navigationObstacle||o.navigationLink||o.navigationModifier||o.audioEmitter||o.audioListener||o.audioZone||o.particleEmitter||o.socket||(o.animation&&(!o.animation->limbs.empty()||o.animation->fullBodyIK))){error="component has no live-origin contract on entity "+std::to_string(id);return false;}
+  if(o.deformable||o.ragdoll||o.wheel||o.powertrain||o.navigationSurface||o.navigationAgent||o.navigationObstacle||o.navigationLink||o.navigationModifier||o.audioEmitter||(o.audioListener&&!o.audioListener->followActiveView)||o.audioZone||o.particleEmitter||o.socket||(o.animation&&(!o.animation->limbs.empty()||o.animation->fullBodyIK))){error="component has no live-origin contract on entity "+std::to_string(id);return false;}
   if(o.body||o.characterMotor||o.render||o.light||o.renderCamera){
    auto p=glm::dvec3(o.transform.position);
    const auto body=RuntimeBody(id);if(body.IsValid())p=glm::dvec3(m_physics.GetTransform(body).position);
@@ -63,6 +63,7 @@ bool RuntimeWorld::CommitOrigin(){
  for(auto& t:m_terrains)shift(t.position);
  for(auto& l:m_staticLights)shift(l.position);
  for(auto& c:m_renderCameras){shift(c.transform.position);if(c.hasClipPlane)shift(c.clipPoint);}
+ if(m_audioListener){shift(m_audioListener->transform.position);shift(m_lastListenerPosition);m_listenerMotionValid=false;}
  if(view)shift(view->pose.position);
  for(auto& source:m_pointMassSources)shift(source.position);
  // Publish translated fields in exactly their previous precedence order.

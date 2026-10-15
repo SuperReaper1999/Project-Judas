@@ -1,0 +1,5 @@
+{
+  "src/SaveStorage.cpp": "8f30e74116efb1a629c8aac1699be238719058724a3eb1f6c62ae2ba19660c64",
+  "tests/SaveStorageTests.cpp": "e7137d85d99737302e7a70336e52ee757fe287b25a81ecf6c0991f70bab23732",
+  "build/judas_save_storage_tests": "c0ad0a7290ef1a723b0b631a01086956086845ec7a90d70b391d807ea8b94762"
+}

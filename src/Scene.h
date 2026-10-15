@@ -1,6 +1,7 @@
 #pragma once
 #include "Deformable.h"
 #include "PlanetTerrain.h"
+#include "Weather.h"
 #include "Classification.h"
 #include "Material.h"
 #include "GravitySelection.h"
@@ -308,6 +309,10 @@ struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings
 
 struct SceneObject {
     std::optional<PlanetSettings> planet;
+    // M86 profiles are ordinary authored components. Runtime interpolation,
+    // storms and sampled wind belong to RuntimeWorld's WeatherSystem.
+    std::optional<WeatherSettings> weather;
+    std::optional<WeatherResponseSettings> weatherResponse;
     std::optional<GravitySelection> gravitySelection;
     bool renderVisible=true; // local entity scope; does not deactivate children or simulation
     std::optional<DeformableSettings> deformable;

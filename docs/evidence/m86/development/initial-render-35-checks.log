@@ -1,0 +1,43 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native GL3.3 weather renderer starts
+PASS weather-off has no weather GPU allocation or pass
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE off CPUmedian=0.548305 CPUp95=0.618675 GPUmedian=0.585888 GPUp95=0.765824 cloud=-1.000000 fog=-1.000000 precip=-1.000000 bytes=0
+PASS all lazy weather shaders compile and link
+PASS sunny weather actually draws a lit sky
+PASS three-dimensional cloud density changes actual sky output
+PASS negative control: zero density removes the cloud volume
+PASS all noise octaves remain continuous across absolute modulo boundaries
+PASS opaque geometry rejects the cloud volume behind it
+PASS overhead roof grid suppresses actual local GPU rain
+PASS negative control: open-sky shelter samples do not hide rain
+PASS snow uses bounded analytic GPU flakes
+PASS moving funnel volume and debris contribute visible depth
+PASS lightning changes cloud illumination and visible lightning output
+PASS rotating weather, scene and view preserves arbitrary-up rendering
+PASS origin shift preserves camera-relative cloud and precipitation presentation
+PASS Earth-scale spherical cloud shell is visible from above
+PASS secondary cameras use a bounded history-free coarse pass
+PASS off-axis/oblique projection renders without temporal camera history
+PASS high quality remains within the declared scratch memory bound
+PASS ordinary secondary target allocates
+PASS alternating secondary/main sizes reuse a bounded two-slot cache without frame allocations
+PASS disabling weather restores the original renderer output
+PASS weather depth copies, GL state, HDR and shader samplers produce no GL errors
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE sunny CPUmedian=0.710810 CPUp95=1.055565 GPUmedian=0.818688 GPUp95=1.156352 cloud=0.147168 fog=0.195232 precip=-1.000000 bytes=4427264
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE cloudy CPUmedian=0.583415 CPUp95=0.663925 GPUmedian=0.784096 GPUp95=0.850464 cloud=0.170496 fog=0.177120 precip=-1.000000 bytes=4427264
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE thunderstorm CPUmedian=0.595468 CPUp95=0.660561 GPUmedian=0.779296 GPUp95=0.785984 cloud=0.155808 fog=0.179008 precip=0.001216 bytes=4427264
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE tornado CPUmedian=0.626379 CPUp95=1.098675 GPUmedian=0.780160 GPUp95=1.129760 cloud=0.205152 fog=0.161568 precip=0.000512 bytes=4427264
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE blizzard CPUmedian=0.591677 CPUp95=0.765085 GPUmedian=0.727232 GPUp95=0.797728 cloud=0.157408 fog=0.160992 precip=0.000512 bytes=4427264
+M86 RENDER 35 checks 0 failures

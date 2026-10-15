@@ -1,0 +1,14 @@
+Started UTC: 2026-10-15T17:32:49.241546+00:00
+Command: ["node", "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs", "--typescript", "/tmp/judas-m85-types/node_modules/typescript/lib/typescript.js"]
+{
+  "publicSymbols": 385,
+  "topLevelExports": 34,
+  "nativeOperations": 268,
+  "callbacks": 16,
+  "typeChecker": "5.9.3",
+  "examples": 44,
+  "negativeDriftChecks": 4,
+  "structuredResultShapes": 7,
+  "runtimeEnumeration": false,
+  "pass": true
+}

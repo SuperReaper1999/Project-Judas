@@ -1,0 +1,71 @@
+Started UTC: 2026-10-15T17:32:49.061784+00:00
+Command: ["/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_tests"]
+PASS default profile/frame validates
+PASS sunny
+PASS cloudy
+PASS rain
+PASS snow
+PASS blizzard
+PASS thunderstorm
+PASS tornado
+PASS fog
+PASS unknown preset preserves output instead of inventing mode
+PASS settings strict JSON roundtrip
+PASS partial authored descriptor uses documented defaults
+PASS unknown top-level property rejected
+PASS invalid intensity cannot partially publish output
+PASS undefined up rejected
+PASS parallel north/up rejected
+PASS numeric enabled cannot masquerade as Boolean
+PASS negative seed rejected without wrapping
+PASS full M39 64-bit occlusion mask preserved
+PASS negative occlusion mask rejected
+PASS negative drag area rejected
+PASS transition begins at previous evaluated profile
+PASS smooth transition midpoint interpolates actual profile
+PASS interruption preserves continuous current profile
+PASS interrupted transition reaches requested endpoint
+PASS zero-duration transition immediate
+PASS pause advances no state
+PASS oversized timestep rejected atomically
+PASS nonfinite timestep rejected atomically
+PASS negative transition rejected atomically
+PASS unsafe wind strength rejected
+PASS region owns interior and exact boundary
+PASS region feather is bounded continuous outside its authored shape
+PASS box region uses authored orientation, not world-up
+PASS disabled field has no spatial influence
+PASS independent instances reproduce seeded fixed-step field
+PASS visual/spatial samples never consume authoritative RNG or advance weather
+PASS different seeds generate different coherent gusts
+PASS entire prescribed field rotates equivalently under arbitrary gravity frame
+PASS absolute double anchoring preserves fine local wind at large scene origins
+PASS radial wind follows local tangent and altitude without universal up
+PASS orbital view keeps cloud shell while local air/forces fade to vacuum
+PASS no phantom drag above atmosphere
+PASS tornado produces opposed rotational flow and updraft
+PASS tornado core finite with no inverse-distance singularity
+PASS tornado wind influence bounded in space
+PASS moving tornado follows authored physical speed
+PASS moving tornado remains on curved planetary ground reference
+PASS curved tornado track rotates with frame
+PASS transitioned tornado travel uses analytic integral independent of step partition
+PASS cloud advection integrates transition wind independent of step partition
+PASS changing wind never jumps the existing cloud advection offset
+PASS generic weather force respects authored maximum acceleration
+PASS shelter exposure suppresses opt-in wind load
+PASS co-moving body has zero relative-air drag
+PASS opt-out body receives no weather force
+PASS exposure scales finite pressure drag without changing weather state
+PASS bounded deterministic lightning slots produce actual events
+PASS lightning event and rendered flash share authoritative clock
+PASS weather cold continuation restores exact event/time/transition state
+PASS new-process weather continuation preserves next strike and movement
+PASS failed continuation restore leaves runtime untouched
+PASS wrong-seed continuation rejected
+PASS disabled field advances time without emitting storm events
+PASS runtime enabled state survives cold restoration
+PASS generic manual strike publishes same event path
+PASS invalid strike cannot corrupt event state
+MEASURE 100000 weather samples 29.823894 ms checksum 669480.247944360
+Weather 67 checks, 0 failures

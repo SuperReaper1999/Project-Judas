@@ -106,7 +106,7 @@ bool RuntimeWorld::RegionVisualReady(const std::vector<EntityId>& ids)const {
 }
 void RuntimeWorld::EndRegionScripts(const std::vector<EntityId>& ids){if(m_scripts)m_scripts->RemoveEntities(ids);}
 void RuntimeWorld::RemoveRegionObject(EntityId id) {
-    m_planets.erase(id);
+    m_planets.erase(id);m_weather.erase(id);m_weatherResponses.erase(id);
     // Suspension is preflighted by the residency coordinator. In particular,
     // conserved liquids are pinned; destruction's parked-parcel path is not used.
     ReleaseRenderResources(id);

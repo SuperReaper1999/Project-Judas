@@ -1,0 +1,48 @@
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native GL3.3 weather renderer starts
+PASS weather-off has no weather GPU allocation or pass
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE off CPUmedian=0.504779 CPUp95=0.581100 GPUmedian=0.547136 GPUp95=0.640672 cloud=-1.000000 fog=-1.000000 precip=-1.000000 bytes=0
+PASS all lazy weather shaders compile and link
+PASS sunny weather actually draws a lit sky
+PASS three-dimensional cloud density changes actual sky output
+PASS negative control: zero density removes the cloud volume
+PASS all noise octaves remain continuous across absolute modulo boundaries
+PASS opaque geometry rejects the cloud volume behind it
+PASS overhead roof grid suppresses actual local GPU rain
+PASS negative control: open-sky shelter samples do not hide rain
+PASS snow uses bounded analytic GPU flakes
+PASS moving funnel volume and debris contribute visible depth
+PASS funnel volume remains visible without debris, rain, cloud lighting or global darkening
+PASS lightning changes cloud illumination and visible lightning output
+PASS rotating weather, scene and view preserves arbitrary-up rendering
+PASS origin shift preserves camera-relative cloud and precipitation presentation
+PASS Earth-scale spherical cloud shell is visible from above
+PASS orbital pixel-footprint filtering keeps a subpixel view change stable at four million metres
+DIAGNOSTIC distant smooth depth image difference=0.280691
+PASS distant opaque geometry does not zebra-clip a thin foreground cloud layer
+PASS negative control: the distant opaque depth fixture draws real geometry
+PASS secondary cameras use a bounded history-free coarse pass
+PASS off-axis/oblique projection renders without temporal camera history
+PASS high quality remains within the declared scratch memory bound
+PASS ordinary secondary target allocates
+PASS alternating secondary/main sizes reuse a bounded two-slot cache without frame allocations
+PASS disabling weather restores the original renderer output
+PASS weather depth copies, GL state, HDR and shader samplers produce no GL errors
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE sunny CPUmedian=0.557945 CPUp95=0.753488 GPUmedian=0.823264 GPUp95=0.834528 cloud=0.155904 fog=0.193760 precip=-1.000000 bytes=4464713
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE cloudy CPUmedian=0.549652 CPUp95=1.033925 GPUmedian=0.862112 GPUp95=1.079136 cloud=0.195776 fog=0.188448 precip=-1.000000 bytes=4464713
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE thunderstorm CPUmedian=0.568593 CPUp95=0.775958 GPUmedian=0.792448 GPUp95=0.809600 cloud=0.169696 fog=0.178592 precip=0.001152 bytes=4464713
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE tornado CPUmedian=0.565549 CPUp95=0.672520 GPUmedian=0.808224 GPUp95=0.888480 cloud=0.233696 fog=0.161696 precip=0.000544 bytes=4464713
+PASS M56 records completed native GPU timestamps
+PASS M56 exact scenario profile exports
+MEASURE blizzard CPUmedian=0.562101 CPUp95=0.639682 GPUmedian=0.739456 GPUp95=0.755744 cloud=0.169440 fog=0.160704 precip=0.000512 bytes=4464713
+M86 RENDER 39 checks 0 failures

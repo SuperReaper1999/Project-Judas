@@ -1,0 +1,32 @@
+script asset=3bbe8f74cbbcfb051aa1cf19b04c2533 entity=1 slot=1 fixedUpdate: Error: negative request accepted
+    at rejects (Assets/probe.js:5:89)
+    at fixedUpdate (Assets/probe.js:13:61)
+
+PASS public wrapper and exact cookbook assets registered in clean project
+PASS actual QuickJS world builds independent authored weather components
+PASS frame-phase rejection remains caught and isolated in ordinary JS
+FAIL valid
+FAIL absent
+FAIL invalid
+FAIL phase
+FAIL input
+FAIL negatives
+FAIL immediate
+FAIL quality
+FAIL coordinates
+FAIL disable
+FAIL strike
+FAIL detached
+FAIL transition
+FAIL interruption
+FAIL endpoint
+FAIL actual public weather operations execute without uncaught diagnostic
+PASS exact documented weather cookbook executes with real fixed input/callbacks
+FAIL two scripted weather instances keep independent native transition state
+PASS ordinary destruction retires retained weather target
+FAIL retained public wrapper detects destruction and fails safely
+FAIL composed save captures real script and weather continuation
+PASS saved composed scene decodes
+RESTORE required participant missing/newer
+FAIL fresh runtime restores public script state and weather before resuming
+Weather JS 26 checks 20 failures

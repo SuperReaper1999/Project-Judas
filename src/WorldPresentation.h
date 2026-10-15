@@ -63,3 +63,6 @@ void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float pre
 // Meshes/terrains resolve through `resources`; unresolvable ones are skipped.
 void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources);
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene);
+
+struct WeatherSample;
+WeatherSample SampleAuthoredWeather(const Scene&,glm::dvec3 absoluteEye);

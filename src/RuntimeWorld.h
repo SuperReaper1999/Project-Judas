@@ -247,6 +247,22 @@ public:
     bool Build(const Scene& scene, ResourceManager* resources, std::string& outError, const ProjectClassification* categories=nullptr,const ProjectNavigation* navigation=nullptr,bool runtimeSnapshot=false);
     void PreparePlanets(Renderer&,glm::dvec3 eye,double fov,unsigned pixels,double dt)const;
     void DrawPlanets(Renderer&)const;
+    // Optional prescribed weather. Absolute doubles stay outside float physics.
+    static WeatherSettings ResolveWeatherSettings(const SceneObject&,glm::dvec3 origin);
+    bool RegisterWeather(const SceneObject&,std::string&);
+    WeatherRuntime* RuntimeWeather(EntityId);
+    const WeatherRuntime* Weather(EntityId)const;
+    WeatherSample SampleWeather(glm::dvec3 absolute)const;
+    void UpdateWeather(float seconds);
+    void PrepareWeather(Renderer&,glm::dvec3 absoluteEye,uint64_t camera=0)const;
+    bool CaptureWeather(EntityId,std::string&,std::string&);
+    bool RestoreWeather(EntityId,const std::string&,std::string&,bool staged=false);
+    void UpdateWeatherAudio(glm::dvec3 listener,bool valid);
+    void EndWeatherAudio();
+    unsigned weatherQuality=1; // visual only: off, quarter, half resolution
+    struct WeatherWork {uint64_t forceQueries=0,shelterQueries=0,forces=0,thunderPlayed=0;};
+    WeatherWork WeatherStats()const{return m_weatherWork;}
+
     const PlanetTiles* Planet(EntityId)const;
     bool PlanetCollision(EntityId,glm::dvec3 focus,std::string& error);
     void ClearPlanetCollision(EntityId);
@@ -641,6 +657,22 @@ private:
     bool CanChangeOrigin(glm::dvec3,std::string&)const;
     std::string m_baselineFingerprint;
     std::map<EntityId,std::unique_ptr<PlanetTiles>> m_planets;
+    struct WeatherThunder {double due=0;glm::dvec3 position{0};double energy=1;};
+    struct WeatherInstance {
+        std::unique_ptr<WeatherRuntime> runtime;glm::dvec3 ownerAbsolute{0};
+        glm::quat ownerRotation{1,0,0,0};glm::vec3 ownerScale{1};
+        uint64_t observedLightning=0;std::vector<WeatherThunder> thunder;
+    };
+    std::map<EntityId,WeatherInstance> m_weather;
+    std::set<EntityId> m_weatherResponses;
+    struct WeatherShelterCache {WeatherShelterGrid grid;unsigned cursor=0;};
+    mutable WeatherShelterCache m_weatherShelter;
+    mutable WeatherWork m_weatherWork;
+    mutable glm::dvec3 m_weatherListener{0};
+    AudioClipHandle m_weatherThunderClip;
+    struct WeatherVoice {AudioVoiceHandle voice;glm::dvec3 absolute{0};};
+    std::vector<WeatherVoice> m_weatherVoices;
+
     ResourceManager* m_assets = nullptr;
 
     const GravityField* SelectedGravitySource(EntityId) const;

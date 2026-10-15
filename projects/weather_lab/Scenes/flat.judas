@@ -1,0 +1,3689 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Weather Lab / Flat meadow",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.5,
+        0.68,
+        0.48
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.23,
+        0.29,
+        0.34
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 10,
+        "name": "Project-owned exploration, watch tour and UI",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "5ab6e2f0bca84510f3d5b1aa8496dbfa",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"planet\": false}",
+          "ui.asset": "3e8c3543c682346bd9628e867d49f4f5",
+          "ui.name": "weather_lab",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 20,
+        "name": "Editable weather profile / F1-F9 are project JS",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "weather.region": "{\"version\":1,\"enabled\":true,\"seed\":860013,\"priority\":0,\"profile\":{\"cloudCoverage\":0.12,\"cloudDensity\":0.65,\"cloudBase\":300,\"cloudThickness\":450,\"rain\":0,\"snow\":0,\"fog\":0,\"wind\":[3,0,1],\"gust\":1,\"lightningRate\":0,\"tornado\":0,\"tornadoRadius\":17,\"tornadoHeight\":320,\"tornadoSpeed\":2},\"frame\":{\"radial\":false,\"center\":[0,0,0],\"up\":[0,1,0],\"north\":[0,0,-1],\"radius\":6371000},\"regionShape\":\"global\",\"regionCenter\":[0,0,0],\"regionHalfExtents\":[100,100,100],\"regionRotation\":[1,0,0,0],\"regionRadius\":100,\"blendDistance\":10,\"topAltitude\":16000,\"tornadoOffset\":[60,45],\"tornadoDirection\":[-1,0,0.2]}"
+        }
+      },
+      {
+        "id": 32,
+        "name": "Presentation audio listener",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-listener": [],
+          "listener.enabled": true,
+          "listener.follow-view": true
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary FaithfulGravity",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "sphere"
+            },
+            "radius": 100000
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Flat meadow collision",
+        "fields": {
+          "position": [
+            0,
+            -0.6,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            550,
+            0.6,
+            550
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.19,
+            0.28,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            550,
+            0.6,
+            550
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 100,
+        "name": "Observatory terrace",
+        "fields": {
+          "position": [
+            0,
+            -0.12,
+            -10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            24,
+            0.12,
+            28
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.25,
+            0.31,
+            0.32
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            24,
+            0.12,
+            28
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 101,
+        "name": "Solid pavilion post",
+        "fields": {
+          "position": [
+            -6,
+            2,
+            -6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.21,
+            0.31,
+            0.36
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 102,
+        "name": "Solid pavilion post",
+        "fields": {
+          "position": [
+            6,
+            2,
+            -6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.21,
+            0.31,
+            0.36
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 103,
+        "name": "Solid pavilion post",
+        "fields": {
+          "position": [
+            -6,
+            2,
+            -18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.21,
+            0.31,
+            0.36
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 104,
+        "name": "Solid pavilion post",
+        "fields": {
+          "position": [
+            6,
+            2,
+            -18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.21,
+            0.31,
+            0.36
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.17,
+            2,
+            0.17
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 105,
+        "name": "Sheltering roof: ordinary box collision",
+        "fields": {
+          "position": [
+            0,
+            4.1,
+            -12
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            6.5,
+            0.24,
+            6.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.11,
+            0.2,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6.5,
+            0.24,
+            6.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 106,
+        "name": "Pavilion rear wall",
+        "fields": {
+          "position": [
+            0,
+            1.45,
+            -18
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            6,
+            1.45,
+            0.18
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.29,
+            0.33
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            1.45,
+            0.18
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 107,
+        "name": "Observation desk",
+        "fields": {
+          "position": [
+            0,
+            1.05,
+            -15
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.1,
+            0.6
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.59,
+            0.39,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            2.5,
+            0.1,
+            0.6
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 108,
+        "name": "Desk support",
+        "fields": {
+          "position": [
+            -2,
+            0.5,
+            -15
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.09,
+            0.5,
+            0.45
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.3,
+            0.22,
+            0.17
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.09,
+            0.5,
+            0.45
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 109,
+        "name": "Desk support",
+        "fields": {
+          "position": [
+            2,
+            0.5,
+            -15
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.09,
+            0.5,
+            0.45
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.3,
+            0.22,
+            0.17
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.09,
+            0.5,
+            0.45
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 110,
+        "name": "Wind-responsive freight / opt-in pressure area",
+        "fields": {
+          "position": [
+            10.0,
+            0.65,
+            -8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.56,
+            0.37,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 300,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":3.5,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 111,
+        "name": "Wind-responsive freight / opt-in pressure area",
+        "fields": {
+          "position": [
+            12.3,
+            0.65,
+            -10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.56,
+            0.37,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":1.5,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 112,
+        "name": "Wind-responsive freight / opt-in pressure area",
+        "fields": {
+          "position": [
+            14.6,
+            0.65,
+            -12
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.56,
+            0.37,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":1.5,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 113,
+        "name": "Wind-responsive freight / opt-in pressure area",
+        "fields": {
+          "position": [
+            16.9,
+            0.65,
+            -14
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.56,
+            0.37,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":1.5,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 114,
+        "name": "Wind-responsive freight / opt-in pressure area",
+        "fields": {
+          "position": [
+            19.2,
+            0.65,
+            -16
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.56,
+            0.37,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            0.65,
+            0.65
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":1.5,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 115,
+        "name": "Wind-responsive panel",
+        "fields": {
+          "position": [
+            11.0,
+            1.05,
+            1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.23,
+            0.5,
+            0.57
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 12,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":3,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 116,
+        "name": "Wind-responsive panel",
+        "fields": {
+          "position": [
+            13.2,
+            1.05,
+            1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.23,
+            0.5,
+            0.57
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 12,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":3,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 117,
+        "name": "Wind-responsive panel",
+        "fields": {
+          "position": [
+            15.4,
+            1.05,
+            1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.23,
+            0.5,
+            0.57
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 12,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":3,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 118,
+        "name": "Wind-responsive panel",
+        "fields": {
+          "position": [
+            17.6,
+            1.05,
+            1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.23,
+            0.5,
+            0.57
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.75,
+            1.05,
+            0.1
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 12,
+          "body.friction": 0.25,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "weather.response": "{\"version\":1,\"enabled\":true,\"area\":3,\"dragCoefficient\":1.2,\"maxAcceleration\":12,\"occlusionMask\":18446744073709551615}"
+        }
+      },
+      {
+        "id": 119,
+        "name": "Footpath marker",
+        "fields": {
+          "position": [
+            -18,
+            0.5,
+            12
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.18,
+            0.5,
+            0.18
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.86,
+            0.71,
+            0.31
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.18,
+            0.5,
+            0.18
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 120,
+        "name": "Footpath marker",
+        "fields": {
+          "position": [
+            18,
+            0.5,
+            12
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.18,
+            0.5,
+            0.18
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.86,
+            0.71,
+            0.31
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.18,
+            0.5,
+            0.18
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 121,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            42.0,
+            2,
+            -8.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 122,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            42.0,
+            4.2,
+            -8.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 123,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            29.698484809834998,
+            2,
+            21.698484809834994
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 124,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            29.698484809834998,
+            4.2,
+            21.698484809834994
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 125,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            2.5717582782094417e-15,
+            2,
+            34.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 126,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            2.5717582782094417e-15,
+            4.2,
+            34.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 127,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            -29.698484809834994,
+            2,
+            21.698484809834998
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 128,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            -29.698484809834994,
+            4.2,
+            21.698484809834998
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 129,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            -42.0,
+            2,
+            -7.999999999999995
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 130,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            -42.0,
+            4.2,
+            -7.999999999999995
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 131,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            -29.698484809835,
+            2,
+            -37.698484809834994
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 132,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            -29.698484809835,
+            4.2,
+            -37.698484809834994
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 133,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            -7.715274834628325e-15,
+            2,
+            -50.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 134,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            -7.715274834628325e-15,
+            4.2,
+            -50.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 135,
+        "name": "Low-poly windbreak trunk",
+        "fields": {
+          "position": [
+            29.698484809834987,
+            2,
+            -37.698484809835
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.28,
+            0.2,
+            0.13
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            2,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 136,
+        "name": "Low-poly tree crown",
+        "fields": {
+          "position": [
+            29.698484809834987,
+            4.2,
+            -37.698484809835
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.3,
+            1.5,
+            1.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.3,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 300,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            300.0,
+            12,
+            0.0
+          ],
+          "rotation": [
+            1.0,
+            0,
+            0.0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 301,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            270.29066037072573,
+            18,
+            130.16512173526743
+          ],
+          "rotation": [
+            0.9749279121818236,
+            0,
+            0.2225209339563144,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 302,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            187.04694055762008,
+            24,
+            234.54944474040894
+          ],
+          "rotation": [
+            0.9009688679024191,
+            0,
+            0.4338837391175581,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            28,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            28,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 303,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            66.75628018689433,
+            30,
+            292.4783736545471
+          ],
+          "rotation": [
+            0.7818314824680298,
+            0,
+            0.6234898018587335,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            34,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            34,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 304,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -66.7562801868943,
+            12,
+            292.4783736545471
+          ],
+          "rotation": [
+            0.6234898018587336,
+            0,
+            0.7818314824680298,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 305,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -187.04694055762005,
+            18,
+            234.54944474040897
+          ],
+          "rotation": [
+            0.4338837391175582,
+            0,
+            0.9009688679024191,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 306,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -270.29066037072573,
+            24,
+            130.16512173526746
+          ],
+          "rotation": [
+            0.22252093395631445,
+            0,
+            0.9749279121818236,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            28,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            28,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 307,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -300.0,
+            30,
+            3.6739403974420595e-14
+          ],
+          "rotation": [
+            6.123233995736766e-17,
+            0,
+            1.0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            34,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            34,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 308,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -270.29066037072573,
+            12,
+            -130.1651217352674
+          ],
+          "rotation": [
+            -0.22252093395631434,
+            0,
+            0.9749279121818236,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 309,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -187.0469405576201,
+            18,
+            -234.54944474040892
+          ],
+          "rotation": [
+            -0.43388373911755806,
+            0,
+            0.9009688679024191,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 310,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            -66.75628018689437,
+            24,
+            -292.4783736545471
+          ],
+          "rotation": [
+            -0.6234898018587335,
+            0,
+            0.7818314824680299,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            28,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            28,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 311,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            66.756280186894,
+            30,
+            -292.47837365454717
+          ],
+          "rotation": [
+            -0.7818314824680295,
+            0,
+            0.6234898018587339,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            34,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            34,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 312,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            187.04694055762002,
+            12,
+            -234.54944474040897
+          ],
+          "rotation": [
+            -0.900968867902419,
+            0,
+            0.43388373911755823,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            16,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 313,
+        "name": "Distant ridge",
+        "fields": {
+          "position": [
+            270.2906603707258,
+            18,
+            -130.16512173526726
+          ],
+          "rotation": [
+            -0.9749279121818237,
+            0,
+            0.2225209339563141,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.2,
+            0.3,
+            0.27
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            55,
+            22,
+            55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 20,
+          "body.friction": 0.7,
+          "body.restitution": 0.03,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    ]
+  }
+}

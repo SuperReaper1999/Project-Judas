@@ -1091,6 +1091,12 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
         return;
     }
     renderer.SetCamera(m_camera.ViewMatrix(), m_camera.ProjectionMatrix(aspect));
+    {
+        const auto eye=scene.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]);
+        auto weather=SampleAuthoredWeather(scene,eye);if(weather.active)renderer.SetWeather(weather,eye,1);else renderer.ClearWeather();
+        renderer.SetWeatherShelter({});
+    }
+
     renderer.SetDynamicLights(BuildAuthoredLights(scene));
     if(m_terrain)m_terrain->Draw(renderer,scene,m_host->Resources());
     if(m_volumeTerrain)m_volumeTerrain->Draw(renderer,scene,m_host->Resources());
@@ -1119,11 +1125,13 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
         }
         for(auto& region:m_regionPreview)DrawAuthoredScene(renderer,region,m_host->Resources());
     }else {m_regionPreview.clear();m_regionPreviewKey.clear();}
+    renderer.DrawWeather();
     DrawEditOverlay(renderer, scene);
     if(m_terrain)renderer.DrawDebugLines(m_terrain->footprint.Lines(),true);
     if(m_volumeTerrain)renderer.DrawDebugLines(m_volumeTerrain->footprint.Lines(),true);
     renderer.EndFrame();
     renderer.EndRenderTarget();
+    renderer.ClearWeather();
     renderer.BeginFrame(window.Width(), window.Height());
     renderer.EndFrame();
     const auto texture = renderer.EditorImageToken(renderer.RenderTargetTexture(m_sceneViewTarget));
@@ -2035,6 +2043,6 @@ void EditorApplication::DrawUIAuthoringPreview(){
  std::string error;if(!m_panels.previewLocale.empty())m_previewLocalization->SetLocale(m_panels.previewLocale,error);m_previewLocalization->Refresh();
  if(!m_uiPreview||m_uiPreviewRevision!=m_panels.uiPreviewRevision){auto candidate=std::make_unique<RuntimeUI>(&resources);if(!candidate->Add(m_panels.uiPreviewDocument,"authoring",0,error)){m_panels.status=error;return;}m_uiPreview=std::move(candidate);m_uiPreviewRevision=m_panels.uiPreviewRevision;}
  m_uiPreview->SetLocalization(m_previewLocalization.get());int width=m_panels.uiPreviewResolution.x,height=m_panels.uiPreviewResolution.y;if(!renderer.ResizeRenderTarget(m_uiPreviewTarget,width,height,error)||!renderer.BeginRenderTarget(m_uiPreviewTarget)){m_panels.status=error;return;}
- renderer.SetSceneAppearance(false,1,{},1,{1,0,0,0},false,{.035f,.045f,.065f});renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);m_uiPreview->Draw(renderer,width,height);renderer.EndUIFrame();renderer.EndRenderTarget();m_panels.uiPreviewToken=renderer.EditorImageToken(renderer.RenderTargetTexture(m_uiPreviewTarget));m_panels.uiPreviewLayout.clear();auto handle=m_uiPreview->Find("authoring");for(auto& e:m_panels.uiPreviewDocument.elements)if(auto* l=m_uiPreview->LayoutOf(handle,e.id))m_panels.uiPreviewLayout[e.id]=*l;
+ renderer.ClearWeather();renderer.SetSceneAppearance(false,1,{},1,{1,0,0,0},false,{.035f,.045f,.065f});renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);m_uiPreview->Draw(renderer,width,height);renderer.EndUIFrame();renderer.EndRenderTarget();m_panels.uiPreviewToken=renderer.EditorImageToken(renderer.RenderTargetTexture(m_uiPreviewTarget));m_panels.uiPreviewLayout.clear();auto handle=m_uiPreview->Find("authoring");for(auto& e:m_panels.uiPreviewDocument.elements)if(auto* l=m_uiPreview->LayoutOf(handle,e.id))m_panels.uiPreviewLayout[e.id]=*l;
  if(m_panels.uiCanvasPick.x>=0){for(auto it=m_panels.uiPreviewDocument.elements.rbegin();it!=m_panels.uiPreviewDocument.elements.rend();++it){auto* l=m_uiPreview->LayoutOf(handle,it->id);if(l&&l->visible&&l->rect.Contains(m_panels.uiCanvasPick)&&l->clip.Contains(m_panels.uiCanvasPick)){m_panels.uiCanvasSelected=it->id;break;}}m_panels.uiCanvasPick={-1,-1};}
 }
