@@ -1,0 +1,21 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Saves/cabinet.judasstate (none saved)
+Project: Tuppence (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/tuppence.judasproj)
+Scene: TUPPENCE / Ball Pusher (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/cabinet.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS payout lip has actual shallow upslope collision
+PASS all project assets registered
+PASS real initial physical population
+PASS pusher uses the authored native body authority
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+PASS drop spends one credit on success and none on refusal
+PASS authored button visible/enabled
+PASS pause owns simulation
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+SINGLE population=50 collected=7 dropped=1
+PASS one inserted ball does not clear the starting bed
+PASS ordinary startup/lifecycle/shutdown
+PERF fixed_p50_ms=1.0597 fixed_p95_ms=5.7984 fixed_max_ms=29.9528 frame_work_p95_ms=7.3871 samples=731
+SUMMARY checks=13 failures=0

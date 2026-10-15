@@ -94,7 +94,7 @@
           "body.radius": 0.21,
           "body.terrain": "",
           "body.mass": 0.045,
-          "body.friction": 0.38,
+          "body.friction": 0.08,
           "body.restitution": 0.08,
           "body.initial-velocity": [
             0,

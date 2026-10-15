@@ -9,17 +9,17 @@ An ordinary JudasJS arcade project with two physical machines. Open `tuppence.ju
 - **Autoplay**: watch ordinary scripted input drive the machine.
 - **Escape / Modes / Menu**: switch machines, pause, resume, save, load, restart or quit.
 
-**Ball Pusher** starts with 112 brass balls. Its short, slow shelf nudges the bed instead of sweeping it clear. The centre pocket pays double. Reach 500 points, then continue playing.
+**Ball Pusher** starts with 56 brass balls in a compact cabinet. Its smaller recessed shelf uses a finite-force motor; a real shallow ramp retains the bed at the payout edge. The centre pocket pays double. Reach 500 points, then continue playing.
 
 **2p Coin Pusher** is a compact tabletop cabinet with 24 flat copper tokens, a reciprocating upper shelf and lower payout edge. Insert coins onto the shelf; native contact pushes coins over the front to return them. Every returned token pays 2p in virtual score and restores one token credit. Reach 100p, then continue. The native slider motor has finite force: a blocked shelf can slow down. Tokens use original embossed render meshes and 12-sided convex physical geometry, not spheres. This is an arcade approximation, not a dimensionally exact commercial cabinet or gambling simulator.
 
-All pieces remain physical until they actually leave the collection edge or escape the cabinet. Ball capacity is 208; coin capacity is 32, and occupied/full drops are refused without spending a credit. No frozen background pieces or decorative population. Dense thin convex stacks remain expensive; see the measured limits in `Review/REPORT.md`.
+All pieces remain physical until they actually leave the collection edge or escape the cabinet. Ball capacity is 80; coin capacity is 32, and occupied/full drops are refused without spending a credit. No frozen background pieces or decorative population. Dense contact beds and thin convex stacks remain expensive; see the measured limits in `Review/REPORT.md`.
 
 Saving uses the normal Judas save service (one shared Tuppence slot). Loading restores the saved machine, physical bodies and ledger. Switching modes starts a fresh round; session best scores are separate. Saves are local user data, not source content.
 
 ## Authoring
 
-`Scenes/cabinet.judas` and `Scenes/coins.judas` are editable scenes; `Scenes/crowded.judas` is a 208-ball stress fixture. `Assets/scripts/game.js` owns credits, collection, UI, machine policy and scene switching. `tools/CreateBallPusher.py` regenerates original cabinet content. `ArtSource/create_coin.py` and `coin.blend` preserve the coin source; Blender exports glTF and Judas's normal hull cooker creates the collision asset. Font licensing is alongside the font.
+`Scenes/cabinet.judas` and `Scenes/coins.judas` are editable scenes; `Scenes/crowded.judas` is a 104-ball over-capacity stress fixture. `Assets/scripts/game.js` owns credits, collection, UI, machine policy and scene switching. `tools/CreateBallPusher.py` regenerates original cabinet content. `ArtSource/create_coin.py` and `coin.blend` preserve the coin source; Blender exports glTF and Judas's normal hull cooker creates the collision asset. Font licensing is alongside the font.
 
 The package is exported with `build/judas_export projects/tuppence/tuppence.judasproj .cache/Tuppence-Package build/judas`. Run `.cache/Tuppence-Package/judas` from any working directory. Windows and human gameplay acceptance remain pending.
 

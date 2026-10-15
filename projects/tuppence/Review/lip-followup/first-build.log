@@ -1,0 +1,27 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_navigation_backend
+[ 20%] Built target judas_quickjs
+[ 20%] Built target judas_glad
+[ 20%] Built target judas_profiler
+[ 20%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 26%] Built target judas_materials
+[ 93%] Built target judas_engine
+[ 93%] Building CXX object CMakeFiles/judas_ball_pusher_application_tests.dir/tests/BallPusherApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/BallPusherApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/BallPusherApplicationTests.cpp:26:241: error: no match for ‘operator==’ (operand types are ‘BodyHandle’ and ‘BodyHandle’)
+   26 |  if(tick==20){const float scale=mode=="coins"?.55f:1.f,x=mode=="coins"?1.2f:3.15f;auto low=w.Physics().Raycast({x,2.2f,3.43f*scale},{0,-1,0},1);auto high=w.Physics().Raycast({x,2.2f,3.67f*scale},{0,-1,0},1);check(low.hit&&high.hit&&low.body==w.RuntimeBody(26)&&high.body==w.RuntimeBody(26)&&high.point.y>low.point.y+.008f&&high.normal.z<-.05f,"payout lip has actual shallow upslope collision");if(mode=="coins")check(w.RuntimeDefinition(1000)->body->shape==SceneShape::ConvexHull,"2p pieces use physical flat convex coin geometry");check(h.Assets().Problems().empty(),"all project assets registered");check(s["balls"].size()==(mode=="stress"?208:mode=="coins"?24:112),"real initial physical population");check(w.RuntimeDefinition(6)->body->motion==(mode=="coins"?SceneBodyMotion::Dynamic:SceneBodyMotion::Kinematic),"pusher uses the authored native body authority");}
+      |                                                                                                                                                                                                                                         ~~~~~~~~^~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                                                                                                                             |                  |
+      |                                                                                                                                                                                                                                             BodyHandle         BodyHandle
+/home/conner/Documents/GitHub/Project-Judas/tests/BallPusherApplicationTests.cpp:26:271: error: no match for ‘operator==’ (operand types are ‘BodyHandle’ and ‘BodyHandle’)
+   26 |  if(tick==20){const float scale=mode=="coins"?.55f:1.f,x=mode=="coins"?1.2f:3.15f;auto low=w.Physics().Raycast({x,2.2f,3.43f*scale},{0,-1,0},1);auto high=w.Physics().Raycast({x,2.2f,3.67f*scale},{0,-1,0},1);check(low.hit&&high.hit&&low.body==w.RuntimeBody(26)&&high.body==w.RuntimeBody(26)&&high.point.y>low.point.y+.008f&&high.normal.z<-.05f,"payout lip has actual shallow upslope collision");if(mode=="coins")check(w.RuntimeDefinition(1000)->body->shape==SceneShape::ConvexHull,"2p pieces use physical flat convex coin geometry");check(h.Assets().Problems().empty(),"all project assets registered");check(s["balls"].size()==(mode=="stress"?208:mode=="coins"?24:112),"real initial physical population");check(w.RuntimeDefinition(6)->body->motion==(mode=="coins"?SceneBodyMotion::Dynamic:SceneBodyMotion::Kinematic),"pusher uses the authored native body authority");}
+      |                                                                                                                                                                                                                                                                      ~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                                                                                                                                                           |                  |
+      |                                                                                                                                                                                                                                                                           BodyHandle         BodyHandle
+gmake[3]: *** [CMakeFiles/judas_ball_pusher_application_tests.dir/build.make:79: CMakeFiles/judas_ball_pusher_application_tests.dir/tests/BallPusherApplicationTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:11469: CMakeFiles/judas_ball_pusher_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11476: CMakeFiles/judas_ball_pusher_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:3543: judas_ball_pusher_application_tests] Error 2

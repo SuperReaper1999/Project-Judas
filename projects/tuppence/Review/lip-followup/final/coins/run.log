@@ -1,0 +1,39 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Saves/coins.judasstate (none saved)
+Project: Tuppence (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/tuppence.judasproj)
+Scene: TUPPENCE / physical 2p coin pusher (/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/coins.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS payout lip has actual shallow upslope collision
+PASS 2p pieces use physical flat convex coin geometry
+PASS all project assets registered
+PASS real initial physical population
+PASS pusher uses the authored native body authority
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+PASS drop spends one credit on success and none on refusal
+PASS authored button visible/enabled
+PASS UI autopilot runs ordinary drop policy
+PASS authored button visible/enabled
+PASS pause owns simulation
+PASS actual gameplay screenshot
+PASS authored button visible/enabled
+SHELF min=-0.825000 max=-0.139829
+PASS native driven shelf actually travels under load
+PASS actual gameplay screenshot
+PASS actual falling balls reach pockets and score
+PASS spawn/collection ledger accounts for every real ball
+PASS paid spawning respects physical cabinet capacity
+PASS authored button visible/enabled
+PASS authored button visible/enabled
+PASS real machine save completes
+PASS authored button visible/enabled
+PASS authored button visible/enabled
+PASS load restores exact script-referenced physical population
+PASS load restores earned score
+PASS authored button visible/enabled
+PASS authored button visible/enabled
+PASS mode menu loads the other ordinary scene
+PASS new mode resets drops and autoplay independently of settling payouts
+PASS ordinary startup/lifecycle/shutdown
+PERF fixed_p50_ms=6.8184 fixed_p95_ms=30.0969 fixed_max_ms=123.7506 frame_work_p95_ms=31.4583 samples=1048
+SUMMARY checks=31 failures=0

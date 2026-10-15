@@ -1,0 +1,14 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/tuppence-moved-package/Saves/cabinet.judasstate (none saved)
+Project: Tuppence (/tmp/tuppence-moved-package/game.judasproj)
+Scene: TUPPENCE / Ball Pusher (/tmp/tuppence-moved-package/Scenes/cabinet.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS payout lip has actual shallow upslope collision
+PASS all project assets registered
+PASS real initial physical population
+PASS pusher uses the authored native body authority
+PASS untouched ball bed remains in machine for ten seconds
+PASS actual gameplay screenshot
+PASS ordinary startup/lifecycle/shutdown
+PERF fixed_p50_ms=0.0000 fixed_p95_ms=0.0000 fixed_max_ms=0.0000 frame_work_p95_ms=0.0000 samples=0
+SUMMARY checks=7 failures=0
