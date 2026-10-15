@@ -7,9 +7,12 @@ status, source/binary fingerprints and retained failures belong to the
 [original M87 evidence report](evidence/m87/REPORT.md). The subsequent human-reported
 live slowdown has a separate [follow-up report](evidence/m87/live-slowdown-followup/REPORT.md)
 and [retained experiment record](evidence/m87/live-slowdown-followup/EXPERIMENTS.md).
-This document describes current mechanisms and reproduction; it does not grant
-human or Windows acceptance. Earlier measurements retain their original source
-identity and are not relabeled as final follow-up measurements.
+The operator [accepted the current Linux candidate](evidence/m87/HUMAN_VALIDATION.md)
+on 15 October 2026, with the dense mixed-pile cascade retained as a known severe
+performance limit. Hardware dependence remains unmeasured; Windows remains
+untested. This document describes mechanisms and reproduction. Earlier
+measurements retain their original source identity and are not relabeled as
+final follow-up measurements.
 
 [Architecture](ARCHITECTURE.md) ·
 [Mechanical Arcade lab](../projects/physics_stress_lab/README.md) ·

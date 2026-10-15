@@ -1,6 +1,11 @@
 # Architecture
 
-## Current Experimental — M87 physics scaling
+## Current accepted release — M87 physics scaling
+
+The operator [accepted the M87 Linux candidate](evidence/m87/HUMAN_VALIDATION.md)
+on 15 October 2026 and authorized promotion to main. The 1,024-piece mixed-pile
+contact/CCD cascade remains a known severe performance limit; hardware dependence
+is unmeasured. Windows validation remains outstanding.
 
 [M87](M87_PHYSICS_SCALING.md) keeps the existing single-owner rigid solver and
 deterministic row order. Sleep assessment builds a retained, step-local disjoint

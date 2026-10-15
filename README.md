@@ -17,16 +17,22 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
-## Current Experimental — M87 physics scaling
+## Latest accepted release — M87 physics scaling
 
 [M87](docs/M87_PHYSICS_SCALING.md) improves sleep-island assessment, joint
-preparation and cooked-box allocation, with expanded bounded physics profiling.
+preparation and cooked-box allocation, with expanded bounded physics profiling,
+joined primitive contact-geometry jobs and reduced redundant CCD geometry work.
 The editable [Mechanical Arcade](projects/physics_stress_lab/README.md) exercises
 32 independent mechanisms and up to 1,152 authored dynamic bodies. Matched
-[measurements and limitations](docs/evidence/m87/REPORT.md) distinguish Linux
-automation from pending human review and unperformed Windows validation.
+[original measurements](docs/evidence/m87/REPORT.md) and the
+[live-slowdown investigation](docs/evidence/m87/live-slowdown-followup/REPORT.md)
+retain their exact evidence. The operator's
+[M87 Linux acceptance record](docs/evidence/m87/HUMAN_VALIDATION.md) authorizes
+promotion of the tested candidate to main with a **known severe performance limit**:
+the 1,024-piece mixed pile can develop seconds-long contact/CCD cascades. Hardware
+dependence is unmeasured; this is not a 60 Hz guarantee. Windows remains untested.
 
-## Latest accepted release — M86 weather
+## Previous accepted release — M86 weather
 
 [M86 prescribed weather](docs/M86_WEATHER.md) provides optional volumetric clouds,
 wind/gusts, rain, snow/blizzards, fog, lightning/thunder and moving tornadoes.
