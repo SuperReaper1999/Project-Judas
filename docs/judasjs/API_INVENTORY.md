@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M83 Experimental candidate public module based on checkpoint `694ffa97c71717aaf2f62ba28eea4a2866deb844`. M83 human validation is pending; M82 has operator acceptance and M67 human authoring review remains deferred.
+Current M85 Experimental candidate public module based on checkpoint `e421645b3c310508ff618fe1e880a1b8cdbc019b`. M85 human validation is pending. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -75,6 +75,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.character` | `characterExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.children` | `children` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.classification` | `classification` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.clearPlanetCollision` | `planetClear` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.clearSocket` | `socketClear` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.collider` | `colliderInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -98,10 +99,13 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.parent` | `parent` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.pauseAudio` | `pauseAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.physicalMaterial` | `physicalMaterialInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.planetSample` | `planetSample` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.planetState` | `planetInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.playAudio` | `playAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.playAudioOneShot` | `audioOneShot` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.pointVelocity` | `pointVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.powertrain` | `powertrainExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.preparePlanetCollision` | `planetCollision` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.presentedTransform` | `presentedTransform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.ragdoll` | `ragdollExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.removeTag` | `removeTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -360,14 +364,19 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.clearView` | `clearView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.fluidSample` | `fluidSample` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `world.origin` | `worldOrigin` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.originState` | `worldOriginState` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.overlap` | `overlap` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.project` | `projectViewport` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.queryTags` | `queryTags` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.requestOrigin` | `worldOriginRequest` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.resetAppearance` | `appearanceReset` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setAppearance` | `appearanceSet` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setView` | `setView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.spawnPrefab` | `spawn` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.sweepCapsule` | `sweep` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.toAbsolute` | `worldAbsolute` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.toLocal` | `worldLocal` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.viewRay` | `viewRay` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.viewport` | `viewportSize` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 

@@ -1,3 +1,4 @@
+#include "../PlanetTiles.h"
 #pragma once
 
 #include <memory>
@@ -46,6 +47,7 @@ private:
     std::unique_ptr<struct TerrainEditor> m_terrain;
     std::unique_ptr<struct VolumeTerrainEditor> m_volumeTerrain;
     std::unique_ptr<struct ModTools> m_modTools;
+    std::map<SceneObjectId,std::pair<std::string,std::unique_ptr<PlanetTiles>>> m_planetPreview;
     std::vector<Scene> m_regionPreview;
     std::string m_regionPreviewKey;
     std::unique_ptr<LocalizationSession> m_previewLocalization;

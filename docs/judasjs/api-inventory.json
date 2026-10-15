@@ -1,7 +1,25 @@
 {
-  "checkpoint": "694ffa97c71717aaf2f62ba28eea4a2866deb844",
+  "checkpoint": "e421645b3c310508ff618fe1e880a1b8cdbc019b",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native",
   "resultShapes": [
+    {
+      "binding": "Entity.planetSample",
+      "declaration": "PlanetSample",
+      "fields": [
+        "position",
+        "normal",
+        "height",
+        "distance"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"position\",preciseVector(sample.point))",
+        "JS_SetPropertyStr(c,o,\"normal\",preciseVector(sample.normal))",
+        "JS_SetPropertyStr(c,o,\"height\",JS_NewFloat64(c,sample.height))",
+        "JS_SetPropertyStr(c,o,\"distance\",JS_NewFloat64(c,sample.distance))"
+      ],
+      "reference": "docs/judasjs/planetary-terrain.md"
+    },
     {
       "binding": "Fracture.state.interfaces",
       "declaration": "FractureInterfaceState",
@@ -768,6 +786,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.clearPlanetCollision",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "planetClear"
+      ],
+      "type": "docs/judas.d.ts:Entity.clearPlanetCollision",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.clearSocket",
       "kinds": [
         "call"
@@ -1013,6 +1042,28 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.planetSample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "planetSample"
+      ],
+      "type": "docs/judas.d.ts:Entity.planetSample",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.planetState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "planetInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.planetState",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.playAudio",
       "kinds": [
         "call"
@@ -1054,6 +1105,17 @@
         "powertrainExists"
       ],
       "type": "docs/judas.d.ts:Entity.powertrain",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.preparePlanetCollision",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "planetCollision"
+      ],
+      "type": "docs/judas.d.ts:Entity.preparePlanetCollision",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -3816,6 +3878,28 @@
       "reference": "docs/judasjs/effects-camera.md"
     },
     {
+      "symbol": "world.origin",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "worldOrigin"
+      ],
+      "type": "docs/judas.d.ts:world.origin",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.originState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "worldOriginState"
+      ],
+      "type": "docs/judas.d.ts:world.originState",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "world.overlap",
       "kinds": [
         "call"
@@ -3846,6 +3930,17 @@
         "queryTags"
       ],
       "type": "docs/judas.d.ts:world.queryTags",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.requestOrigin",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "worldOriginRequest"
+      ],
+      "type": "docs/judas.d.ts:world.requestOrigin",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -3901,6 +3996,28 @@
         "sweep"
       ],
       "type": "docs/judas.d.ts:world.sweepCapsule",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.toAbsolute",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "worldAbsolute"
+      ],
+      "type": "docs/judas.d.ts:world.toAbsolute",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.toLocal",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "worldLocal"
+      ],
+      "type": "docs/judas.d.ts:world.toLocal",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -4075,6 +4192,10 @@
     "pauseAudio",
     "physicalMaterialInfo",
     "physicalMaterialSet",
+    "planetClear",
+    "planetCollision",
+    "planetInfo",
+    "planetSample",
     "playAudio",
     "pointVelocity",
     "pointerCapture",
@@ -4178,7 +4299,12 @@
     "wheelSet",
     "wheelSettings",
     "wheelState",
-    "wheelValid"
+    "wheelValid",
+    "worldAbsolute",
+    "worldLocal",
+    "worldOrigin",
+    "worldOriginRequest",
+    "worldOriginState"
   ],
   "callbacks": [
     "onSignal",

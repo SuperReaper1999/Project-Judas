@@ -1,3 +1,4 @@
+#include "PlanetTiles.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "RadicalGravity.h"
@@ -105,6 +106,7 @@ bool RuntimeWorld::RegionVisualReady(const std::vector<EntityId>& ids)const {
 }
 void RuntimeWorld::EndRegionScripts(const std::vector<EntityId>& ids){if(m_scripts)m_scripts->RemoveEntities(ids);}
 void RuntimeWorld::RemoveRegionObject(EntityId id) {
+    m_planets.erase(id);
     // Suspension is preflighted by the residency coordinator. In particular,
     // conserved liquids are pinned; destruction's parked-parcel path is not used.
     ReleaseRenderResources(id);

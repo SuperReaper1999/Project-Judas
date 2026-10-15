@@ -140,6 +140,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("prefab.ids", Quote(EncodePrefabOverrides(ids)));
         w.Line("prefab.overrides", Quote(EncodePrefabOverrides(o.prefabOverrides)));
     }
+    if(o.planet)w.Line("planet.surface",Quote(EncodePlanetSettings(*o.planet)));
     for(const auto& [key,value]:DeformableProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:LiquidProperties(o))w.Line(key,Quote(value));
     for(const auto& [key,value]:NavigationProperties(o))w.Line(key,Quote(value));
@@ -780,6 +781,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     std::map<std::string,std::string> navFields;
     for(const auto& [key,tokens]:block.values)if(key.rfind("nav.",0)==0){std::string value;if(!p.String(key,value))return false;navFields[key]=value;}
     std::string navError;if(!ApplyNavigationProperties(navFields,o,navError))return reader.Fail(navError);
+    if(p.Has("planet.surface")){std::string value,error;PlanetSettings settings;if(!p.String("planet.surface",value)||!DecodePlanetSettings(value,settings,error))return reader.Fail(error);o.planet=std::move(settings);}
     if(p.Has("powertrain.graph")){std::string value,error;PowertrainSettings settings;if(!p.String("powertrain.graph",value)||!DecodePowertrainSettings(value,settings,error))return reader.Fail(error);o.powertrain=std::move(settings);}
     if(p.Has("gravity-selection.mode")){
         GravitySelection s;std::string mode,error;

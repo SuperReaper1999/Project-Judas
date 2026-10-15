@@ -98,6 +98,7 @@ bool OptEq(const std::optional<T>& a, const std::optional<T>& b, F&& equal) {
 }  // namespace
 
 bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
+    if(bool(a.planet)!=bool(b.planet)||(a.planet&&EncodePlanetSettings(*a.planet)!=EncodePlanetSettings(*b.planet)))return false;
     if(!OptEq(a.powertrain,b.powertrain,PowertrainSettingsEqual))return false;
     if(a.gravitySelection.has_value()!=b.gravitySelection.has_value())return false;
     if(a.gravitySelection){const auto& x=*a.gravitySelection;const auto& y=*b.gravitySelection;

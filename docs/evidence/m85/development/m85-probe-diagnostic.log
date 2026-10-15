@@ -1,0 +1,24 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetary Terrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/planetary_terrain_lab.judasproj)
+Scene: Planetary Terrain Lab - radius 6371 km (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS ordinary JS spawns a real supported motor on Earth-sized terrain
+PASS visual and physical residency obey independent budgets
+PASS actual planetary lab frame captured
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS public prefab throw creates a real dynamic body
+PASS thrown body collides with actual curved terrain
+PASS ordinary save accepts planet project
+PASS durable planet save includes collision interests
+PASS cold staged planet restore publishes a fresh RuntimeWorld
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS restored character endpoint remains physically supported
+PROBE restored displacement=1.306575731 surface_distance=0.348211898 velocity=2.467869282
+FAIL restored rigid probe remains on actual derived terrain collision
+PASS ordinary planetary application startup/reload/shutdown
+MEASURE frames=257 fixed_p95_ms=1.341111 fixed_max_ms=7.657479 render_p95_ms=9.992370 terrain_prepare_p95_ms=7.812140 terrain_prepare_max_ms=245.257635 collision_interest_p95_ms=0.165398
+MEASURE maximum_mixed_lod_seam_m=1.14063254687e-09
+MEASURE select_p95_ms=2.035841 build_p95_ms=1.951692 upload_p95_ms=5.112775
+SUMMARY 14 checks 1 failures

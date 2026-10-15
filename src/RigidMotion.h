@@ -91,6 +91,7 @@ public:
         Append(owner, next, time, finish);
     }
     void Clear() { segments.clear(); }
+    void ShiftOrigin(glm::dvec3 delta) { for(auto& s:segments){s.position=glm::vec3(glm::dvec3(s.position)-delta);s.endPosition=glm::vec3(glm::dvec3(s.endPosition)-delta);} }
     // Concatenate already resolved coupled intervals without restarting their
     // angular integrators. The same generation owner must span every segment.
     void SetRecorded(std::vector<RigidMotionSegment> values) { segments=std::move(values); }

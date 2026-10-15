@@ -1,0 +1,29 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 20%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target judas_profiler
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.cpp: In function ‘bool DecodePlanetSettings(const std::string&, PlanetSettings&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.cpp:49:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   49 |  if(!ValidatePlanetSettings(s,error))throw std::invalid_argument(error);s.rotation=glm::normalize(s.rotation);out=std::move(s);error.clear();return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.cpp:49:73: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   49 |  if(!ValidatePlanetSettings(s,error))throw std::invalid_argument(error);s.rotation=glm::normalize(s.rotation);out=std::move(s);error.clear();return true;
+      |                                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.cpp: In member function ‘PlanetSample PlanetSurface::Sample({anonymous}::V) const’:
+/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.cpp:60:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   60 |  for(auto& patch:settings.patches)step=std::min(step,patch.extent/(8*(patch.resolution-1)));step=std::max(step,1e-5);const double angle=step/settings.radius;
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.cpp:60:93: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   60 |  for(auto& patch:settings.patches)step=std::min(step,patch.extent/(8*(patch.resolution-1)));step=std::max(step,1e-5);const double angle=step/settings.radius;
+      |                                                                                             ^~~~
+[ 33%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_planet_terrain_tests
+[100%] Built target judas_planet_terrain_tests

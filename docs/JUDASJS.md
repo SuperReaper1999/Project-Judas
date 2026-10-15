@@ -1,9 +1,11 @@
-# JudasJS — current API reference (M83 Experimental candidate)
+# JudasJS — current API reference (M85 Experimental candidate)
+
+M85 adds [precision-safe planetary terrain and explicit local-origin APIs](judasjs/planetary-terrain.md). M85 human validation is pending.
 
 M83 adds finite [Deformable attachment strengths/observations](judasjs/deformables.md#m83-materialbody-connection-strength)
 and authored [Powertrain physical prerequisites](judasjs/powertrains.md#physical-connection-prerequisite).
 These extend existing handle snapshots/configuration, with no gameplay damage
-API or new module namespace. Human review is pending; see [model and limits](M83_MECHANICAL_DAMAGE.md).
+API or new module namespace. For that milestone’s model and limits see [model and limits](M83_MECHANICAL_DAMAGE.md).
 
 M82 adds optional [Powertrain networks](judasjs/powertrains.md): real rotational
 inertia, torque sources, gearing, bounded clutches, open differentials and brakes.

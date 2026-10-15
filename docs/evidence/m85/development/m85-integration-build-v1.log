@@ -1,0 +1,103 @@
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[ 13%] Built target judas_quickjs
+[ 26%] Built target freetype
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_materials
+[ 33%] Built target harfbuzz
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1576:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1576 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1576:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1576 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1593:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1593 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1593:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1593 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/SaveStorage.h:3,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h: In instantiation of ‘void SaveArchive::Field(T&) [with T = const long unsigned int]’:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:24:59:   required from ‘void SaveArchive::operator()(T& ...) [with T = {const long unsigned int, bool, glm::vec<3, double, glm::packed_highp>}]’
+   24 |  template<class... T> void operator()(T&... values){(Field(values),...);}
+      |                                                      ~~~~~^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp:224:429:   required from here
+  224 | bool WorldPersistence::Capture(RuntimeWorld& w,std::map<std::string,SaveChunk>& chunks,std::string& error){JUDAS_PROFILE_SCOPE("Save capture");if(!Prepare(w,error))return false;try{chunks.clear();if(!w.m_planets.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_planets.size());a(n);for(auto& [id,planet]:w.m_planets){auto focus=planet->CollisionFocus();bool ready=focus.has_value();glm::dvec3 point=focus.value_or(glm::dvec3(0));a(id,ready,point);}chunks["planets"]={1,std::move(a.bytes)};}const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){ProfileScope participant(PerformanceProfiler::Get().Intern("Save capture "+name));SaveArchive a;unsigned version=1;
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                            ~^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:28:167: error: assignment of read-only variable ‘n’
+   28 |   else if constexpr(std::is_integral_v<T>){using U=std::make_unsigned_t<T>;U n=U(value);if(reading){Require(bytes.size()-position>=sizeof(T),"truncated save field");n=0;for(size_t i=0;i<sizeof(T);++i)n|=U(uint8_t(bytes[position++]))<<(8*i);value=T(n);}else{Require(bytes.size()+sizeof(T)<=Limit,"save exceeds 64 MiB");for(size_t i=0;i<sizeof(T);++i)bytes.push_back(char(n>>(8*i)));}}
+      |                                                                                                                                                                      ~^~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:28:202: error: assignment of read-only variable ‘n’
+   28 |   else if constexpr(std::is_integral_v<T>){using U=std::make_unsigned_t<T>;U n=U(value);if(reading){Require(bytes.size()-position>=sizeof(T),"truncated save field");n=0;for(size_t i=0;i<sizeof(T);++i)n|=U(uint8_t(bytes[position++]))<<(8*i);value=T(n);}else{Require(bytes.size()+sizeof(T)<=Limit,"save exceeds 64 MiB");for(size_t i=0;i<sizeof(T);++i)bytes.push_back(char(n>>(8*i)));}}
+      |                                                                                                                                                                                                         ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:28:246: error: assignment of read-only reference ‘value’
+   28 |   else if constexpr(std::is_integral_v<T>){using U=std::make_unsigned_t<T>;U n=U(value);if(reading){Require(bytes.size()-position>=sizeof(T),"truncated save field");n=0;for(size_t i=0;i<sizeof(T);++i)n|=U(uint8_t(bytes[position++]))<<(8*i);value=T(n);}else{Require(bytes.size()+sizeof(T)<=Limit,"save exceeds 64 MiB");for(size_t i=0;i<sizeof(T);++i)bytes.push_back(char(n>>(8*i)));}}
+      |                                                                                                                                                                                                                                                 ~~~~~^~~~~
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:1871: CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1190: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11605: CMakeFiles/judas_planet_terrain_tests.dir/rule] Error 2
+gmake: *** [Makefile:3582: judas_planet_terrain_tests] Error 2

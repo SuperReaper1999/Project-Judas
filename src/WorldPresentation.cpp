@@ -132,6 +132,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         const auto t=world.PresentedTransform(s.id,SceneTransform{s.position,s.rotation,s.scale},alpha);
         DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha));
     }
+    if(options.includeTerrain)world.DrawPlanets(r);
     world.DrawDeformables(r,alpha);
     world.DrawPhysicalBalances(r);
     r.SetMaterialBindings({});
@@ -407,10 +408,13 @@ void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float /*a
 
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
                       const GameSession* session, const glm::mat4& view, const glm::mat4& projection,
-                      const glm::vec3& shadowFocus, float alpha) {
+                      const glm::vec3& shadowFocus, float alpha,float frameSeconds) {
     JUDAS_PROFILE_SCOPE("World render submission");
     // Existing runtime statistics may accumulate across frames. Observe this
     // submission's delta without resetting the engine's diagnostic state.
+    auto planetEye=world.view?world.view->pose.position:glm::vec3(glm::inverse(view)[3]);
+    const double planetFov=world.view?glm::radians(double(world.view->fov)):2*std::atan(1./double(projection[1][1]));
+    world.PreparePlanets(renderer,world.Settings().worldOrigin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height)),frameSeconds);
     const auto beforeStats = renderer.Stats();
     // One sample owns one immutable lighting/environment decision. Auxiliary
     // cameras never run scripts or advance an animation/fade between passes.

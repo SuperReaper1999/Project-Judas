@@ -1,0 +1,211 @@
+PASS Earth ground collision tiles cook and publish through ordinary PhysicsWorld
+PASS centimetre sampled surface is real raycast collision
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS moving collision interest remains ready
+PASS real CharacterMotor crosses collision tiles without falling or seam spikes
+PASS rebase preserves generation-safe collider and absolute transform
+PASS broadphase queries remain valid after translation
+PASS existing support survives chart change
+PASS cleared tiles retire old support handles safely
+PASS collision residency crosses cube face seam
+PASS face seam physical surface has no gap
+PASS collision residency crosses cube face seam
+PASS face seam physical surface has no gap
+PASS collision residency crosses cube face seam
+PASS face seam physical surface has no gap
+PASS optional planet component builds headlessly
+PASS runtime planet owns collision interest
+PASS script-owned world accepts bounded physical chart relocation
+PASS world origin change does not teleport character
+PASS RadicalGravity source translates independently of terrain support
+PASS absolute terrain descriptor never acquires a local translation
+PASS planet authoring preserves full descriptor through scene serialization
+PASS prefab named properties retain absolute surface definition
+PASS rebased runtime save captures planet and physical interest
+PASS saved scene reconstructs current double origin
+PASS fresh runtime builds saved absolute terrain
+PASS cold save restores actual collision before resumed movement
+PASS restored physical endpoint remains supported without analytic ground substitute
+PASS distant retained physical actors reject unsafe chart move atomically
+PASS planet destruction retires runtime tile owner
+PASS stale planet access fails safely
+MEASURE cold_collision_ms=19.069847 moving_interest_motor_fixed_ms=0.480530 colliders=0 support_steps=180 maximum_height_error_m=0.027680917
+SUMMARY 209 checks 0 failures

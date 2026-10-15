@@ -27,6 +27,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     ProfileFixedStep profileFixedStep(fixedDeltaTime);
     RuntimeWorld& world = session.World();
     const bool legacy = session.UsesLegacyGameplay();
+    world.CommitOrigin();
     world.UpdateNavigation(fixedDeltaTime);
     world.Liquids().BeginStep();
     world.FixedScripts(&window.Input(),fixedDeltaTime);

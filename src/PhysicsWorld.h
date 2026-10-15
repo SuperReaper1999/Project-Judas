@@ -200,6 +200,9 @@ public:
     bool ReadBodyContactSample(BodyHandle,std::vector<BodyContactSample>&,
         unsigned maximumContacts=32,unsigned maximumCandidates=64) const;
     void ClearTouchHistory();
+    // Fixed-boundary coordinate translation; handles, velocities, sleep, local
+    // contact anchors and joint warm starts retain their identities.
+    void ShiftOrigin(glm::dvec3 delta);
     // Massless character geometry participates in queries/events, never rigid response.
     BodyHandle CreateQueryCapsule(float radius,float halfHeight,const BodyTransform&);
     // Owner-thread fixed-step prephase: retain motor observations until the

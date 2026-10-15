@@ -1,0 +1,266 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 20%] Built target freetype
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target judas_materials
+[ 33%] Built target harfbuzz
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 40%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas
+[100%] Built target judas
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 10%] Built target freetype
+[ 15%] Built target judas_quickjs
+[ 20%] Built target judas_navigation_backend
+[ 20%] Built target judas_glad
+[ 20%] Built target judas_profiler
+[ 20%] Built target judas_audio_backend
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_ufbx
+[ 30%] Built target judas_imgui
+[ 30%] Built target judas_materials
+[ 80%] Built target judas_engine
+[ 85%] Built target judas_navigation_baker
+[ 90%] Built target judas_model_import
+[ 95%] Built target judas_world_authoring
+[ 95%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_export
+[100%] Built target judas_export
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 12%] Built target freetype
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[ 93%] Built target judas_engine
+[100%] Linking CXX executable judas_planet_application_tests
+[100%] Built target judas_planet_application_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_planet_world_tests
+[100%] Built target judas_planet_world_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target judas_profiler
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_planet_terrain_tests
+[100%] Built target judas_planet_terrain_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_planet_streaming_tests
+[100%] Built target judas_planet_streaming_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_origin_physics_tests
+[100%] Built target judas_origin_physics_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 26%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_character_motor_tests
+[100%] Built target judas_character_motor_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 12%] Built target freetype
+[ 18%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target judas_profiler
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[ 93%] Built target judas_engine
+[ 93%] Linking CXX executable judas_gravity_selection_tests
+[100%] Built target judas_gravity_selection_tests
+[  0%] Built target judas_profiler
+[  0%] Built target judas_app_icon
+[  0%] Linking CXX executable judas_world_coordinates_tests
+[100%] Built target judas_world_coordinates_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_joint_tests.dir/tests/JointTests.cpp.o
+[100%] Linking CXX executable judas_joint_tests
+[100%] Built target judas_joint_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_kinematic_tests.dir/tests/KinematicTests.cpp.o
+[100%] Linking CXX executable judas_kinematic_tests
+[100%] Built target judas_kinematic_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_cast_tests.dir/tests/PhysicsCastTests.cpp.o
+[100%] Linking CXX executable judas_physics_cast_tests
+[100%] Built target judas_physics_cast_tests
+[  0%] Built target judas_profiler
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/Broadphase.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/CollisionGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/CollisionAsset.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/Narrowphase.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsCastGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsWorld.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/tests/RigidContactTests.cpp.o
+[100%] Linking CXX executable judas_rigid_contact_tests
+[100%] Built target judas_rigid_contact_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 12%] Built target freetype
+[ 18%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_audio_backend
+[ 31%] Built target harfbuzz
+[ 31%] Built target judas_materials
+[ 93%] Built target judas_engine
+[ 93%] Building CXX object CMakeFiles/judas_collision_geometry_tests.dir/tests/CollisionGeometryTests.cpp.o
+[100%] Linking CXX executable judas_collision_geometry_tests
+[100%] Built target judas_collision_geometry_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_streaming_tests.dir/tests/WorldStreamingTests.cpp.o
+[100%] Linking CXX executable judas_streaming_tests
+[100%] Built target judas_streaming_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_save_storage_tests
+[100%] Built target judas_save_storage_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 11%] Built target freetype
+[ 17%] Built target judas_quickjs
+[ 23%] Built target judas_navigation_backend
+[ 23%] Built target judas_glad
+[ 23%] Built target judas_profiler
+[ 23%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Built target judas_materials
+[ 88%] Built target judas_engine
+[ 94%] Built target judas_navigation_baker
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_terrain_authoring_tests.dir/tests/TerrainAuthoringTests.cpp.o
+[100%] Linking CXX executable judas_terrain_authoring_tests
+[100%] Built target judas_terrain_authoring_tests
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 11%] Built target freetype
+[ 17%] Built target judas_quickjs
+[ 23%] Built target judas_navigation_backend
+[ 23%] Built target judas_glad
+[ 23%] Built target judas_profiler
+[ 23%] Built target judas_audio_backend
+[ 29%] Built target harfbuzz
+[ 29%] Built target judas_materials
+[ 88%] Built target judas_engine
+[ 94%] Built target judas_navigation_baker
+[100%] Built target judas_world_authoring
+[100%] Building CXX object CMakeFiles/judas_volume_terrain_tests.dir/tests/VolumeTerrainTests.cpp.o
+[100%] Linking CXX executable judas_volume_terrain_tests
+[100%] Built target judas_volume_terrain_tests

@@ -1,3 +1,4 @@
+#include "PlanetTiles.h"
 #include "PowertrainAuthoring.h"
 #include "SceneSession.h"
 #include "PerformanceProfiler.h"
@@ -405,6 +406,9 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     for (const SceneObject& o : scene.Objects()) {
         if(!ValidateCollisionPlacement(o,outError)||!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
+        if(o.planet){std::string e;if(!ValidatePlanetSettings(*o.planet,e))return fail(o,e);
+            if(o.body||o.characterMotor||o.deformable||o.ragdoll||o.wheel||o.parent||o.transform.position!=glm::vec3(0)||o.transform.rotation!=glm::quat(1,0,0,0)||o.transform.scale!=glm::vec3(1))return fail(o,"planet uses an absolute descriptor frame; owner must be an unparented identity transform without another physical producer");
+            m_planets.emplace(o.id,std::make_unique<PlanetTiles>(*o.planet,&m_physics,0,kAllCategories,o.tags));}
         m_hasScripts|=!o.scripts.empty();
         if(o.deformable){if(o.body||o.animation||o.ragdoll||o.characterMotor||o.transform.scale!=glm::vec3(1))return fail(o,"deformable owns node motion; owner cannot have another motion producer or nonunit scale");std::string error;if(!ValidDeformableSettings(*o.deformable,error)||!ValidateVisualAssets(o,error))return fail(o,error);if(m_assets){m_assets->AddRef(o.deformable->asset);m_referencedAssets.push_back(o.deformable->asset);m_assets->RequestDeformable(o.deformable->asset);}}
         m_hasLiquid|=!LiquidProperties(o).empty();
@@ -820,7 +824,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
     for(const auto& o:ScriptObjects())if(o.ui&&o.ui->enabled){std::string error;UI().Load(o.ui->asset,o.ui->name,o.id,error);}
-    for(auto& [id,info]:m_entityCategories){(void)id;info.tags=info.authoredTags;m_physics.SetBodyTags(info.body,info.tags);}
+    for(auto& [id,info]:m_entityCategories){info.tags=info.authoredTags;m_physics.SetBodyTags(info.body,info.tags);if(auto planet=m_planets.find(id);planet!=m_planets.end())planet->second->SetTags(info.tags);}
     // Every surviving entity returns to its definition's state at Full
     // fidelity (the policy re-decides on the next step). Destroyed entities
     // stay destroyed: destruction is permanent within a run.
@@ -1045,6 +1049,7 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
 bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     std::string error;
     if (!ValidateEntityDestruction(id, error)) { if (outError) *outError = error; return false; }
+    m_planets.erase(id);
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
     m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
@@ -1379,7 +1384,8 @@ LightSwitch* RuntimeWorld::FindLightSwitch(SceneObjectId id) {
 void RuntimeWorld::Destroy() {
     m_regionPending.clear();m_regionKinematicCommands.clear();m_regionAssets.clear();m_composed=false;
  JUDAS_PROFILE_SCOPE("World destroy"); PerformanceProfiler::Get().Boundary("World destroy");
-    m_scripts.reset();spawnStates.clear();
+    m_scripts.reset();m_planets.clear();
+    m_pendingOrigin.reset();m_originRevision=0;m_originError.clear();spawnStates.clear();
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
@@ -1486,6 +1492,7 @@ bool RuntimeWorld::AddTag(EntityId id,unsigned tag){
     auto it=m_entityCategories.find(id);const auto* entity=FindEntity(id);
     if(it==m_entityCategories.end()||!m_categories.tags.names.count(tag)||(entity&&entity->lifecycle==EntityLifecycle::Destroyed))return false;
     it->second.tags|=CategoryBit(tag);m_physics.SetBodyTags(it->second.body,it->second.tags);
+    if(auto planet=m_planets.find(id);planet!=m_planets.end())planet->second->SetTags(it->second.tags);
     // A motor's query capsule is separate from its ordinary rigid body. Do
     // not instantiate a lazy motor here; construction publishes TagsOf(id).
     if(auto motor=m_characters.find(id);motor!=m_characters.end())
@@ -1495,6 +1502,7 @@ bool RuntimeWorld::AddTag(EntityId id,unsigned tag){
 bool RuntimeWorld::RemoveTag(EntityId id,unsigned tag){
     auto it=m_entityCategories.find(id);if(it==m_entityCategories.end()||tag>=64)return false;
     it->second.tags&=~CategoryBit(tag);m_physics.SetBodyTags(it->second.body,it->second.tags);
+    if(auto planet=m_planets.find(id);planet!=m_planets.end())planet->second->SetTags(it->second.tags);
     // A motor's query capsule is separate from its ordinary rigid body. Do
     // not instantiate a lazy motor here; construction publishes TagsOf(id).
     if(auto motor=m_characters.find(id);motor!=m_characters.end())

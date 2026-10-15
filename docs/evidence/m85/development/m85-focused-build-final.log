@@ -1,0 +1,33 @@
+[  0%] Built target judas_icu_build
+[  7%] Built target judas_app_icon
+[ 21%] Built target freetype
+[ 21%] Built target judas_quickjs
+[ 28%] Built target judas_navigation_backend
+[ 28%] Built target judas_glad
+[ 28%] Built target judas_audio_backend
+[ 28%] Built target judas_profiler
+[ 28%] Built target harfbuzz
+[ 28%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Built target judas_planet_application_tests
+[  0%] Built target judas_icu_build
+[  7%] Built target judas_app_icon
+[ 21%] Built target freetype
+[ 21%] Built target judas_quickjs
+[ 28%] Built target judas_navigation_backend
+[ 28%] Built target judas_glad
+[ 28%] Built target judas_profiler
+[ 28%] Built target judas_audio_backend
+[ 28%] Built target harfbuzz
+[ 28%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_planet_world_tests.dir/tests/PlanetWorldTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/PlanetWorldTests.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/PlanetWorldTests.cpp:18:8: error: duplicate ‘const’
+   18 |  const const auto retained=physics.AliveBodyCount();check(!tiles.Collision(origin+V(motor.position)+V(8,0,0),origin,0)&&tiles.State().error.empty(),"bounded collision preparation reports not-ready without pretending it failed");check(physics.AliveBodyCount()==retained&&physics.Raycast(motor.position+glm::vec3(0,1,0),{0,-1,0},3).hit,"pending neighbour cooks keep existing physical support intact");bool caughtUp=false;for(int i=0;i<100&&!caughtUp;++i)caughtUp=tiles.Collision(origin+V(motor.position)+V(8,0,0),origin,2);check(caughtUp,"bounded neighbour preparation eventually publishes complete replacement");auto over=settings;over.maxCollisionTiles=4;PlanetTiles insufficient(over,&physics);auto oldCount=physics.AliveBodyCount();check(!insufficient.Collision(origin,origin)&&!insufficient.State().error.empty()&&physics.AliveBodyCount()==oldCount,"budget failure cannot remove or partially duplicate existing collision");auto huge=settings;huge.radius=1e10;huge.collisionSpacing=.02;PlanetTiles depthLimited(huge,&physics);check(!depthLimited.Collision({0,1e10,0},{0,1e10,0})&&!depthLimited.State().error.empty(),"collision depth never silently weakens requested resolution");
+      |        ^~~~~
+      |        -----
+gmake[3]: *** [CMakeFiles/judas_planet_world_tests.dir/build.make:79: CMakeFiles/judas_planet_world_tests.dir/tests/PlanetWorldTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:11652: CMakeFiles/judas_planet_world_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11659: CMakeFiles/judas_planet_world_tests.dir/rule] Error 2
+gmake: *** [Makefile:3595: judas_planet_world_tests] Error 2

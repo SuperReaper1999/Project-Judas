@@ -1,3 +1,4 @@
+#include "PlanetTiles.h"
 #include "CameraProjection.h"
 #include "WorldStreaming.h"
 #include "SaveService.h"
@@ -92,6 +93,10 @@ export class Entity {
  setAudioVelocity(velocity=null){return call('audioVelocity',this.id,velocity)}
  playAudioOneShot(){return call('audioOneShot',this.id)}
  setAudioEnabled(enabled){return call('audioEnabled',this.id,enabled)}
+ get planetState(){return call("planetInfo",this.id)}
+ planetSample(absolute){return call("planetSample",this.id,absolute)}
+ preparePlanetCollision(absolute){return call("planetCollision",this.id,absolute)}
+ clearPlanetCollision(){return call("planetClear",this.id)}
  get camera(){return call('cameraInfo',this.id)}
  get renderVisible(){return call('renderVisible',this.id)}
  set renderVisible(value){call('renderVisible',this.id,value)}
@@ -129,7 +134,7 @@ export class Entity {
 }
 export const audio={group:name=>call('audioGroup',name),setGroup:(name,settings,fadeSeconds=0)=>call('audioGroupSet',name,settings,fadeSeconds),get diagnostics(){return call('audioDiagnostics')}};
 export const entity=id=>id&&id!=='0'?new Entity(id):null;
-export const world={entity,get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),resetAppearance:()=>call('appearanceReset'),setView:(pose,fov=70,range={})=>call("setView",pose,fov,range),project:point=>call("projectViewport",point),get viewport(){return call("viewportSize")},clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
+export const world={entity,get origin(){return call("worldOrigin")},get originState(){return call("worldOriginState")},toAbsolute:point=>call("worldAbsolute",point),toLocal:point=>call("worldLocal",point),requestOrigin:point=>call("worldOriginRequest",point),get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),resetAppearance:()=>call('appearanceReset'),setView:(pose,fov=70,range={})=>call("setView",pose,fov,range),project:point=>call("projectViewport",point),get viewport(){return call("viewportSize")},clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
  spawnPrefab:(asset,transform={},options={})=>entity(call('spawn',asset,transform,options)),
  overlap:(min,max,filter={})=>call('overlap',min,max,filter).map(entity),
  sweepCapsule:(from,displacement,rotation={w:1,x:0,y:0,z:0},filter={})=>call('sweep',from,displacement,filter,rotation)};
@@ -520,6 +525,17 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(!s->world)return JS_ThrowTypeError(c,"world API unavailable in metadata context");
     auto& world=*s->world;
+    auto doubleVector=[&](JSValueConst value,glm::dvec3& p){for(int i=0;i<3;++i){auto n=JS_GetPropertyStr(c,value,i==0?"x":i==1?"y":"z");bool ok=JS_IsNumber(n)&&JS_ToFloat64(c,&p[i],n)==0&&std::isfinite(p[i]);JS_FreeValue(c,n);if(!ok)return false;}return true;};
+    auto preciseVector=[&](glm::dvec3 p){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,p.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,p.y));JS_SetPropertyStr(c,o,"z",JS_NewFloat64(c,p.z));return o;};
+    if(op=="worldOrigin")return preciseVector(world.Settings().worldOrigin);
+    if(op=="worldOriginState"){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"pending",JS_NewBool(c,world.OriginPending()));JS_SetPropertyStr(c,o,"revision",JS_NewFloat64(c,double(world.OriginRevision())));JS_SetPropertyStr(c,o,"error",JS_NewString(c,world.OriginError().c_str()));return o;}
+    if(op=="worldAbsolute"||op=="worldLocal"||op=="worldOriginRequest"){glm::dvec3 p;if(!doubleVector(arg(1),p))return JS_ThrowTypeError(c,"finite double position required");if(op=="worldOriginRequest"){std::string error;if(!world.RequestOrigin(p,error))return JS_ThrowTypeError(c,"%s",error.c_str());return JS_TRUE;}return preciseVector(op=="worldAbsolute"?world.Settings().worldOrigin+p:p-world.Settings().worldOrigin);}
+    if(op=="planetInfo"||op=="planetSample"||op=="planetCollision"||op=="planetClear"){
+        EntityId id=0;try{id=std::stoull(String(c,arg(1)));}catch(...){return JS_ThrowReferenceError(c,"invalid planet entity");}auto* planet=world.Planet(id);if(!planet)return JS_ThrowReferenceError(c,"stale entity or missing planet terrain");
+        if(op=="planetClear"){world.ClearPlanetCollision(id);return JS_TRUE;}
+        if(op=="planetSample"||op=="planetCollision"){glm::dvec3 point;if(!doubleVector(arg(2),point)||glm::length(point-planet->surface.settings.center)<1e-10)return JS_ThrowTypeError(c,"finite absolute surface point required");if(op=="planetCollision"){std::string error;bool ready=world.PlanetCollision(id,point,error);if(!ready&&!error.empty())return JS_ThrowTypeError(c,"%s",error.c_str());return JS_NewBool(c,ready);}auto sample=planet->surface.Sample(point);auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"position",preciseVector(sample.point));JS_SetPropertyStr(c,o,"normal",preciseVector(sample.normal));JS_SetPropertyStr(c,o,"height",JS_NewFloat64(c,sample.height));JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,sample.distance));return o;}
+        const auto& stats=planet->State();auto o=JS_NewObject(c);for(const auto& entry:std::vector<std::pair<const char*,double>>{{"radius",planet->surface.settings.radius},{"leaves",stats.leaves},{"resident",stats.resident},{"triangles",stats.triangles},{"colliders",stats.colliders},{"maximumPixelError",stats.maximumPixelError},{"prepareMs",stats.prepareMs},{"collisionMs",stats.collisionMs}})JS_SetPropertyStr(c,o,entry.first,JS_NewFloat64(c,entry.second));JS_SetPropertyStr(c,o,"center",preciseVector(planet->surface.settings.center));JS_SetPropertyStr(c,o,"collisionReady",JS_NewBool(c,stats.collisionReady));JS_SetPropertyStr(c,o,"budgetLimited",JS_NewBool(c,stats.budgetLimited));JS_SetPropertyStr(c,o,"error",JS_NewString(c,stats.error.c_str()));return o;
+    }
     if(op=="signalSubscribe"||op=="signalUnsubscribe"||op=="signalEmit"||op=="signalSend"||op=="signalStats")return s->SignalNative(op,argc,argv);
     if(op=="gravitySample"){glm::vec3 point;if(!ReadVec(c,arg(1),point))return JS_ThrowTypeError(c,"finite world position required");return Vec(c,world.Gravity().Sample(point));}
 

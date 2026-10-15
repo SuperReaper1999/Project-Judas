@@ -84,6 +84,7 @@ public:
     // Snaps presentation history to the current pose so the next frame
     // shows a reconstructed pose directly rather than interpolating to it.
     void SnapPresentation();
+    void ShiftOrigin(glm::dvec3 delta){for(auto* p:{&m_spawnPosition,&m_position,&m_previousPosition})*p=glm::vec3(glm::dvec3(*p)-delta);}
     bool IsLive() const { return m_handle.IsValid(); }
 
 private:

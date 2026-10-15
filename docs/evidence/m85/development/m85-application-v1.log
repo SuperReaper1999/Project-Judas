@@ -1,0 +1,4 @@
+/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/Scenes/earth.judas: scene line 8: missing required key 'sun-color'
+FAIL ordinary planetary application startup/reload/shutdown
+MEASURE frames=0 fixed_p95_ms=0.000000 fixed_max_ms=0.000000 render_p95_ms=0.000000 terrain_prepare_p95_ms=0.000000 terrain_prepare_max_ms=0.000000 collision_interest_p95_ms=0.000000
+SUMMARY 1 checks 1 failures

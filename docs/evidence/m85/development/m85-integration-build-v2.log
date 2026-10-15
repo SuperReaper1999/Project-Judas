@@ -1,0 +1,153 @@
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_quickjs
+[ 20%] Built target freetype
+[ 26%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1576:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1576 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1576:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1576 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1593:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1593 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1593:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1593 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+In file included from /usr/include/glm/detail/type_vec3.hpp:435,
+                 from /usr/include/glm/ext/vector_bool3.hpp:5,
+                 from /usr/include/glm/vec3.hpp:5,
+                 from /usr/include/glm/glm.hpp:118,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:11,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/SaveStorage.h:3,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp:1:
+In member function ‘constexpr T& glm::vec<3, T, Q>::operator[](length_type) [with T = double; glm::qualifier Q = glm::packed_highp]’,
+    inlined from ‘void SaveArchive::Field(glm::vec<L, T, Q>&) [with int L = 3; T = double; glm::qualifier Q = glm::packed_highp]’ at /home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:37:109,
+    inlined from ‘void SaveArchive::operator()(T& ...) [with T = {long unsigned int, bool, glm::vec<3, double, glm::packed_highp>}]’ at /home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:24:59,
+    inlined from ‘static bool WorldPersistence::Restore(RuntimeWorld&, const std::map<std::__cxx11::basic_string<char>, SaveChunk>&, std::string&)’ at /home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp:283:545:
+/usr/include/glm/detail/type_vec3.inl:177:24: warning: ‘focus’ may be used uninitialized [-Wmaybe-uninitialized]
+  177 |                 return x;
+      |                        ^
+/home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp: In static member function ‘static bool WorldPersistence::Restore(RuntimeWorld&, const std::map<std::__cxx11::basic_string<char>, SaveChunk>&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp:283:538: note: ‘focus’ declared here
+  283 | bool WorldPersistence::Restore(RuntimeWorld& w,const std::map<std::string,SaveChunk>& chunks,std::string& error){JUDAS_PROFILE_SCOPE("Save restoration");try{if(!w.m_planets.empty()){auto it=chunks.find("planets");if(it==chunks.end()||it->second.version!=1)throw std::runtime_error("required planet collision interest missing/newer");SaveArchive a(it->second.data);uint32_t n=0;a(n);a.Require(n==w.m_planets.size(),"planet owner count mismatch");std::set<EntityId> seen;for(uint32_t i=0;i<n;++i){EntityId id=0;bool ready=false;glm::dvec3 focus;a(id,ready,focus);a.Require(w.m_planets.count(id)&&seen.insert(id).second,"invalid planet owner");if(ready){std::string e;a.Require(w.PlanetCollision(id,focus,e),"saved planet collision preparation failed: "+e);}}a.Finish();}std::string deferredJointContinuation;bool hasJointContinuation=false;const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){auto it=chunks.find(name);if(it==chunks.end()||(it->second.version!=1&&!(name=="articulation"&&(it->second.version==2||it->second.version==3||it->second.version==4))))throw std::runtime_error("required participant missing/newer: "+name);ProfileScope participant(PerformanceProfiler::Get().Intern("Save restore "+name));SaveArchive a(it->second.data);if(name=="articulation"){ArticulationExtended(w,a,it->second.version,&deferredJointContinuation);hasJointContinuation=it->second.version>=4;}else fn(w,a);a.Finish();}
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^~~~~
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 46%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_planet_terrain_tests.dir/tests/PlanetTerrainTests.cpp.o
+[100%] Linking CXX executable judas_planet_terrain_tests
+[100%] Built target judas_planet_terrain_tests
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[ 20%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 33%] Built target judas_glad
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_planet_world_tests.dir/tests/PlanetWorldTests.cpp.o
+[100%] Linking CXX executable judas_planet_world_tests
+[100%] Built target judas_planet_world_tests
+[  0%] Built target judas_icu_build
+[  5%] Built target judas_app_icon
+[ 15%] Built target freetype
+[ 15%] Built target judas_quickjs
+[ 21%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 26%] Built target judas_ufbx
+[ 31%] Built target judas_imgui
+[ 31%] Built target judas_materials
+[ 84%] Built target judas_engine
+[ 84%] Building CXX object CMakeFiles/judas_navigation_baker.dir/src/NavigationBake.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCollision.cpp.o
+[ 84%] Linking CXX static library libjudas_navigation_baker.a
+[ 89%] Built target judas_navigation_baker
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/NavigationDependencies.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ContentReferences.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[ 89%] Linking CXX static library libjudas_model_import.a
+[ 89%] Built target judas_model_import
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/AuthoringDocument.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/SkeletonAuthoring.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/RecipePreview.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/TerrainAuthoring.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/VolumeTerrain.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ModAuthoring.cpp.o
+[ 94%] Linking CXX static library libjudas_world_authoring.a
+[ 94%] Built target judas_world_authoring
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorApplication.cpp: In member function ‘void EditorApplication::FrameEditMode(float)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorApplication.cpp:1100:30: error: no matching function for call to ‘PlanetTiles::Prepare(Renderer&, const glm::vec<3, double, glm::packed_highp>&, double, int, double)’
+ 1100 |             p.second->Prepare(renderer,eye,2*std::atan(1./double(renderer.ProjectionMatrix()[1][1])),900,1./60);p.second->Draw(renderer,scene.Settings().worldOrigin);}
+      |             ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/EditorApplication.cpp:1100:30: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/editor/EditorApplication.h:1,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/editor/EditorApplication.cpp:9:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/../PlanetTiles.h:18:7: note: candidate 1: ‘void PlanetTiles::Prepare(Renderer&, glm::dvec3, glm::dvec3, double, unsigned int, double)’
+   18 |  void Prepare(Renderer&,glm::dvec3 eye,glm::dvec3 origin,double fov,unsigned pixels,double dt);
+      |       ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/../PlanetTiles.h:18:7: note: candidate expects 6 arguments, 5 provided
+gmake[3]: *** [CMakeFiles/judas_editor.dir/build.make:107: CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1346: CMakeFiles/judas_editor.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1353: CMakeFiles/judas_editor.dir/rule] Error 2
+gmake: *** [Makefile:345: judas_editor] Error 2

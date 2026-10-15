@@ -1,5 +1,6 @@
 #pragma once
 #include "Deformable.h"
+#include "PlanetTerrain.h"
 #include "Classification.h"
 #include "Material.h"
 #include "GravitySelection.h"
@@ -306,6 +307,7 @@ struct SceneSocketComponent {SceneObjectId target=0;std::string joint;SceneTrans
 struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings;};
 
 struct SceneObject {
+    std::optional<PlanetSettings> planet;
     std::optional<GravitySelection> gravitySelection;
     bool renderVisible=true; // local entity scope; does not deactivate children or simulation
     std::optional<DeformableSettings> deformable;

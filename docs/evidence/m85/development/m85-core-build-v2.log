@@ -1,0 +1,14 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[ 13%] Built target freetype
+[ 13%] Built target judas_quickjs
+[ 20%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_planet_terrain_tests.dir/tests/PlanetTerrainTests.cpp.o
+[100%] Linking CXX executable judas_planet_terrain_tests
+[100%] Built target judas_planet_terrain_tests

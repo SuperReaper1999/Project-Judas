@@ -278,3 +278,9 @@ fixedUpdate(dt) {
 The ordinary [kinematic lab](../../projects/kinematic_lab/) executes these public
 VM calls with dynamic crates and motor supports. Its retained evidence records
 measured bounds and validation separately from this API contract.
+
+## M85 absolute terrain and live origins
+
+See [planetary terrain and local origins](planetary-terrain.md) for the new coordinate APIs, explicit collision interest, capture-origin retention and supported-component limits.
+
+M85 coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).

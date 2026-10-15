@@ -1,0 +1,71 @@
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[ 20%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+In file included from /usr/include/c++/15/memory:80,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/MeshData.h:5,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/Deformable.h:4,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/Scene.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/NavigationAsset.h:3,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/NavigationSystem.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h:1,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/WorldRegions.cpp:1:
+/usr/include/c++/15/bits/unique_ptr.h: In instantiation of ‘void std::default_delete<_Tp>::operator()(_Tp*) const [with _Tp = PlanetTiles]’:
+/usr/include/c++/15/bits/unique_ptr.h:398:17:   required from ‘std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = PlanetTiles; _Dp = std::default_delete<PlanetTiles>]’
+  398 |           get_deleter()(std::move(__ptr));
+      |           ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+/usr/include/c++/15/bits/stl_pair.h:302:12:   required from ‘void std::__new_allocator<_Tp>::destroy(_Up*) [with _Up = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _Tp = std::_Rb_tree_node<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >]’
+  302 |     struct pair
+      |            ^~~~
+/usr/include/c++/15/bits/alloc_traits.h:696:15:   required from ‘static void std::allocator_traits<std::allocator<_Tp1> >::destroy(allocator_type&, _Up*) [with _Up = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _Tp = std::_Rb_tree_node<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; allocator_type = std::allocator<std::_Rb_tree_node<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > > >]’
+  696 |           __a.destroy(__p);
+      |           ~~~~~~~~~~~^~~~~
+/usr/include/c++/15/bits/stl_tree.h:1265:29:   required from ‘void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_destroy_node(_Node_ptr) [with _Key = long unsigned int; _Val = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _KeyOfValue = std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Compare = std::less<long unsigned int>; _Alloc = std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Node_ptr = std::__rb_tree::_Node_traits<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >, std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >*>::_Node*]’
+ 1265 |         _Node_alloc_traits::destroy(_M_get_Node_allocator(), __p->_M_valptr());
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/15/bits/stl_tree.h:1273:2:   required from ‘void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_drop_node(_Node_ptr) [with _Key = long unsigned int; _Val = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _KeyOfValue = std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Compare = std::less<long unsigned int>; _Alloc = std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Node_ptr = std::__rb_tree::_Node_traits<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >, std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >*>::_Node*]’
+ 1273 |         _M_destroy_node(__p);
+      |         ^~~~~~~~~~~~~~~
+/usr/include/c++/15/bits/stl_tree.h:3116:7:   required from ‘void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_erase_aux(const_iterator) [with _Key = long unsigned int; _Val = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _KeyOfValue = std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Compare = std::less<long unsigned int>; _Alloc = std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; const_iterator = std::_Rb_tree<long unsigned int, std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >, std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >, std::less<long unsigned int>, std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > > >::const_iterator]’
+ 3116 |       _M_drop_node(static_cast<_Node&>(*__y)._M_node_ptr());
+      |       ^~~~~~~~~~~~
+/usr/include/c++/15/bits/stl_tree.h:3130:16:   required from ‘void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_erase_aux(const_iterator, const_iterator) [with _Key = long unsigned int; _Val = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _KeyOfValue = std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Compare = std::less<long unsigned int>; _Alloc = std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; const_iterator = std::_Rb_tree<long unsigned int, std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >, std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >, std::less<long unsigned int>, std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > > >::const_iterator]’
+ 3130 |           _M_erase_aux(__first++);
+      |           ~~~~~~~~~~~~^~~~~~~~~~~
+/usr/include/c++/15/bits/stl_tree.h:3141:19:   required from ‘std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::size_type std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::erase(const _Key&) [with _Key = long unsigned int; _Val = std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> >; _KeyOfValue = std::_Select1st<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; _Compare = std::less<long unsigned int>; _Alloc = std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; size_type = long unsigned int]’
+ 3141 |       _M_erase_aux(__p.first, __p.second);
+      |       ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/15/bits/stl_map.h:1159:26:   required from ‘std::map<_Key, _Tp, _Compare, _Alloc>::size_type std::map<_Key, _Tp, _Compare, _Alloc>::erase(const key_type&) [with _Key = long unsigned int; _Tp = std::unique_ptr<PlanetTiles>; _Compare = std::less<long unsigned int>; _Alloc = std::allocator<std::pair<const long unsigned int, std::unique_ptr<PlanetTiles> > >; size_type = long unsigned int; key_type = long unsigned int]’
+ 1159 |       { return _M_t.erase(__x); }
+      |                ~~~~~~~~~~^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldRegions.cpp:108:20:   required from here
+  108 |     m_planets.erase(id);
+      |     ~~~~~~~~~~~~~~~^~~~
+/usr/include/c++/15/bits/unique_ptr.h:90:23: error: invalid application of ‘sizeof’ to incomplete type ‘PlanetTiles’
+   90 |         static_assert(sizeof(_Tp)>0,
+      |                       ^~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:597: CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1196: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11695: CMakeFiles/judas_planet_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:3608: judas_planet_application_tests] Error 2

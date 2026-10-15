@@ -1,4 +1,4 @@
-/** Current JudasJS through M81 Experimental candidate. M80 has Linux human acceptance.
+/** Current JudasJS through M85 Experimental candidate. M85 human review is pending.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -152,6 +152,11 @@ declare module "judas" {
     clear():boolean;
   }
   export class Entity {
+    readonly planetState:PlanetState;
+    planetSample(absolute:Vec3):PlanetSample;
+    preparePlanetCollision(absolute:Vec3):boolean;
+    clearPlanetCollision():boolean;
+
     /** Local entity render gate; does not hide children or change simulation. */
     renderVisible:boolean;
     /** Independent Render component gate; throws when that component is absent. */
@@ -232,7 +237,17 @@ declare module "judas" {
   }
   /** Does not check existence; null for absent/falsy input or string "0". Use .valid. */
   export function entity(id: string | number | bigint | null | undefined): Entity | null;
+  export interface OriginState {readonly pending:boolean;readonly revision:number;readonly error:string}
+  export interface PlanetState {readonly radius:number;readonly center:Vec3;readonly leaves:number;readonly resident:number;readonly triangles:number;readonly colliders:number;readonly maximumPixelError:number;readonly prepareMs:number;readonly collisionMs:number;readonly collisionReady:boolean;readonly budgetLimited:boolean;readonly error:string}
+  export interface PlanetSample {readonly position:Vec3;readonly normal:Vec3;readonly height:number;readonly distance:number}
   export const world: {
+    /** Absolute binary64 origin; all ordinary transform/query positions remain local. */
+    readonly origin:Vec3;
+    readonly originState:OriginState;
+    toAbsolute(point:Vec3):Vec3;
+    toLocal(absolute:Vec3):Vec3;
+    /** Queue a 512-m quantized origin at the next authoritative boundary. Throws if unsupported. */
+    requestOrigin(absolute:Vec3):boolean;
     entity: typeof entity;
     readonly appearance:Appearance;
     setAppearance(settings:Partial<AppearanceSettings>):boolean;

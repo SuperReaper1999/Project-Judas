@@ -1,5 +1,23 @@
 # Architecture
 
+## Current Experimental — M85 planetary terrain candidate
+
+[M85](M85_PLANETARY_TERRAIN.md) adds an optional absolute binary64 cube-sphere
+surface, budgeted runtime quadtrees, triangle-parent geomorphs and cross-face
+edge welding. Physics uses independent nearby ordinary cooked triangle tiles;
+CharacterMotor and gravity remain generic existing consumers. No Earth-specific
+branch or global float planet collider exists. [JudasJS origin APIs](judasjs/planetary-terrain.md)
+translate a checked subset of active physics/presentation state at fixed boundaries.
+M59 retained records carry their capture origin when needed; save slots reconstruct
+derived collision before resuming. Unsupported component combinations explicitly
+reject live origin shifts. This is a bounded local-chart foundation, not universal
+rebasing of every subsystem or a global streamed DEM/volumetric planet database.
+Human M85 acceptance and Windows M85 validation remain pending.
+
+The following milestone sections are retained context; consult their individual
+acceptance records rather than interpreting an old candidate heading as current
+repository-wide validation status.
+
 ## Current Experimental — M83 candidate; human review pending
 
 [M83 mechanical damage](M83_MECHANICAL_DAMAGE.md) extends the existing dynamic

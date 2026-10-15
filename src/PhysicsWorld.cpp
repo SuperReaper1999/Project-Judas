@@ -220,7 +220,7 @@ struct PhysicsWorld::Impl {
     std::vector<PhysicsWorld::DebugContact> lastStepContacts;
     using TouchKey=std::pair<unsigned,unsigned>;
     std::map<TouchKey,PhysicsWorld::TouchEvent> previousTouches,stepTouches,preStepQueryTouches;
-    bool queryTouchesPending=false,collectingPreStepQueries=false,coupledStep=false;
+    bool queryTouchesPending=false,collectingPreStepQueries=false,coupledStep=false,stepping=false;
     std::vector<PhysicsWorld::TouchEvent> touchEvents;
     void Observe(unsigned a,unsigned b,const Contact& c,float impulse=0,bool preStep=false) {
         auto ha=MakeHandle(a),hb=MakeHandle(b);
@@ -2222,6 +2222,8 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     if(coupling&&(!coupling->iterations||coupling->iterations>64))throw std::invalid_argument("invalid velocity coupling quality");
     JUDAS_PROFILE_SCOPE("Rigid physics");
     Impl& w = *m_impl;
+    if(w.stepping)throw std::logic_error("recursive physics step");
+    struct StepGuard {bool& flag;explicit StepGuard(bool& f):flag(f){flag=true;}~StepGuard(){flag=false;}} guard(w.stepping);
     const Clock::time_point stepStart = Clock::now();
     w.completedObservationsReady=false;w.restoredCompletedObservations=false;
     for(auto& joint:w.joints)if(joint.restoredContinuationDt>0){
@@ -3226,3 +3228,15 @@ void PhysicsWorld::PersistSleep(SaveArchive& a,BodyHandle h){auto* b=m_impl->Get
 
 bool PhysicsWorld::GetPhysicalMaterial(BodyHandle h,std::string& id,float& friction,float& restitution)const{auto* b=m_impl?m_impl->Get(h):nullptr;if(!b)return false;id=b->physicalMaterial;friction=b->friction;restitution=b->restitution;return true;}
 bool PhysicsWorld::SetPhysicalMaterial(BodyHandle h,const std::string& id,float friction,float restitution){auto* b=m_impl?m_impl->Get(h):nullptr;if(!b||!std::isfinite(friction)||friction<0||!std::isfinite(restitution)||restitution<0||restitution>1)return false;if(b->physicalMaterial==id&&b->friction==friction&&b->restitution==restitution)return true;m_impl->InvalidateRestoredContinuation(h.id&Impl::kSlotMask);Wake(h);b->physicalMaterial=id;b->friction=friction;b->restitution=restitution;const auto slot=h.id&Impl::kSlotMask;auto remove=[&](auto& cache){cache.erase(std::remove_if(cache.begin(),cache.end(),[&](const auto& c){return c.key.slotA==slot||c.key.slotB==slot;}),cache.end());};remove(m_impl->contactCache);remove(m_impl->pendingCache);remove(m_impl->completedContactObservations);return true;}
+
+void PhysicsWorld::ShiftOrigin(glm::dvec3 delta) {
+ if(!std::isfinite(delta.x)||!std::isfinite(delta.y)||!std::isfinite(delta.z)||glm::any(glm::greaterThan(glm::abs(delta),glm::dvec3(1e12))))throw std::invalid_argument("invalid origin translation");
+ auto& w=*m_impl;if(w.stepping||w.coupledStep)throw std::logic_error("origin translation requires completed fixed boundary");
+ const auto shift=[&](glm::vec3& p){p=glm::vec3(glm::dvec3(p)-delta);};
+ for(auto slot:w.aliveSlots){auto& b=w.bodies[slot];shift(b.rigidBody.position);shift(b.previousPosition);shift(b.kinematic.target.position);b.motion.ShiftOrigin(delta);b.currentBound.valid=b.previousBound.valid=false;w.InvalidateImpactPose(slot);}
+ for(auto& j:w.joints)if(!j.state.settings.bodyB.IsValid())shift(j.state.settings.anchorB);
+ for(auto& c:w.lastStepContacts)shift(c.point);
+ for(auto* events:{&w.previousTouches,&w.stepTouches,&w.preStepQueryTouches})for(auto& entry:*events)shift(entry.second.point);
+ for(auto& e:w.touchEvents)shift(e.point);
+ w.tree.ShiftOrigin(delta);
+}

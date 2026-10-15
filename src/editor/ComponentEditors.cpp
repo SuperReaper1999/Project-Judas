@@ -917,8 +917,33 @@ ComponentEditor Make(const char* name, char indicator, std::optional<T> SceneObj
 }
 }  // namespace
 
+namespace {
+void DrawPlanet(EditorDocument& doc,SceneObject& o,EditorPanelState&){
+ auto candidate=*o.planet;bool changed=false;
+ changed|=ImGui::InputDouble("Radius (m)",&candidate.radius,10,1000,"%.8f");
+ changed|=ImGui::InputScalarN("Absolute centre",ImGuiDataType_Double,&candidate.center.x,3);
+ changed|=ImGui::InputDouble("Screen error (pixels)",&candidate.pixelError,.25,1);
+ changed|=ImGui::InputDouble("Collision spacing (m)",&candidate.collisionSpacing,.05,.25);
+ changed|=ImGui::InputDouble("Collision interest radius (m)",&candidate.collisionRadius,1,10);
+ int budget=int(candidate.maxTiles);if(ImGui::InputInt("Visual leaf budget",&budget)){candidate.maxTiles=unsigned(std::max(6,budget));candidate.maxResident=std::max(candidate.maxResident,candidate.maxTiles*2);changed=true;}
+ if(ImGui::TreeNode("Procedural height bands")){
+  for(size_t i=0;i<candidate.bands.size();++i){ImGui::PushID(int(i));auto& b=candidate.bands[i];changed|=ImGui::InputDouble("Amplitude (m)",&b.amplitude,.1,10,"%.9g");changed|=ImGui::InputScalarN("Wave (radians/metre)",ImGuiDataType_Double,&b.wave.x,3);if(ImGui::SmallButton("Remove band")){candidate.bands.erase(candidate.bands.begin()+i);changed=true;ImGui::PopID();break;}ImGui::Separator();ImGui::PopID();}
+  if(candidate.bands.size()<16&&ImGui::Button("Add height band")){candidate.bands.push_back({10,{.0001,0,.0001}});changed=true;}ImGui::TreePop();
+ }
+ if(ImGui::TreeNode("Authored height patches")){
+  for(size_t i=0;i<candidate.patches.size();++i){ImGui::PushID(int(i));auto& p=candidate.patches[i];changed|=ImGui::InputScalarN("Model direction",ImGuiDataType_Double,&p.direction.x,3);changed|=ImGui::InputDouble("Half width (m)",&p.extent,1,10);
+   static int cell[2]{0,0};ImGui::InputInt2("Sample column / row",cell);for(auto& c:cell)c=std::clamp(c,0,int(p.resolution)-1);changed|=ImGui::InputDouble("Sample elevation (m)",&p.heights[size_t(cell[1])*p.resolution+cell[0]],.01,.1,"%.9g");ImGui::Text("%u x %u embedded source samples",p.resolution,p.resolution);
+   if(ImGui::SmallButton("Remove patch")){candidate.patches.erase(candidate.patches.begin()+i);changed=true;ImGui::PopID();break;}ImGui::Separator();ImGui::PopID();}
+  if(candidate.patches.size()<64&&ImGui::Button("Add 5 x 5 height patch")){PlanetHeightPatch p;p.extent=20;p.resolution=5;p.heights.assign(25,0);candidate.patches.push_back(std::move(p));changed=true;}ImGui::TreePop();
+ }
+ static std::string error;if(changed&&ValidatePlanetSettings(candidate,error)){doc.BeginEdit();o.planet=candidate;doc.CommitEdit();}
+ if(!error.empty())ImGui::TextWrapped("%s",error.c_str());
+ ImGui::TextWrapped("Absolute cube-sphere. Owner transform must remain identity. Bands and raster samples are editable above; external data can use planet.surface in the scene text. Physical collision interests are supplied by project scripts; no global physics mesh is allocated.");
+}
+}
 const std::vector<ComponentEditor>& ComponentEditorRegistry() {
     static const std::vector<ComponentEditor> registry = {
+        Make<PlanetSettings>("Planet terrain",'T',&SceneObject::planet,DrawPlanet),
         Make<DeformableSettings>("Deformable",'D',&SceneObject::deformable,DrawDeformable),
         Make<LiquidBasinSettings>("Liquid basin",'Q',&SceneObject::liquidBasin,DrawLiquidBasin),
         Make<LiquidContainerSettings>("Liquid container",'C',&SceneObject::liquidContainer,DrawLiquidContainer),

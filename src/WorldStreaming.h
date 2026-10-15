@@ -71,6 +71,8 @@ public:
     void Advance(bool paused);
     // Only committed residency is archived; partial installation/unload defers capture.
     bool SaveReady() const;
+    bool CanChangeOrigin(std::string&) const;
+    void ShiftOrigin(glm::dvec3);
     void ResumeOwnership();
     unsigned ArchiveVersion()const;
     void Persist(class SaveArchive&,unsigned version=1);

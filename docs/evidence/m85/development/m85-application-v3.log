@@ -1,0 +1,32 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetary Terrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/planetary_terrain_lab.judasproj)
+Scene: Planetary Terrain Lab - radius 6371 km (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+PASS ordinary JS spawns a real supported motor on Earth-sized terrain
+PASS visual and physical residency obey independent budgets
+PASS actual planetary lab frame captured
+PASS public prefab throw creates a real dynamic body
+PASS thrown body collides with actual curved terrain
+PASS ordinary save accepts planet project
+PASS durable planet save includes collision interests
+Runtime outer services: deformable participant does not match snapshot components
+LOAD deformable participant does not match snapshot components
+FAIL cold staged planet restore publishes a fresh RuntimeWorld
+PASS restored character endpoint remains physically supported
+PASS script camera visits orbit without replacing scene or terrain source
+PASS actual planetary lab frame captured
+PASS public script state restored without private dispatch
+PASS actual planetary lab frame captured
+PASS public script state restored without private dispatch
+PASS orbital-to-ground traversal reinstalls normal collision
+PASS public script state restored without private dispatch
+PASS cube-face boundary landing uses actual rotated contact and RadicalGravity
+PASS different planetary chart commits a real double origin shift
+PASS face boundary gravity is not universal world Y
+PASS actual planetary lab frame captured
+PASS physical movement stays supported across independent cube-face tiles
+PASS ordinary scene reload resets origin and all tile owners
+PASS ordinary planetary application startup/reload/shutdown
+MEASURE frames=824 fixed_p95_ms=1.279647 fixed_max_ms=226.227851 render_p95_ms=132.591931 terrain_prepare_p95_ms=130.536710 terrain_prepare_max_ms=166.203832 collision_interest_p95_ms=0.261452
+SUMMARY 23 checks 1 failures

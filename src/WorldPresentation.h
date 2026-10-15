@@ -52,7 +52,7 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, const Game
 // playing, the editor camera otherwise).
 void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWorld& world,
                       const GameSession* session, const glm::mat4& view, const glm::mat4& projection,
-                      const glm::vec3& shadowFocus, float presentationAlpha);
+                      const glm::vec3& shadowFocus, float presentationAlpha,float frameSeconds=1.f/60);
 
 // The fluid surface mesh is rebuilt from presented particle positions each
 // frame; call before RenderWorldFrame when the world has fluid.

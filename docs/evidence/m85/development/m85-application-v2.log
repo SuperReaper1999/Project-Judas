@@ -1,0 +1,13 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetary Terrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/planetary_terrain_lab.judasproj)
+Scene: Planetary Terrain Lab - radius 6371 km (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+script asset=46470c1a73b91250f469397a69460be3 entity=10 slot=1 module: ReferenceError: unregistered script import: Assets/scripts/math.js
+
+SCRIPT ReferenceError: unregistered script import: Assets/scripts/math.js
+
+FAIL planetary project scripts stay healthy
+PASS ordinary planetary application startup/reload/shutdown
+MEASURE frames=1 fixed_p95_ms=0.000000 fixed_max_ms=0.000000 render_p95_ms=0.000000 terrain_prepare_p95_ms=0.000000 terrain_prepare_max_ms=0.000000 collision_interest_p95_ms=0.000000
+SUMMARY 2 checks 1 failures

@@ -1,0 +1,48 @@
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Planetary Terrain Lab (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/planetary_terrain_lab.judasproj)
+Scene: Planetary Terrain Lab - radius 6371 km (/home/conner/Documents/GitHub/Project-Judas/projects/planetary_terrain_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS ordinary JS spawns a real supported motor on Earth-sized terrain
+PASS visual and physical residency obey independent budgets
+PASS actual planetary lab frame captured
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS public prefab throw creates a real dynamic body
+PASS thrown body collides with actual curved terrain
+PASS ordinary save accepts planet project
+PASS durable planet save includes collision interests
+PASS cold staged planet restore publishes a fresh RuntimeWorld
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS restored character endpoint remains physically supported
+PROBE restored displacement=1.265705156 surface_distance=0.348211898 velocity=2.467869282
+PASS restored rolling probe follows actual velocity while contacting derived terrain
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS script camera visits orbit without replacing scene or terrain source
+PASS actual planetary lab frame captured
+PASS public script state restored without private dispatch
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS actual planetary lab frame captured
+PASS public script state restored without private dispatch
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS orbital-to-ground traversal reinstalls normal collision
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS public script state restored without private dispatch
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS cube-face boundary landing uses actual rotated contact and RadicalGravity
+PASS different planetary chart commits a real double origin shift
+PASS face boundary gravity is not universal world Y
+PASS actual planetary lab frame captured
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS actual mixed-LOD morph grids agree across independently located neighbouring faces/tiles
+PASS physical movement stays supported across independent cube-face tiles
+PASS save after origin changes retains nonresident station capture frame
+PASS save service accepts version-7 streaming retention with rebased planet
+PASS rebased cold-save endpoint remains physically supported
+PASS ordinary scene reload resets origin and all tile owners
+PASS ordinary planetary application startup/reload/shutdown
+MEASURE frames=860 fixed_p95_ms=1.663690 fixed_max_ms=9.829371 render_p95_ms=20.661734 terrain_prepare_p95_ms=19.233247 terrain_prepare_max_ms=253.158677 collision_interest_p95_ms=0.186058
+MEASURE cpu_frame_p50_ms=10.468621 cpu_frame_p95_ms=24.679244 cpu_frame_max_ms=281.527122 steady_ground_render_p95_ms=16.900924 max_leaves=384 max_resident=500 max_colliders=34
+MEASURE maximum_mixed_lod_seam_m=1.31708901597e-09
+MEASURE select_p95_ms=1.997996 build_p95_ms=3.640803 upload_p95_ms=18.033800
+SUMMARY 37 checks 0 failures

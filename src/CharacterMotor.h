@@ -42,6 +42,7 @@ public:
     BodyHandle observationBody; // massless geometry registration owned by RuntimeWorld
     CharacterMotionResult result;
     void Reset(glm::vec3 p,glm::quat q);
+    void ShiftOrigin(glm::dvec3 delta){position=glm::vec3(glm::dvec3(position)-delta);supportOrigin=glm::vec3(glm::dvec3(supportOrigin)-delta); }
     // Once after the ordinary rigid step. Velocity is WORLD-space control
     // velocity INCLUDING the last support velocity; support changes are
     // composed once. A departing motor retains its inherited world motion.

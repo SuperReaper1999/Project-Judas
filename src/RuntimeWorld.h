@@ -33,6 +33,7 @@
 #include "SkeletalAnimation.h"
 #include "RuntimeUI.h"
 
+class PlanetTiles;
 class SceneSession;
 class RadialTerrain;
 class ResourceManager;
@@ -240,6 +241,11 @@ public:
     // resource manager. On failure nothing is left allocated and `outError`
     // says which object/component could not be realised.
     bool Build(const Scene& scene, ResourceManager* resources, std::string& outError, const ProjectClassification* categories=nullptr,const ProjectNavigation* navigation=nullptr,bool runtimeSnapshot=false);
+    void PreparePlanets(Renderer&,glm::dvec3 eye,double fov,unsigned pixels,double dt)const;
+    void DrawPlanets(Renderer&)const;
+    const PlanetTiles* Planet(EntityId)const;
+    bool PlanetCollision(EntityId,glm::dvec3 focus,std::string& error);
+    void ClearPlanetCollision(EntityId);
     ResourceManager* Resources() const { return m_assets; }
     void Destroy();
     bool IsBuilt() const { return m_built; }
@@ -447,6 +453,11 @@ public:
     // across reconstruction — refresh whenever EntityVersion() changes).
     std::vector<BodyHandle> PickableBodies() const;
     const SceneSettings& Settings() const { return m_settings; }
+    bool RequestOrigin(glm::dvec3 absolute,std::string&);
+    bool CommitOrigin();
+    uint64_t OriginRevision()const{return m_originRevision;}
+    const std::string& OriginError()const{return m_originError;}
+    bool OriginPending()const{return m_pendingOrigin.has_value();}
 
     // Name of the scene object a body belongs to, or "" if unknown.
     std::string NameOfBody(BodyHandle handle) const;
@@ -620,7 +631,12 @@ private:
     mutable unsigned m_entityIndexVersion=~0u;
     mutable size_t m_entityIndexMainSize=~size_t(0),m_entityIndexExtraSize=~size_t(0);
     SceneSettings m_settings;
+    std::optional<glm::dvec3> m_pendingOrigin;
+    uint64_t m_originRevision=0;
+    std::string m_originError;
+    bool CanChangeOrigin(glm::dvec3,std::string&)const;
     std::string m_baselineFingerprint;
+    std::map<EntityId,std::unique_ptr<PlanetTiles>> m_planets;
     ResourceManager* m_assets = nullptr;
 
     const GravityField* SelectedGravitySource(EntityId) const;

@@ -88,7 +88,7 @@ A project's `world-manifest` is a stable `.judasworld` asset ID. Manifest versio
 uses unit-scale placements: an absolute **double** source-origin destination and
 quaternion `x y z w`. Source object positions remain local to that origin. The
 session origin is subtracted in double precision before converting to float;
-there is no live origin rebasing. Bounds are oriented 3D half extents for interest.
+M85 adds opt-in checked live-origin changes for a supported component subset; see [planetary terrain and origins](planetary-terrain.md). Bounds are oriented 3D half extents for interest.
 
 See [M59 authoring/component matrix](../M59_WORLD_STREAMING.md) and the executable
 [streaming cookbook](examples/streaming.js). Related APIs:
@@ -127,3 +127,7 @@ remaining target/persistent velocity intent. Revisit restores that intent privat
 before publication; unload time does not advance it. Fresh bodies have fresh native
 handles. [Kinematic command semantics](entities.md#kinematic-motion-m71) apply equally
 to a root body and a region-owned body. This does not add physics to preparation jobs.
+
+## M85 absolute terrain and live origins
+
+See [planetary terrain and local origins](planetary-terrain.md) for the new coordinate APIs, explicit collision interest, capture-origin retention and supported-component limits.

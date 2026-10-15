@@ -382,6 +382,7 @@ void EditorApplication::RefreshProjectLists() {
 bool EditorApplication::OpenProject(const std::string& projectFile, std::string& outError) {
     Project project;
     if (!project.Load(projectFile, outError)) return false;
+    m_planetPreview.clear();
     if(m_terrain){m_terrain->Shutdown(m_host->GetRenderer(),m_panels.importJobs);m_terrain.reset();}
     if(m_volumeTerrain){m_volumeTerrain->Shutdown(m_host->GetRenderer(),m_panels.importJobs);m_volumeTerrain.reset();}
     RetireRetargetProject(m_panels);
@@ -1093,6 +1094,13 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     renderer.SetDynamicLights(BuildAuthoredLights(scene));
     if(m_terrain)m_terrain->Draw(renderer,scene,m_host->Resources());
     if(m_volumeTerrain)m_volumeTerrain->Draw(renderer,scene,m_host->Resources());
+    {
+        std::set<SceneObjectId> keep;
+        for(const auto& object:scene.Objects())if(object.planet){keep.insert(object.id);auto descriptor=EncodePlanetSettings(*object.planet);auto& p=m_planetPreview[object.id];if(p.first!=descriptor){p.second.reset();p.first=descriptor;p.second=std::make_unique<PlanetTiles>(*object.planet);}
+            const auto eye=glm::dvec3(glm::inverse(renderer.ViewMatrix())[3])+scene.Settings().worldOrigin;
+            p.second->Prepare(renderer,eye,scene.Settings().worldOrigin,2*std::atan(1./double(renderer.ProjectionMatrix()[1][1])),900,1./60);p.second->Draw(renderer,scene.Settings().worldOrigin);}
+        for(auto it=m_planetPreview.begin();it!=m_planetPreview.end();)if(!keep.count(it->first))it=m_planetPreview.erase(it);else ++it;
+    }
     DrawAuthoredScene(renderer, scene, m_host->Resources());
     if(m_panels.worldPreview&&!m_project.Settings().worldManifest.empty()){
         auto key=m_project.ProjectFile()+m_document.Path()+std::to_string(m_panels.worldPreviewRevision);
@@ -2003,6 +2011,7 @@ int EditorApplication::Run(int argc, char** argv) {
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
     if (m_sceneViewTarget.IsValid()) renderer.DestroyRenderTarget(m_sceneViewTarget);
+    m_planetPreview.clear();
     if(m_terrain){m_terrain->Shutdown(renderer,m_panels.importJobs);m_terrain.reset();}
     if(m_volumeTerrain){m_volumeTerrain->Shutdown(renderer,m_panels.importJobs);m_volumeTerrain.reset();}
     ShutdownRetargetPreview(m_panels, renderer);

@@ -1,0 +1,74 @@
+[
+  {
+    "check": "judas_planet_terrain_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_planet_world_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_planet_streaming_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_origin_physics_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_character_motor_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_gravity_selection_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_world_coordinates_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_joint_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_kinematic_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_physics_cast_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_rigid_contact_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_collision_geometry_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_streaming_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_save_storage_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_terrain_authoring_tests",
+    "exit": 0
+  },
+  {
+    "check": "judas_volume_terrain_tests",
+    "exit": 0
+  },
+  {
+    "check": "planet_application",
+    "exit": 0
+  },
+  {
+    "check": "api_drift",
+    "exit": 0
+  }
+]

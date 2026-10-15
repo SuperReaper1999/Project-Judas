@@ -1,0 +1,127 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Planetary Terrain Lab - radius 6371 km",
+      "world-origin": [
+        0,
+        6371000,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.8,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 100
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Double precision Earth / edit Planet terrain component",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "planet.surface": "{\"version\":1,\"radius\":6371000,\"center\":[0,0,0],\"segments\":16,\"maxLevel\":24,\"maxTiles\":384,\"maxResident\":768,\"buildsPerFrame\":4,\"pixelError\":2,\"morphSeconds\":0.2,\"collisionSpacing\":0.5,\"collisionRadius\":18,\"maxCollisionTiles\":96,\"bands\":[{\"amplitude\":1100,\"wave\":[8e-06,0,1.2e-05]},{\"amplitude\":75,\"wave\":[0.00013,0,8e-05]},{\"amplitude\":0.025,\"wave\":[1.1,0,1.4]}],\"patches\":[{\"direction\":[0,1,0],\"extent\":20,\"resolution\":5,\"heights\":[0,0,0,0,0,0,0,0.04,0,0,0,0.04,0.12,0.04,0,0,0,0.04,0,0,0,0,0,0,0]}]}"
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary RadicalGravity / independent from terrain normals",
+        "fields": {
+          "position": [
+            0,
+            -6371000,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "radial"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "sphere"
+            },
+            "radius": 20000000
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Project-owned exploration and presentation",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "46470c1a73b91250f469397a69460be3",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "ui.asset": "9defb066efd4dc4755b825c7c8328294",
+          "ui.name": "terrain_lab",
+          "ui.enabled": true
+        }
+      }
+    ]
+  }
+}

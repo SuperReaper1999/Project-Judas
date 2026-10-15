@@ -1,0 +1,153 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (1.0s)
+-- Generating done (0.6s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_app_icon
+[  0%] Built target judas_quickjs
+[ 13%] Built target freetype
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target judas_materials
+[ 33%] Built target harfbuzz
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1570:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1570 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1570:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1570 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1587:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1587 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1587:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1587 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 60%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 66%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp: In member function ‘bool RuntimeWorld::CanChangeOrigin(glm::dvec3, std::string&) const’:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:27:71: error: no matching function for call to ‘SceneSession::Streaming(ResourceManager&)’
+   27 |  if(m_sceneControl&&m_assets)if(auto* stream=m_sceneControl->Streaming(*m_assets))if(!stream->CanChangeOrigin(error))return false;
+      |                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:27:71: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:2:
+/home/conner/Documents/GitHub/Project-Judas/src/SceneSession.h:18:21: note: candidate 1: ‘WorldStreaming* SceneSession::Streaming(RuntimeWorld&, std::string&)’
+   18 |     WorldStreaming* Streaming(RuntimeWorld&,std::string& error);
+      |                     ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SceneSession.h:18:21: note: candidate expects 2 arguments, 1 provided
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp: In member function ‘bool RuntimeWorld::CommitOrigin()’:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:38:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   38 |  if(!m_pendingOrigin)return true;const auto target=*m_pendingOrigin;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:38:34: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   38 |  if(!m_pendingOrigin)return true;const auto target=*m_pendingOrigin;
+      |                                  ^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:49:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   49 |  for(auto& b:m_staticBodies)shift(b.position);for(auto& r:m_staticRenderables)shift(r.position);for(auto& t:m_terrains)shift(t.position);for(auto& l:m_staticLights)shift(l.position);
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:49:47: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   49 |  for(auto& b:m_staticBodies)shift(b.position);for(auto& r:m_staticRenderables)shift(r.position);for(auto& t:m_terrains)shift(t.position);for(auto& l:m_staticLights)shift(l.position);
+      |                                               ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:60:71: error: no matching function for call to ‘SceneSession::Streaming(ResourceManager&)’
+   60 |  if(m_sceneControl&&m_assets)if(auto* stream=m_sceneControl->Streaming(*m_assets))stream->ShiftOrigin(delta);
+      |                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldOrigin.cpp:60:71: note: there is 1 candidate
+/home/conner/Documents/GitHub/Project-Judas/src/SceneSession.h:18:21: note: candidate 1: ‘WorldStreaming* SceneSession::Streaming(RuntimeWorld&, std::string&)’
+   18 |     WorldStreaming* Streaming(RuntimeWorld&,std::string& error);
+      |                     ^~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SceneSession.h:18:21: note: candidate expects 2 arguments, 1 provided
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:2053: CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1190: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:11605: CMakeFiles/judas_planet_terrain_tests.dir/rule] Error 2
+gmake: *** [Makefile:3582: judas_planet_terrain_tests] Error 2

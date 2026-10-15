@@ -243,6 +243,10 @@ add_library(judas_engine STATIC
     src/DebugDraw.cpp
     src/WorldDebugView.cpp
     src/SceneSession.cpp
+    src/PlanetTerrain.cpp
+    src/PlanetTiles.cpp
+    src/WorldPlanets.cpp
+    src/WorldOrigin.cpp
     src/RuntimeWorld.cpp
     src/GameSession.cpp
     src/Simulation.cpp
@@ -1733,3 +1737,21 @@ judas_warnings(judas_sphere_impact_bounds_tests)
 add_executable(judas_cooked_penetration_tests tests/CookedPenetrationTests.cpp)
 target_link_libraries(judas_cooked_penetration_tests PRIVATE judas_engine)
 judas_warnings(judas_cooked_penetration_tests)
+
+add_executable(judas_planet_terrain_tests tests/PlanetTerrainTests.cpp)
+target_link_libraries(judas_planet_terrain_tests PRIVATE judas_engine)
+judas_warnings(judas_planet_terrain_tests)
+
+add_executable(judas_planet_world_tests tests/PlanetWorldTests.cpp)
+target_link_libraries(judas_planet_world_tests PRIVATE judas_engine)
+judas_warnings(judas_planet_world_tests)
+
+add_executable(judas_planet_application_tests tests/PlanetApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_planet_application_tests PRIVATE judas_engine)
+judas_warnings(judas_planet_application_tests)
+add_executable(judas_planet_streaming_tests tests/PlanetStreamingTests.cpp)
+target_link_libraries(judas_planet_streaming_tests PRIVATE judas_engine)
+judas_warnings(judas_planet_streaming_tests)
+add_executable(judas_origin_physics_tests tests/OriginPhysicsTests.cpp)
+target_link_libraries(judas_origin_physics_tests PRIVATE judas_engine)
+judas_warnings(judas_origin_physics_tests)

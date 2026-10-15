@@ -93,6 +93,7 @@ public:
         }
     }
 
+    void ShiftOrigin(glm::dvec3 delta) { for(auto& node:m_nodes)if(node.height>=0){node.aabb.min=glm::vec3(glm::dvec3(node.aabb.min)-delta);node.aabb.max=glm::vec3(glm::dvec3(node.aabb.max)-delta);} }
     int Height() const;
     int ProxyCount() const { return m_proxyCount; }
     // Structural self-check for tests: parent links, bounds containment,

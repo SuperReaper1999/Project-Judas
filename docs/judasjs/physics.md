@@ -278,3 +278,5 @@ Scene, prefab, modern snapshots and retained region state serialize optional
 intent with normal entity identities. Stop/reload restores authored intent.
 See [character](character.md), [lifecycle](lifecycle.md) and
 [copyable example](examples/gravity-selection.js).
+
+M85 coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
