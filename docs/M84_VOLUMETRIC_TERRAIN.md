@@ -1,7 +1,8 @@
 # M84 — editable volumetric terrain
 
 Current Judas authoring capability. Linux checks are recorded in
-[evidence/m84](evidence/m84/REPORT.md); human review and Windows validation are pending.
+[evidence/m84](evidence/m84/REPORT.md); the operator accepted M84 on 15 October 2026. Windows validation remains outstanding/nonblocking.
+See [acceptance record](evidence/m84/HUMAN_ACCEPTANCE_2026-10-15.md).
 
 ## Open and use the lab
 
@@ -11,7 +12,7 @@ and a sealed pocket. These are actual inward-facing collision surfaces, not hole
 painted into a heightfield. The small exterior apron is a separate ordinary body;
 it does not replace the tunnel's excavated floor.
 
-Play controls: **WASD** move, mouse look, **Space** jump, **E** throw a crate,
+Play controls: **WASD** move, mouse look, **Space** jump, **E** throw a ball,
 **F1/F2** flat/rotated scene, **F3** request/release the retained annex,
 **F6/F7** save/load, **R** reload, **Escape** pause.
 The rotated scene transports geometry, character, gravity and navigation together.
@@ -130,7 +131,7 @@ The application test takes `PROJECT SCENE watch|write|read OUTPUT [EXPECTED_PHYS
 
 ## Human checklist
 
-1. Walk through the tunnel, beneath the roof and into the chamber; throw crates against it.
+1. Walk through the tunnel, beneath the roof and into the chamber; throw balls against it.
 2. Stop, select the rock, activate the volume tool and excavate a new opening.
 3. Add material, smooth it, Undo/Redo and cancel a pending gesture.
 4. Cut an enclosed pocket at an explicit local centre, then connect it to the tunnel.

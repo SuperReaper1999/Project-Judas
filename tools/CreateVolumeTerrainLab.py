@@ -70,6 +70,6 @@ u=json.loads((out/'Assets/ui/terrain.judasui').read_text())
 for element in u['data']['elements']:
  text=element.get('text','')
  if 'Terrain' in text or 'TERRAIN LAB' in text:element['text']='DIG / VOLUMETRIC TERRAIN'
- if 'WASD' in text:element['text']='WASD move | Mouse look | Space jump | E throw crate | F1/F2 flat/rotated | F3 region | F6/F7 save/load | R reload | Esc pause'
+ if 'WASD' in text:element['text']='WASD move | Mouse look | Space jump | E throw ball | F1/F2 flat/rotated | F3 region | F6/F7 save/load | R reload | Esc pause'
 write(out/'Assets/ui/terrain.judasui',u)
 print('Current lab:',projectPath)

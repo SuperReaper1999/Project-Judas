@@ -5,7 +5,7 @@ Open `volume_terrain_lab.judasproj` in Judas Editor. Select the rock, then
 Add/remove/smooth, Save source, Cook, and rebuild stale navigation before Play/export.
 Full workflow and limitations: [M84 guide](../../docs/M84_VOLUMETRIC_TERRAIN.md).
 
-WASD/mouse; Space jump; E throw a physical crate; F1/F2 flat/rotated;
+WASD/mouse; Space jump; E throw a physical ball; F1/F2 flat/rotated;
 F3 request/release annex; F6/F7 save/load; R reload; Escape pause.
 
 The through-tunnel, chamber, roof and sealed pocket are actual mesh/collision.
@@ -21,3 +21,7 @@ project runtimeAssets so E works in standalone exports too.
 
 The volume and tools are original Judas assets/code. DejaVu font licensing is
 preserved in Assets/fonts/LICENSE.txt. No additional third-party dependency.
+
+Human M84 acceptance: 15 October 2026. Windows remains outstanding/nonblocking.
+The rotated lab transports the cave, gravity, player and camera together; its
+first-person view intentionally looks similar. Compare the HUD gravity vector.

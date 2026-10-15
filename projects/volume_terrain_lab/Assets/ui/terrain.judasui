@@ -163,7 +163,7 @@
       {
         "id": "help",
         "parent": "canvas",
-        "text": "WASD move | Mouse look | Space jump | E throw crate | F1/F2 flat/rotated | F3 region | F6/F7 save/load | R reload | Esc pause",
+        "text": "WASD move | Mouse look | Space jump | E throw ball | F1/F2 flat/rotated | F3 region | F6/F7 save/load | R reload | Esc pause",
         "texture": "",
         "font": "9c3ee9e1ef311e9c2417661910eb145b",
         "textKey": "",
