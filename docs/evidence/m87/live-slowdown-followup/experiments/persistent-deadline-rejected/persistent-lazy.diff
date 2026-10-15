@@ -1,0 +1,235 @@
+--- src/PhysicsWorld.cpp
++++ src/PhysicsWorld.cpp
+@@ -12,6 +12,7 @@
+ #include <limits>
+ #include <map>
+ #include <optional>
++#include <queue>
+ #include <set>
+ #include <stdexcept>
+ #include <sstream>
+@@ -492,7 +493,16 @@
+     std::vector<std::array<unsigned,4>> separatedPairs;
+     std::vector<std::array<unsigned,4>> supportPairs;
+     std::vector<std::array<unsigned,4>> spinningPairs; // sorted; continuous search with a penetration target
+-    struct ScheduledImpact { std::array<unsigned,4> key; double time; };
++    struct ScheduledImpact {
++        std::array<unsigned,4> key; double time=0;
++        double queryStart=0,target=0,certifiedThrough=0;
++        bool pending=false;
++        uint64_t revision=0;
++        std::array<float,2> angularSpeeds{};
++    };
++    std::size_t impactDeadlineCalculations=0,impactDeadlineRefinements=0,impactDeadlineRetires=0,
++        impactDeadlineFullQueries=0,impactDeadlinePending=0,impactDeadlineHeapRebuilds=0,
++        impactDeadlineHeapPeakNodes=0,impactDeadlineHeapPeakBytes=0;
+     std::vector<ScheduledImpact> scheduledImpacts;
+     std::vector<unsigned> impactCounts;
+     std::vector<unsigned char> impactCapped;
+@@ -755,7 +765,7 @@
+     // target instead. (A lower bound also catches ragdoll limbs knocked about
+     // on the ground, and changes how they come to rest.)
+     bool SpinsThroughSupport(const std::array<unsigned,4>& key,double remaining,
+-                             double time=0,bool changedVelocity=false) {
++                             double time=0,bool changedVelocity=false,const std::array<float,2>* frozenAngularSpeeds=nullptr) {
+         const auto convex=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::Sphere||type==ShapeType::ConvexHull;};
+         const auto typeA=PrimitiveAt(bodies[key[0]].shape,bodies[key[0]].rigidBody,int(key[2])).shape.type;
+         const auto typeB=PrimitiveAt(bodies[key[1]].shape,bodies[key[1]].rigidBody,int(key[3])).shape.type;
+@@ -765,7 +775,7 @@
+             double oldSweep=0;
+             for(int side=0;side<2;++side){const auto& body=bodies[key[side]];
+                 if(body.HasMotion()&&(side?typeB:typeA)!=ShapeType::Sphere)
+-                    oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++                    oldSweep+=double(frozenAngularSpeeds&&!changedVelocity?(*frozenAngularSpeeds)[std::size_t(side)]:glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
+             }
+             const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+             return std::isfinite(feature)&&oldSweep>feature;
+@@ -783,7 +793,7 @@
+                     AngularDriftGenerator(body.rigidBody.inverseInertiaLocal,body.rigidBody.orientation,
+                                           body.rigidBody.angularVelocity,float(remaining))
+                 : DriftGenerator(slot,time));
+-            sweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++            sweep+=double(frozenAngularSpeeds&&!changedVelocity?(*frozenAngularSpeeds)[std::size_t(side)]:glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
+         }
+         const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+         if(!std::isfinite(feature)||sweep<=feature)return false;
+@@ -814,13 +824,13 @@
+     // its depth at `start` by target (a pair already touching, e.g. pivoting
+     // on one corner), rather than the first touch. Measuring from the start
+     // depth lets the search continue after an event that ended at the target.
+-    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
++    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0,const std::array<float,2>* frozenAngularSpeeds=nullptr) {
+         PhysicsWorkTimer timer(work.toi,work.active);
+         // A target can finish inside the step. Never certify a plane across
+         // its velocity discontinuity; search the two real ledger intervals.
+         for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
+-            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target);
+-                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target);}
++            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target,frozenAngularSpeeds);
++                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target,frozenAngularSpeeds);}
+         ++stats.impactQueries;
+         if(target>0)target+=PairPenetration(a,b,pa,pb,start);
+         const auto& ba=bodies[a]; const auto& bb=bodies[b];
+@@ -881,8 +891,8 @@
+                 // A pair touching at the start is left to the contact solver,
+                 // unless its spin can turn another feature through the support
+                 // before the interval ends: then search to a penetration target.
+-                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start) ?
+-                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)})) : finish+1;
++                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start,false,frozenAngularSpeeds) ?
++                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}),frozenAngularSpeeds) : finish+1;
+                 double lo=previous,hi=time;
+                 for(int k=0;k<32;++k) {
+                     const double mid=(lo+hi)*.5;
+@@ -1071,27 +1081,121 @@
+         double now=0;
+         scheduledImpacts.clear();
+         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
++        impactDeadlineCalculations=impactDeadlineRefinements=impactDeadlineRetires=impactDeadlineFullQueries=
++            impactDeadlinePending=impactDeadlineHeapRebuilds=impactDeadlineHeapPeakNodes=impactDeadlineHeapPeakBytes=0;
++        struct DeadlineItem {double time;std::array<unsigned,4> key;std::size_t index;uint64_t revision;};
++        struct DeadlineLater {
++            bool operator()(const DeadlineItem& a,const DeadlineItem& b)const{
++                return std::tie(a.time,a.key)>std::tie(b.time,b.key);
++            }
++        };
++        struct DeadlineQueue:std::priority_queue<DeadlineItem,std::vector<DeadlineItem>,DeadlineLater>{
++            using Base=std::priority_queue<DeadlineItem,std::vector<DeadlineItem>,DeadlineLater>;
++            using Base::Base;
++            std::size_t StorageBytes()const{return this->c.capacity()*sizeof(DeadlineItem);}
++        } deadlines;
++        const auto exactQuery=[&](ScheduledImpact& entry){
++            const bool certified=entry.pending;
++            const double previousCertificate=entry.certifiedThrough;
++            ++impactDeadlineFullQueries;
++            entry.time=ImpactTime(entry.key[0],entry.key[1],int(entry.key[2]),int(entry.key[3]),
++                entry.queryStart,dt,entry.target,&entry.angularSpeeds);
++            entry.pending=false;
++            if(entry.time<now||(certified&&entry.time<=dt&&entry.time<=previousCertificate))
++                throw std::runtime_error("deferred impact query contradicted geometric absence certificate");
++        };
++        const auto certify=[&](ScheduledImpact& entry,double through){
++            ++impactDeadlineCalculations;
++            const auto& a=RemainingImpactBound(entry.key[0],entry.queryStart,through);
++            const auto& b=RemainingImpactBound(entry.key[1],entry.queryStart,through);
++            if(!rigid_motion_bounds::FiniteBound(a)||!rigid_motion_bounds::FiniteBound(b)||a.Overlaps(b))return false;
++            entry.certifiedThrough=through;
++            if(through==dt){entry.pending=false;entry.time=double(dt)+1;++impactDeadlineRetires;}
++            else {entry.pending=true;entry.time=std::nextafter(through,std::numeric_limits<double>::infinity());}
++            return true;
++        };
++        const auto beginLazy=[&](ScheduledImpact& entry){
++            const auto simple=[&](unsigned slot){const auto& body=bodies[slot];return
++                (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&
++                body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;};
++            const auto a=entry.key[0],b=entry.key[1];
++            if(!simple(a)||!simple(b)||!(double(dt)>entry.queryStart))return false;
++            const auto& aa=ImpactPoseAt(a,entry.queryStart);const auto& bb=ImpactPoseAt(b,entry.queryStart);
++            const auto& boundA=ActualImpactBound(a,aa);const auto& boundB=ActualImpactBound(b,bb);
++            if(!rigid_motion_bounds::FiniteBound(boundA)||!rigid_motion_bounds::FiniteBound(boundB))return false;
++            double gap=0;
++            for(int axis=0;axis<3;++axis)gap=std::max({gap,double(boundA.min[axis])-double(boundB.max[axis]),double(boundB.min[axis])-double(boundA.max[axis])});
++            if(!(gap>0))return false; // Touching/overlapping AABBs retain the exact search immediately.
++            const glm::dvec3 va=bodies[a].HasMotion()?glm::dvec3(aa.pose.linearVelocity):glm::dvec3(0),
++                             vb=bodies[b].HasMotion()?glm::dvec3(bb.pose.linearVelocity):glm::dvec3(0);
++            const double angular=(bodies[a].HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,entry.queryStart)))*bodies[a].boundingRadius:0)+
++                                 (bodies[b].HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,entry.queryStart)))*bodies[b].boundingRadius:0);
++            const double speed=glm::length(va-vb)+angular,remaining=double(dt)-entry.queryStart;
++            if(!std::isfinite(speed)||speed<0)return false;
++            // Only an efficiency hint. The actual represented trajectory must
++            // pass the existing conservative sweep-bound certificate below.
++            const double requested=speed>0?std::min(remaining,.5*gap/speed):remaining;
++            if(!(requested>0)||!std::isfinite(requested))return false;
++            double through=std::min(double(dt),entry.queryStart+requested);
++            if(!(through>entry.queryStart))through=std::nextafter(entry.queryStart,double(dt));
++            if(!certify(entry,through))return false;
++            if(entry.pending)++impactDeadlinePending;
++            return true;
++        };
++        const auto publish=[&](std::size_t index,ScheduledImpact entry){
++            entry.revision=scheduledImpacts[index].revision+1;
++            scheduledImpacts[index]=entry;
++            if(entry.time<=dt)deadlines.push({entry.time,entry.key,index,entry.revision});
++            impactDeadlineHeapPeakNodes=std::max(impactDeadlineHeapPeakNodes,deadlines.size());
++            impactDeadlineHeapPeakBytes=std::max(impactDeadlineHeapPeakBytes,deadlines.StorageBytes());
++            // Stale nodes are optional derived search state. Rebuild at a
++            // bounded ratio without changing any live time/key/revision.
++            if(deadlines.size()>3*scheduledImpacts.size()+256){
++                std::vector<DeadlineItem> live;live.reserve(scheduledImpacts.size());
++                for(std::size_t i=0;i<scheduledImpacts.size();++i){const auto& e=scheduledImpacts[i];if(e.time<=dt)live.push_back({e.time,e.key,i,e.revision});}
++                DeadlineQueue replacement(DeadlineLater{},std::move(live));deadlines.swap(replacement);
++                ++impactDeadlineHeapRebuilds;
++            }
++        };
+         auto schedule=[&](const std::array<unsigned,4>& key) {
+             if(!CanRespond(key[0],key[1]))return;
+-            const double time=std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
+-                std::binary_search(spinningPairs.begin(),spinningPairs.end(),key) ?
+-                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt,SpinPenetrationTarget(key)) :
+-                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt);
+-            const auto found=scheduledIndex.find(key);
+-            if(found!=scheduledIndex.end()) scheduledImpacts[found->second].time=time;
+-            else {scheduledIndex.emplace(key,scheduledImpacts.size());scheduledImpacts.push_back({key,time});}
++            ScheduledImpact entry;entry.key=key;entry.queryStart=now;entry.certifiedThrough=now;
++            entry.angularSpeeds={glm::length(bodies[key[0]].rigidBody.angularVelocity),glm::length(bodies[key[1]].rigidBody.angularVelocity)};
++            if(std::binary_search(supportPairs.begin(),supportPairs.end(),key))entry.time=double(dt)+1;
++            else {
++                if(std::binary_search(spinningPairs.begin(),spinningPairs.end(),key))entry.target=SpinPenetrationTarget(key);
++                if(!beginLazy(entry))exactQuery(entry);
++            }
++            auto found=scheduledIndex.find(key);
++            if(found==scheduledIndex.end()){
++                const auto index=scheduledImpacts.size();scheduledIndex.emplace(key,index);
++                scheduledImpacts.push_back({});publish(index,entry);
++            }else publish(found->second,entry);
+         };
+         for(const auto& key:separatedPairs) schedule(key);
+         for(const auto& key:spinningPairs) schedule(key);
+         for (;;) {
+-            double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
+-            std::array<unsigned,4> selected{};
+-            for (const auto& event:scheduledImpacts) {
+-                if(event.time<earliest || (event.time==earliest && event.key<selected)) {
+-                    earliest=event.time;selected=event.key;seedA=event.key[0];seedB=event.key[1];
+-                }
+-            }
+-            if (earliest>dt) break;
++            while(!deadlines.empty()){
++                const auto& top=deadlines.top();
++                if(top.index<scheduledImpacts.size()&&scheduledImpacts[top.index].revision==top.revision)break;
++                deadlines.pop();
++            }
++            if(deadlines.empty())break;
++            const auto next=deadlines.top();deadlines.pop();
++            auto& chosen=scheduledImpacts[next.index];
++            if(chosen.pending){
++                ++impactDeadlineRefinements;
++                const double span=chosen.certifiedThrough-chosen.queryStart;
++                double through=std::min(double(dt),chosen.queryStart+2*span);
++                if(!(through>chosen.certifiedThrough))through=std::nextafter(chosen.certifiedThrough,double(dt));
++                if(!certify(chosen,through))exactQuery(chosen);
++                publish(next.index,chosen);
++                continue; // No physical time advances merely to refine a certificate.
++            }
++            const double earliest=next.time;
++            const auto selected=next.key;
++            const unsigned seedA=selected[0],seedB=selected[1];
++            if(earliest>dt)break;
+             now=earliest;impactQueryAnchorTime=now;
+             // Infinite-mass boundaries do not join the velocity-changing
+             // island, but solver lever arms and observed point velocities
+@@ -2751,6 +2855,14 @@
+     JUDAS_PROFILE_COUNTER("Physics impact queries",double(w.stats.impactQueries),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact search iterations",double(w.stats.impactSearchIterations),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact sampling fallbacks",double(w.stats.impactSamplingFallbacks),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline calculations",double(w.impactDeadlineCalculations),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline refinements",double(w.impactDeadlineRefinements),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline retirements",double(w.impactDeadlineRetires),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline full queries",double(w.impactDeadlineFullQueries),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact pending deadlines",double(w.impactDeadlinePending),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline heap rebuilds",double(w.impactDeadlineHeapRebuilds),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline heap peak nodes",double(w.impactDeadlineHeapPeakNodes),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics impact deadline heap peak bytes",double(w.impactDeadlineHeapPeakBytes),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact sampling tests",double(w.stats.impactSamplingTests),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact search limits",double(w.stats.impactSearchLimit),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact search stalls",double(w.stats.impactSearchStalls),ProfileCounterMode::Latest);

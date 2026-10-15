@@ -1,0 +1,7 @@
+# Follow-up development failures and controls
+
+The first incremental invocation built the runtime but attempted newly added targets before regenerating their build rules. Configuration and the next invocation built them. The later focused build found the genuine missing JobSystem dependency in standalone PhysicsWorld fixtures; the shared `judas_jobs` target now supplies it without pulling renderer/resource systems into headless tests.
+
+The initial parallel persistence fixture overclaimed bitwise uninterrupted-versus-restored continuation for an unjointed pile. Independent warm serial, warm parallel, cold serial and cold parallel controls established that warm serial equals warm parallel, and cold serial equals cold parallel, while both cold cases differ from uninterrupted simulation. The original expectation and failure remain here. The final test asserts the actual relevant contracts: exact serial/parallel physical and contact observations, identical serialized bytes, correct restored physical endpoints, independently matching cold trajectories, and genuine resumed impulse/displacement. No persistence implementation was changed and no warm/cold equality is claimed for unjointed contact piles. M70/M77 articulated cold continuation is checked separately.
+
+Original source/logs and the four-arm failure reproduction are preserved byte-for-byte. A later passing fixture does not erase the old failure or convert it into a pass.

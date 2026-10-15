@@ -236,7 +236,6 @@ add_library(judas_engine STATIC
     src/SceneFingerprint.cpp
     src/Project.cpp
     src/AssetDatabase.cpp
-    src/JobSystem.cpp
     src/AsyncFile.cpp
     src/ResourceManager.cpp
     src/EnginePaths.cpp
@@ -272,6 +271,10 @@ add_library(judas_engine STATIC
 )
 target_include_directories(judas_engine PUBLIC src ${SDL2_INCLUDE_DIRS})
 find_package(Threads REQUIRED)
+add_library(judas_jobs STATIC src/JobSystem.cpp)
+target_include_directories(judas_jobs PUBLIC src)
+target_link_libraries(judas_jobs PUBLIC Threads::Threads)
+judas_warnings(judas_jobs)
 add_library(judas_audio_backend STATIC src/AudioBackend.c src/ReverbBackend.c)
 target_include_directories(judas_audio_backend PUBLIC third_party/miniaudio third_party/verblib)
 target_compile_definitions(judas_audio_backend PUBLIC MA_NO_RESOURCE_MANAGER MA_NO_ENCODING MA_NO_GENERATION)
@@ -1806,6 +1809,37 @@ judas_warnings(judas_physics_scaling_tests)
 add_executable(judas_joint_scaling_tests tests/JointScalingTests.cpp)
 target_link_libraries(judas_joint_scaling_tests PRIVATE judas_engine)
 judas_warnings(judas_joint_scaling_tests)
+add_executable(judas_parallel_narrowphase_tests tests/ParallelNarrowphaseTests.cpp)
+target_link_libraries(judas_parallel_narrowphase_tests PRIVATE judas_engine)
+judas_warnings(judas_parallel_narrowphase_tests)
+add_executable(judas_primitive_contact_boolean_tests tests/PrimitiveContactBooleanTests.cpp src/Contacts.cpp)
+target_include_directories(judas_primitive_contact_boolean_tests PRIVATE src)
+target_link_libraries(judas_primitive_contact_boolean_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_primitive_contact_boolean_tests)
+add_executable(judas_rigid_motion_bounds_tests tests/RigidMotionBoundsTests.cpp)
+target_link_libraries(judas_rigid_motion_bounds_tests PRIVATE judas_engine)
+add_executable(judas_rigid_motion_geometry_tests tests/RigidMotionGeometryTests.cpp)
+target_link_libraries(judas_rigid_motion_geometry_tests PRIVATE judas_engine)
+judas_warnings(judas_rigid_motion_geometry_tests)
+judas_warnings(judas_rigid_motion_bounds_tests)
+add_executable(judas_physics_stress_live_benchmark tests/PhysicsStressLiveBenchmark.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_physics_stress_live_benchmark PRIVATE judas_engine)
+judas_warnings(judas_physics_stress_live_benchmark)
 add_executable(judas_physics_scaling_application_tests tests/PhysicsScalingApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_physics_scaling_application_tests PRIVATE judas_engine)
 judas_warnings(judas_physics_scaling_application_tests)
+add_executable(judas_contact_sat_workspace_tests tests/ContactSatWorkspaceTests.cpp)
+target_include_directories(judas_contact_sat_workspace_tests PRIVATE src)
+target_link_libraries(judas_contact_sat_workspace_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_contact_sat_workspace_tests)
+
+# Some headless fixtures compile PhysicsWorld directly instead of linking the
+# complete engine. They need the same optional borrowed-job implementation,
+# without pulling renderer/window/resource systems into those fixtures.
+get_property(judas_current_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
+foreach(judas_current_target IN LISTS judas_current_targets)
+    get_target_property(judas_current_sources ${judas_current_target} SOURCES)
+    if("src/PhysicsWorld.cpp" IN_LIST judas_current_sources)
+        target_link_libraries(${judas_current_target} PRIVATE judas_jobs)
+    endif()
+endforeach()

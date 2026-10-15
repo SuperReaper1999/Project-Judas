@@ -1,0 +1,6 @@
+RESTORE step=0 warmJobsEqual=1 coldJobsEqual=1 serialWarmCold=0 warmPhysical=47cf155a8ce7ce06 coldPhysical=ca4aa1d454c143a6 warmAll=38c8a9461dec4fd6 coldAll=440988db73d749d4
+RESTORE step=1 warmJobsEqual=1 coldJobsEqual=1 serialWarmCold=0 warmPhysical=43dbb073185659f7 coldPhysical=00ad7343fd5c6927 warmAll=c5abbe897d05223f coldAll=48ecd1212ec1bfba
+RESTORE step=2 warmJobsEqual=1 coldJobsEqual=1 serialWarmCold=0 warmPhysical=a4654916a6aaae6f coldPhysical=b0c0ee39b4e78803 warmAll=28c757455b483f27 coldAll=fdc7ac1cfc15b3c8
+RESTORE step=3 warmJobsEqual=1 coldJobsEqual=1 serialWarmCold=0 warmPhysical=0d1e82f86578c109 coldPhysical=ca7cbe408aaad3c0 warmAll=d7a4477919ef88b5 coldAll=71c518df00766384
+FAIL restored runtime rebuilds geometry and continues actual physical motion with its ordinary job service
+Parallel narrowphase: 53 checks, 1 failures

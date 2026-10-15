@@ -1,0 +1,84 @@
+[
+  {
+    "group": "loop-bookkeeping",
+    "variant": "experiments/loop-bookkeeping/m87-loop-scalability.cpp.gz",
+    "patch": "experiments/loop-bookkeeping/m87-loop-scalability.patch",
+    "archived_base": "experiments/loop-bookkeeping/m87-loop-base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "5574064c7a6f9a0d35e5a1e2cdaf43df6cdaa13f1de62c637c84324dca74c028",
+    "archived_base_sha256": "5574064c7a6f9a0d35e5a1e2cdaf43df6cdaa13f1de62c637c84324dca74c028",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  },
+  {
+    "group": "truth-cache-proposal",
+    "variant": "experiments/truth-cache-proposal/m87-step-truth-cache.cpp.gz",
+    "patch": "experiments/truth-cache-proposal/m87-step-truth-cache.patch",
+    "archived_base": "experiments/truth-cache-proposal/m87-loop-base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "5574064c7a6f9a0d35e5a1e2cdaf43df6cdaa13f1de62c637c84324dca74c028",
+    "archived_base_sha256": "5574064c7a6f9a0d35e5a1e2cdaf43df6cdaa13f1de62c637c84324dca74c028",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  },
+  {
+    "group": "manifold-cache-rejected",
+    "variant": "experiments/manifold-cache-rejected/m87-manifold-cache.cpp.gz",
+    "patch": "experiments/manifold-cache-rejected/m87-manifold-cache.patch",
+    "archived_base": "experiments/manifold-cache-rejected/m87-manifold-cache-base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "3608f13f372873cdbae032c716d202e9c087cc51d329875acbdb23e5c179c749",
+    "archived_base_sha256": "3608f13f372873cdbae032c716d202e9c087cc51d329875acbdb23e5c179c749",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  },
+  {
+    "group": "lazy-rejected",
+    "variant": "experiments/lazy-rejected/PhysicsWorld.lazy.cpp.gz",
+    "patch": "experiments/lazy-rejected/pending-lazy.diff",
+    "archived_base": "experiments/lazy-rejected/m87-before-lazy.cpp.gz",
+    "reverse_reconstructed_base_sha256": "ed118b327004bad81ca7fd7c4f978da120f63625da79d0401b6d5c2ad3a535cd",
+    "archived_base_sha256": "e1408b70af5d8dd48c125e77bf5924cee69fba9162a8d4fe0050cbede0d7cad9",
+    "archived_base_matches_reverse": false,
+    "forward_reproduces_exact_variant": true,
+    "correct_matching_base": "experiments/lazy-rejected/reverse-reconstructed-base.cpp.gz",
+    "derivation": "Reversed retained unified patch against retained exact variant; reapplying reproduces byte-exact variant. This source reconstruction was performed during evidence collation, not measured in a new run."
+  },
+  {
+    "group": "query-workers-rejected",
+    "variant": "experiments/query-workers-rejected/m87-parallel-prototype.cpp.gz",
+    "patch": "experiments/query-workers-rejected/m87-parallel-prototype.patch",
+    "archived_base": "experiments/query-workers-rejected/m87-parallel-base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+    "archived_base_sha256": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  },
+  {
+    "group": "initial-narrowphase",
+    "variant": "experiments/initial-narrowphase/m87-narrow-prototype.cpp.gz",
+    "patch": "experiments/initial-narrowphase/m87-narrow-prototype.patch",
+    "archived_base": "experiments/initial-narrowphase/m87-narrow-base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+    "archived_base_sha256": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  },
+  {
+    "group": "persistent-deadline-rejected",
+    "variant": "experiments/persistent-deadline-rejected/PhysicsWorld.cpp.gz",
+    "patch": "experiments/persistent-deadline-rejected/persistent-lazy.diff",
+    "archived_base": "experiments/persistent-deadline-rejected/PhysicsWorld.base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+    "archived_base_sha256": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  },
+  {
+    "group": "future-tree-rejected",
+    "variant": "experiments/future-tree-rejected/PhysicsWorld.cpp.gz",
+    "patch": "experiments/future-tree-rejected/future-tree.diff",
+    "archived_base": "experiments/future-tree-rejected/PhysicsWorld.base.cpp.gz",
+    "reverse_reconstructed_base_sha256": "cbd720543976bfb66ffb6a945f1e5bf38696e8ae040bf13d0c1cf330f7e7750b",
+    "archived_base_sha256": "cbd720543976bfb66ffb6a945f1e5bf38696e8ae040bf13d0c1cf330f7e7750b",
+    "archived_base_matches_reverse": true,
+    "forward_reproduces_exact_variant": true
+  }
+]

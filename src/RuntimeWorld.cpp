@@ -333,6 +333,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
         outError = "physics initialization failed";
         return false;
     }
+    m_physics.SetJobSystem(resources ? resources->Jobs() : nullptr);
     m_built = true;
     for(const auto& o:scene.Objects())if(o.wheel)m_wheelParticipants.insert(o.wheel->chassis);
     for(const auto& o:scene.Objects())if(o.powertrain)for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);

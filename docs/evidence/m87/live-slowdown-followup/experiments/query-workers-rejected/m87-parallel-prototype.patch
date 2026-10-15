@@ -1,0 +1,387 @@
+--- /tmp/m87-parallel-base.cpp	2026-10-15 20:48:44.710294812 +0100
++++ /tmp/m87-parallel-prototype.cpp	2026-10-15 20:48:44.741615081 +0100
+@@ -1,4 +1,6 @@
+ #include "PerformanceProfiler.h"
++#include "JobSystem.h"
++#include <exception>
+ #include "PhysicsWorld.h"
+ #include "CollisionAsset.h"
+ #include "CollisionGeometry.h"
+@@ -47,6 +49,11 @@
+ // gravity, reference frames, and world coordinates before this milestone;
+ // this closes the remaining gap (collision/contact/rigid-body solving)
+ // that used to belong to Jolt.
++// Isolated prototype injection only. Production must inject this optional
++// execution service through PhysicsWorld ownership, not an environment policy.
++static thread_local JobSystem* m87PrototypeJobs=nullptr;
++static thread_local unsigned m87PrototypeWorkerLimit=4;
++extern "C" void JudasM87PrototypePhysicsJobs(JobSystem* jobs,unsigned limit){m87PrototypeJobs=jobs;m87PrototypeWorkerLimit=limit;}
+ namespace {
+ 
+ using Clock = std::chrono::steady_clock;
+@@ -525,6 +532,114 @@
+         PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation,impactObservations;
+         std::size_t candidatePasses=0,candidateQueries=0,candidateLeaves=0;
+     } work;
++    // Only query scratch is selected by TLS; authoritative world state remains
++    // immutable for the duration of each joined batch. Storage belongs to Impl.
++    struct ImpactQueryScratch {
++        std::vector<ImpactPoseSample> samples,startSamples;
++        std::vector<std::uint64_t> sampleEpochs,startEpochs;
++        std::uint64_t epoch=0;double start=0;
++        PhysicsWorld::StepStats stats;WorkDiagnostics work;
++        std::size_t impactPoseEvaluations=0,impactPoseReuses=0,impactOrientationBuilds=0,
++            impactTruthRequests=0,impactTruthReuses=0,impactBoundsRejected=0,impactActualBoundsRejected=0;
++        std::size_t allocations=0,allocatedBytes=0;
++        ContactGeometryDiagnostics contacts;
++        CollisionGeometryStats cooked;
++        void Begin(bool profiling,double now){
++            ++epoch;if(!epoch){std::fill(sampleEpochs.begin(),sampleEpochs.end(),0);std::fill(startEpochs.begin(),startEpochs.end(),0);++epoch;}
++            start=now;stats={};work={};work.active=profiling;
++            impactPoseEvaluations=impactPoseReuses=impactOrientationBuilds=impactTruthRequests=impactTruthReuses=impactBoundsRejected=impactActualBoundsRejected=0;
++            allocations=allocatedBytes=0;contacts={};cooked={};
++        }
++    };
++    inline static thread_local Impl* impactQueryOwner=nullptr;
++    inline static thread_local ImpactQueryScratch* impactQueryScratch=nullptr;
++    std::vector<std::unique_ptr<ImpactQueryScratch>> impactQueryWorkers;
++    ContactGeometryDiagnostics parallelContactDiagnostics;
++    CollisionGeometryStats parallelCookedDiagnostics;
++    ImpactQueryScratch* ActiveImpactQuery(){return impactQueryOwner==this?impactQueryScratch:nullptr;}
++    WorkDiagnostics& QueryWork(){auto* query=ActiveImpactQuery();return query?query->work:work;}
++    PhysicsWorld::StepStats& QueryStats(){auto* query=ActiveImpactQuery();return query?query->stats:stats;}
++    std::size_t& QueryCounter(std::size_t& original,std::size_t ImpactQueryScratch::*field){auto* query=ActiveImpactQuery();return query?query->*field:original;}
++    ImpactPoseSample& QuerySample(unsigned slot,double time,bool anchorAllowed=true){
++        if(auto* query=ActiveImpactQuery()){
++            // A common-start sample is pinned separately: queries at future
++            // bracket times cannot evict the event-start pose shared by pairs.
++            auto& samples=anchorAllowed&&time==query->start?query->startSamples:query->samples;
++            auto& epochs=anchorAllowed&&time==query->start?query->startEpochs:query->sampleEpochs;
++            if(samples.size()<bodies.size()){
++                const auto capacity=samples.capacity(),epochCapacity=epochs.capacity();samples.resize(bodies.size());epochs.resize(bodies.size());
++                if(samples.capacity()!=capacity){++query->allocations;query->allocatedBytes+=(samples.capacity()-capacity)*sizeof(ImpactPoseSample);}
++                if(epochs.capacity()!=epochCapacity){++query->allocations;query->allocatedBytes+=(epochs.capacity()-epochCapacity)*sizeof(std::uint64_t);}
++            }
++            auto& sample=samples[slot];
++            if(epochs[slot]!=query->epoch){sample.time=std::numeric_limits<double>::quiet_NaN();sample.boundStart=sample.time;sample.tightValid=false;epochs[slot]=query->epoch;}
++            return sample;
++        }
++        EnsureImpactPoseStorage();return anchorAllowed&&time==impactQueryAnchorTime?impactAnchorSamples[slot]:impactPoseSamples[slot];
++    }
++    static void AddContactDiagnostics(ContactGeometryDiagnostics& into,const ContactGeometryDiagnostics& after,const ContactGeometryDiagnostics& before={}){
++#define ADD_DIAG(name) into.name+=after.name-before.name
++        ADD_DIAG(predicates);ADD_DIAG(intervalResolved);ADD_DIAG(exactFallbacks);ADD_DIAG(unresolved);ADD_DIAG(invalidInputs);ADD_DIAG(numericGapFallbacks);ADD_DIAG(preparedOrientationMisses);
++#undef ADD_DIAG
++    }
++    static void AddCookedDiagnostics(CollisionGeometryStats& into,const CollisionGeometryStats& after,const CollisionGeometryStats& before={}){
++        into.nodes+=after.nodes-before.nodes;into.triangles+=after.triangles-before.triangles;into.convexTests+=after.convexTests-before.convexTests;
++    }
++    void MergeImpactQuery(ImpactQueryScratch& query){
++#define ADD_QUERY(name) name+=query.name
++        ADD_QUERY(impactPoseEvaluations);ADD_QUERY(impactPoseReuses);ADD_QUERY(impactOrientationBuilds);ADD_QUERY(impactTruthRequests);ADD_QUERY(impactTruthReuses);ADD_QUERY(impactBoundsRejected);ADD_QUERY(impactActualBoundsRejected);
++#undef ADD_QUERY
++#define ADD_STATS(name) stats.name+=query.stats.name
++        ADD_STATS(impactQueries);ADD_STATS(impactSearchIterations);ADD_STATS(impactSearchLimit);ADD_STATS(impactUncertifiedAdvances);ADD_STATS(impactSearchStalls);ADD_STATS(impactSamplingFallbacks);ADD_STATS(impactSamplingTests);ADD_STATS(impactSamplingResolutionCaps);
++#undef ADD_STATS
++        stats.impactPeakIterations=std::max(stats.impactPeakIterations,query.stats.impactPeakIterations);
++        stats.impactSamplingMaxInterval=std::max(stats.impactSamplingMaxInterval,query.stats.impactSamplingMaxInterval);
++        for(auto pair:{std::make_pair(&work.toi,&query.work.toi),std::make_pair(&work.geometry,&query.work.geometry)}){pair.first->nanoseconds+=pair.second->nanoseconds;pair.first->calls+=pair.second->calls;}
++        cacheCounters.allocations+=query.allocations;cacheCounters.allocatedBytes+=query.allocatedBytes;
++        AddContactDiagnostics(parallelContactDiagnostics,query.contacts);AddCookedDiagnostics(parallelCookedDiagnostics,query.cooked);
++    }
++    template<class Compute>
++    bool ParallelImpactQueries(std::size_t count,double now,Compute&& compute){
++        JobSystem* jobs=m87PrototypeJobs;
++        if(!jobs||jobs->IsShutDown()||count<256||m87PrototypeWorkerLimit==0)return false;
++        const unsigned lanes=unsigned(std::min({std::size_t(m87PrototypeWorkerLimit),std::size_t(jobs->WorkerCount())+1,count/64}));
++        if(lanes==0)return false;
++        while(impactQueryWorkers.size()<lanes)impactQueryWorkers.push_back(std::make_unique<ImpactQueryScratch>());
++        for(unsigned lane=0;lane<lanes;++lane)impactQueryWorkers[lane]->Begin(work.active,now);
++        std::atomic<std::size_t> next{0};
++        auto run=[&](unsigned lane){
++            auto& query=*impactQueryWorkers[lane];
++            struct RestoreTLS {Impl* owner;ImpactQueryScratch* scratch;~RestoreTLS(){impactQueryOwner=owner;impactQueryScratch=scratch;}} restore{impactQueryOwner,impactQueryScratch};
++            impactQueryOwner=this;impactQueryScratch=&query;
++            const auto contactsBefore=GetContactGeometryDiagnostics();const auto cookedBefore=GetCollisionGeometryStats();
++            JUDAS_PROFILE_SCOPE("Physics CCD query worker batch");
++            try {
++                for(;;){const auto first=next.fetch_add(8,std::memory_order_relaxed);if(first>=count)break;for(auto i=first;i<std::min(first+8,count);++i)compute(i);}
++            } catch(...) {
++                AddContactDiagnostics(query.contacts,GetContactGeometryDiagnostics(),contactsBefore);AddCookedDiagnostics(query.cooked,GetCollisionGeometryStats(),cookedBefore);throw;
++            }
++            AddContactDiagnostics(query.contacts,GetContactGeometryDiagnostics(),contactsBefore);AddCookedDiagnostics(query.cooked,GetCollisionGeometryStats(),cookedBefore);
++        };
++        std::array<JobHandle,JobSystem::kMaxWorkers> handles{};unsigned handleCount=0;
++        std::exception_ptr submitError;
++        try{for(unsigned lane=1;lane<lanes;++lane){auto handle=jobs->Submit([&,lane](JobContext&){run(lane);},JobPriority::High,"Physics CCD query batch");if(handle.IsValid())handles[handleCount++]=handle;}}
++        catch(...){submitError=std::current_exception();}
++        std::exception_ptr mainError;try{run(0);}catch(...){mainError=std::current_exception();}
++        JobHandle failed;
++        for(unsigned i=0;i<handleCount;++i){const auto handle=handles[i];if(jobs->Wait(handle)!=JobState::Completed&&!failed.IsValid())failed=handle;}
++        // All jobs have joined before allocating/copying error text or throwing.
++        std::string workerError=failed.IsValid()?jobs->ErrorOf(failed):std::string{};
++        if(failed.IsValid()&&workerError.empty())workerError="physics query job did not complete";
++        for(unsigned i=0;i<handleCount;++i)jobs->Forget(handles[i]);
++        // The owner-thread lane already contributed to its TLS diagnostics.
++        // Merge worker TLS diagnostics only once into final StepStats below.
++        impactQueryWorkers[0]->contacts={};impactQueryWorkers[0]->cooked={};
++        for(unsigned lane=0;lane<lanes;++lane)MergeImpactQuery(*impactQueryWorkers[lane]);
++        if(submitError)std::rethrow_exception(submitError);
++        if(mainError)std::rethrow_exception(mainError);
++        if(!workerError.empty())throw std::runtime_error(workerError);
++        return true;
++    }
+     void PrepareJoints(JointSolver& target,const std::vector<JointInput>& inputs,float dt,
+                        bool warm=true,bool impact=false,bool append=false){
+         PhysicsWorkTimer timer(work.jointPreparation,work.active);
+@@ -570,22 +685,18 @@
+         return pose;
+     }
+     const ImpactPoseSample& ImpactPoseAt(unsigned slot,double time){
+-        EnsureImpactPoseStorage();
+-        // Independent pair queries share the current event's start pose.
+-        // Bisection samples must not evict that immutable geometric sample.
+-        auto& sample=time==impactQueryAnchorTime?impactAnchorSamples[slot]:impactPoseSamples[slot];
+-        if(sample.time==time&&sample.generation==bodies[slot].generation){++impactPoseReuses;return sample;}
+-        sample.pose=GeometryPoseAt(slot,time);sample.time=time;sample.generation=bodies[slot].generation;++impactPoseEvaluations;
++        auto& sample=QuerySample(slot,time);
++        if(sample.time==time&&sample.generation==bodies[slot].generation){++QueryCounter(impactPoseReuses,&ImpactQueryScratch::impactPoseReuses);return sample;}
++        sample.pose=GeometryPoseAt(slot,time);sample.time=time;sample.generation=bodies[slot].generation;++QueryCounter(impactPoseEvaluations,&ImpactQueryScratch::impactPoseEvaluations);
+         if(!sample.orientation||!sample.orientation->Matches(sample.pose.orientation)){
+-            sample.orientation.emplace(sample.pose.orientation);++impactOrientationBuilds;
++            sample.orientation.emplace(sample.pose.orientation);++QueryCounter(impactOrientationBuilds,&ImpactQueryScratch::impactOrientationBuilds);
+         }
+         return sample;
+     }
+     const Aabb& RemainingImpactBound(unsigned slot,double start,double finish){
+-        EnsureImpactPoseStorage();
+-        auto& sample=impactPoseSamples[slot];const auto& body=bodies[slot];
++        auto& sample=QuerySample(slot,start,false);const auto& body=bodies[slot];
+         if(sample.boundStart==start&&sample.boundFinish==finish&&sample.boundGeneration==body.generation)return sample.remainingBound;
+-        if(!body.HasMotion())sample.remainingBound=CurrentBound(bodies[slot]);
++        if(!body.HasMotion())sample.remainingBound=ActiveImpactQuery()?ShapeAabb(body.shape,body.rigidBody.position,body.rigidBody.orientation):CurrentBound(bodies[slot]);
+         else {
+             // The remaining motion is one anchored segment. Each represented
+             // center component stays between its sampled endpoints. An outward
+@@ -611,7 +722,7 @@
+         sample.boundStart=start;sample.boundFinish=finish;sample.boundGeneration=body.generation;return sample.remainingBound;
+     }
+     const Aabb& ActualImpactBound(unsigned slot,const ImpactPoseSample& pose){
+-        auto& sample=impactPoseSamples[slot];
++        auto& sample=QuerySample(slot,pose.time,false);
+         if(!sample.tightValid||!SamePosition(sample.tightPosition,pose.pose.position)||
+            !SameRotation(sample.tightOrientation,pose.pose.orientation)){
+             sample.tightBound=ShapeAabb(bodies[slot].shape,pose.pose.position,pose.pose.orientation);
+@@ -625,10 +736,10 @@
+         if(!simple(bodies[a].shape)||!simple(bodies[b].shape))return false;
+         const auto& first=ActualImpactBound(a,aa);const auto& second=ActualImpactBound(b,bb);
+         if(!rigid_motion_bounds::FiniteBound(first)||!rigid_motion_bounds::FiniteBound(second)||first.Overlaps(second))return false;
+-        ++impactActualBoundsRejected;return true;
++        ++QueryCounter(impactActualBoundsRejected,&ImpactQueryScratch::impactActualBoundsRejected);return true;
+     }
+     ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) {
+-        PhysicsWorkTimer timer(work.geometry,work.active);
++        PhysicsWorkTimer timer(QueryWork().geometry,QueryWork().active);
+         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+         if(margin==0&&SimpleImpactBoundsSeparated(a,b,aa,bb))return {};
+         return ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
+@@ -642,7 +753,7 @@
+         return deepest;
+     }
+     bool PairPenetrationExceeds(unsigned a,unsigned b,int pa,int pb,double time,double target) {
+-        PhysicsWorkTimer timer(work.geometry,work.active);
++        PhysicsWorkTimer timer(QueryWork().geometry,QueryWork().active);
+         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
+         const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
+@@ -650,7 +761,7 @@
+         return PairPenetration(a,b,pa,pb,time)>target;
+     }
+     bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time) {
+-        PhysicsWorkTimer timer(work.geometry,work.active);
++        PhysicsWorkTimer timer(QueryWork().geometry,QueryWork().active);
+         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+         if(SimpleImpactBoundsSeparated(a,b,aa,bb))return false;
+         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
+@@ -815,13 +926,13 @@
+     // on one corner), rather than the first touch. Measuring from the start
+     // depth lets the search continue after an event that ended at the target.
+     double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
+-        PhysicsWorkTimer timer(work.toi,work.active);
++        PhysicsWorkTimer timer(QueryWork().toi,QueryWork().active);
+         // A target can finish inside the step. Never certify a plane across
+         // its velocity discontinuity; search the two real ledger intervals.
+         for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
+             if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target);
+                 return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target);}
+-        ++stats.impactQueries;
++        ++QueryStats().impactQueries;
+         if(target>0)target+=PairPenetration(a,b,pa,pb,start);
+         const auto& ba=bodies[a]; const auto& bb=bodies[b];
+         const auto posa=ImpactPoseAt(a,start).pose,posb=ImpactPoseAt(b,start).pose;
+@@ -841,7 +952,7 @@
+             const auto finite=[](const Aabb& bound){for(int k=0;k<3;++k)if(!std::isfinite(bound.min[k])||!std::isfinite(bound.max[k]))return false;return true;};
+             // An arithmetic-range failure is not a geometric rejection. Keep
+             // the established query path whenever the enclosure is uncertain.
+-            if(finite(boundA)&&finite(boundB)&&!boundA.Overlaps(boundB)){++impactBoundsRejected;return finish+1;}
++            if(finite(boundA)&&finite(boundB)&&!boundA.Overlaps(boundB)){++QueryCounter(impactBoundsRejected,&ImpactQueryScratch::impactBoundsRejected);return finish+1;}
+         }
+         // Bisection still performs all 32 represented-time bracket updates.
+         // Binary32 pose integration can map several of those times to exactly
+@@ -850,11 +961,11 @@
+         struct ActualTruth {std::array<float,14> pose{};bool valid=false,touching=false;};
+         std::array<ActualTruth,3> actualTruth{};std::size_t nextTruth=0;
+         auto touchingAt=[&](double at){
+-            ++impactTruthRequests;
++            ++QueryCounter(impactTruthRequests,&ImpactQueryScratch::impactTruthRequests);
+             const auto& aa=ImpactPoseAt(a,at).pose;const auto& bb=ImpactPoseAt(b,at).pose;
+             const std::array<float,14> represented={aa.position.x,aa.position.y,aa.position.z,aa.orientation.w,aa.orientation.x,aa.orientation.y,aa.orientation.z,
+                 bb.position.x,bb.position.y,bb.position.z,bb.orientation.w,bb.orientation.x,bb.orientation.y,bb.orientation.z};
+-            for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++impactTruthReuses;return old.touching;}
++            for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++QueryCounter(impactTruthReuses,&ImpactQueryScratch::impactTruthReuses);return old.touching;}
+             const bool touching=target>0?PairPenetrationExceeds(a,b,pa,pb,at,target):PairTouches(a,b,pa,pb,at);
+             actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
+         };
+@@ -872,7 +983,7 @@
+         // the bounded sampling below.
+         const int advanceIterations=target>0?0:64;
+         for (int iteration=0;iteration<advanceIterations;++iteration) {
+-            ++stats.impactSearchIterations;stats.impactPeakIterations=std::max(stats.impactPeakIterations,std::size_t(iteration+1));
++            ++QueryStats().impactSearchIterations;QueryStats().impactPeakIterations=std::max(QueryStats().impactPeakIterations,std::size_t(iteration+1));
+             const float reach=std::nextafter(static_cast<float>(speed*(finish-time)),
+                                              std::numeric_limits<float>::infinity());
+             // Margin manifolds contain proximity features, not necessarily the
+@@ -904,7 +1015,7 @@
+                 // equality at zero margin while a proximity query includes it.
+                 // The latter is not a certified separating plane or an impact.
+                 // Let bounded actual-contact sampling establish contact truth.
+-                ++stats.impactUncertifiedAdvances;
++                ++QueryStats().impactUncertifiedAdvances;
+                 uncertifiedAdvance=true;
+                 break;
+             }
+@@ -921,9 +1032,9 @@
+             stalledAdvances=time-previous<kImpactStallFraction*(finish-previous)?stalledAdvances+1:0;
+             if(stalledAdvances>=kImpactStallAdvances){stalled=true;break;}
+         }
+-        if(stalled) ++stats.impactSearchStalls;
+-        else if(!uncertifiedAdvance&&target==0) ++stats.impactSearchLimit;
+-        ++stats.impactSamplingFallbacks;
++        if(stalled) ++QueryStats().impactSearchStalls;
++        else if(!uncertifiedAdvance&&target==0) ++QueryStats().impactSearchLimit;
++        ++QueryStats().impactSamplingFallbacks;
+         // Rotating grazing features can keep a fixed separating-plane bound
+         // arbitrarily short. Finish this PAIR query with a bounded temporal
+         // sampling approximation, never by applying an impulse across a gap.
+@@ -936,7 +1047,7 @@
+             }
+             return hi;
+         };
+-        ++stats.impactSamplingTests;
++        ++QueryStats().impactSamplingTests;
+         if(touchingAt(time)) return firstContact(previous,time);
+         const double remaining=finish-time;
+         if(!(remaining>0)) return finish+1;
+@@ -947,14 +1058,14 @@
+         const double requested=std::max({16.0,std::ceil(16.0*speed*remaining/feature),
+                                               std::ceil(256.0*angularSpeed*remaining)});
+         constexpr unsigned kMaxSamples=65536;
+-        if(requested>double(kMaxSamples)) ++stats.impactSamplingResolutionCaps;
++        if(requested>double(kMaxSamples)) ++QueryStats().impactSamplingResolutionCaps;
+         const unsigned samples=static_cast<unsigned>(std::min(double(kMaxSamples),requested));
+         const double interval=remaining/double(samples);
+-        stats.impactSamplingMaxInterval=std::max(stats.impactSamplingMaxInterval,interval);
++        QueryStats().impactSamplingMaxInterval=std::max(QueryStats().impactSamplingMaxInterval,interval);
+         double lo=time;
+         for(unsigned sample=1;sample<=samples;++sample) {
+             const double hi=sample==samples ? finish : time+remaining*(double(sample)/double(samples));
+-            ++stats.impactSamplingTests;
++            ++QueryStats().impactSamplingTests;
+             if(touchingAt(hi)) return firstContact(lo,hi);
+             lo=hi;
+         }
+@@ -1071,18 +1182,29 @@
+         double now=0;
+         scheduledImpacts.clear();
+         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
+-        auto schedule=[&](const std::array<unsigned,4>& key) {
+-            if(!CanRespond(key[0],key[1]))return;
+-            const double time=std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
++        auto queryTime=[&](const std::array<unsigned,4>& key) {
++            return std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
+                 std::binary_search(spinningPairs.begin(),spinningPairs.end(),key) ?
+                 ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt,SpinPenetrationTarget(key)) :
+                 ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt);
++        };
++        auto publishTime=[&](const std::array<unsigned,4>& key,double time) {
+             const auto found=scheduledIndex.find(key);
+-            if(found!=scheduledIndex.end()) scheduledImpacts[found->second].time=time;
++            if(found!=scheduledIndex.end())scheduledImpacts[found->second].time=time;
+             else {scheduledIndex.emplace(key,scheduledImpacts.size());scheduledImpacts.push_back({key,time});}
+         };
+-        for(const auto& key:separatedPairs) schedule(key);
+-        for(const auto& key:spinningPairs) schedule(key);
++        std::vector<std::array<unsigned,4>> requests;std::vector<double> times;
++        auto scheduleBatch=[&](const std::vector<std::array<unsigned,4>>& keys){
++            requests.clear();requests.reserve(keys.size());
++            for(const auto& key:keys)if(CanRespond(key[0],key[1]))requests.push_back(key);
++            times.resize(requests.size());
++            const bool parallel=ParallelImpactQueries(requests.size(),now,[&](std::size_t i){times[i]=queryTime(requests[i]);});
++            if(!parallel)for(std::size_t i=0;i<requests.size();++i)times[i]=queryTime(requests[i]);
++            for(std::size_t i=0;i<requests.size();++i)publishTime(requests[i],times[i]);
++        };
++        std::vector<std::array<unsigned,4>> initialSchedule=separatedPairs;
++        initialSchedule.insert(initialSchedule.end(),spinningPairs.begin(),spinningPairs.end());
++        scheduleBatch(initialSchedule);
+         for (;;) {
+             double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
+             std::array<unsigned,4> selected{};
+@@ -1297,7 +1419,7 @@
+                 }
+             }
+             std::sort(dirty.begin(),dirty.end());dirty.erase(std::unique(dirty.begin(),dirty.end()),dirty.end());
+-            for(const auto& key:dirty) schedule(key);
++            scheduleBatch(dirty);
+             if(now>=dt) break;
+         }
+         // No solver reads completed observations during this event pass. Each
+@@ -1436,6 +1558,7 @@
+             sizeof(std::optional<PreparedShapeBounds>)+sizeof(bool)+2*sizeof(PoseBound));
+         for (const Body& body:bodies) if (body.boundPreparation)
+             bytes+=body.boundPreparation->children.capacity()*sizeof(PreparedBoxBound);
++        for(const auto& query:impactQueryWorkers)bytes+=sizeof(ImpactQueryScratch)+(query->samples.capacity()+query->startSamples.capacity())*sizeof(ImpactPoseSample)+(query->sampleEpochs.capacity()+query->startEpochs.capacity())*sizeof(std::uint64_t);
+         return bytes+(impactPoseSamples.capacity()+impactAnchorSamples.capacity())*sizeof(ImpactPoseSample)+solver.FrameStorageBytes();
+     }
+     void EnsureImpactPoseStorage(){
+@@ -2455,6 +2578,7 @@
+         joint.restoredContinuationDt=0;
+     }
+ 
++    w.parallelContactDiagnostics={};w.parallelCookedDiagnostics={};
+     w.stats = StepStats{};
+     w.work={};w.work.active=PerformanceProfiler::Get().Active();
+     if(w.collectingPreStepQueries){
+@@ -2779,16 +2903,16 @@
+     JUDAS_PROFILE_COUNTER("Physics joint preparation ms",double(w.work.jointPreparation.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+     JUDAS_PROFILE_COUNTER("Physics joint preparation calls",double(w.work.jointPreparation.calls),ProfileCounterMode::Sum);
+     const auto collisionAfter=GetCollisionGeometryStats();
+-    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes),ProfileCounterMode::Sum);
+-    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles),ProfileCounterMode::Sum);
+-    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests),ProfileCounterMode::Sum);
++    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes+w.parallelCookedDiagnostics.nodes),ProfileCounterMode::Sum);
++    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles+w.parallelCookedDiagnostics.triangles),ProfileCounterMode::Sum);
++    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests+w.parallelCookedDiagnostics.convexTests),ProfileCounterMode::Sum);
+     w.stats.solverMilliseconds = MillisecondsBetween(solverStart, solverEnd);
+     w.stats.totalMilliseconds = MillisecondsBetween(stepStart, stepEnd);
+     const ContactGeometryDiagnostics geometryAfter = GetContactGeometryDiagnostics();
+-    w.stats.geometryPredicates = geometryAfter.predicates - geometryBefore.predicates;
+-    w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks;
+-    w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved;
+-    w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks;
++    w.stats.geometryPredicates = geometryAfter.predicates - geometryBefore.predicates + w.parallelContactDiagnostics.predicates;
++    w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks + w.parallelContactDiagnostics.exactFallbacks;
++    w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved + w.parallelContactDiagnostics.unresolved;
++    w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks + w.parallelContactDiagnostics.numericGapFallbacks;
+     ++w.completedObservationEpoch;w.completedObservationDt=w.completedSolverDt=fixedDeltaTime;
+     w.completedObservationsReady=true;
+ 

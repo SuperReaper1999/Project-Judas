@@ -1,0 +1,170 @@
+{
+  "utc": "2026-10-15T20:47:12.047069+00:00",
+  "head": "cee55a898aa0e4938665903f3b207d828acdb1df",
+  "observerSHA256": "715dd4ae56bc5a8b9556379d95bb5b6e8f4402fd4a60515b69ba039f0b918e13",
+  "characterSourceSHA256": "78a6ba8ebfa4903f6f45387680ceba6d4e9919f4c9934609887de12d9b9b057d",
+  "balanceSourceSHA256": "5ba5cb47fe7ce084097391fba84a9086e84dc9dd284efce83880021b3fc40a6f",
+  "sourceFingerprints": {
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp": "062fbca7e50cb9fd2de906b30e965e50d09e8d3cea2a0ad274a9e805abe64f21",
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h": "087cee279ce048721d11f0ac54b4832a2a1ae16490638411bc6e7cc55c7fc8e3",
+    "/home/conner/Documents/GitHub/Project-Judas/src/ContactSolver.cpp": "17f5b0f8772a75896f438ebc9759b9df1cf5166cfdd471650929baead46b03e2",
+    "/home/conner/Documents/GitHub/Project-Judas/src/JointSolver.cpp": "936232c5088fc956a6923ba64a4faf3e8561acd3c553695b813e3347c3a78685",
+    "/home/conner/Documents/GitHub/Project-Judas/src/CollisionGeometry.cpp": "7af819b59e19a6fdf0bcf217134177819f867d74d04f2ae81599268e98a00393",
+    "/home/conner/Documents/GitHub/Project-Judas/src/WorldPersistence.cpp": "811472167ecef66679fa92c47dad0bbefb7d7c2e6188dffc9784abb4383f8102"
+  },
+  "binaryFingerprints": {
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a": "2606d62015e66686404ce203f902dae1b6b55cc1909b563706c7989ec8ed1cc0",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_app_icon.a": "1fab532ad9c5dd1fae1c33bda5aabd8d2c584047430e7ab5d6ead6ab4b5d9540",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_materials.a": "3cea886c6bcb6ece6a20885e2216d26cb8a53b440f404f6c805157cf656936f7",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_glad.a": "9d3394b11ea0d111b7e3c5037f820d425e61e4bf503070872d848badcb01bbeb",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_audio_backend.a": "b23eea1b0d42cca4fe7e766d2fc757fa74ada3196ca65b83e0b90a87be161400",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_backend.a": "4d842dc948f96022dcd0458d0c1f6b686f4e914b4e84c373e57075ffb14083f5",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_quickjs.a": "b1d7868584c82ad5d1cfd016feb4f12f2905405042e1da93a1d791369a09c80e",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a": "822208ed4332718329b2cbbe02a7e8f29839d9c3f0efed03ccb711814ace265d",
+    "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/libfreetype.a": "997b0191b40a3289fd301ba87ccf70fad120633d0acc2a8cb2ef79b69d8a07e5",
+    "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-build/libharfbuzz.a": "50a904cb2ef3ff1afcef1ebc93dbfab66ca849117327f4e3eb12f352745d6048",
+    "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicui18n.a": "3f60224cdf597cd765f69503aee34513a5d69a32f5b267e3cdf1c47e367411f0",
+    "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicuuc.a": "413af571dfa69d9928c59caed5bac1312d2d48e5362e9d03e68d6184d2a92083",
+    "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicudata.a": "f62ffb718fbd07e1a5195fd637631358d46882bde564739bbb73dead4b260fc2",
+    "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_jobs.a": "b0670b234db069351c3006bc989a1b5b61f10cd445fe0e9d6dba2e450e3c224c",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_lab_tests": "76cde741d9d13998e620b0c8e7ce0b07688e368d0ea1b1c1ff85f69ebcb70fcb",
+    "/tmp/m87-followup-final-cold/current-standing-observer": "7da9b661ba54c78dbf125276cf000ab83868028a4fc6fe18eac2d5ee80e11a73"
+  },
+  "steps": [
+    {
+      "name": "observer-compile",
+      "command": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/tmp/m87-followup-final-cold/FinalCurrentStandingObserver.cpp",
+        "-o",
+        "/tmp/m87-followup-final-cold/observer.o"
+      ],
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 21.215210236998246
+    },
+    {
+      "name": "observer-link",
+      "command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/tmp/m87-followup-final-cold/observer.o",
+        "-o",
+        "/tmp/m87-followup-final-cold/current-standing-observer",
+        "libjudas_engine.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exitCode": 0,
+      "seconds": 0.7155814690013358
+    },
+    {
+      "name": "character-cold-write",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_lab_tests",
+        "/tmp/m87-followup-final-cold/character",
+        "cold-write"
+      ],
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.314630421999027
+    },
+    {
+      "name": "character-cold-read",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_lab_tests",
+        "/tmp/m87-followup-final-cold/character",
+        "cold-read"
+      ],
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 0.26461059500070405
+    },
+    {
+      "name": "balance-cold-write",
+      "command": [
+        "/tmp/m87-followup-final-cold/current-standing-observer",
+        "/tmp/m87-followup-final-cold/balance",
+        "cold-write"
+      ],
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.667826430999412
+    },
+    {
+      "name": "balance-cold-read",
+      "command": [
+        "/tmp/m87-followup-final-cold/current-standing-observer",
+        "/tmp/m87-followup-final-cold/balance",
+        "cold-read"
+      ],
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas",
+      "exitCode": 0,
+      "seconds": 1.3166364739990968
+    }
+  ],
+  "pass": true,
+  "characterSaveSHA256": {
+    "beforeRead": "163e63cbb013bf35259cae406848230bd0e0f6fa4c83f52dd6aae29e6eb9f397",
+    "afterRead": "163e63cbb013bf35259cae406848230bd0e0f6fa4c83f52dd6aae29e6eb9f397",
+    "unchanged": true
+  },
+  "balanceSaveSHA256": {
+    "beforeRead": "6e3d610d89bb5d789613c078cdde5aa8d85ebeab50c175d9f1a493e14b5682ac",
+    "afterRead": "6e3d610d89bb5d789613c078cdde5aa8d85ebeab50c175d9f1a493e14b5682ac",
+    "unchanged": true
+  },
+  "endpointComparison": {
+    "equal": true,
+    "writeCurrentPhysicalStanding": true,
+    "readCurrentPhysicalStanding": true
+  }
+}

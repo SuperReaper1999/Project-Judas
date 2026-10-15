@@ -1,0 +1,113 @@
+--- a/src/PhysicsWorld.cpp
++++ b/src/PhysicsWorld.cpp
+@@ -19,6 +19,7 @@
+ #include <cstring>
+ #include <tuple>
+ #include <utility>
++#include <unordered_set>
+ #include <vector>
+ 
+ #include "Broadphase.h"
+@@ -1032,6 +1033,18 @@
+                 included[slot]=1;island.push_back(slot);}};
+             include(seedA);include(seedB);
+             std::vector<std::pair<unsigned,unsigned>> touching;
++            // Keep discovery/row order in the vector. Hash membership only
++            // removes repeated queries at this unchanged event-time geometry.
++            std::unordered_set<uint64_t> visitedPairs;
++            struct DiscoveredManifold {
++                std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
++            };
++            std::vector<DiscoveredManifold> discoveredManifolds;
++            const auto simplePart=[&](unsigned slot,int part){
++                const auto& shape=bodies[slot].shape;
++                const auto type=shape.type==ShapeType::CompoundBoxes?shape.boxes[std::size_t(part)].type:shape.type;
++                return type==ShapeType::Box||type==ShapeType::Sphere;
++            };
+             {
+             PhysicsWorkTimer timer(work.impactIslands,work.active);
+             for (std::size_t next=0;next<island.size();++next) {
+@@ -1045,12 +1058,38 @@
+                 for (unsigned b:candidates) {
+                     if (a==b || !CanRespond(a,b)) continue;
+                     const auto pair=std::minmax(a,b);
+-                    if (std::find(touching.begin(),touching.end(),std::pair<unsigned,unsigned>(pair))!=touching.end()) continue;
+-                    bool hit=false;
++                    const uint64_t pairKey=(uint64_t(pair.first)<<32)|pair.second;
++                    if(visitedPairs.count(pairKey))continue;
++                    bool hit=false,reliableMiss=true;
++                    std::optional<DiscoveredManifold> discovered;
+                     for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
+-                        for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb)
+-                            hit=hit||PairTouches(a,b,pa,pb,now);
+-                    if(hit) {touching.emplace_back(pair);include(b);}
++                        for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb){
++                            if(hit)continue; // Preserve the existing first-hit short circuit.
++                            if(simplePart(a,pa)&&simplePart(b,pb)){
++                                auto geometry=PairAt(a,b,pa,pb,now,0);
++                                hit=geometry.count>0;
++                                reliableMiss&=!geometry.uncertain;
++                                // Response is always in ascending body order.
++                                // A reversed discovery must retain the original
++                                // canonical response query, not flip its rows.
++                                if(hit&&a==pair.first)
++                                    discovered=DiscoveredManifold{touching.size(),pa,pb,std::move(geometry)};
++                            }else{
++                                hit=PairTouches(a,b,pa,pb,now);
++                                // Specialized Boolean paths stay unchanged;
++                                // a miss carries no public uncertainty proof.
++                                reliableMiss=false;
++                            }
++                        }
++                    if(hit){
++                        visitedPairs.insert(pairKey);
++                        if(discovered)discoveredManifolds.push_back(std::move(*discovered));
++                        touching.emplace_back(pair);include(b);
++                    }else if(reliableMiss){
++                        // Only a resolved primitive separation may suppress
++                        // the reverse traversal's identical existence query.
++                        visitedPairs.insert(pairKey);
++                    }
+                 }
+             }
+             }
+@@ -1084,11 +1123,17 @@
+             std::vector<ImpactContact> rows;
+             std::vector<ContactKey> observationKeys;
+             std::vector<std::array<unsigned,4>> eventPairs;
+-            for (const auto& pair:touching) {
++            std::size_t discoveredIndex=0;
++            for(std::size_t touchingIndex=0;touchingIndex<touching.size();++touchingIndex){
++                const auto& pair=touching[touchingIndex];
++                const DiscoveredManifold* discovered=discoveredIndex<discoveredManifolds.size()&&
++                    discoveredManifolds[discoveredIndex].touchingIndex==touchingIndex?
++                    &discoveredManifolds[discoveredIndex++]:nullptr;
+                 auto& a=bodies[pair.first];auto& b=bodies[pair.second];
+                 for(int pa=0;pa<PrimitiveCount(a.shape);++pa)
+                     for(int pb=0;pb<PrimitiveCount(b.shape);++pb) {
+-                        const auto m=PairAt(pair.first,pair.second,pa,pb,now,0);
++                        const auto m=discovered&&discovered->partA==pa&&discovered->partB==pb?
++                            discovered->geometry:PairAt(pair.first,pair.second,pa,pb,now,0);
+                         if(m.count) eventPairs.push_back({pair.first,pair.second,unsigned(pa),unsigned(pb)});
+                         for(int k=0;k<m.count;++k) {
+                             Observe(pair.first,pair.second,m.points[k]);
+@@ -1142,6 +1187,9 @@
+                 if(SamePosition(oldVelocities[i].first,b.rigidBody.linearVelocity) &&
+                    SamePosition(oldVelocities[i].second,b.rigidBody.angularVelocity)) continue;
+                 changed.push_back(slot);
++                // Membership remains nonzero; value two also marks the
++                // changed subset without scanning it for every scheduled pair.
++                included[slot]=2;
+                 b.motion.ChangeVelocity(b.rigidBody,now);
+                 InvalidateImpactPose(slot);
+                 CoverStepReach(b,static_cast<float>(dt-now));
+@@ -1156,8 +1204,7 @@
+             std::vector<std::array<unsigned,4>> dirty;
+             dirty.push_back(selected); // retire the event even if its impulse is zero
+             for(const auto& event:scheduledImpacts)
+-                if(std::find(changed.begin(),changed.end(),event.key[0])!=changed.end() ||
+-                   std::find(changed.begin(),changed.end(),event.key[1])!=changed.end()) dirty.push_back(event.key);
++                if(included[event.key[0]]==2||included[event.key[1]]==2)dirty.push_back(event.key);
+             for(unsigned slot:changed) {
+                 const auto candidates=QuerySlots(tree.FatAabb(bodies[slot].proxy));
+                 for(unsigned other:candidates) if(other!=slot && CanRespond(slot,other)) {

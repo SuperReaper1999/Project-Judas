@@ -1,0 +1,140 @@
+{
+  "classification": "REJECTED isolated numerical-policy experiment; not production or physical-quality acceptance",
+  "same_binary": "/tmp/m87-support-continuation/live",
+  "binary_sha256": "15847927f4a92b9365e866aec2caf4966f22c45b5d0fd924637c4f3cbce04e7c",
+  "controls": {
+    "input_scene": "/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas",
+    "frame_seconds_argument": "0.016666667",
+    "completed_fixed_steps": 155,
+    "tour": false,
+    "hidden": true,
+    "swap": 0,
+    "profiler": false,
+    "trace": true,
+    "exit_codes": {
+      "control": 0,
+      "projection": 0
+    }
+  },
+  "control": {
+    "steps": 155,
+    "fixed_ms_sum": 9040.047365,
+    "fixed_ms_median": 42.038408,
+    "fixed_ms_p95_linear": 115.90431059999986,
+    "fixed_ms_max": 583.790625,
+    "worst_step": 153,
+    "impact_events_sum": 3780,
+    "impact_queries_sum": 726869,
+    "nonfinite_fields_sum": 0,
+    "max_linear_speed": 5.43227481842,
+    "max_angular_speed": 2.67039322853
+  },
+  "projection": {
+    "steps": 155,
+    "fixed_ms_sum": 9372.892863,
+    "fixed_ms_median": 26.290832,
+    "fixed_ms_p95_linear": 86.41357019999982,
+    "fixed_ms_max": 2326.404732,
+    "worst_step": 153,
+    "impact_events_sum": 4435,
+    "impact_queries_sum": 1188480,
+    "nonfinite_fields_sum": 0,
+    "max_linear_speed": 5.43227481842,
+    "max_angular_speed": 2.67039322853
+  },
+  "control_trace": {
+    "records": 155,
+    "totals": {
+      "attempts": 0.0,
+      "applied": 0.0,
+      "rows": 0.0,
+      "positive": 0.0,
+      "added": 0.0,
+      "rollback": 0.0,
+      "unsupported": 0.0
+    },
+    "maxima": {
+      "energy_rise": 0.0,
+      "momentum_residual": 0.0,
+      "angular_residual": 0.0,
+      "velocity_violation": 0.0
+    }
+  },
+  "projection_trace": {
+    "records": 155,
+    "totals": {
+      "attempts": 3802.0,
+      "applied": 1368.0,
+      "rows": 120567.0,
+      "positive": 10399.0,
+      "added": 27965.0,
+      "rollback": 0.0,
+      "unsupported": 0.0
+    },
+    "maxima": {
+      "energy_rise": 5.94457588932e-07,
+      "momentum_residual": 1.86598111256e-06,
+      "angular_residual": 1.07269612981e-05,
+      "velocity_violation": 0.038671515882
+    }
+  },
+  "first_physical_divergence": {
+    "step": 142,
+    "control": {
+      "step": "142",
+      "frame": "141",
+      "wall_ms": "11056.329478",
+      "fixed_ms": "88.736253",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12732",
+      "contacts": "2414",
+      "impact_events": "58",
+      "impact_queries": "12256",
+      "impact_iterations": "1324",
+      "impact_peak": "14",
+      "total_physics_ms": "86.840141",
+      "broadphase_ms": "4.126089",
+      "narrowphase_ms": "16.456334",
+      "solver_ms": "62.369302",
+      "trajectory_digest": "bdc984aa86dc4f3d",
+      "max_linear_speed": "3.42712664604",
+      "max_angular_speed": "2.67039322853",
+      "nonfinite_fields": "0"
+    },
+    "projection": {
+      "step": "142",
+      "frame": "141",
+      "wall_ms": "6934.976084",
+      "fixed_ms": "93.686902",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12732",
+      "contacts": "2414",
+      "impact_events": "58",
+      "impact_queries": "13884",
+      "impact_iterations": "1359",
+      "impact_peak": "14",
+      "total_physics_ms": "92.001925",
+      "broadphase_ms": "3.517053",
+      "narrowphase_ms": "13.091252",
+      "solver_ms": "72.251179",
+      "trajectory_digest": "ae902abec4198913",
+      "max_linear_speed": "3.42712664604",
+      "max_angular_speed": "2.67039322853",
+      "nonfinite_fields": "0"
+    }
+  },
+  "matching_physical_step_digests": 141,
+  "limits": [
+    "Physical trajectory changes by design; no exact-behaviour claim.",
+    "The extra normal projection uses 10 additional iterations per accepted event.",
+    "No lowered CCD policy, changed ordinary invalidation/rescheduling, gap exemption or event cap.",
+    "Finite fields and local diagnostic budgets do not establish full physical correctness.",
+    "Residual normal violations remain; ordinary CCD was deliberately retained.",
+    "One cosmetic prototype-only compiler warning; this experiment was rejected rather than polished or tuned.",
+    "All timings include diagnostic trace and are a same-binary rejection comparison, not final production benchmark numbers."
+  ]
+}

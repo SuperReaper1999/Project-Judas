@@ -10,6 +10,8 @@
 #include "Classification.h"
 #include "JointTypes.h"
 
+class JobSystem;
+
 // Opaque handle to a body inside PhysicsWorld. Deliberately not tied to
 // any concrete physics-engine body-ID representation — no file outside
 // PhysicsWorld.cpp needs to know what implements this class.
@@ -120,6 +122,14 @@ public:
 
     bool Init();
     void Shutdown();
+
+    // Optional borrowed execution service for independent contact geometry.
+    // The owner thread still publishes contacts and solves bodies in order.
+    // Null, a stopped pool, or maxLanes <= 1 retains the serial path. The lane
+    // limit includes the calling thread; no worker threads are created here.
+    // Configure after Init, only at a completed step boundary. The service must outlive
+    // any step using it; this pointer/configuration is not physical save state.
+    void SetJobSystem(JobSystem* jobs, unsigned maxLanes = 4);
 
     PhysicsClosestPoint ClosestPoint(const glm::vec3& point,float maximum,const PhysicsQueryFilter& filter={}) const;
 

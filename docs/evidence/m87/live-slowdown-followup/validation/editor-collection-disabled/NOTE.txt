@@ -1,0 +1,1 @@
+The first profiler freeze probe omitted JUDAS_PROFILE=1. Collection is off by default, so it could not retain a frozen frame. No engine correction was made. The repeat in ../editor explicitly enabled collection and both profiler assertions passed; Play/Stop authored-state identity passed in both. Original failed output retained.

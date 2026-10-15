@@ -1,0 +1,2 @@
+FAIL restored runtime rebuilds geometry and continues actual physical motion with its ordinary job service
+Parallel narrowphase: 49 checks, 1 failures

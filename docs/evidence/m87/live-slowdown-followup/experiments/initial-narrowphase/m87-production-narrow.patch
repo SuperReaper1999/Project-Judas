@@ -1,0 +1,235 @@
+--- a/src/PhysicsWorld.cpp
++++ b/src/PhysicsWorld.cpp
+@@ -1,4 +1,6 @@
+ #include "PerformanceProfiler.h"
++#include "JobSystem.h"
++#include <exception>
+ #include "PhysicsWorld.h"
+ #include "CollisionAsset.h"
+ #include "CollisionGeometry.h"
+@@ -525,6 +527,105 @@
+         PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation,impactObservations;
+         std::size_t candidatePasses=0,candidateQueries=0,candidateLeaves=0;
+     } work;
++    // Indexed output only: workers never mutate physics bodies, geometry
++    // caches, solver rows, touches, warm starts or event scheduling.
++    struct InitialContactGeometry {
++        unsigned a=0,b=0;float margin=0;
++        const ContactPreparedOrientation* orientationA=nullptr;
++        const ContactPreparedOrientation* orientationB=nullptr;
++        ContactManifold manifold;bool touching=false,ready=false;
++    };
++    struct InitialGeometryDiagnostics {ContactGeometryDiagnostics contacts;CollisionGeometryStats cooked;};
++    // Optional borrowed process service; no physical state or worker ownership.
++    JobSystem* contactJobs=nullptr;unsigned contactJobLanes=4;
++    static constexpr std::size_t kMaxInitialContactPairs=16384;
++    std::vector<InitialContactGeometry> initialContactGeometry;
++    ContactGeometryDiagnostics parallelContactDiagnostics;
++    CollisionGeometryStats parallelCookedDiagnostics;
++    static void AddContactDiagnostics(ContactGeometryDiagnostics& into,const ContactGeometryDiagnostics& after,const ContactGeometryDiagnostics& before={}){
++#define ADD_DIAG(name) into.name+=after.name-before.name
++        ADD_DIAG(predicates);ADD_DIAG(intervalResolved);ADD_DIAG(exactFallbacks);ADD_DIAG(unresolved);ADD_DIAG(invalidInputs);ADD_DIAG(numericGapFallbacks);ADD_DIAG(preparedOrientationMisses);
++#undef ADD_DIAG
++    }
++    static void AddCookedDiagnostics(CollisionGeometryStats& into,const CollisionGeometryStats& after,const CollisionGeometryStats& before={}){
++        into.nodes+=after.nodes-before.nodes;into.triangles+=after.triangles-before.triangles;into.convexTests+=after.convexTests-before.convexTests;
++    }
++    void PrepareInitialContactGeometry(float dt){
++        initialContactGeometry.clear();JobSystem* jobs=contactJobs;
++        JUDAS_PROFILE_COUNTER("Physics initial geometry worker lanes",0,ProfileCounterMode::Latest);
++        JUDAS_PROFILE_COUNTER("Physics parallel initial manifolds",0,ProfileCounterMode::Latest);
++        JUDAS_PROFILE_COUNTER("Physics initial geometry scratch bytes",initialContactGeometry.capacity()*sizeof(InitialContactGeometry),ProfileCounterMode::Latest);
++        if(!jobs||jobs->IsShutDown()||contactJobLanes<=1||candidatePairs.size()<256)return;
++        const auto eligible=[&](const std::pair<unsigned,unsigned>& pair){
++            const auto& a=bodies[pair.first];const auto& b=bodies[pair.second];
++            const auto simple=[](const Shape& shape){return !shape.asset&&(shape.type==ShapeType::Box||shape.type==ShapeType::Sphere);};
++            return !a.sensor&&!b.sensor&&!a.queryOnly&&!b.queryOnly&&simple(a.shape)&&simple(b.shape)&&
++                !((a.sleeping||a.rigidBody.IsStatic())&&(b.sleeping||b.rigidBody.IsStatic()));
++        };
++        std::size_t count=0;
++        for(const auto& pair:candidatePairs)if(eligible(pair)&&++count>kMaxInitialContactPairs)return;
++        if(count<256)return;
++        const auto capacity=initialContactGeometry.capacity();initialContactGeometry.reserve(std::size_t(count));
++        if(initialContactGeometry.capacity()!=capacity){++cacheCounters.allocations;cacheCounters.allocatedBytes+=initialContactGeometry.capacity()*sizeof(InitialContactGeometry);}
++        for(const auto& pair:candidatePairs)if(eligible(pair)){
++            auto& a=bodies[pair.first];auto& b=bodies[pair.second];
++            const float margin=(glm::length(a.rigidBody.linearVelocity-b.rigidBody.linearVelocity)+
++                glm::length(a.rigidBody.angularVelocity)*a.boundingRadius+
++                glm::length(b.rigidBody.angularVelocity)*b.boundingRadius)*dt;
++            InitialContactGeometry output;output.a=pair.first;output.b=pair.second;output.margin=margin;
++            output.orientationA=&Orientation(a);output.orientationB=&Orientation(b);
++            initialContactGeometry.push_back(std::move(output));
++        }
++        const unsigned lanes=unsigned(std::min({std::size_t(contactJobLanes),std::size_t(jobs->WorkerCount())+1,initialContactGeometry.size()/64}));
++        std::array<InitialGeometryDiagnostics,JobSystem::kMaxWorkers+1> diagnostics{};
++        std::atomic<std::size_t> next{0};
++        const auto compute=[&](InitialContactGeometry& output){
++            const auto& a=bodies[output.a];const auto& b=bodies[output.b];
++            const auto childA=PrimitiveAt(a.shape,a.rigidBody,0,output.orientationA);
++            const auto childB=PrimitiveAt(b.shape,b.rigidBody,0,output.orientationB);
++            output.manifold=ComputeContacts(childA,childB,output.margin,output.orientationA,output.orientationB);
++            output.touching=false;
++            for(int p=0;p<output.manifold.count;++p){const auto& c=output.manifold.points[p];output.touching=output.touching||(c.hasLocalAnchors?c.signedSeparation<=0:c.penetration>=0);}
++            if(!output.touching&&output.manifold.count)output.touching=ComputeContacts(childA,childB,0,output.orientationA,output.orientationB).count>0;
++            output.ready=true;
++        };
++        auto run=[&](unsigned lane){
++            const auto contactsBefore=GetContactGeometryDiagnostics();const auto cookedBefore=GetCollisionGeometryStats();
++            JUDAS_PROFILE_SCOPE("Physics initial geometry worker batch");
++            try {
++                for(;;){const auto first=next.fetch_add(8,std::memory_order_relaxed);if(first>=initialContactGeometry.size())break;
++                    for(auto i=first;i<std::min(first+8,initialContactGeometry.size());++i)compute(initialContactGeometry[i]);
++                }
++            }catch(...){AddContactDiagnostics(diagnostics[lane].contacts,GetContactGeometryDiagnostics(),contactsBefore);AddCookedDiagnostics(diagnostics[lane].cooked,GetCollisionGeometryStats(),cookedBefore);throw;}
++            AddContactDiagnostics(diagnostics[lane].contacts,GetContactGeometryDiagnostics(),contactsBefore);AddCookedDiagnostics(diagnostics[lane].cooked,GetCollisionGeometryStats(),cookedBefore);
++        };
++        std::array<JobHandle,JobSystem::kMaxWorkers> handles{};unsigned handleCount=0;std::exception_ptr submitError;
++        try{for(unsigned lane=1;lane<lanes;++lane){auto handle=jobs->Submit([&,lane](JobContext&){run(lane);},JobPriority::High,"Physics initial contact geometry");if(handle.IsValid())handles[handleCount++]=handle;}}
++        catch(...){submitError=std::current_exception();}
++        std::exception_ptr mainError;try{run(0);}catch(...){mainError=std::current_exception();}
++        // The owner has exhausted the shared range cursor. A job still queued
++        // behind unrelated resource work can no longer claim useful ranges.
++        // Cancel only these jobs; running jobs retain their claimed outputs.
++        for(unsigned i=0;i<handleCount;++i)if(jobs->StateOf(handles[i])==JobState::Queued)jobs->Cancel(handles[i]);
++        JobHandle failed;
++        for(unsigned i=0;i<handleCount;++i)if(jobs->Wait(handles[i])==JobState::Failed&&!failed.IsValid())failed=handles[i];
++        std::string workerError=failed.IsValid()?jobs->ErrorOf(failed):std::string{};
++        if(failed.IsValid()&&workerError.empty())workerError="initial geometry job did not complete";
++        for(unsigned i=0;i<handleCount;++i)jobs->Forget(handles[i]);
++        // Lane zero executes on the owner; its TLS counters are already included
++        // in the native Step's before/after snapshots.
++        for(unsigned lane=1;lane<lanes;++lane){AddContactDiagnostics(parallelContactDiagnostics,diagnostics[lane].contacts);AddCookedDiagnostics(parallelCookedDiagnostics,diagnostics[lane].cooked);}
++        if(submitError)std::rethrow_exception(submitError);
++        if(mainError)std::rethrow_exception(mainError);
++        if(!workerError.empty())throw std::runtime_error(workerError);
++        // Shutdown may cancel jobs before they start; incomplete outputs then
++        // run through the unchanged owner-thread geometry path after all joins.
++        // Never fall back concurrently with a worker writing an output slot.
++        for(auto& output:initialContactGeometry)if(!output.ready)compute(output);
++        JUDAS_PROFILE_COUNTER("Physics initial geometry worker lanes",lanes,ProfileCounterMode::Latest);
++        JUDAS_PROFILE_COUNTER("Physics parallel initial manifolds",initialContactGeometry.size(),ProfileCounterMode::Latest);
++        JUDAS_PROFILE_COUNTER("Physics initial geometry scratch bytes",initialContactGeometry.capacity()*sizeof(InitialContactGeometry),ProfileCounterMode::Latest);
++    }
+     void PrepareJoints(JointSolver& target,const std::vector<JointInput>& inputs,float dt,
+                        bool warm=true,bool impact=false,bool append=false){
+         PhysicsWorkTimer timer(work.jointPreparation,work.active);
+@@ -1436,6 +1537,7 @@
+             sizeof(std::optional<PreparedShapeBounds>)+sizeof(bool)+2*sizeof(PoseBound));
+         for (const Body& body:bodies) if (body.boundPreparation)
+             bytes+=body.boundPreparation->children.capacity()*sizeof(PreparedBoxBound);
++        bytes+=initialContactGeometry.capacity()*sizeof(InitialContactGeometry);
+         return bytes+(impactPoseSamples.capacity()+impactAnchorSamples.capacity())*sizeof(ImpactPoseSample)+solver.FrameStorageBytes();
+     }
+     void EnsureImpactPoseStorage(){
+@@ -1726,6 +1828,14 @@
+     m_impl = nullptr;
+ }
+ 
++void PhysicsWorld::SetJobSystem(JobSystem* jobs,unsigned maxLanes) {
++    if(!m_impl)throw std::logic_error("physics job service requires initialized world");
++    if(m_impl->stepping||m_impl->coupledStep)throw std::logic_error("physics job service requires completed step boundary");
++    m_impl->contactJobs=jobs;
++    m_impl->contactJobLanes=std::min(maxLanes,JobSystem::kMaxWorkers+1);
++    m_impl->initialContactGeometry.clear();
++}
++
+ BodyHandle PhysicsWorld::CreateShape(const Shape& input,const BodyTransform& pose,bool dynamic,float mass,float friction,float restitution) {
+     Shape shape=input;
+     auto positive=[](glm::vec3 h){return std::isfinite(h.x)&&std::isfinite(h.y)&&std::isfinite(h.z)&&h.x>0&&h.y>0&&h.z>0;};
+@@ -2455,6 +2565,7 @@
+         joint.restoredContinuationDt=0;
+     }
+ 
++    w.parallelContactDiagnostics={};w.parallelCookedDiagnostics={};
+     w.stats = StepStats{};
+     w.work={};w.work.active=PerformanceProfiler::Get().Active();
+     if(w.collectingPreStepQueries){
+@@ -2526,6 +2637,8 @@
+     w.startContacts.clear();
+     w.separatedPairs.clear();
+     w.cacheUsed.assign(w.contactCache.size(), 0);
++    w.PrepareInitialContactGeometry(fixedDeltaTime);
++    std::size_t initialGeometryIndex=0;
+     for (const auto& [slotA, slotB] : w.candidatePairs) {
+         Impl::Body& a = w.bodies[slotA];
+         Impl::Body& b = w.bodies[slotB];
+@@ -2535,38 +2648,45 @@
+             if(old!=w.previousTouches.end()){auto observation=old->second;observation.normalImpulse=0;observation.impulseAvailable=false;observation.relativeVelocity={0,0,0};w.stepTouches[key]=observation;}
+             continue;
+         }
++        const Impl::InitialContactGeometry* prepared=nullptr;
++        if(initialGeometryIndex<w.initialContactGeometry.size()){
++            const auto& candidate=w.initialContactGeometry[initialGeometryIndex];
++            if(candidate.a==slotA&&candidate.b==slotB){prepared=&candidate;++initialGeometryIndex;}
++        }
+         const float friction = std::sqrt(std::max(a.friction, 0.0f) * std::max(b.friction, 0.0f));
+         // Speculative margin: the distance this pair's surfaces can close
+         // within the step at their post-force velocities (relative linear
+         // motion plus each body's rotation at its bounding radius). Any
+         // contact within it is generated now, before it can penetrate; at
+         // rest on a support that is g*dt^2 (2.7 mm at 60 Hz, 9.81 m/s^2).
+-        const float margin =
++        const float margin = prepared?prepared->margin:
+             (glm::length(a.rigidBody.linearVelocity - b.rigidBody.linearVelocity) +
+              glm::length(a.rigidBody.angularVelocity) * a.boundingRadius +
+              glm::length(b.rigidBody.angularVelocity) * b.boundingRadius) *
+             fixedDeltaTime;
+         int pairPoints = 0;
+-        const auto& orientationA = w.Orientation(a);
+-        const auto& orientationB = w.Orientation(b);
++        const auto& orientationA = prepared?*prepared->orientationA:w.Orientation(a);
++        const auto& orientationB = prepared?*prepared->orientationB:w.Orientation(b);
+         const glm::dmat3 inverseA = glm::transpose(orientationA.rotation);
+         for (int partA = 0; partA < PrimitiveCount(a.shape); ++partA) {
+             const PrimitivePose childA = PrimitiveAt(a.shape, a.rigidBody, partA, &orientationA);
+             for (int partB = 0; partB < PrimitiveCount(b.shape); ++partB) {
+                 const PrimitivePose childB = PrimitiveAt(b.shape, b.rigidBody, partB, &orientationB);
+                 const ContactManifold manifold =
+-                    ComputeContacts(childA, childB, margin, &orientationA, &orientationB);
++                    prepared?prepared->manifold:ComputeContacts(childA, childB, margin, &orientationA, &orientationB);
+                 const ContactKey key{slotA, slotB, a.generation, b.generation, partA, partB};
+                 const auto range = std::equal_range(
+                     w.contactCache.begin(), w.contactCache.end(), CachedContact{key, {}, {}, 0.0f, {}},
+                     [](const CachedContact& x, const CachedContact& y) { return x.key < y.key; });
+-                bool touchingManifold=false;
+-                for (int p=0;p<manifold.count;++p) {
+-                    const auto& c=manifold.points[p];
+-                    touchingManifold=touchingManifold || (c.hasLocalAnchors ? c.signedSeparation<=0 : c.penetration>=0);
++                bool touchingManifold=prepared?prepared->touching:false;
++                if(!prepared){
++                    for (int p=0;p<manifold.count;++p) {
++                        const auto& c=manifold.points[p];
++                        touchingManifold=touchingManifold || (c.hasLocalAnchors ? c.signedSeparation<=0 : c.penetration>=0);
++                    }
++                    if(!touchingManifold && manifold.count)
++                        touchingManifold=ComputeContacts(childA,childB,0,&orientationA,&orientationB).count>0;
+                 }
+-                if(!touchingManifold && manifold.count)
+-                    touchingManifold=ComputeContacts(childA,childB,0,&orientationA,&orientationB).count>0;
+                 for (int p = 0; p < manifold.count; ++p) {
+                     Contact contact = manifold.points[p];
+                     if (!contact.hit) continue;
+@@ -2779,16 +2899,16 @@
+     JUDAS_PROFILE_COUNTER("Physics joint preparation ms",double(w.work.jointPreparation.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+     JUDAS_PROFILE_COUNTER("Physics joint preparation calls",double(w.work.jointPreparation.calls),ProfileCounterMode::Sum);
+     const auto collisionAfter=GetCollisionGeometryStats();
+-    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes),ProfileCounterMode::Sum);
+-    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles),ProfileCounterMode::Sum);
+-    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests),ProfileCounterMode::Sum);
++    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes+w.parallelCookedDiagnostics.nodes),ProfileCounterMode::Sum);
++    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles+w.parallelCookedDiagnostics.triangles),ProfileCounterMode::Sum);
++    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests+w.parallelCookedDiagnostics.convexTests),ProfileCounterMode::Sum);
+     w.stats.solverMilliseconds = MillisecondsBetween(solverStart, solverEnd);
+     w.stats.totalMilliseconds = MillisecondsBetween(stepStart, stepEnd);
+     const ContactGeometryDiagnostics geometryAfter = GetContactGeometryDiagnostics();
+-    w.stats.geometryPredicates = geometryAfter.predicates - geometryBefore.predicates;
+-    w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks;
+-    w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved;
+-    w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks;
++    w.stats.geometryPredicates = geometryAfter.predicates - geometryBefore.predicates + w.parallelContactDiagnostics.predicates;
++    w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks + w.parallelContactDiagnostics.exactFallbacks;
++    w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved + w.parallelContactDiagnostics.unresolved;
++    w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks + w.parallelContactDiagnostics.numericGapFallbacks;
+     ++w.completedObservationEpoch;w.completedObservationDt=w.completedSolverDt=fixedDeltaTime;
+     w.completedObservationsReady=true;
+ 

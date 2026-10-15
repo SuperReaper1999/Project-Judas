@@ -1,0 +1,10 @@
+{
+  "/home/conner/Documents/GitHub/Project-Judas/src/ImpactSolver.cpp": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+  "/home/conner/Documents/GitHub/Project-Judas/src/ContactSolver.cpp": "17f5b0f8772a75896f438ebc9759b9df1cf5166cfdd471650929baead46b03e2",
+  "/home/conner/Documents/GitHub/Project-Judas/src/ContactSolver.h": "f8c973362eeaedc714d2e9ca072ad5b37d173b9d1f21952582cd8e5f6ed7c794",
+  "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp": "ac5130a28518d280fa4f326b34b35a5856d217894ca9bc2dabf8525374099d43",
+  "/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h": "2229663990e5c2e0faf73d40c58d90fef6be3f2f5e474b24c855c893c0b6f7a3",
+  "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a": "7126048940ef3ea7d7d34167119805bad379a351a7184e835b83c17ad679630a",
+  "/tmp/m87-impact-quality/ImpactSolver-diagnostic.cpp": "f33a133d763e6907bfb28724cfadfc87257a1190ae53611a5c2f0a3375779f10",
+  "/tmp/m87-impact-quality/live-diagnostic.cpp": "2a7e2bbac8e1405ee113852eb99640c081a536cd93f8f44ae8342f00b877130c"
+}

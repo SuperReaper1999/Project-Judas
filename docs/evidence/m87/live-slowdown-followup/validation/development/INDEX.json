@@ -1,0 +1,62 @@
+[
+  {
+    "source": "/tmp/m87-combined-build.log",
+    "stored": "m87-combined-build.log",
+    "sha256": "76306e9bff7bce8e93517c4783567a194df654b856fca6f0db6c57a7e2a2fb70"
+  },
+  {
+    "source": "/tmp/m87-combined-build-v2.log",
+    "stored": "m87-combined-build-v2.log",
+    "sha256": "e71699679c678170f642424728a18df305c0fcc0e84a51ec4e231f13439d86f3"
+  },
+  {
+    "source": "/tmp/m87-focused-build.log",
+    "stored": "m87-focused-build.log",
+    "sha256": "e2369251c071a7835abd652441e6071558694e40bfc60713ad855da497bb0ed7"
+  },
+  {
+    "source": "/tmp/m87-parallel-final-tests.log",
+    "stored": "m87-parallel-final-tests.log",
+    "sha256": "289cadbcfd9b79f4c8f374fc780cbd87e3ccc0c500e7f0ad008ac4ef5d6c0d9d"
+  },
+  {
+    "source": "/tmp/m87-parallel-cold-controls.log",
+    "stored": "m87-parallel-cold-controls.log",
+    "sha256": "ed73a5a24a9cbcd301a9d18b67a6722b350588b65d79d13537bf380f909bbcf6"
+  },
+  {
+    "source": "/tmp/m87-parallel-test-original.cpp",
+    "stored": "m87-parallel-test-original.cpp",
+    "sha256": "25a6131b5621fd9137eb001f0cfa1614b8c4b45411b800a431614ada321d35ab"
+  },
+  {
+    "source": "/tmp/m87-parallel-final-corrected-tests.log",
+    "stored": "m87-parallel-final-corrected-tests.log",
+    "sha256": "09c2a46099d6ebe16320ff8e30b8ee3e8e46b2ce136c4f8a8dcddaafadb08cb1"
+  },
+  {
+    "source": "/tmp/m87-parallel-final-build.log",
+    "stored": "m87-parallel-final-build.log",
+    "sha256": "c4b6f0c7e1eebf0506059eafc9969671384d90d7a4e62b43c074d323128e93e9"
+  },
+  {
+    "source": "/tmp/m87-geometry-final-tests.log",
+    "stored": "m87-geometry-final-tests.log",
+    "sha256": "cd2ab7a2650f03d488c2456b504ccfa27e9f860da5b5338383de0b1f52ced8d7"
+  },
+  {
+    "source": "/tmp/m87-bounds-final-tests.log",
+    "stored": "m87-bounds-final-tests.log",
+    "sha256": "32c8cdfad63ba056fb1c8c35bf9e5610ff7069140f7181cfd926b66f4ecfdee9"
+  },
+  {
+    "source": "/tmp/m87-boolean-final-tests.log",
+    "stored": "m87-boolean-final-tests.log",
+    "sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818"
+  },
+  {
+    "source": "/tmp/m87-sat-final-tests.log",
+    "stored": "m87-sat-final-tests.log",
+    "sha256": "63c9d744278da3e7bc7dc41c5bda89cd2582b0ed5bb7083ff56b11c5119850da"
+  }
+]

@@ -1,4 +1,6 @@
 #include "PerformanceProfiler.h"
+#include "JobSystem.h"
+#include <exception>
 #include "PhysicsWorld.h"
 #include "CollisionAsset.h"
 #include "CollisionGeometry.h"
@@ -19,6 +21,7 @@
 #include <cstring>
 #include <tuple>
 #include <utility>
+#include <unordered_set>
 #include <vector>
 
 #include "Broadphase.h"
@@ -29,6 +32,7 @@
 #include "RadialTerrain.h"
 #include "RigidBody.h"
 #include "RigidMotion.h"
+#include "RigidMotionBounds.h"
 #include "ImpactSolver.h"
 #include "JointSolver.h"
 #include <atomic>
@@ -506,17 +510,129 @@ struct PhysicsWorld::Impl {
         std::optional<ContactPreparedOrientation> orientation;
         double time=std::numeric_limits<double>::quiet_NaN();
         unsigned generation=0;
+        glm::vec3 tightPosition{0};
+        glm::quat tightOrientation{1,0,0,0};
+        Aabb tightBound;
+        bool tightValid=false;
         Aabb remainingBound;
         double boundStart=std::numeric_limits<double>::quiet_NaN(),boundFinish=0;
         unsigned boundGeneration=0;
     };
-    std::vector<ImpactPoseSample> impactPoseSamples;
+    std::vector<ImpactPoseSample> impactPoseSamples,impactAnchorSamples;
+    double impactQueryAnchorTime=0;
     std::size_t impactPoseEvaluations=0,impactPoseReuses=0,impactOrientationBuilds=0,impactTruthRequests=0,impactTruthReuses=0,impactBoundsRejected=0;
+    std::size_t impactActualBoundsRejected=0;
     struct WorkDiagnostics {
         bool active=false;
-        PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation;
+        PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation,impactObservations;
         std::size_t candidatePasses=0,candidateQueries=0,candidateLeaves=0;
     } work;
+    // Indexed output only: workers never mutate physics bodies, geometry
+    // caches, solver rows, touches, warm starts or event scheduling.
+    struct InitialContactGeometry {
+        unsigned a=0,b=0;float margin=0;
+        const ContactPreparedOrientation* orientationA=nullptr;
+        const ContactPreparedOrientation* orientationB=nullptr;
+        ContactManifold manifold;bool touching=false,ready=false;
+    };
+    struct InitialGeometryDiagnostics {ContactGeometryDiagnostics contacts;CollisionGeometryStats cooked;std::size_t manifolds=0;};
+    // Optional borrowed process service; no physical state or worker ownership.
+    JobSystem* contactJobs=nullptr;unsigned contactJobLanes=4;
+    static constexpr std::size_t kMaxInitialContactPairs=16384;
+    std::vector<InitialContactGeometry> initialContactGeometry;
+    ContactGeometryDiagnostics parallelContactDiagnostics;
+    CollisionGeometryStats parallelCookedDiagnostics;
+    static void AddContactDiagnostics(ContactGeometryDiagnostics& into,const ContactGeometryDiagnostics& after,const ContactGeometryDiagnostics& before={}){
+#define ADD_DIAG(name) into.name+=after.name-before.name
+        ADD_DIAG(predicates);ADD_DIAG(intervalResolved);ADD_DIAG(exactFallbacks);ADD_DIAG(unresolved);ADD_DIAG(invalidInputs);ADD_DIAG(numericGapFallbacks);ADD_DIAG(preparedOrientationMisses);
+#undef ADD_DIAG
+    }
+    static void AddCookedDiagnostics(CollisionGeometryStats& into,const CollisionGeometryStats& after,const CollisionGeometryStats& before={}){
+        into.nodes+=after.nodes-before.nodes;into.triangles+=after.triangles-before.triangles;into.convexTests+=after.convexTests-before.convexTests;
+    }
+    void PrepareInitialContactGeometry(float dt){
+        initialContactGeometry.clear();JobSystem* jobs=contactJobs;
+        JUDAS_PROFILE_COUNTER("Physics initial geometry worker lanes",0,ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics parallel initial manifolds",0,ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics initial worker completed manifolds",0,ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics initial geometry scratch bytes",initialContactGeometry.capacity()*sizeof(InitialContactGeometry),ProfileCounterMode::Latest);
+        if(!jobs||jobs->IsShutDown()||contactJobLanes<=1||candidatePairs.size()<256)return;
+        const auto eligible=[&](const std::pair<unsigned,unsigned>& pair){
+            const auto& a=bodies[pair.first];const auto& b=bodies[pair.second];
+            const auto simple=[](const Shape& shape){return !shape.asset&&(shape.type==ShapeType::Box||shape.type==ShapeType::Sphere);};
+            return !a.sensor&&!b.sensor&&!a.queryOnly&&!b.queryOnly&&simple(a.shape)&&simple(b.shape)&&
+                !((a.sleeping||a.rigidBody.IsStatic())&&(b.sleeping||b.rigidBody.IsStatic()));
+        };
+        std::size_t count=0;
+        for(const auto& pair:candidatePairs)if(eligible(pair)&&++count>kMaxInitialContactPairs)return;
+        if(count<256)return;
+        const auto capacity=initialContactGeometry.capacity();initialContactGeometry.reserve(std::size_t(count));
+        if(initialContactGeometry.capacity()!=capacity){++cacheCounters.allocations;cacheCounters.allocatedBytes+=initialContactGeometry.capacity()*sizeof(InitialContactGeometry);}
+        for(const auto& pair:candidatePairs)if(eligible(pair)){
+            auto& a=bodies[pair.first];auto& b=bodies[pair.second];
+            const float margin=(glm::length(a.rigidBody.linearVelocity-b.rigidBody.linearVelocity)+
+                glm::length(a.rigidBody.angularVelocity)*a.boundingRadius+
+                glm::length(b.rigidBody.angularVelocity)*b.boundingRadius)*dt;
+            InitialContactGeometry output;output.a=pair.first;output.b=pair.second;output.margin=margin;
+            output.orientationA=&Orientation(a);output.orientationB=&Orientation(b);
+            initialContactGeometry.push_back(std::move(output));
+        }
+        // Do not inspect the pool's worker vector while Shutdown may join and
+        // clear it. The borrowed pool bounds execution; unused queued jobs are
+        // cancelled below after the owner exhausts the range cursor.
+        const unsigned lanes=unsigned(std::min(std::size_t(contactJobLanes),initialContactGeometry.size()/64));
+        std::array<InitialGeometryDiagnostics,JobSystem::kMaxWorkers+1> diagnostics{};
+        std::atomic<std::size_t> next{0};
+        const auto compute=[&](InitialContactGeometry& output){
+            const auto& a=bodies[output.a];const auto& b=bodies[output.b];
+            const auto childA=PrimitiveAt(a.shape,a.rigidBody,0,output.orientationA);
+            const auto childB=PrimitiveAt(b.shape,b.rigidBody,0,output.orientationB);
+            output.manifold=ComputeContacts(childA,childB,output.margin,output.orientationA,output.orientationB);
+            output.touching=false;
+            for(int p=0;p<output.manifold.count;++p){const auto& c=output.manifold.points[p];output.touching=output.touching||(c.hasLocalAnchors?c.signedSeparation<=0:c.penetration>=0);}
+            if(!output.touching&&output.manifold.count)output.touching=ComputeContacts(childA,childB,0,output.orientationA,output.orientationB).count>0;
+            output.ready=true;
+        };
+        auto run=[&](unsigned lane){
+            const auto contactsBefore=GetContactGeometryDiagnostics();const auto cookedBefore=GetCollisionGeometryStats();
+            JUDAS_PROFILE_SCOPE("Physics initial geometry worker batch");
+            try {
+                for(;;){const auto first=next.fetch_add(8,std::memory_order_relaxed);if(first>=initialContactGeometry.size())break;
+                    for(auto i=first;i<std::min(first+8,initialContactGeometry.size());++i){compute(initialContactGeometry[i]);++diagnostics[lane].manifolds;}
+                }
+            }catch(...){AddContactDiagnostics(diagnostics[lane].contacts,GetContactGeometryDiagnostics(),contactsBefore);AddCookedDiagnostics(diagnostics[lane].cooked,GetCollisionGeometryStats(),cookedBefore);throw;}
+            AddContactDiagnostics(diagnostics[lane].contacts,GetContactGeometryDiagnostics(),contactsBefore);AddCookedDiagnostics(diagnostics[lane].cooked,GetCollisionGeometryStats(),cookedBefore);
+        };
+        std::array<JobHandle,JobSystem::kMaxWorkers> handles{};unsigned handleCount=0;std::exception_ptr submitError;
+        try{for(unsigned lane=1;lane<lanes;++lane){auto handle=jobs->Submit([&,lane](JobContext&){run(lane);},JobPriority::High,"Physics initial contact geometry");if(handle.IsValid())handles[handleCount++]=handle;}}
+        catch(...){submitError=std::current_exception();}
+        std::exception_ptr mainError;try{run(0);}catch(...){mainError=std::current_exception();}
+        // The owner has exhausted the shared range cursor. A job still queued
+        // behind unrelated resource work can no longer claim useful ranges.
+        // Cancel only these jobs; running jobs retain their claimed outputs.
+        for(unsigned i=0;i<handleCount;++i)if(jobs->StateOf(handles[i])==JobState::Queued)jobs->Cancel(handles[i]);
+        JobHandle failed;
+        for(unsigned i=0;i<handleCount;++i)if(jobs->Wait(handles[i])==JobState::Failed&&!failed.IsValid())failed=handles[i];
+        std::string workerError=failed.IsValid()?jobs->ErrorOf(failed):std::string{};
+        if(failed.IsValid()&&workerError.empty())workerError="initial geometry job did not complete";
+        for(unsigned i=0;i<handleCount;++i)jobs->Forget(handles[i]);
+        // Lane zero executes on the owner; its TLS counters are already included
+        // in the native Step's before/after snapshots.
+        for(unsigned lane=1;lane<lanes;++lane){AddContactDiagnostics(parallelContactDiagnostics,diagnostics[lane].contacts);AddCookedDiagnostics(parallelCookedDiagnostics,diagnostics[lane].cooked);}
+        if(submitError)std::rethrow_exception(submitError);
+        if(mainError)std::rethrow_exception(mainError);
+        if(!workerError.empty())throw std::runtime_error(workerError);
+        // Shutdown may cancel jobs before they start; incomplete outputs then
+        // run through the unchanged owner-thread geometry path after all joins.
+        // Never fall back concurrently with a worker writing an output slot.
+        for(auto& output:initialContactGeometry)if(!output.ready)compute(output);
+        std::size_t workerManifolds=0;
+        for(unsigned lane=1;lane<lanes;++lane)workerManifolds+=diagnostics[lane].manifolds;
+        JUDAS_PROFILE_COUNTER("Physics initial worker completed manifolds",workerManifolds,ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics initial geometry worker lanes",lanes,ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics parallel initial manifolds",initialContactGeometry.size(),ProfileCounterMode::Latest);
+        JUDAS_PROFILE_COUNTER("Physics initial geometry scratch bytes",initialContactGeometry.capacity()*sizeof(InitialContactGeometry),ProfileCounterMode::Latest);
+    }
     void PrepareJoints(JointSolver& target,const std::vector<JointInput>& inputs,float dt,
                        bool warm=true,bool impact=false,bool append=false){
         PhysicsWorkTimer timer(work.jointPreparation,work.active);
@@ -525,6 +641,7 @@ struct PhysicsWorld::Impl {
     void InvalidateImpactPose(unsigned slot){
         if(slot<impactPoseSamples.size()){
             impactPoseSamples[slot].time=std::numeric_limits<double>::quiet_NaN();
+            impactAnchorSamples[slot].time=std::numeric_limits<double>::quiet_NaN();
             impactPoseSamples[slot].boundStart=std::numeric_limits<double>::quiet_NaN();
         }
     }
@@ -547,11 +664,26 @@ struct PhysicsWorld::Impl {
         return glm::dot(glm::dvec3(c.normal),glm::dvec3(a.linearVelocity-b.linearVelocity)+
             glm::cross(glm::dvec3(a.angularVelocity),ra)-glm::cross(glm::dvec3(b.angularVelocity),rb));
     }
+    // This RigidBody-shaped adapter serves the existing geometric primitive
+    // APIs only. It deliberately does not transport angular velocity; physical
+    // event/solver publication must continue to use PoseAt above.
+    RigidBody GeometryPoseAt(unsigned slot,double time) const {
+        const auto& body=bodies[slot];
+        RigidBody pose=body.rigidBody;
+        if(body.HasMotion()&&!body.motion.Segments().empty()){
+            const auto geometry=body.motion.EvaluateGeometryAfterEvents(time);
+            pose.position=geometry.position;pose.orientation=geometry.orientation;
+            pose.linearVelocity=geometry.linearVelocity;
+        }
+        return pose;
+    }
     const ImpactPoseSample& ImpactPoseAt(unsigned slot,double time){
         EnsureImpactPoseStorage();
-        auto& sample=impactPoseSamples[slot];
+        // Independent pair queries share the current event's start pose.
+        // Bisection samples must not evict that immutable geometric sample.
+        auto& sample=time==impactQueryAnchorTime?impactAnchorSamples[slot]:impactPoseSamples[slot];
         if(sample.time==time&&sample.generation==bodies[slot].generation){++impactPoseReuses;return sample;}
-        sample.pose=PoseAt(slot,time);sample.time=time;sample.generation=bodies[slot].generation;++impactPoseEvaluations;
+        sample.pose=GeometryPoseAt(slot,time);sample.time=time;sample.generation=bodies[slot].generation;++impactPoseEvaluations;
         if(!sample.orientation||!sample.orientation->Matches(sample.pose.orientation)){
             sample.orientation.emplace(sample.pose.orientation);++impactOrientationBuilds;
         }
@@ -569,15 +701,49 @@ struct PhysicsWorld::Impl {
             // orientation, including a full turn with equal endpoint rotations.
             // Only centers are needed: do not evict the prepared start pose or
             // prepare an unused endpoint orientation for this sphere enclosure.
-            const auto from=PoseAt(slot,start).position,to=PoseAt(slot,finish).position;
+            const auto fromPose=GeometryPoseAt(slot,start),toPose=GeometryPoseAt(slot,finish);
+            const auto from=fromPose.position,to=toPose.position;
             const auto sphere=Shape::Sphere(body.boundingRadius);const glm::quat identity(1,0,0,0);
             sample.remainingBound=ShapeAabb(sphere,from,identity).Union(ShapeAabb(sphere,to,identity));
+            const auto& segments=body.motion.Segments();
+            auto segment=std::upper_bound(segments.begin(),segments.end(),start,
+                [](double time,const auto& value){return time<value.begin;});
+            if(segment!=segments.begin()){
+                --segment;
+                auto tighter=rigid_motion_bounds::TryTranslationSweepBound(body.shape,*segment,fromPose,toPose,start,finish);
+                if(!tighter)tighter=rigid_motion_bounds::TryDynamicBoxSweepBound(body.shape,*segment,fromPose,toPose,start,finish);
+                if(tighter)
+                    sample.remainingBound=rigid_motion_bounds::IntersectConservativeBounds(sample.remainingBound,*tighter);
+            }
         }
         sample.boundStart=start;sample.boundFinish=finish;sample.boundGeneration=body.generation;return sample.remainingBound;
+    }
+    const Aabb& ActualImpactBound(unsigned slot,const ImpactPoseSample& pose){
+        auto& sample=impactPoseSamples[slot];
+        if(!sample.tightValid||!SamePosition(sample.tightPosition,pose.pose.position)||
+           !SameRotation(sample.tightOrientation,pose.pose.orientation)){
+            const auto& shape=bodies[slot].shape;
+            if(shape.type==ShapeType::Box||shape.type==ShapeType::Sphere){
+                PreparedShapeBounds prepared;
+                PrepareShapeBounds(shape,*pose.orientation,prepared);
+                sample.tightBound=ShapeAabb(prepared,pose.pose.position);
+            }else sample.tightBound=ShapeAabb(shape,pose.pose.position,pose.pose.orientation);
+            sample.tightPosition=pose.pose.position;sample.tightOrientation=pose.pose.orientation;
+            sample.tightValid=true;
+        }
+        return sample.tightBound;
+    }
+    bool SimpleImpactBoundsSeparated(unsigned a,unsigned b,const ImpactPoseSample& aa,const ImpactPoseSample& bb){
+        const auto simple=[](const Shape& shape){return (shape.type==ShapeType::Box||shape.type==ShapeType::Sphere)&&shape.pivotOffset==glm::vec3(0);};
+        if(!simple(bodies[a].shape)||!simple(bodies[b].shape))return false;
+        const auto& first=ActualImpactBound(a,aa);const auto& second=ActualImpactBound(b,bb);
+        if(!rigid_motion_bounds::FiniteBound(first)||!rigid_motion_bounds::FiniteBound(second)||first.Overlaps(second))return false;
+        ++impactActualBoundsRejected;return true;
     }
     ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) {
         PhysicsWorkTimer timer(work.geometry,work.active);
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+        if(margin==0&&SimpleImpactBoundsSeparated(a,b,aa,bb))return {};
         return ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
             PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation),margin,&*aa.orientation,&*bb.orientation);
     }
@@ -599,9 +765,13 @@ struct PhysicsWorld::Impl {
     bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time) {
         PhysicsWorkTimer timer(work.geometry,work.active);
         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+        if(SimpleImpactBoundsSeparated(a,b,aa,bb))return false;
         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
         const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
         if(posa.shape.asset||posb.shape.asset)return CookedHasContacts(posa,posb,0);
+        if(posa.childRotation==glm::quat(1,0,0,0)&&posb.childRotation==glm::quat(1,0,0,0))
+            return PrimitiveHasContacts(posa.shape,{posa.parentPosition,posa.parentOrientation,posa.parentLocalCenter},
+                posb.shape,{posb.parentPosition,posb.parentOrientation,posb.parentLocalCenter},0,&*aa.orientation,&*bb.orientation);
         return ComputeContacts(posa,posb,0,&*aa.orientation,&*bb.orientation).count>0;
     }
     // CCD bounds use the geometric drift generator, not the transported
@@ -767,12 +937,6 @@ struct PhysicsWorld::Impl {
         ++stats.impactQueries;
         if(target>0)target+=PairPenetration(a,b,pa,pb,start);
         const auto& ba=bodies[a]; const auto& bb=bodies[b];
-        const auto posa=PoseAt(a,start),posb=PoseAt(b,start);
-        const glm::dvec3 relative=glm::dvec3(ba.HasMotion()?posa.linearVelocity:glm::vec3(0))-glm::dvec3(bb.HasMotion()?posb.linearVelocity:glm::vec3(0));
-        const double angular=(ba.HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,start)))*ba.boundingRadius:0)+
-                             (bb.HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,start)))*bb.boundingRadius:0);
-        const double speed=glm::length(relative)+angular;
-        if (!(speed>0)) return finish+1;
         const auto simpleRadius=[](const Body& body){
             return (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;
         };
@@ -786,6 +950,12 @@ struct PhysicsWorld::Impl {
             // the established query path whenever the enclosure is uncertain.
             if(finite(boundA)&&finite(boundB)&&!boundA.Overlaps(boundB)){++impactBoundsRejected;return finish+1;}
         }
+        const auto posa=ImpactPoseAt(a,start).pose,posb=ImpactPoseAt(b,start).pose;
+        const glm::dvec3 relative=glm::dvec3(ba.HasMotion()?posa.linearVelocity:glm::vec3(0))-glm::dvec3(bb.HasMotion()?posb.linearVelocity:glm::vec3(0));
+        const double angular=(ba.HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,start)))*ba.boundingRadius:0)+
+                             (bb.HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,start)))*bb.boundingRadius:0);
+        const double speed=glm::length(relative)+angular;
+        if (!(speed>0)) return finish+1;
         // Bisection still performs all 32 represented-time bracket updates.
         // Binary32 pose integration can map several of those times to exactly
         // the same pair of poses. Contact truth for that identical geometry is
@@ -969,9 +1139,26 @@ struct PhysicsWorld::Impl {
     }
 
     void AdvanceImpacts(float dt,bool coupledVelocityChanged=false) {
-        stepDuration=dt;
+        // Keep published contact storage ordered even if a later physical
+        // query throws. Successful steps sort once; failure observers retain
+        // the same lower_bound invariant as the former per-event publication.
+        struct ObservationPublication {
+            std::vector<CachedContact>& rows;
+            PhysicsWorkSample& work;
+            bool active,dirty=false;
+            void Publish(){
+                if(!dirty)return;
+                PhysicsWorkTimer timer(work,active);
+                std::stable_sort(rows.begin(),rows.end(),
+                    [](const CachedContact& a,const CachedContact& b){return a.key<b.key;});
+                dirty=false;
+            }
+            ~ObservationPublication(){Publish();}
+        } observationPublication{completedContactObservations,work.impactObservations,work.active};
+        stepDuration=dt;impactQueryAnchorTime=0;
         impactPoseEvaluations=impactPoseReuses=impactOrientationBuilds=impactTruthRequests=impactTruthReuses=impactBoundsRejected=0;
-        for(auto slot:aliveSlots)InvalidateImpactPose(slot);
+        impactActualBoundsRejected=0;
+        for(auto slot:aliveSlots){InvalidateImpactPose(slot);if(slot<impactPoseSamples.size())impactPoseSamples[slot].tightValid=false;}
         impactCounts.assign(bodies.size(),0); impactCapped.assign(bodies.size(),0);
         // A sleeping body still needs its stationary pre-impact trajectory.
         // An actual TOI may wake it and append a new segment during this step.
@@ -1018,7 +1205,7 @@ struct PhysicsWorld::Impl {
                 }
             }
             if (earliest>dt) break;
-            now=earliest;
+            now=earliest;impactQueryAnchorTime=now;
             // Infinite-mass boundaries do not join the velocity-changing
             // island, but solver lever arms and observed point velocities
             // must use their actual event-time COM/orientation.
@@ -1032,25 +1219,63 @@ struct PhysicsWorld::Impl {
                 included[slot]=1;island.push_back(slot);}};
             include(seedA);include(seedB);
             std::vector<std::pair<unsigned,unsigned>> touching;
+            // Keep discovery/row order in the vector. Hash membership only
+            // removes repeated queries at this unchanged event-time geometry.
+            std::unordered_set<uint64_t> visitedPairs;
+            struct DiscoveredManifold {
+                std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
+            };
+            std::vector<DiscoveredManifold> discoveredManifolds;
+            const auto simplePart=[&](unsigned slot,int part){
+                const auto& shape=bodies[slot].shape;
+                const auto type=shape.type==ShapeType::CompoundBoxes?shape.boxes[std::size_t(part)].type:shape.type;
+                return type==ShapeType::Box||type==ShapeType::Sphere;
+            };
             {
             PhysicsWorkTimer timer(work.impactIslands,work.active);
             for (std::size_t next=0;next<island.size();++next) {
-                const unsigned a=island[next]; const auto pose=PoseAt(a,now);
+                const unsigned a=island[next];
                 for(const auto& joint:joints)if(JointActive(joint)&&joint.state.settings.bodyB.IsValid()){
                     const auto x=joint.state.settings.bodyA.id&kSlotMask,y=joint.state.settings.bodyB.id&kSlotMask;
                     if(x==a)include(y);
                     if(y==a)include(x);
                 }
-                const auto candidates=QuerySlots(ShapeAabb(bodies[a].shape,pose.position,pose.orientation));
+                const auto candidates=QuerySlots(ActualImpactBound(a,ImpactPoseAt(a,now)));
                 for (unsigned b:candidates) {
                     if (a==b || !CanRespond(a,b)) continue;
                     const auto pair=std::minmax(a,b);
-                    if (std::find(touching.begin(),touching.end(),std::pair<unsigned,unsigned>(pair))!=touching.end()) continue;
-                    bool hit=false;
+                    const uint64_t pairKey=(uint64_t(pair.first)<<32)|pair.second;
+                    if(visitedPairs.count(pairKey))continue;
+                    bool hit=false,reliableMiss=true;
+                    std::optional<DiscoveredManifold> discovered;
                     for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
-                        for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb)
-                            hit=hit||PairTouches(a,b,pa,pb,now);
-                    if(hit) {touching.emplace_back(pair);include(b);}
+                        for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb){
+                            if(hit)continue; // Preserve the existing first-hit short circuit.
+                            if(simplePart(a,pa)&&simplePart(b,pb)){
+                                auto geometry=PairAt(a,b,pa,pb,now,0);
+                                hit=geometry.count>0;
+                                reliableMiss&=!geometry.uncertain;
+                                // Response is always in ascending body order.
+                                // A reversed discovery must retain the original
+                                // canonical response query, not flip its rows.
+                                if(hit&&a==pair.first)
+                                    discovered=DiscoveredManifold{touching.size(),pa,pb,std::move(geometry)};
+                            }else{
+                                hit=PairTouches(a,b,pa,pb,now);
+                                // Specialized Boolean paths stay unchanged;
+                                // a miss carries no public uncertainty proof.
+                                reliableMiss=false;
+                            }
+                        }
+                    if(hit){
+                        visitedPairs.insert(pairKey);
+                        if(discovered)discoveredManifolds.push_back(std::move(*discovered));
+                        touching.emplace_back(pair);include(b);
+                    }else if(reliableMiss){
+                        // Only a resolved primitive separation may suppress
+                        // the reverse traversal's identical existence query.
+                        visitedPairs.insert(pairKey);
+                    }
                 }
             }
             }
@@ -1084,11 +1309,17 @@ struct PhysicsWorld::Impl {
             std::vector<ImpactContact> rows;
             std::vector<ContactKey> observationKeys;
             std::vector<std::array<unsigned,4>> eventPairs;
-            for (const auto& pair:touching) {
+            std::size_t discoveredIndex=0;
+            for(std::size_t touchingIndex=0;touchingIndex<touching.size();++touchingIndex){
+                const auto& pair=touching[touchingIndex];
+                const DiscoveredManifold* discovered=discoveredIndex<discoveredManifolds.size()&&
+                    discoveredManifolds[discoveredIndex].touchingIndex==touchingIndex?
+                    &discoveredManifolds[discoveredIndex++]:nullptr;
                 auto& a=bodies[pair.first];auto& b=bodies[pair.second];
                 for(int pa=0;pa<PrimitiveCount(a.shape);++pa)
                     for(int pb=0;pb<PrimitiveCount(b.shape);++pb) {
-                        const auto m=PairAt(pair.first,pair.second,pa,pb,now,0);
+                        const auto m=discovered&&discovered->partA==pa&&discovered->partB==pb?
+                            discovered->geometry:PairAt(pair.first,pair.second,pa,pb,now,0);
                         if(m.count) eventPairs.push_back({pair.first,pair.second,unsigned(pa),unsigned(pb)});
                         for(int k=0;k<m.count;++k) {
                             Observe(pair.first,pair.second,m.points[k]);
@@ -1108,9 +1339,19 @@ struct PhysicsWorld::Impl {
             // Replace only primitive groups for which actual TOI geometry
             // was solved. Never replay warm impulses or duplicate repeated
             // TOI loads. Unaffected stance groups retain their completed rows.
+            {
+            PhysicsWorkTimer timer(work.impactObservations,work.active);
+            auto replacedGroups=observationKeys;
+            const auto groupLess=[](const ContactKey& a,const ContactKey& b){
+                return std::tie(a.slotA,a.slotB,a.partA,a.partB,a.generationA,a.generationB)<
+                       std::tie(b.slotA,b.slotB,b.partA,b.partB,b.generationA,b.generationB);
+            };
+            std::sort(replacedGroups.begin(),replacedGroups.end(),groupLess);
+            replacedGroups.erase(std::unique(replacedGroups.begin(),replacedGroups.end(),
+                [](const ContactKey& a,const ContactKey& b){return a.SameBodies(b);}),replacedGroups.end());
+            observationPublication.dirty=true;
             completedContactObservations.erase(std::remove_if(completedContactObservations.begin(),completedContactObservations.end(),
-                [&](const CachedContact& cached){return std::any_of(observationKeys.begin(),observationKeys.end(),
-                    [&](const ContactKey& key){return cached.key.SameBodies(key);});}),completedContactObservations.end());
+                [&](const CachedContact& cached){return std::binary_search(replacedGroups.begin(),replacedGroups.end(),cached.key,groupLess);}),completedContactObservations.end());
             const auto& observed=impactSolver.Constraints();
             if(observed.size()!=observationKeys.size())throw std::runtime_error("impact observation mapping mismatch");
             for(std::size_t i=0;i<observed.size();++i){
@@ -1119,8 +1360,7 @@ struct PhysicsWorld::Impl {
                 completedContactObservations.push_back({key,row.localAnchorA,row.normal,row.normalImpulse,row.tangentImpulse,
                     float(row.signedSeparation),bodies[key.slotA].contactObservationRevision,bodies[key.slotB].contactObservationRevision});
             }
-            std::stable_sort(completedContactObservations.begin(),completedContactObservations.end(),
-                [](const CachedContact& a,const CachedContact& b){return a.key<b.key;});
+            }
             if(result.effectiveRestitution==0) {
                 // An inelastic event leaves the pair touching. It becomes a
                 // support pair unless its new spin can still turn a feature
@@ -1142,6 +1382,9 @@ struct PhysicsWorld::Impl {
                 if(SamePosition(oldVelocities[i].first,b.rigidBody.linearVelocity) &&
                    SamePosition(oldVelocities[i].second,b.rigidBody.angularVelocity)) continue;
                 changed.push_back(slot);
+                // Membership remains nonzero; value two also marks the
+                // changed subset without scanning it for every scheduled pair.
+                included[slot]=2;
                 b.motion.ChangeVelocity(b.rigidBody,now);
                 InvalidateImpactPose(slot);
                 CoverStepReach(b,static_cast<float>(dt-now));
@@ -1156,8 +1399,7 @@ struct PhysicsWorld::Impl {
             std::vector<std::array<unsigned,4>> dirty;
             dirty.push_back(selected); // retire the event even if its impulse is zero
             for(const auto& event:scheduledImpacts)
-                if(std::find(changed.begin(),changed.end(),event.key[0])!=changed.end() ||
-                   std::find(changed.begin(),changed.end(),event.key[1])!=changed.end()) dirty.push_back(event.key);
+                if(included[event.key[0]]==2||included[event.key[1]]==2)dirty.push_back(event.key);
             for(unsigned slot:changed) {
                 const auto candidates=QuerySlots(tree.FatAabb(bodies[slot].proxy));
                 for(unsigned other:candidates) if(other!=slot && CanRespond(slot,other)) {
@@ -1171,6 +1413,11 @@ struct PhysicsWorld::Impl {
             for(const auto& key:dirty) schedule(key);
             if(now>=dt) break;
         }
+        // No solver reads completed observations during this event pass. Each
+        // event still replaces exactly its actual primitive groups and keeps
+        // row insertion order. One stable publication sort has the same final
+        // key/row order as sorting the entire history after every impact.
+        observationPublication.Publish();
         for(const auto slot:aliveSlots) if(bodies[slot].HasMotion()&&!bodies[slot].sleeping) {
             auto& body=bodies[slot];const auto pose=body.motion.EvaluateAfterEvents(dt);
             stats.motionSegments+=body.motion.Segments().size();stats.motionStorageBytes+=body.motion.StorageBytes();
@@ -1302,11 +1549,14 @@ struct PhysicsWorld::Impl {
             sizeof(std::optional<PreparedShapeBounds>)+sizeof(bool)+2*sizeof(PoseBound));
         for (const Body& body:bodies) if (body.boundPreparation)
             bytes+=body.boundPreparation->children.capacity()*sizeof(PreparedBoxBound);
-        return bytes+impactPoseSamples.capacity()*sizeof(ImpactPoseSample)+solver.FrameStorageBytes();
+        bytes+=initialContactGeometry.capacity()*sizeof(InitialContactGeometry);
+        return bytes+(impactPoseSamples.capacity()+impactAnchorSamples.capacity())*sizeof(ImpactPoseSample)+solver.FrameStorageBytes();
     }
     void EnsureImpactPoseStorage(){
         if(impactPoseSamples.size()>=bodies.size())return;
         const auto capacity=impactPoseSamples.capacity();impactPoseSamples.resize(bodies.size());
+        const auto anchorCapacity=impactAnchorSamples.capacity();impactAnchorSamples.resize(bodies.size());
+        if(impactAnchorSamples.capacity()!=anchorCapacity){++cacheCounters.allocations;cacheCounters.allocatedBytes+=impactAnchorSamples.capacity()*sizeof(ImpactPoseSample);}
         if(impactPoseSamples.capacity()!=capacity){++cacheCounters.allocations;cacheCounters.allocatedBytes+=impactPoseSamples.capacity()*sizeof(ImpactPoseSample);}
     }
 
@@ -1588,6 +1838,14 @@ PhysicsWorld::~PhysicsWorld() { Shutdown(); }
 void PhysicsWorld::Shutdown() {
     delete m_impl;
     m_impl = nullptr;
+}
+
+void PhysicsWorld::SetJobSystem(JobSystem* jobs,unsigned maxLanes) {
+    if(!m_impl)throw std::logic_error("physics job service requires initialized world");
+    if(m_impl->stepping||m_impl->coupledStep)throw std::logic_error("physics job service requires completed step boundary");
+    m_impl->contactJobs=jobs;
+    m_impl->contactJobLanes=std::min(maxLanes,JobSystem::kMaxWorkers+1);
+    m_impl->initialContactGeometry.clear();
 }
 
 BodyHandle PhysicsWorld::CreateShape(const Shape& input,const BodyTransform& pose,bool dynamic,float mass,float friction,float restitution) {
@@ -2319,6 +2577,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
         joint.restoredContinuationDt=0;
     }
 
+    w.parallelContactDiagnostics={};w.parallelCookedDiagnostics={};
     w.stats = StepStats{};
     w.work={};w.work.active=PerformanceProfiler::Get().Active();
     if(w.collectingPreStepQueries){
@@ -2390,6 +2649,8 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     w.startContacts.clear();
     w.separatedPairs.clear();
     w.cacheUsed.assign(w.contactCache.size(), 0);
+    w.PrepareInitialContactGeometry(fixedDeltaTime);
+    std::size_t initialGeometryIndex=0;
     for (const auto& [slotA, slotB] : w.candidatePairs) {
         Impl::Body& a = w.bodies[slotA];
         Impl::Body& b = w.bodies[slotB];
@@ -2399,38 +2660,45 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
             if(old!=w.previousTouches.end()){auto observation=old->second;observation.normalImpulse=0;observation.impulseAvailable=false;observation.relativeVelocity={0,0,0};w.stepTouches[key]=observation;}
             continue;
         }
+        const Impl::InitialContactGeometry* prepared=nullptr;
+        if(initialGeometryIndex<w.initialContactGeometry.size()){
+            const auto& candidate=w.initialContactGeometry[initialGeometryIndex];
+            if(candidate.a==slotA&&candidate.b==slotB){prepared=&candidate;++initialGeometryIndex;}
+        }
         const float friction = std::sqrt(std::max(a.friction, 0.0f) * std::max(b.friction, 0.0f));
         // Speculative margin: the distance this pair's surfaces can close
         // within the step at their post-force velocities (relative linear
         // motion plus each body's rotation at its bounding radius). Any
         // contact within it is generated now, before it can penetrate; at
         // rest on a support that is g*dt^2 (2.7 mm at 60 Hz, 9.81 m/s^2).
-        const float margin =
+        const float margin = prepared?prepared->margin:
             (glm::length(a.rigidBody.linearVelocity - b.rigidBody.linearVelocity) +
              glm::length(a.rigidBody.angularVelocity) * a.boundingRadius +
              glm::length(b.rigidBody.angularVelocity) * b.boundingRadius) *
             fixedDeltaTime;
         int pairPoints = 0;
-        const auto& orientationA = w.Orientation(a);
-        const auto& orientationB = w.Orientation(b);
+        const auto& orientationA = prepared?*prepared->orientationA:w.Orientation(a);
+        const auto& orientationB = prepared?*prepared->orientationB:w.Orientation(b);
         const glm::dmat3 inverseA = glm::transpose(orientationA.rotation);
         for (int partA = 0; partA < PrimitiveCount(a.shape); ++partA) {
             const PrimitivePose childA = PrimitiveAt(a.shape, a.rigidBody, partA, &orientationA);
             for (int partB = 0; partB < PrimitiveCount(b.shape); ++partB) {
                 const PrimitivePose childB = PrimitiveAt(b.shape, b.rigidBody, partB, &orientationB);
                 const ContactManifold manifold =
-                    ComputeContacts(childA, childB, margin, &orientationA, &orientationB);
+                    prepared?prepared->manifold:ComputeContacts(childA, childB, margin, &orientationA, &orientationB);
                 const ContactKey key{slotA, slotB, a.generation, b.generation, partA, partB};
                 const auto range = std::equal_range(
                     w.contactCache.begin(), w.contactCache.end(), CachedContact{key, {}, {}, 0.0f, {}},
                     [](const CachedContact& x, const CachedContact& y) { return x.key < y.key; });
-                bool touchingManifold=false;
-                for (int p=0;p<manifold.count;++p) {
-                    const auto& c=manifold.points[p];
-                    touchingManifold=touchingManifold || (c.hasLocalAnchors ? c.signedSeparation<=0 : c.penetration>=0);
+                bool touchingManifold=prepared?prepared->touching:false;
+                if(!prepared){
+                    for (int p=0;p<manifold.count;++p) {
+                        const auto& c=manifold.points[p];
+                        touchingManifold=touchingManifold || (c.hasLocalAnchors ? c.signedSeparation<=0 : c.penetration>=0);
+                    }
+                    if(!touchingManifold && manifold.count)
+                        touchingManifold=ComputeContacts(childA,childB,0,&orientationA,&orientationB).count>0;
                 }
-                if(!touchingManifold && manifold.count)
-                    touchingManifold=ComputeContacts(childA,childB,0,&orientationA,&orientationB).count>0;
                 for (int p = 0; p < manifold.count; ++p) {
                     Contact contact = manifold.points[p];
                     if (!contact.hit) continue;
@@ -2625,6 +2893,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     JUDAS_PROFILE_COUNTER("Physics impact actual-contact requests",double(w.impactTruthRequests),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact actual-contact reuses",double(w.impactTruthReuses),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact remaining-bound rejections",double(w.impactBoundsRejected),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact actual-bound rejections",double(w.impactActualBoundsRejected),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics broadphase passes",double(w.work.candidatePasses),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics broadphase root queries",double(w.work.candidateQueries),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics broadphase overlapping leaves",double(w.work.candidateLeaves),ProfileCounterMode::Latest);
@@ -2638,19 +2907,24 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     JUDAS_PROFILE_COUNTER("Physics CCD geometry calls",double(w.work.geometry.calls),ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics impact island discovery ms",double(w.work.impactIslands.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics impact solve ms",double(w.work.impactSolve.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics impact observation publication ms",double(w.work.impactObservations.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics joint preparation ms",double(w.work.jointPreparation.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics joint preparation calls",double(w.work.jointPreparation.calls),ProfileCounterMode::Sum);
     const auto collisionAfter=GetCollisionGeometryStats();
-    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes),ProfileCounterMode::Sum);
-    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles),ProfileCounterMode::Sum);
-    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics cooked BVH nodes",double(collisionAfter.nodes-collisionBefore.nodes+w.parallelCookedDiagnostics.nodes),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics cooked triangles",double(collisionAfter.triangles-collisionBefore.triangles+w.parallelCookedDiagnostics.triangles),ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics cooked convex tests",double(collisionAfter.convexTests-collisionBefore.convexTests+w.parallelCookedDiagnostics.convexTests),ProfileCounterMode::Sum);
     w.stats.solverMilliseconds = MillisecondsBetween(solverStart, solverEnd);
     w.stats.totalMilliseconds = MillisecondsBetween(stepStart, stepEnd);
     const ContactGeometryDiagnostics geometryAfter = GetContactGeometryDiagnostics();
-    w.stats.geometryPredicates = geometryAfter.predicates - geometryBefore.predicates;
-    w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks;
-    w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved;
-    w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks;
+    w.stats.geometryPredicates = geometryAfter.predicates - geometryBefore.predicates + w.parallelContactDiagnostics.predicates;
+    w.stats.geometryExactFallbacks = geometryAfter.exactFallbacks - geometryBefore.exactFallbacks + w.parallelContactDiagnostics.exactFallbacks;
+    w.stats.geometryUnresolved = geometryAfter.unresolved - geometryBefore.unresolved + w.parallelContactDiagnostics.unresolved;
+    w.stats.geometryNumericGapFallbacks = geometryAfter.numericGapFallbacks - geometryBefore.numericGapFallbacks + w.parallelContactDiagnostics.numericGapFallbacks;
+    JUDAS_PROFILE_COUNTER("Physics geometry predicates",double(w.stats.geometryPredicates),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics geometry exact fallbacks",double(w.stats.geometryExactFallbacks),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics geometry unresolved",double(w.stats.geometryUnresolved),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics geometry numeric gap fallbacks",double(w.stats.geometryNumericGapFallbacks),ProfileCounterMode::Latest);
     ++w.completedObservationEpoch;w.completedObservationDt=w.completedSolverDt=fixedDeltaTime;
     w.completedObservationsReady=true;
 

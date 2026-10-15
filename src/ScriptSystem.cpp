@@ -1744,7 +1744,6 @@ void ScriptSystem::UIEvents(const InputSystem* input,float dt){
 }
 
 void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse,SceneObjectId selfBody,const std::string& selfJoint,SceneObjectId otherArticulation,const std::string& otherJoint){
- JUDAS_PROFILE_SCOPE("JavaScript contact events");
     m->CheckThread();m->fixed=true;
     auto* definition=m->world->RuntimeDefinition(self);if(!definition)return;
     const auto slots=definition->scripts;

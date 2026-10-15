@@ -1,0 +1,132 @@
+--- src/PhysicsWorld.cpp
++++ src/PhysicsWorld.cpp
+@@ -492,7 +492,11 @@
+     std::vector<std::array<unsigned,4>> separatedPairs;
+     std::vector<std::array<unsigned,4>> supportPairs;
+     std::vector<std::array<unsigned,4>> spinningPairs; // sorted; continuous search with a penetration target
+-    struct ScheduledImpact { std::array<unsigned,4> key; double time; };
++    struct ScheduledImpact {
++        std::array<unsigned,4> key; double time;
++        double queryStart=0,target=0; bool pending=false;
++        std::array<float,2> angularSpeeds{};
++    };
+     std::vector<ScheduledImpact> scheduledImpacts;
+     std::vector<unsigned> impactCounts;
+     std::vector<unsigned char> impactCapped;
+@@ -711,7 +715,7 @@
+     // target instead. (A lower bound also catches ragdoll limbs knocked about
+     // on the ground, and changes how they come to rest.)
+     bool SpinsThroughSupport(const std::array<unsigned,4>& key,double remaining,
+-                             double time=0,bool changedVelocity=false) {
++                             double time=0,bool changedVelocity=false,const std::array<float,2>* frozenAngularSpeeds=nullptr) {
+         const auto convex=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::Sphere||type==ShapeType::ConvexHull;};
+         const auto typeA=PrimitiveAt(bodies[key[0]].shape,bodies[key[0]].rigidBody,int(key[2])).shape.type;
+         const auto typeB=PrimitiveAt(bodies[key[1]].shape,bodies[key[1]].rigidBody,int(key[3])).shape.type;
+@@ -721,7 +725,7 @@
+             double oldSweep=0;
+             for(int side=0;side<2;++side){const auto& body=bodies[key[side]];
+                 if(body.HasMotion()&&(side?typeB:typeA)!=ShapeType::Sphere)
+-                    oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++                    oldSweep+=double(frozenAngularSpeeds&&!changedVelocity?(*frozenAngularSpeeds)[std::size_t(side)]:glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
+             }
+             const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+             return std::isfinite(feature)&&oldSweep>feature;
+@@ -739,7 +743,7 @@
+                     AngularDriftGenerator(body.rigidBody.inverseInertiaLocal,body.rigidBody.orientation,
+                                           body.rigidBody.angularVelocity,float(remaining))
+                 : DriftGenerator(slot,time));
+-            sweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++            sweep+=double(frozenAngularSpeeds&&!changedVelocity?(*frozenAngularSpeeds)[std::size_t(side)]:glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
+         }
+         const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+         if(!std::isfinite(feature)||sweep<=feature)return false;
+@@ -770,13 +774,13 @@
+     // its depth at `start` by target (a pair already touching, e.g. pivoting
+     // on one corner), rather than the first touch. Measuring from the start
+     // depth lets the search continue after an event that ended at the target.
+-    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
++    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0,const std::array<float,2>* frozenAngularSpeeds=nullptr) {
+         PhysicsWorkTimer timer(work.toi,work.active);
+         // A target can finish inside the step. Never certify a plane across
+         // its velocity discontinuity; search the two real ledger intervals.
+         for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
+-            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target);
+-                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target);}
++            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target,frozenAngularSpeeds);
++                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target,frozenAngularSpeeds);}
+         ++stats.impactQueries;
+         if(target>0)target+=PairPenetration(a,b,pa,pb,start);
+         const auto& ba=bodies[a]; const auto& bb=bodies[b];
+@@ -837,8 +841,8 @@
+                 // A pair touching at the start is left to the contact solver,
+                 // unless its spin can turn another feature through the support
+                 // before the interval ends: then search to a penetration target.
+-                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start) ?
+-                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)})) : finish+1;
++                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start,false,frozenAngularSpeeds) ?
++                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}),frozenAngularSpeeds) : finish+1;
+                 double lo=previous,hi=time;
+                 for(int k=0;k<32;++k) {
+                     const double mid=(lo+hi)*.5;
+@@ -1012,23 +1016,53 @@
+         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
+         auto schedule=[&](const std::array<unsigned,4>& key) {
+             if(!CanRespond(key[0],key[1]))return;
+-            const double time=std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
+-                std::binary_search(spinningPairs.begin(),spinningPairs.end(),key) ?
+-                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt,SpinPenetrationTarget(key)) :
+-                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt);
++            ScheduledImpact entry;entry.key=key;entry.queryStart=now;
++            entry.time=now;entry.pending=true;
++            entry.angularSpeeds={glm::length(bodies[key[0]].rigidBody.angularVelocity),
++                                 glm::length(bodies[key[1]].rigidBody.angularVelocity)};
++            if(std::binary_search(supportPairs.begin(),supportPairs.end(),key)){
++                entry.pending=false;entry.time=double(dt)+1;
++            }else if(std::binary_search(spinningPairs.begin(),spinningPairs.end(),key))entry.target=SpinPenetrationTarget(key);
+             const auto found=scheduledIndex.find(key);
+-            if(found!=scheduledIndex.end()) scheduledImpacts[found->second].time=time;
+-            else {scheduledIndex.emplace(key,scheduledImpacts.size());scheduledImpacts.push_back({key,time});}
++            if(found!=scheduledIndex.end())scheduledImpacts[found->second]=entry;
++            else {scheduledIndex.emplace(key,scheduledImpacts.size());scheduledImpacts.push_back(entry);}
++        };
++        // This certifies only geometric absence in an inclusive prefix. It
++        // does not shorten ImpactTime's original sampling/search interval.
++        auto prefixSeparated=[&](const ScheduledImpact& event,double through){
++            const auto simple=[&](unsigned slot){const auto& body=bodies[slot];return
++                (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&
++                body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;};
++            if(!simple(event.key[0])||!simple(event.key[1]))return false;
++            const auto& a=RemainingImpactBound(event.key[0],event.queryStart,through);
++            const auto& b=RemainingImpactBound(event.key[1],event.queryStart,through);
++            return rigid_motion_bounds::FiniteBound(a)&&rigid_motion_bounds::FiniteBound(b)&&!a.Overlaps(b);
+         };
+         for(const auto& key:separatedPairs) schedule(key);
+         for(const auto& key:spinningPairs) schedule(key);
+         for (;;) {
+             double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
+             std::array<unsigned,4> selected{};
+-            for (const auto& event:scheduledImpacts) {
+-                if(event.time<earliest || (event.time==earliest && event.key<selected)) {
++            auto select=[&](const ScheduledImpact& event){
++                if(event.time<earliest||(event.time==earliest&&event.key<selected)){
+                     earliest=event.time;selected=event.key;seedA=event.key[0];seedB=event.key[1];
+                 }
++            };
++            for(const auto& event:scheduledImpacts)if(!event.pending)select(event);
++            for(auto& event:scheduledImpacts){
++                if(!event.pending||event.time>earliest||event.time>dt)continue;
++                if(earliest<=dt&&prefixSeparated(event,earliest)){
++                    // Actual contact is absent even at earliest. Consequently
++                    // this query cannot return a TOI <= earliest. Retain its
++                    // original start/mode and frozen spin-precheck inputs.
++                    event.time=std::nextafter(earliest,std::numeric_limits<double>::infinity());
++                    continue;
++                }
++                event.time=ImpactTime(event.key[0],event.key[1],int(event.key[2]),int(event.key[3]),
++                    event.queryStart,dt,event.target,&event.angularSpeeds);
++                event.pending=false;
++                if(event.time<now)throw std::runtime_error("deferred impact query contradicted geometric prefix certificate");
++                select(event);
+             }
+             if (earliest>dt) break;
+             now=earliest;

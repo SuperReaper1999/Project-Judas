@@ -5,6 +5,14 @@
 #include <vector>
 #include <stdexcept>
 
+// Geometry observations intentionally omit transported physical angular
+// velocity. Collision sampling needs the exact represented pose and linear
+// drift; only solver/event publication needs the inertia-dependent transport.
+struct RigidMotionGeometry {
+    glm::vec3 position{0},linearVelocity{0};
+    glm::quat orientation{1,0,0,0};
+};
+
 // Step-local authoritative motion. Observations never restart the integrator.
 // The owner is the full slot/generation handle, not a pointer into body storage.
 struct RigidMotionSegment {
@@ -17,18 +25,17 @@ struct RigidMotionSegment {
     glm::vec3 endPosition{0};
     glm::quat endOrientation{1,0,0,0};
     bool prescribed=false;
-    RigidBody Evaluate(double time) const {
+    RigidMotionGeometry EvaluateGeometry(double time) const {
         if (time < begin || time > end) throw std::out_of_range("motion segment time");
-        RigidBody result;
-        result.inverseMass = inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
+        RigidMotionGeometry result;
         result.position = position; result.orientation = orientation;
-        result.linearVelocity = linearVelocity; result.angularVelocity = angularVelocity;
+        result.linearVelocity = linearVelocity;
         // Keep the integrator's arithmetic for represented movement, but an
         // unchanged angular sample must preserve its anchor. Re-normalizing a
         // binary32 quaternion at zero/sub-ULP drift can alternate between two
         // values and fabricate repeated detach/impact events in a contact island.
         // This is an exact bit test, not an angular tolerance or a CCD time cap.
-        if (prescribed || !result.IsStatic()) {
+        if (prescribed || !(inverseMass <= 0.0f)) {
             const float elapsed = static_cast<float>(time - begin);
             result.position += result.linearVelocity * elapsed;
             const glm::quat omega(0.0f, driftAngularVelocity.x, driftAngularVelocity.y, driftAngularVelocity.z);
@@ -43,10 +50,20 @@ struct RigidMotionSegment {
             if (!same(advanced.w, orientation.w) || !same(advanced.x, orientation.x) ||
                 !same(advanced.y, orientation.y) || !same(advanced.z, orientation.z))
                 result.orientation = glm::normalize(advanced);
-            if(!prescribed)result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
         }
         return result;
     }
+    RigidBody Evaluate(double time) const {
+        const auto geometry=EvaluateGeometry(time);
+        RigidBody result;
+        result.inverseMass=inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
+        result.position=geometry.position;result.orientation=geometry.orientation;
+        result.linearVelocity=geometry.linearVelocity;result.angularVelocity=angularVelocity;
+        if(!prescribed&&!result.IsStatic())
+            result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
+        return result;
+    }
+
 };
 class RigidMotion {
 public:
@@ -80,11 +97,21 @@ public:
         if(time>=it->begin && time<=it->end)return it->Evaluate(time);
         throw std::out_of_range("motion ledger time");
     }
+    // The same right-limit segment selection as EvaluateAfterEvents, without
+    // computing a physical angular velocity that geometry callers never read.
+    RigidMotionGeometry EvaluateGeometryAfterEvents(double time) const {
+        auto it=std::upper_bound(segments.begin(),segments.end(),time,
+            [](double query,const RigidMotionSegment& segment){return query<segment.begin;});
+        if(it==segments.begin())throw std::out_of_range("motion ledger time");
+        --it;
+        if(time>=it->begin&&time<=it->end)return it->EvaluateGeometry(time);
+        throw std::out_of_range("motion ledger time");
+    }
     void ChangeVelocity(const RigidBody& body, double time) {
         if (segments.empty()) throw std::logic_error("motion ledger not started");
         auto& previous = segments.back();
         const double finish = previous.end;
-        const auto pose = previous.Evaluate(time);
+        const auto pose = previous.EvaluateGeometry(time);
         previous.end = time; previous.endPosition = pose.position; previous.endOrientation = pose.orientation;
         RigidBody next = body; next.position = pose.position; next.orientation = pose.orientation;
         const auto owner = previous.owner;
@@ -103,7 +130,7 @@ private:
         s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
         s.driftAngularVelocity=prescribed?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
-        const auto pose=s.Evaluate(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
+        const auto pose=s.EvaluateGeometry(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
         segments.push_back(s);
     }
     std::vector<RigidMotionSegment> segments;

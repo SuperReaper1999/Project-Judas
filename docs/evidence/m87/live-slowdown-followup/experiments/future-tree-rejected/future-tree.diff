@@ -1,0 +1,133 @@
+--- src/PhysicsWorld.cpp
++++ src/PhysicsWorld.cpp
+@@ -522,6 +522,11 @@
+     double impactQueryAnchorTime=0;
+     std::size_t impactPoseEvaluations=0,impactPoseReuses=0,impactOrientationBuilds=0,impactTruthRequests=0,impactTruthReuses=0,impactBoundsRejected=0;
+     std::size_t impactActualBoundsRejected=0;
++    std::size_t impactFutureTreeBuilds=0,impactFutureTreeUpdates=0,impactFutureTreeBoundBuilds=0,
++        impactFutureTreeBfsQueries=0,impactFutureTreeBfsCandidates=0,impactFutureTreeDirtyQueries=0,
++        impactFutureTreeDirtyCandidates=0,impactFutureTreeComparedCandidates=0,
++        impactFutureTreeAddedCandidates=0,impactFutureTreeRemovedCandidates=0,impactFutureTreeFallbacks=0;
++
+     struct WorkDiagnostics {
+         bool active=false;
+         PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation,impactObservations;
+@@ -1173,6 +1178,73 @@
+         if(!spinningPairs.empty())supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),
+             [&](const auto& key){return std::binary_search(spinningPairs.begin(),spinningPairs.end(),key);}),supportPairs.end());
+         double now=0;
++        // Isolated experiment: this tree owns no public query or presentation
++        // state. Its leaves enclose remaining trajectories, not historical
++        // previous-pose/segment sweeps retained by the public broadphase.
++        DynamicAabbTree futureTree;
++        std::vector<int> futureProxies;
++        std::vector<unsigned> futureScratch;
++        bool futureTreeBuilt=false,futureTreeUsable=true;
++        const bool useFutureTree=std::getenv("JUDAS_CCD_LOCAL_ORIGINAL")==nullptr;
++        const bool useFutureDirty=std::getenv("JUDAS_CCD_LOCAL_DIRTY_QUERY")!=nullptr;
++        const bool compareFutureTree=std::getenv("JUDAS_CCD_LOCAL_COMPARE")!=nullptr;
++        impactFutureTreeBuilds=impactFutureTreeUpdates=impactFutureTreeBoundBuilds=
++            impactFutureTreeBfsQueries=impactFutureTreeBfsCandidates=impactFutureTreeDirtyQueries=
++            impactFutureTreeDirtyCandidates=impactFutureTreeComparedCandidates=
++            impactFutureTreeAddedCandidates=impactFutureTreeRemovedCandidates=impactFutureTreeFallbacks=0;
++        const auto futureBound=[&](unsigned slot){
++            ++impactFutureTreeBoundBuilds;
++            auto& body=bodies[slot];
++            if(!body.HasMotion())return CurrentBound(body);
++            const bool simple=(body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&
++                body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;
++            if(simple){
++                const auto bound=RemainingImpactBound(slot,now,dt);
++                if(rigid_motion_bounds::FiniteBound(bound))return bound;
++            }
++            return tree.FatAabb(body.proxy);
++        };
++        const auto ensureFutureTree=[&](){
++            if(futureTreeBuilt)return futureTreeUsable;
++            futureTreeBuilt=true;++impactFutureTreeBuilds;
++            futureProxies.assign(bodies.size(),DynamicAabbTree::kNull);
++            for(unsigned slot:aliveSlots){
++                const auto bound=futureBound(slot);
++                if(!rigid_motion_bounds::FiniteBound(bound)){
++                    futureTreeUsable=false;++impactFutureTreeFallbacks;return false;
++                }
++                futureProxies[slot]=futureTree.CreateProxy(bound,slot);
++            }
++            return true;
++        };
++        const auto updateFutureBody=[&](unsigned slot){
++            if(!futureTreeBuilt||!futureTreeUsable||!useFutureTree)return;
++            const auto bound=futureBound(slot);
++            if(!rigid_motion_bounds::FiniteBound(bound)){
++                futureTreeUsable=false;++impactFutureTreeFallbacks;return;
++            }
++            // Replacing, rather than only enlarging, removes old trajectory
++            // history. No unchanged body's conservative enclosure is shrunk.
++            futureTree.MoveProxy(futureProxies[slot],bound);++impactFutureTreeUpdates;
++        };
++        const auto futureCandidates=[&](const Aabb& query,bool dirty)->const std::vector<unsigned>&{
++            if(dirty)++impactFutureTreeDirtyQueries;else ++impactFutureTreeBfsQueries;
++            if(!useFutureTree||!ensureFutureTree()){
++                const auto& result=QuerySlots(query);
++                if(dirty)impactFutureTreeDirtyCandidates+=result.size();else impactFutureTreeBfsCandidates+=result.size();
++                return result;
++            }
++            futureScratch.clear();
++            futureTree.Query(query,[&](int proxy){futureScratch.push_back(futureTree.UserData(proxy));});
++            std::sort(futureScratch.begin(),futureScratch.end());
++            if(dirty)impactFutureTreeDirtyCandidates+=futureScratch.size();else impactFutureTreeBfsCandidates+=futureScratch.size();
++            if(compareFutureTree){
++                const auto& original=QuerySlots(query);impactFutureTreeComparedCandidates+=original.size();
++                for(auto slot:futureScratch)if(!std::binary_search(original.begin(),original.end(),slot))++impactFutureTreeAddedCandidates;
++                for(auto slot:original)if(!std::binary_search(futureScratch.begin(),futureScratch.end(),slot))++impactFutureTreeRemovedCandidates;
++            }
++            return futureScratch;
++        };
+         scheduledImpacts.clear();
+         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
+         auto schedule=[&](const std::array<unsigned,4>& key) {
+@@ -1231,7 +1303,7 @@
+                     if(x==a)include(y);
+                     if(y==a)include(x);
+                 }
+-                const auto candidates=QuerySlots(ActualImpactBound(a,ImpactPoseAt(a,now)));
++                const auto candidates=futureCandidates(ActualImpactBound(a,ImpactPoseAt(a,now)),false);
+                 for (unsigned b:candidates) {
+                     if (a==b || !CanRespond(a,b)) continue;
+                     const auto pair=std::minmax(a,b);
+@@ -1379,6 +1451,7 @@
+                 b.motion.ChangeVelocity(b.rigidBody,now);
+                 InvalidateImpactPose(slot);
+                 CoverStepReach(b,static_cast<float>(dt-now));
++                updateFutureBody(slot);
+                 supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),[&](const auto& pair) {
+                     return (pair[0]==slot || pair[1]==slot) &&
+                         std::find(eventPairs.begin(),eventPairs.end(),pair)==eventPairs.end();
+@@ -1392,7 +1465,8 @@
+             for(const auto& event:scheduledImpacts)
+                 if(included[event.key[0]]==2||included[event.key[1]]==2)dirty.push_back(event.key);
+             for(unsigned slot:changed) {
+-                const auto candidates=QuerySlots(tree.FatAabb(bodies[slot].proxy));
++                const auto candidates=useFutureDirty&&useFutureTree?
++                    futureCandidates(futureBound(slot),true):QuerySlots(tree.FatAabb(bodies[slot].proxy));
+                 for(unsigned other:candidates) if(other!=slot && CanRespond(slot,other)) {
+                     const auto a=std::min(slot,other),b=std::max(slot,other);
+                     for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
+@@ -2874,6 +2948,17 @@
+     JUDAS_PROFILE_COUNTER("Physics impact queries",double(w.stats.impactQueries),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact search iterations",double(w.stats.impactSearchIterations),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact sampling fallbacks",double(w.stats.impactSamplingFallbacks),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future tree builds",double(w.impactFutureTreeBuilds),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future tree updates",double(w.impactFutureTreeUpdates),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future bound builds",double(w.impactFutureTreeBoundBuilds),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future BFS queries",double(w.impactFutureTreeBfsQueries),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future BFS candidates",double(w.impactFutureTreeBfsCandidates),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future dirty queries",double(w.impactFutureTreeDirtyQueries),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future dirty candidates",double(w.impactFutureTreeDirtyCandidates),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD original compared candidates",double(w.impactFutureTreeComparedCandidates),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future added candidates",double(w.impactFutureTreeAddedCandidates),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future removed candidates",double(w.impactFutureTreeRemovedCandidates),ProfileCounterMode::Latest);
++    JUDAS_PROFILE_COUNTER("Physics CCD future tree fallbacks",double(w.impactFutureTreeFallbacks),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact sampling tests",double(w.stats.impactSamplingTests),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact search limits",double(w.stats.impactSearchLimit),ProfileCounterMode::Latest);
+     JUDAS_PROFILE_COUNTER("Physics impact search stalls",double(w.stats.impactSearchStalls),ProfileCounterMode::Latest);

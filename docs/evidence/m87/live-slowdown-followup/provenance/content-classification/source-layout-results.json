@@ -1,0 +1,1255 @@
+{
+  "source_commit": "cee55a898aa0e4938665903f3b207d828acdb1df",
+  "source_provenance": {
+    "tools/CreatePhysicsStressLab.py": {
+      "bytes": 12053,
+      "sha256": "4a21548aba8c6ecf2e93225ff8eb2e4a6d3af6682beeb67cca65505cf0bbff89",
+      "matches_original_commit": true
+    },
+    "projects/physics_stress_lab/Scenes/room1024.judas": {
+      "bytes": 2198434,
+      "sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+      "matches_original_commit": true
+    },
+    "projects/physics_stress_lab/Assets/scripts/lab.js": {
+      "bytes": 7474,
+      "sha256": "de4d913d8b41781d3e8b001e47c9c7fce093b28ec58e4657c930c3264d290fc9",
+      "matches_original_commit": true
+    }
+  },
+  "authored_body_count": 1285,
+  "body_slot_ranges": {
+    "floor": [
+      0,
+      0
+    ],
+    "cabinets": [
+      1,
+      256
+    ],
+    "pit_walls": [
+      257,
+      260
+    ],
+    "loose": [
+      261,
+      1284
+    ]
+  },
+  "selected_slots": {
+    "0": {
+      "authored_id": 3,
+      "name": "Solid arcade floor",
+      "position": [
+        0,
+        -0.25,
+        0
+      ]
+    },
+    "1": {
+      "authored_id": 1000,
+      "name": "Cabinet rear / physical wall",
+      "position": [
+        -25.900000000000002,
+        1.14,
+        -29.27
+      ]
+    },
+    "256": {
+      "authored_id": 1627,
+      "name": "Free contact-driven cabinet ball",
+      "position": [
+        25.900000000000002,
+        1.41,
+        -9.500000000000002
+      ]
+    },
+    "257": {
+      "authored_id": 40,
+      "name": "Loose-body pit / solid retaining wall",
+      "position": [
+        0,
+        1.1,
+        36
+      ]
+    },
+    "260": {
+      "authored_id": 43,
+      "name": "Loose-body pit / solid retaining wall",
+      "position": [
+        26,
+        1.1,
+        19
+      ]
+    },
+    "261": {
+      "authored_id": 5000,
+      "name": "Loose sphere",
+      "position": [
+        -5.55,
+        0.34,
+        10.0
+      ]
+    },
+    "395": {
+      "authored_id": 5134,
+      "name": "Loose box",
+      "position": [
+        -1.1099999999999999,
+        0.34,
+        15.92
+      ]
+    },
+    "667": {
+      "authored_id": 5406,
+      "name": "Loose box",
+      "position": [
+        -1.1099999999999999,
+        1.02,
+        16.66
+      ]
+    },
+    "1152": {
+      "authored_id": 5891,
+      "name": "Loose sphere",
+      "position": [
+        2.59,
+        2.38,
+        15.18
+      ]
+    },
+    "1168": {
+      "authored_id": 5907,
+      "name": "Loose box",
+      "position": [
+        2.59,
+        2.38,
+        15.92
+      ]
+    },
+    "1284": {
+      "authored_id": 6023,
+      "name": "Loose sphere",
+      "position": [
+        5.55,
+        2.38,
+        21.1
+      ]
+    }
+  },
+  "initial_positive_volume_loose_aabb_overlaps": [],
+  "remaining_25_pair_classification": {
+    "loose-loose": 25
+  },
+  "core_spinning_pairs": 0,
+  "core_highest_inclusion_bodies": [
+    {
+      "slot": 1168,
+      "impact_island_inclusions": 69,
+      "position": [
+        2.5683388710021973,
+        1.9528266191482544,
+        15.270048141479492
+      ],
+      "linear_velocity": [
+        -0.014949866570532322,
+        0.010405132547020912,
+        0.016937006264925003
+      ],
+      "angular_velocity": [
+        -0.029918378219008446,
+        -0.008243522606790066,
+        0.028528202325105667
+      ],
+      "speed_mps": 0.024872222960883542,
+      "angular_speed_radps": 0.042153568628604414,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 65,
+      "last_segment_begins": [
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 1152,
+      "impact_island_inclusions": 67,
+      "position": [
+        2.5139265060424805,
+        1.9953947067260742,
+        14.554142951965332
+      ],
+      "linear_velocity": [
+        0.008444984443485737,
+        0.004910608287900686,
+        0.01790105551481247
+      ],
+      "angular_velocity": [
+        0.030063647776842117,
+        -0.07359083741903305,
+        0.036026403307914734
+      ],
+      "speed_mps": 0.020393126894920087,
+      "angular_speed_radps": 0.0872773510424618,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.30000001192092896,
+      "motion_segments": 67,
+      "last_segment_begins": [
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 352,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.587228775024414,
+        0.32015663385391235,
+        13.675764083862305
+      ],
+      "linear_velocity": [
+        5.8027995692100376e-05,
+        -0.006205324549227953,
+        0.007361988071352243
+      ],
+      "angular_velocity": [
+        0.023099582642316818,
+        -0.00020278066222090274,
+        -0.0003542128251865506
+      ],
+      "speed_mps": 0.009628514338789128,
+      "angular_speed_radps": 0.023103188199288034,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 54,
+      "last_segment_begins": [
+        0.0014148848322906608,
+        0.0016935636131429998,
+        0.0017511165089989186,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 368,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.589752435684204,
+        0.29710957407951355,
+        14.441937446594238
+      ],
+      "linear_velocity": [
+        -5.37512846676691e-07,
+        1.6652633348712698e-05,
+        -1.7144649973488413e-05
+      ],
+      "angular_velocity": [
+        -5.4683652706444263e-05,
+        1.1045596011172165e-06,
+        5.109503717903863e-07
+      ],
+      "speed_mps": 2.390686387254583e-05,
+      "angular_speed_radps": 5.469719367128319e-05,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 67,
+      "last_segment_begins": [
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 608,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.583848237991333,
+        0.9153956770896912,
+        13.623037338256836
+      ],
+      "linear_velocity": [
+        0.00029760345933027565,
+        -0.0049951206892728806,
+        0.021094011142849922
+      ],
+      "angular_velocity": [
+        0.0230697151273489,
+        -0.00020629314531106502,
+        -0.00038986120489425957
+      ],
+      "speed_mps": 0.021679416611479287,
+      "angular_speed_radps": 0.02307393127921453,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 47,
+      "last_segment_begins": [
+        0.000845936620581865,
+        0.0008478680852625803,
+        0.000878701874686775,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 624,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.5868141651153564,
+        0.8928916454315186,
+        14.319108009338379
+      ],
+      "linear_velocity": [
+        -0.008998447097837925,
+        -6.760542601114139e-05,
+        0.011039776727557182
+      ],
+      "angular_velocity": [
+        0.03726252168416977,
+        -0.05383411422371864,
+        0.02990196831524372
+      ],
+      "speed_mps": 0.014242657436747087,
+      "angular_speed_radps": 0.07197732341259605,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.30000001192092896,
+      "motion_segments": 67,
+      "last_segment_begins": [
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 864,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.585653781890869,
+        1.497019648551941,
+        13.43040943145752
+      ],
+      "linear_velocity": [
+        -0.015372417867183685,
+        -0.0050567337311804295,
+        -0.014519665390253067
+      ],
+      "angular_velocity": [
+        -0.1417829692363739,
+        -0.042947858572006226,
+        0.057125210762023926
+      ],
+      "speed_mps": 0.021741721876527603,
+      "angular_speed_radps": 0.15877726104832912,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.30000001192092896,
+      "motion_segments": 43,
+      "last_segment_begins": [
+        0.000845936620581865,
+        0.0008478680852625803,
+        0.000878701874686775,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 880,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.6067214012145996,
+        1.4633116722106934,
+        14.126103401184082
+      ],
+      "linear_velocity": [
+        0.01080817449837923,
+        0.005177696701139212,
+        0.02051924169063568
+      ],
+      "angular_velocity": [
+        -0.010033976286649704,
+        -0.027650006115436554,
+        -0.06618211418390274
+      ],
+      "speed_mps": 0.023762669434958784,
+      "angular_speed_radps": 0.07242427601402632,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 67,
+      "last_segment_begins": [
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 1071,
+      "impact_island_inclusions": 66,
+      "position": [
+        1.8356269598007202,
+        1.9408131837844849,
+        10.70504379272461
+      ],
+      "linear_velocity": [
+        0.04651530459523201,
+        -0.1266397386789322,
+        -0.30180811882019043
+      ],
+      "angular_velocity": [
+        0.507322371006012,
+        -0.02342219091951847,
+        -0.08959151804447174
+      ],
+      "speed_mps": 0.3305895303242945,
+      "angular_speed_radps": 0.5157045930143971,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.30000001192092896,
+      "motion_segments": 44,
+      "last_segment_begins": [
+        0.0014148848322906608,
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 1136,
+      "impact_island_inclusions": 66,
+      "position": [
+        2.675102710723877,
+        2.0030267238616943,
+        13.871037483215332
+      ],
+      "linear_velocity": [
+        0.05144355818629265,
+        0.0337723046541214,
+        0.08642458915710449
+      ],
+      "angular_velocity": [
+        0.016467517241835594,
+        0.03081921674311161,
+        -0.09151449054479599
+      ],
+      "speed_mps": 0.106095324362064,
+      "angular_speed_radps": 0.0979586914185903,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 62,
+      "last_segment_begins": [
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0018755369970376362,
+        0.0019002131553578767,
+        0.00190053919647379,
+        0.0020042891598229325,
+        0.002423582064376402,
+        0.002428713622692492,
+        0.002440088975334557,
+        0.0024434482009506853,
+        0.0024436169666399842
+      ]
+    },
+    {
+      "slot": 271,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8491499423980713,
+        0.3504345118999481,
+        9.933871269226074
+      ],
+      "linear_velocity": [
+        0.0005005974089726806,
+        0.08572302013635635,
+        -0.1286384016275406
+      ],
+      "angular_velocity": [
+        -0.3672526180744171,
+        0.0022378244902938604,
+        0.00010943190864054486
+      ],
+      "speed_mps": 0.15458500946842313,
+      "angular_speed_radps": 0.3672594523171673,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 24,
+      "last_segment_begins": [
+        0.0007296800267253118,
+        0.0007300629822017764,
+        0.0007372478375516512,
+        0.0007376474622465803,
+        0.0007795337975866181,
+        0.0012479746919905228,
+        0.0014148848322906608,
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 303,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8494277000427246,
+        0.2987511456012726,
+        11.438441276550293
+      ],
+      "linear_velocity": [
+        -0.0050741685554385185,
+        -3.630429290524262e-14,
+        0.055283740162849426
+      ],
+      "angular_velocity": [
+        0.18466156721115112,
+        0.007290022447705269,
+        0.016949152573943138
+      ],
+      "speed_mps": 0.05551611579462717,
+      "angular_speed_radps": 0.18558101359013354,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.30000001192092896,
+      "motion_segments": 65,
+      "last_segment_begins": [
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 319,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8487939834594727,
+        0.3272521197795868,
+        12.185181617736816
+      ],
+      "linear_velocity": [
+        -4.8260411858791485e-05,
+        0.013373429886996746,
+        -0.016613753512501717
+      ],
+      "angular_velocity": [
+        -0.05045609176158905,
+        -8.208589861169457e-05,
+        7.882415957283229e-05
+      ],
+      "speed_mps": 0.02132762907085393,
+      "angular_speed_radps": 0.05045622010413362,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 65,
+      "last_segment_begins": [
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 351,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8413640260696411,
+        0.2987719178199768,
+        13.645697593688965
+      ],
+      "linear_velocity": [
+        -0.017405740916728973,
+        -1.8189894035458565e-12,
+        0.013738352805376053
+      ],
+      "angular_velocity": [
+        0.04588843509554863,
+        0.023743601515889168,
+        0.05813813582062721
+      ],
+      "speed_mps": 0.022174358044039905,
+      "angular_speed_radps": 0.07777885268607021,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.30000001192092896,
+      "motion_segments": 65,
+      "last_segment_begins": [
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 367,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8490607738494873,
+        0.32622087001800537,
+        14.406243324279785
+      ],
+      "linear_velocity": [
+        -0.0017081205733120441,
+        -0.0011173291131854057,
+        0.003339548595249653
+      ],
+      "angular_velocity": [
+        0.005490950774401426,
+        -0.005102670285850763,
+        0.0010624114656820893
+      ],
+      "speed_mps": 0.003913909178836101,
+      "angular_speed_radps": 0.007570766313618239,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 60,
+      "last_segment_begins": [
+        0.0011558338396772088,
+        0.001195737957916318,
+        0.001204083721861624,
+        0.0012479746919905228,
+        0.0014148848322906608,
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024
+      ]
+    },
+    {
+      "slot": 415,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8491593599319458,
+        0.3205588459968567,
+        16.6332950592041
+      ],
+      "linear_velocity": [
+        1.5019440070318524e-05,
+        -0.002275557490065694,
+        0.0026956701185554266
+      ],
+      "angular_velocity": [
+        0.008332816883921623,
+        3.693012331495993e-05,
+        -1.38129780680174e-05
+      ],
+      "speed_mps": 0.003527750680284356,
+      "angular_speed_radps": 0.008332910167122913,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 58,
+      "last_segment_begins": [
+        0.0010760388740899602,
+        0.0010843846089315838,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 431,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8498519659042358,
+        0.29721155762672424,
+        17.401601791381836
+      ],
+      "linear_velocity": [
+        2.2140352484711912e-07,
+        2.604521796456538e-06,
+        2.5437630029045977e-06
+      ],
+      "angular_velocity": [
+        6.538060915772803e-06,
+        -2.2215097033040365e-06,
+        1.8488944988348521e-06
+      ],
+      "speed_mps": 3.6473666560928773e-06,
+      "angular_speed_radps": 7.1484093872729245e-06,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 57,
+      "last_segment_begins": [
+        0.0010704399683227226,
+        0.0010760388740899602,
+        0.0010843846089315838,
+        0.0011558338396772088,
+        0.001195737957916318,
+        0.001204083721861624,
+        0.0012479746919905228,
+        0.0014148848322906608,
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572
+      ]
+    },
+    {
+      "slot": 527,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8462518453598022,
+        0.9341261982917786,
+        9.807750701904297
+      ],
+      "linear_velocity": [
+        0.0006694169715046883,
+        0.0394778810441494,
+        -0.34315651655197144
+      ],
+      "angular_velocity": [
+        -0.3673667311668396,
+        0.0023857918567955494,
+        -0.0011166873155161738
+      ],
+      "speed_mps": 0.3454205350915044,
+      "angular_speed_radps": 0.36737617527753974,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 25,
+      "last_segment_begins": [
+        0.0007300629822017764,
+        0.0007372478375516512,
+        0.0007376474622465803,
+        0.0007795337975866181,
+        0.0012479746919905228,
+        0.0014148848322906608,
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 559,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.852445125579834,
+        0.8736177086830139,
+        11.254094123840332
+      ],
+      "linear_velocity": [
+        0.00284406915307045,
+        0.0021179351024329662,
+        -0.044274598360061646
+      ],
+      "angular_velocity": [
+        -0.4785940647125244,
+        0.019642679020762444,
+        -0.0462549589574337
+      ],
+      "speed_mps": 0.044416375790808704,
+      "angular_speed_radps": 0.48122513945691014,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 65,
+      "last_segment_begins": [
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    },
+    {
+      "slot": 575,
+      "impact_island_inclusions": 64,
+      "position": [
+        1.8449691534042358,
+        0.9203822612762451,
+        12.112199783325195
+      ],
+      "linear_velocity": [
+        -8.875803905539215e-05,
+        0.009690595790743828,
+        -0.046542342752218246
+      ],
+      "angular_velocity": [
+        -0.05045577511191368,
+        -8.125114982249215e-05,
+        7.837089651729912e-05
+      ],
+      "speed_mps": 0.04754056366550612,
+      "angular_speed_radps": 0.05045590139806023,
+      "mass_kg": 2.0,
+      "bounding_radius_m": 0.5196152925491333,
+      "motion_segments": 65,
+      "last_segment_begins": [
+        0.0014273668121125784,
+        0.0014734776388965075,
+        0.0016935636131429998,
+        0.00169377514724572,
+        0.0017511165089989186,
+        0.001821328936167683,
+        0.001982027271381024,
+        0.002488668527308184,
+        0.0024887498434078554,
+        0.003020196235824806,
+        0.0030779714776372463,
+        0.0031603248295369478
+      ]
+    }
+  ],
+  "core_step_stats": {
+    "bodies": 1285,
+    "dynamicBodies": 1152,
+    "sleepingBodies": 0,
+    "sleepingIslands": 0,
+    "awakeBodies": 0,
+    "possiblePairs": 816192,
+    "candidatePairs": 12676,
+    "layerRejectedPairs": 0,
+    "collidingPairs": 1179,
+    "contactPoints": 2406,
+    "proxyReinsertions": 0,
+    "geometryPredicates": 0,
+    "geometryExactFallbacks": 0,
+    "geometryUnresolved": 0,
+    "geometryNumericGapFallbacks": 0,
+    "orientationCacheHits": 0,
+    "orientationCacheRebuilds": 0,
+    "boundCacheHits": 0,
+    "boundCacheRebuilds": 0,
+    "shapeCacheRebuilds": 0,
+    "solverFrameBuilds": 0,
+    "geometryCacheBytes": 0,
+    "geometryCacheAllocations": 0,
+    "geometryCacheAllocatedBytes": 0,
+    "solverFrameNodeRequests": 0,
+    "impactEvents": 396,
+    "impactSafetyFallback": 0,
+    "impactEventCapFallback": 329,
+    "impactQueries": 314709,
+    "impactSearchIterations": 228889,
+    "impactPeakIterations": 59,
+    "impactSearchLimit": 0,
+    "impactUncertifiedAdvances": 0,
+    "impactSearchStalls": 1478,
+    "impactSamplingFallbacks": 1478,
+    "impactSamplingTests": 6195,
+    "impactSamplingResolutionCaps": 0,
+    "impactSamplingMaxInterval": 0.0010416614652588166,
+    "motionSegments": 0,
+    "motionStorageBytes": 0,
+    "treeHeight": 0,
+    "broadphaseMilliseconds": 0.0,
+    "narrowphaseMilliseconds": 0.0,
+    "solverMilliseconds": 0.0,
+    "totalMilliseconds": 0.0
+  },
+  "chronology": [
+    {
+      "step": "1",
+      "frame": "0",
+      "wall_ms": "20.42947",
+      "fixed_ms": "14.605786",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "10572",
+      "contacts": "0",
+      "impact_events": "0",
+      "impact_queries": "0",
+      "impact_iterations": "0",
+      "impact_peak": "0",
+      "total_physics_ms": "10.713951",
+      "broadphase_ms": "1.600162",
+      "narrowphase_ms": "7.010288",
+      "solver_ms": "0.511519",
+      "trajectory_digest": "b0f64260602c5d25",
+      "max_linear_speed": "0.163500010967",
+      "max_angular_speed": "2.0091058559e-06",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "3",
+      "frame": "2",
+      "wall_ms": "142.297227",
+      "fixed_ms": "12.102615",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "10572",
+      "contacts": "0",
+      "impact_events": "0",
+      "impact_queries": "0",
+      "impact_iterations": "0",
+      "impact_peak": "0",
+      "total_physics_ms": "11.516546",
+      "broadphase_ms": "1.773945",
+      "narrowphase_ms": "7.503263",
+      "solver_ms": "0.599617",
+      "trajectory_digest": "6bb35b5cfd63710c",
+      "max_linear_speed": "0.490500032902",
+      "max_angular_speed": "2.31246667681e-06",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "5",
+      "frame": "4",
+      "wall_ms": "227.382256",
+      "fixed_ms": "38.603898",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "10572",
+      "contacts": "0",
+      "impact_events": "256",
+      "impact_queries": "4318",
+      "impact_iterations": "4189",
+      "impact_peak": "2",
+      "total_physics_ms": "35.751849",
+      "broadphase_ms": "1.609608",
+      "narrowphase_ms": "8.566245",
+      "solver_ms": "24.010623",
+      "trajectory_digest": "daf52fa2f7149c5c",
+      "max_linear_speed": "0.817500054836",
+      "max_angular_speed": "0.000168417813256",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "10",
+      "frame": "9",
+      "wall_ms": "426.795389",
+      "fixed_ms": "34.74937",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "10740",
+      "contacts": "1309",
+      "impact_events": "256",
+      "impact_queries": "10196",
+      "impact_iterations": "5279",
+      "impact_peak": "1",
+      "total_physics_ms": "33.50975",
+      "broadphase_ms": "2.007633",
+      "narrowphase_ms": "10.025969",
+      "solver_ms": "19.283946",
+      "trajectory_digest": "e6640f44cafe92f7",
+      "max_linear_speed": "1.63500022888",
+      "max_angular_speed": "0.869562804699",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "20",
+      "frame": "19",
+      "wall_ms": "1036.890511",
+      "fixed_ms": "28.380296",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12150",
+      "contacts": "2302",
+      "impact_events": "0",
+      "impact_queries": "0",
+      "impact_iterations": "0",
+      "impact_peak": "0",
+      "total_physics_ms": "27.171693",
+      "broadphase_ms": "2.821924",
+      "narrowphase_ms": "17.193795",
+      "solver_ms": "4.531643",
+      "trajectory_digest": "668051d5fe50805e",
+      "max_linear_speed": "0.280001401901",
+      "max_angular_speed": "0.869562149048",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "60",
+      "frame": "59",
+      "wall_ms": "2899.834533",
+      "fixed_ms": "30.016945",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12354",
+      "contacts": "2334",
+      "impact_events": "0",
+      "impact_queries": "0",
+      "impact_iterations": "0",
+      "impact_peak": "0",
+      "total_physics_ms": "28.791718",
+      "broadphase_ms": "2.97299",
+      "narrowphase_ms": "18.064909",
+      "solver_ms": "4.940659",
+      "trajectory_digest": "c0acd9ee6e12b009",
+      "max_linear_speed": "0.28000998497",
+      "max_angular_speed": "0.869563937187",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "90",
+      "frame": "89",
+      "wall_ms": "4288.750696",
+      "fixed_ms": "28.665888",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12354",
+      "contacts": "2334",
+      "impact_events": "0",
+      "impact_queries": "40",
+      "impact_iterations": "80",
+      "impact_peak": "2",
+      "total_physics_ms": "27.427777",
+      "broadphase_ms": "2.816735",
+      "narrowphase_ms": "17.386224",
+      "solver_ms": "4.483383",
+      "trajectory_digest": "c04dbce7f6f1b2f7",
+      "max_linear_speed": "0.327280879021",
+      "max_angular_speed": "0.869565486908",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "91",
+      "frame": "90",
+      "wall_ms": "4392.102517",
+      "fixed_ms": "86.29005",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12354",
+      "contacts": "2334",
+      "impact_events": "60",
+      "impact_queries": "9474",
+      "impact_iterations": "7506",
+      "impact_peak": "10",
+      "total_physics_ms": "84.838379",
+      "broadphase_ms": "2.886421",
+      "narrowphase_ms": "17.996993",
+      "solver_ms": "61.261252",
+      "trajectory_digest": "b6a287ea9f4731d4",
+      "max_linear_speed": "0.341412752867",
+      "max_angular_speed": "0.869565427303",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "100",
+      "frame": "99",
+      "wall_ms": "5478.889152",
+      "fixed_ms": "105.611378",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12620",
+      "contacts": "2334",
+      "impact_events": "80",
+      "impact_queries": "13098",
+      "impact_iterations": "9878",
+      "impact_peak": "8",
+      "total_physics_ms": "104.338876",
+      "broadphase_ms": "3.015723",
+      "narrowphase_ms": "17.345946",
+      "solver_ms": "81.118402",
+      "trajectory_digest": "d6717763960ab408",
+      "max_linear_speed": "0.500100791454",
+      "max_angular_speed": "0.869565010071",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "120",
+      "frame": "119",
+      "wall_ms": "6900.971358",
+      "fixed_ms": "29.608233",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12580",
+      "contacts": "2414",
+      "impact_events": "0",
+      "impact_queries": "0",
+      "impact_iterations": "0",
+      "impact_peak": "0",
+      "total_physics_ms": "28.221347",
+      "broadphase_ms": "2.976137",
+      "narrowphase_ms": "17.852065",
+      "solver_ms": "4.707903",
+      "trajectory_digest": "6675a2584ca24bc5",
+      "max_linear_speed": "1.17046868801",
+      "max_angular_speed": "1.91437268257",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "140",
+      "frame": "139",
+      "wall_ms": "7838.434898",
+      "fixed_ms": "30.180545",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "12704",
+      "contacts": "2414",
+      "impact_events": "0",
+      "impact_queries": "8",
+      "impact_iterations": "16",
+      "impact_peak": "2",
+      "total_physics_ms": "28.885964",
+      "broadphase_ms": "2.883859",
+      "narrowphase_ms": "17.952472",
+      "solver_ms": "5.244946",
+      "trajectory_digest": "b4fbf9800fa98387",
+      "max_linear_speed": "3.1327586174",
+      "max_angular_speed": "2.67039322853",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "150",
+      "frame": "149",
+      "wall_ms": "8621.28799",
+      "fixed_ms": "84.798691",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "13097",
+      "contacts": "2551",
+      "impact_events": "21",
+      "impact_queries": "9453",
+      "impact_iterations": "6539",
+      "impact_peak": "13",
+      "total_physics_ms": "83.487005",
+      "broadphase_ms": "3.027908",
+      "narrowphase_ms": "20.04637",
+      "solver_ms": "57.594445",
+      "trajectory_digest": "79c737a637624283",
+      "max_linear_speed": "4.64842557907",
+      "max_angular_speed": "2.67039322853",
+      "nonfinite_fields": "0"
+    },
+    {
+      "step": "155",
+      "frame": "154",
+      "wall_ms": "11244.674192",
+      "fixed_ms": "703.23364",
+      "bodies": "1285",
+      "awake": "1152",
+      "sleeping": "0",
+      "candidates": "13247",
+      "contacts": "2452",
+      "impact_events": "232",
+      "impact_queries": "120812",
+      "impact_iterations": "83145",
+      "impact_peak": "45",
+      "total_physics_ms": "701.920626",
+      "broadphase_ms": "3.305825",
+      "narrowphase_ms": "20.823979",
+      "solver_ms": "674.513497",
+      "trajectory_digest": "8509c058f2122986",
+      "max_linear_speed": "5.43227481842",
+      "max_angular_speed": "2.67039322853",
+      "nonfinite_fields": "0"
+    }
+  ]
+}

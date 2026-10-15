@@ -1,0 +1,270 @@
+{
+  "utc": "2026-10-15T20:41:11.115995+00:00",
+  "head": "cee55a898aa0e4938665903f3b207d828acdb1df",
+  "knownBaselineFailures": [
+    "judas_physical_balance_foundation_tests"
+  ],
+  "tests": [
+    {
+      "target": "judas_rigid_motion_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_tests"
+      ],
+      "binarySHA256": "644f8e1e794f285dc97a843f20b73f916f7f0e7c083b3d66bd1f1001ad771842",
+      "exitCode": 0,
+      "seconds": 0.07079485099893645,
+      "log": "judas_rigid_motion_tests.log"
+    },
+    {
+      "target": "judas_contact_geometry_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_geometry_tests"
+      ],
+      "binarySHA256": "b183ae461db031b6f75fa3d28f352fc361637794ae1fcf2d556f47c4bdd5eb78",
+      "exitCode": 0,
+      "seconds": 0.11849969900140422,
+      "log": "judas_contact_geometry_tests.log"
+    },
+    {
+      "target": "judas_rigid_contact_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+      ],
+      "binarySHA256": "a16ab60cf577dfc5b2c306f6da1b755a1ddeb23383e547463716de3e7c454a45",
+      "exitCode": 0,
+      "seconds": 2.023316609000176,
+      "log": "judas_rigid_contact_tests.log"
+    },
+    {
+      "target": "judas_impact_solver_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_solver_tests"
+      ],
+      "binarySHA256": "d37253c3c7b8475f8b6394c8d48fbec750d6f636f78c9d0d0fb6623fb315f9a7",
+      "exitCode": 0,
+      "seconds": 0.004654745000152616,
+      "log": "judas_impact_solver_tests.log"
+    },
+    {
+      "target": "judas_impact_timing_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+      ],
+      "binarySHA256": "8b8896858d7612714ace30c77cbefbaa661b3eeddadd2cd7e7f83678db08e572",
+      "exitCode": 0,
+      "seconds": 0.019011373002285836,
+      "log": "judas_impact_timing_tests.log"
+    },
+    {
+      "target": "judas_impact_robustness_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+      ],
+      "binarySHA256": "054deb7c17b3a2949298997465eace283d78a7980577c01933a2ba53ace3fde9",
+      "exitCode": 0,
+      "seconds": 0.9691908280001371,
+      "log": "judas_impact_robustness_tests.log"
+    },
+    {
+      "target": "judas_impact_mesh_cost_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests"
+      ],
+      "binarySHA256": "eb42a93bb7d80485ccbdbf385e9a8fd0113a19a133dbaf466a1f7440cea7b3a4",
+      "exitCode": 0,
+      "seconds": 10.950483794997126,
+      "log": "judas_impact_mesh_cost_tests.log"
+    },
+    {
+      "target": "judas_sphere_impact_bounds_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_sphere_impact_bounds_tests"
+      ],
+      "binarySHA256": "cf9875ce5d4691c30b07dbdf5281536582fd798bdd30d34d05a04b5b6647fcc1",
+      "exitCode": 0,
+      "seconds": 0.01985899999999674,
+      "log": "judas_sphere_impact_bounds_tests.log"
+    },
+    {
+      "target": "judas_contact_cache_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_cache_tests"
+      ],
+      "binarySHA256": "3b2e54c8ca818d4b6fddddea8745dd10e1ee90a45cd5b8b44f688653418b870b",
+      "exitCode": 0,
+      "seconds": 0.036295665999205085,
+      "log": "judas_contact_cache_tests.log"
+    },
+    {
+      "target": "judas_contact_lifecycle_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+      ],
+      "binarySHA256": "24acaa909546b4a7f083d9817b36ce686ff4583910cb5870d68f903abcb4ee2a",
+      "exitCode": 0,
+      "seconds": 0.20476860299822874,
+      "log": "judas_contact_lifecycle_tests.log"
+    },
+    {
+      "target": "judas_contact_storage_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_storage_tests"
+      ],
+      "binarySHA256": "6bb5442f884a6a800a3580a2d5fd79960f021a05ec1a80c605206239462af81e",
+      "exitCode": 0,
+      "seconds": 0.11747383100009756,
+      "log": "judas_contact_storage_tests.log"
+    },
+    {
+      "target": "judas_kinematic_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+      ],
+      "binarySHA256": "72d8d087266a9e0e1a8871e2c4d961299d74f78c563edaa67867eea4e322815a",
+      "exitCode": 0,
+      "seconds": 0.03632969599857461,
+      "log": "judas_kinematic_tests.log"
+    },
+    {
+      "target": "judas_ragdoll_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests"
+      ],
+      "binarySHA256": "2d8f4b58a301ca664f6a44ff133161f1e35ceec719ad4dca5ac00ae2cc7efdfc",
+      "exitCode": 0,
+      "seconds": 1.0692833250031981,
+      "log": "judas_ragdoll_tests.log"
+    },
+    {
+      "target": "judas_post_consumer_ragdoll_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_ragdoll_tests"
+      ],
+      "binarySHA256": "a53b38c85449703d8c6e01c7c29b1d07f5b38ddc6b1ed0e2ab1816a01975f660",
+      "exitCode": 0,
+      "seconds": 28.81102804099646,
+      "log": "judas_post_consumer_ragdoll_tests.log"
+    },
+    {
+      "target": "judas_character_motor_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "binarySHA256": "3edd24ddc6182dbca71c39d59bc4b5eac664b72e67f54027ae9fe775cf041e11",
+      "exitCode": 0,
+      "seconds": 0.7063338520019897,
+      "log": "judas_character_motor_tests.log"
+    },
+    {
+      "target": "judas_joint_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+      ],
+      "binarySHA256": "7f6217a0e9684b8b38d5b29a4c5c1fcc41fd18011e17353e6ad7f8a112f936c6",
+      "exitCode": 0,
+      "seconds": 0.06729956200069864,
+      "log": "judas_joint_tests.log"
+    },
+    {
+      "target": "judas_joint_scaling_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_scaling_tests"
+      ],
+      "binarySHA256": "a568efecc2d0d7c50b0e715dba49ad07134f7c77687e29da14291728c0aebd3b",
+      "exitCode": 0,
+      "seconds": 0.01631390900001861,
+      "log": "judas_joint_scaling_tests.log"
+    },
+    {
+      "target": "judas_physics_continuation_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+      ],
+      "binarySHA256": "6c0aa2d70f94e88f1595860ede61b6f7194598463f590663c46cbb07a2d160ef",
+      "exitCode": 0,
+      "seconds": 0.15362887300216244,
+      "log": "judas_physics_continuation_tests.log"
+    },
+    {
+      "target": "judas_physical_animation_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "binarySHA256": "1e1a6aaa21ecdf2020457aad2451060ca8629da50d7311b5197f127ab2dd8f5d",
+      "exitCode": 0,
+      "seconds": 0.2594763300003251,
+      "log": "judas_physical_animation_tests.log"
+    },
+    {
+      "target": "judas_physical_balance_foundation_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_foundation_tests"
+      ],
+      "binarySHA256": "24887fbb4ea928e8014209c0b4cfb55d2ca083464f34e927910aa314537fa57f",
+      "exitCode": 1,
+      "seconds": 0.18404140600250685,
+      "log": "judas_physical_balance_foundation_tests.log"
+    },
+    {
+      "target": "judas_physical_balance_controller_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+      ],
+      "binarySHA256": "2934c81afc959691e2483cdd293a503c5d1ef1548fdac417c9a17a9e2c90d659",
+      "exitCode": 0,
+      "seconds": 3.027651567997964,
+      "log": "judas_physical_balance_controller_tests.log"
+    },
+    {
+      "target": "judas_rigid_motion_geometry_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_geometry_tests"
+      ],
+      "binarySHA256": "93125c8eaff9e175d2b422dba22b7bb6028f84d6e4a41639527be0fb8eb08cdf",
+      "exitCode": 0,
+      "seconds": 0.004113651000807295,
+      "log": "judas_rigid_motion_geometry_tests.log"
+    },
+    {
+      "target": "judas_rigid_motion_bounds_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_bounds_tests"
+      ],
+      "binarySHA256": "79b600715c4a16d589d5ad52f14cb5e7ae88b835cd075457f4a1fa9f960ca9c9",
+      "exitCode": 0,
+      "seconds": 0.26576132100308314,
+      "log": "judas_rigid_motion_bounds_tests.log"
+    },
+    {
+      "target": "judas_primitive_contact_boolean_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_primitive_contact_boolean_tests"
+      ],
+      "binarySHA256": "5ae6c26a5286591242b1d0eca0ded321fadb6adcf28060f18b0eab86b08b83bd",
+      "exitCode": 0,
+      "seconds": 0.11471281299964176,
+      "log": "judas_primitive_contact_boolean_tests.log"
+    },
+    {
+      "target": "judas_contact_sat_workspace_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sat_workspace_tests"
+      ],
+      "binarySHA256": "7c799c022962b89e2bdef1fe117c557b808e34fe4b06d3c5161f9cc2f4c75994",
+      "exitCode": 0,
+      "seconds": 0.11447771299935994,
+      "log": "judas_contact_sat_workspace_tests.log"
+    },
+    {
+      "target": "judas_parallel_narrowphase_tests",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_parallel_narrowphase_tests"
+      ],
+      "binarySHA256": "50ae92b10f36c97d330a0320407ce598e2ce6e2d2287ac8ecb8e592d6515803d",
+      "exitCode": 0,
+      "seconds": 1.8178515740000876,
+      "log": "judas_parallel_narrowphase_tests.log"
+    }
+  ],
+  "unexpectedFailures": []
+}

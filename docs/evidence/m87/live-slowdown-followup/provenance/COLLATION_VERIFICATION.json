@@ -1,0 +1,9 @@
+{
+  "checked_utc": "2026-10-15T20:28:04.682445+00:00",
+  "copied_artifacts": 246,
+  "copied_stored_and_decompressed_hash_failures": [],
+  "all_directory_files_before_this_receipt": 257,
+  "all_directory_bytes_before_this_receipt": 8241405,
+  "no_binary_extensions_or_ELF_or_core": [],
+  "scope": "Evidence-byte verification only. No engine build, test or simulation rerun. Final-source fingerprint report is owned separately by root."
+}

@@ -1,0 +1,12 @@
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 20000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/m87-followup-editor/editor.edit.png
+[editor autotest] edit frame: 291 draw calls, 48072 triangles, 10601 debug lines
+[editor autotest] live cursor + frozen capture while simulation continues: FAIL
+[editor autotest] closing profiler restores capture: PASS
+[editor autotest] wrote: /tmp/m87-followup-editor/editor.play.png
+[editor autotest] play frame: 1 steps, step 1.017 ms, 389 bodies, 0 contacts, 425 draw calls, 61788 triangles, 1 shadow passes, 0 lights, 12624 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes
+[editor autotest] jobs: 7 workers, 160 completed, 0 failed, 6 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

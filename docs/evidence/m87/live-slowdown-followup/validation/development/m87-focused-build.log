@@ -1,0 +1,50 @@
+[  0%] Built target judas_app_icon
+[ 14%] Built target freetype
+[ 21%] Built target judas_icu_build
+[ 21%] Built target judas_quickjs
+[ 28%] Built target judas_navigation_backend
+[ 28%] Built target judas_glad
+[ 28%] Built target judas_profiler
+[ 28%] Built target judas_audio_backend
+[ 28%] Built target harfbuzz
+[ 28%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_rigid_motion_tests.dir/tests/RigidMotionTests.cpp.o
+[100%] Linking CXX executable judas_rigid_motion_tests
+[100%] Built target judas_rigid_motion_tests
+[  0%] Built target judas_app_icon
+[ 14%] Built target freetype
+[ 21%] Built target judas_icu_build
+[ 21%] Built target judas_quickjs
+[ 28%] Built target judas_navigation_backend
+[ 28%] Built target judas_glad
+[ 28%] Built target judas_profiler
+[ 28%] Built target judas_audio_backend
+[ 28%] Built target harfbuzz
+[ 28%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_contact_geometry_tests.dir/tests/ContactGeometryProbe.cpp.o
+[100%] Linking CXX executable judas_contact_geometry_tests
+[100%] Built target judas_contact_geometry_tests
+[  0%] Built target judas_profiler
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/ContactSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/CollisionGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/Contacts.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/ImpactSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/Narrowphase.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsCastGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsWorld.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/tests/RigidContactTests.cpp.o
+[  0%] Linking CXX executable judas_rigid_contact_tests
+/usr/bin/x86_64-linux-gnu-ld.bfd: CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsWorld.cpp.o: in function `PhysicsWorld::Impl::PrepareInitialContactGeometry(float)':
+PhysicsWorld.cpp:(.text._ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf[_ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf]+0x577): undefined reference to `JobSystem::Submit(std::function<void (JobContext&)>, JobPriority, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: PhysicsWorld.cpp:(.text._ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf[_ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf]+0x671): undefined reference to `JobSystem::StateOf(JobHandle) const'
+/usr/bin/x86_64-linux-gnu-ld.bfd: PhysicsWorld.cpp:(.text._ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf[_ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf]+0x682): undefined reference to `JobSystem::Cancel(JobHandle)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: PhysicsWorld.cpp:(.text._ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf[_ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf]+0x6b1): undefined reference to `JobSystem::Wait(JobHandle)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: PhysicsWorld.cpp:(.text._ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf[_ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf]+0x710): undefined reference to `JobSystem::Forget(JobHandle)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: PhysicsWorld.cpp:(.text._ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf[_ZN12PhysicsWorld4Impl29PrepareInitialContactGeometryEf]+0xeb4): undefined reference to `JobSystem::ErrorOf[abi:cxx11](JobHandle) const'
+collect2: error: ld returned 1 exit status
+gmake[3]: *** [CMakeFiles/judas_rigid_contact_tests.dir/build.make:326: judas_rigid_contact_tests] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:1735: CMakeFiles/judas_rigid_contact_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1742: CMakeFiles/judas_rigid_contact_tests.dir/rule] Error 2
+gmake: *** [Makefile:449: judas_rigid_contact_tests] Error 2

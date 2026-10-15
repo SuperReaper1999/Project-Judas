@@ -1,0 +1,30 @@
+{
+  "scope": "Original stalled step188, unfinished at physical time0.003821390s. Pre-step snapshot located using original binary Step disassembly: GetContactGeometryDiagnostics output at rbp-0x940. TLS output located from original Get function fs:-96. No executable execution or new build.",
+  "before": {
+    "predicates": 197262669,
+    "intervalResolved": 197262659,
+    "exactFallbacks": 10,
+    "unresolved": 0,
+    "invalidInputs": 0,
+    "numericGapFallbacks": 0,
+    "preparedOrientationMisses": 0
+  },
+  "current": {
+    "predicates": 200450511,
+    "intervalResolved": 200450501,
+    "exactFallbacks": 10,
+    "unresolved": 0,
+    "invalidInputs": 0,
+    "numericGapFallbacks": 0,
+    "preparedOrientationMisses": 0
+  },
+  "unfinished_step_delta": {
+    "predicates": 3187842,
+    "intervalResolved": 3187842,
+    "exactFallbacks": 0,
+    "unresolved": 0,
+    "invalidInputs": 0,
+    "numericGapFallbacks": 0,
+    "preparedOrientationMisses": 0
+  }
+}

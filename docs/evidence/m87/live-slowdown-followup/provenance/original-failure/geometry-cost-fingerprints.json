@@ -1,0 +1,12 @@
+{
+  "/tmp/m87-live-diagnostics/analyze-existing-geometry.py": "6e309e8dcd58ab22545cab165f01242b2e60793219e97c4a1be77b9af4285ed1",
+  "/tmp/m87-live-diagnostics/geometry-cost-summary.json": "fec5ad28e6a9f77a03569be7b97b0c58ac871c38471ff442259cf360c3a1ea60",
+  "/tmp/m87-live-diagnostics/read-core-predicates.gdb": "d7a8a9921893a8e302cbdffc7ebf9faee4d6f7da5ba61d824436bcae08d703b3",
+  "/tmp/m87-live-diagnostics/read-all-core-predicates.gdb": "adf067339708fc216a8b918dc35487db89a0e616194a827326263b45be1e9a0c",
+  "/tmp/m87-live-diagnostics/read-core-step-predicates.gdb": "a31962c9c42a887550651202bb38979b5720c31437fba3b96d7fd090f2ea6784",
+  "/tmp/m87-live-diagnostics/original-core-predicate-tls.txt": "c96245c50983788596c206b155fc7465334da36a9dadefe4bfb5a646408aad8a",
+  "/tmp/m87-live-diagnostics/original-core-all-predicate-tls.txt": "40d4c072c467b2949f4cc3aaee882ca235842577c2b1d54659d63381c633de48",
+  "/tmp/m87-live-diagnostics/original-core-predicate-delta.json": "288acd41dcb1a185108a0ca940b8336b7cac47ffa8431adc94029ea848adb431",
+  "/tmp/m87-live-diagnostics/original-core-predicate-delta.txt": "fc93835cb0149f98b7cde47ebf7b6cac10e1c349a146483d6c84bdac8873e814",
+  "/tmp/m87-live-diagnostics/original-step-disassembly.txt": "97e9cc896403f9c530712d027f8b21369801c6c26093fdc412c4b9f3bf3c808a"
+}

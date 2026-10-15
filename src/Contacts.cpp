@@ -5,6 +5,7 @@
 #include <limits>
 #include <memory>
 #include <optional>
+#include <type_traits>
 #include "ContactPreparedGeometry.h"
 
 namespace {
@@ -119,7 +120,10 @@ namespace {
         return gap;
     }
 
-    Contact SpherePair(Context& c,float ra,float rb,float margin) {
+    template<bool ExistenceOnly> using PairResult=std::conditional_t<ExistenceOnly,bool,Contact>;
+
+    template<bool ExistenceOnly=false>
+    PairResult<ExistenceOnly> SpherePair(Context& c,float ra,float rb,float margin) {
         const Iv r=Iv(double(ra))+Iv(double(rb));
         const Iv pred=SpherePredicate(c.interval,r);
         const int sign=Sign(pred,[&]{
@@ -134,13 +138,19 @@ namespace {
 
         const glm::dvec3 delta=c.a-c.b;
         const double distance=glm::length(delta),radius=double(ra)+double(rb);
-        const glm::dvec3 normal=distance>0?delta/distance:glm::dvec3(0,1,0);
         // symmetric coincident convention
-        const double gap=SphereGap(c,distance,radius,sign);
-        return MakeContact(c,normal,gap,c.a-normal*double(ra),c.b+normal*double(rb));
+        // Existence queries still execute the response path's representable-
+        // gap validation even though they do not need the resulting witness.
+        [[maybe_unused]] const double gap=SphereGap(c,distance,radius,sign);
+        if constexpr(ExistenceOnly)return true;
+        else{
+            const glm::dvec3 normal=distance>0?delta/distance:glm::dvec3(0,1,0);
+            return MakeContact(c,normal,gap,c.a-normal*double(ra),c.b+normal*double(rb));
+        }
     }
 
-    Contact SphereBoxPair(Context& c,float radius,const glm::vec3& half,float margin) {
+    template<bool ExistenceOnly=false>
+    PairResult<ExistenceOnly> SphereBoxPair(Context& c,float radius,const glm::vec3& half,float margin) {
         const Iv pred=SphereBoxPredicate(c.interval,half,Iv(double(radius)));
         const int sign=Sign(pred,[&]{
             return SphereBoxPredicate(c.E(),half,Exact(double(radius)));
@@ -155,11 +165,13 @@ namespace {
         const glm::dvec3 local=glm::transpose(c.rb)*(c.a-c.b),h(half);
         const glm::dvec3 nearest=glm::clamp(local,-h,h),outside=local-nearest;
         const double distance=glm::length(outside);
-        glm::dvec3 normal,witnessB;
+        [[maybe_unused]] glm::dvec3 normal,witnessB;
         double gap;
         if (distance>0){
-            normal=c.rb*(outside/distance);
-            witnessB=c.b+c.rb*nearest;
+            if constexpr(!ExistenceOnly){
+                normal=c.rb*(outside/distance);
+                witnessB=c.b+c.rb*nearest;
+            }
             if (sign==0)gap=0;
             else if (c.exact){
                 const auto&e=c.E();
@@ -186,16 +198,19 @@ namespace {
             int axis=0;
             if (remaining.y<remaining[axis])axis=1;
             if (remaining.z<remaining[axis])axis=2;
-            glm::dvec3 ln(0);
-            ln[axis]=local[axis]>=0?1:-1;
-            normal=c.rb*ln;
-            glm::dvec3 point=local;
-            point[axis]=ln[axis]*h[axis];
-            witnessB=c.b+c.rb*point;
+            if constexpr(!ExistenceOnly){
+                glm::dvec3 ln(0);
+                ln[axis]=local[axis]>=0?1:-1;
+                normal=c.rb*ln;
+                glm::dvec3 point=local;
+                point[axis]=ln[axis]*h[axis];
+                witnessB=c.b+c.rb*point;
+            }
             gap=-(double(radius)+remaining[axis]);
         }
 
-        return MakeContact(c,normal,gap,c.a-normal*double(radius),witnessB);
+        if constexpr(ExistenceOnly)return true;
+        else return MakeContact(c,normal,gap,c.a-normal*double(radius),witnessB);
     }
 
     struct SatResult {
@@ -519,6 +534,51 @@ ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Sha
     }
 
     return result;
+}
+
+bool PrimitiveHasContacts(const Shape& a,const ContactPose& pa,const Shape& b,const ContactPose& pb,float margin,
+                          const ContactPreparedOrientation* preparedA,
+                          const ContactPreparedOrientation* preparedB){
+    const auto simple=[](ShapeType type){return type==ShapeType::Sphere||type==ShapeType::Box;};
+    if(!simple(a.type)||!simple(b.type)||margin!=0)
+        return PrimitiveContacts(a,pa,b,pb,margin,preparedA,preparedB).count>0;
+    if(!Valid(pa)||!Valid(pb)){
+        ++diagnostics.invalidInputs;
+        ++diagnostics.unresolved;
+        return false;
+    }
+    try{
+        std::optional<ContactPreparedOrientation> localA,localB;
+        const auto resolve=[&](const glm::quat& q,const ContactPreparedOrientation* prepared,
+                               std::optional<ContactPreparedOrientation>& local)
+                               -> const ContactPreparedOrientation& {
+            if(prepared&&prepared->Matches(q))return *prepared;
+            if(prepared)++diagnostics.preparedOrientationMisses;
+            local.emplace(q);
+            return *local;
+        };
+        const auto& orientationA=resolve(pa.orientation,preparedA,localA);
+        const auto& orientationB=resolve(pb.orientation,preparedB,localB);
+        Context c(pa,pb,orientationA,orientationB);
+        if(a.type==ShapeType::Sphere&&b.type==ShapeType::Sphere)
+            return SpherePair<true>(c,a.radius,b.radius,margin);
+        if(a.type==ShapeType::Sphere&&b.type==ShapeType::Box)
+            return SphereBoxPair<true>(c,a.radius,b.halfExtents,margin);
+        if(a.type==ShapeType::Box&&b.type==ShapeType::Sphere){
+            Context reverse(pb,pa,orientationB,orientationA);
+            return SphereBoxPair<true>(reverse,b.radius,a.halfExtents,margin);
+        }
+        // Reuse every exact-sign/numeric-gap validation of the response path.
+        // With zero margin its accepted SAT gap cannot be positive. BoxPair's
+        // only subsequent ArithmeticFailure guard requires a positive SAT gap;
+        // every remaining branch emits at least one row. Thus clipping and
+        // witness construction cannot change this accepted-contact truth.
+        // Positive-margin queries must keep the full construction guard.
+        return BoxSat(c,a.halfExtents,b.halfExtents,margin).hit;
+    }catch(const ArithmeticFailure&){
+        ++diagnostics.unresolved;
+        return false;
+    }
 }
 
 Contact SphereVsSphere(const glm::vec3& a, float ra, const glm::vec3& b, float rb, float margin) {

@@ -1,0 +1,72 @@
+M87 ISOLATED PARALLEL CCD PROTOTYPE
+=================================
+Not integrated, not accepted, not benchmarked yet.
+No shared repository source edits in this prototype.
+
+Source base: /tmp/m87-parallel-base.cpp
+Prototype: /tmp/m87-parallel-prototype.cpp
+Patch: /tmp/m87-parallel-prototype.patch
+Generator: /tmp/m87-make-parallel-prototype.py
+Build: bash /tmp/m87-build-parallel-prototype.sh
+Helper: /tmp/m87-parallel-live.cpp
+
+Temporary injection is explicitly prototype-only:
+extern "C" JudasM87PrototypePhysicsJobs(JobSystem*, unsigned lanes).
+M87_PARALLEL_WORKERS=0 uses serial scheduling; 1 uses private/pinned scratch on
+one owner-thread lane; 2/4 adds existing JobSystem workers. A production version
+must inject the optional service through PhysicsWorld ownership/lifetime.
+
+Execution:
+* Initial separated + spinning key order is preserved, including duplicates.
+* Dirty key order remains the existing sorted unique order.
+* CanRespond filtering runs on owner thread before dispatch.
+* Queries execute into unique, preassigned result indices.
+* Owner publishes event times in original request order only after all joins.
+* Earliest event/ties, wake, solver/contact row order, impulses and ledger changes
+  remain owner-thread operations.
+* Up to four lanes by default; no threads created, no per-pair jobs.
+* Eight-query chunks share a bounded atomic cursor; pair arithmetic is unchanged.
+* Batches under 256 requests use original serial querying.
+* Request and result vectors retain storage through the event loop.
+
+Thread-safety boundaries:
+* The owner must not mutate bodies, shapes, ledgers, support/spinning vectors,
+  proxy tree or lifecycle state while the joined batch runs.
+* Worker scratch owns all mutable sampled poses, orientations, actual/remaining
+  bounds, query counters and work timers.
+* QuerySample routes both ordinary and pinned common-start caches privately.
+* RemainingImpactBound bypasses mutable owner CurrentBound when on a worker;
+  it evaluates the same ShapeAabb calculation into private storage.
+* QuerySlots, solver state, observation maps, warm starts and scripts never run
+  in worker jobs.
+* Shared cooked assets and motion segments are read-only. Primitive shape copies
+  may increment shared_ptr counts, which are thread-safe.
+* Contacts and cooked-geometry diagnostics are already thread-local. Per-job
+  deltas are gathered once. Owner-lane deltas are not double-counted.
+* Counts merge on owner after join. Parallel timer sums are aggregate CPU work,
+  not a replacement for outer wall time; those time categories overlap.
+* Scratch allocation/storage counters include retained per-worker data.
+* Submission/main/worker errors wait for all submitted jobs before throwing.
+  No result times are published on an unsuccessful batch.
+* Existing JobSystem and PhysicsWorld must outlive the synchronous batch. No
+  callback, rendering, resource installation or world destruction runs inside it.
+* The thread-local injection defaults to null on other threads, preventing
+  accidental nested use of the pool from an unrelated worker.
+
+Required evidence before considering integration:
+* All completed physical state digests match original for the exact dense case
+  through at least 155 steps, across serial, one-lane control and 2/4 workers.
+* Repeat runs preserve physical endpoints under varying task scheduling.
+* Compare identical fixed dt, inputs, geometry and all solver/CCD budgets.
+* Run profiler-off timings separately from diagnostic collection.
+* Preserve raw results; reject if no useful wall-time benefit.
+* Cross-check contact/cooked counters with owner-only baseline where query work
+  is equivalent. Pose/cache hit diagnostics may differ without physical change.
+* Verify cancellation/failure paths and no outstanding jobs at return.
+
+Performance limitations:
+The host has four physical cores and independent research processes remain
+untouched. Parallelism cannot alone remove hundreds of milliseconds of necessary
+serial work. This prototype targets only independent initial/dirty TOI queries;
+island discovery, response and rendering remain serial. It is not evidence of a
+60 Hz dense pile or broad physics scalability until measured.

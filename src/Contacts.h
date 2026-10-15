@@ -108,6 +108,17 @@ ContactManifold PrimitiveContacts(const Shape& a, const ContactPose& poseA,
                                   const ContactPreparedOrientation* preparedA = nullptr,
                                   const ContactPreparedOrientation* preparedB = nullptr);
 
+// Accepted-contact existence with exactly PrimitiveContacts' boundary and
+// uncertainty policy. Zero-margin box/sphere pairs share the full validated
+// predicates and numeric-gap guards without constructing response witnesses;
+// other pairs/margins retain the ordinary manifold path. This is not a
+// speculative overlap approximation.
+bool PrimitiveHasContacts(const Shape& a, const ContactPose& poseA,
+                          const Shape& b, const ContactPose& poseB,
+                          float margin = 0.0f,
+                          const ContactPreparedOrientation* preparedA = nullptr,
+                          const ContactPreparedOrientation* preparedB = nullptr);
+
 // Distance from a capsule (defined by its own core segment endpoints and
 // radius) to a sphere or a box, along with the closest point ON THE OTHER
 // SHAPE and the separating normal (pointing away from the other shape,

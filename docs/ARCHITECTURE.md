@@ -19,6 +19,28 @@ and solving. The ordinary [Mechanical Arcade](../projects/physics_stress_lab/REA
 and matched before/after fixtures provide scaling evidence; their timings and
 remaining limits are recorded separately from human acceptance.
 
+The [live-slowdown follow-up](evidence/m87/live-slowdown-followup/REPORT.md) adds
+joined initial box/sphere geometry batches borrowing `ResourceManager`'s existing
+job pool. The ordinary runtime caps the batch at four execution contexts including
+the owner, with 256–16,384 eligible pairs; absent/stopped pools, small or oversized
+batches and unsupported geometry retain serial processing. Workers read frozen
+step inputs/prepared orientations and fill distinct indexed geometry outputs.
+The owner joins all work, consumes results in original pair order and retains all
+body mutation, contact/constraint solving, CCD event order and script callbacks.
+No public `PhysicsWorld` method becomes generally thread-safe.
+
+Geometry-only motion-ledger observations omit unused angular-velocity transport
+while preserving represented pose; full physical observations keep that transport.
+Exact-key derived pose/orientation caches, conservative primitive sweep bounds,
+validated Boolean contact existence, lazy SAT orientation rows and impact
+membership/publication bookkeeping reduce redundant geometry work without changing
+contact fidelity, solver budgets or simulation cadence. M56 merges worker predicate
+counts and records bounded batch/collision aggregates; script contact profiling is
+batched while actual callback attribution remains. These are mechanisms, not a
+claim that dense low-speed CCD cascades are solved. Final measurements and retained
+rejected alternatives belong to the follow-up report and
+[experiment record](evidence/m87/live-slowdown-followup/EXPERIMENTS.md).
+
 ## Current Experimental — M86 optional prescribed weather candidate
 
 [Current M86 weather](M86_WEATHER.md) adds owner-authored profiles/regions,
@@ -244,7 +266,7 @@ stable reimport, source diagnostics and size-aware eight-weight skinning.
 | Game policy | Trusted project QuickJS owns logical input interpretation, trajectories, transitions and game rules. Safe public handles reacquire native state; no raw ECS/GL/physics pointer API is implied. |
 | Authoritative fixed work | Simulation runs navigation, script intent, opted-in M70 motor/reference/physical-drive preparation, ordinary physics and final pose consumers once per fixed interval. M71 prescribed rigid motion publishes inside that ordinary rigid step. See the current fixed ordering below. |
 | Pose consumers | Clip/layer and IK reference resolve before physical contribution. Final joints, sockets, skinning and presented reads share resolved samples; M66 skin palettes are size-aware and use eight influences. |
-| Resource work | Shared ResourceManager/job workers decode immutable CPU content; Renderer owns graphics upload/delete and context-thread use. IDs/generations and durable selections are separate from disposable GPU caches. |
+| Resource work | Shared ResourceManager/job workers decode immutable CPU content; M87 also borrows the pool for joined private initial geometry over frozen inputs. Renderer owns graphics upload/delete and context-thread use. IDs/generations and durable selections are separate from disposable GPU caches. |
 | Presentation | After fixed catch-up, presentationUpdate samples interpolation, then audio and render submission consume that world. Cameras do not integrate simulation. Auxiliary cameras retain authored size/cadence/mask and reuse main-focused shadow maps. |
 | M72 visual state | Validated root appearance and isolated entity/material runtime patches feed one rendered sample. Render hiding preserves simulation. Modern saves/region state retain values and IDs, then rebuild resources. |
 
@@ -313,9 +335,10 @@ reads and decodes happen on workers, GPU upload happens only in
 `ResourceManager::Pump` on the GL thread, requests never block (a
 placeholder draws until the asset is Ready), demand is reference-counted,
 stale completions are rejected by generation, and resident bytes are
-budgeted with least-recently-used eviction. PhysicsWorld, the session and
-the editor UI are NOT threaded. See "Milestone 31" at the end of this
-document.
+budgeted with least-recently-used eviction. The session, public PhysicsWorld
+state and editor UI retain one owner. M87 additionally borrows that pool for
+joined private initial-contact geometry; world mutation and solving remain serial.
+See the current M87 section and "Milestone 31" thread ownership law below.
 
 As of Milestone 30 a game is a **project** (`.judasproj`: a root
 directory, its Assets/Scenes/Saves folders, a startup scene), assets have
@@ -8516,16 +8539,23 @@ asset sets will consume. Those systems are not built here.
 ### Thread ownership law
 
 - The authoritative fixed step (`StepPlayedWorld`) stays on the thread
-  that owns the session. **PhysicsWorld is not thread-safe** and is not
-  made so; no worker ever touches it, a GameSession, a RuntimeWorld or a
-  Scene.
+  that owns the session. **PhysicsWorld's public state/API is not thread-safe**;
+  workers cannot call it or mutate bodies, trees, solver rows, events, a
+  GameSession, RuntimeWorld or Scene. M87's narrow internal exception is joined
+  initial primitive geometry: the owner freezes its inputs/prepared orientations,
+  workers read that view and write disjoint private indexed outputs, and the owner
+  publishes results in original candidate order only after all jobs join. Error,
+  cancellation and serial-fallback paths also join before consuming outputs or
+  releasing their storage. No solver/event/callback ownership crosses this boundary.
 - **Renderer is the sole owner of raw OpenGL** and GL work stays on the
   thread owning the context. The only code that creates or destroys a GPU
   mesh/texture from an asset is `ResourceManager::Pump`/`Release`/
   `EvictToFit`/`Shutdown`, on the thread that constructed the manager
   (`OwnerThread()`).
 - The editor UI stays on its thread.
-- **Background jobs produce data.** A resource load job owns a `LoadTask`
+- **Background jobs produce data.** M87's geometry batches follow the joined
+  handoff above; they do not install resources, publish contacts or run scripts.
+  A resource load job owns a `LoadTask`
   (path, decoded `MeshData`/`TextureData`, error, stage) and nothing
   else; the result is installed into engine state only at the deliberate
   handoff — `Pump`, once per frame, after `PollEvents` and before the
@@ -8757,6 +8787,10 @@ editor autotests report the authored scene IDENTICAL after Play/Stop.
   real GL upload path.
 
 ### Deliberately not implemented
+
+The following list records the M31 checkpoint's scope. Later milestones supersede
+several entries; current M87 still keeps stepping/solving owner-serial while
+allowing the private joined geometry work described above.
 
 Multithreaded PhysicsWorld stepping, parallel contact solving, a parallel
 PlayerController, procedural planets, Terrain-ML/WMP integration,

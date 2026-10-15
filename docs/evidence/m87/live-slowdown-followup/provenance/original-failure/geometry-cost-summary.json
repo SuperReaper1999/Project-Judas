@@ -1,0 +1,415 @@
+{
+  "dense-fixed-tight-query": {
+    "profile_sha256": "9d838431c29cc0a137fa637fe5ac57751434b94a7fbc8e5a32ee30e841aefe95",
+    "retained_fixed_frames": 118,
+    "predicate_counters_available": false,
+    "note": "Existing M56 captures do not publish geometryPredicates/geometryExactFallbacks/numericGapFallbacks/preparedOrientationMisses/unresolved, so these cannot be inferred per frame.",
+    "median_retained_frame": {
+      "frame": 139,
+      "step_ids": [
+        138
+      ],
+      "maximum_fixed_span_ms": 32.115159999999996,
+      "counters": {
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics CCD search inclusive ms": 0,
+        "Physics CCD geometry inclusive ms": 0,
+        "Physics CCD geometry calls": 0,
+        "Physics impact island discovery ms": 0,
+        "Physics impact solve ms": 0,
+        "Physics impact observation publication ms": 0.10827099999999999
+      },
+      "physics_scopes_ms": [
+        {
+          "name": "Physics kinematic publication",
+          "inclusive_ms": 0.009649999999999999
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.594721
+        },
+        {
+          "name": "Physics prediction and wake",
+          "inclusive_ms": 2.741351
+        },
+        {
+          "name": "Physics velocity integration",
+          "inclusive_ms": 0.10400899999999999
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.449639
+        },
+        {
+          "name": "Physics broadphase",
+          "inclusive_ms": 2.449865
+        },
+        {
+          "name": "Physics contacts",
+          "inclusive_ms": 18.794632
+        },
+        {
+          "name": "Physics initial impacts",
+          "inclusive_ms": 0.002617
+        },
+        {
+          "name": "Physics contact row preparation",
+          "inclusive_ms": 0.244781
+        },
+        {
+          "name": "Physics contact history publication",
+          "inclusive_ms": 0.313225
+        },
+        {
+          "name": "Physics velocity constraints",
+          "inclusive_ms": 3.39463
+        },
+        {
+          "name": "Physics continuous impacts",
+          "inclusive_ms": 0.9243309999999999
+        },
+        {
+          "name": "Physics position constraints",
+          "inclusive_ms": 0.997232
+        },
+        {
+          "name": "Physics sleeping assessment",
+          "inclusive_ms": 0.21834199999999998
+        },
+        {
+          "name": "Physics contact and joint solver",
+          "inclusive_ms": 5.565493
+        },
+        {
+          "name": "Physics endpoint contact publication",
+          "inclusive_ms": 0.323442
+        },
+        {
+          "name": "Physics proxy refresh",
+          "inclusive_ms": 0.677049
+        }
+      ]
+    },
+    "worst_retained_frame": {
+      "frame": 154,
+      "step_ids": [
+        153
+      ],
+      "maximum_fixed_span_ms": 662.7833469999999,
+      "counters": {
+        "Physics impact events": 463,
+        "Physics impact queries": 135104,
+        "Physics impact sampling fallbacks": 546,
+        "Physics impact sampling tests": 2231,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact orientation preparations": 115688,
+        "Physics impact actual-contact requests": 79687,
+        "Physics impact actual-contact reuses": 35127,
+        "Physics CCD search inclusive ms": 303.626668,
+        "Physics CCD geometry inclusive ms": 289.017652,
+        "Physics CCD geometry calls": 162115,
+        "Physics impact island discovery ms": 148.133458,
+        "Physics impact solve ms": 19.265462,
+        "Physics impact observation publication ms": 15.513874999999999
+      },
+      "physics_scopes_ms": [
+        {
+          "name": "Physics kinematic publication",
+          "inclusive_ms": 0.008255
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.561001
+        },
+        {
+          "name": "Physics prediction and wake",
+          "inclusive_ms": 2.7827029999999997
+        },
+        {
+          "name": "Physics velocity integration",
+          "inclusive_ms": 0.10070899999999999
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.668389
+        },
+        {
+          "name": "Physics broadphase",
+          "inclusive_ms": 2.6687339999999997
+        },
+        {
+          "name": "Physics contacts",
+          "inclusive_ms": 21.320581999999998
+        },
+        {
+          "name": "Physics initial impacts",
+          "inclusive_ms": 0.0029389999999999998
+        },
+        {
+          "name": "Physics contact row preparation",
+          "inclusive_ms": 0.253333
+        },
+        {
+          "name": "Physics contact history publication",
+          "inclusive_ms": 0.32214899999999996
+        },
+        {
+          "name": "Physics velocity constraints",
+          "inclusive_ms": 3.429639
+        },
+        {
+          "name": "Physics continuous impacts",
+          "inclusive_ms": 624.553859
+        },
+        {
+          "name": "Physics position constraints",
+          "inclusive_ms": 1.138457
+        },
+        {
+          "name": "Physics sleeping assessment",
+          "inclusive_ms": 0.259997
+        },
+        {
+          "name": "Physics contact and joint solver",
+          "inclusive_ms": 629.415672
+        },
+        {
+          "name": "Physics endpoint contact publication",
+          "inclusive_ms": 0.43027499999999996
+        },
+        {
+          "name": "Physics proxy refresh",
+          "inclusive_ms": 0.9256089999999999
+        }
+      ]
+    }
+  },
+  "dense-rotation-profile": {
+    "profile_sha256": "07426d422ec6840e43b631de57d0bf00199c17f0042a025b33063fd28dddfa32",
+    "retained_fixed_frames": 118,
+    "predicate_counters_available": false,
+    "note": "Existing M56 captures do not publish geometryPredicates/geometryExactFallbacks/numericGapFallbacks/preparedOrientationMisses/unresolved, so these cannot be inferred per frame.",
+    "median_retained_frame": {
+      "frame": 130,
+      "step_ids": [
+        129
+      ],
+      "maximum_fixed_span_ms": 30.191301,
+      "counters": {
+        "Physics impact events": 0,
+        "Physics impact queries": 0,
+        "Physics impact sampling fallbacks": 0,
+        "Physics impact sampling tests": 0,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact orientation preparations": 0,
+        "Physics impact actual-contact requests": 0,
+        "Physics impact actual-contact reuses": 0,
+        "Physics CCD search inclusive ms": 0,
+        "Physics CCD geometry inclusive ms": 0,
+        "Physics CCD geometry calls": 0,
+        "Physics impact island discovery ms": 0,
+        "Physics impact solve ms": 0
+      },
+      "physics_scopes_ms": [
+        {
+          "name": "Physics kinematic publication",
+          "inclusive_ms": 0.00487
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.463931
+        },
+        {
+          "name": "Physics prediction and wake",
+          "inclusive_ms": 2.599569
+        },
+        {
+          "name": "Physics velocity integration",
+          "inclusive_ms": 0.099808
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.666811
+        },
+        {
+          "name": "Physics broadphase",
+          "inclusive_ms": 2.6670499999999997
+        },
+        {
+          "name": "Physics contacts",
+          "inclusive_ms": 17.808003
+        },
+        {
+          "name": "Physics initial impacts",
+          "inclusive_ms": 0.001769
+        },
+        {
+          "name": "Physics contact row preparation",
+          "inclusive_ms": 0.20748
+        },
+        {
+          "name": "Physics contact history publication",
+          "inclusive_ms": 0.30028499999999997
+        },
+        {
+          "name": "Physics velocity constraints",
+          "inclusive_ms": 3.1272539999999998
+        },
+        {
+          "name": "Physics continuous impacts",
+          "inclusive_ms": 0.663702
+        },
+        {
+          "name": "Physics position constraints",
+          "inclusive_ms": 0.980798
+        },
+        {
+          "name": "Physics sleeping assessment",
+          "inclusive_ms": 0.157832
+        },
+        {
+          "name": "Physics contact and joint solver",
+          "inclusive_ms": 4.957536
+        },
+        {
+          "name": "Physics endpoint contact publication",
+          "inclusive_ms": 0.267628
+        },
+        {
+          "name": "Physics proxy refresh",
+          "inclusive_ms": 0.581332
+        }
+      ]
+    },
+    "worst_retained_frame": {
+      "frame": 154,
+      "step_ids": [
+        153
+      ],
+      "maximum_fixed_span_ms": 745.640322,
+      "counters": {
+        "Physics impact events": 463,
+        "Physics impact queries": 135104,
+        "Physics impact sampling fallbacks": 546,
+        "Physics impact sampling tests": 2231,
+        "Physics impact sampling resolution caps": 0,
+        "Physics impact orientation preparations": 115688,
+        "Physics impact actual-contact requests": 79687,
+        "Physics impact actual-contact reuses": 35127,
+        "Physics CCD search inclusive ms": 268.29690999999997,
+        "Physics CCD geometry inclusive ms": 321.806857,
+        "Physics CCD geometry calls": 162115,
+        "Physics impact island discovery ms": 229.97844899999998,
+        "Physics impact solve ms": 19.736048999999998
+      },
+      "physics_scopes_ms": [
+        {
+          "name": "Physics kinematic publication",
+          "inclusive_ms": 0.0050609999999999995
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.4333769999999997
+        },
+        {
+          "name": "Physics prediction and wake",
+          "inclusive_ms": 2.6424849999999998
+        },
+        {
+          "name": "Physics velocity integration",
+          "inclusive_ms": 0.073775
+        },
+        {
+          "name": "Physics candidate generation",
+          "inclusive_ms": 2.413242
+        },
+        {
+          "name": "Physics broadphase",
+          "inclusive_ms": 2.4134729999999998
+        },
+        {
+          "name": "Physics contacts",
+          "inclusive_ms": 21.726049
+        },
+        {
+          "name": "Physics initial impacts",
+          "inclusive_ms": 0.0017989999999999998
+        },
+        {
+          "name": "Physics contact row preparation",
+          "inclusive_ms": 0.18548399999999998
+        },
+        {
+          "name": "Physics contact history publication",
+          "inclusive_ms": 0.274575
+        },
+        {
+          "name": "Physics velocity constraints",
+          "inclusive_ms": 3.1939439999999997
+        },
+        {
+          "name": "Physics continuous impacts",
+          "inclusive_ms": 708.5047989999999
+        },
+        {
+          "name": "Physics position constraints",
+          "inclusive_ms": 1.145786
+        },
+        {
+          "name": "Physics sleeping assessment",
+          "inclusive_ms": 0.251305
+        },
+        {
+          "name": "Physics contact and joint solver",
+          "inclusive_ms": 713.122854
+        },
+        {
+          "name": "Physics endpoint contact publication",
+          "inclusive_ms": 0.394321
+        },
+        {
+          "name": "Physics proxy refresh",
+          "inclusive_ms": 0.883784
+        }
+      ]
+    }
+  },
+  "original_human_stall_core": {
+    "scope": "Original stalled step188, unfinished at physical time0.003821390s. Pre-step snapshot located using original binary Step disassembly: GetContactGeometryDiagnostics output at rbp-0x940. TLS output located from original Get function fs:-96. No executable execution or new build.",
+    "before": {
+      "predicates": 197262669,
+      "intervalResolved": 197262659,
+      "exactFallbacks": 10,
+      "unresolved": 0,
+      "invalidInputs": 0,
+      "numericGapFallbacks": 0,
+      "preparedOrientationMisses": 0
+    },
+    "current": {
+      "predicates": 200450511,
+      "intervalResolved": 200450501,
+      "exactFallbacks": 10,
+      "unresolved": 0,
+      "invalidInputs": 0,
+      "numericGapFallbacks": 0,
+      "preparedOrientationMisses": 0
+    },
+    "unfinished_step_delta": {
+      "predicates": 3187842,
+      "intervalResolved": 3187842,
+      "exactFallbacks": 0,
+      "unresolved": 0,
+      "invalidInputs": 0,
+      "numericGapFallbacks": 0,
+      "preparedOrientationMisses": 0
+    }
+  },
+  "conclusion": "Exact arithmetic fallbacks did not occur in the captured unfinished stalled step; all3187842 observed predicates resolved using intervals. Current profile files cannot provide a per-step normal-vs-worst predicate comparison without extra publication. Inclusive geometry times overlap discovery/search and must not be added to them."
+}

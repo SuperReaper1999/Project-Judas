@@ -1,0 +1,5 @@
+iterations=10 accepted=1 body_words_different=0 row_words_different=0 median_ms=0.054589 p95_ms=0.078627 max_ms=0.107111
+iterations=20 accepted=1 body_words_different=102 row_words_different=115 median_ms=0.093009 p95_ms=0.117363 max_ms=0.161089
+iterations=40 accepted=1 body_words_different=102 row_words_different=124 median_ms=0.162621 p95_ms=0.187777 max_ms=0.794338
+iterations=80 accepted=1 body_words_different=102 row_words_different=125 median_ms=0.293857 p95_ms=0.338621 max_ms=0.504604
+Frozen solve replay complete. Captured-iteration endpoint and row bits matched; alternatives intentionally change the numerical solve.

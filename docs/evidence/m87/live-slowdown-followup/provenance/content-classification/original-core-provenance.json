@@ -1,0 +1,26 @@
+{
+  "head": "cee55a898aa0e4938665903f3b207d828acdb1df",
+  "files": {
+    "/tmp/judas-m87-watch-ecpbqnfz/judas": {
+      "bytes": 52973920,
+      "sha256": "1a40543ec02a42d4350514b1ff5477c5eb4135566de10be7e6c1292ed9bd7978"
+    },
+    "/tmp/judas-m87-live-slow.core": {
+      "bytes": 167591936,
+      "sha256": "da84e7dfce92a32da3ff9706b2495f233e995a9413017429dc8dbc026e6bcd0a"
+    },
+    "/tmp/judas-m87-PhysicsWorld-debug.o": {
+      "bytes": 13167680,
+      "sha256": "4650ad70eae6ed33aaf2ca10c1785447d4dce4e94a7182be16830a0459a24261"
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp": {
+      "bytes": 223727,
+      "sha256": "5574064c7a6f9a0d35e5a1e2cdaf43df6cdaa13f1de62c637c84324dca74c028"
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_engine.dir/flags.make": {
+      "bytes": 1556,
+      "sha256": "aeb4c3977b0b61ab28611bc44ace6a2d2beff65448fcc2fdcaaf688656e4960b"
+    }
+  },
+  "note": "One unchanged PhysicsWorld.cpp translation unit compiled -O3 -DNDEBUG with existing build flags plus -g, solely to attach C++ types to the unmodified release core."
+}

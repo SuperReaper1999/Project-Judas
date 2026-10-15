@@ -266,12 +266,23 @@ namespace contact_geometry {
     // Original Sat remains the unchanged exact fallback and magnitude path.
     template<class T> struct SatWorkspace {
         const Pair<T>& p;
-        std::array<std::array<T,3>,3> ab;
+        mutable std::array<std::array<T,3>,3> ab;
+        mutable unsigned preparedRows=0;
         T da2,db2;
-        explicit SatWorkspace(const Pair<T>& pair):p(pair),da2(p.a.d*p.a.d),db2(p.b.d*p.b.d){
-            for(int i=0;i<3;++i)for(int j=0;j<3;++j)ab[i][j]=Dot(p.a.n[i],p.b.n[j]);
+        explicit SatWorkspace(const Pair<T>& pair):p(pair),da2(p.a.d*p.a.d),db2(p.b.d*p.b.d){}
+        void PrepareRow(int i)const{
+            const unsigned bit=1u<<i;
+            if(preparedRows&bit)return;
+            for(int j=0;j<3;++j)ab[i][j]=Dot(p.a.n[i],p.b.n[j]);
+            preparedRows|=bit;
         }
         T Evaluate(const glm::vec3&ha,const glm::vec3&hb,int axis,const V<T>&t)const{
+            // A-face axes need only their own cross-orientation row. Most
+            // separated pairs stop here; retain the other six dot products
+            // until a later axis actually needs them. Every expression and
+            // its rounding order is unchanged from eager preparation.
+            if(axis<3)PrepareRow(axis);
+            else if(preparedRows!=7u)for(int i=0;i<3;++i)PrepareRow(i);
             T s=Abs(Dot(p.delta,t));
             if(axis<3){
                 for(int k=0;k<3;++k){

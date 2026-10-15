@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Exact original parent invocations; both completed with exit code 0.
+env JUDAS_ENGINE_ROOT=/home/conner/Documents/GitHub/Project-Judas JUDAS_SUPPORT_CONTINUATION_ORIGINAL=1 JUDAS_SUPPORT_CONTINUATION_TRACE=1 timeout --signal=TERM --kill-after=3s 45s /tmp/m87-support-continuation/live /tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas /tmp/m87-support-continuation/control-155 100 155 0 0 1 0.016666667 0 0 > /tmp/m87-support-continuation/control-155.log 2>&1
+env JUDAS_ENGINE_ROOT=/home/conner/Documents/GitHub/Project-Judas JUDAS_SUPPORT_CONTINUATION_TRACE=1 timeout --signal=TERM --kill-after=3s 45s /tmp/m87-support-continuation/live /tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas /tmp/m87-support-continuation/projection-155 100 155 0 0 1 0.016666667 0 0 > /tmp/m87-support-continuation/projection-155.log 2>&1

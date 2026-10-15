@@ -1,0 +1,29 @@
+Renderer fragment texture units: 32 (material path uses 12)
+diagnostic swap=0 hidden=1 tour=0 frame_seconds=0.0166667 profile=0 periodic_export=0
+Project: Judas Physics Stress Lab (/tmp/judas-m87-watch-ecpbqnfz/game.judasproj)
+Scene: Physics Stress Lab / 1024 loose bodies (/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas)
+World origin (m): 0.000, 0.000, 0.000
+completed frames=156 steps=155 wall_ms=12318.9
+	Command being timed: "/home/conner/Documents/GitHub/Project-Judas/.cache/m87-live-followup/baseline/live-digest /tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas /tmp/m87-followup-final-perf/before-1 100 155 0 0 1 0.016666667 0 0"
+	User time (seconds): 12.65
+	System time (seconds): 0.19
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:12.90
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 153920
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 31196
+	Voluntary context switches: 250
+	Involuntary context switches: 1091
+	Swaps: 0
+	File system inputs: 856
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

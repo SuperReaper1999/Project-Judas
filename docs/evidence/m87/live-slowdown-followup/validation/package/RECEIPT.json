@@ -1,0 +1,19 @@
+{
+  "nativeLinux": true,
+  "processExitCode": 0,
+  "workingDirectory": "/tmp/m87-followup-unrelated-working-directory",
+  "engineRootEnvironment": "unset",
+  "runtimeSource": "build/judas",
+  "export": ".cache/m87-followup-export",
+  "moved": "/tmp/judas-m87-followup-moved",
+  "runtimeSHA256": "8e973f6e00e61cd96d8d6669f0a8df56b0c4d3be8be947db44bc27b333d58a9b",
+  "exportedRuntimeSHA256": "8e973f6e00e61cd96d8d6669f0a8df56b0c4d3be8be947db44bc27b333d58a9b",
+  "movedRuntimeSHA256": "8e973f6e00e61cd96d8d6669f0a8df56b0c4d3be8be947db44bc27b333d58a9b",
+  "checks": [
+    "normal package startup",
+    "all four registered scenes load normally",
+    "pause/resume assertions",
+    "authored reload assertion"
+  ],
+  "scope": "Startup/functional/lifetime smoke only. The largest pile receives only a few steps here; this is not its sustained performance acceptance."
+}

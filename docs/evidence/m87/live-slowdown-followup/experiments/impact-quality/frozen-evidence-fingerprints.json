@@ -1,0 +1,13 @@
+{
+  "/tmp/m87-live-diagnostics/dense-fixed-residual-capture/impact-residuals.csv": "6c97a512c0be5890f460ac0043204b8d7a828cb8d46d14f95cac308ba3fc2907",
+  "/tmp/m87-impact-quality/frozen-island.bits": "7ad8ea2b9cb7227fd303cb684b0e2a18033fd9ecb323ccec4002b4d92174d7d9",
+  "/tmp/m87-impact-quality/frozen-replay/times-80.csv": "886f7f42dcef0e5a7f49f414b910fdc7d53efee755fce12093dd293ae1f73c57",
+  "/tmp/m87-impact-quality/frozen-replay/residual-80.csv": "b393a7d830ee245c57b60b5cf12caf8fc1ffe17b811ea07e31a87976adaa8d63",
+  "/tmp/m87-impact-quality/frozen-replay/times-40.csv": "8ef83f431b466067f897bacea7741dff678a02d6cae386437507c9da0ea18e27",
+  "/tmp/m87-impact-quality/frozen-replay/residual-40.csv": "b2318fd91e3b24f96e1c0fe6bc22b7ea6469dd7c0ab2b343e060f06f6d975cf0",
+  "/tmp/m87-impact-quality/frozen-replay/times-20.csv": "2c9c5861c0934f1e2e274de18da6de5004c87845aae6cfc88a12b4bbd6fe6a9b",
+  "/tmp/m87-impact-quality/frozen-replay/residual-20.csv": "e947edc116589209a66133a168d6f1f845f998dbbb994e202690323d59cf8e78",
+  "/tmp/m87-impact-quality/frozen-replay/times-10.csv": "39900b7e7b98ea2b99f1a893a8dd0039ea6d4625e84f989df2e828d5e23d0c6e",
+  "/tmp/m87-impact-quality/frozen-replay/residual-10.csv": "3f1813ffcdecf3812d55d5f3a9b07497b1ebb60ea27c421d4810282ad0db8553",
+  "/tmp/m87-impact-quality/frozen-replay/replay.csv": "c6ab6f83e09ec4f47b34f25e32b2b0c901e919c682c8028dafa51791d3005bac"
+}

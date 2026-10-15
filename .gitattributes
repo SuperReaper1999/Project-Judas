@@ -4,3 +4,6 @@
 # M78 numerical evidence includes native Windows receipts and exact save inputs.
 # Preserve recorded bytes instead of normalizing line endings during checkpointing.
 docs/evidence/m78*/** -text
+
+# M87 follow-up manifests identify exact captured bytes, including raw CSV.
+docs/evidence/m87/live-slowdown-followup/** -text

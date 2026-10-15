@@ -32,6 +32,13 @@ replace or manually sleep resting assemblies. HUD figures read `entity.sleeping`
 An off motor does not prevent impulses/contact from waking its connected bodies.
 Changing population reloads an ordinary scene; it is not a physics quality switch.
 
+**Known performance limit:** the 1,024-piece mixed box/sphere pile can enter a
+low-speed continuous-impact cascade after collapsing. Even with the M87 follow-up
+optimizations, individual fixed steps can take seconds and temporarily prevent UI
+input from being processed. This mode is an unresolved stress case, not a 60 Hz
+demonstration. The population, CCD, contacts and simulation cadence are unchanged.
+See the [measured investigation](../../docs/evidence/m87/live-slowdown-followup/REPORT.md).
+
 ## Project organization
 
 - `Scenes/room128.judas`, `room512.judas`, `room1024.judas`: identical machinery,

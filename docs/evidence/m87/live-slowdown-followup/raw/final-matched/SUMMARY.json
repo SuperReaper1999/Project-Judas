@@ -1,0 +1,30 @@
+{
+  "before": {
+    "steps": 310,
+    "medianMs": 32.321656000000004,
+    "p95NearestRankMs": 118.474236,
+    "worstMs": 1033.83023,
+    "sumMs": 18734.786493,
+    "peakRSSMiB": [
+      150.3125,
+      150.27734375
+    ],
+    "initialGeometrySumMs": 5747.307622,
+    "impactEvents": 7560,
+    "impactQueries": 1453738
+  },
+  "final": {
+    "steps": 310,
+    "medianMs": 24.5148685,
+    "p95NearestRankMs": 110.801636,
+    "worstMs": 841.709328,
+    "sumMs": 13447.239281,
+    "peakRSSMiB": [
+      174.98046875,
+      175.421875
+    ],
+    "initialGeometrySumMs": 3573.31445,
+    "impactEvents": 7560,
+    "impactQueries": 1453738
+  }
+}

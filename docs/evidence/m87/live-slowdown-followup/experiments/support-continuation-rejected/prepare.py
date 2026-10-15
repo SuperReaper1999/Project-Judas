@@ -1,0 +1,235 @@
+#!/usr/bin/env python3
+"""Prepare ONE isolated, deliberately non-production solver-policy experiment."""
+from pathlib import Path
+import hashlib,json,subprocess
+ROOT=Path('/home/conner/Documents/GitHub/Project-Judas');OUT=Path(__file__).resolve().parent
+base=(ROOT/'src/PhysicsWorld.cpp').read_text();(OUT/'PhysicsWorld.base.cpp').write_text(base)
+marker='''        for (;;) {
+            double earliest=double(dt)+1; unsigned seedA=0,seedB=0;'''
+assert base.count(marker)==1
+insert=r'''        // ISOLATED EXPERIMENT ONLY. This extends the existing speculative
+        // support policy; it is not an exact trajectory-preserving optimization.
+        const bool continuationEnabled=!std::getenv("JUDAS_SUPPORT_CONTINUATION_ORIGINAL");
+        const bool continuationTrace=std::getenv("JUDAS_SUPPORT_CONTINUATION_TRACE");
+        struct ContinuationReference {unsigned generationA=0,generationB=0;glm::dvec3 anchorA{0};glm::vec3 normal{0};};
+        using ContinuationKey=std::array<unsigned,4>;
+        std::map<ContinuationKey,std::vector<ContinuationReference>> continuationGroups;
+        std::vector<std::vector<ContinuationKey>> continuationAdjacency(continuationEnabled?bodies.size():0);
+        auto rememberContinuation=[&](const ContinuationKey& key,const ContinuationReference& reference){
+            if(!continuationEnabled)return;
+            auto [it,created]=continuationGroups.try_emplace(key);
+            if(created){continuationAdjacency[key[0]].push_back(key);continuationAdjacency[key[1]].push_back(key);}
+            it->second.push_back(reference);
+        };
+        if(continuationEnabled)for(const auto& cached:contactCache){
+            const ContinuationKey key{cached.key.slotA,cached.key.slotB,unsigned(cached.key.partA),unsigned(cached.key.partB)};
+            if(std::binary_search(supportPairs.begin(),supportPairs.end(),key))
+                rememberContinuation(key,{cached.key.generationA,cached.key.generationB,cached.localAnchorA,cached.normal});
+        }
+        ContactSolver continuationSolver;JointSolver continuationJoints;
+        struct ContinuationMetrics {std::size_t attempts=0,applied=0,rows=0,positive=0,added=0,rolledBack=0,unsupported=0;
+            double worstEnergyRise=0,worstMomentumResidual=0,worstAngularResidual=0,worstViolation=0; } continuationMetrics;
+        struct ContinuationBudget {double energy=0;glm::dvec3 momentum{0},angular{0};};
+        struct ContinuationUnsupported {};
+        auto continuationBudget=[&](const std::vector<unsigned>& component){
+            ContinuationBudget value;
+            for(auto slot:component){const auto& body=bodies[slot].rigidBody;if(body.IsStatic())continue;
+                const double mass=1/double(body.inverseMass);const glm::dvec3 v(body.linearVelocity),w(body.angularVelocity);
+                const glm::dmat3 inverse(body.InverseInertiaWorld());glm::dvec3 spin(0);
+                if(glm::determinant(inverse)!=0)spin=glm::inverse(inverse)*w;
+                else if(glm::dot(w,w)!=0)throw ContinuationUnsupported{};
+                const auto p=mass*v;value.energy+=.5*(mass*glm::dot(v,v)+glm::dot(w,spin));
+                value.momentum+=p;value.angular+=glm::cross(glm::dvec3(body.position),p)+spin;
+            }return value;
+        };
+        auto continueSupports=[&](double time,std::vector<unsigned>& impactIsland,std::vector<unsigned char>& impactIncluded,
+                                  std::vector<std::pair<glm::vec3,glm::vec3>>& impactOldVelocities,
+                                  const std::vector<ImpactContact>& actualRows,const std::vector<ContactKey>& actualKeys){
+            const double remaining=double(dt)-time;
+            if(!continuationEnabled||!(remaining>0)||continuationGroups.empty())return;
+            ++continuationMetrics.attempts;
+            const float h=static_cast<float>(remaining);if(!(h>0)||!std::isfinite(h)){++continuationMetrics.unsupported;return;}
+            struct Row {ContinuationKey key;Contact geometry;};std::vector<Row> projectionRows;
+            std::set<ContinuationKey> actualGroups;
+            for(std::size_t i=0;i<actualRows.size();++i){const auto& key=actualKeys[i];
+                ContinuationKey group{key.slotA,key.slotB,unsigned(key.partA),unsigned(key.partB)};
+                projectionRows.push_back({group,actualRows[i].geometry});actualGroups.insert(group);
+            }
+            std::vector<unsigned> component=impactIsland;auto componentIncluded=impactIncluded;
+            // Discovery is read-only: no provisional wake, acceleration, pose,
+            // joint state, motion ledger, or cache publication can escape a skip.
+            bool unsupported=false;std::size_t positive=0;
+            const auto include=[&](unsigned slot){if(bodies[slot].rigidBody.IsStatic()||componentIncluded[slot])return;
+                if(bodies[slot].sleeping||bodies[slot].deferredAcceleration){unsupported=true;return;}
+                componentIncluded[slot]=1;component.push_back(slot);
+            };
+            std::set<ContinuationKey> checkedSupport,checkedActual=actualGroups;
+            for(std::size_t next=0;next<component.size()&&!unsupported;++next){const unsigned slot=component[next];
+                for(const auto& joint:joints)if(JointActive(joint)&&joint.state.settings.bodyB.IsValid()){
+                    const auto a=unsigned(joint.state.settings.bodyA.id&kSlotMask),b=unsigned(joint.state.settings.bodyB.id&kSlotMask);
+                    if(a==slot)include(b);if(b==slot)include(a);
+                }
+                for(const auto& key:continuationAdjacency[slot]){
+                    if(!checkedSupport.insert(key).second||!CanRespond(key[0],key[1])||actualGroups.count(key))continue;
+                    const auto& old=continuationGroups.at(key);
+                    if(old.empty()||old[0].generationA!=bodies[key[0]].generation||old[0].generationB!=bodies[key[1]].generation)continue;
+                    const auto a=PoseAt(key[0],time),b=PoseAt(key[1],time);
+                    const double reach=(glm::length(glm::dvec3(a.linearVelocity)-glm::dvec3(b.linearVelocity))+
+                        glm::length(glm::dvec3(a.angularVelocity))*bodies[key[0]].boundingRadius+
+                        glm::length(glm::dvec3(b.angularVelocity))*bodies[key[1]].boundingRadius)*remaining;
+                    if(!(reach>=0)||!std::isfinite(reach)||reach>std::numeric_limits<float>::max()){unsupported=true;break;}
+                    const float margin=std::nextafter(static_cast<float>(reach),std::numeric_limits<float>::infinity());
+                    if(!std::isfinite(margin)){unsupported=true;break;}
+                    const auto fresh=PairAt(key[0],key[1],int(key[2]),int(key[3]),time,margin);
+                    if(fresh.uncertain){unsupported=true;break;}
+                    bool accepted=false;
+                    for(int p=0;p<fresh.count;++p){const auto& contact=fresh.points[p];
+                        if(!contact.hasLocalAnchors||!std::isfinite(contact.signedSeparation)){unsupported=true;break;}
+                        const bool matches=std::any_of(old.begin(),old.end(),[&](const auto& prior){
+                            return glm::dot(prior.normal,contact.normal)>=kWarmStartNormalDot&&
+                                   glm::distance(prior.anchorA,contact.localAnchorA)<kWarmStartAnchorDistance;
+                        });
+                        if(!matches)continue;
+                        projectionRows.push_back({key,contact});accepted=true;positive+=contact.signedSeparation>0;
+                    }
+                    if(accepted){include(key[0]);include(key[1]);}
+                }
+                // Existing actual contacts of newly reached support members
+                // must participate too; never discover new positive-gap pairs.
+                if(next<impactIsland.size())continue;
+                const auto candidates=QuerySlots(ActualImpactBound(slot,ImpactPoseAt(slot,time)));
+                for(unsigned other:candidates){if(slot==other||!CanRespond(slot,other))continue;
+                    const auto a=std::min(slot,other),b=std::max(slot,other);
+                    for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb){
+                        ContinuationKey key{a,b,unsigned(pa),unsigned(pb)};if(!checkedActual.insert(key).second)continue;
+                        const auto fresh=PairAt(a,b,pa,pb,time,0);if(fresh.uncertain){unsupported=true;break;}
+                        if(!fresh.count)continue;
+                        projectionRows.erase(std::remove_if(projectionRows.begin(),projectionRows.end(),[&](const auto& row){return row.key==key;}),projectionRows.end());
+                        for(int p=0;p<fresh.count;++p)projectionRows.push_back({key,fresh.points[p]});
+                        include(a);include(b);
+                    }
+                }
+            }
+            if(unsupported){++continuationMetrics.unsupported;return;}
+            positive=std::count_if(projectionRows.begin(),projectionRows.end(),[](const auto& row){return row.geometry.signedSeparation>0;});
+            if(!positive)return; // No changed policy when only actual rows exist.
+            struct BodyBackup {unsigned slot;RigidBody original,physical;};std::vector<BodyBackup> saved;saved.reserve(component.size());
+            for(auto slot:component){auto physical=impactIncluded[slot]?bodies[slot].rigidBody:PoseAt(slot,time);
+                saved.push_back({slot,bodies[slot].rigidBody,physical});
+            }
+            // An external moving anchor requires additional mechanical work
+            // accounting. This experiment conservatively leaves that case on
+            // the original path, rather than weakening its energy guard.
+            const auto movingStatic=[&](const RigidBody& body){return body.IsStatic()&&
+                (glm::dot(body.linearVelocity,body.linearVelocity)!=0||glm::dot(body.angularVelocity,body.angularVelocity)!=0);};
+            for(const auto& row:projectionRows)if(movingStatic(bodies[row.key[0]].rigidBody)||movingStatic(bodies[row.key[1]].rigidBody)){++continuationMetrics.unsupported;return;}
+            std::vector<JointInput> jointInputs;
+            struct JointBackup {std::size_t index;JointState state;std::array<float,12> warm;};std::vector<JointBackup> jointBackup;
+            for(std::size_t j=0;j<joints.size();++j){auto& joint=joints[j];if(!JointActive(joint))continue;
+                auto* a=Get(joint.state.settings.bodyA);auto* b=Get(joint.state.settings.bodyB);
+                if(!componentIncluded[joint.state.settings.bodyA.id&kSlotMask]&&(!b||!componentIncluded[joint.state.settings.bodyB.id&kSlotMask]))continue;
+                if(movingStatic(a->rigidBody)||(b&&movingStatic(b->rigidBody))){unsupported=true;break;}
+                jointBackup.push_back({j,joint.state,joint.warm});
+                jointInputs.push_back({&a->rigidBody,b?&b->rigidBody:&worldAnchor,&joint.state,&joint.warm,a->shape.pivotOffset,b?b->shape.pivotOffset:glm::vec3(0)});
+            }
+            if(unsupported){++continuationMetrics.unsupported;return;}
+            for(const auto& before:saved)bodies[before.slot].rigidBody=before.physical;
+            const auto restore=[&]{for(const auto& before:saved)bodies[before.slot].rigidBody=before.original;
+                for(const auto& before:jointBackup){joints[before.index].state=before.state;joints[before.index].warm=before.warm;}};
+            try{
+                const auto before=continuationBudget(component);continuationSolver.Clear();
+                for(const auto& row:projectionRows){auto& a=bodies[row.key[0]];auto& b=bodies[row.key[1]];
+                    continuationSolver.AddContact(a.rigidBody,b.rigidBody,row.geometry,0,0,0,glm::vec3(0));
+                }
+                continuationSolver.Prepare(h);
+                // ISOLATED ONLY: the solver object is non-const. This bypasses
+                // the existing restitution branch to exercise explicit generic
+                // remaining-gap targets without adding a production API.
+                auto& constraints=const_cast<std::vector<ContactConstraint>&>(continuationSolver.Constraints());
+                if(constraints.size()!=projectionRows.size())throw std::runtime_error("continuation row mapping mismatch");
+                for(auto& row:constraints){const double target=-std::max(row.signedSeparation,0.0)/remaining;
+                    if(!std::isfinite(target)||target < -std::numeric_limits<float>::max())throw ContinuationUnsupported{};
+                    row.restitutionBias=static_cast<float>(target);
+                }
+                continuationJoints.Prepare(jointInputs,h,false,true);
+                for(int iteration=0;iteration<ContactSolver::kVelocityIterations;++iteration){
+                    continuationSolver.SolveVelocities(1);if(!continuationJoints.Empty())continuationJoints.SolveIteration();
+                }
+                const auto after=continuationBudget(component);const double energyRise=after.energy-before.energy;
+                const double tolerance=64.0*std::numeric_limits<float>::epsilon()*std::max(1.0,before.energy);
+                continuationMetrics.worstEnergyRise=std::max(continuationMetrics.worstEnergyRise,energyRise);
+                bool finite=std::isfinite(after.energy);
+                for(auto slot:component)for(int axis=0;axis<3;++axis)finite=finite&&
+                    std::isfinite(bodies[slot].rigidBody.linearVelocity[axis])&&std::isfinite(bodies[slot].rigidBody.angularVelocity[axis]);
+                if(!finite||energyRise>tolerance){restore();++continuationMetrics.rolledBack;return;}
+                glm::dvec3 externalMomentum(0),externalAngular(0);
+                for(std::size_t i=0;i<constraints.size();++i){const auto& row=constraints[i];const glm::dvec3 impulse=glm::dvec3(row.normal)*double(row.normalImpulse);
+                    if(row.bodyA->IsStatic()&&!row.bodyB->IsStatic()){
+                        externalMomentum-=impulse;externalAngular+=glm::cross(glm::dvec3(row.bodyB->position)+glm::dvec3(row.velocityOffsetB),-impulse);
+                    }else if(row.bodyB->IsStatic()&&!row.bodyA->IsStatic()){
+                        externalMomentum+=impulse;externalAngular+=glm::cross(glm::dvec3(row.bodyA->position)+glm::dvec3(row.velocityOffsetA),impulse);
+                    }
+                    const auto pointVelocity=[&](const RigidBody& body,glm::vec3 offset){return body.linearVelocity+glm::cross(body.angularVelocity,offset);};
+                    const double vn=glm::dot(pointVelocity(*row.bodyA,row.velocityOffsetA)-pointVelocity(*row.bodyB,row.velocityOffsetB),row.normal);
+                    continuationMetrics.worstViolation=std::max(continuationMetrics.worstViolation,double(row.restitutionBias)-vn);
+                    if(row.signedSeparation>0||row.normalImpulse<=0)continue; // No positive-gap event/observation.
+                    const auto& key=projectionRows[i].key;const auto& a=bodies[key[0]];const auto& b=bodies[key[1]];
+                    ContactKey contactKey{key[0],key[1],a.generation,b.generation,int(key[2]),int(key[3])};
+                    auto existing=std::find_if(completedContactObservations.begin(),completedContactObservations.end(),[&](const auto& cached){
+                        return cached.key.SameBodies(contactKey)&&cached.localAnchorA==row.localAnchorA&&cached.normal==row.normal;
+                    });
+                    if(existing!=completedContactObservations.end())existing->normalImpulse+=row.normalImpulse;
+                    else completedContactObservations.push_back({contactKey,row.localAnchorA,row.normal,row.normalImpulse,glm::vec3(0),float(row.signedSeparation),a.contactObservationRevision,b.contactObservationRevision});
+                    observationPublication.dirty=true;
+                    if(!actualGroups.count(key))Observe(key[0],key[1],projectionRows[i].geometry);
+                }
+                for(const auto& backup:jointBackup){const auto& joint=joints[backup.index];auto* a=Get(joint.state.settings.bodyA);auto* b=Get(joint.state.settings.bodyB);
+                    const glm::dvec3 linear=glm::dvec3(joint.state.reactionImpulse)-glm::dvec3(backup.state.reactionImpulse);
+                    const glm::dvec3 angular=glm::dvec3(joint.state.reactionAngularImpulse)-glm::dvec3(backup.state.reactionAngularImpulse);
+                    if(a->rigidBody.IsStatic()&&b&&!b->rigidBody.IsStatic()){
+                        externalMomentum-=linear;externalAngular-=glm::cross(glm::dvec3(a->rigidBody.position),linear)+angular;
+                    }else if(!a->rigidBody.IsStatic()&&(!b||b->rigidBody.IsStatic())){
+                        externalMomentum+=linear;externalAngular+=glm::cross(glm::dvec3(a->rigidBody.position),linear)+angular;
+                    }
+                }
+                continuationMetrics.worstMomentumResidual=std::max(continuationMetrics.worstMomentumResidual,glm::length(after.momentum-before.momentum-externalMomentum));
+                continuationMetrics.worstAngularResidual=std::max(continuationMetrics.worstAngularResidual,glm::length(after.angular-before.angular-externalAngular));
+                for(const auto& body:saved)if(!impactIncluded[body.slot]){
+                    impactIncluded[body.slot]=1;impactIsland.push_back(body.slot);
+                    impactOldVelocities.emplace_back(body.physical.linearVelocity,body.physical.angularVelocity);++continuationMetrics.added;
+                }
+                ++continuationMetrics.applied;continuationMetrics.rows+=constraints.size();continuationMetrics.positive+=positive;
+            }catch(const ContinuationUnsupported&){restore();++continuationMetrics.unsupported;return;}
+            catch(...){restore();throw;}
+        };
+'''
+s=base.replace(marker,insert+marker)
+marker='''            if(result.effectiveRestitution==0) {
+                // An inelastic event leaves the pair touching.'''
+assert s.count(marker)==1
+s=s.replace(marker,'''            // Isolated support continuation runs AFTER true impact observation
+            // publication and BEFORE any replacement motion is appended.
+            continueSupports(now,island,included,oldVelocities,rows,observationKeys);
+            if(continuationEnabled&&result.effectiveRestitution==0){
+                std::set<ContinuationKey> replaced;
+                for(std::size_t i=0;i<rows.size();++i){const auto& key=observationKeys[i];
+                    ContinuationKey group{key.slotA,key.slotB,unsigned(key.partA),unsigned(key.partB)};
+                    if(replaced.insert(group).second)continuationGroups[group].clear();
+                    rememberContinuation(group,{key.generationA,key.generationB,rows[i].geometry.localAnchorA,rows[i].geometry.normal});
+                }
+            }
+'''+marker)
+# Fix newly inserted groups' adjacency: clearing a nonexistent [] entry above
+# would pre-create it before rememberContinuation's try_emplace.
+s=s.replace('''if(replaced.insert(group).second)continuationGroups[group].clear();''','''if(replaced.insert(group).second){auto old=continuationGroups.find(group);if(old!=continuationGroups.end())old->second.clear();}''')
+marker='''        observationPublication.Publish();
+        for(const auto slot:aliveSlots)'''
+assert s.count(marker)==1
+s=s.replace(marker,'''        if(continuationTrace)std::fprintf(stderr,"CONTINUATION attempts=%zu applied=%zu rows=%zu positive=%zu added=%zu rollback=%zu unsupported=%zu energy_rise=%.12g momentum_residual=%.12g angular_residual=%.12g velocity_violation=%.12g events=%zu queries=%zu\\n",
+            continuationMetrics.attempts,continuationMetrics.applied,continuationMetrics.rows,continuationMetrics.positive,continuationMetrics.added,continuationMetrics.rolledBack,continuationMetrics.unsupported,
+            continuationMetrics.worstEnergyRise,continuationMetrics.worstMomentumResidual,continuationMetrics.worstAngularResidual,continuationMetrics.worstViolation,std::size_t(stats.impactEvents),std::size_t(stats.impactQueries));
+        observationPublication.Publish();
+        for(const auto slot:aliveSlots)''')
+(OUT/'PhysicsWorld.cpp').write_text(s)
+(OUT/'provenance.json').write_text(json.dumps({'source_sha256':hashlib.sha256(base.encode()).hexdigest(),'source_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'prototype_sha256':hashlib.sha256(s.encode()).hexdigest()},indent=2)+'\n')
+with(OUT/'support-continuation.diff').open('w')as f:subprocess.run(['diff','-u',str(OUT/'PhysicsWorld.base.cpp'),str(OUT/'PhysicsWorld.cpp')],stdout=f)

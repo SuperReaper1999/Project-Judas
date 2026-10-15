@@ -1,0 +1,11 @@
+/tmp/m87-followup-final-cold/FinalCurrentStandingObserver.cpp: In function ‘Json {anonymous}::CurrentPhysicalEndpoint(RuntimeWorld&, EntityId)’:
+/tmp/m87-followup-final-cold/FinalCurrentStandingObserver.cpp:64:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   64 |  if(!(totalMass>0))throw std::runtime_error("current endpoint mass missing");com/=totalMass;velocity/=totalMass;gravity/=totalMass;
+      |  ^~
+/tmp/m87-followup-final-cold/FinalCurrentStandingObserver.cpp:64:78: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   64 |  if(!(totalMass>0))throw std::runtime_error("current endpoint mass missing");com/=totalMass;velocity/=totalMass;gravity/=totalMass;
+      |                                                                              ^~~
+/tmp/m87-followup-final-cold/FinalCurrentStandingObserver.cpp: In function ‘void {anonymous}::DiagnosticRestoreDrives(RuntimeWorld&, EntityId, const std::filesystem::__cxx11::path&, const GameSnapshot&)’:
+/tmp/m87-followup-final-cold/FinalCurrentStandingObserver.cpp:161:101: warning: unused parameter ‘snapshot’ [-Wunused-parameter]
+  161 | void DiagnosticRestoreDrives(RuntimeWorld& w,EntityId owner,const fs::path& out,const GameSnapshot& snapshot){
+      |                                                                                 ~~~~~~~~~~~~~~~~~~~~^~~~~~~~

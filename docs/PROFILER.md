@@ -110,6 +110,36 @@ and contact-island discovery, so these categories **overlap**. Do not sum them.
 This avoids emitting one scope event per contact/search predicate. The aggregate
 geometry-call counter counts nested calls; it is work, not unique body pairs.
 
+The live-slowdown follow-up adds `Physics impact observation publication ms` and
+these bounded observations:
+
+- `Physics initial geometry worker lanes`: configured/used batch contexts,
+  including the caller; zero when no joined batch was selected.
+- `Physics parallel initial manifolds`: eligible indexed output count, not a
+  count of actual contacts or proof that a worker executed.
+- `Physics initial worker completed manifolds`: outputs genuinely computed on
+  worker lanes. The caller may claim most ranges while workers are busy elsewhere.
+- `Physics initial geometry scratch bytes`: retained output capacity; this is
+  named scratch storage, not process RSS or every worker allocation.
+- `Physics geometry predicates`, `Physics geometry exact fallbacks`,
+  `Physics geometry unresolved`, `Physics geometry numeric gap fallbacks`: latest
+  native-step robust geometry observations, with joined-worker TLS deltas merged
+  after completion and the caller counted only once.
+
+`Physics initial geometry worker batch` scopes run on the participating thread
+lanes. Their summed durations are aggregate CPU work; they overlap the owner's
+joined initial-contact phase. The normal batch limit is four contexts including
+the caller, with 256–16,384 eligible primitive pairs; fallback is serial. These
+measurements do not imply parallel event scheduling or contact/constraint solving.
+
+`JavaScript contact events` now surrounds the complete dispatch batch rather than
+emitting a scope for every considered body pair. Executed lifecycle/callback and
+script-asset attribution is retained. This reduces diagnostic event floods without
+omitting gameplay callbacks or changing their order. Inspect dropped/truncated
+records before interpreting any capture: the original overflowing live capture is
+preserved as a failure, alongside later zero-overflow captures in the
+[follow-up evidence](evidence/m87/live-slowdown-followup/EXPERIMENTS.md).
+
 These diagnostics do not change solver iterations, physical thresholds, wake
 semantics or scheduling. The [M87 scaling report](M87_PHYSICS_SCALING.md) explains
 the separate owner-thread allocation probe used by its benchmark; ordinary M56

@@ -1,0 +1,47 @@
+M87 ISOLATED INITIAL-NARROWPHASE PROTOTYPE
+========================================
+Unintegrated and unmeasured. CCD query parallelism is entirely absent.
+
+Build: bash /tmp/m87-build-narrow-prototype.sh
+Binary: /tmp/m87-narrow-live
+Env: M87_PARALLEL_WORKERS=0 (original serial), 1 (prefetch control), 2/4 workers.
+Source: /tmp/m87-narrow-prototype.cpp
+Base: /tmp/m87-narrow-base.cpp
+Patch: /tmp/m87-narrow-prototype.patch
+Generator: /tmp/m87-make-narrow-prototype.py
+
+Scope:
+* Only current-pose Box/Sphere candidate-pair geometry and unchanged zero-margin
+  touching-manifold classification are eligible.
+* All compound, cooked, terrain and capsule geometry remains on the owner.
+* Sensors, query-only and sleeping/static pair policy is preserved.
+* Logical collision filtering and suppressed pairs stay in GenerateCandidatePairs.
+* Exact post-force speculative margin arithmetic is preserved.
+* The owner prepares orientations and immutable request records before dispatch.
+* Workers only read shapes/physical inputs/prepared orientations; they write their
+  own preassigned manifold/touching outputs. No body or cache mutations.
+* All submitted tasks join before outputs are consumed, including error paths.
+* Owner consumes candidate pairs in the original order and retains all Observe,
+  warm-start matching, solver row creation, touched-body order and contact policy.
+* ContactSolver::AddContact only registers frames/rows; physical velocity/position
+  updates begin after this entire narrowphase. Early geometry is therefore from
+  the same physical inputs as the original interleaved production loop.
+* Cached prepared-orientation pointers remain stable: bodies/shape storage cannot
+  resize during a fixed step, and unchanged orientation queries do not re-emplace.
+* Work is split into eight-pair chunks with at most the existing worker pool plus
+  main thread; no new threads and no per-contact jobs.
+* Small batches (<256 eligible pairs) retain the existing serial path.
+* Worker-local contact and cooked diagnostic deltas are merged; owner-lane TLS
+  diagnostics are counted by existing native before/after snapshots only once.
+* Initial manifold scratch is retained per world and included in geometry cache
+  storage/allocation counters.
+
+Acceptance:
+Compare exact physical endpoint/trajectory digests across 0/1/2/4 modes through
+155 unchanged dense steps before considering integration. Measure profiler-off
+wall time and preserve raw results. A useful normal-step benefit is required;
+reject if task dispatch or output memory negates geometry savings.
+
+The temporary extern-C JobSystem injection belongs only to the isolated helper.
+Any accepted production integration needs optional service ownership/lifetime via
+normal PhysicsWorld/RuntimeWorld/EngineHost infrastructure.

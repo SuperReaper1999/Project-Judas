@@ -1,0 +1,14 @@
+{
+  "requestedSteps": 210,
+  "completedSteps": 180,
+  "completedSimulationSeconds": 3.0,
+  "timeoutSeconds": 75,
+  "processExitCode": 137,
+  "complete": false,
+  "medianMs": 25.559935,
+  "p95NearestRankMs": 3068.790701,
+  "maxMs": 4567.297884,
+  "sumCompletedMs": 72039.078799,
+  "nonfiniteFields": 0,
+  "note": "External bounded observer cutoff; terminated while physics executing; censored maximum and incomplete run, not a crash-free or completed performance acceptance."
+}

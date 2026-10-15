@@ -1,0 +1,23 @@
+{
+  "frameInterval": {
+    "samples": 1719,
+    "medianMs": 17.097992,
+    "p95NearestRankMs": 17.905099,
+    "worstMs": 65.446134
+  },
+  "fixedStep": {
+    "samples": 1799,
+    "medianMs": 1.757364,
+    "p95NearestRankMs": 3.355208,
+    "worstMs": 23.983371
+  },
+  "medianCadenceFPS": 58.48640004042579,
+  "frames": 1749,
+  "fixedSteps": 1799,
+  "bodies": "389",
+  "awake": "0",
+  "sleeping": "256",
+  "nonfiniteFields": 0,
+  "catchUpFrames": 61,
+  "note": "Real measured frame clock, hidden rendered window, swap1, default128+tourscript; observer overhead and other user applications remain. FPS is observed loop cadence, not an isolated GPU throughput benchmark."
+}

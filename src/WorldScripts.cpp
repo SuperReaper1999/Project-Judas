@@ -4,6 +4,7 @@
 #include "ResourceManager.h"
 #include "PhysicalMaterial.h"
 #include "InputSystem.h"
+#include "PerformanceProfiler.h"
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -171,6 +172,9 @@ void RuntimeWorld::DispatchUIEvents(const InputSystem* input,float dt){if(m_scri
 
 void RuntimeWorld::DispatchPhysicsEvents(const InputSystem* input,float dt){
     if(!m_scripts)return; // No script consumers: do not scan/copy entity definitions.
+    // Contact count may be large even when neither body owns a script. Profile
+    // the dispatch batch once; callback asset scopes retain script attribution.
+    JUDAS_PROFILE_SCOPE("JavaScript contact events");
     // Freeze pair->entity identities before any callback can destroy/spawn bodies.
     // Only bodies in actual observations need identity resolution. Exit events
     // can use the preceding generation's frozen identity after body destruction.

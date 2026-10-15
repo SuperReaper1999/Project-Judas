@@ -1,0 +1,7 @@
+ISOLATED impact iterations=80 residual_csv=0 from_step=0
+Renderer fragment texture units: 32 (material path uses 12)
+diagnostic swap=0 hidden=1 tour=0 frame_seconds=0.0166667 profile=0 periodic_export=0
+Project: Judas Physics Stress Lab (/tmp/judas-m87-watch-ecpbqnfz/game.judasproj)
+Scene: Physics Stress Lab / 1024 loose bodies (/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas)
+World origin (m): 0.000, 0.000, 0.000
+completed frames=156 steps=155 wall_ms=17862.8

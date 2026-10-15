@@ -1,0 +1,153 @@
+{
+  "startUTC": "2026-10-15T20:45:21.774172+00:00",
+  "head": "cee55a898aa0e4938665903f3b207d828acdb1df",
+  "platform": "Native Linux",
+  "profile": false,
+  "cadence": 0.016666666666666666,
+  "visibleFPSMeasurement": false,
+  "hostPolicy": "Other user applications untouched; only Judas benchmark/build/test workloads serialized. Not an idle-host certification.",
+  "cases": [
+    {
+      "name": "before-1",
+      "binary": "/home/conner/Documents/GitHub/Project-Judas/.cache/m87-live-followup/baseline/live-digest",
+      "binarySHA256": "52229181b54c86d3bafdaf6693aff643b1c4a5c94b3bf869ac26cdbeb3104815",
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m87-live-followup/baseline/live-digest",
+        "/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas",
+        "/tmp/m87-followup-final-perf/before-1",
+        "100",
+        "155",
+        "0",
+        "0",
+        "1",
+        "0.016666667",
+        "0",
+        "0"
+      ],
+      "utc": "2026-10-15T20:45:22.078371+00:00",
+      "exitCode": 0,
+      "seconds": 12.948474593002175,
+      "steps": 155,
+      "medianMs": 32.768861,
+      "p95NearestRankMs": 120.520489,
+      "maxMs": 1033.83023,
+      "sumMs": 9452.942218,
+      "impactEvents": 3780,
+      "nonfiniteFields": 0,
+      "finalDigest": "8509c058f2122986"
+    },
+    {
+      "name": "final-1",
+      "binary": "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+      "binarySHA256": "986af850f93becbd88d250c0dc3368d8def7f7cf6a6de23049f41fbc739b0fb9",
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+        "/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas",
+        "/tmp/m87-followup-final-perf/final-1",
+        "100",
+        "155",
+        "0",
+        "0",
+        "1",
+        "0.016666667",
+        "0",
+        "0"
+      ],
+      "utc": "2026-10-15T20:45:35.176866+00:00",
+      "exitCode": 0,
+      "seconds": 10.593223334999493,
+      "steps": 155,
+      "medianMs": 25.130761,
+      "p95NearestRankMs": 152.404791,
+      "maxMs": 617.692628,
+      "sumMs": 6997.997925,
+      "impactEvents": 3780,
+      "nonfiniteFields": 0,
+      "finalDigest": "8509c058f2122986"
+    },
+    {
+      "name": "final-2",
+      "binary": "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+      "binarySHA256": "986af850f93becbd88d250c0dc3368d8def7f7cf6a6de23049f41fbc739b0fb9",
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+        "/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas",
+        "/tmp/m87-followup-final-perf/final-2",
+        "100",
+        "155",
+        "0",
+        "0",
+        "1",
+        "0.016666667",
+        "0",
+        "0"
+      ],
+      "utc": "2026-10-15T20:45:45.913435+00:00",
+      "exitCode": 0,
+      "seconds": 10.090271581000707,
+      "steps": 155,
+      "medianMs": 24.027097,
+      "p95NearestRankMs": 71.885442,
+      "maxMs": 841.709328,
+      "sumMs": 6449.241356,
+      "impactEvents": 3780,
+      "nonfiniteFields": 0,
+      "finalDigest": "8509c058f2122986"
+    },
+    {
+      "name": "before-2",
+      "binary": "/home/conner/Documents/GitHub/Project-Judas/.cache/m87-live-followup/baseline/live-digest",
+      "binarySHA256": "52229181b54c86d3bafdaf6693aff643b1c4a5c94b3bf869ac26cdbeb3104815",
+      "command": [
+        "/usr/bin/time",
+        "-v",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m87-live-followup/baseline/live-digest",
+        "/tmp/judas-m87-watch-ecpbqnfz/Scenes/room1024.judas",
+        "/tmp/m87-followup-final-perf/before-2",
+        "100",
+        "155",
+        "0",
+        "0",
+        "1",
+        "0.016666667",
+        "0",
+        "0"
+      ],
+      "utc": "2026-10-15T20:45:56.174673+00:00",
+      "exitCode": 0,
+      "seconds": 12.545859238998673,
+      "steps": 155,
+      "medianMs": 31.681285,
+      "p95NearestRankMs": 113.874278,
+      "maxMs": 1023.120351,
+      "sumMs": 9281.844275,
+      "impactEvents": 3780,
+      "nonfiniteFields": 0,
+      "finalDigest": "8509c058f2122986"
+    }
+  ],
+  "motionComparisons": {
+    "final-1": {
+      "steps": 155,
+      "digestMismatches": 0,
+      "sameLength": true
+    },
+    "final-2": {
+      "steps": 155,
+      "digestMismatches": 0,
+      "sameLength": true
+    },
+    "before-2": {
+      "steps": 155,
+      "digestMismatches": 0,
+      "sameLength": true
+    }
+  },
+  "endUTC": "2026-10-15T20:46:08.723638+00:00"
+}
