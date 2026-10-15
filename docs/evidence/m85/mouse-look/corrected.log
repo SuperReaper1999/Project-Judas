@@ -1,0 +1,19 @@
+PASS positive logical horizontal mouse turns toward camera right
+PASS negative logical horizontal mouse turns toward camera left
+PASS horizontal look respects current arbitrary gravity tangent
+PASS modal UI blocks horizontal look
+PASS existing vertical-look direction is preserved
+PASS independent idle instance retains its yaw
+PASS positive logical horizontal mouse turns toward camera right
+PASS negative logical horizontal mouse turns toward camera left
+PASS horizontal look respects current arbitrary gravity tangent
+PASS modal UI blocks horizontal look
+PASS existing vertical-look direction is preserved
+PASS independent idle instance retains its yaw
+PASS positive logical horizontal mouse turns toward camera right
+PASS negative logical horizontal mouse turns toward camera left
+PASS horizontal look respects current arbitrary gravity tangent
+PASS modal UI blocks horizontal look
+PASS existing vertical-look direction is preserved
+PASS independent idle instance retains its yaw
+SUMMARY 18 checks 0 failures

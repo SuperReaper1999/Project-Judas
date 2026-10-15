@@ -1,0 +1,10 @@
+{
+  "acceptedMainImplementation": "2ea9587b2fbc734cbe2ec906ba344cd6d9ae2a67",
+  "validation": "18/18 project-JS checks; human confirmation pending",
+  "sources": {
+    "projects/planetary_terrain_lab/Assets/scripts/explore.js": "5a8de1ee36c25a05331515778267ea0ab7d80df689423fe3fd64edc717faf460",
+    "projects/planetary_terrain_lab/README.md": "762dae68989d563144b43370621a6de31c6038d8795e39d41080045028c511a8",
+    "scripts/m85_mouse_look_check.mjs": "8f0eaa55b65e379cf67e3e2f226e68fb8d2610209ba14babb97be457f94c260e"
+  },
+  "runtimeBinaryUnchanged": "b8df0ed10d3ac82974ddf431f67ea0cc4fceeec07c3fef43166768bce0561d52"
+}

@@ -13,7 +13,7 @@ export default class {
  leaveGround(){this.state.altitude=Math.max(.1,this.planet.planetSample(this.eye).distance);if(this.state.actor){const a=world.entity(this.state.actor);if(a?.valid){this.state.direction=norm(sub(world.toAbsolute(a.transform.position),this.planet.planetState.center));a.destroy();}this.state.actor=null;}for(const id of this.state.balls){const b=world.entity(id);if(b?.valid)b.destroy();}this.state.balls=[];scenes.removeInterest('planet-traveller');this.planet.clearPlanetCollision();this.state.mode='flight';}
  uiUpdate(){if(input.pressed('pause')){this.hud.modal=!this.hud.modal;this.hud.get('pause').visible=this.hud.modal;input.pointerCapture=!this.hud.modal;}}
  onUI(e){if(e.type==='click'&&e.element==='resume'){this.hud.modal=false;this.hud.get('pause').visible=false;input.pointerCapture=true;}if(e.type==='click'&&e.element==='reload')scenes.reload();}
- update(dt){if(this.hud.modal)return;this.state.yaw-=input.axis('look_x')*.002;this.state.pitch=Math.max(-1.4,Math.min(1.4,this.state.pitch-input.axis('look_y')*.002));
+ update(dt){if(this.hud.modal)return;this.state.yaw+=input.axis('look_x')*.002;this.state.pitch=Math.max(-1.4,Math.min(1.4,this.state.pitch-input.axis('look_y')*.002));
   if(input.pressed('orbit')){this.leaveGround();this.state.mode='ascending';this.state.tour=false;}
   if(input.pressed('land')){this.leaveGround();this.state.mode='descending';this.state.tour=false;}
   if(input.pressed('edge')){this.leaveGround();this.state.direction=norm({x:1,y:1,z:0});this.state.altitude=1200;this.state.mode='descending';this.state.tour=false;}
