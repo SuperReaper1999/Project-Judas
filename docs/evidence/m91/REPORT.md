@@ -197,6 +197,9 @@ This is not a physical-monitor/GPU certification or a 1024-pile FPS result.
   not freeze simulation. Export and byte-identical relocated package pass all four
   registered scenes, pause/resume and reload without repository/CWD dependency.
 
+An [evidence-only packaging follow-up](PACKAGING_NOTE.md) restores two original
+CSV byte streams after Git newline normalization; physics and tests are unchanged.
+
 See [final results](RESULTS.json), `raw/VERIFIED_RUNS.json`, final **verified** raw
 receipts and [reproduction/provenance](REPRODUCTION.md). Old folders called
 `final-*`/`closed-*` are explicitly developmental, not silently overwritten.

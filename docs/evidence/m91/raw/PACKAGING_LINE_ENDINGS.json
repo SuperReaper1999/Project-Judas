@@ -1,0 +1,19 @@
+{
+  "first_local_checkpoint": "e8c0e8064189928c04a2154bb895745af2e5c2e2",
+  "mismatches": [
+    {
+      "path": "docs/evidence/m91/raw/before-scaling/comparison.csv",
+      "working_sha256": "f5b2c60a220fdd585674d7a45cbc7a6485aaa68b0a701514ebd5aa9b823008a7",
+      "committed_sha256": "2210f71404daf2f36645ebc071ae4993a9b5c406cfda683f29b3847c2becdcbf",
+      "only_CRLF_normalization": true
+    },
+    {
+      "path": "docs/evidence/m91/raw/scaling-verified/comparison.csv",
+      "working_sha256": "0699420060f4b37d09faa4095c7cca0750648faa160d709d38efc081b2e8fa9e",
+      "committed_sha256": "1149e5665fca4aa67611f40ac1d1bebaef5a5a3e7e59ac98e914df5e3d1cbfcb",
+      "only_CRLF_normalization": true
+    }
+  ],
+  "physics_or_test_source_mismatch": false,
+  "pushed": false
+}

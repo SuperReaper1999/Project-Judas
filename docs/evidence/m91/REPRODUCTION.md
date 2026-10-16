@@ -131,4 +131,7 @@ permission error is retained. No host security setting was changed. M56 aggregat
 phase timers/counters and matched wall measurements provide the diagnosis.
 
 Run `python3 docs/evidence/m91/verify.py` to verify this checkpoint's source and
-stored evidence. That is a byte/provenance check, not a rerun or human acceptance.
+stored evidence. Add `--git` to check the real Git index blobs and `--binaries`
+to check retained local builds. These are byte/provenance checks, not a rerun or
+human acceptance. The [packaging follow-up](PACKAGING_NOTE.md) records a corrected
+CSV newline-normalization issue; original numerical bytes are preserved.

@@ -2,6 +2,15 @@
   "scope": "Exact raw inputs, developmental failures, final receipts and source snapshots. No executables, static archives, objects, core dumps or user environment dumps. Gzip is deterministic and lossless.",
   "files": [
     {
+      "original": ".cache/m91/PACKAGING_LINE_ENDINGS.json",
+      "stored": "docs/evidence/m91/raw/PACKAGING_LINE_ENDINGS.json",
+      "uncompressed_bytes": 774,
+      "uncompressed_sha256": "a9dfa902c0a11d902672d4b64780ff0b833f9e55f04ed41aa14ebe00ea22372d",
+      "stored_bytes": 774,
+      "stored_sha256": "a9dfa902c0a11d902672d4b64780ff0b833f9e55f04ed41aa14ebe00ea22372d",
+      "gzip": false
+    },
+    {
       "original": ".cache/m91/VERIFIED_RUNS.json",
       "stored": "docs/evidence/m91/raw/VERIFIED_RUNS.json",
       "uncompressed_bytes": 5004,
@@ -1615,10 +1624,10 @@
     {
       "original": ".cache/m91/collect.py",
       "stored": "docs/evidence/m91/raw/collect.py",
-      "uncompressed_bytes": 3777,
-      "uncompressed_sha256": "21f8f270930253aed26326e5fa23dd86117a2eda21fc639ba341ec89b7ca6cc9",
-      "stored_bytes": 3777,
-      "stored_sha256": "21f8f270930253aed26326e5fa23dd86117a2eda21fc639ba341ec89b7ca6cc9",
+      "uncompressed_bytes": 3784,
+      "uncompressed_sha256": "fe992df402ec7e2907cc5d1ac86be34b743812a181f2f997f1595db523137342",
+      "stored_bytes": 3784,
+      "stored_sha256": "fe992df402ec7e2907cc5d1ac86be34b743812a181f2f997f1595db523137342",
       "gzip": false
     },
     {
@@ -6447,39 +6456,39 @@
     },
     {
       "original": ".cache/m91/verified-delivery/editor.edit.png",
-      "stored": "docs/evidence/m91/images/editor.edit.png.gz",
+      "stored": "docs/evidence/m91/images/editor.edit.png",
       "uncompressed_bytes": 263060,
       "uncompressed_sha256": "a30ceb4229e92575388c6ef25156d1faca72844c8559b372ed9574921dda83e5",
-      "stored_bytes": 247594,
-      "stored_sha256": "8b6ebec633a88562e626d276ce1d252e91439c57d73eb11f93a40ea21bea1135",
-      "gzip": true
+      "stored_bytes": 263060,
+      "stored_sha256": "a30ceb4229e92575388c6ef25156d1faca72844c8559b372ed9574921dda83e5",
+      "gzip": false
     },
     {
       "original": ".cache/m91/verified-delivery/editor.play.png",
-      "stored": "docs/evidence/m91/images/editor.play.png.gz",
+      "stored": "docs/evidence/m91/images/editor.play.png",
       "uncompressed_bytes": 213659,
       "uncompressed_sha256": "65ce2e94f84dc1cc0ffa391c1245a762c51651e9ecbd6ff833089e7bb8230bf6",
-      "stored_bytes": 197617,
-      "stored_sha256": "161ec0fd96b5cce57b9b8b012b950a5fb2cfbc75ac4ae7a952fbb43a37d5cd00",
-      "gzip": true
+      "stored_bytes": 213659,
+      "stored_sha256": "65ce2e94f84dc1cc0ffa391c1245a762c51651e9ecbd6ff833089e7bb8230bf6",
+      "gzip": false
     },
     {
       "original": "/tmp/judas-m91-verified-delivery/package-powered.png",
-      "stored": "docs/evidence/m91/images/package-powered.png.gz",
+      "stored": "docs/evidence/m91/images/package-powered.png",
       "uncompressed_bytes": 94633,
       "uncompressed_sha256": "d9304aa9cdeac01f19778e82e8c22d190d42e8b8fe4b3195e638908649039e11",
-      "stored_bytes": 77295,
-      "stored_sha256": "c734d6b039f69365e97a90a2fe6035a91720b7cf3a9fc1504a5b61ae9344ff83",
-      "gzip": true
+      "stored_bytes": 94633,
+      "stored_sha256": "d9304aa9cdeac01f19778e82e8c22d190d42e8b8fe4b3195e638908649039e11",
+      "gzip": false
     },
     {
       "original": "/tmp/judas-m91-verified-delivery/package-rotated.png",
-      "stored": "docs/evidence/m91/images/package-rotated.png.gz",
+      "stored": "docs/evidence/m91/images/package-rotated.png",
       "uncompressed_bytes": 109464,
       "uncompressed_sha256": "eede62ef34db8c6a8f898b5c07a8755868152437d190184bee184a434726ccc6",
-      "stored_bytes": 96701,
-      "stored_sha256": "2cfef562cafcbc889e6782310eb62ef40153f6d3b5a5b46c5ed2a302cf62d79c",
-      "gzip": true
+      "stored_bytes": 109464,
+      "stored_sha256": "eede62ef34db8c6a8f898b5c07a8755868152437d190184bee184a434726ccc6",
+      "gzip": false
     }
   ]
 }

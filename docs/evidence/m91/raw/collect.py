@@ -9,7 +9,7 @@ selected={'baseline','before-scaling','scaling-verified','scaling-verified-repea
 plain={'SOURCE.json','BINARIES.json','MATCHED_OBSERVER_LINK.json','RESULTS.json','run.json','results.json','RECEIPT.json','PLAN.json','LINK.json','FIXTURE.json','LAZY.json','VERIFIED_RUNS.json','PACKAGE_FILES.json','SUMMARY.json','summary.json','quality.json'}
 def copy(src,rel):
  data=src.read_bytes();stored=dest/rel
- compressed=(('profile' in src.name and src.suffix=='.json') or (len(data)>8192 and src.name not in plain and src.suffix not in {'.py','.txt','.script'}))
+ compressed=(('profile' in src.name and src.suffix=='.json') or (len(data)>8192 and src.name not in plain and src.suffix not in {'.py','.txt','.script','.png'}))
  if compressed:
   stored=Path(str(stored)+'.gz');buffer=io.BytesIO()
   with gzip.GzipFile(filename='',mode='wb',fileobj=buffer,mtime=0)as stream:stream.write(data)
