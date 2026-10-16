@@ -33,7 +33,7 @@ export default class {
   // act through real mechanical inputs; the chassis is never repositioned.
   if(this.state.watch){const speed=dot(rover.velocity,rotate(rover.transform.rotation,{x:0,y:0,z:-1}));throttle=Math.max(-.15,Math.min(.8,(15-speed)*.13));const up=surface.normal,forward=norm(tangent(rotate(rover.transform.rotation,{x:0,y:0,z:-1}),up)),course=norm(tangent({x:-absolute.x*.035,y:0,z:-1},up)),heading=Math.atan2(dot(cross(forward,course),up),dot(forward,course));steering=Math.max(-.3,Math.min(.3,heading*.9));brake=0;}
   if(!ready){throttle=0;brake=1;}
-  if(!this.state.driving&&input.pressed('interact')){const ray=world.viewRay,hit=ray&&physics.raycast(ray.origin,ray.direction,5,{ignored:[actor,rover]});if(hit&&hit.entity.hasTag('Cargo'))hit.entity.applyImpulseAtPoint(mul(ray.direction,35),hit.point);}
+  if(!this.state.driving&&input.pressed('interact')){const ray=world.viewRay,hit=ray&&physics.raycast(ray.origin,ray.direction,length(sub(ray.origin,actor.transform.position))+5,{ignored:[actor,rover]});if(hit&&hit.entity.hasTag('Cargo')&&length(sub(hit.point,actor.transform.position))<=5)hit.entity.applyImpulseAtPoint(mul(ray.direction,35),hit.point);}
   const drive=this.state.driving;rover.powertrain.set({sources:[{name:'engine',input:drive?throttle:0}],links:[{name:'clutch',engagement:1}],brakes:[{name:'left',engagement:drive?brake:1},{name:'right',engagement:drive?brake:1}]});
   const wheels=rover.children.filter(e=>e.wheel);for(let i=0;i<wheels.length;i++)wheels[i].wheel.set({driveTorque:0,brakeTorque:i<2?(drive?brake:1)*750:0,steeringAngle:drive&&i<2?steering:0});
   if(drive){actor.transform={position:add(rover.transform.position,rotate(rover.transform.rotation,{x:0,y:1,z:0})),rotation:rover.transform.rotation};this.state.distance+=length(rover.velocity)*dt;}
@@ -46,9 +46,18 @@ export default class {
  }
  presentationUpdate(dt){if(!this.state.ready)return;const focus=world.entity(this.state.driving?this.state.rover:this.state.actor);if(!focus?.valid)return;const t=focus.presentedTransform,up=norm(mul(physicsGravity(focus),-1));const basisUp=length(up)>.5?up:rotate(t.rotation,{x:0,y:1,z:0});let forward;
   if(this.state.driving){const base=rotate(t.rotation,{x:0,y:0,z:-1}),right=cross(base,basisUp);forward=norm(add(mul(base,Math.cos(this.state.yaw)),mul(right,Math.sin(this.state.yaw))));}else{const base=norm(tangent({x:0,y:0,z:-1},basisUp)),right=cross(base,basisUp);forward=norm(add(mul(base,Math.cos(this.state.yaw)),mul(right,Math.sin(this.state.yaw))));}
-  let eye=this.state.driving?add(t.position,add(mul(forward,-7),mul(basisUp,3.8+this.state.pitch*3))):add(t.position,mul(basisUp,.65));const target=this.state.driving?add(t.position,mul(basisUp,.8)):add(eye,add(mul(forward,Math.cos(this.state.pitch)),mul(basisUp,-Math.sin(this.state.pitch))));
-  if(this.state.driving){const ray=sub(eye,target),distance=length(ray),hit=physics.sphereCast(target,.2,norm(ray),distance,{ignored:[world.entity(this.state.rover),world.entity(this.state.actor)]});if(hit)eye=add(target,mul(norm(ray),Math.max(.5,hit.distance-.1)));}
-  this.camera=this.camera?add(this.camera,mul(sub(eye,this.camera),1-Math.exp(-9*dt))):eye;world.setView({position:this.camera,rotation:look(sub(target,this.camera),basisUp)},70,{near:.05,far:60000});
+  // Both modes keep the visible controlled model in front of the camera.
+  // Orbit around local gravity-up, using the same presented pose as the model.
+  const target=add(t.position,mul(basisUp,this.state.driving?.8:.5));
+  const aim=add(mul(forward,Math.cos(this.state.pitch)),mul(basisUp,-Math.sin(this.state.pitch)));
+  const eye=this.state.driving?add(t.position,add(mul(forward,-7),mul(basisUp,3.8+this.state.pitch*3))):add(target,mul(aim,-4.2));
+  this.camera=this.camera?add(this.camera,mul(sub(eye,this.camera),1-Math.exp(-9*dt))):eye;
+  // Resolve the smoothed camera too: a wall must not remain between the view
+  // and its focus while smoothing catches up. The rover can obstruct on foot.
+  const ray=sub(this.camera,target),distance=length(ray),ignored=this.state.driving?[world.entity(this.state.rover),world.entity(this.state.actor)]:[focus];
+  const hit=physics.sphereCast(target,.2,norm(ray),distance,{ignored});
+  if(hit)this.camera=add(target,mul(norm(ray),Math.max(.35,hit.distance-.08)));
+  world.setView({position:this.camera,rotation:look(sub(target,this.camera),basisUp)},70,{near:.05,far:60000});
   const rover=world.entity(this.state.rover),state=rover.powertrain.state,wheels=rover.children.filter(e=>e.wheel),contacts=wheels.filter(e=>e.wheel.state.contact).length,regions=scenes.regions;let text=`${this.state.driving?'DRIVING — E to leave after braking':'ON FOOT — E near rover to board'} | ${this.state.watch?'WATCH DRIVE — T to stop':''}\nSpeed ${length(rover.velocity).toFixed(1)} m/s | shaft ${state.shafts[0]?.rpm.toFixed(0)} RPM | tyre contacts ${contacts}/4\nTravel ${(this.state.distance/1000).toFixed(2)} km | origin transitions ${this.state.shifts} | local chart ${length(t.position).toFixed(1)} m\nStations ${regions.filter(r=>r.state==='active').length} active / ${regions.filter(r=>r.retained>0).length} retained | walking support ${world.entity(this.state.actor).character.supported}`;
   if(this.request){const s=saves.status(this.request);text+=`\nSave/load ${s?.state||''} ${s?.error||''}`;}if(this.problem&&!this.problem.includes('streaming transaction'))text+='\n'+this.problem;this.hud.get('status').text=text;
  }

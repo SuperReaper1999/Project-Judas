@@ -9,7 +9,7 @@ rover, a separate script-driven explorer and streamed service stations. Open
 | Input | Action |
 |---|---|
 | WASD | Walk; or throttle/reverse/steer while driving |
-| Mouse | Look around |
+| Mouse | Orbit the third-person camera around the explorer or rover |
 | E | Board nearby rover; leave after braking below walking speed |
 | Space | Jump on foot; brake while driving |
 | T | Start/stop the physical watch drive; boards automatically when nearby |
@@ -37,8 +37,11 @@ HUD shows actual shaft RPM, tyre contacts, chart transitions and residency.
 The watch drive never assigns chassis pose, velocity or wheel spin. Its simple
 steering correction and throttle/brake policy operate the authored mechanisms.
 Entering hides/disables the separate motor; leaving restores it alongside the
-rover with the actual inherited point velocity. The camera uses presentation
-poses and explicitly translates its own smoothing cache on origin changes.
+rover with the actual inherited point velocity. Both modes use third-person cameras, presentation poses and local gravity-up.
+The on-foot view follows behind the visible character, with a sphere cast to
+avoid walls and the rover. The camera explicitly translates its own smoothing
+cache on origin changes. F remains limited to cargo within 5 m of the explorer,
+rather than measuring interaction reach from the offset camera.
 
 ## Human checklist
 
@@ -56,4 +59,5 @@ poses and explicitly translates its own smoothing cache on origin changes.
 This is a single local physics chart, not physics for the entire Earth at once.
 Liquid/PBF and atmosphere/combustion live-origin support are excluded. See
 [M90 contracts](../../docs/M90_ASSEMBLY_TRAVEL.md) and the
-[automated evidence](../../docs/evidence/m90/REPORT.md). Human acceptance pending.
+[automated evidence](../../docs/evidence/m90/REPORT.md). M90 release promotion is operator-authorized; the camera correction has automated
+checks, without an additional human camera retest being claimed.

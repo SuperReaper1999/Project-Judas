@@ -1,5 +1,5 @@
 {
-  "checkpoint": "7f7b617907a81d65bcbdd931f9989f01c4c72dd9",
+  "checkpoint": "3c3a1a3353a814357545ac11739c2300d2ec9b78",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
     {

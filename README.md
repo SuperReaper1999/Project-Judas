@@ -16,23 +16,25 @@ or performance result as a guarantee.
 
 ## Current status
 
-The latest human-accepted release on `main` is **M89**, including optional local
-multiplayer alongside native Linux, Windows and Android runtimes. Android targets
-Android 16 with OpenGL ES 3, ARM64 phones/tablets and x86_64 emulators. Broader
-hardware and physical-controller coverage remains outstanding; see the platform
-and milestone evidence for the exact validation scope.
+The current release on `main` is **M90**, promoted by operator authorization
+following the driving review and third-person camera correction. The camera
+follow-up passed automated reproduction and regression checks; an additional
+human retest of that correction is not claimed. See the
+[follow-up evidence](docs/evidence/m90-camera-followup/REPORT.md).
 
-**M90 large-world assembly travel** is the current Experimental candidate.
-Vehicles, wheels, powertrains, characters, navigation, articulated poses,
-attachments, deformables, audio and particles can now participate in the checked
-local-origin transition. This remains a bounded local physics chart; active
-liquids/PBF and atmosphere/combustion still reject transitions. Start with the
+M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
+poses, attachments, deformables, audio and particles through checked local-origin
+transitions. This remains a bounded local physics chart; active liquids/PBF and
+atmosphere/combustion still reject transitions. Start with the
 [travel lab](projects/travelling_lab/README.md), [M90 contracts](docs/M90_ASSEMBLY_TRAVEL.md)
-and [validation evidence](docs/evidence/m90/REPORT.md). M90 human acceptance is pending.
+and [original validation evidence](docs/evidence/m90/REPORT.md).
 
-See also [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
-[validation report](docs/evidence/m89/REPORT.md). Automated checks do not replace
-physical or human acceptance.
+Native Linux, Windows and Android runtimes and optional local multiplayer remain
+available. Android targets Android 16 with OpenGL ES 3, ARM64 phones/tablets and
+x86_64 emulators. Broader hardware and physical-controller coverage remains
+outstanding; M90 Windows/Android checks were not performed. See
+[local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
+[validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
 
 ## Highlights
 

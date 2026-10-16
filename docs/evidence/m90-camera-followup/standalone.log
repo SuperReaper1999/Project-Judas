@@ -1,0 +1,9 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bring Everything Along (/tmp/judas-m90-travel-20261016/game.judasproj)
+Scene: M90 — Bring Everything Along (/tmp/judas-m90-travel-20261016/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m90-camera/standalone.png

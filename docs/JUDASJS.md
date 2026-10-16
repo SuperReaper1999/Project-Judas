@@ -1,10 +1,10 @@
-# JudasJS — current API reference (M90 Experimental candidate)
+# JudasJS — current API reference (M90)
 
-M89 adds optional [local players, scoped input, viewports and HUD focus](judasjs/local-multiplayer.md). M89 operator acceptance is recorded; main remains that accepted release while M90 is reviewed.
+M89 adds optional [local players, scoped input, viewports and HUD focus](judasjs/local-multiplayer.md). M89 operator acceptance is recorded; M90 main promotion is now operator-authorized.
 
 M90 extends [local-origin assembly travel](judasjs/planetary-terrain.md) and adds the
 optional `onOriginShift(event)` cache notification. No new gameplay namespace or
-second physics world is introduced. M90 human acceptance is pending.
+second physics world is introduced. The [M90 camera follow-up and release authorization](evidence/m90-camera-followup/REPORT.md) distinguish automated correction checks from operator review.
 
 M88 adds [normalized touch/pointer snapshots](judasjs/input.md#touch-and-pointer-snapshots-m88)
 for the optional [native Android runtime](ANDROID.md). Existing gameplay APIs and

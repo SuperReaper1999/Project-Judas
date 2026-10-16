@@ -1,8 +1,10 @@
 # M90 — Bring Everything Along
 
-Current Experimental capability; Linux automated validation is recorded in
-[evidence](evidence/m90/REPORT.md). Human acceptance is pending. Main remains the
-accepted M89 checkpoint. No Windows or Android M90 validation is claimed.
+M90 release promotion was authorized by the operator after the driving review
+and third-person camera correction. See the [camera follow-up](evidence/m90-camera-followup/REPORT.md)
+for the automated before/after proof; a further human camera retest is not claimed.
+The [original candidate evidence](evidence/m90/REPORT.md) retains its original status.
+No Windows or Android M90 validation is claimed.
 
 ## One chart, one authoritative world
 

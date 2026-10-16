@@ -1,0 +1,14 @@
+{
+  "build/judas": {
+    "sha256": "830aabbfdad418a7b4efe0b44488a661fcd8e781c68ff808ba502ca5e2dd4611",
+    "bytes": 53165008
+  },
+  "build/judas_origin_travel_application_tests": {
+    "sha256": "efc5e6421105c5aa8b70d13bac7f37ea51cb6f8b825634ed7115a8efc1a7b4eb",
+    "bytes": 53247968
+  },
+  ".cache/m90-camera/export/judas": {
+    "sha256": "830aabbfdad418a7b4efe0b44488a661fcd8e781c68ff808ba502ca5e2dd4611",
+    "bytes": 53165008
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "checks": 18,
+  "failures": 0,
+  "fixedMilliseconds": [
+    0.432024,
+    0.724829,
+    8.577526
+  ],
+  "frameMilliseconds": [
+    3.145622,
+    6.094606,
+    13.880032
+  ],
+  "frames": 9967,
+  "maximumOriginTransitions": 4,
+  "sceneMilliseconds": [
+    2.100927,
+    3.633865,
+    7.791169
+  ],
+  "shiftStepMilliseconds": [
+    0.430022,
+    6.274709,
+    6.274709
+  ]
+}

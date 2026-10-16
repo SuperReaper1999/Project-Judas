@@ -1,0 +1,42 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/travelling_lab.judasproj)
+Scene: M90 — Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+PASS initial on-foot camera is outside the visible character model
+TRAVEL frame=600 phase=0 distance=85.092 speed=12.838 origin_revision=0 local=85.281 error=
+TRAVEL frame=1200 phase=0 distance=216.881 speed=13.321 origin_revision=0 local=217.077 error=
+TRAVEL frame=1800 phase=0 distance=350.441 speed=13.349 origin_revision=1 local=244.852 error=
+TRAVEL frame=2400 phase=0 distance=483.725 speed=13.341 origin_revision=1 local=186.215 error=
+TRAVEL frame=3000 phase=0 distance=617.311 speed=13.342 origin_revision=1 local=211.899 error=
+TRAVEL frame=3600 phase=0 distance=750.547 speed=13.339 origin_revision=1 local=301.243 error=
+TRAVEL frame=4200 phase=0 distance=884.073 speed=13.333 origin_revision=2 local=230.601 error=
+TRAVEL frame=4800 phase=0 distance=1017.159 speed=13.127 origin_revision=2 local=183.622 error=
+TRAVEL frame=5400 phase=0 distance=1150.042 speed=13.315 origin_revision=2 local=222.492 error=
+TRAVEL frame=6000 phase=0 distance=1283.106 speed=13.328 origin_revision=3 local=312.144 error=
+TRAVEL frame=6600 phase=0 distance=1416.462 speed=13.310 origin_revision=3 local=218.563 error=
+TRAVEL frame=7200 phase=0 distance=1549.464 speed=13.322 origin_revision=3 local=183.672 error=
+TRAVEL frame=7800 phase=0 distance=1682.724 speed=13.299 origin_revision=3 local=234.755 error=
+TRAVEL frame=8400 phase=0 distance=1815.642 speed=13.316 origin_revision=4 local=295.748 error=
+TRAVEL frame=9000 phase=0 distance=1948.809 speed=13.288 origin_revision=4 local=208.252 error=
+PASS actual powered planetary drive crosses multiple origin charts
+PASS active physical coordinates remain local after kilometre-scale travel
+PASS real wheel/ground contact and powertrain remain operational
+PASS departed waystation actually unloads with retained state
+PASS actual kilometre-scale drive frame captured
+TRAVEL frame=9600 phase=1 distance=2081.025 speed=12.942 origin_revision=4 local=186.338 error=
+PASS leave moving assembly and stand on real planetary collision
+PASS dismounted third-person camera stays outside the visible character
+PASS dismounted view aims at the actual presented character under local gravity
+PASS actual dismounted third-person frame captured
+PASS ordinary save service accepts travelled assembly
+PASS travelled save commits successfully
+PASS fresh world reconstruction preserves absolute chassis endpoint
+PASS cold publication preserves actual momentum and mechanical continuation
+PASS restored character resumes against reconstructed collision
+PASS normal scene reload requested
+PASS reload rebuilds authored chart without old runtime state
+PASS ordinary application lifecycle completes
+SUMMARY 18 checks 0 failures frames=9967

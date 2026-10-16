@@ -1,4 +1,4 @@
-/** Current JudasJS through M90 Experimental. M89 is human accepted.
+/** Current JudasJS through M90. M90 release promotion is operator-authorized.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.

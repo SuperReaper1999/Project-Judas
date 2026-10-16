@@ -1,0 +1,25 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/.cache/m90-camera/before/travelling_lab.judasproj)
+Scene: M90 — Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/.cache/m90-camera/before/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+FAIL initial on-foot camera is outside the visible character model
+PASS active physical coordinates remain local after kilometre-scale travel
+PASS real wheel/ground contact and powertrain remain operational
+PASS actual kilometre-scale drive frame captured
+PASS leave moving assembly and stand on real planetary collision
+FAIL dismounted third-person camera stays outside the visible character
+FAIL dismounted view aims at the actual presented character under local gravity
+PASS actual dismounted third-person frame captured
+PASS ordinary save service accepts travelled assembly
+PASS travelled save commits successfully
+PASS fresh world reconstruction preserves absolute chassis endpoint
+PASS cold publication preserves actual momentum and mechanical continuation
+PASS restored character resumes against reconstructed collision
+PASS normal scene reload requested
+TRAVEL frame=600 phase=6 distance=0.000 speed=0.055 origin_revision=0 local=0.880 error=
+PASS reload rebuilds authored chart without old runtime state
+PASS ordinary application lifecycle completes
+SUMMARY 16 checks 3 failures frames=613

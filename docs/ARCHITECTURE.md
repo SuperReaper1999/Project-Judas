@@ -1,6 +1,6 @@
 # Architecture
 
-## Current Experimental — M90 assembly travel
+## Current release — M90 assembly travel
 
 M90 extends the existing M85 checked origin transaction rather than introducing
 parallel physical worlds. At a completed fixed boundary, the shared PhysicsWorld
@@ -15,8 +15,9 @@ stream payloads decode using their capture origin before private publication.
 Active liquids/PBF, atmosphere/combustion, the single 8 km chart bound and pending
 streaming transactions remain explicit restrictions. Live articulations keep
 their existing suspension pins. See [M90 contracts and lab](M90_ASSEMBLY_TRAVEL.md)
-and [measured evidence](evidence/m90/REPORT.md). Automated candidate validation is
-separate from human acceptance; main remains accepted M89.
+and [measured evidence](evidence/m90/REPORT.md). The operator authorized main
+promotion after the driving review and [third-person camera correction](evidence/m90-camera-followup/REPORT.md);
+the correction has automated proof, with no additional human camera retest claimed.
 
 ## M89 optional local multiplayer
 

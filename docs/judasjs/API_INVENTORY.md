@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M90 Experimental public module based on checkpoint `7f7b617907a81d65bcbdd931f9989f01c4c72dd9`. M89 human acceptance is recorded. M90 human acceptance is pending; earlier platform acceptance does not certify this origin-integration candidate. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M90 public module based on checkpoint `3c3a1a3353a814357545ac11739c2300d2ec9b78`. M89 human acceptance is recorded. M90 release promotion is operator-authorized; the camera follow-up records automated correction checks without claiming an additional human retest. Earlier platform acceptance does not certify M90 on those platforms. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
