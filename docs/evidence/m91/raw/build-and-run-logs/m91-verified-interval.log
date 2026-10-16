@@ -1,0 +1,7 @@
+M91 interval equivalence multiplications=300200 divisions=249998 zero_divisor_rejections=50202 bit_differences=0
+KERNEL repeat=0 reference=1 ms=24.685315 checksum=-3562.6977434279765
+KERNEL repeat=0 reference=0 ms=17.403986 checksum=-3562.6977434279765
+KERNEL repeat=1 reference=1 ms=24.931616 checksum=-3562.6977434279765
+KERNEL repeat=1 reference=0 ms=17.226797 checksum=-3562.6977434279765
+KERNEL repeat=2 reference=1 ms=24.131640 checksum=-3562.6977434279765
+KERNEL repeat=2 reference=0 ms=17.116355 checksum=-3562.6977434279765

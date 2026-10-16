@@ -1,0 +1,1 @@
+step,frame,wall_ms,fixed_ms,bodies,awake,sleeping,candidates,contacts,impact_events,impact_queries,impact_iterations,impact_peak,total_physics_ms,broadphase_ms,narrowphase_ms,solver_ms,trajectory_digest,max_linear_speed,max_angular_speed,nonfinite_fields

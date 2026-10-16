@@ -1,0 +1,1 @@
+frame,wall_ms,interval_ms,work_before_swap_ms,fixed_steps,last_fixed_ms,surface_ms,scene_cpu_ms,bodies,awake,sleeping,candidates,contacts,impact_events,impact_queries,impact_iterations,impact_peak,total_physics_ms,broadphase_ms,narrowphase_ms,solver_ms,draw_calls,triangles

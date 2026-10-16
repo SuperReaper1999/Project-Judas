@@ -1,0 +1,6 @@
+ENCLOSURES relative_failures=0 shape_failures=0 rounded_vs_ideal_deviations=60856
+INTERACTION rotated=0 events=1 momentum=0.5 proved=1
+INTERACTION rotated=1 events=2 momentum=0.5 proved=1
+FAIL elastic departure does not become persistent support or suppress the next real bounce
+ELASTIC first=2.25000024 second=0 second_events=0
+M91 continuity checks=406 failures=1

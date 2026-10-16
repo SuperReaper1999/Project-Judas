@@ -1,0 +1,30 @@
+Running free-64-r0
+  PASS median 0.0273, p95 0.0398, max 0.0776 ms
+Running free-256-r0
+  PASS median 0.1276, p95 0.1813, max 0.2788 ms
+Running free-1024-r0
+  PASS median 0.6984, p95 0.8685, max 0.9794 ms
+Running pile-64-r0
+  PASS median 0.0631, p95 0.8798, max 0.9778 ms
+Running pile-256-r0
+  PASS median 0.3779, p95 3.7253, max 4.2304 ms
+Running pile-1024-r0
+  PASS median 1.9327, p95 15.6986, max 16.2820 ms
+Running mesh-64-r0
+  PASS median 0.0592, p95 0.5551, max 1.5797 ms
+Running mesh-256-r0
+  PASS median 0.4159, p95 1.9157, max 6.4834 ms
+Running mesh-1024-r0
+  PASS median 2.6548, p95 8.4452, max 25.1944 ms
+Running machines_active-64-r0
+  PASS median 0.1388, p95 0.1638, max 0.1787 ms
+Running machines_active-256-r0
+  PASS median 0.5919, p95 0.6559, max 0.7402 ms
+Running machines_active-1024-r0
+  PASS median 2.5267, p95 2.7340, max 5.5536 ms
+Running machines_sleeping-64-r0
+  PASS median 0.0367, p95 0.0483, max 0.0735 ms
+Running machines_sleeping-256-r0
+  PASS median 0.1956, p95 0.2303, max 0.2555 ms
+Running machines_sleeping-1024-r0
+  PASS median 0.8978, p95 0.9726, max 1.0191 ms

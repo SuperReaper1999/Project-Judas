@@ -1,0 +1,14 @@
+{
+  "scene_and_registration_bytes_unchanged": {
+    "projects/physics_stress_lab/Scenes/room128.judas": true,
+    "projects/physics_stress_lab/Scenes/room512.judas": true,
+    "projects/physics_stress_lab/Scenes/room1024.judas": true,
+    "projects/physics_stress_lab/Scenes/rotated.judas": true,
+    "projects/physics_stress_lab/physics_stress_lab.judasproj": true
+  },
+  "final_vs_prepublication_270_physical_digests_identical": true,
+  "M77_output_byte_identical_to_baseline": true,
+  "README_archive_unchanged": true,
+  "native_final_source_unchanged": true,
+  "all_final_benchmark_fingerprints_unchanged": true
+}

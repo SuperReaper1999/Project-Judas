@@ -1,0 +1,7 @@
+ENCLOSURES relative_failures=0 shape_failures=0 rounded_vs_ideal_deviations=60856
+FAIL real impact revalidates a gapped support using a complete interval proof
+INTERACTION rotated=0 events=1 momentum=0.5 proved=0
+FAIL real impact revalidates a gapped support using a complete interval proof
+INTERACTION rotated=1 events=2 momentum=0.5 proved=0
+ELASTIC first=2.25000024 second=0.5625 second_events=1
+M91 continuity checks=406 failures=2

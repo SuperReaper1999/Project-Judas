@@ -1,0 +1,44 @@
+[  5%] Built target judas_icu_build
+[ 11%] Built target judas_app_icon
+[ 11%] Built target judas_quickjs
+[ 23%] Built target freetype
+[ 23%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 41%] Built target judas_jobs
+[ 41%] Built target judas_profiler
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target judas_materials
+[ 41%] Built target harfbuzz
+[ 41%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 41%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_physics_stress_live_benchmark
+[100%] Built target judas_physics_stress_live_benchmark
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_app_icon
+[ 23%] Built target freetype
+[ 23%] Built target judas_glad
+[ 29%] Built target judas_profiler
+[ 35%] Built target judas_navigation_backend
+[ 41%] Built target judas_jobs
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target judas_materials
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_physical_balance_controller_tests
+[100%] Built target judas_physical_balance_controller_tests
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_app_icon
+[ 23%] Built target freetype
+[ 23%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_profiler
+[ 41%] Built target judas_jobs
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target judas_materials
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_collision_continuity_tests
+[100%] Built target judas_collision_continuity_tests

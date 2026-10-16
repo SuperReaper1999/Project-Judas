@@ -1,0 +1,7 @@
+observer-compile exit 0
+observer-link exit 0
+character-cold-write exit 0
+character-cold-read exit 0
+balance-cold-write exit 0
+balance-cold-read exit 0
+{"pass": true, "receipt": "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/verified-cold/RECEIPT.json", "endpoint": {"equal": true, "writeCurrentPhysicalStanding": true, "readCurrentPhysicalStanding": true}}

@@ -79,6 +79,7 @@ public:
     // data); position iterations re-evaluate penetration from anchors.
     static constexpr int kVelocityIterations = 10;
     static constexpr int kPositionIterations = 4;
+    static constexpr float kPenetrationSlop = 0.005f;
 
     void Clear();
     // One manifold point between two bodies (either may be static). The

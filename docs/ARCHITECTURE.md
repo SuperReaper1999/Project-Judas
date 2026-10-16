@@ -1,5 +1,28 @@
 # Architecture
 
+## Experimental — M91 collision continuity
+
+M91 retains the existing fixed-step solver and chronological first-touch CCD.
+The new continuation policy is limited to free inelastic native-primitive contact
+events. Jointed assemblies, external couplers, elastic flights and complex event
+geometry retain their original cache/event policy. Within that domain it separates contact identity from invalidated impulse guesses, keeps inelastic TOI
+features as zero-load continuation identities, and revalidates existing supports
+against outward-rounded bounds on the entire remaining trajectory. Retention is
+bounded by the existing 5 mm position allowance (and a smaller thin-feature bound);
+this is explicitly a persistent-contact approximation, not a zero-overlap claim.
+Failed/unsupported proofs retain ordinary CCD. No new pair is exempted by a
+support certificate, and no impact impulse becomes a warm support load.
+
+Relative motion retains shared drift plus represented-float rounding envelopes.
+Bounded interval subdivision is a proof refinement, not collision sampling.
+Existing angular/contact ownership, response manifolds, fixed cadence, ten velocity
+iterations, callbacks and sleeping policy remain. Derived sweep-bound reuse,
+ordered joint adjacency and bit-equivalent interval arithmetic reduce repeat work.
+M56 records proof work alongside CCD/island costs. Dense worst-step limits and
+missing warm-contact cold continuation remain explicit; Experimental evidence is
+not human acceptance. See [M91 contracts](M91_COLLISION_CONTINUITY.md) and
+[measurements](evidence/m91/REPORT.md).
+
 ## Current release — M90 assembly travel
 
 M90 extends the existing M85 checked origin transaction rather than introducing

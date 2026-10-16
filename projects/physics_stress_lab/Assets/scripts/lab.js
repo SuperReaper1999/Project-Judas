@@ -116,7 +116,7 @@ export default class {
   let text=`32 ARCADE MECHANISMS / 96 ARTICULATED BODIES + 32 FREE BALLS + ${this.loose.length} LOOSE PIECES\n`;
   text+=`${alive} dynamic / ${asleep} naturally sleeping / ${alive-asleep} awake   |   finite motors ${this.state.motors?'ON':'OFF'}${this.state.tour?' / WATCH TOUR':''}\n`;
   text+=`${this.props.tilted?'ROTATED GRAVITY ROOM':'FLAT GRAVITY ROOM'}   |   WASD move / Q down / E up / mouse look   |   F6 save / F7 load / R reload\n`;
-  text+=this.notice||'No scripted freezing, distance culling or decorative replacement of physical bodies.';
+  text+=this.notice||'M91: same bodies and 60 Hz cadence. Press 3 for the extreme stress case; stalls remain.';
   if(this.request){const status=saves.status(this.request);text+=`\nSave/load: ${status?.state||'pending'} ${status?.error||''}`;}
   this.doc.get('status').text=text;
  }

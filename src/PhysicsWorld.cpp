@@ -524,7 +524,9 @@ struct PhysicsWorld::Impl {
     std::size_t impactActualBoundsRejected=0;
     struct WorkDiagnostics {
         bool active=false;
-        PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation,impactObservations;
+        PhysicsWorkSample toi,geometry,impactIslands,impactSolve,jointPreparation,impactObservations,continuationProof,continuationCache;
+        std::size_t continuationAttempts=0,continuationAccepted=0,continuationPartitions=0,continuationOverBudget=0;
+        std::size_t coupledFallbackEvents=0,elasticFallbackEvents=0,geometryFallbackEvents=0,peakImpactBodies=0,peakImpactRows=0;
         std::size_t candidatePasses=0,candidateQueries=0,candidateLeaves=0;
     } work;
     // Indexed output only: workers never mutate physics bodies, geometry
@@ -692,7 +694,10 @@ struct PhysicsWorld::Impl {
     const Aabb& RemainingImpactBound(unsigned slot,double start,double finish){
         EnsureImpactPoseStorage();
         auto& sample=impactPoseSamples[slot];const auto& body=bodies[slot];
-        if(sample.boundStart==start&&sample.boundFinish==finish&&sample.boundGeneration==body.generation)return sample.remainingBound;
+        // An unchanged anchored trajectory's earlier enclosure also contains
+        // every later subinterval. Velocity changes invalidate this cache.
+        // Reusing the superset is conservative; it never supplies contact truth.
+        if(sample.boundStart<=start&&sample.boundFinish>=finish&&sample.boundGeneration==body.generation)return sample.remainingBound;
         if(!body.HasMotion())sample.remainingBound=CurrentBound(bodies[slot]);
         else {
             // The remaining motion is one anchored segment. Each represented
@@ -917,6 +922,62 @@ struct PhysicsWorld::Impl {
         for(int side=0;side<2;++side)
             projected+=glm::length(glm::cross(normal,omega[side]))*bodies[key[side]].boundingRadius*remaining;
         return projected>feature;
+    }
+    static bool ContinuationPrimitive(const Body& body){
+        return !body.shape.asset&&body.shape.pivotOffset==glm::vec3(0)&&
+            (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere);
+    }
+    bool SupportContinuationSafe(const std::array<unsigned,4>& key,double start,double finish){
+        PhysicsWorkTimer timer(work.continuationProof,work.active);
+        ++work.continuationAttempts;
+        const auto& a=bodies[key[0]];const auto& b=bodies[key[1]];
+        if(!ContinuationPrimitive(a)||!ContinuationPrimitive(b))return false;
+        const auto& aa=ImpactPoseAt(key[0],start);const auto& bb=ImpactPoseAt(key[1],start);
+        const float clearance=std::min(ContactSolver::kPenetrationSlop,float(.25*std::min(PrimitiveFeature(key[0],key[2]),PrimitiveFeature(key[1],key[3]))));
+        const auto m=PairAt(key[0],key[1],key[2],key[3],start,clearance);
+        if(!m.count||m.uncertain)return false;
+        const glm::dvec3 normal=m.points[0].preciseNormal;
+        // Preserve the original fallback for penetration already beyond the
+        // ordinary position solver's allowance; do not enlarge that allowance.
+        for(int i=0;i<m.count;++i)if(m.points[i].signedSeparation < -clearance){++work.continuationOverBudget;return false;}
+        std::array<const RigidMotionSegment*,2> segments{};
+        for(unsigned side=0;side<2;++side){
+            const auto& body=bodies[key[side]];
+            if(!body.HasMotion())continue;
+            const auto& path=body.motion.Segments();
+            auto it=std::upper_bound(path.begin(),path.end(),start,[](double t,const auto& s){return t<s.begin;});
+            if(it==path.begin())return false;
+            segments[side]=&*--it;
+            if(finish>segments[side]->end)return false;
+        }
+        using contact_geometry::Iv;
+        Iv norm(0);for(int k=0;k<3;++k)norm=norm+Iv(normal[k])*Iv(normal[k]);
+        const Iv allowance=Iv(double(clearance))*contact_geometry::Sqrt(norm);
+        auto gap=[&](double lo,double hi)->std::optional<Iv>{
+            auto extent=[&](unsigned side,const ImpactPoseSample& sample){
+                auto pose=sample.pose;pose.position=glm::vec3(0);
+                return rigid_motion_bounds::TryPrimitiveSweepProjection(bodies[key[side]].shape,segments[side],pose,pose,lo,hi,normal,glm::dvec3(0),*sample.orientation);
+            };
+            const auto first=extent(0,aa),second=extent(1,bb);
+            const auto relative=rigid_motion_bounds::TryRelativeCentreProjection(segments[0],segments[1],aa.pose,bb.pose,lo,hi,normal);
+            if(!first||!second||!relative)return std::nullopt;
+            return *relative+Iv(first->lo)-Iv(second->hi)+allowance;
+        };
+        const auto entire=gap(start,finish);if(!entire)return false;
+        if(entire->lo>0){++work.continuationAccepted;return true;}
+        const auto end=gap(finish,finish);if(!end||end->hi<=0)return false;
+        // Subdivision tightens a conservative rotation enclosure; it is not
+        // temporal collision sampling. Every accepted leaf covers ALL times.
+        auto certify=[&](auto&& self,double lo,double hi,unsigned depth)->bool{
+            ++work.continuationPartitions;
+            const auto bound=gap(lo,hi);if(!bound)return false;
+            if(bound->lo>0)return true;
+            if(!depth||bound->hi<=0)return false;
+            const double mid=(lo+hi)*.5;
+            return self(self,lo,mid,depth-1)&&self(self,mid,hi,depth-1);
+        };
+        if(certify(certify,start,finish,3)){++work.continuationAccepted;return true;}
+        return false;
     }
     // A quarter of the existing half-dimension feature (one eighth of the
     // full thickness for boxes), measured relative to the current overlap.
@@ -1155,6 +1216,10 @@ struct PhysicsWorld::Impl {
             }
             ~ObservationPublication(){Publish();}
         } observationPublication{completedContactObservations,work.impactObservations,work.active};
+        // The incoming cache is already ordered. Only newly appended TOI
+        // identities require publication; erasure and impulse changes preserve
+        // order. Keep that invariant on failure as well as successful return.
+        ObservationPublication cachePublication{contactCache,work.continuationCache,work.active};
         stepDuration=dt;impactQueryAnchorTime=0;
         impactPoseEvaluations=impactPoseReuses=impactOrientationBuilds=impactTruthRequests=impactTruthReuses=impactBoundsRejected=0;
         impactActualBoundsRejected=0;
@@ -1181,6 +1246,13 @@ struct PhysicsWorld::Impl {
         for(const auto& key:supportPairs)if(SpinsThroughSupport(key,dt))spinningPairs.push_back(key);
         if(!spinningPairs.empty())supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),
             [&](const auto& key){return std::binary_search(spinningPairs.begin(),spinningPairs.end(),key);}),supportPairs.end());
+        // Preserve joint encounter order, but visit only incident joints while
+        // growing an impact island. Scanning every unrelated joint for every
+        // reached body makes independent machinery multiply dense-pile cost.
+        // Allocate/build only once an actual event needs island discovery.
+        // Free flight and fully quiet worlds must not pay this scratch cost.
+        std::vector<std::vector<unsigned>> impactJointNeighbours;
+        bool jointNeighboursReady=false;
         double now=0;
         scheduledImpacts.clear();
         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
@@ -1205,6 +1277,15 @@ struct PhysicsWorld::Impl {
                 }
             }
             if (earliest>dt) break;
+            if(!jointNeighboursReady){
+                impactJointNeighbours.resize(bodies.size());
+                for(const auto& joint:joints)if(JointActive(joint)&&joint.state.settings.bodyB.IsValid()){
+                    const auto a=joint.state.settings.bodyA.id&kSlotMask,b=joint.state.settings.bodyB.id&kSlotMask;
+                    impactJointNeighbours[a].push_back(b);
+                    if(a!=b)impactJointNeighbours[b].push_back(a);
+                }
+                jointNeighboursReady=true;
+            }
             now=earliest;impactQueryAnchorTime=now;
             // Infinite-mass boundaries do not join the velocity-changing
             // island, but solver lever arms and observed point velocities
@@ -1235,11 +1316,7 @@ struct PhysicsWorld::Impl {
             PhysicsWorkTimer timer(work.impactIslands,work.active);
             for (std::size_t next=0;next<island.size();++next) {
                 const unsigned a=island[next];
-                for(const auto& joint:joints)if(JointActive(joint)&&joint.state.settings.bodyB.IsValid()){
-                    const auto x=joint.state.settings.bodyA.id&kSlotMask,y=joint.state.settings.bodyB.id&kSlotMask;
-                    if(x==a)include(y);
-                    if(y==a)include(x);
-                }
+                for(unsigned neighbour:impactJointNeighbours[a])include(neighbour);
                 const auto candidates=QuerySlots(ActualImpactBound(a,ImpactPoseAt(a,now)));
                 for (unsigned b:candidates) {
                     if (a==b || !CanRespond(a,b)) continue;
@@ -1332,6 +1409,7 @@ struct PhysicsWorld::Impl {
                     }
             }
             if(rows.empty()) throw std::runtime_error("impact bracket lost contact geometry");
+            if(work.active){work.peakImpactBodies=std::max(work.peakImpactBodies,island.size());work.peakImpactRows=std::max(work.peakImpactRows,rows.size());}
             PrepareJoints(eventJointSolver,JointInputs(&included),dt,false,true);
             const auto result=[&]{PhysicsWorkTimer timer(work.impactSolve,work.active);
                 return impactSolver.Solve(rows,dt,capture,eventJointSolver.Empty()?nullptr:&eventJointSolver);}();
@@ -1374,8 +1452,50 @@ struct PhysicsWorld::Impl {
                 }
             }
             ++stats.impactEvents;stats.impactSafetyFallback+=result.safetyFallback;
-            contactCache.erase(std::remove_if(contactCache.begin(),contactCache.end(),
-                [&](const CachedContact& c){return included[c.key.slotA] || included[c.key.slotB];}),contactCache.end());
+            // A geometric overlap enclosure alone does not certify the reaction
+            // history of a coupled mechanical system. Keep the original event
+            // and cache policy for hard joints, external couplers and elastic
+            // flights. The fast continuation is for free inelastic primitives.
+            const bool continuationEligible=result.effectiveRestitution==0&&
+                eventJointSolver.Empty()&&!coupledVelocityChanged&&
+                std::all_of(eventPairs.begin(),eventPairs.end(),[&](const auto& pair){
+                    return ContinuationPrimitive(bodies[pair[0]])&&ContinuationPrimitive(bodies[pair[1]]);
+                });
+            if(work.active){
+                if(!eventJointSolver.Empty()||coupledVelocityChanged)++work.coupledFallbackEvents;
+                else if(result.effectiveRestitution!=0)++work.elasticFallbackEvents;
+                else if(!continuationEligible)++work.geometryFallbackEvents;
+            }
+            {
+            PhysicsWorkTimer timer(work.continuationCache,work.active);
+            if(continuationEligible){
+            cachePublication.dirty=true;
+            // A velocity-changing island invalidates its old load guesses,
+            // not contact identity. New actual TOI features also need zero-load
+            // identity for next step's ordinary geometric support matching.
+            // Neither old warm impulses nor impact impulses are replayed here.
+            for(auto& cached:contactCache)if(included[cached.key.slotA]||included[cached.key.slotB]){
+                cached.normalImpulse=0;cached.tangentImpulse=glm::vec3(0);
+            }
+            auto replaced=observationKeys;
+            std::sort(replaced.begin(),replaced.end());
+            replaced.erase(std::unique(replaced.begin(),replaced.end(),[](const ContactKey& a,const ContactKey& b){return a.SameBodies(b);}),replaced.end());
+            contactCache.erase(std::remove_if(contactCache.begin(),contactCache.end(),[&](const CachedContact& c){return std::binary_search(replaced.begin(),replaced.end(),c.key);}),contactCache.end());
+            // An elastic departure is a new flight, not support. In particular,
+            // a short ballistic return must still receive its own restitution.
+            if(result.effectiveRestitution==0){
+                const auto& contactRows=impactSolver.Constraints();
+                for(std::size_t i=0;i<contactRows.size();++i){
+                    const auto& row=contactRows[i];const auto& key=observationKeys[i];
+                    contactCache.push_back({key,row.localAnchorA,row.normal,0,glm::vec3(0),float(row.signedSeparation),
+                        bodies[key.slotA].contactObservationRevision,bodies[key.slotB].contactObservationRevision});
+                }
+            }
+            }else{
+                contactCache.erase(std::remove_if(contactCache.begin(),contactCache.end(),
+                    [&](const CachedContact& c){return included[c.key.slotA]||included[c.key.slotB];}),contactCache.end());
+            }
+            }
             std::vector<unsigned> changed;
             for(std::size_t i=0;i<island.size();++i) {
                 const auto slot=island[i];auto& b=bodies[slot];
@@ -1388,11 +1508,13 @@ struct PhysicsWorld::Impl {
                 b.motion.ChangeVelocity(b.rigidBody,now);
                 InvalidateImpactPose(slot);
                 CoverStepReach(b,static_cast<float>(dt-now));
-                supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),[&](const auto& pair) {
-                    return (pair[0]==slot || pair[1]==slot) &&
-                        std::find(eventPairs.begin(),eventPairs.end(),pair)==eventPairs.end();
-                }),supportPairs.end());
+
             }
+            supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),[&](const auto& pair){
+                return (included[pair[0]]==2||included[pair[1]]==2)&&
+                    std::find(eventPairs.begin(),eventPairs.end(),pair)==eventPairs.end()&&
+                    (!continuationEligible||!SupportContinuationSafe(pair,now,dt));
+            }),supportPairs.end());
             // Cached event times depend only on the two anchored trajectories.
             // Recompute incident queries after an actual velocity change; retain
             // every unaffected event (including disjoint simultaneous events).
@@ -1418,6 +1540,7 @@ struct PhysicsWorld::Impl {
         // row insertion order. One stable publication sort has the same final
         // key/row order as sorting the entire history after every impact.
         observationPublication.Publish();
+        cachePublication.Publish();
         for(const auto slot:aliveSlots) if(bodies[slot].HasMotion()&&!bodies[slot].sleeping) {
             auto& body=bodies[slot];const auto pose=body.motion.EvaluateAfterEvents(dt);
             stats.motionSegments+=body.motion.Segments().size();stats.motionStorageBytes+=body.motion.StorageBytes();
@@ -2902,6 +3025,17 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     JUDAS_PROFILE_COUNTER("Physics sleep scratch bytes",double(w.sleepScratchBytes),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics persistent contact rows",double(w.solver.Constraints().size()),ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics joint rows",double(w.joints.empty()?0:w.jointSolver.RowCount()),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics continuation coupled fallback events",double(w.work.coupledFallbackEvents),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics continuation elastic fallback events",double(w.work.elasticFallbackEvents),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics continuation geometry fallback events",double(w.work.geometryFallbackEvents),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics peak impact island bodies",double(w.work.peakImpactBodies),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics peak impact contact rows",double(w.work.peakImpactRows),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact continuation cache ms",double(w.work.continuationCache.nanoseconds)*1e-6,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics support continuation attempts",double(w.work.continuationAttempts),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics support continuation accepted",double(w.work.continuationAccepted),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics support continuation partitions",double(w.work.continuationPartitions),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics support continuation over-budget fallback",double(w.work.continuationOverBudget),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics support continuation proof ms",double(w.work.continuationProof.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD search inclusive ms",double(w.work.toi.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD geometry inclusive ms",double(w.work.geometry.nanoseconds)*1e-6,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD geometry calls",double(w.work.geometry.calls),ProfileCounterMode::Sum);

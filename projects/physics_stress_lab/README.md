@@ -1,6 +1,6 @@
 # Physics Stress Lab — The Mechanical Arcade
 
-An ordinary Judas project for M87. One shared JudasJS controller drives an editable
+An ordinary Judas project, retained from M87 and used for M91 collision validation. One shared JudasJS controller drives an editable
 room of 32 independent mechanisms, each with a finite-force slider shelf, two
 spring-hinged paddles and a free ball. Native rigid bodies, contacts and M45 joints
 produce their motion. Motor power can be removed without disabling physics.
@@ -32,12 +32,25 @@ replace or manually sleep resting assemblies. HUD figures read `entity.sleeping`
 An off motor does not prevent impulses/contact from waking its connected bodies.
 Changing population reloads an ordinary scene; it is not a physics quality switch.
 
-**Known performance limit:** the 1,024-piece mixed box/sphere pile can enter a
-low-speed continuous-impact cascade after collapsing. Even with the M87 follow-up
-optimizations, individual fixed steps can take seconds and temporarily prevent UI
-input from being processed. This mode is an unresolved stress case, not a 60 Hz
-demonstration. The population, CCD, contacts and simulation cadence are unchanged.
-See the [measured investigation](../../docs/evidence/m87/live-slowdown-followup/REPORT.md).
+## M91 comparison and remaining limit
+
+M91 keeps these exact authored populations and mechanical settings. The ordinary
+lab now exercises zero-load contact identities and interval-checked support
+continuation after impacts. It retains the same 60 Hz cadence, materials,
+constraints, actual collision geometry and CCD for new encounters. Population
+selection never changes simulation quality.
+
+The original M87 seconds-long dense-pile failure remains preserved in its
+[historical report](../../docs/evidence/m87/live-slowdown-followup/REPORT.md).
+M91's matched measurements and physical checks are in the
+[current report](../../docs/evidence/m91/REPORT.md), with the numerical contract
+[explained separately](../../docs/M91_COLLISION_CONTINUITY.md).
+
+**The 1,024-piece pile remains an extreme stress workload.** Cost is substantially
+improved in the measured failure region, but isolated stalls remain. It is not a
+60 Hz certification. The default room is the practical watch-tour demonstration;
+press **3** deliberately to inspect the worst case. No body is frozen or removed
+to improve the result. M91 human acceptance is pending.
 
 ## Project organization
 
@@ -53,7 +66,7 @@ See the [measured investigation](../../docs/evidence/m87/live-slowdown-followup/
 The free inspection camera is a lab tool, not a CharacterMotor. This room is a
 physics workload, not an arcade scoring game. For a real consumer game use the
 existing [Tuppence](../tuppence/README.md) project. Before/after timing comes from
-the controlled M87 benchmarks, not visual FPS or HUD sampling alone.
+the controlled M87/M91 benchmarks, not visual FPS or HUD sampling alone.
 
 ## Human checklist
 
@@ -67,4 +80,4 @@ the controlled M87 benchmarks, not visual FPS or HUD sampling alone.
 8. Repeat the ordinary exported package from a different working directory.
 
 Automated benchmark coverage and remaining performance limits are recorded in the
-M87 evidence report. Human acceptance and Windows validation are separate states.
+M91 evidence report. Human acceptance and Windows validation are separate states.

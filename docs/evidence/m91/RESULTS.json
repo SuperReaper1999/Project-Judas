@@ -1,0 +1,273 @@
+{
+  "baseline_dense_receipt": "raw/final-dense/RESULTS.json",
+  "final_dense_receipt": "raw/dense-verified/RESULTS.json",
+  "final_profile_receipt": "raw/profile-verified/RESULTS.json",
+  "consumer": [
+    {
+      "label": "baseline",
+      "mode": "play",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/baseline/judas_ball_pusher_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/cabinet.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/consumer-verified/baseline-play",
+        "play"
+      ],
+      "exit": 0,
+      "seconds": 23.468624790999456,
+      "measured_fixed_frames": 1048,
+      "physics_ms": {
+        "median": 11.8548,
+        "p95": 30.3562,
+        "maximum": 109.097
+      },
+      "fixed_ms": {
+        "median": 12.3268,
+        "p95": 30.8051,
+        "maximum": 110.205
+      },
+      "frame_work_ms": {
+        "median": 13.8435,
+        "p95": 32.502,
+        "maximum": 112.153
+      }
+    },
+    {
+      "label": "candidate",
+      "mode": "play",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ball_pusher_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/cabinet.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/consumer-verified/candidate-play",
+        "play"
+      ],
+      "exit": 0,
+      "seconds": 20.808236154000042,
+      "measured_fixed_frames": 1048,
+      "physics_ms": {
+        "median": 0.699424,
+        "p95": 4.34945,
+        "maximum": 32.1388
+      },
+      "fixed_ms": {
+        "median": 1.17718,
+        "p95": 5.02307,
+        "maximum": 32.5968
+      },
+      "frame_work_ms": {
+        "median": 2.76399,
+        "p95": 7.28039,
+        "maximum": 34.286
+      }
+    },
+    {
+      "label": "baseline",
+      "mode": "coins",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/baseline/judas_ball_pusher_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/coins.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/consumer-verified/baseline-coins",
+        "coins"
+      ],
+      "exit": 0,
+      "seconds": 22.660516955000276,
+      "measured_fixed_frames": 1048,
+      "physics_ms": {
+        "median": 6.02638,
+        "p95": 28.2391,
+        "maximum": 116.009
+      },
+      "fixed_ms": {
+        "median": 6.34807,
+        "p95": 28.5326,
+        "maximum": 116.311
+      },
+      "frame_work_ms": {
+        "median": 7.55665,
+        "p95": 29.8099,
+        "maximum": 117.616
+      }
+    },
+    {
+      "label": "candidate",
+      "mode": "coins",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ball_pusher_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tuppence/Scenes/coins.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/consumer-verified/candidate-coins",
+        "coins"
+      ],
+      "exit": 0,
+      "seconds": 22.610006986998997,
+      "measured_fixed_frames": 1048,
+      "physics_ms": {
+        "median": 6.01608,
+        "p95": 26.9883,
+        "maximum": 110.196
+      },
+      "fixed_ms": {
+        "median": 6.32533,
+        "p95": 27.3091,
+        "maximum": 110.492
+      },
+      "frame_work_ms": {
+        "median": 7.47789,
+        "p95": 28.5176,
+        "maximum": 111.685
+      }
+    }
+  ],
+  "concave": {
+    "before": [
+      {
+        "case": "box-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 0,
+        "medianMs": 0.158538,
+        "p95Ms": 0.284654,
+        "maxMs": 2.622994,
+        "first120MaxMs": 2.622994,
+        "contactRows": 13801,
+        "ccdIterations": 747,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 13
+      },
+      {
+        "case": "box-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 0,
+        "medianMs": 0.613425,
+        "p95Ms": 0.832267,
+        "maxMs": 9.546489,
+        "first120MaxMs": 9.546489,
+        "contactRows": 55204,
+        "ccdIterations": 2988,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 52
+      },
+      {
+        "case": "mesh-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 8192,
+        "medianMs": 0.153009,
+        "p95Ms": 0.289314,
+        "maxMs": 4.39771,
+        "first120MaxMs": 4.39771,
+        "contactRows": 15677,
+        "ccdIterations": 2248,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0489002839,
+        "sleeping": 0
+      },
+      {
+        "case": "mesh-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 8192,
+        "medianMs": 0.648676,
+        "p95Ms": 2.72502,
+        "maxMs": 11.067231,
+        "first120MaxMs": 11.067231,
+        "contactRows": 56576,
+        "ccdIterations": 18127,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0447216108,
+        "sleeping": 26
+      }
+    ],
+    "after": [
+      {
+        "case": "box-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 0,
+        "medianMs": 0.156216,
+        "p95Ms": 0.251391,
+        "maxMs": 2.01934,
+        "first120MaxMs": 2.01934,
+        "contactRows": 13801,
+        "ccdIterations": 747,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 13
+      },
+      {
+        "case": "box-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 0,
+        "medianMs": 0.598905,
+        "p95Ms": 0.91948,
+        "maxMs": 9.194827,
+        "first120MaxMs": 9.194827,
+        "contactRows": 55204,
+        "ccdIterations": 2988,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0493287928,
+        "sleeping": 52
+      },
+      {
+        "case": "mesh-1",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 13,
+        "meshTriangles": 8192,
+        "medianMs": 0.152653,
+        "p95Ms": 0.283806,
+        "maxMs": 3.732621,
+        "first120MaxMs": 3.732621,
+        "contactRows": 15677,
+        "ccdIterations": 2248,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0489002839,
+        "sleeping": 0
+      },
+      {
+        "case": "mesh-4",
+        "steps": 900,
+        "hz": 60,
+        "rigBodies": 52,
+        "meshTriangles": 8192,
+        "medianMs": 0.594791,
+        "p95Ms": 2.51033,
+        "maxMs": 10.336737,
+        "first120MaxMs": 10.336737,
+        "contactRows": 56576,
+        "ccdIterations": 18127,
+        "ccdLimits": 0,
+        "minimumBoneCenterY": 0.0447216108,
+        "sleeping": 26
+      }
+    ]
+  },
+  "watch": {
+    "frames": 1753,
+    "steps": 1799,
+    "wall_ms": 30006.828222,
+    "frame_interval_ms": {
+      "median": 17.086709,
+      "p95_nearest_rank": 17.839913,
+      "maximum": 34.686228
+    },
+    "fixed_ms": {
+      "median": 1.615326,
+      "p95_nearest_rank": 3.038412,
+      "maximum": 8.122173
+    },
+    "maximum_fixed_steps_per_frame": 2
+  },
+  "native_pass": true,
+  "cold_pass": true,
+  "delivery_pass": true,
+  "scaling_pass": true
+}

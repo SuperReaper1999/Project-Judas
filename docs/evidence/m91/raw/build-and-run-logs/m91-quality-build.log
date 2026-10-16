@@ -1,0 +1,22 @@
+[  5%] Built target judas_icu_build
+[  5%] Built target judas_quickjs
+[ 11%] Built target judas_app_icon
+[ 23%] Built target freetype
+[ 23%] Built target judas_glad
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_profiler
+[ 41%] Built target judas_jobs
+[ 41%] Built target judas_audio_backend
+[ 41%] Built target judas_materials
+[ 41%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_physics_stress_live_benchmark.dir/tests/PhysicsStressLiveBenchmark.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsStressLiveBenchmark.cpp: In function ‘void quality(RuntimeWorld&, const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsStressLiveBenchmark.cpp:54:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   54 |   if(!physics.GetBodyShape(body,a,pa))continue;++population;
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/tests/PhysicsStressLiveBenchmark.cpp:54:48: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   54 |   if(!physics.GetBodyShape(body,a,pa))continue;++population;
+      |                                                ^~
+[100%] Linking CXX executable judas_physics_stress_live_benchmark
+[100%] Built target judas_physics_stress_live_benchmark

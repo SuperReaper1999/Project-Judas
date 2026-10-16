@@ -1,0 +1,54 @@
+{
+  "PhysicsWorld_sha256": "e20c08d19e10a59239059716d717912b996579cbc41247cb045474cd0559cf42",
+  "binary_sha256": "12febc60102ddf21a81019a830db9ff0ee43a632287950ba1cf458cde132855d",
+  "runs": [
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_diagnostics",
+        "--workload",
+        "free",
+        "--count",
+        "1024",
+        "--warm",
+        "60",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--sleep",
+        "1",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/lazy-free"
+      ],
+      "exit": 0,
+      "workload": "free",
+      "calls": 0,
+      "bytes": 0,
+      "digest": "0a4a19a439edf37b"
+    },
+    {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_diagnostics",
+        "--workload",
+        "machines_sleeping",
+        "--count",
+        "1024",
+        "--warm",
+        "300",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--sleep",
+        "1",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/lazy-machines_sleeping"
+      ],
+      "exit": 0,
+      "workload": "machines_sleeping",
+      "calls": 71400,
+      "bytes": 19038720,
+      "digest": "a84e4455bbcd0753"
+    }
+  ]
+}

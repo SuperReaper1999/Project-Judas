@@ -1,0 +1,16 @@
+{
+  "frames": 1753,
+  "steps": 1799,
+  "wall_ms": 30006.828222,
+  "frame_interval_ms": {
+    "median": 17.086709,
+    "p95_nearest_rank": 17.839913,
+    "maximum": 34.686228
+  },
+  "fixed_ms": {
+    "median": 1.615326,
+    "p95_nearest_rank": 3.038412,
+    "maximum": 8.122173
+  },
+  "maximum_fixed_steps_per_frame": 2
+}

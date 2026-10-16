@@ -1,0 +1,4 @@
+ENCLOSURES relative_failures=0 shape_failures=0 rounded_vs_ideal_deviations=60856
+INTERACTION rotated=0 events=1 momentum=0.5 proved=1
+INTERACTION rotated=1 events=2 momentum=0.5 proved=1
+M91 continuity checks=402 failures=0

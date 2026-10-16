@@ -1,0 +1,95 @@
+{
+  "baseline_binary_sha256": "ef9006f60fb8289fa6fe0397e72af1ef6d6c23678a0e1a9054a81bda1b2f01ed",
+  "baseline_engine_sha256": "4d2641c5a7261975fb4875be537668a4d96c6389bc6a503bf695abb4fedee21a",
+  "link": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "CMakeFiles/judas_collision_continuity_tests.dir/tests/CollisionContinuityTests.cpp.o",
+    "-o",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/negative/baseline-continuity",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/baseline/libjudas_engine.a",
+    "libjudas_app_icon.a",
+    "libjudas_materials.a",
+    "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+    "libjudas_glad.a",
+    "libjudas_audio_backend.a",
+    "libjudas_navigation_backend.a",
+    "libjudas_quickjs.a",
+    "-lm",
+    "libjudas_profiler.a",
+    "_deps/judas_freetype-build/libfreetype.a",
+    "_deps/judas_harfbuzz-build/libharfbuzz.a",
+    "unicode/icu/lib/libicui18n.a",
+    "unicode/icu/lib/libicuuc.a",
+    "unicode/icu/lib/libicudata.a",
+    "-ldl",
+    "libjudas_jobs.a"
+  ],
+  "runs": [
+    {
+      "name": "baseline-elastic",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/negative/baseline-continuity",
+        "--elastic-only"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "pass": true
+    },
+    {
+      "name": "baseline-no-continuation",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/negative/baseline-continuity"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "name": "missing-body-contact",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_benchmarks",
+        "--workload",
+        "pile",
+        "--count",
+        "64",
+        "--warm",
+        "60",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--negative-no-body-contact",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/negative/no-contact"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "pass": true
+    },
+    {
+      "name": "frozen-mechanisms",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_benchmarks",
+        "--workload",
+        "machines_active",
+        "--count",
+        "64",
+        "--warm",
+        "60",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--negative-freeze",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/negative/freeze"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

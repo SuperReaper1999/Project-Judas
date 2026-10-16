@@ -1,0 +1,4 @@
+after-155-r0 COMPLETE 155 {'median': 20.586313, 'p95_nearest_rank': 44.01415, 'maximum': 541.155967}
+after-240-r0 COMPLETE 240 {'median': 23.100496, 'p95_nearest_rank': 153.06779, 'maximum': 469.807945}
+after-155-r1 COMPLETE 155 {'median': 20.949555, 'p95_nearest_rank': 49.40838, 'maximum': 469.122509}
+after-240-r1 COMPLETE 240 {'median': 24.501973, 'p95_nearest_rank': 160.592471, 'maximum': 480.666238}

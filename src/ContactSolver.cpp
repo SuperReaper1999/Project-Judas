@@ -14,7 +14,7 @@ constexpr float kEpsilon = 1.0e-6f;
 // contacts do not fight the solver every step trying to reach exactly zero
 // — unchanged from the pre-M32 solver.
 constexpr float kPositionalCorrectionPercent = 0.2f;
-constexpr float kPenetrationSlop = 0.005f;
+constexpr float kPenetrationSlop = ContactSolver::kPenetrationSlop;
 
 // Restitution only above a meaningful closing speed — otherwise a resting
 // contact's own per-step gravity nudge would "bounce" forever at

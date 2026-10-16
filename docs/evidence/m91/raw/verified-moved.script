@@ -1,0 +1,22 @@
+FRAMES 240
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ACTION watch 1 5 6
+SCREENSHOT 60 /tmp/judas-m91-verified-delivery/package-powered.png
+ACTION pause 1 70 71
+EXPECT_PAUSED 1 73
+ACTION pause 1 85 86
+EXPECT_PAUSED 0 88
+ACTION count_512 1 100 101
+WAIT_SERVICES scene 10000 102
+EXPECT_SCENE Scenes/room512.judas 103
+ACTION count_1024 1 135 136
+WAIT_SERVICES scene 10000 137
+EXPECT_SCENE Scenes/room1024.judas 138
+ACTION rotated 1 170 171
+WAIT_SERVICES scene 10000 172
+EXPECT_SCENE Scenes/rotated.judas 173
+SCREENSHOT 205 /tmp/judas-m91-verified-delivery/package-rotated.png
+ACTION reset 1 210 211
+WAIT_SERVICES scene 10000 212
+EXPECT_SCENE Scenes/rotated.judas 213

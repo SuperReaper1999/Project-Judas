@@ -1,0 +1,7 @@
+{
+  "libjudas_engine.a": "4d2641c5a7261975fb4875be537668a4d96c6389bc6a503bf695abb4fedee21a",
+  "judas_physics_stress_live_benchmark": "6d9b005ca37b53b3126b2eb575137e1f329b97b2a040d882894b6487f487333a",
+  "judas_physics_scaling_benchmarks": "978913cfc5958d74236c091ec2f30a337b7fb9bc4c94ade480901a15db25f862",
+  "judas_impact_mesh_cost_tests": "3065d152b83cbd98df4f8318133d3fffa0dac7cd55c5cb47063674878776d841",
+  "judas_ball_pusher_application_tests": "2bc2c958925aa1ba74f3b779e8d892d5d5fc34c33779795a232669adb8b6d6fc"
+}

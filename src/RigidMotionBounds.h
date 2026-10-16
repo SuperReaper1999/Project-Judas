@@ -79,13 +79,11 @@ using contact_geometry::Iv;
 inline float LoFloat(double value){float f=float(value);return double(f)>value?std::nextafter(f,-std::numeric_limits<float>::infinity()):f;}
 inline float HiFloat(double value){float f=float(value);return double(f)<value?std::nextafter(f,std::numeric_limits<float>::infinity()):f;}
 inline Iv Square(Iv v){const auto a=contact_geometry::Abs(v);return a*a;}
-inline std::optional<Aabb> TryDynamicBoxSweepBound(const Shape& shape,const RigidMotionSegment& segment,
-        const RigidBody& from,const RigidBody& to,double start,double finish){
-    if(shape.type!=ShapeType::Box||shape.pivotOffset!=glm::vec3(0)||segment.prescribed||
-       !std::isfinite(start)||!std::isfinite(finish)||start>finish||start<segment.begin||finish>segment.end||
-       !std::isfinite(float(finish-segment.begin))||!Finite3(segment.position)||!Finite3(segment.linearVelocity)||
-       !Finite3(segment.driftAngularVelocity)||!Finite4(segment.orientation)||!Finite3(from.position)||!Finite3(to.position)||
-       !Finite3(shape.halfExtents)||glm::any(glm::lessThanEqual(shape.halfExtents,glm::vec3(0))))return std::nullopt;
+inline std::optional<contact_geometry::M<Iv>> TryDynamicRotationInterval(
+        const RigidMotionSegment& segment,double start,double finish){
+    if(segment.prescribed||!std::isfinite(start)||!std::isfinite(finish)||start>finish||
+       start<segment.begin||finish>segment.end||!std::isfinite(float(finish-segment.begin))||
+       !Finite3(segment.driftAngularVelocity)||!Finite4(segment.orientation))return std::nullopt;
     try{
         // omega*q0 is fixed on an anchored segment. Each component of the
         // UNnormalised binary32 quaternion is monotone in represented elapsed
@@ -127,13 +125,108 @@ inline std::optional<Aabb> TryDynamicBoxSweepBound(const Shape& shape,const Rigi
             contact_geometry::V<Iv>{ww+xx-yy-zz,two*(x*y+w*z),two*(x*z-w*y)},
             contact_geometry::V<Iv>{two*(x*y-w*z),ww-xx+yy-zz,two*(y*z+w*x)},
             contact_geometry::V<Iv>{two*(x*z+w*y),two*(y*z-w*x),ww-xx-yy+zz}};
+        contact_geometry::M<Iv> rotation;
+        for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k)rotation[j][k]=n[j][k]/d;
+        return rotation;
+    }catch(const contact_geometry::ArithmeticFailure&){return std::nullopt;}
+}
+inline std::optional<Aabb> TryDynamicBoxSweepBound(const Shape& shape,const RigidMotionSegment& segment,
+        const RigidBody& from,const RigidBody& to,double start,double finish){
+    if(shape.type!=ShapeType::Box||shape.pivotOffset!=glm::vec3(0)||!Finite3(segment.position)||
+       !Finite3(segment.linearVelocity)||!Finite3(from.position)||!Finite3(to.position)||
+       !Finite3(shape.halfExtents)||glm::any(glm::lessThanEqual(shape.halfExtents,glm::vec3(0))))return std::nullopt;
+    const auto rotation=TryDynamicRotationInterval(segment,start,finish);if(!rotation)return std::nullopt;
+    try{
         Aabb bound;
         for(unsigned k=0;k<3;++k){
-            Iv extent(0);for(unsigned j=0;j<3;++j)extent=extent+contact_geometry::Abs(n[j][k]/d)*Iv(double(shape.halfExtents[j]));
+            Iv extent(0);for(unsigned j=0;j<3;++j)extent=extent+contact_geometry::Abs((*rotation)[j][k])*Iv(double(shape.halfExtents[j]));
             const Iv center(double(std::min(from.position[k],to.position[k])),double(std::max(from.position[k],to.position[k])));
             bound.min[k]=LoFloat((center-extent).lo);bound.max[k]=HiFloat((center+extent).hi);
         }
         return FiniteBound(bound)?std::optional<Aabb>(bound):std::nullopt;
+    }catch(const contact_geometry::ArithmeticFailure&){return std::nullopt;}
+}
+
+// Projection of every represented point of a centred primitive over ONE
+// anchored segment. `origin` is common to both bodies, avoiding world-coordinate
+// cancellation; the axis can have any orientation. Uncertain ranges fail closed.
+inline std::optional<Iv> TryPrimitiveSweepProjection(const Shape& shape,const RigidMotionSegment* segment,
+        const RigidBody& from,const RigidBody& to,double start,double finish,const glm::dvec3& axis,
+        const glm::dvec3& origin,const ContactPreparedOrientation& orientation){
+    if(!std::isfinite(start)||!std::isfinite(finish)||start>finish||
+       shape.pivotOffset!=glm::vec3(0)||!Finite3(from.position)||!Finite3(to.position)||
+       (shape.type!=ShapeType::Box&&shape.type!=ShapeType::Sphere))return std::nullopt;
+    for(int k=0;k<3;++k)if(!std::isfinite(axis[k])||!std::isfinite(origin[k]))return std::nullopt;
+    if(segment&&(start<segment->begin||finish>segment->end||!Finite3(segment->position)||
+       !Finite3(segment->linearVelocity)||(!segment->prescribed&&!(segment->inverseMass>0))))return std::nullopt;
+    if(!segment&&(from.position!=to.position||!SameQuat(from.orientation,to.orientation)))return std::nullopt;
+    try{
+        Iv center(0),extent(0);
+        for(int k=0;k<3;++k)center=center+(Iv(double(std::min(from.position[k],to.position[k])),double(std::max(from.position[k],to.position[k])))-Iv(origin[k]))*Iv(axis[k]);
+        if(shape.type==ShapeType::Sphere){
+            if(!(shape.radius>0)||!std::isfinite(shape.radius))return std::nullopt;
+            Iv length(0);for(int k=0;k<3;++k)length=length+Iv(axis[k])*Iv(axis[k]);
+            extent=contact_geometry::Sqrt(length)*Iv(double(shape.radius));
+        }else{
+            if(!Finite3(shape.halfExtents)||glm::any(glm::lessThanEqual(shape.halfExtents,glm::vec3(0))))return std::nullopt;
+            auto rotation=orientation.normalizedInterval;
+            if(segment){
+                if(segment->prescribed){
+                    if(segment->driftAngularVelocity!=glm::vec3(0)||!SameQuat(from.orientation,to.orientation))return std::nullopt;
+                }else{
+                    const auto swept=TryDynamicRotationInterval(*segment,start,finish);if(!swept)return std::nullopt;rotation=*swept;
+                }
+            }
+            for(int j=0;j<3;++j){Iv projected(0);for(int k=0;k<3;++k)projected=projected+rotation[j][k]*Iv(axis[k]);extent=extent+contact_geometry::Abs(projected)*Iv(double(shape.halfExtents[j]));}
+        }
+        const Iv lo=center-extent,hi=center+extent;
+        if(!std::isfinite(lo.lo)||!std::isfinite(hi.hi))return std::nullopt;
+        return Iv(lo.lo,hi.hi);
+    }catch(const contact_geometry::ArithmeticFailure&){return std::nullopt;}
+}
+// Outward bound on a float operation's rounding error. Using a full ULP
+// above the magnitude covers binade boundaries, subnormals and signed zero.
+inline double FloatRoundingBound(double magnitude){
+    const float value=std::nextafter(float(magnitude),std::numeric_limits<float>::infinity());
+    return double(std::nextafter(value,std::numeric_limits<float>::infinity()))-double(value);
+}
+// Relative affine motion preserves common drift. Independent centre intervals
+// lose that correlation and cannot certify even two co-moving resting boxes.
+// Explicit rounding envelopes cover RigidMotion's double subtraction -> float
+// elapsed -> float multiply -> float add, rather than assuming exact drift.
+inline std::optional<Iv> TryRelativeCentreProjection(const RigidMotionSegment* a,const RigidMotionSegment* b,
+        const RigidBody& fromA,const RigidBody& fromB,double start,double finish,const glm::dvec3& axis){
+    if(!std::isfinite(start)||!std::isfinite(finish)||start>finish)return std::nullopt;
+    for(int k=0;k<3;++k)if(!std::isfinite(axis[k]))return std::nullopt;
+    for(const auto* segment:{a,b})if(segment&&(start<segment->begin||finish>segment->end||
+        !std::isfinite(segment->begin)||!std::isfinite(segment->end)||!Finite3(segment->position)||
+        !Finite3(segment->linearVelocity)||(!segment->prescribed&&!(segment->inverseMass>0))))return std::nullopt;
+    try{
+        const Iv span=Iv(finish)-Iv(start);
+        Iv projected(0);
+        for(int k=0;k<3;++k){
+            struct Drift {Iv base,velocity,error;};
+            auto drift=[&](const RigidMotionSegment* segment,const RigidBody& from){
+                if(!segment)return Drift{Iv(double(from.position[k])),Iv(0),Iv(0)};
+                const double velocity=segment->linearVelocity[k];
+                const Iv elapsed=Iv(start)-Iv(segment->begin);
+                const double maximumElapsed=std::max(std::abs(start-segment->begin),std::abs(finish-segment->begin));
+                const double doubleMagnitude=std::max({std::abs(start),std::abs(finish),std::abs(segment->begin)});
+                const double doubleError=std::nextafter(doubleMagnitude,std::numeric_limits<double>::infinity())-doubleMagnitude;
+                const Iv timeError=Iv(doubleError)+Iv(FloatRoundingBound(maximumElapsed+doubleError));
+                const double roundedElapsed=double(std::nextafter(float(maximumElapsed+doubleError),std::numeric_limits<float>::infinity()));
+                const double product=std::abs(velocity)*roundedElapsed;
+                const Iv error=Iv(std::abs(velocity))*timeError+Iv(FloatRoundingBound(product))+
+                    Iv(FloatRoundingBound(std::abs(double(segment->position[k]))+product));
+                return Drift{Iv(double(segment->position[k]))+Iv(velocity)*elapsed,Iv(velocity),error};
+            };
+            const auto first=drift(a,fromA),second=drift(b,fromB);
+            const Iv error=first.error+second.error;
+            const Iv delta=first.base-second.base+(first.velocity-second.velocity)*Iv(0,span.hi)+Iv(-error.hi,error.hi);
+            projected=projected+delta*Iv(axis[k]);
+        }
+        if(!std::isfinite(projected.lo)||!std::isfinite(projected.hi))return std::nullopt;
+        return projected;
     }catch(const contact_geometry::ArithmeticFailure&){return std::nullopt;}
 }
 } // namespace rigid_motion_bounds

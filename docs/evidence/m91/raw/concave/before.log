@@ -1,0 +1,10 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+{"case":"box-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":0,"medianMs":0.158538,"p95Ms":0.284654,"maxMs":2.622994,"first120MaxMs":2.622994,"contactRows":13801,"ccdIterations":747,"ccdLimits":0,"minimumBoneCenterY":0.0493287928,"sleeping":13}
+{"case":"box-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":0,"medianMs":0.613425,"p95Ms":0.832267,"maxMs":9.546489,"first120MaxMs":9.546489,"contactRows":55204,"ccdIterations":2988,"ccdLimits":0,"minimumBoneCenterY":0.0493287928,"sleeping":52}
+{"case":"mesh-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":8192,"medianMs":0.153009,"p95Ms":0.289314,"maxMs":4.39771,"first120MaxMs":4.39771,"contactRows":15677,"ccdIterations":2248,"ccdLimits":0,"minimumBoneCenterY":0.0489002839,"sleeping":0}
+{"case":"mesh-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":8192,"medianMs":0.648676,"p95Ms":2.72502,"maxMs":11.067231,"first120MaxMs":11.067231,"contactRows":56576,"ccdIterations":18127,"ccdLimits":0,"minimumBoneCenterY":0.0447216108,"sleeping":26}
+observer_sanity=1

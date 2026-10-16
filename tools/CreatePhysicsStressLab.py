@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Author the ordinary M87 lab. This is content generation, not engine dispatch.
+"""Author the ordinary M87/M91 lab. This is content generation, not engine dispatch.
 
 All cabinets, paddles, shelves and loose pieces below are ordinary rigid bodies.
 The controller is deliberately shared by the room rather than every physical item.
@@ -90,7 +90,7 @@ for element in ui['data']['elements']:
     if element.get('font'):
         element['font'] = identity(font_path)
     if element['id'] == 'title':
-        element.update(text='JUDAS / THE MECHANICAL ARCADE', color=[.94, .78, .37, 1], fontSize=24)
+        element.update(text='JUDAS / COLLISION CONTINUITY', color=[.94, .78, .37, 1], fontSize=24)
     elif element['id'] == 'help':
         element.update(text='1 / 2 / 3: 128 / 512 / 1024 LOOSE BODIES   |   4: ROTATED ROOM   |   M: MOTOR POWER\nF5: WATCH TOUR   |   J: IMPULSE ONE ASSEMBLY   |   K: IMPULSE ALL   |   P: DROP 32   |   ESC: PAUSE', fontSize=14)
     elif element['id'] == 'status':

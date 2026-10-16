@@ -1,0 +1,94 @@
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[ 12%] Built target judas_app_icon
+[ 18%] Built target judas_navigation_backend
+[ 18%] Built target judas_glad
+[ 31%] Built target freetype
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_audio_backend
+[ 37%] Built target judas_materials
+[ 37%] Built target judas_jobs
+[ 37%] Built target harfbuzz
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 43%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_physics_stress_live_benchmark
+[100%] Built target judas_physics_stress_live_benchmark
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[ 12%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 31%] Built target judas_navigation_backend
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_materials
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_collision_continuity_tests.dir/tests/CollisionContinuityTests.cpp.o
+[100%] Linking CXX executable judas_collision_continuity_tests
+[100%] Built target judas_collision_continuity_tests
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_icu_build
+[ 12%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_materials
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_impact_robustness_tests.dir/tests/ImpactRobustnessTests.cpp.o
+[100%] Linking CXX executable judas_impact_robustness_tests
+[100%] Built target judas_impact_robustness_tests
+[ 50%] Built target judas_jobs
+[ 50%] Built target judas_profiler
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/ContactSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/CollisionGeometry.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/Contacts.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/ImpactSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/JointSolver.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/Narrowphase.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsCastGeometry.cpp.o
+[100%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/src/PhysicsWorld.cpp.o
+[100%] Building CXX object CMakeFiles/judas_rigid_contact_tests.dir/tests/RigidContactTests.cpp.o
+[100%] Linking CXX executable judas_rigid_contact_tests
+[100%] Built target judas_rigid_contact_tests
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (1.0s)
+-- Generating done (0.7s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[  6%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[ 12%] Built target judas_app_icon
+[ 12%] Built target judas_glad
+[ 12%] Built target judas_profiler
+[ 25%] Built target freetype
+[ 37%] Built target judas_navigation_backend
+[ 43%] Built target judas_audio_backend
+[ 43%] Built target judas_jobs
+[ 43%] Built target judas_materials
+[ 43%] Built target harfbuzz
+[106%] Built target judas_engine
+[106%] Building CXX object CMakeFiles/judas_physics_continuation_tests.dir/tests/PhysicsContinuationTests.cpp.o
+[106%] Linking CXX executable judas_physics_continuation_tests
+[106%] Built target judas_physics_continuation_tests

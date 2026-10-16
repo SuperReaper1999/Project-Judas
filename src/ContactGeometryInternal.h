@@ -67,6 +67,14 @@ namespace contact_geometry {
         return a+-b;
     }
 
+    // Exact exponent test for normal binary64 operands. Subnormals retain
+    // ilogb; no arithmetic bound, predicate or floating-point order changes.
+    inline bool ProductErrorIsNormalRange(double a,double b){
+        std::uint64_t aa,bb;std::memcpy(&aa,&a,8);std::memcpy(&bb,&b,8);
+        const unsigned ea=unsigned((aa>>52)&2047),eb=unsigned((bb>>52)&2047);
+        if(ea&&ea<2047&&eb&&eb<2047)return ea+eb>=1078; // (ea-1023)+(eb-1023)>=-968
+        return std::ilogb(std::abs(a))+std::ilogb(std::abs(b))>=-968;
+    }
     inline Iv operator*(Iv a,Iv b) {
         if ((a.lo==0&&a.hi==0)||(b.lo==0&&b.hi==0)) return Iv(0);
         if (a.lo==1&&a.hi==1)return b;
@@ -76,10 +84,21 @@ namespace contact_geometry {
         if (a.lo==a.hi && b.lo==b.hi) {
             const double p=a.lo*b.lo,e=std::fma(a.lo,b.lo,-p);
             if (std::isfinite(p) && std::abs(p)>=std::numeric_limits<double>::min() &&
-            std::ilogb(std::abs(a.lo))+std::ilogb(std::abs(b.lo))>=-968)
+            ProductErrorIsNormalRange(a.lo,b.lo))
             return {e<0?Down(p):p,e>0?Up(p):p};
         }
 
+        // A scalar times an interval has only two distinct endpoint products.
+        // Keep the point/point error-free product above and the exact same
+        // outward endpoint rounding as the four-product reference below.
+        if(a.lo==a.hi&&std::isfinite(a.lo)&&std::isfinite(b.lo)&&std::isfinite(b.hi)){
+            const double x=a.lo*b.lo,y=a.lo*b.hi;
+            return {Down(std::min(x,y)),Up(std::max(x,y))};
+        }
+        if(b.lo==b.hi&&std::isfinite(b.lo)&&std::isfinite(a.lo)&&std::isfinite(a.hi)){
+            const double x=a.lo*b.lo,y=a.hi*b.lo;
+            return {Down(std::min(x,y)),Up(std::max(x,y))};
+        }
         const std::array<double,4> v{a.lo*b.lo,a.lo*b.hi,a.hi*b.lo,a.hi*b.hi};
         return {Down(*std::min_element(v.begin(),v.end())),Up(*std::max_element(v.begin(),v.end()))};
     }
@@ -87,6 +106,14 @@ namespace contact_geometry {
     inline Iv operator/(Iv a,Iv b) {
         if (b.lo<=0 && b.hi>=0) throw ArithmeticFailure();
         if (b.lo==1&&b.hi==1)return a;
+        if(b.lo==b.hi&&std::isfinite(b.lo)&&std::isfinite(a.lo)&&std::isfinite(a.hi)){
+            const double x=a.lo/b.lo,y=a.hi/b.lo;
+            return {Down(std::min(x,y)),Up(std::max(x,y))};
+        }
+        if(a.lo==a.hi&&std::isfinite(a.lo)&&std::isfinite(b.lo)&&std::isfinite(b.hi)){
+            const double x=a.lo/b.lo,y=a.lo/b.hi;
+            return {Down(std::min(x,y)),Up(std::max(x,y))};
+        }
         const std::array<double,4> v{a.lo/b.lo,a.lo/b.hi,a.hi/b.lo,a.hi/b.hi};
         return {Down(*std::min_element(v.begin(),v.end())),Up(*std::max_element(v.begin(),v.end()))};
     }

@@ -1,0 +1,26 @@
+PASS non-append duplicate inputs retain their existing duplicate-row semantics
+PASS body order follows first input encounter, not pointer/hash order
+PASS repeated append duplicates preserve rows, velocities, reactions and warm histories exactly
+PASS append adds only newly encountered participant and preserves existing body order
+PASS append cannot apply a newly awakened joint warm start twice
+PASS empty non-append boundary clears every membership domain
+PASS append after empty clear can prepare the same state/body pointer addresses again
+PASS ordinary next boundary discards preceding prepared/body membership
+PASS failed material participant preserves body membership despite contributing no rows
+PASS append respects a prepared no-row material participant
+PASS new boundary can prepare that same material state after reset
+PASS impact preparation retains no-warm-start and observation-retention semantics
+PASS reset/impact solve remains finite after membership reuse
+PASS growing membership table preserves ordered independent rows at 1
+PASS all independent fixed participants solve, including hash-table growth boundary 1
+PASS large repeated append neither adds nor warms duplicate rows 1
+PASS growing membership table preserves ordered independent rows at 31
+PASS all independent fixed participants solve, including hash-table growth boundary 31
+PASS large repeated append neither adds nor warms duplicate rows 31
+PASS growing membership table preserves ordered independent rows at 257
+PASS all independent fixed participants solve, including hash-table growth boundary 257
+PASS large repeated append neither adds nor warms duplicate rows 257
+PASS growing membership table preserves ordered independent rows at 2048
+PASS all independent fixed participants solve, including hash-table growth boundary 2048
+PASS large repeated append neither adds nor warms duplicate rows 2048
+SUMMARY 25 checks 0 failures

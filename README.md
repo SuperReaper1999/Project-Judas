@@ -36,6 +36,12 @@ outstanding; M90 Windows/Android checks were not performed. See
 [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
 [validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
 
+Experimental development includes **M91 collision continuity and scaling**.
+It preserves ordinary first-touch CCD while reducing repeated persistent-contact
+work within the existing solver allowance. Extreme dense piles remain expensive;
+see the [contracts and limitations](docs/M91_COLLISION_CONTINUITY.md) and
+[measured evidence](docs/evidence/m91/REPORT.md). Human review is pending.
+
 ## Highlights
 
 - C++ engine with SDL2, OpenGL 3.3 Core on desktop, and an optional OpenGL ES

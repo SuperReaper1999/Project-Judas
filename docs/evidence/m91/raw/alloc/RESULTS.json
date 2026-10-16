@@ -1,0 +1,151 @@
+{
+  "source_sha256": "de88f9f2bd303188d002e5984126c80b589b92fd35ca2da3278a98926ec97a32",
+  "runs": [
+    {
+      "name": "before",
+      "workload": "free",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/before",
+        "--workload",
+        "free",
+        "--count",
+        "1024",
+        "--warm",
+        "60",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--sleep",
+        "1",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/before-free"
+      ]
+    },
+    {
+      "name": "before",
+      "workload": "machines_sleeping",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/before",
+        "--workload",
+        "machines_sleeping",
+        "--count",
+        "1024",
+        "--warm",
+        "300",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--sleep",
+        "1",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/before-machines_sleeping"
+      ]
+    },
+    {
+      "name": "eager",
+      "workload": "free",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/eager",
+        "--workload",
+        "free",
+        "--count",
+        "1024",
+        "--warm",
+        "60",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--sleep",
+        "1",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/eager-free"
+      ]
+    },
+    {
+      "name": "eager",
+      "workload": "machines_sleeping",
+      "exit": 0,
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/eager",
+        "--workload",
+        "machines_sleeping",
+        "--count",
+        "1024",
+        "--warm",
+        "300",
+        "--steps",
+        "120",
+        "--profile",
+        "0",
+        "--sleep",
+        "1",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/eager-machines_sleeping"
+      ]
+    }
+  ],
+  "before": {
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/before",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/baseline/libjudas_engine.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "libjudas_profiler.a",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "libjudas_jobs.a"
+    ],
+    "binary_sha256": "8362697fccc28b079e2af4009d3b1cd0d3692fb962295caa7853f5477d34f8b9",
+    "engine_sha256": "4d2641c5a7261975fb4875be537668a4d96c6389bc6a503bf695abb4fedee21a"
+  },
+  "eager": {
+    "command": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m91/alloc/eager",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "libjudas_profiler.a",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "libjudas_jobs.a"
+    ],
+    "binary_sha256": "7ecbd0fef411078a07fb93d45d102a369f767bb804391d3995dfc7040712307b",
+    "engine_sha256": "ac8271160947139e3793a8a7304f7fd2b47a89091ad8a8c4e1da37c78ee08f54"
+  }
+}

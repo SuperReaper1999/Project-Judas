@@ -1,0 +1,8 @@
+before-155-r0 COMPLETE 155 {'median': 21.722305, 'p95_nearest_rank': 62.855502, 'maximum': 703.739535}
+after-155-r0 COMPLETE 155 {'median': 20.587251, 'p95_nearest_rank': 48.853933, 'maximum': 491.746981}
+before-240-r0 CENSORED/FAILED 186 {'median': 22.224418, 'p95_nearest_rank': 2462.01748, 'maximum': 3515.54965}
+after-240-r0 COMPLETE 240 {'median': 23.189206, 'p95_nearest_rank': 144.000364, 'maximum': 474.688467}
+after-155-r1 COMPLETE 155 {'median': 20.955633, 'p95_nearest_rank': 43.891587, 'maximum': 467.757194}
+before-155-r1 COMPLETE 155 {'median': 21.813837, 'p95_nearest_rank': 64.624759, 'maximum': 620.686613}
+after-240-r1 COMPLETE 240 {'median': 25.293656, 'p95_nearest_rank': 143.615915, 'maximum': 486.162798}
+before-240-r1 CENSORED/FAILED 184 {'median': 24.322788, 'p95_nearest_rank': 2585.953385, 'maximum': 3647.346466}

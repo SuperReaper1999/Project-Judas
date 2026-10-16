@@ -1,0 +1,4 @@
+baseline play 0 {'median': 12.3268, 'p95': 30.8051, 'maximum': 110.205}
+candidate play 0 {'median': 1.17718, 'p95': 5.02307, 'maximum': 32.5968}
+baseline coins 0 {'median': 6.34807, 'p95': 28.5326, 'maximum': 116.311}
+candidate coins 0 {'median': 6.32533, 'p95': 27.3091, 'maximum': 110.492}
