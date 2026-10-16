@@ -1,0 +1,38 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/.cache/m90-mouse/before/travelling_lab.judasproj)
+Scene: M90 — Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/.cache/m90-mouse/before/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+LOOK frame=20 yaw=0.000000000 pitch=0.200000000 paused=0
+FAIL canonical positive-X/negative-Y mouse deltas reach on-foot script look at full magnitude
+FAIL relative mouse delta is consumed once rather than held into later frames
+LOOK frame=24 yaw=0.000000000 pitch=0.200000000 paused=0
+FAIL opposite mouse directions reverse on-foot camera intent
+CAMERA measured_heading_rad=0.000000016
+FAIL real third-person view orbits in the requested mouse direction, not merely due to settling
+PASS initial on-foot camera is outside the visible character model
+LOOK frame=50 yaw=0.000000000 pitch=0.200000000 paused=0
+FAIL physical mouse axes also orbit the same rover camera while driving
+LOOK frame=74 yaw=0.000000000 pitch=0.200000000 paused=1
+PASS paused UI blocks mouse-look leakage into gameplay
+LOOK frame=80 yaw=0.000000000 pitch=0.200000000 paused=0
+FAIL mouse look resumes through normal input after closing pause UI
+PASS active physical coordinates remain local after kilometre-scale travel
+PASS real wheel/ground contact and powertrain remain operational
+PASS actual kilometre-scale drive frame captured
+PASS leave moving assembly and stand on real planetary collision
+PASS dismounted third-person camera stays outside the visible character
+PASS dismounted view aims at the actual presented character under local gravity
+PASS actual dismounted third-person frame captured
+PASS ordinary save service accepts travelled assembly
+PASS travelled save commits successfully
+PASS fresh world reconstruction preserves absolute chassis endpoint
+PASS cold publication preserves actual momentum and mechanical continuation
+PASS restored character resumes against reconstructed collision
+PASS normal scene reload requested
+TRAVEL frame=600 phase=6 distance=0.000 speed=0.057 origin_revision=0 local=0.881 error=
+PASS reload rebuilds authored chart without old runtime state
+PASS ordinary application lifecycle completes
+SUMMARY 23 checks 6 failures frames=623

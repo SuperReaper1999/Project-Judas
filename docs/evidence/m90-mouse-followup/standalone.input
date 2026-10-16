@@ -1,0 +1,9 @@
+FRAMES 150
+LOG_EVERY 0
+CONTROL mouse:dx 120 20 21
+CONTROL mouse:dy -60 20 21
+EXPECT_AXIS look_x 120 20
+EXPECT_AXIS look_y -60 20
+EXPECT_AXIS look_x 0 21
+EXPECT_AXIS look_y 0 21
+SCREENSHOT 80 /home/conner/Documents/GitHub/Project-Judas/.cache/m90-mouse/standalone.png

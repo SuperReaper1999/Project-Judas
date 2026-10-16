@@ -32,7 +32,7 @@ int main(){
  auto& settings=project.Settings();settings.name="Bring Everything Along";settings.legacyGameplay=false;settings.startupScene="Scenes/earth.judas";settings.worldManifest=worldId;settings.input.entries.clear();settings.saveIdentity="9090909090909090909090909090909090909090909090909090909090909090";
  auto action=[&](const char* name,const char* key){settings.input.entries.push_back({name,false,{{std::string("key:")+key}}});};
  for(auto p:{std::pair{"forward","W"},{"backward","S"},{"left","A"},{"right","D"},{"brake","Space"},{"use","E"},{"watch","T"},{"navigate","N"},{"interact","F"},{"pause","Escape"},{"save","F6"},{"load","F7"},{"reload","R"}})action(p.first,p.second);
- settings.input.entries.push_back({"look_x",true,{{"mouse:DeltaX"}}});settings.input.entries.push_back({"look_y",true,{{"mouse:DeltaY"}}});
+ settings.input.entries.push_back({"look_x",true,{{"mouse:dx"}}});settings.input.entries.push_back({"look_y",true,{{"mouse:dy"}}});
  settings.classification.tags.names[0]="Courier";settings.classification.tags.names[1]="Cargo";settings.classification.tags.nextId=2;
  Scene station;auto box=[&](glm::vec3 position,glm::vec3 half,glm::vec3 color,bool dynamic=false){auto& o=station.CreateObject(dynamic?"Movable service cargo":"Waystation structure");o.transform.position=position;o.render=SceneRenderComponent{};o.render->halfExtents=half;o.render->color=color;o.body=SceneBodyComponent{};o.body->halfExtents=half;o.body->motion=dynamic?SceneBodyMotion::Dynamic:SceneBodyMotion::Static;o.body->mass=dynamic?8:1;if(dynamic)o.tags=CategoryBit(1);return o.id;};
  box({0,-.4f,0},{14,.4f,12},{.32f,.36f,.39f});
