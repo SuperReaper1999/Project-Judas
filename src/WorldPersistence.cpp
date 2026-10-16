@@ -129,11 +129,11 @@ bool WorldPersistence::CaptureAnimation(RuntimeWorld& w,EntityId id,std::string&
 bool WorldPersistence::CaptureKinematic(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){
  try{auto body=w.RuntimeBody(id);if(!w.Physics().IsKinematicBody(body)){bytes.clear();return true;}SaveArchive a;w.Physics().PersistKinematic(a,body);a.Require(a.bytes.size()<=1024,"kinematic snapshot bound");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}
 }
-bool WorldPersistence::RestoreKinematic(RuntimeWorld& w,EntityId id,const std::string& bytes,std::string& error){
+bool WorldPersistence::RestoreKinematic(RuntimeWorld& w,EntityId id,const std::string& bytes,std::string& error,glm::dvec3 capturedOriginDelta){
  // Region restoration uses a private, disabled actor; only native fixup may
  // resolve its body before publication. No callback or integration occurs here.
  const bool pending=w.m_regionPending.erase(id)!=0;bool ok=false;
- try{SaveArchive a(bytes);a.Require(bytes.size()<=1024&&w.Physics().IsKinematicBody(w.RuntimeBody(id)),"saved kinematic body unavailable");w.Physics().PersistKinematic(a,w.RuntimeBody(id));a.Finish();if(pending)w.m_regionKinematicCommands[id]=bytes;ok=true;}catch(const std::exception& e){error=e.what();}
+ try{SaveArchive a(bytes);a.Require(bytes.size()<=1024&&w.Physics().IsKinematicBody(w.RuntimeBody(id)),"saved kinematic body unavailable");w.Physics().PersistKinematic(a,w.RuntimeBody(id),capturedOriginDelta);a.Finish();if(pending){SaveArchive current;w.Physics().PersistKinematic(current,w.RuntimeBody(id));w.m_regionKinematicCommands[id]=std::move(current.bytes);}ok=true;}catch(const std::exception& e){error=e.what();}
  if(pending)w.m_regionPending.insert(id);
  return ok;
 }

@@ -1,6 +1,24 @@
 # Architecture
 
-## Current Experimental — M89 optional local multiplayer
+## Current Experimental — M90 assembly travel
+
+M90 extends the existing M85 checked origin transaction rather than introducing
+parallel physical worlds. At a completed fixed boundary, the shared PhysicsWorld
+translates first; component owners translate world-space history, then the world
+publishes gravity/streaming frames and the new binary64 origin. Script-owned
+cache notification follows publication. Handles, scalar rotational continuation,
+body-local contact anchors, Detour tile geometry and immutable assets are retained.
+
+Wheels/powertrains, CharacterMotor support, navigation, sockets, IK, articulations,
+deformables/material sections, audio and particles now participate. Retained
+stream payloads decode using their capture origin before private publication.
+Active liquids/PBF, atmosphere/combustion, the single 8 km chart bound and pending
+streaming transactions remain explicit restrictions. Live articulations keep
+their existing suspension pins. See [M90 contracts and lab](M90_ASSEMBLY_TRAVEL.md)
+and [measured evidence](evidence/m90/REPORT.md). Automated candidate validation is
+separate from human acceptance; main remains accepted M89.
+
+## M89 optional local multiplayer
 
 `RuntimeWorld` lazily owns `LocalPlayers`. A process-monotonic player token is
 independent of device assignments and an optional controlled-entity association.
@@ -109,8 +127,9 @@ cheaper and have no temporal weather history to alias another camera.
 Scene/editor/prefab properties use the existing component path. Full saves own
 explicit weather continuation; M59 retained records use archive version 8 and
 restore privately before atomic publication. Absolute weather anchoring survives
-M85 chart shifts; only follow-active-view audio listeners receive the additional
-narrow audio origin contract. Project JS controls weather intent and the ordinary
+M85 chart shifts. M90 additionally translates ordinary audio emitters, zones,
+listener motion history and backend one-shots; the original M86 narrow contract
+is superseded for these participants. Project JS controls weather intent and the ordinary
 [Weather Lab](../projects/weather_lab/README.md) tour. Final Linux measurements,
 Windows status and human acceptance must be read from the M86 evidence; this
 candidate section itself makes no validation claim.
@@ -125,7 +144,8 @@ branch or global float planet collider exists. [JudasJS origin APIs](judasjs/pla
 translate a checked subset of active physics/presentation state at fixed boundaries.
 M59 retained records carry their capture origin when needed; save slots reconstruct
 derived collision before resuming. Unsupported component combinations explicitly
-reject live origin shifts. This is a bounded local-chart foundation, not universal
+rejected live origin shifts at M85. M90 now extends the listed component participants;
+active liquid/PBF and atmosphere/combustion exclusions remain. This is a bounded local-chart foundation, not universal
 rebasing of every subsystem or a global streamed DEM/volumetric planet database.
 [M85 Linux operator acceptance](evidence/m85/HUMAN_VALIDATION.md) is recorded; Windows M85 validation remains unperformed.
 

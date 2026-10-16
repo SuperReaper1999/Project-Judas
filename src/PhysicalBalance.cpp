@@ -148,6 +148,13 @@ bool PhysicalBalanceController::Request(PhysicsWorld& world,BalanceTask task,boo
 }
 void PhysicalBalanceController::Release(PhysicsWorld& world){JointAngularDrive disabled;for(size_t i=1;i<m_bodies.size();++i)world.SetJointAngularDrive(m_bodies[i].joint,disabled);}
 void PhysicalBalanceController::Cancel(PhysicsWorld& world){Release(world);m_history.progress=BalanceProgress::Cancelled;m_history.task=BalanceTask::None;m_history.swing=-1;m_history.reason="cancelled";m_observation={};}
+void PhysicalBalanceController::ShiftOrigin(glm::dvec3 delta){
+    auto shift=[&](glm::vec3& p){p=glm::vec3(glm::dvec3(p)-delta);};
+    shift(m_observation.com);
+    for(auto& support:m_observation.supports)shift(support.point);
+    for(auto& contact:m_contacts)shift(contact.point);
+    // Planned footholds and stance/root references are support-body-local.
+}
 void PhysicalBalanceController::Fail(PhysicsWorld& world,const char* why){Release(world);m_history.progress=BalanceProgress::Failed;m_history.swing=-1;m_history.lastSwing=-1;m_history.frameSupport={};m_history.plannedSupport={};m_history.stanceSupport={};m_history.reason=why;}
 bool PhysicalBalanceController::Observe(PhysicsWorld& world,const std::vector<glm::vec3>& gravity){
     JUDAS_PROFILE_SCOPE("Physical balance observations");

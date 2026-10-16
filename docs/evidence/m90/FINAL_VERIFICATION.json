@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-16T13:53:21.966929+00:00",
+  "baseline": "7f7b617907a81d65bcbdd931f9989f01c4c72dd9",
+  "branch": "Experimental",
+  "sourceContentFiles": 60,
+  "sourceFingerprintsVerified": true,
+  "archiveSHA256": "a651133c638964ef0cadf5b5e731255d69292799fae8228c3225a5a0bc9da1a3",
+  "protectedHistoricalTrackedChanges": [],
+  "existingProjectTrackedChanges": [],
+  "fluidAlgorithmTrackedChanges": [],
+  "runtimeExportMovedSHA256Match": true,
+  "mainUnchanged": true,
+  "humanAccepted": false,
+  "windowsM90": "not performed - informational",
+  "androidM90": "not performed - nonblocking",
+  "knownBaselineFailures": [
+    "M77 foundation 17-participant assumption",
+    "M82 lifecycle 19-participant assumption"
+  ]
+}

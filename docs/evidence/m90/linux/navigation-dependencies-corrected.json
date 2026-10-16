@@ -1,0 +1,11 @@
+{
+  "command": [
+    "build/judas_navigation_dependency_tests",
+    ".cache/m90/dependency-project/landscape_fork.judasproj",
+    "Imports/landscape.judasterrain"
+  ],
+  "exit": 0,
+  "seconds": 0.7127783910000289,
+  "utc": "2026-10-16T13:44:43.056848+00:00",
+  "fixtureSource": ".cache/m78-followup/dependency-negatives-project"
+}

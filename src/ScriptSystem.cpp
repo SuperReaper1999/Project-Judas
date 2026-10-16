@@ -1832,6 +1832,30 @@ void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const Phy
     }
 }
 
+void ScriptSystem::ShiftOrigin(glm::dvec3 delta){
+    m->CheckThread();
+    m->viewOrigin=glm::vec3(glm::dvec3(m->viewOrigin)-delta);
+    const auto vector=[&](glm::dvec3 p){auto value=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,value,"x",JS_NewFloat64(m->ctx,p.x));JS_SetPropertyStr(m->ctx,value,"y",JS_NewFloat64(m->ctx,p.y));JS_SetPropertyStr(m->ctx,value,"z",JS_NewFloat64(m->ctx,p.z));return value;};
+    const bool fixed=m->fixed;m->fixed=false;
+    // The chart is completely published before notification. This callback is
+    // for explicitly owned script caches; arbitrary JSON is never guessed to
+    // be a position. Physics intent remains confined to fixedUpdate.
+    for(auto key:m->world->ScriptKeys()){
+        auto it=m->instances.find(key);if(it==m->instances.end()||!it->second.started||it->second.fault||!m->world->RuntimeDefinition(key.first))continue;
+        auto& i=it->second;Impl::Invocation invocation(*m,i);m->polls=0;
+        auto fn=JS_GetPropertyStr(m->ctx,i.value,"onOriginShift");
+        if(JS_IsException(fn))m->Error(i,"onOriginShift");
+        else if(JS_IsFunction(m->ctx,fn)){
+            auto event=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,event,"delta",vector(delta));JS_SetPropertyStr(m->ctx,event,"origin",vector(m->world->Settings().worldOrigin));JS_SetPropertyStr(m->ctx,event,"revision",JS_NewFloat64(m->ctx,double(m->world->OriginRevision())));
+            auto result=JS_Call(m->ctx,fn,i.value,1,&event);
+            if(JS_IsException(result))m->Error(i,"onOriginShift");
+            else if(JS_PromiseState(m->ctx,result)!=JS_PROMISE_NOT_A_PROMISE){JS_ThrowTypeError(m->ctx,"async origin callbacks unsupported");m->Error(i,"onOriginShift");}
+            JS_FreeValue(m->ctx,result);JS_FreeValue(m->ctx,event);
+        }
+        JS_FreeValue(m->ctx,fn);
+    }
+    m->fixed=fixed;
+}
 void ScriptSystem::SetView(const glm::mat4& view) {
     m->CheckThread();auto inverse=glm::inverse(view);m->viewOrigin=glm::vec3(inverse[3]);
     m->viewDirection=-glm::vec3(inverse[2]);m->hasView=true;

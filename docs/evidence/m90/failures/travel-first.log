@@ -1,0 +1,46 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/travelling_lab.judasproj)
+Scene: M90 — Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+TRAVEL frame=600 phase=0 distance=85.089 speed=12.838 origin_revision=0 local=85.279 error=
+TRAVEL frame=1200 phase=0 distance=216.880 speed=13.321 origin_revision=0 local=217.076 error=
+TRAVEL frame=1800 phase=0 distance=350.441 speed=13.348 origin_revision=1 local=244.866 error=
+TRAVEL frame=2400 phase=0 distance=483.726 speed=13.342 origin_revision=1 local=186.239 error=
+TRAVEL frame=3000 phase=0 distance=617.313 speed=13.340 origin_revision=1 local=211.939 error=
+TRAVEL frame=3600 phase=0 distance=750.551 speed=13.341 origin_revision=1 local=301.278 error=
+TRAVEL frame=4200 phase=0 distance=884.075 speed=13.330 origin_revision=2 local=230.734 error=
+TRAVEL frame=4800 phase=0 distance=1017.161 speed=13.153 origin_revision=2 local=183.827 error=
+TRAVEL frame=5400 phase=0 distance=1018.369 speed=0.047 origin_revision=2 local=183.756 error=
+TRAVEL frame=6000 phase=0 distance=1018.882 speed=0.053 origin_revision=2 local=183.729 error=
+TRAVEL frame=6600 phase=0 distance=1019.410 speed=0.053 origin_revision=2 local=183.708 error=
+TRAVEL frame=7200 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=7800 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=8400 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=9000 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=9600 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=10200 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=10800 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=11400 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=12000 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=12600 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=13200 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=13800 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=14400 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=15000 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=15600 phase=0 distance=1019.627 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=16200 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=16800 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=17400 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=18000 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=18600 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=19200 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=19800 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=20400 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=21000 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+TRAVEL frame=21600 phase=0 distance=1019.628 speed=0.000 origin_revision=2 local=183.703 error=
+FAIL bounded end-to-end travel finishes
+PASS ordinary application lifecycle completes
+SUMMARY 2 checks 1 failures frames=22001

@@ -1,4 +1,4 @@
-# Planet terrain and local physics origins (M85)
+# Planet terrain and local physics origins (M85 / M90)
 
 This optional component describes an absolute binary64 cube-sphere. Ordinary
 `Entity.transform`, physics queries, CharacterMotor and camera positions still
@@ -20,20 +20,64 @@ points, world joint anchors, gravity regions, motor support origins and rigid
 presentation history together. It does not reset momentum, sleep, orientation,
 constraints or time. Support normal remains independent from gravity direction.
 
-**Scope:** live shifts require script-owned execution and an 8 km active physics
-chart. Spatial actors must be streamed out/retired before moving to a distant
-chart. Active liquid/PBF, atmosphere/combustion, deformables, articulations/IK,
-wheels/powertrains, navigation, audio, particles and visual sockets currently
-reject live shifts. Retained opaque component continuations and pending M59
-transactions also reject shifts. This is not universal whole-engine rebasing.
-Scenes that never request a shift retain their existing behaviour.
+**M90 scope:** live shifts require script-owned execution and an 8 km active
+physics chart. Spatial actors must be streamed out/retired before moving to a
+distant chart. Wheels and scalar powertrain state, navigation frames/corridors,
+ragdolls/physical animation, shared and legacy IK targets, sockets, deformables,
+audio and particles participate. Body/joint/entity handles retain their identities;
+the operation translates positions and preserves directions, velocities, loads,
+sleep, commands and local attachment frames. Detour tiles and immutable mesh/rest
+assets remain in their own local frames.
 
-Scripts own their cached coordinates. Store long-lived locations in absolute
-space, or observe `revision` and translate local caches yourself. The engine
-cannot infer which numbers inside arbitrary game JSON represent positions.
-Scene reload resets the origin to the authored value; saves preserve the current
-origin. Streamed ordinary rigid/motor records retain their capture origin so
-unload/reload does not reinterpret old local coordinates in a new chart.
+**Remaining exclusions:** active conserved liquids, legacy PBF, atmosphere and
+combustion reject shifts. An in-flight M59 residency transaction defers the shift
+until it reaches a safe boundary. A live articulation still pins its streamed
+source region under the existing suspension rules; translating it does not add
+articulation suspension support. This is one shared local physics chart, not
+simultaneous distant physics islands or universal whole-engine rebasing.
+Scenes that never request a shift retain their existing path.
+
+## `onOriginShift(event)` — explicit script caches (M90)
+
+An optional synchronous script callback runs **after** a nonzero origin change
+has fully committed and **before** the next ordinary `fixedUpdate`:
+
+```js
+onOriginShift({delta, origin, revision}) {
+  // Only a cache this script knows to be local position data.
+  if (this.smoothedCamera) {
+    this.smoothedCamera.x -= delta.x;
+    this.smoothedCamera.y -= delta.y;
+    this.smoothedCamera.z -= delta.z;
+  }
+}
+```
+
+`delta = newOrigin - oldOrigin`, in binary64 metres. `origin` is the new absolute
+origin; `revision` is the current world's monotonic origin-transition count.
+Revisions are runtime observations, not durable identities. All vectors are
+object snapshots, not mutable native storage. Subtract delta from **local points**;
+never from directions, velocities, local offsets or absolute locations.
+
+Only already-started, live, healthy slots receive the hook. Rejected requests and
+zero shifts emit nothing. A callback error faults that slot under the usual
+isolation/budget rules; it cannot roll back a completed native chart change.
+This notification is not a fixed-update callback: fixed-only movement/impulse
+writes remain forbidden. Use it for owned caches, then submit motion in
+`fixedUpdate`. See [lifecycle](lifecycle.md).
+
+The engine never guesses which numbers in arbitrary JSON are positions. Store
+long-lived locations in absolute space (`world.toAbsolute`), or retain their
+capture origin and explicitly reproject when reacquiring them. Suspended scripts
+receive no callbacks while absent; on `restore`/resume, rebuild local caches from
+absolute data, rather than replaying missed origin events.
+
+Scene reload resets to the authored origin. Full saves preserve the active chart.
+M59 retained records preserve capture origins and decode kinematic targets,
+deformed nodes and owned material sections in the new chart before publication.
+Powertrain spin/commands are scalar and are not translated. Derived contact and
+presentation data reconstruct through their existing lifecycle. See the
+[M90 implementation and limitations](../M90_ASSEMBLY_TRAVEL.md).
 
 ## Entity planet methods
 

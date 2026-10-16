@@ -23,6 +23,7 @@ public:
     std::optional<std::vector<SceneObjectId>> DeclaredReferences(SceneObjectId,const SceneScriptSlot&)const;
     // Latest active presentation camera, for project-authored pointing UI.
     void SetView(const glm::mat4& view);
+    void ShiftOrigin(glm::dvec3 delta);
     void Frame(const InputSystem* input,float dt);
     void Fixed(const InputSystem* input,float dt);
     void UIFrame(const InputSystem* input,float dt);

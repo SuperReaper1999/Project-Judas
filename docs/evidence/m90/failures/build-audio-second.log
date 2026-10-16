@@ -1,0 +1,21 @@
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_app_icon
+[ 13%] Built target judas_quickjs
+[ 13%] Built target judas_glad
+[ 26%] Built target freetype
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target judas_jobs
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_origin_audio_tests.dir/tests/OriginAudioTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/OriginAudioTests.cpp:4:10: fatal error: AudioAcoustics.h: No such file or directory
+    4 | #include "AudioAcoustics.h"
+      |          ^~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[3]: *** [CMakeFiles/judas_origin_audio_tests.dir/build.make:79: CMakeFiles/judas_origin_audio_tests.dir/tests/OriginAudioTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:12430: CMakeFiles/judas_origin_audio_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:12437: CMakeFiles/judas_origin_audio_tests.dir/rule] Error 2
+gmake: *** [Makefile:3725: judas_origin_audio_tests] Error 2

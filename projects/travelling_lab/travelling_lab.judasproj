@@ -1,0 +1,12 @@
+JudasProject 1
+name "Bring Everything Along"
+world-manifest "90909090909090909090909000000006"
+startup-scene "Scenes/earth.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+save-identity "9090909090909090909090909090909090909090909090909090909090909090"
+legacy-gameplay "false"
+input-map "1 15 \"forward\" 0 1 \"key:W\" 1 0 \"backward\" 0 1 \"key:S\" 1 0 \"left\" 0 1 \"key:A\" 1 0 \"right\" 0 1 \"key:D\" 1 0 \"brake\" 0 1 \"key:Space\" 1 0 \"use\" 0 1 \"key:E\" 1 0 \"watch\" 0 1 \"key:T\" 1 0 \"navigate\" 0 1 \"key:N\" 1 0 \"interact\" 0 1 \"key:F\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"save\" 0 1 \"key:F6\" 1 0 \"load\" 0 1 \"key:F7\" 1 0 \"reload\" 0 1 \"key:R\" 1 0 \"look_x\" 1 1 \"mouse:DeltaX\" 1 0 \"look_y\" 1 1 \"mouse:DeltaY\" 1 0 "
+classification "JudasClassification 1 2 2 0 \"Courier\" 1 \"Cargo\" 1 1 0 \"Default\" 1 1 0 \"Default\" "
+navigation "JudasNavigationProject 1 1 1 0 \"Default\" 1 1 0 \"Default\" 0.300000012 1.79999995 50 0.349999994"

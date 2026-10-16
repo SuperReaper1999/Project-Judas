@@ -98,6 +98,7 @@ public:
                    const BalanceSettings&,std::string&);
     bool Request(PhysicsWorld&,BalanceTask,bool allowSteps,bool effort,std::string&);
     void Cancel(PhysicsWorld&);
+    void ShiftOrigin(glm::dvec3 delta);
     // Called before one ordinary PhysicsWorld step. Acceleration is sampled
     // for EVERY mapped physical body through its ordinary world gravity path.
     void Prepare(PhysicsWorld&,const std::vector<glm::vec3>& accelerations,float dt);

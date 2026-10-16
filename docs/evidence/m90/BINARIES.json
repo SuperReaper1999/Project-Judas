@@ -1,0 +1,50 @@
+{
+  "build/judas": {
+    "sha256": "830aabbfdad418a7b4efe0b44488a661fcd8e781c68ff808ba502ca5e2dd4611",
+    "bytes": 53165008
+  },
+  "build/judas_editor": {
+    "sha256": "ba5a1ac38a378a5f0d434a5fa5b5e7ec5b91120f046c12b9551eae1942573ee3",
+    "bytes": 58438016
+  },
+  "build/judas_export": {
+    "sha256": "fcdde2de084241652f9de21622f36c058d41047a9f4888d7dc36242535b585c5",
+    "bytes": 52975608
+  },
+  "build/judas_origin_physics_tests": {
+    "sha256": "829e15cca9d4dda9074458986cd6a45066361f91d69250cf79470748a52d74b0",
+    "bytes": 1267528
+  },
+  "build/judas_origin_assembly_tests": {
+    "sha256": "b457a9515d4355cf662797195c70387b56080baa4708f33b66ea87401ffcab38",
+    "bytes": 52401136
+  },
+  "build/judas_origin_stream_tests": {
+    "sha256": "849ab4259cb6f3b8b93d29029af237cbae303d886f434cef84b09178114c5935",
+    "bytes": 52316096
+  },
+  "build/judas_origin_script_tests": {
+    "sha256": "cbf96605e8521a09b8ad0118d6961deee07eff7adb76675dc0486a17facc3356",
+    "bytes": 52277832
+  },
+  "build/judas_origin_participant_tests": {
+    "sha256": "2264359c5641e06ce46e75f2712d9807357d0fa11b1bf5489218612463b9007d",
+    "bytes": 52342352
+  },
+  "build/judas_origin_travel_application_tests": {
+    "sha256": "4f88417de5dbede4dc33b9458e53046dc1b7a49c54983b3379e3cd4fd8787fc6",
+    "bytes": 53243656
+  },
+  "build/judas_origin_audio_tests": {
+    "sha256": "4ae2b8f3bd5889a762f6c716b6c92550885b360136d1692822953eea90872d75",
+    "bytes": 52280248
+  },
+  ".cache/m90/export/judas": {
+    "sha256": "830aabbfdad418a7b4efe0b44488a661fcd8e781c68ff808ba502ca5e2dd4611",
+    "bytes": 53165008
+  },
+  "/tmp/judas-m90-travel-20261016/judas": {
+    "sha256": "830aabbfdad418a7b4efe0b44488a661fcd8e781c68ff808ba502ca5e2dd4611",
+    "bytes": 53165008
+  }
+}

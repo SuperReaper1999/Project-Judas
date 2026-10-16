@@ -1,4 +1,4 @@
-/** Current JudasJS through M89 Experimental. M89 operator acceptance is pending.
+/** Current JudasJS through M90 Experimental. M89 is human accepted.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -895,6 +895,7 @@ declare module "judas" {
     readonly initialState:JSONValue;
   }
   /** Structural tooling interface, not a runtime-exported base class. */
+  export interface OriginShiftEvent {readonly delta:Vec3;readonly origin:Vec3;readonly revision:number}
   export interface ScriptBehaviour {
     state?: JSONValue;
     start?(dt: number): void;
@@ -909,6 +910,8 @@ declare module "judas" {
     onSignal?(event:SignalEvent):void;
     onUI?(event: UIEvent): void;
     onFracture?(event:FractureEvent):void;
+    /** After a successful chart publication, before fixedUpdate. Subtract delta from owned local-space position caches. */
+    onOriginShift?(event:OriginShiftEvent):void;
     onCollisionEnter?(event: ContactEvent): void;
     onCollisionStay?(event: ContactEvent): void;
     onCollisionExit?(event: ContactEvent): void;

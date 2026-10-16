@@ -66,6 +66,7 @@ Promise. No async callback/top-level-await scheduler exists.
 | `onUI(event)` | UI input events, before gameplay input; broadcast to live scripts. |
 | `update(dt)` | Active gameplay frame, before that frame's fixed-step catch-up. |
 | `presentationUpdate(dt, alpha)` | After fixed-step catch-up, before the interactive view/audio/world draw. Runs also on zero-step frames and while UI pauses gameplay. Alpha is the same [0,1] interpolation fraction used by rendering; `dt` is outer-frame seconds. |
+| `onOriginShift(event)` | M90: after a nonzero native chart commit, before fixed scripts; only already-started live/healthy slots. Position caches may subtract `event.delta`; fixed-only writes stay forbidden. [Coordinates and lifetime](planetary-terrain.md#onoriginshiftevent--explicit-script-caches-m90). |
 | `fixedUpdate(dt)` | Before ordinary fixed-step force/physics advance; zero or several calls per rendered frame. |
 | `onCollisionEnter/Stay/Exit(event)` | Fixed-step authoritative contact delivery after physics/motor/pose publication. |
 | `onTriggerEnter/Stay/Exit(event)` | Same event boundary; sensors generate no physical response. |

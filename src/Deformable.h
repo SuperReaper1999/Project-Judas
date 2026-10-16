@@ -122,6 +122,7 @@ public:
     bool Force(const std::string& group,glm::dvec3 force);
     bool Release(const std::string& group);
     void Wake(){sleeping=false;quietSeconds=0;}
+    void ShiftOrigin(glm::dvec3 delta);
     void Step(double dt,PhysicsWorld&,const GravityField&,const std::vector<DeformableTarget>&);
     void MapRender(double alpha,MeshData&)const;
     DeformableHit Raycast(glm::dvec3 origin,glm::dvec3 direction,double maximum)const;

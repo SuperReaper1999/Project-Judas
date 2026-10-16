@@ -123,6 +123,13 @@ void DeformableInstance::Reset(const glm::dmat4& transform){
     attachmentState.assign(settings.attachments.size(),{});
     Wake();
 }
+void DeformableInstance::ShiftOrigin(glm::dvec3 delta){
+    for(auto* points:{&positions,&previous,&start,&contactReference,&contactStartReference})for(auto& p:*points)p-=delta;
+    initial[3]-=glm::dvec4(delta,0);
+    for(auto* tree:{&faceTree,&edgeTree})for(auto& node:*tree){node.low-=delta;node.high-=delta;}
+    // Rest matrices, plastic strain, multipliers, velocities and forces are
+    // translation-invariant. Candidate identities and sleep clocks stay intact.
+}
 bool DeformableInstance::SetMaterial(const DeformableMaterial& m,std::string& e){if(asset->fracture&&asset->fracture->rigid){e="rigid fracture material is authored; reload to change mass/contact properties";return false;}auto s=settings;
     s.material=m;
     if(!ValidDeformableSettings(s,e))return false;

@@ -22,7 +22,7 @@ public:
  static bool CaptureAnimation(RuntimeWorld&,uint64_t,std::string&,std::string&);
  static bool RestoreAnimation(RuntimeWorld&,uint64_t,const std::string&,std::string&);
  static bool CaptureKinematic(RuntimeWorld&,uint64_t,std::string&,std::string&);
- static bool RestoreKinematic(RuntimeWorld&,uint64_t,const std::string&,std::string&);
+ static bool RestoreKinematic(RuntimeWorld&,uint64_t,const std::string&,std::string&,glm::dvec3 capturedOriginDelta={});
 private:
  static void Entities(RuntimeWorld&,SaveArchive&);
  static void Motors(RuntimeWorld&,SaveArchive&);

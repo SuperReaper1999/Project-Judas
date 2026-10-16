@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M89 Experimental public module based on checkpoint `109c4386ef750162391655f522c237ecbf51aa7f`. M89 human acceptance is pending. M88 phone acceptance remains separately recorded; it does not certify this local multiplayer candidate. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M90 Experimental public module based on checkpoint `7f7b617907a81d65bcbdd931f9989f01c4c72dd9`. M89 human acceptance is recorded. M90 human acceptance is pending; earlier platform acceptance does not certify this origin-integration candidate. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -431,7 +431,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 
 ## Lifecycle and dynamic exceptions
 
-`onSignal`, `onFracture`, `start`, `restore`, `update`, `fixedUpdate`, `uiUpdate`, `presentationUpdate`, `destroy`, `onUI`, `onCollisionEnter`, `onCollisionStay`, `onCollisionExit`, `onTriggerEnter`, `onTriggerStay`, `onTriggerExit` are structural ScriptBehaviour callbacks, not module exports.
+`onOriginShift`, `onSignal`, `onFracture`, `start`, `restore`, `update`, `fixedUpdate`, `uiUpdate`, `presentationUpdate`, `destroy`, `onUI`, `onCollisionEnter`, `onCollisionStay`, `onCollisionExit`, `onTriggerEnter`, `onTriggerStay`, `onTriggerExit` are structural ScriptBehaviour callbacks, not module exports.
 
 - **globalThis.__judas**: Internal native dispatcher; unsupported, not a public API declaration.
 - **globalThis.console**: Alias of exported console; no extra API.

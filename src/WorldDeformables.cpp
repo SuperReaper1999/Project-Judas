@@ -164,7 +164,7 @@ bool RuntimeWorld::CaptureDeformable(EntityId id,std::string& bytes,std::string&
         }catch(const std::exception& e){error=e.what();
         return false;
         }}
-bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged,const std::map<EntityId,EntityId>& remap){auto* s=RuntimeDeformable(id,error,staged);
+bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::string& error,bool staged,const std::map<EntityId,EntityId>& remap,glm::dvec3 capturedOriginDelta){auto* s=RuntimeDeformable(id,error,staged);
     if(!s)return false;
     try{const bool materials=bytes.rfind(materialStateHeader,0)==0;
         if(s->asset->fracture&&s->asset->fracture->HasMaterials()&&!materials)throw std::runtime_error("material partition requires retained state4");
@@ -172,8 +172,8 @@ bool RuntimeWorld::RestoreDeformable(EntityId id,const std::string& bytes,std::s
         const bool framed=strengths||bytes.rfind(stateHeader,0)==0;
         if(bytes.rfind("Judas.DeformableState.",0)==0&&!framed)throw std::runtime_error("unsupported deformable state version");
         SaveArchive a(framed?bytes.substr(std::char_traits<char>::length(stateHeader)):bytes);
-        s->Persist(a,framed,strengths);
-        if(materials){for(auto& attachment:s->settings.attachments)if(remap.count(attachment.target))attachment.target=remap.at(attachment.target);PersistFractureBundle(id,a,staged,remap);}else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a);
+        s->Persist(a,framed,strengths);s->ShiftOrigin(capturedOriginDelta);
+        if(materials){for(auto& attachment:s->settings.attachments)if(remap.count(attachment.target))attachment.target=remap.at(attachment.target);PersistFractureBundle(id,a,staged,remap,capturedOriginDelta);}else if(s->asset->fracture&&s->asset->fracture->rigid)PersistRigidFracture(id,a,nullptr,capturedOriginDelta);
         a.Finish();
         ++m_deformables.at(id).revision;m_deformables.at(id).meshTopology=~uint64_t(0);
         for(auto& t:m_deformables.at(id).targets)t.valid=false;

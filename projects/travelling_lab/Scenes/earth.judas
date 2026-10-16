@@ -1,0 +1,130 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "M90 — Bring Everything Along",
+      "world-origin": [
+        0,
+        6371000,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.8,
+        0.25
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.27,
+        0.3,
+        0.33
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 4
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Earth-sized precision-safe terrain",
+        "fields": {
+          "planet.surface": "{\"version\":1,\"radius\":6371000.0,\"center\":[0.0,0.0,0.0],\"rotation\":[1.0,0.0,0.0,0.0],\"segments\":16,\"maxLevel\":24,\"maxTiles\":256,\"maxResident\":512,\"buildsPerFrame\":4,\"pixelError\":2.0,\"morphSeconds\":0.35,\"collisionSpacing\":0.5,\"collisionRadius\":18.0,\"maxCollisionTiles\":128,\"bands\":[{\"amplitude\":0.08,\"wave\":[0.018,0.0,0.024]},{\"amplitude\":1.5,\"wave\":[0.0007,0.0,0.0011]}],\"patches\":[]}",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary RadicalGravity",
+        "fields": {
+          "position": [
+            0,
+            -6371000,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "radial"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "sphere"
+            },
+            "radius": 20000000
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Project travel, input and camera policy",
+        "fields": {
+          "ui.asset": "90909090909090909090909000000005",
+          "ui.name": "travel",
+          "ui.enabled": true,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "90909090909090909090909000000004",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-listener": [],
+          "listener.enabled": true,
+          "listener.follow-view": true
+        }
+      }
+    ]
+  }
+}

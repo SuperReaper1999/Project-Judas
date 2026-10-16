@@ -1,0 +1,28 @@
+PASS generic material configuration
+PASS elastic load has finite physical displacement and no plastic strain
+PASS elastic unloading returns physically
+PASS impact produces permanent strain and positive plastic work
+PASS unloaded physical endpoint follows plastic rest geometry
+PASS material history round trip exact
+PASS capacity failure releases real body motion
+PASS nonfinite material rejected
+PASS stale joint safely rejected
+PASS generic material configuration
+PASS elastic load has finite physical displacement and no plastic strain
+PASS elastic unloading returns physically
+PASS impact produces permanent strain and positive plastic work
+PASS unloaded physical endpoint follows plastic rest geometry
+PASS material history round trip exact
+PASS capacity failure releases real body motion
+PASS nonfinite material rejected
+PASS stale joint safely rejected
+PASS versioned physical partition material round trip
+PASS soft partition cannot silently use rigid material law
+PASS actual material resource registered
+PASS lazy material scene builds
+PASS physical parent moves before material construction
+PASS lazy material uses current arbitrary parent frame and inherited point motion
+PASS current-frame physical children prepare
+PASS generated material body retains its owner identity
+PASS destroying material retires physical children and ownership
+SUMMARY 27 checks 0 failures

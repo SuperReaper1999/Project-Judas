@@ -4,6 +4,7 @@
 #include "WorldPersistence.h"
 #include "ScriptSystem.h"
 #include "WorldStreaming.h"
+#include "OriginTranslation.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSerialization.h"
@@ -348,7 +349,7 @@ void WorldStreaming::Advance(bool paused){
                     auto o=r.flat.Objects()[r.next];auto local=r.local.Objects()[r.localIndices.at(o.id)];auto original=r.originals.at(o.id);
                     if(auto snap=r.saved.find(original);snap!=r.saved.end()&&snap->second.destroyed)return;
                     if(auto snap=r.saved.find(original);snap!=r.saved.end()){
-                        auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)+snap->second.origin-m->world.Settings().worldOrigin);saved.transform.rotation=snap->second.state.rotation;o=std::move(saved);
+                        auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)+snap->second.origin-m->world.Settings().worldOrigin);saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
                     }
                     for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==original)reference(o,ref.field,Resolve(ref.target,ref.targetLocal));
                     ok=m->world.StageRegionObject(o,local,error,id+":"+std::to_string(original));r.members.push_back(o.id);m->owners[o.id]=id;m->identities[o.id]="region:"+id+":"+std::to_string(original);
@@ -365,7 +366,7 @@ void WorldStreaming::Advance(bool paused){
                 while(budget()&&r.restoreNext<r.restoreKeys.size()&&ok)unit([&]{JUDAS_PROFILE_SCOPE("Streaming retained entity restoration");
                     auto source=r.restoreKeys[r.restoreNext++];const auto& snap=r.saved.at(source);if(snap.destroyed)return;auto runtime=r.mapping.at(source);
                     if(!snap.deformable.empty()){
-                        if(!m->world.RestoreDeformable(runtime,snap.deformable,error,true,r.savedReplacements)){ok=false;return;}
+                        if(!m->world.RestoreDeformable(runtime,snap.deformable,error,true,r.savedReplacements,m->world.Settings().worldOrigin-snap.origin)){ok=false;return;}
                         auto* deform=m->world.RuntimeDeformable(runtime,error,true);
                         for(auto& attachment:deform->settings.attachments)if(auto it=r.savedReplacements.find(attachment.target);it!=r.savedReplacements.end())attachment.target=it->second;
                         for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==source&&ref.field.rfind("deformable:",0)==0)for(auto& attachment:deform->settings.attachments)if(attachment.group==ref.field.substr(11))attachment.target=Resolve(ref.target,ref.targetLocal);
@@ -373,7 +374,7 @@ void WorldStreaming::Advance(bool paused){
                     auto restored=snap.state;restored.position=glm::vec3(glm::dvec3(restored.position)+snap.origin-m->world.Settings().worldOrigin);auto t=snap.definition.transform;t.position=restored.position;t.rotation=snap.state.rotation;
                     auto records=snap.scripts;for(auto& js:records)js.entity=runtime;
                     ok=m->world.RestoreRegionObject(runtime,t,restored,records,error,m->restoredRecords);
-                    if(ok&&!snap.kinematic.empty())ok=WorldPersistence::RestoreKinematic(m->world,runtime,snap.kinematic,error);
+                    if(ok&&!snap.kinematic.empty())ok=WorldPersistence::RestoreKinematic(m->world,runtime,snap.kinematic,error,m->world.Settings().worldOrigin-snap.origin);
                     if(ok&&!snap.animation.empty())ok=WorldPersistence::RestoreAnimation(m->world,runtime,snap.animation,error);
                     if(ok&&!snap.wheel.empty())ok=WorldPersistence::RestoreWheel(m->world,runtime,snap.wheel,error);
                     if(ok&&!snap.powertrain.empty())ok=WorldPersistence::RestorePowertrain(m->world,runtime,snap.powertrain,error);
@@ -451,7 +452,6 @@ void WorldStreaming::Persist(SaveArchive& a,unsigned version){
 bool WorldStreaming::CanChangeOrigin(std::string& error)const {
  for(const auto& [id,r]:m->regions){
   if(r.status.state!="active"&&r.status.state!="unloaded"&&r.status.state!="failed"){error="origin change deferred by streaming transaction: "+id;return false;}
-  for(const auto& [_,s]:r.saved)if(!s.destroyed&&(!s.deformable.empty()||!s.animation.empty()||!s.kinematic.empty()||!s.wheel.empty()||!s.powertrain.empty())){error="retained component requires an origin-aware continuation record: "+id;return false;}
  }
  error.clear();return true;
 }
@@ -460,7 +460,7 @@ void WorldStreaming::ShiftOrigin(glm::dvec3 delta) {
  // Snapshot positions retain their capture origin; source recipes/region absolute
  // placement and immutable worker data are never translated in place.
  for(auto& [_,r]:m->regions)if(r.status.state=="active"){
-  for(auto& o:r.flat.Objects())o.transform.position=glm::vec3(glm::dvec3(o.transform.position)-delta);
-  for(auto& o:r.local.Objects())if(!o.parent)o.transform.position=glm::vec3(glm::dvec3(o.transform.position)-delta);
+  for(auto& o:r.flat.Objects()){TranslateOriginPoint(o.transform.position,delta);TranslateOriginIntent(o,delta);}
+  for(auto& o:r.local.Objects()){if(!o.parent)TranslateOriginPoint(o.transform.position,delta);TranslateOriginIntent(o,delta);}
  }
 }

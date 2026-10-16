@@ -14,6 +14,11 @@ bool ValidParticleSettings(const ParticleEmitterSettings& s){
 bool ParticleSettingsEqual(const ParticleEmitterSettings& a,const ParticleEmitterSettings& b){return
     std::tie(a.enabled,a.loop,a.localSpace,a.useGravity,a.rate,a.lifetime,a.size,a.endSize,a.burst,a.maxParticles,a.spread,a.velocity,a.velocityVariation,a.acceleration,a.color,a.endColor,a.textureAsset,a.seed)==
     std::tie(b.enabled,b.loop,b.localSpace,b.useGravity,b.rate,b.lifetime,b.size,b.endSize,b.burst,b.maxParticles,b.spread,b.velocity,b.velocityVariation,b.acceleration,b.color,b.endColor,b.textureAsset,b.seed);}
+void VisualParticlePool::ShiftOrigin(glm::dvec3 delta){
+    if(!settings.localSpace)for(auto& p:particles)p.position=glm::vec3(glm::dvec3(p.position)-delta);
+    // These are derived presentation data; no age, emission credit or RNG reset.
+    billboards.clear();bounds={};
+}
 float VisualParticlePool::Random(){random=random*1664525u+1013904223u;return static_cast<float>(random>>8)*(1.0f/16777216.0f);}
 glm::vec3 VisualParticlePool::Variation(glm::vec3 e){return glm::vec3(2*Random()-1,2*Random()-1,2*Random()-1)*e;}
 void VisualParticlePool::Spawn(glm::vec3 p,glm::quat q,glm::vec3 scale){if(particles.size()>=static_cast<size_t>(settings.maxParticles))return;

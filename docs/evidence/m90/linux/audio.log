@@ -1,0 +1,11 @@
+PASS ordinary source audio project loads
+PASS production audio backend initializes device-free
+PASS ordinary emitter/listener world builds
+PASS actual persistent voice advances before translation
+PASS independent ordinary one-shot starts
+PASS ordinary audio no longer blocks native chart publication
+PASS voice identity/cursor/state survives with translated backend position
+PASS listener keeps actual camera motion without rebase-induced Doppler velocity
+PASS origin change does not retire or duplicate the independent shot
+PASS normal teardown releases all translated audio ownership
+SUMMARY 10 checks 0 failures

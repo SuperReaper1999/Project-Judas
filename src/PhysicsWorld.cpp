@@ -3464,11 +3464,12 @@ void PhysicsWorld::PersistBodyForces(SaveArchive& archive,BodyHandle handle){
  auto* body=m_impl->Get(handle);archive.Require(body!=nullptr,"saved force body unavailable");archive(body->rigidBody.forceAccumulator,body->rigidBody.torqueAccumulator);
 }
 
-void PhysicsWorld::PersistKinematic(SaveArchive& archive,BodyHandle handle) {
+void PhysicsWorld::PersistKinematic(SaveArchive& archive,BodyHandle handle,glm::dvec3 capturedOriginDelta) {
  auto* body=m_impl->Get(handle);archive.Require(body&&body->isKinematic,"saved kinematic body unavailable");
  auto state=body->kinematic;auto linear=body->rigidBody.linearVelocity,angular=body->rigidBody.angularVelocity;
  archive(state.control,state.target.position,state.target.rotation,state.linearVelocity,state.angularVelocity,
          state.remainingSeconds,state.targetNextStep,linear,angular);
+ if(archive.reading)state.target.position=glm::vec3(glm::dvec3(state.target.position)-capturedOriginDelta);
  archive.Require(state.control==KinematicControl::Stopped||state.control==KinematicControl::Target||state.control==KinematicControl::Velocity,"invalid kinematic control");
  archive.Require(UsableKinematicPose(state.target)&&state.remainingSeconds>=0&&state.remainingSeconds<=60,
                  "invalid kinematic target state");

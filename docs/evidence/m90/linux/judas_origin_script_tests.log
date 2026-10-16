@@ -1,0 +1,17 @@
+script asset=570bf9cd2fe928169701aa0b721375cc entity=2 slot=1 onOriginShift: Error: isolated origin failure
+    at onOriginShift (Assets/fault.js:1:44)
+
+PASS ordinary origin callback assets register
+PASS ordinary VM world builds
+PASS unstarted world translates safely
+PASS origin hook never precedes start/restore
+PASS started scripts receive committed chart notification
+PASS notification observes fully published origin and revision
+PASS explicit script cache translation leaves arbitrary JSON untouched
+PASS entity pose already translated and fixed-only writes remain guarded
+PASS one faulty notification cannot undo native chart or healthy scripts
+PASS independent local-player view translates without changing identity/viewport
+PASS rejected transaction emits no callback
+PASS zero translation emits no duplicate notification
+PASS destroyed/faulted slots do not block subsequent native chart publication
+SUMMARY 13 checks 0 failures

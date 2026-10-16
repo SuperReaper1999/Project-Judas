@@ -1,3 +1,4 @@
+#include "OriginTranslation.h"
 #include "RuntimeWorld.h"
 #include "SaveArchive.h"
 #include "SceneSerialization.h"
@@ -69,7 +70,7 @@ void RuntimeWorld::UpdateRigidFracture(EntityId owner,double dt){
     s.fracture.Connectivity(c);
     for(auto pair:c.contactNeighbours){auto a=RuntimeBody(record.rigid.parts[pair.x]),b=RuntimeBody(record.rigid.parts[pair.y]);if(a.IsValid()&&b.IsValid())m_physics.SetPairCollisionEnabled(a,b,s.fracture.component[pair.x]!=s.fracture.component[pair.y]);}
 }
-void RuntimeWorld::PersistRigidFracture(EntityId owner,SaveArchive& a,const std::map<EntityId,EntityId>* remap){
+void RuntimeWorld::PersistRigidFracture(EntityId owner,SaveArchive& a,const std::map<EntityId,EntityId>* remap,glm::dvec3 capturedOriginDelta){
     const auto resolveBody=[&](EntityId id){
         // Only this private restoration boundary may resolve staged actors.
         // Public RuntimeBody intentionally rejects unpublished definitions.
@@ -82,7 +83,7 @@ void RuntimeWorld::PersistRigidFracture(EntityId owner,SaveArchive& a,const std:
     for(unsigned p=0;p<c.parts.size();++p){auto id=record.rigid.parts[p];a.Require(s.fracture.removed[p]||(resolveBody(id).IsValid()&&!IsTransientEntity(id)),"required fracture body missing/transient");if(a.reading&&!s.fracture.removed[p]){FindEntity(id)->requiresFull=true;a.Require(m_physics.SetMassDistribution(resolveBody(id),float([&](){double m=0;for(auto n:c.parts[p].nodes)m+=s.NodeMass(n);return m;}()),glm::mat3(inertia(s,c.parts[p],center(*s.asset,c.parts[p])))),"invalid restored fragment inertia");}}
     auto saveJoint=[&](JointHandle& handle,const JointMaterial* material=nullptr){bool exists=handle.IsValid();a(exists);EntityId first=0,second=0;JointSettings settings;
         if(exists){if(!a.reading){JointState state;a.Require(m_physics.GetJoint(handle,state),"stale owned fracture joint");settings=state.settings;first=EntityIdOfBody(settings.bodyA);second=EntityIdOfBody(settings.bodyB);}a(first,second,settings.anchorA,settings.anchorB,settings.frameA,settings.frameB);
-            if(a.reading){if(remap){if(remap->count(first))first=remap->at(first);if(remap->count(second))second=remap->at(second);}settings.bodyA=resolveBody(first);settings.bodyB=resolveBody(second);a.Require(settings.bodyA.IsValid()&&(!second||settings.bodyB.IsValid()),"fracture attached body missing");handle=m_physics.CreateJoint(settings);a.Require(handle.IsValid(),"fracture constraint recreation failed");if(material&&material->enabled)a.Require(m_physics.ConfigureJointMaterial(handle,*material),"fracture material recreation failed");}m_physics.PersistJointSolverState(a,handle);if(material&&material->enabled)m_physics.PersistJointMaterial(a,handle);
+            if(a.reading){if(remap){if(remap->count(first))first=remap->at(first);if(remap->count(second))second=remap->at(second);}settings.bodyA=resolveBody(first);settings.bodyB=resolveBody(second);if(!second)TranslateOriginPoint(settings.anchorB,capturedOriginDelta);a.Require(settings.bodyA.IsValid()&&(!second||settings.bodyB.IsValid()),"fracture attached body missing");handle=m_physics.CreateJoint(settings);a.Require(handle.IsValid(),"fracture constraint recreation failed");if(material&&material->enabled)a.Require(m_physics.ConfigureJointMaterial(handle,*material),"fracture material recreation failed");}m_physics.PersistJointSolverState(a,handle);if(material&&material->enabled)m_physics.PersistJointMaterial(a,handle);
         }else if(a.reading)handle={};};
     if(a.reading)record.rigid.bonds.resize(c.bonds.size());
     a.Require(record.rigid.bonds.size()==c.bonds.size(),"fracture bond ownership count differs");for(unsigned b=0;b<record.rigid.bonds.size();++b)saveJoint(record.rigid.bonds[b],&c.bonds[b].material);
@@ -96,7 +97,7 @@ EntityId RuntimeWorld::FracturePartOwner(EntityId part)const{
  for(const auto& [owner,r]:m_deformables)if(r.simulation.asset->fracture&&r.simulation.asset->fracture->HasMaterials()&&std::find(r.rigid.parts.begin(),r.rigid.parts.end(),part)!=r.rigid.parts.end())return owner;
  return 0;
 }
-void RuntimeWorld::PersistFractureBundle(EntityId owner,SaveArchive& a,bool staged,const std::map<EntityId,EntityId>& references){
+void RuntimeWorld::PersistFractureBundle(EntityId owner,SaveArchive& a,bool staged,const std::map<EntityId,EntityId>& references,glm::dvec3 capturedOriginDelta){
  auto& r=m_deformables.at(owner);const auto& c=*r.simulation.asset->fracture;
  a.Require(c.rigid&&c.HasMaterials(),"retained physical bundle requires finite rigid material");
  a.Require(!a.reading||!r.rigid.initialized,"retained physical bundle requires a fresh owner");
@@ -109,12 +110,12 @@ void RuntimeWorld::PersistFractureBundle(EntityId owner,SaveArchive& a,bool stag
    if(exists){a(text,state.position,state.rotation,state.linearVelocity,state.angularVelocity);a.Require(text.size()<=65536,"retained physical definition exceeds bound");
     if(a.reading){Scene single;std::string error;a.Require(LoadSceneFromString(text,single,error)&&single.Objects().size()==1,"invalid retained physical definition: "+error);auto d=single.Objects()[0];
      a.Require(d.id==old&&d.body&&d.body->motion==SceneBodyMotion::Dynamic&&!d.parent&&!d.deformable&&!d.ragdoll&&!d.wheel&&!d.powertrain&&!d.joint&&d.scripts.empty(),"retained physical part ownership differs");
-     d.id=0;auto id=CreateEntity(d,&state,&error);a.Require(id!=0,"retained physical part allocation failed: "+error);created.push_back(id);remap[old]=id;FindEntity(id)->requiresFull=true;
+     TranslateOriginPoint(d.transform.position,capturedOriginDelta);TranslateOriginPoint(state.position,capturedOriginDelta);d.id=0;auto id=CreateEntity(d,&state,&error);a.Require(id!=0,"retained physical part allocation failed: "+error);created.push_back(id);remap[old]=id;FindEntity(id)->requiresFull=true;
      if(staged){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_regionPending.insert(id);}
     }
    }
   }
-  PersistRigidFracture(owner,a,a.reading?&remap:nullptr);
+  PersistRigidFracture(owner,a,a.reading?&remap:nullptr,capturedOriginDelta);
  }catch(...){for(auto id:created)RemoveRegionObject(id);throw;}
 }
 

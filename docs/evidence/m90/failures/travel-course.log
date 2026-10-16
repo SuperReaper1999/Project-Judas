@@ -1,0 +1,24 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/travelling_lab.judasproj)
+Scene: M90 — Bring Everything Along (/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/Scenes/earth.judas)
+World origin (m): 0.000, 6371000.000, 0.000
+TRAVEL frame=600 phase=0 distance=85.092 speed=12.838 origin_revision=0 local=85.281 error=
+TRAVEL frame=1200 phase=0 distance=216.881 speed=13.321 origin_revision=0 local=217.077 error=
+TRAVEL frame=1800 phase=0 distance=350.441 speed=13.349 origin_revision=1 local=244.852 error=
+TRAVEL frame=2400 phase=0 distance=483.725 speed=13.341 origin_revision=1 local=186.215 error=
+TRAVEL frame=3000 phase=0 distance=617.311 speed=13.342 origin_revision=1 local=211.899 error=
+TRAVEL frame=3600 phase=0 distance=750.547 speed=13.339 origin_revision=1 local=301.243 error=
+TRAVEL frame=4200 phase=0 distance=884.073 speed=13.333 origin_revision=2 local=230.601 error=
+TRAVEL frame=4800 phase=0 distance=1017.159 speed=13.127 origin_revision=2 local=183.622 error=
+TRAVEL frame=5400 phase=0 distance=1150.042 speed=13.315 origin_revision=2 local=222.492 error=
+STALL pose 0.000692 183.215958 -126.233131 rot 0.999998 -0.001584 0.000016 -0.001525
+WHEEL 4611686018427387905 contact=1 compression=0.268369 force=1594.654663
+WHEEL 4611686018427387907 contact=1 compression=0.263828 force=1599.995850
+WHEEL 4611686018427387909 contact=1 compression=0.276003 force=1590.457397
+WHEEL 4611686018427387911 contact=1 compression=0.271390 force=1594.755493
+FAIL watch drive progresses through waystation
+PASS ordinary application lifecycle completes
+SUMMARY 2 checks 1 failures frames=5400

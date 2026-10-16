@@ -417,8 +417,8 @@ public:
     void UpdateDeformables(double dt);
     bool PrepareRigidFracture(EntityId,std::string&);
     void UpdateRigidFracture(EntityId,double);
-    void PersistRigidFracture(EntityId,SaveArchive&,const std::map<EntityId,EntityId>* remap=nullptr);
-    void PersistFractureBundle(EntityId,SaveArchive&,bool staged=false,const std::map<EntityId,EntityId>& remap={});
+    void PersistRigidFracture(EntityId,SaveArchive&,const std::map<EntityId,EntityId>* remap=nullptr,glm::dvec3 capturedOriginDelta={});
+    void PersistFractureBundle(EntityId,SaveArchive&,bool staged=false,const std::map<EntityId,EntityId>& remap={},glm::dvec3 capturedOriginDelta={});
     EntityId FracturePartOwner(EntityId)const;
     unsigned MechanicalSubsteps();
     unsigned MechanicalIterations();
@@ -428,7 +428,7 @@ public:
     void DrawDeformables(Renderer&,float alpha)const;
     void RemoveDeformable(EntityId);
     void ClearDeformables();
-    bool RestoreDeformable(EntityId,const std::string&,std::string&,bool staged=false,const std::map<EntityId,EntityId>& remap={});
+    bool RestoreDeformable(EntityId,const std::string&,std::string&,bool staged=false,const std::map<EntityId,EntityId>& remap={},glm::dvec3 capturedOriginDelta={});
     bool CaptureDeformable(EntityId,std::string&,std::string&);
     void SetDeformableEnabled(EntityId,bool);
     bool ResetDeformable(EntityId,std::string&);

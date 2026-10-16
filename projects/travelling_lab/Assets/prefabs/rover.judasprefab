@@ -1,0 +1,723 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Reusable powertrain buggy",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.3,
+        0.8,
+        0.5
+      ],
+      "sun-color": [
+        1,
+        0.97,
+        0.91
+      ],
+      "ambient": [
+        0.3,
+        0.34,
+        0.38
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 40
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Electric expedition rover / physical gearbox and differential",
+        "fields": {
+          "powertrain.graph": "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"crank\",\"kind\":\"internal\",\"inertia\":0.28,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.018,\"target\":\"0\",\"bearing\":\"1\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"gearbox\",\"kind\":\"internal\",\"inertia\":0.07,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.0,\"target\":\"0\",\"bearing\":\"1\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"carrier\",\"kind\":\"internal\",\"inertia\":0.1,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.0,\"target\":\"0\",\"bearing\":\"1\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"left\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.0,\"target\":\"4\",\"bearing\":\"0\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"right\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.0,\"target\":\"5\",\"bearing\":\"0\",\"axis\":[1.0,0.0,0.0]}],\"sources\":[{\"name\":\"engine\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":140.0,\"maxPower\":30000.0,\"starterTorque\":0.0}],\"links\":[{\"name\":\"gearbox\",\"kind\":\"gear\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.2222222222222222,\"maxTorque\":500.0},{\"name\":\"clutch\",\"kind\":\"clutch\",\"input\":1,\"output\":2,\"outputB\":0,\"ratio\":1.0,\"maxTorque\":1000.0},{\"name\":\"differential\",\"kind\":\"differential\",\"input\":2,\"output\":3,\"outputB\":4,\"ratio\":0.2857142857142857,\"maxTorque\":500.0}],\"brakes\":[{\"name\":\"left\",\"shaft\":3,\"maxTorque\":750.0},{\"name\":\"right\",\"shaft\":4,\"maxTorque\":750.0}]}",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.85,
+            0.24,
+            1.2
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.93,
+            0.47,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.85,
+            0.24,
+            1.2
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 650,
+          "body.friction": 0.75,
+          "body.restitution": 0,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary M81 suspension and tyre terminal",
+        "fields": {
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            -1.02,
+            -0.15,
+            -0.95
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.38,
+          "wheel.minLength": 0.1,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.65,
+          "wheel.springStiffness": 14000,
+          "wheel.damping": 1600,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1,
+          "wheel.rollingResistance": 0.012,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0,
+          "position": [
+            -1.02,
+            -0.55,
+            -0.95
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.055,
+            0.075,
+            0.095
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "90909090909090909090909000000001",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 32,
+        "name": "Rolling marker / no duplicate collider",
+        "fields": {
+          "parent": 2,
+          "position": [
+            -0.155,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.018,
+            0.035,
+            0.28
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.72,
+            0.78,
+            0.81
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 3,
+        "name": "Ordinary M81 suspension and tyre terminal",
+        "fields": {
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            1.02,
+            -0.15,
+            -0.95
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.38,
+          "wheel.minLength": 0.1,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.65,
+          "wheel.springStiffness": 14000,
+          "wheel.damping": 1600,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1,
+          "wheel.rollingResistance": 0.012,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0,
+          "position": [
+            1.02,
+            -0.55,
+            -0.95
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.055,
+            0.075,
+            0.095
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "90909090909090909090909000000001",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 33,
+        "name": "Rolling marker / no duplicate collider",
+        "fields": {
+          "parent": 3,
+          "position": [
+            0.155,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.018,
+            0.035,
+            0.28
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.72,
+            0.78,
+            0.81
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 4,
+        "name": "Ordinary M81 suspension and tyre terminal",
+        "fields": {
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            -1.02,
+            -0.15,
+            0.95
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.38,
+          "wheel.minLength": 0.1,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.65,
+          "wheel.springStiffness": 14000,
+          "wheel.damping": 1600,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1,
+          "wheel.rollingResistance": 0.012,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0,
+          "position": [
+            -1.02,
+            -0.55,
+            0.95
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.055,
+            0.075,
+            0.095
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "90909090909090909090909000000001",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 34,
+        "name": "Rolling marker / no duplicate collider",
+        "fields": {
+          "parent": 4,
+          "position": [
+            -0.155,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.018,
+            0.035,
+            0.28
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.72,
+            0.78,
+            0.81
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 5,
+        "name": "Ordinary M81 suspension and tyre terminal",
+        "fields": {
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            1.02,
+            -0.15,
+            0.95
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.38,
+          "wheel.minLength": 0.1,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.65,
+          "wheel.springStiffness": 14000,
+          "wheel.damping": 1600,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1,
+          "wheel.rollingResistance": 0.012,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0,
+          "position": [
+            1.02,
+            -0.55,
+            0.95
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.055,
+            0.075,
+            0.095
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "90909090909090909090909000000001",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 35,
+        "name": "Rolling marker / no duplicate collider",
+        "fields": {
+          "parent": 5,
+          "position": [
+            0.155,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.018,
+            0.035,
+            0.28
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.72,
+            0.78,
+            0.81
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 21,
+        "name": "Cabin visual / physics belongs to chassis",
+        "fields": {
+          "parent": 1,
+          "position": [
+            0,
+            0.5,
+            0.2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.58,
+            0.3,
+            0.55
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.25,
+            0.36,
+            0.45
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 22,
+        "name": "Forward marker",
+        "fields": {
+          "parent": 1,
+          "position": [
+            0,
+            0.31,
+            -1.14
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.6,
+            0.065,
+            0.035
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.96,
+            0.89,
+            0.42
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 23,
+        "name": "Rear marker",
+        "fields": {
+          "parent": 1,
+          "position": [
+            0,
+            0.31,
+            1.14
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.6,
+            0.065,
+            0.035
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.8,
+            0.19,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      }
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "checkpoint": "109c4386ef750162391655f522c237ecbf51aa7f",
+  "checkpoint": "7f7b617907a81d65bcbdd931f9989f01c4c72dd9",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
     {
@@ -4929,6 +4929,7 @@
     "worldOriginState"
   ],
   "callbacks": [
+    "onOriginShift",
     "onSignal",
     "onFracture",
     "start",

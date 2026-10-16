@@ -1,0 +1,8 @@
+JudasUI 1
+1280 720 1 1 0 5
+"canvas" "" 0 0 1 1 0 0 1 0 0 0 0 0 0 180 40 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 22 0 0 1 "" "" ""
+"title" "canvas" 2 0 1 1 0 0 1 0 0 0 0 24 18 850 40 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 28 0 0 1 "BRING EVERYTHING ALONG" "" ""
+"controls" "canvas" 2 0 1 1 0 0 1 0 0 0 0 24 58 1040 62 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 17 0 0 1 "WASD drive / walk  |  E enter / leave  |  Space brake / jump  |  T watch drive  |  N courier  |  F push cargo
+Mouse look  |  F6 / F7 save / load  |  Escape pause  |  R reload" "" ""
+"status" "canvas" 2 0 1 1 0 0 1 0 0 0 0 24 130 1020 160 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 18 0 0 1 "Preparing real terrain collision..." "" ""
+"pause" "canvas" 2 0 0 1 0 0 1 0 0 0 0 400 320 1020 160 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 28 0 0 1 "PAUSED — Escape resumes" "" ""

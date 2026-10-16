@@ -1,0 +1,260 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--target",
+      "judas_origin_physics_tests",
+      "judas_origin_assembly_tests",
+      "judas_origin_stream_tests",
+      "judas_origin_script_tests",
+      "judas_character_motor_tests",
+      "judas_wheel_tests",
+      "judas_powertrain_tests",
+      "judas_wheel_lifecycle_tests",
+      "judas_powertrain_lifecycle_tests",
+      "judas_navigation_tests",
+      "judas_navigation_dependency_tests",
+      "judas_streaming_tests",
+      "judas_save_exclusion_tests",
+      "judas_physics_continuation_tests",
+      "judas_physical_animation_tests",
+      "judas_physical_balance_foundation_tests",
+      "judas_physical_balance_controller_tests",
+      "judas_section_material_tests",
+      "judas_gravity_selection_tests",
+      "judas_local_multiplayer_script_tests",
+      "judas_origin_participant_tests",
+      "judas_origin_travel_application_tests",
+      "-j4"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:41:33.468942+00:00",
+    "seconds": 103.52634561600007,
+    "exit": 0
+  },
+  {
+    "name": "judas_origin_physics_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:16.995540+00:00",
+    "seconds": 0.015829746999770578,
+    "exit": 0
+  },
+  {
+    "name": "judas_origin_assembly_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_assembly_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:17.011605+00:00",
+    "seconds": 0.11407130600036908,
+    "exit": 0
+  },
+  {
+    "name": "judas_origin_stream_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_stream_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:17.125916+00:00",
+    "seconds": 0.06409156100016844,
+    "exit": 0
+  },
+  {
+    "name": "judas_origin_script_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_script_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:17.190345+00:00",
+    "seconds": 0.03199787300036405,
+    "exit": 0
+  },
+  {
+    "name": "judas_character_motor_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:17.222607+00:00",
+    "seconds": 0.5148841639993407,
+    "exit": 0
+  },
+  {
+    "name": "judas_wheel_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:17.737759+00:00",
+    "seconds": 0.11412759999984701,
+    "exit": 0
+  },
+  {
+    "name": "judas_powertrain_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:17.852127+00:00",
+    "seconds": 0.21431884100002208,
+    "exit": 0
+  },
+  {
+    "name": "judas_wheel_lifecycle_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_wheel_lifecycle_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:18.066710+00:00",
+    "seconds": 0.01582798600065871,
+    "exit": 0
+  },
+  {
+    "name": "judas_powertrain_lifecycle_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_powertrain_lifecycle_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:18.082822+00:00",
+    "seconds": 0.03188976300043578,
+    "exit": 1
+  },
+  {
+    "name": "judas_navigation_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:18.114984+00:00",
+    "seconds": 0.4147659449999992,
+    "exit": 0
+  },
+  {
+    "name": "judas_navigation_dependency_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_dependency_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:18.530050+00:00",
+    "seconds": 0.00782495099974767,
+    "exit": 2
+  },
+  {
+    "name": "judas_streaming_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:18.538138+00:00",
+    "seconds": 0.5653168240005471,
+    "exit": 0
+  },
+  {
+    "name": "judas_save_exclusion_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_exclusion_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:19.103748+00:00",
+    "seconds": 0.007748558999992383,
+    "exit": 2
+  },
+  {
+    "name": "judas_physics_continuation_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:19.111769+00:00",
+    "seconds": 0.031976878000023135,
+    "exit": 0
+  },
+  {
+    "name": "judas_physical_animation_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:19.144025+00:00",
+    "seconds": 0.11412914599986834,
+    "exit": 0
+  },
+  {
+    "name": "judas_physical_balance_foundation_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_foundation_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:19.258450+00:00",
+    "seconds": 0.03193800300050498,
+    "exit": 1
+  },
+  {
+    "name": "judas_physical_balance_controller_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:19.290726+00:00",
+    "seconds": 2.4686226220001117,
+    "exit": 0
+  },
+  {
+    "name": "judas_section_material_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_section_material_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:21.759638+00:00",
+    "seconds": 0.031765773000188346,
+    "exit": 0
+  },
+  {
+    "name": "judas_gravity_selection_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_gravity_selection_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:21.791706+00:00",
+    "seconds": 0.41473604299972067,
+    "exit": 0
+  },
+  {
+    "name": "judas_local_multiplayer_script_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_script_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:22.206734+00:00",
+    "seconds": 0.06434385400007159,
+    "exit": 0
+  },
+  {
+    "name": "judas_origin_participant_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_participant_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:22.271406+00:00",
+    "seconds": 0.21433667099972809,
+    "exit": 0
+  },
+  {
+    "name": "judas_origin_travel_application_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_travel_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/travelling_lab/travelling_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/final-linux/travel"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUTC": "2026-10-16T13:43:22.486078+00:00",
+    "seconds": 38.14392843799942,
+    "exit": 0
+  }
+]

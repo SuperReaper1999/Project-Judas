@@ -1,0 +1,726 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.16,
+        0.17,
+        0.19
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 11
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Waystation structure",
+        "fields": {
+          "position": [
+            0,
+            -0.4,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            14,
+            0.4,
+            12
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.32,
+            0.36,
+            0.39
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            14,
+            0.4,
+            12
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Waystation structure",
+        "fields": {
+          "position": [
+            -9,
+            2,
+            5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.9,
+            0.62,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 3,
+        "name": "Waystation structure",
+        "fields": {
+          "position": [
+            -9,
+            2,
+            -5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.9,
+            0.62,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Waystation structure",
+        "fields": {
+          "position": [
+            9,
+            2,
+            5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.9,
+            0.62,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 5,
+        "name": "Waystation structure",
+        "fields": {
+          "position": [
+            9,
+            2,
+            -5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.9,
+            0.62,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.15,
+            2,
+            0.15
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 6,
+        "name": "Waystation structure",
+        "fields": {
+          "position": [
+            0,
+            4,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            9.4,
+            0.16,
+            5.4
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.15,
+            0.23,
+            0.3
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            9.4,
+            0.16,
+            5.4
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 7,
+        "name": "Movable service cargo",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -6,
+            0.55,
+            2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.6,
+            0.55,
+            0.6
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.8,
+            0.45,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.6,
+            0.55,
+            0.6
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 8,
+        "name": "Movable service cargo",
+        "fields": {
+          "tags": 2,
+          "position": [
+            6,
+            0.55,
+            -2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.6,
+            0.55,
+            0.6
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.8,
+            0.45,
+            0.2
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.6,
+            0.55,
+            0.6
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 9,
+        "name": "Navigation courier / N changes destination",
+        "fields": {
+          "nav.agent.areas": "18446744073709551615",
+          "nav.agent.arrival": "0.300000012",
+          "nav.agent.avoidance": "1",
+          "nav.agent.cornerDistance": "0.25",
+          "nav.agent.costs": "",
+          "nav.agent.enabled": "1",
+          "nav.agent.profile": "0",
+          "nav.agent.repathSeconds": "0.5",
+          "nav.agent.speed": "3",
+          "motor.enabled": true,
+          "motor.radius": 0.3,
+          "motor.halfHeight": 0.6,
+          "motor.offset": [
+            0,
+            0,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 80,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "tags": 1,
+          "position": [
+            -6,
+            0.95,
+            -3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.7,
+            0.3
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.1,
+            0.8,
+            0.8
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 10,
+        "name": "Local-frame navigation surface",
+        "fields": {
+          "nav.surface.asset": "90909090909090909090909000000007",
+          "nav.surface.cellHeight": "0.100000001",
+          "nav.surface.cellSize": "0.200000003",
+          "nav.surface.enabled": "1",
+          "nav.surface.halfExtents": "16 5 14",
+          "nav.surface.includeDynamic": "0",
+          "nav.surface.minRegion": "1",
+          "nav.surface.profile": "0",
+          "nav.surface.simplification": "1.29999995",
+          "nav.surface.sources": "18446744073709551615",
+          "nav.surface.tileSize": "32",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    ]
+  }
+}

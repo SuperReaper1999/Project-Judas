@@ -4,6 +4,7 @@
 #include "RuntimeWorld.h"
 #include "Prefab.h"
 #include "ResourceManager.h"
+#include "OriginTranslation.h"
 #include <DetourNavMesh.h>
 #include <DetourNavMeshQuery.h>
 #include <DetourNavMeshBuilder.h>
@@ -80,5 +81,17 @@ void NavigationSystem::Update(RuntimeWorld& world,float dt){
 void NavigationSystem::Debug(DebugLineList& lines)const{for(auto& [id,s]:m->surfaces)for(int i=0;i<s->mesh->getMaxTiles();++i){const auto* t=static_cast<const dtNavMesh*>(s->mesh)->getTile(i);if(!t||!t->header)continue;for(int j=0;j<t->header->polyCount;++j){auto& p=t->polys[j];for(int k=0;k<p.vertCount;++k){auto a=t->verts+p.verts[k]*3,b=t->verts+p.verts[(k+1)%p.vertCount]*3;lines.Line(s->world({a[0],a[1],a[2]}),s->world({b[0],b[1],b[2]}),p.getArea()==1?glm::vec3(.1f,.8f,.7f):glm::vec3(.8f,.4f,.9f));}}}for(auto& [id,o]:m->links){const auto& link=*o.navigationLink;auto start=o.transform.position+o.transform.rotation*link.start,end=o.transform.position+o.transform.rotation*link.end;lines.Line(start,end,{.8f,.4f,1});glm::vec3 up=o.transform.rotation*glm::vec3(0,.5f,0);lines.Line(start,start+up,{.8f,.4f,1});lines.Line(end,end+up,{.8f,.4f,1});}for(auto& [id,a]:m->agents)for(size_t i=1;i<a.path.corners.size();++i)lines.Line(a.path.corners[i-1].position,a.path.corners[i].position,{1,.8f,.1f});}
 
 void NavigationSystem::RegisterAgent(SceneObjectId id){m->agents.try_emplace(id);}
+
+void NavigationSystem::ShiftOrigin(glm::dvec3 delta){
+ for(auto* surfaces:{&m->surfaces,&m->staged})for(auto& [_,s]:*surfaces){
+  TranslateOriginPoint(s->frame.position,delta);
+  for(auto& [id,obstacle]:s->obstacles)TranslateOriginPoint(obstacle.pose.position,delta);
+ }
+ for(auto& [_,link]:m->links)TranslateOriginPoint(link.transform.position,delta);
+ for(auto& [_,agent]:m->agents){
+  TranslateOriginPoint(agent.destination,delta);
+  for(auto& corner:agent.path.corners){TranslateOriginPoint(corner.position,delta);TranslateOriginPoint(corner.linkEnd,delta);}
+ }
+}
 
 NavigationStatistics NavigationSystem::Statistics()const{NavigationStatistics stats;stats.surfaces=m->surfaces.size();stats.agents=m->agents.size();for(const auto& [id,s]:m->surfaces){stats.obstacles+=s->obstacles.size();for(int i=0;i<s->mesh->getMaxTiles();++i){const auto* tile=static_cast<const dtNavMesh*>(s->mesh)->getTile(i);if(tile&&tile->header){++stats.tiles;stats.polygons+=tile->header->polyCount;}}}return stats;}

@@ -1,0 +1,15 @@
+PASS independent matched mechanical worlds build
+FAIL complete vehicle, motor, particles and constraints accept origin request
+component has no live-origin contract on entity 3
+PASS independent matched mechanical worlds build
+FAIL complete vehicle, motor, particles and constraints accept origin request
+component has no live-origin contract on entity 3
+PASS real navigation asset bakes
+PASS navigation fixture publishes a real asset
+PASS navigation world builds
+PASS surface-local Detour data installs
+FAIL active navigation surface and corridor accept shift
+FAIL translated Detour path matches real translated floor
+FAIL navigation intent and revision survive without repath/reset
+FAIL negative query at old chart position no longer hits surface
+SUMMARY 12 checks 6 failures

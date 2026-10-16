@@ -26,6 +26,9 @@ public:
  NavigationAgentState* Agent(SceneObjectId);const NavigationAgentState* Agent(SceneObjectId)const;
  bool CompleteLink(SceneObjectId);
  void Update(RuntimeWorld&,float);
+ // Detour geometry is surface-local. Retain polygon refs, pending obstacles,
+ // link progress and revision while translating only the enclosing world frames.
+ void ShiftOrigin(glm::dvec3 delta);
  void Debug(DebugLineList&)const;
  NavigationStatistics Statistics()const;
  unsigned Revision()const;const std::map<SceneObjectId,std::string>& Errors()const;

@@ -339,7 +339,7 @@ public:
     bool SetKinematicVelocity(BodyHandle,const glm::vec3& worldCOMLinear,const glm::vec3& worldAngular);
     bool StopKinematic(BodyHandle);
     bool GetKinematicMotion(BodyHandle,KinematicMotionState&) const;
-    void PersistKinematic(class SaveArchive&,BodyHandle);
+    void PersistKinematic(class SaveArchive&,BodyHandle,glm::dvec3 capturedOriginDelta={});
     glm::vec3 GetPointVelocity(BodyHandle,const glm::vec3& worldPoint) const;
     // Command-aware current-interval velocity for pre-step couplers. Shares
     // Step's prescribed motion evaluation without advancing pose or intent.

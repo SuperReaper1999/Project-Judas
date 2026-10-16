@@ -24,6 +24,7 @@ public:
     explicit VisualParticlePool(const ParticleEmitterSettings& s={}):settings(s),random(s.seed){particles.reserve(s.maxParticles);billboards.reserve(s.maxParticles);}
     void Update(float dt,glm::vec3 position,glm::quat rotation,glm::vec3 scale,const GravityField& gravity);
     void Burst(unsigned count,glm::vec3 position,glm::quat rotation,glm::vec3 scale);
+    void ShiftOrigin(glm::dvec3 delta);
     const std::vector<ParticleBillboard>& Presentation(glm::vec3 position,glm::quat rotation,glm::vec3 scale);
     const std::vector<VisualParticle>& Particles()const{return particles;}
     const VisualBounds& Bounds()const{return bounds;}

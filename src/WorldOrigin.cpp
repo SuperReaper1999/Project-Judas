@@ -6,6 +6,7 @@
 #include "RadicalGravity.h"
 #include "SphericalVolume.h"
 #include "OrientedGravityVolume.h"
+#include "OriginTranslation.h"
 #include <cmath>
 namespace {
 bool finite(glm::dvec3 p){return std::isfinite(p.x)&&std::isfinite(p.y)&&std::isfinite(p.z);}
@@ -18,7 +19,6 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin,std::string& error)const {
  if(m_hasLiquid||!m_fluidVolumes.empty()||m_emittedParticles||m_atmosphere||!m_combustibles.empty()) {error="active liquid/fluid/atmosphere/combustion has no live-origin contract";return false;}
  for(const auto& [id,o]:m_scriptDefinitions){
   if(!RuntimeDefinition(id))continue;
-  if(o.deformable||o.ragdoll||o.wheel||o.powertrain||o.navigationSurface||o.navigationAgent||o.navigationObstacle||o.navigationLink||o.navigationModifier||o.audioEmitter||(o.audioListener&&!o.audioListener->followActiveView)||o.audioZone||o.particleEmitter||o.socket||(o.animation&&(!o.animation->limbs.empty()||o.animation->fullBodyIK))){error="component has no live-origin contract on entity "+std::to_string(id);return false;}
   if(o.body||o.characterMotor||o.render||o.light||o.renderCamera){
    auto p=glm::dvec3(o.transform.position);
    const auto body=RuntimeBody(id);if(body.IsValid())p=glm::dvec3(m_physics.GetTransform(body).position);
@@ -26,6 +26,7 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin,std::string& error)const {
    for(auto parent=o.parent;parent;){auto* ancestor=RuntimeDefinition(parent);if(!ancestor)break;if(glm::length(glm::dvec3(ancestor->transform.position)-delta)>8192){error="active transform ancestor exceeds local precision chart";return false;}parent=ancestor->parent;}
   }
  }
+ for(const auto& [id,record]:m_deformables)for(auto point:record.simulation.positions)if(glm::length(point-delta)>8192){error="deformable must remain inside the 8 km physics chart: "+std::to_string(id);return false;}
  if(m_sceneControl&&m_assets)if(auto* stream=m_sceneControl->StreamingIfLoaded())if(!stream->CanChangeOrigin(error))return false;
  error.clear();return true;
 }
@@ -52,22 +53,42 @@ bool RuntimeWorld::CommitOrigin(){
  }
  m_pendingOrigin.reset();
  m_physics.ShiftOrigin(delta);
- for(auto& [_,o]:m_scriptDefinitions)if(!o.planet)shift(o.transform.position);
- for(auto& o:m_hierarchy.Objects())if(!o.parent&&!o.planet)shift(o.transform.position);
- for(auto* collection:{&m_entities,&m_extraEntities})for(auto& e:*collection){if(!e.definition.planet){shift(e.definition.transform.position);shift(e.state.position);}}
+ for(auto& [_,o]:m_scriptDefinitions){if(!o.planet)shift(o.transform.position);TranslateOriginIntent(o,delta);}
+ for(auto& o:m_hierarchy.Objects()){if(!o.parent&&!o.planet)shift(o.transform.position);TranslateOriginIntent(o,delta);}
+ for(auto* collection:{&m_entities,&m_extraEntities})for(auto& e:*collection){if(!e.definition.planet){shift(e.definition.transform.position);shift(e.state.position);}TranslateOriginIntent(e.definition,delta);}
  for(auto& body:m_dynamicBodies)body.ShiftOrigin(delta);
  for(auto& [_,c]:m_characters){c.motor.ShiftOrigin(delta);shift(c.previous.position);}
- for(auto& [_,a]:m_animationInstances)for(auto* history:{&a.previousWorld,&a.recentWorld})for(auto& matrix:*history){auto p=glm::vec3(matrix[3]);shift(p);matrix[3]=glm::vec4(p,matrix[3].w);}
+ for(auto& [_,wheel]:m_wheels)for(auto* state:{&wheel.state,&wheel.previous}){shift(state->point);shift(state->center);}
+ // Powertrain state is scalar rotational state: no translation or reset.
+ m_navigation->ShiftOrigin(delta);
+ for(auto& [_,a]:m_animationInstances){
+  for(auto* history:{&a.previousWorld,&a.recentWorld})for(auto& matrix:*history)TranslateOriginMatrix(matrix,delta);
+  if(a.fullBodyIK){auto& ik=*a.fullBodyIK;TranslateIKTargets(ik.settings.targets,delta);TranslateIKTargets(ik.mapping.settings.targets,delta);TranslateIKTargets(ik.sampledTargets,delta);}
+ }
+ for(auto& [_,r]:m_ragdolls){shift(r.reference.position);shift(r.previousPresentation.position);shift(r.currentPresentation.position);}
+ for(auto& [_,s]:m_physicalAnimations){for(auto* history:{&s.previousReferenceWorld,&s.recentReferenceWorld})for(auto& matrix:*history)TranslateOriginMatrix(matrix,delta);if(s.pending&&s.pending->placement)shift(s.pending->placement->position);}
+ for(auto& [_,balance]:m_balances)balance.controller.ShiftOrigin(delta);
+ for(auto& [_,record]:m_deformables){record.simulation.ShiftOrigin(delta);for(auto& t:record.targets){TranslateOriginMatrix(t.previous,delta);TranslateOriginMatrix(t.current,delta);}++record.revision;}
+ for(auto& emitter:m_particleEmitters){shift(emitter.transform.position);emitter.pool.ShiftOrigin(delta);}
+ for(auto& emitter:m_audioEmitters){shift(emitter.transform.position);shift(emitter.lastPosition);}
+ for(auto& zone:m_audioZones)shift(zone.transform.position);
+ if(m_audioSystem){
+  for(const auto& emitter:m_audioEmitters){AudioVoiceSnapshot voice;if(m_audioSystem->Snapshot(emitter.voice,voice)){shift(voice.position);m_audioSystem->SetPosition(emitter.voice,voice.position);}}
+  for(auto& entry:m_audioOneShots){AudioVoiceSnapshot voice;if(m_audioSystem->Snapshot(entry.second,voice)){shift(voice.position);m_audioSystem->SetPosition(entry.second,voice.position);}}
+ }
  for(auto& b:m_staticBodies)shift(b.position);
  for(auto& r:m_staticRenderables)shift(r.position);
  for(auto& t:m_terrains)shift(t.position);
  for(auto& l:m_staticLights)shift(l.position);
  for(auto& c:m_renderCameras){shift(c.transform.position);if(c.hasClipPlane)shift(c.clipPoint);}
- if(m_audioListener){shift(m_audioListener->transform.position);shift(m_lastListenerPosition);m_listenerMotionValid=false;}
+ if(m_audioListener){shift(m_audioListener->transform.position);shift(m_lastListenerPosition);}
  if(view)shift(view->pose.position);
+ if(m_players)for(auto& [_,player]:m_players->All())if(player.view)shift(player.view->position);
  for(auto& source:m_pointMassSources)shift(source.position);
  // Publish translated fields in exactly their previous precedence order.
  m_gravityMap=std::move(map);m_gravityFields=std::move(fields);m_gravityVolumes=std::move(volumes);m_gravityRegions=std::move(regions);
  if(m_sceneControl&&m_assets)if(auto* stream=m_sceneControl->StreamingIfLoaded())stream->ShiftOrigin(delta);
- m_settings.worldOrigin=target;m_hierarchy.Settings().worldOrigin=target;++m_originRevision;m_originError.clear();return true;
+ m_settings.worldOrigin=target;m_hierarchy.Settings().worldOrigin=target;++m_originRevision;m_originError.clear();
+ if(m_scripts)m_scripts->ShiftOrigin(delta);
+ return true;
 }
