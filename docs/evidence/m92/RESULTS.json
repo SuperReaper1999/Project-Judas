@@ -1,0 +1,289 @@
+{
+  "baseline": "61a9df6acaa102c0a9fcf1006866a01fc3b33a89",
+  "platform": "native Linux",
+  "humanValidation": "pending",
+  "windows": "not run",
+  "android": "not run",
+  "focused": {
+    "started": "2026-10-16T17:40:10.283371+00:00",
+    "platform": "native Linux",
+    "humanAcceptance": false,
+    "windows": "not run",
+    "android": "not run",
+    "commands": [
+      {
+        "name": "judas_rendering_architecture_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_rendering_architecture_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_rendering_architecture_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.666783614000451,
+        "log": ".cache/m92/final-validation/judas_rendering_architecture_tests.log"
+      },
+      {
+        "name": "judas_rendering_lab_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_rendering_lab_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_rendering_lab_tests"
+        ],
+        "exit": 0,
+        "seconds": 2.9750120300013805,
+        "log": ".cache/m92/final-validation/judas_rendering_lab_tests.log"
+      },
+      {
+        "name": "judas_render_camera_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_render_camera_tests",
+          "--output",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_render_camera_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.46501637100300286,
+        "log": ".cache/m92/final-validation/judas_render_camera_tests.log"
+      },
+      {
+        "name": "judas_local_multiplayer_render_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_render_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.41490508900096756,
+        "log": ".cache/m92/final-validation/judas_local_multiplayer_render_tests.log"
+      },
+      {
+        "name": "judas_planet_terrain_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_planet_terrain_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.01589814199905959,
+        "log": ".cache/m92/final-validation/judas_planet_terrain_tests.log"
+      },
+      {
+        "name": "judas_planet_world_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_planet_world_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.31471587299893145,
+        "log": ".cache/m92/final-validation/judas_planet_world_tests.log"
+      },
+      {
+        "name": "judas_planet_streaming_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_planet_streaming_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_planet_streaming_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.03198521800004528,
+        "log": ".cache/m92/final-validation/judas_planet_streaming_tests.log"
+      },
+      {
+        "name": "judas_material_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.41485425700011547,
+        "log": ".cache/m92/final-validation/judas_material_tests.log"
+      },
+      {
+        "name": "judas_script_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.8156246329999703,
+        "log": ".cache/m92/final-validation/judas_script_tests.log"
+      },
+      {
+        "name": "judas_runtime_render_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_runtime_render_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.5150194609996106,
+        "log": ".cache/m92/final-validation/judas_runtime_render_tests.log"
+      },
+      {
+        "name": "judas_runtime_render_application_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_application_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_runtime_render_application_tests"
+        ],
+        "exit": 0,
+        "seconds": 0.46489792200009106,
+        "log": ".cache/m92/final-validation/judas_runtime_render_application_tests.log"
+      },
+      {
+        "name": "judas_runtime_render_application_tests-read",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_application_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_runtime_render_application_tests",
+          "read"
+        ],
+        "exit": 0,
+        "seconds": 0.21438085900081205,
+        "log": ".cache/m92/final-validation/judas_runtime_render_application_tests-read.log"
+      },
+      {
+        "name": "judas_weather_render_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_render_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/judas_weather_render_tests"
+        ],
+        "exit": 0,
+        "seconds": 1.6673361199973442,
+        "log": ".cache/m92/final-validation/judas_weather_render_tests.log"
+      },
+      {
+        "name": "judasjs_examples_tests",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/cookbook",
+          "surface"
+        ],
+        "exit": 0,
+        "seconds": 0.4148791750012606,
+        "log": ".cache/m92/final-validation/judasjs_examples_tests.log"
+      },
+      {
+        "name": "api",
+        "argv": [
+          "node",
+          "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+          "--typescript",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+          "--runtime",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/final-validation/cookbook/surface.json"
+        ],
+        "exit": 0,
+        "seconds": 1.166412978000153,
+        "log": ".cache/m92/final-validation/api.log"
+      }
+    ],
+    "binaries": {
+      "judas_rendering_architecture_tests": "b989155492670ef577e3554c8d507f0d50f5c39f547b35e191dd5f661c9a92c8",
+      "judas_rendering_lab_tests": "373a365e0db1d3b6494997025eb0152b02f3edfe825c274ed293d0f336db0209",
+      "judas_render_camera_tests": "849d08d65e50e066367b6523e873223425f1c6833910447bc1d92a0b0bcdf47e",
+      "judas_local_multiplayer_render_tests": "74736722450b2306d11b2d9f5a66fc2e7e920a0eb4e6a41e9ff802f9c9778a5a",
+      "judas_planet_terrain_tests": "de141c0263038930ff25952e16a770a472b5c02174136134fa919f4a95c1d4c9",
+      "judas_planet_world_tests": "5fc34272bd02c0e32599727e1926d700bf1ba484d626c298245f5dcd65c16422",
+      "judas_planet_streaming_tests": "10d60d39b68003f561e2ef5fabd08afd09de4d0d688668dead3491962af2cc50",
+      "judas_material_tests": "82b9211fd4c665de03382cacbeaa0c8b9680fb4341ccd4cef6ef0198015c747f",
+      "judas_script_tests": "08447b674cfb9b44ed53be361da557f57fb2c59ef8e721a903275c8dff6cdcb8",
+      "judas_runtime_render_tests": "a6ceb67bf696aa280d87d8a956e04e813743a9b9db27312be7cb39512c481c2e",
+      "judas_runtime_render_application_tests": "7c0a2896e065120514ba55538bd9b1cb5c561dbb3fe90c3fd0c07f223b0e1f9c",
+      "judas_weather_render_tests": "8899353d0da55210d91e096a663fbd0b59cdace0ddc96162f1bd13ae56db2e06",
+      "judasjs_examples_tests": "5b262b69e5c161b58dff29e4c4fd9e488c33a9037844b9e2ef690eeb61f18069"
+    },
+    "pass": true
+  },
+  "finalNarrowFollowup": [
+    {
+      "name": "judas_rendering_architecture_tests",
+      "exit": 0,
+      "seconds": 0.3145731349977723,
+      "sha256": "e7dce6f804832b4945a6e26b19affcbb4f319a906e96a4ee60268ff203d0f876"
+    },
+    {
+      "name": "judas_rendering_lab_tests",
+      "exit": 0,
+      "seconds": 2.672064414000488,
+      "sha256": "c1837ce380e126ffd3cd6adc8598848a32757dfe2ea373d93697430e457dd08f"
+    },
+    {
+      "name": "judas_render_camera_tests",
+      "exit": 0,
+      "seconds": 0.2646562129993981,
+      "sha256": "8a3715f260785a8c0f994fcffba2eb6362417f25ad91a012678676a0b8148c5f"
+    },
+    {
+      "name": "judas_local_multiplayer_render_tests",
+      "exit": 0,
+      "seconds": 0.2146050480005215,
+      "sha256": "3d53615e18542585c9e0c2358e2983f4067db2f92d032093b3ca2427faa2519d"
+    }
+  ],
+  "standaloneConsumers": [
+    {
+      "name": "judas_ui_tests",
+      "exit": 0,
+      "seconds": 0.007854244999180082,
+      "sha256": "7f449283d4b369ee3159ae7029c12d42354ffd59304c445686f02c554bc4c63a"
+    },
+    {
+      "name": "judas_lighting_tests",
+      "exit": 0,
+      "seconds": 0.007966034001583466,
+      "sha256": "3dad649b1c791774c8c8f7f974ba54289d9b887abec915a40eccb4c40dabc2fe"
+    },
+    {
+      "name": "judas_interactable_tests",
+      "exit": 0,
+      "seconds": 0.00790125600178726,
+      "sha256": "b6cf847666f4ff58ebf75758c82187dee0b4f7a44aa762cc1b8cbb0570412d67"
+    }
+  ],
+  "delivery": {
+    "runs": [
+      {
+        "name": "editor",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/delivery/editor-project/rendering_lab.judasproj"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "exit": 0,
+        "seconds": 3.320966747996863
+      },
+      {
+        "name": "export",
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+          "/home/conner/Documents/GitHub/Project-Judas/projects/rendering_lab/rendering_lab.judasproj",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/m92/delivery/package",
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "exit": 0,
+        "seconds": 0.6209070349977992
+      },
+      {
+        "name": "moved",
+        "argv": [
+          "/tmp/judas-m92-relocated-9cw88i10/judas"
+        ],
+        "cwd": "/tmp/judas-m92-unrelated-7eki5v4j",
+        "exit": 0,
+        "seconds": 1.7175629949997528
+      }
+    ],
+    "moved": "/tmp/judas-m92-relocated-9cw88i10",
+    "unrelatedWorkingDirectory": "/tmp/judas-m92-unrelated-7eki5v4j",
+    "prelaunchBytesIdentical": true,
+    "pass": true,
+    "humanAcceptance": false,
+    "windows": "not run",
+    "android": "not run"
+  },
+  "api": {
+    "publicSymbols": 424,
+    "topLevelExports": 37,
+    "nativeOperations": 288,
+    "callbacks": 17,
+    "typeChecker": "5.9.3",
+    "examples": 46,
+    "negativeDriftChecks": 4,
+    "structuredResultShapes": 8,
+    "runtimeEnumeration": true,
+    "pass": true
+  },
+  "passLinux": true,
+  "fullProductionSuiteRun": false,
+  "cleanBuild": false,
+  "remainingLimits": "REPORT.md and PERFORMANCE.md",
+  "timestamp": "2026-10-16T17:59:01.858722+00:00"
+}

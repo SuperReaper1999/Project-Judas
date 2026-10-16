@@ -44,33 +44,29 @@ layout(location = 7) in vec4 aWeights1;
 uniform samplerBuffer uBones;
 mat4 bone(uint joint) { int b=int(joint)*4;return mat4(texelFetch(uBones,b),texelFetch(uBones,b+1),texelFetch(uBones,b+2),texelFetch(uBones,b+3)); }
 uniform mat4 uModel;
+uniform bool uInstanced;
+layout(location=9) in mat4 aInstanceModel;
+layout(location=13) in vec4 aInstanceTint;
 uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormalMatrix;
-
-// Milestone 15: one light-space transform PER SHADOW SLOT (see
-// src/Light.h's kDirectionalShadowSlot/kTorchShadowSlot/
-// kShipHeadlightShadowSlot) — always all three, computed unconditionally
-// every vertex regardless of whether this frame's active lights actually
-// use each one (e.g. the torch slot when the torch is off): cheap at this
-// engine's tiny vertex counts, and far simpler than a dynamically-indexed
-// varying (GLSL doesn't support indexing a varying array by a value that
-// differs per dynamic light in the fragment shader's own per-light loop —
-// see the fragment shader below for how the FIXED set of three is
-// selected between instead).
-uniform mat4 uLightSpaceMatrix[3];
+uniform vec4 uColor;
+out vec4 vTint;
 
 out vec3 vWorldNormal;
 out vec4 vWorldTangent;
 out vec3 vWorldPos;
 out vec2 vUV;
 out vec2 vUV1;
-out vec4 vDirLightSpacePos;
-out vec4 vTorchLightSpacePos;
-out vec4 vShipLightSpacePos;
+
+
+
 
 void main() {
-    // uNormalMatrix = transpose(inverse(mat3(uModel))), computed on the CPU
+    mat4 model=uInstanced?aInstanceModel:uModel;
+    mat3 normalMatrix=uInstanced?transpose(inverse(mat3(model))):uNormalMatrix;
+    vTint=uInstanced?aInstanceTint:uColor;
+    // uNormalMatrix = transpose(inverse(mat3(model))), computed on the CPU
     // once per draw call (see DrawMesh) — the standard correction so
     // normals stay perpendicular to their surface under non-uniform scale
     // (DrawBox's halfExtents are rarely a uniform scale), not just rotation.
@@ -79,20 +75,17 @@ void main() {
     vec4 localPosition=skin*vec4(aLocalPos,1.0);
     mat3 linear=mat3(skin);
     vec3 normal=abs(determinant(linear))>1e-8?transpose(inverse(linear))*aLocalNormal:linear*aLocalNormal;
-    vWorldNormal = uNormalMatrix * normal;
-    vec3 tangent=mat3(uModel)*linear*aTangent.xyz;
-    vWorldTangent=vec4(tangent,aTangent.w*(determinant(mat3(uModel)*linear)<0.0?-1.0:1.0));
+    vWorldNormal = normalMatrix * normal;
+    vec3 tangent=mat3(model)*linear*aTangent.xyz;
+    vWorldTangent=vec4(tangent,aTangent.w*(determinant(mat3(model)*linear)<0.0?-1.0:1.0));
     // Milestone 14: the fragment's own world-space position, needed so the
     // fragment shader can compute a per-fragment vector TO each dynamic
     // point/spot light (distance-based attenuation, cone angle) — the
     // Milestone 9 directional light never needed this, since a directional
     // light's contribution doesn't depend on fragment position at all.
-    vWorldPos = vec3(uModel * localPosition);
+    vWorldPos = vec3(model * localPosition);
     vUV = aUV;vUV1=aUV1;
-    vDirLightSpacePos = uLightSpaceMatrix[0] * vec4(vWorldPos, 1.0);
-    vTorchLightSpacePos = uLightSpaceMatrix[1] * vec4(vWorldPos, 1.0);
-    vShipLightSpacePos = uLightSpaceMatrix[2] * vec4(vWorldPos, 1.0);
-    gl_Position = uProjection * uView * uModel * localPosition;
+    gl_Position = uProjection * uView * model * localPosition;
 }
 )";
 
@@ -102,13 +95,13 @@ in vec4 vWorldTangent;
 in vec3 vWorldPos;
 in vec2 vUV;
 in vec2 vUV1;
-in vec4 vDirLightSpacePos;
-in vec4 vTorchLightSpacePos;
-in vec4 vShipLightSpacePos;
+
+
+
 out vec4 FragColor;
 
 uniform sampler2D uTexture;
-uniform vec4 uColor;
+in vec4 vTint;
 uniform bool uWaterEnabled;
 uniform sampler2D uWaterPaths;
 uniform mat4 uWaterViewProjection;
@@ -126,39 +119,17 @@ uniform vec3 uWeatherEye,uWeatherUp,uWeatherPhase;
 uniform vec4 uWeatherAmounts; // coverage,density,rain,snow
 uniform vec4 uWeatherLayer; // base,thickness,eye altitude,radial radius
 uniform float uWeatherFlash;
+float spotWeight(float outerCos,float innerCos,float angle){return innerCos<=outerCos+1e-7?step(outerCos,angle):smoothstep(outerCos,innerCos,angle);}
 float weatherCloud(vec3 p){return texture(uWeatherNoise,p/262144.0).r*.65+texture(uWeatherNoise,p/65536.0).r*.35;}
 
-// Milestone 15: one depth texture per shadow slot (see src/Light.h) —
-// slot 0 is the directional "sun," slot 1 the player torch, slot 2 the
-// spacecraft headlight. Bound to fixed texture units 1/2/3 (uTexture stays
-// on unit 0 — see Renderer::Init) so all four textures this shader ever
-// samples are bound simultaneously, no rebinding between them mid-draw.
-uniform sampler2D uShadowMapDir;
-uniform sampler2D uShadowMapTorch;
-uniform sampler2D uShadowMapShip;
-
-// Milestone 14: dynamic point/spot lights — see src/Light.h and
-// docs/ARCHITECTURE.md, "Milestone 14," for the full model. A fixed-size
-// array (kMaxDynamicLights on the CPU side, mirrored here) is
-// deliberately small and explicit rather than unbounded — see "Milestone
-// 14, Light limits." `uLightCount` (<= the array size) bounds the loop so
-// unused slots are never touched, not merely zeroed.
-#define MAX_DYNAMIC_LIGHTS 5
-uniform int uLightCount;
-uniform vec3 uDynamicLightPosition[MAX_DYNAMIC_LIGHTS];
-uniform vec3 uDynamicLightDirection[MAX_DYNAMIC_LIGHTS];  // spot only; the direction the light FACES
-uniform vec3 uDynamicLightColor[MAX_DYNAMIC_LIGHTS];      // already intensity-scaled, see Renderer.cpp
-uniform float uDynamicLightRange[MAX_DYNAMIC_LIGHTS];
-uniform float uDynamicLightInnerCos[MAX_DYNAMIC_LIGHTS];  // spot only
-uniform float uDynamicLightOuterCos[MAX_DYNAMIC_LIGHTS];  // spot only
-uniform int uDynamicLightIsSpot[MAX_DYNAMIC_LIGHTS];      // 0 = point, 1 = spot
-// Milestone 15: -1 = this light casts no shadow; 1 = uses vTorchLightSpacePos
-// / uShadowMapTorch; 2 = uses vShipLightSpacePos / uShadowMapShip (slot 0,
-// the directional light, is applied separately below, not through this
-// per-dynamic-light array — see src/Light.h's kDirectionalShadowSlot/
-// kTorchShadowSlot/kShipHeadlightShadowSlot).
-uniform int uDynamicLightShadowIndex[MAX_DYNAMIC_LIGHTS];
-
+// M92: one depth array; world-position projection selects the assigned layer.
+uniform sampler2DArray uShadowMaps;
+uniform mat4 uLightSpaceMatrix[9];
+uniform sampler2D uLightGrid;
+uniform bool uHasDynamicLights;
+uniform vec4 uLightViewport;
+vec4 lightTexel(int i){return texelFetch(uLightGrid,ivec2(i%1024,i/1024),0);}
+ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clamp(ivec2((gl_FragCoord.xy-uLightViewport.xy)/uLightViewport.zw*meta.xy),ivec2(0),n-1);return ivec2(tile.y*n.x+tile.x,int(meta.z));}
 // Milestone 15: samples `shadowMap` at `lightSpacePos` (already multiplied
 // by that light's own view*projection in the vertex shader) and returns
 // how LIT this fragment is (1.0 = fully lit, 0.0 = fully shadowed) — a
@@ -173,23 +144,26 @@ uniform int uDynamicLightShadowIndex[MAX_DYNAMIC_LIGHTS];
 // this is the same "no light reaches unclaimed space" honesty this
 // engine already applies elsewhere (see docs/ARCHITECTURE.md's gravity-
 // context law) rather than guessing.
-float ComputeShadowFactor(vec4 lightSpacePos, sampler2D shadowMap, float ndotl) {
+float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
+    if(slot<0||slot>=9)return 1.0;
+    vec4 lightSpacePos=uLightSpaceMatrix[slot]*vec4(worldPosition,1);
+    if(lightSpacePos.w<=0.0)return 1.0;
     vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
     projCoords = projCoords * 0.5 + 0.5;  // NDC [-1,1] -> texture/depth [0,1]
 
     if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0 ||
-        projCoords.z > 1.0) {
+        projCoords.z < -1.0 || projCoords.z > 1.0) {
         return 1.0;
     }
 
     float bias = max(0.006 * (1.0 - ndotl), 0.0015);
     float currentDepth = projCoords.z - bias;
 
-    vec2 texelSize = 1.0 / vec2(textureSize(shadowMap, 0));
+    vec2 texelSize = 1.0 / vec2(textureSize(uShadowMaps, 0).xy);
     float litSum = 0.0;
     for (int x = -1; x <= 1; ++x) {
         for (int y = -1; y <= 1; ++y) {
-            float closestDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            float closestDepth = texture(uShadowMaps, vec3(projCoords.xy + vec2(x, y) * texelSize,float(slot))).r;
             litSum += currentDepth <= closestDepth ? 1.0 : 0.0;
         }
     }
@@ -221,8 +195,12 @@ vec3 BRDF(vec3 base,float metal,float rough,vec3 n,vec3 v,vec3 l){
  return ((vec3(1.0)-f)*(1.0-metal)*base/PI+D*visibility*f)*nl;
 }
 vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
- vec3 result=BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*ComputeShadowFactor(vDirLightSpacePos,uShadowMapDir,max(dot(n,uLightDirection),0.0));
- for(int i=0;i<uLightCount;++i){vec3 to=uDynamicLightPosition[i]-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(uDynamicLightRange[i],0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=uDynamicLightIsSpot[i]!=0?smoothstep(uDynamicLightOuterCos[i],uDynamicLightInnerCos[i],dot(-l,uDynamicLightDirection[i])):1.0;float shadow=1.0;if(uDynamicLightShadowIndex[i]==1)shadow=ComputeShadowFactor(vTorchLightSpacePos,uShadowMapTorch,max(dot(n,l),0.0));else if(uDynamicLightShadowIndex[i]==2)shadow=ComputeShadowFactor(vShipLightSpacePos,uShadowMapShip,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*uDynamicLightColor[i]*attenuation*spot*shadow;}
+ vec3 result=BRDF(base,metal,rough,n,v,uLightDirection)*uLightColor*ComputeShadowFactor(0,vWorldPos,max(dot(n,uLightDirection),0.0));
+ ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
+ for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
+ vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
+ vec3 lightPosition=lp.xyz,lightColor=lc.xyz,lightDirection=ld.xyz;
+ float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);vec3 to=lightPosition-vWorldPos;float distance=length(to);vec3 l=distance>0.00001?to/distance:n;float f=clamp(distance/max(lightRange,0.0001),0.0,1.0),w=clamp(1.0-f*f*f*f,0.0,1.0);float attenuation=w*w/(distance*distance+1.0);float spot=isSpot!=0?spotWeight(outerCos,innerCos,dot(-l,lightDirection)):1.0;float shadow=1.0;shadow=ComputeShadowFactor(shadowSlot,vWorldPos,max(dot(n,l),0.0));result+=BRDF(base,metal,rough,n,v,l)*lightColor*attenuation*spot*shadow;}
  float ao=uHasOcclusion?mix(1.0,texture(uOcclusion,mapUV(3)).r,uOcclusionStrength):1.0;
  vec3 f0=mix(vec3(0.04),base,metal);
  if(uEnvironmentEnabled){float nv=max(dot(n,v),0.0);vec3 f=f0+(max(vec3(1.0-rough),f0)-f0)*pow(1.0-nv,5.0);vec3 diffuse=texture(uEnvDiffuse,envUV(uEnvironmentInverse*n)).rgb*base*(vec3(1.0)-f)*(1.0-metal);vec3 reflection=reflect(-v,n);vec3 spec=textureLod(uEnvSpecular,envUV(uEnvironmentInverse*reflection),rough*(uEnvLevels-1.0)).rgb;vec2 brdf=texture(uBRDF,vec2(nv,rough)).rg;result+=(diffuse+spec*(f0*brdf.x+brdf.y))*uEnvironmentIntensity*ao;
@@ -237,45 +215,45 @@ void main() {
 
 
     float diffuseFactor = max(dot(normal, uLightDirection), 0.0);
-    float dirShadow = ComputeShadowFactor(vDirLightSpacePos, uShadowMapDir, diffuseFactor);
+    float dirShadow = ComputeShadowFactor(0, vWorldPos, diffuseFactor);
     vec3 lighting = uAmbientColor + uLightColor * diffuseFactor * dirShadow;
 
-    for (int i = 0; i < uLightCount; ++i) {
-        vec3 toLight = uDynamicLightPosition[i] - vWorldPos;
+    ivec2 tileInfo=uHasDynamicLights?lightTile():ivec2(0);vec4 tileHeader=uHasDynamicLights?lightTexel(1+tileInfo.x):vec4(0);
+ for(int item=0;item<int(tileHeader.y);++item){int record=tileInfo.y+int(lightTexel(int(tileHeader.x)+item).x)*4;
+ vec4 lp=lightTexel(record),lc=lightTexel(record+1),ld=lightTexel(record+2),ls=lightTexel(record+3);
+ vec3 lightPosition=lp.xyz,lightColor=lc.xyz,lightDirection=ld.xyz;
+ float lightRange=lp.w,innerCos=ld.w,outerCos=ls.x;int isSpot=int(lc.w),shadowSlot=int(ls.y);
+        vec3 toLight = lightPosition - vWorldPos;
         float distance = length(toLight);
         vec3 lightDir = distance > 1.0e-5 ? toLight / distance : vec3(0.0, 1.0, 0.0);
 
         // Smooth-windowed inverse-square attenuation (see Renderer.cpp,
         // SetDynamicLights, for the full derivation/citation) — genuinely
         // inverse-square close to the light, smoothly reaches exactly zero
-        // at uDynamicLightRange[i] instead of a hard cliff or a never-zero
+        // at lightRange instead of a hard cliff or a never-zero
         // tail, and the "+1.0" keeps it finite as distance approaches 0.
-        float rangeFraction = clamp(distance / max(uDynamicLightRange[i], 1.0e-4), 0.0, 1.0);
+        float rangeFraction = clamp(distance / max(lightRange, 1.0e-4), 0.0, 1.0);
         float windowed = 1.0 - rangeFraction * rangeFraction * rangeFraction * rangeFraction;
         windowed = clamp(windowed, 0.0, 1.0);
         float attenuation = (windowed * windowed) / (distance * distance + 1.0);
 
         float spotFactor = 1.0;
-        if (uDynamicLightIsSpot[i] != 0) {
-            float cosAngle = dot(-lightDir, uDynamicLightDirection[i]);
-            spotFactor = smoothstep(uDynamicLightOuterCos[i], uDynamicLightInnerCos[i], cosAngle);
+        if (isSpot != 0) {
+            float cosAngle = dot(-lightDir, lightDirection);
+            spotFactor = spotWeight(outerCos, innerCos, cosAngle);
         }
 
         float lightDiffuse = max(dot(normal, lightDir), 0.0);
 
         float shadow = 1.0;
-        int shadowIndex = uDynamicLightShadowIndex[i];
-        if (shadowIndex == 1) {
-            shadow = ComputeShadowFactor(vTorchLightSpacePos, uShadowMapTorch, lightDiffuse);
-        } else if (shadowIndex == 2) {
-            shadow = ComputeShadowFactor(vShipLightSpacePos, uShadowMapShip, lightDiffuse);
-        }
+        int shadowIndex = shadowSlot;
+        shadow=ComputeShadowFactor(shadowIndex,vWorldPos,lightDiffuse);
 
-        lighting += uDynamicLightColor[i] * lightDiffuse * attenuation * spotFactor * shadow;
+        lighting += lightColor * lightDiffuse * attenuation * spotFactor * shadow;
     }
 
     vec4 texColor = texture(uTexture,materialUV);
-    vec4 base=vec4((uMaterialModel==0||uBaseLinear)?texColor.rgb:decodeSRGB(texColor.rgb),texColor.a)*uBaseFactor*uColor;
+    vec4 base=vec4((uMaterialModel==0||uBaseLinear)?texColor.rgb:decodeSRGB(texColor.rgb),texColor.a)*uBaseFactor*vTint;
     if(uAlphaMode==1&&base.a<uAlphaCutoff)discard;
     if(uMaterialModel==0){FragColor=vec4(lighting*base.rgb,base.a);if(uModern)FragColor.rgb=decodeSRGB(FragColor.rgb);}
     else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
@@ -334,12 +312,15 @@ layout(location = 7) in vec4 aWeights1;
 uniform samplerBuffer uBones;
 mat4 bone(uint joint) { int b=int(joint)*4;return mat4(texelFetch(uBones,b),texelFetch(uBones,b+1),texelFetch(uBones,b+2),texelFetch(uBones,b+3)); }
 uniform mat4 uModel;
+uniform bool uInstanced;
+layout(location=9) in mat4 aInstanceModel;
+layout(location=13) in vec4 aInstanceTint;
 uniform mat4 uLightViewProj;
 
 void main() {
     mat4 skin=mat4(1.0);
     if(uSkinned)skin=bone(aJoints.x)*aWeights.x+bone(aJoints.y)*aWeights.y+bone(aJoints.z)*aWeights.z+bone(aJoints.w)*aWeights.w+bone(aJoints1.x)*aWeights1.x+bone(aJoints1.y)*aWeights1.y+bone(aJoints1.z)*aWeights1.z+bone(aJoints1.w)*aWeights1.w;
-    shadowUV=aUV;shadowUV1=aUV1;gl_Position = uLightViewProj * uModel * skin * vec4(aLocalPos, 1.0);
+    mat4 model=uInstanced?aInstanceModel:uModel;shadowUV=aUV;shadowUV1=aUV1;gl_Position = uLightViewProj * model * skin * vec4(aLocalPos, 1.0);
 }
 )";
 
@@ -363,7 +344,7 @@ bool CompileShader(GLenum type, const char* source, GLuint& outShader) {
     auto replaceAll=[&](const std::string& from,const std::string& to){
         std::size_t at=0;while((at=es.find(from,at))!=std::string::npos){es.replace(at,from.size(),to);at+=to.size();}
     };
-    replaceAll("#version 330 core", "#version 300 es\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision highp sampler3D;\nprecision highp sampler2DShadow;");
+    replaceAll("#version 330 core", "#version 300 es\nprecision highp float;\nprecision highp int;\nprecision highp sampler2D;\nprecision highp sampler3D;\nprecision highp sampler2DShadow;\nprecision highp sampler2DArray;");
     replaceAll("samplerBuffer uBones", "sampler2D uBones");
     for(int i=0;i<4;++i){const std::string b=i?"b+"+std::to_string(i):"b";
         replaceAll("texelFetch(uBones,"+b+")", "texelFetch(uBones,ivec2("+std::to_string(i)+",b/4),0)");}
@@ -608,6 +589,7 @@ void main() {
 }  // namespace
 
 bool Renderer::Init() {
+    if(const char* batching=std::getenv("JUDAS_RENDER_BATCHING"))m_batchingEnabled=std::strcmp(batching,"0")!=0;
     const char* shadows=std::getenv("JUDAS_SHADOWS");m_shadowsEnabled=!(shadows&&std::string(shadows)=="0");
     std::fprintf(stderr,"Shadow maps: %s\n",m_shadowsEnabled?"on":"off");
     std::fprintf(stderr,"Graphics: %s / %s\n",glGetString(GL_VERSION),glGetString(GL_RENDERER));
@@ -641,46 +623,10 @@ bool Renderer::Init() {
     m_uLightColor = glGetUniformLocation(m_shaderProgram, "uLightColor");
     m_uAmbientColor = glGetUniformLocation(m_shaderProgram, "uAmbientColor");
 
-    // Milestone 14: one uniform location per dynamic-light field, per
-    // array slot — see Renderer.h's own comment on why these can't be
-    // cached as a single location the way a plain uniform can.
-    m_uLightCount = glGetUniformLocation(m_shaderProgram, "uLightCount");
-    for (int i = 0; i < kMaxDynamicLights; ++i) {
-        const std::string prefix = "uDynamicLight";
-        const std::string index = "[" + std::to_string(i) + "]";
-        m_uDynamicLightPosition[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "Position" + index).c_str());
-        m_uDynamicLightDirection[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "Direction" + index).c_str());
-        m_uDynamicLightColor[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "Color" + index).c_str());
-        m_uDynamicLightRange[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "Range" + index).c_str());
-        m_uDynamicLightInnerCos[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "InnerCos" + index).c_str());
-        m_uDynamicLightOuterCos[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "OuterCos" + index).c_str());
-        m_uDynamicLightIsSpot[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "IsSpot" + index).c_str());
-        m_uDynamicLightShadowIndex[i] =
-            glGetUniformLocation(m_shaderProgram, (prefix + "ShadowIndex" + index).c_str());
-    }
-
-    // Milestone 15: one mat4 + one sampler2D location per shadow slot.
-    for (int slot = 0; slot < kShadowMapCount; ++slot) {
-        const std::string matrixName = "uLightSpaceMatrix[" + std::to_string(slot) + "]";
-        m_uLightSpaceMatrix[slot] = glGetUniformLocation(m_shaderProgram, matrixName.c_str());
-    }
-    m_uShadowMapSampler[0] = glGetUniformLocation(m_shaderProgram, "uShadowMapDir");
-    m_uShadowMapSampler[1] = glGetUniformLocation(m_shaderProgram, "uShadowMapTorch");
-    m_uShadowMapSampler[2] = glGetUniformLocation(m_shaderProgram, "uShadowMapShip");
-
-    // Texture unit 0 is the diffuse/white-fallback texture (unchanged
-    // since Milestone 9); units 1-3 are the three shadow maps (Milestone
-    // 15) — all four bound once here rather than every draw call, since
-    // which GL texture OBJECT each unit points at only ever changes when a
-    // shadow map is re-rendered (see BeginShadowPass), not which UNIT a
-    // given uniform samples from.
+    m_uInstanced=glGetUniformLocation(m_shaderProgram,"uInstanced");
+    for(int slot=0;slot<kShadowMapCount;++slot)m_uLightSpaceMatrix[slot]=glGetUniformLocation(m_shaderProgram,("uLightSpaceMatrix["+std::to_string(slot)+"]").c_str());
+    // Unit 1: depth array; 14: tiled lights. Material, weather and pose units
+    // retain their prior assignments, within the GLES3 sixteen-unit minimum.
     glUseProgram(m_shaderProgram);
     glUniform1i(m_uTexture, 0);
     // Sampler types must use distinct units even when uSkinned is false.
@@ -688,9 +634,8 @@ bool Renderer::Init() {
     // render a skeleton first to make its boxes and spheres valid GL draws.
     glUniform1i(m_uBones, 15);
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uWeatherNoise"),13);
-    glUniform1i(m_uShadowMapSampler[0], 1);
-    glUniform1i(m_uShadowMapSampler[1], 2);
-    glUniform1i(m_uShadowMapSampler[2], 3);
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uShadowMaps"),1);
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uLightGrid"),14);
 
     glClearColor(0.08f, 0.09f, 0.11f, 1.0f);
     glEnable(GL_DEPTH_TEST);
@@ -736,6 +681,7 @@ bool Renderer::Init() {
         return false;
     }
     m_uShadowModel = glGetUniformLocation(m_shadowShaderProgram, "uModel");
+    m_uShadowInstanced=glGetUniformLocation(m_shadowShaderProgram,"uInstanced");
     m_uShadowSkinned=glGetUniformLocation(m_shadowShaderProgram,"uSkinned");m_uShadowBones=glGetUniformLocation(m_shadowShaderProgram,"uBones");
     m_uShadowLightViewProj = glGetUniformLocation(m_shadowShaderProgram, "uLightViewProj");
     glUseProgram(m_shadowShaderProgram);
@@ -754,32 +700,7 @@ bool Renderer::Init() {
     // GL_CLAMP_TO_BORDER with a border color) keeps this to GL surface
     // this engine already has — see ComputeShadowFactor's own "outside
     // the shadow map's coverage counts as fully lit" comment.
-    for (int slot = 0; m_shadowsEnabled && slot < kShadowMapCount; ++slot) {
-        glGenTextures(1, &m_shadowMapTexture[slot]);
-        glBindTexture(GL_TEXTURE_2D, m_shadowMapTexture[slot]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, kShadowMapResolution, kShadowMapResolution, 0,
-                     GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, nullptr);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-        glGenFramebuffers(1, &m_shadowFbo[slot]);
-        glBindFramebuffer(GL_FRAMEBUFFER, m_shadowFbo[slot]);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,
-                                m_shadowMapTexture[slot], 0);
-        // No color attachment exists for this FBO at all — tell GL not to
-        // expect or provide one, or GL_FRAMEBUFFER_COMPLETE would
-        // (correctly) fail on some drivers.
-        const GLenum noColor=GL_NONE;glDrawBuffers(1,&noColor);
-        glReadBuffer(GL_NONE);
-        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            std::fprintf(stderr, "Shadow framebuffer %d is incomplete.\n", slot);
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            glBindTexture(GL_TEXTURE_2D, 0);
-            return false;
-        }
-    }
+    ReserveShadowLayers(1);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -914,6 +835,11 @@ void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
 #endif
 }
 void Renderer::Shutdown() {
+    m_meshBatches.clear();m_batchLookup.clear();if(m_instanceBuffer)glDeleteBuffers(1,&m_instanceBuffer);m_instanceBuffer=0;
+    if(m_lightTexture)glDeleteTextures(1,&m_lightTexture);
+    m_lightTexture=0;m_lightTextureRows=0;
+    if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
+    m_shadowArray=0;m_shadowLayers=0;
     ShutdownWeather();
     if(m_poseTexture){glDeleteTextures(1,&m_poseTexture);m_poseTexture=0;}
     if(m_poseBuffer){glDeleteBuffers(1,&m_poseBuffer);m_poseBuffer=0;}
@@ -951,10 +877,6 @@ void Renderer::Shutdown() {
         if (m_shadowFbo[slot]) {
             glDeleteFramebuffers(1, &m_shadowFbo[slot]);
             m_shadowFbo[slot] = 0;
-        }
-        if (m_shadowMapTexture[slot]) {
-            glDeleteTextures(1, &m_shadowMapTexture[slot]);
-            m_shadowMapTexture[slot] = 0;
         }
     }
     if (m_shadowShaderProgram) {
@@ -1054,36 +976,12 @@ void Renderer::SetLighting(const glm::vec3& direction, const glm::vec3& lightCol
     glUniform3f(m_uAmbientColor, ambientColor.r, ambientColor.g, ambientColor.b);
 }
 
-void Renderer::SetDynamicLights(const std::vector<DynamicLight>& lights) {
-    glUseProgram(m_shaderProgram);
-
-    const int count = std::min(static_cast<int>(lights.size()), kMaxDynamicLights);
-    glUniform1i(m_uLightCount, count);
-    m_stats.dynamicLights = static_cast<unsigned int>(count);
-
-    for (int i = 0; i < count; ++i) {
-        const DynamicLight& light = lights[static_cast<size_t>(i)];
-        glUniform3f(m_uDynamicLightPosition[i], light.position.x, light.position.y, light.position.z);
-        const glm::vec3 direction =
-            glm::length(light.direction) > 1.0e-6f ? glm::normalize(light.direction) : glm::vec3(0.0f, 0.0f, -1.0f);
-        glUniform3f(m_uDynamicLightDirection[i], direction.x, direction.y, direction.z);
-        glUniform3f(m_uDynamicLightColor[i], light.color.r, light.color.g, light.color.b);
-        glUniform1f(m_uDynamicLightRange[i], std::max(light.range, 1.0e-3f));
-        // Cosines, not degrees: computed once here (CPU) rather than once
-        // per fragment (GPU) — see the fragment shader's own
-        // smoothstep(outerCos, innerCos, cosAngle) call. Clamped so a
-        // misconfigured inner > outer doesn't silently invert the falloff
-        // direction (smoothstep requires edge0 <= edge1).
-        const float innerCos = std::cos(glm::radians(std::min(light.innerConeDegrees, light.outerConeDegrees)));
-        const float outerCos = std::cos(glm::radians(light.outerConeDegrees));
-        glUniform1f(m_uDynamicLightInnerCos[i], innerCos);
-        glUniform1f(m_uDynamicLightOuterCos[i], outerCos);
-        glUniform1i(m_uDynamicLightIsSpot[i], light.kind == LightKind::Spot ? 1 : 0);
-        glUniform1i(m_uDynamicLightShadowIndex[i], light.shadowMapIndex);
-    }
-}
+#include "RendererScale.inl"
 
 void Renderer::BeginShadowPass(int shadowSlot, const glm::mat4& lightViewProjection) {
+    if(shadowSlot<0||shadowSlot>=kShadowMapCount||!m_shadowsEnabled)return;
+    ReserveShadowLayers(unsigned(shadowSlot+1));
+    glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING,&m_shadowSavedFramebuffer);glGetIntegerv(GL_VIEWPORT,&m_shadowSavedViewport.x);
     m_profileShadow=BeginProfilePass("Shadow",std::uint64_t(shadowSlot));
     m_shadowLightSpaceMatrix[shadowSlot] = lightViewProjection;
     m_shadowPassActive = true;
@@ -1103,7 +1001,7 @@ void Renderer::EndShadowPass() {
     m_shadowPassActive = false;
     m_frustum=Frustum(m_projection*m_view);
     m_currentShadowSlot = -1;
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_shadowSavedFramebuffer));glViewport(m_shadowSavedViewport.x,m_shadowSavedViewport.y,m_shadowSavedViewport.z,m_shadowSavedViewport.w);
 }
 
 void Renderer::InvalidateShadowSlot(int shadowSlot) {
@@ -1389,7 +1287,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
                          const glm::vec3& tintColor, float alpha,const std::vector<glm::mat4>* skin,const std::vector<std::string>* hiddenParts) {
     GpuMesh* gpuMesh = GetMesh(mesh);
     if (!gpuMesh) return;
-    if(!m_shadowPassActive&&!AllowsLayer(m_renderLayer)){++m_stats.layerRejectedDraws;return;}
+    if(!m_submittingBatch&&!m_shadowPassActive&&!AllowsLayer(m_renderLayer)){++m_stats.layerRejectedDraws;return;}
 
     static const GpuMaterial failed=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.8f,.02f,.65f,1};return m;}();
     static const GpuMaterial pending=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.25f,.25f,.28f,1};return m;}();
@@ -1399,16 +1297,20 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     auto alphaAt=[&](size_t slot,const GpuMaterial* material){auto binding=bindingAt(slot);return binding.overrides.alpha.value_or(material?material->definition.alpha:MaterialAlpha::Opaque);};
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
     const auto* palette=skin&&!skin->empty()?skin:&gpuMesh->restSkin;
-    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!gpuMesh->primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),gpuMesh->primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace(glm::determinant(glm::mat3(model*orientation))<0?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));++m_stats.drawCalls;m_stats.triangles+=count/3;}glFrontFace(GL_CCW);};
+    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!gpuMesh->primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),gpuMesh->primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
     if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
     if(!palette->empty()){bounds={};for(const auto& matrix:*palette){auto b=TransformBounds(gpuMesh->bounds,matrix);bounds.Include(b.min);bounds.Include(b.max);}}
-    ++m_stats.renderablesConsidered;
-    if(!IsVisible(TransformBounds(bounds,model))){++m_stats.renderablesCulled;return;}
-    ++m_stats.renderablesVisible;
+    if(!m_submittingBatch)++m_stats.renderablesConsidered;
+    if(!m_submittingBatch&&!IsVisible(TransformBounds(bounds,model))){++m_stats.renderablesCulled;return;}
+    if(!m_submittingBatch)++m_stats.renderablesVisible;
     bool blended=false;for(size_t i=0;i<parts;++i)blended|=alphaAt(i,materialAt(i))==MaterialAlpha::Blend;
     if(blended&&!m_shadowPassActive&&!m_flushingBlends){BlendDraw draw{mesh,position,scale,tintColor,rotation,texture,alpha,skin?*skin:std::vector<glm::mat4>{},m_materialBindings,-(m_view*glm::vec4(position,1)).z,m_renderLayer,hiddenParts?*hiddenParts:std::vector<std::string>{}};m_blendDraws.push_back(std::move(draw));}
 
+    if(m_collectingBatch&&m_batchingEnabled&&!m_submittingBatch&&palette->empty()&&(!hiddenParts||hiddenParts->empty())){
+        bool opaque=true;for(size_t i=0;i<parts;++i)opaque&=alphaAt(i,materialAt(i))==MaterialAlpha::Opaque;
+        if(opaque&&std::abs(glm::determinant(glm::mat3(model)))>1e-12f){QueueMeshInstance(mesh,texture,model,{tintColor,alpha});return;}
+    }
     // Milestone 15: while a shadow pass is active (see BeginShadowPass),
     // every DrawMesh call writes depth only, from that light's own view/
     // projection, through the separate minimal shadow shader — normals,
@@ -1418,6 +1320,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 
     if (m_shadowPassActive) {
         glUseProgram(m_shadowShaderProgram);
+        glUniform1i(m_uShadowInstanced,m_submittingBatch);
         glUniform1i(m_uShadowSkinned,!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(m_uShadowBones,15);}
         glUniformMatrix4fv(m_uShadowModel, 1, GL_FALSE, glm::value_ptr(model));
         submit(true);
@@ -1430,6 +1333,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     const glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(model));
 
     glUseProgram(m_shaderProgram);
+    glUniform1i(m_uInstanced,m_submittingBatch);
     glUniform1i(m_uSkinned,!palette->empty());if(!palette->empty()){UploadPosePalette(*palette);glUniform1i(m_uBones,15);}
     glUniformMatrix4fv(m_uModel, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix3fv(m_uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
@@ -1451,10 +1355,8 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
         texture = m_whiteTexture; ++m_stats.feedbackFallbacks;
     }
     glBindTexture(GL_TEXTURE_2D, ResolveTexture(texture));
-    for (int slot = 0; slot < kShadowMapCount; ++slot) {
-        glActiveTexture(GL_TEXTURE0 + 1 + slot);
-        glBindTexture(GL_TEXTURE_2D, m_shadowMapTexture[slot]);
-    }
+    glActiveTexture(GL_TEXTURE1);glBindTexture(GL_TEXTURE_2D_ARRAY,m_shadowArray);
+    glActiveTexture(GL_TEXTURE14);glBindTexture(GL_TEXTURE_2D,m_lightTexture);
     glActiveTexture(GL_TEXTURE0);  // restore the default active unit other calls (UI, texture creation) assume
 
     submit(false);
@@ -1509,9 +1411,6 @@ void Renderer::EndFrame() {
     FlushMaterialBlends();const bool background=m_environmentBackground;
     if(m_weather.enabled)m_environmentBackground=false;
     ResolveLinearPass();m_environmentBackground=background;
-    // Nothing to do yet; kept as an explicit boundary for future per-frame
-    // work (batching, multiple draw calls, etc.) rather than for any
-    // behavior this milestone needs.
 }
 
 bool Renderer::LoadFont(const char* path,float pixels,std::string& error){

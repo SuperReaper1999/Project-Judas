@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M90 public module based on checkpoint `3c3a1a3353a814357545ac11739c2300d2ec9b78`. M89 human acceptance is recorded. M90 release promotion is operator-authorized; the camera follow-up records automated correction checks without claiming an additional human retest. Earlier platform acceptance does not certify M90 on those platforms. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M92 public module based on checkpoint `61a9df6acaa102c0a9fcf1006866a01fc3b33a89 + M92 working surface`. M91 is operator accepted. M92 automated validation and human review are recorded separately; earlier platform acceptance does not certify M92 on those platforms. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -87,6 +87,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.inertiaWorld` | `inertiaWorld` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.kinematicMotion` | `kinematicMotion` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.light` | `lightInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.liquid` | `liquidOwner` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.mass` | `mass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.material` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](materials.md) |
@@ -121,6 +122,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setCameraProjection` | `cameraProjection` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.setColliderEnabled` | `colliderEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setKinematicVelocity` | `kinematicVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setLight` | `lightSettings` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setMotionType` | `motionTypeSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |

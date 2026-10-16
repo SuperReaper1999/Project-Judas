@@ -1,5 +1,9 @@
 # JudasJS — current API reference (M90)
 
+M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
+Its current candidate and platform evidence are separate from human acceptance.
+
+
 M89 adds optional [local players, scoped input, viewports and HUD focus](judasjs/local-multiplayer.md). M89 operator acceptance is recorded; M90 main promotion is now operator-authorized.
 
 M90 extends [local-origin assembly travel](judasjs/planetary-terrain.md) and adds the

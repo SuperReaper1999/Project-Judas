@@ -1,0 +1,22 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas Rendering Lab (/home/conner/Documents/GitHub/Project-Judas/.cache/m92/validation/judas_rendering_lab_tests/project/rendering_lab.judasproj)
+Scene: Light Factory / 1024 repeated objects (/home/conner/Documents/GitHub/Project-Judas/.cache/m92/validation/judas_rendering_lab_tests/project/Scenes/gallery.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS registered rendering lab script starts without faults
+PASS ordinary project submits many actual independent light sources
+PASS ordinary project uses actual GPU instancing
+PASS logical L toggles individual lights through public JS
+PASS logical L restores light source contribution
+PASS logical H changes ordinary per-light shadow request
+PASS logical V renders independent split-screen views
+PASS split views can be left without retaining active cameras
+FAIL pause UI receives input focus
+PASS pause resumes cleanly
+PASS post-save change establishes a different live light state
+PASS all tested light/view/save callbacks remain fault-free
+PASS F7 restores the saved light state after a different live edit
+LAB draws=12 instances=4058 lights=122 shadow_bytes=20971520 light_bytes=163840 fixed_ms=0.170396
+PASS ordinary application startup, rendering and Stop
+SUMMARY 14 checks 1 failures

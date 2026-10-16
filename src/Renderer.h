@@ -11,6 +11,7 @@
 #include "FontLoader.h"
 #include "TextLayout.h"
 #include "Light.h"
+#include "RenderLightGrid.h"
 #include "MeshData.h"
 #include "DebugDraw.h"
 #include "TextureData.h"
@@ -68,7 +69,9 @@ struct RenderStats {
     unsigned int particleEmittersConsidered=0,particleEmittersVisible=0,particleEmittersCulled=0,particlesSubmitted=0;
     unsigned int triangles = 0;
     unsigned int shadowPasses = 0;
-    unsigned int dynamicLights = 0;  // as last set by SetDynamicLights (after truncation)
+    unsigned int instancedDraws=0,instances=0,lightTileOverflow=0,lightRejected=0,maxTileLights=0;
+    std::size_t lightBytes=0,instanceBytes=0,shadowBytes=0;
+    unsigned int dynamicLights = 0;  // active view, after relevance selection
     unsigned int offscreenPasses = 0;
     unsigned int feedbackFallbacks = 0;
     unsigned int targetDeletionFailures = 0;
@@ -159,19 +162,18 @@ public:
     void SetLighting(const glm::vec3& direction, const glm::vec3& lightColor,
                       const glm::vec3& ambientColor);
 
-    // Milestone 14: the current frame's dynamic point/spot lights, already
-    // in WORLD space (see src/Light.h's own doc comment for who's
-    // responsible for getting them there). Called once per frame,
-    // alongside SetLighting/SetCamera, BEFORE the frame's DrawMesh/DrawBox/
-    // DrawSphere calls — every mesh drawn until the next SetDynamicLights
-    // call is lit by exactly this light set, on top of the existing
-    // ambient + directional terms SetLighting already provides (see
-    // docs/ARCHITECTURE.md, "Milestone 14, Combining lights" — dynamic
-    // lights are additive, never a replacement for the Milestone 9
-    // directional "sun"). `lights.size()` beyond kMaxDynamicLights (see
-    // src/Light.h) is silently truncated, not an error — M14 doesn't need
-    // more than that many at once, see "Milestone 14, Light limits."
+    // Rebuild the active camera's bounded screen tile lists. Call after its
+    // SetCamera and target/viewport selection. See RenderLightGrid limits and
+    // RenderStats overflow diagnostics; ordering never chooses the first five.
     void SetDynamicLights(const std::vector<DynamicLight>& lights);
+    // Explicit pass scope. Transparent/skinned/masked draws retain their ordered
+    // path. Compatible opaque draws share one upload and one instanced draw.
+    void BeginMeshBatch();
+    void EndMeshBatch();
+    void SetBatchingEnabled(bool value){m_batchingEnabled=value;}
+    void SetShadowBudget(unsigned n){m_shadowBudget=std::min(n,8u);}
+    unsigned ShadowBudget()const{return m_shadowBudget;}
+    void ReserveShadowLayers(unsigned layers);
 
     // --- Judas-owned mesh/texture resources (Milestone 9) ---
     //
@@ -484,28 +486,18 @@ private:
     GLint m_uLightColor = -1;
     GLint m_uAmbientColor = -1;
 
-    // --- Milestone 14: dynamic point/spot lights ---
-    //
-    // One uniform location per FIELD, per ARRAY SLOT (kMaxDynamicLights of
-    // each) — GLSL struct-array uniforms are addressed by their own
-    // "uLights[i].field" name per element; there is no single "array"
-    // location to cache the way a plain vec3/float uniform has one. Fetched
-    // once in Init, reused every SetDynamicLights call.
-    GLint m_uLightCount = -1;
-    GLint m_uDynamicLightPosition[kMaxDynamicLights];
-    GLint m_uDynamicLightDirection[kMaxDynamicLights];
-    GLint m_uDynamicLightColor[kMaxDynamicLights];
-    GLint m_uDynamicLightRange[kMaxDynamicLights];
-    GLint m_uDynamicLightInnerCos[kMaxDynamicLights];
-    GLint m_uDynamicLightOuterCos[kMaxDynamicLights];
-    GLint m_uDynamicLightIsSpot[kMaxDynamicLights];
-    // Milestone 15: which shadow slot (see src/Light.h) each dynamic
-    // light uses, or -1 for none — the main shader uses this to select
-    // between the fixed vTorchLightSpacePos/vShipLightSpacePos varyings
-    // (see Renderer.cpp's fragment shader) when applying this light's own
-    // shadow factor.
-    GLint m_uDynamicLightShadowIndex[kMaxDynamicLights];
-
+    RenderLightGrid m_lightGrid;
+    GLuint m_lightTexture=0,m_instanceBuffer=0,m_shadowArray=0;
+    unsigned m_lightTextureRows=0,m_shadowBudget=4,m_shadowLayers=0;
+    GLint m_uInstanced=-1,m_uShadowInstanced=-1;
+    bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;
+    struct Instance {glm::mat4 model;glm::vec4 tint;};
+    struct MeshBatch {MeshHandle mesh;TextureHandle texture;std::vector<MaterialBinding> bindings;bool reversed=false;std::vector<Instance> instances;};
+    unsigned m_activeInstances=0;bool m_activeBatchReversed=false;
+    void QueueMeshInstance(MeshHandle,TextureHandle,const glm::mat4&,glm::vec4);
+    std::vector<MeshBatch> m_meshBatches;
+    std::map<std::string,size_t> m_batchLookup;
+    GLint m_shadowSavedFramebuffer=0;glm::ivec4 m_shadowSavedViewport{0};
     CategoryMask m_renderMask=kAllCategories;
     unsigned m_renderLayer=0;
     Frustum m_frustum;
@@ -530,7 +522,6 @@ private:
     GLint m_uShadowModel = -1,m_uShadowSkinned=-1,m_uShadowBones=-1;
     GLint m_uShadowLightViewProj = -1;
     GLuint m_shadowFbo[kShadowMapCount] = {0, 0, 0};
-    GLuint m_shadowMapTexture[kShadowMapCount] = {0, 0, 0};
     glm::mat4 m_shadowLightSpaceMatrix[kShadowMapCount] = {glm::mat4(1.0f), glm::mat4(1.0f),
                                                             glm::mat4(1.0f)};
     // Main shader's own shadow-sampling uniform locations — one mat4 +
@@ -538,7 +529,6 @@ private:
     // per-dynamic-light-field locations above for why these can't be a
     // single cached array location).
     GLint m_uLightSpaceMatrix[kShadowMapCount] = {-1, -1, -1};
-    GLint m_uShadowMapSampler[kShadowMapCount] = {-1, -1, -1};
     bool m_shadowPassActive = false;
     int m_currentShadowSlot = -1;
 

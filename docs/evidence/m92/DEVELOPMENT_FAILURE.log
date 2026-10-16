@@ -1,0 +1,19 @@
+PASS screen bins retain many visible lights beyond five with local lists
+PASS negative control: offscreen volumes produce no light work
+PASS global and per-tile overload are bounded and observable
+PASS visible shadow priority selects four sources beyond historical indices
+PASS zero shadow budget leaves every source lit without shadows
+PASS opposite planetary cameras refine both hemispheres under one leaf budget
+PASS negative control: second physical viewpoint changes actual selected keys
+PASS new light settings serialize through ordinary scene authoring
+PASS headless light world builds
+PASS disabled runtime lamp is absent from world light submission
+PASS runtime intensity affects the actual submitted source
+PASS invalid patch does not partly mutate runtime state
+PASS modern durable snapshot contains changed light state, no GPU handle
+FAIL destroyed light safely rejects mutation
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real native GL renderer compiles all revised shaders
+

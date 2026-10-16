@@ -2,28 +2,10 @@
 
 #include <glm/glm.hpp>
 
-// Milestone 14: Judas's own minimal dynamic-light representation — plain
-// rendering-relevant data, nothing else. `Renderer` consumes a list of
-// these (see `Renderer::SetDynamicLights`); it never reaches into
-// `PlayerController`, `FlyingPrimitiveControl`, `PilotAttachment`, or any
-// physics body to get there (see docs/ARCHITECTURE.md, "Milestone 14,
-// Judas-owned light representation"). The composition root
-// (`Application.cpp`) is the only place that knows a light is "the
-// player's torch" or "the spacecraft's headlight" — by the time a
-// `DynamicLight` reaches `Renderer`, it is already expressed in WORLD
-// space for the CURRENT render frame, built from whichever owner's
-// PRESENTED (interpolated) transform is current that frame — see
-// "Milestone 14, Dynamic means dynamic" for why presented, not
-// authoritative, transforms feed this.
-//
-// The existing Milestone 9 directional light (the "sun") is NOT
-// represented here — it stays exactly what it was
-// (`Renderer::SetLighting`'s `direction`/`lightColor`/`ambientColor`,
-// unchanged), a single always-on world-space direction with no position
-// and no falloff. `DynamicLight` covers the two NEW light kinds this
-// milestone adds: point and spot. A future third dynamic kind would add a
-// new `LightKind` enumerator and a matching branch in the fragment
-// shader, not a parallel representation.
+// Presentation-only point/spot data, in the active local world chart. Owners
+// supply interpolated transforms; no light reads input, gameplay or gravity.
+// M92 bins a relevance-bounded set per camera rather than truncating the first
+// five registered sources. Directional sunlight remains SetLighting state.
 enum class LightKind {
     Point,
     Spot,
@@ -60,34 +42,17 @@ struct DynamicLight {
     float innerConeDegrees = 15.0f;
     float outerConeDegrees = 25.0f;
 
-    // Milestone 15: -1 (the default) means this light casts no shadow;
-    // otherwise the index (1 or 2 — see kDirectionalShadowSlot/
-    // kMaxShadowSlots below, slot 0 is reserved for the directional "sun")
-    // of the dedicated shadow map this light uses. Only the player torch
-    // and the spacecraft headlight ever set this (see Application.cpp's
-    // BuildDynamicLights) — point/navigation lights never cast shadows
-    // this milestone, per its own brief. See docs/ARCHITECTURE.md,
-    // "Milestone 15, Spotlight shadows."
+    // Assigned per view by SelectShadowLights; -1 is unshadowed.
     int shadowMapIndex = -1;
+    bool castsShadow = false;
+    float shadowPriority = 0;
+    unsigned long long identity = 0;
 };
 
-// Milestone 15: shadow-map slot indices — a small, fixed, explicit set
-// (never a dynamically-sized shadow-caster list), matching this
-// milestone's own required scope exactly: one directional caster, one
-// player-torch spotlight caster, one spacecraft-headlight spotlight
-// caster. `Renderer` owns one depth-texture/framebuffer pair per slot
-// (see Renderer::Init), created once and reused every frame.
-constexpr int kDirectionalShadowSlot = 0;
-constexpr int kTorchShadowSlot = 1;
-constexpr int kShipHeadlightShadowSlot = 2;
-constexpr int kShadowMapCount = 3;
-
-// A small, explicit, documented cap — not a scale limit this milestone
-// needed to solve. One player torch plus a small fixed spacecraft light
-// rig (one headlight spot, two wingtip point lights) is 4 total; this
-// value comfortably covers that with one slot of headroom, sized for a
-// fixed-length GLSL uniform array (see Renderer.cpp) — never a dynamically
-// resizable light list. See docs/ARCHITECTURE.md, "Milestone 14, Light
-// limits," for why clustered/deferred/tiled lighting was deliberately not
-// built to support more than this.
-constexpr int kMaxDynamicLights = 5;
+// One directional layer and up to eight selected spot layers. Historical
+// torch/ship indices remain valid for low-level callers; runtime selection is
+// generic. Point-light cubemap shadows are not part of this representation.
+constexpr int kDirectionalShadowSlot=0,kTorchShadowSlot=1,kShipHeadlightShadowSlot=2;
+constexpr int kShadowMapCount=9;
+// Historical M14 constant retained for source compatibility, NOT a runtime cap.
+constexpr int kMaxDynamicLights=5;

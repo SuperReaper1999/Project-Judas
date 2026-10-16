@@ -1,0 +1,22 @@
+{
+  "files": {
+    "build/judas": "4920a81b299f8085e8b4765a0b218e3acc64db40215c97df51820d2b6bb4c1c5",
+    "build/judas_editor": "ba47c3a52968296755b17204956032a7edd431b6287a359a3acf9ed393178ac3",
+    "build/judas_export": "15157d89c1098d370f3755465eb04ca029bbc23510ae97215fc396c7bff6861b",
+    "build/judas_rendering_architecture_tests": "e7dce6f804832b4945a6e26b19affcbb4f319a906e96a4ee60268ff203d0f876",
+    "build/judas_rendering_lab_tests": "c1837ce380e126ffd3cd6adc8598848a32757dfe2ea373d93697430e457dd08f",
+    "build/judas_rendering_scale_tests": "e8b0e28f684ecf08e976e0404fe4a2c0c94006e74d2c4a4195c992d515fac5d6",
+    "build/judas_rendering_shadow_scale_tests": "cb70974b1ff0ed02648dbd5e3c70f447938b9eed51e500ff21de0dd08a684a34",
+    "build/judas_rendering_lab_performance": "4013b9a9779a516945bd917573aca8713e5b877f8a56c5dc96add4bbcc84cd0f",
+    "build/judas_ui_tests": "7f449283d4b369ee3159ae7029c12d42354ffd59304c445686f02c554bc4c63a",
+    "build/judas_lighting_tests": "3dad649b1c791774c8c8f7f974ba54289d9b887abec915a40eccb4c40dabc2fe",
+    "build/judas_interactable_tests": "b6cf847666f4ff58ebf75758c82187dee0b4f7a44aa762cc1b8cbb0570412d67",
+    ".cache/m92/baseline/judas": "d7281a291e493802bc5a480f16c5f97b5444d917056317a0ef9a1928d8903c90",
+    ".cache/m92/baseline/libjudas_engine.a": "82813024da606149e661a1ce0cb605622723e0e04594620dc90f0a1ca760daec",
+    ".cache/m92/baseline/rendering_scale_cpu": "e1099230b60bfd68f54bdb1eb1f271f467173d0156f776b2dc81d3a63b9d6550",
+    ".cache/m92/baseline/shadow_scale_cpu": "089b58466f84bc60c3eedaffce878b1e9971d126cfdb01fc6da35f0aabf994b9",
+    ".cache/m92/delivery/package/judas": "4920a81b299f8085e8b4765a0b218e3acc64db40215c97df51820d2b6bb4c1c5"
+  },
+  "measuredBinaryReceipts": "raw archive checkpoint-measure/RESULTS.json",
+  "notes": "Measured observers are retained locally. Older receipt hashes intentionally identify older binaries, not the final relinks."
+}

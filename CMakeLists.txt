@@ -198,6 +198,7 @@ add_library(judas_engine STATIC
     src/LocalMultiplayer.cpp
     src/InputSystem.cpp
     src/Renderer.cpp
+    src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/CharacterMotor.cpp
     src/PlayerController.cpp
@@ -610,6 +611,7 @@ add_executable(judas_ui_tests
     src/PauseMenu.cpp
     src/HUD.cpp
     src/Renderer.cpp
+    src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
 )
@@ -634,6 +636,7 @@ add_executable(judas_lighting_tests
     src/UIWidgets.cpp
     src/HUD.cpp
     src/Renderer.cpp
+    src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
 )
@@ -678,6 +681,7 @@ add_executable(judas_interactable_tests
     src/UIWidgets.cpp
     src/HUD.cpp
     src/Renderer.cpp
+    src/RenderLightGrid.cpp
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
     ${JUDAS_PHYSICS_SOURCES}
@@ -1934,3 +1938,24 @@ add_executable(judas_local_multiplayer_performance tests/LocalMultiplayerPerform
 target_link_libraries(judas_local_multiplayer_performance PRIVATE judas_engine)
 judas_warnings(judas_local_multiplayer_performance)
 endif()
+
+# M92 native rendering measurement and behavioural checks.
+add_executable(judas_rendering_scale_tests tests/RenderingScaleTests.cpp)
+target_link_libraries(judas_rendering_scale_tests PRIVATE judas_engine)
+judas_warnings(judas_rendering_scale_tests)
+target_compile_definitions(judas_rendering_scale_tests PRIVATE JUDAS_M92)
+
+add_executable(judas_rendering_architecture_tests tests/RenderingArchitectureTests.cpp)
+target_link_libraries(judas_rendering_architecture_tests PRIVATE judas_engine)
+judas_warnings(judas_rendering_architecture_tests)
+
+add_executable(judas_rendering_lab_tests tests/RenderingLabTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_rendering_lab_tests PRIVATE judas_engine)
+judas_warnings(judas_rendering_lab_tests)
+add_executable(judas_rendering_shadow_scale_tests tests/RenderingShadowScaleTests.cpp)
+target_link_libraries(judas_rendering_shadow_scale_tests PRIVATE judas_engine)
+target_compile_definitions(judas_rendering_shadow_scale_tests PRIVATE JUDAS_M92)
+judas_warnings(judas_rendering_shadow_scale_tests)
+add_executable(judas_rendering_lab_performance tests/RenderingLabPerformance.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_rendering_lab_performance PRIVATE judas_engine)
+judas_warnings(judas_rendering_lab_performance)

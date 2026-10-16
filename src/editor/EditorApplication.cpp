@@ -1097,6 +1097,9 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
         renderer.SetWeatherShelter({});
     }
 
+    // Clear runtime-view shadow history before terrain and authored previews.
+    // Edit mode has no matching shadow pass for this camera.
+    for(int slot=0;slot<kShadowMapCount;++slot)renderer.InvalidateShadowSlot(slot);
     renderer.SetDynamicLights(BuildAuthoredLights(scene));
     if(m_terrain)m_terrain->Draw(renderer,scene,m_host->Resources());
     if(m_volumeTerrain)m_volumeTerrain->Draw(renderer,scene,m_host->Resources());

@@ -284,3 +284,30 @@ measured bounds and validation separately from this API contract.
 See [planetary terrain and local origins](planetary-terrain.md) for the new coordinate APIs, explicit collision interest, capture-origin retention and supported-component limits.
 
 M85 coordinate clarification: existing “world-space” positions are in the current simulation chart, not absolute planetary coordinates. `world.toAbsolute`/`world.toLocal` convert via the binary64 origin; directions do not translate. This local chart is distinct from a joint/entity parent-local frame. See [supported origin changes](planetary-terrain.md).
+
+## Entity.light / Entity.setLight(settings)
+
+`entity.light` returns a copied `LightSettings` object, or `null` without an authored light.
+`entity.setLight(patch)` atomically changes known fields: `enabled`, `kind` (`point`/`spot`),
+`color` (`{x,y,z}` linear RGB), `intensity`, `range` (metres), `innerConeDegrees`,
+`outerConeDegrees`, `castsShadow`, `shadowPriority`. Range must be positive, intensity
+and colour nonnegative, and `0 <= inner <= outer < 90` with outer positive. Nonfinite,
+unknown or incorrectly typed values throw. An absent component throws on mutation;
+stale entity references follow the normal Entity ReferenceError contract.
+
+A spot faces the entity's local **-Z**; changing its ordinary transform moves/aims it.
+Gravity supplies no lighting orientation. `color * intensity` is radiance-like artistic
+strength, not calibrated lumens. Shadow selection adds `shadowPriority` to intensity/distance relevance;
+remaining relevance is intensity/distance, with stable source-identity ties.
+
+```js
+const lamp = world.queryTags(['lamp'])[0];
+if (lamp?.light) lamp.setLight({enabled:true, intensity:4, castsShadow:true});
+```
+
+These are presentation settings: frame updates may change them. They enter ordinary
+modern save snapshots and streamed entity definitions; GPU lists/maps are transient.
+Legacy pose-only `.judasstate` deltas do not persist light patches. Scripts restoring
+such old states must reapply their own intent. Mutating the returned copy has no effect.
+
+See [rendering](rendering.md) for tiled lighting, shadow budgets and current limits.

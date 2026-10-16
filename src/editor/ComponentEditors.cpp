@@ -683,7 +683,12 @@ void DrawGravity(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
 
 void DrawLight(EditorDocument& doc, SceneObject& o, EditorPanelState&) {
     SceneLightComponent& l = *o.light;
+    Checkbox(doc,"Enabled##light",l.enabled);
     Combo(doc, "Kind##light", l.kind, kLightKindNames, 2);
+    DragScalar(doc,"Intensity##light",l.intensity,.1f,0,10000);
+    Checkbox(doc,"Request shadow##light",l.castsShadow);
+    DragScalar(doc,"Shadow priority##light",l.shadowPriority,.1f,-10000,10000);
+    ImGui::TextDisabled("Spot shadows use a per-view relevance budget; points remain unshadowed.");
     ColorEdit(doc, "Color##light", l.color);
     DragScalar(doc, "Range", l.range, 0.1f, 0.0f, 10000.0f);
     if (l.kind == SceneLightKind::Spot) {

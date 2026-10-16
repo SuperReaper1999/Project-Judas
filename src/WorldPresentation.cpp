@@ -19,6 +19,7 @@
 #include "Scene.h"
 #include "ShadowTransforms.h"
 #include "TerrainLibrary.h"
+#include "PlanetTerrain.h"
 
 std::vector<MaterialBinding> BuildRenderMaterialBindings(ResourceManager* resources,const SceneRenderComponent& render) {
     const auto* parts=resources?resources->TryGetModelParts(render.meshAsset):nullptr;
@@ -127,6 +128,7 @@ void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderCo
 void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession* session,
                        float alpha, const WorldDrawOptions& options) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
+    r.BeginMeshBatch();
     for (const RuntimeWorld::StaticRenderable& s : world.StaticRenderables()) {
         if(!world.IsPublished(s.id)||!world.RenderVisible(s.id)||world.RuntimeDefinition(s.id)->deformable)continue;
         r.SetRenderLayer(world.RenderLayerOf(s.id));
@@ -205,6 +207,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         r.DrawMesh(world.FluidMesh(), glm::vec3(0.0f), glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::vec3(1.0f),
                    TextureHandle{}, glm::vec3(0.12f, 0.48f, 0.82f));
     }
+    r.EndMeshBatch();
 }
 
 void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSession* session, float alpha) {
@@ -375,7 +378,9 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, const Game
         light.position = t.position;
         light.direction = t.rotation*glm::vec3(0,0,-1);
         if(t.rotation==glm::quat(1,0,0,0))light.direction=s.direction;
-        light.color = s.light.color;
+        if(!s.light.enabled)continue;
+        light.identity=s.id;light.castsShadow=s.light.castsShadow;light.shadowPriority=s.light.shadowPriority;
+        light.color = s.light.color*s.light.intensity;
         light.range = s.light.range;
         light.innerConeDegrees = s.light.innerConeDegrees;
         light.outerConeDegrees = s.light.outerConeDegrees;
@@ -416,7 +421,19 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     // submission's delta without resetting the engine's diagnostic state.
     auto planetEye=world.view?world.view->pose.position:glm::vec3(glm::inverse(view)[3]);
     const double planetFov=world.view?glm::radians(double(world.view->fov)):2*std::atan(1./double(projection[1][1]));
-    world.PreparePlanets(renderer,world.Settings().worldOrigin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height)),frameSeconds);
+    if(world.HasPlanets()){
+    std::vector<PlanetView> planetViews;
+    const auto origin=world.Settings().worldOrigin;
+    if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){
+        for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);planetViews.push_back({origin+glm::dvec3(p.view->position),glm::radians(double(p.fov)),unsigned(std::max(1,size.y))});}
+    }else planetViews.push_back({origin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height))});
+    for(const auto& camera:world.PresentationCameras())if(camera.settings.enabled&&world.IsPublished(camera.id)){
+        auto pose=world.PresentedTransform(camera.id,camera.transform,alpha);double fov=glm::radians(double(camera.settings.verticalFovDegrees));
+        if(camera.hasFrustum)fov=2*std::atan(double(camera.frustum.w-camera.frustum.z)/(2*camera.settings.nearPlane));
+        planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height)});
+    }
+    world.PreparePlanets(renderer,planetViews,frameSeconds);
+    }
     const auto beforeStats = renderer.Stats();
     // One sample owns one immutable lighting/environment decision. Auxiliary
     // cameras never run scripts or advance an animation/fade between passes.
@@ -426,40 +443,22 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.SetLighting(settings.sunDirection, settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0), settings.ambientColor);
     const std::vector<DynamicLight> lights = BuildWorldLights(world, session, alpha);
 
-    // Milestone 15 shadow passes: the directional sun always, then each
-    // shadow-casting spot light in the frame's list.
-    const glm::mat4 dirShadow = ComputeDirectionalShadowMatrix(
-        world.view ? world.view->pose.position : shadowFocus, settings.sunDirection, kDirShadowHalfExtent, kDirShadowDistance);
-    static ProfileLabel shadowLabel("Shadow pass submission");
-    ProfileScope shadowScope(shadowLabel);
-    if(settings.sunEnabled&&renderer.ShadowsEnabled()){renderer.BeginShadowPass(kDirectionalShadowSlot, dirShadow);
-        DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
-        renderer.EndShadowPass();
-    }else renderer.InvalidateShadowSlot(kDirectionalShadowSlot);
-    shadowScope.End();
-    for (const DynamicLight& light : lights) {
-        if (light.shadowMapIndex != kTorchShadowSlot && light.shadowMapIndex != kShipHeadlightShadowSlot) continue;
-        if(!renderer.ShadowsEnabled()){renderer.InvalidateShadowSlot(light.shadowMapIndex);continue;}
-        ProfileScope spotlightScope(shadowLabel);
-        const glm::mat4 spotShadow = ComputeSpotShadowMatrix(light.position, light.direction,
-                                                             light.outerConeDegrees, light.range);
-        renderer.BeginShadowPass(light.shadowMapIndex, spotShadow);
-        WorldDrawOptions options;
-        // The torch sits inside the player's own body box: exclude it from
-        // only the torch's pass (M15 post-validation fix).
-        options.includePlayerModel = light.shadowMapIndex != kTorchShadowSlot;
-        // A whole planet far outside a small light's range costs a depth
-        // pass for nothing.
-        options.includeTerrain = true;
-        for (const RuntimeWorld::Terrain& t : world.Terrains()) {
-            if (glm::distance(light.position, t.position) > light.range + t.surface->BoundRadius()) {
-                options.includeTerrain = false;
-            }
+    // Each camera receives its own relevance decision and actual shadow chart.
+    // Targets/viewport are restored by Renderer; no pass borrows another eye's
+    // directional coverage or stale spotlight assignment.
+    auto lightPass=[&](){
+        auto selected=SelectShadowLights(lights,renderer.ViewMatrix(),renderer.ProjectionMatrix(),renderer.ShadowBudget());
+        unsigned layers=1;for(const auto& light:selected)if(light.shadowMapIndex>0)layers=std::max(layers,unsigned(light.shadowMapIndex+1));renderer.ReserveShadowLayers(layers);
+        for(int slot=0;slot<kShadowMapCount;++slot)renderer.InvalidateShadowSlot(slot);
+        if(renderer.ShadowsEnabled()){
+            static ProfileLabel shadowLabel("Shadow pass submission");ProfileScope shadowScope(shadowLabel);
+            const auto eye=glm::vec3(glm::inverse(renderer.ViewMatrix())[3]);
+            if(settings.sunEnabled){renderer.BeginShadowPass(0,ComputeDirectionalShadowMatrix(eye,settings.sunDirection,kDirShadowHalfExtent,kDirShadowDistance));DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{});renderer.EndShadowPass();}
+            for(size_t source=0;source<selected.size();++source){const auto& light=selected[source];if(light.shadowMapIndex<=0)continue;renderer.BeginShadowPass(light.shadowMapIndex,ComputeSpotShadowMatrix(light.position,light.direction,light.outerConeDegrees,light.range));WorldDrawOptions options;options.includePlayerModel=lights[source].shadowMapIndex!=kTorchShadowSlot;DrawWorldGeometry(renderer,world,session,alpha,options);renderer.EndShadowPass();}
         }
-        DrawWorldGeometry(renderer, world, session, alpha, options);
-        renderer.EndShadowPass();
-    }
-
+        renderer.SetDynamicLights(selected);
+    };
+    (void)shadowFocus;
     // Secondary views are presentation passes only; shadow maps above are shared.
     if (!world.PresentationCameras().empty()) {
         world.BindCameraRenderer(renderer);
@@ -500,7 +499,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
                 camera.hasFrustum?&camera.frustum:nullptr,camera.hasClipPlane?&viewPlane:nullptr));
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(position),camera.id);
             renderer.SetRenderMask(c.renderMask);
-            renderer.SetDynamicLights(lights);
+            lightPass();
             renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
             DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
             DrawWorldTransparents(renderer, world, session, alpha);
@@ -520,7 +519,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             const auto& pose=*p.view;const auto q=pose.rotation;
             renderer.SetCamera(glm::lookAt(pose.position,pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(p.fov),float(vw)/vh,p.nearPlane,p.farPlane));
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
-            renderer.SetRenderMask(p.renderMask);renderer.SetDynamicLights(lights);
+            renderer.SetRenderMask(p.renderMask);lightPass();
             renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
             DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{});DrawWorldTransparents(renderer,world,session,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
         }
@@ -536,7 +535,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     }else renderer.SetCamera(view, projection);
     world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]));
     renderer.SetRenderMask(settings.mainCameraRenderMask);
-    renderer.SetDynamicLights(lights);
+    lightPass();
     renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
     DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
     DrawWorldTransparents(renderer, world, session, alpha);
@@ -544,6 +543,11 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     renderer.EndFrame();
     }
     const auto& stats=renderer.Stats();
+    JUDAS_PROFILE_COUNTER("Instanced draw submissions",stats.instancedDraws-beforeStats.instancedDraws,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Instances submitted",stats.instances-beforeStats.instances,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Light tile overflow",stats.lightTileOverflow-beforeStats.lightTileOverflow,ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Light grid GPU bytes",stats.lightBytes,ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Shadow GPU bytes",stats.shadowBytes,ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Submitted draws all passes",stats.drawCalls-beforeStats.drawCalls,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Submitted triangles all passes",stats.triangles-beforeStats.triangles,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Visible renderables all passes",stats.renderablesVisible-beforeStats.renderablesVisible,ProfileCounterMode::Sum);
@@ -555,6 +559,10 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
 
 void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets) {
     JUDAS_PROFILE_SCOPE("Editor authored submission");
+    // Authored previews do not render shadow maps of their own. Never sample
+    // maps generated for a previous runtime camera or Play session.
+    for(int slot=0;slot<kShadowMapCount;++slot)r.InvalidateShadowSlot(slot);
+    r.BeginMeshBatch();
     const auto settings=scene.Settings();assets.RequestEnvironment(settings.environmentAsset);
     r.SetLighting(settings.sunDirection,settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0),settings.ambientColor);
     r.SetSceneAppearance(settings.linearRendering,settings.exposure,assets.TryGetEnvironment(settings.environmentAsset),settings.environmentIntensity,settings.environmentRotation,settings.environmentBackground,settings.backgroundColor);
@@ -610,17 +618,19 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
     }
     r.SetRenderLayer(0);
     r.SetMaterialBindings({});
+    r.EndMeshBatch();
 }
 
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene) {
     std::vector<DynamicLight> lights;
     for (const SceneObject& o : scene.Objects()) {
-        if (!o.light) continue;
+        if (!o.light||!o.light->enabled) continue;
         DynamicLight light;
         light.kind = o.light->kind == SceneLightKind::Spot ? LightKind::Spot : LightKind::Point;
         light.position = o.transform.position;
         light.direction = glm::normalize(glm::normalize(o.transform.rotation) * glm::vec3(0.0f, 0.0f, -1.0f));
-        light.color = o.light->color;
+        light.identity=o.id;light.castsShadow=o.light->castsShadow;light.shadowPriority=o.light->shadowPriority;
+        light.color = o.light->color*o.light->intensity;
         light.range = o.light->range;
         light.innerConeDegrees = o.light->innerConeDegrees;
         light.outerConeDegrees = o.light->outerConeDegrees;

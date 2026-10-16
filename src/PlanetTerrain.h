@@ -63,6 +63,8 @@ PlanetTileData BuildPlanetTile(const PlanetSurface&,PlanetTileKey,unsigned segme
 // Greedy screen-space-error refinement: six roots always cover the sphere.
 // A hard leaf budget bounds work; unsatisfied error is observable, not hidden.
 struct PlanetSelection {std::vector<PlanetTileKey> leaves;double maximumPixelError=0;bool budgetLimited=false;};
+struct PlanetView {glm::dvec3 eye;double fov;unsigned pixels;};
+PlanetSelection SelectPlanetTiles(const PlanetSurface&,const std::vector<PlanetView>&);
 PlanetSelection SelectPlanetTiles(const PlanetSurface&,glm::dvec3 eye,double verticalFov,unsigned pixels);
 // Barycentric parent surface used by geomorphs, not a radial-height blend.
 glm::dvec3 PlanetTrianglePoint(const PlanetSurface&,PlanetTileKey,glm::dvec3 direction,unsigned segments);

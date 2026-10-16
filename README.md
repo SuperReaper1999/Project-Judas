@@ -16,11 +16,12 @@ or performance result as a guarantee.
 
 ## Current status
 
-The current release on `main` is **M90**, promoted by operator authorization
-following the driving review and third-person camera correction. The camera
-follow-up passed automated reproduction and regression checks; an additional
-human retest of that correction is not claimed. See the
-[follow-up evidence](docs/evidence/m90-camera-followup/REPORT.md).
+The current release on `main` is **M91**, human-tested and promoted at
+`61a9df6acaa102c0a9fcf1006866a01fc3b33a89`. It preserves first-touch CCD while
+reducing repeated persistent-contact work within the existing solver allowance.
+Extreme dense piles remain expensive; see [M91 contracts](docs/M91_COLLISION_CONTINUITY.md)
+and the [measured evidence](docs/evidence/m91/REPORT.md). The earlier evidence's
+pending-review wording predates the operator's release promotion.
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin
@@ -36,11 +37,11 @@ outstanding; M90 Windows/Android checks were not performed. See
 [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
 [validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
 
-Experimental development includes **M91 collision continuity and scaling**.
-It preserves ordinary first-touch CCD while reducing repeated persistent-contact
-work within the existing solver allowance. Extreme dense piles remain expensive;
-see the [contracts and limitations](docs/M91_COLLISION_CONTINUITY.md) and
-[measured evidence](docs/evidence/m91/REPORT.md). Human review is pending.
+Experimental development adds **M92 scalable rendering**: opaque mesh instancing,
+per-view tiled dynamic lights, selected spotlight shadows, individual scripted
+lights and shared multi-view planetary LOD. See the [Rendering Lab](projects/rendering_lab/README.md),
+[current contracts](docs/judasjs/rendering.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
+M92 human review is pending; Windows and Android M92 are unvalidated.
 
 ## Highlights
 

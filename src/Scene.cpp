@@ -173,7 +173,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
         return false;
     }
     if (!OptEq(a.light, b.light, [](const SceneLightComponent& x, const SceneLightComponent& y) {
-            return x.kind == y.kind && Eq(x.color, y.color) && x.range == y.range &&
+            return x.enabled==y.enabled&&x.castsShadow==y.castsShadow&&x.intensity==y.intensity&&x.shadowPriority==y.shadowPriority&&x.kind == y.kind && Eq(x.color, y.color) && x.range == y.range &&
                    x.innerConeDegrees == y.innerConeDegrees &&
                    x.outerConeDegrees == y.outerConeDegrees;
         })) {

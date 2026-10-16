@@ -1670,3 +1670,10 @@ bool RuntimeWorld::ResetAppearance(){
  m_runtimeEnvironmentAsset.clear();
  return true;
 }
+
+bool RuntimeWorld::SetLight(EntityId id,const SceneLightComponent& value){
+ if(!RuntimeDefinition(id))return false;
+ auto it=m_scriptDefinitions.find(id);if(it==m_scriptDefinitions.end()||!it->second.light)return false;
+ if(!std::isfinite(value.range)||value.range<=0||!std::isfinite(value.intensity)||value.intensity<0||!std::isfinite(value.shadowPriority)||!std::isfinite(glm::length(value.color))||glm::any(glm::lessThan(value.color,glm::vec3(0)))||!std::isfinite(value.innerConeDegrees)||!std::isfinite(value.outerConeDegrees)||value.innerConeDegrees<0||value.outerConeDegrees<=0||value.outerConeDegrees>=90||value.innerConeDegrees>value.outerConeDegrees)return false;
+ it->second.light=value;for(auto& light:m_staticLights)if(light.id==id)light.light=value;return true;
+}

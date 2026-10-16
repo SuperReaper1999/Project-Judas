@@ -35,6 +35,7 @@
 #include "LocalMultiplayer.h"
 
 class PlanetTiles;
+struct PlanetView;
 class SceneSession;
 class RadialTerrain;
 class ResourceManager;
@@ -246,7 +247,9 @@ public:
     // resource manager. On failure nothing is left allocated and `outError`
     // says which object/component could not be realised.
     bool Build(const Scene& scene, ResourceManager* resources, std::string& outError, const ProjectClassification* categories=nullptr,const ProjectNavigation* navigation=nullptr,bool runtimeSnapshot=false);
+    bool HasPlanets()const{return !m_planets.empty();}
     void PreparePlanets(Renderer&,glm::dvec3 eye,double fov,unsigned pixels,double dt)const;
+    void PreparePlanets(Renderer&,const std::vector<PlanetView>&,double dt)const;
     void DrawPlanets(Renderer&)const;
     // Optional prescribed weather. Absolute doubles stay outside float physics.
     static WeatherSettings ResolveWeatherSettings(const SceneObject&,glm::dvec3 origin);
@@ -296,6 +299,7 @@ public:
     const std::vector<StaticBody>& StaticBodies() const { return m_staticBodies; }
     const std::vector<StaticRenderable>& StaticRenderables() const { return m_staticRenderables; }
     const std::vector<Terrain>& Terrains() const { return m_terrains; }
+    bool SetLight(EntityId,const SceneLightComponent&);
     const std::vector<StaticLight>& StaticLights() const { return m_staticLights; }
     const std::vector<GravityRegion>& GravityRegions() const { return m_gravityRegions; }
     std::vector<Door>& Doors() { return m_doors; }

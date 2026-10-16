@@ -1,6 +1,19 @@
 # Architecture
 
-## Experimental — M91 collision continuity
+## Experimental — M92 rendering scale
+
+The current renderer uses per-view CPU-built screen light tiles uploaded through
+one portable RGBA32F texture, a relevance-selected spotlight shadow array, and
+pass-scoped opaque mesh instancing. Main, secondary and local-player cameras
+select their own light/shadow resources. Planetary LOD evaluates all active
+views against one shared residency/build budget. No extra simulation world is
+created. Individual light intent lives in ordinary entity definitions and is
+exposed through `Entity.light` / `setLight`. See [current rendering contracts](judasjs/rendering.md)
+and [M92 evidence](evidence/m92/REPORT.md). Historical M14/M15 sections below
+describe the earlier five-light/three-shadow implementation, not these current
+limits. M91 collision mechanisms are unchanged.
+
+## Current release — M91 collision continuity
 
 M91 retains the existing fixed-step solver and chronological first-touch CCD.
 The new continuation policy is limited to free inelastic native-primitive contact
@@ -19,11 +32,12 @@ Existing angular/contact ownership, response manifolds, fixed cadence, ten veloc
 iterations, callbacks and sleeping policy remain. Derived sweep-bound reuse,
 ordered joint adjacency and bit-equivalent interval arithmetic reduce repeat work.
 M56 records proof work alongside CCD/island costs. Dense worst-step limits and
-missing warm-contact cold continuation remain explicit; Experimental evidence is
-not human acceptance. See [M91 contracts](M91_COLLISION_CONTINUITY.md) and
+missing warm-contact cold continuation remain explicit. M91 was subsequently
+human-tested and promoted at `61a9df6acaa102c0a9fcf1006866a01fc3b33a89`; its
+original evidence retains its pre-review status. See [M91 contracts](M91_COLLISION_CONTINUITY.md) and
 [measurements](evidence/m91/REPORT.md).
 
-## Current release — M90 assembly travel
+## Earlier release — M90 assembly travel
 
 M90 extends the existing M85 checked origin transaction rather than introducing
 parallel physical worlds. At a completed fixed boundary, the shared PhysicsWorld

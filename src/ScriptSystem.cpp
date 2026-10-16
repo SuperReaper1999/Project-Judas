@@ -135,6 +135,8 @@ export class Entity {
  get wheel(){return call('wheelExists',this.id)?new Wheel(this.id):null}
  get powertrain(){return call('powertrainExists',this.id)?new Powertrain(this.id):null}
  get ragdoll(){return call('ragdollExists',this.id)?new Ragdoll(this.id):null}
+ get light(){return call("lightInfo",this.id)}
+ setLight(settings){return call("lightSettings",this.id,settings)}
  get audio(){return call('audioInfo',this.id)}
  setAudio(settings){return call('audioSettings',this.id,settings)}
  seekAudio(seconds){return call('audioSeek',this.id,seconds)}
@@ -1290,6 +1292,21 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             }
         }
         return world.SetGravitySelection(id,selection,error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
+    }
+    if(op=="lightInfo"||op=="lightSettings"){
+        if(!definition->light){if(op=="lightInfo")return JS_NULL;return JS_ThrowTypeError(c,"entity has no light component");}
+        auto l=*definition->light;
+        if(op=="lightSettings"){
+            auto patch=arg(2);if(!KnownOptions(c,patch,{"enabled","kind","color","intensity","range","innerConeDegrees","outerConeDegrees","castsShadow","shadowPriority"}))return JS_ThrowTypeError(c,"unknown light option");
+            for(auto entry:{std::pair<const char*,float*>{"intensity",&l.intensity},{"range",&l.range},{"innerConeDegrees",&l.innerConeDegrees},{"outerConeDegrees",&l.outerConeDegrees},{"shadowPriority",&l.shadowPriority}}){auto v=JS_GetPropertyStr(c,patch,entry.first);bool present=!JS_IsUndefined(v);JS_FreeValue(c,v);if(present&&!Number(c,patch,entry.first,*entry.second))return JS_ThrowTypeError(c,"finite light number required");}
+            for(auto entry:{std::pair<const char*,bool*>{"enabled",&l.enabled},{"castsShadow",&l.castsShadow}}){auto v=JS_GetPropertyStr(c,patch,entry.first);if(!JS_IsUndefined(v)){if(!JS_IsBool(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"light flag must be boolean");}*entry.second=JS_ToBool(c,v);}JS_FreeValue(c,v);}
+            auto color=JS_GetPropertyStr(c,patch,"color");if(!JS_IsUndefined(color)&&!ReadVec(c,color,l.color)){JS_FreeValue(c,color);return JS_ThrowTypeError(c,"finite light color required");}JS_FreeValue(c,color);
+            auto kind=JS_GetPropertyStr(c,patch,"kind");if(!JS_IsUndefined(kind)){auto k=String(c,kind);if(k!="point"&&k!="spot"){JS_FreeValue(c,kind);return JS_ThrowTypeError(c,"light kind must be point or spot");}l.kind=k=="point"?SceneLightKind::Point:SceneLightKind::Spot;}JS_FreeValue(c,kind);
+            return world.SetLight(id,l)?JS_TRUE:JS_ThrowTypeError(c,"invalid light settings");
+        }
+        auto out=JS_NewObject(c);JS_SetPropertyStr(c,out,"kind",JS_NewString(c,l.kind==SceneLightKind::Point?"point":"spot"));JS_SetPropertyStr(c,out,"color",Vec(c,l.color));JS_SetPropertyStr(c,out,"enabled",JS_NewBool(c,l.enabled));JS_SetPropertyStr(c,out,"castsShadow",JS_NewBool(c,l.castsShadow));
+        for(auto entry:{std::pair<const char*,float>{"intensity",l.intensity},{"range",l.range},{"innerConeDegrees",l.innerConeDegrees},{"outerConeDegrees",l.outerConeDegrees},{"shadowPriority",l.shadowPriority}})JS_SetPropertyStr(c,out,entry.first,JS_NewFloat64(c,entry.second));
+        return out;
     }
     if(op=="modelParts"||op=="modelPartVisible"){
         auto* parts=definition->render&&world.Resources()?world.Resources()->TryGetModelParts(definition->render->meshAsset):nullptr;

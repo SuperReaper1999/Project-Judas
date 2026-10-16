@@ -41,15 +41,16 @@ std::vector<std::pair<PlanetTileKey,double>> PlanetTiles::Dependencies(PlanetTil
  std::vector<std::pair<PlanetTileKey,double>> result;for(auto k:keys){result.emplace_back(k,m_tiles.at(k).morph);if(k.level<key.level)result.emplace_back(k,double(m_tiles.at(k).revision));}return result;
 }
 void PlanetTiles::Upload(Tile& t){auto data=t.data;data.points=t.resolved;data.parentPoints=data.points;auto mesh=data.Mesh(1,0);if(t.mesh.IsValid())m_renderer->UpdateMeshVertices(t.mesh,mesh.vertices);else t.mesh=m_renderer->CreateMesh(mesh);}
-void PlanetTiles::Prepare(Renderer& renderer,V eye,V origin,double fov,unsigned pixels,double dt){(void)origin;const auto start=std::chrono::steady_clock::now();if(m_renderer&&m_renderer!=&renderer)throw std::logic_error("planet renderer owner changed");m_renderer=&renderer;
- auto selection=SelectPlanetTiles(surface,eye,fov,pixels);m_stats.selectionMs=ms(start);const auto buildStart=std::chrono::steady_clock::now();std::set<PlanetTileKey> desired(selection.leaves.begin(),selection.leaves.end());if(m_tiles.empty()){m_leaves=desired;for(auto k:m_leaves)Ensure(k,1);}
+void PlanetTiles::Prepare(Renderer& renderer,V eye,V origin,double fov,unsigned pixels,double dt){Prepare(renderer,std::vector<PlanetView>{{eye,fov,pixels}},origin,dt);}
+void PlanetTiles::Prepare(Renderer& renderer,const std::vector<PlanetView>& views,V origin,double dt){(void)origin;const auto start=std::chrono::steady_clock::now();if(m_renderer&&m_renderer!=&renderer)throw std::logic_error("planet renderer owner changed");m_renderer=&renderer;
+ auto selection=SelectPlanetTiles(surface,views);m_stats.selectionMs=ms(start);const auto buildStart=std::chrono::steady_clock::now();std::set<PlanetTileKey> desired(selection.leaves.begin(),selection.leaves.end());if(m_tiles.empty()){m_leaves=desired;for(auto k:m_leaves)Ensure(k,1);}
  for(auto k:m_leaves)Ensure(k,1);
  // Only complete sibling groups replace their parent. A frame can never show
  // an unprepared hole; the six coverage roots exist for the entire lifetime.
  unsigned groups=std::max(1u,surface.settings.buildsPerFrame/4);
  std::vector<PlanetTileKey> split;
  for(auto k:m_leaves){bool wants=false;for(auto d:desired)if(d.level>k.level&&descendant(d,k)){wants=true;break;}if(wants&&m_tiles.at(k).morph>=1)split.push_back(k);}
- std::sort(split.begin(),split.end(),[&](auto a,auto b){return glm::length(surface.TileCenter(a)-eye)<glm::length(surface.TileCenter(b)-eye);});
+ std::sort(split.begin(),split.end(),[&](auto a,auto b){return ([&](){double x=1e300,y=1e300;for(const auto& v:views){x=std::min(x,glm::length(surface.TileCenter(a)-v.eye));y=std::min(y,glm::length(surface.TileCenter(b)-v.eye));}return x<y;})();});
  for(auto k:split){if(!groups||m_leaves.size()+3>surface.settings.maxTiles||m_tiles.size()+4>surface.settings.maxResident)break;for(auto c:children(k))Ensure(c,0);m_leaves.erase(k);for(auto c:children(k))m_leaves.insert(c);--groups;}
  // Reverse morph before coarsening. Siblings share their boundary alpha.
  std::set<PlanetTileKey> parents;for(auto k:m_leaves)if(k.level)parents.insert(k.Parent());

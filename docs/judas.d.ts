@@ -193,7 +193,15 @@ declare module "judas" {
     /** Presentation quality only; never modifies sampled wind or physical forces. */
     quality:0|1|2;
   };
+  /** Copied local-chart light settings. Colour is linear and multiplied by intensity. */
+  export interface LightSettings {
+    kind:'point'|'spot'; enabled:boolean; color:Vec3; intensity:number; range:number;
+    innerConeDegrees:number; outerConeDegrees:number; castsShadow:boolean; shadowPriority:number;
+  }
   export class Entity {
+    readonly light: LightSettings|null;
+    /** Atomic patch. Invalid values/unknown keys throw; never creates a component. */
+    setLight(settings:Partial<LightSettings>):boolean;
     readonly weather:Weather|null;
     readonly planetState:PlanetState;
     planetSample(absolute:Vec3):PlanetSample;

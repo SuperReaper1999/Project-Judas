@@ -17,6 +17,7 @@ public:
  struct Stats {unsigned leaves=6,resident=0,triangles=0,colliders=0;double maximumPixelError=0,prepareMs=0,collisionMs=0,selectionMs=0,buildMs=0,uploadMs=0;bool budgetLimited=false,collisionReady=false;std::string error;};
  const Stats& State()const{return m_stats;}
  void Prepare(Renderer&,glm::dvec3 eye,glm::dvec3 origin,double fov,unsigned pixels,double dt);
+ void Prepare(Renderer&,const std::vector<PlanetView>&,glm::dvec3 origin,double dt);
  void Draw(Renderer&,glm::dvec3 origin)const;
  // Explicit physical-interest set. Query readiness before creating/moving a
  // body into a new chart. Visual selection never removes physical support.

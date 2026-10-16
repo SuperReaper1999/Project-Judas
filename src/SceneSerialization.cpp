@@ -337,6 +337,10 @@ void WriteObject(Writer& w, const SceneObject& o) {
         const SceneLightComponent& l = *o.light;
         w.Line("light", l.kind == SceneLightKind::Point ? "point" : "spot");
         w.Line("light.color", V(l.color));
+        if(!l.enabled)w.Line("light.enabled","false");
+        if(l.intensity!=1)w.Line("light.intensity",F(l.intensity));
+        if(l.castsShadow)w.Line("light.shadows","true");
+        if(l.shadowPriority!=0)w.Line("light.shadow-priority",F(l.shadowPriority));
         w.Line("light.range", F(l.range));
         w.Line("light.cone", F(l.innerConeDegrees) + " " + F(l.outerConeDegrees));
     }
@@ -1069,6 +1073,11 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!ParseFloat((*cone)[0], l.innerConeDegrees) || !ParseFloat((*cone)[1], l.outerConeDegrees)) {
             return reader.Fail("light.cone expects two finite numbers");
         }
+        if(p.Has("light.enabled")&&!p.Bool("light.enabled",l.enabled))return false;
+        if(p.Has("light.shadows")&&!p.Bool("light.shadows",l.castsShadow))return false;
+        if(p.Has("light.intensity")&&!p.Float("light.intensity",l.intensity))return false;
+        if(p.Has("light.shadow-priority")&&!p.Float("light.shadow-priority",l.shadowPriority))return false;
+        if(l.range<=0||l.intensity<0||l.innerConeDegrees<0||l.outerConeDegrees<=0||l.outerConeDegrees>=90||l.innerConeDegrees>l.outerConeDegrees||glm::any(glm::lessThan(l.color,glm::vec3(0))))return reader.Fail("invalid light range, colour, intensity or cone");
         o.light = l;
     }
     if (p.Has("door")) {

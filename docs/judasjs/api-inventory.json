@@ -1,7 +1,35 @@
 {
-  "checkpoint": "3c3a1a3353a814357545ac11739c2300d2ec9b78",
+  "checkpoint": "61a9df6acaa102c0a9fcf1006866a01fc3b33a89 + M92 working surface",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
+    {
+      "binding": "Entity.light",
+      "declaration": "LightSettings",
+      "fields": [
+        "kind",
+        "color",
+        "enabled",
+        "castsShadow",
+        "intensity",
+        "range",
+        "innerConeDegrees",
+        "outerConeDegrees",
+        "shadowPriority"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,out,\"kind\"",
+        "JS_SetPropertyStr(c,out,\"color\"",
+        "JS_SetPropertyStr(c,out,\"enabled\"",
+        "JS_SetPropertyStr(c,out,\"castsShadow\"",
+        "{\"intensity\",l.intensity}",
+        "{\"range\",l.range}",
+        "{\"innerConeDegrees\",l.innerConeDegrees}",
+        "{\"outerConeDegrees\",l.outerConeDegrees}",
+        "{\"shadowPriority\",l.shadowPriority}"
+      ],
+      "reference": "docs/judasjs/entities.md"
+    },
     {
       "binding": "Weather.state",
       "declaration": "WeatherState",
@@ -989,6 +1017,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.light",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "lightInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.light",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.liquid",
       "kinds": [
         "get"
@@ -1360,6 +1399,17 @@
         "kinematicVelocity"
       ],
       "type": "docs/judas.d.ts:Entity.setKinematicVelocity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setLight",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "lightSettings"
+      ],
+      "type": "docs/judas.d.ts:Entity.setLight",
       "reference": "docs/judasjs/entities.md"
     },
     {
@@ -4738,6 +4788,8 @@
     "kinematicStop",
     "kinematicTarget",
     "kinematicVelocity",
+    "lightInfo",
+    "lightSettings",
     "liquidAccounting",
     "liquidConnections",
     "liquidEnabled",

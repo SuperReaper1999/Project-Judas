@@ -333,6 +333,8 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     size_t materialCount=0;for(const auto& o:scene.Objects())materialCount+=o.render&&!o.render->materials.empty();
     if(s.backgroundColor!=glm::vec3(.08f,.09f,.11f)){w.Text("Judas.Background.1");w.Vector(s.backgroundColor);}
     if(materialCount||s.linearRendering||!s.environmentAsset.empty()){w.Text("Judas.Materials.1");w.Boolean(s.linearRendering);w.Number(s.exposure);w.Text(s.environmentAsset);w.Number(s.environmentIntensity);w.Quaternion(s.environmentRotation);w.Boolean(s.environmentBackground);w.U64(materialCount);for(const auto& o:scene.Objects())if(o.render&&!o.render->materials.empty()){w.U64(o.id);w.Text(EncodeMaterialSlots(o.render->materials));}}
+    size_t extendedLights=0;for(const auto& o:scene.Objects())if(o.light&&(!o.light->enabled||o.light->castsShadow||o.light->intensity!=1||o.light->shadowPriority!=0))++extendedLights;
+    if(extendedLights){w.Text("Judas.LightControls.1");w.U64(extendedLights);for(const auto& o:scene.Objects())if(o.light&&(!o.light->enabled||o.light->castsShadow||o.light->intensity!=1||o.light->shadowPriority!=0)){const auto& l=*o.light;w.U64(o.id);w.Boolean(l.enabled);w.Boolean(l.castsShadow);w.Number(l.intensity);w.Number(l.shadowPriority);if(l.intensity<0)w.Fail("negative light intensity");}}
     // Versioned optional M72 records preserve schema-5 bytes for every scene
     // whose visibility, sunlight and material bindings retain their defaults.
     if(!s.sunEnabled||s.sunIntensity!=1){w.Text("Judas.SunControls.1");w.Boolean(s.sunEnabled);w.Number(s.sunIntensity);if(s.sunIntensity<0||s.sunIntensity>10000)w.Fail("sun intensity must be 0..10000");}

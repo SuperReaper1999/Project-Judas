@@ -122,3 +122,12 @@ Game-side traversal/camera policy is shown in the ordinary
 [CharacterMotor](character.md), [physics/gravity](physics.md),
 [streaming](streaming.md), [saves](saves.md) and the
 [representation, authoring and measured limits](../M85_PLANETARY_TERRAIN.md).
+
+## M92 multi-view render selection
+
+The world submits main/local-player and enabled secondary camera interest together.
+The selector takes the maximum requested screen error per tile, under the existing
+shared leaf/residency/build budgets. Opposite cameras therefore cannot inherit only
+the main eye's detail. Shared seams and morph state remain world-owned. More views
+can exhaust that budget (`budgetLimited`); they do not create independent collision
+interest or extra simulated planets. See [rendering limits](rendering.md).

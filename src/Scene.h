@@ -157,6 +157,8 @@ enum class SceneLightKind { Point, Spot };
 // A standalone dynamic light at the object's transform; a spot light
 // faces the object's local -Z.
 struct SceneLightComponent {
+    bool enabled=true,castsShadow=false;
+    float intensity=1,shadowPriority=0;
     SceneLightKind kind = SceneLightKind::Point;
     glm::vec3 color{1.0f};
     float range = 10.0f;
