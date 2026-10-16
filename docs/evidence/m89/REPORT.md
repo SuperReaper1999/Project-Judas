@@ -3,7 +3,9 @@
 ## Candidate and delivery
 
 Base: accepted M88 `109c4386ef750162391655f522c237ecbf51aa7f`.
-**Experimental only; human M89 acceptance pending. Main is unchanged.**
+**Human accepted on 2026-10-16; authorized for main promotion.**
+See [operator acceptance](HUMAN_VALIDATION.md) for the exact tested checkpoint
+and remaining platform coverage. The measurements below describe that candidate.
 No networking, new physics solver, game-specific C++ behavior or later milestone.
 
 - Editable project: [Core Scramble](../../../projects/core_scramble/README.md),
@@ -178,7 +180,7 @@ behavior, not physical-phone GPU/thermal/battery performance or four-view certif
   unchanged. Only new game content, generic input/UI/view infrastructure, current
   documentation/types/tooling and M89 evidence are in this checkpoint.
 
-## One human checklist — pending
+## One human checklist
 
 1. Start two-player shared mode. Move Cyan with WASD and Coral with arrows independently.
 2. Shove/jump, collide with bots/crates and push a core into your color; confirm score.
@@ -193,5 +195,6 @@ behavior, not physical-phone GPU/thermal/battery performance or four-view certif
     both owner menus, split/four-player layout, rotation/background/resume and physical
     controllers when available. Assess small-screen/tablet usability and audible effects.
 
-Automated passes authorize an Experimental checkpoint under AGENTS.md. They do
-not authorize main promotion or constitute M89 human acceptance.
+Automated passes alone do not constitute human acceptance. The operator's later
+desktop acceptance and explicit promotion authorization are recorded separately
+in [HUMAN_VALIDATION.md](HUMAN_VALIDATION.md).

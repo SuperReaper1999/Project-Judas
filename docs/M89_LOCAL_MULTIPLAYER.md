@@ -1,7 +1,8 @@
 # M89 — Judas Learns to Play Together
 
-Current **Experimental** candidate based on accepted M88
-`109c4386ef750162391655f522c237ecbf51aa7f`. Human validation is pending.
+Human-accepted M89, promoted to **main** after operator desktop testing.
+The tested implementation is `945b76390f50d15fe2297664fa23ec349b7cd85d`;
+see [acceptance and remaining platform coverage](evidence/m89/HUMAN_VALIDATION.md).
 
 ## Ownership and integration
 
