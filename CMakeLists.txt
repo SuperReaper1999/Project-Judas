@@ -49,10 +49,13 @@ file(READ "${CMAKE_CURRENT_SOURCE_DIR}/assets/branding/judas-icon.png" JUDAS_APP
 string(REGEX REPLACE "(..)" "0x\\1," JUDAS_APP_ICON_BYTES "${JUDAS_APP_ICON_HEX}")
 configure_file(cmake/JudasAppIcon.h.in generated/JudasAppIcon.h @ONLY)
 configure_file(cmake/judas-editor.desktop.in judas-editor.desktop @ONLY)
-add_library(judas_app_icon STATIC src/AppIcon.cpp src/TextureLoader.cpp)
+add_library(judas_app_icon STATIC src/AppIcon.cpp src/TextureLoader.cpp src/CookedTexture.cpp)
 target_include_directories(judas_app_icon PUBLIC src PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_link_libraries(judas_app_icon PUBLIC SDL2::SDL2)
 judas_warnings(judas_app_icon)
+file(GLOB JUDAS_MESHOPT_SOURCES CONFIGURE_DEPENDS third_party/meshoptimizer/src/*.cpp)
+add_library(judas_meshoptimizer STATIC ${JUDAS_MESHOPT_SOURCES})
+target_include_directories(judas_meshoptimizer PUBLIC third_party/meshoptimizer/src)
 include_directories(SYSTEM third_party/quickhull)
 set_source_files_properties(third_party/quickhull/QuickHull.cpp PROPERTIES COMPILE_OPTIONS "$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wno-unused-parameter>")
 if(NOT ANDROID)
@@ -213,6 +216,7 @@ add_library(judas_engine STATIC
     src/CollisionSource.cpp
     src/ModelLoader.cpp
     src/ModelArchive.cpp
+    src/AssetCook.cpp
     src/FontLoader.cpp
     src/UIWidgets.cpp
     src/PauseMenu.cpp
@@ -1959,3 +1963,23 @@ judas_warnings(judas_rendering_shadow_scale_tests)
 add_executable(judas_rendering_lab_performance tests/RenderingLabPerformance.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_rendering_lab_performance PRIVATE judas_engine)
 judas_warnings(judas_rendering_lab_performance)
+
+# M93 cook/LOD codecs are optional asset paths; no external runtime tool required.
+target_link_libraries(judas_engine PUBLIC judas_meshoptimizer)
+add_executable(judas_cook src/AssetCookMain.cpp)
+target_link_libraries(judas_cook PRIVATE judas_engine)
+judas_warnings(judas_cook)
+add_executable(judas_asset_pipeline_benchmark tests/AssetPipelineBenchmark.cpp)
+target_link_libraries(judas_asset_pipeline_benchmark PRIVATE judas_engine)
+judas_warnings(judas_asset_pipeline_benchmark)
+add_executable(judas_asset_pipeline_tests tests/AssetPipelineTests.cpp)
+target_link_libraries(judas_asset_pipeline_tests PRIVATE judas_engine)
+judas_warnings(judas_asset_pipeline_tests)
+
+add_executable(judas_asset_residency_tests tests/AssetResidencyTests.cpp)
+target_link_libraries(judas_asset_residency_tests PRIVATE judas_engine)
+judas_warnings(judas_asset_residency_tests)
+
+add_executable(judas_asset_lab_tests tests/AssetLabTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_asset_lab_tests PRIVATE judas_engine)
+judas_warnings(judas_asset_lab_tests)

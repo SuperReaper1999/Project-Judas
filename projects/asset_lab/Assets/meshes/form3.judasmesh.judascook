@@ -1,0 +1,16 @@
+{
+  "cooker": 1,
+  "error": 0.10000000149011612,
+  "files": {
+    "../../SourceArt/form3.obj": "821a5c981a684c4a57c35b9c60b330aedcdbb190a069a2c8c31f52d7cacaa438"
+  },
+  "levels": 4,
+  "outputSha256": "c567841d40d8249849dc2a0221a28445c40ce5e254f0df45b37d59596e9f763b",
+  "pixels": 0.5,
+  "ratio": 0.3499999940395355,
+  "semantic": 0,
+  "source": "../../SourceArt/form3.obj",
+  "sourceSha256": "821a5c981a684c4a57c35b9c60b330aedcdbb190a069a2c8c31f52d7cacaa438",
+  "textureMax": 4096,
+  "textureMode": 0
+}

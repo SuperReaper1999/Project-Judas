@@ -1,0 +1,325 @@
+{
+  "timing": "completed render wall ms, excludes swap/pacing; fresh process, warm OS cache",
+  "modes": {
+    "source-baseline": {
+      "load_ms": [
+        139.764412,
+        140.24123
+      ],
+      "gpu_payload_bytes": [
+        25318740,
+        25318740
+      ],
+      "peak_process_rss_kib": [
+        144176,
+        146348
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 3.351305,
+            "p95": 3.97639,
+            "max": 4.60538
+          },
+          "triangles": [
+            2048000
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 3.243568,
+            "p95": 3.716416,
+            "max": 4.194624
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.026444000000000002,
+            "p95": 0.05181,
+            "max": 0.11561
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 6.135249999999999,
+            "p95": 6.70589,
+            "max": 6.96346
+          },
+          "triangles": [
+            4128768
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 5.833247999999999,
+            "p95": 6.295552000000001,
+            "max": 6.46976
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.0530335,
+            "p95": 0.114886,
+            "max": 0.203451
+          }
+        }
+      }
+    },
+    "source-candidate": {
+      "load_ms": [
+        138.760564,
+        137.475011
+      ],
+      "gpu_payload_bytes": [
+        25318740,
+        25318740
+      ],
+      "peak_process_rss_kib": [
+        146480,
+        146108
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 3.0616250000000003,
+            "p95": 3.40437,
+            "max": 3.8889
+          },
+          "triangles": [
+            2048000
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 2.955504,
+            "p95": 3.256512,
+            "max": 3.279936
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.0250265,
+            "p95": 0.04762,
+            "max": 0.058686
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 6.152735,
+            "p95": 6.96673,
+            "max": 7.64354
+          },
+          "triangles": [
+            4128768
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 5.844384,
+            "p95": 6.361824,
+            "max": 7.199552000000001
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.0473295,
+            "p95": 0.097435,
+            "max": 0.13827
+          }
+        }
+      }
+    },
+    "cooked-full": {
+      "load_ms": [
+        27.550407,
+        31.037372
+      ],
+      "gpu_payload_bytes": [
+        3566352,
+        3566352
+      ],
+      "peak_process_rss_kib": [
+        112460,
+        112924
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 1.21704,
+            "p95": 1.41347,
+            "max": 1.95734
+          },
+          "triangles": [
+            2048000
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 1.101504,
+            "p95": 1.107872,
+            "max": 1.1104
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.0253535,
+            "p95": 0.048969,
+            "max": 0.061542
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 2.326985,
+            "p95": 2.67665,
+            "max": 5.67499
+          },
+          "triangles": [
+            4128768
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 2.093904,
+            "p95": 2.100192,
+            "max": 2.10272
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.047660499999999995,
+            "p95": 0.086215,
+            "max": 3.39168
+          }
+        }
+      }
+    },
+    "cooked-lod": {
+      "load_ms": [
+        25.416076,
+        24.728057
+      ],
+      "gpu_payload_bytes": [
+        3566352,
+        3566352
+      ],
+      "peak_process_rss_kib": [
+        113856,
+        113976
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 0.348193,
+            "p95": 0.473959,
+            "max": 1.80501
+          },
+          "triangles": [
+            284302
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 0.21136,
+            "p95": 0.21632,
+            "max": 0.218688
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.0396245,
+            "p95": 0.076921,
+            "max": 1.47119
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 0.5837435,
+            "p95": 0.66524,
+            "max": 3.10067
+          },
+          "triangles": [
+            447094
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 0.315328,
+            "p95": 0.319296,
+            "max": 0.32048
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.06946150000000001,
+            "p95": 0.107518,
+            "max": 2.573051
+          }
+        }
+      }
+    }
+  },
+  "quality": [
+    {
+      "left": "source-baseline",
+      "right": "source-candidate",
+      "view": 1,
+      "foreground_union_pixels": 55200,
+      "foreground_rgb_rms": 0.0,
+      "background_threshold_mask_difference_pixels": 0,
+      "mask_difference_percent": 0.0,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "source-baseline",
+      "right": "source-candidate",
+      "view": 2,
+      "foreground_union_pixels": 55200,
+      "foreground_rgb_rms": 0.0,
+      "background_threshold_mask_difference_pixels": 0,
+      "mask_difference_percent": 0.0,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "source-candidate",
+      "right": "cooked-full",
+      "view": 1,
+      "foreground_union_pixels": 55285,
+      "foreground_rgb_rms": 1.3066017386579085,
+      "background_threshold_mask_difference_pixels": 115,
+      "mask_difference_percent": 0.20801302342407524,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "source-candidate",
+      "right": "cooked-full",
+      "view": 2,
+      "foreground_union_pixels": 55285,
+      "foreground_rgb_rms": 1.3066017386579085,
+      "background_threshold_mask_difference_pixels": 115,
+      "mask_difference_percent": 0.20801302342407524,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "cooked-full",
+      "right": "cooked-lod",
+      "view": 1,
+      "foreground_union_pixels": 55456,
+      "foreground_rgb_rms": 5.060289408698718,
+      "background_threshold_mask_difference_pixels": 805,
+      "mask_difference_percent": 1.451601269474899,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "cooked-full",
+      "right": "cooked-lod",
+      "view": 2,
+      "foreground_union_pixels": 55456,
+      "foreground_rgb_rms": 5.060289408698718,
+      "background_threshold_mask_difference_pixels": 805,
+      "mask_difference_percent": 1.451601269474899,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    }
+  ],
+  "storage": {
+    "column.obj": {
+      "source_bytes": 1578121,
+      "cooked_bytes": 310139
+    },
+    "tile0.png": {
+      "source_bytes": 1165233,
+      "cooked_bytes": 1344838
+    }
+  }
+}

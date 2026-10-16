@@ -75,6 +75,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         if(options.project.ModSession())host.OpenContentView(options.project.ModSession()->assets);
         else host.OpenProjectAssets(options.project.RootDir(), options.project.AssetsDir());
 
+        host.Resources().ConfigureVisualStreaming(uint64_t(options.project.Settings().visualBudgetMiB)*1024*1024);
         const auto& iconId = options.project.Settings().iconAsset;
         if (!iconId.empty()) {
             const auto* icon = host.Assets().Find(iconId);

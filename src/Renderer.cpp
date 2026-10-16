@@ -1,4 +1,5 @@
 #include "PerformanceProfiler.h"
+#include "CookedTexture.h"
 #include "Tangents.h"
 #include "Renderer.h"
 #include "SkeletalAnimation.h"
@@ -858,14 +859,14 @@ void Renderer::Shutdown() {
     for (unsigned int i = 0; i < m_targets.size(); ++i) DestroyRenderTarget(RenderTargetHandle{i});
     m_targets.clear();
     for (std::size_t i = 0; i < m_meshes.size(); ++i) {
-        DestroyMesh(MeshHandle{static_cast<unsigned int>(i)});
+        DestroyMesh(MeshHandle{static_cast<unsigned int>(i),m_meshes[i].generation});
     }
-    m_meshes.clear();
+    m_meshes.clear();m_freeMeshes.clear();
 
     for (std::size_t i = 0; i < m_textures.size(); ++i) {
-        DestroyTexture(TextureHandle{static_cast<unsigned int>(i)});
+        DestroyTexture(TextureHandle{static_cast<unsigned int>(i),m_textures[i].generation});
     }
-    m_textures.clear();
+    m_textures.clear();m_freeTextures.clear();
 
     if (m_shaderProgram) {
         if(m_waterPathTexture){glDeleteTextures(1,&m_waterPathTexture);m_waterPathTexture=0;m_waterColumns=m_waterRows=0;}
@@ -1035,6 +1036,7 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
         }
     }else if(!data.skinVertices.empty())return {};
     GpuMesh mesh;
+    mesh.lods=data.lods;mesh.lodPixels=data.lodPixels;
     mesh.primitives=data.primitives;for(const auto& material:data.materials)mesh.materials.push_back(CreateMaterial(MaterialSettings(material)));
     mesh.alive = true;
     if(data.skeletal){mesh.restSkin=ResolveSkinMatrices(data.skeletal->skeleton,data.skeletal->skeleton.rest);for(auto& part:data.primitives)if(part.count)mesh.partOrientation.push_back(data.skinVertices.at(data.indices.empty()?part.first:data.indices.at(part.first)));else mesh.partOrientation.emplace_back();}
@@ -1071,12 +1073,13 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
     }
 
     if (!data.indices.empty()) {
-        mesh.indexCount = static_cast<GLsizei>(data.indices.size());
+        auto indices=data.indices;indices.insert(indices.end(),data.lodIndices.begin(),data.lodIndices.end());
+        mesh.indexCount = static_cast<GLsizei>(indices.size());
         glGenBuffers(1, &mesh.ebo);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     static_cast<GLsizeiptr>(data.indices.size() * sizeof(std::uint32_t)),
-                     data.indices.data(), GL_STATIC_DRAW);
+                     static_cast<GLsizeiptr>(indices.size() * sizeof(std::uint32_t)),
+                     indices.data(), GL_STATIC_DRAW);
     }
 
     glBindVertexArray(0);
@@ -1086,10 +1089,10 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
     // bound would detach it from the VAO itself.
 
     MeshHandle handle;
-    handle.id = static_cast<unsigned int>(m_meshes.size());
-    m_meshes.push_back(mesh);
+    if(m_freeMeshes.empty()){handle.id=unsigned(m_meshes.size());m_meshes.push_back(std::move(mesh));}
+    else{handle.id=m_freeMeshes.back();m_freeMeshes.pop_back();mesh.generation=m_meshes[handle.id].generation;handle.generation=mesh.generation;m_meshes[handle.id]=std::move(mesh);}
     TraceResourceOperation(ResourceTracePoint::MeshCreated, handle.id,
-                           data.vertices.size() * sizeof(MeshVertex) + data.indices.size() * sizeof(std::uint32_t) + data.skinVertices.size()*sizeof(MeshSkinVertex));
+                           data.vertices.size() * sizeof(MeshVertex) + (data.indices.size()+data.lodIndices.size()) * sizeof(std::uint32_t) + data.skinVertices.size()*sizeof(MeshSkinVertex));
     return handle;
 }
 
@@ -1103,12 +1106,13 @@ bool Renderer::UpdateMeshVertices(MeshHandle handle, const std::vector<MeshVerte
                  vertices.empty() ? nullptr : vertices.data(), GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     mesh->vertexCount = static_cast<GLsizei>(vertices.size());
+    if(!mesh->lods.empty())mesh->lodPixels=0; // changed geometry invalidates offline error estimates
     mesh->bounds={};for(const auto& v:vertices)mesh->bounds.Include(v.position);
     return true;
 }
 
 Renderer::GpuMesh* Renderer::GetMesh(MeshHandle handle) {
-    if (!handle.IsValid() || handle.id >= m_meshes.size() || !m_meshes[handle.id].alive) {
+    if (!handle.IsValid() || handle.id >= m_meshes.size() || !m_meshes[handle.id].alive || m_meshes[handle.id].generation!=handle.generation) {
         return nullptr;
     }
     return &m_meshes[handle.id];
@@ -1124,21 +1128,28 @@ void Renderer::DestroyMesh(MeshHandle handle) {
     glDeleteVertexArrays(1, &mesh->vao);
     const std::size_t bytes = static_cast<std::size_t>(mesh->vertexCount) * sizeof(MeshVertex) +
                               static_cast<std::size_t>(mesh->indexCount) * sizeof(std::uint32_t);
-    *mesh = GpuMesh{};
+    auto generation=mesh->generation;*mesh=GpuMesh{};mesh->generation=generation;
+    if(generation!=0xFFFFFFFFu){++mesh->generation;m_freeMeshes.push_back(handle.id);}
     TraceResourceOperation(ResourceTracePoint::MeshDestroyed, handle.id, bytes);
 }
 
 TextureHandle Renderer::CreateTexture(const TextureData& data,bool srgb) {
     GpuTexture texture;texture.width=data.width;texture.height=data.height;texture.srgb=srgb;
     texture.alive = true;
-    texture.uploadedBytes = data.pixels.size();
-
+    texture.storage=data.storage;texture.mipCount=data.levels.empty()?1:unsigned(data.levels.size());
     glGenTextures(1, &texture.textureId);
     glBindTexture(GL_TEXTURE_2D, texture.textureId);
-    {JUDAS_PROFILE_SCOPE("Texture driver texel upload");
-    glTexImage2D(GL_TEXTURE_2D, 0, srgb?GL_SRGB8_ALPHA8:GL_RGBA8, data.width, data.height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 data.pixels.data());}
-    {JUDAS_PROFILE_SCOPE("Texture driver mipmap generation");glGenerateMipmap(GL_TEXTURE_2D);}
+    if(data.levels.empty()){
+        glTexImage2D(GL_TEXTURE_2D,0,srgb?GL_SRGB8_ALPHA8:GL_RGBA8,data.width,data.height,0,GL_RGBA,GL_UNSIGNED_BYTE,data.pixels.data());
+        glGenerateMipmap(GL_TEXTURE_2D);for(int w=data.width,h=data.height;;w=std::max(1,w/2),h=std::max(1,h/2)){texture.uploadedBytes+=size_t(w)*h*4;if(w==1&&h==1)break;}
+    }else{
+        GLenum format=data.storage==TextureStorage::BC1?(srgb?0x8C4C:0x83F0):(srgb?0x8C4F:0x83F3);
+        GLint count=0;glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS,&count);std::vector<GLint> formats(static_cast<size_t>(std::max(0,count)));if(count)glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS,formats.data());
+        bool compressed=m_allowBlockCompression&&data.storage!=TextureStorage::Rgba8&&std::find(formats.begin(),formats.end(),GLint(format))!=formats.end();
+        texture.storage=compressed?data.storage:TextureStorage::Rgba8;
+        for(size_t i=0;i<data.levels.size();++i){const auto& source=data.levels[i];if(compressed){glCompressedTexImage2D(GL_TEXTURE_2D,GLint(i),format,source.width,source.height,0,GLsizei(source.bytes.size()),source.bytes.data());texture.uploadedBytes+=source.bytes.size();}else{auto level=ExpandTextureMip(source,data.storage);glTexImage2D(GL_TEXTURE_2D,GLint(i),srgb?GL_SRGB8_ALPHA8:GL_RGBA8,level.width,level.height,0,GL_RGBA,GL_UNSIGNED_BYTE,level.bytes.data());texture.uploadedBytes+=level.bytes.size();}}
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAX_LEVEL,GLint(data.levels.size()-1));
+    }
 
     // Linear filtering both ways (mipmapped minification), repeat wrapping —
     // ordinary, sufficient defaults for one UV-mapped demo texture; nothing
@@ -1152,27 +1163,27 @@ TextureHandle Renderer::CreateTexture(const TextureData& data,bool srgb) {
     glBindTexture(GL_TEXTURE_2D, 0);
 
     TextureHandle handle;
-    handle.id = static_cast<unsigned int>(m_textures.size());
-    m_textures.push_back(texture);
+    handle=InstallTexture(std::move(texture));
     TraceResourceOperation(ResourceTracePoint::TextureCreated, handle.id, texture.uploadedBytes);
     return handle;
 }
 
 void Renderer::DestroyTexture(TextureHandle handle) {
-    if (!handle.IsValid() || handle.id >= m_textures.size() || !m_textures[handle.id].alive) {
+    if (!ValidTexture(handle)) {
         return;
     }
     auto colour=m_textures[handle.id].colourView;if(colour.IsValid())DestroyTexture(colour);
     glDeleteTextures(1, &m_textures[handle.id].textureId);
     const std::size_t bytes = m_textures[handle.id].uploadedBytes;
-    m_textures[handle.id] = GpuTexture{};
+    auto generation=m_textures[handle.id].generation;m_textures[handle.id]=GpuTexture{};m_textures[handle.id].generation=generation;
+    if(generation!=0xFFFFFFFFu){++m_textures[handle.id].generation;m_freeTextures.push_back(handle.id);}
     TraceResourceOperation(ResourceTracePoint::TextureDestroyed, handle.id, bytes);
 }
 
 bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) const {
     if (!SDL_GL_GetCurrentContext() || !handle.IsValid() || handle.id >= m_meshes.size()) return false;
     const GpuMesh& mesh = m_meshes[handle.id];
-    if (!mesh.alive || !glIsBuffer(mesh.vbo) || (mesh.ebo && !glIsBuffer(mesh.ebo))) return false;
+    if (!mesh.alive || mesh.generation!=handle.generation || !glIsBuffer(mesh.vbo) || (mesh.ebo && !glIsBuffer(mesh.ebo))) return false;
     GLint previousBuffer = 0;
     glGetIntegerv(GL_COPY_READ_BUFFER, &previousBuffer);
     MeshData data;
@@ -1213,6 +1224,7 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
         }
     }
     glBindBuffer(GL_COPY_READ_BUFFER, static_cast<GLuint>(previousBuffer));
+    data.lods=mesh.lods;data.lodPixels=mesh.lodPixels;data.primitives=mesh.primitives;if(!data.lods.empty()){data.lodIndices.assign(data.indices.begin()+data.lods[0].count,data.indices.end());data.indices.resize(data.lods[0].count);}
     outData = std::move(data);
     return true;
 }
@@ -1220,7 +1232,7 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
 bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outData) const {
     if (!SDL_GL_GetCurrentContext() || !handle.IsValid() || handle.id >= m_textures.size()) return false;
     const GpuTexture& texture = m_textures[handle.id];
-    if (!texture.alive || !glIsTexture(texture.textureId)) return false;
+    if (!texture.alive || texture.generation!=handle.generation || !glIsTexture(texture.textureId)) return false;
     GLint previousTexture = 0, previousPackBuffer = 0;
     GLint alignment = 0, rowLength = 0, skipRows = 0, skipPixels = 0;
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
@@ -1268,7 +1280,7 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
 std::uintptr_t Renderer::EditorImageToken(TextureHandle texture) const {return static_cast<std::uintptr_t>(ResolveTexture(texture));}
 
 GLuint Renderer::ResolveTexture(TextureHandle handle) const {
-    if (handle.IsValid() && handle.id < m_textures.size() && m_textures[handle.id].alive) {
+    if (ValidTexture(handle)) {
         return m_textures[handle.id].textureId;
     }
     // Falls back to the white 1x1 texture — including, harmlessly, during
@@ -1289,15 +1301,29 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
     if (!gpuMesh) return;
     if(!m_submittingBatch&&!m_shadowPassActive&&!AllowsLayer(m_renderLayer)){++m_stats.layerRejectedDraws;return;}
 
+    unsigned lod=0;
+    if(!gpuMesh->lods.empty()){
+        if(m_submittingBatch)lod=m_activeBatchLod;
+        else if(m_meshLodMultiplier>0&&gpuMesh->lodPixels>0){
+            GLint viewport[4];glGetIntegerv(GL_VIEWPORT,viewport);
+            auto centre=position+rotation*((gpuMesh->bounds.min+gpuMesh->bounds.max)*.5f*scale);
+            float maxScale=std::max({std::abs(scale.x),std::abs(scale.y),std::abs(scale.z)});
+            float distance=std::max(.001f,glm::length(centre-glm::vec3(glm::inverse(m_view)[3]))-glm::length(gpuMesh->bounds.max-gpuMesh->bounds.min)*.5f*maxScale);
+            float projected=maxScale*float(viewport[3])*std::abs(m_projection[1][1])*.5f;
+            if(std::abs(m_projection[3][3])<.5f)projected/=distance;
+            for(unsigned i=1;i<gpuMesh->lods.size();++i)if(gpuMesh->lods[i].error*projected<=gpuMesh->lodPixels*m_meshLodMultiplier)lod=i;
+        }
+    }
+    const auto& primitives=lod?gpuMesh->lods[lod].primitives:gpuMesh->primitives;
     static const GpuMaterial failed=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.8f,.02f,.65f,1};return m;}();
     static const GpuMaterial pending=[](){GpuMaterial m;m.definition.model=MaterialModel::Unlit;m.definition.baseColor={.25f,.25f,.28f,1};return m;}();
-    auto materialAt=[&](size_t slot)->const GpuMaterial* {MaterialHandle handle;if(slot<m_materialBindings.size())handle=m_materialBindings[slot].handle;if(!handle.IsValid()&&slot<m_materialBindings.size()&&m_materialBindings[slot].explicitAsset)return m_materialBindings[slot].failed?&failed:&pending;if(!handle.IsValid()&&slot<gpuMesh->primitives.size()&&m_linearRendering){int index=gpuMesh->primitives[slot].material;if(index>=0&&size_t(index)<gpuMesh->materials.size())handle=gpuMesh->materials[index];}return handle.IsValid()&&handle.id<m_materials.size()&&m_materials[handle.id].alive?&m_materials[handle.id]:nullptr;};
-    size_t parts=std::max(size_t(1),gpuMesh->primitives.size());
+    auto materialAt=[&](size_t slot)->const GpuMaterial* {MaterialHandle handle;if(slot<m_materialBindings.size())handle=m_materialBindings[slot].handle;if(!handle.IsValid()&&slot<m_materialBindings.size()&&m_materialBindings[slot].explicitAsset)return m_materialBindings[slot].failed?&failed:&pending;if(!handle.IsValid()&&slot<primitives.size()&&m_linearRendering){int index=primitives[slot].material;if(index>=0&&size_t(index)<gpuMesh->materials.size())handle=gpuMesh->materials[index];}return ValidMaterial(handle)?&m_materials[handle.id]:nullptr;};
+    size_t parts=std::max(size_t(1),primitives.size());
     auto bindingAt=[&](size_t slot){return slot<m_materialBindings.size()?m_materialBindings[slot]:MaterialBinding{};};
     auto alphaAt=[&](size_t slot,const GpuMaterial* material){auto binding=bindingAt(slot);return binding.overrides.alpha.value_or(material?material->definition.alpha:MaterialAlpha::Opaque);};
     const glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
     const auto* palette=skin&&!skin->empty()?skin:&gpuMesh->restSkin;
-    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!gpuMesh->primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),gpuMesh->primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!gpuMesh->primitives.empty()){first=gpuMesh->primitives[i].first;count=gpuMesh->primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
+    auto submit=[&](bool shadow){for(size_t i=0;i<parts;++i){if(hiddenParts&&!primitives.empty()&&std::find(hiddenParts->begin(),hiddenParts->end(),primitives[i].part)!=hiddenParts->end())continue;auto* m=materialAt(i);bool isBlend=alphaAt(i,m)==MaterialAlpha::Blend;if((shadow&&isBlend)||(!shadow&&isBlend!=m_flushingBlends))continue;BindMaterial(m,bindingAt(i),texture,tintColor,alpha,shadow);glm::mat4 orientation(1);if(i<gpuMesh->partOrientation.size()&&!palette->empty()){orientation=glm::mat4(0);auto& w=gpuMesh->partOrientation[i];for(int k=0;k<4;++k)orientation+=palette->at(w.joints[k])*w.weights[k]+palette->at(w.joints1[k])*w.weights1[k];}glFrontFace((m_submittingBatch?m_activeBatchReversed:glm::determinant(glm::mat3(model*orientation))<0)?GL_CW:GL_CCW);unsigned first=0,count=unsigned(gpuMesh->ebo?gpuMesh->indexCount:gpuMesh->vertexCount);if(!primitives.empty()){first=primitives[i].first;count=primitives[i].count;}glBindVertexArray(gpuMesh->vao);if(m_submittingBatch){if(gpuMesh->ebo)glDrawElementsInstanced(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4),GLsizei(m_activeInstances));else glDrawArraysInstanced(GL_TRIANGLES,GLint(first),GLsizei(count),GLsizei(m_activeInstances));++m_stats.instancedDraws;m_stats.instances+=m_activeInstances;}else {if(gpuMesh->ebo)glDrawElements(GL_TRIANGLES,GLsizei(count),GL_UNSIGNED_INT,reinterpret_cast<void*>(size_t(first)*4));else glDrawArrays(GL_TRIANGLES,GLint(first),GLsizei(count));}if(lod)m_stats.lodReducedInstances+=(m_submittingBatch?m_activeInstances:1);++m_stats.drawCalls;m_stats.triangles+=count/3*(m_submittingBatch?m_activeInstances:1);}glFrontFace(GL_CCW);};
     if(palette->size()>kModelPaletteLimit||palette->size()!=gpuMesh->restSkin.size())return;
     VisualBounds bounds=gpuMesh->bounds;
     if(!palette->empty()){bounds={};for(const auto& matrix:*palette){auto b=TransformBounds(gpuMesh->bounds,matrix);bounds.Include(b.min);bounds.Include(b.max);}}
@@ -1309,7 +1335,7 @@ void Renderer::DrawMesh(MeshHandle mesh, const glm::vec3& position, const glm::q
 
     if(m_collectingBatch&&m_batchingEnabled&&!m_submittingBatch&&palette->empty()&&(!hiddenParts||hiddenParts->empty())){
         bool opaque=true;for(size_t i=0;i<parts;++i)opaque&=alphaAt(i,materialAt(i))==MaterialAlpha::Opaque;
-        if(opaque&&std::abs(glm::determinant(glm::mat3(model)))>1e-12f){QueueMeshInstance(mesh,texture,model,{tintColor,alpha});return;}
+        if(opaque&&std::abs(glm::determinant(glm::mat3(model)))>1e-12f){QueueMeshInstance(mesh,texture,model,{tintColor,alpha},lod);return;}
     }
     // Milestone 15: while a shadow pass is active (see BeginShadowPass),
     // every DrawMesh call writes depth only, from that light's own view/
@@ -1490,8 +1516,8 @@ RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::stri
         glDeleteTextures(1, &color.textureId);
         error = "render-target framebuffer incomplete: " + std::to_string(status); return {};
     }
-    color.alive = true; target.color.id = static_cast<unsigned int>(m_textures.size());
-    m_textures.push_back(color); m_targets.push_back(target);
+    color.alive = true; target.color=InstallTexture(color);
+    m_targets.push_back(target);
     TraceResourceOperation(ResourceTracePoint::TextureCreated, target.color.id, color.uploadedBytes);
     return RenderTargetHandle{static_cast<unsigned int>(m_targets.size() - 1)};
 }
@@ -1599,7 +1625,7 @@ void main(){vec4 sampleColour=texture(image,texcoord);result=sampleColour*tint;i
     const unsigned indices[6]={0,1,2,0,2,3};m_particleVertices.clear();m_particleVertices.reserve(particles.size()*6);
     for(size_t i:m_particleOrder){const auto& p=particles[i];for(auto k:indices){auto c=corners[k];m_particleVertices.push_back({p.position+p.size*(right*c.x+up*c.y),c+glm::vec2(0.5f),p.color});}}
     if(m_linearRendering)texture=ColourTexture(texture);
-    glUseProgram(m_particleProgram);glUniform1i(glGetUniformLocation(m_particleProgram,"imageLinear"),texture.IsValid()&&texture.id<m_textures.size()&&(m_textures[texture.id].srgb||m_textures[texture.id].sceneLinear));glUniform1i(glGetUniformLocation(m_particleProgram,"modern"),m_linearRendering);glBindSampler(0,0);glUniformMatrix4fv(glGetUniformLocation(m_particleProgram,"vp"),1,GL_FALSE,glm::value_ptr(m_projection*m_view));
+    glUseProgram(m_particleProgram);glUniform1i(glGetUniformLocation(m_particleProgram,"imageLinear"),ValidTexture(texture)&&(m_textures[texture.id].srgb||m_textures[texture.id].sceneLinear));glUniform1i(glGetUniformLocation(m_particleProgram,"modern"),m_linearRendering);glBindSampler(0,0);glUniformMatrix4fv(glGetUniformLocation(m_particleProgram,"vp"),1,GL_FALSE,glm::value_ptr(m_projection*m_view));
     if(m_activeTarget.IsValid()&&texture.id==RenderTargetTexture(m_activeTarget).id){texture={};++m_stats.feedbackFallbacks;}
     glActiveTexture(GL_TEXTURE0);glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glUniform1i(glGetUniformLocation(m_particleProgram,"image"),0);
     glBindVertexArray(m_particleVao);glBindBuffer(GL_ARRAY_BUFFER,m_particleVbo);
@@ -1625,13 +1651,13 @@ void Renderer::SetUIClip(glm::vec2 position,glm::vec2 size){
 void Renderer::ClearUIClip(){glDisable(GL_SCISSOR_TEST);}
 void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit,bool flipVertical){
     if(!texture.IsValid())return;
-    if(fit){const auto* image=texture.id<m_textures.size()&&m_textures[texture.id].alive?&m_textures[texture.id]:nullptr;
+    if(fit){const auto* image=ValidTexture(texture)?&m_textures[texture.id]:nullptr;
         if(image&&image->width>0&&image->height>0){auto scaled=glm::vec2(image->width,image->height);scaled*=std::min(size.x/scaled.x,size.y/scaled.y);position+=(size-scaled)*.5f;size=scaled;}}
     glUniform2f(m_uiUPosition,position.x,position.y);glUniform2f(m_uiUSize,size.x,size.y);
     // Imported TextureData stores the authored bottom row first for world
     // materials. UI's unit quad starts at its top-left, so compensate here;
     // fonts use their separate top-down atlas path. Preserve render-target UVs.
-    const bool imported=texture.id<m_textures.size()&&!m_textures[texture.id].renderTarget;
+    const bool imported=ValidTexture(texture)&&!m_textures[texture.id].renderTarget;
     glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
     const bool invert=imported!=flipVertical;glUniform2f(m_uiUUVOffset,0,invert?1:0);glUniform2f(m_uiUUVScale,1,invert?-1:1);
     glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glDrawArrays(GL_TRIANGLES,0,6);++m_uiDrawCalls;

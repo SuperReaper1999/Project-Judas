@@ -59,7 +59,7 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
 
 void EngineHost::PumpResources() {
     JUDAS_PROFILE_SCOPE("Resource pump");
-    if (m_resources) m_resources->Pump();
+    if (m_resources) {m_resources->AdvanceVisualFrame();m_resources->Pump();}
     m_audio.Update();
 }
 

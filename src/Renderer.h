@@ -34,6 +34,7 @@ struct WeatherShelterGrid;
 struct MeshHandle {
     static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
     unsigned int id = kInvalidId;
+    unsigned generation=0;
     bool IsValid() const { return id != kInvalidId; }
 };
 struct RenderTargetHandle {
@@ -41,11 +42,12 @@ struct RenderTargetHandle {
     bool IsValid() const { return id != 0xFFFFFFFFu; }
 };
 
-struct MaterialHandle {unsigned id=0xFFFFFFFFu;bool IsValid()const{return id!=0xFFFFFFFFu;}};
+struct MaterialHandle {unsigned id=0xFFFFFFFFu,generation=0;bool IsValid()const{return id!=0xFFFFFFFFu;}};
 struct EnvironmentHandle {unsigned id=0xFFFFFFFFu;bool IsValid()const{return id!=0xFFFFFFFFu;}};
 struct TextureHandle {
     static constexpr unsigned int kInvalidId = 0xFFFFFFFFu;
     unsigned int id = kInvalidId;
+    unsigned generation=0;
     bool IsValid() const { return id != kInvalidId; }
 };
 // Borrowed immutable resources resolved for one render sample. A map replacement
@@ -71,6 +73,7 @@ struct RenderStats {
     unsigned int shadowPasses = 0;
     unsigned int instancedDraws=0,instances=0,lightTileOverflow=0,lightRejected=0,maxTileLights=0;
     std::size_t lightBytes=0,instanceBytes=0,shadowBytes=0;
+    unsigned int lodReducedInstances=0;
     unsigned int dynamicLights = 0;  // active view, after relevance selection
     unsigned int offscreenPasses = 0;
     unsigned int feedbackFallbacks = 0;
@@ -146,6 +149,7 @@ public:
     void SetRenderMask(CategoryMask mask){m_renderMask=mask;}
     void SetRenderLayer(unsigned layer){m_renderLayer=layer;}
     bool AllowsLayer(unsigned layer)const{return (m_renderMask&CategoryBit(layer))!=0;}
+    bool AcceptsCurrentLayer()const{return m_shadowPassActive||AllowsLayer(m_renderLayer);}
     bool IsVisible(const VisualBounds& bounds)const{return !m_cullingEnabled || m_frustum.IsVisible(bounds);}
     void DrawSphereTransformed(const glm::vec3& p,const glm::quat& q,const glm::vec3& scale,float radius,const glm::vec3& color,float alpha,TextureHandle texture){DrawMesh(m_sphereMesh,p,q,scale*radius,texture,color,alpha);}
     void DrawParticles(const std::vector<ParticleBillboard>& particles,const VisualBounds& bounds,TextureHandle texture={});
@@ -168,6 +172,13 @@ public:
     void SetDynamicLights(const std::vector<DynamicLight>& lights);
     // Explicit pass scope. Transparent/skinned/masked draws retain their ordered
     // path. Compatible opaque draws share one upload and one instanced draw.
+    void SetMeshLodMultiplier(float value){m_meshLodMultiplier=value;}
+    void SetBlockCompressionEnabled(bool enabled){m_allowBlockCompression=enabled;}
+    size_t TextureResidentBytes(TextureHandle)const;
+    size_t MeshResidentBytes(MeshHandle)const;
+    size_t MaterialResidentBytes(MaterialHandle)const;
+    size_t EnvironmentResidentBytes(EnvironmentHandle)const;
+    size_t ResourceSlotCount()const{return m_meshes.size()+m_textures.size()+m_materials.size();}
     void BeginMeshBatch();
     void EndMeshBatch();
     void SetBatchingEnabled(bool value){m_batchingEnabled=value;}
@@ -407,6 +418,7 @@ private:
     // is drawn non-indexed — see MeshData's own convention), and enough
     // count/type information to issue the right draw call.
     struct GpuMesh {
+        unsigned generation=0;
         GLuint vao = 0;
         GLuint vbo = 0,skinVbo=0;
         GLuint ebo = 0;          // 0 if non-indexed
@@ -417,6 +429,7 @@ private:
         std::vector<glm::mat4> restSkin;
         std::vector<MeshSkinVertex> partOrientation;
         std::vector<MeshPrimitive> primitives;
+        std::vector<MeshLod> lods;float lodPixels=1;
         std::vector<MaterialHandle> materials;
     };
     struct GpuTarget { GLuint framebuffer = 0, depth = 0; TextureHandle color; int width = 0, height = 0; };
@@ -429,10 +442,12 @@ private:
     glm::mat4 m_savedView{1.0f}, m_savedProjection{1.0f};
 
     struct GpuTexture {
+        unsigned generation=0;
         GLuint textureId = 0;
         int width=0,height=0;
         std::size_t uploadedBytes = 0;  // base-level RGBA payload, excluding generated mipmaps
         bool alive = false,sceneLinear=false,srgb=false,renderTarget=false;
+        TextureStorage storage=TextureStorage::Rgba8;unsigned mipCount=1;
         TextureHandle colourView;
     };
 
@@ -442,11 +457,15 @@ private:
     GpuMesh* GetMesh(MeshHandle handle);
     GLuint ResolveTexture(TextureHandle handle) const;
 
+    std::vector<unsigned> m_freeMeshes,m_freeTextures,m_freeMaterials;
+    bool ValidTexture(TextureHandle h)const{return h.IsValid()&&h.id<m_textures.size()&&m_textures[h.id].alive&&h.generation==m_textures[h.id].generation;}
+    bool ValidMaterial(MaterialHandle h)const{return h.IsValid()&&h.id<m_materials.size()&&m_materials[h.id].alive&&h.generation==m_materials[h.id].generation;}
+    TextureHandle InstallTexture(GpuTexture);
     std::vector<GpuMesh> m_meshes;
     std::vector<GpuTexture> m_textures;
-    bool m_shadowsEnabled=true;
+    bool m_shadowsEnabled=true,m_allowBlockCompression=true;
 
-    struct GpuMaterial {bool alive=false;MaterialDefinition definition;std::array<TextureHandle,5> textures;std::array<GLuint,5> samplers{};};
+    struct GpuMaterial {unsigned generation=0;bool alive=false;MaterialDefinition definition;std::array<TextureHandle,5> textures;std::array<GLuint,5> samplers{};};
     struct GpuEnvironment {bool alive=false;GLuint diffuse=0,specular=0,brdf=0;unsigned levels=0;std::size_t bytes=0;};
     std::vector<GpuMaterial> m_materials;std::vector<GpuEnvironment> m_environments;
     std::vector<MaterialBinding> m_materialBindings;
@@ -492,9 +511,9 @@ private:
     GLint m_uInstanced=-1,m_uShadowInstanced=-1;
     bool m_batchingEnabled=true,m_collectingBatch=false,m_submittingBatch=false;
     struct Instance {glm::mat4 model;glm::vec4 tint;};
-    struct MeshBatch {MeshHandle mesh;TextureHandle texture;std::vector<MaterialBinding> bindings;bool reversed=false;std::vector<Instance> instances;};
-    unsigned m_activeInstances=0;bool m_activeBatchReversed=false;
-    void QueueMeshInstance(MeshHandle,TextureHandle,const glm::mat4&,glm::vec4);
+    struct MeshBatch {MeshHandle mesh;TextureHandle texture;std::vector<MaterialBinding> bindings;bool reversed=false;unsigned lod=0;std::vector<Instance> instances;};
+    unsigned m_activeInstances=0,m_activeBatchLod=0;bool m_activeBatchReversed=false;float m_meshLodMultiplier=1;
+    void QueueMeshInstance(MeshHandle,TextureHandle,const glm::mat4&,glm::vec4,unsigned lod);
     std::vector<MeshBatch> m_meshBatches;
     std::map<std::string,size_t> m_batchLookup;
     GLint m_shadowSavedFramebuffer=0;glm::ivec4 m_shadowSavedViewport{0};

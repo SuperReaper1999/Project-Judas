@@ -59,6 +59,7 @@ std::string Generic(const fs::path& p) { return p.generic_string(); }
 std::string Project::SerializeToString(const ProjectSettings& s) {
     std::string out = "JudasProject " + std::to_string(kProjectFormatVersion) + "\n";
     out += "name " + Quote(s.name) + "\n";
+    if(s.visualBudgetMiB)out+="visual-budget-mib "+Quote(std::to_string(s.visualBudgetMiB))+"\n";
     if(!s.modContract.empty())out+="mod-contract "+Quote(s.modContract)+"\n";
     if (!s.audio.groups.empty()) out += "audio-groups " + Quote(s.audio.Serialize()) + "\n";
     if (!s.iconAsset.empty()) out += "icon-asset " + Quote(s.iconAsset) + "\n";
@@ -135,6 +136,7 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
         else if (key == "name") s.name = value;
         else if (key == "audio-groups") {if(!ProjectAudioSettings::Parse(value,s.audio,outError))return false;}
         else if (key == "icon-asset") s.iconAsset = value;
+        else if(key=="visual-budget-mib"){try{size_t n=0;auto x=std::stoul(value,&n);if(n!=value.size()||x>65536)throw std::runtime_error("range");s.visualBudgetMiB=unsigned(x);}catch(...){outError="visual-budget-mib requires 0..65536";return false;}}
         else if(key=="export-asset-policy"){if(value!="all"&&value!="closure"){outError="export asset policy must be all or closure";return false;}s.exportAssetPolicy=value;}
         else if(key=="runtime-assets"){std::istringstream list(value);std::string id;std::set<std::string> seen;while(list>>std::quoted(id)){if(!IsValidAssetId(id)||!seen.insert(id).second){outError="invalid/duplicate runtime asset root";return false;}s.runtimeAssets.push_back(id);}if(!list.eof()){outError="invalid runtime asset list";return false;}}
         else if(key=="export-scenes"||key=="exclude-scenes"){std::istringstream list(value);std::string path;std::set<std::string> seen;auto& paths=key=="export-scenes"?s.exportScenes:s.excludeScenes;while(list>>std::quoted(path)){if(path.empty()||std::filesystem::path(path).is_absolute()||std::filesystem::path(path).lexically_normal().generic_string()!=path||path.find("..")!=std::string::npos||!seen.insert(path).second){outError="invalid/duplicate export scene path";return false;}paths.push_back(path);}if(!list.eof()){outError="invalid export scene list";return false;}}

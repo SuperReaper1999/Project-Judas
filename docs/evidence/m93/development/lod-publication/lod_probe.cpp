@@ -1,0 +1,4 @@
+#include "ModelLoader.h"
+#include <cstdio>
+#include <algorithm>
+int main(){MeshData m;std::string e;LoadModelMesh(".cache/m93/fixtures/Assets/column.judasmesh",m,e);auto idx=m.indices;idx.insert(idx.end(),m.lodIndices.begin(),m.lodIndices.end());for(auto& l:m.lods){float lo=100,hi=-100;for(unsigned i=l.first;i<l.first+l.count;i++){auto y=m.vertices.at(idx.at(i)).position.y;lo=std::min(lo,y);hi=std::max(hi,y);}double area=0;for(unsigned i=l.first;i<l.first+l.count;i+=3){auto a=m.vertices.at(idx.at(i)).position,b=m.vertices.at(idx.at(i+1)).position,c=m.vertices.at(idx.at(i+2)).position;area+=glm::length(glm::cross(b-a,c-a))*.5;}printf("area=%g ",area);printf("LOD first=%u count=%u error=%g bounds_y=%g..%g parts=",l.first,l.count,l.error,lo,hi);for(auto& p:l.primitives)printf("[%u,%u]",p.first,p.count);puts("");}}

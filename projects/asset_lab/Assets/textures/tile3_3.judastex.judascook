@@ -1,0 +1,16 @@
+{
+  "cooker": 1,
+  "error": 0.10000000149011612,
+  "files": {
+    "../../SourceArt/tile3_3.png": "33d3da853da83b7c97094b0b9b0bf3565e0e7fd11fdd37c23569d7877f95d757"
+  },
+  "levels": 4,
+  "outputSha256": "65b6bc19bb6453c6b9ea9c87490117e2b0020a9c8249b7f83ef44eab0fb3914d",
+  "pixels": 0.5,
+  "ratio": 0.3499999940395355,
+  "semantic": 0,
+  "source": "../../SourceArt/tile3_3.png",
+  "sourceSha256": "33d3da853da83b7c97094b0b9b0bf3565e0e7fd11fdd37c23569d7877f95d757",
+  "textureMax": 4096,
+  "textureMode": 0
+}

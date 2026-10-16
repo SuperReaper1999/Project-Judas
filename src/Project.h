@@ -32,6 +32,7 @@ namespace JudasMods {struct Session;}
 // the existing assets/ tree); a new game gets Assets/ Scenes/ Saves/ from
 // the editor's New Project. Neither layout is assumed by engine code.
 struct ProjectSettings {
+    unsigned visualBudgetMiB=0; // opt-in cooked visual working set; 0 preserves pinned legacy demand
     // Missing field preserves historical projects; newly created projects opt out.
     bool legacyGameplay = true;
     std::string modContract; // optional immutable game-authored JSON; absent = no mod service

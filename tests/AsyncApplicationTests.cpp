@@ -174,7 +174,7 @@ int RunCase(const std::string& name,const fs::path& output) {
     auto journal=std::make_shared<Journal>(output/(name+".events.tsv"));ApplicationControl control;
     control.hidden=true;control.resourceTrace=[journal](const auto& e){journal->Observe(e);};
     control.frameSeconds=[](float){return 1.0f/60.0f;};
-    std::shared_ptr<Gate> gate;std::vector<JobHandle> blockers;int phase=0,frames=0;bool done=false,initialView=false;float initialX=0;unsigned int retainedHandle=0;std::uint64_t uploads=0;
+    std::shared_ptr<Gate> gate;std::vector<JobHandle> blockers;int phase=0,frames=0;bool done=false,initialView=false;float initialX=0;unsigned int retainedHandle=0,retainedGeneration=0;std::uint64_t uploads=0;
     control.hostReady=[&](EngineHost& host){
         Check(!host.Resources().BlockingMode()&&host.Resources().Jobs()==&host.Jobs()&&host.Jobs().WorkerCount()>0&&host.Resources().GetRenderer()==&host.GetRenderer(),"normal application has async workers and real renderer (no headless residency)");
         std::printf("ASYNC enabled=%d workers=%u renderer_present=%d\n",!host.Resources().BlockingMode(),host.Jobs().WorkerCount(),host.Resources().GetRenderer()!=nullptr);
@@ -261,8 +261,8 @@ int RunCase(const std::string& name,const fs::path& output) {
             if(id==6)Check(rm.Stats().uploads==uploads&&journal->Count(Point::DecodeEnd,id)==1,"CPU-ready cancellation discards actual decoded data without GPU creation");
             done=true;
         }else if(name=="stale-generation"){
-            if(phase==1&&Ready(rm,7)){VerifyMesh(host,7,7);retainedHandle=rm.TryGetMesh(Id(7)).id;gate->Open();host.Jobs().WaitAll();++phase;}
-            else if(phase==2){Check(rm.TryGetMesh(Id(7)).id==retainedHandle&&journal->Count(Point::StaleDiscarded,7)>0,"late old completion discarded without replacing newer GPU handle");VerifyMesh(host,7,7);done=true;}
+            if(phase==1&&Ready(rm,7)){VerifyMesh(host,7,7);retainedHandle=rm.TryGetMesh(Id(7)).id;retainedGeneration=rm.TryGetMesh(Id(7)).generation;gate->Open();host.Jobs().WaitAll();++phase;}
+            else if(phase==2){Check(rm.TryGetMesh(Id(7)).id==retainedHandle&&rm.TryGetMesh(Id(7)).generation==retainedGeneration&&journal->Count(Point::StaleDiscarded,7)>0,"late old completion discarded without replacing newer GPU handle");VerifyMesh(host,7,7);done=true;}
         }else if(name=="project-switch"&&Ready(rm,7)){VerifyMesh(host,7,9);Check(rm.RefCount(Id(7))==1,"new project's reference count reflects its actual consumer");done=true;}
         else if(name=="project-close"){Check(rm.StateOf(Id(7))==ResourceState::Unloaded&&!rm.TryGetMesh(Id(7)).IsValid(),"closed project data cannot return in subsequent normal pump");done=true;}
         else if(name=="missing-recovery"||name=="corrupt-recovery"){
@@ -275,28 +275,26 @@ int RunCase(const std::string& name,const fs::path& output) {
             }else if(phase==2&&Ready(rm,bad)&&(bad==8||Ready(rm,10))){VerifyMesh(host,bad,4);if(bad==9)VerifyTexture(host,10);VerifyMesh(host,11,1);done=true;}
         }else if(name=="residency"){
             if(phase==1&&Ready(rm,12)&&Ready(rm,13)&&Ready(rm,14)){
-                VerifyMesh(host,12,1);retainedHandle=rm.TryGetMesh(Id(12)).id;rm.ReleaseRef(Id(12));rm.ReleaseRef(Id(13));rm.TryGetMesh(Id(13));
+                VerifyMesh(host,12,1);retainedHandle=rm.TryGetMesh(Id(12)).id;retainedGeneration=rm.TryGetMesh(Id(12)).generation;rm.ReleaseRef(Id(12));rm.ReleaseRef(Id(13));rm.TryGetMesh(Id(13));
                 rm.SetBudgetBytes(rm.Stats().bytesResident-rm.BytesOf(Id(12)));++phase;
             }else if(phase==2){MeshData data;Check(rm.StateOf(Id(12))==ResourceState::Unloaded&&Ready(rm,13)&&!host.GetRenderer().ReadMeshForDiagnostics(MeshHandle{retainedHandle},data),"LRU evicts and actually destroys the oldest unused GPU buffers");rm.SetBudgetBytes(0);++phase;}
             else if(phase==3){Check(Ready(rm,1)&&Ready(rm,14)&&rm.Stats().bytesResident>rm.Stats().budgetBytes&&rm.StateOf(Id(13))==ResourceState::Unloaded,"budget protects active consumers and reports unavoidable over-budget residency");std::printf("OVER_BUDGET resident=%llu budget=%llu\n",(unsigned long long)rm.Stats().bytesResident,(unsigned long long)rm.Stats().budgetBytes);rm.SetBudgetBytes(256ull*1024*1024);Request(rm,12);++phase;}
-            else if(phase==4&&Ready(rm,12)){VerifyMesh(host,12,1);Check(rm.TryGetMesh(Id(12)).id!=retainedHandle,"evicted asset reloads into a newly created real GPU handle");done=true;}
+            else if(phase==4&&Ready(rm,12)){VerifyMesh(host,12,1);Check(rm.TryGetMesh(Id(12)).id!=retainedHandle||rm.TryGetMesh(Id(12)).generation!=retainedGeneration,"evicted asset reloads into a distinct generation-safe GPU handle");done=true;}
         }else if(name=="upload-budget"){
             if(phase==1){Check(rm.Stats().uploads-uploads==2,"normal per-frame Pump uploads exactly its two-resource budget");int cpu=0;for(int n:{2,3,11})cpu+=rm.StateOf(Id(n))==ResourceState::CpuReady;Check(cpu==1,"third genuinely decoded resource remains CPU-ready");++phase;}
             else if(phase==2){VerifyTexture(host,3);VerifyMesh(host,2,1);VerifyMesh(host,11,1);done=true;}
         }
         if(done)Quit();
     };
-    // Application finishes its close-event frame before leaving the loop.
-    // Request the three real loads at that frame's ordinary after-frame boundary;
-    // the next operation is the application's existing owner-driven teardown.
+    // Window close now exits before another resource pump or after-frame hook.
+    // Prepare outstanding work at the real before-shutdown boundary, immediately
+    // before owner-driven teardown; keep all original cancellation assertions.
     if(name=="shutdown-outstanding"){
         auto setup=control.beforeFrame;
         control.beforeFrame=[&](EngineHost&,RuntimeWorld&,InteractivePlay&){++frames;};
-        control.afterFrame=[&,setup](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
-            if(host.GetWindow().ShouldClose())setup(host,world,play);
-            else Quit();
-        };
-        control.beforeShutdown=[&](EngineHost& host,RuntimeWorld&,InteractivePlay&){
+        control.afterFrame=[&](EngineHost&,RuntimeWorld&,InteractivePlay&){Quit();};
+        control.beforeShutdown=[&,setup](EngineHost& host,RuntimeWorld& world,InteractivePlay& play){
+            setup(host,world,play);
             Check(host.Resources().StateOf(Id(17))==ResourceState::CpuReady,"application exits with CPU-ready work unconsumed");
         };
     }

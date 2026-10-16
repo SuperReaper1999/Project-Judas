@@ -1,4 +1,6 @@
 #include "../PowertrainAuthoring.h"
+#include "../AssetCook.h"
+#include <atomic>
 #include "AuthoringDocument.h"
 #include "ContentReferences.h"
 #include "NamedAuthoring.h"
@@ -45,6 +47,8 @@ struct RuntimeRenderHistory {
     std::vector<Action> undo,redo;
     SceneObjectId selected=0;std::string materialKey="*";
 };
+
+struct AssetCookPanelTask {std::atomic<bool> ready{false};std::string root,source,destination,recipe,error;std::vector<uint8_t> bytes;JobHandle job;};
 
 namespace {
 constexpr ImGuiWindowFlags kWorkspacePanelFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
@@ -908,6 +912,12 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         ImGui::End();
         return;
     }
+    if(auto task=state.assetCookTask;task&&task->ready.load(std::memory_order_acquire)&&state.mode==EditorMode::Edit){
+        if(task->root!=state.project->RootDir())state.status="Cook belongs to previous project; result discarded";
+        else if(!task->error.empty())state.status=task->error;
+        else{std::string error;if(PublishAssetCook(task->destination,task->bytes,task->recipe,error)){auto relative=std::filesystem::path(task->destination).lexically_relative(state.project->RootDir()).generic_string();if(auto* existing=state.assets->FindByRelativePath(relative)){if(state.resources)state.resources->Invalidate(existing->id);state.status="Updated cooked generation; stable ID retained";}else requests.trackAssetPath=task->destination;}else state.status=error;}
+        state.assetCookTask.reset();
+    }
     const AssetDatabase& db = *state.assets;
     PublishFinishedEditorImport(state, requests);
     if (ImGui::BeginTabBar("##assetBrowserTabs")) {
@@ -1022,6 +1032,24 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             ImGui::SameLine();
             if (ImGui::Button("Copy path")) ImGui::SetClipboardText(record->path.c_str());
             ImGui::TextWrapped("Provenance: %s",record->source.empty()?"project-owned":record->source.c_str());
+            if((record->type==AssetType::Mesh||record->type==AssetType::Texture)&&ImGui::TreeNode("Cook / LOD / residency")){
+                static int maxSize=2048,levels=4,semantic=0;static float error=.1f,pixels=.5f;static bool lossless=false;
+                auto ext=std::filesystem::path(record->path).extension();bool cooked=ext==".judasmesh"||ext==".judastex";
+                static std::string recipeSelection;if(recipeSelection!=record->id){recipeSelection=record->id;if(cooked)try{std::ifstream f(record->path+".judascook");nlohmann::json j;f>>j;maxSize=j.at("textureMax");levels=j.at("levels");semantic=j.at("semantic");error=j.at("error");pixels=j.at("pixels");lossless=j.at("textureMode").get<unsigned>()!=0;}catch(...){}}
+                ImGui::TextWrapped("Cooked resources are separate assets. Source files and existing scene references remain intact. Drag the cooked asset onto a normal mesh/texture field.");
+                if(record->type==AssetType::Texture){ImGui::InputInt("Maximum dimension",&maxSize);ImGui::Combo("Texture role",&semantic,"sRGB colour\0Linear data\0Tangent normal\0");ImGui::Checkbox("Lossless RGBA (no BC)",&lossless);}else{ImGui::SliderInt("LOD levels",&levels,1,8);ImGui::DragFloat("Maximum object-space error",&error,.005f,0,10);ImGui::DragFloat("Screen error pixels",&pixels,.1f,0,32);}
+                ImGui::BeginDisabled(record->missing||record->readOnly||state.mode!=EditorMode::Edit||bool(state.assetCookTask)||!state.importJobs);
+                if(ImGui::Button(cooked?"Recook recorded source":"Cook optimized copy")){
+                    auto task=std::make_shared<AssetCookPanelTask>();task->root=state.project->RootDir();task->source=record->path;
+                    if(cooked){try{std::ifstream f(record->path+".judascook");nlohmann::json j;f>>j;task->source=(std::filesystem::path(record->path).parent_path()/j.at("source").get<std::string>()).lexically_normal().string();task->destination=record->path;}catch(...){state.status="No authoring cook recipe; use the original source asset";}}
+                    else{auto path=std::filesystem::path(record->path);task->destination=(path.parent_path()/(path.stem().string()+".packed"+(record->type==AssetType::Mesh?".judasmesh":".judastex"))).string();}
+                    if(!task->destination.empty()){AssetCookSettings settings;settings.maxTextureSize=unsigned(std::max(1,maxSize));settings.lodLevels=unsigned(levels);settings.lodMaxError=error;settings.lodPixels=pixels;settings.textureSemantic=unsigned(semantic);settings.textureMode=lossless?1:0;task->job=state.importJobs->Submit([task,settings](JobContext& context){if(!context.CancelRequested())PrepareAssetCook(task->source,task->destination,settings,task->bytes,task->recipe,task->error);else task->error="Cook cancelled";task->ready.store(true,std::memory_order_release);},JobPriority::Normal,"Asset pipeline cook");if(task->job.IsValid())state.assetCookTask=task;else state.status="Cook worker unavailable";}
+                }
+                ImGui::EndDisabled();if(state.assetCookTask)ImGui::TextDisabled("Cooking on a worker; publication waits for Edit mode.");
+                if(cooked&&ImGui::Button("Verify cook source/generation")){std::string reason;bool fresh=CookedAssetFresh(record->path,reason);state.status=fresh?"Cook generation current (or runtime-only asset without authoring recipe)":reason;}
+                ImGui::TreePop();
+            }
+
             static uint64_t usersGeneration=~uint64_t(0);static std::string usersAsset;static std::vector<SceneObjectId> users;
             if(usersGeneration!=doc.Generation()||usersAsset!=record->id){users.clear();usersGeneration=doc.Generation();usersAsset=record->id;for(auto& o:doc.GetScene().Objects())for(auto& [key,value]:ObjectProperties(o))if(value.find(record->id)!=std::string::npos){users.push_back(o.id);break;}}
             if(ImGui::TreeNode("Current scene users")){for(auto id:users)if(auto* user=doc.GetScene().Find(id))if(ImGui::Selectable((user->name+" ##asset-user"+std::to_string(id)).c_str()))doc.Select(id);ImGui::TreePop();}
@@ -1245,6 +1273,8 @@ void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, Edit
         ImGui::EndCombo();
     }
     ImGui::Text("Assets: %s   Scenes: %s   Saves: %s", s.assetsDir.c_str(), s.scenesDir.c_str(), s.savesDir.c_str());
+    int budget=int(s.visualBudgetMiB);if(ImGui::InputInt("Cooked visual budget MiB (0 disables)",&budget)){s.visualBudgetMiB=unsigned(std::clamp(budget,0,65536));}
+    ImGui::TextWrapped("Applied when the project is reopened. Opt-in cooked visual working set. Visible demand from every active view is retained. Required physics/animation and other explicit references remain pinned; an oversized working set is reported, not silently degraded.");
     ImGui::TextWrapped("Runtime scenes: saved .judas files in the project scene directory, plus the startup scene. Scripts load them by project-relative path. Export includes this same set.");
     if(ImGui::CollapsingHeader("Export scene selection")){
         bool closure=s.exportAssetPolicy=="closure";if(ImGui::Checkbox("Asset dependency closure (explicit dynamic roots)",&closure))s.exportAssetPolicy=closure?"closure":"all";
@@ -1394,6 +1424,9 @@ void DrawProfilerPanel(EditorPanelState& state) {
                 p.resources.failed, p.resources.loadedTerrainMeshes);
     ImGui::Text("  resident %.1f MB of %.0f MB budget (peak %.1f MB)", p.resources.bytesResident / 1048576.0,
                 p.resources.budgetBytes / 1048576.0, p.resources.peakBytesResident / 1048576.0);
+    ImGui::Text("  GPU payload %.1f MB / prepared CPU %.1f MB / pinned %.1f MB / over budget %.1f MB",
+                p.resources.gpuBytesResident / 1048576.0, p.resources.preparedBytes / 1048576.0,
+                p.resources.pinnedBytes / 1048576.0, p.resources.overBudgetBytes / 1048576.0);
     ImGui::Text("  hits %llu / loads %llu / uploads %llu / evictions %llu / cancelled %llu / stale %llu",
                 p.resources.hits, p.resources.misses, p.resources.uploads, p.resources.evictions, p.resources.cancelled,
                 p.resources.staleDiscarded);

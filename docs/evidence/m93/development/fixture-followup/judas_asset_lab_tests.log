@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / The Packed Museum (/home/conner/Documents/GitHub/Project-Judas/.cache/m93/closure-checks/judas_asset_lab_tests/project/asset_lab.judasproj)
+Scene: The Packed Museum / four asset districts (/home/conner/Documents/GitHub/Project-Judas/.cache/m93/closure-checks/judas_asset_lab_tests/project/Scenes/museum.judas)
+World origin (m): 6371000.000, 1800000.000, -2200000.000
+PASS ordinary asset project starts with script-owned view and authored scenery
+PASS real project enables soft visual ownership
+PASS logical district control changes real camera state
+PASS independent split views render alongside cached remote camera
+PASS leaving split views clears their interests
+terminate called after throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
+  what():  filesystem error: recursive directory iterator cannot open directory: No such file or directory [/home/conner/Documents/GitHub/Project-Judas/.cache/m93/closure-checks/judas_asset_lab_tests/project/Saves]

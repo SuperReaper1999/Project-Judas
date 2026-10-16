@@ -25,7 +25,7 @@ std::string ModSaveContext(const Project& p){if(!p.ModSession())return {};const 
 bool ComputeSaveContentFingerprint(const Project& project,const AssetDatabase& assets,
  const std::vector<std::string>& scenes,std::string& result,std::string& error,const JobContext* cancel){
  try{
-  auto settings=project.Settings();settings.modContract.clear();settings.saveIdentity.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
+  auto settings=project.Settings();settings.visualBudgetMiB=0;settings.modContract.clear();settings.saveIdentity.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
   std::string bytes="Judas.SaveContent.1:"+Project::SerializeToString(settings),digest;
   for(const auto& scene:scenes){if(cancel&&cancel->CancelRequested())return false;if(!SceneFingerprintSha256File(project.Resolve(scene),digest,error))return false;bytes+=scene+":"+digest;}
   if(project.ModSession())bytes+="Judas.ModContext.1:"+project.ModSession()->snapshot.resolution.signature;

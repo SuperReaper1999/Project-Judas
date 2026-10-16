@@ -1,0 +1,1 @@
+triangles=16384 exact_order=16321 cyclic_equivalent=16384 geometrically_changed=0

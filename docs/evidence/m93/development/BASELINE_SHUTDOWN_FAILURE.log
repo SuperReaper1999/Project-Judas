@@ -1,0 +1,27 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: FTFT2 async (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shutdown-outstanding/a/main.judasproj)
+Scene: FTFT2 async application (/home/conner/Documents/GitHub/Project-Judas/build/ftft2-fixtures/shutdown-outstanding/a/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS normal application has async workers and real renderer (no headless residency)
+ASYNC enabled=1 workers=7 renderer_present=1
+PASS actual GL mesh buffers are resident for asset 1
+PASS GPU vertex contents match current asset, max x=1.000000
+FAIL application exits with CPU-ready work unconsumed
+PASS normal application returned cleanly
+PASS literal decode/read operations run on workers; GPU creation/destruction on owning thread with current context
+PASS shutdown order: resources drained, workers joined, renderer destroyed, then context destroyed
+PASS all traced mesh/texture objects destroyed exactly once before renderer/context destruction
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+PASS no decoder operation after worker join
+OWNERSHIP main=136664064417536 decode_events=2 GPU_created=5 GPU_destroyed=5 trace_events=24
+PASS shutdown cancels queued work and running read before decoding
+FAIL case completed every required assertion phase
+CASE shutdown-outstanding FAIL frames=2 seconds=0.497801
+FTFT2 integration: 17 checks, 2 failures

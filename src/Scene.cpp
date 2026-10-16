@@ -129,7 +129,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
     }
     if (!OptEq(a.render, b.render, [](const SceneRenderComponent& x, const SceneRenderComponent& y) {
             return x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
-                   Eq(x.color, y.color) && x.alpha == y.alpha &&
+                   Eq(x.color, y.color) && x.alpha == y.alpha && x.lodMultiplier==y.lodMultiplier &&
                    Eq(x.secondaryColor, y.secondaryColor) && x.secondaryAlpha == y.secondaryAlpha &&
                    x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset && x.textureCamera == y.textureCamera &&
                    x.visible==y.visible&&x.hiddenParts==y.hiddenParts&&RenderSlotsEqual(x.materials,y.materials)&&

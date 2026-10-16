@@ -1,0 +1,13 @@
+{
+  "originalModelImportFixture": {
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/originals/Skateboarder.fbx",
+    "available": true,
+    "sha256": "953aa682ae141b7ba09656c6873150aa3f06cc38ea4a7f5500a357440bc64814",
+    "distribution": "external M66 input, not redistributed by M93"
+  },
+  "typescript": {
+    "version": "5.9.3",
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+    "runtimeDependency": false
+  }
+}

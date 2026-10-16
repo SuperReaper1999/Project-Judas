@@ -1,0 +1,248 @@
+{
+  "started": "2026-10-16T20:06:55.106889+00:00",
+  "platform": "native Linux",
+  "humanAcceptance": false,
+  "windows": "not run",
+  "android": "not run",
+  "commands": [
+    {
+      "name": "build",
+      "argv": [
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "judas_asset_pipeline_tests",
+        "judas_asset_residency_tests",
+        "judas_asset_lab_tests",
+        "judas_rendering_architecture_tests",
+        "judas_render_camera_tests",
+        "judas_local_multiplayer_render_tests",
+        "judas_material_tests",
+        "judas_material_application_tests",
+        "judas_model_import_tests",
+        "judas_model_reimport_tests",
+        "judas_resource_handoff_tests",
+        "judas_async_application_tests",
+        "judas_runtime_render_tests",
+        "judas_runtime_render_authoring_tests",
+        "judas_save_storage_tests",
+        "judas_streaming_tests",
+        "judas_export_tests",
+        "judasjs_examples_tests",
+        "judas",
+        "judas_editor",
+        "judas_export",
+        "judas_cook",
+        "judas_asset_pipeline_benchmark",
+        "-j",
+        "2"
+      ],
+      "exit": 0,
+      "seconds": 55.74005836499782
+    },
+    {
+      "name": "judas_asset_pipeline_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_pipeline_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_asset_pipeline_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.7156055960003869
+    },
+    {
+      "name": "judas_asset_residency_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_residency_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_asset_residency_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.8660694869977306
+    },
+    {
+      "name": "judas_asset_lab_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_asset_lab_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_asset_lab_tests"
+      ],
+      "exit": 0,
+      "seconds": 1.7688482770026894
+    },
+    {
+      "name": "judas_rendering_architecture_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rendering_architecture_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_rendering_architecture_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.3160926719974668
+    },
+    {
+      "name": "judas_render_camera_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_render_camera_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_render_camera_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.26464820000182954
+    },
+    {
+      "name": "judas_local_multiplayer_render_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_render_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.21459178700024495
+    },
+    {
+      "name": "judas_material_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.2145986380019167
+    },
+    {
+      "name": "judas_material_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_material_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_material_application_tests",
+        "quick"
+      ],
+      "exit": 0,
+      "seconds": 0.4650581260029867
+    },
+    {
+      "name": "judas_model_import_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_import_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m66/originals/Skateboarder.fbx",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/model-import"
+      ],
+      "exit": 0,
+      "seconds": 8.38175522399979
+    },
+    {
+      "name": "judas_model_reimport_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_reimport_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_model_reimport_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.665608589999465
+    },
+    {
+      "name": "judas_resource_handoff_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_resource_handoff_tests-owned"
+      ],
+      "exit": 0,
+      "seconds": 5.326310807999107
+    },
+    {
+      "name": "judas_async_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_async_application_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_async_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 1.9691601390004507
+    },
+    {
+      "name": "judas_runtime_render_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_runtime_render_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.31538621800063993
+    },
+    {
+      "name": "judas_runtime_render_authoring_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_render_authoring_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_runtime_render_authoring_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.06439454300198122
+    },
+    {
+      "name": "judas_save_storage_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/m61-storage-m93"
+      ],
+      "exit": 0,
+      "seconds": 0.46624963100111927
+    },
+    {
+      "name": "judas_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_streaming_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5657447300000058
+    },
+    {
+      "name": "judas_export_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.1145791310009372
+    },
+    {
+      "name": "judasjs_examples_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/cookbook",
+        "surface"
+      ],
+      "exit": 0,
+      "seconds": 0.21462173799955053
+    },
+    {
+      "name": "api",
+      "argv": [
+        "node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+        "--runtime",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/cookbook/surface.json"
+      ],
+      "exit": 0,
+      "seconds": 1.1165318029998161
+    }
+  ],
+  "binaries": {
+    "judas_asset_pipeline_tests": "346305aaacf57449c0ec32572653eb8bf648496c700b09ba7bdeaa27b1c2fac2",
+    "judas_asset_residency_tests": "7bd19787c935a1cc8a142c1cd83fad793a745dadec2a362e36d1f2dcb7e48cda",
+    "judas_asset_lab_tests": "3dc23a3b1164c8856e41080c0fe19b15b6aba7e247d61545d3c0ba18cf1b41f4",
+    "judas_rendering_architecture_tests": "f2b6c4c484d180c0e90f29c1f589e068410d4ded82f73d9a3e793ea08fa6564b",
+    "judas_render_camera_tests": "d4ca9cb8b9a5578d13644cfcad0b2bc9b0c15cae56998f1fc83c29cd2ff36168",
+    "judas_local_multiplayer_render_tests": "a560fd26de349e8835cbcc2e5784e9d7cc1f589b803b938242a58762f1c56e29",
+    "judas_material_tests": "376974cb26ac78619dc0770bccc35f0b4b43341e01f2dbeb6ab40f00ad217662",
+    "judas_material_application_tests": "d9b8186a1f6d4ff50b0bd3e170dce59c52219a7878533802701ce3ba500ef0f3",
+    "judas_model_import_tests": "52266f444078251f3c17ba34cdf8aa8a33240e6256bfcf292257fcd8fb94f388",
+    "judas_model_reimport_tests": "ea3ed439ff99f67a9c7e5f0650a5c216a67b699df3bf7e7daf0c6b4bcd5ee194",
+    "judas_resource_handoff_tests": "c5cc3ed26e1dcbfbe19c75d90769648acd3d79c0ddb575c64f8c1c150af7158d",
+    "judas_async_application_tests": "2d6b2c381bd1549e818cbd8394203cdcde4e998499e1ed95ed41dd5bdf1f3206",
+    "judas_runtime_render_tests": "04e74383a5a1bf0d80d0f504f189967a83dc19f4a7903bf62a03b4c5cc721537",
+    "judas_runtime_render_authoring_tests": "46f2b540e7844267701105bd274e4e9dafd0502c81e593c71816ef9e461ca2ff",
+    "judas_save_storage_tests": "07dc6a2e24afa075e9c8cd26a020480133aed37044a00d1bbfe38aaae77e17e4",
+    "judas_streaming_tests": "13d3d639a8069d17d273d652130be7ad30de316b6195345f13cb066c0a710599",
+    "judas_export_tests": "d38a3eb3c4c31934eb94520ad085195e32167ad7bf98fd99cb5035f1fdbb261e",
+    "judasjs_examples_tests": "da8e4b7f3f11e38507cceb6c2217d0c3ec7c529b5ae6a1647a57434f4925be16",
+    "judas": "d0be699df4fd09fbc29552d1e9badb42da40922efc67b4d6472f7db857d9dc04",
+    "judas_editor": "5fab45717b55b5815bf8ae6855219dfae50543ff1ba4514de6678fbd87351932",
+    "judas_export": "44c9fad11f3590be6b1f4c7fbe2c04d87d6a0aff6b243d59a19169fcb6dc2363",
+    "judas_cook": "74c8152cb4bc3e330d20696c490bd6a86fa5740cd1090f5577e5bac0aaf4b7ce",
+    "judas_asset_pipeline_benchmark": "b34b1d1146850abf3fadcd3f783659371268e53d52aa0a38aa3b4b2133121d73"
+  },
+  "pass": true
+}

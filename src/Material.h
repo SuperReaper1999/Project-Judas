@@ -6,8 +6,8 @@
 #include <optional>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
-// Factors are scene-linear. Images stay RGBA8; shader interpretation is per
-// material role, so sharing one image between colour and data is safe.
+// Factors are scene-linear. Images carry RGBA8 or cooked mip chains; shader
+// interpretation is per material role. Cook mip semantics for the intended role.
 enum class MaterialModel { Legacy, PBR, Unlit };
 enum class MaterialAlpha { Opaque, Mask, Blend };
 struct MaterialSampler {int wrapS=10497,wrapT=10497,minFilter=9987,magFilter=9729;};

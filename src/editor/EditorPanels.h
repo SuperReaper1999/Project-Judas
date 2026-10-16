@@ -23,6 +23,7 @@
 // generic engine components (through the ComponentEditors registry) and
 // the project/asset layer, and nothing about any particular game.
 
+struct AssetCookPanelTask;
 enum class EditorMode { Edit, Play };
 
 // The Asset Browser's drag payload type: the dragged asset's id bytes.
@@ -114,6 +115,7 @@ struct EditorPanelState {
     int assetTypeFilter = -1;
     bool assetMissingOnly = false;
     bool selectAssetDetails = false;
+    std::shared_ptr<AssetCookPanelTask> assetCookTask;
     JobSystem* importJobs=nullptr;
     std::shared_ptr<ModelCookTask> importTask,importAccepted;
     bool importPublished=false;

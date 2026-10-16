@@ -1,0 +1,225 @@
+{
+  "pass": true,
+  "assets": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form0.obj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/form0.judasmesh"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "6f9aa8b13886644c586f453a67343b1db8bb3f943c33cf2905938557aa19fd36",
+      "seconds": 0.10938315800012788
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form1.obj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/form1.judasmesh"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "cb534b598cf0fba304525c81cac9a1cdb0ffcdde523dfb8d763af40a3f4487b9",
+      "seconds": 0.10546509200139553
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form2.obj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/form2.judasmesh"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "5451ccd6bbb401d4209fe88396fc3dedf933c4b7e16185b98d5e689310d5cf13",
+      "seconds": 0.1033651120014838
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form3.obj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/form3.judasmesh"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "c567841d40d8249849dc2a0221a28445c40ce5e254f0df45b37d59596e9f763b",
+      "seconds": 0.10261621800236753
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_0.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile0_0.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "8606f90e7250ee67a6c78e2cd0bb09e18288b9b285136a61e7cf1ac6c020e8f7",
+      "seconds": 0.16950090000318596
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_1.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile0_1.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "a1e5f560f17f71173fdbcf91d59780739605b9e1e0ddfdf15253420ed19b9d9c",
+      "seconds": 0.16759969100166927
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_2.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile0_2.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "3f5774abdf1e89e1492d04f7df30c3549a5efa591f6772379149388673a06bd0",
+      "seconds": 0.1670981249990291
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_3.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile0_3.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "09c20f4ae29e53a6e11890bd6952567145ceb91c73a6667f160d50185126af7b",
+      "seconds": 0.1661785209980735
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_0.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile1_0.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "8e124c4ffda6bfab259139a084e5c36be445f3006c141debc86cfd48bd678e62",
+      "seconds": 0.17019764400174608
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_1.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile1_1.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "c583d02a630885ef5adfd37a0632dd5e123f255904760a3e6e757c11d6c5d8dd",
+      "seconds": 0.1708439059984812
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_2.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile1_2.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "528bcc1b3f251c710e1f7f45e604ed39a7c693dc1a2300724cd48d07a411d010",
+      "seconds": 0.17020809200039366
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_3.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile1_3.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "8aa5261621b343eca8ed9a25e2dd194443fdcda46db0c9e171dc44ead411628d",
+      "seconds": 0.17067985399989993
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_0.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile2_0.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "02183b195fefcfa7803e099547ae83a19ba1367982475af9908142ca4b1d93cb",
+      "seconds": 0.1736514990006981
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_1.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile2_1.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "f054c4a4aa06aea1ab2f10877d3af2c302385c635e4ae8552c7ad2d2c9196084",
+      "seconds": 0.1757903260004241
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_2.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile2_2.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "ef796a96a582ac0a545b25029842116c1088e9ddffb207f224474738b9d7f42a",
+      "seconds": 0.17705403999934788
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_3.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile2_3.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "c77118807ff9432be13cbbb5cb80f8c25e71acd23a4f53aaef7abfb5018a9276",
+      "seconds": 0.17536280999775045
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_0.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile3_0.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "00bc3c41006f69b32214e9852146bffc6692ed151f8743c84b5cfef5f50bc324",
+      "seconds": 0.1671137560006173
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_1.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile3_1.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "0828a7f602349f16562811c29d687200f96905b549862db6da9344f95dc620db",
+      "seconds": 0.16763369299951592
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_2.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile3_2.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "250996b5d3c5cad5ee976e66918e35153bb33d97556ff2638aae66800720b6bf",
+      "seconds": 0.16768573000081233
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_3.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m93/deterministic/tile3_3.judastex"
+      ],
+      "exit": 0,
+      "identical": true,
+      "sha256": "65b6bc19bb6453c6b9ea9c87490117e2b0020a9c8249b7f83ef44eab0fb3914d",
+      "seconds": 0.16748489200108452
+    }
+  ]
+}

@@ -20,6 +20,9 @@ void Tangent(const SMikkTSpaceContext* c,const float v[],float sign,int f,int k)
  vertex.tangent=glm::vec4(glm::normalize(t),sign);}
 }
 bool GenerateMeshTangents(MeshData& m){
+ // Reindexing only the base stream would orphan precomputed LOD indices.
+ // Final cooked geometry already contains its authoritative tangent stream.
+ if(!m.lods.empty()||!m.lodIndices.empty())return false;
  if(!m.indices.empty()){std::vector<MeshVertex> vertices;std::vector<MeshSkinVertex> skin;std::vector<uint32_t> source;std::vector<ModelSourceLocation> locations;vertices.reserve(m.indices.size());if(!m.skinVertices.empty())skin.reserve(m.indices.size());for(auto i:m.indices){if(i>=m.vertices.size())return false;vertices.push_back(m.vertices[i]);if(!m.vertexLocations.empty())locations.push_back(m.vertexLocations.at(i));if(!m.sourceVertexIds.empty()){if(m.sourceVertexIds.size()!=m.vertices.size())return false;source.push_back(m.sourceVertexIds[i]);}if(!m.skinVertices.empty())skin.push_back(m.skinVertices[i]);}m.vertexLocations=std::move(locations);m.vertices=std::move(vertices);m.skinVertices=std::move(skin);m.sourceVertexIds=std::move(source);for(size_t i=0;i<m.indices.size();++i)m.indices[i]=unsigned(i);}
  if(m.vertices.empty()||m.vertices.size()%3)return false;
  for(size_t i=0;i<m.vertices.size();i+=3){auto n=glm::cross(m.vertices[i+1].position-m.vertices[i].position,m.vertices[i+2].position-m.vertices[i].position);n=glm::dot(n,n)>1e-12f?glm::normalize(n):glm::vec3(0,0,1);for(size_t k=0;k<3;++k)if(glm::dot(m.vertices[i+k].normal,m.vertices[i+k].normal)<1e-12f)m.vertices[i+k].normal=n;}

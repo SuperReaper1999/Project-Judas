@@ -94,10 +94,12 @@ bool RuntimeWorld::RequestVisualAssets(const SceneObject& o, std::string* outErr
     if (!o.render || o.render->shape != SceneShape::Mesh || !m_assets) return true;
     // Demand: referenced for the life of this world; the load runs in the
     // background and presentation picks it up when Ready.
-    m_assets->AddRef(o.render->meshAsset);
-    m_referencedAssets.push_back(o.render->meshAsset);
-    m_assets->RequestMesh(o.render->meshAsset, JobPriority::High);
-    if (!o.render->textureAsset.empty()) {
+    if(!m_assets->StreamableVisual(o.render->meshAsset)){
+        m_assets->AddRef(o.render->meshAsset);
+        m_referencedAssets.push_back(o.render->meshAsset);
+        m_assets->RequestMesh(o.render->meshAsset, JobPriority::High);
+    }
+    if (!o.render->textureAsset.empty()&&!m_assets->StreamableVisual(o.render->textureAsset)) {
         m_assets->AddRef(o.render->textureAsset);
         m_referencedAssets.push_back(o.render->textureAsset);
         m_assets->RequestTexture(o.render->textureAsset, JobPriority::High);

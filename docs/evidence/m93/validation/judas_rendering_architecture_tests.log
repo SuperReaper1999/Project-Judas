@@ -1,0 +1,48 @@
+PASS screen bins retain many visible lights beyond five with local lists
+PASS negative control: offscreen volumes produce no light work
+PASS global and per-tile overload are bounded and observable
+PASS visible shadow priority selects four sources beyond historical indices
+PASS zero shadow budget leaves every source lit without shadows
+PASS opposite planetary cameras refine both hemispheres under one leaf budget
+PASS negative control: second physical viewpoint changes actual selected keys
+PASS new light settings serialize through ordinary scene authoring
+PASS headless light world builds
+PASS disabled runtime lamp is absent from world light submission
+PASS runtime intensity affects the actual submitted source
+PASS invalid patch does not partly mutate runtime state
+PASS modern durable snapshot contains changed light state, no GPU handle
+PASS destroyed light safely rejects mutation
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real native GL renderer compiles all revised shaders
+PASS API probe is an ordinary registered script
+PASS public API world builds
+PASS copy
+PASS unknown
+PASS negative
+PASS flag
+PASS applied
+PASS absent
+PASS absentError
+PASS stale
+PASS public light API negative cases are caught without VM faults
+PASS instancing preserves mirrored/nonuniform rotated geometry and per-instance tint pixels
+PASS same visible geometry becomes a bounded number of actual GPU instanced draws
+PASS batch flush preserves prior per-instance layer acceptance when Default layer is hidden
+PASS non-default accepted layer remains visible; rejected closer layer does not occlude it
+PASS PBR material shading remains pixel-equivalent through instancing
+PASS more than five lights contribute to actual framebuffer output
+PASS late registered visible source lights geometry despite earlier invisible sources
+PASS secondary target begins
+PASS shadow array layer five restores secondary framebuffer and viewport
+PASS ordinary multi-view shadow world builds
+PASS each independent camera gets its own selected shadow pass
+PASS ordinary authored spot/receiver/occluder fixture builds
+PASS selected authored spotlight actually shadows receiver pixels; disabling request removes shadow
+PASS actual planetary world with opposite authored camera builds
+PASS actual RenderWorldFrame passes both physical camera positions into shared planetary refinement
+PASS planet does not inherit a preceding offscreen object's instance material
+PASS authored edit view cannot inherit a previous runtime camera's directional shadow map
+PASS no graphics errors after instancing, tiled lighting, shadows and target teardown
+SUMMARY 44 checks 0 failures

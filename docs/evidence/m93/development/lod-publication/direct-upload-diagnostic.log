@@ -1,0 +1,12 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+GPU indices equal 1 tails 25326/25326
+mode 0 tris 16384 error 0
+mode 1 tris 2006 error 0
+mode 2 tris 2006 error 0
+mode 3 tris 702 error 0
+mode 4 tris 2006 error 0
+mode 5 tris 88654 error 0
+mode 6 tris 88654 error 0
+mode 7 tris 1916928 error 0

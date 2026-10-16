@@ -1,0 +1,182 @@
+[
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form0.obj",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/meshes/form0.judasmesh"
+    ],
+    "exit": 0,
+    "seconds": 0.10507877100098995
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form1.obj",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/meshes/form1.judasmesh"
+    ],
+    "exit": 0,
+    "seconds": 0.10361043499869993
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form2.obj",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/meshes/form2.judasmesh"
+    ],
+    "exit": 0,
+    "seconds": 0.10799368100197171
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/form3.obj",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/meshes/form3.judasmesh"
+    ],
+    "exit": 0,
+    "seconds": 0.101141422001092
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_0.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile0_0.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.16666818399971817
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_1.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile0_1.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.16616079499726766
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_2.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile0_2.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.16736568399937823
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile0_3.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile0_3.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.1683661179995397
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_0.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile1_0.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.18176654700073414
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_1.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile1_1.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.20087236799736274
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_2.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile1_2.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.17100089200175717
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile1_3.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile1_3.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.16848548999769264
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_0.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile2_0.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.16533290799998213
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_1.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile2_1.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.17511763899892685
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_2.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile2_2.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.17510061200300697
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile2_3.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile2_3.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.18412893200002145
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_0.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile3_0.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.17046328300057212
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_1.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile3_1.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.1669471409986727
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_2.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile3_2.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.16570598199905362
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/SourceArt/tile3_3.png",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Assets/textures/tile3_3.judastex"
+    ],
+    "exit": 0,
+    "seconds": 0.17283520300043165
+  }
+]

@@ -1,6 +1,14 @@
 # Architecture
 
-## Experimental — M92 rendering scale
+## Experimental — M93 asset pipeline
+
+Optional cooked RGBA/BC mip chains, rigid mesh LOD and demand-based visual
+residency extend the existing importer/resource/renderer ownership. Default
+projects keep eager visual references; per-view selection never changes physics.
+See [M93 contracts](M93_ASSET_PIPELINE.md) and the M93 section below.
+M93 human acceptance and Windows/Android validation remain pending.
+
+## Current release — M92 rendering scale
 
 The current renderer uses per-view CPU-built screen light tiles uploaded through
 one portable RGBA32F texture, a relevance-selected spotlight shadow array, and
@@ -13,7 +21,7 @@ and [M92 evidence](evidence/m92/REPORT.md). Historical M14/M15 sections below
 describe the earlier five-light/three-shadow implementation, not these current
 limits. M91 collision mechanisms are unchanged.
 
-## Current release — M91 collision continuity
+## M91 collision continuity (retained)
 
 M91 retains the existing fixed-step solver and chronological first-touch CCD.
 The new continuation policy is limited to free inelastic native-primitive contact
@@ -10011,3 +10019,31 @@ placement and local navigation frames preserve arbitrary-gravity independence.
 This is editable finite-volume world authoring, not seamless LOD chunks, runtime
 excavation, material-mass accounting or soil dynamics.
 See [M84 workflow, numerical representation, limits and lab](M84_VOLUMETRIC_TERRAIN.md).
+
+## M93 optional cooked visual pipeline
+
+`AssetCook` prepares deterministic `.judastex`/`.judasmesh` artifacts on CPU and
+publishes only after rechecking source/dependency hashes. Editor import jobs own
+preparation; ResourceManager still owns generation checks and owner-thread GPU
+installation. Relative `.judascook` recipes are authoring records, not runtime
+dependencies; ProjectExporter rejects stale recorded cooks.
+
+`TextureData` carries source RGBA or prefiltered RGBA/BC mip chains. Renderer
+uploads supported compressed formats and expands unsupported ones. Rigid cooked
+meshes preserve base topology/provenance separately from render-only reduced
+index ranges; per-view projected-error selection is independent of physics.
+Imported embedded maps are cooked according to material role. Skin LOD is not
+implemented. Meshoptimizer's stored error is an estimate, not a geometric proof.
+
+`ProjectSettings::visualBudgetMiB` defaults to zero (legacy eager ownership).
+Opt-in projects retain soft visual references for cooked mesh/texture assets.
+WorldPresentation gathers demand from the same static/dynamic presentation owners
+as drawing, across main/split/enabled secondary cameras even between cached
+updates. Explicit/nonvisual owners stay pinned. ResourceManager evicts only
+unreferenced, no-longer-demanded resources; active overcommit remains observable.
+Mesh/texture/material GPU slots are generation-checked and reused safely.
+Save data contains asset identity/settings, never these GPU handles. Existing
+scene streaming controls publication; residency does not own simulation lifetime.
+
+See [current M93 contracts](M93_ASSET_PIPELINE.md),
+[lab](../projects/asset_lab/README.md) and [evidence](evidence/m93/REPORT.md).

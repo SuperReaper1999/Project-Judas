@@ -1,0 +1,6 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PAYLOAD gpu_bytes=5846640 accounting=actual renderer owned payload
+ASSETS views=1 load_ms=54.397328 resident=5846640 median=3.092004 p95=3.383918 max=3.599166 triangles=2048000
+ASSETS views=2 load_ms=54.397328 resident=5846640 median=6.097735 p95=6.675825 max=7.765121 triangles=4128768

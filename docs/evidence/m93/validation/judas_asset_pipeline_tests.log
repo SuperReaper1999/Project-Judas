@@ -1,0 +1,49 @@
+PASS BC texture cooking is byte deterministic
+PASS full BC1 chain includes sub-block tail mips
+PASS BC1 keeps representative authored colour detail within measured RMS bound
+PASS corrupt cook fails without publishing partial texture
+PASS alpha content selects BC3 rather than discarding transparency
+PASS BC3 transparent pixel survives decoding
+PASS sRGB mip filter averages linear light
+PASS linear data does not receive colour gamma
+PASS normal mips renormalize and retain lossless vector channels
+PASS detailed source fixture loads through current importer
+PASS attribute-aware LOD mesh cooking is byte deterministic
+PASS cooked mesh contains genuinely reduced estimated-error LOD geometry
+PASS full-attribute welding removes importer expansion without positional-only seam merging
+PASS base physical topology identities survive shading compaction
+PASS physics/import consumers retain exact base triangles; render LOD tails are separate
+PASS corrupt mesh cannot partially replace accepted geometry
+PASS invalid simplification settings fail explicitly
+PASS animated streams are preserved rather than silently rigidified by cooking
+PASS final LOD geometry rejects a partial tangent reindex without mutating its streams
+PASS imported material maps cook self-contained color/normal roles and mip chains
+PASS bounded metadata read supplies actual local-space residency bounds
+PASS corrupt bounds metadata fails open instead of hiding an asset
+PASS scene/prefab property path preserves authorable LOD tolerance
+PASS project residency policy survives normal project serialization
+PASS named project format retains residency configuration
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native renderer initializes
+PASS actual GPU BC sampling preserves image/alpha content
+PASS cooked imported material mip chains create actual GPU-owned images
+PASS unsupported/disabled BC uploads real decoded full mip chain and accounts for larger fallback
+PASS zero tolerance forces base while distant view actually submits fewer triangles
+PASS closer and higher-resolution views never select less detail
+PASS GPU upload retains full base and shared LOD index tails
+PASS reused mesh slot rejects retained stale handle
+PASS reused texture slot rejects retained stale handle
+PASS stale texture destruction cannot destroy replacement
+PASS material slot reuse is generation-safe including owned texture lifetime
+PASS 1000 residency churn cycles reuse bounded handle storage
+PASS cooked formats register through ordinary asset database
+PUBLICATION vertices=8385 expected=8385
+PASS ordinary resource loading preserves the cooked vertex/LOD address space exactly
+PASS currently demanded visual survives budget pressure
+PASS inactive unreferenced cooked visual is actually evicted
+PASS explicitly pinned dependencies remain resident and oversubscription is reported
+PASS evicted resource reloads safely with a fresh GPU generation
+PASS no GL errors after compressed upload, LOD batching, reuse and eviction
+SUMMARY 44 checks 0 failures

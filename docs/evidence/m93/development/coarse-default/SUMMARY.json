@@ -1,0 +1,325 @@
+{
+  "timing": "completed render wall ms, excludes swap/pacing; fresh process, warm OS cache",
+  "modes": {
+    "source-baseline": {
+      "load_ms": [
+        134.357719,
+        138.348243
+      ],
+      "gpu_payload_bytes": [
+        25318740,
+        25318740
+      ],
+      "peak_process_rss_kib": [
+        144024,
+        146036
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 3.344805,
+            "p95": 4.02143,
+            "max": 5.18213
+          },
+          "triangles": [
+            2048000
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 3.236256,
+            "p95": 3.846464,
+            "max": 4.05424
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.0263865,
+            "p95": 0.093026,
+            "max": 0.156733
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 6.461675,
+            "p95": 7.09125,
+            "max": 7.61545
+          },
+          "triangles": [
+            4128768
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 5.915328,
+            "p95": 6.586048,
+            "max": 7.2686399999999995
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.119701,
+            "p95": 0.15997,
+            "max": 0.234786
+          }
+        }
+      }
+    },
+    "source-candidate": {
+      "load_ms": [
+        140.602637,
+        136.266574
+      ],
+      "gpu_payload_bytes": [
+        25318740,
+        25318740
+      ],
+      "peak_process_rss_kib": [
+        143984,
+        146408
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 3.06216,
+            "p95": 3.39821,
+            "max": 3.87632
+          },
+          "triangles": [
+            2048000
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 2.95336,
+            "p95": 3.2408,
+            "max": 3.256224
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.025256,
+            "p95": 0.042144,
+            "max": 0.055596
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 6.31953,
+            "p95": 6.92589,
+            "max": 7.71409
+          },
+          "triangles": [
+            4128768
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 5.98216,
+            "p95": 6.472704,
+            "max": 6.6532800000000005
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.0561515,
+            "p95": 0.122933,
+            "max": 0.468855
+          }
+        }
+      }
+    },
+    "cooked-full": {
+      "load_ms": [
+        25.648329,
+        25.229869
+      ],
+      "gpu_payload_bytes": [
+        3563688,
+        3563688
+      ],
+      "peak_process_rss_kib": [
+        113012,
+        112836
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 1.21759,
+            "p95": 1.39598,
+            "max": 1.50262
+          },
+          "triangles": [
+            2048000
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 1.108288,
+            "p95": 1.112928,
+            "max": 1.1144
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.023273000000000002,
+            "p95": 0.041086,
+            "max": 0.055602
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 2.3303700000000003,
+            "p95": 2.74223,
+            "max": 6.55498
+          },
+          "triangles": [
+            4128768
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 2.102096,
+            "p95": 2.1080959999999997,
+            "max": 2.110976
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.046662499999999996,
+            "p95": 0.088744,
+            "max": 3.5684
+          }
+        }
+      }
+    },
+    "cooked-lod": {
+      "load_ms": [
+        25.258627,
+        26.112682
+      ],
+      "gpu_payload_bytes": [
+        3563688,
+        3563688
+      ],
+      "peak_process_rss_kib": [
+        112848,
+        113608
+      ],
+      "views": {
+        "1": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 0.2322775,
+            "p95": 0.348851,
+            "max": 1.62694
+          },
+          "triangles": [
+            96878
+          ],
+          "gpu_opaque_ms": {
+            "samples": 96,
+            "median": 0.096208,
+            "p95": 0.100064,
+            "max": 0.106176
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 96,
+            "median": 0.039631,
+            "p95": 0.063943,
+            "max": 1.438976
+          }
+        },
+        "2": {
+          "wall_ms": {
+            "samples": 120,
+            "median": 0.421746,
+            "p95": 0.568799,
+            "max": 3.06396
+          },
+          "triangles": [
+            186032
+          ],
+          "gpu_opaque_ms": {
+            "samples": 118,
+            "median": 0.16927999999999999,
+            "p95": 0.174976,
+            "max": 0.27088
+          },
+          "cpu_opaque_submission_ms": {
+            "samples": 120,
+            "median": 0.055895,
+            "p95": 0.112302,
+            "max": 2.670192
+          }
+        }
+      }
+    }
+  },
+  "quality": [
+    {
+      "left": "source-baseline",
+      "right": "source-candidate",
+      "view": 1,
+      "foreground_union_pixels": 55200,
+      "foreground_rgb_rms": 0.0,
+      "background_threshold_mask_difference_pixels": 0,
+      "mask_difference_percent": 0.0,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "source-baseline",
+      "right": "source-candidate",
+      "view": 2,
+      "foreground_union_pixels": 55200,
+      "foreground_rgb_rms": 0.0,
+      "background_threshold_mask_difference_pixels": 0,
+      "mask_difference_percent": 0.0,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "source-candidate",
+      "right": "cooked-full",
+      "view": 1,
+      "foreground_union_pixels": 55285,
+      "foreground_rgb_rms": 1.3066017386579085,
+      "background_threshold_mask_difference_pixels": 115,
+      "mask_difference_percent": 0.20801302342407524,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "source-candidate",
+      "right": "cooked-full",
+      "view": 2,
+      "foreground_union_pixels": 55285,
+      "foreground_rgb_rms": 1.3066017386579085,
+      "background_threshold_mask_difference_pixels": 115,
+      "mask_difference_percent": 0.20801302342407524,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "cooked-full",
+      "right": "cooked-lod",
+      "view": 1,
+      "foreground_union_pixels": 58116,
+      "foreground_rgb_rms": 23.761977887700507,
+      "background_threshold_mask_difference_pixels": 7259,
+      "mask_difference_percent": 12.490536169041228,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    },
+    {
+      "left": "cooked-full",
+      "right": "cooked-lod",
+      "view": 2,
+      "foreground_union_pixels": 58116,
+      "foreground_rgb_rms": 23.761977887700507,
+      "background_threshold_mask_difference_pixels": 7259,
+      "mask_difference_percent": 12.490536169041228,
+      "mask_definition": "luma difference >6 from each image corner background; not a depth silhouette or certified geometric error"
+    }
+  ],
+  "storage": {
+    "column.obj": {
+      "source_bytes": 1578121,
+      "cooked_bytes": 309496
+    },
+    "tile0.png": {
+      "source_bytes": 1165233,
+      "cooked_bytes": 1344838
+    }
+  }
+}

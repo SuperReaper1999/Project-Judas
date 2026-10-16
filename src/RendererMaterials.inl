@@ -1,40 +1,45 @@
 // Included by Renderer.cpp. All GL operations stay in Renderer ownership.
 TextureHandle Renderer::ColourTexture(TextureHandle source){
- if(!source.IsValid()||source.id>=m_textures.size()||!m_textures[source.id].alive)return source;
+ if(!ValidTexture(source))return source;
  const auto& t=m_textures[source.id];
  // Modern camera targets already store linear radiance. Legacy display targets
  // remain live raw images; immutable asset colour views must not freeze them.
  if(t.srgb||t.sceneLinear||t.renderTarget)return source;
- if(t.colourView.IsValid()&&m_textures[t.colourView.id].alive)return t.colourView;
+ if(ValidTexture(t.colourView))return t.colourView;
  // GL 3.3 has no texture views: reuse decoded texel bytes once, on the owner
  // thread, then cache a role-correct sRGB upload. No asset decoding here.
- TextureData data;if(!ReadTextureForDiagnostics(source,data))return source;
+ TextureData data;
+#ifndef __ANDROID__
+ if(t.storage!=TextureStorage::Rgba8){data.width=t.width;data.height=t.height;data.storage=t.storage;glBindTexture(GL_TEXTURE_2D,t.textureId);for(unsigned i=0;i<t.mipCount;++i){GLint size=0,w=0,h=0;glGetTexLevelParameteriv(GL_TEXTURE_2D,GLint(i),GL_TEXTURE_COMPRESSED_IMAGE_SIZE,&size);glGetTexLevelParameteriv(GL_TEXTURE_2D,GLint(i),GL_TEXTURE_WIDTH,&w);glGetTexLevelParameteriv(GL_TEXTURE_2D,GLint(i),GL_TEXTURE_HEIGHT,&h);if(size<=0)return source;TextureMip level{w,h,{}};level.bytes.resize(size_t(size));glGetCompressedTexImage(GL_TEXTURE_2D,GLint(i),level.bytes.data());data.levels.push_back(std::move(level));}}
+ else
+#endif
+ if(!ReadTextureForDiagnostics(source,data))return source;
  auto view=CreateTexture(data,true);m_textures[source.id].colourView=view;return view;
 }
 GLint Renderer::MaterialUniform(const char* name){auto it=m_materialUniforms.find(name);if(it!=m_materialUniforms.end())return it->second;auto location=glGetUniformLocation(m_shaderProgram,name);m_materialUniforms.emplace(name,location);return location;}
 MaterialHandle Renderer::CreateMaterial(const MaterialDefinition& definition){
  std::string error;if(!ValidateMaterial(definition,error))return {};
  GpuMaterial m;m.alive=true;m.definition=MaterialSettings(definition);
- for(size_t i=0;i<5;++i){const auto& image=definition.maps[i];if(!image.embedded.pixels.empty()){m.textures[i]=CreateTexture(image.embedded,(i==0||i==4)&&definition.model!=MaterialModel::Legacy);glGenSamplers(1,&m.samplers[i]);auto& s=image.sampler;glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_T,s.wrapT);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MAG_FILTER,s.magFilter);}m.definition.maps[i].embedded=TextureData{};}
+ for(size_t i=0;i<5;++i){const auto& image=definition.maps[i];if(image.embedded.HasImage()){m.textures[i]=CreateTexture(image.embedded,(i==0||i==4)&&definition.model!=MaterialModel::Legacy);glGenSamplers(1,&m.samplers[i]);auto& s=image.sampler;glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[i],GL_TEXTURE_WRAP_T,s.wrapT);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[i],GL_TEXTURE_MAG_FILTER,s.magFilter);}m.definition.maps[i].embedded=TextureData{};}
  // Encoded source images belong to the immutable CPU resource/cooked archive.
  // Retaining them here would copy megabytes in ApplyMaterialOverride on every
  // draw. The GPU material only needs uploaded handles and lightweight settings.
  for(auto& map:m.definition.maps)std::vector<uint8_t>().swap(map.encodedImage);
- MaterialHandle handle{unsigned(m_materials.size())};m_materials.push_back(std::move(m));return handle;
+ MaterialHandle handle;if(m_freeMaterials.empty()){handle.id=unsigned(m_materials.size());m_materials.push_back(std::move(m));}else{handle.id=m_freeMaterials.back();m_freeMaterials.pop_back();m.generation=m_materials[handle.id].generation;handle.generation=m.generation;m_materials[handle.id]=std::move(m);}return handle;
 }
 bool Renderer::UploadMeshMap(MeshHandle mesh,const MeshData& data,size_t material,size_t map){
  JUDAS_PROFILE_SCOPE("Mesh texture upload unit");
  auto* gpu=GetMesh(mesh);if(!gpu||material>=gpu->materials.size()||map>=5)return false;
- auto handle=gpu->materials[material];if(!handle.IsValid()||handle.id>=m_materials.size())return false;
+ auto handle=gpu->materials[material];if(!ValidMaterial(handle))return false;
  const auto& definition=data.materials.at(material);const auto& image=definition.maps[map];
- auto& m=m_materials[handle.id];if(image.embedded.pixels.empty())return true;
+ auto& m=m_materials[handle.id];if(!image.embedded.HasImage())return true;
  m.textures[map]=CreateTexture(image.embedded,(map==0||map==4)&&definition.model!=MaterialModel::Legacy);
  if(!m.textures[map].IsValid())return false;
  glGenSamplers(1,&m.samplers[map]);auto& s=image.sampler;
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_S,s.wrapS);glSamplerParameteri(m.samplers[map],GL_TEXTURE_WRAP_T,s.wrapT);
  glSamplerParameteri(m.samplers[map],GL_TEXTURE_MIN_FILTER,s.minFilter);glSamplerParameteri(m.samplers[map],GL_TEXTURE_MAG_FILTER,s.magFilter);return true;
 }
-void Renderer::DestroyMaterial(MaterialHandle handle){if(!handle.IsValid()||handle.id>=m_materials.size())return;auto& m=m_materials[handle.id];if(!m.alive)return;for(auto t:m.textures)DestroyTexture(t);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);m={};}
+void Renderer::DestroyMaterial(MaterialHandle handle){if(!ValidMaterial(handle))return;auto& m=m_materials[handle.id];for(auto t:m.textures)DestroyTexture(t);for(auto s:m.samplers)if(s)glDeleteSamplers(1,&s);auto generation=m.generation;m={};m.generation=generation;if(generation!=0xFFFFFFFFu){++m.generation;m_freeMaterials.push_back(handle.id);}}
 EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){
  if(data.specular.empty()||data.diffuse.pixels.empty()||data.brdf.empty())return {};
  GpuEnvironment e;e.alive=true;e.levels=unsigned(data.specular.size());GLint previous;glGetIntegerv(GL_TEXTURE_BINDING_2D,&previous);
@@ -63,10 +68,10 @@ void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialBinding& bindin
  glActiveTexture(GL_TEXTURE0);glBindTexture(GL_TEXTURE_2D,ResolveTexture(base));glBindSampler(0,gpu&&(binding.textureOverrides[0]||!generated.IsValid())?gpu->samplers[0]:0);
  if(shadow){glUniform1i(location("uTexture"),0);glUniform1f(location("uAlphaFactor"),m.baseColor.a*alpha);}
  else{
-  glUniform1i(location("uMaterialModel"),int(m.model));glUniform1i(location("uModern"),m_linearRendering);glUniform1i(location("uBaseLinear"),base.IsValid()&&base.id<m_textures.size()&&(m_textures[base.id].sceneLinear||m_textures[base.id].srgb));
+  glUniform1i(location("uMaterialModel"),int(m.model));glUniform1i(location("uModern"),m_linearRendering);glUniform1i(location("uBaseLinear"),ValidTexture(base)&&(m_textures[base.id].sceneLinear||m_textures[base.id].srgb));
   glUniform4fv(location("uBaseFactor"),1,glm::value_ptr(m.baseColor));glUniform1f(location("uMetallic"),m.metallic);glUniform1f(location("uRoughness"),m.roughness);glUniform1f(location("uNormalStrength"),m.normalStrength);glUniform1f(location("uOcclusionStrength"),m.occlusionStrength);glUniform3fv(location("uEmission"),1,glm::value_ptr(m.emissive));glUniform1f(location("uEmissionIntensity"),m.emissiveIntensity);
   auto eye=glm::vec3(glm::inverse(m_view)[3]);glUniform3fv(location("uCameraPosition"),1,glm::value_ptr(eye));
-  glUniform1i(location("uEmissiveLinear"),emissionTexture.IsValid()&&emissionTexture.id<m_textures.size()&&(m_textures[emissionTexture.id].srgb||m_textures[emissionTexture.id].sceneLinear));
+  glUniform1i(location("uEmissiveLinear"),ValidTexture(emissionTexture)&&(m_textures[emissionTexture.id].srgb||m_textures[emissionTexture.id].sceneLinear));
   const char* names[]={"uMR","uNormal","uOcclusion","uEmissive"};const char* present[]={"uHasMR","uHasNormal","uHasOcclusion","uHasEmissive"};
   for(unsigned i=1;i<5;++i){glActiveTexture(GL_TEXTURE0+4+i);auto texture=i==4?emissionTexture:mapTexture(i);glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glBindSampler(4+i,gpu?gpu->samplers[i]:0);glUniform1i(location(names[i-1]),int(4+i));glUniform1i(location(present[i-1]),texture.IsValid());}
   const GpuEnvironment* env=m_environment.IsValid()&&m_environment.id<m_environments.size()&&m_environments[m_environment.id].alive?&m_environments[m_environment.id]:nullptr;
@@ -126,4 +131,4 @@ glUseProgram(m_outputProgram);
  glBindFramebuffer(GL_READ_FRAMEBUFFER,m_hdrFbo);glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(m_outputFramebuffer));glBlitFramebuffer(0,0,m_hdrWidth,m_hdrHeight,0,0,m_hdrWidth,m_hdrHeight,GL_DEPTH_BUFFER_BIT,GL_NEAREST);glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_outputFramebuffer));glActiveTexture(GL_TEXTURE0);glEnable(GL_DEPTH_TEST);m_linearPass=false;
 }
 std::size_t Renderer::AppearanceBytes()const{size_t bytes=0;for(auto& t:m_linearTargets)bytes+=size_t(t.width)*t.height*11;for(auto& e:m_environments)if(e.alive)bytes+=e.bytes;for(const auto& texture:m_textures)if(texture.alive&&texture.colourView.IsValid()&&m_textures[texture.colourView.id].alive)bytes+=m_textures[texture.colourView.id].uploadedBytes;return bytes;}
-void Renderer::ShutdownAppearance(){m_blendDraws.clear();for(unsigned i=0;i<m_materials.size();++i)DestroyMaterial({i});for(unsigned i=0;i<m_environments.size();++i)DestroyEnvironment({i});m_materials.clear();m_environments.clear();for(auto& t:m_linearTargets){glDeleteFramebuffers(1,&t.fbo);glDeleteTextures(1,&t.color);glDeleteTextures(1,&t.depth);}m_linearTargets.clear();if(m_outputProgram)glDeleteProgram(m_outputProgram);if(m_outputVao)glDeleteVertexArrays(1,&m_outputVao);m_hdrFbo=m_hdrColor=m_hdrDepth=m_outputProgram=m_outputVao=0;m_hdrWidth=m_hdrHeight=0;m_linearPass=false;m_materialUniforms.clear();}
+void Renderer::ShutdownAppearance(){m_blendDraws.clear();for(unsigned i=0;i<m_materials.size();++i)DestroyMaterial({i,m_materials[i].generation});for(unsigned i=0;i<m_environments.size();++i)DestroyEnvironment({i});m_materials.clear();m_freeMaterials.clear();m_environments.clear();for(auto& t:m_linearTargets){glDeleteFramebuffers(1,&t.fbo);glDeleteTextures(1,&t.color);glDeleteTextures(1,&t.depth);}m_linearTargets.clear();if(m_outputProgram)glDeleteProgram(m_outputProgram);if(m_outputVao)glDeleteVertexArrays(1,&m_outputVao);m_hdrFbo=m_hdrColor=m_hdrDepth=m_outputProgram=m_outputVao=0;m_hdrWidth=m_hdrHeight=0;m_linearPass=false;m_materialUniforms.clear();}

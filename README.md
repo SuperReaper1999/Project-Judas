@@ -16,12 +16,13 @@ or performance result as a guarantee.
 
 ## Current status
 
-The current release on `main` is **M91**, human-tested and promoted at
-`61a9df6acaa102c0a9fcf1006866a01fc3b33a89`. It preserves first-touch CCD while
-reducing repeated persistent-contact work within the existing solver allowance.
-Extreme dense piles remain expensive; see [M91 contracts](docs/M91_COLLISION_CONTINUITY.md)
-and the [measured evidence](docs/evidence/m91/REPORT.md). The earlier evidence's
-pending-review wording predates the operator's release promotion.
+The current release on `main` is **M92**, human-tested and promoted at
+`bb3dbc402629a60c22738da8520e5017998709f1`. It adds opaque mesh instancing,
+per-view tiled dynamic lighting, selected spotlight shadows, scripted individual
+lights and shared multi-view planetary LOD. See the
+[Rendering Lab](projects/rendering_lab/README.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
+M91 collision continuity remains included; extreme dense piles still have the
+[documented costs](docs/evidence/m91/REPORT.md).
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin
@@ -37,11 +38,11 @@ outstanding; M90 Windows/Android checks were not performed. See
 [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
 [validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
 
-Experimental development adds **M92 scalable rendering**: opaque mesh instancing,
-per-view tiled dynamic lights, selected spotlight shadows, individual scripted
-lights and shared multi-view planetary LOD. See the [Rendering Lab](projects/rendering_lab/README.md),
-[current contracts](docs/judasjs/rendering.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
-M92 human review is pending; Windows and Android M92 are unvalidated.
+Experimental development adds **M93 cooked assets, rigid mesh LOD and optional
+visual residency**. Start with [The Packed Museum](projects/asset_lab/README.md),
+[the pipeline guide](docs/M93_ASSET_PIPELINE.md) and
+[M93 evidence](docs/evidence/m93/REPORT.md). M93 human review is pending;
+Windows/Android M93 are unvalidated.
 
 ## Highlights
 

@@ -82,3 +82,13 @@ Counters include instanced draws/instances, tile overflow, light-grid GPU bytes
 and shadow-array payload bytes. GPU timestamps include command-stream gaps;
 they are not a hardware utilization meter. Windows/Android M92 validation is
 informational and has not been claimed by Linux rendering checks.
+
+## Cooked visual assets (M93 Experimental)
+
+Projects may author `.judastex` textures and `.judasmesh` rigid meshes through the
+editor or offline cooker. Existing mesh/texture asset IDs, scene transitions,
+material controls and saves continue to use the same public APIs. No native
+render dispatch or new gameplay binding is required. LOD is selected independently
+for each actual view; collision keeps the base geometry. Optional project visual
+residency is a soft memory policy, not a guarantee of total GPU memory usage.
+See [cooking, LOD, budgets and current limitations](../M93_ASSET_PIPELINE.md).

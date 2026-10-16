@@ -1,0 +1,292 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Judas / The Packed Museum",
+    "legacyGameplay": false,
+    "saveIdentity": "f3b7726483416ce465e0cd32259b033ab45a4520ef9bbabc0ee83460eba760f1",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/museum.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "closure",
+    "runtimeAssets": [
+      "63823e4e9e29f5e0973538943baeb619",
+      "a6b6360a57a6d2ec901e89da9c45c92f",
+      "d793c7151a2f500cd65c005382db4178"
+    ],
+    "exportScenes": [
+      "Scenes/museum.judas",
+      "Scenes/full_detail.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F7",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dx",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "look_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dy",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:D",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_z",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:S",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:W",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "move_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:Q",
+            "scale": -1.0,
+            "deadzone": 0.0
+          },
+          {
+            "control": "key:E",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "split",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:V",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "watch",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F5",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "district0",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:1",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "district1",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:2",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "district2",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:3",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "district3",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:4",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "detail",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F2",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "monitors",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:C",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 2,
+        "entries": [
+          {
+            "id": 0,
+            "name": "lamp"
+          },
+          {
+            "id": 1,
+            "name": "gallery_camera"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {},
+    "visualBudgetMiB": 8
+  }
+}

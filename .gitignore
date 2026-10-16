@@ -29,3 +29,6 @@ projects/*/Saves/*.judasstate
 
 # Showcase production files are independent of engine milestones.
 /video_work/
+
+# M93 source artwork uses OBJ meshes, not compiler object files.
+!projects/asset_lab/SourceArt/*.obj

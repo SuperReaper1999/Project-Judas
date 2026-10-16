@@ -1,0 +1,19 @@
+{
+  "baseCommit": "bb3dbc402629a60c22738da8520e5017998709f1",
+  "branch": "Experimental",
+  "sourceFingerprints": 817,
+  "binaryFingerprints": 29,
+  "nativeLinuxValidated": true,
+  "humanAcceptance": false,
+  "windows": "not run",
+  "android": "not run",
+  "finalDefaults": {
+    "normalAttributeWeight": 1,
+    "uvAttributeWeight": 0.1,
+    "pixelTolerance": 0.5
+  },
+  "recordedAt": "2026-10-16T20:20:17.301216+00:00",
+  "validation": "validation/RESULTS.json",
+  "measurements": "measure/SUMMARY.json",
+  "delivery": "delivery/RESULTS.json"
+}

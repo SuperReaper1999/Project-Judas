@@ -1,6 +1,10 @@
 #include "Tangents.h"
 #include "PerformanceProfiler.h"
 #include "ResourceManager.h"
+#include "AssetCook.h"
+#include "CookedTexture.h"
+#include <fstream>
+#include <cstring>
 #include "SceneFingerprint.h"
 
 #include <algorithm>
@@ -35,13 +39,14 @@ ResourceManager::~ResourceManager() {
 }
 
 std::uint64_t ResourceManager::EstimateMeshBytes(const MeshData& data) {
-    uint64_t bytes=static_cast<uint64_t>(data.vertices.size())*sizeof(MeshVertex)+static_cast<uint64_t>(data.skinVertices.size())*sizeof(MeshSkinVertex)+static_cast<uint64_t>(data.indices.size())*sizeof(uint32_t);
+    uint64_t bytes=static_cast<uint64_t>(data.vertices.size())*sizeof(MeshVertex)+static_cast<uint64_t>(data.skinVertices.size())*sizeof(MeshSkinVertex)+static_cast<uint64_t>(data.indices.size()+data.lodIndices.size())*sizeof(uint32_t);
     for(auto& material:data.materials)for(auto& map:material.maps)bytes+=EstimateTextureBytes(map.embedded)+map.encodedImage.size();
     if(data.skeletal){const auto& s=data.skeletal->skeleton;bytes+=s.rest.local.size()*sizeof(JointTransform)+(s.parents.size()+s.order.size()+s.skinNodes.size())*sizeof(int)+s.inverseBind.size()*sizeof(glm::mat4);for(const auto& name:s.names)bytes+=name.size();for(const auto& clip:data.skeletal->clips){bytes+=clip.name.size();for(const auto& track:clip.tracks)bytes+=track.times.size()*sizeof(float)+track.values.size()*sizeof(glm::vec4);}}
     return bytes;
 }
 
 std::uint64_t ResourceManager::EstimateTextureBytes(const TextureData& data) {
+    if(!data.levels.empty())return TexturePayloadBytes(data);
     // RGBA plus the mipmap chain the renderer generates (~1/3 more).
     const std::uint64_t base = static_cast<std::uint64_t>(data.width) * static_cast<std::uint64_t>(data.height) * 4ull;
     return base + base / 3ull;
@@ -110,7 +115,7 @@ void ResourceManager::RunLoadTask(LoadTask& task, const JobContext* context) {
     } else if(task.type==AssetType::Catalog){task.catalog=std::make_shared<Catalog>();task.succeeded=ParseCatalog(std::string(bytes.begin(),bytes.end()),*task.catalog,task.error);
     } else if (task.type == AssetType::Mesh) {
         task.succeeded = ParseModelMesh(reinterpret_cast<const char*>(bytes.data()), bytes.size(), task.path, task.mesh, task.error);
-        if(task.succeeded&&task.mesh.materials.empty()&&!GenerateMeshTangents(task.mesh)){task.succeeded=false;task.error="could not generate mesh tangents";}
+        if(task.succeeded&&task.mesh.materials.empty()&&task.mesh.lods.empty()&&!GenerateMeshTangents(task.mesh)){task.succeeded=false;task.error="could not generate mesh tangents";}
     } else if(task.type==AssetType::Material){
         task.material=std::make_shared<MaterialDefinition>();task.succeeded=ParseMaterial(std::string(bytes.begin(),bytes.end()),*task.material,task.error);
         if(task.succeeded)for(auto& map:task.material->maps)if(!map.asset.empty()){auto path=task.texturePaths.find(map.asset);if(path==task.texturePaths.end()){task.succeeded=false;task.error="missing/wrong-type material texture "+map.asset;break;}std::vector<uint8_t> imageBytes;if(!ReadWholeFile(path->second,imageBytes,task.error,context,&cancelled)||!DecodeTextureFromMemory(imageBytes.data(),imageBytes.size(),path->second,map.embedded,task.error)){task.cancelled=cancelled;task.succeeded=false;break;}}
@@ -163,6 +168,9 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
     task->priority=priority;
     std::error_code sizeError;auto size=std::filesystem::file_size(path,sizeError);
     task->admissionBytes=sizeError?1:std::max<std::uint64_t>(1,size>std::numeric_limits<std::uint64_t>::max()/8?std::numeric_limits<std::uint64_t>::max():size*8);
+    if(std::filesystem::path(path).extension()==".judasmesh"){
+        std::ifstream f(path,std::ios::binary);unsigned char header[40];if(f.read(reinterpret_cast<char*>(header),40)&&!std::memcmp(header,"JMS1",4)){auto u=[&](unsigned p){uint32_t v=0;for(unsigned k=0;k<4;++k)v|=uint32_t(header[p+k])<<(k*8);return v;};auto vertices=u(32),indices=u(36);if(vertices<=2000000&&indices<=12000000)task->admissionBytes=std::max(task->admissionBytes,uint64_t(vertices)*56+uint64_t(indices)*4);}
+    }
     if(expected==AssetType::Collision&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Mesh&&!record.missing)task->texturePaths.emplace(key,record.path);
     if(expected==AssetType::Material&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Texture&&!record.missing)task->texturePaths.emplace(key,record.path);
     task->requested = std::chrono::steady_clock::now();
@@ -227,6 +235,7 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
     } else if(task->type==AssetType::Catalog){entry.catalog=task->catalog;entry.bytes=0;for(auto& p:entry.catalog->messages)entry.bytes+=p.first.size()+p.second.size();
     } else if (task->type == AssetType::Mesh) {
         if (m_renderer) { entry.mesh=task->stagedMesh;task->stagedMesh={};if(!entry.mesh.IsValid())entry.mesh=m_renderer->CreateMesh(task->mesh); }
+        VisualBounds bounds;for(auto& vertex:task->mesh.vertices)bounds.Include(vertex.position);m_visualBounds[task->id]=bounds;
         entry.bytes = EstimateMeshBytes(task->mesh);
         for(auto& warning:task->mesh.importWarnings)std::fprintf(stderr,"asset %s: %s\n",task->id.c_str(),warning.c_str());
         entry.skeletal=task->mesh.skeletal;entry.meshMaterials=std::move(task->mesh.materials);entry.meshPrimitives=std::move(task->mesh.primitives);for(auto& m:entry.meshMaterials)for(auto& map:m.maps){map.embedded=TextureData{};std::vector<uint8_t>().swap(map.encodedImage);}
@@ -417,6 +426,7 @@ bool ResourceManager::AdvanceUpload(const std::shared_ptr<LoadTask>& task,double
 
 void ResourceManager::Pump(std::size_t maxUploads) {
     JUDAS_PROFILE_SCOPE("Resource completion and budget");
+    RefreshResidentBytes();
     if (m_shutDown) return;
     const auto pumpStart=std::chrono::steady_clock::now();
     AdmitPending();
@@ -473,7 +483,12 @@ void ResourceManager::Pump(std::size_t maxUploads) {
         m_inFlight.erase(m_inFlight.begin() + static_cast<std::ptrdiff_t>(i));
     }
     AdmitPending();
-    if (m_stats.bytesResident > m_budgetBytes) EvictToFit(m_budgetBytes);
+    RefreshResidentBytes();
+    if (m_stats.bytesResident > m_budgetBytes && EvictToFit(m_budgetBytes)) RefreshResidentBytes();
+    m_stats.overBudgetBytes=m_stats.bytesResident>m_budgetBytes?m_stats.bytesResident-m_budgetBytes:0;
+    JUDAS_PROFILE_COUNTER("Resource GPU payload bytes",double(m_stats.gpuBytesResident),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Resource prepared CPU bytes",double(m_stats.preparedBytes),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Resource over budget bytes",double(m_stats.overBudgetBytes),ProfileCounterMode::Latest);
     m_stats.lastPumpMs=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-pumpStart).count();
     m_stats.peakPumpMs=std::max(m_stats.peakPumpMs,m_stats.lastPumpMs);
     JUDAS_PROFILE_COUNTER("Resource resident byte estimate",double(m_stats.bytesResident),ProfileCounterMode::Latest);
@@ -502,6 +517,7 @@ std::size_t ResourceManager::EvictToFit(std::uint64_t targetBytes) {
         AssetId victimId;
         for (auto& [id, entry] : m_entries) {
             if (entry.state != ResourceState::Ready || entry.refs > 0) continue;
+            if(m_visualStreaming&&entry.visualDemand&&m_visualFrame<=entry.visualDemand+2)continue;
             if (!victim || entry.lastUse < victim->lastUse) { victim = &entry; victimId = id; }
         }
         if (!victim) break;
@@ -523,6 +539,7 @@ void ResourceManager::DestroyGpu(Entry& entry) {
         m_stats.bytesResident -= std::min(m_stats.bytesResident, entry.bytes);
     }
     entry.material={};entry.environment={};entry.materialDefinition.reset();
+    std::vector<MaterialDefinition>().swap(entry.meshMaterials);std::vector<MeshPrimitive>().swap(entry.meshPrimitives);
     entry.mesh = MeshHandle{};
     entry.skeletal.reset();entry.deformable.reset();entry.collision.reset();entry.navigation.reset();entry.liquid.reset();entry.font.reset();entry.catalog.reset();
     entry.texture = TextureHandle{};
@@ -575,6 +592,7 @@ void ResourceManager::Release(const AssetId& id) {
 }
 
 void ResourceManager::ReleaseAll() {
+    m_visualBounds.clear();
     JUDAS_PROFILE_SCOPE("Resource release");
     for (auto& [id, entry] : m_entries) {
         if (entry.task && m_jobs) {
@@ -647,6 +665,7 @@ void ResourceManager::RefreshCounts() const {
 }
 
 const ResourceStats& ResourceManager::Stats() const {
+    const_cast<ResourceManager*>(this)->RefreshResidentBytes();
     RefreshCounts();
     return m_stats;
 }
@@ -678,7 +697,7 @@ std::shared_ptr<const LiquidResource> ResourceManager::GetLiquid(const AssetId& 
 
 std::optional<MaterialDefinition> ResourceManager::TryGetMeshMaterial(const AssetId& id,unsigned slot)const{auto it=m_entries.find(id);if(it==m_entries.end()||it->second.state!=ResourceState::Ready||slot>=it->second.meshPrimitives.size())return {};int index=it->second.meshPrimitives[slot].material;if(index<0||size_t(index)>=it->second.meshMaterials.size())return {};return it->second.meshMaterials[index];}
 
-void ResourceManager::Invalidate(const AssetId& id){std::vector<AssetId> dependent;for(auto& [key,e]:m_entries)if(e.materialDefinition)for(auto& map:e.materialDefinition->maps)if(map.asset==id){dependent.push_back(key);break;}Release(id);for(auto& key:dependent)Release(key);}
+void ResourceManager::Invalidate(const AssetId& id){m_visualBounds.erase(id);std::vector<AssetId> dependent;for(auto& [key,e]:m_entries)if(e.materialDefinition)for(auto& map:e.materialDefinition->maps)if(map.asset==id){dependent.push_back(key);break;}Release(id);for(auto& key:dependent)Release(key);}
 
 ResourceState ResourceManager::RequestFont(const AssetId& id,JobPriority p){if(id.empty())return ResourceState::Unloaded;auto& e=Begin(id,AssetType::Font,p);return TypeMismatch(e.state,e.type,AssetType::Font)?ResourceState::Failed:e.state;}
 ResourceState ResourceManager::RequestCatalog(const AssetId& id,JobPriority p){if(id.empty())return ResourceState::Unloaded;auto& e=Begin(id,AssetType::Catalog,p);return TypeMismatch(e.state,e.type,AssetType::Catalog)?ResourceState::Failed:e.state;}
@@ -710,3 +729,82 @@ std::shared_ptr<const PhysicalMaterial> ResourceManager::RequirePhysicalMaterial
 }
 
 const std::vector<MeshPrimitive>* ResourceManager::TryGetModelParts(const AssetId& id)const{auto it=m_entries.find(id);return it!=m_entries.end()&&it->second.state==ResourceState::Ready?&it->second.meshPrimitives:nullptr;}
+
+bool ResourceManager::StreamableVisual(const AssetId &id) const {
+    if (!m_visualStreaming || !m_assets)
+        return false;
+    const auto *a = m_assets->Find(id);
+    if (!a || a->missing)
+        return false;
+    auto ext = std::filesystem::path(a->path).extension();
+    return (a->type == AssetType::Mesh && ext == ".judasmesh") ||
+           (a->type == AssetType::Texture && ext == ".judastex");
+}
+VisualBounds ResourceManager::VisualMeshBounds(const AssetId &id) {
+    auto found = m_visualBounds.find(id);
+    if (found != m_visualBounds.end())
+        return found->second;
+    VisualBounds bounds;
+    const auto *a = m_assets ? m_assets->Find(id) : nullptr;
+    std::string error;
+    if (a && std::filesystem::path(a->path).extension() == ".judasmesh")
+        ReadCookedMeshBounds(a->path, bounds, error);
+    m_visualBounds.emplace(id, bounds);
+    return bounds;
+}
+void ResourceManager::DemandVisual(const AssetId &id) {
+    if (id.empty())
+        return;
+    auto *a = m_assets ? m_assets->Find(id) : nullptr;
+    if (!a)
+        return;
+    auto &e = m_entries[id];
+    e.visualDemand = m_visualFrame;
+    if (a->type == AssetType::Mesh)
+        RequestMesh(id);
+    else if (a->type == AssetType::Texture)
+        RequestTexture(id);
+}
+void ResourceManager::RefreshResidentBytes() {
+    m_stats.bytesResident = 0;
+    m_stats.gpuBytesResident = 0;
+    m_stats.pinnedBytes = 0;
+    m_stats.preparedBytes = 0;
+    for (auto &[_, e] : m_entries)
+        if (e.state == ResourceState::Ready) {
+            size_t gpu = 0;
+            if (m_renderer) {
+                if (e.type == AssetType::Mesh)
+                    gpu = m_renderer->MeshResidentBytes(e.mesh);
+                if (e.type == AssetType::Texture)
+                    gpu = m_renderer->TextureResidentBytes(e.texture);
+                if (e.type == AssetType::Material)
+                    gpu = m_renderer->MaterialResidentBytes(e.material);
+                if (e.type == AssetType::Environment)
+                    gpu = m_renderer->EnvironmentResidentBytes(e.environment);
+                if (gpu) {
+                    e.bytes = gpu;
+                    if (e.type == AssetType::Material)
+                        e.bytes += sizeof(MaterialDefinition);
+                    if (e.skeletal) {
+                        MeshData metadata;
+                        metadata.skeletal = e.skeletal;
+                        e.bytes += EstimateMeshBytes(metadata);
+                    }
+                }
+            }
+            m_stats.bytesResident += e.bytes;
+            m_stats.gpuBytesResident += gpu;
+            if (e.refs)
+                m_stats.pinnedBytes += e.bytes;
+        }
+    for (auto &task : m_inFlight)
+        if (task->stage.load(std::memory_order_acquire) == 2 && task->succeeded)
+            m_stats.preparedBytes += task->type == AssetType::Mesh
+                                         ? EstimateMeshBytes(task->mesh)
+                                     : task->type == AssetType::Texture
+                                         ? TexturePayloadBytes(task->texture)
+                                         : 0;
+    m_stats.peakBytesResident =
+        std::max(m_stats.peakBytesResident, m_stats.bytesResident);
+}

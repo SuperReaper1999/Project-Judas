@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "63823e4e9e29f5e0973538943baeb619"
+type script
+source "Assets/scripts/lab.js"

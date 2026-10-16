@@ -93,6 +93,7 @@ struct ResourceStats {
     std::uint64_t bytesResident = 0;   // estimated bytes of Ready resources
     std::uint64_t budgetBytes = 0;
     std::uint64_t peakBytesResident = 0;
+    std::uint64_t gpuBytesResident=0,preparedBytes=0,pinnedBytes=0,overBudgetBytes=0;
 };
 
 class ResourceManager {
@@ -203,6 +204,12 @@ public:
     void Shutdown();
 
     void SetBudgetBytes(std::uint64_t bytes) { m_budgetBytes = bytes; }
+    void ConfigureVisualStreaming(std::uint64_t bytes){m_visualStreaming=bytes!=0;m_budgetBytes=bytes?bytes:256ull*1024*1024;}
+    bool VisualStreaming()const{return m_visualStreaming;}
+    bool StreamableVisual(const AssetId&)const;
+    VisualBounds VisualMeshBounds(const AssetId&);
+    void DemandVisual(const AssetId&);
+    void AdvanceVisualFrame(){++m_visualFrame;}
     std::uint64_t BudgetBytes() const { return m_budgetBytes; }
     // Evicts unreferenced Ready resources, LRU first, until resident bytes
     // fit `targetBytes` (or nothing evictable remains). Returns how many.
@@ -274,7 +281,7 @@ private:
         unsigned int generation = 0;
         unsigned int refs = 0;
         std::uint64_t bytes = 0;
-        unsigned long long lastUse = 0;
+        unsigned long long lastUse = 0,visualDemand=0;
         std::shared_ptr<LoadTask> task;
         std::thread::id decodeThread;
         double loadMilliseconds = 0.0;
@@ -306,6 +313,9 @@ private:
     mutable ResourceStats m_stats;
     std::uint64_t m_budgetBytes = 256ull * 1024ull * 1024ull;
     unsigned long long m_useClock = 0;
+    bool m_visualStreaming=false;unsigned long long m_visualFrame=1;
+    std::map<AssetId,VisualBounds> m_visualBounds;
+    void RefreshResidentBytes();
     bool m_shutDown = false;
     ResourceTrace m_trace;
 };

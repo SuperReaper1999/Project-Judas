@@ -1,0 +1,17 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / The Packed Museum (/tmp/judas-m93-relocated-ap_6ao8g/game.judasproj)
+Scene: The Packed Museum / four asset districts (/tmp/judas-m93-relocated-ap_6ao8g/Scenes/museum.judas)
+World origin (m): 6371000.000, 1800000.000, -2200000.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-museum.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-split.png
+[TestHarness] service save ready after 55 wait frames at frame 225
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-district3.png
+[TestHarness] service save ready after 41 wait frames at frame 305
+[TestHarness] service scene ready after 0 wait frames at frame 335
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-full.png
+[TestHarness] service scene ready after 0 wait frames at frame 435
+[TestHarness] service scene ready after 0 wait frames at frame 470
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-reloaded.png

@@ -1,0 +1,27 @@
+PASS independent fixture cook succeeds
+PASS independent fixture cook succeeds
+PASS independent fixture cook succeeds
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native host initializes
+PASS ordinary cooked asset registration
+PASS ordinary cooked asset registration
+PASS ordinary cooked asset registration
+PASS ordinary optional residency world builds
+PASS optional pure visual ownership does not eagerly pin or load geometry
+PASS main and secondary viewpoints demand their distinct assets; unseen negative control stays unloaded
+FAIL cached secondary view retains residency between sparse render updates
+PASS visible working-set overcommit is observable rather than silently discarded
+PASS disabled secondary view releases its demand and allows eviction while main stays intact
+PASS durable world keeps asset identity rather than GPU slot/generation
+PASS restored world reconstructs ordinary visual owners
+PASS restored physical/presentation world reloads actual required geometry
+PASS default projects retain prior eager/pinned visual behaviour
+PASS published cook has a verifiable source/output generation
+PASS authoring cook recipes survive project relocation
+PASS cook preparation is separate from publication
+PASS conflicting publication preserves prior output and another writer's temporary file
+PASS changed source is detected and stale prepared generation cannot publish
+PASS no GL errors through camera demand, save restoration and scene teardown
+SUMMARY 23 checks 1 failures

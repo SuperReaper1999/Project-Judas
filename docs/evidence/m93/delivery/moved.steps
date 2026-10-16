@@ -1,0 +1,30 @@
+FRAMES 600
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+SCREENSHOT 90 /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-museum.png
+ACTION split 1 100 101
+SCREENSHOT 150 /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-split.png
+ACTION split 1 165 166
+ACTION pause 1 180 181
+EXPECT_PAUSED 1 184
+ACTION pause 1 190 191
+EXPECT_PAUSED 0 194
+ACTION district0 1 205 206
+ACTION save 1 220 221
+WAIT_SERVICES save 10000 225
+ACTION district2 1 240 241
+SCREENSHOT 280 /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-district3.png
+ACTION load 1 300 301
+WAIT_SERVICES save 10000 305
+EXPECT_SCENE Scenes/museum.judas 310
+ACTION detail 1 330 331
+WAIT_SERVICES scene 10000 335
+EXPECT_SCENE Scenes/full_detail.judas 340
+SCREENSHOT 400 /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-full.png
+ACTION detail 1 430 431
+WAIT_SERVICES scene 10000 435
+EXPECT_SCENE Scenes/museum.judas 440
+ACTION reset 1 465 466
+WAIT_SERVICES scene 10000 470
+EXPECT_SCENE Scenes/museum.judas 475
+SCREENSHOT 560 /home/conner/Documents/GitHub/Project-Judas/.cache/m93/delivery/standalone-reloaded.png

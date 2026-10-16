@@ -1,7 +1,9 @@
-# JudasJS — current API reference (M90)
+# JudasJS — current API reference (M93 repository state)
+
+M93 adds optional [cooked assets, mesh LOD and visual residency](M93_ASSET_PIPELINE.md) without new public JavaScript bindings. Existing asset IDs, material controls, views and saves retain their APIs. M93 human review is pending.
 
 M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
-Its current candidate and platform evidence are separate from human acceptance.
+M92 operator acceptance is recorded by release promotion at `bb3dbc402629a60c22738da8520e5017998709f1`; platform coverage remains scoped.
 
 
 M89 adds optional [local players, scoped input, viewports and HUD focus](judasjs/local-multiplayer.md). M89 operator acceptance is recorded; M90 main promotion is now operator-authorized.

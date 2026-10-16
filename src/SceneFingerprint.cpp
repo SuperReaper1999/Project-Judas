@@ -112,6 +112,7 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         w.Enum(r.shape, 4, "render shape"); w.Vector(r.halfExtents); w.Number(r.radius);
         w.Vector(r.color); w.Number(r.alpha); w.Vector(r.secondaryColor); w.Number(r.secondaryAlpha);
         w.Text(r.meshAsset); w.Text(r.textureAsset); w.U64(r.textureCamera);
+        if(r.lodMultiplier!=1){w.Text("M93-render-lod");w.Number(r.lodMultiplier);}
     }
     w.Boolean(o.audioEmitter.has_value());
     if(o.audioEmitter){const auto& a=*o.audioEmitter;w.Context(object+" audio emitter");w.Text(a.asset);w.Boolean(a.enabled);w.Boolean(a.playOnStart);w.Boolean(a.loop);w.Boolean(a.spatial);

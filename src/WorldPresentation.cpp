@@ -83,6 +83,12 @@ bool EntityRenderVisible(const RuntimeWorld& world,EntityId id){
 
 void DrawMeshOrPlaceholder(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
                            const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr) {
+    r.SetMeshLodMultiplier(render.lodMultiplier);
+    if(resources&&resources->VisualStreaming()&&r.AcceptsCurrentLayer()){
+        auto matrix=glm::translate(glm::mat4(1),position)*glm::mat4_cast(rotation)*glm::scale(glm::mat4(1),scale);
+        if(!r.IsVisible(TransformBounds(resources->VisualMeshBounds(render.meshAsset),matrix)))return;
+        resources->DemandVisual(render.meshAsset);resources->DemandVisual(render.textureAsset);
+    }
     r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
     const MeshHandle mesh = resources ? resources->TryGetMesh(render.meshAsset) : MeshHandle{};
     if (mesh.IsValid()) {
@@ -433,6 +439,42 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height)});
     }
     world.PreparePlanets(renderer,planetViews,frameSeconds);
+    }
+    if(auto* assets=world.Resources();assets&&assets->VisualStreaming()){
+        struct Interest {Frustum frustum;CategoryMask mask;};std::vector<Interest> interests;
+        auto addView=[&](glm::vec3 position,glm::quat rotation,float fov,float aspect,float nearPlane,float farPlane,CategoryMask mask){auto v=glm::lookAt(position,position+rotation*glm::vec3(0,0,-1),rotation*glm::vec3(0,1,0));interests.push_back({Frustum(glm::perspective(glm::radians(fov),aspect,nearPlane,farPlane)*v),mask});};
+        if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);addView(p.view->position,p.view->rotation,p.fov,float(std::max(1,size.x))/std::max(1,size.y),p.nearPlane,p.farPlane,p.renderMask);}}
+        else if(world.view){auto& v=*world.view;addView(v.pose.position,v.pose.rotation,v.fov,float(width)/height,v.nearPlane,v.farPlane,world.Settings().mainCameraRenderMask);}
+        else interests.push_back({Frustum(projection*view),world.Settings().mainCameraRenderMask});
+        for(const auto& c:world.PresentationCameras())if(c.settings.enabled&&world.IsPublished(c.id)){auto pose=world.PresentedTransform(c.id,c.transform,alpha);auto v=glm::lookAt(pose.position,pose.position+pose.rotation*glm::vec3(0,0,-1),pose.rotation*glm::vec3(0,1,0));auto plane=c.hasClipPlane?ViewSpacePlane(v,c.clipNormal,c.clipPoint):glm::vec4(0);interests.push_back({Frustum(SecondaryCameraProjection(c.settings.verticalFovDegrees,float(c.settings.width)/c.settings.height,c.settings.nearPlane,c.settings.farPlane,c.hasFrustum?&c.frustum:nullptr,c.hasClipPlane?&plane:nullptr)*v),c.settings.renderMask});}
+        // Use the same presentation owners as DrawWorldGeometry. Entities()
+        // contains managed rigid bodies, not ordinary static renderables. Demand
+        // all enabled views even on frames where a cached camera is not redrawn.
+        auto demand = [&](SceneObjectId id, const SceneRenderComponent& render,
+                          const SceneTransform& pose) {
+            if (!world.IsPublished(id) || !world.RenderVisible(id) ||
+                !render.visible || render.shape != SceneShape::Mesh) return;
+            auto matrix = glm::translate(glm::mat4(1), pose.position) *
+                          glm::mat4_cast(pose.rotation) * glm::scale(glm::mat4(1), pose.scale);
+            auto bounds = TransformBounds(assets->VisualMeshBounds(render.meshAsset), matrix);
+            for (const auto& interest : interests)
+                if ((interest.mask & CategoryBit(world.RenderLayerOf(id))) &&
+                    interest.frustum.IsVisible(bounds)) {
+                    assets->DemandVisual(render.meshAsset);
+                    assets->DemandVisual(render.textureAsset);
+                    break;
+                }
+        };
+        for (const auto& s : world.StaticRenderables())
+            demand(s.id, s.render, world.PresentedTransform(s.id,
+                   SceneTransform{s.position, s.rotation, s.scale}, alpha));
+        const auto& bodies = world.DynamicBodies();
+        const auto& visuals = world.DynamicVisuals();
+        for (size_t i = 0; i < bodies.size(); ++i)
+            if (visuals[i].hasRender)
+                demand(visuals[i].id, visuals[i].render,
+                       SceneTransform{bodies[i].GetPresentedPosition(alpha),
+                                      bodies[i].GetPresentedOrientation(alpha), visuals[i].scale});
     }
     const auto beforeStats = renderer.Stats();
     // One sample owns one immutable lighting/environment decision. Auxiliary

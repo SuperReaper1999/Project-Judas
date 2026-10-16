@@ -227,6 +227,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.radius", F(r.radius));
         w.Line("render.color", V(r.color));
         w.Line("render.alpha", F(r.alpha));
+        if(r.lodMultiplier!=1)w.Line("render.lod-multiplier",F(r.lodMultiplier));
         w.Line("render.secondary-color", V(r.secondaryColor));
         w.Line("render.secondary-alpha", F(r.secondaryAlpha));
         w.Line("render.mesh-asset", Quote(r.meshAsset));
@@ -861,6 +862,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("render.radius", r.radius)) return false;
         if (!p.Vec3("render.color", r.color)) return false;
         if (!p.Float("render.alpha", r.alpha)) return false;
+        if(p.Has("render.lod-multiplier")&&(!p.Float("render.lod-multiplier",r.lodMultiplier)||r.lodMultiplier<0||r.lodMultiplier>32))return reader.Fail("render.lod-multiplier expects 0..32");
         if (!p.Vec3("render.secondary-color", r.secondaryColor)) return false;
         if (!p.Float("render.secondary-alpha", r.secondaryAlpha)) return false;
         if (!p.String("render.mesh-asset", r.meshAsset)) return false;

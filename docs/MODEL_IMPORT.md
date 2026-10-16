@@ -243,3 +243,13 @@ Controls: **G** clips/crossfade, **J** arm mask, **K** additive spine, **I** IK,
 **F** ragdoll/return, **T** part, **P** prefab, **B** extracted motor intent,
 **U** stream load/retire/revisit, **F5** reload, **F6/F7** modern save/load,
 **Esc** pause, mouse + **WASD** separate inspection camera.
+
+## Optional runtime cooking (M93)
+
+Rigid imported models can additionally be cooked to `.judasmesh`, preserving
+material parts, source topology and embedded map roles while adding render-only
+LODs and compressed streams. Source import/reimport remains authoritative and
+separate. Animated assets continue through the normal import path; rigid cooking
+rejects them. Textures can use `.judastex` mip chains. See
+[asset cooking/residency contracts](M93_ASSET_PIPELINE.md) and
+[The Packed Museum](../projects/asset_lab/README.md).

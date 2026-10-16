@@ -390,6 +390,7 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     m_project = project;
     m_scenePicker.Clear();
     m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
+    m_host->Resources().ConfigureVisualStreaming(uint64_t(m_project.Settings().visualBudgetMiB)*1024*1024);
     {std::string assetError;if(!JudasMods::OpenAuthorAssets(m_project,m_host->Assets(),assetError))m_panels.status=assetError;}
     if(!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError))return false;
     RefreshProjectLists();
@@ -1187,10 +1188,10 @@ void EditorApplication::RefreshAssetDemand() {
     if (wanted == m_heldAssets) return;
     ResourceManager& resources = m_host->Resources();
     for (const std::string& id : wanted) {
-        if (!std::binary_search(m_heldAssets.begin(), m_heldAssets.end(), id)) resources.AddRef(id);
+        if (!std::binary_search(m_heldAssets.begin(), m_heldAssets.end(), id)&&!resources.StreamableVisual(id)) resources.AddRef(id);
     }
     for (const std::string& id : m_heldAssets) {
-        if (!std::binary_search(wanted.begin(), wanted.end(), id)) resources.ReleaseRef(id);
+        if (!std::binary_search(wanted.begin(), wanted.end(), id)&&!resources.StreamableVisual(id)) resources.ReleaseRef(id);
     }
     m_heldAssets = wanted;
 }
@@ -2018,7 +2019,7 @@ int EditorApplication::Run(int argc, char** argv) {
 
     if (m_panels.mode == EditorMode::Play) StopPlay();
     else CancelCameraNavigation();
-    for (const std::string& id : m_heldAssets) host.Resources().ReleaseRef(id);
+    for (const std::string& id : m_heldAssets)if(!host.Resources().StreamableVisual(id)) host.Resources().ReleaseRef(id);
     m_heldAssets.clear();
     window.SetEventHook(nullptr);
     if (m_sceneViewTarget.IsValid()) renderer.DestroyRenderTarget(m_sceneViewTarget);

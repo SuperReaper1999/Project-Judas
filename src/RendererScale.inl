@@ -20,14 +20,14 @@ void Renderer::BeginMeshBatch(){
  if(m_collectingBatch)return;
  m_meshBatches.clear();m_batchLookup.clear();m_collectingBatch=true;
 }
-void Renderer::QueueMeshInstance(MeshHandle mesh,TextureHandle texture,const glm::mat4& model,glm::vec4 tint){
+void Renderer::QueueMeshInstance(MeshHandle mesh,TextureHandle texture,const glm::mat4& model,glm::vec4 tint,unsigned lod){
  // Exact material state defines compatibility. Tint and transform are instance
  // attributes, not grouping keys. Immutable mesh handles are never retained
  // across the pass, resource replacement or scene lifetime.
  std::string key;auto append=[&](const auto& value){key.append(reinterpret_cast<const char*>(&value),sizeof(value));};
- append(mesh.id);append(texture.id);bool reversed=glm::determinant(glm::mat3(model))<0;append(reversed);
- for(const auto& b:m_materialBindings){append(b.handle.id);append(b.explicitAsset);append(b.failed);for(unsigned i=0;i<5;++i){append(b.textures[i].id);append(b.textureOverrides[i]);}auto text=EncodeMaterialOverrides(b.overrides);key+=std::to_string(text.size())+":"+text;}
- auto [it,inserted]=m_batchLookup.emplace(key,m_meshBatches.size());if(inserted)m_meshBatches.push_back({mesh,texture,m_materialBindings,reversed,{}});
+ append(mesh.id);append(mesh.generation);append(texture.id);append(texture.generation);append(lod);bool reversed=glm::determinant(glm::mat3(model))<0;append(reversed);
+ for(const auto& b:m_materialBindings){append(b.handle.id);append(b.handle.generation);append(b.explicitAsset);append(b.failed);for(unsigned i=0;i<5;++i){append(b.textures[i].id);append(b.textures[i].generation);append(b.textureOverrides[i]);}auto text=EncodeMaterialOverrides(b.overrides);key+=std::to_string(text.size())+":"+text;}
+ auto [it,inserted]=m_batchLookup.emplace(key,m_meshBatches.size());if(inserted)m_meshBatches.push_back({mesh,texture,m_materialBindings,reversed,lod,{}});
  m_meshBatches[it->second].instances.push_back({model,tint});
  // A bounded pass flush avoids an unbounded transient upload on huge worlds.
  if(m_meshBatches[it->second].instances.size()==16384){EndMeshBatch();BeginMeshBatch();}
@@ -43,7 +43,7 @@ void Renderer::EndMeshBatch(){
   glBindVertexArray(mesh->vao);glBindBuffer(GL_ARRAY_BUFFER,m_instanceBuffer);auto bytes=batch.instances.size()*sizeof(Instance);glBufferData(GL_ARRAY_BUFFER,GLsizeiptr(bytes),batch.instances.data(),GL_STREAM_DRAW);m_stats.instanceBytes=std::max(m_stats.instanceBytes,bytes);
   for(unsigned c=0;c<4;++c){glEnableVertexAttribArray(9+c);glVertexAttribPointer(9+c,4,GL_FLOAT,GL_FALSE,sizeof(Instance),reinterpret_cast<void*>(sizeof(glm::vec4)*c));glVertexAttribDivisor(9+c,1);}
   glEnableVertexAttribArray(13);glVertexAttribPointer(13,4,GL_FLOAT,GL_FALSE,sizeof(Instance),reinterpret_cast<void*>(offsetof(Instance,tint)));glVertexAttribDivisor(13,1);
-  m_materialBindings=batch.bindings;m_submittingBatch=true;m_activeInstances=unsigned(batch.instances.size());m_activeBatchReversed=batch.reversed;
+  m_materialBindings=batch.bindings;m_submittingBatch=true;m_activeInstances=unsigned(batch.instances.size());m_activeBatchReversed=batch.reversed;m_activeBatchLod=batch.lod;
   DrawMesh(batch.mesh,{0,0,0},{1,0,0,0},{1,1,1},batch.texture,{1,1,1},1);
   m_submittingBatch=false;glBindVertexArray(mesh->vao);for(unsigned c=9;c<=13;++c){glDisableVertexAttribArray(c);glVertexAttribDivisor(c,0);}
  }
@@ -64,4 +64,57 @@ void Renderer::ReserveShadowLayers(unsigned layers){
  for(unsigned i=0;i<layers;++i){if(!m_shadowFbo[i])glGenFramebuffers(1,&m_shadowFbo[i]);glBindFramebuffer(GL_FRAMEBUFFER,m_shadowFbo[i]);glFramebufferTextureLayer(GL_FRAMEBUFFER,GL_DEPTH_ATTACHMENT,next,0,GLint(i));glDrawBuffers(1,&none);glReadBuffer(GL_NONE);}
  if(m_shadowArray)glDeleteTextures(1,&m_shadowArray);
  m_shadowArray=next;m_shadowLayers=layers;glBindFramebuffer(GL_DRAW_FRAMEBUFFER,GLuint(draw));glBindFramebuffer(GL_READ_FRAMEBUFFER,GLuint(read));glBindTexture(GL_TEXTURE_2D_ARRAY,0);
+}
+
+size_t Renderer::TextureResidentBytes(TextureHandle h) const {
+    if (!ValidTexture(h))
+        return 0;
+    const auto &t = m_textures[h.id];
+    size_t bytes = t.uploadedBytes;
+    if (ValidTexture(t.colourView))
+        bytes += m_textures[t.colourView.id].uploadedBytes;
+    return bytes;
+}
+size_t Renderer::MeshResidentBytes(MeshHandle h) const {
+    if (!h.IsValid() || h.id >= m_meshes.size() || !m_meshes[h.id].alive ||
+        m_meshes[h.id].generation != h.generation)
+        return 0;
+    const auto &m = m_meshes[h.id];
+    size_t bytes =
+        size_t(m.vertexCount) * sizeof(MeshVertex) + size_t(m.indexCount) * 4 +
+        (m.skinVbo ? size_t(m.vertexCount) * sizeof(MeshSkinVertex) : 0);
+    for (auto handle : m.materials)
+        if (ValidMaterial(handle))
+            for (auto t : m_materials[handle.id].textures)
+                bytes += TextureResidentBytes(t);
+    return bytes;
+}
+
+TextureHandle Renderer::InstallTexture(GpuTexture texture) {
+    TextureHandle handle;
+    if (m_freeTextures.empty()) {
+        handle.id = unsigned(m_textures.size());
+        m_textures.push_back(std::move(texture));
+    } else {
+        handle.id = m_freeTextures.back();
+        m_freeTextures.pop_back();
+        texture.generation = m_textures[handle.id].generation;
+        handle.generation = texture.generation;
+        m_textures[handle.id] = std::move(texture);
+    }
+    return handle;
+}
+size_t Renderer::MaterialResidentBytes(MaterialHandle h) const {
+    if (!ValidMaterial(h))
+        return 0;
+    size_t bytes = 0;
+    for (auto t : m_materials[h.id].textures)
+        bytes += TextureResidentBytes(t);
+    return bytes;
+}
+size_t Renderer::EnvironmentResidentBytes(EnvironmentHandle h) const {
+    return h.IsValid() && h.id < m_environments.size() &&
+                   m_environments[h.id].alive
+               ? m_environments[h.id].bytes
+               : 0;
 }

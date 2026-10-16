@@ -79,6 +79,7 @@ struct SceneRenderComponent {
     float radius = 0.5f;           // Sphere
     glm::vec3 color{0.8f};
     float alpha = 1.0f;
+    float lodMultiplier=1.0f; // cooked pixel-error tolerance multiplier; 0 forces base detail
     // Compound only: colour/alpha for every child box after the first
     // (an open container drawn with an opaque base and translucent walls).
     glm::vec3 secondaryColor{0.8f};

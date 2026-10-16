@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary physical world with optional views
+PASS two camera renders do not step physical state
+PASS both actual display targets render successfully
+PASS independent camera orientation survives FBO composition upright, including HDR display conversion
+PASS viewport resizing replaces rather than leaks display resources
+PASS shared screen does not render inactive player targets
+PASS world teardown retires all local-view GPU resources before renderer shutdown
+PASS ordinary physical world with optional views
+PASS two camera renders do not step physical state
+PASS both actual display targets render successfully
+PASS independent camera orientation survives FBO composition upright, including HDR display conversion
+PASS viewport resizing replaces rather than leaks display resources
+PASS shared screen does not render inactive player targets
+PASS world teardown retires all local-view GPU resources before renderer shutdown
+14 checks 0 failures

@@ -32,6 +32,7 @@ struct MeshSkinVertex {glm::uvec4 joints{0};glm::vec4 weights{1,0,0,0};glm::uvec
 
 struct MeshPrimitive {unsigned first=0,count=0;int material=-1;std::string part;int node=-1;MeshPrimitive(unsigned start=0,unsigned length=0,int slot=-1,std::string key={},int sourceNode=-1):first(start),count(length),material(slot),part(std::move(key)),node(sourceNode){}};
 struct ModelSourceLocation {uint32_t node=0,element=0;};
+struct MeshLod {float error=0;unsigned first=0,count=0;std::vector<MeshPrimitive> primitives;};
 struct MeshData {
     // Import-time provenance, indexed like vertices and triangles respectively.
     // Binary source IDs are not text line numbers.
@@ -50,9 +51,11 @@ struct MeshData {
     std::vector<uint32_t> sourceVertexIds;
     // Empty means "draw non-indexed" (glDrawArrays) — Judas's existing
     // built-in cube/sphere primitives use this; an imported model always
-    // populates it (glDrawElements). 32-bit indices: this engine's meshes
-    // are all small (a demo's worth of hand-authored/imported geometry),
-    // so there's no evidence 16-bit indexing is worth the added complexity
-    // of two index-type code paths.
+    // populates it (glDrawElements). Indices remain 32-bit for one common
+    // upload/query path; cooked files compress them losslessly on disk.
     std::vector<std::uint32_t> indices;
+    std::vector<uint32_t> lodIndices; // render-only tails; collision/import consumers retain base indices
+    std::vector<MeshLod> lods; // estimated object-space simplification error; ranges in shared index stream
+    float lodPixels=1.0f;
+
 };

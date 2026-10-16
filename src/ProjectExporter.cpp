@@ -1,6 +1,7 @@
 #include "WorldStreaming.h"
 #include "Material.h"
 #include "ModelArchive.h"
+#include "AssetCook.h"
 #include "Environment.h"
 #include "NavigationAsset.h"
 #include "LiquidTypes.h"
@@ -303,6 +304,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         report["auxiliary"]=nlohmann::json::array();for(const auto& path:auxiliary){Copy(path,staging/fs::path(path).lexically_relative(root));report["auxiliary"].push_back(fs::path(path).lexically_relative(root).generic_string());}
         for (const auto& [id, record] : assets.Records()) {
             if(!included.count(id)){auto bytes=fs::file_size(record.path);std::string hash,detail;const bool hashed=SceneFingerprintSha256File(record.path,hash,detail);Require(hashed,detail);excluded+=bytes;report["excluded"].push_back({{"id",id},{"path",record.relativePath},{"type",AssetTypeName(record.type)},{"sha256",hash},{"bytes",bytes}});continue;}
+            if(fs::path(record.path).extension()==".judasmesh"||fs::path(record.path).extension()==".judastex"){std::string freshness;Require(CookedAssetFresh(record.path,freshness),freshness);}
             const auto relative = fs::path(record.relativePath);
             Require(!relative.is_absolute() && Inside((root / relative).lexically_normal(), root), "Unsafe asset path");
             auto bytes=fs::file_size(record.path);assetBytes+=bytes;

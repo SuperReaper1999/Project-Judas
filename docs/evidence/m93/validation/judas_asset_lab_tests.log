@@ -1,0 +1,23 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / The Packed Museum (/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_asset_lab_tests/project/asset_lab.judasproj)
+Scene: The Packed Museum / four asset districts (/home/conner/Documents/GitHub/Project-Judas/.cache/m93/final-quality-validation/judas_asset_lab_tests/project/Scenes/museum.judas)
+World origin (m): 6371000.000, 1800000.000, -2200000.000
+PASS ordinary asset project starts with script-owned view and authored scenery
+PASS real project enables soft visual ownership
+PASS logical district control changes real camera state
+PASS independent split views render alongside cached remote camera
+PASS leaving split views clears their interests
+PASS ordinary save actually publishes durable bytes
+PASS post-save district change establishes different physical view
+PASS load restores actual saved camera state rather than a cached status
+PASS full detail control reloads scene with real base-geometry policy
+PASS automatic LOD scene restores its actual policy
+PASS pause owns focus and releases pointer
+PASS resume releases modal focus
+PASS reload starts a healthy new world without stale callback state
+PASS cooked assets use actual instanced rendering
+LAB fixed_ms=0.037994 gpu_resource_bytes=7137152 over_budget=0 draws=15 triangles=647048
+PASS ordinary application startup, async scene/save services and Stop
+SUMMARY 15 checks 0 failures
