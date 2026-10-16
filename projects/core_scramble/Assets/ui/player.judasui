@@ -1,0 +1,990 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      480,
+      480
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 20,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.0,
+          0.0
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.9,
+          0.71,
+          1
+        ]
+      },
+      {
+        "id": "strip",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 24,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          12
+        ],
+        "size": [
+          456,
+          66
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.025,
+          0.055,
+          0.085,
+          0.9
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "label",
+        "parent": "canvas",
+        "text": "P1 / CYAN",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 24,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          25,
+          17
+        ],
+        "size": [
+          270,
+          28
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "score",
+        "parent": "canvas",
+        "text": "0 CORES  /  KEYBOARD",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 16,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          25,
+          46
+        ],
+        "size": [
+          330,
+          22
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.6,
+          0.83,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "options",
+        "parent": "canvas",
+        "text": "...",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 26,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          1,
+          0
+        ],
+        "anchorMax": [
+          1,
+          0
+        ],
+        "offset": [
+          -20,
+          23
+        ],
+        "size": [
+          64,
+          43
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          1,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.13,
+          0.28,
+          0.34,
+          1
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "cooldown",
+        "parent": "canvas",
+        "text": "SHOVE READY",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -10
+        ],
+        "size": [
+          380,
+          25
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "panel",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 24,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.025,
+          0.05,
+          0.08,
+          0.95
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "help",
+        "parent": "panel",
+        "text": "YOUR CONTROLS PAUSED / ARENA LIVE",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 16,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -150
+        ],
+        "size": [
+          450,
+          40
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "resume",
+        "parent": "panel",
+        "text": "RESUME",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 22,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -70
+        ],
+        "size": [
+          380,
+          56
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.14,
+          0.28,
+          0.36,
+          1
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "device",
+        "parent": "panel",
+        "text": "CHANGE DEVICE",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 22,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          380,
+          56
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.14,
+          0.28,
+          0.36,
+          1
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "leave",
+        "parent": "panel",
+        "text": "LEAVE ARENA",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 22,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          70
+        ],
+        "size": [
+          380,
+          56
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.14,
+          0.28,
+          0.36,
+          1
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "move_hint",
+        "parent": "canvas",
+        "text": "DRAG",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 18,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          1
+        ],
+        "anchorMax": [
+          0,
+          1
+        ],
+        "offset": [
+          24,
+          -64
+        ],
+        "size": [
+          130,
+          40
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          0,
+          1
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.08,
+          0.2,
+          0.26,
+          0.72
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "shove",
+        "parent": "canvas",
+        "text": "SHOVE",
+        "texture": "",
+        "font": "88c88947d461c84987d2ed220c8a9586",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": false,
+        "spacing": 8.0,
+        "fontSize": 20,
+        "value": 0.0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          1,
+          1
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          -24,
+          -64
+        ],
+        "size": [
+          140,
+          46
+        ],
+        "relativeSize": [
+          0.0,
+          0.0
+        ],
+        "align": [
+          1,
+          1
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "padding": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "background": [
+          0.14,
+          0.38,
+          0.43,
+          0.9
+        ],
+        "color": [
+          0.92,
+          0.96,
+          1,
+          1
+        ]
+      }
+    ]
+  }
+}

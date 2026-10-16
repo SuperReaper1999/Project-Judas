@@ -18,6 +18,15 @@ loaded with the vendored GLAD 2.0.8 OpenGL 3.3 Core loader through the
 SDL-created context; generation and license provenance are recorded in
 [`third_party/glad/README.md`](third_party/glad/README.md).
 
+## Experimental — M89 local multiplayer
+
+[M89](docs/M89_LOCAL_MULTIPLAYER.md) adds optional world-owned player identities,
+independent device routes, shared/split views and player-scoped HUD/focus. The
+editable [Core Scramble](projects/core_scramble/README.md) is a 2–4-player physical
+arena game using the same project on Linux and Android. Human acceptance is pending;
+[validation and limitations](docs/evidence/m89/REPORT.md) distinguish synthetic
+controller/emulator checks from physical hardware testing. Main remains at accepted M88.
+
 ## Latest accepted release — M88 native Android games
 
 [Native Android build/export](docs/ANDROID.md) targets Android 16 with ARM64 and

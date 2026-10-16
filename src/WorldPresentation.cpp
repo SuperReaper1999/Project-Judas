@@ -508,6 +508,26 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.EndRenderTarget(); ++camera.updates;
         }
     }
+    if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){
+        players->BindRenderer(renderer);
+        // Each view borrows the same immutable presented world and shadow maps.
+        // No extra simulation, input dispatch or audio update occurs per camera.
+        for(auto& entry:players->All()){auto& p=entry.second;if(!p.view)continue;
+            const auto size=LocalPlayers::ViewSize(p.viewport,width,height);const int vw=size.x,vh=size.y;
+            if(p.attemptedSize!=size||p.attemptedLinear!=settings.linearRendering||(!p.target.IsValid()&&p.renderError.empty())){p.attemptedSize=size;p.attemptedLinear=settings.linearRendering;renderer.ResizeRenderTarget(p.target,vw,vh,p.renderError,true);}
+            if(!p.renderError.empty()||!renderer.BeginRenderTarget(p.target))continue;
+            JUDAS_PROFILE_SCOPE("Local player view");RendererProfileScope playerGPU(renderer,"Local player view",p.id);
+            const auto& pose=*p.view;const auto q=pose.rotation;
+            renderer.SetCamera(glm::lookAt(pose.position,pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(p.fov),float(vw)/vh,p.nearPlane,p.farPlane));
+            world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
+            renderer.SetRenderMask(p.renderMask);renderer.SetDynamicLights(lights);
+            renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
+            DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{});DrawWorldTransparents(renderer,world,session,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
+        }
+        renderer.ClearWeather();renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);
+        for(auto& entry:players->All()){auto& p=entry.second;if(p.view&&p.renderError.empty())renderer.DrawUIImage({p.viewport.x*width,p.viewport.y*height},{p.viewport.z*width,p.viewport.w*height},renderer.RenderTargetTexture(p.target),{1,1,1,1},false,true);}
+        renderer.EndUIFrame();
+    }else{
     renderer.BeginFrame(width, height);
     JUDAS_PROFILE_SCOPE("Main camera");
     RendererProfileScope mainGPU(renderer,"Main camera");
@@ -522,6 +542,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     DrawWorldTransparents(renderer, world, session, alpha);
     renderer.DrawWeather();
     renderer.EndFrame();
+    }
     const auto& stats=renderer.Stats();
     JUDAS_PROFILE_COUNTER("Submitted draws all passes",stats.drawCalls-beforeStats.drawCalls,ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Submitted triangles all passes",stats.triangles-beforeStats.triangles,ProfileCounterMode::Sum);

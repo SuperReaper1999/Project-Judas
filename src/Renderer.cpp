@@ -1559,7 +1559,7 @@ void Renderer::EndUIFrame() {
     glEnable(GL_DEPTH_TEST);
 }
 
-RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::string& error) {
+RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::string& error,bool display) {
     error.clear();
     GLint maximum = 0; glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maximum);
     if (width < 1 || height < 1 || width > maximum || height > maximum || m_activeTarget.IsValid()) {
@@ -1569,9 +1569,9 @@ RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::stri
     glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &draw); glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &read);
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &texture); glGetIntegerv(GL_RENDERBUFFER_BINDING, &depth);
     GpuTarget target; target.width = width; target.height = height;
-    GpuTexture color;color.width=width;color.height=height; color.sceneLinear=m_linearRendering;color.renderTarget=true;color.uploadedBytes = static_cast<std::size_t>(width) * height * (color.sceneLinear?8:4);
+    GpuTexture color;color.width=width;color.height=height; color.sceneLinear=m_linearRendering&&!display;color.renderTarget=true;color.uploadedBytes = static_cast<std::size_t>(width) * height * (color.sceneLinear?8:4);
     glGenTextures(1, &color.textureId); glBindTexture(GL_TEXTURE_2D, color.textureId);
-    glTexImage2D(GL_TEXTURE_2D, 0, color.sceneLinear?GL_RGBA16F:GL_RGBA8, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, color.sceneLinear?GL_RGBA16F:GL_RGBA8, width, height, 0, GL_RGBA, color.sceneLinear?GL_HALF_FLOAT:GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -1597,13 +1597,13 @@ RenderTargetHandle Renderer::CreateRenderTarget(int width, int height, std::stri
     return RenderTargetHandle{static_cast<unsigned int>(m_targets.size() - 1)};
 }
 
-bool Renderer::ResizeRenderTarget(RenderTargetHandle& target, int width, int height, std::string& error) {
+bool Renderer::ResizeRenderTarget(RenderTargetHandle& target, int width, int height, std::string& error,bool display) {
     if (m_activeTarget.IsValid()) { error = "cannot resize during a target pass"; return false; }
     if (target.IsValid() && target.id < m_targets.size()) {
         const auto& old = m_targets[target.id];
-        if (old.framebuffer && old.width == width && old.height == height && m_textures[old.color.id].sceneLinear==m_linearRendering) { error.clear(); return true; }
+        if (old.framebuffer && old.width == width && old.height == height && m_textures[old.color.id].sceneLinear==(m_linearRendering&&!display)) { error.clear(); return true; }
     }
-    auto replacement = CreateRenderTarget(width, height, error);
+    auto replacement = CreateRenderTarget(width, height, error,display);
     if (!replacement.IsValid()) return false;
     DestroyRenderTarget(target); target = replacement; return true;
 }
@@ -1724,7 +1724,7 @@ void Renderer::SetUIClip(glm::vec2 position,glm::vec2 size){
     glEnable(GL_SCISSOR_TEST);glScissor(int(std::floor(lo.x)),int(std::floor(m_uiScreenSize.y-hi.y)),std::max(0,int(std::ceil(hi.x)-std::floor(lo.x))),std::max(0,int(std::ceil(hi.y)-std::floor(lo.y))));
 }
 void Renderer::ClearUIClip(){glDisable(GL_SCISSOR_TEST);}
-void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit){
+void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit,bool flipVertical){
     if(!texture.IsValid())return;
     if(fit){const auto* image=texture.id<m_textures.size()&&m_textures[texture.id].alive?&m_textures[texture.id]:nullptr;
         if(image&&image->width>0&&image->height>0){auto scaled=glm::vec2(image->width,image->height);scaled*=std::min(size.x/scaled.x,size.y/scaled.y);position+=(size-scaled)*.5f;size=scaled;}}
@@ -1734,7 +1734,7 @@ void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle textu
     // fonts use their separate top-down atlas path. Preserve render-target UVs.
     const bool imported=texture.id<m_textures.size()&&!m_textures[texture.id].renderTarget;
     glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
-    glUniform2f(m_uiUUVOffset,0,imported?1:0);glUniform2f(m_uiUUVScale,1,imported?-1:1);
+    const bool invert=imported!=flipVertical;glUniform2f(m_uiUUVOffset,0,invert?1:0);glUniform2f(m_uiUUVScale,1,invert?-1:1);
     glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glDrawArrays(GL_TRIANGLES,0,6);++m_uiDrawCalls;
 }
 

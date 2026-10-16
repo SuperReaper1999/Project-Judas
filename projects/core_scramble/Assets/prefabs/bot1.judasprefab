@@ -1,0 +1,113 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "CORE SCRAMBLE",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        1,
+        0.6
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.84
+      ],
+      "ambient": [
+        0.4,
+        0.44,
+        0.51
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Bumper bot",
+        "fields": {
+          "render.half-extents": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.radius": 0.7,
+          "render.color": [
+            1,
+            0.39,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.half-extents": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "body.radius": 0.7,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.25,
+          "body.restitution": 0.3,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "position": [
+            0,
+            1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "sphere"
+          },
+          "tags": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "sphere"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

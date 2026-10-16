@@ -1,0 +1,22 @@
+PASS isolated emulator root available
+PASS fixture display dimensions
+PASS native MT input device identified
+All files should be loaded. Notifying the device.
+PASS actual cyan/coral physical bots identified in single-before
+PASS actual cyan/coral physical bots identified in single-after
+PASS one native touch moves only its owning physical bot
+PASS actual cyan/coral physical bots identified in two-before
+PASS actual cyan/coral physical bots identified in two-after
+PASS simultaneous native touches move two physical bots in opposite directions
+PASS owner touch opens actual local menu with idle assigned mouse
+PASS owner touch resumes its local menu
+PASS rotation changes native viewport and game layout
+Warning: Activity not started, its current task has been brought to the front
+PASS app resumes with live native runtime
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/local-gamepads: 1 file pushed, 0 skipped. 81.9 MB/s (8208 bytes in 0.000s)
+PASS actual cyan/coral physical bots identified in pads-before
+PASS actual cyan/coral physical bots identified in pads-driving
+PASS two native Android gamepads hotplug/drive/remove through normal InputDevice adapter
+PASS distinct Android gamepads independently drive actual game bots
+PASS no script fault/native crash/context loss
+M89 emulator functional checks complete. Human/hardware acceptance remains pending.

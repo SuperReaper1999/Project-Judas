@@ -181,3 +181,18 @@ Use ready mode with shadows on/off for identical-content rendering comparisons.
 Build caches are locked per export transaction. Concurrent exports must wait or
 use separate caches. The game/APK is a generated deliverable; source, instructions
 and evidence are committed, SDK/build caches/signing keys are not.
+
+## M89 local multiplayer (Experimental)
+
+[Core Scramble](../projects/core_scramble/README.md) uses the same public
+[local-player APIs](judasjs/local-multiplayer.md) and gameplay on desktop/Android.
+Touches are captured to non-overlapping normalized regions at contact down;
+primary-touch mouse emulation stays out of another player's physical-mouse route.
+Standard Android InputDevice gamepads route independently through SDL instances.
+Physical multi-keyboard/multi-mouse separation is not available through this SDL2
+adapter. Four touch players are best suited to a tablet. Hardware acceptance is
+pending; emulator/virtual input is described separately in [M89 evidence](evidence/m89/REPORT.md).
+
+For repeated builds `--icu-host-tools /absolute/path/to/matching/icu-host-build`
+may reuse ICU 76.1's existing native data tools. The default still builds its own;
+SDK/ICU caches are developer artifacts, never packaged runtime dependencies.

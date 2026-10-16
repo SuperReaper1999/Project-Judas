@@ -32,6 +32,7 @@
 #include "ScriptSystem.h"
 #include "SkeletalAnimation.h"
 #include "RuntimeUI.h"
+#include "LocalMultiplayer.h"
 
 class PlanetTiles;
 class SceneSession;
@@ -330,8 +331,10 @@ public:
     bool SetColliderEnabled(EntityId id,bool enabled);
     void FixedScripts(const InputSystem* input,float dt);
     bool RestoreScriptState(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume=false);
-    void EndScripts(){m_scripts.reset();m_ui.reset();pointerCapture=false;}
+    void EndScripts(){m_scripts.reset();m_ui.reset();m_players.reset();pointerCapture=false;}
     LocalizationSession& Localization();
+    LocalPlayers& Players(){if(!m_players)m_players=std::make_unique<LocalPlayers>();return *m_players;}
+    LocalPlayers* PlayersIfLoaded()const{return m_players.get();}
     RuntimeUI& UI(){if(!m_ui)m_ui=std::make_unique<RuntimeUI>(m_assets);m_ui->SetLocalization(&Localization());return *m_ui;}
     const RuntimeUI* UIIfLoaded()const{return m_ui.get();}
     void UpdateUIScripts(InputSystem* input,float dt);
@@ -639,6 +642,7 @@ private:
     std::map<EntityId,JointHandle> m_runtimeJoints;
     std::unique_ptr<ScriptSystem> m_scripts;
     std::unique_ptr<RuntimeUI> m_ui;
+    std::unique_ptr<LocalPlayers> m_players;
     std::unique_ptr<LocalizationSession> m_localization;
     std::map<EntityId,SceneObject> m_scriptDefinitions;
     std::set<EntityId> m_characterOwners;

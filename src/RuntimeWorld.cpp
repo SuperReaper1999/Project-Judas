@@ -821,7 +821,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     for(auto id:articulations){std::string error;LeaveRagdoll(id,0,error);}
     // Destroy callbacks may still inspect lazy runtime components. Retire
     // scripts before clearing them so callbacks cannot recreate reset state.
-    m_scripts.reset();spawnStates.clear();
+    m_scripts.reset();m_players.reset();spawnStates.clear();
     EndWeatherAudio();m_weather.clear();m_weatherResponses.clear();m_weatherShelter={};
     m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_powertrains.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
@@ -1390,7 +1390,7 @@ LightSwitch* RuntimeWorld::FindLightSwitch(SceneObjectId id) {
 void RuntimeWorld::Destroy() {
     m_regionPending.clear();m_regionKinematicCommands.clear();m_regionAssets.clear();m_composed=false;
  JUDAS_PROFILE_SCOPE("World destroy"); PerformanceProfiler::Get().Boundary("World destroy");
-    m_scripts.reset();m_planets.clear();
+    m_scripts.reset();m_players.reset();m_planets.clear();
     EndWeatherAudio();m_weather.clear();m_weatherResponses.clear();m_weatherShelter={};weatherQuality=1;m_weatherWork={};
     m_pendingOrigin.reset();m_originRevision=0;m_originError.clear();spawnStates.clear();
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();

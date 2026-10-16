@@ -195,6 +195,7 @@ add_library(judas_engine STATIC
     src/AudioSystem.cpp
     src/WorldAudio.cpp
     src/Window.cpp
+    src/LocalMultiplayer.cpp
     src/InputSystem.cpp
     src/Renderer.cpp
     src/SkeletalAnimation.cpp
@@ -1881,4 +1882,26 @@ if(UNIX AND NOT ANDROID)
 add_executable(judas_breakwater_performance tests/BreakwaterPerformance.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_breakwater_performance PRIVATE judas_engine)
 judas_warnings(judas_breakwater_performance)
+endif()
+
+# M89 optional local player/device and UI routing contracts.
+add_executable(judas_local_multiplayer_tests tests/LocalMultiplayerTests.cpp)
+target_link_libraries(judas_local_multiplayer_tests PRIVATE judas_engine)
+judas_warnings(judas_local_multiplayer_tests)
+add_executable(judas_local_multiplayer_application_tests tests/LocalMultiplayerApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_local_multiplayer_application_tests PRIVATE judas_engine)
+judas_warnings(judas_local_multiplayer_application_tests)
+add_executable(judas_local_multiplayer_render_tests tests/LocalMultiplayerRenderTests.cpp)
+target_link_libraries(judas_local_multiplayer_render_tests PRIVATE judas_engine)
+judas_warnings(judas_local_multiplayer_render_tests)
+add_executable(judas_local_device_adapter_tests tests/LocalDeviceAdapterTests.cpp)
+target_link_libraries(judas_local_device_adapter_tests PRIVATE judas_engine)
+judas_warnings(judas_local_device_adapter_tests)
+add_executable(judas_local_multiplayer_script_tests tests/LocalMultiplayerScriptTests.cpp)
+target_link_libraries(judas_local_multiplayer_script_tests PRIVATE judas_engine)
+judas_warnings(judas_local_multiplayer_script_tests)
+if(UNIX AND NOT ANDROID)
+add_executable(judas_local_multiplayer_performance tests/LocalMultiplayerPerformance.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_local_multiplayer_performance PRIVATE judas_engine)
+judas_warnings(judas_local_multiplayer_performance)
 endif()

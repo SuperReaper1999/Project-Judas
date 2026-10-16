@@ -183,3 +183,10 @@ mapping is project policy: use `world.project`/`world.viewport` for a physical b
 or camera. Modal menus must gate a game's touch behaviour just as other input.
 Focus loss, OS backgrounding and input reset clear held contacts. Handle rotation
 by reading current coordinates/viewport rather than caching pixel dimensions.
+
+## Local players (M89)
+
+Use [players and PlayerInput](local-multiplayer.md) for independent routes. The
+global input namespace deliberately retains its existing aggregate/selected-pad
+behaviour. SDL touch-generated mouse events remain on the global UI route and
+are excluded from another player's physical-mouse assignment.

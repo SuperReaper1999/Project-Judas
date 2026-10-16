@@ -1,0 +1,61 @@
+[
+  {
+    "name": "judas_local_multiplayer_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {},
+    "exit": 0
+  },
+  {
+    "name": "judas_local_device_adapter_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_device_adapter_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {},
+    "exit": 0
+  },
+  {
+    "name": "judas_local_multiplayer_script_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_script_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {},
+    "exit": 0
+  },
+  {
+    "name": "judas_local_multiplayer_render_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_render_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {},
+    "exit": 0
+  },
+  {
+    "name": "judas_local_multiplayer_application_tests",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_application_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {},
+    "exit": 0
+  },
+  {
+    "name": "api",
+    "command": [
+      "node",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+      "--runtime",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/script-probe/surface.json",
+      "--typescript",
+      "/tmp/judas-m85-types/node_modules/typescript"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {},
+    "exit": 0
+  }
+]

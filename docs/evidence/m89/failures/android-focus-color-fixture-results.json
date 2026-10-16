@@ -1,0 +1,254 @@
+{
+  "method": "Android16 x86_64 emulator; synthetic kernel input, not physical controllers/touch hardware",
+  "apkSha256": "c13eaecacb02f5db58ba5047f285e07e57a587c84495451e4487f33a18e2886e",
+  "checks": [
+    {
+      "check": "isolated emulator root available",
+      "pass": true
+    },
+    {
+      "check": "fixture display dimensions",
+      "pass": true
+    },
+    {
+      "check": "native MT input device identified",
+      "pass": true
+    },
+    {
+      "check": "actual cyan/coral physical bots identified in single-before",
+      "pass": true,
+      "blobs": [
+        [
+          {
+            "x": 222.53521126760563,
+            "y": 511.98591549295776,
+            "pixels": 213,
+            "bounds": [
+              215,
+              504,
+              16,
+              17
+            ]
+          }
+        ],
+        [
+          {
+            "x": 526.182156133829,
+            "y": 758.7769516728624,
+            "pixels": 269,
+            "bounds": [
+              518,
+              749,
+              18,
+              20
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "check": "actual cyan/coral physical bots identified in single-after",
+      "pass": true,
+      "blobs": [
+        [
+          {
+            "x": 373.2669902912621,
+            "y": 511.878640776699,
+            "pixels": 206,
+            "bounds": [
+              366,
+              504,
+              16,
+              17
+            ]
+          }
+        ],
+        [
+          {
+            "x": 526.182156133829,
+            "y": 758.7769516728624,
+            "pixels": 269,
+            "bounds": [
+              518,
+              749,
+              18,
+              20
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "check": "one native touch moves only its owning physical bot",
+      "pass": true,
+      "before": [
+        {
+          "x": 222.53521126760563,
+          "y": 511.98591549295776,
+          "pixels": 213,
+          "bounds": [
+            215,
+            504,
+            16,
+            17
+          ]
+        },
+        {
+          "x": 526.182156133829,
+          "y": 758.7769516728624,
+          "pixels": 269,
+          "bounds": [
+            518,
+            749,
+            18,
+            20
+          ]
+        }
+      ],
+      "after": [
+        {
+          "x": 373.2669902912621,
+          "y": 511.878640776699,
+          "pixels": 206,
+          "bounds": [
+            366,
+            504,
+            16,
+            17
+          ]
+        },
+        {
+          "x": 526.182156133829,
+          "y": 758.7769516728624,
+          "pixels": 269,
+          "bounds": [
+            518,
+            749,
+            18,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "check": "actual cyan/coral physical bots identified in two-before",
+      "pass": true,
+      "blobs": [
+        [
+          {
+            "x": 222.53521126760563,
+            "y": 511.98591549295776,
+            "pixels": 213,
+            "bounds": [
+              215,
+              504,
+              16,
+              17
+            ]
+          }
+        ],
+        [
+          {
+            "x": 526.182156133829,
+            "y": 758.7769516728624,
+            "pixels": 269,
+            "bounds": [
+              518,
+              749,
+              18,
+              20
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "check": "actual cyan/coral physical bots identified in two-after",
+      "pass": true,
+      "blobs": [
+        [
+          {
+            "x": 381.77941176470586,
+            "y": 512.0784313725491,
+            "pixels": 204,
+            "bounds": [
+              374,
+              504,
+              16,
+              17
+            ]
+          }
+        ],
+        [
+          {
+            "x": 345.6014234875445,
+            "y": 758.8113879003558,
+            "pixels": 281,
+            "bounds": [
+              337,
+              749,
+              18,
+              20
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "check": "simultaneous native touches move two physical bots in opposite directions",
+      "pass": true,
+      "before": [
+        {
+          "x": 222.53521126760563,
+          "y": 511.98591549295776,
+          "pixels": 213,
+          "bounds": [
+            215,
+            504,
+            16,
+            17
+          ]
+        },
+        {
+          "x": 526.182156133829,
+          "y": 758.7769516728624,
+          "pixels": 269,
+          "bounds": [
+            518,
+            749,
+            18,
+            20
+          ]
+        }
+      ],
+      "after": [
+        {
+          "x": 381.77941176470586,
+          "y": 512.0784313725491,
+          "pixels": 204,
+          "bounds": [
+            374,
+            504,
+            16,
+            17
+          ]
+        },
+        {
+          "x": 345.6014234875445,
+          "y": 758.8113879003558,
+          "pixels": 281,
+          "bounds": [
+            337,
+            749,
+            18,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "check": "owner touch opens actual local menu with idle assigned mouse",
+      "pass": false
+    }
+  ]
+}

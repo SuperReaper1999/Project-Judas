@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <set>
+#include <tuple>
 #include "InputSystem.h"
 
 enum class Action {
@@ -101,6 +102,7 @@ public:
     void SetTestInputMode(bool enabled);
     void BeginTestFrame();
     void QueueTestPhysical(std::string control,float value);
+    void QueueTestDevice(std::string device,std::string control,float value){m_testDevices.emplace_back(std::move(device),std::move(control),value);}
     void SetTestPointer(int x,int y) { m_uiClickX=x;m_uiClickY=y; }
     void SetTestActionState(Action action, bool active);
     void QueueTestMouseDelta(int deltaX, int deltaY);
@@ -124,6 +126,9 @@ private:
     bool m_controllerInputReady=false;
     bool m_inputFocused=true;
     void RefreshController(bool poll=true);
+    void RefreshLocalControllers(bool poll);
+    std::map<SDL_JoystickID,std::pair<SDL_GameController*,std::string>> m_localControllers;
+    std::weak_ptr<InputDeviceHub> m_localHub;
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
     bool m_sdlInitialized = false;
@@ -155,6 +160,7 @@ private:
     int m_height = 0;
 
     std::vector<std::pair<std::string,float>> m_testPhysical;
+    std::vector<std::tuple<std::string,std::string,float>> m_testDevices;
     bool m_testInputMode = false;
     bool m_testActionState[static_cast<int>(Action::Count)] = {};
     mutable int m_testMouseDeltaX = 0;

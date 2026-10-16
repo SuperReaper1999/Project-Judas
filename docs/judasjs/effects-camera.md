@@ -90,3 +90,10 @@ The actual view projection drives Renderer frustum culling and projection. `worl
 `world.project(worldPoint)` returns null until a script-owned view and a positive viewport size exist. Otherwise it returns `{x,y,depth,distance,behind,inside}`: x/y are normalized top-left viewport coordinates; depth is OpenGL normalized depth mapped to 0–1; distance is signed view-axis distance in metres, not Euclidean distance. `behind` identifies a point on/behind the camera plane; `inside` includes the near/far clipping bounds. Outside coordinates are not clamped. A point exactly on the camera plane returns the safe centre coordinates with `behind=true`, `inside=false`. Results are snapshots. `world.viewport` returns pixel `{width,height}`, zero before the interactive view is established. Read it again after resize.
 
 Use `presentationUpdate` for view/marker placement, not authoritative movement. A larger far range with a very small near plane reduces depth precision; this does not supply infinite viewing distance or live origin rebasing.
+
+## Local viewports (M89)
+
+[LocalPlayer.setView/project/ray](local-multiplayer.md#viewports-and-cameras)
+provide independent cameras in the same world. With no dedicated player views,
+the existing primary world view remains unchanged. Cameras do not create another
+physics tick or private audio listener.

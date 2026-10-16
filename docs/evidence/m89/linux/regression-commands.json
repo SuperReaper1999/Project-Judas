@@ -1,0 +1,58 @@
+[
+  {
+    "name": "judas_input_tests",
+    "arguments": [],
+    "exit": 0
+  },
+  {
+    "name": "judas_paired_input_tests",
+    "arguments": [],
+    "exit": 0
+  },
+  {
+    "name": "judas_paired_input_script_tests",
+    "arguments": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/regressions-final/paired-js"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "judas_runtime_ui_tests",
+    "arguments": [
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/regressions-final/ui"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "judas_runtime_ui_application_tests",
+    "arguments": [
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/regressions-final/ui-app"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "judas_character_motor_tests",
+    "arguments": [],
+    "exit": 0
+  },
+  {
+    "name": "judas_render_camera_tests",
+    "arguments": [
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/regressions-final/cameras"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "judas_audio_tests",
+    "arguments": [],
+    "exit": 0
+  },
+  {
+    "name": "judas_breakwater_application_tests",
+    "arguments": [],
+    "exit": 0
+  }
+]

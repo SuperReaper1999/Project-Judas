@@ -1,5 +1,37 @@
 # Architecture
 
+## Current Experimental — M89 optional local multiplayer
+
+`RuntimeWorld` lazily owns `LocalPlayers`. A process-monotonic player token is
+independent of device assignments and an optional controlled-entity association.
+`Window` publishes a bounded optional `InputDeviceHub`: aggregate SDL keyboard/mouse,
+per-instance gamepads and captured touch regions. Each player uses the existing
+InputSystem/InputMap edge/fixed-step semantics. The hub is world-owned; Window holds
+a weak reference and closes extra controllers after teardown. Single-player worlds
+allocate neither this service nor per-player GPU resources.
+
+`InteractivePlay` routes once before UI callbacks and steps the same authoritative
+world once, not once per player/view. RuntimeUI binds ordinary documents to player
+IDs and viewports; local modal focus blocks only owner gameplay while global modal
+pause retains its existing policy. Removal retires bound UI safely, not the entity.
+Project scripts choose joins, input maps, controller reassignment, control policy,
+shared-screen cameras and independent views. Save stable project seat keys/entity
+references, not native device/player/graphics tokens; reconstruct runtime identities
+on restore. No new authored player component or alternate entity-reference system.
+
+`WorldPresentation` reuses the existing renderer for optional display targets,
+ordered by player ID and sharing shadows/presentation alpha. Targets have explicit
+LDR tone mapping, FBO UV orientation and a proportional 2048-pixel longest-side cap.
+Allocation failure retries only after size/format changes or explicit clear/re-enable.
+Projection/rays use the same pixel aspect. Renderer alone owns GL; no physics or
+script ticking occurs per view. Shared audio/listener and primary planetary LOD
+policies remain unchanged; independent origins/private audio are not claimed.
+
+See [M89 architecture and limits](M89_LOCAL_MULTIPLAYER.md),
+[public API](judasjs/local-multiplayer.md) and the ordinary
+[Core Scramble project](../projects/core_scramble/README.md). Linux/emulator evidence
+does not imply human, physical-controller or Android-device acceptance.
+
 ## Current accepted release — M88 native Android runtime
 
 The operator [accepted the installed Breakwater phone build](evidence/m88/HUMAN_VALIDATION.md)

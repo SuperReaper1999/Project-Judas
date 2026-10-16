@@ -1,0 +1,110 @@
+[  0%] Built target judas_icu_build
+[  6%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 12%] Built target judas_glad
+[ 12%] Built target judas_profiler
+[ 12%] Built target judas_jobs
+[ 12%] Built target judas_audio_backend
+[ 18%] Built target judas_navigation_backend
+[ 18%] Built target judas_materials
+[ 18%] Built target harfbuzz
+[ 31%] Built target freetype
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ContentStorage.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModStore.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 37%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp: In member function ‘uint32_t RuntimeUI::Add(const UIDocument&, const std::string&, uint64_t, std::string&, uint64_t)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp:69:102: warning: missing initializer for member ‘RuntimeUI::Instance::layout’ [-Wmissing-field-initializers]
+   69 |     InvalidateLayout();auto id=m_next++;m_documents.emplace(id,Instance{d,name,{},{},owner,slot,{},{}});return id;}
+      |                                                                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp:69:102: warning: missing initializer for member ‘RuntimeUI::Instance::refs’ [-Wmissing-field-initializers]
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:873:
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl: In static member function ‘static JSValue ScriptSystem::Impl::Native(JSContext*, JSValue, int, JSValue*)’:
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:22:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   22 |             if(!hub()||!JS_IsString(arg(2))||!KnownOptions(c,arg(3),{"controls","region"}))return JS_ThrowTypeError(c,"device and controls/region options required");LocalPlayers::Assignment a;a.device=String(c,arg(2));auto controls=JS_GetPropertyStr(c,arg(3),"controls"),region=JS_GetPropertyStr(c,arg(3),"region");bool valid=true;
+      |             ^~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:22:166: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   22 |             if(!hub()||!JS_IsString(arg(2))||!KnownOptions(c,arg(3),{"controls","region"}))return JS_ThrowTypeError(c,"device and controls/region options required");LocalPlayers::Assignment a;a.device=String(c,arg(2));auto controls=JS_GetPropertyStr(c,arg(3),"controls"),region=JS_GetPropertyStr(c,arg(3),"region");bool valid=true;
+      |                                                                                                                                                                      ^~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:24:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   24 |             if(!JS_IsUndefined(region))valid&=rect(region,a.region);JS_FreeValue(c,controls);JS_FreeValue(c,region);
+      |             ^~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:24:69: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   24 |             if(!JS_IsUndefined(region))valid&=rect(region,a.region);JS_FreeValue(c,controls);JS_FreeValue(c,region);
+      |                                                                     ^~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:25:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   25 |             if(!valid||!service->Assign(p->id,*hub(),std::move(a),error))return JS_ThrowTypeError(c,"device assignment: %s",error.c_str());return JS_TRUE;
+      |             ^~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:25:140: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   25 |             if(!valid||!service->Assign(p->id,*hub(),std::move(a),error))return JS_ThrowTypeError(c,"device assignment: %s",error.c_str());return JS_TRUE;
+      |                                                                                                                                            ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:30:13: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   30 |             if(!valid||!service->SetView(p->id,pose,float(fov),nearPlane,farPlane,error))return JS_ThrowTypeError(c,"invalid player view/range");return JS_TRUE;
+      |             ^~
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptLocalMultiplayer.inl:30:146: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   30 |             if(!valid||!service->SetView(p->id,pose,float(fov),nearPlane,farPlane,error))return JS_ThrowTypeError(c,"invalid player view/range");return JS_TRUE;
+      |                                                                                                                                                  ^~~~~~
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp: In member function ‘void Window::Shutdown()’:
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp:77:5: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   77 |     for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();
+      |     ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp:77:76: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   77 |     for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();
+      |                                                                            ^~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp: In member function ‘void Window::RefreshLocalControllers(bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp:163:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  163 |  if(!poll)return;const bool available=!m_keyboardClaimed&&m_inputFocused&&m_applicationActive;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/Window.cpp:163:18: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  163 |  if(!poll)return;const bool available=!m_keyboardClaimed&&m_inputFocused&&m_applicationActive;
+      |                  ^~~~~
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+In file included from /usr/include/glm/gtx/norm.hpp:20,
+                 from /usr/include/glm/gtx/quaternion.hpp:21,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/LocalMultiplayer.cpp:5:
+/usr/include/glm/gtx/component_wise.hpp:22:9: error: #error "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+   22 | #       error "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+      |         ^~~~~
+/usr/include/glm/gtx/norm.hpp:23:9: error: #error "GLM: GLM_GTX_norm is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+   23 | #       error "GLM: GLM_GTX_norm is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+      |         ^~~~~
+/usr/include/glm/gtx/quaternion.hpp:24:9: error: #error "GLM: GLM_GTX_quaternion is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+   24 | #       error "GLM: GLM_GTX_quaternion is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+      |         ^~~~~
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/LocalMultiplayer.cpp: In member function ‘void LocalPlayers::Route(const InputDeviceHub&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/LocalMultiplayer.cpp:47:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   47 |  if(lastFrame==hub.frame)return;lastFrame=hub.frame;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/LocalMultiplayer.cpp:47:33: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   47 |  if(lastFrame==hub.frame)return;lastFrame=hub.frame;
+      |                                 ^~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:793: CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1276: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1390: CMakeFiles/judas.dir/rule] Error 2
+gmake: *** [Makefile:332: judas] Error 2

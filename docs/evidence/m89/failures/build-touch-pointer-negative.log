@@ -1,0 +1,21 @@
+[  0%] Built target judas_quickjs
+[  6%] Built target judas_app_icon
+[ 13%] Built target judas_icu_build
+[ 26%] Built target freetype
+[ 26%] Built target judas_glad
+[ 33%] Built target judas_navigation_backend
+[ 33%] Built target judas_profiler
+[ 33%] Built target judas_jobs
+[ 33%] Built target judas_audio_backend
+[ 33%] Built target harfbuzz
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_local_multiplayer_tests.dir/tests/LocalMultiplayerTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/LocalMultiplayerTests.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/LocalMultiplayerTests.cpp:33:521: error: ‘any_of’ is not a member of ‘std’
+   33 |  tick();combinedHub.Set("mouse","mouse:Left",0);combinedHub.Pointer("mouse",{0,0,false});combined.Route(combinedHub);tick();combinedHub.RecordTouch({501,.5f,.5f,1},true);combinedHub.RecordTouch({501,.5f,.5f,0},false);combined.Route(combinedHub);auto touchPointer=combined.Find(cp)->input.Pointer();RuntimeUI tapUI;auto td=tapUI.Add(doc,"touch-release",0,error);tapUI.SetPlayer(td,cp);tapUI.Input(combined.Find(cp)->input,{touchPointer.x*100,touchPointer.y*100},true,100,100,cp);auto tapped=tapUI.TakeEvents();Check(std::any_of(tapped.begin(),tapped.end(),[&](const auto& e){return e.type=="click"&&e.player==cp;}),"touch release uses its actual UI position even with an assigned idle physical mouse");
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ^~~~~~
+gmake[3]: *** [CMakeFiles/judas_local_multiplayer_tests.dir/build.make:79: CMakeFiles/judas_local_multiplayer_tests.dir/tests/LocalMultiplayerTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:13137: CMakeFiles/judas_local_multiplayer_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:13144: CMakeFiles/judas_local_multiplayer_tests.dir/rule] Error 2
+gmake: *** [Makefile:3959: judas_local_multiplayer_tests] Error 2

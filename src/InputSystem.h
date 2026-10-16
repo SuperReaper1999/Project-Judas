@@ -1,5 +1,7 @@
 #pragma once
 #include <map>
+#include <memory>
+class InputDeviceHub;
 #include <array>
 #include <chrono>
 #include <cstdint>
@@ -54,10 +56,13 @@ struct InputPointer {float x=0,y=0;bool down=false;};
 class InputSystem {
 public:
     InputSystem();
+    // Allocated only when a project opts into device-scoped input.
+    mutable std::weak_ptr<InputDeviceHub> localDevices;
     bool SetMap(const InputMap& map,std::string& error);
     const InputMap& Map() const {return m_map;}
     void BeginFrame();
     void SetTouch(std::int64_t device,std::int64_t finger,float x,float y,float pressure,bool down);
+    std::uint64_t TouchId(std::int64_t device,std::int64_t finger)const;
     const std::vector<InputTouch>& Touches() const {return m_touches;}
     void SetPointer(float x,float y,bool down);
     InputPointer Pointer() const {return m_pointer;}
@@ -65,6 +70,7 @@ public:
     void AddDelta(const std::string& control,float delta);
     void ClearDevice(const std::string& prefix);
     void Reset();
+    std::uint64_t ResetRevision()const{return m_resetRevision;}
     void DiscardPending();
     void DiscardStickHistory();
     // Consume logical inputs and every action/axis sharing their physical bindings.
@@ -93,6 +99,7 @@ private:
     std::vector<InputTouch> m_touches;
     std::uint64_t m_nextTouch=1;
     InputPointer m_pointer;
+    std::uint64_t m_resetRevision=0;
     void Evaluate();
     bool StickConsumed(const std::string& side) const;
     std::vector<std::string> m_consumed;

@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M88 public module based on checkpoint `16c40f08986486ef3d88aca50cefe0dde572b95b`. M88 operator phone acceptance is recorded in docs/evidence/m88/HUMAN_VALIDATION.md; emulator measurements and remaining device coverage are distinct. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M89 Experimental public module based on checkpoint `109c4386ef750162391655f522c237ecbf51aa7f`. M89 human acceptance is pending. M88 phone acceptance remains separately recorded; it does not certify this local multiplayer candidate. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -173,6 +173,24 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `LiquidVolume.surfaceEnabled` | `liquidSurfaceEnabled` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `LiquidVolume.transferTo` | `liquidTransfer` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `LiquidVolume.valid` | `liquidValid` | [declaration](../judas.d.ts) | [reference](liquid.md) |
+| `LocalPlayer` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.assign` | `playerAssign` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.clearView` | `playerView` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.devices` | `playerInfo` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.entity` | `playerEntity` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.input` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.leave` | `playerRemove` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.name` | `playerInfo` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.project` | `playerProject` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.ray` | `playerRay` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.setInputMap` | `playerMap` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.setView` | `playerView` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.unassign` | `playerUnassign` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.valid` | `playerExists` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.viewError` | `playerInfo` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `LocalPlayer.viewport` | `playerViewport` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `Material` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `Material.assign` | `materialAssign` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `Material.clearOverrides` | `materialClear` | [declaration](../judas.d.ts) | [reference](materials.md) |
@@ -193,6 +211,17 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `NavigationAgent.state` | `navAgentState` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `NavigationAgent.steering` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `NavigationAgent.stopped` | `navStopped` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `PlayerInput` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.axis` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.held` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.pointer` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.pressed` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.released` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.stick` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.touches` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `PlayerInput.vector` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `Powertrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](powertrains.md) |
 | `Powertrain.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](powertrains.md) |
 | `Powertrain.enabled` | `powertrainEnabled` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
@@ -225,6 +254,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIDocument.handle` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.hide` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.modal` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.player` | `uiPlayer` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.show` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.unload` | `uiUnload` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.visible` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
@@ -318,6 +348,11 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `physics.raycastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.sphereCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.sphereCastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `players` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `players.create` | `playerCreate` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `players.devices` | `playerDevices` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `players.get` | `playerExists` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
+| `players.list` | `playerList` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `profiler` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](profiling.md) |
 | `profiler.counter` | `profileCounter` | [declaration](../judas.d.ts) | [reference](profiling.md) |
 | `profiler.scope` | `profileScope` | [declaration](../judas.d.ts) | [reference](profiling.md) |

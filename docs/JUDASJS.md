@@ -1,4 +1,6 @@
-# JudasJS — current API reference (M88 accepted release)
+# JudasJS — current API reference (M89 Experimental candidate)
+
+M89 adds optional [local players, scoped input, viewports and HUD focus](judasjs/local-multiplayer.md). M89 operator acceptance is pending; main remains the accepted M88 release.
 
 M88 adds [normalized touch/pointer snapshots](judasjs/input.md#touch-and-pointer-snapshots-m88)
 for the optional [native Android runtime](ANDROID.md). Existing gameplay APIs and

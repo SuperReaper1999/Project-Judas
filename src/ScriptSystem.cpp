@@ -54,6 +54,44 @@ export const signals={
  send:(target,name,payload=null,phase='fixed')=>{if(!(target instanceof Entity))throw new TypeError('signals.send requires an Entity');return call('signalSend',target.id,name,payload,phase)},
  get stats(){return call('signalStats')}
 };
+export class PlayerInput {
+ constructor(id){this.id=String(id)}
+ held(name){return call('playerInput',this.id,'held',name)}
+ pressed(name){return call('playerInput',this.id,'pressed',name)}
+ released(name){return call('playerInput',this.id,'released',name)}
+ axis(name){return call('playerInput',this.id,'axis',name)}
+ vector(name){return call('playerInput',this.id,'vector',name)}
+ stick(side){return call('playerInput',this.id,'stick',side)}
+ get touches(){return call('playerInput',this.id,'touches')}
+ get pointer(){return call('playerInput',this.id,'pointer')}
+}
+export class LocalPlayer {
+ constructor(id){this.id=String(id)}
+ get valid(){return call('playerExists',this.id)}
+ get name(){return call('playerInfo',this.id).name}
+ get devices(){return call('playerInfo',this.id).devices}
+ get input(){return new PlayerInput(this.id)}
+ get entity(){return entity(call('playerEntity',this.id))}
+ set entity(value){call('playerEntity',this.id,value?.id??null)}
+ get viewport(){return call('playerViewport',this.id)}
+ set viewport(value){call('playerViewport',this.id,value)}
+ get viewError(){return call('playerInfo',this.id).viewError}
+ project(point){return call('playerProject',this.id,point)}
+ ray(point={x:.5,y:.5}){return call('playerRay',this.id,point)}
+ assign(device,options={}){return call('playerAssign',this.id,device,options)}
+ unassign(device){return call('playerUnassign',this.id,device)}
+ setInputMap(map){return call('playerMap',this.id,map)}
+ setView(pose,fov=70,range={}){return call('playerView',this.id,pose,fov,range)}
+ clearView(){return call('playerView',this.id,null)}
+ leave(){return call('playerRemove',this.id)}
+}
+export const players={
+ create:(name='Player',map=null)=>new LocalPlayer(call('playerCreate',name,map)),
+ get:id=>call('playerExists',String(id))?new LocalPlayer(id):null,
+ get list(){return call('playerList').map(id=>new LocalPlayer(id))},
+ get devices(){return call('playerDevices')}
+};
+
 export class Weather {
  constructor(id){this.id=String(id)}
  get valid(){return call('weatherExists',this.id)}
@@ -373,6 +411,8 @@ export class UIElement {
 }
 export class UIDocument {
  constructor(handle){this.handle=handle}
+ get player(){const id=call("uiPlayer",this.handle);return id?new LocalPlayer(id):null}
+ set player(value){call("uiPlayer",this.handle,value?.id??null)}
  get(id){call('uiGet',this.handle,id,'visible');return new UIElement(this.handle,id)}
  get visible(){return call('uiGet',this.handle,'','visible')}
  set visible(v){call('uiSet',this.handle,'','visible',v)}
@@ -399,7 +439,7 @@ struct ScriptSystem::Impl {
     std::map<std::string,JSModuleDef*> modules;
     std::vector<ScriptDiagnostic> diagnostics;
     const InputSystem* input=nullptr;bool fixed=false;float delta=0;
-    bool inPresentation=false;float presentationAlpha=1;
+    bool inUI=false;bool inPresentation=false;float presentationAlpha=1;
     bool hasView=false;glm::vec3 viewOrigin{0},viewDirection{0};
     unsigned budget=10000,polls=0;bool stopping=false;SceneObjectId currentOwner=0;std::uint64_t currentSlot=0;
     std::map<std::pair<SceneObjectId,std::uint64_t>,std::string> restored;
@@ -832,6 +872,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(!JS_IsUndefined(r))ok=ok&&Number(c,r,"w",t.rotation.w)&&Number(c,r,"x",t.rotation.x)&&Number(c,r,"y",t.rotation.y)&&Number(c,r,"z",t.rotation.z)&&std::isfinite(glm::dot(t.rotation,t.rotation))&&glm::dot(t.rotation,t.rotation)>1e-12f;
         if(!JS_IsUndefined(scale))ok=ok&&ReadVec(c,scale,t.scale)&&t.scale.x>0&&t.scale.y>0&&t.scale.z>0;
         JS_FreeValue(c,p);JS_FreeValue(c,r);JS_FreeValue(c,scale);return ok;};
+    #include "ScriptLocalMultiplayer.inl"
     if(op=="setView"){
         const bool initialView=!world.view;SceneTransform t;double fov=70;float nearPlane=.1f,farPlane=500;auto range=arg(3);if(!KnownOptions(c,range,{"near","far"}))return JS_ThrowTypeError(c,"camera range accepts near/far only");for(auto [key,value]:{std::pair<const char*,float*>{"near",&nearPlane},{"far",&farPlane}}){auto v=JS_GetPropertyStr(c,range,key);bool has=!JS_IsUndefined(v);JS_FreeValue(c,v);if(has&&!Number(c,range,key,*value))return JS_ThrowTypeError(c,"finite camera range required");}if(!readTransform(arg(1),t)||JS_ToFloat64(c,&fov,arg(2))||!world.SetRuntimeView(t,float(fov),nearPlane,farPlane))return JS_ThrowTypeError(c,"invalid runtime view");if(initialView)world.ResetAudioMotion();return JS_TRUE;
     }
@@ -1735,19 +1776,21 @@ bool ScriptSystem::SourceFingerprint(const AssetDatabase& assets,const Scene& sc
 }
 
 void ScriptSystem::UIFrame(const InputSystem* input,float dt){
- JUDAS_PROFILE_SCOPE("JavaScript UI update");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;
+ JUDAS_PROFILE_SCOPE("JavaScript UI update");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;m->inUI=true;
     for(auto key:m->world->ScriptKeys()){auto it=m->instances.find(key);if(it==m->instances.end()||!m->world->RuntimeDefinition(key.first))continue;auto& i=it->second;if(!i.started){i.started=true;m->Callback(i,i.loaded?"restore":"start");}m->Callback(i,"uiUpdate");}
+    m->inUI=false;
 }
 void ScriptSystem::UIEvents(const InputSystem* input,float dt){
- JUDAS_PROFILE_SCOPE("JavaScript UI events");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;
-    if(!m->world->UIIfLoaded())return;
+ JUDAS_PROFILE_SCOPE("JavaScript UI events");m->CheckThread();m->input=input;m->delta=dt;m->fixed=false;m->inUI=true;
+    if(!m->world->UIIfLoaded()){m->inUI=false;return;}
     auto events=m->world->UI().TakeEvents();
     for(const auto& event:events)for(auto key:m->world->ScriptKeys()){auto it=m->instances.find(key);if(it==m->instances.end()||it->second.fault||!m->world->RuntimeDefinition(key.first))continue;
         auto& i=it->second;Impl::Invocation invocation(*m,i);ProfileScope assetScope(m->AssetLabel(i));m->polls=0;m->currentOwner=i.entity;m->currentSlot=i.slot.id;auto fn=JS_GetPropertyStr(m->ctx,i.value,"onUI");if(JS_IsException(fn)){m->Error(i,"onUI");JS_FreeValue(m->ctx,fn);continue;}if(JS_IsFunction(m->ctx,fn)){
-            auto e=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,e,"document",JS_NewString(m->ctx,event.document.c_str()));JS_SetPropertyStr(m->ctx,e,"element",JS_NewString(m->ctx,event.element.c_str()));JS_SetPropertyStr(m->ctx,e,"type",JS_NewString(m->ctx,event.type.c_str()));JS_SetPropertyStr(m->ctx,e,"value",JS_NewFloat64(m->ctx,event.value));
+            auto e=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,e,"document",JS_NewString(m->ctx,event.document.c_str()));JS_SetPropertyStr(m->ctx,e,"element",JS_NewString(m->ctx,event.element.c_str()));JS_SetPropertyStr(m->ctx,e,"type",JS_NewString(m->ctx,event.type.c_str()));JS_SetPropertyStr(m->ctx,e,"value",JS_NewFloat64(m->ctx,event.value));JS_SetPropertyStr(m->ctx,e,"playerId",event.player?JS_NewString(m->ctx,std::to_string(event.player).c_str()):JS_NULL);
             auto result=JS_Call(m->ctx,fn,i.value,1,&e);if(JS_IsException(result))m->Error(i,"onUI");else if(JS_PromiseState(m->ctx,result)!=JS_PROMISE_NOT_A_PROMISE){JS_ThrowTypeError(m->ctx,"async UI callback unsupported");m->Error(i,"onUI");}JS_FreeValue(m->ctx,result);JS_FreeValue(m->ctx,e);
         }JS_FreeValue(m->ctx,fn);
     }
+    m->inUI=false;
 }
 
 void ScriptSystem::PhysicsEvent(SceneObjectId self,SceneObjectId other,const PhysicsWorld::TouchEvent& event,bool reverse,SceneObjectId selfBody,const std::string& selfJoint,SceneObjectId otherArticulation,const std::string& otherJoint){

@@ -125,7 +125,7 @@ void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline
 }
 void InputSystem::AddDelta(const std::string& c,float v){if(std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
 void InputSystem::ClearDevice(const std::string& prefix){if(prefix=="touch:"){m_touchKeys.clear();m_touches.clear();}for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
-void InputSystem::Reset(){m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
+void InputSystem::Reset(){++m_resetRevision;m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
 void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}DiscardStickHistory();}
 void InputSystem::DiscardStickHistory(){
     m_stickResetSequence=++m_stickSequence;
@@ -189,3 +189,5 @@ void InputSystem::SetTouch(std::int64_t device,std::int64_t finger,float x,float
     if(!down){m_touchKeys.erase(it);m_touches.erase(m_touches.begin()+index);return;}
     m_touches[index]={it->id,std::clamp(x,0.f,1.f),std::clamp(y,0.f,1.f),std::clamp(pressure,0.f,1.f)};
 }
+
+std::uint64_t InputSystem::TouchId(std::int64_t device,std::int64_t finger)const{for(const auto& key:m_touchKeys)if(key.device==device&&key.finger==finger)return key.id;return 0;}

@@ -1,0 +1,42 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/core_scramble/Saves/arena.judasstate (none saved)
+Project: Core Scramble (/home/conner/Documents/GitHub/Project-Judas/projects/core_scramble/core_scramble.judasproj)
+Scene: CORE SCRAMBLE (/home/conner/Documents/GitHub/Project-Judas/projects/core_scramble/Scenes/arena.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS new gamepad becomes an independent game seat
+PASS shared lobby exposes device recovery control
+PASS explicit device release is not immediately stolen back by autojoin
+PASS ordinary project creates two independent local identities
+PASS identities bind distinct actual bodies
+PASS five real physical core bodies
+PASS two keyboard partitions independently drive native rigid bodies
+PASS per-player action applies real physical shove impulse
+PASS actual core entering goal changes project score
+PASS scored core retires collision and a distinct core replaces it
+PASS local pause owns one player's controls without pausing arena
+PASS local modal suppresses only owner gameplay; other player keeps moving
+PASS owner Back releases local focus without stuck input
+PASS split view preserves exact player/body identities
+PASS independent views own real render targets
+PASS capture actual player view composition
+PASS runtime joining expands to four real bodies
+PASS camera/roster changes preserve score
+PASS capture actual player view composition
+PASS actual owner UI navigation leaves safely and retires identity
+PASS project leave retires only that controlled body
+PASS game respawn changes physical body while preserving player identity
+PASS rejoin cannot revive stale player token
+PASS no faults through movement/UI/join/leave and device rerouting
+PASS normal M61 save captures multiplayer consumer state
+PASS normal M61 restore requested
+PASS new-world restore rebinds actual saved bodies and project score without duplicates
+PASS restored physical endpoints preserved; identities do not respawn saved actors
+PASS restoration cannot revive old player handles
+PASS scene reload builds new roster without stale identities
+PASS scene reload cleans actual player/core body population
+PASS full native round reaches scored end screen after reload
+PASS no script faults through completed round
+PASS ordinary application shuts down safely
+34 checks 0 failures

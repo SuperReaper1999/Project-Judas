@@ -1,0 +1,228 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Core Scramble",
+    "legacyGameplay": false,
+    "saveIdentity": "1ccb525f62a9f25feebeeb41d766db1f5f050c723847f27a58711954923ec58f",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/arena.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "all",
+    "runtimeAssets": [],
+    "exportScenes": [
+      "Scenes/arena.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:AC Back",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:Back",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "split",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:V",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:RightShoulder",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "restart",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Backspace",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "two",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F2",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "three",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F3",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "four",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F4",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_click",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_activate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Return",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:South",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Up",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadUp",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Down",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadDown",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 3,
+        "entries": [
+          {
+            "id": 0,
+            "name": "bot"
+          },
+          {
+            "id": 1,
+            "name": "core"
+          },
+          {
+            "id": 2,
+            "name": "cargo"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {}
+  }
+}

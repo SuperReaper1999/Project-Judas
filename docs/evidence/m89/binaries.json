@@ -1,0 +1,245 @@
+{
+  "candidate": [
+    {
+      "path": "build/judas",
+      "bytes": 53151832,
+      "sha256": "2f9d679f5a7852d88b29daa6efbd8070bb533189cd83be26c97bff08a70bc0df"
+    },
+    {
+      "path": "build/judas_editor",
+      "bytes": 58424840,
+      "sha256": "ee8a024c30f54a686048c8ae1c6344908e875e1d2644c8e7d927c0467e9cfa54"
+    },
+    {
+      "path": "build/judas_export",
+      "bytes": 52962432,
+      "sha256": "924767bf5372641cc56daee2302dace76baf0835b829b7386d87b68b329ffc6c"
+    },
+    {
+      "path": "build/judas_local_multiplayer_tests",
+      "bytes": 52239264,
+      "sha256": "3397487a5f532bc6e36310cbca33873d6c9ec9d349b0e1c2d5fd28202a66b6a0"
+    },
+    {
+      "path": "build/judas_local_device_adapter_tests",
+      "bytes": 52230792,
+      "sha256": "04020865d423b89fcc836ff99b862295dba7c1cb57607d6f71c5105a00d43f5a"
+    },
+    {
+      "path": "build/judas_local_multiplayer_script_tests",
+      "bytes": 52290680,
+      "sha256": "b3e426b295154ee02869fa95c925353c5042b7e6c2be2cc356e1c7fa95f9878d"
+    },
+    {
+      "path": "build/judas_local_multiplayer_render_tests",
+      "bytes": 52402768,
+      "sha256": "0523cf1dcf469953c5cc7070e922617b8bd8d2bd1ea9990dc11e87bafa651840"
+    },
+    {
+      "path": "build/judas_local_multiplayer_application_tests",
+      "bytes": 53200496,
+      "sha256": "61488a24f44d07441b4f5f820bbb9c82248de136c707b61d0c0a31216161398a"
+    },
+    {
+      "path": "build/judas_local_multiplayer_performance",
+      "bytes": 53194112,
+      "sha256": "3a07b310c884a11094062d6e2decbf15186b161d7b45f11244b494435d02f5d1"
+    },
+    {
+      "path": "build/judas_paired_input_script_tests",
+      "bytes": 52397808,
+      "sha256": "47c9cf74931bcf76027a2b65f672086cbeb68178a3175c426b683ac807d58122"
+    },
+    {
+      "path": "build/judas_runtime_ui_tests",
+      "bytes": 52415608,
+      "sha256": "8b91f7e747c269bb4c3b077a892aa3f393510f54e0a70dc7075f06260af54594"
+    },
+    {
+      "path": "build/judas_runtime_ui_application_tests",
+      "bytes": 53185320,
+      "sha256": "abb574a2a1e5c1a176e6e3e065a933cffb8c1cca29c06ba66032c0fe4c50cb8f"
+    },
+    {
+      "path": "build/judas_character_motor_tests",
+      "bytes": 52284712,
+      "sha256": "69ad26379dcd5d5c26a5ac07cd0cdf4f242b4b5544bd5dae6d30211fd80dd5b2"
+    },
+    {
+      "path": "build/judas_render_camera_tests",
+      "bytes": 52637672,
+      "sha256": "f54c7c2a94aaaa97516f4b8f56a094c1551a901c81e5137a9565f6bbb7b4226a"
+    },
+    {
+      "path": "build/judas_audio_tests",
+      "bytes": 52564552,
+      "sha256": "bf33c6b1a7b4f963a88d7389ed2d55c5aa12ea3d830b98ff2fe9f85cbfd42773"
+    },
+    {
+      "path": "build/judas_breakwater_application_tests",
+      "bytes": 53196848,
+      "sha256": "a18a1ec35a248b7145902f6891b15d50352f15adfd9015eec19ba5ae66367c5a"
+    },
+    {
+      "path": ".cache/m89/CoreScramble.apk",
+      "bytes": 104071919,
+      "sha256": "c13eaecacb02f5db58ba5047f285e07e57a587c84495451e4487f33a18e2886e"
+    },
+    {
+      "path": ".cache/m89/CoreScramble-Linux-x86_64.zip",
+      "bytes": 23311005,
+      "sha256": "3c6d408e1d01488ca6c507e12f9f48bca83372e63ff94668ddccb2b423c365a9"
+    },
+    {
+      "path": ".cache/m89/CoreScramble-desktop-final/judas",
+      "bytes": 53151832,
+      "sha256": "2f9d679f5a7852d88b29daa6efbd8070bb533189cd83be26c97bff08a70bc0df"
+    },
+    {
+      "path": ".cache/m89/local-gamepads",
+      "bytes": 8208,
+      "sha256": "53d59942eb2e1bc511080aff0a910792721e576ca93e64d23e7f574d4ed0daea"
+    },
+    {
+      "path": ".cache/m89/android/android-arm64-v8a/libmain.so",
+      "bytes": 221465248,
+      "sha256": "fbca91d9d25945b6d2c3fa0d2a3dd701380ae89f5ec80db16c0d9fc663ba1671"
+    },
+    {
+      "path": ".cache/m89/android/android-x86_64/libmain.so",
+      "bytes": 213737168,
+      "sha256": "b25fffab55c00b9c009bca4d9082727d251b5b17759cb8128b1bb42a414cde04"
+    },
+    {
+      "path": "build/judas_input_tests",
+      "bytes": 52243504,
+      "sha256": "b23b12dade160b56bf1d003412ef18a515de474bc80b475a6216e8c94a46dcea"
+    },
+    {
+      "path": "build/judas_paired_input_tests",
+      "bytes": 52356840,
+      "sha256": "e0701385771b75409cd472db89c149faaec723c1f1ffdb41c7635cdd43c6f1e8"
+    }
+  ],
+  "negativeProof": {
+    "path": ".cache/m89/touch-pointer-before-test",
+    "sha256": "629ad6ebc71391148640c5b4a203b5089032e991b9f44d20b2c2ac6056a388c3",
+    "expectedExit": 1,
+    "result": "37 checks / 2 failures with preserved pre-pointer-correction object; final test passes 37/0"
+  },
+  "apkNative": [
+    {
+      "path": "lib/arm64-v8a/libmain.so",
+      "bytes": 47913120,
+      "storedUncompressed": true,
+      "sha256": "a329ffe437ad1b00022b55b526455240a4f553517bf0466c76cf8db0d97f30ee"
+    },
+    {
+      "path": "lib/arm64-v8a/libSDL2.so",
+      "bytes": 1257040,
+      "storedUncompressed": true,
+      "sha256": "11461a5417b8f89dd19372b8ac1aa52cd035191d8a0a1449d324f96ffdb1a51d"
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "storedUncompressed": true,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    },
+    {
+      "path": "lib/x86_64/libmain.so",
+      "bytes": 49028096,
+      "storedUncompressed": true,
+      "sha256": "9e74b64d7452fdc847039af3cba6b688e8dfc3b18d0a990901e0414abb57546d"
+    },
+    {
+      "path": "lib/x86_64/libSDL2.so",
+      "bytes": 1370960,
+      "storedUncompressed": true,
+      "sha256": "c2ea3805f01574beacced734d1670457233c0a93562d37a95f27dbb3e1acf3ee"
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "storedUncompressed": true,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256"
+    }
+  ],
+  "apkCurrentContent": [
+    {
+      "project": "Assets/ui/hud.judasui",
+      "apk": "assets/content/Assets/ui/hud.judasui",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/ui/player.judasui",
+      "apk": "assets/content/Assets/ui/player.judasui",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/ui/hud_portrait.judasui",
+      "apk": "assets/content/Assets/ui/hud_portrait.judasui",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/scripts/controls.js",
+      "apk": "assets/content/Assets/scripts/controls.js",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/scripts/game.js",
+      "apk": "assets/content/Assets/scripts/game.js",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/scripts/math.js",
+      "apk": "assets/content/Assets/scripts/math.js",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/scripts/content.js",
+      "apk": "assets/content/Assets/scripts/content.js",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/audio/bump.wav",
+      "apk": "assets/content/Assets/audio/bump.wav",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/audio/goal.wav",
+      "apk": "assets/content/Assets/audio/goal.wav",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/fonts/DejaVuSans.ttf",
+      "apk": "assets/content/Assets/fonts/DejaVuSans.ttf",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/prefabs/core.judasprefab",
+      "apk": "assets/content/Assets/prefabs/core.judasprefab",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/prefabs/bot2.judasprefab",
+      "apk": "assets/content/Assets/prefabs/bot2.judasprefab",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/prefabs/bot3.judasprefab",
+      "apk": "assets/content/Assets/prefabs/bot3.judasprefab",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/prefabs/bot1.judasprefab",
+      "apk": "assets/content/Assets/prefabs/bot1.judasprefab",
+      "byteIdentical": true
+    },
+    {
+      "project": "Assets/prefabs/bot0.judasprefab",
+      "apk": "assets/content/Assets/prefabs/bot0.judasprefab",
+      "byteIdentical": true
+    }
+  ]
+}

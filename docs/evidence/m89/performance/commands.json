@@ -1,0 +1,35 @@
+[
+  {
+    "utc": "2026-10-16T01:17:09.636615+00:00",
+    "command": [
+      "build/judas_local_multiplayer_performance",
+      "2",
+      "shared",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/performance/2-shared.json"
+    ],
+    "profile": "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/performance/2-shared-m56.json",
+    "exit": 0
+  },
+  {
+    "utc": "2026-10-16T01:17:16.714779+00:00",
+    "command": [
+      "build/judas_local_multiplayer_performance",
+      "4",
+      "shared",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/performance/4-shared.json"
+    ],
+    "profile": "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/performance/4-shared-m56.json",
+    "exit": 0
+  },
+  {
+    "utc": "2026-10-16T01:17:23.793824+00:00",
+    "command": [
+      "build/judas_local_multiplayer_performance",
+      "4",
+      "split",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/performance/4-split.json"
+    ],
+    "profile": "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/performance/4-split-m56.json",
+    "exit": 0
+  }
+]

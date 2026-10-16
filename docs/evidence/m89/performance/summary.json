@@ -1,0 +1,181 @@
+[
+  {
+    "players": 2,
+    "split": false,
+    "frame": {
+      "medianMs": 1.28733,
+      "p95Ms": 1.977253,
+      "samples": 3579,
+      "worstMs": 6.376523
+    },
+    "fixed": {
+      "medianMs": 0.380346,
+      "p95Ms": 1.030779,
+      "samples": 300,
+      "worstMs": 3.294243
+    },
+    "maxBodies": 20,
+    "peakRssBytes": 186576896,
+    "method": "Linux Release, same Core Scramble arena/physics, real clock logical-input pilot; hidden 1024x768 GL window, uncapped swap; 2s warm-up + 5s measurement; throughput not display refresh",
+    "name": "2-shared",
+    "retainedM56Frames": 120,
+    "scriptCPU": {
+      "samples": 120,
+      "medianMs": 0.127208,
+      "p95Ms": 0.270465,
+      "worstMs": 0.357308
+    },
+    "inputRoutingCPU": {
+      "samples": 120,
+      "medianMs": 0.0118335,
+      "p95Ms": 0.021358,
+      "worstMs": 0.025027
+    },
+    "gpuScopedPassTotal": {
+      "samples": 118,
+      "medianMs": 0.389664,
+      "p95Ms": 0.39545600000000003,
+      "worstMs": 0.40575999999999995
+    },
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "profilerReservedEstimateBytes": 70575472,
+    "diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  },
+  {
+    "players": 4,
+    "split": false,
+    "frame": {
+      "medianMs": 1.446404,
+      "p95Ms": 1.90527,
+      "samples": 3312,
+      "worstMs": 3.026493
+    },
+    "fixed": {
+      "medianMs": 0.48506,
+      "p95Ms": 0.979886,
+      "samples": 300,
+      "worstMs": 1.59199
+    },
+    "maxBodies": 22,
+    "peakRssBytes": 127770624,
+    "method": "Linux Release, same Core Scramble arena/physics, real clock logical-input pilot; hidden 1024x768 GL window, uncapped swap; 2s warm-up + 5s measurement; throughput not display refresh",
+    "name": "4-shared",
+    "retainedM56Frames": 120,
+    "scriptCPU": {
+      "samples": 120,
+      "medianMs": 0.174337,
+      "p95Ms": 0.379133,
+      "worstMs": 0.445907
+    },
+    "inputRoutingCPU": {
+      "samples": 120,
+      "medianMs": 0.018224,
+      "p95Ms": 0.029757,
+      "worstMs": 0.046459
+    },
+    "gpuScopedPassTotal": {
+      "samples": 118,
+      "medianMs": 0.400384,
+      "p95Ms": 0.407136,
+      "worstMs": 0.41184
+    },
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "profilerReservedEstimateBytes": 70575472,
+    "diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  },
+  {
+    "players": 4,
+    "split": true,
+    "frame": {
+      "medianMs": 3.019327,
+      "p95Ms": 3.750879,
+      "samples": 1603,
+      "worstMs": 6.480707
+    },
+    "fixed": {
+      "medianMs": 0.511972,
+      "p95Ms": 1.000322,
+      "samples": 300,
+      "worstMs": 1.397732
+    },
+    "maxBodies": 22,
+    "peakRssBytes": 132685824,
+    "method": "Linux Release, same Core Scramble arena/physics, real clock logical-input pilot; hidden 1024x768 GL window, uncapped swap; 2s warm-up + 5s measurement; throughput not display refresh",
+    "name": "4-split",
+    "retainedM56Frames": 120,
+    "scriptCPU": {
+      "samples": 120,
+      "medianMs": 0.245782,
+      "p95Ms": 0.490568,
+      "worstMs": 0.555615
+    },
+    "inputRoutingCPU": {
+      "samples": 120,
+      "medianMs": 0.019697,
+      "p95Ms": 0.027925,
+      "worstMs": 0.051844
+    },
+    "gpuScopedPassTotal": {
+      "samples": 118,
+      "medianMs": 0.8535520000000001,
+      "p95Ms": 0.882016,
+      "worstMs": 0.895264
+    },
+    "capFrames": 0,
+    "discardedSeconds": 0,
+    "profilerReservedEstimateBytes": 70575472,
+    "diagnostics": {
+      "dropped_events": 0,
+      "exhausted_labels": 0,
+      "exhausted_nodes": 0,
+      "exhausted_threads": 0,
+      "incomplete_scopes": 0,
+      "open_scopes": 0,
+      "truncated_records": 0,
+      "gpu_dropped": 0,
+      "nested_frames": 0
+    }
+  },
+  {
+    "players": 4,
+    "split": true,
+    "frame": {
+      "medianMs": 2.927866,
+      "p95Ms": 3.729188,
+      "samples": 1642,
+      "worstMs": 6.472291
+    },
+    "fixed": {
+      "medianMs": 0.570393,
+      "p95Ms": 1.002886,
+      "samples": 299,
+      "worstMs": 2.723551
+    },
+    "maxBodies": 22,
+    "peakRssBytes": 125001728,
+    "method": "Linux Release, same Core Scramble arena/physics, real clock logical-input pilot; hidden 1024x768 GL window, uncapped swap; 2s warm-up + 5s measurement; throughput not display refresh",
+    "name": "4-split-profiler-off"
+  }
+]

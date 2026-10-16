@@ -1,0 +1,49 @@
+{
+  "method": "Android16 x86_64 emulator; synthetic kernel input, not physical controllers/touch hardware",
+  "apkSha256": "d88f520e66ea38db191a260066d58110073e965015d0e00fffe80a463e7dc635",
+  "checks": [
+    {
+      "check": "isolated emulator root available",
+      "pass": true
+    },
+    {
+      "check": "fixture display dimensions",
+      "pass": true
+    },
+    {
+      "check": "native MT input device identified",
+      "pass": true
+    },
+    {
+      "check": "actual cyan/coral physical bots identified in single-before",
+      "pass": false,
+      "blobs": [
+        [],
+        [
+          {
+            "x": 286.0700934579439,
+            "y": 556.8598130841121,
+            "pixels": 642,
+            "bounds": [
+              264,
+              543,
+              35,
+              27
+            ]
+          },
+          {
+            "x": 430.378640776699,
+            "y": 558.4563106796116,
+            "pixels": 412,
+            "bounds": [
+              421,
+              543,
+              35,
+              27
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

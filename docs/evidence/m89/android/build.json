@@ -1,0 +1,26 @@
+{
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/CoreScramble.apk",
+  "sha256": "c13eaecacb02f5db58ba5047f285e07e57a587c84495451e4487f33a18e2886e",
+  "abis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "developmentSigning": true,
+  "shadows": "off",
+  "contentFiles": 43,
+  "contentBytes": 2370343,
+  "native": {
+    "arm64-v8a": {
+      "libmain.so": "fbca91d9d25945b6d2c3fa0d2a3dd701380ae89f5ec80db16c0d9fc663ba1671",
+      "_deps/judas_sdl-build/libSDL2.so": "0b91dc0a788b964aa7112bca7d33a17f4ad190099a29a2f6c3841419c8eaf0fc"
+    },
+    "x86_64": {
+      "libmain.so": "b25fffab55c00b9c009bca4d9082727d251b5b17759cb8128b1bb42a414cde04",
+      "_deps/judas_sdl-build/libSDL2.so": "0acd68edae61fcaaa411250fbe5380a01113e3cca819c90a0f32830cdf21ca2c"
+    }
+  }
+}

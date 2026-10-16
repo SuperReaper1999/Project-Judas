@@ -28,6 +28,7 @@ def main():
     p.add_argument('--abis',default='arm64-v8a,x86_64')
     p.add_argument('--shadows',choices=['off','on'],default='off',help='Mobile graphics profile; physics is unchanged')
     p.add_argument('--jobs',type=int,default=4)
+    p.add_argument('--icu-host-tools',type=Path,help='Reuse a matching ICU 76.1 host build without rebuilding its tools')
     p.add_argument('--id',default='org.projectjudas.breakwater')
     p.add_argument('--name',default='Breakwater')
     p.add_argument('--version-code',type=int,default=1)
@@ -56,7 +57,7 @@ def main():
         if not f.is_file():p.error(f'Missing {f}; see docs/ANDROID.md SDK setup')
     native={}
     known=sorted(cache.glob('android-*/unicode/host/src/judas_icu_host-build/config/icucross.mk'))
-    host_tools=known[0].parent.parent if known else None
+    host_tools=a.icu_host_tools.resolve() if a.icu_host_tools else known[0].parent.parent if known else None
     for abi in abis:
         b=cache/('android-'+abi)
         cross_host=[f'-DJUDAS_ICU_HOST_TOOLS={host_tools}'] if host_tools else []

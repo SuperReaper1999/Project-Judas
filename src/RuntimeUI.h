@@ -26,7 +26,7 @@ bool SaveUIDocument(const std::string& path,const UIDocument& doc,std::string& e
 std::string SerializeUIDocument(const UIDocument& doc);
 bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error);
 bool ValidateUIAssets(const UIDocument& doc,const AssetDatabase& assets,std::string& error);
-struct UIEvent {std::string document,element,type;float value=0;};
+struct UIEvent {std::string document,element,type;float value=0;std::uint64_t player=0;};
 struct UILayout {UIRect rect,clip;bool visible=false,enabled=false;};
 struct UIStats {unsigned elements=0,draws=0;double updateUs=0,renderUs=0;};
 // World-owned document instances; monotonically increasing handles never revive
@@ -46,16 +46,20 @@ public:
     void Layout(int width,int height);
     bool SetElementLayout(std::uint32_t handle,const std::string& id,const std::map<std::string,glm::vec2>& patch,std::string& error);
     void InvalidateLayout(){++m_layoutRevision;}
-    void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height);
+    void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height,std::uint64_t player=0);
     void Draw(Renderer& renderer,int width,int height);
     std::vector<UIEvent> TakeEvents();
-    bool Paused()const;
+    bool Paused(std::uint64_t player=0)const;
+    bool SetPlayer(std::uint32_t handle,std::uint64_t player);
+    std::uint64_t Player(std::uint32_t handle)const;
+    void PlayerViewport(std::uint64_t player,glm::vec4 rect);
+    void RemovePlayer(std::uint64_t player);
     bool debugOverlayVisible=true; // Engine diagnostics remain independent of project controls.
     bool QuitRequested()const{return m_quit;}void RequestQuit(){m_quit=true;}
     bool OwnsInput()const;bool Empty()const{return m_documents.empty();}
     const UIStats& Stats()const{return m_stats;}
 private:
-    struct Instance {UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0;std::map<std::string,UILayout> layout;std::vector<std::string> refs;};
+    struct Instance {UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;};
     std::map<std::uint32_t,Instance> m_documents;std::uint32_t m_next=1;
     ResourceManager* m_resources=nullptr;std::vector<UIEvent> m_events;
     LocalizationSession* m_localization=nullptr;

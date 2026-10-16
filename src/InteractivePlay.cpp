@@ -106,10 +106,13 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     // Everything UI-related is handled here, before any gameplay system
     // sees this frame's input. Gameplay code is never told a menu exists;
     // it simply isn't called while one owns input.
+    world.viewportWidth=window.Width();world.viewportHeight=std::max(1,window.Height());
+    if(auto* players=world.PlayersIfLoaded())if(auto devices=window.Input().localDevices.lock()){players->Route(*devices);if(world.UIIfLoaded())for(auto& p:players->All())world.UI().PlayerViewport(p.first,p.second.viewport);}
     world.UpdateUIScripts(&window.Input(),frameDeltaTime);
     const bool authoredUI=world.UIIfLoaded()&&!world.UIIfLoaded()->Empty();
     bool uiOwned=false;
-    if(authoredUI){auto& ui=world.UI();uiOwned=ui.OwnsInput();int x,y;window.GetMousePosition(x,y);ui.Input(window.Input(),{x,y},!window.IsMouseCaptured(),window.Width(),window.Height());world.DispatchUIEvents(&window.Input(),frameDeltaTime);uiOwned|=ui.OwnsInput();}
+    if(authoredUI){auto& ui=world.UI();uiOwned=ui.OwnsInput();int x,y;window.GetMousePosition(x,y);ui.Input(window.Input(),{x,y},!window.IsMouseCaptured(),window.Width(),window.Height());if(!ui.OwnsInput())if(auto* players=world.PlayersIfLoaded())for(auto& p:players->All()){const auto pointer=p.second.input.Pointer();ui.Input(p.second.input,{pointer.x*window.Width(),pointer.y*window.Height()},!window.IsMouseCaptured(),window.Width(),window.Height(),p.first);}
+    world.DispatchUIEvents(&window.Input(),frameDeltaTime);uiOwned|=ui.OwnsInput();}
     if(world.Scripts())world.Scripts()->DrainSignals(&window.Input(),frameDeltaTime,true);
     uiOwned|=world.UIIfLoaded()&&world.UIIfLoaded()->OwnsInput();
     if (window.ConsumeUIBackRequest()&&!authoredUI&&world.legacyGameplay) m_pauseMenu.HandleBackRequest();
@@ -179,7 +182,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
                                m_measurements.measureFluid;
         while (m_physicsAccumulator >= SimulationTiming::kFixedTimestep &&
                stepsThisFrame < SimulationTiming::kMaxPhysicsStepsPerFrame) {
-            window.Input().BeginFixedStep();
+            window.Input().BeginFixedStep();if(auto* players=world.PlayersIfLoaded())players->BeginFixedStep();
             const auto stepStart = Clock::now();
             m_measurements.atmosphereMeasured = m_measurements.fireMeasured = m_measurements.fluidMeasured = false;
             StepPlayedWorld(m_session, window, SimulationTiming::kFixedTimestep, &m_measurements);
@@ -194,7 +197,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
         if (stepsThisFrame == SimulationTiming::kMaxPhysicsStepsPerFrame) { profileCap=true; profileDiscarded=m_physicsAccumulator; m_physicsAccumulator = 0.0f; }
         m_lastStepsThisFrame = stepsThisFrame;
     } else {
-        window.ClearPendingRequests();
+        window.ClearPendingRequests();if(auto* players=world.PlayersIfLoaded())players->DiscardPending();
         m_lastStepsThisFrame = 0;
     }
 

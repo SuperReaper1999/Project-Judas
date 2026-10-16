@@ -1,4 +1,4 @@
-/** Current JudasJS through M88, accepted on the operator phone. See evidence/m88/HUMAN_VALIDATION.md.
+/** Current JudasJS through M89 Experimental. M89 operator acceptance is pending.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -753,6 +753,36 @@ declare module "judas" {
     reload(): void;
   };
   export const session: { get(key: string): JSONValue; set(key: string, value: JSONValue): void; delete(key: string): void };
+  export interface NormalizedViewport {x:number;y:number;width:number;height:number}
+  export interface InputDeviceInfo {id:string;kind:'keyboard'|'mouse'|'touch'|'gamepad';name:string;connected:boolean}
+  /** Same ordinary project input entries. Required scale/deadzone match the authoring parser. */
+  export interface PlayerInputEntry {name:string;axis:boolean;vector?:boolean;bindings:{control:string;scale:number;deadzone:number;scaleY?:number;circular?:boolean}[]}
+  export interface DeviceAssignment {controls?:string[];region?:NormalizedViewport}
+  export class PlayerInput {
+    constructor(id:string); id:string;
+    held(name:string):boolean; pressed(name:string):boolean; released(name:string):boolean;
+    axis(name:string):number; vector(name:string):InputVector; stick(side:StickSide):InputVector;
+    readonly touches:readonly TouchContact[]; readonly pointer:PointerSnapshot;
+  }
+  export class LocalPlayer {
+    constructor(id:string); id:string;
+    readonly valid:boolean; readonly name:string; readonly devices:string[]; readonly input:PlayerInput;
+    get entity():Entity|null; set entity(value:Entity|null);
+    get viewport():NormalizedViewport; set viewport(value:NormalizedViewport);
+    readonly viewError:string;
+    project(point:Vec3):ViewportPoint|null;
+    ray(point?:InputVector):{origin:Vec3;direction:Vec3}|null;
+    assign(device:string,options?:DeviceAssignment):boolean;
+    unassign(device:string):boolean;setInputMap(map:PlayerInputEntry[]):boolean;
+    setView(pose:TransformPatch,fov?:number,range?:{near?:number;far?:number}):boolean;
+    clearView():boolean;leave():boolean;
+  }
+  export const players: {
+    create(name?:string,map?:PlayerInputEntry[]|null):LocalPlayer;
+    get(id:string):LocalPlayer|null;
+    readonly list:LocalPlayer[];readonly devices:InputDeviceInfo[];
+  };
+
   export type StickSide = "left" | "right";
   export interface InputVector { x: number; y: number }
   /** Copied backend observation: receipt time in monotonic seconds, not simulation time. */
@@ -806,6 +836,7 @@ declare module "judas" {
     texture: AssetId;
   }
   export class UIDocument {
+    get player():LocalPlayer|null; set player(value:LocalPlayer|null);
     constructor(handle: number);
     handle: number;
     get(id: string): UIElement;
@@ -822,7 +853,7 @@ declare module "judas" {
     quit(): void;
     debugOverlayVisible: boolean;
   };
-  export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back"; value: number }
+  export interface UIEvent { document: string; element: string; type: "click" | "change" | "focus" | "back"; value: number; playerId: string|null }
   export interface ContactEvent { other: Entity | null; point: Vec3; normal: Vec3; relativeVelocity: Vec3; physicalMaterial:AssetId|null; normalImpulse: number | null; selfBody: Entity | null; selfJoint: string | null; otherArticulation: Entity | null; otherJoint: string | null }
   export type ScriptProperties = Record<string, number | boolean | string | Entity | null>;
   /** Authored defaults; entity references become Entity|null in ScriptContext.properties. */

@@ -1,0 +1,2619 @@
++ cmake -S /home/conner/Documents/GitHub/Project-Judas -B /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a -DCMAKE_TOOLCHAIN_FILE=/home/conner/Android/Sdk/ndk/28.2.13676358/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-26 -DANDROID_STL=c++_shared -DCMAKE_BUILD_TYPE=Release -DJUDAS_ICU_HOST_TOOLS=/home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-x86_64/unicode/host/src/judas_icu_host-build
+-- The C compiler identification is Clang 19.0.1
+-- The CXX compiler identification is Clang 19.0.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "2.5.1")
+-- Looking for __GLIBC__
+-- Looking for __GLIBC__ - not found
+-- Performing Test CHECK_CPU_ARCHITECTURE_X86
+-- Performing Test CHECK_CPU_ARCHITECTURE_X86 - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_X64
+-- Performing Test CHECK_CPU_ARCHITECTURE_X64 - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM32
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM32 - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64 - Success
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64EC
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64EC - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_LOONGARCH64
+-- Performing Test CHECK_CPU_ARCHITECTURE_LOONGARCH64 - Failed
+-- Performing Test HAVE_GCC_WALL
+-- Performing Test HAVE_GCC_WALL - Success
+-- Performing Test HAVE_GCC_WUNDEF
+-- Performing Test HAVE_GCC_WUNDEF - Success
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING - Success
+-- Performing Test HAVE_GCC_WDOCUMENTATION
+-- Performing Test HAVE_GCC_WDOCUMENTATION - Success
+-- Performing Test HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND
+-- Performing Test HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND - Success
+-- Performing Test HAVE_GCC_COMMENT_BLOCK_COMMANDS
+-- Performing Test HAVE_GCC_COMMENT_BLOCK_COMMANDS - Success
+-- Performing Test HAVE_GCC_WDECLARATION_AFTER_STATEMENT
+-- Performing Test HAVE_GCC_WDECLARATION_AFTER_STATEMENT - Success
+-- Performing Test HAVE_GCC_ATOMICS
+-- Performing Test HAVE_GCC_ATOMICS - Success
+-- Performing Test HAVE_GCC_FVISIBILITY
+-- Performing Test HAVE_GCC_FVISIBILITY - Success
+-- Performing Test HAVE_GCC_WSHADOW
+-- Performing Test HAVE_GCC_WSHADOW - Success
+-- Performing Test HAVE_GCC_WUNUSED_LOCAL_TYPEDEFS
+-- Performing Test HAVE_GCC_WUNUSED_LOCAL_TYPEDEFS - Success
+-- Performing Test HAVE_NO_UNDEFINED
+-- Performing Test HAVE_NO_UNDEFINED - Success
+-- Looking for immintrin.h
+-- Looking for immintrin.h - not found
+-- Performing Test HAVE_ALTIVEC_H_HDR
+-- Performing Test HAVE_ALTIVEC_H_HDR - Failed
+-- Performing Test CPU_SUPPORTS_ALTIVEC
+-- Performing Test CPU_SUPPORTS_ALTIVEC - Failed
+-- Looking for ctype.h
+-- Looking for ctype.h - found
+-- Looking for float.h
+-- Looking for float.h - found
+-- Looking for iconv.h
+-- Looking for iconv.h - found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for limits.h
+-- Looking for limits.h - found
+-- Looking for malloc.h
+-- Looking for malloc.h - found
+-- Looking for math.h
+-- Looking for math.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for stdarg.h
+-- Looking for stdarg.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for wchar.h
+-- Looking for wchar.h - found
+-- Looking for 7 include files stddef.h, ..., float.h
+-- Looking for 7 include files stddef.h, ..., float.h - found
+-- Looking for M_PI
+-- Looking for M_PI - found
+-- Performing Test HAVE_MPROTECT
+-- Performing Test HAVE_MPROTECT - Success
+-- Looking for strtod
+-- Looking for strtod - found
+-- Looking for malloc
+-- Looking for malloc - found
+-- Looking for calloc
+-- Looking for calloc - found
+-- Looking for realloc
+-- Looking for realloc - found
+-- Looking for free
+-- Looking for free - found
+-- Looking for getenv
+-- Looking for getenv - found
+-- Looking for setenv
+-- Looking for setenv - found
+-- Looking for putenv
+-- Looking for putenv - found
+-- Looking for unsetenv
+-- Looking for unsetenv - found
+-- Looking for bsearch
+-- Looking for bsearch - found
+-- Looking for qsort
+-- Looking for qsort - found
+-- Looking for abs
+-- Looking for abs - found
+-- Looking for bcopy
+-- Looking for bcopy - found
+-- Looking for memset
+-- Looking for memset - found
+-- Looking for memcpy
+-- Looking for memcpy - found
+-- Looking for memmove
+-- Looking for memmove - found
+-- Looking for memcmp
+-- Looking for memcmp - found
+-- Looking for strlen
+-- Looking for strlen - found
+-- Looking for strlcpy
+-- Looking for strlcpy - found
+-- Looking for strlcat
+-- Looking for strlcat - found
+-- Looking for _strrev
+-- Looking for _strrev - not found
+-- Looking for _strupr
+-- Looking for _strupr - not found
+-- Looking for _strlwr
+-- Looking for _strlwr - not found
+-- Looking for index
+-- Looking for index - not found
+-- Looking for rindex
+-- Looking for rindex - not found
+-- Looking for strchr
+-- Looking for strchr - found
+-- Looking for strrchr
+-- Looking for strrchr - found
+-- Looking for strstr
+-- Looking for strstr - found
+-- Looking for strtok_r
+-- Looking for strtok_r - found
+-- Looking for itoa
+-- Looking for itoa - not found
+-- Looking for _ltoa
+-- Looking for _ltoa - not found
+-- Looking for _uitoa
+-- Looking for _uitoa - not found
+-- Looking for _ultoa
+-- Looking for _ultoa - not found
+-- Looking for strtol
+-- Looking for strtol - found
+-- Looking for strtoul
+-- Looking for strtoul - found
+-- Looking for _i64toa
+-- Looking for _i64toa - not found
+-- Looking for _ui64toa
+-- Looking for _ui64toa - not found
+-- Looking for strtoll
+-- Looking for strtoll - found
+-- Looking for strtoull
+-- Looking for strtoull - found
+-- Looking for atoi
+-- Looking for atoi - found
+-- Looking for atof
+-- Looking for atof - found
+-- Looking for strcmp
+-- Looking for strcmp - found
+-- Looking for strncmp
+-- Looking for strncmp - found
+-- Looking for _stricmp
+-- Looking for _stricmp - not found
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for _strnicmp
+-- Looking for _strnicmp - not found
+-- Looking for strncasecmp
+-- Looking for strncasecmp - found
+-- Looking for strcasestr
+-- Looking for strcasestr - found
+-- Looking for wcscmp
+-- Looking for wcscmp - found
+-- Looking for _wcsdup
+-- Looking for _wcsdup - not found
+-- Looking for wcsdup
+-- Looking for wcsdup - found
+-- Looking for wcslcat
+-- Looking for wcslcat - found
+-- Looking for wcslcpy
+-- Looking for wcslcpy - found
+-- Looking for wcslen
+-- Looking for wcslen - found
+-- Looking for wcsncmp
+-- Looking for wcsncmp - found
+-- Looking for wcsstr
+-- Looking for wcsstr - found
+-- Looking for wcscasecmp
+-- Looking for wcscasecmp - found
+-- Looking for _wcsicmp
+-- Looking for _wcsicmp - not found
+-- Looking for wcsncasecmp
+-- Looking for wcsncasecmp - found
+-- Looking for _wcsnicmp
+-- Looking for _wcsnicmp - not found
+-- Looking for sscanf
+-- Looking for sscanf - found
+-- Looking for vsscanf
+-- Looking for vsscanf - found
+-- Looking for vsnprintf
+-- Looking for vsnprintf - found
+-- Looking for fopen64
+-- Looking for fopen64 - found
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Looking for fseeko64
+-- Looking for fseeko64 - found
+-- Looking for _Exit
+-- Looking for _Exit - found
+-- Looking for sigaction
+-- Looking for sigaction - found
+-- Looking for sigtimedwait
+-- Looking for sigtimedwait - found
+-- Looking for setjmp
+-- Looking for setjmp - found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for sysconf
+-- Looking for sysconf - found
+-- Looking for sysctlbyname
+-- Looking for sysctlbyname - not found
+-- Looking for getauxval
+-- Looking for getauxval - found
+-- Looking for elf_aux_info
+-- Looking for elf_aux_info - not found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for memfd_create
+-- Looking for memfd_create - not found
+-- Looking for posix_fallocate
+-- Looking for posix_fallocate - found
+-- Looking for pow in m
+-- Looking for pow in m - found
+-- Looking for atan
+-- Looking for atan - found
+-- Looking for atan2
+-- Looking for atan2 - found
+-- Looking for atanf
+-- Looking for atanf - found
+-- Looking for atan2f
+-- Looking for atan2f - found
+-- Looking for ceil
+-- Looking for ceil - found
+-- Looking for ceilf
+-- Looking for ceilf - found
+-- Looking for copysign
+-- Looking for copysign - found
+-- Looking for copysignf
+-- Looking for copysignf - found
+-- Looking for cos
+-- Looking for cos - found
+-- Looking for cosf
+-- Looking for cosf - found
+-- Looking for exp
+-- Looking for exp - found
+-- Looking for expf
+-- Looking for expf - found
+-- Looking for fabs
+-- Looking for fabs - found
+-- Looking for fabsf
+-- Looking for fabsf - found
+-- Looking for floor
+-- Looking for floor - found
+-- Looking for floorf
+-- Looking for floorf - found
+-- Looking for fmod
+-- Looking for fmod - found
+-- Looking for fmodf
+-- Looking for fmodf - found
+-- Looking for log
+-- Looking for log - found
+-- Looking for logf
+-- Looking for logf - found
+-- Looking for log10
+-- Looking for log10 - found
+-- Looking for log10f
+-- Looking for log10f - found
+-- Looking for lround
+-- Looking for lround - found
+-- Looking for lroundf
+-- Looking for lroundf - found
+-- Looking for pow
+-- Looking for pow - found
+-- Looking for powf
+-- Looking for powf - found
+-- Looking for round
+-- Looking for round - found
+-- Looking for roundf
+-- Looking for roundf - found
+-- Looking for scalbn
+-- Looking for scalbn - found
+-- Looking for scalbnf
+-- Looking for scalbnf - found
+-- Looking for sin
+-- Looking for sin - found
+-- Looking for sinf
+-- Looking for sinf - found
+-- Looking for sqrt
+-- Looking for sqrt - found
+-- Looking for sqrtf
+-- Looking for sqrtf - found
+-- Looking for tan
+-- Looking for tan - found
+-- Looking for tanf
+-- Looking for tanf - found
+-- Looking for acos
+-- Looking for acos - found
+-- Looking for acosf
+-- Looking for acosf - found
+-- Looking for asin
+-- Looking for asin - found
+-- Looking for asinf
+-- Looking for asinf - found
+-- Looking for trunc
+-- Looking for trunc - found
+-- Looking for truncf
+-- Looking for truncf - found
+-- Performing Test ICONV_IN_LIBC
+-- Performing Test ICONV_IN_LIBC - Failed
+-- Performing Test ICONV_IN_LIBICONV
+-- Performing Test ICONV_IN_LIBICONV - Failed
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for alloca
+-- Looking for alloca - found
+-- Looking for alloca
+-- Looking for alloca - found
+-- Looking for alloca
+-- Looking for alloca - not found
+-- Performing Test HAVE_SA_SIGACTION
+-- Performing Test HAVE_SA_SIGACTION - Success
+-- Looking for dlopen
+-- Looking for dlopen - found
+-- Performing Test HAVE_O_CLOEXEC
+-- Performing Test HAVE_O_CLOEXEC - Success
+-- Performing Test HAVE_ARM_MODE
+-- Performing Test HAVE_ARM_MODE - Failed
+-- Performing Test VULKAN_PASSED_ANDROID_CHECKS
+-- Performing Test VULKAN_PASSED_ANDROID_CHECKS - Success
+-- Performing Test HAVE_PTHREADS
+-- Performing Test HAVE_PTHREADS - Success
+-- Performing Test HAVE_RECURSIVE_MUTEXES
+-- Performing Test HAVE_RECURSIVE_MUTEXES - Success
+-- Performing Test HAVE_PTHREADS_SEM
+-- Performing Test HAVE_PTHREADS_SEM - Success
+-- Performing Test HAVE_SEM_TIMEDWAIT
+-- Performing Test HAVE_SEM_TIMEDWAIT - Success
+-- Looking for include file pthread.h
+-- Looking for include file pthread.h - found
+-- Looking for include file pthread_np.h
+-- Looking for include file pthread_np.h - not found
+-- Performing Test HAVE_PTHREAD_SETNAME_NP
+-- Performing Test HAVE_PTHREAD_SETNAME_NP - Success
+-- Found Git: /usr/bin/git (found version "2.53.0")
+CMake Deprecation Warning at .cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/CMakeLists.txt:3300 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- 
+-- SDL2 was configured with the following options:
+-- 
+-- Platform: Android-1
+-- 64-bit:   TRUE
+-- Compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
+-- Revision: SDL-release-2.32.10-0-g5d2495703
+-- 
+-- Subsystems:
+--   Atomic:	ON
+--   Audio:	ON
+--   Video:	ON
+--   Render:	ON
+--   Events:	ON
+--   Joystick:	ON
+--   Haptic:	ON
+--   Hidapi:	ON
+--   Power:	ON
+--   Threads:	ON
+--   Timers:	ON
+--   File:	ON
+--   Loadso:	ON
+--   CPUinfo:	ON
+--   Filesystem:	ON
+--   Sensor:	ON
+--   Locale:	ON
+--   Misc:	ON
+-- 
+-- Options:
+--   SDL2_DISABLE_INSTALL        (Wanted: ON): OFF
+--   SDL2_DISABLE_SDL2MAIN       (Wanted: OFF): OFF
+--   SDL2_DISABLE_UNINSTALL      (Wanted: OFF): OFF
+--   SDL_3DNOW                   (Wanted: OFF): OFF
+--   SDL_ALSA                    (Wanted: OFF): OFF
+--   SDL_ALSA_SHARED             (Wanted: OFF): OFF
+--   SDL_ALTIVEC                 (Wanted: ON): OFF
+--   SDL_ARMNEON                 (Wanted: OFF): OFF
+--   SDL_ARMSIMD                 (Wanted: OFF): OFF
+--   SDL_ARTS                    (Wanted: OFF): OFF
+--   SDL_ARTS_SHARED             (Wanted: OFF): OFF
+--   SDL_ASAN                    (Wanted: OFF): OFF
+--   SDL_ASSEMBLY                (Wanted: ON): ON
+--   SDL_ASSERTIONS              (Wanted: auto): auto
+--   SDL_BACKGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_CCACHE                  (Wanted: ON): OFF
+--   SDL_CLOCK_GETTIME           (Wanted: ON): ON
+--   SDL_COCOA                   (Wanted: OFF): OFF
+--   SDL_DBUS                    (Wanted: OFF): OFF
+--   SDL_DIRECTFB                (Wanted: OFF): OFF
+--   SDL_DIRECTFB_SHARED         (Wanted: OFF): OFF
+--   SDL_DIRECTX                 (Wanted: OFF): OFF
+--   SDL_DISKAUDIO               (Wanted: ON): ON
+--   SDL_DUMMYAUDIO              (Wanted: ON): ON
+--   SDL_DUMMYVIDEO              (Wanted: ON): ON
+--   SDL_ESD                     (Wanted: OFF): OFF
+--   SDL_ESD_SHARED              (Wanted: OFF): OFF
+--   SDL_FOREGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND             (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND_SHARED      (Wanted: OFF): OFF
+--   SDL_GCC_ATOMICS             (Wanted: ON): ON
+--   SDL_HIDAPI                  (Wanted: ON): ON
+--   SDL_HIDAPI_JOYSTICK         (Wanted: ON): ON
+--   SDL_HIDAPI_LIBUSB           (Wanted: OFF): OFF
+--   SDL_IBUS                    (Wanted: OFF): OFF
+--   SDL_INSTALL_TESTS           (Wanted: OFF): OFF
+--   SDL_JACK                    (Wanted: OFF): OFF
+--   SDL_JACK_SHARED             (Wanted: OFF): OFF
+--   SDL_KMSDRM                  (Wanted: OFF): OFF
+--   SDL_KMSDRM_SHARED           (Wanted: OFF): OFF
+--   SDL_LASX                    (Wanted: OFF): OFF
+--   SDL_LIBC                    (Wanted: ON): ON
+--   SDL_LIBICONV                (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE           (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE_SHARED    (Wanted: OFF): OFF
+--   SDL_LIBUDEV                 (Wanted: ON): OFF
+--   SDL_LSX                     (Wanted: OFF): OFF
+--   SDL_METAL                   (Wanted: OFF): OFF
+--   SDL_MMX                     (Wanted: OFF): OFF
+--   SDL_NAS                     (Wanted: OFF): OFF
+--   SDL_NAS_SHARED              (Wanted: OFF): OFF
+--   SDL_OFFSCREEN               (Wanted: ON): ON
+--   SDL_OPENGL                  (Wanted: ON): OFF
+--   SDL_OPENGLES                (Wanted: ON): ON
+--   SDL_OSS                     (Wanted: OFF): OFF
+--   SDL_PIPEWIRE                (Wanted: OFF): OFF
+--   SDL_PIPEWIRE_SHARED         (Wanted: OFF): OFF
+--   SDL_PTHREADS                (Wanted: ON): ON
+--   SDL_PTHREADS_SEM            (Wanted: ON): ON
+--   SDL_PULSEAUDIO              (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO_SHARED       (Wanted: OFF): OFF
+--   SDL_RENDER_D3D              (Wanted: OFF): OFF
+--   SDL_RENDER_METAL            (Wanted: OFF): OFF
+--   SDL_RPATH                   (Wanted: OFF): OFF
+--   SDL_RPI                     (Wanted: OFF): OFF
+--   SDL_SNDIO                   (Wanted: OFF): OFF
+--   SDL_SNDIO_SHARED            (Wanted: OFF): OFF
+--   SDL_SSE                     (Wanted: OFF): OFF
+--   SDL_SSE2                    (Wanted: OFF): OFF
+--   SDL_SSE3                    (Wanted: OFF): OFF
+--   SDL_SSEMATH                 (Wanted: OFF): OFF
+--   SDL_STATIC_PIC              (Wanted: OFF): OFF
+--   SDL_SYSTEM_ICONV            (Wanted: ON): OFF
+--   SDL_TESTS                   (Wanted: OFF): OFF
+--   SDL_VENDOR_INFO             (Wanted: ): OFF
+--   SDL_VIRTUAL_JOYSTICK        (Wanted: ON): ON
+--   SDL_VIVANTE                 (Wanted: OFF): OFF
+--   SDL_VULKAN                  (Wanted: ON): ON
+--   SDL_WASAPI                  (Wanted: OFF): OFF
+--   SDL_WAYLAND                 (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR        (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR_SHARED (Wanted: OFF): OFF
+--   SDL_WAYLAND_QT_TOUCH        (Wanted: OFF): OFF
+--   SDL_WAYLAND_SHARED          (Wanted: OFF): OFF
+--   SDL_X11                     (Wanted: OFF): OFF
+--   SDL_X11_SHARED              (Wanted: OFF): OFF
+--   SDL_X11_XCURSOR             (Wanted: OFF): OFF
+--   SDL_X11_XDBE                (Wanted: OFF): OFF
+--   SDL_X11_XFIXES              (Wanted: OFF): OFF
+--   SDL_X11_XINPUT              (Wanted: OFF): OFF
+--   SDL_X11_XRANDR              (Wanted: OFF): OFF
+--   SDL_X11_XSCRNSAVER          (Wanted: OFF): OFF
+--   SDL_X11_XSHAPE              (Wanted: OFF): OFF
+--   SDL_XINPUT                  (Wanted: OFF): OFF
+-- 
+--  CFLAGS:        -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -idirafter "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/video/khronos"
+--  EXTRA_CFLAGS:   -Wall -Wundef -fno-strict-aliasing -Wdocumentation -Wdocumentation-unknown-command -fcomment-block-commands=threadsafety -fcomment-block-commands=deprecated -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs
+--  EXTRA_LDFLAGS:  -Wl,--no-undefined
+--  EXTRA_LIBS:    m;OpenSLES;dl;log;android;GLESv1_CM;GLESv2
+-- 
+--  Build Shared Library: ON
+--  Build Static Library: OFF
+-- 
+-- If something was not detected, although the libraries
+-- were installed, then make sure you have set the
+-- CFLAGS and LDFLAGS environment variables correctly.
+-- 
+CMake Deprecation Warning at .cache/m89/android/android-arm64-v8a/_deps/judas_glm-src/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at .cache/m89/android/android-arm64-v8a/_deps/judas_glm-src/CMakeLists.txt:2 (cmake_policy):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- GLM: Version 1.0.1
+-- GLM: Disable -Wc++98-compat warnings
+-- GLM: Build with C++ features auto detection
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+-- Looking for atexit
+-- Looking for atexit - found
+-- Looking for getpagesize
+-- Looking for getpagesize - found
+-- Looking for mmap
+-- Looking for mmap - found
+-- Looking for isatty
+-- Looking for isatty - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/mman.h
+-- Looking for sys/mman.h - found
+-- Looking for stdbool.h
+-- Looking for stdbool.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS - Success
+-- Performing Test COMPILER_SUPPORTS_CXX11
+-- Performing Test COMPILER_SUPPORTS_CXX11 - Success
+CMake Deprecation Warning at .cache/m89/android/android-arm64-v8a/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Looking for fcntl.h
+-- Looking for fcntl.h - found
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Configuring done (21.3s)
+-- Generating done (0.2s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a
++ cmake --build /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a --target main -j 4
+[  0%] Building CXX object CMakeFiles/judas_profiler.dir/src/PerformanceProfiler.cpp.o
+[  0%] Generating include/SDL2/SDL.h
+[  1%] Creating directories for 'judas_icu_build'
+[  1%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[  1%] Generating include/SDL2/SDL_assert.h
+[  1%] Performing download step (verify and extract) for 'judas_icu_build'
+[  1%] Generating include/SDL2/SDL_atomic.h
+-- verifying file...
+     file='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+[  1%] Generating include/SDL2/SDL_audio.h
+[  2%] Generating include/SDL2/SDL_bits.h
+[  2%] Generating include/SDL2/SDL_blendmode.h
+[  2%] Generating include/SDL2/SDL_clipboard.h
+[  2%] Generating include/SDL2/SDL_copying.h
+[  2%] Generating include/SDL2/SDL_cpuinfo.h
+[  3%] Generating include/SDL2/SDL_egl.h
+[  3%] Generating include/SDL2/SDL_endian.h
+[  3%] Generating include/SDL2/SDL_error.h
+[  3%] Generating include/SDL2/SDL_events.h
+[  3%] Generating include/SDL2/SDL_filesystem.h
+[  4%] Generating include/SDL2/SDL_gamecontroller.h
+[  4%] Generating include/SDL2/SDL_gesture.h
+[  4%] Generating include/SDL2/SDL_guid.h
+[  4%] Generating include/SDL2/SDL_haptic.h
+[  4%] Generating include/SDL2/SDL_hidapi.h
+[  5%] Generating include/SDL2/SDL_hints.h
+[  5%] Generating include/SDL2/SDL_joystick.h
+-- verifying file... done
+[  5%] Generating include/SDL2/SDL_keyboard.h
+-- extracting...
+     src='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+     dst='/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/unicode/build/src/judas_icu_build'
+-- extracting... [tar xf]
+[  5%] Generating include/SDL2/SDL_keycode.h
+[  5%] Generating include/SDL2/SDL_loadso.h
+[  6%] Generating include/SDL2/SDL_locale.h
+[  6%] Generating include/SDL2/SDL_log.h
+[  6%] Generating include/SDL2/SDL_main.h
+[  6%] Generating include/SDL2/SDL_messagebox.h
+[  6%] Generating include/SDL2/SDL_metal.h
+[  6%] Generating include/SDL2/SDL_misc.h
+[  7%] Generating include/SDL2/SDL_mouse.h
+[  7%] Generating include/SDL2/SDL_mutex.h
+[  7%] Generating include/SDL2/SDL_name.h
+[  7%] Generating include/SDL2/SDL_opengl.h
+[  7%] Generating include/SDL2/SDL_opengl_glext.h
+[  8%] Generating include/SDL2/SDL_opengles.h
+[  8%] Generating include/SDL2/SDL_opengles2.h
+[  8%] Generating include/SDL2/SDL_opengles2_gl2.h
+[  8%] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[  8%] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[  9%] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[  9%] Generating include/SDL2/SDL_pixels.h
+[  9%] Generating include/SDL2/SDL_platform.h
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[  9%] Generating include/SDL2/SDL_power.h
+[  9%] No update step for 'judas_icu_build'
+[  9%] Generating include/SDL2/SDL_quit.h
+[ 10%] Generating include/SDL2/SDL_rect.h
+[ 10%] No patch step for 'judas_icu_build'
+[ 10%] Generating include/SDL2/SDL_render.h
+[ 10%] Performing configure step for 'judas_icu_build'
+[ 10%] Generating include/SDL2/SDL_rwops.h
+[ 10%] Generating include/SDL2/SDL_scancode.h
+[ 10%] Generating include/SDL2/SDL_sensor.h
+[ 11%] Generating include/SDL2/SDL_shape.h
+[ 11%] Generating include/SDL2/SDL_stdinc.h
+[ 11%] Generating include/SDL2/SDL_surface.h
+[ 11%] Generating include/SDL2/SDL_system.h
+[ 11%] Generating include/SDL2/SDL_syswm.h
+[ 11%] Generating include/SDL2/SDL_test.h
+[ 12%] Generating include/SDL2/SDL_test_assert.h
+[ 12%] Generating include/SDL2/SDL_test_common.h
+[ 12%] Generating include/SDL2/SDL_test_compare.h
+[ 12%] Generating include/SDL2/SDL_test_crc32.h
+[ 12%] Generating include/SDL2/SDL_test_font.h
+[ 13%] Generating include/SDL2/SDL_test_fuzzer.h
+[ 13%] Generating include/SDL2/SDL_test_harness.h
+[ 13%] Generating include/SDL2/SDL_test_images.h
+[ 13%] Generating include/SDL2/SDL_test_log.h
+[ 13%] Generating include/SDL2/SDL_test_md5.h
+[ 14%] Generating include/SDL2/SDL_test_memory.h
+[ 14%] Generating include/SDL2/SDL_test_random.h
+[ 14%] Generating include/SDL2/SDL_thread.h
+[ 14%] Generating include/SDL2/SDL_timer.h
+[ 14%] Generating include/SDL2/SDL_touch.h
+[ 14%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[ 15%] Generating include/SDL2/SDL_types.h
+[ 15%] Generating include/SDL2/SDL_version.h
+[ 15%] Generating include/SDL2/SDL_video.h
+[ 15%] Generating include/SDL2/SDL_vulkan.h
+[ 15%] Generating include/SDL2/begin_code.h
+[ 16%] Generating include/SDL2/close_code.h
+[ 16%] Built target sdl_headers_copy
+[ 16%] Building CXX object CMakeFiles/judas_jobs.dir/src/JobSystem.cpp.o
+[ 16%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[ 16%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[ 18%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[ 18%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[ 19%] Linking CXX static library libjudas_profiler.a
+[ 19%] Linking CXX static library libjudas_jobs.a
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[ 19%] Built target judas_jobs
+[ 19%] Built target judas_profiler
+[ 19%] Building C object CMakeFiles/judas_audio_backend.dir/src/AudioBackend.c.o
+[ 19%] Building CXX object _deps/judas_harfbuzz-build/CMakeFiles/harfbuzz.dir/src/harfbuzz.cc.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+-- judas_icu_build configure command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/unicode/build/src/judas_icu_build-stamp/judas_icu_build-configure-*.log
+[ 21%] Performing build step for 'judas_icu_build'
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[ 24%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[ 24%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[ 24%] Building C object CMakeFiles/judas_audio_backend.dir/src/ReverbBackend.c.o
+[ 24%] Linking C static library libjudas_audio_backend.a
+[ 24%] Built target judas_audio_backend
+[ 24%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/quickjs.c.o
+[ 24%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[ 24%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[ 24%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[ 25%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[ 25%] Linking C static library libfreetype.a
+[ 25%] Built target freetype
+[ 25%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/dtoa.c.o
+[ 25%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libregexp.c.o
+[ 25%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libunicode.c.o
+[ 25%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAssert.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourCommon.cpp.o
+[ 25%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNode.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp.o
+[ 26%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp.o
+[ 27%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp.o
+[ 28%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp.o
+[ 28%] Linking CXX static library libjudas_navigation_backend.a
+[ 28%] Built target judas_navigation_backend
+[ 28%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL.c.o
+[ 28%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_assert.c.o
+[ 28%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_dataqueue.c.o
+[ 28%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_error.c.o
+[ 28%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_guid.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_hints.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_list.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_log.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_utils.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/atomic/SDL_atomic.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/atomic/SDL_spinlock.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audio.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audiocvt.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audiodev.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audiotypecvt.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_mixer.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_wave.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/cpuinfo/SDL_cpuinfo.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/dynapi/SDL_dynapi.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_clipboardevents.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_displayevents.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_dropevents.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_events.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_gesture.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_keyboard.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_keysym_to_scancode.c.o
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_mouse.c.o
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_quit.c.o
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_scancode_tables.c.o
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_touch.c.o
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_windowevents.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/imKStoUCS.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/file/SDL_rwops.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/haptic/SDL_haptic.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/hidapi/SDL_hidapi.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/SDL_gamecontroller.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/SDL_joystick.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/SDL_steam_virtual_gamepad.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/controller_type.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_atan2.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_exp.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_fmod.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_log.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_log10.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_pow.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_rem_pio2.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_sqrt.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_cos.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_rem_pio2.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_sin.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_tan.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_atan.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_copysign.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_cos.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_fabs.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_floor.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_scalbn.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_sin.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_tan.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/locale/SDL_locale.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/misc/SDL_url.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/power/SDL_power.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/SDL_d3dmath.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/SDL_render.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/SDL_yuv_sw.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d/SDL_render_d3d.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d/SDL_shaders_d3d.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d11/SDL_render_d3d11.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d11/SDL_shaders_d3d11.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d12/SDL_render_d3d12.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d12/SDL_shaders_d3d12.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengl/SDL_render_gl.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengl/SDL_shaders_gl.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengles/SDL_render_gles.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengles2/SDL_render_gles2.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengles2/SDL_shaders_gles2.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/ps2/SDL_render_ps2.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/psp/SDL_render_psp.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_blendfillrect.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_blendline.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_blendpoint.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_drawline.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_drawpoint.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_render_sw.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_rotate.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_triangle.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/sensor/SDL_sensor.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_crc16.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_crc32.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_getenv.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_iconv.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_malloc.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_mslibc.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_qsort.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_stdlib.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_string.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_strtokr.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/SDL_thread.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/timer/SDL_timer.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_RLEaccel.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_0.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_1.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_A.c.o
+[ 50%] Linking C static library libjudas_quickjs.a
+[ 50%] Built target judas_quickjs
+[ 50%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2main.dir/src/main/android/SDL_android_main.c.o
+[ 51%] Linking C static library libSDL2main.a
+[ 51%] Built target SDL2main
+[ 51%] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_N.c.o
+[ 52%] Linking CXX static library libjudas_materials.a
+[ 52%] Built target judas_materials
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_auto.c.o
+[ 52%] Linking C static library libharfbuzz.a
+[ 52%] Built target harfbuzz
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_copy.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_slow.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_bmp.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_clipboard.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_egl.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_fillrect.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_pixels.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_rect.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_shape.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_stretch.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_surface.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_video.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_vulkan_utils.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_yuv.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb_sse.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb_std.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/dummy/SDL_dummyaudio.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/disk/SDL_diskaudio.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/loadso/dlopen/SDL_sysloadso.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/virtual/SDL_virtualjoystick.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullevents.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullframebuffer.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullvideo.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenevents.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenframebuffer.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenopengles.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenvideo.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenwindow.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/core/android/SDL_android.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/home/conner/Android/Sdk/ndk/28.2.13676358/sources/android/cpufeatures/cpu-features.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/misc/android/SDL_sysurl.c.o
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/core/android/SDL_android.c:735:15: warning: redefinition of typedef 'SDL_main_func' is a C11 feature [-Wtypedef-redefinition]
+  735 | typedef int (*SDL_main_func)(int argc, char *argv[]);
+      |               ^
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-build/include/SDL2/SDL_main.h:154:15: note: previous definition is here
+  154 | typedef int (*SDL_main_func)(int argc, char *argv[]);
+      |               ^
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/android/SDL_androidaudio.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/openslES/SDL_openslES.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/aaudio/SDL_aaudio.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/filesystem/android/SDL_sysfilesystem.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/haptic/android/SDL_syshaptic.c.o
+[ 60%] Building CXX object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/hidapi/android/hid.cpp.o
+1 warning generated.
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_combined.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_luna.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_shield.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_steam.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_switch.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_wii.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapijoystick.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/android/SDL_sysjoystick.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/steam/SDL_steamcontroller.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/power/android/SDL_syspower.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/locale/android/SDL_syslocale.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/timer/unix/SDL_systimer.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/sensor/android/SDL_androidsensor.c.o
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/sensor/android/SDL_androidsensor.c:56:26: warning: 'ASensorManager_getInstance' is deprecated: first deprecated in Android 26 - Use ASensorManager_getInstanceForPackage instead [-Wdeprecated-declarations]
+   56 |     SDL_sensor_manager = ASensorManager_getInstance();
+      |                          ^
+/home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/sensor.h:751:17: note: 'ASensorManager_getInstance' has been explicitly marked deprecated here
+  751 | ASensorManager* ASensorManager_getInstance()
+      |                 ^
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidclipboard.c.o
+1 warning generated.
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidevents.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidgl.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidkeyboard.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidmessagebox.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidmouse.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidtouch.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidvideo.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidvulkan.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidwindow.c.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/video/android/SDL_androidvulkan.c:36:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-build/include/SDL2/SDL_syswm.h:106:15: warning: redefinition of typedef 'EGLSurface' is a C11 feature [-Wtypedef-redefinition]
+  106 | typedef void *EGLSurface;
+      |               ^
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-build/include/SDL2/SDL_egl.h:566:15: note: previous definition is here
+  566 | typedef void *EGLSurface;
+      |               ^
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/video/android/SDL_androidwindow.c:33:
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/video/android/SDL_androidwindow.h:27:
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-src/src/video/android/../SDL_egl_c.h:28:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-build/include/SDL2/SDL_egl.h:566:15: warning: redefinition of typedef 'EGLSurface' is a C11 feature [-Wtypedef-redefinition]
+  566 | typedef void *EGLSurface;
+      |               ^
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/_deps/judas_sdl-build/include/SDL2/SDL_syswm.h:106:15: note: previous definition is here
+  106 | typedef void *EGLSurface;
+      |               ^
+1 warning generated.
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_systhread.c.o
+1 warning generated.
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_sysmutex.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_systls.c.o
+[ 67%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_syscond.c.o
+[ 67%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_syssem.c.o
+[ 67%] Linking CXX shared library libSDL2.so
+[ 67%] Built target SDL2
+[ 67%] Building CXX object CMakeFiles/judas_app_icon.dir/src/AppIcon.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_app_icon.dir/src/TextureLoader.cpp.o
+[ 68%] Linking CXX static library libjudas_app_icon.a
+[ 68%] Built target judas_app_icon
+-- judas_icu_build build command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+[ 68%] Performing install step for 'judas_icu_build'
+-- judas_icu_build install command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-arm64-v8a/unicode/build/src/judas_icu_build-stamp/judas_icu_build-install-*.log
+[ 69%] Completed 'judas_icu_build'
+[ 69%] Built target judas_icu_build
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Powertrain.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ContentStorage.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModStore.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.cpp:169:10: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+  169 |         }if(found)Wake();
+      |          ^
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.cpp:167:5: note: previous statement is here
+  167 |     for(size_t i=0;i<settings.attachments.size();++i)if(settings.attachments[i].group==group){released[i]=true;
+      |     ^
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+1 warning generated.
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Localization.cpp:33:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+   33 |  }return true;
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/Localization.cpp:25:2: note: previous statement is here
+   25 |  for(int i=0;i<mp.countParts();++i)if(mp.getPartType(i)==UMSGPAT_PART_TYPE_ARG_START){
+      |  ^
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+1 warning generated.
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:127:80: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  127 |   auto accumulate=[&](LiquidMoment m,glm::vec3 flow){if(m.volume>0){V c=global(s.pose,m.first/m.volume);
+      |                                                                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:122:16: note: 's' declared here
+  122 |  for(auto& [id,s]:m_states)if(s.enabled&&!s.container&&s.volume>0)for(auto worldTet:geometry.cells){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:133:45: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  133 |    accumulate(LiquidIntersection(body,basin,s.equilibrium,level),flow);
+      |                                             ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:122:16: note: 's' declared here
+  122 |  for(auto& [id,s]:m_states)if(s.enabled&&!s.container&&s.volume>0)for(auto worldTet:geometry.cells){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:210:161: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  210 |     for(unsigned corner=0;corner<8;++corner){V p=V(center)+glm::dquat(child)*V(corner&1?half.x:-half.x,corner&2?half.y:-half.y,corner&4?half.z:-half.z);p=local(s.pose,V(pose.position)+glm::dquat(pose.rotation)*p);lower=glm::min(lower,p);upper=glm::max(upper,p);}
+      |                                                                                                                                                                 ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:203:16: note: 's' declared here
+  203 |  for(auto& [id,s]:m_states)if(s.enabled&&s.dynamicSurface){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:215:6: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+  215 |     }(world.Physics().IsDynamicBody(body)?dynamicSolids:solids).push_back(std::move(planes));
+      |      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:213:5: note: previous statement is here
+  213 |     for(unsigned axis=0;axis<3;++axis)for(double sign:{-1.,1.}){V normal(0);normal[axis]=sign;normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(pose.rotation)*glm::dquat(child)*normal;
+      |     ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:225:62: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  225 |     for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);
+      |                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:203:16: note: 's' declared here
+  203 |  for(auto& [id,s]:m_states)if(s.enabled&&s.dynamicSurface){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:225:91: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  225 |     for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);
+      |                                                                                           ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:223:22: note: 'c' declared here
+  223 |   for(auto& [otherId,c]:m_states)if(c.container&&c.enabled&&c.equilibriumValid&&c.volume>0){
+      |                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:285:32: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  285 |    auto& cache=m_opticalCache[{id,index}];
+      |                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:283:13: note: 'id' declared here
+  283 |  for(auto& [id,s]:m_states)if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      |             ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:286:54: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  286 |    if(cache.revision!=revision||cache.pose.position!=s.pose.position||cache.pose.rotation!=s.pose.rotation||!cache.equilibrium.Equivalent(s.equilibrium)){
+      |                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:283:16: note: 's' declared here
+  283 |  for(auto& [id,s]:m_states)if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      |                ^
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+8 warnings generated.
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1549:19: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1549 |         return o;}return JS_NULL;}
+      |                   ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1546:26: note: previous statement is here
+ 1546 |     if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
+      |                          ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1566:23: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1566 |             return o;}return JS_NULL;}
+      |                       ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1559:25: note: previous statement is here
+ 1559 |     if(op=="audioInfo"){for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){auto o=JS_NewObject(c);AudioVoiceSnapshot snapshot;
+      |                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1579:10: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1579 |         }return JS_FALSE;
+      |          ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1572:9: note: previous statement is here
+ 1572 |         for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){AudioSettings settings=emitter.settings;auto options=arg(2);
+      |         ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1586:54: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1586 |             e.pool.settings=settings;return JS_TRUE;}return JS_FALSE;}
+      |                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1583:25: note: previous statement is here
+ 1583 |     if(op=="particles"){for(auto& e:world.VisualEmitters())if(e.id==id){auto settings=e.pool.settings;auto enabled=JS_GetPropertyStr(c,arg(2),"enabled");if(!JS_IsUndefined(enabled))settings.enabled=JS_ToBool(c,enabled);JS_FreeValue(c,enabled);
+      |                         ^
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.o
+4 warnings generated.
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/Weather.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/PlatformServices.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionAsset.cpp:64:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+   64 |  }a.edges.assign(edges.begin(),edges.end());
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionAsset.cpp:55:2: note: previous statement is here
+   55 |  for(unsigned seed=0;seed<a.faces.size();++seed)if(!used[seed]){
+      |  ^
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+1 warning generated.
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.o
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RigidBodyGravity.cpp:4:
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.h:23:1: warning: 'RigidBody' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
+   23 | struct RigidBody {
+      | ^
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBodyGravity.h:3:1: note: did you mean struct here?
+    3 | class RigidBody;
+      | ^~~~~
+      | struct
+1 warning generated.
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/AndroidPlatform.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3444:6: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 3444 |     }return false;
+      |      ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3432:5: note: previous statement is here
+ 3432 |     for(auto& joint:m_impl->joints)if(joint.handle.id==handle.id){
+      |     ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3590:188: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 3590 |   j.state.constitutive={};j.state.constitutive.material=material;j.warm.fill(0);Wake(j.state.settings.bodyA);if(j.state.settings.bodyB.IsValid())Wake(j.state.settings.bodyB);return true;}return false;
+      |                                                                                                                                                                                            ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3589:2: note: previous statement is here
+ 3589 |  for(auto& j:m_impl->joints)if(j.handle.id==h.id){if(j.state.settings.type!=JointType::Fixed||j.state.angularDrive.enabled)return false;
+      |  ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3599:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 3599 |  }throw std::runtime_error("stale material joint history");
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3594:2: note: previous statement is here
+ 3594 |  for(auto& j:m_impl->joints)if(j.handle.id==h.id){auto& c=j.state.constitutive;
+      |  ^
+3 warnings generated.
+[ 98%] Linking CXX static library libjudas_engine.a
+[ 98%] Built target judas_engine
+[ 98%] Building CXX object CMakeFiles/main.dir/src/RuntimeOptions.cpp.o
+[ 98%] Building CXX object CMakeFiles/main.dir/src/Application.cpp.o
+[ 98%] Building CXX object CMakeFiles/main.dir/src/main.cpp.o
+[ 98%] Building CXX object CMakeFiles/main.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/main.dir/src/TestHarness.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Application.cpp:17:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeOptions.h:44:1: warning: 'RuntimeOptions' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
+   44 | struct RuntimeOptions {
+      | ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeDiagnostics.h:8:1: note: did you mean struct here?
+    8 | class RuntimeOptions;
+      | ^~~~~
+      | struct
+1 warning generated.
+[100%] Linking CXX shared library libmain.so
+[100%] Built target main
++ cmake -S /home/conner/Documents/GitHub/Project-Judas -B /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64 -DCMAKE_TOOLCHAIN_FILE=/home/conner/Android/Sdk/ndk/28.2.13676358/build/cmake/android.toolchain.cmake -DANDROID_ABI=x86_64 -DANDROID_PLATFORM=android-26 -DANDROID_STL=c++_shared -DCMAKE_BUILD_TYPE=Release -DJUDAS_ICU_HOST_TOOLS=/home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-x86_64/unicode/host/src/judas_icu_host-build
+-- The C compiler identification is Clang 19.0.1
+-- The CXX compiler identification is Clang 19.0.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "2.5.1")
+-- Looking for __GLIBC__
+-- Looking for __GLIBC__ - not found
+-- Performing Test CHECK_CPU_ARCHITECTURE_X86
+-- Performing Test CHECK_CPU_ARCHITECTURE_X86 - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_X64
+-- Performing Test CHECK_CPU_ARCHITECTURE_X64 - Success
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM32
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM32 - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64 - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64EC
+-- Performing Test CHECK_CPU_ARCHITECTURE_ARM64EC - Failed
+-- Performing Test CHECK_CPU_ARCHITECTURE_LOONGARCH64
+-- Performing Test CHECK_CPU_ARCHITECTURE_LOONGARCH64 - Failed
+-- Performing Test HAVE_GCC_WALL
+-- Performing Test HAVE_GCC_WALL - Success
+-- Performing Test HAVE_GCC_WUNDEF
+-- Performing Test HAVE_GCC_WUNDEF - Success
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING
+-- Performing Test HAVE_GCC_NO_STRICT_ALIASING - Success
+-- Performing Test HAVE_GCC_WDOCUMENTATION
+-- Performing Test HAVE_GCC_WDOCUMENTATION - Success
+-- Performing Test HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND
+-- Performing Test HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND - Success
+-- Performing Test HAVE_GCC_COMMENT_BLOCK_COMMANDS
+-- Performing Test HAVE_GCC_COMMENT_BLOCK_COMMANDS - Success
+-- Performing Test HAVE_GCC_WDECLARATION_AFTER_STATEMENT
+-- Performing Test HAVE_GCC_WDECLARATION_AFTER_STATEMENT - Success
+-- Performing Test HAVE_GCC_ATOMICS
+-- Performing Test HAVE_GCC_ATOMICS - Success
+-- Performing Test HAVE_GCC_FVISIBILITY
+-- Performing Test HAVE_GCC_FVISIBILITY - Success
+-- Performing Test HAVE_GCC_WSHADOW
+-- Performing Test HAVE_GCC_WSHADOW - Success
+-- Performing Test HAVE_GCC_WUNUSED_LOCAL_TYPEDEFS
+-- Performing Test HAVE_GCC_WUNUSED_LOCAL_TYPEDEFS - Success
+-- Performing Test HAVE_NO_UNDEFINED
+-- Performing Test HAVE_NO_UNDEFINED - Success
+-- Performing Test HAVE_MMX
+-- Performing Test HAVE_MMX - Success
+-- Performing Test HAVE_SSE
+-- Performing Test HAVE_SSE - Success
+-- Performing Test CPU_SUPPORTS_SSE2
+-- Performing Test CPU_SUPPORTS_SSE2 - Success
+-- Performing Test CPU_SUPPORTS_SSE3
+-- Performing Test CPU_SUPPORTS_SSE3 - Success
+-- Looking for immintrin.h
+-- Looking for immintrin.h - found
+-- Performing Test HAVE_ALTIVEC_H_HDR
+-- Performing Test HAVE_ALTIVEC_H_HDR - Failed
+-- Performing Test CPU_SUPPORTS_ALTIVEC
+-- Performing Test CPU_SUPPORTS_ALTIVEC - Failed
+-- Looking for ctype.h
+-- Looking for ctype.h - found
+-- Looking for float.h
+-- Looking for float.h - found
+-- Looking for iconv.h
+-- Looking for iconv.h - found
+-- Looking for inttypes.h
+-- Looking for inttypes.h - found
+-- Looking for limits.h
+-- Looking for limits.h - found
+-- Looking for malloc.h
+-- Looking for malloc.h - found
+-- Looking for math.h
+-- Looking for math.h - found
+-- Looking for memory.h
+-- Looking for memory.h - found
+-- Looking for signal.h
+-- Looking for signal.h - found
+-- Looking for stdarg.h
+-- Looking for stdarg.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stdio.h
+-- Looking for stdio.h - found
+-- Looking for stdlib.h
+-- Looking for stdlib.h - found
+-- Looking for string.h
+-- Looking for string.h - found
+-- Looking for strings.h
+-- Looking for strings.h - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for wchar.h
+-- Looking for wchar.h - found
+-- Looking for 7 include files stddef.h, ..., float.h
+-- Looking for 7 include files stddef.h, ..., float.h - found
+-- Looking for M_PI
+-- Looking for M_PI - found
+-- Performing Test HAVE_MPROTECT
+-- Performing Test HAVE_MPROTECT - Success
+-- Looking for strtod
+-- Looking for strtod - found
+-- Looking for malloc
+-- Looking for malloc - found
+-- Looking for calloc
+-- Looking for calloc - found
+-- Looking for realloc
+-- Looking for realloc - found
+-- Looking for free
+-- Looking for free - found
+-- Looking for getenv
+-- Looking for getenv - found
+-- Looking for setenv
+-- Looking for setenv - found
+-- Looking for putenv
+-- Looking for putenv - found
+-- Looking for unsetenv
+-- Looking for unsetenv - found
+-- Looking for bsearch
+-- Looking for bsearch - found
+-- Looking for qsort
+-- Looking for qsort - found
+-- Looking for abs
+-- Looking for abs - found
+-- Looking for bcopy
+-- Looking for bcopy - found
+-- Looking for memset
+-- Looking for memset - found
+-- Looking for memcpy
+-- Looking for memcpy - found
+-- Looking for memmove
+-- Looking for memmove - found
+-- Looking for memcmp
+-- Looking for memcmp - found
+-- Looking for strlen
+-- Looking for strlen - found
+-- Looking for strlcpy
+-- Looking for strlcpy - found
+-- Looking for strlcat
+-- Looking for strlcat - found
+-- Looking for _strrev
+-- Looking for _strrev - not found
+-- Looking for _strupr
+-- Looking for _strupr - not found
+-- Looking for _strlwr
+-- Looking for _strlwr - not found
+-- Looking for index
+-- Looking for index - not found
+-- Looking for rindex
+-- Looking for rindex - not found
+-- Looking for strchr
+-- Looking for strchr - found
+-- Looking for strrchr
+-- Looking for strrchr - found
+-- Looking for strstr
+-- Looking for strstr - found
+-- Looking for strtok_r
+-- Looking for strtok_r - found
+-- Looking for itoa
+-- Looking for itoa - not found
+-- Looking for _ltoa
+-- Looking for _ltoa - not found
+-- Looking for _uitoa
+-- Looking for _uitoa - not found
+-- Looking for _ultoa
+-- Looking for _ultoa - not found
+-- Looking for strtol
+-- Looking for strtol - found
+-- Looking for strtoul
+-- Looking for strtoul - found
+-- Looking for _i64toa
+-- Looking for _i64toa - not found
+-- Looking for _ui64toa
+-- Looking for _ui64toa - not found
+-- Looking for strtoll
+-- Looking for strtoll - found
+-- Looking for strtoull
+-- Looking for strtoull - found
+-- Looking for atoi
+-- Looking for atoi - found
+-- Looking for atof
+-- Looking for atof - found
+-- Looking for strcmp
+-- Looking for strcmp - found
+-- Looking for strncmp
+-- Looking for strncmp - found
+-- Looking for _stricmp
+-- Looking for _stricmp - not found
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for _strnicmp
+-- Looking for _strnicmp - not found
+-- Looking for strncasecmp
+-- Looking for strncasecmp - found
+-- Looking for strcasestr
+-- Looking for strcasestr - found
+-- Looking for wcscmp
+-- Looking for wcscmp - found
+-- Looking for _wcsdup
+-- Looking for _wcsdup - not found
+-- Looking for wcsdup
+-- Looking for wcsdup - found
+-- Looking for wcslcat
+-- Looking for wcslcat - found
+-- Looking for wcslcpy
+-- Looking for wcslcpy - found
+-- Looking for wcslen
+-- Looking for wcslen - found
+-- Looking for wcsncmp
+-- Looking for wcsncmp - found
+-- Looking for wcsstr
+-- Looking for wcsstr - found
+-- Looking for wcscasecmp
+-- Looking for wcscasecmp - found
+-- Looking for _wcsicmp
+-- Looking for _wcsicmp - not found
+-- Looking for wcsncasecmp
+-- Looking for wcsncasecmp - found
+-- Looking for _wcsnicmp
+-- Looking for _wcsnicmp - not found
+-- Looking for sscanf
+-- Looking for sscanf - found
+-- Looking for vsscanf
+-- Looking for vsscanf - found
+-- Looking for vsnprintf
+-- Looking for vsnprintf - found
+-- Looking for fopen64
+-- Looking for fopen64 - found
+-- Looking for fseeko
+-- Looking for fseeko - found
+-- Looking for fseeko64
+-- Looking for fseeko64 - found
+-- Looking for _Exit
+-- Looking for _Exit - found
+-- Looking for sigaction
+-- Looking for sigaction - found
+-- Looking for sigtimedwait
+-- Looking for sigtimedwait - found
+-- Looking for setjmp
+-- Looking for setjmp - found
+-- Looking for nanosleep
+-- Looking for nanosleep - found
+-- Looking for sysconf
+-- Looking for sysconf - found
+-- Looking for sysctlbyname
+-- Looking for sysctlbyname - not found
+-- Looking for getauxval
+-- Looking for getauxval - found
+-- Looking for elf_aux_info
+-- Looking for elf_aux_info - not found
+-- Looking for poll
+-- Looking for poll - found
+-- Looking for memfd_create
+-- Looking for memfd_create - not found
+-- Looking for posix_fallocate
+-- Looking for posix_fallocate - found
+-- Looking for pow in m
+-- Looking for pow in m - found
+-- Looking for atan
+-- Looking for atan - found
+-- Looking for atan2
+-- Looking for atan2 - found
+-- Looking for atanf
+-- Looking for atanf - found
+-- Looking for atan2f
+-- Looking for atan2f - found
+-- Looking for ceil
+-- Looking for ceil - found
+-- Looking for ceilf
+-- Looking for ceilf - found
+-- Looking for copysign
+-- Looking for copysign - found
+-- Looking for copysignf
+-- Looking for copysignf - found
+-- Looking for cos
+-- Looking for cos - found
+-- Looking for cosf
+-- Looking for cosf - found
+-- Looking for exp
+-- Looking for exp - found
+-- Looking for expf
+-- Looking for expf - found
+-- Looking for fabs
+-- Looking for fabs - found
+-- Looking for fabsf
+-- Looking for fabsf - found
+-- Looking for floor
+-- Looking for floor - found
+-- Looking for floorf
+-- Looking for floorf - found
+-- Looking for fmod
+-- Looking for fmod - found
+-- Looking for fmodf
+-- Looking for fmodf - found
+-- Looking for log
+-- Looking for log - found
+-- Looking for logf
+-- Looking for logf - found
+-- Looking for log10
+-- Looking for log10 - found
+-- Looking for log10f
+-- Looking for log10f - found
+-- Looking for lround
+-- Looking for lround - found
+-- Looking for lroundf
+-- Looking for lroundf - found
+-- Looking for pow
+-- Looking for pow - found
+-- Looking for powf
+-- Looking for powf - found
+-- Looking for round
+-- Looking for round - found
+-- Looking for roundf
+-- Looking for roundf - found
+-- Looking for scalbn
+-- Looking for scalbn - found
+-- Looking for scalbnf
+-- Looking for scalbnf - found
+-- Looking for sin
+-- Looking for sin - found
+-- Looking for sinf
+-- Looking for sinf - found
+-- Looking for sqrt
+-- Looking for sqrt - found
+-- Looking for sqrtf
+-- Looking for sqrtf - found
+-- Looking for tan
+-- Looking for tan - found
+-- Looking for tanf
+-- Looking for tanf - found
+-- Looking for acos
+-- Looking for acos - found
+-- Looking for acosf
+-- Looking for acosf - found
+-- Looking for asin
+-- Looking for asin - found
+-- Looking for asinf
+-- Looking for asinf - found
+-- Looking for trunc
+-- Looking for trunc - found
+-- Looking for truncf
+-- Looking for truncf - found
+-- Performing Test ICONV_IN_LIBC
+-- Performing Test ICONV_IN_LIBC - Failed
+-- Performing Test ICONV_IN_LIBICONV
+-- Performing Test ICONV_IN_LIBICONV - Failed
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for alloca
+-- Looking for alloca - found
+-- Looking for alloca
+-- Looking for alloca - found
+-- Looking for alloca
+-- Looking for alloca - not found
+-- Performing Test HAVE_SA_SIGACTION
+-- Performing Test HAVE_SA_SIGACTION - Success
+-- Looking for dlopen
+-- Looking for dlopen - found
+-- Performing Test HAVE_O_CLOEXEC
+-- Performing Test HAVE_O_CLOEXEC - Success
+-- Performing Test HAVE_ARM_MODE
+-- Performing Test HAVE_ARM_MODE - Failed
+-- Performing Test VULKAN_PASSED_ANDROID_CHECKS
+-- Performing Test VULKAN_PASSED_ANDROID_CHECKS - Success
+-- Performing Test HAVE_PTHREADS
+-- Performing Test HAVE_PTHREADS - Success
+-- Performing Test HAVE_RECURSIVE_MUTEXES
+-- Performing Test HAVE_RECURSIVE_MUTEXES - Success
+-- Performing Test HAVE_PTHREADS_SEM
+-- Performing Test HAVE_PTHREADS_SEM - Success
+-- Performing Test HAVE_SEM_TIMEDWAIT
+-- Performing Test HAVE_SEM_TIMEDWAIT - Success
+-- Looking for include file pthread.h
+-- Looking for include file pthread.h - found
+-- Looking for include file pthread_np.h
+-- Looking for include file pthread_np.h - not found
+-- Performing Test HAVE_PTHREAD_SETNAME_NP
+-- Performing Test HAVE_PTHREAD_SETNAME_NP - Success
+-- Found Git: /usr/bin/git (found version "2.53.0")
+CMake Deprecation Warning at .cache/m89/android/android-x86_64/_deps/judas_sdl-src/CMakeLists.txt:3300 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- 
+-- SDL2 was configured with the following options:
+-- 
+-- Platform: Android-1
+-- 64-bit:   TRUE
+-- Compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
+-- Revision: SDL-release-2.32.10-0-g5d2495703
+-- 
+-- Subsystems:
+--   Atomic:	ON
+--   Audio:	ON
+--   Video:	ON
+--   Render:	ON
+--   Events:	ON
+--   Joystick:	ON
+--   Haptic:	ON
+--   Hidapi:	ON
+--   Power:	ON
+--   Threads:	ON
+--   Timers:	ON
+--   File:	ON
+--   Loadso:	ON
+--   CPUinfo:	ON
+--   Filesystem:	ON
+--   Sensor:	ON
+--   Locale:	ON
+--   Misc:	ON
+-- 
+-- Options:
+--   SDL2_DISABLE_INSTALL        (Wanted: ON): OFF
+--   SDL2_DISABLE_SDL2MAIN       (Wanted: OFF): OFF
+--   SDL2_DISABLE_UNINSTALL      (Wanted: OFF): OFF
+--   SDL_3DNOW                   (Wanted: OFF): OFF
+--   SDL_ALSA                    (Wanted: OFF): OFF
+--   SDL_ALSA_SHARED             (Wanted: OFF): OFF
+--   SDL_ALTIVEC                 (Wanted: ON): OFF
+--   SDL_ARMNEON                 (Wanted: OFF): OFF
+--   SDL_ARMSIMD                 (Wanted: OFF): OFF
+--   SDL_ARTS                    (Wanted: OFF): OFF
+--   SDL_ARTS_SHARED             (Wanted: OFF): OFF
+--   SDL_ASAN                    (Wanted: OFF): OFF
+--   SDL_ASSEMBLY                (Wanted: ON): ON
+--   SDL_ASSERTIONS              (Wanted: auto): auto
+--   SDL_BACKGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_CCACHE                  (Wanted: ON): OFF
+--   SDL_CLOCK_GETTIME           (Wanted: ON): ON
+--   SDL_COCOA                   (Wanted: OFF): OFF
+--   SDL_DBUS                    (Wanted: OFF): OFF
+--   SDL_DIRECTFB                (Wanted: OFF): OFF
+--   SDL_DIRECTFB_SHARED         (Wanted: OFF): OFF
+--   SDL_DIRECTX                 (Wanted: OFF): OFF
+--   SDL_DISKAUDIO               (Wanted: ON): ON
+--   SDL_DUMMYAUDIO              (Wanted: ON): ON
+--   SDL_DUMMYVIDEO              (Wanted: ON): ON
+--   SDL_ESD                     (Wanted: OFF): OFF
+--   SDL_ESD_SHARED              (Wanted: OFF): OFF
+--   SDL_FOREGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND             (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND_SHARED      (Wanted: OFF): OFF
+--   SDL_GCC_ATOMICS             (Wanted: ON): ON
+--   SDL_HIDAPI                  (Wanted: ON): ON
+--   SDL_HIDAPI_JOYSTICK         (Wanted: ON): ON
+--   SDL_HIDAPI_LIBUSB           (Wanted: OFF): OFF
+--   SDL_IBUS                    (Wanted: OFF): OFF
+--   SDL_INSTALL_TESTS           (Wanted: OFF): OFF
+--   SDL_JACK                    (Wanted: OFF): OFF
+--   SDL_JACK_SHARED             (Wanted: OFF): OFF
+--   SDL_KMSDRM                  (Wanted: OFF): OFF
+--   SDL_KMSDRM_SHARED           (Wanted: OFF): OFF
+--   SDL_LASX                    (Wanted: OFF): OFF
+--   SDL_LIBC                    (Wanted: ON): ON
+--   SDL_LIBICONV                (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE           (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE_SHARED    (Wanted: OFF): OFF
+--   SDL_LIBUDEV                 (Wanted: ON): OFF
+--   SDL_LSX                     (Wanted: OFF): OFF
+--   SDL_METAL                   (Wanted: OFF): OFF
+--   SDL_MMX                     (Wanted: ON): ON
+--   SDL_NAS                     (Wanted: OFF): OFF
+--   SDL_NAS_SHARED              (Wanted: OFF): OFF
+--   SDL_OFFSCREEN               (Wanted: ON): ON
+--   SDL_OPENGL                  (Wanted: ON): OFF
+--   SDL_OPENGLES                (Wanted: ON): ON
+--   SDL_OSS                     (Wanted: OFF): OFF
+--   SDL_PIPEWIRE                (Wanted: OFF): OFF
+--   SDL_PIPEWIRE_SHARED         (Wanted: OFF): OFF
+--   SDL_PTHREADS                (Wanted: ON): ON
+--   SDL_PTHREADS_SEM            (Wanted: ON): ON
+--   SDL_PULSEAUDIO              (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO_SHARED       (Wanted: OFF): OFF
+--   SDL_RENDER_D3D              (Wanted: OFF): OFF
+--   SDL_RENDER_METAL            (Wanted: OFF): OFF
+--   SDL_RPATH                   (Wanted: OFF): OFF
+--   SDL_RPI                     (Wanted: OFF): OFF
+--   SDL_SNDIO                   (Wanted: OFF): OFF
+--   SDL_SNDIO_SHARED            (Wanted: OFF): OFF
+--   SDL_SSE                     (Wanted: ON): ON
+--   SDL_SSE2                    (Wanted: ON): ON
+--   SDL_SSE3                    (Wanted: ON): ON
+--   SDL_SSEMATH                 (Wanted: ON): ON
+--   SDL_STATIC_PIC              (Wanted: OFF): OFF
+--   SDL_SYSTEM_ICONV            (Wanted: ON): OFF
+--   SDL_TESTS                   (Wanted: OFF): OFF
+--   SDL_VENDOR_INFO             (Wanted: ): OFF
+--   SDL_VIRTUAL_JOYSTICK        (Wanted: ON): ON
+--   SDL_VIVANTE                 (Wanted: OFF): OFF
+--   SDL_VULKAN                  (Wanted: ON): ON
+--   SDL_WASAPI                  (Wanted: OFF): OFF
+--   SDL_WAYLAND                 (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR        (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR_SHARED (Wanted: OFF): OFF
+--   SDL_WAYLAND_QT_TOUCH        (Wanted: OFF): OFF
+--   SDL_WAYLAND_SHARED          (Wanted: OFF): OFF
+--   SDL_X11                     (Wanted: OFF): OFF
+--   SDL_X11_SHARED              (Wanted: OFF): OFF
+--   SDL_X11_XCURSOR             (Wanted: OFF): OFF
+--   SDL_X11_XDBE                (Wanted: OFF): OFF
+--   SDL_X11_XFIXES              (Wanted: OFF): OFF
+--   SDL_X11_XINPUT              (Wanted: OFF): OFF
+--   SDL_X11_XRANDR              (Wanted: OFF): OFF
+--   SDL_X11_XSCRNSAVER          (Wanted: OFF): OFF
+--   SDL_X11_XSHAPE              (Wanted: OFF): OFF
+--   SDL_XINPUT                  (Wanted: OFF): OFF
+-- 
+--  CFLAGS:        -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -idirafter "/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/video/khronos"
+--  EXTRA_CFLAGS:   -Wall -Wundef -fno-strict-aliasing -Wdocumentation -Wdocumentation-unknown-command -fcomment-block-commands=threadsafety -fcomment-block-commands=deprecated -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs -mmmx -msse -msse2 -msse3
+--  EXTRA_LDFLAGS:  -Wl,--no-undefined
+--  EXTRA_LIBS:    m;OpenSLES;dl;log;android;GLESv1_CM;GLESv2
+-- 
+--  Build Shared Library: ON
+--  Build Static Library: OFF
+-- 
+-- If something was not detected, although the libraries
+-- were installed, then make sure you have set the
+-- CFLAGS and LDFLAGS environment variables correctly.
+-- 
+CMake Deprecation Warning at .cache/m89/android/android-x86_64/_deps/judas_glm-src/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at .cache/m89/android/android-x86_64/_deps/judas_glm-src/CMakeLists.txt:2 (cmake_policy):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- GLM: Version 1.0.1
+-- GLM: Disable -Wc++98-compat warnings
+-- GLM: Build with C++ features auto detection
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+-- Looking for atexit
+-- Looking for atexit - found
+-- Looking for getpagesize
+-- Looking for getpagesize - found
+-- Looking for mmap
+-- Looking for mmap - found
+-- Looking for isatty
+-- Looking for isatty - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/mman.h
+-- Looking for sys/mman.h - found
+-- Looking for stdbool.h
+-- Looking for stdbool.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS - Success
+-- Performing Test COMPILER_SUPPORTS_CXX11
+-- Performing Test COMPILER_SUPPORTS_CXX11 - Success
+CMake Deprecation Warning at .cache/m89/android/android-x86_64/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Looking for fcntl.h
+-- Looking for fcntl.h - found
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Configuring done (19.7s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64
++ cmake --build /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64 --target main -j 4
+[  0%] Generating include/SDL2/SDL.h
+[  0%] Building C object CMakeFiles/judas_audio_backend.dir/src/AudioBackend.c.o
+[  0%] Building CXX object CMakeFiles/judas_jobs.dir/src/JobSystem.cpp.o
+[  0%] Building CXX object _deps/judas_harfbuzz-build/CMakeFiles/harfbuzz.dir/src/harfbuzz.cc.o
+[  0%] Generating include/SDL2/SDL_assert.h
+[  0%] Generating include/SDL2/SDL_atomic.h
+[  0%] Generating include/SDL2/SDL_audio.h
+[  1%] Generating include/SDL2/SDL_bits.h
+[  1%] Generating include/SDL2/SDL_blendmode.h
+[  1%] Generating include/SDL2/SDL_clipboard.h
+[  1%] Generating include/SDL2/SDL_copying.h
+[  1%] Generating include/SDL2/SDL_cpuinfo.h
+[  2%] Generating include/SDL2/SDL_egl.h
+[  2%] Generating include/SDL2/SDL_endian.h
+[  2%] Generating include/SDL2/SDL_error.h
+[  2%] Generating include/SDL2/SDL_events.h
+[  2%] Generating include/SDL2/SDL_filesystem.h
+[  3%] Generating include/SDL2/SDL_gamecontroller.h
+[  3%] Generating include/SDL2/SDL_gesture.h
+[  3%] Generating include/SDL2/SDL_guid.h
+[  3%] Generating include/SDL2/SDL_haptic.h
+[  3%] Generating include/SDL2/SDL_hidapi.h
+[  4%] Generating include/SDL2/SDL_hints.h
+[  4%] Generating include/SDL2/SDL_joystick.h
+[  4%] Generating include/SDL2/SDL_keyboard.h
+[  4%] Generating include/SDL2/SDL_keycode.h
+[  4%] Generating include/SDL2/SDL_loadso.h
+[  5%] Generating include/SDL2/SDL_locale.h
+[  5%] Generating include/SDL2/SDL_log.h
+[  5%] Generating include/SDL2/SDL_main.h
+[  5%] Generating include/SDL2/SDL_messagebox.h
+[  5%] Generating include/SDL2/SDL_metal.h
+[  5%] Generating include/SDL2/SDL_misc.h
+[  6%] Generating include/SDL2/SDL_mouse.h
+[  6%] Generating include/SDL2/SDL_mutex.h
+[  6%] Generating include/SDL2/SDL_name.h
+[  6%] Generating include/SDL2/SDL_opengl.h
+[  6%] Generating include/SDL2/SDL_opengl_glext.h
+[  7%] Generating include/SDL2/SDL_opengles.h
+[  7%] Generating include/SDL2/SDL_opengles2.h
+[  7%] Generating include/SDL2/SDL_opengles2_gl2.h
+[  7%] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[  7%] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[  8%] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[  8%] Generating include/SDL2/SDL_pixels.h
+[  8%] Generating include/SDL2/SDL_platform.h
+[  8%] Generating include/SDL2/SDL_power.h
+[  8%] Generating include/SDL2/SDL_quit.h
+[  9%] Generating include/SDL2/SDL_rect.h
+[  9%] Generating include/SDL2/SDL_render.h
+[  9%] Generating include/SDL2/SDL_rwops.h
+[  9%] Generating include/SDL2/SDL_scancode.h
+[  9%] Generating include/SDL2/SDL_sensor.h
+[ 10%] Generating include/SDL2/SDL_shape.h
+[ 10%] Generating include/SDL2/SDL_stdinc.h
+[ 10%] Generating include/SDL2/SDL_surface.h
+[ 10%] Generating include/SDL2/SDL_system.h
+[ 10%] Generating include/SDL2/SDL_syswm.h
+[ 10%] Generating include/SDL2/SDL_test.h
+[ 11%] Generating include/SDL2/SDL_test_assert.h
+[ 11%] Generating include/SDL2/SDL_test_common.h
+[ 11%] Generating include/SDL2/SDL_test_compare.h
+[ 11%] Generating include/SDL2/SDL_test_crc32.h
+[ 11%] Generating include/SDL2/SDL_test_font.h
+[ 12%] Generating include/SDL2/SDL_test_fuzzer.h
+[ 12%] Generating include/SDL2/SDL_test_harness.h
+[ 12%] Generating include/SDL2/SDL_test_images.h
+[ 12%] Generating include/SDL2/SDL_test_log.h
+[ 12%] Generating include/SDL2/SDL_test_md5.h
+[ 13%] Generating include/SDL2/SDL_test_memory.h
+[ 13%] Generating include/SDL2/SDL_test_random.h
+[ 13%] Generating include/SDL2/SDL_thread.h
+[ 13%] Generating include/SDL2/SDL_timer.h
+[ 13%] Generating include/SDL2/SDL_touch.h
+[ 14%] Generating include/SDL2/SDL_types.h
+[ 14%] Generating include/SDL2/SDL_version.h
+[ 14%] Generating include/SDL2/SDL_video.h
+[ 14%] Generating include/SDL2/SDL_vulkan.h
+[ 14%] Generating include/SDL2/begin_code.h
+[ 15%] Generating include/SDL2/close_code.h
+[ 15%] Built target sdl_headers_copy
+[ 15%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/quickjs.c.o
+[ 15%] Linking CXX static library libjudas_jobs.a
+[ 15%] Built target judas_jobs
+[ 15%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp.o
+[ 15%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAssert.cpp.o
+[ 15%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourCommon.cpp.o
+[ 15%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNode.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp.o
+[ 16%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp.o
+[ 17%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp.o
+[ 18%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp.o
+[ 18%] Linking CXX static library libjudas_navigation_backend.a
+[ 18%] Built target judas_navigation_backend
+[ 18%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/dtoa.c.o
+[ 18%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libregexp.c.o
+[ 18%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libunicode.c.o
+[ 18%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[ 18%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[ 18%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[ 18%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[ 19%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[ 20%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[ 21%] Building C object CMakeFiles/judas_audio_backend.dir/src/ReverbBackend.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[ 22%] Linking C static library libjudas_audio_backend.a
+[ 22%] Built target judas_audio_backend
+[ 22%] Building CXX object CMakeFiles/judas_profiler.dir/src/PerformanceProfiler.cpp.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[ 22%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[ 23%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[ 24%] Linking CXX static library libjudas_profiler.a
+[ 24%] Built target judas_profiler
+[ 25%] Creating directories for 'judas_icu_build'
+[ 25%] Performing download step (verify and extract) for 'judas_icu_build'
+-- verifying file...
+     file='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+-- verifying file... done
+-- extracting...
+     src='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+     dst='/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/unicode/build/src/judas_icu_build'
+-- extracting... [tar xf]
+[ 25%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[ 25%] No update step for 'judas_icu_build'
+[ 25%] No patch step for 'judas_icu_build'
+[ 25%] Performing configure step for 'judas_icu_build'
+[ 25%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+-- judas_icu_build configure command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/unicode/build/src/judas_icu_build-stamp/judas_icu_build-configure-*.log
+[ 26%] Performing build step for 'judas_icu_build'
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[ 27%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[ 27%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[ 27%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[ 27%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[ 27%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[ 28%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[ 28%] Linking C static library libfreetype.a
+[ 28%] Built target freetype
+[ 28%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2main.dir/src/main/android/SDL_android_main.c.o
+[ 29%] Linking C static library libSDL2main.a
+[ 29%] Built target SDL2main
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_assert.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_dataqueue.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_error.c.o
+[ 29%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_guid.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_hints.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_list.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_log.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/SDL_utils.c.o
+[ 30%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/atomic/SDL_atomic.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/atomic/SDL_spinlock.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audio.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audiocvt.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audiodev.c.o
+[ 31%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_audiotypecvt.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_mixer.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/SDL_wave.c.o
+[ 32%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/cpuinfo/SDL_cpuinfo.c.o
+[ 33%] Linking C static library libjudas_quickjs.a
+[ 33%] Built target judas_quickjs
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/dynapi/SDL_dynapi.c.o
+[ 33%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_clipboardevents.c.o
+[ 33%] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_displayevents.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_dropevents.c.o
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_events.c.o
+[ 35%] Linking CXX static library libjudas_materials.a
+[ 35%] Built target judas_materials
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_gesture.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_keyboard.c.o
+[ 35%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_keysym_to_scancode.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_mouse.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_quit.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_scancode_tables.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_touch.c.o
+[ 36%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/SDL_windowevents.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/events/imKStoUCS.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/file/SDL_rwops.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/haptic/SDL_haptic.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/hidapi/SDL_hidapi.c.o
+[ 37%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/SDL_gamecontroller.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/SDL_joystick.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/SDL_steam_virtual_gamepad.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/controller_type.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_atan2.c.o
+[ 38%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_exp.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_fmod.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_log.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_log10.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_pow.c.o
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_rem_pio2.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/e_sqrt.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_cos.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_rem_pio2.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_sin.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/k_tan.c.o
+[ 40%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_atan.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_copysign.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_cos.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_fabs.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_floor.c.o
+[ 41%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_scalbn.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_sin.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/libm/s_tan.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/misc/SDL_url.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/locale/SDL_locale.c.o
+[ 42%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/power/SDL_power.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/SDL_d3dmath.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/SDL_render.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/SDL_yuv_sw.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d/SDL_render_d3d.c.o
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d/SDL_shaders_d3d.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d11/SDL_render_d3d11.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d11/SDL_shaders_d3d11.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d12/SDL_render_d3d12.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/direct3d12/SDL_shaders_d3d12.c.o
+[ 44%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengl/SDL_render_gl.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengl/SDL_shaders_gl.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengles/SDL_render_gles.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengles2/SDL_render_gles2.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/opengles2/SDL_shaders_gles2.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/ps2/SDL_render_ps2.c.o
+[ 45%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/psp/SDL_render_psp.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_blendfillrect.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_blendline.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_blendpoint.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_drawline.c.o
+[ 46%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_drawpoint.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_render_sw.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_rotate.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/software/SDL_triangle.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm.c.o
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/sensor/SDL_sensor.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_crc16.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_crc32.c.o
+[ 48%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_getenv.c.o
+[ 50%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_iconv.c.o
+[ 50%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_malloc.c.o
+[ 50%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_mslibc.c.o
+[ 50%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_qsort.c.o
+[ 50%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_stdlib.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_string.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/stdlib/SDL_strtokr.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/SDL_thread.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/timer/SDL_timer.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_RLEaccel.c.o
+[ 51%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit.c.o
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_0.c.o
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_1.c.o
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_A.c.o
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_N.c.o
+[ 52%] Linking C static library libharfbuzz.a
+[ 52%] Built target harfbuzz
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_auto.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_copy.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_blit_slow.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_bmp.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_clipboard.c.o
+[ 53%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_egl.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_fillrect.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_pixels.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_rect.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_shape.c.o
+[ 54%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_stretch.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_surface.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_video.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_vulkan_utils.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/SDL_yuv.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.o
+[ 55%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb_sse.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/yuv2rgb/yuv_rgb_std.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/dummy/SDL_dummyaudio.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/disk/SDL_diskaudio.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/loadso/dlopen/SDL_sysloadso.c.o
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/virtual/SDL_virtualjoystick.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullevents.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullframebuffer.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/dummy/SDL_nullvideo.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenevents.c.o
+[ 57%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenframebuffer.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenopengles.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenvideo.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/offscreen/SDL_offscreenwindow.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/core/android/SDL_android.c.o
+[ 58%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/home/conner/Android/Sdk/ndk/28.2.13676358/sources/android/cpufeatures/cpu-features.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/misc/android/SDL_sysurl.c.o
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/core/android/SDL_android.c:735:15: warning: redefinition of typedef 'SDL_main_func' is a C11 feature [-Wtypedef-redefinition]
+  735 | typedef int (*SDL_main_func)(int argc, char *argv[]);
+      |               ^
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-build/include/SDL2/SDL_main.h:154:15: note: previous definition is here
+  154 | typedef int (*SDL_main_func)(int argc, char *argv[]);
+      |               ^
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/android/SDL_androidaudio.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/openslES/SDL_openslES.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/audio/aaudio/SDL_aaudio.c.o
+[ 59%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/filesystem/android/SDL_sysfilesystem.c.o
+1 warning generated.
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/haptic/android/SDL_syshaptic.c.o
+[ 60%] Building CXX object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/hidapi/android/hid.cpp.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_combined.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_luna.c.o
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_shield.c.o
+[ 61%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_steam.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_switch.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_wii.c.o
+[ 62%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/hidapi/SDL_hidapijoystick.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/android/SDL_sysjoystick.c.o
+[ 63%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/joystick/steam/SDL_steamcontroller.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/power/android/SDL_syspower.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/locale/android/SDL_syslocale.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/timer/unix/SDL_systimer.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidclipboard.c.o
+[ 64%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/sensor/android/SDL_androidsensor.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidevents.c.o
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/sensor/android/SDL_androidsensor.c:56:26: warning: 'ASensorManager_getInstance' is deprecated: first deprecated in Android 26 - Use ASensorManager_getInstanceForPackage instead [-Wdeprecated-declarations]
+   56 |     SDL_sensor_manager = ASensorManager_getInstance();
+      |                          ^
+/home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/android/sensor.h:751:17: note: 'ASensorManager_getInstance' has been explicitly marked deprecated here
+  751 | ASensorManager* ASensorManager_getInstance()
+      |                 ^
+1 warning generated.
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidgl.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidkeyboard.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidmessagebox.c.o
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidmouse.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidvideo.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidtouch.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidvulkan.c.o
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/video/android/SDL_androidwindow.c.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/video/android/SDL_androidwindow.c:33:
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/video/android/SDL_androidwindow.h:27:
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/video/android/../SDL_egl_c.h:28:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-build/include/SDL2/SDL_egl.h:566:15: warning: redefinition of typedef 'EGLSurface' is a C11 feature [-Wtypedef-redefinition]
+  566 | typedef void *EGLSurface;
+      |               ^
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-build/include/SDL2/SDL_syswm.h:106:15: note: previous definition is here
+  106 | typedef void *EGLSurface;
+      |               ^
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-src/src/video/android/SDL_androidvulkan.c:36:
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-build/include/SDL2/SDL_syswm.h:106:15: warning: redefinition of typedef 'EGLSurface' is a C11 feature [-Wtypedef-redefinition]
+  106 | typedef void *EGLSurface;
+      |               ^
+/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/_deps/judas_sdl-build/include/SDL2/SDL_egl.h:566:15: note: previous definition is here
+  566 | typedef void *EGLSurface;
+      |               ^
+1 warning generated.
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_systhread.c.o
+1 warning generated.
+[ 66%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_sysmutex.c.o
+[ 67%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_syscond.c.o
+[ 67%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_systls.c.o
+[ 67%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2.dir/src/thread/pthread/SDL_syssem.c.o
+[ 67%] Linking CXX shared library libSDL2.so
+[ 67%] Built target SDL2
+[ 68%] Building CXX object CMakeFiles/judas_app_icon.dir/src/AppIcon.cpp.o
+[ 68%] Building CXX object CMakeFiles/judas_app_icon.dir/src/TextureLoader.cpp.o
+[ 68%] Linking CXX static library libjudas_app_icon.a
+[ 68%] Built target judas_app_icon
+-- judas_icu_build build command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+[ 68%] Performing install step for 'judas_icu_build'
+-- judas_icu_build install command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-x86_64/unicode/build/src/judas_icu_build-stamp/judas_icu_build-install-*.log
+[ 69%] Completed 'judas_icu_build'
+[ 69%] Built target judas_icu_build
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Powertrain.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ContentStorage.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModStore.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.cpp:169:10: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+  169 |         }if(found)Wake();
+      |          ^
+/home/conner/Documents/GitHub/Project-Judas/src/Deformable.cpp:167:5: note: previous statement is here
+  167 |     for(size_t i=0;i<settings.attachments.size();++i)if(settings.attachments[i].group==group){released[i]=true;
+      |     ^
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+1 warning generated.
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Localization.cpp:33:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+   33 |  }return true;
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/Localization.cpp:25:2: note: previous statement is here
+   25 |  for(int i=0;i<mp.countParts();++i)if(mp.getPartType(i)==UMSGPAT_PART_TYPE_ARG_START){
+      |  ^
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+1 warning generated.
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:127:80: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  127 |   auto accumulate=[&](LiquidMoment m,glm::vec3 flow){if(m.volume>0){V c=global(s.pose,m.first/m.volume);
+      |                                                                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:122:16: note: 's' declared here
+  122 |  for(auto& [id,s]:m_states)if(s.enabled&&!s.container&&s.volume>0)for(auto worldTet:geometry.cells){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:133:45: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  133 |    accumulate(LiquidIntersection(body,basin,s.equilibrium,level),flow);
+      |                                             ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:122:16: note: 's' declared here
+  122 |  for(auto& [id,s]:m_states)if(s.enabled&&!s.container&&s.volume>0)for(auto worldTet:geometry.cells){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:210:161: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  210 |     for(unsigned corner=0;corner<8;++corner){V p=V(center)+glm::dquat(child)*V(corner&1?half.x:-half.x,corner&2?half.y:-half.y,corner&4?half.z:-half.z);p=local(s.pose,V(pose.position)+glm::dquat(pose.rotation)*p);lower=glm::min(lower,p);upper=glm::max(upper,p);}
+      |                                                                                                                                                                 ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:203:16: note: 's' declared here
+  203 |  for(auto& [id,s]:m_states)if(s.enabled&&s.dynamicSurface){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:215:6: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+  215 |     }(world.Physics().IsDynamicBody(body)?dynamicSolids:solids).push_back(std::move(planes));
+      |      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:213:5: note: previous statement is here
+  213 |     for(unsigned axis=0;axis<3;++axis)for(double sign:{-1.,1.}){V normal(0);normal[axis]=sign;normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(pose.rotation)*glm::dquat(child)*normal;
+      |     ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:225:62: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  225 |     for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);
+      |                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:203:16: note: 's' declared here
+  203 |  for(auto& [id,s]:m_states)if(s.enabled&&s.dynamicSurface){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:225:91: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  225 |     for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);
+      |                                                                                           ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:223:22: note: 'c' declared here
+  223 |   for(auto& [otherId,c]:m_states)if(c.container&&c.enabled&&c.equilibriumValid&&c.volume>0){
+      |                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:285:32: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  285 |    auto& cache=m_opticalCache[{id,index}];
+      |                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:283:13: note: 'id' declared here
+  283 |  for(auto& [id,s]:m_states)if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      |             ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:286:54: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  286 |    if(cache.revision!=revision||cache.pose.position!=s.pose.position||cache.pose.rotation!=s.pose.rotation||!cache.equilibrium.Equivalent(s.equilibrium)){
+      |                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:283:16: note: 's' declared here
+  283 |  for(auto& [id,s]:m_states)if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      |                ^
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+8 warnings generated.
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1549:19: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1549 |         return o;}return JS_NULL;}
+      |                   ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1546:26: note: previous statement is here
+ 1546 |     if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
+      |                          ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1566:23: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1566 |             return o;}return JS_NULL;}
+      |                       ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1559:25: note: previous statement is here
+ 1559 |     if(op=="audioInfo"){for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){auto o=JS_NewObject(c);AudioVoiceSnapshot snapshot;
+      |                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1579:10: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1579 |         }return JS_FALSE;
+      |          ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1572:9: note: previous statement is here
+ 1572 |         for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){AudioSettings settings=emitter.settings;auto options=arg(2);
+      |         ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1586:54: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1586 |             e.pool.settings=settings;return JS_TRUE;}return JS_FALSE;}
+      |                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1583:25: note: previous statement is here
+ 1583 |     if(op=="particles"){for(auto& e:world.VisualEmitters())if(e.id==id){auto settings=e.pool.settings;auto enabled=JS_GetPropertyStr(c,arg(2),"enabled");if(!JS_IsUndefined(enabled))settings.enabled=JS_ToBool(c,enabled);JS_FreeValue(c,enabled);
+      |                         ^
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[ 81%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.o
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.o
+4 warnings generated.
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 83%] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.o
+[ 84%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[ 85%] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.o
+[ 87%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 88%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 89%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.o
+[ 90%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/Weather.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 92%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 94%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/PlatformServices.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionAsset.cpp:64:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+   64 |  }a.edges.assign(edges.begin(),edges.end());
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionAsset.cpp:55:2: note: previous statement is here
+   55 |  for(unsigned seed=0;seed<a.faces.size();++seed)if(!used[seed]){
+      |  ^
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+1 warning generated.
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.o
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[ 96%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RigidBodyGravity.cpp:4:
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.h:23:1: warning: 'RigidBody' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
+   23 | struct RigidBody {
+      | ^
+/home/conner/Documents/GitHub/Project-Judas/src/RigidBodyGravity.h:3:1: note: did you mean struct here?
+    3 | class RigidBody;
+      | ^~~~~
+      | struct
+1 warning generated.
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+[ 97%] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 98%] Building CXX object CMakeFiles/judas_engine.dir/src/AndroidPlatform.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3444:6: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 3444 |     }return false;
+      |      ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3432:5: note: previous statement is here
+ 3432 |     for(auto& joint:m_impl->joints)if(joint.handle.id==handle.id){
+      |     ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3590:188: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 3590 |   j.state.constitutive={};j.state.constitutive.material=material;j.warm.fill(0);Wake(j.state.settings.bodyA);if(j.state.settings.bodyB.IsValid())Wake(j.state.settings.bodyB);return true;}return false;
+      |                                                                                                                                                                                            ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3589:2: note: previous statement is here
+ 3589 |  for(auto& j:m_impl->joints)if(j.handle.id==h.id){if(j.state.settings.type!=JointType::Fixed||j.state.angularDrive.enabled)return false;
+      |  ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3599:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 3599 |  }throw std::runtime_error("stale material joint history");
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:3594:2: note: previous statement is here
+ 3594 |  for(auto& j:m_impl->joints)if(j.handle.id==h.id){auto& c=j.state.constitutive;
+      |  ^
+3 warnings generated.
+[ 98%] Linking CXX static library libjudas_engine.a
+[ 98%] Built target judas_engine
+[ 98%] Building CXX object CMakeFiles/main.dir/src/RuntimeOptions.cpp.o
+[ 98%] Building CXX object CMakeFiles/main.dir/src/Application.cpp.o
+[ 98%] Building CXX object CMakeFiles/main.dir/src/main.cpp.o
+[ 98%] Building CXX object CMakeFiles/main.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/main.dir/src/TestHarness.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Application.cpp:17:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeOptions.h:44:1: warning: 'RuntimeOptions' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
+   44 | struct RuntimeOptions {
+      | ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeDiagnostics.h:8:1: note: did you mean struct here?
+    8 | class RuntimeOptions;
+      | ^~~~~
+      | struct
+1 warning generated.
+[100%] Linking CXX shared library libmain.so
+[100%] Built target main
++ /home/conner/Documents/GitHub/Project-Judas/build/judas_export /home/conner/Documents/GitHub/Project-Judas/projects/core_scramble/core_scramble.judasproj /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-content /home/conner/Documents/GitHub/Project-Judas/build/judas
+Exported /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/android-content: 14 assets, 1 scenes, 55482059 bytes, 0.352 seconds
++ /home/conner/Android/Sdk/build-tools/36.0.0/aapt2 compile --dir /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/res -o /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/resources.zip
++ /home/conner/Android/Sdk/build-tools/36.0.0/aapt2 link -o /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/resources.apk --manifest /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/AndroidManifest.xml -I /home/conner/Android/Sdk/platforms/android-36/android.jar --java /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/java -A /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/assets /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/resources.zip
++ /home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17/bin/javac -encoding UTF-8 --release 8 -classpath /home/conner/Android/Sdk/platforms/android-36/android.jar -d /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/classes @/home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/javac.args
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
++ /home/conner/Android/Sdk/build-tools/36.0.0/d8 --release --min-api 26 --lib /home/conner/Android/Sdk/platforms/android-36/android.jar --output /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/dex /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/classes.jar
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/native/arm64-v8a/libmain.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/native/arm64-v8a/libSDL2.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/native/arm64-v8a/libc++_shared.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/native/x86_64/libmain.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/native/x86_64/libSDL2.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/native/x86_64/libc++_shared.so
++ /home/conner/Android/Sdk/build-tools/36.0.0/zipalign -P 16 -f 4 /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/unsigned.apk /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/aligned.apk
++ keytool -genkeypair -keystore /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/development-signing.p12 -storepass:env JUDAS_DEVELOPMENT_PASSWORD -keypass:env JUDAS_DEVELOPMENT_PASSWORD -alias judas-development -keyalg RSA -keysize 2048 -validity 3650 -dname CN=Judas Development, O=Local Development, C=GB
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 3,650 days
+	for: CN=Judas Development, O=Local Development, C=GB
++ /home/conner/Android/Sdk/build-tools/36.0.0/apksigner sign --ks /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/development-signing.p12 --ks-key-alias judas-development --ks-pass env:JUDAS_DEVELOPMENT_PASSWORD --out /home/conner/Documents/GitHub/Project-Judas/.cache/m89/CoreScramble.apk /home/conner/Documents/GitHub/Project-Judas/.cache/m89/android/apk-staging/aligned.apk
++ /home/conner/Android/Sdk/build-tools/36.0.0/apksigner verify --verbose /home/conner/Documents/GitHub/Project-Judas/.cache/m89/CoreScramble.apk
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
++ /home/conner/Android/Sdk/build-tools/36.0.0/zipalign -c -P 16 4 /home/conner/Documents/GitHub/Project-Judas/.cache/m89/CoreScramble.apk
+APK: /home/conner/Documents/GitHub/Project-Judas/.cache/m89/CoreScramble.apk
+SHA256: c3d17e3c9aad920c303463c99036a50ab9102d95d984a4fc6c953e2a30d618e0

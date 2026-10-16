@@ -1,6 +1,6 @@
 {
-  "checkpoint": "16c40f08986486ef3d88aca50cefe0dde572b95b",
-  "authority": "src/ScriptSystem.cpp::library + Impl::Native",
+  "checkpoint": "109c4386ef750162391655f522c237ecbf51aa7f",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
     {
       "binding": "Weather.state",
@@ -1912,6 +1912,198 @@
       "reference": "docs/judasjs/liquid.md"
     },
     {
+      "symbol": "LocalPlayer",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.assign",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerAssign"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.assign",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.clearView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerView"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.clearView",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer.constructor",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.devices",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInfo"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.devices",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.entity",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "playerEntity"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.entity",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer.id",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.input",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer.input",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.leave",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerRemove"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.leave",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.name",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInfo"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.name",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.project",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerProject"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.project",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.ray",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerRay"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.ray",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.setInputMap",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerMap"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.setInputMap",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.setView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerView"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.setView",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.unassign",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerUnassign"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.unassign",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerExists"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.valid",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.viewError",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInfo"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.viewError",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.viewport",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "playerViewport"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.viewport",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
       "symbol": "Material",
       "kinds": [
         "class"
@@ -2113,6 +2305,121 @@
       ],
       "type": "docs/judas.d.ts:NavigationAgent.stopped",
       "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "PlayerInput",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:PlayerInput",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.axis",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.axis",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:PlayerInput.constructor",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.held",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.held",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:PlayerInput.id",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.pointer",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.pointer",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.pressed",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.pressed",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.released",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.released",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.stick",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.stick",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.touches",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.touches",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.vector",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.vector",
+      "reference": "docs/judasjs/local-multiplayer.md"
     },
     {
       "symbol": "Powertrain",
@@ -2451,6 +2758,18 @@
         "uiSet"
       ],
       "type": "docs/judas.d.ts:UIDocument.modal",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.player",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiPlayer"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.player",
       "reference": "docs/judasjs/ui.md"
     },
     {
@@ -3461,6 +3780,59 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
+      "symbol": "players",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:players",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.create",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerCreate"
+      ],
+      "type": "docs/judas.d.ts:players.create",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.devices",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerDevices"
+      ],
+      "type": "docs/judas.d.ts:players.devices",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.get",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerExists"
+      ],
+      "type": "docs/judas.d.ts:players.get",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.list",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerList"
+      ],
+      "type": "docs/judas.d.ts:players.list",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
       "symbol": "profiler",
       "kinds": [
         "namespace"
@@ -4422,6 +4794,21 @@
     "planetInfo",
     "planetSample",
     "playAudio",
+    "playerAssign",
+    "playerCreate",
+    "playerDevices",
+    "playerEntity",
+    "playerExists",
+    "playerInfo",
+    "playerInput",
+    "playerList",
+    "playerMap",
+    "playerProject",
+    "playerRay",
+    "playerRemove",
+    "playerUnassign",
+    "playerView",
+    "playerViewport",
     "pointVelocity",
     "pointer",
     "pointerCapture",
@@ -4512,6 +4899,7 @@
     "uiGet",
     "uiLayout",
     "uiLoad",
+    "uiPlayer",
     "uiQuit",
     "uiSet",
     "uiUnload",

@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "LocalMultiplayer.h"
 #include "AppIcon.h"
 
 #include <cstdio>
@@ -73,6 +74,8 @@ void Window::Shutdown() {
         SDL_GL_DeleteContext(m_glContext);
         m_glContext = nullptr;
     }
+    for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);
+    m_localControllers.clear();
     if (m_window) {
         SDL_DestroyWindow(m_window);
         m_window = nullptr;
@@ -125,6 +128,7 @@ void Window::ClearPendingRequests() {
 
 void Window::SetInputClaimed(bool keyboard, bool mouse) {
     if(m_keyboardClaimed!=keyboard){m_controllerInputReady=false;m_input.ClearDevice("stick:");}
+    if(m_keyboardClaimed!=keyboard||m_mouseClaimed!=mouse)if(auto hub=m_input.localDevices.lock())hub->Reset();
     m_keyboardClaimed = keyboard;
     m_mouseClaimed = mouse;
 }
@@ -148,8 +152,32 @@ void Window::RefreshController(bool poll){
         m_controllerInputReady=available;
     }
 }
+void Window::RefreshLocalControllers(bool poll){
+ auto hub=m_input.localDevices.lock();
+ // A new world may publish its hub before an intervening device poll. Native
+ // controller handles are reusable, but their previous world tokens are not.
+ if(hub!=m_localHub.lock()){for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();m_localHub=hub;}
+ if(!hub){for(auto& p:m_localControllers)SDL_GameControllerClose(p.second.first);m_localControllers.clear();return;}
+ for(auto it=m_localControllers.begin();it!=m_localControllers.end();)if(!SDL_GameControllerGetAttached(it->second.first)){hub->Disconnect(it->second.second);SDL_GameControllerClose(it->second.first);it=m_localControllers.erase(it);}else ++it;
+ for(int i=0;i<SDL_NumJoysticks()&&m_localControllers.size()<16;++i)if(SDL_IsGameController(i)){
+  const auto instance=SDL_JoystickGetDeviceInstanceID(i);if(m_localControllers.count(instance))continue;
+  auto* controller=SDL_GameControllerOpen(i);if(!controller)continue;const char* name=SDL_GameControllerName(controller);
+  auto token=hub->Connect("gamepad",name?name:"Gamepad");if(token.empty()){SDL_GameControllerClose(controller);break;}
+  m_localControllers[instance]={controller,token};
+ }
+ if(!poll)return;
+ const bool available=!m_keyboardClaimed&&m_inputFocused&&m_applicationActive;
+ for(auto& entry:m_localControllers){auto* pad=entry.second.first;const auto& id=entry.second.second;
+  for(int b=0;b<15;++b)hub->Set(id,std::string("pad:")+PadButton(b),available?SDL_GameControllerGetButton(pad,SDL_GameControllerButton(b)):0);
+  for(int a=0;a<6;++a)hub->Set(id,std::string("stick:")+PadAxis(a),available?NormalizedPadAxis(a,SDL_GameControllerGetAxis(pad,SDL_GameControllerAxis(a))):0);
+ }
+}
 void Window::PollEvents(){
     m_input.BeginFrame();m_consumed.clear();
+    auto hub=m_input.localDevices.lock();if(hub)hub->BeginFrame();
+    if(!m_testInputMode)RefreshLocalControllers(false);
+    if(hub)for(auto& [device,control,value]:m_testDevices)hub->Set(device,control,value);
+    m_testDevices.clear();
     // Select one controller before events, but do not overwrite the previous
     // pair with its final poll: each delivered axis event must remain observable.
     if(!m_testInputMode)RefreshController(false);
@@ -163,9 +191,17 @@ void Window::PollEvents(){
         if(m_testInputMode&&event.type!=SDL_QUIT&&event.type!=SDL_WINDOWEVENT&&
            !(event.type>=SDL_APP_TERMINATING&&event.type<=SDL_APP_DIDENTERFOREGROUND)&&event.type!=SDL_RENDER_DEVICE_RESET)continue;
         if(m_eventHook)m_eventHook(event);
+        if(hub){
+         if(event.type==SDL_KEYDOWN||event.type==SDL_KEYUP){if(!m_keyboardClaimed&&m_inputFocused&&m_applicationActive)hub->Set("keyboard",std::string("key:")+SDL_GetScancodeName(event.key.keysym.scancode),event.type==SDL_KEYDOWN?1:0);}
+         else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP){if(!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.button.which!=SDL_TOUCH_MOUSEID)if(auto* name=MouseButton(event.button.button)){hub->Set("mouse",std::string("mouse:")+name,event.type==SDL_MOUSEBUTTONDOWN?1:0);const auto* d=hub->Find("mouse");auto left=d->values.find("mouse:Left");hub->Pointer("mouse",{float(event.button.x)/std::max(1,m_width),float(event.button.y)/std::max(1,m_height),left!=d->values.end()&&left->second>.5f});}}
+         else if(event.type==SDL_MOUSEMOTION&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.motion.which!=SDL_TOUCH_MOUSEID){auto* d=hub->Find("mouse");auto pointer=d->pointer;pointer.x=float(event.motion.x)/std::max(1,m_width);pointer.y=float(event.motion.y)/std::max(1,m_height);hub->Pointer("mouse",pointer);if(m_mouseCaptured)for(auto p:{std::pair<const char*,float>{"mouse:dx",float(event.motion.xrel)},{"mouse:dy",float(event.motion.yrel)}}){auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
+         else if(event.type==SDL_MOUSEWHEEL&&!m_mouseClaimed&&m_inputFocused&&m_applicationActive&&event.wheel.which!=SDL_TOUCH_MOUSEID){float sign=event.wheel.direction==SDL_MOUSEWHEEL_FLIPPED?-1:1;for(auto p:{std::pair<const char*,float>{"mouse:wheelX",sign*event.wheel.x},{"mouse:wheelY",sign*event.wheel.y}}){auto* d=hub->Find("mouse");auto old=d->values.find(p.first);hub->Set("mouse",p.first,p.second+(old==d->values.end()?0:old->second));}}
+         else if(event.type==SDL_CONTROLLERAXISMOTION){auto pad=m_localControllers.find(event.caxis.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* axis=PadAxis(event.caxis.axis))hub->Set(pad->second.second,std::string("stick:")+axis,NormalizedPadAxis(event.caxis.axis,event.caxis.value));}
+         else if(event.type==SDL_CONTROLLERBUTTONDOWN||event.type==SDL_CONTROLLERBUTTONUP){auto pad=m_localControllers.find(event.cbutton.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* button=PadButton(event.cbutton.button))hub->Set(pad->second.second,std::string("pad:")+button,event.type==SDL_CONTROLLERBUTTONDOWN?1:0);}
+        }
         if(event.type==SDL_QUIT)m_shouldClose=true;
-        else if(event.type==SDL_APP_WILLENTERBACKGROUND){m_applicationActive=false;m_lifecycleClockReset=true;m_input.Reset();ClearPendingRequests();}
-        else if(event.type==SDL_APP_DIDENTERFOREGROUND){m_applicationActive=true;m_lifecycleClockReset=true;m_input.Reset();ClearPendingRequests();}
+        else if(event.type==SDL_APP_WILLENTERBACKGROUND){m_applicationActive=false;m_lifecycleClockReset=true;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
+        else if(event.type==SDL_APP_DIDENTERFOREGROUND){m_applicationActive=true;m_lifecycleClockReset=true;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
         else if(event.type==SDL_RENDER_DEVICE_RESET){
             // Context loss cannot leave stale native GPU handles in a live world.
             // Android normally preserves EGL across pause; a lost context exits
@@ -173,12 +209,12 @@ void Window::PollEvents(){
             std::fprintf(stderr,"Graphics context lost; restart the application\n");m_shouldClose=true;
         }
         else if(event.type==SDL_FINGERDOWN||event.type==SDL_FINGERMOTION||event.type==SDL_FINGERUP){
-            if((!m_mouseClaimed||event.type==SDL_FINGERUP)&&m_applicationActive)m_input.SetTouch(event.tfinger.touchId,event.tfinger.fingerId,event.tfinger.x,event.tfinger.y,event.tfinger.pressure,event.type!=SDL_FINGERUP);
+            if((!m_mouseClaimed||event.type==SDL_FINGERUP)&&m_applicationActive){const auto previous=m_input.TouchId(event.tfinger.touchId,event.tfinger.fingerId);m_input.SetTouch(event.tfinger.touchId,event.tfinger.fingerId,event.tfinger.x,event.tfinger.y,event.tfinger.pressure,event.type!=SDL_FINGERUP);if(hub&&m_inputFocused){const auto current=m_input.TouchId(event.tfinger.touchId,event.tfinger.fingerId);hub->RecordTouch({current?current:previous,event.tfinger.x,event.tfinger.y,event.tfinger.pressure},event.type!=SDL_FINGERUP);}}
         }
         else if(event.type==SDL_WINDOWEVENT){
             if(event.window.event==SDL_WINDOWEVENT_CLOSE)m_shouldClose=true;
             if(event.window.event==SDL_WINDOWEVENT_SIZE_CHANGED){m_width=event.window.data1;m_height=event.window.data2;}
-            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_controllerInputReady=false;m_input.Reset();ClearPendingRequests();}
+            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_controllerInputReady=false;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
             if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED){
                 m_inputFocused=true;m_controllerInputReady=false;
                 // SDL/compositor capture can disappear independently of the
@@ -202,6 +238,13 @@ void Window::PollEvents(){
     // Restore held physical keys after UI ownership ends without stale edges.
     if(!m_testInputMode&&!m_keyboardClaimed&&m_inputFocused){const auto* keys=SDL_GetKeyboardState(nullptr);for(int i=0;i<SDL_NUM_SCANCODES;++i)if(keys[i])m_input.SetPhysical(std::string("key:")+SDL_GetScancodeName(static_cast<SDL_Scancode>(i)),1);}
     if(!m_testInputMode)RefreshController();
+    if(hub){
+      // Touch-generated mouse events remain on the legacy UI route only.
+      // They must never masquerade as another player's physical mouse.
+      hub->Touches(m_inputFocused&&m_applicationActive?m_input.Touches():std::vector<InputTouch>{});
+      if(!m_testInputMode&&!m_keyboardClaimed&&m_inputFocused&&m_applicationActive){const auto* keys=SDL_GetKeyboardState(nullptr);for(int i=0;i<SDL_NUM_SCANCODES;++i)if(keys[i])hub->Set("keyboard",std::string("key:")+SDL_GetScancodeName(SDL_Scancode(i)),1);}
+      if(!m_testInputMode)RefreshLocalControllers(true);
+    }
     // Requested capture and the backend's actual grab are separate state.
     // A compositor/backend release need not produce another FOCUS_GAINED
     // event. Reconcile while this window owns focus; never grab it back from

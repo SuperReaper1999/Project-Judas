@@ -99,8 +99,8 @@ public:
     void EndProfilePass(unsigned token);
     void PollProfileGPU();
     // Generated resources belong to runtime presentation, not disk assets.
-    RenderTargetHandle CreateRenderTarget(int width, int height, std::string& error);
-    bool ResizeRenderTarget(RenderTargetHandle& target, int width, int height, std::string& error);
+    RenderTargetHandle CreateRenderTarget(int width, int height, std::string& error,bool display=false);
+    bool ResizeRenderTarget(RenderTargetHandle& target, int width, int height, std::string& error,bool display=false);
     void DestroyRenderTarget(RenderTargetHandle target);
     TextureHandle RenderTargetTexture(RenderTargetHandle target) const;
     std::uintptr_t EditorImageToken(TextureHandle) const;
@@ -354,7 +354,7 @@ public:
     void EndUIFrame();
     void SetUIClip(glm::vec2 position,glm::vec2 size);
     void ClearUIClip();
-    void DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit);
+    void DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle texture,glm::vec4 tint,bool fit,bool flipVertical=false);
     bool SelectUIFont(const std::string& path,std::string& error);
     std::shared_ptr<const TextFont> DefaultTextFont()const{return m_defaultTextFont;}
     void SelectTextFonts(std::vector<std::shared_ptr<const TextFont>> fonts);
