@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "installed": [
+    {
+      "id": "hill-map",
+      "version": "1.0.0",
+      "sha256": "f65b30129ce4d2a434a3f6b5ebff44a32b2b800d4b797f1125db57be0ec6e6ee",
+      "file": "hill-map--1.0.0--f65b30129ce4d2a434a3f6b5ebff44a32b2b800d4b797f1125db57be0ec6e6ee.judasmod"
+    },
+    {
+      "id": "landscape-fork",
+      "version": "1.0.0",
+      "sha256": "e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6",
+      "file": "landscape-fork--1.0.0--e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6.judasmod"
+    },
+    {
+      "id": "hill-map",
+      "version": "1.0.0",
+      "sha256": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b",
+      "file": "hill-map--1.0.0--49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b.judasmod"
+    },
+    {
+      "id": "common",
+      "version": "1.0.0",
+      "sha256": "a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d",
+      "file": "common--1.0.0--a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d.judasmod"
+    },
+    {
+      "id": "consumer",
+      "version": "1.0.0",
+      "sha256": "544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd",
+      "file": "consumer--1.0.0--544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd.judasmod"
+    }
+  ]
+}

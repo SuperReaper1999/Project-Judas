@@ -288,6 +288,7 @@ add_library(judas_engine STATIC
     src/SaveStorage.cpp
     src/SaveStorageWindows.cpp
     src/PlatformServices.cpp
+    src/SaveEvolution.cpp
     src/SaveService.cpp
     src/MotorPersistence.cpp
     src/LiquidPersistence.cpp
@@ -2039,3 +2040,14 @@ judas_warnings(judas_living_world_streaming_tests)
 add_executable(judas_living_world_application_tests tests/LivingWorldApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_living_world_application_tests PRIVATE judas_engine)
 judas_warnings(judas_living_world_application_tests)
+
+# M98 persistence evolution uses the existing archive/storage/restore path.
+add_executable(judas_save tools/SaveEvolutionMain.cpp)
+target_link_libraries(judas_save PRIVATE judas_engine)
+judas_warnings(judas_save)
+add_executable(judas_save_evolution_tests tests/SaveEvolutionTests.cpp)
+target_link_libraries(judas_save_evolution_tests PRIVATE judas_engine)
+judas_warnings(judas_save_evolution_tests)
+add_executable(judas_save_evolution_application_tests tests/SaveEvolutionApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_save_evolution_application_tests PRIVATE judas_engine)
+judas_warnings(judas_save_evolution_application_tests)

@@ -17,7 +17,7 @@ if (result?.state === 'failed') console.log(result.error);
 | Member | Result / semantics |
 |---|---|
 | `save(slot, {name?, metadata?}={})` | Numeric request token. Captures at a later safe frame boundary, not the exact call instant. |
-| `load(slot)` | Request token; validates content and builds a private world. Publication replaces the world once. |
+| `load(slot, {migrate?:boolean}={})` | Request token; validates content and builds a private world. Publication replaces the world once. |
 | `delete(slot)` | Request token; removes current and previous-good generation of this slot only. |
 | `refresh()` | Request token for bounded metadata listing. |
 | `list()` | Detached cached metadata array; refresh explicitly after boot. No world construction. |
@@ -80,7 +80,7 @@ project policy; they must not replay target hits, initial water, starting enemie
 or score initialization. Modules/closures/globals/UI focus are new, not serialized.
 Required modern state is listed in the participation contract. Unsupported required
 legacy state rejects the save explicitly. Save files never execute migration code.
-Strict content compatibility is the default; container 1 timestamp seconds have
+Strict content compatibility is the default; M98 optionally accepts explicit, project-authored ordered migrations (below). container 1 timestamp seconds have
 an explicit checked upgrade to container 2 milliseconds. Unsupported game or
 participant versions reject before live mutation.
 
@@ -175,3 +175,53 @@ regional terrain and supported primitive construction use streaming archive v9.
 Ordinary joints now preserve exact native physical settings (articulation v5) before
 strict warm-history validation; moving-owner frame round trips are not used as a
 substitute for those settings. Earlier save formats retain their existing contracts.
+
+
+## Save evolution — M98
+
+Current saves expose separate `content` (SHA-256), `compatibility` (project-owned
+contract string) and `contentVersion` (integer; 0 means legacy exact-only).
+Container format 4 protects identity metadata and payload with a combined hash;
+older containers 1–3 remain readable. Native snapshot/participant versions remain
+independent and are validated strictly. A matching name or version never substitutes
+for content identity.
+
+```js
+import {saves} from 'judas';
+// The installed project must explicitly approve this exact source fingerprint.
+const request = saves.load('before-update', {migrate:true});
+// Poll on subsequent updates. No synchronous world replacement occurs here.
+const result = saves.status(request);
+if (result?.state === 'completed' && result.migrated) {
+  console.log(result.migrationReport); // ordered steps, source/target hashes
+  saves.save('after-update');          // source slot is protected in this session
+}
+```
+
+`SaveRequest` adds `migrated`, `migrationMs` and `migrationReport` (`exact`, an
+ordered JSON report, or empty before comparison). Conversion success does not
+mean load success: required native resources, geometry, continuation and streaming
+contracts must still pass in the private world. Report fields can describe a
+conversion whose later native restoration failed. `migrated` therefore only means
+a conversion was performed; always inspect `state` and `error`.
+
+`SaveSlot` adds `content`, `compatibility`, `contentVersion`. Cached `status` is a
+conservative exact-identity hint, not a migration feasibility or native-restore
+certificate. Compare the identities and use the explicit load to get diagnostics.
+
+No save file contains executable migration code. The installed project owns a
+bounded `saveEvolution` JSON policy, edited in Project settings or `.judasproj`.
+It pins approved source hashes and declares consecutive steps. Supported operations
+patch project script/session JSON, rename a registered scene, or update a narrowly
+allowed subset of saved scene/prefab metadata and appearance. Native physics
+records, IDs, geometry and opaque participants are never rewritten or discarded.
+Missing/changed mods reject unless an exact old/new context is explicitly approved
+by the installed policy; package trust/dependency resolution still belongs to the
+normal mod launcher. No package is installed/enabled by loading a save.
+
+Loading/migrating is read-only on disk. Original source slots survive failures;
+a successfully migrated session requires a **different destination slot**.
+Ordinary overwrite retains the exact previous valid bytes. `judas_save` provides
+inspection, dry conversion, separate-slot conversion/recovery and previous-good
+recovery. It does not replace the game's full native restore validation.
+See [policy schema, tools, fixtures and boundaries](../M98_SAVE_EVOLUTION.md).

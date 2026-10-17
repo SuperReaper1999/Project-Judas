@@ -1,6 +1,6 @@
 # Architecture
 
-## Experimental — M96 UI toolkit
+## Current — M96 UI toolkit
 
 The existing retained RuntimeUI owns text inputs, scroll containers and fixed-row
 virtual lists alongside legacy controls. SDL's text/IME and clipboard adapter
@@ -13,7 +13,7 @@ not become a hidden save participant or duplicate inventory data. One native
 composition session/window coexists with independent M89 player document focus.
 The editor reuses the normal named UI canvas/source/undo/export pipeline.
 [Contracts and limits](M96_UI_TOOLKIT.md); [showcase](../projects/ui_showcase/README.md).
-M96 human acceptance is pending; native screen-reader integration is not claimed.
+M96 is human accepted; native screen-reader integration is not claimed.
 
 
 ## M95 animation production workflow (human accepted)
@@ -10141,3 +10141,25 @@ no live colliders; no hidden physics continues. Existing external-dependency and
 unsupported-component pins remain authoritative. New runtime adoption does not
 claim arbitrary complex assembly support or exact joint warm-start continuation.
 See [M97 boundaries, source workflow and lab](M97_LIVING_WORLD.md).
+
+
+## M98 — explicit save evolution
+
+Modern SaveService remains the single capture/worker/private-restore/publication
+path. Optional project `saveEvolution` policy adds independently versioned project
+compatibility to format-4 save headers while retaining formats 1–3 readers.
+SaveEvolution.cpp performs bounded transactional conversions on worker-owned
+snapshots: exact-source allowlists, ordered steps, guarded project JSON and narrowly
+allowed scene/prefab metadata changes. Native physical state is preserved and
+still validated by WorldPersistence, streaming and resource owners.
+
+Policy is installed content, never executable code supplied by saves. Normal
+loads stay exact-only; JavaScript explicitly opts in. Source slots stay unchanged;
+successfully migrated sources are protected from overwrite for the service lifetime.
+Storage keeps exact previous bytes; `judas_save` offers read-only inspection,
+conversion checks and separate-slot migration/recovery with locked destination
+creation. See [scope and unsupported conversions](M98_SAVE_EVOLUTION.md).
+
+M97 is operator accepted. M98 human/platform acceptance remains separate from
+focused Linux evidence. No generic physical-topology or inactive-region script
+conversion is claimed.

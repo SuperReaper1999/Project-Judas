@@ -1,6 +1,6 @@
-# JudasJS — current API reference (M97 repository state)
+# JudasJS — current API reference (M98 repository state)
 
-M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 is human accepted. M97 adds [live local volume editing](judasjs/terrain.md) and regional construction persistence; human acceptance is pending.
+M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 is human accepted. M97 adds [live local volume editing](judasjs/terrain.md) and regional construction persistence; M97 is human accepted. M98 adds [explicit save evolution and recovery](M98_SAVE_EVOLUTION.md); human acceptance is pending.
 
 M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
 M92 operator acceptance is recorded by release promotion at `bb3dbc402629a60c22738da8520e5017998709f1`; platform coverage remains scoped.

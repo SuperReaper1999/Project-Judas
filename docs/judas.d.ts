@@ -919,10 +919,12 @@ declare module "judas" {
     { type: "number"; default?: number } | { type: "boolean"; default?: boolean } |
     { type: "string"; default?: string } | { type: "entity"; default?: {entity:EntityId} | null }>;
   export interface SaveOptions { name?: string; metadata?: { [key: string]: JSONValue } | JSONValue[] }
+  export interface SaveLoadOptions { migrate?: boolean }
   export interface SaveSlot {
     readonly id: string; readonly name: string; readonly scene: string; readonly timestamp: number;
     readonly metadata: JSONValue; readonly status: "compatible" | "incompatible" | "corrupt";
     readonly error: string; readonly recovered: boolean;
+    readonly content:string; readonly compatibility:string; readonly contentVersion:number;
     readonly modContext: {format: 1; signature: string; contractSha256: string; active: {id: string; version: string; sha256: string}[]} | null;
   }
   export interface SaveRequest {
@@ -930,10 +932,11 @@ declare module "judas" {
     readonly state: "queued" | "writing" | "reading" | "working" | "preparing" | "restoring" | "completed" | "failed" | "cancelled";
     readonly error: string; readonly recovered: boolean; readonly captureMs: number; readonly workerMs: number;
     readonly restoreMs: number; readonly bytes: number;
+    readonly migrated:boolean; readonly migrationMs:number; readonly migrationReport:string;
   }
   export const saves: {
     save(slot: string, options?: SaveOptions): number;
-    load(slot: string): number;
+    load(slot: string, options?: SaveLoadOptions): number;
     delete(slot: string): number;
     refresh(): number;
     /** Cached metadata; refresh or a completed operation updates it asynchronously. */

@@ -1,0 +1,87 @@
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_meshoptimizer
+[ 12%] Built target judas_icu_build
+[ 25%] Built target freetype
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 43%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_mod_content_tests.dir/tests/ModContentTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:20:209: note: unnamed temporary defined here
+   20 |  auto a=std::make_shared<Package>(Fixture("alpha")),b=std::make_shared<Package>(Fixture("beta"));Resolution r;Check(CheckedResolve(c,{},r,e)&&r.signature.empty(),"empty loadout identity");Check(CheckedResolve(c,{{b,{}},{a,{}}},r,e)&&r.ordered[0].package->manifest.id=="alpha","stable order");auto signature=r.signature;Check(CheckedResolve(c,{{a,{}},{b,{}}},r,e)&&r.signature==signature,"order independent signature");Check(!CheckedResolve(c,{{a,{}},{a,{}}},r,e),"duplicate IDs");c.enabled=false;Check(!CheckedResolve(c,{{a,{}}},r,e),"disabled contract");c.enabled=true;
+      |                                                                                                                                                                                                   ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:20:209: note: unnamed temporary defined here
+   20 |  auto a=std::make_shared<Package>(Fixture("alpha")),b=std::make_shared<Package>(Fixture("beta"));Resolution r;Check(CheckedResolve(c,{},r,e)&&r.signature.empty(),"empty loadout identity");Check(CheckedResolve(c,{{b,{}},{a,{}}},r,e)&&r.ordered[0].package->manifest.id=="alpha","stable order");auto signature=r.signature;Check(CheckedResolve(c,{{a,{}},{b,{}}},r,e)&&r.signature==signature,"order independent signature");Check(!CheckedResolve(c,{{a,{}},{a,{}}},r,e),"duplicate IDs");c.enabled=false;Check(!CheckedResolve(c,{{a,{}}},r,e),"disabled contract");c.enabled=true;
+      |                                                                                                                                                                                                   ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:20:340: note: unnamed temporary defined here
+   20 |  auto a=std::make_shared<Package>(Fixture("alpha")),b=std::make_shared<Package>(Fixture("beta"));Resolution r;Check(CheckedResolve(c,{},r,e)&&r.signature.empty(),"empty loadout identity");Check(CheckedResolve(c,{{b,{}},{a,{}}},r,e)&&r.ordered[0].package->manifest.id=="alpha","stable order");auto signature=r.signature;Check(CheckedResolve(c,{{a,{}},{b,{}}},r,e)&&r.signature==signature,"order independent signature");Check(!CheckedResolve(c,{{a,{}},{a,{}}},r,e),"duplicate IDs");c.enabled=false;Check(!CheckedResolve(c,{{a,{}}},r,e),"disabled contract");c.enabled=true;
+      |                                                                                                                                                                                                                                                                                                                                      ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:20:340: note: unnamed temporary defined here
+   20 |  auto a=std::make_shared<Package>(Fixture("alpha")),b=std::make_shared<Package>(Fixture("beta"));Resolution r;Check(CheckedResolve(c,{},r,e)&&r.signature.empty(),"empty loadout identity");Check(CheckedResolve(c,{{b,{}},{a,{}}},r,e)&&r.ordered[0].package->manifest.id=="alpha","stable order");auto signature=r.signature;Check(CheckedResolve(c,{{a,{}},{b,{}}},r,e)&&r.signature==signature,"order independent signature");Check(!CheckedResolve(c,{{a,{}},{a,{}}},r,e),"duplicate IDs");c.enabled=false;Check(!CheckedResolve(c,{{a,{}}},r,e),"disabled contract");c.enabled=true;
+      |                                                                                                                                                                                                                                                                                                                                      ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:21:67: note: unnamed temporary defined here
+   21 |  b->manifest.dependencies={{"alpha","1.0.0"}};Check(CheckedResolve(c,{{b,{}},{a,{}}},r,e)&&r.ordered[0].package==a,"dependency order");Check(!CheckedResolve(c,{{b,{}}},r,e),"missing dependency");b->manifest.dependencies[0].version="2.0.0";Check(!CheckedResolve(c,{{a,{}},{b,{}}},r,e),"dependency version");b->manifest.dependencies[0].version="1.0.0";a->manifest.dependencies={{"beta","1.0.0"}};Check(!CheckedResolve(c,{{a,{}},{b,{}}},r,e),"cycle");a->manifest.dependencies.clear();a->manifest.executable=true;Check(!CheckedResolve(c,{{a,{}}},r,e),"no discovery trust");Check(!CheckedResolve(c,{{a,"oldhash"}},r,e),"changed payload trust");Check(CheckedResolve(c,{{a,a->hash}},r,e),"explicit trust");c.executable=false;Check(!CheckedResolve(c,{{a,a->hash}},r,e),"game denies executable");c.executable=true;a->manifest.executable=false;
+      |                                                     ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:21:67: note: unnamed temporary defined here
+   21 |  b->manifest.dependencies={{"alpha","1.0.0"}};Check(CheckedResolve(c,{{b,{}},{a,{}}},r,e)&&r.ordered[0].package==a,"dependency order");Check(!CheckedResolve(c,{{b,{}}},r,e),"missing dependency");b->manifest.dependencies[0].version="2.0.0";Check(!CheckedResolve(c,{{a,{}},{b,{}}},r,e),"dependency version");b->manifest.dependencies[0].version="1.0.0";a->manifest.dependencies={{"beta","1.0.0"}};Check(!CheckedResolve(c,{{a,{}},{b,{}}},r,e),"cycle");a->manifest.dependencies.clear();a->manifest.executable=true;Check(!CheckedResolve(c,{{a,{}}},r,e),"no discovery trust");Check(!CheckedResolve(c,{{a,"oldhash"}},r,e),"changed payload trust");Check(CheckedResolve(c,{{a,a->hash}},r,e),"explicit trust");c.executable=false;Check(!CheckedResolve(c,{{a,a->hash}},r,e),"game denies executable");c.executable=true;a->manifest.executable=false;
+      |                                                     ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:26:549: note: unnamed temporary defined here
+   26 |  auto first=std::make_shared<Package>(Fixture("first")),second=std::make_shared<Package>(Fixture("second"));for(auto pack:{first,second}){pack->manifest.scenes={"Scenes/map.judas"};pack->files["Scenes/map.judas"]="fixture";pack->manifest.files.push_back({"Scenes/map.judas",SceneFingerprintSha256("fixture"),7});pack->manifest.replacements={{"terrain",SceneFingerprintSha256("original"),{"scene","Scenes/map.judas"}}};}c.replacements["terrain"]={{"scene","Scenes/base.judas"},SceneFingerprintSha256("original"),JSON::object()};Check(!CheckedResolve(c,{{first,{}},{second,{}}},r,e)&&e.find("first and second")!=std::string::npos,"both conflicting replacement owners attributed");c.replacements.clear();
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:37:94: warning: dangling pointer to an unnamed temporary may be used [-Wdangling-pointer=]
+   37 |  }catch(const std::exception& e){std::cerr<<"check "<<checks<<": "<<e.what()<<'\n';return 1;}}
+      |                                                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/tests/ModContentTests.cpp:26:549: note: unnamed temporary defined here
+   26 |  auto first=std::make_shared<Package>(Fixture("first")),second=std::make_shared<Package>(Fixture("second"));for(auto pack:{first,second}){pack->manifest.scenes={"Scenes/map.judas"};pack->files["Scenes/map.judas"]="fixture";pack->manifest.files.push_back({"Scenes/map.judas",SceneFingerprintSha256("fixture"),7});pack->manifest.replacements={{"terrain",SceneFingerprintSha256("original"),{"scene","Scenes/map.judas"}}};}c.replacements["terrain"]={{"scene","Scenes/base.judas"},SceneFingerprintSha256("original"),JSON::object()};Check(!CheckedResolve(c,{{first,{}},{second,{}}},r,e)&&e.find("first and second")!=std::string::npos,"both conflicting replacement owners attributed");c.replacements.clear();
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[100%] Linking CXX executable judas_mod_content_tests
+[100%] Built target judas_mod_content_tests
+[  6%] Built target judas_icu_build
+[ 12%] Built target judas_meshoptimizer
+[ 12%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_quickjs
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_jobs
+[ 31%] Built target harfbuzz
+[ 37%] Built target judas_audio_backend
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_mod_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mod_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mod_application_tests.dir/src/TestHarness.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mod_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mod_application_tests.dir/tests/ModApplicationTests.cpp.o
+[100%] Linking CXX executable judas_mod_application_tests
+[100%] Built target judas_mod_application_tests

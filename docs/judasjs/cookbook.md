@@ -194,3 +194,5 @@ executed application composition (add/remove/smooth, retained prefab constructio
 rotated gravity and cold saves), inspect [Living World Lab](../../projects/living_world_lab/README.md)
 and [Terrain's ownership limits](terrain.md). The standalone example is type-checked;
 the lab/application regression exercises the full asynchronous lifecycle.
+
+[Explicit save evolution](examples/save-evolution.js) shows request/poll/error policy. The executable cross-version lab is [Save Evolution Lab](../../projects/save_evolution_lab/README.md); see [conversion boundaries](../M98_SAVE_EVOLUTION.md).

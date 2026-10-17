@@ -1,0 +1,13 @@
+{
+  "build": "Judas M98 / native snapshot schema 1",
+  "compatibility": "judas.save-evolution.lab",
+  "content": "9d178aa8abb0c0ab06db1b828ab77e67a29fcf746b93b77c8a6a1a686c656688",
+  "engineSchema": 1,
+  "modContext": "",
+  "ms": 8.152091,
+  "participants": 14,
+  "project": "462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3",
+  "recoveredPrevious": false,
+  "scene": "Scenes/workshop.judas",
+  "version": 2
+}

@@ -1,0 +1,5 @@
+[96mdocs/judasjs/examples/save-evolution.js[0m:[93m6[0m:[93m8[0m - [91merror[0m[90m TS7006: [0mParameter 'event' implicitly has an 'any' type.
+
+[7m6[0m   onUI(event) { if(event.type==='click' && event.element==='upgrade')this.beginUpgrade(); }
+[7m [0m [91m       ~~~~~[0m
+

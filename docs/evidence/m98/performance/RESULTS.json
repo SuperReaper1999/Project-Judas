@@ -1,0 +1,84 @@
+{
+  "rows": [
+    {
+      "migration": 12.2645,
+      "worker": 36.3019,
+      "restore": 53.8304
+    },
+    {
+      "migration": 12.0413,
+      "worker": 39.8476,
+      "restore": 54.8159
+    },
+    {
+      "migration": 11.925,
+      "worker": 38.3026,
+      "restore": 56.3718
+    },
+    {
+      "migration": 13.9527,
+      "worker": 44.9062,
+      "restore": 56.0922
+    },
+    {
+      "migration": 13.2512,
+      "worker": 39.3415,
+      "restore": 58.1609
+    },
+    {
+      "migration": 12.0707,
+      "worker": 35.1657,
+      "restore": 56.2633
+    },
+    {
+      "migration": 13.987,
+      "worker": 44.7762,
+      "restore": 55.6462
+    },
+    {
+      "migration": 11.1401,
+      "worker": 34.4624,
+      "restore": 54.8198
+    },
+    {
+      "migration": 15.4293,
+      "worker": 43.9334,
+      "restore": 56.4207
+    },
+    {
+      "migration": 13.1555,
+      "worker": 39.6628,
+      "restore": 58.805
+    },
+    {
+      "migration": 12.4227,
+      "worker": 39.5362,
+      "restore": 58.7049
+    },
+    {
+      "migration": 11.0126,
+      "worker": 35.8771,
+      "restore": 55.4128
+    }
+  ],
+  "summary": {
+    "migration": {
+      "samples": 12,
+      "median": 12.3436,
+      "p95": 15.4293,
+      "worst": 15.4293
+    },
+    "worker": {
+      "samples": 12,
+      "median": 39.43885,
+      "p95": 44.9062,
+      "worst": 44.9062
+    },
+    "restore": {
+      "samples": 12,
+      "median": 56.17775,
+      "p95": 58.805,
+      "worst": 58.805
+    }
+  }
+}

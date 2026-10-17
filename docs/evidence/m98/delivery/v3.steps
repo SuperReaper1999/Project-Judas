@@ -1,0 +1,8 @@
+FRAMES 460
+FRAME_SECONDS 0.016666667
+ACTION load 1 150 151
+WAIT_SERVICES save 10000 170
+SCREENSHOT 250 /home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/upgraded.png
+ACTION save 1 300 301
+WAIT_SERVICES save 10000 320
+SCREENSHOT 400 /home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/saved-upgraded.png

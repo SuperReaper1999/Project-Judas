@@ -1,7 +1,58 @@
 {
-  "checkpoint": "a488c72463f207473838318b978b5a7f8e1f8afb + M96 UI toolkit",
+  "checkpoint": "4c26a3bb23b8e3d1a7047283da0dcd2afdcc5e9c + M98 save evolution",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
+    {
+      "binding": "saves.status",
+      "declaration": "SaveRequest",
+      "fields": [
+        "id",
+        "operation",
+        "slot",
+        "state",
+        "error",
+        "recovered",
+        "captureMs",
+        "workerMs",
+        "restoreMs",
+        "bytes",
+        "migrated",
+        "migrationMs",
+        "migrationReport"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"migrated\",JS_NewBool(c,status->migrated))",
+        "{\"migrationMs\",status->migrationMs}",
+        "{\"migrationReport\",&status->migrationReport}"
+      ],
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "binding": "saves.list",
+      "declaration": "SaveSlot",
+      "fields": [
+        "id",
+        "name",
+        "scene",
+        "timestamp",
+        "metadata",
+        "status",
+        "error",
+        "recovered",
+        "modContext",
+        "content",
+        "compatibility",
+        "contentVersion"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "{\"content\",&slot.content}",
+        "{\"compatibility\",&slot.compatibility}",
+        "JS_SetPropertyStr(c,o,\"contentVersion\",JS_NewUint32(c,slot.contentVersion))"
+      ],
+      "reference": "docs/judasjs/saves.md"
+    },
     {
       "binding": "Terrain.state",
       "declaration": "TerrainStatus",

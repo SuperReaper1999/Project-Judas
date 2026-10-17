@@ -1,0 +1,29 @@
+PASS migration requires explicit opt-in
+PASS failure preserves input and output
+PASS 
+PASS ordered identity and scene path upgrade
+PASS script patch preserves unknown state
+PASS unknown native state retained byte-exact for normal loader to accept or reject
+PASS version4 roundtrip
+PASS identity header corruption rejected
+PASS legacy container read unchanged
+PASS current version reload needs no migration
+PASS guard failure atomic
+PASS missing edge rejected
+PASS unapproved content rejected
+PASS compatibility identity mismatch rejected
+PASS physical continuation cannot be retuned through scene patch
+PASS unknown operation fails closed
+PASS unknown policy field rejected
+PASS nonconsecutive or branching edge rejected
+PASS missing mod diagnosis includes saved dependency identity
+PASS changed mod version not silently substituted
+PASS exact author-approved mod transition allowed
+PASS same version different package bytes rejected
+PASS project policy legacy serialization
+PASS project policy named serialization
+PASS original fixture stored
+PASS source fixture bytes exact
+PASS migration publishes separate destination
+PASS source save never rewritten
+Migration ms=1.112279 bytes=1306 checks=28 failures=0

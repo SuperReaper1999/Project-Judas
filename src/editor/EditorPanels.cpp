@@ -1,4 +1,5 @@
 #include "../PowertrainAuthoring.h"
+#include "../SaveEvolution.h"
 #include "../AssetCook.h"
 #include <atomic>
 #include "AuthoringDocument.h"
@@ -1303,6 +1304,15 @@ void DrawProjectSettingsPanel(EditorDocument& doc, EditorPanelState& state, Edit
         for(auto it=s.audio.groups.begin();it!=s.audio.groups.end();){ImGui::PushID(it->first.c_str());ImGui::TextUnformatted(it->first.c_str());ImGui::SliderFloat("Gain",&it->second.gain,0,1);ImGui::Checkbox("Mute",&it->second.mute);ImGui::Checkbox("Paused",&it->second.paused);bool remove=ImGui::SmallButton("Remove group");ImGui::PopID();if(remove)it=s.audio.groups.erase(it);else ++it;}
         static char group[65]{};ImGui::InputText("New group",group,sizeof(group));if(ImGui::Button("Add sound group")&&group[0]&&std::string(group)!="master"&&s.audio.groups.size()<16)s.audio.groups.emplace(group,AudioGroupSettings{});
         ImGui::TextWrapped("Empty emitter group uses master. Games choose group names and pause policy in JavaScript. Save project to persist routing.");
+    }
+    if(ImGui::CollapsingHeader("Save compatibility and migrations")){
+        static std::string evolutionProject;static std::vector<char> draft(1024*1024+1);
+        if(evolutionProject!=project.ProjectFile()){evolutionProject=project.ProjectFile();CopyToBuffer(s.saveEvolution,draft.data(),draft.size());}
+        ImGui::TextWrapped("Optional project-owned JSON policy. Pin exact old content hashes; explicit ordered migrations never relax native physics validation. See docs/M98_SAVE_EVOLUTION.md. Restart Play after saving configuration.");
+        ImGui::InputTextMultiline("Evolution policy",draft.data(),draft.size(),{0,220});
+        if(ImGui::Button("Validate / apply save policy")){std::string e;if(ValidateSaveEvolution(draft.data(),e)){s.saveEvolution=draft.data();state.status="Applied save policy; Save project, then restart Play";}else state.status=e;}
+        ImGui::SameLine();if(ImGui::Button("Reset policy draft"))CopyToBuffer(s.saveEvolution,draft.data(),draft.size());
+        SaveEvolutionIdentity identity;std::string e;if(SaveEvolutionCurrent(s.saveEvolution,identity,e))ImGui::Text("Compatibility: %s | Content version: %u",identity.compatibility.empty()?"exact-content only":identity.compatibility.c_str(),identity.version);
     }
     ImGui::Separator();
     if(ImGui::CollapsingHeader("Localization and fallback fonts")){

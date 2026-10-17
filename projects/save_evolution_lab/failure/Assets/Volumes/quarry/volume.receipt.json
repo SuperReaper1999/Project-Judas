@@ -1,0 +1,12 @@
+{
+  "format": "JudasVolumeTerrainCook",
+  "inputs": {
+    "Imports/quarry.judasvolume": "ee49953dbd0bf276b8f52a930c1e793fe3445c0dcb89f6a9a7fdc89a3bead810"
+  },
+  "products": {
+    "Assets/Volumes/quarry/volume.judascollision": "0ffe108422aefe08f38f61ba7263e6f2c8e5fc5e325c61c0ede4ad4c47eb9b93",
+    "Assets/Volumes/quarry/volume.judasmodel": "e78256c4c8649d75122d498b19de9ef598ebb296556cdf40a1be07fc36cc825e"
+  },
+  "revision": "M84-1",
+  "version": 1
+}

@@ -71,7 +71,7 @@ bool SaveStorage::Open(std::string& error){
   m_root=root.u8string();return true;
  }catch(const std::exception& e){for(auto h:m_directoryHandles)CloseHandle(static_cast<HANDLE>(h));m_directoryHandles.clear();error=e.what();return false;}
 }
-bool SaveStorage::ReadFile(const std::string& file,GameSnapshot& value,std::string& error,bool metadataOnly){
+bool SaveStorage::ReadFile(const std::string& file,GameSnapshot& value,std::string& error,bool metadataOnly,std::string* exactBytes){
  JUDAS_PROFILE_SCOPE("Save read");
  try {
   Handle handle(CreateFileW((fs::u8path(m_root)/fs::u8path(file)).c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_FLAG_OPEN_REPARSE_POINT,nullptr));
@@ -80,7 +80,7 @@ bool SaveStorage::ReadFile(const std::string& file,GameSnapshot& value,std::stri
   if(size.QuadPart<0||uint64_t(size.QuadPart)>SaveArchive::Limit)throw std::runtime_error("invalid/oversized save file");
   std::string bytes(size_t(size.QuadPart),'\0');size_t at=0;
   while(at<bytes.size()){DWORD n=0;DWORD count=DWORD(std::min<size_t>(bytes.size()-at,1<<20));if(!::ReadFile(handle.value,bytes.data()+at,count,&n,nullptr)||!n)throw std::runtime_error("truncated/failed slot read");at+=n;}
-  return DecodeGameSnapshot(bytes,value,error,metadataOnly);
+  const bool good=DecodeGameSnapshot(bytes,value,error,metadataOnly);if(good&&exactBytes)*exactBytes=std::move(bytes);return good;
  }catch(const std::exception& e){error=e.what();return false;}
 }
 bool SaveStorage::Publish(const std::string& file,const std::string& bytes,std::string& error){
@@ -101,15 +101,16 @@ bool SaveStorage::Publish(const std::string& file,const std::string& bytes,std::
   if(boundary)boundary("directory-synced");return true;
  }catch(const std::exception& e){error=published?"published; durability uncertain: "+std::string(e.what()):e.what();if(!published&&ownsTemporary)DeleteFileW(tmp.c_str());return false;}
 }
-bool SaveStorage::Write(const std::string& id,const GameSnapshot& value,std::string& error){
+bool SaveStorage::Write(const std::string& id,const GameSnapshot& value,std::string& error,bool onlyNew){
  error.clear();if(!ValidSlot(id)){error="invalid slot ID";return false;}if(!Open(error))return false;
  try {
   const auto root=fs::u8path(m_root);Lock lock(root);CheckDestination(root/(id+".save"));CheckDestination(root/(id+".previous"));
-  const auto names=SlotNames(root);if(!names.count(id)&&names.size()>=128)throw std::runtime_error("save slot limit (128); delete an existing slot first");
-  auto bytes=EncodeGameSnapshot(value);GameSnapshot previous;std::string oldError;
-  bool good=ReadFile(id+".save",previous,oldError);
+  const auto names=SlotNames(root);if(onlyNew&&names.count(id))throw std::runtime_error("destination exists; choose a new slot");if(!names.count(id)&&names.size()>=128)throw std::runtime_error("save slot limit (128); delete an existing slot first");
+  auto bytes=EncodeGameSnapshot(value);GameSnapshot previous;std::string oldError,exactPrevious;
+  bool good=ReadFile(id+".save",previous,oldError,false,&exactPrevious);
+  if(!good&&oldError.find("unsupported newer save container version")!=std::string::npos){error="refusing to overwrite a newer save container; choose a new slot";return false;}
   if(!good&&(oldError.rfind("read slot:",0)==0||oldError.rfind("stat slot:",0)==0||oldError=="truncated/failed slot read")){error=oldError;return false;}
-  if(good&&!Publish(id+".previous",EncodeGameSnapshot(previous),error))return false;
+  if(good&&!Publish(id+".previous",exactPrevious,error))return false;
   if(boundary)boundary("previous-committed");return Publish(id+".save",bytes,error);
  }catch(const std::exception& e){error=e.what();return false;}
 }
@@ -119,6 +120,7 @@ bool SaveStorage::Read(const std::string& id,GameSnapshot& value,bool& recovered
   if(ReadFile(id+".previous",value,error)){recovered=true;error.clear();return true;}error=original;return false;
  }catch(const std::exception& e){error=e.what();return false;}
 }
+bool SaveStorage::ReadPrevious(const std::string& id,GameSnapshot& s,std::string& error){error.clear();if(!ValidSlot(id)){error="invalid slot ID";return false;}if(!Open(error))return false;try{Lock lock(fs::u8path(m_root));return ReadFile(id+".previous",s,error);}catch(const std::exception& e){error=e.what();return false;}}
 bool SaveStorage::Delete(const std::string& id,std::string& error){
  error.clear();if(!ValidSlot(id)){error="invalid slot ID";return false;}if(!Open(error))return false;
  try {auto root=fs::u8path(m_root);Lock lock(root);for(auto ext:{".save",".previous"})CheckDestination(root/(id+ext));
@@ -129,7 +131,7 @@ std::vector<SaveSlotInfo> SaveStorage::List(const std::string& project,const std
  error.clear();std::vector<SaveSlotInfo> result;if(!Open(error))return result;
  try {auto root=fs::u8path(m_root);Lock lock(root);for(const auto& id:SlotNames(root)){SaveSlotInfo info;info.id=id;GameSnapshot value;
   if(!ReadFile(id+".save",value,info.error,true)){if(ReadFile(id+".previous",value,info.error,true))info.recovered=true;else {info.status=info.error.find("unsupported")!=std::string::npos?"incompatible":"corrupt";result.push_back(info);continue;}}
-  info.error.clear();info.name=value.displayName;info.scene=value.scene;info.metadata=value.metadata;info.timestamp=value.timestamp;
+  info.error.clear();info.name=value.displayName;info.scene=value.scene;info.metadata=value.metadata;info.timestamp=value.timestamp;info.modContext=value.modContext;info.content=value.content;info.compatibility=value.compatibility;info.contentVersion=value.contentVersion;
   info.status=value.gameVersion!=1||value.project!=project||(!content.empty()&&value.content!=content)?"incompatible":"compatible";result.push_back(info);
  }}catch(const std::exception& e){error=e.what();}return result;
 }

@@ -2,6 +2,7 @@
 #include "SaveStorage.h"
 #include "JobSystem.h"
 #include <memory>
+#include <set>
 class SceneSession;class RuntimeWorld;class ResourceManager;class InteractivePlay;
 class Project;class AssetDatabase;
 // Existing content identity, normalized for packaging-only settings. A package's
@@ -9,13 +10,13 @@ class Project;class AssetDatabase;
 bool ComputeSaveContentFingerprint(const Project&,const AssetDatabase&,
  const std::vector<std::string>& scenes,std::string& digest,std::string& error,
  const JobContext* cancel=nullptr);
-struct SaveRequestStatus {uint64_t id=0;std::string operation,slot,state="queued",error;bool recovered=false;double captureMs=0,workerMs=0,restoreMs=0;size_t bytes=0;};
+struct SaveRequestStatus {uint64_t id=0;std::string operation,slot,state="queued",error;bool recovered=false,migrated=false;std::string migrationReport;double migrationMs=0,captureMs=0,workerMs=0,restoreMs=0;size_t bytes=0;};
 // Project/session owner-thread service. Worker products contain immutable data;
 // they never retain world, VM, scene-session or native-resource pointers.
 class SaveService {
 public:
  SaveService(SceneSession&,ResourceManager&,bool editor=false);~SaveService();
- uint64_t Request(const std::string& operation,const std::string& slot,const std::string& name,const std::string& metadata,std::string& error);
+ uint64_t Request(const std::string& operation,const std::string& slot,const std::string& name,const std::string& metadata,std::string& error,bool migrate=false);
  bool Cancel(uint64_t);
  const SaveRequestStatus* Status(uint64_t)const;
  const std::vector<SaveSlotInfo>& List()const{return m_slots;}
@@ -26,7 +27,7 @@ public:
  const std::string& Content()const{return m_content;}
 private:
  struct Product;SceneSession& m_session;ResourceManager& m_resources;
- std::string m_root,m_identity,m_content,m_identityError,m_name,m_metadata;
+ std::string m_root,m_identity,m_content,m_identityError,m_name,m_metadata;std::set<std::string> m_protectedSlots;bool m_allowMigration=false;
  std::map<uint64_t,SaveRequestStatus> m_requests;std::vector<SaveSlotInfo> m_slots;
  uint64_t m_active=0;JobHandle m_job,m_identityJob;std::shared_ptr<Product> m_product,m_identityProduct;
  std::unique_ptr<RuntimeWorld> m_staged;std::shared_ptr<SceneSession> m_stagedSession;

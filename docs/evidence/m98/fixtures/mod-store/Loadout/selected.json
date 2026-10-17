@@ -1,0 +1,29 @@
+{
+  "format": 1,
+  "selected": [
+    {
+      "id": "hill-map",
+      "version": "1.0.0",
+      "sha256": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b",
+      "trustedHash": "49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b"
+    },
+    {
+      "id": "landscape-fork",
+      "version": "1.0.0",
+      "sha256": "e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6",
+      "trustedHash": ""
+    },
+    {
+      "id": "common",
+      "version": "1.0.0",
+      "sha256": "a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d",
+      "trustedHash": "a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d"
+    },
+    {
+      "id": "consumer",
+      "version": "1.0.0",
+      "sha256": "544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd",
+      "trustedHash": "544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd"
+    }
+  ]
+}

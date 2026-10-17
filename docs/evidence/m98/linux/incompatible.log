@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Save Evolution Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/incompatible/save_evolution.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/incompatible/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS queue public save-service load: 
+Runtime outer services: save evolution: source content/compatibility/version not explicitly approved
+LOAD_RESULT failed migration_ms=0.146608 worker_ms=3.26335 restore_ms=0 error=save evolution: source content/compatibility/version not explicitly approved report=
+PASS load/migration preserves original source bytes
+PASS failed candidate leaves original world published
+PASS live world remains usable after failure
+PASS project lifecycle remains healthy
+PASS application shutdown
+SUMMARY 6 checks 0 failures

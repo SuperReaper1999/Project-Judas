@@ -1,0 +1,13 @@
+FRAMES 420
+FRAME_SECONDS 0.016666667
+ACTION dig 1 180 181
+ACTION collect 1 200 201
+ACTION collect 1 204 205
+ACTION collect 1 208 209
+ACTION collect 1 212 213
+ACTION collect 1 216 217
+ACTION collect 1 220 221
+ACTION collect 1 224 225
+ACTION save 1 260 261
+WAIT_SERVICES save 10000 280
+SCREENSHOT 360 /home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/old-progress.png

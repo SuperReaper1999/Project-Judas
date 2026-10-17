@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Save Evolution Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/failure/save_evolution.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/failure/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS queue public save-service load: 
+Runtime outer services: save evolution: [json.exception.other_error.501] unsuccessful: {"op":"test","path":"/inventory/ore","value":-999}
+LOAD_RESULT failed migration_ms=10.7018 worker_ms=14.3866 restore_ms=0 error=save evolution: [json.exception.other_error.501] unsuccessful: {"op":"test","path":"/inventory/ore","value":-999} report=
+PASS load/migration preserves original source bytes
+PASS failed candidate leaves original world published
+PASS live world remains usable after failure
+PASS project lifecycle remains healthy
+PASS application shutdown
+SUMMARY 6 checks 0 failures

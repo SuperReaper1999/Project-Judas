@@ -1,0 +1,9 @@
+core 1
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m98_validation.py", line 15, in <module>
+    run('core',[R/'build/judas_save_evolution_tests',out/'core'])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m98_validation.py", line 14, in run
+    if r.returncode!=expected:raise RuntimeError(name+' failed; retained evidence')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: core failed; retained evidence

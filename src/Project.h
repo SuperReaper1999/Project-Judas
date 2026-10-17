@@ -43,6 +43,7 @@ struct ProjectSettings {
     ProjectAudioSettings audio;
     std::string worldManifest; // optional normal .judasworld asset identity
     std::string name;
+    std::string saveEvolution; // optional bounded, declarative migration policy
     std::string saveIdentity; // stable local/export save namespace; empty derives legacy name/file identity
     std::string iconAsset; // optional texture asset ID; empty uses the Judas icon
     std::string exportAssetPolicy="all"; // opt-in "closure" requires explicit dynamic roots

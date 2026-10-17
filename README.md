@@ -135,4 +135,6 @@ features should remain clearly scoped.
 Project Judas is licensed under the [MIT License](LICENSE). Vendored
 dependencies retain their own notices and licence terms.
 
-Experimental M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md). Try [Living World Lab](projects/living_world_lab/README.md); human acceptance pending.
+M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md). Try [Living World Lab](projects/living_world_lab/README.md); human accepted.
+
+Experimental M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md). Try [Save Evolution Lab](projects/save_evolution_lab/README.md); human acceptance pending.

@@ -371,7 +371,12 @@ void WorldStreaming::Advance(bool paused){
                         auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)+snap->second.origin-m->world.Settings().worldOrigin);saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
                     }
                     for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==original)reference(o,ref.field,Resolve(ref.target,ref.targetLocal));
-                    ok=m->world.StageRegionObject(o,local,error,id+":"+std::to_string(original));r.members.push_back(o.id);m->owners[o.id]=id;m->identities[o.id]="region:"+id+":"+std::to_string(original);
+                    ok=m->world.StageRegionObject(o,local,error,id+":"+std::to_string(original));r.members.push_back(o.id);m->owners[o.id]=id;
+                    // Adoption preserves identity across ownership changes. Retained
+                    // reconstruction allocates a fresh runtime ID, not a new identity.
+                    std::string persistent="region:"+id+":"+std::to_string(original);
+                    if(auto saved=r.saved.find(original);saved!=r.saved.end())if(auto identity=m->identities.find(saved->second.definition.id);identity!=m->identities.end())persistent=identity->second;
+                    m->identities[o.id]=std::move(persistent);
                 },r,"Streaming component registration");
                 if(!ok){s.state="unloading";s.error=error;r.scriptsEnded=true;r.unload=true;break;}
                 ++r.next;s.installed=r.next;

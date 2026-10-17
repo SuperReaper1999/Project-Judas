@@ -1,4 +1,5 @@
 #include "SaveService.h"
+#include "SaveEvolution.h"
 #include "modding/ModRuntime.h"
 #include "SceneSession.h"
 #include "WorldPersistence.h"
@@ -25,7 +26,7 @@ std::string ModSaveContext(const Project& p){if(!p.ModSession())return {};const 
 bool ComputeSaveContentFingerprint(const Project& project,const AssetDatabase& assets,
  const std::vector<std::string>& scenes,std::string& result,std::string& error,const JobContext* cancel){
  try{
-  auto settings=project.Settings();settings.visualBudgetMiB=0;settings.modContract.clear();settings.saveIdentity.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
+  auto settings=project.Settings();settings.visualBudgetMiB=0;settings.modContract.clear();settings.saveIdentity.clear();settings.saveEvolution.clear();settings.exportAssetPolicy="all";settings.runtimeAssets.clear();
   std::string bytes="Judas.SaveContent.1:"+Project::SerializeToString(settings),digest;
   for(const auto& scene:scenes){if(cancel&&cancel->CancelRequested())return false;if(!SceneFingerprintSha256File(project.Resolve(scene),digest,error))return false;bytes+=scene+":"+digest;}
   if(project.ModSession())bytes+="Judas.ModContext.1:"+project.ModSession()->snapshot.resolution.signature;
@@ -52,7 +53,7 @@ bool ComputeSaveContentFingerprint(const Project& project,const AssetDatabase& a
   result=SceneFingerprintSha256(bytes);error.clear();return true;
  }catch(const std::exception& e){error=std::string("save content: ")+e.what();return false;}
 }
-struct SaveService::Product {GameSnapshot snapshot;std::vector<SaveSlotInfo> slots;std::string error,digest;bool recovered=false;double elapsed=0;size_t bytes=0;};
+struct SaveService::Product {GameSnapshot snapshot;std::vector<SaveSlotInfo> slots;std::string error,digest;bool recovered=false,migrated=false;std::string migrationReport;double migrationMs=0,elapsed=0;size_t bytes=0;};
 SaveService::SaveService(SceneSession& session,ResourceManager& resources,bool editor):m_session(session),m_resources(resources){
  auto project=session.m_project;auto settings=project.Settings();m_identity=settings.saveIdentity.empty()?SceneFingerprintSha256(settings.name+"\n"+std::filesystem::path(project.ProjectFile()).filename().string()):settings.saveIdentity;
  GamePackage package{"",m_identity};std::string root;if(!PackageSaveDirectory(package,root,m_identityError))return;
@@ -69,14 +70,15 @@ void SaveService::RefreshContent(){
  },JobPriority::Normal,"save project identity");
 }
 SaveService::~SaveService(){if(auto* jobs=m_resources.Jobs()){jobs->Cancel(m_job);jobs->Cancel(m_identityJob);jobs->Forget(m_job);jobs->Forget(m_identityJob);}}
-uint64_t SaveService::Request(const std::string& operation,const std::string& slot,const std::string& name,const std::string& metadata,std::string& error){
+uint64_t SaveService::Request(const std::string& operation,const std::string& slot,const std::string& name,const std::string& metadata,std::string& error,bool migrate){
+ if(operation=="save"&&m_protectedSlots.count(slot)){error="migrated source slot is protected; save upgraded progress to a new slot";return 0;}
  if(Busy()||m_session.Pending()||!m_session.Accepting()){error="save/scene service busy";return 0;}
  if(operation!="save"&&operation!="load"&&operation!="delete"&&operation!="list"){error="invalid save operation";return 0;}
  if(operation!="list"&&!SaveStorage::ValidSlot(slot)){error="invalid slot ID";return 0;}
  if(name.size()>1024||!ScriptSystem::ValidateJson(metadata,error)){if(error.empty())error="invalid slot display name/metadata";return 0;}
  if(!m_identityError.empty()){error=m_identityError;return 0;}
  if(!m_identityJob.IsValid())RefreshContent();
- auto id=nextRequest.fetch_add(1);m_restoreStart=Clock::now();m_active=id;m_name=name;m_metadata=metadata;m_requests[id]={id,operation,slot,"queued",""};while(m_requests.size()>32)m_requests.erase(m_requests.begin());return id;
+ auto id=nextRequest.fetch_add(1);m_restoreStart=Clock::now();m_active=id;m_name=name;m_metadata=metadata;m_allowMigration=migrate;SaveRequestStatus request;request.id=id;request.operation=operation;request.slot=slot;m_requests[id]=std::move(request);while(m_requests.size()>32)m_requests.erase(m_requests.begin());return id;
 }
 bool SaveService::Cancel(uint64_t id){if(id!=m_active||!id)return false;auto& s=m_requests.at(id);if(s.state!="queued"&&s.state!="preparing")return false;m_staged.reset();m_stagedSession.reset();s.state="cancelled";m_active=0;return true;}
 const SaveRequestStatus* SaveService::Status(uint64_t id)const{auto it=m_requests.find(id);return it==m_requests.end()?nullptr:&it->second;}
@@ -92,7 +94,8 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
    if(m_session.m_project.Settings().legacyGameplay){error="modern slots require legacy-gameplay false; built-in legacy player/control state uses the separate .judasstate contract";Finish(error);return;}
    if(m_session.m_streaming&&!m_session.m_streaming->SaveReady())return;
    if(!WorldPersistence::Prepare(*world,error)){if(error=="loading"&&ms(m_restoreStart)<=30000){error.clear();return;}if(error=="loading")error="required save participants failed to prepare within 30 seconds";Finish(error);return;}
-   snapshot.modContext=ModSaveContext(m_session.m_project);snapshot.project=m_identity;snapshot.scene=m_session.Current();snapshot.content=m_content;snapshot.displayName=m_name;snapshot.metadata=m_metadata;snapshot.timestamp=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+   SaveEvolutionIdentity evolution;if(!SaveEvolutionCurrent(m_session.m_project.Settings().saveEvolution,evolution,error)){Finish(error);return;}snapshot.compatibility=evolution.compatibility;snapshot.contentVersion=evolution.version;
+   snapshot.diagnosticBuild="Judas M98 / native snapshot schema 1";snapshot.modContext=ModSaveContext(m_session.m_project);snapshot.project=m_identity;snapshot.scene=m_session.Current();snapshot.content=m_content;snapshot.displayName=m_name;snapshot.metadata=m_metadata;snapshot.timestamp=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
    if(!WorldPersistence::Capture(*world,snapshot.participants,error)){Finish(error);return;}
    try{SaveArchive a;auto values=m_session.m_values;auto locale=m_session.Localization(&m_resources).Locale();a(values,locale);snapshot.participants["session"]={1,std::move(a.bytes)};
     SaveArchive stream;unsigned streamVersion=1;bool composed=m_session.ComposedProject();stream(composed);if(composed){std::string e;auto* coordinator=m_session.Streaming(*world,e);if(!coordinator)throw std::runtime_error(e);streamVersion=coordinator->ArchiveVersion();coordinator->Persist(stream,streamVersion);}snapshot.participants["streaming"]={streamVersion,std::move(stream.bytes)};
@@ -100,11 +103,17 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
    s.captureMs=ms(start);
   }
   size_t snapshotBytes=0;for(const auto& [_,chunk]:snapshot.participants)snapshotBytes+=chunk.data.size()+128;if(snapshotBytes>8*1024*1024){error="snapshot exceeds 8 MiB payload limit";Finish(error);return;}JUDAS_PROFILE_COUNTER("Save snapshot bytes",double(snapshotBytes),ProfileCounterMode::Latest);
-  auto product=m_product=std::make_shared<Product>();product->snapshot=std::move(snapshot);auto root=m_root,id=s.slot,operation=s.operation,identity=m_identity,content=m_content;
+  auto product=m_product=std::make_shared<Product>();product->snapshot=std::move(snapshot);auto root=m_root,id=s.slot,operation=s.operation,identity=m_identity,content=m_content;auto policy=m_session.m_project.Settings().saveEvolution,mods=ModSaveContext(m_session.m_project);const bool allowMigration=m_allowMigration;
   s.state=operation=="load"?"reading":operation=="save"?"writing":"working";
-  m_job=jobs->Submit([product,root,id,operation,identity,content](JobContext&){auto start=Clock::now();SaveStorage storage(root);bool ok=true;
+  m_job=jobs->Submit([product,root,id,operation,identity,content,policy,mods,allowMigration](JobContext&){auto start=Clock::now();SaveStorage storage(root);bool ok=true;
    if(operation=="save"){product->bytes=EncodeGameSnapshot(product->snapshot).size();ok=storage.Write(id,product->snapshot,product->error);}
-   else if(operation=="load"){ok=storage.Read(id,product->snapshot,product->recovered,product->error);if(ok)product->bytes=EncodeGameSnapshot(product->snapshot).size();}
+   else if(operation=="load"){
+    ok=storage.Read(id,product->snapshot,product->recovered,product->error);
+    if(ok){product->bytes=EncodeGameSnapshot(product->snapshot).size();
+     if(product->snapshot.project!=identity){ok=false;product->error="save belongs to a different project identity";}
+     else{auto begin=Clock::now();GameSnapshot evolved;ok=EvolveSave(policy,content,mods,product->snapshot,allowMigration,evolved,product->migrationReport,product->error);product->migrationMs=ms(begin);product->migrated=ok&&product->migrationReport!="exact";if(ok)product->snapshot=std::move(evolved);}
+    }
+   }
    else if(operation=="delete")ok=storage.Delete(id,product->error);
    if(ok){std::string listingError;product->slots=storage.List(identity,content,listingError);if(!listingError.empty())product->error=(operation=="save"?"save committed, metadata refresh failed: ":"")+listingError;}
    product->elapsed=ms(start);
@@ -113,12 +122,19 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
  if(m_job.IsValid()){
   if(!jobs->IsFinished(m_job))return;
   auto jobError=jobs->ErrorOf(m_job);jobs->Forget(m_job);m_job={};if(m_product->error.empty())m_product->error=jobError;
+  s.migrated=m_product->migrated;s.migrationMs=m_product->migrationMs;s.migrationReport=m_product->migrationReport;
   s.workerMs=m_product->elapsed;s.bytes=m_product->bytes;s.recovered=m_product->recovered;m_slots=m_product->slots;
+  SaveEvolutionIdentity identity;std::string identityError;SaveEvolutionCurrent(m_session.m_project.Settings().saveEvolution,identity,identityError);
+  const auto currentMods=ModSaveContext(m_session.m_project);
+  for(auto& slot:m_slots)if(slot.status!="corrupt"&&slot.content.size()==64){
+   const bool matches=slot.content==m_content&&slot.compatibility==identity.compatibility&&slot.contentVersion==identity.version&&slot.modContext==currentMods;
+   if(!matches){slot.status="incompatible";slot.error="content/compatibility/mod identity differs; explicit project-approved migration required";}
+  }
+
   if(!m_product->error.empty()){error=m_product->error;Finish(error);return;}
   if(s.operation!="load"){Finish("");return;}
   auto& saved=m_product->snapshot;
-  if(saved.modContext!=ModSaveContext(m_session.m_project)){error="save requires a different exact mod loadout/contract; select the saved IDs, versions and content hashes before loading (no automatic trust or substitution)";Finish(error);return;}
-  if(saved.project!=m_identity||saved.content!=m_content||std::find(m_session.Scenes().begin(),m_session.Scenes().end(),saved.scene)==m_session.Scenes().end()){error="save incompatible with registered project/content";Finish(error);return;}
+  if(std::find(m_session.Scenes().begin(),m_session.Scenes().end(),saved.scene)==m_session.Scenes().end()){error="saved/migrated scene is not registered";Finish(error);return;}
   if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>23)){error="unsupported save game/participant schema";Finish(error);return;}
   Scene scene;if(!WorldPersistence::SceneFrom(saved.participants,scene,error)){Finish(error);return;}
   const bool hasWeather=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.weather);});
@@ -161,5 +177,6 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
  world=std::move(m_staged);m_session.m_values=std::move(m_stagedSession->m_values);std::string locale=m_stagedSession->Localization(&m_resources).Locale();if(!m_session.Localization(&m_resources).Configuration().locales.empty())m_session.Localization(&m_resources).SetLocale(locale,error);
  m_session.m_streaming=std::move(m_stagedSession->m_streaming);m_session.m_streamWorld=world.get();m_session.m_current=saved.scene;m_session.m_accepting=true;if(m_session.m_streaming)m_session.m_streaming->ResumeOwnership();world->SetSceneControl(std::move(control));
  if(!play.Begin(*world,WorldCoordinates(world->Settings().worldOrigin),error)){error="published save session start failed: "+error;Finish(error);return;}play.SetWorldStatePath("",false);WorldPersistence::Published(*world);
+ if(s.migrated)m_protectedSlots.insert(s.slot);
  s.restoreMs=ms(m_restoreStart);Finish("");
 }

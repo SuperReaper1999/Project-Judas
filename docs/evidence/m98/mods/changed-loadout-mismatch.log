@@ -1,0 +1,17 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/home/conner/Documents/GitHub/Project-Judas/projects/modding_lab/modding_lab.judasproj)
+Scene: Protected hub (/home/conner/Documents/GitHub/Project-Judas/projects/modding_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS required composed terrain/body ready through normal resource path
+PASS ordinary authored UI published
+PASS normal renderer capture
+PASS frozen catalog reaches normal script/resource database
+PASS normal modern save/load request
+Runtime outer services: save evolution: mod loadout/contract mismatch; saved requirements: {"active":[{"id":"common","sha256":"a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d","version":"1.0.0"},{"id":"consumer","sha256":"544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd","version":"1.0.0"},{"id":"hill-map","sha256":"49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b","version":"1.0.0"},{"id":"landscape-fork","sha256":"e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6","version":"1.0.0"}],"contractSha256":"3b1562f86a88df9168b9e43b3fc27191f750dad541425adf663b0aa5106c4025","format":1,"signature":"099086c441f9906585443d3e47db124c2c7ebb4a3a55cab73f75877e4357fa9c"}; current: {"active":[{"id":"common","sha256":"a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d","version":"1.0.0"},{"id":"consumer","sha256":"544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd","version":"1.0.0"},{"id":"hill-map","sha256":"49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b","version":"1.0.0"}],"contractSha256":"3b1562f86a88df9168b9e43b3fc27191f750dad541425adf663b0aa5106c4025","format":1,"signature":"8a1be46d218662dd208e2281cdf272729412165e6b30e4151ea57248c2e7f44e"}
+PASS changed loadout refused before live-world replacement
+DIAGNOSTIC save evolution: mod loadout/contract mismatch; saved requirements: {"active":[{"id":"common","sha256":"a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d","version":"1.0.0"},{"id":"consumer","sha256":"544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd","version":"1.0.0"},{"id":"hill-map","sha256":"49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b","version":"1.0.0"},{"id":"landscape-fork","sha256":"e32ac8e46564e9a6b53e7986c17715a961d79ad6f0b2acf5a13c962e1e6283b6","version":"1.0.0"}],"contractSha256":"3b1562f86a88df9168b9e43b3fc27191f750dad541425adf663b0aa5106c4025","format":1,"signature":"099086c441f9906585443d3e47db124c2c7ebb4a3a55cab73f75877e4357fa9c"}; current: {"active":[{"id":"common","sha256":"a963e294b0ca171fc0652af4022285801ce27546f39d5fd205c459cbdd30285d","version":"1.0.0"},{"id":"consumer","sha256":"544c593b060ad24aeb16565376712059d28195c03a39a4ffc12d5b008b43b8cd","version":"1.0.0"},{"id":"hill-map","sha256":"49a39e13583be0cf673081bd3c0f73dfda4ab80fa5d3948a77d49ecece394f2b","version":"1.0.0"}],"contractSha256":"3b1562f86a88df9168b9e43b3fc27191f750dad541425adf663b0aa5106c4025","format":1,"signature":"8a1be46d218662dd208e2281cdf272729412165e6b30e4151ea57248c2e7f44e"}
+PASS normal Application shutdown
+7 checks, 0 failures

@@ -1,0 +1,13 @@
+{
+  "build": "Judas M98 / native snapshot schema 1",
+  "compatibility": "",
+  "content": "6d65e7e7fa82b62fbf902c7767ceac1212f6878e2307b4e4a25288e8cb58787c",
+  "engineSchema": 1,
+  "modContext": "",
+  "ms": 32.948843,
+  "participants": 14,
+  "project": "462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3",
+  "recoveredPrevious": true,
+  "scene": "Scenes/workshop.judas",
+  "version": 0
+}

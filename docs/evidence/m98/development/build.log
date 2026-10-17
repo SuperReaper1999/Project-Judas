@@ -1,0 +1,79 @@
+[  6%] Built target judas_icu_build
+[ 12%] Built target judas_meshoptimizer
+[ 12%] Built target judas_app_icon
+[ 12%] Built target judas_quickjs
+[ 12%] Built target judas_glad
+[ 25%] Built target freetype
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_jobs
+[ 31%] Built target judas_profiler
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[ 43%] Built target judas_navigation_cook
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 43%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_save_evolution_tests.dir/tests/SaveEvolutionTests.cpp.o
+[100%] Linking CXX executable judas_save_evolution_tests
+[100%] Built target judas_save_evolution_tests
+[  6%] Built target judas_icu_build
+[ 12%] Built target judas_meshoptimizer
+[ 12%] Built target judas_app_icon
+[ 25%] Built target freetype
+[ 25%] Built target judas_quickjs
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_save_evolution_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_evolution_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_evolution_application_tests.dir/tests/SaveEvolutionApplicationTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_evolution_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_evolution_application_tests.dir/src/TestHarness.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:25:85: error: no matching function for call to ‘RuntimeTerrain::Brush(long unsigned int&, glm::vec<3, float, glm::packed_highp>, const char [7], float, int, std::string&)’
+   25 |     auto transform=w.RuntimeDefinition(owner)->transform;check(w.LiveTerrain().Brush(owner,transform.position+transform.rotation*glm::vec3(0,-3.5f,7),"remove",1.8f,1,error),"v1 edits actual terrain");phase=1;
+      |                                                                ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:25:85: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h:1,
+                 from /home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:4:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.h:19:7: note: candidate 1: ‘bool RuntimeTerrain::Brush(uint64_t, glm::vec3, const VolumeBrush&, std::string&)’
+   19 |  bool Brush(uint64_t,glm::vec3 worldPoint,const VolumeBrush&,std::string&);
+      |       ^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.h:19:7: note: candidate expects 4 arguments, 6 provided
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:38:167: error: no matching function for call to ‘WorldStreaming::Request(const char [8], std::string&)’
+   38 |    auto t=w.RuntimeDefinition(10)->transform;t.position={50,-3.6f,11};check(w.SetRuntimeTransform(10,t),"travel away normally before cold save");token=stream->Request("quarry1",error);check(token!=0,"request destination region");phase=2;
+      |                                                                                                                                                        ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:38:167: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:6:
+/home/conner/Documents/GitHub/Project-Judas/src/WorldStreaming.h:58:14: note: candidate 1: ‘uint64_t WorldStreaming::Request(const std::string&, bool, std::string&, SceneObjectId, uint64_t)’
+   58 |     uint64_t Request(const std::string&,bool preload,std::string& error,SceneObjectId requester=0,uint64_t slot=0);
+      |              ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldStreaming.h:58:14: note: candidate expects 5 arguments, 2 provided
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:49:191: error: no matching function for call to ‘WorldStreaming::Request(const char [8], std::string&)’
+   49 |     auto transform=w.RuntimeDefinition(10)->transform;transform.position={0,-3.6f,11};check(w.SetRuntimeTransform(10,transform),"return to edited region after upgrade");token=stream->Request("quarry0",error);phase=6;at=frame;
+      |                                                                                                                                                                                ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/SaveEvolutionApplicationTests.cpp:49:191: note: there is 1 candidate
+/home/conner/Documents/GitHub/Project-Judas/src/WorldStreaming.h:58:14: note: candidate 1: ‘uint64_t WorldStreaming::Request(const std::string&, bool, std::string&, SceneObjectId, uint64_t)’
+   58 |     uint64_t Request(const std::string&,bool preload,std::string& error,SceneObjectId requester=0,uint64_t slot=0);
+      |              ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/WorldStreaming.h:58:14: note: candidate expects 5 arguments, 2 provided
+gmake[3]: *** [CMakeFiles/judas_save_evolution_application_tests.dir/build.make:79: CMakeFiles/judas_save_evolution_application_tests.dir/tests/SaveEvolutionApplicationTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:15608: CMakeFiles/judas_save_evolution_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:15615: CMakeFiles/judas_save_evolution_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:4506: judas_save_evolution_application_tests] Error 2

@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M97 public module based on checkpoint `a488c72463f207473838318b978b5a7f8e1f8afb + M96 UI toolkit`. M97 adds optional live bounded volume creation, brush editing and publication state. See [terrain](terrain.md). Human/platform acceptance remains separate from earlier milestones.
+Current M98 public module based on checkpoint `4c26a3bb23b8e3d1a7047283da0dcd2afdcc5e9c + M98 save evolution`. M98 extends saves.load with explicit migration opt-in and save identity/report fields. See [saves](saves.md). Human/platform acceptance remains separate from earlier milestones.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

@@ -1,0 +1,15 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS save-evolution normal registered script
+PASS save-evolution normal project
+PASS save-evolution ordinary scene
+PASS save-evolution runtime builds
+PASS save-evolution normal project-owned UI
+PASS save-evolution ordinary fixed-step session
+PASS save-evolution real VM callbacks without faults
+EXAMPLE save-evolution {"upgradeReady":false,"requested":true,"error":""}
+PASS save-evolution documented outcome
+PASS save-evolution teardown
+SUMMARY 10 checks 0 failures

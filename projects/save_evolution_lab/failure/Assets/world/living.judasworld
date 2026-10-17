@@ -1,0 +1,90 @@
+{
+  "kind": "world",
+  "schema": 1,
+  "data": {
+    "budget": {
+      "installMilliseconds": 2,
+      "unitsPerFrame": 16,
+      "maxPreparing": 2,
+      "pendingBytes": 33554432,
+      "liveBytes": 67108864,
+      "retainedBytes": 16777216,
+      "resourceCacheBytes": 67108864
+    },
+    "regions": [
+      {
+        "id": "quarry0",
+        "scene": "Scenes/quarry.judas",
+        "origin": [
+          6371000,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "halfExtents": [
+          18,
+          12,
+          18
+        ],
+        "priority": 1,
+        "policy": "snapshot",
+        "estimatedBytes": 2000000,
+        "dependencies": []
+      },
+      {
+        "id": "quarry1",
+        "scene": "Scenes/quarry.judas",
+        "origin": [
+          6371050,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "halfExtents": [
+          18,
+          12,
+          18
+        ],
+        "priority": 1,
+        "policy": "snapshot",
+        "estimatedBytes": 2000000,
+        "dependencies": []
+      },
+      {
+        "id": "quarry2",
+        "scene": "Scenes/quarry_rotated.judas",
+        "origin": [
+          6371100,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0.7071067811865475,
+          0.7071067811865476
+        ],
+        "halfExtents": [
+          18,
+          12,
+          18
+        ],
+        "priority": 1,
+        "policy": "snapshot",
+        "estimatedBytes": 2000000,
+        "dependencies": []
+      }
+    ],
+    "references": []
+  }
+}

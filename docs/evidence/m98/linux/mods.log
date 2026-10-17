@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Save Evolution Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS isolated adversarial save fixture
+PASS queue public save-service load: 
+Runtime outer services: save evolution: mod loadout/contract mismatch; saved requirements: {"active":[{"id":"missing.cosmetics","sha256":"2222222222222222222222222222222222222222222222222222222222222222","version":"1.0.0"}],"contractSha256":"1111111111111111111111111111111111111111111111111111111111111111","format":1,"signature":"missing-pack"}; current: unmodded
+LOAD_RESULT failed migration_ms=0.141058 worker_ms=4.3277 restore_ms=0 error=save evolution: mod loadout/contract mismatch; saved requirements: {"active":[{"id":"missing.cosmetics","sha256":"2222222222222222222222222222222222222222222222222222222222222222","version":"1.0.0"}],"contractSha256":"1111111111111111111111111111111111111111111111111111111111111111","format":1,"signature":"missing-pack"}; current: unmodded report=
+PASS load/migration preserves original source bytes
+PASS failed candidate leaves original world published
+PASS missing mod diagnosis names exact saved requirement
+PASS live world remains usable after failure
+PASS project lifecycle remains healthy
+PASS application shutdown
+SUMMARY 8 checks 0 failures

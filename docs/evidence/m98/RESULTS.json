@@ -1,0 +1,605 @@
+{
+  "baseline": "4c26a3bb23b8e3d1a7047283da0dcd2afdcc5e9c",
+  "platform": "native Linux",
+  "humanAcceptance": "pending",
+  "windows": "not run; nonblocking",
+  "android": "not run; nonblocking",
+  "focused": [
+    {
+      "name": "core",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/core"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.16445999899997332
+    },
+    {
+      "name": "storage",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/m61-storage-m98"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.11424714800000402
+    },
+    {
+      "name": "write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/save_evolution.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.5151506580000387
+    },
+    {
+      "name": "same-content",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/save_evolution.judasproj",
+        "same-content",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.6153322130001015
+    },
+    {
+      "name": "exact",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "exact",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.41485658199985664
+    },
+    {
+      "name": "failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/failure/save_evolution.judasproj",
+        "failure",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.41473241199992117
+    },
+    {
+      "name": "incompatible",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/incompatible/save_evolution.judasproj",
+        "incompatible",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.41490575600005286
+    },
+    {
+      "name": "mods",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "mods",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.41480861699983507
+    },
+    {
+      "name": "native-failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "native-failure",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.5150248879999708
+    },
+    {
+      "name": "read-v2",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v2/save_evolution.judasproj",
+        "read-v2",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.5651922680001462
+    },
+    {
+      "name": "read-v3",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "read-v3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.6151376190000519
+    },
+    {
+      "name": "direct-v3",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "direct-v3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.6152560420000555
+    },
+    {
+      "name": "current-v3",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "current-v3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/application"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.6152562400000079
+    },
+    {
+      "name": "inspect-original",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "inspect",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "old-progress"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.01590667300001769
+    },
+    {
+      "name": "dry-convert",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "old-progress"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.06402127199999086
+    },
+    {
+      "name": "offline-convert",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "migrate",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "old-progress",
+        "offline-upgraded"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.11435529999994287
+    },
+    {
+      "name": "refuse-existing",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "migrate",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "old-progress",
+        "offline-upgraded"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "seconds": 0.0643913030000931
+    },
+    {
+      "name": "refuse-source",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "migrate",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "old-progress",
+        "old-progress"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "seconds": 0.06416696499991303
+    },
+    {
+      "name": "recover-corrupt",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "recover",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "recovery",
+        "recovered-current"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.06414385399989442
+    },
+    {
+      "name": "recover-previous",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "previous",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/final-source/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "recovery",
+        "recovered-previous"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.0640980349999154
+    },
+    {
+      "name": "script-v1",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/save_evolution.judasproj"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.01587600600009864
+    },
+    {
+      "name": "script-v2",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v2/save_evolution.judasproj"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.015808784999990166
+    },
+    {
+      "name": "script-v3",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.015813306999916676
+    },
+    {
+      "name": "script-failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/failure/save_evolution.judasproj"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.01584983999987344
+    },
+    {
+      "name": "script-incompatible",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/incompatible/save_evolution.judasproj"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "seconds": 0.015880850000030478
+    }
+  ],
+  "performance": {
+    "rows": [
+      {
+        "migration": 12.2645,
+        "worker": 36.3019,
+        "restore": 53.8304
+      },
+      {
+        "migration": 12.0413,
+        "worker": 39.8476,
+        "restore": 54.8159
+      },
+      {
+        "migration": 11.925,
+        "worker": 38.3026,
+        "restore": 56.3718
+      },
+      {
+        "migration": 13.9527,
+        "worker": 44.9062,
+        "restore": 56.0922
+      },
+      {
+        "migration": 13.2512,
+        "worker": 39.3415,
+        "restore": 58.1609
+      },
+      {
+        "migration": 12.0707,
+        "worker": 35.1657,
+        "restore": 56.2633
+      },
+      {
+        "migration": 13.987,
+        "worker": 44.7762,
+        "restore": 55.6462
+      },
+      {
+        "migration": 11.1401,
+        "worker": 34.4624,
+        "restore": 54.8198
+      },
+      {
+        "migration": 15.4293,
+        "worker": 43.9334,
+        "restore": 56.4207
+      },
+      {
+        "migration": 13.1555,
+        "worker": 39.6628,
+        "restore": 58.805
+      },
+      {
+        "migration": 12.4227,
+        "worker": 39.5362,
+        "restore": 58.7049
+      },
+      {
+        "migration": 11.0126,
+        "worker": 35.8771,
+        "restore": 55.4128
+      }
+    ],
+    "summary": {
+      "migration": {
+        "samples": 12,
+        "median": 12.3436,
+        "p95": 15.4293,
+        "worst": 15.4293
+      },
+      "worker": {
+        "samples": 12,
+        "median": 39.43885,
+        "p95": 44.9062,
+        "worst": 44.9062
+      },
+      "restore": {
+        "samples": 12,
+        "median": 56.17775,
+        "p95": 58.805,
+        "worst": 58.805
+      }
+    }
+  },
+  "delivery": [
+    {
+      "name": "editor",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/editor-project/save_evolution.judasproj"
+      ],
+      "exit": 0,
+      "seconds": 1.8681544089999989
+    },
+    {
+      "name": "export-v1",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/v1",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.32004260700000486
+    },
+    {
+      "name": "export-v2",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v2/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/v2",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.2645604879999155
+    },
+    {
+      "name": "export-v3",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/v3",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.26458514899991314
+    },
+    {
+      "name": "export-failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/failure/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/failure",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.26485898600003566
+    },
+    {
+      "name": "export-incompatible",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/incompatible/save_evolution.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/incompatible",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.26482150900005763
+    },
+    {
+      "name": "moved-v1",
+      "argv": [
+        "/tmp/judas-m98-relocated-gho74gqg/v1/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.46482927099987137
+    },
+    {
+      "name": "moved-v3",
+      "argv": [
+        "/tmp/judas-m98-relocated-gho74gqg/v3/judas"
+      ],
+      "exit": 0,
+      "seconds": 0.6152295140000206
+    },
+    {
+      "name": "inspect-upgraded",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save",
+        "inspect",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/delivery-final/user-data/judas/games/462e0b8c7393298985adbde6a9d685dfaa232a1bb68d25a35ee6b6bd27f02aa3/Saves/Slots",
+        "upgraded-progress"
+      ],
+      "exit": 0,
+      "seconds": 0.015907057000049463
+    }
+  ],
+  "regressions": [
+    {
+      "name": "judas_physics_continuation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.016101077000030273
+    },
+    {
+      "name": "judas_save_exclusion_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_exclusion_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/exclusion"
+      ],
+      "exit": 0,
+      "seconds": 0.03211206299988589
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5150241379999443
+    },
+    {
+      "name": "judas_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5652342109999609
+    },
+    {
+      "name": "judas_living_world_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/terrain"
+      ],
+      "exit": 0,
+      "seconds": 0.46504115099992305
+    },
+    {
+      "name": "judas_living_world_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/regions"
+      ],
+      "exit": 0,
+      "seconds": 0.1642683750001197
+    },
+    {
+      "name": "save-stream-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/save-stream"
+      ],
+      "exit": 0,
+      "seconds": 0.7154425660000925
+    },
+    {
+      "name": "save-stream-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/save-stream"
+      ],
+      "exit": 0,
+      "seconds": 0.7655819100000372
+    },
+    {
+      "name": "animation-cold-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/animation-cold"
+      ],
+      "exit": 0,
+      "seconds": 0.2145729929998197
+    },
+    {
+      "name": "animation-cold-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/animation-cold"
+      ],
+      "exit": 0,
+      "seconds": 0.2144019360000584
+    },
+    {
+      "name": "cookbook-surface",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/cookbook",
+        "surface"
+      ],
+      "exit": 0,
+      "seconds": 0.26475985800016133
+    },
+    {
+      "name": "api",
+      "argv": [
+        "node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+        "--runtime",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m98/regressions/cookbook/surface.json"
+      ],
+      "exit": 1,
+      "seconds": 1.1164717020001262
+    }
+  ],
+  "followups": {
+    "api": "linux/api-final.log passed (supersedes regressions/api.log TypeScript JSDoc failure)",
+    "cookbook": "linux/cookbook-evolution.log 10 checks passed",
+    "m97Backward": "linux/m97-backward.log 8 checks passed",
+    "mods": "mods/content.log 127; with-loadout write 9 / read 11; changed-loadout 7 passed"
+  }
+}

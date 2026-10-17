@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Save Evolution Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS queue public save-service load: 
+Runtime outer services: save evolution: save differs from installed content/compatibility/mods; explicit migration required
+LOAD_RESULT failed migration_ms=0.117955 worker_ms=3.355 restore_ms=0 error=save evolution: save differs from installed content/compatibility/mods; explicit migration required report=
+PASS load/migration preserves original source bytes
+PASS failed candidate leaves original world published
+PASS live world remains usable after failure
+PASS project lifecycle remains healthy
+PASS application shutdown
+SUMMARY 6 checks 0 failures
