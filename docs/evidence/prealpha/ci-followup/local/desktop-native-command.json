@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/desktop-native-owned"
+  ],
+  "cwd": "/tmp",
+  "environment": {
+    "SDL_AUDIODRIVER": "dummy",
+    "SDL_VIDEODRIVER": "x11",
+    "JUDAS_ENGINE_ROOT": "/home/conner/Documents/GitHub/Project-Judas"
+  },
+  "startedUtc": "2026-10-17T22:30:27.142053+00:00",
+  "binarySha256": "052fd7966adc42f6c60b0c98fdbeef08e1962f7c74636b2135b7c4d29a37673b",
+  "exit": 0,
+  "elapsedSeconds": 1.3669714690004184
+}

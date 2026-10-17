@@ -47,6 +47,20 @@ python3 scripts/prealpha_validate.py --list --group lifecycle
 python3 scripts/prealpha_validate.py --build-dir build --group core --group network
 ```
 
+The `resource-handoff` gate creates its own deterministic multipart, skinned
+`.judasmodel` and embedded images inside its fresh output directory. It needs a
+real OpenGL context, but no private import-lab source files or ignored cooked
+models. The case checks actual partial GPU allocations, cancellation, complete
+publication and retirement. Its `fixture.json` records generated content hashes
+and dimensions. One bounded 5 ms observation pause after an actual map allocation
+forces a private upload boundary on fast GPUs too; reported pump times include
+that pause and are functional diagnostics, not normal loading benchmarks.
+To additionally exercise the original full-quality consumer
+asset, restore the local import-lab assets and run
+`build/judas_resource_handoff_tests /absolute/new-owned-output --original`.
+Missing original assets fail explicitly; they do not silently substitute the
+generated fixture or count as consumer validation.
+
 Every invocation creates a fresh evidence directory, records commands, executable
 SHA-256 hashes, embedded identities, platform, elapsed time, source revision/worktree status and exact
 failure logs in `RESULTS.json`. Missing binaries, timeouts and nonzero exits fail.

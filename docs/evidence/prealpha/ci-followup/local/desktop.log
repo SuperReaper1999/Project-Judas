@@ -1,0 +1,4 @@
+SDL_Init failed: x11 not available
+PASS fresh owned output required
+PASS real self-contained model archive is available
+FAIL actual owner-thread GL context: 

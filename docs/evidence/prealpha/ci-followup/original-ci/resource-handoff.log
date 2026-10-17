@@ -1,0 +1,9 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4 / llvmpipe (LLVM 20.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS fresh owned output required
+PASS ordinary import lab project
+PASS authored original multipart scene
+PASS actual owner-thread GL context
+GL renderer: llvmpipe (LLVM 20.1.2, 256 bits) vendor: Mesa
+FAIL unknown asset id d15b628722311f90a9146c4d51e12ce2

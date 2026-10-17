@@ -1,0 +1,2319 @@
+[
+  {
+    "evidenceDirectory": "20261017T222105Z-2fc406cf",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:05.406615+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_build_identity_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "7c2e3b3931555e11d53e1bca5327970d60122f3119bbd76cf5aaee8ebc99a8e3",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "7c2e3b3931555e11d53e1bca5327970d60122f3119bbd76cf5aaee8ebc99a8e3",
+          "seconds": 0.2146240869999474,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "build-identity"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:06.455203+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222106Z-6c2edc72",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:06.651894+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_collision_geometry_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "145fae5233eb81a83600b974e19f3d76d8389d77cd035383700869c8f8f24f0e",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "145fae5233eb81a83600b974e19f3d76d8389d77cd035383700869c8f8f24f0e",
+          "seconds": 0.4323307570000452,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "collision-geometry"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:07.311157+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222107Z-3ca14369",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:07.498280+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_rigid_contact_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "e479623b55bf54af7c43c1a27e19d5f27fb3027185070d95bb89231c909c6b52",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "e479623b55bf54af7c43c1a27e19d5f27fb3027185070d95bb89231c909c6b52",
+          "seconds": 0.8192912349999233,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "rigid-contact"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:08.471367+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222108Z-a75d308a",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:08.657349+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_impact_solver_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "4abfd9af7feb67f6bb8d6f873c453396bd160958c05f74ad6a7122ef06e82213",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "4abfd9af7feb67f6bb8d6f873c453396bd160958c05f74ad6a7122ef06e82213",
+          "seconds": 0.004087387000026865,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "impact-solver"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:08.813288+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222109Z-308e3509",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:09.752036+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_character_motor_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "35db9514602062d92705d15dc085a1dd3e55710f008dcd2f5ef024330d31004c",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "35db9514602062d92705d15dc085a1dd3e55710f008dcd2f5ef024330d31004c",
+          "seconds": 0.43285540200008654,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "character-motor"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:10.412149+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222109Z-808da952",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:09.361411+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_collision_continuity_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "d4171725bc2efacd93cbef1fa897938981be4689d0f657fde04b0a3bb7532b35",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "d4171725bc2efacd93cbef1fa897938981be4689d0f657fde04b0a3bb7532b35",
+          "seconds": 0.020311848999995163,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "collision-continuity"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:09.542170+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222109Z-87f92402",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:09.001043+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_impact_timing_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "b3a714f214a5919c1d71bcf661102e8cd9114bae271c6e1a419be2745e446718",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "b3a714f214a5919c1d71bcf661102e8cd9114bae271c6e1a419be2745e446718",
+          "seconds": 0.010776498000041101,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "impact-timing"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:09.169842+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222110Z-6e1b0f9c",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:10.601000+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_physics_continuation_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "dc5f5bb4037cc0bfd5428f4abf455a10a184886e9dda224dac8325fc89a63c94",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "dc5f5bb4037cc0bfd5428f4abf455a10a184886e9dda224dac8325fc89a63c94",
+          "seconds": 0.08284278999997241,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "physics-continuation"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:10.908314+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222111Z-2dfcf6d0",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:11.612246+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_prealpha_lifecycle_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "305dc530af07870cbccd7e4e036a79f8382104c25d2883e386e2c8c61f41db0d",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "305dc530af07870cbccd7e4e036a79f8382104c25d2883e386e2c8c61f41db0d",
+          "seconds": 0.28165201800004525,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "composed-lifecycle"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:12.174898+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222111Z-46e384a3",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:11.098179+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_contact_lifecycle_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "39017e6c837380e0b17d043965bf0729aa6093f1373f01e2e65f0359e5bd917b",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "39017e6c837380e0b17d043965bf0729aa6093f1373f01e2e65f0359e5bd917b",
+          "seconds": 0.10011078600007295,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "contacts"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:11.425472+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222112Z-184cd89b",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:12.450175+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_origin_physics_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "a3d30f3138e240413e98cb1ae84f61e758af8b04a27c374f8ce9a78eb3f6e5d7",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "a3d30f3138e240413e98cb1ae84f61e758af8b04a27c374f8ce9a78eb3f6e5d7",
+          "seconds": 0.010688037000022632,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "origin-physics"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:12.651289+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222112Z-e72bc1f0",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:12.926199+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_origin_assembly_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "cb6e6b7560d8448dbc1a4f73ff3c913edc8b9773678ec0993fb05cb74633fdef",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "cb6e6b7560d8448dbc1a4f73ff3c913edc8b9773678ec0993fb05cb74633fdef",
+          "seconds": 0.181925074999981,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "origin-assembly"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:13.365027+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222113Z-b9f4aa4f",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:13.641509+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_origin_participant_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "b136493e7f541ddbcd3fa1ec542fdd5fa3c88188c82f7451d811b75f47676309",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "b136493e7f541ddbcd3fa1ec542fdd5fa3c88188c82f7451d811b75f47676309",
+          "seconds": 1.1839162579999538,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "origin-participants"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:15.051326+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222115Z-c83a0b4b",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:15.754173+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_living_world_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222115Z-c83a0b4b/terrain"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "4123df2b725c6968e620a79eebf1f157b18261613f8854aa7ac1cd3e19efb013",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "4123df2b725c6968e620a79eebf1f157b18261613f8854aa7ac1cd3e19efb013",
+          "seconds": 0.43246850000002723,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "terrain-lifecycle"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:16.411092+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222115Z-ecef127c",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:15.242457+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_origin_stream_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "d5241748d0d82aea0144aca3b3f715d9be7417af2e368ef6b5bb96b754a26684",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "d5241748d0d82aea0144aca3b3f715d9be7417af2e368ef6b5bb96b754a26684",
+          "seconds": 0.09949563999998645,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "origin-stream"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:15.564798+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222116Z-ac4edbe8",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:16.598647+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_living_world_streaming_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222116Z-ac4edbe8/terrain-streaming"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "b71de4b1e3da346c5efc666ea7d745fafcba445ad91adc79572c5da67e891b0d",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "b71de4b1e3da346c5efc666ea7d745fafcba445ad91adc79572c5da67e891b0d",
+          "seconds": 0.18205649799995172,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "terrain-streaming"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:17.003322+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222117Z-b9b03c25",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:17.784514+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_network_transport_tests"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "6395f87a2ba070355f3814f61ebc3d5b2754133278824d5d7b23256d6b9e88ef",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "6395f87a2ba070355f3814f61ebc3d5b2754133278824d5d7b23256d6b9e88ef",
+          "seconds": 0.3651330279999456,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "network-transport"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:18.303608+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222117Z-fd04698c",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:17.190346+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_save_evolution_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222117Z-fd04698c/saves"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "40598ff9856f620fe4924ff9b182dff4b8ea514547a3e2ad32f8bb34067e70fe",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "40598ff9856f620fe4924ff9b182dff4b8ea514547a3e2ad32f8bb34067e70fe",
+          "seconds": 0.18137147699997058,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "save-evolution"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:17.594391+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222118Z-913cb452",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:18.490191+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_network_session_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222118Z-913cb452/network-session"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "cf18869460efef9c57de4cad97864ce25af9df0a6f6afe9f955b0b63f2b73ae3",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "cf18869460efef9c57de4cad97864ce25af9df0a6f6afe9f955b0b63f2b73ae3",
+          "seconds": 0.7831893420000142,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "network-session"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:19.496567+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222119Z-d203615c",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:19.683142+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_network_boundary_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222119Z-d203615c/network-boundaries"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "48c3a4dcbc1cdd60d4dca23c642e87888c5b0a907c4330319643611b2b99f8be",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "48c3a4dcbc1cdd60d4dca23c642e87888c5b0a907c4330319643611b2b99f8be",
+          "seconds": 0.0993988499999432,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "network-boundaries"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:20.005027+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222120Z-07285cb0",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:20.196011+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_network_script_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222120Z-07285cb0/network-js"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "25eda84882b2c0aed66f045fb49ac6a43cefc18905a11d22158154208ee8b9a5",
+          "exit": 0,
+          "status": "passed",
+          "binarySha256After": "25eda84882b2c0aed66f045fb49ac6a43cefc18905a11d22158154208ee8b9a5",
+          "seconds": 0.3318492679999281,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "network-js"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true,
+      "finishedUtc": "2026-10-17T22:21:20.750387+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  {
+    "evidenceDirectory": "20261017T222120Z-a8242315",
+    "result": {
+      "format": 1,
+      "startedUtc": "2026-10-17T22:21:20.936385+00:00",
+      "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatus": "",
+      "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+      "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "cpuCount": 4,
+      "groups": [],
+      "tests": [
+        {
+          "argv": [
+            "/home/runner/work/Project-Judas/Project-Judas/build/judas_resource_handoff_tests",
+            "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222120Z-a8242315/resource-handoff"
+          ],
+          "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+          "timeoutSeconds": 120,
+          "binarySha256": "82cd79bbd6a8c58c7b1c57fe75893801a1c08da14bdcd967766eee4446b13088",
+          "exit": 1,
+          "status": "failed",
+          "binarySha256After": "82cd79bbd6a8c58c7b1c57fe75893801a1c08da14bdcd967766eee4446b13088",
+          "seconds": 0.23200444999997671,
+          "buildIdentity": {
+            "architecture": "x86_64",
+            "build_id": "0.1.0-prealpha-Experimental-683cc3d-clean-49f9a61bf6e4",
+            "channel": "Experimental",
+            "compiler": "GNU",
+            "compiler_version": "13.3.0",
+            "configuration": "Release",
+            "maturity": "pre-alpha",
+            "platform": "Linux",
+            "schema": 1,
+            "source_dirty": false,
+            "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+            "source_origin": "git",
+            "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+            "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+            "source_untracked_count": 0,
+            "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "version": "0.1.0-prealpha"
+          },
+          "name": "resource-handoff"
+        }
+      ],
+      "knownFindings": [
+        {
+          "id": "CCD-MESH-ARRIVAL",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "CCD-MESH-CONTINUATION",
+          "status": "open-correctness-failing",
+          "scheduled": false,
+          "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+          "evidence": "docs/evidence/prealpha/physics"
+        },
+        {
+          "id": "FLU-001",
+          "status": "deferred-failing",
+          "scheduled": false,
+          "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+          "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+        },
+        {
+          "id": "LEGACY-CONTINUATION",
+          "status": "documented-incompatible-history",
+          "scheduled": false,
+          "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+          "evidence": "docs/evidence/m78-cold-boundary"
+        },
+        {
+          "id": "DENSE-CCD-TAIL",
+          "status": "open-performance-limit",
+          "scheduled": false,
+          "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+          "evidence": "docs/evidence/m91/REPORT.md"
+        }
+      ],
+      "humanAcceptance": "not-established",
+      "scope": "explicit manifest subset",
+      "expectedSourceIdentity": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": false,
+      "finishedUtc": "2026-10-17T22:21:21.388506+00:00",
+      "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+      "trackedWorktreeStatusAfter": "",
+      "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSourceIdentityAfter": {
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_fingerprint": "49f9a61bf6e4ec3ad8b461aa0791dbfe8a534839a1fe6198d9fdb9cc05c68971",
+        "source_dirty": false,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  }
+]

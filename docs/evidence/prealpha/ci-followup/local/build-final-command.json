@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "cmake",
+    "--build",
+    "build",
+    "--target",
+    "judas_resource_handoff_tests",
+    "-j2"
+  ],
+  "startedUtc": "2026-10-17T22:30:54.368314+00:00",
+  "exit": 0,
+  "elapsedSeconds": 16.34020754700032
+}

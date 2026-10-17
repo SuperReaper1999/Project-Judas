@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/desktop-final-owned"
+  ],
+  "cwd": "/tmp",
+  "expectedExit": 1,
+  "exit": 1,
+  "diagnosticVerified": true,
+  "modelUnchanged": true
+}

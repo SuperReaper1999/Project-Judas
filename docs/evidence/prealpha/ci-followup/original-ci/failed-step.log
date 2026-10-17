@@ -1,0 +1,76 @@
+linux	Focused native gates	﻿2026-10-17T22:21:04.0897252Z ##[group]Run xvfb-run -a ctest --test-dir build -L prealpha --output-on-failure
+linux	Focused native gates	2026-10-17T22:21:04.0897750Z [36;1mxvfb-run -a ctest --test-dir build -L prealpha --output-on-failure[0m
+linux	Focused native gates	2026-10-17T22:21:04.0954747Z shell: /usr/bin/bash -e {0}
+linux	Focused native gates	2026-10-17T22:21:04.0954998Z env:
+linux	Focused native gates	2026-10-17T22:21:04.0955170Z   SDL_AUDIODRIVER: dummy
+linux	Focused native gates	2026-10-17T22:21:04.0955361Z   LIBGL_ALWAYS_SOFTWARE: 1
+linux	Focused native gates	2026-10-17T22:21:04.0955545Z ##[endgroup]
+linux	Focused native gates	2026-10-17T22:21:05.2034738Z Internal ctest changing into directory: /home/runner/work/Project-Judas/Project-Judas/build
+linux	Focused native gates	2026-10-17T22:21:05.3041311Z Test project /home/runner/work/Project-Judas/Project-Judas/build
+linux	Focused native gates	2026-10-17T22:21:05.3694548Z       Start  1: prealpha.build-identity
+linux	Focused native gates	2026-10-17T22:21:06.6144341Z  1/23 Test  #1: prealpha.build-identity ...........   Passed    1.24 sec
+linux	Focused native gates	2026-10-17T22:21:06.6195805Z       Start  2: prealpha.collision-geometry
+linux	Focused native gates	2026-10-17T22:21:07.4664399Z  2/23 Test  #2: prealpha.collision-geometry .......   Passed    0.85 sec
+linux	Focused native gates	2026-10-17T22:21:07.4665370Z       Start  3: prealpha.rigid-contact
+linux	Focused native gates	2026-10-17T22:21:08.6246267Z  3/23 Test  #3: prealpha.rigid-contact ............   Passed    1.16 sec
+linux	Focused native gates	2026-10-17T22:21:08.6247150Z       Start  4: prealpha.impact-solver
+linux	Focused native gates	2026-10-17T22:21:08.9681573Z  4/23 Test  #4: prealpha.impact-solver ............   Passed    0.34 sec
+linux	Focused native gates	2026-10-17T22:21:08.9682464Z       Start  5: prealpha.impact-timing
+linux	Focused native gates	2026-10-17T22:21:09.3290619Z  5/23 Test  #5: prealpha.impact-timing ............   Passed    0.36 sec
+linux	Focused native gates	2026-10-17T22:21:09.3291564Z       Start  6: prealpha.collision-continuity
+linux	Focused native gates	2026-10-17T22:21:09.7197159Z  6/23 Test  #6: prealpha.collision-continuity .....   Passed    0.39 sec
+linux	Focused native gates	2026-10-17T22:21:09.7197976Z       Start  7: prealpha.character-motor
+linux	Focused native gates	2026-10-17T22:21:10.5685603Z  7/23 Test  #7: prealpha.character-motor ..........   Passed    0.85 sec
+linux	Focused native gates	2026-10-17T22:21:10.5686540Z       Start  8: prealpha.physics-continuation
+linux	Focused native gates	2026-10-17T22:21:11.0658033Z  8/23 Test  #8: prealpha.physics-continuation .....   Passed    0.50 sec
+linux	Focused native gates	2026-10-17T22:21:11.0659142Z       Start  9: prealpha.contacts
+linux	Focused native gates	2026-10-17T22:21:11.5803188Z  9/23 Test  #9: prealpha.contacts .................   Passed    0.51 sec
+linux	Focused native gates	2026-10-17T22:21:11.5804024Z       Start 10: prealpha.composed-lifecycle
+linux	Focused native gates	2026-10-17T22:21:12.4181469Z 10/23 Test #10: prealpha.composed-lifecycle .......   Passed    0.84 sec
+linux	Focused native gates	2026-10-17T22:21:12.4182747Z       Start 11: prealpha.origin-physics
+linux	Focused native gates	2026-10-17T22:21:12.8936989Z 11/23 Test #11: prealpha.origin-physics ...........   Passed    0.48 sec
+linux	Focused native gates	2026-10-17T22:21:12.8938529Z       Start 12: prealpha.origin-assembly
+linux	Focused native gates	2026-10-17T22:21:13.6094808Z 12/23 Test #12: prealpha.origin-assembly ..........   Passed    0.72 sec
+linux	Focused native gates	2026-10-17T22:21:13.6095850Z       Start 13: prealpha.origin-participants
+linux	Focused native gates	2026-10-17T22:21:15.2097164Z 13/23 Test #13: prealpha.origin-participants ......   Passed    1.60 sec
+linux	Focused native gates	2026-10-17T22:21:15.2097837Z       Start 14: prealpha.origin-stream
+linux	Focused native gates	2026-10-17T22:21:15.7214403Z 14/23 Test #14: prealpha.origin-stream ............   Passed    0.51 sec
+linux	Focused native gates	2026-10-17T22:21:15.7215328Z       Start 15: prealpha.terrain-lifecycle
+linux	Focused native gates	2026-10-17T22:21:16.5662401Z 15/23 Test #15: prealpha.terrain-lifecycle ........   Passed    0.84 sec
+linux	Focused native gates	2026-10-17T22:21:16.5663552Z       Start 16: prealpha.terrain-streaming
+linux	Focused native gates	2026-10-17T22:21:17.1574794Z 16/23 Test #16: prealpha.terrain-streaming ........   Passed    0.59 sec
+linux	Focused native gates	2026-10-17T22:21:17.1575523Z       Start 17: prealpha.save-evolution
+linux	Focused native gates	2026-10-17T22:21:17.7515739Z 17/23 Test #17: prealpha.save-evolution ...........   Passed    0.59 sec
+linux	Focused native gates	2026-10-17T22:21:17.7516747Z       Start 18: prealpha.network-transport
+linux	Focused native gates	2026-10-17T22:21:18.4580140Z 18/23 Test #18: prealpha.network-transport ........   Passed    0.71 sec
+linux	Focused native gates	2026-10-17T22:21:18.4581109Z       Start 19: prealpha.network-session
+linux	Focused native gates	2026-10-17T22:21:19.6509715Z 19/23 Test #19: prealpha.network-session ..........   Passed    1.19 sec
+linux	Focused native gates	2026-10-17T22:21:19.6510718Z       Start 20: prealpha.network-boundaries
+linux	Focused native gates	2026-10-17T22:21:20.1635259Z 20/23 Test #20: prealpha.network-boundaries .......   Passed    0.51 sec
+linux	Focused native gates	2026-10-17T22:21:20.1636373Z       Start 21: prealpha.network-js
+linux	Focused native gates	2026-10-17T22:21:20.9039714Z 21/23 Test #21: prealpha.network-js ...............   Passed    0.74 sec
+linux	Focused native gates	2026-10-17T22:21:20.9040875Z       Start 22: prealpha.resource-handoff
+linux	Focused native gates	2026-10-17T22:21:21.5419003Z 22/23 Test #22: prealpha.resource-handoff .........***Failed    0.64 sec
+linux	Focused native gates	2026-10-17T22:21:21.5419591Z resource-handoff failed
+linux	Focused native gates	2026-10-17T22:21:21.5420359Z /home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222120Z-a8242315/RESULTS.json
+linux	Focused native gates	2026-10-17T22:21:21.5420882Z 
+linux	Focused native gates	2026-10-17T22:21:21.5421074Z       Start 23: prealpha.gate-negative-controls
+linux	Focused native gates	2026-10-17T22:21:21.7961242Z 23/23 Test #23: prealpha.gate-negative-controls ...   Passed    0.25 sec
+linux	Focused native gates	2026-10-17T22:21:21.7964097Z 
+linux	Focused native gates	2026-10-17T22:21:21.7964409Z 96% tests passed, 1 tests failed out of 23
+linux	Focused native gates	2026-10-17T22:21:21.7964711Z 
+linux	Focused native gates	2026-10-17T22:21:21.7964874Z Label Time Summary:
+linux	Focused native gates	2026-10-17T22:21:21.7965316Z application    =   0.64 sec*proc (1 test)
+linux	Focused native gates	2026-10-17T22:21:21.7965660Z collision      =   3.10 sec*proc (5 tests)
+linux	Focused native gates	2026-10-17T22:21:21.7965957Z core           =   7.24 sec*proc (9 tests)
+linux	Focused native gates	2026-10-17T22:21:21.7966231Z lifecycle      =   8.03 sec*proc (11 tests)
+linux	Focused native gates	2026-10-17T22:21:21.7966497Z network        =   3.15 sec*proc (4 tests)
+linux	Focused native gates	2026-10-17T22:21:21.7966778Z prealpha       =  16.41 sec*proc (23 tests)
+linux	Focused native gates	2026-10-17T22:21:21.7967048Z tooling        =   0.25 sec*proc (1 test)
+linux	Focused native gates	2026-10-17T22:21:21.7967192Z 
+linux	Focused native gates	2026-10-17T22:21:21.7967324Z Total Test time (real) =  16.49 sec
+linux	Focused native gates	2026-10-17T22:21:21.7967478Z 
+linux	Focused native gates	2026-10-17T22:21:21.7967580Z The following tests FAILED:
+linux	Focused native gates	2026-10-17T22:21:21.7969292Z 	 22 - prealpha.resource-handoff (Failed)                application prealpha
+linux	Focused native gates	2026-10-17T22:21:21.7969875Z Errors while running CTest
+linux	Focused native gates	2026-10-17T22:21:21.8372824Z ##[error]Process completed with exit code 8.

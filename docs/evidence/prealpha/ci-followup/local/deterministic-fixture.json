@@ -1,0 +1,16 @@
+{
+  "equal": true,
+  "fixture": {
+    "archiveBytes": 42386975,
+    "indices": 5232,
+    "mapHeight": 512,
+    "mapWidth": 512,
+    "maps": 40,
+    "mode": "generated",
+    "modelSha256": "f6cf05cf94dcffa0b6cf19f3939c01b2c4b13194c5383e4144e0a28aa2a31737",
+    "parts": 8,
+    "rgbaPayloadBytes": 41943040,
+    "skinJoints": 109,
+    "vertices": 3488
+  }
+}

@@ -1,0 +1,19 @@
+[  0%] Built target judas_glad
+[  0%] Built target judas_profiler
+[ 12%] Built target freetype
+[ 12%] Built target judas_audio_backend
+[ 12%] Built target judas_jobs
+[ 18%] Built target judas_quickjs
+[ 25%] Built target judas_navigation_backend
+[ 31%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 31%] Built target judas_app_icon
+[ 37%] Built target judas_meshoptimizer
+[ 37%] Built target judas_icu_build
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[ 43%] Built target judas_navigation_cook
+[ 43%] Linking CXX static library libjudas_build_identity.a
+[ 43%] Built target judas_build_identity
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_resource_handoff_tests
+[100%] Built target judas_resource_handoff_tests

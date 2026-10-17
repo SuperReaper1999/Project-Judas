@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/llvmpipe-final-owned"
+  ],
+  "cwd": "/tmp",
+  "environment": {
+    "SDL_AUDIODRIVER": "dummy",
+    "SDL_VIDEODRIVER": "x11",
+    "JUDAS_ENGINE_ROOT": "/home/conner/Documents/GitHub/Project-Judas",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "__GLX_VENDOR_LIBRARY_NAME": "mesa"
+  },
+  "startedUtc": "2026-10-17T22:31:35.601355+00:00",
+  "binarySha256": "8c6035b2da3c6951930d47c84528665e787c08f6de307b61cb7c6f26c6fc454f",
+  "exit": 0,
+  "elapsedSeconds": 1.6674356799994712
+}

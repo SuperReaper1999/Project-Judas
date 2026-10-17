@@ -1,0 +1,19 @@
+{
+  "cancelledUploadedMaps": 1,
+  "checks": 14,
+  "failures": 0,
+  "fixtureMode": "generated",
+  "injectedPauseActualMs": 5.083944,
+  "injectedPauseMinimumMs": 5,
+  "postUnloadBytes": 0,
+  "privateFrames": 23,
+  "pumpMs": {
+    "maximum": 123.110151,
+    "median": 0.001328,
+    "p95": 0.011503
+  },
+  "readyIncludingCancellationMs": 792.686125,
+  "residentBytes": 56376943,
+  "samples": 499,
+  "timingScope": "functional diagnostic; includes one injected owner-thread map pause"
+}

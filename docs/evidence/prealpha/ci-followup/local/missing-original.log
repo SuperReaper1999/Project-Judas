@@ -1,0 +1,2 @@
+PASS fresh owned output required
+FAIL optional original import-lab model d15b628722311f90a9146c4d51e12ce2 is unavailable; restore the author's local imported assets, or omit --original for the self-contained gate

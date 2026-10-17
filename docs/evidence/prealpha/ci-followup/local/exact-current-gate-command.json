@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "python3",
+    "scripts/prealpha_validate.py",
+    "--build-dir",
+    "build",
+    "--test",
+    "resource-handoff",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/exact-current-gate"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environment": {
+    "SDL_VIDEODRIVER": "x11",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "__GLX_VENDOR_LIBRARY_NAME": "mesa"
+  },
+  "startedUtc": "2026-10-17T22:33:37.893171+00:00",
+  "exit": 0,
+  "elapsedSeconds": 2.321279173998846
+}

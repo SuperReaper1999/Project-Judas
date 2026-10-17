@@ -1,0 +1,16 @@
+{
+  "cancelledUploadedMaps": 1,
+  "checks": 14,
+  "failures": 0,
+  "fixtureMode": "generated",
+  "postUnloadBytes": 0,
+  "privateFrames": 22,
+  "pumpMs": {
+    "maximum": 9.656066,
+    "median": 0.001305,
+    "p95": 0.011468
+  },
+  "readyIncludingCancellationMs": 607.228934,
+  "residentBytes": 56376943,
+  "samples": 501
+}

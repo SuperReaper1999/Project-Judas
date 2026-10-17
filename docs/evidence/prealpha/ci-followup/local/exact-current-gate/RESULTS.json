@@ -1,0 +1,103 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-17T22:33:37.950561+00:00",
+  "sourceRevision": "683cc3ddd81743febd15845e487de1aa7140556d",
+  "trackedWorktreeStatus": "M docs/PREALPHA.md\n M tests/ResourceHandoffTests.cpp",
+  "manifestSha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275",
+  "trackedDiffSha256": "f65a6c2afd98391d17e2410fdf2c6e7a8137967739d0008f5859306f90e092c6",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/exact-current-gate/resource-handoff"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "195f186f1e76dd04222eb6b1de7c82233520a056791240fde1eab78f825cc098",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "195f186f1e76dd04222eb6b1de7c82233520a056791240fde1eab78f825cc098",
+      "seconds": 1.7173093519995746,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-683cc3d-dirty-ee82c3fccf82-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "ee82c3fccf82bb40059a392ae1079589fe51ee00c7119ec6ceb43f6323e1233a",
+        "source_origin": "git",
+        "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+        "source_tree": "68cb7b620da7d9f6d9206d41627015ccc7c14570",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "resource-handoff"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "open-correctness-failing",
+      "scheduled": false,
+      "reason": "Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.",
+      "evidence": "docs/evidence/prealpha/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "open-correctness-failing",
+      "scheduled": false,
+      "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+      "evidence": "docs/evidence/prealpha/physics"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+    "source_fingerprint": "ee82c3fccf82bb40059a392ae1079589fe51ee00c7119ec6ceb43f6323e1233a",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-17T22:33:40.030886+00:00",
+  "sourceRevisionAfter": "683cc3ddd81743febd15845e487de1aa7140556d",
+  "trackedWorktreeStatusAfter": "M docs/PREALPHA.md\n M tests/ResourceHandoffTests.cpp",
+  "trackedDiffSha256After": "f65a6c2afd98391d17e2410fdf2c6e7a8137967739d0008f5859306f90e092c6",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "683cc3ddd81743febd15845e487de1aa7140556d",
+    "source_fingerprint": "ee82c3fccf82bb40059a392ae1079589fe51ee00c7119ec6ceb43f6323e1233a",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2"
+  }
+}

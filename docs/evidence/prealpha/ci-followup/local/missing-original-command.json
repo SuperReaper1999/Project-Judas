@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_resource_handoff_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/missing-original-owned",
+    "--original"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ci-followup/missing-original-root",
+  "expectedExit": 1,
+  "startedUtc": "2026-10-17T22:31:55.841818+00:00",
+  "binarySha256": "8c6035b2da3c6951930d47c84528665e787c08f6de307b61cb7c6f26c6fc454f",
+  "fixtureInputs": {
+    "import_lab.judasproj": "44e4fe194d47452f6c9f8070060bd4df49bf0671a1ad88373ab6d290fa35c405",
+    "Scenes/main.judas": "a3bdbcac7744ff16d439a2797951a0f0d1fa8c0575d204b527f1c9b2068e6eb7"
+  },
+  "exit": 1,
+  "elapsedSeconds": 0.0072841900000639725,
+  "diagnosticVerified": true
+}
