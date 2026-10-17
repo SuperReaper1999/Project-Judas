@@ -1,0 +1,128 @@
+{
+  "baseline": "94e4113a52af4ae66b942e8089e3e4e0e4daf1d4",
+  "utc": "2026-10-17T13:27:38.269925+00:00",
+  "runs": [
+    {
+      "name": "judas_living_world_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-validation/core"
+      ],
+      "exit": 0,
+      "seconds": 0.5153992830000789
+    },
+    {
+      "name": "judas_living_world_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-validation/stream"
+      ],
+      "exit": 0,
+      "seconds": 0.164492430001701
+    },
+    {
+      "name": "judas_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5655908720000298
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5151286899999832
+    },
+    {
+      "name": "judas_volume_terrain_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_volume_terrain_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-validation/m84"
+      ],
+      "exit": 0,
+      "seconds": 4.672914184000547
+    },
+    {
+      "name": "judas_navigation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.4148014430011244
+    },
+    {
+      "name": "judas_origin_stream_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_stream_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.16437568599940278
+    },
+    {
+      "name": "judas_post_consumer_metadata_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_metadata_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.2646037680005975
+    },
+    {
+      "name": "judas_prefab_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.06404271200153744
+    },
+    {
+      "name": "judas_classification_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_classification_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5150643730012234
+    },
+    {
+      "name": "judas_lifecycle_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_lifecycle_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.6153810999985581
+    },
+    {
+      "name": "script-check",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj"
+      ],
+      "exit": 0,
+      "seconds": 0.015804922999450355
+    },
+    {
+      "name": "living-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-validation/application"
+      ],
+      "exit": 0,
+      "seconds": 0.6152251559997239
+    },
+    {
+      "name": "living-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-validation/application"
+      ],
+      "exit": 1,
+      "seconds": 0.41484425499947974
+    }
+  ]
+}

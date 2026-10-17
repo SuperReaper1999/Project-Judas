@@ -1,0 +1,245 @@
+{
+  "baseline": "94e4113a52af4ae66b942e8089e3e4e0e4daf1d4",
+  "utc": "2026-10-17T13:55:55.683275+00:00",
+  "runs": [
+    {
+      "name": "judas_living_world_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/core"
+      ],
+      "exit": 0,
+      "seconds": 0.46495764999963285
+    },
+    {
+      "name": "judas_living_world_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/stream"
+      ],
+      "exit": 0,
+      "seconds": 0.16426679600044736
+    },
+    {
+      "name": "judas_streaming_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.615977182998904
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5151946900004987
+    },
+    {
+      "name": "judas_volume_terrain_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_volume_terrain_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/m84"
+      ],
+      "exit": 0,
+      "seconds": 4.777680659000907
+    },
+    {
+      "name": "judas_navigation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_navigation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.41477644000042346
+    },
+    {
+      "name": "judas_origin_stream_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_stream_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.06401590300083626
+    },
+    {
+      "name": "judas_post_consumer_metadata_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_metadata_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.3145979549990443
+    },
+    {
+      "name": "judas_prefab_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.06405095500122115
+    },
+    {
+      "name": "judas_classification_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_classification_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.21441165500073112
+    },
+    {
+      "name": "judas_lifecycle_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_lifecycle_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.6152692760006175
+    },
+    {
+      "name": "judas_physics_continuation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.01604382500045176
+    },
+    {
+      "name": "judas_save_exclusion_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_exclusion_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/save-exclusion"
+      ],
+      "exit": 0,
+      "seconds": 0.03187183400041249
+    },
+    {
+      "name": "script-check",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj"
+      ],
+      "exit": 0,
+      "seconds": 0.01567280900053447
+    },
+    {
+      "name": "living-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/application"
+      ],
+      "exit": 0,
+      "seconds": 0.7152858739991643
+    },
+    {
+      "name": "living-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/application"
+      ],
+      "exit": 0,
+      "seconds": 0.46470156999930623
+    },
+    {
+      "name": "living-rotated",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "rotated",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/application"
+      ],
+      "exit": 1,
+      "seconds": 0.5149832080005581
+    },
+    {
+      "name": "living-rotated",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "rotated",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/application"
+      ],
+      "exit": 0,
+      "seconds": 0.515389607000543
+    },
+    {
+      "name": "living-performance",
+      "argv": [
+        "/usr/bin/time",
+        "-v",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+        "performance",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/application"
+      ],
+      "exit": 0,
+      "seconds": 0.9162777279998409
+    },
+    {
+      "name": "existing-save-stream-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/existing-save-stream"
+      ],
+      "exit": 0,
+      "seconds": 0.7153242579988728
+    },
+    {
+      "name": "existing-save-stream-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/existing-save-stream"
+      ],
+      "exit": 0,
+      "seconds": 0.7654546490011853
+    },
+    {
+      "name": "animation-cold-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/animation-cold"
+      ],
+      "exit": 0,
+      "seconds": 0.21438424999905692
+    },
+    {
+      "name": "animation-cold-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/animation-cold"
+      ],
+      "exit": 0,
+      "seconds": 0.21434485300051165
+    },
+    {
+      "name": "cookbook-surface",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/cookbook",
+        "surface"
+      ],
+      "exit": 0,
+      "seconds": 0.21432437600014964
+    },
+    {
+      "name": "api",
+      "argv": [
+        "node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+        "--runtime",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/staged-final/cookbook/surface.json"
+      ],
+      "exit": 0,
+      "seconds": 1.1162552109999524
+    }
+  ]
+}

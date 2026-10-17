@@ -1,6 +1,6 @@
-# JudasJS — current API reference (M96 repository state)
+# JudasJS — current API reference (M97 repository state)
 
-M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 human review is pending.
+M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 is human accepted. M97 adds [live local volume editing](judasjs/terrain.md) and regional construction persistence; human acceptance is pending.
 
 M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
 M92 operator acceptance is recorded by release promotion at `bb3dbc402629a60c22738da8520e5017998709f1`; platform coverage remains scoped.
@@ -48,7 +48,7 @@ retain their original validation scope.
 
 [M76 local mods](MODDING.md) exposes only a detached content catalog; install/trust are tools, not gameplay APIs. See [catalog reference](judasjs/mods.md). M76 is a candidate pending human review.
 
-[M75 heightfield authoring](M75.md) and [M84 volumetric terrain authoring](M84_VOLUMETRIC_TERRAIN.md) create ordinary cooked assets; scripts consume them through existing entities, physics queries, CharacterMotor, navigation, scenes and saves. There is no runtime brush namespace or new terrain JS API. Gameplay still belongs to projects.
+[M75 heightfield authoring](M75.md) and [M84 volumetric terrain authoring](M84_VOLUMETRIC_TERRAIN.md) create ordinary cooked assets; scripts consume them through existing entities, physics queries, CharacterMotor, navigation, scenes and saves. M97 adds opt-in [live Terrain instances](judasjs/terrain.md) while retaining this asset workflow. Gameplay still belongs to projects.
 
 
 JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
@@ -222,3 +222,9 @@ M83 adds authored [physical section connections](M83_COARSE_CRASH.md), optional
 [part-mounted wheels](judasjs/wheels.md#rigid-material-section-mounts-m83), explicit
 [material-group drive prerequisites](judasjs/powertrains.md#material-group-prerequisites-m83)
 and copied plastic observations on [fracture interfaces](judasjs/fracture.md#m83-finite-physical-material-sections).
+
+## Mutable world regions (M97)
+
+[Live volumetric terrain](judasjs/terrain.md) provides bounded add/remove/smooth edits,
+collision/navigation publication and retained/cold-save state.
+See [Living World Lab](M97_LIVING_WORLD.md) for supported regional suspension boundaries.

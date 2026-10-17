@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M96 public module based on checkpoint `a488c72463f207473838318b978b5a7f8e1f8afb + M96 UI toolkit`. M96 adds editable text, scroll/list controls, focus, UI state and accessibility observations. See [UI toolkit](../M96_UI_TOOLKIT.md). Human/platform acceptance remains separate from earlier milestones.
+Current M97 public module based on checkpoint `a488c72463f207473838318b978b5a7f8e1f8afb + M96 UI toolkit`. M97 adds optional live bounded volume creation, brush editing and publication state. See [terrain](terrain.md). Human/platform acceptance remains separate from earlier milestones.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -136,6 +136,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.sleeping` | `sleeping` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.stopAudio` | `stopAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.stopKinematic` | `kinematicStop` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.velocity` | `setVelocity`, `velocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -253,6 +254,12 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Ragdoll.receiveContactEvents` | `ragdollContactEvents` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.requestBalance` | `ragdollBalanceRequest` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.setMode` | `ragdollMode` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
+| `Terrain.brush` | `terrainBrush` | [declaration](../judas.d.ts) | [reference](terrain.md) |
+| `Terrain.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
+| `Terrain.create` | `terrainCreate` | [declaration](../judas.d.ts) | [reference](terrain.md) |
+| `Terrain.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
+| `Terrain.state` | `terrainState` | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `UIDocument` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.accessibility` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.captureState` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |

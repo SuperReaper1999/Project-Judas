@@ -1057,6 +1057,7 @@ bool RuntimeWorld::ValidateEntityDestruction(EntityId id, std::string& error) co
 bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     std::string error;
     if (!ValidateEntityDestruction(id, error)) { if (outError) *outError = error; return false; }
+    if(m_runtimeTerrain)m_runtimeTerrain->Remove(id);
     m_planets.erase(id);m_weather.erase(id);m_weatherResponses.erase(id);
     for(auto it=spawnStates.begin();it!=spawnStates.end();)if(it->first.first==id)it=spawnStates.erase(it);else++it;
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
@@ -1224,6 +1225,7 @@ EntityId RuntimeWorld::CreateEntity(const SceneObject& definitionIn, const Entit
         EntityRecord e;e.id=definition.id;e.name=definition.name;e.definition=definition;e.authored=false;
         e.requiresFull=true;e.state=StateFromDefinition(definition);e.slot=std::numeric_limits<std::size_t>::max();
         m_extraEntities.push_back(e);
+        ++m_entityVersion; // Publish non-dynamic owners to versioned metadata consumers too.
     }
     FindEntity(definition.id)->definition=local;
     m_hierarchy.InsertObject(local);
@@ -1400,7 +1402,7 @@ void RuntimeWorld::Destroy() {
     ClearCharacters();
     m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
-    m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
+    m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
     EndAudio();
     m_particleEmitters.clear();
     m_audioEmitters.clear();m_audioZones.clear();m_audioIdentities.clear();m_audioListener.reset();m_audioSystem=nullptr;

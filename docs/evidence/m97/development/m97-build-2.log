@@ -1,0 +1,74 @@
+[  0%] Built target judas_app_icon
+[  5%] Built target judas_meshoptimizer
+[ 16%] Built target freetype
+[ 16%] Built target judas_icu_build
+[ 16%] Built target judas_quickjs
+[ 22%] Built target judas_navigation_backend
+[ 22%] Built target judas_glad
+[ 27%] Built target judas_profiler
+[ 27%] Built target judas_jobs
+[ 27%] Built target judas_audio_backend
+[ 27%] Built target harfbuzz
+[ 33%] Built target judas_imgui
+[ 33%] Built target judas_ufbx
+[ 38%] Built target judas_navigation_cook
+[ 38%] Built target judas_materials
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/VolumeTerrainGeometry.cpp.o
+[ 44%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:8:
+/usr/include/glm/gtx/component_wise.hpp:22:9: error: #error "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+   22 | #       error "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+      |         ^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp: In member function ‘void RuntimeTerrain::Remove(uint64_t)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:86:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   86 |  if(r.committed&&r.committed->navigated)world.Navigation().RemoveSurface(id);records.erase(it);
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:86:78: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   86 |  if(r.committed&&r.committed->navigated)world.Navigation().RemoveSurface(id);records.erase(it);
+      |                                                                              ^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp: In member function ‘bool RuntimeTerrain::Restore(uint64_t, const std::string&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:101:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  101 |  if(bytes.empty())return true;try{SaveArchive archive(std::vector<uint8_t>(bytes.begin(),bytes.end()));std::string source;bool nav=false;unsigned profile=0;archive(source,nav,profile);archive.Finish();
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:101:31: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  101 |  if(bytes.empty())return true;try{SaveArchive archive(std::vector<uint8_t>(bytes.begin(),bytes.end()));std::string source;bool nav=false;unsigned profile=0;archive(source,nav,profile);archive.Finish();
+      |                               ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:101:102: error: no matching function for call to ‘SaveArchive::SaveArchive(std::vector<unsigned char>)’
+  101 |  if(bytes.empty())return true;try{SaveArchive archive(std::vector<uint8_t>(bytes.begin(),bytes.end()));std::string source;bool nav=false;unsigned profile=0;archive(source,nav,profile);archive.Finish();
+      |                                                                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:101:102: note: there are 4 candidates
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.cpp:6:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:21:2: note: candidate 1: ‘SaveArchive::SaveArchive()’
+   21 |  SaveArchive()=default;
+      |  ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:21:2: note: candidate expects 0 arguments, 1 provided
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:20:11: note: candidate 2: ‘SaveArchive::SaveArchive(std::string)’
+   20 |  explicit SaveArchive(std::string input):bytes(std::move(input)),reading(true){if(bytes.size()>Limit)throw std::runtime_error("save exceeds 64 MiB");}
+      |           ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:20:35: note: no known conversion for argument 1 from ‘std::vector<unsigned char>’ to ‘std::string’ {aka ‘std::__cxx11::basic_string<char>’}
+   20 |  explicit SaveArchive(std::string input):bytes(std::move(input)),reading(true){if(bytes.size()>Limit)throw std::runtime_error("save exceeds 64 MiB");}
+      |                       ~~~~~~~~~~~~^~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:16:7: note: candidate 3: ‘SaveArchive::SaveArchive(const SaveArchive&)’
+   16 | class SaveArchive {
+      |       ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:16:7: note: no known conversion for argument 1 from ‘std::vector<unsigned char>’ to ‘const SaveArchive&’
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:16:7: note: candidate 4: ‘SaveArchive::SaveArchive(SaveArchive&&)’
+/home/conner/Documents/GitHub/Project-Judas/src/SaveArchive.h:16:7: note: no known conversion for argument 1 from ‘std::vector<unsigned char>’ to ‘SaveArchive&&’
+gmake[3]: *** [CMakeFiles/judas_engine.dir/build.make:429: CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:1455: CMakeFiles/judas_engine.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1653: CMakeFiles/judas_editor.dir/rule] Error 2
+gmake: *** [Makefile:385: judas_editor] Error 2

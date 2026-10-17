@@ -1,6 +1,6 @@
 # M84 — editable volumetric terrain
 
-Current Judas authoring capability. Linux checks are recorded in
+M84 authoring capability. M97 adds a separate opt-in per-instance [runtime editing path](M97_LIVING_WORLD.md) using these same geometry operations. Linux checks are recorded in
 [evidence/m84](evidence/m84/REPORT.md); the operator accepted M84 on 15 October 2026. Windows validation remains outstanding/nonblocking.
 See [acceptance record](evidence/m84/HUMAN_ACCEPTANCE_2026-10-15.md).
 
@@ -112,8 +112,8 @@ The application test takes `PROJECT SCENE watch|write|read OUTPUT [EXPECTED_PHYS
 
 ## Deliberate limits
 
-- Authoring/edit-and-cook capability; no live gameplay `terrain.dig()` JS binding or in-Play
-  collision replacement is claimed. Scripts consume the result using existing public APIs.
+- This M84 workflow edits source assets outside Play. Live per-instance gameplay editing
+  now uses [M97 Terrain](judasjs/terrain.md); it does not modify these source files.
 - Bounded dense grids: 3–129 samples per axis, at most 300000 samples, .3–1024 m extent per axis.
   The editor's cubic creation control is capped at 37 samples so its initial solid fits the collision budget. No seamless chunk stitching,
   adaptive octrees, runtime remeshing, planetary-scale volume store or LOD is implemented.

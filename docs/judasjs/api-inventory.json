@@ -3,6 +3,29 @@
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
     {
+      "binding": "Terrain.state",
+      "declaration": "TerrainStatus",
+      "fields": [
+        "ready",
+        "busy",
+        "navigation",
+        "revision",
+        "samples",
+        "triangles",
+        "bytes",
+        "prepareMs",
+        "publishMs",
+        "error"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "{\"ready\",state->ready}",
+        "{\"revision\",double(state->revision)}",
+        "JS_SetPropertyStr(c,result,\"error\",JS_NewString(c,state->error.c_str()))"
+      ],
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
       "binding": "Animation.advance",
       "declaration": "AnimationSample",
       "fields": [
@@ -1588,6 +1611,15 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.terrain",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.terrain",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
       "symbol": "Entity.transform",
       "kinds": [
         "get",
@@ -2811,6 +2843,66 @@
       ],
       "type": "docs/judas.d.ts:Ragdoll.setMode",
       "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Terrain",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Terrain",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.brush",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "terrainBrush"
+      ],
+      "type": "docs/judas.d.ts:Terrain.brush",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Terrain.constructor",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.create",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "terrainCreate"
+      ],
+      "type": "docs/judas.d.ts:Terrain.create",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Terrain.id",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "terrainState"
+      ],
+      "type": "docs/judas.d.ts:Terrain.state",
+      "reference": "docs/judasjs/terrain.md"
     },
     {
       "symbol": "UIDocument",
@@ -5159,6 +5251,9 @@
     "stickSamples",
     "stopAudio",
     "sweep",
+    "terrainBrush",
+    "terrainCreate",
+    "terrainState",
     "torque",
     "touches",
     "transform",

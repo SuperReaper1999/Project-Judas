@@ -202,6 +202,7 @@ declare module "judas" {
     readonly light: LightSettings|null;
     /** Atomic patch. Invalid values/unknown keys throw; never creates a component. */
     setLight(settings:Partial<LightSettings>):boolean;
+    readonly terrain:Terrain;
     readonly weather:Weather|null;
     readonly planetState:PlanetState;
     planetSample(absolute:Vec3):PlanetSample;
@@ -523,6 +524,25 @@ declare module "judas" {
     release(group:string):boolean;attach(group:string,options:DeformableAttachmentOptions):boolean;
     setMaterial(options:DeformableMaterialOptions):boolean;
     raycast(origin:Vec3,direction:Vec3,maximum:number):DeformableHit|null;
+  }
+  /** Optional bounded editable volume on a root unit-scale static body. */
+  export type TerrainCreateOptions = ({source:string;resolution?:never;extent?:never}|
+    {source?:never;resolution:Vec3;extent:Vec3}) & {navigation?:boolean;profile?:number};
+  export interface TerrainStatus {
+    readonly ready:boolean; readonly busy:boolean; readonly navigation:boolean;
+    readonly revision:number; readonly samples:number; readonly triangles:number;
+    /** Geometry estimate, excluding allocator, cooked BVH and native navigation overhead. */
+    readonly bytes:number;
+    readonly prepareMs:number; readonly publishMs:number; readonly error:string;
+  }
+  export interface TerrainBrushOptions {kind:"remove"|"add"|"smooth";radius:number;strength?:number;}
+  export class Terrain {
+    constructor(id:string);
+    id:string;
+    readonly state:TerrainStatus|null;
+    create(options:TerrainCreateOptions):boolean;
+    /** Point is in the current simulation frame; radius is in metres. */
+    brush(point:Vec3,options:TerrainBrushOptions):boolean;
   }
   export class Character {
     /** Add WORLD-space metres for the next fixed step, through motor sweeps. Does not accumulate into velocity. */

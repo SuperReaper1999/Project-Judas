@@ -1,0 +1,61 @@
+PASS build ordinary static world: 
+PASS create optional live volume
+PASS pending edit cannot be archived
+PASS duplicate create rejected
+PASS atomic terrain publication: 
+PASS static body handle and classification preserved
+PASS solid blocks tunnel before edit
+PASS invalid brush rejected
+PASS excavate entrance
+PASS bounded single-flight backpressure
+PASS pending result retains last-good collider
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS committed excavation opens actual collider
+PASS excavated cavity floor receives navigation
+PASS normal navigation update retains live surface
+PASS capture committed scalar field
+METRIC samples=7497 triangles=14224 estimated_bytes=604324 prepare_ms=41.4318 publish_ms=0.158788
+PASS fresh world
+PASS restore exact committed field: 
+PASS restored collision remains excavated
+PASS scalar persistence is byte exact
+PASS construction adds physical material
+PASS atomic terrain publication: 
+PASS added material blocks real ray
+FALLING_PROBE position=1.55038,0.0278989,1.19577 velocity=-5.30276
+PASS newly added geometry generates actual falling-body contacts above the cave floor
+PASS smooth uses shared M84 field operation
+PASS atomic terrain publication: 
+PASS full physical save captures terrain: 
+PASS cold save destination
+PASS full physical save restores terrain: 
+PASS full restore reconstructs added collision
+PASS rotated world
+PASS rotated volume restoration
+PASS arbitrary rigid orientation preserves excavation
+PASS queue deliberately empty product
+PASS failed empty product retains revision and collision
+PASS failure rollback preserves physical solid
+PASS remove terrain owner
+PASS destroy cleans terrain runtime state
+PASS staging freeze requires collision to be disabled first
+PASS explicit private simulation suspension
+PASS ten seconds of private staging preserves exact pose and momentum
+PASS publication resumes real motion without a settling delay
+PASS ordinary collider-disabled actors still move normally
+PASS generation reuse does not inherit the private suspension flag
+PASS independent moving-owner joint fixture
+PASS native ordinary joint physical settings have an explicit new save version
+PASS physical joint snapshot scene
+PASS moving-owner joint cold restoration: 
+PASS native joint settings restore bit-exactly without weakening continuation validation
+PASS next physical endpoint agrees after exact settings restoration
+SUMMARY 58 checks 0 failures

@@ -1,0 +1,12 @@
+file:///home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs:91
+ for(const k of symbols){const r=abilities(runtime.get(k).kinds),t=abilities(declarations.get(k).kinds);if(JSON.stringify(r)!==JSON.stringify(t))throw Error(k+' access kind mismatch '+r+' vs '+t);}
+                                                                                                                                                       ^
+
+Error: Terrain.id access kind mismatch get,set vs get
+    at checkSurface (file:///home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs:91:152)
+    at file:///home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs:93:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2

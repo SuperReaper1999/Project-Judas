@@ -185,3 +185,12 @@ executes in the focused M83 QuickJS fixture.
 [ui-controls.js](examples/ui-controls.js) executes against the ordinary Field Notes
 asset: configuration, grapheme selection, keyed lists, atomic state restore, invalid
 input rejection, submit and stale handles. See [UI reference](ui.md).
+
+## Runtime excavation and persistent construction (M97)
+
+[terrain.js](examples/terrain.js) shows a generic static-body volume and a
+query-driven remove dab. Bind the project's logical `dig` action. For a complete
+executed application composition (add/remove/smooth, retained prefab construction,
+rotated gravity and cold saves), inspect [Living World Lab](../../projects/living_world_lab/README.md)
+and [Terrain's ownership limits](terrain.md). The standalone example is type-checked;
+the lab/application regression exercises the full asynchronous lifecycle.

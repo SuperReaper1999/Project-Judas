@@ -1,0 +1,23 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Living World Lab (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+TERRAIN_COMMIT owner=4611686018427387904 revision=1 prepare_ms=35.6325 publish_ms=0.186278 estimated_bytes=499220
+PASS project JS initializes editable terrain in real application
+PASS initial field capture
+TERRAIN_COMMIT owner=4611686018427387904 revision=2 prepare_ms=35.0697 publish_ms=0.208725 estimated_bytes=497940
+PASS logical click executes JS brush and publishes changed field
+EDIT_LATENCY_MS 40.1031
+PASS JS prefab construction creates actual physical body
+PASS leaving actually unloads edited source region
+TERRAIN_COMMIT owner=4611686018427387939 revision=1 prepare_ms=34.4751 publish_ms=0.171603 estimated_bytes=497940
+PASS return preserves exact edited terrain field
+PASS committed edited collider answers local cave ray
+PASS queue real cold save: 
+PASS save completes: 
+PASS project JS has no runtime diagnostics
+PASS application shutdown
+SUMMARY 11 checks 0 failures

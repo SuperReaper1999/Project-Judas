@@ -144,6 +144,7 @@ export class Entity {
  setAudioVelocity(velocity=null){return call('audioVelocity',this.id,velocity)}
  playAudioOneShot(){return call('audioOneShot',this.id)}
  setAudioEnabled(enabled){return call('audioEnabled',this.id,enabled)}
+ get terrain(){return new Terrain(this.id)}
  get weather(){return call('weatherExists',this.id)?new Weather(this.id):null}
  get planetState(){return call("planetInfo",this.id)}
  planetSample(absolute){return call("planetSample",this.id,absolute)}
@@ -231,6 +232,12 @@ export class EntityGravity {
  select(source){return call('entityGravitySelect',this.id,source?.id??'0')}
  setUniform(acceleration){return call('entityGravityUniform',this.id,acceleration)}
  clear(){return call('entityGravityClear',this.id)}
+}
+export class Terrain {
+ constructor(id){this.id=id}
+ get state(){return call('terrainState',this.id)}
+ create(options){return call('terrainCreate',this.id,options)}
+ brush(point,options){return call('terrainBrush',this.id,point,options)}
 }
 export class Character {
  constructor(id){this.id=id}
@@ -623,6 +630,37 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(!s->world)return JS_ThrowTypeError(c,"world API unavailable in metadata context");
     auto& world=*s->world;
+    if(op=="terrainState"||op=="terrainCreate"||op=="terrainBrush"){
+        EntityId owner=0;try{auto identity=String(c,arg(1));if(identity.empty()||identity.find_first_not_of("0123456789")!=std::string::npos)throw std::invalid_argument("identity");owner=std::stoull(identity);}catch(...){return JS_ThrowReferenceError(c,"invalid terrain owner");}
+        if(!world.RuntimeDefinition(owner))return JS_ThrowReferenceError(c,"stale terrain owner");
+        if(op=="terrainState"){auto* state=world.LiveTerrain().Status(owner);if(!state)return JS_NULL;auto result=JS_NewObject(c);
+            for(auto [key,value]:{std::pair<const char*,bool>{"ready",state->ready},{"busy",state->busy},{"navigation",state->navigation}})JS_SetPropertyStr(c,result,key,JS_NewBool(c,value));
+            for(auto [key,value]:{std::pair<const char*,double>{"revision",double(state->revision)},{"samples",double(state->samples)},{"triangles",double(state->triangles)},{"bytes",double(state->bytes)},{"prepareMs",state->prepareMs},{"publishMs",state->publishMs}})JS_SetPropertyStr(c,result,key,JS_NewFloat64(c,value));
+            JS_SetPropertyStr(c,result,"error",JS_NewString(c,state->error.c_str()));return result;
+        }
+        std::string error;
+        if(op=="terrainCreate"){
+            auto options=arg(2);auto source=JS_GetPropertyStr(c,options,"source");VolumeTerrainSource volume;
+            if(!JS_IsUndefined(source)){bool ok=JS_IsString(source)&&ParseVolumeTerrain(String(c,source),volume,error);JS_FreeValue(c,source);if(!ok)return JS_ThrowTypeError(c,"invalid volume source: %s",error.c_str());}
+            else {JS_FreeValue(c,source);auto n=JS_GetPropertyStr(c,options,"resolution"),ext=JS_GetPropertyStr(c,options,"extent");glm::vec3 count,extent;bool ok=ReadVec(c,n,count)&&ReadVec(c,ext,extent);JS_FreeValue(c,n);JS_FreeValue(c,ext);
+                if(!ok||glm::any(glm::lessThan(count,glm::vec3(3)))||glm::any(glm::greaterThan(count,glm::vec3(32)))||count!=glm::floor(count)||glm::any(glm::lessThan(extent,glm::vec3(.3f)))||glm::any(glm::greaterThan(extent,glm::vec3(64))))return JS_ThrowTypeError(c,"terrain requires integer resolution 3..32 and extent .3..64");
+                try{volume=CreateVolumeTerrain(glm::uvec3(count),extent);}catch(const std::exception& ex){return JS_ThrowTypeError(c,"%s",ex.what());}
+            }
+            auto nav=JS_GetPropertyStr(c,options,"navigation"),profile=JS_GetPropertyStr(c,options,"profile");bool valid=JS_IsUndefined(nav)||JS_IsBool(nav);bool enabled=JS_IsBool(nav)&&JS_ToBool(c,nav);double profileId=0;valid&=JS_IsUndefined(profile)||(JS_IsNumber(profile)&&JS_ToFloat64(c,&profileId,profile)==0&&std::isfinite(profileId)&&profileId>=0&&profileId<=65535&&profileId==std::floor(profileId));JS_FreeValue(c,nav);JS_FreeValue(c,profile);
+            if(!valid)return JS_ThrowTypeError(c,"invalid terrain navigation/profile");
+            if(!world.LiveTerrain().ReadyToSave())return JS_FALSE;
+            if(!world.LiveTerrain().Create(owner,std::move(volume),enabled,unsigned(profileId),error))return JS_ThrowTypeError(c,"%s",error.c_str());
+        return JS_TRUE;
+        }
+        glm::vec3 point;float radius=0,strength=1;auto options=arg(3);auto kind=JS_GetPropertyStr(c,options,"kind");auto name=String(c,kind);JS_FreeValue(c,kind);VolumeBrush brush;
+        if(name=="remove")brush.kind=VolumeBrushKind::Remove;else if(name=="add")brush.kind=VolumeBrushKind::Add;else if(name=="smooth")brush.kind=VolumeBrushKind::Smooth;else return JS_ThrowTypeError(c,"terrain brush kind must be add/remove/smooth");
+        auto value=JS_GetPropertyStr(c,options,"strength");bool hasStrength=!JS_IsUndefined(value);JS_FreeValue(c,value);
+        if(!ReadVec(c,arg(2),point)||!Number(c,options,"radius",radius)||(hasStrength&&!Number(c,options,"strength",strength)))return JS_ThrowTypeError(c,"finite terrain brush point/radius/strength required");
+        brush.radius=radius;brush.strength=strength;
+        if(!world.LiveTerrain().ReadyToSave())return JS_FALSE;
+        if(!world.LiveTerrain().Brush(owner,point,brush,error))return JS_ThrowTypeError(c,"%s",error.c_str());
+        return JS_TRUE;
+    }
     auto doubleVector=[&](JSValueConst value,glm::dvec3& p){for(int i=0;i<3;++i){auto n=JS_GetPropertyStr(c,value,i==0?"x":i==1?"y":"z");bool ok=JS_IsNumber(n)&&JS_ToFloat64(c,&p[i],n)==0&&std::isfinite(p[i]);JS_FreeValue(c,n);if(!ok)return false;}return true;};
     auto preciseVector=[&](glm::dvec3 p){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,p.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,p.y));JS_SetPropertyStr(c,o,"z",JS_NewFloat64(c,p.z));return o;};
     auto weatherProfileValue=[&](const WeatherProfile& p){

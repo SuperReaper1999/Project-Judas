@@ -119,7 +119,7 @@ struct WorldStreaming::Impl {
     RuntimeWorld& world;ResourceManager& resources;Project project;WorldManifest manifest;
     bool restoredRecords=false;std::string baselineError,restoredBaseline;uint64_t previousResourceBudget=0;JobHandle baselineJob;std::shared_ptr<std::string> baseline=std::make_shared<std::string>();
     struct Product {PreparedWorldRegion data;std::string error;double elapsed=0;};
-    struct Snapshot {glm::dvec3 origin{0};SceneObject definition;EntityPhysicalState state;bool destroyed=false;std::vector<ScriptStateRecord> scripts;std::string deformable;std::string animation;std::string kinematic;std::string wheel;std::string powertrain;std::string weather;};
+    struct Snapshot {glm::dvec3 origin{0};SceneObject definition;EntityPhysicalState state;bool destroyed=false,constructed=false;std::vector<ScriptStateRecord> scripts;std::string deformable;std::string animation;std::string kinematic;std::string wheel;std::string powertrain;std::string weather;std::string terrain;};
     struct Region {
         RegionStatus status;JobHandle job;std::shared_ptr<Product> product;
         std::map<SceneObjectId,EntityId> mapping;std::vector<EntityId> members;Scene local,flat;
@@ -141,7 +141,7 @@ struct WorldStreaming::Impl {
     ~Impl(){resources.SetBudgetBytes(previousResourceBudget);if(baselineJob.IsValid())resources.Jobs()->Cancel(baselineJob);for(auto& [_,r]:regions){if(r.job.IsValid())resources.Jobs()->Cancel(r.job);if(r.relocationJob.IsValid())resources.Jobs()->Cancel(r.relocationJob);releaseHandoff(r);}}
     void releaseHandoff(Region& r){for(auto& a:r.handoffRefs)resources.ReleaseRef(a);r.handoffRefs.clear();}
     void clearPrepared(Region& r){if(r.relocationJob.IsValid()){resources.Jobs()->Cancel(r.relocationJob);resources.Jobs()->Forget(r.relocationJob);r.relocationJob={};}r.relocation.reset();r.relocationPhase=0;r.allocationNext=r.relocationNext=r.restoreNext=0;r.originals.clear();r.localIndices.clear();r.savedReplacements.clear();r.restoreKeys.clear();releaseHandoff(r);r.product.reset();r.local=Scene{};r.flat=Scene{};for(auto& [_,id]:r.mapping)if(!owners.count(id))gravityOrder.erase(id);r.mapping.clear();r.members.clear();r.next=r.navNext=r.resourceNext=0;}
-    size_t savedBytes(const std::map<SceneObjectId,Snapshot>& saved)const {size_t bytes=0;for(auto& [_,snap]:saved){bytes+=sizeof(Snapshot)+sizeof(SceneObject)*2+snap.deformable.size()+snap.animation.size()+snap.kinematic.size()+snap.wheel.size()+snap.powertrain.size()+snap.weather.size();for(auto& [key,value]:ObjectProperties(snap.definition))bytes+=key.size()+value.size();for(auto& js:snap.scripts)bytes+=js.json.size();}return bytes;}
+    size_t savedBytes(const std::map<SceneObjectId,Snapshot>& saved)const {size_t bytes=0;for(auto& [_,snap]:saved){bytes+=sizeof(Snapshot)+sizeof(SceneObject)*2+snap.deformable.size()+snap.animation.size()+snap.kinematic.size()+snap.wheel.size()+snap.powertrain.size()+snap.weather.size()+snap.terrain.size();for(auto& [key,value]:ObjectProperties(snap.definition))bytes+=key.size()+value.size();for(auto& js:snap.scripts)bytes+=js.json.size();}return bytes;}
     void recount(){stats.resourceResidentBytes=resources.Stats().bytesResident;stats.resourceCacheBudget=resources.BudgetBytes();stats.pendingBytes=stats.liveBytes=stats.retainedBytes=stats.active=stats.pending=0;for(auto& [id,r]:regions){auto& s=r.status;s.demands=0;for(auto& [_,q]:requests)if(q.region==id)++s.demands;s.retained=r.retainedBytes;stats.retainedBytes+=s.retained;
         if(s.state=="active"||s.state=="unloading"){++stats.active;stats.liveBytes+=s.bytes;}else if(s.state=="preparing"||s.state=="prepared"||s.state=="installing"){++stats.pending;stats.pendingBytes+=s.bytes;if(s.state=="installing")stats.liveBytes+=s.bytes;}
     }}
@@ -176,6 +176,7 @@ struct WorldStreaming::Impl {
             const auto* definition=world.RuntimeDefinition(owner);if(!definition)continue;const auto& o=*definition;
             bool here=Owner(o.id)==id;
             if(o.deformable){std::string error;auto* deform=world.RuntimeDeformable(o.id,error);if(here&&deform&&deform->asset->fracture&&!deform->asset->fracture->HasMaterials())add("live fracture family: physical pieces retained; remove/adopt family before suspension");if(!here&&deform&&deform->asset->fracture&&deform->asset->fracture->rigid)for(unsigned p=0;p<deform->asset->fracture->parts.size();++p){auto child=world.FracturePartEntity(o.id,p,true);if(child&&Owner(child)==id){add("material piece owned by an external fracture family");break;}}const auto& settings=deform?deform->settings:*o.deformable;for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];if(a.enabled&&(!deform||!deform->released[i])&&a.target&&Owner(a.target)==id&&Owner(o.id)!=id)add("external deformable attachment");}}
+            if(here&&world.RuntimeTerrainBusy(o.id))add("runtime terrain publication pending");
             if(here&&(o.liquidBasin||o.liquidContainer||o.liquidConnection))add("conserved liquid group: no lossless suspension");
             if(!here&&o.parent&&Owner(o.parent)==id)add("external hierarchy parent");
             if(!here&&o.gravitySelection&&o.gravitySelection->source&&Owner(o.gravitySelection->source)==id)add("external selected gravity field");
@@ -206,7 +207,7 @@ struct WorldStreaming::Impl {
     }
     std::string Owner(EntityId id)const{auto it=owners.find(id);if(it!=owners.end())return it->second;if(auto family=world.FracturePartOwner(id))return Owner(family);if(world.IsTransientEntity(id)){auto articulation=world.ArticulatedIdentity(id).first;if(articulation){auto owner=owners.find(articulation);if(owner!=owners.end())return owner->second;}}return "root";}
     bool snapshot(Region& r,std::string& error){auto records=world.Scripts()?world.Scripts()->Capture(false,&r.members):std::vector<ScriptStateRecord>{};auto result=r.saved;
-        for(auto& [local,id]:r.mapping){Snapshot s;s.origin=world.Settings().worldOrigin;const auto* def=world.RuntimeDefinition(id);s.destroyed=!def;if(def){s.definition=*def;s.definition.tags=world.TagsOf(id);if(!world.CaptureWeather(id,s.weather,error)||!WorldPersistence::CaptureKinematic(world,id,s.kinematic,error)||!WorldPersistence::CaptureWheel(world,id,s.wheel,error)||!WorldPersistence::CapturePowertrain(world,id,s.powertrain,error))return false;if((def->animation||def->ragdoll)&&!WorldPersistence::CaptureAnimation(world,id,s.animation,error))return false;if(def->deformable){auto* deform=world.RuntimeDeformable(id,error);if(!deform||!world.CaptureDeformable(id,s.deformable,error))return false;s.definition.deformable=deform->settings;}world.GetEntityState(id,s.state);if(s.definition.joint){JointState joint;if(world.Physics().GetJoint(world.RuntimeJoint(id),joint)){s.definition.joint->settings=joint.settings;
+        for(auto& [local,id]:r.mapping){Snapshot s;s.constructed=r.saved.count(local)&&r.saved.at(local).constructed;s.origin=world.Settings().worldOrigin;const auto* def=world.RuntimeDefinition(id);s.destroyed=!def;if(def){s.definition=*def;s.definition.tags=world.TagsOf(id);if(!world.CaptureRuntimeTerrain(id,s.terrain,error))return false;if(!world.CaptureWeather(id,s.weather,error)||!WorldPersistence::CaptureKinematic(world,id,s.kinematic,error)||!WorldPersistence::CaptureWheel(world,id,s.wheel,error)||!WorldPersistence::CapturePowertrain(world,id,s.powertrain,error))return false;if((def->animation||def->ragdoll)&&!WorldPersistence::CaptureAnimation(world,id,s.animation,error))return false;if(def->deformable){auto* deform=world.RuntimeDeformable(id,error);if(!deform||!world.CaptureDeformable(id,s.deformable,error))return false;s.definition.deformable=deform->settings;}world.GetEntityState(id,s.state);if(s.definition.joint){JointState joint;if(world.Physics().GetJoint(world.RuntimeJoint(id),joint)){s.definition.joint->settings=joint.settings;
                     // Native world anchors are already in the simulation frame; authored
                     // settings are relative to their joint entity, including on revisit.
                     if(!s.definition.joint->bodyB){auto inverse=glm::inverse(s.definition.transform.rotation);s.definition.joint->settings.anchorB=inverse*(joint.settings.anchorB-s.definition.transform.position);s.definition.joint->settings.frameB=glm::normalize(inverse*joint.settings.frameB);}
@@ -247,7 +248,17 @@ bool WorldStreaming::Adopt(EntityId root,const std::string& target,std::string& 
     for(auto& o:objects)if(o.socket&&(ids.count(o.id)||ids.count(o.socket->target))&&(!ids.count(o.id)||!ids.count(o.socket->target))){error="adopt complete socket assembly or keep dependency pinned";return false;}
     for(auto& o:objects)if(o.joint&&(ids.count(o.id)||ids.count(o.joint->bodyA)||ids.count(o.joint->bodyB))){if(!ids.count(o.id)||!ids.count(o.joint->bodyA)||(o.joint->bodyB&&!ids.count(o.joint->bodyB))){error="adopt complete joint assembly or keep dependency pinned";return false;}}
     for(auto id:ids){const auto owner=m->Owner(id);if(owner!="root"&&m->regions.at(owner).status.state!="active"){error="adoption source is departing/not active";return false;}if(m->world.ArticulatedIdentity(id).first){error="adopt the complete articulation owner, not a transient bone";return false;}auto* o=m->world.RuntimeDefinition(id);if(o&&(o->gravity||o->liquidBasin||o->liquidContainer)){error="group-owned gravity/liquid cannot be adopted separately";return false;}}
-    for(auto id:ids){m->identities.try_emplace(id,PersistentKey(id));auto from=m->Owner(id);if(from!="root"){auto& r=m->regions.at(from);r.members.erase(std::remove(r.members.begin(),r.members.end(),id),r.members.end());for(auto it=r.mapping.begin();it!=r.mapping.end();)if(it->second==id){r.saved[it->first].destroyed=true;it=r.mapping.erase(it);}else ++it;r.retainedBytes=m->savedBytes(r.saved);}m->owners[id]=target;if(target!="root")m->regions.at(target).members.push_back(id);}
+    if(target!="root"){
+        auto& destination=m->regions.at(target);
+        if(destination.mapping.size()+ids.size()>4096){error="regional member limit exceeded";return false;}
+        for(auto id:ids)if(m->Owner(id)!=target){const auto* definition=m->world.RuntimeDefinition(id);
+            // Existing authored members already have a source recipe. New members
+            // initially support root physical/render/script objects, not arbitrary
+            // newly introduced resource-backed subsystems or prefab hierarchies.
+            if(definition->parent||definition->gravity||definition->navigationSurface||definition->deformable||definition->ragdoll||definition->animation||definition->weather||definition->planet||definition->ui){error="runtime regional adoption requires root rigid/render/script/joint members";return false;}
+        }
+    }
+    for(auto id:ids){auto from=m->Owner(id);if(from==target)continue;m->identities.try_emplace(id,PersistentKey(id));if(from!="root"){auto& r=m->regions.at(from);r.members.erase(std::remove(r.members.begin(),r.members.end(),id),r.members.end());for(auto it=r.mapping.begin();it!=r.mapping.end();)if(it->second==id){r.saved[it->first].destroyed=true;it=r.mapping.erase(it);}else ++it;r.retainedBytes=m->savedBytes(r.saved);}m->owners[id]=target;if(target!="root"){auto& destination=m->regions.at(target);destination.members.push_back(id);SceneObjectId local=1;for(const auto& [key,_]:destination.mapping)local=std::max(local,key+1);for(const auto& [key,_]:destination.saved)local=std::max(local,key+1);destination.mapping[local]=id;destination.saved[local].constructed=true;}}
     return true;
 }
 bool WorldStreaming::Interest(const std::string& id,glm::vec3 p,float load,float retain,int priority,std::string& error){if(id.empty()||id.size()>128||!finite(glm::dvec3(p))||!std::isfinite(load+retain)||load<0||retain<load||priority<-100000||priority>100000||(m->interests.size()>=32&&!m->interests.count(id))){error="invalid interest source or 32-source limit";return false;}m->interests[id]={p,load,retain,priority};return true;}
@@ -255,6 +266,7 @@ void WorldStreaming::RemoveInterest(const std::string& id){m->interests.erase(id
 void WorldStreaming::SetPreparationGate(std::function<bool(const JobContext&)> gate){m->gate=std::move(gate);}
 void WorldStreaming::Advance(bool paused){
     JUDAS_PROFILE_SCOPE("Streaming outer integration");
+    if(!paused)m->world.AdvanceRuntimeTerrain();
     for(auto it=m->requests.begin();it!=m->requests.end();){auto& demand=it->second;const auto* owner=demand.owner?m->world.RuntimeDefinition(demand.owner):nullptr;
         bool gone=demand.owner&&!owner;if(owner&&demand.slot)gone=std::none_of(owner->scripts.begin(),owner->scripts.end(),[&](const auto& slot){return slot.id==demand.slot&&slot.enabled;});
         if(gone)it=m->requests.erase(it);else ++it;
@@ -302,7 +314,14 @@ void WorldStreaming::Advance(bool paused){
             bool ready=true;for(auto& dep:def.dependencies)if(m->regions.at(dep).status.state!="active")ready=false;if(!ready){s.error="waiting for dependency";continue;}
             m->recount();if(m->stats.liveBytes+s.bytes>m->manifest.liveBytes){s.error="live byte budget";continue;}
             // No scene copy, remap or hierarchy flattening is repeated on a yield.
-            unit([&]{JUDAS_PROFILE_SCOPE("Streaming relocation begin");r.local=std::move(r.product->data.source);r.relocationPhase=1;s.state="installing";s.error.clear();},r,"Streaming relocation begin");
+            unit([&]{JUDAS_PROFILE_SCOPE("Streaming relocation begin");r.local=std::move(r.product->data.source);
+                for(const auto& [local,snapshot]:r.saved)if(!snapshot.destroyed&&!r.local.Find(local)){
+                    auto object=snapshot.definition;object.id=local;object.parent=0;
+                    object.transform.position=glm::inverse(def.rotation)*glm::vec3(glm::dvec3(snapshot.state.position)+snapshot.origin-def.origin);
+                    object.transform.rotation=glm::inverse(def.rotation)*snapshot.state.rotation;
+                    r.local.Objects().push_back(std::move(object));
+                }
+                r.relocationPhase=1;s.state="installing";s.error.clear();},r,"Streaming relocation begin");
         }
         if(s.state=="installing"&&!paused&&r.relocationPhase==1){
             while(budget()&&r.allocationNext<r.local.Objects().size())unit([&]{JUDAS_PROFILE_SCOPE("Streaming identity allocation");auto source=r.local.Objects()[r.allocationNext++].id;auto runtime=m->world.AllocateRuntimeEntityId();r.mapping[source]=runtime;r.originals[runtime]=source;if(auto snap=r.saved.find(source);snap!=r.saved.end()){r.savedReplacements[snap->second.definition.id]=runtime;r.restoreKeys.push_back(source);}},r,"Streaming identity allocation");
@@ -363,7 +382,10 @@ void WorldStreaming::Advance(bool paused){
             }
             if(s.state=="installing"&&r.next==r.flat.Objects().size()&&r.navNext==r.product->data.navigation.size()&&budget()){
                 bool ok=true;std::string error;
-                while(budget()&&r.restoreNext<r.restoreKeys.size()&&ok)unit([&]{JUDAS_PROFILE_SCOPE("Streaming retained entity restoration");
+                while(budget()&&r.restoreNext<r.restoreKeys.size()&&ok){
+                    const auto& nextSnapshot=r.saved.at(r.restoreKeys[r.restoreNext]);
+                    if(!nextSnapshot.terrain.empty()&&!m->world.LiveTerrain().ReadyToSave())break;
+                    unit([&]{JUDAS_PROFILE_SCOPE("Streaming retained entity restoration");
                     auto source=r.restoreKeys[r.restoreNext++];const auto& snap=r.saved.at(source);if(snap.destroyed)return;auto runtime=r.mapping.at(source);
                     if(!snap.deformable.empty()){
                         if(!m->world.RestoreDeformable(runtime,snap.deformable,error,true,r.savedReplacements,m->world.Settings().worldOrigin-snap.origin)){ok=false;return;}
@@ -378,10 +400,17 @@ void WorldStreaming::Advance(bool paused){
                     if(ok&&!snap.animation.empty())ok=WorldPersistence::RestoreAnimation(m->world,runtime,snap.animation,error);
                     if(ok&&!snap.wheel.empty())ok=WorldPersistence::RestoreWheel(m->world,runtime,snap.wheel,error);
                     if(ok&&!snap.powertrain.empty())ok=WorldPersistence::RestorePowertrain(m->world,runtime,snap.powertrain,error);
+                    if(ok&&!snap.terrain.empty())ok=m->world.LiveTerrain().Restore(runtime,snap.terrain,error,true);
                     if(ok&&!snap.weather.empty())ok=m->world.RestoreWeather(runtime,snap.weather,error,true);
                 },r,"Streaming retained entity restoration");
+                }
+                bool terrainPending=false;
+                for(auto source:r.restoreKeys)if(!r.saved.at(source).terrain.empty())if(auto* terrain=m->world.LiveTerrain().Status(r.mapping.at(source))){
+                    terrainPending|=terrain->busy;
+                    if(!terrain->busy&&!terrain->error.empty()){ok=false;error=terrain->error;}
+                }
                 if(!ok){s.state="unloading";s.error=error;r.unload=true;r.scriptsEnded=true;}
-                else if(r.restoreNext==r.restoreKeys.size()&&budget()){
+                else if(r.restoreNext==r.restoreKeys.size()&&!terrainPending&&budget()){
                     // Only the enable/visibility commit remains atomic. Expensive
                     // serialization and reconstruction have completed while private.
                     unit([&]{JUDAS_PROFILE_SCOPE("Streaming atomic publication");m->world.Navigation().PublishSurfaces(r.members);m->world.PublishRegion(r.members);m->world.RebuildRegionGravity(m->gravityOrder);
@@ -415,9 +444,9 @@ SceneObjectId WorldStreaming::ResolvePersistentKey(const std::string& key)const{
  if(key.rfind("region:",0)==0){auto split=key.rfind(':');if(split<=7)return 0;auto tail=key.substr(split+1);size_t end=0;auto local=std::stoull(tail,&end);return end==tail.size()?Resolve(key.substr(7,split-7),local):0;}}catch(...){}return 0;
 }
 void WorldStreaming::ResumeOwnership(){m->previousResourceBudget=m->resources.BudgetBytes();m->resources.SetBudgetBytes(m->manifest.resourceCacheBytes);}
-unsigned WorldStreaming::ArchiveVersion()const{for(const auto& [_,r]:m->regions)for(const auto& [__,s]:r.saved)if(!s.weather.empty())return 8;for(const auto& [_,r]:m->regions)for(const auto& [__,s]:r.saved)if(!s.destroyed&&s.origin!=m->world.Settings().worldOrigin)return 7;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.powertrain.empty())return 6;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.wheel.empty())return 5;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.kinematic.empty())return 4;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.animation.empty())return 3;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.deformable.empty())return 2;return 1;}
+unsigned WorldStreaming::ArchiveVersion()const{for(const auto& [_,r]:m->regions)for(const auto& [__,s]:r.saved)if(s.constructed||!s.terrain.empty())return 9;for(const auto& [_,r]:m->regions)for(const auto& [__,owner]:r.mapping)if(m->world.HasRuntimeTerrain(owner))return 9;for(const auto& [_,r]:m->regions)for(const auto& [__,s]:r.saved)if(!s.weather.empty())return 8;for(const auto& [_,r]:m->regions)for(const auto& [__,s]:r.saved)if(!s.destroyed&&s.origin!=m->world.Settings().worldOrigin)return 7;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.powertrain.empty())return 6;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.wheel.empty())return 5;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.kinematic.empty())return 4;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.animation.empty())return 3;for(auto& [_,r]:m->regions)for(auto& [__,s]:r.saved)if(!s.deformable.empty())return 2;return 1;}
 void WorldStreaming::Persist(SaveArchive& a,unsigned version){
- a.Require(version>=1&&version<=8,"unsupported streaming archive version");
+ a.Require(version>=1&&version<=9,"unsupported streaming archive version");
  std::string baseline=m->world.BaselineFingerprint();a(baseline);a.Require(baseline.size()==64,"composed authored identity not ready");if(a.reading){m->restoredRecords=true;m->restoredBaseline=baseline;m->world.SetCompositionFingerprint(baseline);}
  a.Require(a.reading||SaveReady(),"streaming residency transaction pending");
  uint32_t count=uint32_t(m->regions.size());a(count);a.Require(count==m->regions.size(),"saved manifest region mismatch");std::set<std::string> seen;
@@ -428,6 +457,7 @@ void WorldStreaming::Persist(SaveArchive& a,unsigned version){
    if(!a.reading){auto it=r.saved.begin();std::advance(it,j);local=it->first;snapshot=it->second;WriteSceneObjectBlock(snapshot.definition,text);}
    if(version>=7){a(snapshot.origin);a.Require(finite(snapshot.origin)&&glm::all(glm::lessThanEqual(glm::abs(snapshot.origin),glm::dvec3(1e12))),"invalid retained capture origin");}else if(a.reading)snapshot.origin=m->world.Settings().worldOrigin;
    a(local,snapshot.destroyed,text,snapshot.state.position,snapshot.state.rotation,snapshot.state.linearVelocity,snapshot.state.angularVelocity);if(version>=2)a(snapshot.deformable);if(version>=3){a(snapshot.animation);a.Require(snapshot.animation.size()<=1024*1024,"retained animation snapshot bound");}if(version>=4){a(snapshot.kinematic);a.Require(snapshot.kinematic.size()<=1024,"retained kinematic snapshot bound");}if(version>=5){a(snapshot.wheel);a.Require(snapshot.wheel.size()<=1024,"retained wheel snapshot bound");}if(version>=6){a(snapshot.powertrain);a.Require(snapshot.powertrain.size()<=64*1024,"retained powertrain snapshot bound");}if(version>=8){a(snapshot.weather);a.Require(snapshot.weather.size()<=65536,"retained weather snapshot bound");}
+   if(version>=9){a(snapshot.constructed,snapshot.terrain);a.Require(snapshot.terrain.size()<=2*1024*1024,"retained terrain record bound");}
    uint32_t scripts=uint32_t(snapshot.scripts.size());a(scripts);a.Require(scripts<=16,"region script count bound");if(a.reading)snapshot.scripts.resize(scripts);for(auto& s:snapshot.scripts)a(s.entity,s.slot,s.json);
    if(a.reading&&!snapshot.destroyed){std::vector<std::string> lines;std::istringstream input(text);std::string line;while(std::getline(input,line))lines.push_back(line);size_t cursor=0;std::string error;a.Require(ParseSceneObjectBlock(lines,cursor,snapshot.definition,error)&&cursor==lines.size(),"invalid retained definition");}
    if(!snapshot.destroyed){

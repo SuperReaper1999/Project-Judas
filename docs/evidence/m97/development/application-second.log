@@ -1,0 +1,15 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Living World Lab (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS project JS initializes editable terrain in real application
+PASS initial field capture
+FAIL bounded application workflow timeout phase 1
+quarry0 active  PIN gravity dependency in use
+quarry1 unloaded 
+quarry2 unloaded 
+PASS application shutdown
+SUMMARY 4 checks 1 failures

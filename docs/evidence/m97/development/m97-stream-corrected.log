@@ -1,0 +1,27 @@
+PASS ordinary project
+PASS ordinary physical assembly authoring
+PASS large absolute origin root
+PASS activate real region
+PASS optional terrain on streamed static owner
+PASS streamed terrain ready
+PASS persistent enclosed chamber edit
+PASS capture edited field before suspension
+PASS runtime construction adopted without permanent pin: 
+PASS destroy physical load-bearing member
+PASS edited region with adopted construction really unloads
+PASS no suspended region body remains simulated
+PASS retained volume uses versioned optional archive
+PASS live chart shift while edited region is suspended: 
+PASS return reconstructs edited terrain and construction
+PASS streaming scalar bytes exact across origin transition
+PASS old collider handle never aliases replacement
+PASS destroyed member stays destroyed
+PASS constructed body restores physical momentum
+PASS create external physical dependency
+PRE DEP owners quarry root ids 4611686018427387913 4611686018427387914 definitions 5 version 13
+DEPENDENCY active 
+PIN external joint body A
+OWNERS body=quarry rootjoint=root
+PASS external joint pins instead of unsafe suspension
+PASS removing dependency permits suspension
+SUMMARY 22 checks 0 failures

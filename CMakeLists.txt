@@ -114,13 +114,17 @@ if(NOT WIN32)
     target_link_libraries(judas_quickjs PUBLIC m)
 endif()
 
-# Pinned RecastNavigation 1.6.0. Recast baking stays out of runtime.
+# Pinned RecastNavigation 1.6.0. Bounded geometry baking is shared with optional live terrain.
 file(GLOB JUDAS_DETOUR third_party/recastnavigation/Detour/Source/*.cpp third_party/recastnavigation/DetourTileCache/Source/*.cpp third_party/recastnavigation/DetourCrowd/Source/*.cpp)
 add_library(judas_navigation_backend STATIC ${JUDAS_DETOUR})
 target_include_directories(judas_navigation_backend SYSTEM PUBLIC third_party/recastnavigation/Detour/Include third_party/recastnavigation/DetourTileCache/Include third_party/recastnavigation/DetourCrowd/Include)
 target_compile_definitions(judas_navigation_backend PUBLIC DT_VIRTUAL_QUERYFILTER)
 file(GLOB JUDAS_RECAST third_party/recastnavigation/Recast/Source/*.cpp)
-add_library(judas_navigation_baker STATIC src/NavigationBake.cpp ${JUDAS_RECAST})
+add_library(judas_navigation_cook STATIC src/NavigationGeometryBake.cpp ${JUDAS_RECAST})
+target_include_directories(judas_navigation_cook SYSTEM PRIVATE third_party/recastnavigation/Recast/Include)
+target_include_directories(judas_navigation_cook PUBLIC src)
+target_link_libraries(judas_navigation_cook PUBLIC judas_navigation_backend)
+add_library(judas_navigation_baker STATIC src/NavigationBake.cpp)
 target_include_directories(judas_navigation_baker SYSTEM PRIVATE third_party/recastnavigation/Recast/Include)
 target_include_directories(judas_navigation_baker PUBLIC src)
 target_link_libraries(judas_navigation_baker PUBLIC judas_engine judas_navigation_backend)
@@ -171,6 +175,8 @@ add_library(judas_engine STATIC
     src/LiquidTypes.cpp
     src/LiquidSystem.cpp
     src/LiquidSurface.cpp
+    src/VolumeTerrainGeometry.cpp
+    src/RuntimeTerrain.cpp
     src/NavigationSystem.cpp
     src/NavigationTypes.cpp
     src/NavigationAsset.cpp
@@ -302,7 +308,7 @@ target_link_libraries(judas_audio_backend PUBLIC Threads::Threads ${CMAKE_DL_LIB
 if(UNIX)
     target_link_libraries(judas_audio_backend PUBLIC m)
 endif()
-target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend judas_meshoptimizer)
+target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend judas_meshoptimizer judas_navigation_cook)
 judas_warnings(judas_engine)
 
 # Android builds the same engine and application, loaded by SDL's native Activity.
@@ -2022,3 +2028,14 @@ judas_warnings(judas_ui_production_tests)
 add_executable(judas_ui_showcase_application_tests tests/UIShowcaseApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_ui_showcase_application_tests PRIVATE judas_engine)
 judas_warnings(judas_ui_showcase_application_tests)
+
+
+add_executable(judas_living_world_tests tests/LivingWorldTests.cpp)
+target_link_libraries(judas_living_world_tests PRIVATE judas_engine)
+judas_warnings(judas_living_world_tests)
+add_executable(judas_living_world_streaming_tests tests/LivingWorldStreamingTests.cpp)
+target_link_libraries(judas_living_world_streaming_tests PRIVATE judas_engine)
+judas_warnings(judas_living_world_streaming_tests)
+add_executable(judas_living_world_application_tests tests/LivingWorldApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_living_world_application_tests PRIVATE judas_engine)
+judas_warnings(judas_living_world_application_tests)

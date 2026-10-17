@@ -1,0 +1,30 @@
+[
+  {
+    "name": "editor",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-delivery/editor-project/living_world_lab.judasproj"
+    ],
+    "exit": 0,
+    "seconds": 1.929573215000346
+  },
+  {
+    "name": "export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m97/final-delivery/package",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "exit": 0,
+    "seconds": 0.2651416539993079
+  },
+  {
+    "name": "relocated",
+    "argv": [
+      "/tmp/judas-m97-relocated-2dzq4z3g/judas"
+    ],
+    "exit": 0,
+    "seconds": 0.9658872170002724
+  }
+]

@@ -1,0 +1,62 @@
+[  6%] Built target judas_meshoptimizer
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_icu_build
+[ 18%] Built target freetype
+[ 18%] Built target judas_quickjs
+[ 18%] Built target judas_glad
+[ 18%] Built target judas_profiler
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_jobs
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_materials
+[ 31%] Built target judas_navigation_cook
+[ 93%] Built target judas_engine
+[100%] Built target judas_living_world_tests
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_meshoptimizer
+[ 20%] Built target freetype
+[ 20%] Built target judas_quickjs
+[ 20%] Built target judas_icu_build
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_jobs
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_living_world_streaming_tests.dir/tests/LivingWorldStreamingTests.cpp.o
+[100%] Linking CXX executable judas_living_world_streaming_tests
+[100%] Built target judas_living_world_streaming_tests
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_meshoptimizer
+[ 20%] Built target freetype
+[ 20%] Built target judas_icu_build
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_jobs
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_living_world_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_living_world_application_tests.dir/tests/LivingWorldApplicationTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_living_world_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_living_world_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/LivingWorldApplicationTests.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/tests/LivingWorldApplicationTests.cpp:20:125: error: unable to deduce ‘auto*’ from ‘(& w)->RuntimeWorld::SceneControl()’
+   20 |  control.afterFrame=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){++frame;std::string error;auto* session=w.SceneControl();auto* stream=session?session->Streaming(w,error):nullptr;if(!stream)return;auto owner=stream->Resolve("quarry0",1);auto* terrain=owner?w.LiveTerrain().Status(owner):nullptr;
+      |                                                                                                               ~~~~~~~~~~~~~~^~
+/home/conner/Documents/GitHub/Project-Judas/tests/LivingWorldApplicationTests.cpp:20:126: note:   mismatched types ‘auto*’ and ‘std::shared_ptr<SceneSession>’
+   20 |  control.afterFrame=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){++frame;std::string error;auto* session=w.SceneControl();auto* stream=session?session->Streaming(w,error):nullptr;if(!stream)return;auto owner=stream->Resolve("quarry0",1);auto* terrain=owner?w.LiveTerrain().Status(owner):nullptr;
+      |                                                                                                                              ^
+gmake[3]: *** [CMakeFiles/judas_living_world_application_tests.dir/build.make:79: CMakeFiles/judas_living_world_application_tests.dir/tests/LivingWorldApplicationTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:15464: CMakeFiles/judas_living_world_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:15471: CMakeFiles/judas_living_world_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:4467: judas_living_world_application_tests] Error 2

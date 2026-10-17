@@ -131,3 +131,15 @@ to a root body and a region-owned body. This does not add physics to preparation
 ## M85 absolute terrain and live origins
 
 See [planetary terrain and local origins](planetary-terrain.md) for the new coordinate APIs, explicit collision interest, capture-origin retention and supported-component limits.
+
+## M97 mutable regional content
+
+[Terrain](terrain.md) fields and supported root primitive runtime construction can
+now be retained in snapshot regions. `adopt` assigns new arrivals a durable
+region-local recipe; no immutable source file is rewritten. Complex newly adopted
+hierarchies/articulations and resource-backed subsystem ownership remain restricted.
+Cross-region dependencies still pin. Pending terrain work defers suspension; retained
+geometry prepares asynchronously while the destination stays private. Private
+rigid/kinematic bodies do not accumulate simulated motion during preparation.
+See [scope and lab](../M97_LIVING_WORLD.md). The normal collider-enabled property
+continues to control collision, not whether a gameplay body is simulated.

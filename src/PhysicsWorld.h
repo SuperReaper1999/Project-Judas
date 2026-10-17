@@ -134,6 +134,10 @@ public:
     PhysicsClosestPoint ClosestPoint(const glm::vec3& point,float maximum,const PhysicsQueryFilter& filter={}) const;
 
     // Generic authored-pivot factory. Concave mesh is static-only.
+    // Internal assembly staging: disabled actors retain exact physical state
+    // without advancing. Collider-disabled gameplay actors otherwise keep moving.
+    bool SetBodySimulationSuspended(BodyHandle,bool);
+    bool ReplaceStaticCollision(BodyHandle,std::shared_ptr<const CollisionAsset>);
     BodyHandle CreateShape(const Shape&,const BodyTransform&,bool dynamic,float mass,float friction,float restitution);
 
     BodyHandle CreateStaticBox(const glm::vec3& position, const glm::vec3& halfExtents,

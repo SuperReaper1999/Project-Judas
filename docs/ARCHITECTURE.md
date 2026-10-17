@@ -10032,7 +10032,8 @@ winding. The existing model archive, collision cooker, asset IDs and publication
 transaction produce immutable ordinary models/colliders and source/product receipts.
 Editor previews/cooks use the existing job pool; Renderer alone uploads/draws meshes.
 
-There is no new runtime density grid, terrain solver or JudasJS brush namespace.
+The original M84 path has no runtime density grid. M97 adds an optional per-instance
+[mutable terrain path](M97_LIVING_WORLD.md) sharing its geometry operations.
 Existing static triangle geometry supplies real cave/overhang contacts and queries.
 Recast consumes those same surfaces through the normal navigation dependency path.
 Scene/prefab, full save, retained regions and export preserve ordinary resource
@@ -10120,3 +10121,23 @@ project recipe drafts use explicit bounded edits, atomic save and disk-conflict
 checks. Exported games do not contain editor authoring tools.
 
 See [M95 contracts](M95_ANIMATION_WORKFLOW.md) and [Motion Studio](../projects/animation_studio/README.md).
+
+## M97 — mutable local terrain and regional construction
+
+`RuntimeTerrain` is an optional world-owned service, allocated on first use.
+`VolumeTerrainGeometry` and `VolumeBrush.inl` share M84 extraction/brush mathematics
+with the editor. One bounded immutable job prepares a new mesh, cooked collider
+and optional local Recast product. At the outer boundary, native navigation stages
+before `PhysicsWorld::ReplaceStaticCollision` updates geometry in place and wakes
+nearby sleepers; the renderer sees only committed revisions. The body identity,
+classification and physical ownership stay unchanged. Failed/pending products keep
+last-good geometry. Region staging keeps new surfaces private until publication.
+
+WorldPersistence has an optional runtime-terrain participant. WorldStreaming v9
+retains committed scalar fields; pending publications pin/defer snapshots. Root
+primitive runtime construction can be adopted into a region and re-enters normal
+staged restoration through durable region-local identities. Inactive regions have
+no live colliders; no hidden physics continues. Existing external-dependency and
+unsupported-component pins remain authoritative. New runtime adoption does not
+claim arbitrary complex assembly support or exact joint warm-start continuation.
+See [M97 boundaries, source workflow and lab](M97_LIVING_WORLD.md).

@@ -45,7 +45,7 @@ WorldStreaming* SceneSession::Streaming(RuntimeWorld& world,std::string& error){
     }
     error=m_streamError;return m_streaming.get();
 }
-void SceneSession::AdvanceStreaming(RuntimeWorld& world,bool paused){if(!ComposedProject())return;std::string error;if(auto* stream=Streaming(world,error))stream->Advance(paused);}
+void SceneSession::AdvanceStreaming(RuntimeWorld& world,bool paused){if(!ComposedProject()){if(!paused)world.AdvanceRuntimeTerrain();return;}std::string error;if(auto* stream=Streaming(world,error))stream->Advance(paused);}
 bool SceneSession::Request(const std::string& scene,std::string& error){
     if(!m_accepting||(m_saveService&&m_saveService->Busy())){error="Scene/save lifecycle is busy";return false;}
     if(std::find(m_scenes.begin(),m_scenes.end(),scene)==m_scenes.end()){

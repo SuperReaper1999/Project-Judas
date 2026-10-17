@@ -1,3 +1,4 @@
+#include "RuntimeTerrain.h"
 #include "NavigationSystem.h"
 #include "LiquidSystem.h"
 #pragma once
@@ -390,6 +391,12 @@ public:
     LiquidSystem& Liquids(){return *m_liquid;}
     const LiquidSystem& Liquids()const{return *m_liquid;}
     void UpdateLiquids(double dt){if(m_liquid&&m_hasLiquid)m_liquid->Update(*this,dt);}
+    RuntimeTerrain& LiveTerrain(){if(!m_runtimeTerrain)m_runtimeTerrain=std::make_unique<RuntimeTerrain>(*this);return *m_runtimeTerrain;}
+    bool RuntimeTerrainBusy(EntityId id)const{auto* status=m_runtimeTerrain?m_runtimeTerrain->Status(id):nullptr;return status&&status->busy;}
+    bool HasRuntimeTerrain(EntityId id)const{return m_runtimeTerrain&&m_runtimeTerrain->Has(id);}
+    void DrawRuntimeTerrain(Renderer& renderer)const{if(m_runtimeTerrain)m_runtimeTerrain->Draw(renderer);}
+    void AdvanceRuntimeTerrain(){if(m_runtimeTerrain)m_runtimeTerrain->Advance();}
+    bool CaptureRuntimeTerrain(EntityId id,std::string& data,std::string& error)const{data.clear();return !m_runtimeTerrain||m_runtimeTerrain->Capture(id,data,error);}
     NavigationSystem& Navigation(){return *m_navigation;}
     const NavigationSystem& Navigation()const{return *m_navigation;}
     bool SetNavigationEnabled(EntityId id,const std::string& kind,bool enabled);
@@ -593,6 +600,7 @@ public:
     bool IsComposed() const { return m_composed; }
 private:
     friend class WorldPersistence;
+    friend class RuntimeTerrain;
     bool m_restoreConstruction=false;
     bool m_composed=false;
     std::set<EntityId> m_regionPending;
@@ -619,6 +627,7 @@ private:
 
     struct EntityCategories {CategoryMask tags=0, authoredTags=0;unsigned renderLayer=0;BodyHandle body;};
     ProjectClassification m_categories;
+    std::unique_ptr<RuntimeTerrain> m_runtimeTerrain;
     std::unique_ptr<NavigationSystem> m_navigation;
     std::unique_ptr<LiquidSystem> m_liquid=std::make_unique<LiquidSystem>();
     bool m_hasLiquid=false;

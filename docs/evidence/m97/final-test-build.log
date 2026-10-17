@@ -1,0 +1,17 @@
+[  6%] Built target judas_app_icon
+[  6%] Built target judas_meshoptimizer
+[ 20%] Built target freetype
+[ 20%] Built target judas_icu_build
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_jobs
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_living_world_application_tests.dir/tests/LivingWorldApplicationTests.cpp.o
+[100%] Linking CXX executable judas_living_world_application_tests
+[100%] Built target judas_living_world_application_tests

@@ -17,6 +17,7 @@ public:
  const ProjectNavigation& Configuration()const;
  bool LoadSurface(SceneObjectId,const SceneTransform&,std::shared_ptr<const NavigationData>,std::string&,bool publish=true);
  void PublishSurfaces(const std::vector<SceneObjectId>&);
+ void DiscardStagedSurface(SceneObjectId);
  void RemoveSurface(SceneObjectId);
  std::optional<NavigationLocation> Sample(glm::vec3,float,const NavigationFilter& = {})const;
  NavigationPath FindPath(glm::vec3,glm::vec3,const NavigationFilter& = {})const;

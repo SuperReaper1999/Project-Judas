@@ -1,0 +1,34 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Living World Lab (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS project JS initializes editable terrain in real application
+PASS initial field capture
+PASS logical click executes JS brush and publishes changed field
+PASS JS prefab construction creates actual physical body
+script asset=9835ec8aaede8c3fc4ee0206bc8844f7 entity=10 slot=1 update: TypeError: character intent must be supplied in fixedUpdate
+    at __judas (native)
+    at call (judas:2:51)
+    at set velocity (judas:198:51)
+    at update (Assets/scripts/controller.js:33:105)
+
+FAIL bounded application workflow timeout phase 3
+quarry0 active 
+quarry1 active  PIN gravity dependency in use
+quarry2 unloaded 
+HUD TOOL: REMOVE | Physical block built and adopted by quarry0
+LOADING | revision 0 | 0 triangles | terrain 0 ms prep / 0 ms publish
+quarry0: active [gravity dependency in use] | quarry1: installing | quarry2: unloaded
+1 active regions | 0 KiB retained | absolute origin 6371000
+
+SCRIPT TypeError: character intent must be supplied in fixedUpdate
+    at __judas (native)
+    at call (judas:2:51)
+    at set velocity (judas:198:51)
+    at update (Assets/scripts/controller.js:33:105)
+
+PASS application shutdown
+SUMMARY 6 checks 1 failures

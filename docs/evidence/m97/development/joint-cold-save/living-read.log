@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Living World Lab (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+TERRAIN_COMMIT owner=4611686018427387904 revision=1 prepare_ms=38.4767 publish_ms=0.177347 estimated_bytes=499220
+PASS project JS initializes editable terrain in real application
+PASS queue fresh-process slot load: 
+Runtime outer services: joint continuation physical context differs
+FAIL fresh-process cold load completes: joint continuation physical context differs
+FAIL cold load publishes a replacement world
+FAIL restored physical field matches edited pre-exit bytes
+FAIL fresh-process actual collision endpoint matches saved edited world
+PASS project JS has no runtime diagnostics
+PASS application shutdown
+SUMMARY 8 checks 4 failures

@@ -50,6 +50,7 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
         EntityRecord e;e.id=definition.id;e.name=definition.name;e.definition=definition;e.authored=false;e.requiresFull=true;
         e.state.position=definition.transform.position;e.state.rotation=definition.transform.rotation;e.slot=std::numeric_limits<size_t>::max();m_extraEntities.push_back(e);
     }
+    if(stage.body)m_physics.SetBodySimulationSuspended(m_entityCategories.at(definition.id).body,true);
     m_scriptDefinitions[definition.id]=definition;
     if(auto* e=FindEntity(definition.id))e->definition=definition;
     m_hierarchy.InsertObject(local);
@@ -62,7 +63,7 @@ void RuntimeWorld::BindRegionCameraReference(EntityId id,EntityId target) {
 }
 void RuntimeWorld::HideRegion(const std::vector<EntityId>& ids) {
     auto all=ids;for(auto id:ids)if(auto r=m_deformables.find(id);r!=m_deformables.end()&&r->second.simulation.asset->fracture&&r->second.simulation.asset->fracture->HasMaterials())for(auto child:r->second.rigid.parts)if(child&&FindEntity(child))all.push_back(child);
-    for(auto id:all){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_regionPending.insert(id);}
+    for(auto id:all){auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,false);m_physics.SetBodySimulationSuspended(body,true);m_regionPending.insert(id);}
 }
 void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
     auto all=ids;for(auto id:ids)if(auto r=m_deformables.find(id);r!=m_deformables.end()&&r->second.simulation.asset->fracture&&r->second.simulation.asset->fracture->HasMaterials())for(auto child:r->second.rigid.parts)if(child&&FindEntity(child))all.push_back(child);
@@ -70,7 +71,7 @@ void RuntimeWorld::PublishRegion(const std::vector<EntityId>& ids) {
         m_regionPending.erase(id);
         if(auto* e=FindEntity(id))e->requiresFull|=EntityRequiresFull(e->definition)||m_jointParticipants.count(id);
         if(auto* d=RuntimeDefinition(id))if(d->body){
-            const auto body=RuntimeBody(id);m_physics.SetBodyEnabled(body,d->body->enabled);
+            const auto body=RuntimeBody(id);m_physics.SetBodySimulationSuspended(body,false);m_physics.SetBodyEnabled(body,d->body->enabled);
             if(auto pending=m_regionKinematicCommands.find(id);pending!=m_regionKinematicCommands.end()){
                 if(d->body->enabled){SaveArchive command(pending->second);m_physics.PersistKinematic(command,body);command.Finish();}
                 m_regionKinematicCommands.erase(pending);
@@ -106,6 +107,7 @@ bool RuntimeWorld::RegionVisualReady(const std::vector<EntityId>& ids)const {
 }
 void RuntimeWorld::EndRegionScripts(const std::vector<EntityId>& ids){if(m_scripts)m_scripts->RemoveEntities(ids);}
 void RuntimeWorld::RemoveRegionObject(EntityId id) {
+    if(m_runtimeTerrain)m_runtimeTerrain->Remove(id);
     m_planets.erase(id);m_weather.erase(id);m_weatherResponses.erase(id);
     // Suspension is preflighted by the residency coordinator. In particular,
     // conserved liquids are pinned; destruction's parked-parcel path is not used.

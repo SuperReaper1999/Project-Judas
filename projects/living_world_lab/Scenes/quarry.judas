@@ -1,0 +1,1161 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Retained editable quarry",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.4,
+        0.7,
+        0.35
+      ],
+      "sun-color": [
+        1,
+        0.98,
+        0.92
+      ],
+      "ambient": [
+        0.3,
+        0.32,
+        0.35
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Editable quarry \u2014 runtime brush / M84 source authoring",
+        "fields": {
+          "position": [
+            0,
+            5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.56,
+            0.49,
+            0.39
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "b444f9afdcbb545c8569d8ce99494389",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "triangle-mesh"
+            }
+          },
+          "body.half-extents": [
+            12,
+            0.15,
+            8
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.collision-asset": "18e418d4916e3a29783fad3388beab99",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "script.0.id": 1,
+          "script.0.asset": "5fa89c818f3dae9a3edfbd691cde3352",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "scripts": 1
+        }
+      },
+      {
+        "id": 20,
+        "name": "Ordinary dynamic crate 0",
+        "fields": {
+          "position": [
+            4.0,
+            1,
+            10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 21,
+        "name": "Ordinary dynamic crate 1",
+        "fields": {
+          "position": [
+            5.2,
+            1,
+            10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 22,
+        "name": "Ordinary dynamic crate 2",
+        "fields": {
+          "position": [
+            6.4,
+            1,
+            10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 23,
+        "name": "Ordinary dynamic crate 3",
+        "fields": {
+          "position": [
+            7.6,
+            1,
+            10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 100,
+        "name": "Ordinary cave light 0",
+        "fields": {
+          "position": [
+            0,
+            3.4,
+            5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            1,
+            0.82,
+            0.6
+          ],
+          "light.range": 8,
+          "light.cone": {
+            "innerDegrees": 15,
+            "outerDegrees": 25
+          }
+        }
+      },
+      {
+        "id": 101,
+        "name": "Ordinary cave light 1",
+        "fields": {
+          "position": [
+            0,
+            3.4,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            1,
+            0.82,
+            0.6
+          ],
+          "light.range": 8,
+          "light.cone": {
+            "innerDegrees": 15,
+            "outerDegrees": 25
+          }
+        }
+      },
+      {
+        "id": 102,
+        "name": "Ordinary cave light 2",
+        "fields": {
+          "position": [
+            0,
+            3.4,
+            -5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            1,
+            0.82,
+            0.6
+          ],
+          "light.range": 8,
+          "light.cone": {
+            "innerDegrees": 15,
+            "outerDegrees": 25
+          }
+        }
+      },
+      {
+        "id": 200,
+        "name": "Construction stock 0",
+        "fields": {
+          "position": [
+            -7.0,
+            1,
+            10.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 201,
+        "name": "Construction stock 1",
+        "fields": {
+          "position": [
+            -5.8,
+            1,
+            10.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 202,
+        "name": "Construction stock 2",
+        "fields": {
+          "position": [
+            -4.6,
+            1,
+            10.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 203,
+        "name": "Construction stock 3",
+        "fields": {
+          "position": [
+            -7.0,
+            1,
+            11.2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 204,
+        "name": "Construction stock 4",
+        "fields": {
+          "position": [
+            -5.8,
+            1,
+            11.2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 205,
+        "name": "Construction stock 5",
+        "fields": {
+          "position": [
+            -4.6,
+            1,
+            11.2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.74,
+            0.42,
+            0.22
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 8,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Uniform lab gravity",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "box"
+            },
+            "halfExtents": [
+              20,
+              16,
+              20
+            ]
+          }
+        }
+      },
+      {
+        "id": 300,
+        "name": "Load-bearing cantilever / Delete releases its physical support",
+        "fields": {
+          "position": [
+            -6,
+            2.8,
+            7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3,
+            0.2,
+            0.6
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.72,
+            0.38,
+            0.12
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            3,
+            0.2,
+            0.6
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 35,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "joint": 0,
+          "joint.body-a": 300,
+          "joint.body-b": 0,
+          "joint.anchor-a": [
+            -2.8,
+            0.0,
+            0.0
+          ],
+          "joint.anchor-b": [
+            -2.8,
+            0.0,
+            0.0
+          ],
+          "joint.frame-a": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "joint.frame-b": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "joint.enabled": true,
+          "joint.limits": false,
+          "joint.motor": false,
+          "joint.spring": false,
+          "joint.lower": -1.0,
+          "joint.upper": 1.0,
+          "joint.speed": 0.0,
+          "joint.max-force": 10.0,
+          "joint.rest": 0.0,
+          "joint.stiffness": 10.0,
+          "joint.damping": 1.0
+        }
+      },
+      {
+        "id": 301,
+        "name": "Cantilever fixed foundation",
+        "fields": {
+          "position": [
+            -8.8,
+            1.3,
+            7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.35,
+            1.3,
+            0.6
+          ],
+          "render.radius": 0.5,
+          "render.color": [
+            0.3,
+            0.4,
+            0.43
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.35,
+            1.3,
+            0.6
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    ]
+  }
+}

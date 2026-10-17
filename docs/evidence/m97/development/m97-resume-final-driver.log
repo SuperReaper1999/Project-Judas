@@ -1,0 +1,26 @@
+judas_living_world_tests already passed
+judas_living_world_streaming_tests already passed
+judas_streaming_tests already passed
+judas_character_motor_tests already passed
+judas_volume_terrain_tests already passed
+judas_navigation_tests already passed
+judas_origin_stream_tests already passed
+judas_post_consumer_metadata_tests already passed
+judas_prefab_tests already passed
+judas_classification_tests already passed
+judas_lifecycle_tests already passed
+judas_physics_continuation_tests already passed
+judas_save_exclusion_tests 0
+script-check 0
+living-write 0
+living-read 0
+living-performance 0
+existing-save-stream-write -11
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m97_validation.py", line 18, in <module>
+    for mode in ['write','read']:run('existing-save-stream-'+mode,[R/'build/judas_save_streaming_tests',R/'projects/shooter_game/shooter_game.judasproj',mode,out/'existing-save-stream'])
+                                 ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m97_validation.py", line 13, in run
+    if r.returncode:raise RuntimeError(name+' failed; evidence retained')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: existing-save-stream-write failed; evidence retained

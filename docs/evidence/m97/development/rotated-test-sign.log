@@ -1,0 +1,15 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Living World Lab (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/living_world_lab.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/living_world_lab/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+TERRAIN_COMMIT owner=4611686018427387904 revision=1 prepare_ms=37.1009 publish_ms=0.226151 estimated_bytes=499220
+PASS project JS initializes editable terrain in real application
+FAIL actual rotated quarry motor follows the ordinary local gravity region
+PASS logical digging publishes real collision in the rotated quarry
+PASS rotated support remains stable after terrain publication
+PASS project JS has no runtime diagnostics
+PASS application shutdown
+SUMMARY 6 checks 1 failures

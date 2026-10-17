@@ -196,8 +196,8 @@ struct PhysicsWorld::Impl {
         RigidMotion motion;
         glm::quat previousOrientation{1.0f, 0.0f, 0.0f, 0.0f};
         Shape shape;
-        // Shape is immutable for this slot generation. AddBody replaces the
-        // entire cache on slot reuse, including all compound child dimensions.
+        // AddBody replaces the entire cache on slot reuse. Explicit static
+        // geometry replacement invalidates shape-derived bounds in place.
         float boundingRadius = 0;
         std::optional<ContactPreparedOrientation> orientationCache;
         std::optional<PreparedShapeBounds> boundPreparation;
@@ -208,11 +208,11 @@ struct PhysicsWorld::Impl {
         std::string physicalMaterial;
         float friction = 0.5f;
         float restitution = 0.0f;
-        bool sensor = false, enabled = true, queryOnly=false, queriesEnabled=true;
+        bool sensor = false, enabled = true, queryOnly=false, queriesEnabled=true, simulationSuspended=false;
         bool isDynamic = false, isKinematic=false;
         KinematicMotionState kinematic;
         double kinematicActiveDuration=0;
-        bool HasMotion() const {return isDynamic||isKinematic;}
+        bool HasMotion() const {return !simulationSuspended&&(isDynamic||isKinematic);}
         bool sleeping=false,deferredAcceleration=false;
         float quietSeconds=0;
         glm::vec3 lastAcceleration{0};
@@ -1575,7 +1575,7 @@ struct PhysicsWorld::Impl {
         }
     }
     void PublishKinematics(float dt) {
-        for(auto slot:aliveSlots){auto& body=bodies[slot];if(!body.isKinematic)continue;
+        for(auto slot:aliveSlots){auto& body=bodies[slot];if(!body.isKinematic||body.simulationSuspended)continue;
             auto& rigid=body.rigidBody;auto& command=body.kinematic;
             body.previousPosition=rigid.position;body.previousOrientation=rigid.orientation;
             CurrentBound(body);body.previousBound=body.currentBound;
@@ -1971,6 +1971,29 @@ void PhysicsWorld::SetJobSystem(JobSystem* jobs,unsigned maxLanes) {
     m_impl->initialContactGeometry.clear();
 }
 
+bool PhysicsWorld::SetBodySimulationSuspended(BodyHandle handle,bool suspended){
+    auto* body=m_impl->Get(handle);if(!body||(suspended&&body->enabled))return false;
+    body->simulationSuspended=suspended;body->motion.Clear();
+    body->previousPosition=body->rigidBody.position;body->previousOrientation=body->rigidBody.orientation;
+    return true;
+}
+
+bool PhysicsWorld::ReplaceStaticCollision(BodyHandle handle,std::shared_ptr<const CollisionAsset> asset){
+    auto* body=m_impl->Get(handle);
+    if(!body||body->isDynamic||body->isKinematic||!asset||asset->convex||asset->faces.empty())return false;
+    const auto old=m_impl->CurrentBound(*body);
+    for(auto slot:m_impl->QuerySlots(old))if(m_impl->bodies[slot].sleeping)m_impl->Wake(slot);
+    body->shape=Shape::Cooked(std::move(asset),"");body->boundingRadius=ShapeBoundingRadius(body->shape);
+    body->currentBound.valid=body->previousBound.valid=false;body->boundPreparationValid=false;
+    const auto slot=handle.id&Impl::kSlotMask;m_impl->InvalidateRestoredContinuation(slot);
+    auto uses=[&](const auto& entry){return entry.key.slotA==slot||entry.key.slotB==slot;};
+    auto& cache=m_impl->contactCache;cache.erase(std::remove_if(cache.begin(),cache.end(),uses),cache.end());
+    auto& observations=m_impl->completedContactObservations;observations.erase(std::remove_if(observations.begin(),observations.end(),uses),observations.end());
+    m_impl->InvalidateImpactPose(slot);m_impl->RefreshProxy(*body);
+    for(auto other:m_impl->QuerySlots(m_impl->CurrentBound(*body)))if(m_impl->bodies[other].sleeping)m_impl->Wake(other);
+    return true;
+}
+
 BodyHandle PhysicsWorld::CreateShape(const Shape& input,const BodyTransform& pose,bool dynamic,float mass,float friction,float restitution) {
     Shape shape=input;
     auto positive=[](glm::vec3 h){return std::isfinite(h.x)&&std::isfinite(h.y)&&std::isfinite(h.z)&&h.x>0&&h.y>0&&h.z>0;};
@@ -2069,7 +2092,7 @@ std::size_t PhysicsWorld::DynamicBodyCount() const {
 void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& acceleration,
                                             float fixedDeltaTime) {
     Impl::Body* body = m_impl->Get(handle);
-    if (!body || body->rigidBody.IsStatic()) return;
+    if (!body || body->simulationSuspended || body->rigidBody.IsStatic()) return;
     if(body->sleeping&&glm::length(acceleration-body->lastAcceleration)>1e-5f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->lastAcceleration=acceleration;
     if(body->sleeping){body->deferredAcceleration=true;return;}
@@ -2078,14 +2101,14 @@ void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3& a
 
 void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3& force) {
     Impl::Body* body = m_impl->Get(handle);
-    if (!body || body->rigidBody.IsStatic()) return;
+    if (!body || body->simulationSuspended || body->rigidBody.IsStatic()) return;
     if(glm::length(force)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->rigidBody.ApplyForce(force);
 }
 
 void PhysicsWorld::ApplyTorque(BodyHandle handle, const glm::vec3& torque,bool wake) {
     Impl::Body* body = m_impl->Get(handle);
-    if (!body || body->rigidBody.IsStatic()) return;
+    if (!body || body->simulationSuspended || body->rigidBody.IsStatic()) return;
     // Unchanged pose drives retain the normal quiet-time clock at equilibrium.
     // Existing callers keep their normal explicit wake behaviour.
     if(wake&&glm::length(torque)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
@@ -2210,14 +2233,14 @@ glm::vec3 PhysicsWorld::GetCenterOfMass(BodyHandle handle) const {
 
 void PhysicsWorld::ApplyLinearImpulse(BodyHandle handle, const glm::vec3& impulse,bool wake) {
     Impl::Body* body = m_impl->Get(handle);
-    if (!body || !body->isDynamic) return;
+    if (!body || body->simulationSuspended || !body->isDynamic) return;
     if(wake&&glm::length(impulse)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->rigidBody.ApplyLinearImpulse(impulse);
 }
 
 void PhysicsWorld::ApplyAngularImpulse(BodyHandle handle, const glm::vec3& impulse,bool wake) {
     Impl::Body* body = m_impl->Get(handle);
-    if (!body || !body->isDynamic || !FiniteVector(impulse)) return;
+    if (!body || body->simulationSuspended || !body->isDynamic || !FiniteVector(impulse)) return;
     if(wake&&glm::length(impulse)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->rigidBody.ApplyAngularImpulse(impulse);
 }
@@ -2225,7 +2248,7 @@ void PhysicsWorld::ApplyAngularImpulse(BodyHandle handle, const glm::vec3& impul
 void PhysicsWorld::ApplyImpulseAtPoint(BodyHandle handle, const glm::vec3& impulse,
                                        const glm::vec3& worldPoint) {
     Impl::Body* body = m_impl->Get(handle);
-    if (!body || !body->isDynamic) return;
+    if (!body || body->simulationSuspended || !body->isDynamic) return;
     if(glm::length(impulse)>1e-8f)m_impl->Wake(handle.id&Impl::kSlotMask);
     body->rigidBody.ApplyImpulseAtPoint(impulse, worldPoint);
 }
@@ -2735,7 +2758,7 @@ void PhysicsWorld::Step(float fixedDeltaTime,const VelocityCoupling* coupling) {
     for (const unsigned int slot : w.aliveSlots) {
         Impl::Body& body = w.bodies[slot];
         if (!body.rigidBody.IsStatic()) ++movable;
-        if (!body.isDynamic) continue;
+        if (!body.isDynamic||body.simulationSuspended) continue;
         body.motion.Clear();
         body.previousPosition = body.rigidBody.position;
         body.previousOrientation = body.rigidBody.orientation;

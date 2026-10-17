@@ -166,3 +166,12 @@ cold-start path. An older in-progress save that omitted this context can still
 fail to continue its original bounded physical task. The original M77 failure is
 preserved, separately from passing new captures. See the
 [mechanism and compatibility report](../M78_COLD_CONTINUATION.md).
+
+## M97 mutable regions
+
+Slots include committed [Terrain](terrain.md) instance fields/settings. Pending edits
+defer capture; cold restore reconstructs actual collision and navigation. Retained
+regional terrain and supported primitive construction use streaming archive v9.
+Ordinary joints now preserve exact native physical settings (articulation v5) before
+strict warm-history validation; moving-owner frame round trips are not used as a
+substitute for those settings. Earlier save formats retain their existing contracts.

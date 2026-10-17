@@ -1,0 +1,47 @@
+PASS build ordinary static world: 
+PASS create optional live volume
+PASS pending edit cannot be archived
+PASS duplicate create rejected
+PASS atomic terrain publication: 
+PASS static body handle and classification preserved
+PASS solid blocks tunnel before edit
+PASS invalid brush rejected
+PASS excavate entrance
+PASS bounded single-flight backpressure
+PASS pending result retains last-good collider
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS extend tunnel
+PASS atomic terrain publication: 
+PASS committed excavation opens actual collider
+PASS excavated cavity floor receives navigation
+PASS normal navigation update retains live surface
+PASS capture committed scalar field
+METRIC samples=7497 triangles=14224 estimated_bytes=604324 prepare_ms=45.9856 publish_ms=0.2064
+PASS fresh world
+PASS restore exact committed field: 
+PASS restored collision remains excavated
+PASS scalar persistence is byte exact
+PASS construction adds physical material
+PASS atomic terrain publication: 
+PASS added material blocks real ray
+PASS smooth uses shared M84 field operation
+PASS atomic terrain publication: 
+PASS full physical save captures terrain: 
+PASS cold save destination
+PASS full physical save restores terrain: 
+PASS full restore reconstructs added collision
+PASS rotated world
+PASS rotated volume restoration
+PASS arbitrary rigid orientation preserves excavation
+PASS queue deliberately empty product
+PASS failed empty product retains revision and collision
+PASS failure rollback preserves physical solid
+PASS remove terrain owner
+PASS destroy cleans terrain runtime state
+SUMMARY 45 checks 0 failures

@@ -1,0 +1,11 @@
+editor 0
+export 0
+relocated 1
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m97_delivery.py", line 35, in <module>
+    e=env.copy();e.update(JUDAS_TEST_SCRIPT=str(steps),JUDAS_PROFILE='1');run('relocated',[moved/'judas'],e,unrelated);assert 'script asset='not in(out/'relocated.log').read_text()
+                                                                          ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m97_delivery.py", line 11, in run
+    if r.returncode:raise RuntimeError(name+' failed; evidence retained')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: relocated failed; evidence retained

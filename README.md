@@ -50,7 +50,7 @@ Try [The Repair Bench](projects/developer_lab/README.md). Windows/Android M94 va
 
 Experimental M95 adds [animation event tracks, a timeline and collision-aware
 root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 is human accepted; its Windows/Android validation remains outstanding.
-Experimental M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). Try [Field Notes](projects/ui_showcase/README.md); human acceptance is pending.
+M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). Try [Field Notes](projects/ui_showcase/README.md); human accepted.
 
 ## Highlights
 
@@ -134,3 +134,5 @@ features should remain clearly scoped.
 
 Project Judas is licensed under the [MIT License](LICENSE). Vendored
 dependencies retain their own notices and licence terms.
+
+Experimental M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md). Try [Living World Lab](projects/living_world_lab/README.md); human acceptance pending.

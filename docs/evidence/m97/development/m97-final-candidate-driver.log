@@ -1,0 +1,21 @@
+judas_living_world_tests 0
+judas_living_world_streaming_tests 0
+judas_streaming_tests 0
+judas_character_motor_tests 0
+judas_volume_terrain_tests 0
+judas_navigation_tests 0
+judas_origin_stream_tests 0
+judas_post_consumer_metadata_tests 0
+judas_prefab_tests 0
+judas_classification_tests 0
+judas_lifecycle_tests 0
+judas_physics_continuation_tests 0
+judas_save_exclusion_tests 2
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m97_validation.py", line 12, in <module>
+    for exe,extra in [('judas_living_world_tests',[out/'core']),('judas_living_world_streaming_tests',[out/'stream']),('judas_streaming_tests',[]),('judas_character_motor_tests',[]),('judas_volume_terrain_tests',[out/'m84']),('judas_navigation_tests',[]),('judas_origin_stream_tests',[]),('judas_post_consumer_metadata_tests',[]),('judas_prefab_tests',[]),('judas_classification_tests',[]),('judas_lifecycle_tests',[]),('judas_physics_continuation_tests',[]),('judas_save_exclusion_tests',[])]:run(exe,[R/'build'/exe,*extra])
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m97_validation.py", line 11, in run
+    if r.returncode:raise RuntimeError(name+' failed; evidence retained')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: judas_save_exclusion_tests failed; evidence retained

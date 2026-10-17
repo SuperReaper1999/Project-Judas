@@ -17,5 +17,7 @@ bool CollectNavigationGeometry(const Scene&,const SceneObject&,const ProjectNavi
 bool DecodeNavigation(const std::vector<unsigned char>&,NavigationData&,std::string&);
 bool LoadNavigation(const std::string&,NavigationData&,std::string&);
 bool SaveNavigation(const std::string&,const NavigationData&,std::string&);
-// Editor/tool target only; never linked into standalone runtime.
+// Shared bounded geometry baker, used by tools and opt-in live terrain.
+bool BakeNavigationGeometry(const NavigationGeometry&,const NavigationSurfaceSettings&,const NavigationProfile&,NavigationData&,std::string&);
+// Scene collection and authoring wrapper.
 bool BakeNavigation(const Scene&,const SceneObject&,const ProjectNavigation&,NavigationData&,std::string&,const AssetDatabase* assets=nullptr);
