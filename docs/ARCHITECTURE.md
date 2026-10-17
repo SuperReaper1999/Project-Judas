@@ -10,6 +10,13 @@ not an Alpha release or automatic promotion to main. Start with the
 The milestone sections below retain architectural history; later explicit
 contracts supersede earlier limits. Raw historical evidence remains unchanged.
 
+Pre-Alpha Pass2 extends live origin translation to conserved liquid owners and
+parcels, prescribed atmosphere frames and combustion carrier handles. Wave/storage
+state stays owner-local; thermal state stays attached to its existing body handle.
+Legacy PBF, liquid regional suspension and thermal modern-slot persistence retain
+their explicit boundaries. See the current matrix above rather than applying the
+older M90 exclusion list to the Experimental implementation.
+
 RuntimeWorld owns live component state; Scene owns authored definitions;
 Simulation orders fixed-step publication. Workers prepare private products and
 the world/resource owner publishes them. Input, cameras and game rules remain

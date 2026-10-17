@@ -40,6 +40,7 @@ jobs:
         run: |
           python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
           python3 scripts/prealpha_packaging_checks.py --output .cache/prealpha/ci/packaging.json
+          python3 scripts/prealpha_distribution_checks.py --output .cache/prealpha/ci/distribution.json
           python3 -m unittest discover -s tests -p test_prealpha_validation.py -v
           node tests/TypeScriptToolingTests.mjs
           node scripts/check_judasjs_api.mjs
@@ -51,6 +52,11 @@ jobs:
         run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
       - name: Focused native gates
         run: xvfb-run -a ctest --test-dir build -L prealpha --output-on-failure
+      - name: Qualify SDK on its declared Linux baseline
+        run: |
+          python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/prealpha/ci/sdk-qualification.json
+          cd /tmp
+          python3 "$GITHUB_WORKSPACE/build/linux-sdk/tools/package_sdk.py" verify "$GITHUB_WORKSPACE/build/linux-sdk"
       - name: Preserve diagnostics even on failure
         if: always()
         uses: actions/upload-artifact@v7

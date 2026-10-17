@@ -1,5 +1,9 @@
 # Making a Judas game by hand
 
+For a first visible result with no input/controller setup, start with
+[Your first visible project](../FIRST_PROJECT.md), then return here for the
+complete authoring and subsystem workflow.
+
 [API index](../JUDASJS.md) · [Lifecycle](lifecycle.md) · [Cookbook](cookbook.md) · [IDE setup](practices.md)
 
 Judas runs ordinary project JavaScript. You author entities/components/assets and

@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "kind": "separate post-native tooling-only source delta",
+  "files": {
+    "tests/test_prealpha_validation.py": "9614ceaa5e65470ee6eb4fefa37a62f4cb123e4020e2dc779fff4c2dcebbbaa9"
+  },
+  "before_sha256": "a5ab33a54422df9524bf92bff5260100bae4f7bf5102542364c449116b1a96ea",
+  "runtime_or_physical_test_conditions_changed": false,
+  "native_gate_receipt_still_records_original_52_file_candidate": true,
+  "followup_receipt": "VALIDATION_FOLLOWUP.json"
+}

@@ -1,0 +1,36 @@
+from pathlib import Path
+root=Path.cwd();p=root/'src/PhysicsWorld.cpp';s=(root/'.cache/prealpha-pass2/physics/batch-v1/PhysicsWorld.cpp').read_text()
+s=s.replace('#include "ImpactSolver.h"','#include "ImpactSolver.h"\n#include "ImpactPairVisitSet.h"')
+a=s.index('        for (;;) {',s.index('    void AdvanceImpacts('))
+s=s[:a]+'''        // Capacities live through this event pass; values and membership are
+        // rebuilt for each event. No cross-time contact truth is cached.
+        ImpactPairVisitSet visitedPairs;
+        struct DiscoveredManifold {
+            std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
+        };
+        std::vector<unsigned> island;
+        std::vector<unsigned char> included;
+        std::vector<std::pair<unsigned,unsigned>> touching;
+        std::vector<DiscoveredManifold> discoveredManifolds;
+        std::vector<std::pair<glm::vec3,glm::vec3>> oldVelocities;
+        std::vector<ImpactContact> rows;
+        std::vector<ContactKey> observationKeys;
+        std::vector<std::array<unsigned,4>> eventPairs;
+'''+s[a:]
+s=s.replace('            std::vector<unsigned> island;\n            std::vector<unsigned char> included(bodies.size(),0);', '            island.clear();included.assign(bodies.size(),0);')
+s=s.replace('''            std::vector<std::pair<unsigned,unsigned>> touching;
+            // Keep discovery/row order in the vector. Hash membership only
+            // removes repeated queries at this unchanged event-time geometry.
+            std::unordered_set<uint64_t> visitedPairs;
+            struct DiscoveredManifold {
+                std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
+            };
+            std::vector<DiscoveredManifold> discoveredManifolds;''', '''            touching.clear();discoveredManifolds.clear();visitedPairs.Begin(bodies.size());
+            // Membership removes only previously resolved identical queries;
+            // encounter order and uncertainty handling remain unchanged.''')
+s=s.replace('visitedPairs.count(pairKey)', 'visitedPairs.Contains(pairKey)').replace('visitedPairs.insert(pairKey)', 'visitedPairs.Insert(pairKey)')
+s=s.replace('            std::vector<std::pair<glm::vec3,glm::vec3>> oldVelocities;','            oldVelocities.clear();')
+s=s.replace('''            std::vector<ImpactContact> rows;
+            std::vector<ContactKey> observationKeys;
+            std::vector<std::array<unsigned,4>> eventPairs;''','''            rows.clear();observationKeys.clear();eventPairs.clear();''')
+p.write_text(s)

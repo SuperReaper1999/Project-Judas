@@ -1,0 +1,93 @@
+THROW i 0 reason impact bracket lost contact geometry
+THROW i 7 reason impact bracket lost contact geometry
+THROW i 14 reason impact bracket lost contact geometry
+THROW i 16 reason impact bracket lost contact geometry
+THROW i 19 reason impact bracket lost contact geometry
+FAIL trough 2x26 coarse fast impacts do not throw
+CROSS i 0 step 1 p -1.20,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.39 impacts 0 queries 0
+CROSS i 1 step 1 p -1.10,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 2 step 1 p -1.00,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 3 step 1 p -0.90,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 4 step 1 p -0.80,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 5 step 1 p -0.70,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 6 step 1 p -0.60,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.39 impacts 0 queries 0
+CROSS i 7 step 1 p -0.50,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 8 step 1 p -0.40,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 9 step 1 p -0.30,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 10 step 1 p -0.20,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 11 step 1 p -0.10,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 12 step 1 p 0.00,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.39 impacts 0 queries 0
+CROSS i 13 step 1 p 0.10,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 14 step 1 p 0.20,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 15 step 1 p 0.30,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 16 step 1 p 0.40,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 17 step 1 p 0.50,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 18 step 1 p 0.60,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.39 impacts 0 queries 0
+CROSS i 19 step 1 p 0.70,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 20 step 1 p 0.80,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 21 step 1 p 0.90,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 22 step 1 p 1.00,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 23 step 1 p 1.10,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+THROW i 0 reason impact bracket lost contact geometry
+THROW i 7 reason impact bracket lost contact geometry
+THROW i 9 reason impact bracket lost contact geometry
+THROW i 12 reason impact bracket lost contact geometry
+THROW i 16 reason impact bracket lost contact geometry
+FAIL rotated trough preserves first-contact/crossing contract
+SCENARIO "trough 2x26 coarse" triangles 104 steps 1 totalMs 5.62 worstStepMs 5.62 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 24 meshTriangles 24 bvhNodes 165 fastBoxSteps 90 fastBoxesThrough 0 legacyOracleThrough 0 fastBoxesThrew 5 digest fe142d2fcd4a2716
+THROW i 1 reason impact bracket lost contact geometry
+THROW i 7 reason impact bracket lost contact geometry
+THROW i 13 reason impact bracket lost contact geometry
+THROW i 19 reason impact bracket lost contact geometry
+FAIL trough 30x30 fast impacts do not throw
+CROSS i 0 step 1 p -1.20,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.37 impacts 0 queries 0
+CROSS i 1 step 1 p -1.10,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 2 step 1 p -1.00,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 3 step 1 p -0.90,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.18 impacts 0 queries 0
+CROSS i 4 step 1 p -0.80,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 5 step 1 p -0.70,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 6 step 1 p -0.60,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.37 impacts 0 queries 0
+CROSS i 7 step 1 p -0.50,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 8 step 1 p -0.40,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 9 step 1 p -0.30,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.18 impacts 0 queries 0
+CROSS i 10 step 1 p -0.20,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 11 step 1 p -0.10,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 12 step 1 p 0.00,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.37 impacts 0 queries 0
+CROSS i 13 step 1 p 0.10,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 14 step 1 p 0.20,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 15 step 1 p 0.30,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.18 impacts 0 queries 0
+CROSS i 16 step 1 p 0.40,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 17 step 1 p 0.50,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 18 step 1 p 0.60,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.37 impacts 0 queries 0
+CROSS i 19 step 1 p 0.70,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 20 step 1 p 0.80,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 21 step 1 p 0.90,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.18 impacts 0 queries 0
+CROSS i 22 step 1 p 1.00,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 23 step 1 p 1.10,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+SCENARIO "trough 30x30" triangles 1800 steps 1 totalMs 0.06 worstStepMs 0.06 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 0 meshTriangles 0 bvhNodes 155 fastBoxSteps 90 fastBoxesThrough 0 legacyOracleThrough 0 fastBoxesThrew 4 digest fe142d2fcd4a2716
+CROSS i 0 step 1 p -1.20,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.38 impacts 0 queries 0
+CROSS i 1 step 1 p -1.10,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 2 step 1 p -1.00,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 3 step 1 p -0.90,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 4 step 1 p -0.80,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 5 step 1 p -0.70,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 6 step 1 p -0.60,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.38 impacts 0 queries 0
+CROSS i 7 step 1 p -0.50,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 8 step 1 p -0.40,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 9 step 1 p -0.30,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 10 step 1 p -0.20,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 11 step 1 p -0.10,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 12 step 1 p 0.00,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.38 impacts 0 queries 0
+CROSS i 13 step 1 p 0.10,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 14 step 1 p 0.20,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 15 step 1 p 0.30,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 16 step 1 p 0.40,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 17 step 1 p 0.50,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+CROSS i 18 step 1 p 0.60,-0.14,-1.00 v 0.00,-40.33,0.00 omega 0.00,0.00,0.00 depth 0.38 impacts 0 queries 0
+CROSS i 19 step 1 p 0.70,-0.14,-0.80 v 0.00,-40.33,6.00 omega 0.00,0.00,0.00 depth 0.31 impacts 0 queries 0
+CROSS i 20 step 1 p 0.80,-0.14,-0.60 v 0.00,-40.33,12.00 omega 0.00,0.00,0.00 depth 0.24 impacts 0 queries 0
+CROSS i 21 step 1 p 0.90,-0.14,-0.40 v 0.00,-40.33,18.00 omega 0.00,0.00,0.00 depth 0.19 impacts 0 queries 0
+CROSS i 22 step 1 p 1.00,-0.14,-0.20 v 0.00,-40.33,24.00 omega 0.00,0.00,0.00 depth 0.15 impacts 0 queries 0
+CROSS i 23 step 1 p 1.10,-0.14,0.00 v 0.00,-40.33,30.00 omega 0.00,0.00,0.00 depth 0.14 impacts 0 queries 0
+SCENARIO "trough 60x60 dense" triangles 7200 steps 1 totalMs 0.14 worstStepMs 0.14 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 7 meshTriangles 7 bvhNodes 153 fastBoxSteps 90 fastBoxesThrough 0 legacyOracleThrough 0 fastBoxesThrew 0 digest fe142d2fcd4a2716
+checks 193 failures 3

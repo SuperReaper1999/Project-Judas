@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "SaveService.h"
 #include "SaveEvolution.h"
 #include "modding/ModRuntime.h"
@@ -96,7 +97,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
    if(m_session.m_streaming&&!m_session.m_streaming->SaveReady())return;
    if(!WorldPersistence::Prepare(*world,error)){if(error=="loading"&&ms(m_restoreStart)<=30000){error.clear();return;}if(error=="loading")error="required save participants failed to prepare within 30 seconds";Finish(error);return;}
    SaveEvolutionIdentity evolution;if(!SaveEvolutionCurrent(m_session.m_project.Settings().saveEvolution,evolution,error)){Finish(error);return;}snapshot.compatibility=evolution.compatibility;snapshot.contentVersion=evolution.version;
-   snapshot.diagnosticBuild="Judas M98 / native snapshot schema 1";snapshot.modContext=ModSaveContext(m_session.m_project);snapshot.project=m_identity;snapshot.scene=m_session.Current();snapshot.content=m_content;snapshot.displayName=m_name;snapshot.metadata=m_metadata;snapshot.timestamp=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
+   snapshot.diagnosticBuild=GetBuildIdentity().buildId;snapshot.modContext=ModSaveContext(m_session.m_project);snapshot.project=m_identity;snapshot.scene=m_session.Current();snapshot.content=m_content;snapshot.displayName=m_name;snapshot.metadata=m_metadata;snapshot.timestamp=uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
    if(!WorldPersistence::Capture(*world,snapshot.participants,error)){Finish(error);return;}
    try{SaveArchive a;auto values=m_session.m_values;auto locale=m_session.Localization(&m_resources).Locale();a(values,locale);snapshot.participants["session"]={1,std::move(a.bytes)};
     SaveArchive stream;unsigned streamVersion=1;bool composed=m_session.ComposedProject();stream(composed);if(composed){std::string e;auto* coordinator=m_session.Streaming(*world,e);if(!coordinator)throw std::runtime_error(e);streamVersion=coordinator->ArchiveVersion();coordinator->Persist(stream,streamVersion);}snapshot.participants["streaming"]={streamVersion,std::move(stream.bytes)};

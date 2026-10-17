@@ -1,0 +1,17 @@
+from pathlib import Path
+import hashlib,json,shlex,subprocess,shutil,time,datetime
+r=Path.cwd();b=r/'.cache/prealpha-pass2/physics';o=b/'final-physics-v8';o.mkdir(exist_ok=True);flags=(r/'build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']:args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+cmd=['/usr/bin/c++',*args,'-c',str(r/'src/RuntimeWorld.cpp'),'-o',str(o/'RuntimeWorld.cpp.o')]
+start=time.monotonic()
+with(o/'RuntimeWorld.cpp.build.log').open('w')as log:subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True)
+a=o/'libjudas_engine.a';shutil.copyfile(b/'batch-scratch-events-v7/libjudas_engine.a',a);subprocess.run(['ar','r',str(a),str(o/'RuntimeWorld.cpp.o')],check=True)
+link=shlex.split((r/'build/CMakeFiles/judas_physics_stress_live_benchmark.dir/link.txt').read_text());objects=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):]
+command=['/usr/bin/c++','-O3','-DNDEBUG',*objects,'-o',str(o/'live'),str(a),*libs[1:]];subprocess.run(command,cwd=r/'build',check=True)
+record={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'commands':[cmd,command],'compileSeconds':time.monotonic()-start,'sources':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [r/'src/RuntimeWorld.cpp',r/'src/PhysicsWorld.cpp',r/'src/CollisionGeometry.cpp',r/'src/CollisionGeometry.h',r/'src/ImpactPairVisitSet.h']},'binarySha256':hashlib.sha256((o/'live').read_bytes()).hexdigest()}
+(o/'BUILD.json').write_text(json.dumps(record,indent=2)+'\n');print('v8 linked',record['compileSeconds'],flush=True)
+command=[str(o/'live'),str(r/'projects/physics_stress_lab/Scenes/room1024.judas'),str(o/'dense270'),'105','270','0','0','1','0.016666667','1','0','1'];record['commands'].append(command);start=time.monotonic()
+with(o/'dense270.log').open('w')as log:
+ try:p=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,cwd=r,timeout=65);record['exit']=p.returncode
+ except subprocess.TimeoutExpired:record['exit']='timeout65s'
+record['wallSeconds']=time.monotonic()-start;(o/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n');print(record['exit'],record['wallSeconds'],flush=True)

@@ -1,0 +1,3 @@
+PASS fresh process decodes checked snapshot envelope
+PASS fresh process builds shifted authored owners without rebaking
+FAIL fresh process restores actual liquid participants: cannot restore physical state after 3 checks

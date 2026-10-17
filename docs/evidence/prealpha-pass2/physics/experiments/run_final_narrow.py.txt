@@ -1,0 +1,19 @@
+from pathlib import Path
+import json,hashlib,shlex,subprocess,shutil,time
+r=Path.cwd();b=r/'.cache/prealpha-pass2/physics';o=b/'final-narrow';o.mkdir(exist_ok=True);flags=(r/'build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']:args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+record={'commands':[],'sources':{}}
+for name in ['src/CollisionGeometry.cpp','src/CollisionGeometry.h','src/PhysicsWorld.cpp','src/ImpactPairVisitSet.h','src/ReentrantQueryScratch.h','tests/CollisionWitnessTests.cpp']:
+ p=r/name;record['sources'][name]=hashlib.sha256(p.read_bytes()).hexdigest()
+for source,out in [('src/CollisionGeometry.cpp','CollisionGeometry.cpp.o'),('tests/CollisionWitnessTests.cpp','witness.o')]:
+ command=['/usr/bin/c++',*args,'-c',str(r/source),'-o',str(o/out)];record['commands'].append(command)
+ with(o/(out+'.build.log')).open('w')as log:subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True)
+a=o/'libjudas_engine.a';shutil.copyfile(b/'final-physics-v8/libjudas_engine.a',a);subprocess.run(['ar','r',str(a),str(o/'CollisionGeometry.cpp.o')],check=True)
+link=shlex.split((r/'build/CMakeFiles/judas_impact_mesh_cost_tests.dir/link.txt').read_text());objects=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):]
+for label,objs in [('witness',[str(o/'witness.o')]),('mesh',objects)]:
+ command=['/usr/bin/c++','-O3','-DNDEBUG',*objs,'-o',str(o/label),str(a),*libs[1:]];subprocess.run(command,cwd=r/'build',check=True);record['commands'].append(command)
+for label,cmd in [('witness',[str(o/'witness')]),('entry',[str(o/'mesh'),'1','trough','1.2','entry'])]:
+ start=time.monotonic()
+ with(o/(label+'.log')).open('w')as log:p=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=10)
+ record[label]={'exit':p.returncode,'seconds':time.monotonic()-start};print(label,p.returncode,flush=True)
+(o/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n')

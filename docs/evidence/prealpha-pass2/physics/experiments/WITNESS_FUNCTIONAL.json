@@ -1,0 +1,26 @@
+[
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/witness-baseline"
+    ],
+    "exit": 0,
+    "performanceScope": "functional-only during coordinated small diagnostic work",
+    "output": "checks 108001 positive 9574 negative 26426 contactDigest bcda068c12557e44 elapsedMs 337.768\n"
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/witness-v3"
+    ],
+    "exit": 0,
+    "performanceScope": "functional-only during coordinated small diagnostic work",
+    "output": "checks 108001 positive 9574 negative 26426 contactDigest bcda068c12557e44 elapsedMs 428.05\n"
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/witness-v4"
+    ],
+    "exit": 0,
+    "performanceScope": "functional-only during coordinated small diagnostic work",
+    "output": "checks 108001 positive 9574 negative 26426 contactDigest bcda068c12557e44 elapsedMs 282.102\n"
+  }
+]

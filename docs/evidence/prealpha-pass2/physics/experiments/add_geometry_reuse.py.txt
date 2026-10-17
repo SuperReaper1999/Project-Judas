@@ -1,0 +1,73 @@
+from pathlib import Path
+p=Path('src/PhysicsWorld.cpp');s=p.read_text()
+pos=s.index('    ContactManifold PairAt(')
+s=s[:pos]+'''    // Derived exact geometry, scoped to this fixed step. Dense impact cascades
+    // repeatedly discover the same pair at the same represented anchor pose.
+    // Velocity changes do not alter contact geometry. Never cache speculative
+    // margins, cooked/compound geometry or a Boolean miss's uncertainty.
+    struct ImpactContactMemo {
+        std::array<float,30> geometry{};
+        unsigned a=0,b=0,generationA=0,generationB=0;
+        std::uint64_t epoch=0;
+        bool valid=false;
+        ContactManifold manifold;
+    };
+    static constexpr std::size_t kImpactMemoEntries=4096;
+    std::vector<ImpactContactMemo> impactContactMemo;
+    std::uint64_t impactMemoEpoch=0;
+    std::size_t impactMemoHits=0,impactMemoStores=0;
+    ImpactContactMemo* ImpactMemo(unsigned a,unsigned b,int pa,int pb,double time,
+                                 const ImpactPoseSample& aa,const ImpactPoseSample& bb){
+        // Lazy allocation avoids an added cost in quiet/free-flight worlds.
+        if(stats.impactEvents<2||time!=impactQueryAnchorTime||pa||pb)return nullptr;
+        const auto eligible=[](const Shape& shape){return !shape.asset&&shape.pivotOffset==glm::vec3(0)&&
+            (shape.type==ShapeType::Box||shape.type==ShapeType::Sphere);};
+        if(!eligible(bodies[a].shape)||!eligible(bodies[b].shape))return nullptr;
+        const auto append=[](std::array<float,30>& key,unsigned offset,const Body& body,const RigidBody& pose){
+            const auto& q=pose.orientation;const auto& p=pose.position;const auto& c=pose.localCenter;
+            const auto& h=body.shape.halfExtents;
+            const std::array<float,15> value={p.x,p.y,p.z,q.w,q.x,q.y,q.z,c.x,c.y,c.z,h.x,h.y,h.z,body.shape.radius,float(body.shape.type)};
+            std::copy(value.begin(),value.end(),key.begin()+offset);
+        };
+        std::array<float,30> key{};append(key,0,bodies[a],aa.pose);append(key,15,bodies[b],bb.pose);
+        if(impactContactMemo.empty())impactContactMemo.resize(kImpactMemoEntries);
+        const auto hash=(std::uint64_t(a)*0x9e3779b185ebca87ull)^(std::uint64_t(b)*0xc2b2ae3d27d4eb4full);
+        auto& entry=impactContactMemo[hash&(kImpactMemoEntries-1)];
+        if(entry.epoch!=impactMemoEpoch||entry.a!=a||entry.b!=b||
+           entry.generationA!=bodies[a].generation||entry.generationB!=bodies[b].generation||
+           std::memcmp(entry.geometry.data(),key.data(),sizeof(key))!=0){
+            entry.epoch=impactMemoEpoch;entry.a=a;entry.b=b;
+            entry.generationA=bodies[a].generation;entry.generationB=bodies[b].generation;
+            entry.geometry=key;entry.valid=false;
+        }
+        return &entry;
+    }
+'''+s[pos:]
+a=s.index('    ContactManifold PairAt(');b=s.index('    // Deepest actual',a)
+s=s[:a]+'''    ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) {
+        PhysicsWorkTimer timer(work.geometry,work.active);
+        const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+        auto* memo=margin==0?ImpactMemo(a,b,pa,pb,time,aa,bb):nullptr;
+        if(memo&&memo->valid){++impactMemoHits;return memo->manifold;}
+        if(margin==0&&SimpleImpactBoundsSeparated(a,b,aa,bb))return {};
+        auto result=ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
+            PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation),margin,&*aa.orientation,&*bb.orientation);
+        if(memo){memo->manifold=result;memo->valid=true;++impactMemoStores;}
+        return result;
+    }
+'''+s[b:]
+a=s.index('    bool PairTouches(');b=s.index('        if(SimpleImpactBoundsSeparated',a)
+s=s[:b]+'''        if(auto* memo=ImpactMemo(a,b,pa,pb,time,aa,bb);memo&&memo->valid){
+            ++impactMemoHits;return memo->manifold.count>0;
+        }
+'''+s[b:]
+s=s.replace('        stepDuration=dt;impactQueryAnchorTime=0;', '''        stepDuration=dt;impactQueryAnchorTime=0;
+        if(++impactMemoEpoch==0){for(auto& entry:impactContactMemo)entry.epoch=0;++impactMemoEpoch;}
+        impactMemoHits=impactMemoStores=0;''')
+a=s.index('    JUDAS_PROFILE_COUNTER("Physics impact actual-bound rejections"')
+b=s.index('\n',a)
+s=s[:b]+'''
+    JUDAS_PROFILE_COUNTER("Physics impact geometry memo hits",double(w.impactMemoHits),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact geometry memo stores",double(w.impactMemoStores),ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact geometry memo bytes",double(w.impactContactMemo.capacity()*sizeof(PhysicsWorld::Impl::ImpactContactMemo)),ProfileCounterMode::Latest);'''+s[b:]
+p.write_text(s)

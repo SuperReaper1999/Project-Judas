@@ -1,0 +1,18 @@
+from pathlib import Path
+import shlex,subprocess,json,hashlib,time
+r=Path.cwd();b=r/'.cache/prealpha-pass2/physics';v=b/'batch-scratch-events-v7';o=b/'checks-v7';o.mkdir(exist_ok=True);record=[]
+def link(target,out,archive):
+ args=shlex.split((r/'build/CMakeFiles'/f'{target}.dir/link.txt').read_text());objs=[x for x in args if x.endswith('.o')];libs=args[args.index('libjudas_engine.a'):] if 'libjudas_engine.a' in args else [];cmd=['/usr/bin/c++','-O3','-DNDEBUG',*objs,'-o',str(out),*([str(archive),*libs[1:]] if libs else [x for x in args if not x.endswith('.o') and x.endswith('.a')])];subprocess.run(cmd,cwd=r/'build',check=True);return cmd
+for target in ['judas_collision_geometry_tests','judas_rigid_contact_tests','judas_impact_solver_tests','judas_impact_timing_tests','judas_impact_robustness_tests','judas_kinematic_tests','judas_ragdoll_tests','judas_post_consumer_ragdoll_tests','judas_sphere_impact_bounds_tests','judas_physics_continuation_tests','judas_character_motor_tests']:
+ if not(r/'build/CMakeFiles'/f'{target}.dir/link.txt').exists():record.append({'target':target,'status':'missing-existing-target'});continue
+ try:
+  cmd=link(target,o/target,v/'libjudas_engine.a');start=time.monotonic()
+  with (o/(target+'.log')).open('w') as log:result=subprocess.run([str(o/target)],stdout=log,stderr=subprocess.STDOUT,cwd=r,timeout=35)
+  row={'target':target,'exit':result.returncode,'seconds':time.monotonic()-start,'binarySha256':hashlib.sha256((o/target).read_bytes()).hexdigest(),'link':cmd}
+ except subprocess.TimeoutExpired:row={'target':target,'exit':'timeout35s'}
+ record.append(row);(o/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n');print(row['target'],row.get('exit',row.get('status')),flush=True)
+for label,args in [('entry',['1','trough','1.2','entry']),('full',['1','trough'])]:
+ start=time.monotonic()
+ with(o/(label+'.log')).open('w')as log:p=subprocess.run([str(v/'mesh'),*args],stdout=log,stderr=subprocess.STDOUT,cwd=r,timeout=30)
+ record.append({'target':'mesh-'+label,'args':args,'exit':p.returncode,'seconds':time.monotonic()-start});print(label,p.returncode,flush=True)
+(o/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n')

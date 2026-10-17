@@ -39,6 +39,27 @@ std::vector<glm::dvec4> convexPlanes(const LiquidGeometry& geometry){
 double surfaceQ(const LiquidState& s){return s.equilibrium.kind==GravityEquilibrium::Kind::Plane?s.q+glm::dot(glm::dquat(s.pose.rotation)*s.equilibrium.up,V(s.pose.position)):s.q;}
 }
 LiquidSystem::LiquidSystem():m_generation(generations.fetch_add(1)){}
+bool LiquidSystem::CanShiftOrigin(glm::dvec3 delta,std::string& error)const {
+ if(!std::isfinite(glm::dot(delta,delta))){error="nonfinite liquid origin translation";return false;}
+ auto inside=[&](V position){position-=delta;return std::isfinite(glm::dot(position,position))&&glm::length(position)<=8192.;};
+ for(const auto& [id,state]:m_states){
+  for(unsigned corner=0;corner<8;++corner){
+   V point(corner&1?state.maximum.x:state.minimum.x,
+           corner&2?state.maximum.y:state.minimum.y,
+           corner&4?state.maximum.z:state.minimum.z);
+   if(!inside(global(state.pose,point))){error="liquid owner "+std::to_string(state.entity)+" must remain inside the 8 km physics chart";return false;}
+  }
+ }
+ for(const auto& [id,parcel]:m_parcels)if(!inside(V(parcel.position))){error="detached liquid parcel "+std::to_string(id)+" must remain inside the 8 km physics chart";return false;}
+ error.clear();return true;
+}
+void LiquidSystem::ShiftOrigin(glm::dvec3 delta) {
+ for(auto& [id,state]:m_states)state.pose.position=glm::vec3(V(state.pose.position)-delta);
+ for(auto& [id,parcel]:m_parcels)parcel.position=glm::vec3(V(parcel.position)-delta);
+ // Optical cells contain derived world-space planes. Rebuild them lazily;
+ // immutable capacity geometry and all authoritative surface history stay local.
+ m_opticalCache.clear();
+}
 LiquidHandle LiquidSystem::Insert(LiquidState state,std::string& error){if(m_entities.count(state.entity)){error="duplicate liquid owner";return {};}if(!std::isfinite(state.volume+state.capacity+state.material.density)||state.material.id.empty()||state.material.density<=0||state.capacity<=0||state.volume<0||state.volume>state.capacity+1e-12){error="initial liquid exceeds capacity";return {};}if(m_density.count(state.material.id)&&m_density[state.material.id]!=state.material.density){error="material identity has contradictory density";return {};}state.handle={m_next++,m_generation};m_density[state.material.id]=state.material.density;m_expected[state.material.id]+=state.volume;auto h=state.handle;Resolve(state);m_entities[state.entity]=h;m_states[h.id]=std::move(state);return h;}
 LiquidHandle LiquidSystem::AddBasin(SceneObjectId entity,const LiquidBasinSettings& a,const SceneTransform& pose,std::shared_ptr<const LiquidBasinData> data,std::string& error){if(!data||data->curve.empty()){error="missing capacity data";return {};}LiquidState s;s.entity=entity;s.enabled=a.enabled;s.material=a.material;s.volume=a.initialVolume;s.capacity=data->capacity;s.geometry=data->geometry;s.equilibrium=data->equilibrium;s.basin=data;s.pose=pose;if(data->dynamicSurface)s.dynamicSurface=std::make_shared<LiquidSurface>(data->dynamicSurface,a.initialVolume);return Insert(std::move(s),error);}
 LiquidHandle LiquidSystem::AddContainer(SceneObjectId entity,const LiquidContainerSettings& a,const SceneTransform& p,const LiquidGeometry& g,const GravityEquilibrium& e,std::string& error){if(!ValidateLiquidGeometry(g,error))return {};if(!std::isfinite(e.magnitude)||e.magnitude<=0){error="container requires nonzero gravity";return {};}if(a.opening.size()<3){error="opening needs a polygon";return {};}V n=glm::cross(a.opening[1]-a.opening[0],a.opening[2]-a.opening[0]);if(glm::length(n)<1e-10){error="degenerate container opening";return {};}n=glm::normalize(n);double sign=0;for(auto& t:g.cells)for(V p:t){double d=glm::dot(n,p-a.opening[0]);if(std::abs(d)<1e-8)continue;if(sign&&d*sign<0){error="opening must be an exterior cavity face";return {};}sign=d;}for(V p:a.opening)if(std::abs(glm::dot(n,p-a.opening[0]))>1e-7){error="opening must be planar";return {};}double turn=0;for(size_t i=0;i<a.opening.size();++i){V u=a.opening[(i+1)%a.opening.size()]-a.opening[i],v=a.opening[(i+2)%a.opening.size()]-a.opening[(i+1)%a.opening.size()];double d=glm::dot(glm::cross(u,v),n);if(std::abs(d)<1e-10)continue;if(turn&&d*turn<0){error="opening must be convex and ordered";return {};}turn=d;}LiquidState s;s.entity=entity;s.container=true;s.enabled=a.enabled;s.material=a.material;s.volume=a.initialVolume;s.pose=p;s.equilibrium=localized(e,p);s.equilibrium.kind=GravityEquilibrium::Kind::Plane;s.equilibrium.up=glm::inverse(glm::dquat(p.rotation))*e.Up(V(p.position));s.geometry=g;s.containerSettings=a;for(auto& t:g.cells){auto q=coordinates(t,s.equilibrium);s.capacity+=LiquidClip(t,q,*std::max_element(q.begin(),q.end())).volume;}return Insert(std::move(s),error);}

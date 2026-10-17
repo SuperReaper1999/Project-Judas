@@ -50,7 +50,19 @@ M91's matched measurements and physical checks are in the
 improved in the measured failure region, but isolated stalls remain. It is not a
 60 Hz certification. The default room is the practical watch-tour demonstration;
 press **3** deliberately to inspect the worst case. No body is frozen or removed
-to improve the result. M91 human acceptance is pending.
+to improve the result. M91 was human accepted at the checkpoint recorded in the
+[current architecture](../../docs/ARCHITECTURE.md#m91-collision-continuity-retained).
+Pre-Alpha changes remain pending separate human acceptance.
+
+## Pre-Alpha Pass2
+
+[Matched Pass2 evidence](../../docs/evidence/prealpha-pass2/physics/REPORT.md)
+retains the same 1,024-piece workload and every measured trajectory digest.
+Query/event scratch and whole-world teardown improve selected costs; the extreme
+pile still has multi-second fixed steps and is not 60 Hz certified. A separate
+curved-mesh first-arrival repair passes its asserting contract, while later
+one-sided-sheet continuation remains a documented failure. The lab never changes
+physics quality to hide these limits.
 
 ## Project organization
 

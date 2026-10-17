@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "suite": "prealpha-distribution",
+  "tests": 15,
+  "failures": 1,
+  "errors": 3,
+  "passed": false,
+  "scope": "Independent binary/APK fixtures and I/O failure injection; no native runtime/hardware claim"
+}

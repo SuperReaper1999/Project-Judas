@@ -1,0 +1,13 @@
+{
+  "revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "startedUtc": "2026-10-17T22:56:51.284036+00:00",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpuCount": 8,
+  "source": {
+    "src/PhysicsWorld.cpp": "841e67e25d9bae1bad9e11daf88169c43bc2a29d9eea281ae3b159d1aa73f467",
+    "src/CollisionGeometry.cpp": "7af819b59e19a6fdf0bcf217134177819f867d74d04f2ae81599268e98a00393",
+    "src/CollisionGeometry.h": "3c4ef5b5181b6cfa30b8e3ec04f6acdbdcb57604f844f27204426002c047b269",
+    "tests/ImpactMeshCostTests.cpp": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+  },
+  "binarySha256": "d458fcb3c47b2def6dfc84692fb02a4db3a6d75c3c257fac1f18d53149752d2c"
+}

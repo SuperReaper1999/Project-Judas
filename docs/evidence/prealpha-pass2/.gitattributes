@@ -1,0 +1,2 @@
+# Preserve exact raw receipts, including Windows CRLF, for recorded SHA-256s.
+* -text

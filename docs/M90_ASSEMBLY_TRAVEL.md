@@ -100,9 +100,10 @@ asset IDs. Its authored JS is kept separately and is not overwritten by the tool
 
 - One shared local chart, checked at 8 km; absolute anchors are finite and bounded
   to 1e12 m. This does not enable simultaneous widely separated active physics.
-- Conserved liquids, legacy PBF, atmosphere and combustion still reject live
-  shifts. Their numerical/state contracts were not changed. FLU-001 and
-  independent fluid research remain untouched.
+- M90 originally rejected conserved liquids, legacy PBF, atmosphere and combustion.
+  Pre-Alpha Pass2 adds bounded conserved-owner/parcel and analytic gas/thermal
+  carrier translation; see [current composition support](PREALPHA.md).
+  Legacy PBF remains rejected. FLU-001 and independent fluid research are untouched.
 - Planet collision retains one bounded focus; the lab prepares ahead and brakes
   if collision is not ready. It does not silently drive through missing terrain.
 - Pending streaming blocks a shift; large travel still requires residency policy.

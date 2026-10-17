@@ -1,0 +1,21 @@
+from pathlib import Path
+import concurrent.futures,datetime,hashlib,json,shlex,shutil,subprocess,sys,time
+root=Path.cwd();scratch=root/'.cache/prealpha-pass2/physics';label=sys.argv[1];out=scratch/label;out.mkdir(exist_ok=False)
+flags=(root/'build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']: args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+record={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':{},'commands':[]}
+for name in ['PhysicsWorld.cpp','CollisionGeometry.cpp','CollisionGeometry.h']:
+    source=root/'src'/name;(out/name).write_bytes(source.read_bytes());record['source'][name]=hashlib.sha256(source.read_bytes()).hexdigest()
+
+def compile_one(name):
+    command=['/usr/bin/c++',*args,'-c',str(root/'src'/name),'-o',str(out/(name+'.o'))]
+    with (out/(name+'.build.log')).open('w') as log: subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True)
+    return command
+start=time.monotonic()
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+    record['commands']+=list(pool.map(compile_one,['PhysicsWorld.cpp','CollisionGeometry.cpp']))
+archive=out/'libjudas_engine.a';shutil.copyfile(scratch/'libjudas_engine-baseline.a',archive)
+command=['ar','r',str(archive),str(out/'PhysicsWorld.cpp.o'),str(out/'CollisionGeometry.cpp.o')];subprocess.run(command,check=True);record['commands'].append(command)
+link=shlex.split((root/'build/CMakeFiles/judas_impact_mesh_cost_tests.dir/link.txt').read_text());objects=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):]
+command=['/usr/bin/c++','-O3','-DNDEBUG',*objects,'-o',str(out/'mesh'),str(archive),*libs[1:]];subprocess.run(command,cwd=root/'build',check=True);record['commands'].append(command)
+record['binarySha256']=hashlib.sha256((out/'mesh').read_bytes()).hexdigest();record['buildSeconds']=time.monotonic()-start;(out/'BUILD.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({'label':label,'buildSeconds':record['buildSeconds'],'binarySha256':record['binarySha256']}),flush=True)

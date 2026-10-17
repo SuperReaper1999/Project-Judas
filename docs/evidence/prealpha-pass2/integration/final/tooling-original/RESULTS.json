@@ -1,0 +1,41 @@
+{
+  "utc": "2026-10-17T23:48:22.106344+00:00",
+  "results": [
+    {
+      "name": "cmake",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_cmake_test_targets.py",
+        "-v"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.2126111760007916,
+      "logSha256": "85d0e04067b7a27297a2ebc4110a2d5896ed8144c98ec815885b08f441a0a4b5"
+    },
+    {
+      "name": "validation",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prealpha_validation.py",
+        "-v"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 1,
+      "seconds": 0.4834712629999558,
+      "logSha256": "d383979b4ac71eb11c4f6ae218811187cc4a7e9dfbce3addd8f580e61579b245"
+    }
+  ]
+}

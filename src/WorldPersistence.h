@@ -24,6 +24,8 @@ public:
  static bool CaptureKinematic(RuntimeWorld&,uint64_t,std::string&,std::string&);
  static bool RestoreKinematic(RuntimeWorld&,uint64_t,const std::string&,std::string&,glm::dvec3 capturedOriginDelta={});
 private:
+ static bool IncludesEntity(const RuntimeWorld&,uint64_t);
+ static bool CapturePrepared(RuntimeWorld&,std::map<std::string,SaveChunk>&,std::string&);
  static void Entities(RuntimeWorld&,SaveArchive&);
  static void Motors(RuntimeWorld&,SaveArchive&);
  static void Wheels(RuntimeWorld&,SaveArchive&);

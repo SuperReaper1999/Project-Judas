@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "argv": [
+    "python3",
+    "tools/build_android.py",
+    "projects/connected_workshop/connected_workshop.judasproj",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk",
+    "--cache",
+    ".cache/m88",
+    "--abis",
+    "arm64-v8a",
+    "--jobs",
+    "2",
+    "--icu-host-tools",
+    ".cache/m88/android-x86_64/unicode/host/src/judas_icu_host-build",
+    "--channel",
+    "Experimental",
+    "--exporter",
+    "build/judas_export",
+    "--desktop-runtime",
+    "build/judas",
+    "--id",
+    "org.projectjudas.connectedworkshop.prealpha",
+    "--name",
+    "Connected Workshop Pre-Alpha",
+    "--version-code",
+    "2",
+    "--version-name",
+    "prealpha-pass2"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "sourceRevision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "startedUtc": "2026-10-17T23:51:52.810550+00:00",
+  "scope": "Actual arm64 native rebuild and development signing/content verification; no installation, emulator or hardware pass",
+  "timeoutSeconds": 1200,
+  "environmentOverrides": {
+    "JAVA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17",
+    "PATHPrefix": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17/bin"
+  }
+}

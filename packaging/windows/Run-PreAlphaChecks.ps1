@@ -1,6 +1,6 @@
-# Run only in the isolated extracted PreAlphaPass1 directory. No VM configuration,
+# Run only in an isolated extracted task directory. No VM configuration,
 # existing Source/Build directory, dependency installation or GPU claim is involved.
-param([string]$WorkRoot = 'C:\JudasValidation\PreAlphaPass1')
+param([string]$WorkRoot = 'C:\JudasValidation\PreAlphaPass2')
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $source = Join-Path $WorkRoot 'Source'
@@ -41,6 +41,21 @@ try {
     Invoke-Checked 'build-identity' "$build\Release\judas_build_identity_tests.exe" @()
     Invoke-Checked 'network-transport' "$build\Release\judas_network_transport_tests.exe" @()
     Invoke-Checked 'binary-identity' "$build\Release\judas_build_identity_tests.exe" @('--build-info-json')
+    Invoke-Checked 'distribution-controls' 'C:\JudasValidation\Python\python.exe' @("$source\scripts\prealpha_distribution_checks.py", '--output', "$logs\distribution.json")
+    # Inspect the actual native executables, separately from the independent
+    # synthetic PE fixtures. This is not a full SDK dependency-closure claim.
+    $python = @'
+import json, pathlib, sys
+sys.path.insert(0, sys.argv[1])
+from binary_dependencies import inspect
+files = [pathlib.Path(path) for path in sys.argv[3:]]
+result = {str(path): inspect(path.read_bytes()) for path in files}
+assert all(value['format'] == 'PE32+' and value['machine'] == 0x8664 for value in result.values())
+pathlib.Path(sys.argv[2]).write_text(json.dumps(result, indent=2) + '\n')
+'@
+    $probe = Join-Path $logs 'inspect-native.py'
+    [IO.File]::WriteAllText($probe, $python)
+    Invoke-Checked 'native-pe-metadata' 'C:\JudasValidation\Python\python.exe' @($probe, "$source\tools", "$logs\native-pe.json", "$build\Release\judas_build_identity_tests.exe", "$build\Release\judas_network_transport_tests.exe")
     $report.binaries = @{}
     foreach ($name in @('judas_build_identity_tests.exe', 'judas_network_transport_tests.exe')) {
         $report.binaries[$name] = (Get-FileHash "$build\Release\$name" -Algorithm SHA256).Hash.ToLowerInvariant()

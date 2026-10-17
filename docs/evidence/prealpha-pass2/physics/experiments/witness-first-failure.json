@@ -1,0 +1,6 @@
+{
+  "status": "compile-failed",
+  "cause": "Test driver omitted required Shape::Cooked asset identity argument",
+  "stderrExcerpt": "error: no matching function for call to Shape::Cooked(std::shared_ptr<CollisionAsset>)",
+  "preservedSource": "WitnessConformanceTests.first-failed.cpp.txt"
+}

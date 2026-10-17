@@ -1,0 +1,421 @@
+{
+  "schema": 1,
+  "createdUtc": "2026-10-17T23:35:48.506975+00:00",
+  "copied_files": [
+    {
+      "source": ".cache/prealpha-pass2/integration/ORIGIN_BASELINE.json",
+      "path": "baseline/ORIGIN_BASELINE.json",
+      "bytes": 3676,
+      "sha256": "228b318571befa36fa7827be11f0ad1f06a474216210d39f741ac65efe6f8834"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/CAPTURE_BASELINE.json",
+      "path": "baseline/CAPTURE_BASELINE.json",
+      "bytes": 3645,
+      "sha256": "b97a78e8908d5b86f10269361b0d8d5eb77ff38ea4fc22b20f980adbe73c3dd5"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-before.cpp",
+      "path": "probes/origin-before.cpp",
+      "bytes": 845,
+      "sha256": "efe8e69f071b3b46e655d868d4ffac4eb008ab5f53373902f1e044175749d3ef"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/capture-before.cpp",
+      "path": "probes/capture-before.cpp",
+      "bytes": 707,
+      "sha256": "663fda4bf65b331d5e586dd280dd37b418ca9e5c5a87f0d23c22ca9d234cc4f2"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/equivalence-before.cpp",
+      "path": "probes/equivalence-before.cpp",
+      "bytes": 597,
+      "sha256": "d5d0361a42234127977b0558b63611bb168341cb086bafb42ef6fc700535a529"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/quat-probe.cpp",
+      "path": "probes/quat-probe.cpp",
+      "bytes": 359,
+      "sha256": "98d849f272db52c645c8aab73bcec103d321c112d839eedaacae6286b5e68816"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-before.log",
+      "path": "baseline/run-before.log",
+      "bytes": 400,
+      "sha256": "9e662405582ed2f8cf6e4053f1bffd1ab9908d4a4ca4b40ae927a20dc2b7701f"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-capture-before.log",
+      "path": "baseline/run-capture-before.log",
+      "bytes": 137,
+      "sha256": "baeee28c21badca4c5f19d410c61cc0026f90e7609633bd2d651262986da3bd9"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/equivalence-before.log",
+      "path": "baseline/equivalence-before.log",
+      "bytes": 87,
+      "sha256": "33222208e057935e39210e28dc5a87f9dc0ef3c1740981d47c7e19ae13a93358"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/compile-before.log",
+      "path": "baseline/compile-before.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/link-before.log",
+      "path": "baseline/link-before.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/compile-capture-before.log",
+      "path": "baseline/compile-capture-before.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/link-capture-before.log",
+      "path": "baseline/link-capture-before.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-1.log",
+      "path": "diagnostic/run-origin-1.log",
+      "bytes": 1464,
+      "sha256": "638cbebbf4c8204b988d6dbfcebf5d0bb764a97fdd38bc87eed119224ed0dc32"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-2.log",
+      "path": "diagnostic/run-origin-2.log",
+      "bytes": 94,
+      "sha256": "b8fd3253f4a4d490811c46326bb867966fdd4aaaf0514857c985bcb60e26bb60"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-3.log",
+      "path": "diagnostic/run-origin-3.log",
+      "bytes": 1539,
+      "sha256": "8f017665e73526983b1de0673183d82bafc1c6299218131231daf22b0be216b5"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-4.log",
+      "path": "diagnostic/run-origin-4.log",
+      "bytes": 1636,
+      "sha256": "dc453f41b6446ea505ee2080b7036c0581be4e8feccc324c90981207a6120630"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-5.log",
+      "path": "diagnostic/run-origin-5.log",
+      "bytes": 687,
+      "sha256": "5b740502f4ab57631d0e563e7dea4d9b520d56f06f30e8771d485e990ac5c40f"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-6.log",
+      "path": "diagnostic/run-origin-6.log",
+      "bytes": 772,
+      "sha256": "1d5eefa1608747a3db3f47cafe4c08ee920adb2f5930c576268dfa1d738c1b9d"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-7.log",
+      "path": "diagnostic/run-origin-7.log",
+      "bytes": 3994,
+      "sha256": "6ee313d1dfe67bd8ad4220ca4b9c0cfd991a038e989f24d8f24f36d6b59b39e8"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-8.log",
+      "path": "diagnostic/run-origin-8.log",
+      "bytes": 5435,
+      "sha256": "e073077fbea238d2ef455bbf2a24100abbbb5575b195d8eae8996c80c0e96e15"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-origin-9.log",
+      "path": "diagnostic/run-origin-9.log",
+      "bytes": 5435,
+      "sha256": "e073077fbea238d2ef455bbf2a24100abbbb5575b195d8eae8996c80c0e96e15"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-cold-debug.log",
+      "path": "diagnostic/run-cold-debug.log",
+      "bytes": 221,
+      "sha256": "37b847c07d22d5c01a7d1f533413e9b0a4fceb7aa6afa9b5b8bac1ba3064d0f7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-first-project-1.log",
+      "path": "diagnostic/run-first-project-1.log",
+      "bytes": 1414,
+      "sha256": "b4ca9e1ed8c7431b26a2ae7873e8465a8f636139f718d636bcc9f7d2b9185f8f"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/run-lifecycle-1.log",
+      "path": "diagnostic/run-lifecycle-1.log",
+      "bytes": 2076,
+      "sha256": "67870b02444a588e2cbbc1ab6f79b84d0342156225b5a75853cbbd0a908aa27f"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/configure-diagnostic.log",
+      "path": "diagnostic/configure-diagnostic.log",
+      "bytes": 911,
+      "sha256": "a9c9c428f3491e09b91c0e36f6f1d131458b47c3e17a9f6ae15678bed241122c"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/build-diagnostic.log",
+      "path": "diagnostic/build-diagnostic.log",
+      "bytes": 75,
+      "sha256": "eeab88e62c2ad0a561c1fa645248d42968d4d8ed7a5ad9a1cda728e2a827c4ab"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/api-drift.log",
+      "path": "diagnostic/api-drift.log",
+      "bytes": 249,
+      "sha256": "2bb956c4f80ebd387fed20fa326e59b092712211479a1bcd68896b609b9ef856"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/typescript-tooling.log",
+      "path": "diagnostic/typescript-tooling.log",
+      "bytes": 893,
+      "sha256": "0950675ce230f7ea0684e800bde30ccc47c3c4fabc8c7c5c1abca64f260035d7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/2.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/2.judasbasin",
+      "bytes": 53217,
+      "sha256": "11606b8e91bc2c6c9a3c7fe0d7864f1b09e44fb57da5005b5a091d9b8278e1be"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/2.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/2.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "b3e3892b398e1c7d2e3ee274252f10d4b08c1be2b18dfea84e5d2a1413c096d8"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/3.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/3.judasbasin",
+      "bytes": 53277,
+      "sha256": "8fa5440123909bccf049ebc6d99f12f858b63b65db2afd5cf42375d7a9ccde91"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/3.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/3.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "28c5a745250ad6748f9b59f0ced705ace335d92bdfa76556ccdee7c15b2ebfc7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/basin.judascavity",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/basin.judascavity",
+      "bytes": 189,
+      "sha256": "d59c7c3e8baf6879c650ac65e3b2577eac96a88e428f26485728a95a4d18d8b4"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/basin.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/basin.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "63855b1e95eab84284005d76d8d811154af579e122fb9042f72088b816b235da"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/cup.judascavity",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/cup.judascavity",
+      "bytes": 1497,
+      "sha256": "0e144785126cf73f24e81bff9ded4ce3cb20b3d95692245a4b2b7077394c39d0"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-1/uniform/Assets/cup.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-1/Assets/cup.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "602f05a8b0324e5523ebb46734f1ccd5b8a5ac37975d8f824a69029d47829d8b"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/2.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/2.judasbasin",
+      "bytes": 53217,
+      "sha256": "11606b8e91bc2c6c9a3c7fe0d7864f1b09e44fb57da5005b5a091d9b8278e1be"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/2.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/2.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "b3e3892b398e1c7d2e3ee274252f10d4b08c1be2b18dfea84e5d2a1413c096d8"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/3.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/3.judasbasin",
+      "bytes": 53277,
+      "sha256": "8fa5440123909bccf049ebc6d99f12f858b63b65db2afd5cf42375d7a9ccde91"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/3.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/3.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "28c5a745250ad6748f9b59f0ced705ace335d92bdfa76556ccdee7c15b2ebfc7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/basin.judascavity",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/basin.judascavity",
+      "bytes": 189,
+      "sha256": "d59c7c3e8baf6879c650ac65e3b2577eac96a88e428f26485728a95a4d18d8b4"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/basin.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/basin.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "63855b1e95eab84284005d76d8d811154af579e122fb9042f72088b816b235da"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/cup.judascavity",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/cup.judascavity",
+      "bytes": 1497,
+      "sha256": "0e144785126cf73f24e81bff9ded4ce3cb20b3d95692245a4b2b7077394c39d0"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-3/uniform/Assets/cup.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-3/Assets/cup.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "602f05a8b0324e5523ebb46734f1ccd5b8a5ac37975d8f824a69029d47829d8b"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/2.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/2.judasbasin",
+      "bytes": 53217,
+      "sha256": "11606b8e91bc2c6c9a3c7fe0d7864f1b09e44fb57da5005b5a091d9b8278e1be"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/2.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/2.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "b3e3892b398e1c7d2e3ee274252f10d4b08c1be2b18dfea84e5d2a1413c096d8"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/3.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/3.judasbasin",
+      "bytes": 53277,
+      "sha256": "8fa5440123909bccf049ebc6d99f12f858b63b65db2afd5cf42375d7a9ccde91"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/3.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/3.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "28c5a745250ad6748f9b59f0ced705ace335d92bdfa76556ccdee7c15b2ebfc7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/basin.judascavity",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/basin.judascavity",
+      "bytes": 189,
+      "sha256": "d59c7c3e8baf6879c650ac65e3b2577eac96a88e428f26485728a95a4d18d8b4"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/basin.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/basin.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "63855b1e95eab84284005d76d8d811154af579e122fb9042f72088b816b235da"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/cup.judascavity",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/cup.judascavity",
+      "bytes": 1497,
+      "sha256": "0e144785126cf73f24e81bff9ded4ce3cb20b3d95692245a4b2b7077394c39d0"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-4/uniform/Assets/cup.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-4/Assets/cup.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "602f05a8b0324e5523ebb46734f1ccd5b8a5ac37975d8f824a69029d47829d8b"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/2.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/2.judasbasin",
+      "bytes": 34692,
+      "sha256": "1683e73fdae675feb43b092a6ab384c9c07a64f6d8e547d14714ca3ab9e05220"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/2.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/2.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "b3e3892b398e1c7d2e3ee274252f10d4b08c1be2b18dfea84e5d2a1413c096d8"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/3.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/3.judasbasin",
+      "bytes": 34731,
+      "sha256": "46f11bed87fc63bfbe1ffc596bd615a6f3776e98339e3d314699539e93c85769"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/3.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/3.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "28c5a745250ad6748f9b59f0ced705ace335d92bdfa76556ccdee7c15b2ebfc7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/basin.judascavity",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/basin.judascavity",
+      "bytes": 189,
+      "sha256": "d59c7c3e8baf6879c650ac65e3b2577eac96a88e428f26485728a95a4d18d8b4"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/basin.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/basin.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "63855b1e95eab84284005d76d8d811154af579e122fb9042f72088b816b235da"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/cup.judascavity",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/cup.judascavity",
+      "bytes": 1497,
+      "sha256": "0e144785126cf73f24e81bff9ded4ce3cb20b3d95692245a4b2b7077394c39d0"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-5/uniform/Assets/cup.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-5/Assets/cup.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "602f05a8b0324e5523ebb46734f1ccd5b8a5ac37975d8f824a69029d47829d8b"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/2.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/2.judasbasin",
+      "bytes": 34692,
+      "sha256": "1683e73fdae675feb43b092a6ab384c9c07a64f6d8e547d14714ca3ab9e05220"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/2.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/2.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "b3e3892b398e1c7d2e3ee274252f10d4b08c1be2b18dfea84e5d2a1413c096d8"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/3.judasbasin",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/3.judasbasin",
+      "bytes": 34731,
+      "sha256": "46f11bed87fc63bfbe1ffc596bd615a6f3776e98339e3d314699539e93c85769"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/3.judasbasin.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/3.judasbasin.judasmeta",
+      "bytes": 94,
+      "sha256": "28c5a745250ad6748f9b59f0ced705ace335d92bdfa76556ccdee7c15b2ebfc7"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/basin.judascavity",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/basin.judascavity",
+      "bytes": 189,
+      "sha256": "d59c7c3e8baf6879c650ac65e3b2577eac96a88e428f26485728a95a4d18d8b4"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/basin.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/basin.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "63855b1e95eab84284005d76d8d811154af579e122fb9042f72088b816b235da"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/cup.judascavity",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/cup.judascavity",
+      "bytes": 1497,
+      "sha256": "0e144785126cf73f24e81bff9ded4ce3cb20b3d95692245a4b2b7077394c39d0"
+    },
+    {
+      "source": ".cache/prealpha-pass2/integration/origin-run-6/uniform/Assets/cup.judascavity.judasmeta",
+      "path": "failed-bake-fixtures/origin-run-6/Assets/cup.judascavity.judasmeta",
+      "bytes": 100,
+      "sha256": "602f05a8b0324e5523ebb46734f1ccd5b8a5ac37975d8f824a69029d47829d8b"
+    }
+  ],
+  "excluded": "Executables, objects, static/shared libraries, existing build/cache trees and unrelated assets are not copied. Small .judasbasin data assets are exact failed reproduction inputs, not executable binaries."
+}

@@ -1,0 +1,11 @@
+from pathlib import Path
+import hashlib,json,shlex,subprocess
+root=Path.cwd();out=root/'.cache/prealpha-pass2/physics';source=out/'WitnessConformanceTests.cpp';flags=Path('build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']:args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+commands=[];command=['/usr/bin/c++',*args,'-c',str(source),'-o',str(out/'witness.o')];commands.append(command)
+with (out/'witness-build.log').open('w') as log:subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,check=True)
+link=shlex.split(Path('build/CMakeFiles/judas_impact_mesh_cost_tests.dir/link.txt').read_text());libs=link[link.index('libjudas_engine.a'):]
+for label,archive in [('baseline',out/'libjudas_engine-baseline.a'),('v3',out/'batch-planes-v3/libjudas_engine.a'),('v4',out/'scratch-v4/libjudas_engine.a')]:
+    command=['/usr/bin/c++','-O3','-DNDEBUG',str(out/'witness.o'),'-o',str(out/('witness-'+label)),str(archive),*libs[1:]];commands.append(command);subprocess.run(command,cwd=root/'build',check=True)
+(out/'WITNESS_BUILD.json').write_text(json.dumps({'commands':commands,'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'objectSha256':hashlib.sha256((out/'witness.o').read_bytes()).hexdigest(),'binaries':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.glob('witness-*') if p.is_file() and p.suffix==''}},indent=2)+'\n')
+print('Three same-driver witness conformance binaries ready')

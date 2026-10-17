@@ -1,0 +1,31 @@
+[
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/batch-v1/mesh",
+      "1",
+      "trough",
+      "1.2",
+      "entry"
+    ],
+    "exit": 0,
+    "seconds": 0.3145795079999516
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/batch-v1/mesh",
+      "1",
+      "trough"
+    ],
+    "exit": 1,
+    "seconds": 1.1663333800006512
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/batch-v1/mesh",
+      "60",
+      "trough"
+    ],
+    "exit": 1,
+    "seconds": 3.4730312419997063
+  }
+]

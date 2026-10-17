@@ -1,0 +1,14 @@
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1590:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1590 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1590:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1590 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1607:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1607 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1607:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1607 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^

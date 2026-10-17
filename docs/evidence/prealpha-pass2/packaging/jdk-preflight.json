@@ -1,0 +1,15 @@
+{
+  "cached_complete_jdk": {
+    "passed": true,
+    "tools": {
+      "java": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17/bin/java",
+      "javac": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17/bin/javac",
+      "keytool": "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17/bin/keytool"
+    },
+    "version": "javac 17.0.20.1"
+  },
+  "system_jre": {
+    "passed": false,
+    "error": "A complete JDK is required; set JAVA_HOME/PATH to JDK 17+ (a JRE is insufficient)"
+  }
+}

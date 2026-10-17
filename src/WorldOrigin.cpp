@@ -18,13 +18,18 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin,std::string& error)const {
  for(auto body:m_physics.AliveBodies())if(glm::length(glm::dvec3(m_physics.GetTransform(body).position)-delta)>8192){error="live collision body must be retired before leaving the 8 km physics chart";return false;}
  // These are ownership restrictions, not a request to silently drop state.
  // Name the actual blocker so projects can retire it before retrying.
- if(m_hasLiquid){error="active conserved liquid has no live-origin contract; unload its reservoir/container owners before changing origin";return false;}
+ if(m_liquid&&!m_liquid->CanShiftOrigin(delta,error))return false;
  if(!m_fluidVolumes.empty()){error="active legacy fluid has no live-origin contract; unload its fluid owners before changing origin";return false;}
  if(m_emittedParticles){error="active emitted liquid particles have no live-origin contract; retire them before changing origin";return false;}
- if(m_atmosphere){error="active atmosphere has no live-origin contract; unload its owner before changing origin";return false;}
- if(!m_combustibles.empty()){error="active combustion has no live-origin contract; unload its owners before changing origin";return false;}
  for(const auto& [id,o]:m_scriptDefinitions){
   if(!RuntimeDefinition(id))continue;
+  // A liquid-only actor may have no rigid/render proxy yet. Until its actual
+  // cavity is published we cannot certify the complete volume's chart bounds.
+  if(delta!=glm::dvec3(0)&&(o.liquidBasin||o.liquidContainer)&&
+     (!m_liquid||!m_liquid->Handle(id).id)){
+   error="entity "+std::to_string(id)+" liquid geometry not published; prepare liquid resources before changing origin";
+   return false;
+  }
   if(o.body||o.characterMotor||o.render||o.light||o.renderCamera){
    auto p=glm::dvec3(o.transform.position);
    const auto body=RuntimeBody(id);if(body.IsValid())p=glm::dvec3(m_physics.GetTransform(body).position);
@@ -59,6 +64,10 @@ bool RuntimeWorld::CommitOrigin(){
  }
  m_pendingOrigin.reset();
  m_physics.ShiftOrigin(delta);
+ if(m_liquid)m_liquid->ShiftOrigin(delta);
+ if(m_atmosphere)shift(m_atmosphere->frame.originPosition);
+ // Combustion owns thermal scalars and generation-safe body handles, not a
+ // second copy of body positions. Those handles survive the physics shift.
  for(auto& [_,o]:m_scriptDefinitions){if(!o.planet)shift(o.transform.position);TranslateOriginIntent(o,delta);}
  for(auto& o:m_hierarchy.Objects()){if(!o.parent&&!o.planet)shift(o.transform.position);TranslateOriginIntent(o,delta);}
  for(auto* collection:{&m_entities,&m_extraEntities})for(auto& e:*collection){if(!e.definition.planet){shift(e.definition.transform.position);shift(e.state.position);}TranslateOriginIntent(e.definition,delta);}

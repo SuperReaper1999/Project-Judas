@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "kind": "judas-android-verification",
+  "passed": true,
+  "sha256": "43b76986b69c66fbef3a37152eda9c82890a0ef2290a499af4c52163ed14569a",
+  "bytes": 53484213,
+  "engine": {
+    "arm64-v8a": {
+      "architecture": "arm64-v8a",
+      "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-7a0361d95237-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "Clang",
+      "compiler_version": "19.0.1",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Android",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "7a0361d952377e46966122565e9c9c26d2305d1c041dc36a9a1a9d82dc0c5014",
+      "source_origin": "git",
+      "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+      "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "contentFiles": 21,
+  "contentBytes": 2261535,
+  "native": {
+    "lib/arm64-v8a/libSDL2.so": {
+      "format": "ELF64",
+      "machine": 183,
+      "needed": [
+        "libGLESv1_CM.so",
+        "libGLESv2.so",
+        "libOpenSLES.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libc.so",
+        "libdl.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC",
+          "LIBC_N"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ],
+        "libm.so": [
+          "LIBC"
+        ]
+      },
+      "search_paths": [],
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libc++_shared.so": {
+      "format": "ELF64",
+      "machine": 183,
+      "needed": [
+        "libc.so",
+        "libdl.so",
+        "libm.so"
+      ],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ]
+      },
+      "search_paths": [],
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libmain.so": {
+      "format": "ELF64",
+      "machine": 183,
+      "needed": [
+        "libGLESv3.so",
+        "libSDL2.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libc.so",
+        "libdl.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC",
+          "LIBC_N"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ],
+        "libm.so": [
+          "LIBC"
+        ]
+      },
+      "search_paths": [],
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    }
+  },
+  "shippedNative": [
+    {
+      "bytes": 49058392,
+      "path": "lib/arm64-v8a/libmain.so",
+      "sha256": "64c15443f65558f5546470f244f925ca13e94a1a5f8b6657100622bd9518d225"
+    },
+    {
+      "bytes": 1257024,
+      "path": "lib/arm64-v8a/libSDL2.so",
+      "sha256": "88190d99f493db104a691c2217f7220956362e37fabcf2105df640bc85cc586a"
+    },
+    {
+      "bytes": 1253544,
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    }
+  ],
+  "scope": "ZIP/content/native-byte/ELF verification only; signatures, ZIP alignment and device execution are separate",
+  "androidTools": {
+    "signature": {
+      "argv": [
+        "/home/conner/Android/Sdk/build-tools/36.0.0/apksigner",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        ".cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk"
+      ],
+      "exit": 0,
+      "logSha256": "38f8cd54072823b6ea7b7a9ca9ba8ec43160eead62c54fe437b5695b8c140377"
+    },
+    "alignment": {
+      "argv": [
+        "/home/conner/Android/Sdk/build-tools/36.0.0/zipalign",
+        "-c",
+        "-P",
+        "16",
+        "-v",
+        "4",
+        ".cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk"
+      ],
+      "exit": 0,
+      "logSha256": "2b12561bd6bd095fa7a9eeb6093845c5e59c71d1d6dbd56bb8db3102ca2463cc"
+    },
+    "manifest": {
+      "argv": [
+        "/home/conner/Android/Sdk/build-tools/36.0.0/aapt2",
+        "dump",
+        "badging",
+        ".cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk"
+      ],
+      "exit": 0,
+      "logSha256": "f91e01c906027b49a75c541801402cd1bfed849a72a5677f57f32e6c97875ea7"
+    }
+  }
+}

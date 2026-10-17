@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "kind": "judas-android-apk",
+  "application": {
+    "id": "org.projectjudas.connectedworkshop.prealpha",
+    "name": "Connected Workshop Pre-Alpha",
+    "versionCode": 2,
+    "versionName": "prealpha-pass2"
+  },
+  "preset": "development",
+  "engine": {
+    "arm64-v8a": {
+      "schema": 1,
+      "version": "0.1.0-prealpha",
+      "maturity": "pre-alpha",
+      "channel": "Experimental",
+      "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-7a0361d95237-u84f47c24fcd0",
+      "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+      "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+      "source_dirty": true,
+      "source_fingerprint": "7a0361d952377e46966122565e9c9c26d2305d1c041dc36a9a1a9d82dc0c5014",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "source_origin": "git",
+      "platform": "Android",
+      "architecture": "arm64-v8a",
+      "configuration": "Release",
+      "compiler": "Clang",
+      "compiler_version": "19.0.1"
+    }
+  },
+  "desktopTools": {
+    "exporter": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-7a0361d95237-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "7a0361d952377e46966122565e9c9c26d2305d1c041dc36a9a1a9d82dc0c5014",
+      "source_origin": "git",
+      "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+      "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    },
+    "desktopRuntime": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-7a0361d95237-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "7a0361d952377e46966122565e9c9c26d2305d1c041dc36a9a1a9d82dc0c5014",
+      "source_origin": "git",
+      "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+      "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "abis": [
+    "arm64-v8a"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "jdk": "javac 17.0.20.1",
+  "developmentSigning": true,
+  "shadows": "off",
+  "contentFiles": 21,
+  "contentBytes": 2261535,
+  "native": {
+    "arm64-v8a": {
+      "libmain.so": "de6239916357dd8d81b3fcc641643f2c22f40314eceabc8ca786bf5ed0c0203e",
+      "_deps/judas_sdl-build/libSDL2.so": "d048971681a427c0f04d500242df835b9a67696cbf38502def13fcded72c2306"
+    }
+  },
+  "shippedNative": [
+    {
+      "bytes": 49058392,
+      "path": "lib/arm64-v8a/libmain.so",
+      "sha256": "64c15443f65558f5546470f244f925ca13e94a1a5f8b6657100622bd9518d225"
+    },
+    {
+      "bytes": 1257024,
+      "path": "lib/arm64-v8a/libSDL2.so",
+      "sha256": "88190d99f493db104a691c2217f7220956362e37fabcf2105df640bc85cc586a"
+    },
+    {
+      "bytes": 1253544,
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    }
+  ],
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk",
+  "sha256": "43b76986b69c66fbef3a37152eda9c82890a0ef2290a499af4c52163ed14569a"
+}

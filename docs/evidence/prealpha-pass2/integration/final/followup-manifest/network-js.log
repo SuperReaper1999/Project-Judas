@@ -1,0 +1,39 @@
+PASS fresh fixture directory preserves original evidence
+PASS ordinary JS fixture registered: 
+PASS fixture scene writes: 
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS actual public JS opts in and rejects unsupported replication
+PASS default null and nonobject plain JSON replication state match the public contract
+PASS public host binding reaches real listener
+PASS active network rejects script-VM replacement before lifecycle mutation
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS public join binding completes content-checked handshake
+PASS actual JS observes replicated JSON and controlled ownership
+PASS client cannot publish host state, ownership or undeclared channels
+PASS custom project channel reaches raw network intent and existing PlayerInput equally
+PASS remote custom action is seen once by authoritative fixed input
+PASS host JS applies real force to physical body from remote intent
+PASS neutral logical snapshot stops remote intent
+PASS actual JS close invalidates previous replica handles
+PASS host observes ordinary client close
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS actual game host starts for remote intent normalization check
+PASS independent native client uses ordinary declared control protocol
+PASS non-demo client connects to actual project host
+PASS raw diagonal snapshot is valid at the generic network boundary
+PASS read actual authoritative motor before measured interval
+PASS read actual authoritative motor after measured interval
+GAME_DIAGONAL speed_mps=5.499990940 physical_distance_m=2.749995470 fixed_seconds=0.5
+PASS host JS enforces its 5.5 m/s rule for unnormalized but bounded remote axes
+SUMMARY checks=37 failures=0

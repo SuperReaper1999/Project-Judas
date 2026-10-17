@@ -19,7 +19,20 @@ Verify a moved SDK without Git or the engine source checkout:
 
 ```powershell
 python "$sdk\tools\package_sdk.py" verify $sdk
+python "$sdk\tools\inspect_sdk.py" $sdk --host-check --system-directory C:/Windows/System32 --output C:/Temp/judas-sdk-qualification.json
 ```
+
+The inspector checks regular and delay imports in every tool and bundled DLL.
+It reports missing dependencies instead of treating the DLL filename list as
+proof of closure. System32/API-set resolution is not a minimum-OS, graphics or
+application test. Write the qualification receipt outside the verified SDK.
+
+The [Pre-Alpha pass-2 check](evidence/prealpha-pass2/packaging/REPORT.md) exercised
+15 packaging controls on native Windows Python and parsed a real system PE file.
+It did **not** complete native engine compilation: the existing VM had less than
+80 MiB free during configuration. Current full-SDK/moved-game certification and
+hardware validation remain outstanding. Historical results below retain their
+original checkpoints and scope.
 
 See [distribution and package verification](DISTRIBUTION.md). The historical
 Windows receipts below describe their original checkpoints, not new validation.

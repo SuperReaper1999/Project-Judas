@@ -35,8 +35,10 @@ M91 collision continuity remains included; extreme dense piles still have the
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin
-transitions. This remains a bounded local physics chart; active liquids/PBF and
-atmosphere/combustion still reject transitions. Start with the
+transitions. This remains a bounded local physics chart. Experimental Pre-Alpha
+extends it to conserved liquid owners/parcels and analytic atmosphere/thermal
+carriers; legacy PBF remains excluded. These extensions do not imply regional
+liquid suspension or thermal cold-save support. Start with the
 [travel lab](projects/travelling_lab/README.md), [M90 contracts](docs/M90_ASSEMBLY_TRAVEL.md)
 and [original validation evidence](docs/evidence/m90/REPORT.md).
 
@@ -104,9 +106,9 @@ release builds. See [distribution and relocation checks](docs/DISTRIBUTION.md).
 Run a project or scene with the runtime, or open one in the editor:
 
 ```sh
-./build/judas judas_tech_demo.judasproj
-./build/judas projects/tiny_game/tiny_game.judasproj
-./build/judas_editor projects/tiny_game/tiny_game.judasproj
+./build/Experimental/judas judas_tech_demo.judasproj
+./build/Experimental/judas projects/tiny_game/tiny_game.judasproj
+./build/Experimental/judas_editor projects/tiny_game/tiny_game.judasproj
 ```
 
 The first build compiles local third-party sources and can take a while.
@@ -131,6 +133,7 @@ options, lifecycle behavior and current limitations.
 
 ## Documentation
 
+- [Your first visible project](docs/FIRST_PROJECT.md) — create, debug, reload and export a small project
 - [Architecture](docs/ARCHITECTURE.md) — engine boundaries and major systems
 - [JudasJS](docs/JUDASJS.md) and [getting started](docs/judasjs/getting-started.md)
 - [Editor guide](docs/EDITOR_GUIDE.md) and [content authoring](docs/CONTENT_AUTHORING.md)

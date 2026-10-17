@@ -1,0 +1,67 @@
+PASS fresh output directory required
+PASS plane equality ignores its physically unused centre
+PASS different actual plane directions remain distinct
+PASS radial equality ignores its unused preferred axis
+PASS different radial centres remain distinct
+PASS nonfinite equilibrium comparison remains false
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS ordinary authoritative session
+PASS real basin surface and independent cup resolve
+PASS wave receives an ordinary physical impulse
+PASS detached parcel retains a paired ownership debit
+PASS positive pre-shift physical submersion sample
+PASS positive real displaced-volume and buoyancy integral
+PASS positive optical query primes real world-space caches
+PASS conserved owners and parcels accept live translation: loading
+PASS body-independent handle, complete wave history and energy remain byte-identical
+PASS actual depth/normal/flow sample follows the new chart
+PASS negative old-chart query cannot hit translated water
+PASS actual solid-volume loading preserves displacement, force and centre
+PASS derived optical planes rebuild in the translated chart
+PASS parcels translate once; velocity, quantity and total ledger are unchanged
+PASS shifted disturbed liquid captures through normal participants: 
+PASS fresh world reconstructs shifted physical liquid state: 
+PASS restored endpoint checks real wave allocation, spatial query and owner ledger
+PASS paired flow resumes under translated selected gravity without a false field mismatch
+PASS continuation remains conservative
+PASS return shift restores the same usable local surface
+PASS out-of-chart liquid is rejected atomically with an owner diagnostic
+PASS nonfinite liquid translations fail preflight
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS ordinary authoritative session
+PASS real basin surface and independent cup resolve
+PASS wave receives an ordinary physical impulse
+PASS detached parcel retains a paired ownership debit
+PASS positive pre-shift physical submersion sample
+PASS positive real displaced-volume and buoyancy integral
+PASS positive optical query primes real world-space caches
+PASS conserved owners and parcels accept live translation: loading
+PASS body-independent handle, complete wave history and energy remain byte-identical
+PASS actual depth/normal/flow sample follows the new chart
+PASS negative old-chart query cannot hit translated water
+PASS actual solid-volume loading preserves displacement, force and centre
+PASS derived optical planes rebuild in the translated chart
+PASS parcels translate once; velocity, quantity and total ledger are unchanged
+PASS shifted disturbed liquid captures through normal participants: 
+PASS fresh world reconstructs shifted physical liquid state: 
+PASS restored endpoint checks real wave allocation, spatial query and owner ledger
+PASS paired flow resumes under translated selected gravity without a false field mismatch
+PASS continuation remains conservative
+PASS return shift restores the same usable local surface
+PASS out-of-chart liquid is rejected atomically with an owner diagnostic
+PASS nonfinite liquid translations fail preflight
+PASS fresh process decodes checked snapshot envelope
+PASS fresh process builds shifted authored owners without rebaking
+FAIL independent process verifies uniform origin save: Tool failed or exited unsuccessfully after 65 checks

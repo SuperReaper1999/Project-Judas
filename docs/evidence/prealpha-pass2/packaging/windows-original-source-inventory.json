@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "scope": "dependency-light-functional-fixture-with-custom-CMake-harness",
+  "source": {
+    "schema": 1,
+    "revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+    "tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+    "source_dirty": true,
+    "source_fingerprint": "9899bb7ccfad3675b7d776a2ae4f40d0e4ec627fd5fd3f23b100deb3b3ec681a",
+    "channel": "Experimental",
+    "source_files_sha256": "9899bb7ccfad3675b7d776a2ae4f40d0e4ec627fd5fd3f23b100deb3b3ec681a",
+    "selection": "dependency-light-functional-fixture-with-custom-CMake-harness"
+  },
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "02f9054c3496b34c2e8d61ea969a7c94bb5957a6abdc187a29a50b0123764d31"
+    },
+    {
+      "path": "Run-PreAlphaChecks.ps1",
+      "sha256": "a6efbba526626d7a447b36ac19ec154d0261a7ec2c93af4eeef174dc1ddd1dd6"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.cmake",
+      "sha256": "a0af3dd20b35f01562ea38ae53f3dd5a633f13d10426ead329f5a96496d49899"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.h.in",
+      "sha256": "82dc9b20e697990c51d28171bfeab33db8423aa97d82006bdde219df2440ac14"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.json.in",
+      "sha256": "37f2ca8c940eb76531157584bfdd1512c238cf9f0d8ca8e0e36f11788cabc720"
+    },
+    {
+      "path": "cmake/JudasSourceInfo.json.in",
+      "sha256": "66ec66caf2f2a36f81024f6ee8bd1d2b9809710c0f0992cd265750b98d9c0385"
+    },
+    {
+      "path": "engine-version.json",
+      "sha256": "9e15abe3bee56ff72a23fa37189b22b83d14137c05f19563ec10f7e84d7eaa87"
+    },
+    {
+      "path": "scripts/prealpha_distribution_checks.py",
+      "sha256": "00fc8e6e05a2c5f2f53dd02aeb540f42f1de91e1a092b0521fd9b497f4d57600"
+    },
+    {
+      "path": "src/BuildIdentity.cpp",
+      "sha256": "923cfa7eb1112988f05803eae920826f4d8b13d9e3c7b60e5e4a8dcee12ec37d"
+    },
+    {
+      "path": "src/BuildIdentity.h",
+      "sha256": "59ea9985faba0cadc7eaf60398570a0192ff6678767d2a2289ae99ca7681c4f8"
+    },
+    {
+      "path": "src/BuildUpdate.cpp",
+      "sha256": "be63ebc8b81754912c5ed174a15f47892b413fc32bc1fb07cac1240bf90cdd4d"
+    },
+    {
+      "path": "src/BuildUpdate.h",
+      "sha256": "7f0ca712638a29e1b481b794287046037063ba5204dd79e89891b42fe86eaa2d"
+    },
+    {
+      "path": "src/NetworkTransport.cpp",
+      "sha256": "d994ae3d119e230e2830de293555069b6799c58efcc50745e22f20d086c6dc90"
+    },
+    {
+      "path": "src/NetworkTransport.h",
+      "sha256": "2ec74e7801c1b0e3f3cefc969b93be07f84292bef1b036d03986b3ddea758fb5"
+    },
+    {
+      "path": "src/ProcessArguments.h",
+      "sha256": "613b55903d610474aa3112e0c270b68edade0bfb1f9b078c906fdaf13ca7c001"
+    },
+    {
+      "path": "src/ToolProcess.cpp",
+      "sha256": "d8eaf7c43acfeaeaecd2f235e40b24a63bc5bcd153a73b3b6468e2efd6957d32"
+    },
+    {
+      "path": "src/ToolProcess.h",
+      "sha256": "a0d304161f9908ee5ca9d0a72bec8f490f567c720e891673e2a490ef089cbb17"
+    },
+    {
+      "path": "tests/BuildIdentityTests.cpp",
+      "sha256": "100449ce36a785ff5148af01335a66a506113f4bb5f8a35728ee97cda51a53b9"
+    },
+    {
+      "path": "tests/NetworkTransportTests.cpp",
+      "sha256": "d532f3769a364022faeefcf14767881b3895e5fd1868a9e8434bcbb9d35d3448"
+    },
+    {
+      "path": "third_party/nlohmann/json.hpp",
+      "sha256": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6"
+    },
+    {
+      "path": "tools/binary_dependencies.py",
+      "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+    },
+    {
+      "path": "tools/build_android.py",
+      "sha256": "961a4d8f5bc25496b46c211a13d5acffe9395e6eebaf8bea47843ef50df36376"
+    },
+    {
+      "path": "tools/inspect_sdk.py",
+      "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+    },
+    {
+      "path": "tools/package_sdk.py",
+      "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+    },
+    {
+      "path": "tools/verify_android.py",
+      "sha256": "9a3e0bcca571d8b32279b14b2e526056ff85a4d8a769445ed4c54cb1e348c789"
+    }
+  ],
+  "archiveSha256": "55834f7086ceccab05d954cc13845a950f2d177e32ac7b61a0c744a4ee6bcc1f",
+  "bytes": 195740
+}

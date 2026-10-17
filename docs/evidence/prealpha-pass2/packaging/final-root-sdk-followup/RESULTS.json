@@ -1,0 +1,28 @@
+[
+  {
+    "name": "verify",
+    "argv": [
+      "python3",
+      "tools/package_sdk.py",
+      "verify",
+      "build/linux-sdk"
+    ],
+    "exit": 0,
+    "seconds": 2.698028611001064,
+    "logSha256": "7f080262fb3246f92d10e31c1120eaf2ec24e467f3d9d46685ed178cf3962e48"
+  },
+  {
+    "name": "inspect",
+    "argv": [
+      "python3",
+      "tools/inspect_sdk.py",
+      "build/linux-sdk",
+      "--host-check",
+      "--output",
+      ".cache/prealpha-pass2/packaging/final-root-sdk-followup/qualification.json"
+    ],
+    "exit": 0,
+    "seconds": 2.884919787000399,
+    "logSha256": "44c4a504bb663a2d8e420dcf04fd1c1a41c5d013cf76cc98af5a83af085e81a0"
+  }
+]

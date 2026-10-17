@@ -1,0 +1,1482 @@
+{
+  "baseline": {
+    "completedSteps": 270,
+    "fixedMs": {
+      "median": 27.070207500000002,
+      "p95": 413.328083,
+      "max": 2123.409281
+    },
+    "finalDigest": "192f0f4bed728953",
+    "quality": {
+      "candidate_pairs": 9327,
+      "contact_points": 2475,
+      "deepest_endpoint_penetration_m": 0.007217108528522143,
+      "observation_ms": 41.027341,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    },
+    "worstFrameCounters": [
+      {
+        "name": "Resource GPU payload bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource prepared CPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource over budget bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource resident byte estimate",
+        "value": 759720,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource budget bytes",
+        "value": 268435456,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource in flight",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource uploads",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Audio voices",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio stream PCM bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio pending retirements",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script instances",
+        "value": 1,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script callback calls",
+        "value": 4,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Character motor instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physical animation participants",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Powertrain assemblies",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Wheel instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry worker lanes",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics parallel initial manifolds",
+        "value": 12212,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial worker completed manifolds",
+        "value": 7956,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry scratch bytes",
+        "value": 9236160,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Sleeping physics bodies",
+        "value": 128,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Awake physics bodies",
+        "value": 1024,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics bodies last step",
+        "value": 1285,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics candidate pairs last step",
+        "value": 12628,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics contacts last step",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joints",
+        "value": 96,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact events",
+        "value": 51,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact queries",
+        "value": 501599,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search iterations",
+        "value": 46950,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling fallbacks",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling tests",
+        "value": 2583,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search limits",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search stalls",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling resolution caps",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose evaluations",
+        "value": 130189,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose reuses",
+        "value": 1414693,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact orientation preparations",
+        "value": 78508,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact requests",
+        "value": 64669,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact reuses",
+        "value": 8299,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact remaining-bound rejections",
+        "value": 459940,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-bound rejections",
+        "value": 344326,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase passes",
+        "value": 2,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase root queries",
+        "value": 2304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase overlapping leaves",
+        "value": 51764,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep graph edges",
+        "value": 1845,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep islands",
+        "value": 69,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep scratch bytes",
+        "value": 44172,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics persistent contact rows",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joint rows",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation coupled fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation elastic fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation geometry fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact island bodies",
+        "value": 973,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact contact rows",
+        "value": 2517,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact continuation cache ms",
+        "value": 19.406344,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics support continuation attempts",
+        "value": 3967,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation accepted",
+        "value": 3902,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation partitions",
+        "value": 645,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation over-budget fallback",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation proof ms",
+        "value": 27.446521999999998,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD search inclusive ms",
+        "value": 331.157047,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry inclusive ms",
+        "value": 932.146894,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry calls",
+        "value": 626049,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact island discovery ms",
+        "value": 723.625534,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact solve ms",
+        "value": 167.54067,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact observation publication ms",
+        "value": 13.207681,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation ms",
+        "value": 0.022015,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation calls",
+        "value": 52,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked BVH nodes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked triangles",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked convex tests",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics geometry predicates",
+        "value": 2798292,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry exact fallbacks",
+        "value": 5,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry unresolved",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry numeric gap fallbacks",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio occlusion queries",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Instanced draw submissions",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Instances submitted",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light tile overflow",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light grid GPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Shadow GPU bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Submitted draws all passes",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Submitted triangles all passes",
+        "value": 298584,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Visible renderables all passes",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Frustum rejected all passes",
+        "value": 1314,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Layer rejected all passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Particles submitted",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Secondary passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Text atlas bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text layout bytes",
+        "value": 36483,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text glyph raster total",
+        "value": 110,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Runtime UI draws",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      }
+    ]
+  },
+  "rejectedMemo": {
+    "completedSteps": 270,
+    "fixedMs": {
+      "median": 25.692638000000002,
+      "p95": 403.005843,
+      "max": 2139.980139
+    },
+    "finalDigest": "192f0f4bed728953",
+    "quality": {
+      "candidate_pairs": 9327,
+      "contact_points": 2475,
+      "deepest_endpoint_penetration_m": 0.007217108528522143,
+      "observation_ms": 32.731275,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    },
+    "worstFrameCounters": [
+      {
+        "name": "Resource GPU payload bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource prepared CPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource over budget bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource resident byte estimate",
+        "value": 759720,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource budget bytes",
+        "value": 268435456,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource in flight",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource uploads",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Audio voices",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio stream PCM bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio pending retirements",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script instances",
+        "value": 1,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script callback calls",
+        "value": 4,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Character motor instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physical animation participants",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Powertrain assemblies",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Wheel instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry worker lanes",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics parallel initial manifolds",
+        "value": 12212,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial worker completed manifolds",
+        "value": 9132,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry scratch bytes",
+        "value": 9236160,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Sleeping physics bodies",
+        "value": 128,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Awake physics bodies",
+        "value": 1024,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics bodies last step",
+        "value": 1285,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics candidate pairs last step",
+        "value": 12628,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics contacts last step",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joints",
+        "value": 96,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact events",
+        "value": 51,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact queries",
+        "value": 501599,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search iterations",
+        "value": 46950,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling fallbacks",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling tests",
+        "value": 2583,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search limits",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search stalls",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling resolution caps",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose evaluations",
+        "value": 130189,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose reuses",
+        "value": 1414693,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact orientation preparations",
+        "value": 78508,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact requests",
+        "value": 64669,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact reuses",
+        "value": 8299,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact remaining-bound rejections",
+        "value": 459940,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-bound rejections",
+        "value": 344326,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact geometry memo hits",
+        "value": 2352,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact geometry memo stores",
+        "value": 170326,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact geometry memo bytes",
+        "value": 3407872,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase passes",
+        "value": 2,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase root queries",
+        "value": 2304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase overlapping leaves",
+        "value": 51764,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep graph edges",
+        "value": 1845,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep islands",
+        "value": 69,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep scratch bytes",
+        "value": 44172,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics persistent contact rows",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joint rows",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation coupled fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation elastic fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation geometry fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact island bodies",
+        "value": 973,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact contact rows",
+        "value": 2517,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact continuation cache ms",
+        "value": 19.189180999999998,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics support continuation attempts",
+        "value": 3967,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation accepted",
+        "value": 3902,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation partitions",
+        "value": 645,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation over-budget fallback",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation proof ms",
+        "value": 26.621461999999998,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD search inclusive ms",
+        "value": 323.308854,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry inclusive ms",
+        "value": 977.866284,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry calls",
+        "value": 626049,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact island discovery ms",
+        "value": 757.861589,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact solve ms",
+        "value": 163.002724,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact observation publication ms",
+        "value": 13.37697,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation ms",
+        "value": 0.027146999999999998,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation calls",
+        "value": 52,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked BVH nodes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked triangles",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked convex tests",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics geometry predicates",
+        "value": 2774592,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry exact fallbacks",
+        "value": 5,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry unresolved",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry numeric gap fallbacks",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio occlusion queries",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Instanced draw submissions",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Instances submitted",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light tile overflow",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light grid GPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Shadow GPU bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Submitted draws all passes",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Submitted triangles all passes",
+        "value": 298584,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Visible renderables all passes",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Frustum rejected all passes",
+        "value": 1314,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Layer rejected all passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Particles submitted",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Secondary passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Text atlas bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text layout bytes",
+        "value": 36483,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text glyph raster total",
+        "value": 110,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Runtime UI draws",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      }
+    ]
+  },
+  "candidate": {
+    "completedSteps": 270,
+    "fixedMs": {
+      "median": 25.9372945,
+      "p95": 416.695211,
+      "max": 1970.799137
+    },
+    "finalDigest": "192f0f4bed728953",
+    "quality": {
+      "candidate_pairs": 9327,
+      "contact_points": 2475,
+      "deepest_endpoint_penetration_m": 0.007217108528522143,
+      "observation_ms": 31.485317,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    },
+    "worstFrameCounters": [
+      {
+        "name": "Resource GPU payload bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource prepared CPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource over budget bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource resident byte estimate",
+        "value": 759720,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource budget bytes",
+        "value": 268435456,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource in flight",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource uploads",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Audio voices",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio stream PCM bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio pending retirements",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script instances",
+        "value": 1,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script callback calls",
+        "value": 4,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Character motor instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physical animation participants",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Powertrain assemblies",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Wheel instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry worker lanes",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics parallel initial manifolds",
+        "value": 12212,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial worker completed manifolds",
+        "value": 8192,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry scratch bytes",
+        "value": 9236160,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Sleeping physics bodies",
+        "value": 128,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Awake physics bodies",
+        "value": 1024,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics bodies last step",
+        "value": 1285,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics candidate pairs last step",
+        "value": 12628,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics contacts last step",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joints",
+        "value": 96,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact events",
+        "value": 51,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact queries",
+        "value": 501599,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search iterations",
+        "value": 46950,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling fallbacks",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling tests",
+        "value": 2583,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search limits",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search stalls",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling resolution caps",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose evaluations",
+        "value": 130189,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose reuses",
+        "value": 1414693,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact orientation preparations",
+        "value": 78508,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact requests",
+        "value": 64669,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact reuses",
+        "value": 8299,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact remaining-bound rejections",
+        "value": 459940,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-bound rejections",
+        "value": 344326,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase passes",
+        "value": 2,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase root queries",
+        "value": 2304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase overlapping leaves",
+        "value": 51764,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep graph edges",
+        "value": 1845,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep islands",
+        "value": 69,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep scratch bytes",
+        "value": 44172,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics persistent contact rows",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joint rows",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation coupled fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation elastic fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation geometry fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact island bodies",
+        "value": 973,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact contact rows",
+        "value": 2517,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact continuation cache ms",
+        "value": 18.897795,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics support continuation attempts",
+        "value": 3967,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation accepted",
+        "value": 3902,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation partitions",
+        "value": 645,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation over-budget fallback",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation proof ms",
+        "value": 26.485910999999998,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD search inclusive ms",
+        "value": 319.31505,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry inclusive ms",
+        "value": 899.518097,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry calls",
+        "value": 626049,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact island discovery ms",
+        "value": 630.1824889999999,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact solve ms",
+        "value": 164.071065,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact observation publication ms",
+        "value": 13.269862999999999,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation ms",
+        "value": 0.017051999999999998,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation calls",
+        "value": 52,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked BVH nodes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked triangles",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked convex tests",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics geometry predicates",
+        "value": 2798292,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry exact fallbacks",
+        "value": 5,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry unresolved",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry numeric gap fallbacks",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio occlusion queries",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Instanced draw submissions",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Instances submitted",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light tile overflow",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light grid GPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Shadow GPU bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Submitted draws all passes",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Submitted triangles all passes",
+        "value": 298584,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Visible renderables all passes",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Frustum rejected all passes",
+        "value": 1314,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Layer rejected all passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Particles submitted",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Secondary passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Text atlas bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text layout bytes",
+        "value": 36483,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text glyph raster total",
+        "value": 110,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Runtime UI draws",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      }
+    ]
+  },
+  "identicalPhysicalFieldsAll270": true,
+  "comparedPhysicalFields": [
+    "trajectory_digest",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ]
+}

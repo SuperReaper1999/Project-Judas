@@ -1,0 +1,1663 @@
+{
+  "schema": "judas.prealpha.physics-evidence.v1",
+  "createdUtc": "2026-10-17T23:31:34.261914+00:00",
+  "baselineRevision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "acceptedBaselineArchiveSha256": "fd46ae5b078b32f2be9de4b85bd141d9552bc984595bed9c043279594375c694",
+  "files": [
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/COMMANDS.json",
+      "path": "raw/baseline/COMMANDS.json",
+      "originalBytes": 612,
+      "originalSha256": "e3fb79589c0261495ccf40f898cf0dd09c2eb5cc000d0112b19972e98aad0b47",
+      "storedBytes": 612,
+      "storedSha256": "e3fb79589c0261495ccf40f898cf0dd09c2eb5cc000d0112b19972e98aad0b47",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/CollisionGeometry.cpp",
+      "path": "experiments/baseline/CollisionGeometry.cpp.txt",
+      "originalBytes": 26728,
+      "originalSha256": "7af819b59e19a6fdf0bcf217134177819f867d74d04f2ae81599268e98a00393",
+      "storedBytes": 26728,
+      "storedSha256": "7af819b59e19a6fdf0bcf217134177819f867d74d04f2ae81599268e98a00393",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/CollisionGeometry.h",
+      "path": "experiments/baseline/CollisionGeometry.h.txt",
+      "originalBytes": 1855,
+      "originalSha256": "3c4ef5b5181b6cfa30b8e3ec04f6acdbdcb57604f844f27204426002c047b269",
+      "storedBytes": 1855,
+      "storedSha256": "3c4ef5b5181b6cfa30b8e3ec04f6acdbdcb57604f844f27204426002c047b269",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/PhysicsWorld.cpp",
+      "path": "experiments/baseline/PhysicsWorld.cpp.txt",
+      "originalBytes": 256104,
+      "originalSha256": "841e67e25d9bae1bad9e11daf88169c43bc2a29d9eea281ae3b159d1aa73f467",
+      "storedBytes": 256104,
+      "storedSha256": "841e67e25d9bae1bad9e11daf88169c43bc2a29d9eea281ae3b159d1aa73f467",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/SOURCE.json",
+      "path": "raw/baseline/SOURCE.json",
+      "originalBytes": 697,
+      "originalSha256": "2a8260ff530d9410407d56d2c69428422b4c66bb6d9e9482fde2c5f8ea2fbc97",
+      "storedBytes": 697,
+      "storedSha256": "2a8260ff530d9410407d56d2c69428422b4c66bb6d9e9482fde2c5f8ea2fbc97",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/build.log",
+      "path": "raw/baseline/build.log",
+      "originalBytes": 645,
+      "originalSha256": "0e541b63ca30b1dc3151eff1b164782f614a1f528a8d949d495641e56ac10380",
+      "storedBytes": 645,
+      "storedSha256": "0e541b63ca30b1dc3151eff1b164782f614a1f528a8d949d495641e56ac10380",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/entry.log",
+      "path": "raw/baseline/entry.log",
+      "originalBytes": 1426,
+      "originalSha256": "06aaf9dfd60c9002bf4f82703292fd86ed4f2c2d36ebe33bdd8064178963cee1",
+      "storedBytes": 1426,
+      "storedSha256": "06aaf9dfd60c9002bf4f82703292fd86ed4f2c2d36ebe33bdd8064178963cee1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/full.log",
+      "path": "raw/baseline/full.log",
+      "originalBytes": 1429,
+      "originalSha256": "ea95b318f1233598dd43b18779da65b11a89fdbc4ffadad1a0699967b9769851",
+      "storedBytes": 1429,
+      "storedSha256": "ea95b318f1233598dd43b18779da65b11a89fdbc4ffadad1a0699967b9769851",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/baseline/mesh60.log",
+      "path": "raw/baseline/mesh60.log",
+      "originalBytes": 1536,
+      "originalSha256": "700b62e41690dd5d65d64648b1a4ee6dd00c8ff3e482cb1840203f6c0ecbca52",
+      "storedBytes": 1536,
+      "storedSha256": "700b62e41690dd5d65d64648b1a4ee6dd00c8ff3e482cb1840203f6c0ecbca52",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/BUILD.json",
+      "path": "raw/batch-v1/BUILD.json",
+      "originalBytes": 5742,
+      "originalSha256": "9cd0e16b92bf0e9b8374a7431891d83d54e29d6b77ffe798d18c5fe03c74571d",
+      "storedBytes": 5742,
+      "storedSha256": "9cd0e16b92bf0e9b8374a7431891d83d54e29d6b77ffe798d18c5fe03c74571d",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/COMMANDS.json",
+      "path": "raw/batch-v1/COMMANDS.json",
+      "originalBytes": 638,
+      "originalSha256": "83989d3c95784d0ac8f4c51a8863af156e2314bb7782d8e672bc6494f79d7523",
+      "storedBytes": 638,
+      "storedSha256": "83989d3c95784d0ac8f4c51a8863af156e2314bb7782d8e672bc6494f79d7523",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/CollisionGeometry.cpp",
+      "path": "experiments/batch-v1/CollisionGeometry.cpp.txt",
+      "originalBytes": 29964,
+      "originalSha256": "ad4caa68b46f2ad94322be474070655b325ba6fdecb4282399ff15f357042b26",
+      "storedBytes": 29964,
+      "storedSha256": "ad4caa68b46f2ad94322be474070655b325ba6fdecb4282399ff15f357042b26",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/CollisionGeometry.cpp.build.log",
+      "path": "raw/batch-v1/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/CollisionGeometry.h",
+      "path": "experiments/batch-v1/CollisionGeometry.h.txt",
+      "originalBytes": 2384,
+      "originalSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "storedBytes": 2384,
+      "storedSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/CrossingObserver.cpp",
+      "path": "experiments/batch-v1/CrossingObserver.cpp.txt",
+      "originalBytes": 16592,
+      "originalSha256": "e9cbac6afee4ca4cbabd95f0203877b0bf50984c0c8d8dc99627ac238f06193a",
+      "storedBytes": 16592,
+      "storedSha256": "e9cbac6afee4ca4cbabd95f0203877b0bf50984c0c8d8dc99627ac238f06193a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/PhysicsWorld.cpp",
+      "path": "experiments/batch-v1/PhysicsWorld.cpp.txt",
+      "originalBytes": 257518,
+      "originalSha256": "09e773496c44ff7ebae789b5fbc94361ee533da2ed4860ff3e1796016eddcd53",
+      "storedBytes": 257518,
+      "storedSha256": "09e773496c44ff7ebae789b5fbc94361ee533da2ed4860ff3e1796016eddcd53",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/PhysicsWorld.cpp.build.log",
+      "path": "raw/batch-v1/PhysicsWorld.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/crossings.log",
+      "path": "raw/batch-v1/crossings.log",
+      "originalBytes": 15475,
+      "originalSha256": "807faf03ef0f6bf603a849b5c3524b7b7e72ac49aa8b673641d375c994c3603b",
+      "storedBytes": 15475,
+      "storedSha256": "807faf03ef0f6bf603a849b5c3524b7b7e72ac49aa8b673641d375c994c3603b",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/entry.log",
+      "path": "raw/batch-v1/entry.log",
+      "originalBytes": 1184,
+      "originalSha256": "abdfbdcaad6d57c29ca388f43e629e316842e0579262f3d2db7ed44786fc45d7",
+      "storedBytes": 1184,
+      "storedSha256": "abdfbdcaad6d57c29ca388f43e629e316842e0579262f3d2db7ed44786fc45d7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/full.log",
+      "path": "raw/batch-v1/full.log",
+      "originalBytes": 1429,
+      "originalSha256": "db189b9f239a6e09fe1f6b6bb0d499acc246fdfe14ee752f091af8b1995c15f1",
+      "storedBytes": 1429,
+      "storedSha256": "db189b9f239a6e09fe1f6b6bb0d499acc246fdfe14ee752f091af8b1995c15f1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-v1/mesh60.log",
+      "path": "raw/batch-v1/mesh60.log",
+      "originalBytes": 1535,
+      "originalSha256": "c631d88e9b3bd280ef7758b133b1666927885f7d13f46884a9acc7ba76b9ba8f",
+      "storedBytes": 1535,
+      "storedSha256": "c631d88e9b3bd280ef7758b133b1666927885f7d13f46884a9acc7ba76b9ba8f",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/BUILD.json",
+      "path": "raw/batch-patches-v2/BUILD.json",
+      "originalBytes": 5799,
+      "originalSha256": "0546bac1a21654bff22a55f844aa10d941fe40c1062e0b3a28e409ceb1f68feb",
+      "storedBytes": 5799,
+      "storedSha256": "0546bac1a21654bff22a55f844aa10d941fe40c1062e0b3a28e409ceb1f68feb",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/COMMANDS.json",
+      "path": "raw/batch-patches-v2/COMMANDS.json",
+      "originalBytes": 661,
+      "originalSha256": "d83500c4afc454dd2bfd37e43e187c05fe959d9c2ddedfe2487b72ac23f37b2f",
+      "storedBytes": 661,
+      "storedSha256": "d83500c4afc454dd2bfd37e43e187c05fe959d9c2ddedfe2487b72ac23f37b2f",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/CollisionGeometry.cpp",
+      "path": "experiments/batch-patches-v2/CollisionGeometry.cpp.txt",
+      "originalBytes": 31487,
+      "originalSha256": "69c1e9260f6b127ced94d2fc41d1a16f2fa15115a2b412ffb29ec232a48b5a72",
+      "storedBytes": 31487,
+      "storedSha256": "69c1e9260f6b127ced94d2fc41d1a16f2fa15115a2b412ffb29ec232a48b5a72",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/CollisionGeometry.cpp.build.log",
+      "path": "raw/batch-patches-v2/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/CollisionGeometry.h",
+      "path": "experiments/batch-patches-v2/CollisionGeometry.h.txt",
+      "originalBytes": 2882,
+      "originalSha256": "5c0fab0213a67350967b812b4f9cb2045d908aa80a7c128f8105afeac9912ce7",
+      "storedBytes": 2882,
+      "storedSha256": "5c0fab0213a67350967b812b4f9cb2045d908aa80a7c128f8105afeac9912ce7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/CrossingObserver.cpp",
+      "path": "experiments/batch-patches-v2/CrossingObserver.cpp.txt",
+      "originalBytes": 16647,
+      "originalSha256": "d79b501799c6a0012ef17e8992847faa98735ff7228dcf832becf0344f6919b0",
+      "storedBytes": 16647,
+      "storedSha256": "d79b501799c6a0012ef17e8992847faa98735ff7228dcf832becf0344f6919b0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/PhysicsWorld.cpp",
+      "path": "experiments/batch-patches-v2/PhysicsWorld.cpp.txt",
+      "originalBytes": 259625,
+      "originalSha256": "25e839c6d3a321bd299229532191de36632d8ae1fb76e4f15bc552001edc8637",
+      "storedBytes": 259625,
+      "storedSha256": "25e839c6d3a321bd299229532191de36632d8ae1fb76e4f15bc552001edc8637",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/PhysicsWorld.cpp.build.log",
+      "path": "raw/batch-patches-v2/PhysicsWorld.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/crossings.log",
+      "path": "raw/batch-patches-v2/crossings.log",
+      "originalBytes": 9924,
+      "originalSha256": "a51936ce81fbdb1a362a003f133f6e404bfe4bff382acc9d8232ead1cef5a3d9",
+      "storedBytes": 9924,
+      "storedSha256": "a51936ce81fbdb1a362a003f133f6e404bfe4bff382acc9d8232ead1cef5a3d9",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/entry.log",
+      "path": "raw/batch-patches-v2/entry.log",
+      "originalBytes": 1184,
+      "originalSha256": "0576b9a9609bb52e272ebcf8b3e5e2c6376bbc3e067bc0eab73021c72e234b23",
+      "storedBytes": 1184,
+      "storedSha256": "0576b9a9609bb52e272ebcf8b3e5e2c6376bbc3e067bc0eab73021c72e234b23",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/full.log",
+      "path": "raw/batch-patches-v2/full.log",
+      "originalBytes": 1343,
+      "originalSha256": "3b9527a4b479782b47ae0628df5bef785c84b0dc7500aed6126f8228458ab0bd",
+      "storedBytes": 1343,
+      "storedSha256": "3b9527a4b479782b47ae0628df5bef785c84b0dc7500aed6126f8228458ab0bd",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-patches-v2/mesh60.log",
+      "path": "raw/batch-patches-v2/mesh60.log",
+      "originalBytes": 1467,
+      "originalSha256": "f446ba434d3468f79b8773097720f645ba3852c459cfe0315b4c113067b28afa",
+      "storedBytes": 1467,
+      "storedSha256": "f446ba434d3468f79b8773097720f645ba3852c459cfe0315b4c113067b28afa",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/BUILD.json",
+      "path": "raw/batch-planes-v3/BUILD.json",
+      "originalBytes": 5792,
+      "originalSha256": "53919cc573c09237993f2a1a7cdff5b7f8b064de00230adf0eaa7be43330d48e",
+      "storedBytes": 5792,
+      "storedSha256": "53919cc573c09237993f2a1a7cdff5b7f8b064de00230adf0eaa7be43330d48e",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/COMMANDS.json",
+      "path": "raw/batch-planes-v3/COMMANDS.json",
+      "originalBytes": 419,
+      "originalSha256": "7d11745c9a9b7575cbb738d39c7317fff8b08dda5ba85e0f8666225561b6e704",
+      "storedBytes": 419,
+      "storedSha256": "7d11745c9a9b7575cbb738d39c7317fff8b08dda5ba85e0f8666225561b6e704",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/CollisionGeometry.cpp",
+      "path": "experiments/batch-planes-v3/CollisionGeometry.cpp.txt",
+      "originalBytes": 32302,
+      "originalSha256": "c04db5e49540878e0c33b9668a258b376454923c36d0642f6c2f3b6405104334",
+      "storedBytes": 32302,
+      "storedSha256": "c04db5e49540878e0c33b9668a258b376454923c36d0642f6c2f3b6405104334",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/CollisionGeometry.cpp.build.log",
+      "path": "raw/batch-planes-v3/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/CollisionGeometry.h",
+      "path": "experiments/batch-planes-v3/CollisionGeometry.h.txt",
+      "originalBytes": 3109,
+      "originalSha256": "70055efdc9992da9d4911e4492bd5d98694f190f8806a37ba754f02213145bf1",
+      "storedBytes": 3109,
+      "storedSha256": "70055efdc9992da9d4911e4492bd5d98694f190f8806a37ba754f02213145bf1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/PhysicsWorld.cpp",
+      "path": "experiments/batch-planes-v3/PhysicsWorld.cpp.txt",
+      "originalBytes": 261791,
+      "originalSha256": "25efaebd65caa3898bd7817e278659822ee2073ef273fed0e0b531e69fcbb362",
+      "storedBytes": 261791,
+      "storedSha256": "25efaebd65caa3898bd7817e278659822ee2073ef273fed0e0b531e69fcbb362",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/PhysicsWorld.cpp.build.log",
+      "path": "raw/batch-planes-v3/PhysicsWorld.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/coarse-full.log",
+      "path": "raw/batch-planes-v3/coarse-full.log",
+      "originalBytes": 584,
+      "originalSha256": "de4b476353eee6e9f816c7e3e30de2a40e5cb03a3bd3d34a3fa11399f9214ebf",
+      "storedBytes": 584,
+      "storedSha256": "de4b476353eee6e9f816c7e3e30de2a40e5cb03a3bd3d34a3fa11399f9214ebf",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-planes-v3/coarse60.log",
+      "path": "raw/batch-planes-v3/coarse60.log",
+      "originalBytes": 622,
+      "originalSha256": "4068beb79eb63d9162a2c0f0b746340afb55f0c4bde89b5d928aba2746473bd8",
+      "storedBytes": 622,
+      "storedSha256": "4068beb79eb63d9162a2c0f0b746340afb55f0c4bde89b5d928aba2746473bd8",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/BUILD.json",
+      "path": "raw/scratch-v4/BUILD.json",
+      "originalBytes": 5757,
+      "originalSha256": "fe3436a52bc9f6b886ca1b106b1fe8cc1388a8f469e5a1a0b2e33fd43aa8fd2d",
+      "storedBytes": 5757,
+      "storedSha256": "fe3436a52bc9f6b886ca1b106b1fe8cc1388a8f469e5a1a0b2e33fd43aa8fd2d",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/COMMANDS.json",
+      "path": "raw/scratch-v4/COMMANDS.json",
+      "originalBytes": 785,
+      "originalSha256": "eb3feb5339a6cca9fbdc16fa30a4cf9944240af35df8f5bd97964a8caa3563b7",
+      "storedBytes": 785,
+      "storedSha256": "eb3feb5339a6cca9fbdc16fa30a4cf9944240af35df8f5bd97964a8caa3563b7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/CollisionGeometry.cpp",
+      "path": "experiments/scratch-v4/CollisionGeometry.cpp.txt",
+      "originalBytes": 33502,
+      "originalSha256": "2f41228168287ac894073dace83081a5bde1ffc8a40507206dc9a507f6f2d32b",
+      "storedBytes": 33502,
+      "storedSha256": "2f41228168287ac894073dace83081a5bde1ffc8a40507206dc9a507f6f2d32b",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/CollisionGeometry.cpp.build.log",
+      "path": "raw/scratch-v4/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/CollisionGeometry.h",
+      "path": "experiments/scratch-v4/CollisionGeometry.h.txt",
+      "originalBytes": 3150,
+      "originalSha256": "b3bad6ff636f5025d929fc01fbac78e00c1ae8f79b02d88ab350304ae2c3f950",
+      "storedBytes": 3150,
+      "storedSha256": "b3bad6ff636f5025d929fc01fbac78e00c1ae8f79b02d88ab350304ae2c3f950",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/CrossingObserver.cpp",
+      "path": "experiments/scratch-v4/CrossingObserver.cpp.txt",
+      "originalBytes": 17020,
+      "originalSha256": "05cb89633289a12e14406767b704b3d7821228ee0674d56b06288c45e7dd67d0",
+      "storedBytes": 17020,
+      "storedSha256": "05cb89633289a12e14406767b704b3d7821228ee0674d56b06288c45e7dd67d0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/PhysicsWorld.cpp",
+      "path": "experiments/scratch-v4/PhysicsWorld.cpp.txt",
+      "originalBytes": 263592,
+      "originalSha256": "058cfda6783b926326279cec1e80f19596c418ab04c333f1edf75e7445d6241a",
+      "storedBytes": 263592,
+      "storedSha256": "058cfda6783b926326279cec1e80f19596c418ab04c333f1edf75e7445d6241a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/PhysicsWorld.cpp.build.log",
+      "path": "raw/scratch-v4/PhysicsWorld.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/crossings.log",
+      "path": "raw/scratch-v4/crossings.log",
+      "originalBytes": 20702,
+      "originalSha256": "8cf2887e34647a8fef230eafce418e9d7a0e37e25bd801838b417090316f1f20",
+      "storedBytes": 20702,
+      "storedSha256": "8cf2887e34647a8fef230eafce418e9d7a0e37e25bd801838b417090316f1f20",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/entry.log",
+      "path": "raw/scratch-v4/entry.log",
+      "originalBytes": 1184,
+      "originalSha256": "067d68f38ce07cbb392ca016fa4279d77f28ca9b58d00cf02a61c315ff8ea6f8",
+      "storedBytes": 1184,
+      "storedSha256": "067d68f38ce07cbb392ca016fa4279d77f28ca9b58d00cf02a61c315ff8ea6f8",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/full.log",
+      "path": "raw/scratch-v4/full.log",
+      "originalBytes": 1425,
+      "originalSha256": "55424e90467308ca73f48fa6f30768472d915d297f901897a4ae8f6b9769dddf",
+      "storedBytes": 1425,
+      "storedSha256": "55424e90467308ca73f48fa6f30768472d915d297f901897a4ae8f6b9769dddf",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/mesh60.log",
+      "path": "raw/scratch-v4/mesh60.log",
+      "originalBytes": 1549,
+      "originalSha256": "175bcbe4c9fde1c339ad1e2da3d63a07e988527de556e220ca61463717191326",
+      "storedBytes": 1549,
+      "storedSha256": "175bcbe4c9fde1c339ad1e2da3d63a07e988527de556e220ca61463717191326",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/rejected-final-CollisionGeometry.cpp",
+      "path": "experiments/scratch-v4/rejected-final-CollisionGeometry.cpp.txt",
+      "originalBytes": 33502,
+      "originalSha256": "2f41228168287ac894073dace83081a5bde1ffc8a40507206dc9a507f6f2d32b",
+      "storedBytes": 33502,
+      "storedSha256": "2f41228168287ac894073dace83081a5bde1ffc8a40507206dc9a507f6f2d32b",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/rejected-final-CollisionGeometry.h",
+      "path": "experiments/scratch-v4/rejected-final-CollisionGeometry.h.txt",
+      "originalBytes": 3150,
+      "originalSha256": "b3bad6ff636f5025d929fc01fbac78e00c1ae8f79b02d88ab350304ae2c3f950",
+      "storedBytes": 3150,
+      "storedSha256": "b3bad6ff636f5025d929fc01fbac78e00c1ae8f79b02d88ab350304ae2c3f950",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/scratch-v4/rejected-final-PhysicsWorld.cpp",
+      "path": "experiments/scratch-v4/rejected-final-PhysicsWorld.cpp.txt",
+      "originalBytes": 263592,
+      "originalSha256": "058cfda6783b926326279cec1e80f19596c418ab04c333f1edf75e7445d6241a",
+      "storedBytes": 263592,
+      "storedSha256": "058cfda6783b926326279cec1e80f19596c418ab04c333f1edf75e7445d6241a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v5/CollisionGeometry.cpp",
+      "path": "experiments/batch-scratch-memo-v5/CollisionGeometry.cpp.txt",
+      "originalBytes": 31109,
+      "originalSha256": "4975295ab6d578360dc1dc02f38018b61f630bc2c198ce922026c241e327b554",
+      "storedBytes": 31109,
+      "storedSha256": "4975295ab6d578360dc1dc02f38018b61f630bc2c198ce922026c241e327b554",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v5/CollisionGeometry.cpp.build.log",
+      "path": "raw/batch-scratch-memo-v5/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v5/CollisionGeometry.h",
+      "path": "experiments/batch-scratch-memo-v5/CollisionGeometry.h.txt",
+      "originalBytes": 2384,
+      "originalSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "storedBytes": 2384,
+      "storedSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v5/PhysicsWorld.cpp",
+      "path": "experiments/batch-scratch-memo-v5/PhysicsWorld.cpp.txt",
+      "originalBytes": 261121,
+      "originalSha256": "8b577ede61e75cc9e2a783911efcec05ac77350fe7705c406bf0d3314d5554df",
+      "storedBytes": 261121,
+      "storedSha256": "8b577ede61e75cc9e2a783911efcec05ac77350fe7705c406bf0d3314d5554df",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v5/PhysicsWorld.cpp.build.log",
+      "path": "raw/batch-scratch-memo-v5/PhysicsWorld.cpp.build.log",
+      "originalBytes": 454,
+      "originalSha256": "9408653a8663ccfca8ab1ea49bb340e2ee60af7ad4574ad89513b5f9d4f41a6b",
+      "storedBytes": 454,
+      "storedSha256": "9408653a8663ccfca8ab1ea49bb340e2ee60af7ad4574ad89513b5f9d4f41a6b",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v6/BUILD.json",
+      "path": "raw/batch-scratch-memo-v6/BUILD.json",
+      "originalBytes": 5834,
+      "originalSha256": "91901a67e93d6ee795e055c794c192626a0a6a10de30af0681e7137c180e4cc7",
+      "storedBytes": 5834,
+      "storedSha256": "91901a67e93d6ee795e055c794c192626a0a6a10de30af0681e7137c180e4cc7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v6/CollisionGeometry.cpp",
+      "path": "experiments/batch-scratch-memo-v6/CollisionGeometry.cpp.txt",
+      "originalBytes": 31109,
+      "originalSha256": "4975295ab6d578360dc1dc02f38018b61f630bc2c198ce922026c241e327b554",
+      "storedBytes": 31109,
+      "storedSha256": "4975295ab6d578360dc1dc02f38018b61f630bc2c198ce922026c241e327b554",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v6/CollisionGeometry.cpp.build.log",
+      "path": "raw/batch-scratch-memo-v6/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v6/CollisionGeometry.h",
+      "path": "experiments/batch-scratch-memo-v6/CollisionGeometry.h.txt",
+      "originalBytes": 2384,
+      "originalSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "storedBytes": 2384,
+      "storedSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v6/PhysicsWorld.cpp",
+      "path": "experiments/batch-scratch-memo-v6/PhysicsWorld.cpp.txt",
+      "originalBytes": 261127,
+      "originalSha256": "7f49744b0c8b581013aabda47c558bc5d78dcbeacec61f821cffbc1f407030d7",
+      "storedBytes": 261127,
+      "storedSha256": "7f49744b0c8b581013aabda47c558bc5d78dcbeacec61f821cffbc1f407030d7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-memo-v6/PhysicsWorld.cpp.build.log",
+      "path": "raw/batch-scratch-memo-v6/PhysicsWorld.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-events-v7/BUILD.json",
+      "path": "raw/batch-scratch-events-v7/BUILD.json",
+      "originalBytes": 5848,
+      "originalSha256": "23de0a542f15e83ff104fdc43821e17123e48b381ae998e42a5b3809a1e36b6e",
+      "storedBytes": 5848,
+      "storedSha256": "23de0a542f15e83ff104fdc43821e17123e48b381ae998e42a5b3809a1e36b6e",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-events-v7/CollisionGeometry.cpp",
+      "path": "experiments/batch-scratch-events-v7/CollisionGeometry.cpp.txt",
+      "originalBytes": 31109,
+      "originalSha256": "4975295ab6d578360dc1dc02f38018b61f630bc2c198ce922026c241e327b554",
+      "storedBytes": 31109,
+      "storedSha256": "4975295ab6d578360dc1dc02f38018b61f630bc2c198ce922026c241e327b554",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-events-v7/CollisionGeometry.cpp.build.log",
+      "path": "raw/batch-scratch-events-v7/CollisionGeometry.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-events-v7/CollisionGeometry.h",
+      "path": "experiments/batch-scratch-events-v7/CollisionGeometry.h.txt",
+      "originalBytes": 2384,
+      "originalSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "storedBytes": 2384,
+      "storedSha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-events-v7/PhysicsWorld.cpp",
+      "path": "experiments/batch-scratch-events-v7/PhysicsWorld.cpp.txt",
+      "originalBytes": 257884,
+      "originalSha256": "5bddaf349180cfba96f031ace41c02c78860bd38f18e304f9433d21d609f424a",
+      "storedBytes": 257884,
+      "storedSha256": "5bddaf349180cfba96f031ace41c02c78860bd38f18e304f9433d21d609f424a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/batch-scratch-events-v7/PhysicsWorld.cpp.build.log",
+      "path": "raw/batch-scratch-events-v7/PhysicsWorld.cpp.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/RESULTS.json",
+      "path": "raw/checks-v7/RESULTS.json",
+      "originalBytes": 14897,
+      "originalSha256": "e62b2be4ca15053652150f583795611d06e6f62734619c77a2f56e3cd10f43a2",
+      "storedBytes": 14897,
+      "storedSha256": "e62b2be4ca15053652150f583795611d06e6f62734619c77a2f56e3cd10f43a2",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/entry.log",
+      "path": "raw/checks-v7/entry.log",
+      "originalBytes": 1184,
+      "originalSha256": "d1861986349784d5ea5ada20772dc28c342deb8091a5b585f9e5c78d6f35fe60",
+      "storedBytes": 1184,
+      "storedSha256": "d1861986349784d5ea5ada20772dc28c342deb8091a5b585f9e5c78d6f35fe60",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/full.log",
+      "path": "raw/checks-v7/full.log",
+      "originalBytes": 1429,
+      "originalSha256": "428c21e1d023ba2aaf73016d80c0759865c0e91261084a54a5870eb95a7a9d68",
+      "storedBytes": 1429,
+      "storedSha256": "428c21e1d023ba2aaf73016d80c0759865c0e91261084a54a5870eb95a7a9d68",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_character_motor_tests.log",
+      "path": "raw/checks-v7/judas_character_motor_tests.log",
+      "originalBytes": 1869,
+      "originalSha256": "0b08531ddfc9e9c97fdc7c753c7f587e4c07e8572052702b6d6f12c7b0f27ec0",
+      "storedBytes": 1869,
+      "storedSha256": "0b08531ddfc9e9c97fdc7c753c7f587e4c07e8572052702b6d6f12c7b0f27ec0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_collision_geometry_tests.log",
+      "path": "raw/checks-v7/judas_collision_geometry_tests.log",
+      "originalBytes": 3182,
+      "originalSha256": "1a2af14742d484c123ba3813f1cc6e413639031f2a34f41435cfc578fdeab7b9",
+      "storedBytes": 3182,
+      "storedSha256": "1a2af14742d484c123ba3813f1cc6e413639031f2a34f41435cfc578fdeab7b9",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_impact_robustness_tests.log",
+      "path": "raw/checks-v7/judas_impact_robustness_tests.log",
+      "originalBytes": 4877,
+      "originalSha256": "3b0d8574795a16cff392bd045f95642804f9159f9e95b120fb3b1ff4d68985f1",
+      "storedBytes": 4877,
+      "storedSha256": "3b0d8574795a16cff392bd045f95642804f9159f9e95b120fb3b1ff4d68985f1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_impact_solver_tests.log",
+      "path": "raw/checks-v7/judas_impact_solver_tests.log",
+      "originalBytes": 256,
+      "originalSha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "storedBytes": 256,
+      "storedSha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_impact_timing_tests.log",
+      "path": "raw/checks-v7/judas_impact_timing_tests.log",
+      "originalBytes": 43704,
+      "originalSha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "storedBytes": 43704,
+      "storedSha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_kinematic_tests.log",
+      "path": "raw/checks-v7/judas_kinematic_tests.log",
+      "originalBytes": 6480,
+      "originalSha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d",
+      "storedBytes": 6480,
+      "storedSha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_physics_continuation_tests.log",
+      "path": "raw/checks-v7/judas_physics_continuation_tests.log",
+      "originalBytes": 30,
+      "originalSha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534",
+      "storedBytes": 30,
+      "storedSha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_post_consumer_ragdoll_tests.log",
+      "path": "raw/checks-v7/judas_post_consumer_ragdoll_tests.log",
+      "originalBytes": 2135,
+      "originalSha256": "f7831b9cb0923afa2ab036c88612f1ae8205cfd74436156b658ac16f41c8a3b6",
+      "storedBytes": 2135,
+      "storedSha256": "f7831b9cb0923afa2ab036c88612f1ae8205cfd74436156b658ac16f41c8a3b6",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_ragdoll_tests.log",
+      "path": "raw/checks-v7/judas_ragdoll_tests.log",
+      "originalBytes": 2422,
+      "originalSha256": "1d0acfb9e6b214f381ef3d74745351a2352763a885ca0e141cbc74e978a4a815",
+      "storedBytes": 2422,
+      "storedSha256": "1d0acfb9e6b214f381ef3d74745351a2352763a885ca0e141cbc74e978a4a815",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_rigid_contact_tests.log",
+      "path": "raw/checks-v7/judas_rigid_contact_tests.log",
+      "originalBytes": 3627,
+      "originalSha256": "bcc643201b76b47dde44c8f28023bebab08f80d1b90d06743d96b809c9c48dd0",
+      "storedBytes": 3627,
+      "storedSha256": "bcc643201b76b47dde44c8f28023bebab08f80d1b90d06743d96b809c9c48dd0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/checks-v7/judas_sphere_impact_bounds_tests.log",
+      "path": "raw/checks-v7/judas_sphere_impact_bounds_tests.log",
+      "originalBytes": 1224,
+      "originalSha256": "32e8e2837b3560ac25415a308861f3e21f8fbe3cfad025a10174516173141bb7",
+      "storedBytes": 1224,
+      "storedSha256": "32e8e2837b3560ac25415a308861f3e21f8fbe3cfad025a10174516173141bb7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/RESULTS.json",
+      "path": "raw/metrics-v7/RESULTS.json",
+      "originalBytes": 6584,
+      "originalSha256": "578e169e60d389a288c8987da15565f227dc690b34e519401f2d74468b238a82",
+      "storedBytes": 6584,
+      "storedSha256": "578e169e60d389a288c8987da15565f227dc690b34e519401f2d74468b238a82",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-baseline/endpoints.json",
+      "path": "raw/metrics-v7/free-baseline/endpoints.json.gz",
+      "originalBytes": 396557,
+      "originalSha256": "18fd4c55a6b64755bdb50fe7b6d042e64cf3d0d4a794025822ec17f06a3c38a8",
+      "storedBytes": 6955,
+      "storedSha256": "2c6a5d62b4e33579a2f4d70639cdd0b5cd5fdf126a0862dfbcf6d124b11a6bb9",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-baseline/profile.json",
+      "path": "raw/metrics-v7/free-baseline/profile.json.gz",
+      "originalBytes": 1173155,
+      "originalSha256": "60148fd8136050b5d5ac905d86d9ad55d11e4395e0477c39e653429d77470db7",
+      "storedBytes": 64654,
+      "storedSha256": "f971852605a5de4f7003e4d60524292d30526d55fb7c364cb5661047da5aca97",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-baseline/steps.csv",
+      "path": "raw/metrics-v7/free-baseline/steps.csv",
+      "originalBytes": 13434,
+      "originalSha256": "030c1db9c6f4679bcac36c03182cffdce79608f6fe6b5593f6fa76b2b6cc58fb",
+      "storedBytes": 13434,
+      "storedSha256": "030c1db9c6f4679bcac36c03182cffdce79608f6fe6b5593f6fa76b2b6cc58fb",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-baseline/summary.json",
+      "path": "raw/metrics-v7/free-baseline/summary.json",
+      "originalBytes": 3039,
+      "originalSha256": "4fcbac71727c300c2315e12e72724eb7553caac8935382531ae025226ae3e05f",
+      "storedBytes": 3039,
+      "storedSha256": "4fcbac71727c300c2315e12e72724eb7553caac8935382531ae025226ae3e05f",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-baseline.log",
+      "path": "raw/metrics-v7/free-baseline.log",
+      "originalBytes": 2634,
+      "originalSha256": "9cd3b533e6110a18f8f613c73bb7849d5acaf03a832c025182bffc529ba1bde7",
+      "storedBytes": 2634,
+      "storedSha256": "9cd3b533e6110a18f8f613c73bb7849d5acaf03a832c025182bffc529ba1bde7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-candidate/endpoints.json",
+      "path": "raw/metrics-v7/free-candidate/endpoints.json.gz",
+      "originalBytes": 396557,
+      "originalSha256": "18fd4c55a6b64755bdb50fe7b6d042e64cf3d0d4a794025822ec17f06a3c38a8",
+      "storedBytes": 6955,
+      "storedSha256": "2c6a5d62b4e33579a2f4d70639cdd0b5cd5fdf126a0862dfbcf6d124b11a6bb9",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-candidate/profile.json",
+      "path": "raw/metrics-v7/free-candidate/profile.json.gz",
+      "originalBytes": 1173052,
+      "originalSha256": "6fb84df09bd34b996f6f03cb96f5b91857ca4f75c5700fa67ec221c211b66ae6",
+      "storedBytes": 64715,
+      "storedSha256": "c05eba065c75948bc9cd58f6f5b7a804ecef448eba87bf63c52369575c716371",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-candidate/steps.csv",
+      "path": "raw/metrics-v7/free-candidate/steps.csv",
+      "originalBytes": 13419,
+      "originalSha256": "f4e7edeb32fff260c0ce46ea8919c53e2d1a1a8d0c62247adb40449fffa75823",
+      "storedBytes": 13419,
+      "storedSha256": "f4e7edeb32fff260c0ce46ea8919c53e2d1a1a8d0c62247adb40449fffa75823",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-candidate/summary.json",
+      "path": "raw/metrics-v7/free-candidate/summary.json",
+      "originalBytes": 3042,
+      "originalSha256": "d28e050f3e35784b65ae05a680ab020647116c3665b9e70b69a85db57efa1758",
+      "storedBytes": 3042,
+      "storedSha256": "d28e050f3e35784b65ae05a680ab020647116c3665b9e70b69a85db57efa1758",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/free-candidate.log",
+      "path": "raw/metrics-v7/free-candidate.log",
+      "originalBytes": 2637,
+      "originalSha256": "9f7a7bdfd5f502f1ef96781473b4208d76f042f7d2cf0c392f9c43bde9f7a863",
+      "storedBytes": 2637,
+      "storedSha256": "9f7a7bdfd5f502f1ef96781473b4208d76f042f7d2cf0c392f9c43bde9f7a863",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-baseline/endpoints.json",
+      "path": "raw/metrics-v7/machines_active-baseline/endpoints.json",
+      "originalBytes": 90183,
+      "originalSha256": "982b043049e11c9f8fb556bcfbd202cc757a31b3330fefea340263abf9f2c30c",
+      "storedBytes": 90183,
+      "storedSha256": "982b043049e11c9f8fb556bcfbd202cc757a31b3330fefea340263abf9f2c30c",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-baseline/profile.json",
+      "path": "raw/metrics-v7/machines_active-baseline/profile.json.gz",
+      "originalBytes": 1177881,
+      "originalSha256": "ebfb8a6a07be62ff7953aed5892cdb3ddbe20660ce80eb08945577b7f50f8718",
+      "storedBytes": 66384,
+      "storedSha256": "c047964dbaf8cdb4df3a2733467535029cc25430b68241f3c584a59981418063",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-baseline/steps.csv",
+      "path": "raw/metrics-v7/machines_active-baseline/steps.csv",
+      "originalBytes": 17921,
+      "originalSha256": "2f8eb93aeaad324870c43c73b0d4f123c6e47c9fc6cbfaf176a0d5a5c4649411",
+      "storedBytes": 17921,
+      "storedSha256": "2f8eb93aeaad324870c43c73b0d4f123c6e47c9fc6cbfaf176a0d5a5c4649411",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-baseline/summary.json",
+      "path": "raw/metrics-v7/machines_active-baseline/summary.json",
+      "originalBytes": 3103,
+      "originalSha256": "55c4607e95561794398e6b98a8619dfc78ca563f52277ea996319442bc2bb049",
+      "storedBytes": 3103,
+      "storedSha256": "55c4607e95561794398e6b98a8619dfc78ca563f52277ea996319442bc2bb049",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-baseline.log",
+      "path": "raw/metrics-v7/machines_active-baseline.log",
+      "originalBytes": 2698,
+      "originalSha256": "f582dd9d23ac6ba8e8b55ecde649fa9772819a8abb23e76230a5d583d05f83c9",
+      "storedBytes": 2698,
+      "storedSha256": "f582dd9d23ac6ba8e8b55ecde649fa9772819a8abb23e76230a5d583d05f83c9",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-candidate/endpoints.json",
+      "path": "raw/metrics-v7/machines_active-candidate/endpoints.json",
+      "originalBytes": 90183,
+      "originalSha256": "982b043049e11c9f8fb556bcfbd202cc757a31b3330fefea340263abf9f2c30c",
+      "storedBytes": 90183,
+      "storedSha256": "982b043049e11c9f8fb556bcfbd202cc757a31b3330fefea340263abf9f2c30c",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-candidate/profile.json",
+      "path": "raw/metrics-v7/machines_active-candidate/profile.json.gz",
+      "originalBytes": 1177781,
+      "originalSha256": "35922fae0ce65fca5318501967d9c88256474f2efdea65aff63ccea6b0b8bfad",
+      "storedBytes": 66550,
+      "storedSha256": "0bd67e9d43fb38370f7dc5261a8a53036ad85bd620f34b5052a5c6389a5dbb38",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-candidate/steps.csv",
+      "path": "raw/metrics-v7/machines_active-candidate/steps.csv",
+      "originalBytes": 17934,
+      "originalSha256": "17dc81e4ce1d9d0eaf6ecd9136f66e1d7b4455258bdb2591428ed1f76d1e9d53",
+      "storedBytes": 17934,
+      "storedSha256": "17dc81e4ce1d9d0eaf6ecd9136f66e1d7b4455258bdb2591428ed1f76d1e9d53",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-candidate/summary.json",
+      "path": "raw/metrics-v7/machines_active-candidate/summary.json",
+      "originalBytes": 3081,
+      "originalSha256": "0cbc18163693a34c906d83d830a01a2f090c27411d4c77a56aceb3febcc5b7ba",
+      "storedBytes": 3081,
+      "storedSha256": "0cbc18163693a34c906d83d830a01a2f090c27411d4c77a56aceb3febcc5b7ba",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_active-candidate.log",
+      "path": "raw/metrics-v7/machines_active-candidate.log",
+      "originalBytes": 2676,
+      "originalSha256": "112e3ed370eb85e1273b4b44d9d4dfff70626578f84535f6d92de97defceb688",
+      "storedBytes": 2676,
+      "storedSha256": "112e3ed370eb85e1273b4b44d9d4dfff70626578f84535f6d92de97defceb688",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-baseline/endpoints.json",
+      "path": "raw/metrics-v7/machines_sleeping-baseline/endpoints.json",
+      "originalBytes": 84073,
+      "originalSha256": "101274b62b59675c3096d3e117bf878fda9121f0395cd12b3168d6ee9a416ad5",
+      "storedBytes": 84073,
+      "storedSha256": "101274b62b59675c3096d3e117bf878fda9121f0395cd12b3168d6ee9a416ad5",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-baseline/profile.json",
+      "path": "raw/metrics-v7/machines_sleeping-baseline/profile.json.gz",
+      "originalBytes": 1177184,
+      "originalSha256": "7b6bfaab09c1b3f8724e4ce6ea359435333f3f7183284286c8da1d147168aa04",
+      "storedBytes": 63357,
+      "storedSha256": "ec891d0f3ccdb47f09d97afcbc9a121ddaa7219aa6325c26f4578917637d6860",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-baseline/steps.csv",
+      "path": "raw/metrics-v7/machines_sleeping-baseline/steps.csv",
+      "originalBytes": 40832,
+      "originalSha256": "6000763b1cd33584aa687fcd19053bb2886e22790da7ccf4c5892dc562cfabe6",
+      "storedBytes": 40832,
+      "storedSha256": "6000763b1cd33584aa687fcd19053bb2886e22790da7ccf4c5892dc562cfabe6",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-baseline/summary.json",
+      "path": "raw/metrics-v7/machines_sleeping-baseline/summary.json",
+      "originalBytes": 3081,
+      "originalSha256": "83dd917f89bf2ad5aa3fcd7d49d82642123e39ebb8435e95378b4848a3881554",
+      "storedBytes": 3081,
+      "storedSha256": "83dd917f89bf2ad5aa3fcd7d49d82642123e39ebb8435e95378b4848a3881554",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-baseline.log",
+      "path": "raw/metrics-v7/machines_sleeping-baseline.log",
+      "originalBytes": 2676,
+      "originalSha256": "da570f9d89a5b059e3d7296ce36badaaad3193a6ee0ce30b7cfab1240aca43ca",
+      "storedBytes": 2676,
+      "storedSha256": "da570f9d89a5b059e3d7296ce36badaaad3193a6ee0ce30b7cfab1240aca43ca",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-candidate/endpoints.json",
+      "path": "raw/metrics-v7/machines_sleeping-candidate/endpoints.json",
+      "originalBytes": 84073,
+      "originalSha256": "101274b62b59675c3096d3e117bf878fda9121f0395cd12b3168d6ee9a416ad5",
+      "storedBytes": 84073,
+      "storedSha256": "101274b62b59675c3096d3e117bf878fda9121f0395cd12b3168d6ee9a416ad5",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-candidate/profile.json",
+      "path": "raw/metrics-v7/machines_sleeping-candidate/profile.json.gz",
+      "originalBytes": 1177125,
+      "originalSha256": "56c8e568c38665fbfdcdb9c608ce241899abb30943e3421ce08d93fafa10a23d",
+      "storedBytes": 63131,
+      "storedSha256": "6195ee6227a911e92831e239eb1c4523436ed9cdcc49d56db3fb53c590af15ff",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-candidate/steps.csv",
+      "path": "raw/metrics-v7/machines_sleeping-candidate/steps.csv",
+      "originalBytes": 40832,
+      "originalSha256": "91a3842a40e714d0d9582fa25e7f69d623de28399e68e0d2a435726de73dc795",
+      "storedBytes": 40832,
+      "storedSha256": "91a3842a40e714d0d9582fa25e7f69d623de28399e68e0d2a435726de73dc795",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-candidate/summary.json",
+      "path": "raw/metrics-v7/machines_sleeping-candidate/summary.json",
+      "originalBytes": 3084,
+      "originalSha256": "1590b6e8894197d417dcdbab96bef39c4acc3a4271fdc1cd29e3e2ca946a55c5",
+      "storedBytes": 3084,
+      "storedSha256": "1590b6e8894197d417dcdbab96bef39c4acc3a4271fdc1cd29e3e2ca946a55c5",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-candidate.log",
+      "path": "raw/metrics-v7/machines_sleeping-candidate.log",
+      "originalBytes": 2679,
+      "originalSha256": "afd7af04c7b74a04b394080c3be55e5d24572f64554d48b96dce22ede87c5643",
+      "storedBytes": 2679,
+      "storedSha256": "afd7af04c7b74a04b394080c3be55e5d24572f64554d48b96dce22ede87c5643",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/mesh-baseline-0.log",
+      "path": "raw/metrics-v7/mesh-baseline-0.log",
+      "originalBytes": 1536,
+      "originalSha256": "bdacf816530920baf83d6572108506fe3a51eeab55df989c88894f36b988fcb7",
+      "storedBytes": 1536,
+      "storedSha256": "bdacf816530920baf83d6572108506fe3a51eeab55df989c88894f36b988fcb7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/mesh-baseline-1.log",
+      "path": "raw/metrics-v7/mesh-baseline-1.log",
+      "originalBytes": 1536,
+      "originalSha256": "fdd8261f01a2bdf82ce771daa9ebad0127128d2bb1f7624789861111d0ac2aa4",
+      "storedBytes": 1536,
+      "storedSha256": "fdd8261f01a2bdf82ce771daa9ebad0127128d2bb1f7624789861111d0ac2aa4",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/mesh-baseline-2.log",
+      "path": "raw/metrics-v7/mesh-baseline-2.log",
+      "originalBytes": 1536,
+      "originalSha256": "eb1994e8b616dd3c279f524fce6867f90273ef9a51388c777879570b989cef6e",
+      "storedBytes": 1536,
+      "storedSha256": "eb1994e8b616dd3c279f524fce6867f90273ef9a51388c777879570b989cef6e",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/mesh-candidate-0.log",
+      "path": "raw/metrics-v7/mesh-candidate-0.log",
+      "originalBytes": 1535,
+      "originalSha256": "98f9202f1b5924dbd22b32c23af22d49f795a909b027af222293303b0d2dcd88",
+      "storedBytes": 1535,
+      "storedSha256": "98f9202f1b5924dbd22b32c23af22d49f795a909b027af222293303b0d2dcd88",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/mesh-candidate-1.log",
+      "path": "raw/metrics-v7/mesh-candidate-1.log",
+      "originalBytes": 1535,
+      "originalSha256": "883d571c7ee8573c5fdf3c7082ec397f9c47c6ebdd1188ce6c040bd553f44232",
+      "storedBytes": 1535,
+      "storedSha256": "883d571c7ee8573c5fdf3c7082ec397f9c47c6ebdd1188ce6c040bd553f44232",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/mesh-candidate-2.log",
+      "path": "raw/metrics-v7/mesh-candidate-2.log",
+      "originalBytes": 1535,
+      "originalSha256": "99547417aff6153898d3fbf542d831c1215d93ff06fabfff5a6acbbce8c9e87b",
+      "storedBytes": 1535,
+      "storedSha256": "99547417aff6153898d3fbf542d831c1215d93ff06fabfff5a6acbbce8c9e87b",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-baseline/endpoints.json",
+      "path": "raw/metrics-v7/pile-baseline/endpoints.json",
+      "originalBytes": 104590,
+      "originalSha256": "631ef75f9aee95e95943d0e268ce9995976da667e1ca68922bec9f8faf642f04",
+      "storedBytes": 104590,
+      "storedSha256": "631ef75f9aee95e95943d0e268ce9995976da667e1ca68922bec9f8faf642f04",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-baseline/profile.json",
+      "path": "raw/metrics-v7/pile-baseline/profile.json.gz",
+      "originalBytes": 1175051,
+      "originalSha256": "3f693f8229bcc98338f3988e17ef6dfd9defd2a16860e3b99e48472acc63de42",
+      "storedBytes": 64827,
+      "storedSha256": "cd5333f22d82a6e963cdb1a67fc69659d5e6a6ddd84893a8fbbd149ae3285177",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-baseline/steps.csv",
+      "path": "raw/metrics-v7/pile-baseline/steps.csv",
+      "originalBytes": 20921,
+      "originalSha256": "0e78a68cde1588a1886a1b25b44d3876e3786072bf3d58616ad719b3bbe1eba8",
+      "storedBytes": 20921,
+      "storedSha256": "0e78a68cde1588a1886a1b25b44d3876e3786072bf3d58616ad719b3bbe1eba8",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-baseline/summary.json",
+      "path": "raw/metrics-v7/pile-baseline/summary.json",
+      "originalBytes": 3077,
+      "originalSha256": "a688182ac2fd7a1062b359ce32faba8541477efd0b997b53bff2c605ac39545a",
+      "storedBytes": 3077,
+      "storedSha256": "a688182ac2fd7a1062b359ce32faba8541477efd0b997b53bff2c605ac39545a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-baseline.log",
+      "path": "raw/metrics-v7/pile-baseline.log",
+      "originalBytes": 2672,
+      "originalSha256": "c7a1aa0bf6cd8fceabde64c220a8a8811f68f83f96eead15c44350679cdd2a81",
+      "storedBytes": 2672,
+      "storedSha256": "c7a1aa0bf6cd8fceabde64c220a8a8811f68f83f96eead15c44350679cdd2a81",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-candidate/endpoints.json",
+      "path": "raw/metrics-v7/pile-candidate/endpoints.json",
+      "originalBytes": 104590,
+      "originalSha256": "631ef75f9aee95e95943d0e268ce9995976da667e1ca68922bec9f8faf642f04",
+      "storedBytes": 104590,
+      "storedSha256": "631ef75f9aee95e95943d0e268ce9995976da667e1ca68922bec9f8faf642f04",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-candidate/profile.json",
+      "path": "raw/metrics-v7/pile-candidate/profile.json.gz",
+      "originalBytes": 1175057,
+      "originalSha256": "c210bc74ec18d60df74f145aa0f32aa626ee9f84851b305eab4ebfe0f801962b",
+      "storedBytes": 64988,
+      "storedSha256": "5feace20d366fab34b6685b8dc869b10984b65641d6745b3c9737bf97f955f6f",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-candidate/steps.csv",
+      "path": "raw/metrics-v7/pile-candidate/steps.csv",
+      "originalBytes": 20931,
+      "originalSha256": "31b0f4b2cdc3cccea10706c39d900ec25ca5da5c1d266e127d7cd0215e4d3e0c",
+      "storedBytes": 20931,
+      "storedSha256": "31b0f4b2cdc3cccea10706c39d900ec25ca5da5c1d266e127d7cd0215e4d3e0c",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-candidate/summary.json",
+      "path": "raw/metrics-v7/pile-candidate/summary.json",
+      "originalBytes": 3064,
+      "originalSha256": "c87fa002577455feb3d82fbbc2de13d2b322afad1502afbb7972b06ec38a0f78",
+      "storedBytes": 3064,
+      "storedSha256": "c87fa002577455feb3d82fbbc2de13d2b322afad1502afbb7972b06ec38a0f78",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/pile-candidate.log",
+      "path": "raw/metrics-v7/pile-candidate.log",
+      "originalBytes": 2659,
+      "originalSha256": "34a91e8fdd5fbff106b0bf581da80918e9303256a0fe8a039082407aee040fa8",
+      "storedBytes": 2659,
+      "storedSha256": "34a91e8fdd5fbff106b0bf581da80918e9303256a0fe8a039082407aee040fa8",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/witness-baseline-0.log",
+      "path": "raw/metrics-v7/witness-baseline-0.log",
+      "originalBytes": 92,
+      "originalSha256": "0cabf479d0330efaa6b452d0fba43f82c6cef3f91b7e6331500ac634a9383607",
+      "storedBytes": 92,
+      "storedSha256": "0cabf479d0330efaa6b452d0fba43f82c6cef3f91b7e6331500ac634a9383607",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/witness-baseline-1.log",
+      "path": "raw/metrics-v7/witness-baseline-1.log",
+      "originalBytes": 92,
+      "originalSha256": "9392e69ed53745ded81f2fb55ba5c42fe033e9e9480d24f3f302ac3c5722ba73",
+      "storedBytes": 92,
+      "storedSha256": "9392e69ed53745ded81f2fb55ba5c42fe033e9e9480d24f3f302ac3c5722ba73",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/witness-baseline-2.log",
+      "path": "raw/metrics-v7/witness-baseline-2.log",
+      "originalBytes": 92,
+      "originalSha256": "b56fe9dc31867b04c9393a3cb207ca205f0d96c462ceb98f849069ca32ecd488",
+      "storedBytes": 92,
+      "storedSha256": "b56fe9dc31867b04c9393a3cb207ca205f0d96c462ceb98f849069ca32ecd488",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/witness-candidate-0.log",
+      "path": "raw/metrics-v7/witness-candidate-0.log",
+      "originalBytes": 92,
+      "originalSha256": "325dcceeb7fd35a2d65cd5e7f11d98201d8aaae17d2e3f88722dbe8f8e06cc0e",
+      "storedBytes": 92,
+      "storedSha256": "325dcceeb7fd35a2d65cd5e7f11d98201d8aaae17d2e3f88722dbe8f8e06cc0e",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/witness-candidate-1.log",
+      "path": "raw/metrics-v7/witness-candidate-1.log",
+      "originalBytes": 92,
+      "originalSha256": "a28d83a11e9c8374b87fc357aab729dec8e1312df0b4171e1d2a132d0d96f028",
+      "storedBytes": 92,
+      "storedSha256": "a28d83a11e9c8374b87fc357aab729dec8e1312df0b4171e1d2a132d0d96f028",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/metrics-v7/witness-candidate-2.log",
+      "path": "raw/metrics-v7/witness-candidate-2.log",
+      "originalBytes": 91,
+      "originalSha256": "e996a0fc6758567d204848ce242b29fd1388817750264fa4078d906097534a5a",
+      "storedBytes": 91,
+      "storedSha256": "e996a0fc6758567d204848ce242b29fd1388817750264fa4078d906097534a5a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/RESULTS.json",
+      "path": "raw/matched-v6/RESULTS.json",
+      "originalBytes": 5009,
+      "originalSha256": "21cfba850eb92151dee64d5d045199fb3872ea9633c0535ac88304b337451288",
+      "storedBytes": 5009,
+      "storedSha256": "21cfba850eb92151dee64d5d045199fb3872ea9633c0535ac88304b337451288",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/baseline/begins.csv",
+      "path": "raw/matched-v6/baseline/begins.csv",
+      "originalBytes": 7355,
+      "originalSha256": "bd1766f5ac8837a81d25aaf0ca9bbb9a05465d7f7f28d8ac6894741d20f69d5e",
+      "storedBytes": 7355,
+      "storedSha256": "bd1766f5ac8837a81d25aaf0ca9bbb9a05465d7f7f28d8ac6894741d20f69d5e",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/baseline/frames.csv",
+      "path": "raw/matched-v6/baseline/frames.csv",
+      "originalBytes": 42666,
+      "originalSha256": "702817537a0f1f206509733c7f0a13c4aeca823b6122550275b4f4ae532ba21a",
+      "storedBytes": 42666,
+      "storedSha256": "702817537a0f1f206509733c7f0a13c4aeca823b6122550275b4f4ae532ba21a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/baseline/profile-shutdown.json",
+      "path": "raw/matched-v6/baseline/profile-shutdown.json.gz",
+      "originalBytes": 3404292,
+      "originalSha256": "d2126eca96598e34c847efce5afa8604d734913d18ac72dd89ce4ff2a911a665",
+      "storedBytes": 325923,
+      "storedSha256": "0211f5d2cc7442581b8220110e45492dae968905b59801d6d1cf966cb02f1cb9",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/baseline/quality.json",
+      "path": "raw/matched-v6/baseline/quality.json",
+      "originalBytes": 366,
+      "originalSha256": "533edd80a013b814543415923aad85f1867e03c3ed218d27f9de00d1b5370f59",
+      "storedBytes": 366,
+      "storedSha256": "533edd80a013b814543415923aad85f1867e03c3ed218d27f9de00d1b5370f59",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/baseline/steps.csv",
+      "path": "raw/matched-v6/baseline/steps.csv",
+      "originalBytes": 41398,
+      "originalSha256": "e7a1ba6adae54bb1778de8da134410304d58c20e0323ab8ff1c736a52988dffd",
+      "storedBytes": 41398,
+      "storedSha256": "e7a1ba6adae54bb1778de8da134410304d58c20e0323ab8ff1c736a52988dffd",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/baseline.log",
+      "path": "raw/matched-v6/baseline.log",
+      "originalBytes": 613,
+      "originalSha256": "5612c9b12e7c3fcbee3a2c4994e892896e0493fde8798646fd819b8779ccf0e6",
+      "storedBytes": 613,
+      "storedSha256": "5612c9b12e7c3fcbee3a2c4994e892896e0493fde8798646fd819b8779ccf0e6",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/candidate/begins.csv",
+      "path": "raw/matched-v6/candidate/begins.csv",
+      "originalBytes": 7358,
+      "originalSha256": "6f5d6748b93291123b791d305a59c126cd353637ab02c11eaa1c403f9330f308",
+      "storedBytes": 7358,
+      "storedSha256": "6f5d6748b93291123b791d305a59c126cd353637ab02c11eaa1c403f9330f308",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/candidate/frames.csv",
+      "path": "raw/matched-v6/candidate/frames.csv",
+      "originalBytes": 42622,
+      "originalSha256": "65f43d458c421e2fd9b9ee48883d2635fd104677be23205d17a48c28a0fca6ba",
+      "storedBytes": 42622,
+      "storedSha256": "65f43d458c421e2fd9b9ee48883d2635fd104677be23205d17a48c28a0fca6ba",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/candidate/profile-shutdown.json",
+      "path": "raw/matched-v6/candidate/profile-shutdown.json.gz",
+      "originalBytes": 3438956,
+      "originalSha256": "c717439158aa1e92436b08790d488595ef6f9d4a135f599111c50045b2558bc5",
+      "storedBytes": 327483,
+      "storedSha256": "dc8ba46c2b204096bb867fdcea9faf2dced0fc49a8834ee3828943b94413c914",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/candidate/quality.json",
+      "path": "raw/matched-v6/candidate/quality.json",
+      "originalBytes": 366,
+      "originalSha256": "de94fbc83285110657ec0aef2b50b703b8226f68dad4191849d17d4d9848d6d7",
+      "storedBytes": 366,
+      "storedSha256": "de94fbc83285110657ec0aef2b50b703b8226f68dad4191849d17d4d9848d6d7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/candidate/steps.csv",
+      "path": "raw/matched-v6/candidate/steps.csv",
+      "originalBytes": 41389,
+      "originalSha256": "ac9511151fe51d972bea6c58b9db863d7d96d3209e3e16f2b3f6c996801a65f1",
+      "storedBytes": 41389,
+      "storedSha256": "ac9511151fe51d972bea6c58b9db863d7d96d3209e3e16f2b3f6c996801a65f1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/matched-v6/candidate.log",
+      "path": "raw/matched-v6/candidate.log",
+      "originalBytes": 613,
+      "originalSha256": "1f068b7936c548b0ba17eeb10911129a1dc1ed225d094b399a2bdd839bf8bd06",
+      "storedBytes": 613,
+      "storedSha256": "1f068b7936c548b0ba17eeb10911129a1dc1ed225d094b399a2bdd839bf8bd06",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/BUILD.json",
+      "path": "raw/final-physics-v8/BUILD.json",
+      "originalBytes": 4179,
+      "originalSha256": "014ff1d60dccbb34d2d68058afa37bd46d6ebad3775ad5e974fecaf2a9c9eae1",
+      "storedBytes": 4179,
+      "storedSha256": "014ff1d60dccbb34d2d68058afa37bd46d6ebad3775ad5e974fecaf2a9c9eae1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/RESULTS.json",
+      "path": "raw/final-physics-v8/RESULTS.json",
+      "originalBytes": 4670,
+      "originalSha256": "a942df047b8d7c8706426d55ff3f6ba1785ccc24de7de1d38848f49697afd3c7",
+      "storedBytes": 4670,
+      "storedSha256": "a942df047b8d7c8706426d55ff3f6ba1785ccc24de7de1d38848f49697afd3c7",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/RuntimeWorld.cpp.build.log",
+      "path": "raw/final-physics-v8/RuntimeWorld.cpp.build.log",
+      "originalBytes": 1596,
+      "originalSha256": "e385057fe2eb1f3b9fc00aa8b20eeaba4d40f75ff393e95e993f00154414d20a",
+      "storedBytes": 1596,
+      "storedSha256": "e385057fe2eb1f3b9fc00aa8b20eeaba4d40f75ff393e95e993f00154414d20a",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270/begins.csv",
+      "path": "raw/final-physics-v8/dense270/begins.csv",
+      "originalBytes": 7366,
+      "originalSha256": "9fa081c44332d3698027b6932290492df6ebba88e2cf61ba99b5c75f20ae4393",
+      "storedBytes": 7366,
+      "storedSha256": "9fa081c44332d3698027b6932290492df6ebba88e2cf61ba99b5c75f20ae4393",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270/frames.csv",
+      "path": "raw/final-physics-v8/dense270/frames.csv",
+      "originalBytes": 42581,
+      "originalSha256": "1c98b1673ee39463b60dbf25bd086934b308143d3e80ba4b7441d767250da1bf",
+      "storedBytes": 42581,
+      "storedSha256": "1c98b1673ee39463b60dbf25bd086934b308143d3e80ba4b7441d767250da1bf",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270/profile-final.json",
+      "path": "raw/final-physics-v8/dense270/profile-final.json.gz",
+      "originalBytes": 3380528,
+      "originalSha256": "3d7902f9dbf06ff10965cb863c258f60cb45be1e851432e9bb5671b89fa4470a",
+      "storedBytes": 323935,
+      "storedSha256": "714b0a68e87bcfd4bab2bee62aca2564076cccf3ea93ddce1a7ebe37560f198d",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270/profile-shutdown.json",
+      "path": "raw/final-physics-v8/dense270/profile-shutdown.json.gz",
+      "originalBytes": 3403639,
+      "originalSha256": "04aef39780275f67c29e45af8fd706ad68f99e2a25ad06489a3f72544d38e914",
+      "storedBytes": 326005,
+      "storedSha256": "c512cb2e808b5f1eaddbfa890d7b9d4b74dfa6c26704aec641c917971c969758",
+      "compression": "gzip"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270/quality.json",
+      "path": "raw/final-physics-v8/dense270/quality.json",
+      "originalBytes": 366,
+      "originalSha256": "6d9915720c2a0f17aa92ac93ae3e0acde335228101fc7f966b0098d2f1a050f5",
+      "storedBytes": 366,
+      "storedSha256": "6d9915720c2a0f17aa92ac93ae3e0acde335228101fc7f966b0098d2f1a050f5",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270/steps.csv",
+      "path": "raw/final-physics-v8/dense270/steps.csv",
+      "originalBytes": 41358,
+      "originalSha256": "35734d9b11cd9ac57a31c8cc1ee5d8c356ad74af73faf70c3c1935ed3aeb2254",
+      "storedBytes": 41358,
+      "storedSha256": "35734d9b11cd9ac57a31c8cc1ee5d8c356ad74af73faf70c3c1935ed3aeb2254",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-physics-v8/dense270.log",
+      "path": "raw/final-physics-v8/dense270.log",
+      "originalBytes": 613,
+      "originalSha256": "dfe28169706dde5ba470cc5ac33ffa3a68ae49fb43daf4585b8544aad07528c3",
+      "storedBytes": 613,
+      "storedSha256": "dfe28169706dde5ba470cc5ac33ffa3a68ae49fb43daf4585b8544aad07528c3",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-narrow/CollisionGeometry.cpp.o.build.log",
+      "path": "raw/final-narrow/CollisionGeometry.cpp.o.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-narrow/RESULTS.json",
+      "path": "raw/final-narrow/RESULTS.json",
+      "originalBytes": 6739,
+      "originalSha256": "1f05181ded1000424f5a2615f435ebe0e0848227374d7d6237f52e4374f1b4be",
+      "storedBytes": 6739,
+      "storedSha256": "1f05181ded1000424f5a2615f435ebe0e0848227374d7d6237f52e4374f1b4be",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-narrow/entry.log",
+      "path": "raw/final-narrow/entry.log",
+      "originalBytes": 1184,
+      "originalSha256": "5fc67310446b87108480bcf454d16df233d92534d853d8319a097cfc1d3b6ec6",
+      "storedBytes": 1184,
+      "storedSha256": "5fc67310446b87108480bcf454d16df233d92534d853d8319a097cfc1d3b6ec6",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-narrow/witness.log",
+      "path": "raw/final-narrow/witness.log",
+      "originalBytes": 91,
+      "originalSha256": "a3b79c63c39e0d8be997e95323526c885fd78a32ed6485c9c106fc1f029dfb30",
+      "storedBytes": 91,
+      "storedSha256": "a3b79c63c39e0d8be997e95323526c885fd78a32ed6485c9c106fc1f029dfb30",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/final-narrow/witness.o.build.log",
+      "path": "raw/final-narrow/witness.o.build.log",
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/build_variant.py",
+      "path": "experiments/build_variant.py.txt",
+      "originalBytes": 2164,
+      "originalSha256": "4dee7cdbccc983a4a8051fb7406f57f90d80e2f420b2d9ac577c3b591991e362",
+      "storedBytes": 2164,
+      "storedSha256": "4dee7cdbccc983a4a8051fb7406f57f90d80e2f420b2d9ac577c3b591991e362",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/prepare_scratch.py",
+      "path": "experiments/prepare_scratch.py.txt",
+      "originalBytes": 9075,
+      "originalSha256": "10d439847ff91346308373a14fb36ce45c7260264e78d7e850e7ffd82329b7b3",
+      "storedBytes": 9075,
+      "storedSha256": "10d439847ff91346308373a14fb36ce45c7260264e78d7e850e7ffd82329b7b3",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/build_witness.py",
+      "path": "experiments/build_witness.py.txt",
+      "originalBytes": 1534,
+      "originalSha256": "dc99fb0d9fb9db66f0745c90bdba505fb7b32e8bd9cfafa596d2f0ae00225d6f",
+      "storedBytes": 1534,
+      "storedSha256": "dc99fb0d9fb9db66f0745c90bdba505fb7b32e8bd9cfafa596d2f0ae00225d6f",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/run_matched.py",
+      "path": "experiments/run_matched.py.txt",
+      "originalBytes": 1751,
+      "originalSha256": "6e3d0911bffa7cbdfadc7aa8f661a8b3236878ddad96ba2e851d54322db03562",
+      "storedBytes": 1751,
+      "storedSha256": "6e3d0911bffa7cbdfadc7aa8f661a8b3236878ddad96ba2e851d54322db03562",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/check_v7.py",
+      "path": "experiments/check_v7.py.txt",
+      "originalBytes": 2186,
+      "originalSha256": "846cf2af0c4c657924048dba134eba5a4c2c23328c2a338d769828ad0a9f2ccb",
+      "storedBytes": 2186,
+      "storedSha256": "846cf2af0c4c657924048dba134eba5a4c2c23328c2a338d769828ad0a9f2ccb",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/run_v7_metrics.py",
+      "path": "experiments/run_v7_metrics.py.txt",
+      "originalBytes": 2574,
+      "originalSha256": "d66c49c934490ba1b1d1890405747350f74c3c441966ddc0a3f9e4ef28bbc1b0",
+      "storedBytes": 2574,
+      "storedSha256": "d66c49c934490ba1b1d1890405747350f74c3c441966ddc0a3f9e4ef28bbc1b0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/build_v8.py",
+      "path": "experiments/build_v8.py.txt",
+      "originalBytes": 2254,
+      "originalSha256": "22631590335f8953373f972559199a926a0b8a0461d45179f2b5ed36abca20b3",
+      "storedBytes": 2254,
+      "storedSha256": "22631590335f8953373f972559199a926a0b8a0461d45179f2b5ed36abca20b3",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/run_final_narrow.py",
+      "path": "experiments/run_final_narrow.py.txt",
+      "originalBytes": 2036,
+      "originalSha256": "2c04c2b0f18daf6b50700dce6109bc8fce077f9cdd4cadce38e72edaa6510cf0",
+      "storedBytes": 2036,
+      "storedSha256": "2c04c2b0f18daf6b50700dce6109bc8fce077f9cdd4cadce38e72edaa6510cf0",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/add_geometry_reuse.py",
+      "path": "experiments/add_geometry_reuse.py.txt",
+      "originalBytes": 4717,
+      "originalSha256": "d7a86bc266de8cf66e400862119a7fe47785c77d42b13142f4c71308dcd5bb7f",
+      "storedBytes": 4717,
+      "storedSha256": "d7a86bc266de8cf66e400862119a7fe47785c77d42b13142f4c71308dcd5bb7f",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/add_event_scratch.py",
+      "path": "experiments/add_event_scratch.py.txt",
+      "originalBytes": 2558,
+      "originalSha256": "3af5a6b0ad6edfa7192e8dfe8e4973eb899c110dafffb59620b620b8cd95d1d9",
+      "storedBytes": 2558,
+      "storedSha256": "3af5a6b0ad6edfa7192e8dfe8e4973eb899c110dafffb59620b620b8cd95d1d9",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/WitnessConformanceTests.first-failed.cpp.txt",
+      "path": "experiments/WitnessConformanceTests.first-failed.cpp.txt",
+      "originalBytes": 4056,
+      "originalSha256": "e471b96408a089609ec1205704e7ebb7a7ed033476b0bf553be058e6633ca8dd",
+      "storedBytes": 4056,
+      "storedSha256": "e471b96408a089609ec1205704e7ebb7a7ed033476b0bf553be058e6633ca8dd",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/witness-first-failure.json",
+      "path": "experiments/witness-first-failure.json",
+      "originalBytes": 292,
+      "originalSha256": "2910fae5c27712f7cca6f75ee2faa171c4faf34ea9a7e955e66517b025a8daa8",
+      "storedBytes": 292,
+      "storedSha256": "2910fae5c27712f7cca6f75ee2faa171c4faf34ea9a7e955e66517b025a8daa8",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/WITNESS_BUILD.json",
+      "path": "experiments/WITNESS_BUILD.json",
+      "originalBytes": 5489,
+      "originalSha256": "9d0c14dcc2774e7ead47eeb66d1b8fcb9e3b1bcedebb0f24e29213d07c1344d1",
+      "storedBytes": 5489,
+      "storedSha256": "9d0c14dcc2774e7ead47eeb66d1b8fcb9e3b1bcedebb0f24e29213d07c1344d1",
+      "compression": "none"
+    },
+    {
+      "source": ".cache/prealpha-pass2/physics/WITNESS_FUNCTIONAL.json",
+      "path": "experiments/WITNESS_FUNCTIONAL.json",
+      "originalBytes": 1004,
+      "originalSha256": "d2b1877dfd0245a7140b74d733555f52496ee01f24a99dfd3aba831bc0b98a86",
+      "storedBytes": 1004,
+      "storedSha256": "d2b1877dfd0245a7140b74d733555f52496ee01f24a99dfd3aba831bc0b98a86",
+      "compression": "none"
+    }
+  ],
+  "excluded": "Generated executables, archives and object files remain local scratch; exact hashes and reproduction commands are retained. No protected evidence modified.",
+  "generatedDocuments": {
+    "REPORT.md": "cc583896b1e3d30e5d7f0392b45ff1d1a2def0a407a834d7a3c994ca754e3447",
+    "FINAL_SOURCE.json": "c3095f2cb740572ec6701c5298b161e4b34cba55d09523191a34bc9dd860018d",
+    "HARDWARE.txt": "2a559aa0a731a100b1a4138838d55d3480c6ed0eb6018e62684a5398bae633ec",
+    "MEASUREMENTS.json": "74e1006ad89eda13dc333a9e71eb8e1d5b38f4347c5719aa2995bd899af2493e",
+    "VERIFICATION.json": "6e37f783b006603da63ded9c000724ab28d53846d6e7ee5381e2f9302a5120df"
+  }
+}

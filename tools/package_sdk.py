@@ -40,10 +40,13 @@ def read_json(path):
 
 
 def identity(path, release=False):
-    value = read_json(path)
+    return validate_identity(read_json(path), release=release, origin=str(path))
+
+
+def validate_identity(value, release=False, origin="build identity"):
     missing = set(IDENTITY_FIELDS) - value.keys()
     if missing or value.get("schema") != 1:
-        raise ValueError(f"Invalid build identity {path}; missing {sorted(missing)}")
+        raise ValueError(f"Invalid build identity {origin}; missing {sorted(missing)}")
     if any(not isinstance(value[field], str) for field in IDENTITY_FIELDS if field not in ("schema", "source_dirty", "source_untracked_count")):
         raise ValueError("Build identity fields must use their declared string/Boolean types")
     if value["channel"] not in ("main", "Experimental", "Local"):
@@ -103,7 +106,7 @@ def probe_identity(executable, timeout=10, limit=16384):
 
 def relative_path(value):
     path = Path(value)
-    if not value or path.is_absolute() or ".." in path.parts or "\\" in value:
+    if not value or path.is_absolute() or ".." in path.parts or "\\" in value or ":" in value:
         raise ValueError(f"Unsafe inventory/manifest path: {value!r}")
     return path
 

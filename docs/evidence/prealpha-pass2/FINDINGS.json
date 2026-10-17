@@ -1,0 +1,1326 @@
+{
+  "schema": 1,
+  "kind": "original Pre-Alpha assessment reconciliation",
+  "assessment_baseline": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "assessment_sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
+  "review_base_commit": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "status": "Pass2 scoped Linux combined validation complete; remaining correctness, performance and platform gaps explicit; no human acceptance or Alpha readiness",
+  "id_policy": "Original report used A-E section letters and P0/P1/P2 table priorities, not detailed IDs. Workstream and subfinding IDs here are new reconciliation labels, never claimed historical IDs.",
+  "status_definitions": {
+    "resolved": "The original bounded issue was corrected and has cited implementation plus scoped evidence. This does not imply universal/platform/human acceptance.",
+    "improved": "A demonstrated part is corrected or instrumented; an essential gap remains, or new Pass2 work awaits final validation.",
+    "deferred": "Deliberate supported boundary or separately authorized future work; no fabricated implementation.",
+    "unsupported_by_evidence": "The original report identified a risk/observation; no current causal defect or controlled reproduction was established.",
+    "open": "Original issue remains unresolved or final corrective validation is not yet available."
+  },
+  "evidence_policy": "Pass1 receipts remain historical scoped evidence, never relabelled as Pass2 execution. Final combined Linux26/26 is a selected manifest, not exhaustive engine certification. Supplemental exact earlier identities precede only a two-file test/prose follow-up with no runtime changes. Known failing contracts stay failed. Tooling regression5/6 is preserved with a subsequent6/6 correction; pending Android/CI/nativeWindows qualification remains separate.",
+  "workstreams": [
+    {
+      "id": "P0-01",
+      "priority": "P0",
+      "original_name": "Explicit build identity and two release channels",
+      "original_completion_evidence": "Exact source/build identity visible in editor, runtime, tools, APK and package manifest; archive builds work without Git history.",
+      "status": "resolved",
+      "finding_ids": [
+        "C-01",
+        "C-02",
+        "C-03",
+        "C-04",
+        "C-05",
+        "C-06",
+        "C-07"
+      ]
+    },
+    {
+      "id": "P0-02",
+      "priority": "P0",
+      "original_name": "Reliable regression and release gates",
+      "original_completion_evidence": "Focused test groups, explicit expected failures, reproducible prerequisites, failing negative controls and archived machine-readable results.",
+      "status": "resolved",
+      "finding_ids": [
+        "R-04",
+        "DX-05",
+        "PL-01"
+      ]
+    },
+    {
+      "id": "P0-03",
+      "priority": "P0",
+      "original_name": "Curved-mesh collision correctness",
+      "original_completion_evidence": "Validated crossing oracle, preserved original failure, generic correction and affected collision/CCD regressions.",
+      "status": "improved",
+      "finding_ids": [
+        "A-01",
+        "A-02"
+      ]
+    },
+    {
+      "id": "P1-01",
+      "priority": "P1",
+      "original_name": "Dense-contact predictability",
+      "original_completion_evidence": "Matched workloads with median/p95/worst costs and physical invariants; documented practical limits.",
+      "status": "open",
+      "finding_ids": [
+        "B-01",
+        "R-03"
+      ]
+    },
+    {
+      "id": "P1-02",
+      "priority": "P1",
+      "original_name": "Packaging and clean-machine usability",
+      "original_completion_evidence": "Complete Linux/Windows SDKs, coherent Android presets, relocated exports and every shipped tool launching independently.",
+      "status": "improved",
+      "finding_ids": [
+        "D-01",
+        "D-02",
+        "PL-04",
+        "PL-05",
+        "PL-06",
+        "PL-08",
+        "L-07",
+        "D-03"
+      ]
+    },
+    {
+      "id": "P1-03",
+      "priority": "P1",
+      "original_name": "Composed lifecycle contracts",
+      "original_completion_evidence": "Selected save/stream/origin/mod/resource combinations pass cold-process and failure-injection tests with actual restored endpoints.",
+      "status": "improved",
+      "finding_ids": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-05",
+        "E-06",
+        "R-01",
+        "R-02",
+        "DX-07",
+        "L-01",
+        "L-02",
+        "L-03",
+        "L-04",
+        "L-05",
+        "L-06"
+      ]
+    },
+    {
+      "id": "P1-04",
+      "priority": "P1",
+      "original_name": "Incremental architecture cleanup",
+      "original_completion_evidence": "Smaller subsystem boundaries and fewer duplicated integration lists without behaviour changes.",
+      "status": "improved",
+      "finding_ids": [
+        "M-01",
+        "M-02",
+        "L-08"
+      ]
+    },
+    {
+      "id": "P2-01",
+      "priority": "P2",
+      "original_name": "Editor onboarding and actionable diagnostics",
+      "original_completion_evidence": "A fresh developer can create, debug, save and export a small game without engine-source knowledge.",
+      "status": "improved",
+      "finding_ids": [
+        "R-05",
+        "DX-01",
+        "DX-06"
+      ]
+    },
+    {
+      "id": "P2-02",
+      "priority": "P2",
+      "original_name": "Current documentation and support matrix",
+      "original_completion_evidence": "Searchable current architecture/API/platform guidance with automatic drift checks.",
+      "status": "improved",
+      "finding_ids": [
+        "DX-02",
+        "DX-03",
+        "DX-04",
+        "DX-08",
+        "CAP-02"
+      ]
+    },
+    {
+      "id": "P2-03",
+      "priority": "P2",
+      "original_name": "Platform and release qualification",
+      "original_completion_evidence": "Explicit Linux, Windows and Android results; missing hardware coverage remains visible.",
+      "status": "open",
+      "finding_ids": [
+        "PL-02",
+        "PL-03",
+        "PL-07",
+        "L-09",
+        "L-10",
+        "CAP-01"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "A-01",
+      "workstream": "P0-03",
+      "original_section": "2.A",
+      "original_quote": "The crossing measurement is explicitly **reported rather than asserted**.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "The actual cooked-triangle oracle now asserts the unchanged 5 cm crossing gate and distinguishes collider removal, legal flight, finite edges, rear entry and rotation. The false-green measurement defect is corrected; remaining physical continuation failures stay separately open.",
+      "source_paths": [
+        "tests/ImpactMeshCostTests.cpp",
+        "src/PhysicsWorld.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/physics/REPORT.md",
+        "docs/evidence/prealpha/validation/known-failures-final/RESULTS.json",
+        "docs/evidence/prealpha-pass2/physics/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/known-failures/RESULTS.json"
+      ],
+      "next_action": "Keep the actual-surface oracle and unchanged geometric acceptance conditions; preserve known continuation failures until physically repaired.",
+      "pass2_evidence_scope": "Preserved matched physics measurements plus final combined source gate; full continuation remains explicitly failed."
+    },
+    {
+      "id": "A-02",
+      "workstream": "P0-03",
+      "original_section": "2.A",
+      "original_quote": "All three curved-trough resolutions: **24 fast-box crossings each**.",
+      "original_classification": "confirmed",
+      "status": "open",
+      "disposition": "Pass2 finite-patch initial arrival passes 193 checks with zero coarse/medium/dense arrival crossings, without changing solver budgets or inputs. The original full 90-step continuation still fails 4 assertions, with 11/20/15 crossings versus 24/24/24 baseline. This original physical correctness finding remains open.",
+      "source_paths": [
+        "src/PhysicsWorld.cpp",
+        "src/CollisionGeometry.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/physics/REPORT.md",
+        "docs/evidence/prealpha-pass2/physics/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/known-failures/RESULTS.json"
+      ],
+      "next_action": "Establish a compatible generic one-sided contact-continuation mechanism; initial arrival passing does not close the full90-step failure.",
+      "pass2_evidence_scope": "Preserved matched physics measurements plus final combined source gate; full continuation remains explicitly failed.",
+      "release_blocker": true
+    },
+    {
+      "id": "B-01",
+      "workstream": "P1-01",
+      "original_section": "2.B",
+      "original_quote": "Dense-contact physics still has severe latency tails",
+      "original_classification": "confirmed",
+      "status": "open",
+      "disposition": "Matched Pass2 dense scene preserves all 270 physical digests/counters and 7.2171085 mm deepest observed penetration. Median 27.070\u219225.937 ms, p95 413.328\u2192416.695 ms, worst 2123.409\u21921970.799 ms are mixed, still far outside real time. Whole-world teardown now exits in 54.731 s instead of timing out after exports. Exact witness/scratch improvements do not close the latency gate.",
+      "source_paths": [
+        "src/PhysicsWorld.cpp",
+        "src/CollisionGeometry.cpp",
+        "tests/PhysicsStressLiveBenchmark.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/physics/REPORT.md",
+        "docs/evidence/prealpha/REPORT.md",
+        "docs/evidence/prealpha-pass2/physics/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json"
+      ],
+      "next_action": "Continue profiling the preserved dense fixture; require matched physical digests and median/p95/worst improvements, not median-only or isolated microbenchmark closure.",
+      "pass2_evidence_scope": "Preserved matched physics measurements plus final combined source gate; full continuation remains explicitly failed.",
+      "release_blocker": true
+    },
+    {
+      "id": "C-01",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "The editor\u2019s current identity is inferred from milestone numbers in recent Git commit subjects, with an **M76 fallback** when suitable history is unavailable.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Explicit engine-version.json and shared native identity replace milestone inference/fallback. Unknown source identity is explicit and release-ineligible.",
+      "source_paths": [
+        "engine-version.json",
+        "cmake/JudasBuildIdentity.cmake",
+        "src/BuildIdentity.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/identity-closure.json",
+        "tests/BuildIdentityTests.cpp"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "C-02",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "Unnumbered Pre-Alpha corrections cannot be identified reliably.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Full revision/tree/fingerprint, build ID, independent channel and toolchain/configuration fields identify unnumbered checkpoints.",
+      "source_paths": [
+        "src/BuildIdentity.cpp",
+        "docs/BUILD_RELEASES.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/identity-closure.json"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "C-03",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "Source archives can acquire the fallback identity.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Exact tracked-blob archives include a hashed selected-file inventory and frozen source metadata. CMake validates no-Git archives, detects modifications and rejects malformed inventories.",
+      "source_paths": [
+        "tools/package_source.py",
+        "cmake/JudasBuildIdentity.cmake"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/identity-closure.json",
+        "scripts/prealpha_build_identity_checks.py"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "C-04",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "Reconfiguration watches `main` references but does not explicitly watch the Experimental branch reference.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Git HEAD/index/packed references and both primary branch references are configuration dependencies; branch/channel controls exercise actual independent fixtures.",
+      "source_paths": [
+        "cmake/JudasBuildIdentity.cmake"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/identity-closure.json"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "C-05",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "Runtime `--build-info` identifies platform/configuration, not the exact engine build.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "The legacy text line remains compatible; runtime/editor/public tools expose --build-info-json and --version before initialization. Android ABI identities are embedded.",
+      "source_paths": [
+        "src/BuildIdentity.cpp",
+        "src/main.cpp",
+        "tools/build_android.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "docs/evidence/prealpha/packaging-closure.json",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed.",
+      "pass2_evidence_scope": "Previously established bounded mechanism, with selected native identity regressions rerun on final combined Linux; platform-specific limitations remain explicit."
+    },
+    {
+      "id": "C-06",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "Export runtime probing cannot establish precise engine/tool compatibility.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Bounded shell-free probes compare channel/source/target identity and conservative untracked observations. Missing, stalled, malformed and mismatched binaries are rejected. Exported runtime SHA-256 is recorded.",
+      "source_paths": [
+        "src/ProjectExporter.cpp",
+        "src/ToolProcess.cpp",
+        "src/BuildIdentity.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "docs/evidence/prealpha/validation/export-final/RESULTS.json",
+        "tests/BuildIdentityTests.cpp",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed.",
+      "pass2_evidence_scope": "Previously established bounded mechanism, with selected native identity regressions rerun on final combined Linux; platform-specific limitations remain explicit."
+    },
+    {
+      "id": "C-07",
+      "workstream": "P0-01",
+      "original_section": "2.C",
+      "original_quote": "Update notification compares milestone numbers from `main`, so newer unnumbered stabilization builds can remain invisible.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Optional unauthenticated HTTPS ancestry comparison follows the selected channel/revision; offline/missing curl is nonfatal. No updater was added.",
+      "source_paths": [
+        "src/BuildUpdate.cpp",
+        "src/editor/EditorMilestoneNotice.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "tests/BuildIdentityTests.cpp"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "D-01",
+      "workstream": "P1-02",
+      "original_section": "2.D",
+      "original_quote": "The Windows SDK uses an explicit staging list that omits newer tools, including:",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "One shared17-tool inventory drives staging/probes. Actual final host Linux SDK verifies17 tools/212 files, embedded identity, hashes and dependencies. Native Windows Python packaging controls pass15, but current C++/SDK execution is incomplete under guest disk pressure; a synthetic inventory is not a Windows qualification.",
+      "source_paths": [
+        "packaging/sdk-inventory.json",
+        "cmake/JudasSdk.cmake",
+        "tools/package_sdk.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/packaging-closure.json",
+        "docs/evidence/prealpha/REPORT.md",
+        "docs/evidence/prealpha-pass2/packaging/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/supplemental/sdk-qualification.json"
+      ],
+      "next_action": "Record actual Windows launch/dependency probes separately; do not infer native Windows success from synthetic checks."
+    },
+    {
+      "id": "D-02",
+      "workstream": "P1-02",
+      "original_section": "2.D",
+      "original_quote": "The SDK configuration is included before later targets are declared, so its one-time target scan also misses later additions.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "SDK finalization occurs after public target declarations and uses an explicit shared inventory rather than incidental target-discovery order.",
+      "source_paths": [
+        "CMakeLists.txt",
+        "cmake/JudasSdk.cmake"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/packaging-closure.json",
+        "scripts/prealpha_packaging_checks.py"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "E-01",
+      "workstream": "P1-03",
+      "original_section": "2.E",
+      "original_quote": "Live origin changes reject active liquids, legacy fluid, atmosphere and combustion.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "Pass2 removes blanket origin refusals for published conserved-liquid owners/parcels, atmosphere reference frames and body-owned combustion state. Final87 parent+2\u00d78 cold checks observe wave/ledger bytes, real submersion/solid loading/optics/flow, radial/non-Y translation, cold physical endpoint and thermal/gas continuation. Unpublished liquid rejects nonzero shifts until normal publication. Active legacy PBF remains unsupported; atmosphere/combustion origin support does not imply modern slot-save support.",
+      "source_paths": [
+        "src/WorldOrigin.cpp",
+        "src/LiquidSystem.cpp",
+        "src/AtmosphereField.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/origin-environment.log"
+      ],
+      "next_action": "Keep bounded origin and unsupported ownership controls; investigate the separately preserved general-rotation liquid-bake failures without weakening existing physical contracts.",
+      "pass2_evidence_scope": "Final combined26/26 gate and87+16 real origin/cold endpoint checks, with explicitly failed rotated-bake and unsupported legacy/thermal-save controls."
+    },
+    {
+      "id": "E-02",
+      "workstream": "P1-03",
+      "original_section": "2.E",
+      "original_quote": "Regional suspension pins unsupported liquid groups and certain active navigation/articulation states.",
+      "original_classification": "confirmed",
+      "status": "deferred",
+      "disposition": "These pins currently guard unpreserved intent/dependencies. Supported retained bodies/terrain are exercised; universal suspension was never promised. No removal without a lossless continuation contract.",
+      "source_paths": [
+        "src/WorldStreaming.cpp",
+        "docs/M97_LIVING_WORLD.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "tests/LivingWorldStreamingTests.cpp"
+      ],
+      "next_action": "Extend only explicitly selected assembly states with independent restored physical endpoints; retain unsupported pins."
+    },
+    {
+      "id": "E-03",
+      "workstream": "P1-03",
+      "original_section": "2.E",
+      "original_quote": "Runtime excavation supports bounded local volumes, not arbitrary editing of every planetary terrain representation.",
+      "original_classification": "confirmed",
+      "status": "deferred",
+      "disposition": "M97 local volumetric editing remains the supported representation. Planetary heightfield and arbitrary planet-wide excavation are separate capabilities, not secretly provided by origin support.",
+      "source_paths": [
+        "src/RuntimeTerrain.cpp",
+        "docs/judasjs/terrain.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json"
+      ],
+      "next_action": "Keep authoring/runtime preflight bounds explicit; do not infer universal planetary editing."
+    },
+    {
+      "id": "E-04",
+      "workstream": "P1-03",
+      "original_section": "2.E",
+      "original_quote": "Online replication excludes vehicles, powertrains, articulation, deformables, terrain and several other systems.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "RepresentationIssue centralizes host/client support admission and names the blocking component. The supported entity subset was not expanded.",
+      "source_paths": [
+        "src/NetworkSession.cpp",
+        "docs/M99_NETWORK.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json",
+        "tests/NetworkBoundaryTests.cpp"
+      ],
+      "next_action": "General physical assembly replication remains deferred; preserve negative admission controls."
+    },
+    {
+      "id": "E-05",
+      "workstream": "P1-03",
+      "original_section": "2.E",
+      "original_quote": "Saves do not automatically merge newly authored world content into an old complete-world snapshot.",
+      "original_classification": "confirmed",
+      "status": "deferred",
+      "disposition": "Complete-world restore and explicit game/content migrations remain authoritative. Automatic world/content merge would require policy the engine cannot invent.",
+      "source_paths": [
+        "src/WorldPersistence.cpp",
+        "src/SaveService.cpp",
+        "docs/M98_SAVE_EVOLUTION.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/application-final/RESULTS.json"
+      ],
+      "next_action": "Document developer-authored migration boundaries rather than silently creating replacement content."
+    },
+    {
+      "id": "E-06",
+      "workstream": "P1-03",
+      "original_section": "2.E",
+      "original_quote": "Migrations cannot generally rewrite opaque retained native-region state.",
+      "original_classification": "confirmed",
+      "status": "deferred",
+      "disposition": "Native topology and opaque retained participant records remain restricted; explicit M98 migration/error/recovery controls preserve original bytes.",
+      "source_paths": [
+        "src/WorldPersistence.cpp",
+        "src/WorldStreaming.cpp",
+        "docs/M98_SAVE_EVOLUTION.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/application-final/RESULTS.json"
+      ],
+      "next_action": "Add typed migrations only with participant-version and inactive-region reconstruction contracts."
+    },
+    {
+      "id": "M-01",
+      "workstream": "P1-04",
+      "original_section": "3",
+      "original_quote": "Important behaviour is concentrated in large, densely written files:",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "Pass1 extracted identity/validation/SDK/process helpers. Pass2 extracts the unchanged 20 mechanical regression target contracts and shared application-test sources. Large RuntimeWorld/ScriptSystem/editor/physics files remain.",
+      "source_paths": [
+        "CMakeLists.txt",
+        "cmake/JudasTestTargets.cmake",
+        "cmake/tests/MechanicalTests.cmake",
+        "src/RuntimeWorld.cpp",
+        "src/ScriptSystem.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "tests/test_cmake_test_targets.py",
+        "docs/evidence/prealpha-pass2/CMAKE_TARGET_PARITY.json",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ],
+      "next_action": "Keep extraction incremental; require target/source/link/warning parity and affected native checks.",
+      "pass2_evidence_scope": "Six compiler-free CMake parity/negative controls pass; affected native targets configure/build and selected final regressions pass. This does not certify every target by execution."
+    },
+    {
+      "id": "M-02",
+      "workstream": "P1-04",
+      "original_section": "3",
+      "original_quote": "Adding a component can require coordinated changes across serialization, prefabs, runtime construction, persistence, streaming, origin changes, editor controls, bindings and export.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "Shared SDK/support inventories reduce selected duplicated lists, but there is still no universal lifecycle registry. New composed tests cover selected omissions without certifying all component paths.",
+      "source_paths": [
+        "src/Scene.h",
+        "src/RuntimeWorld.cpp",
+        "src/WorldStreaming.cpp",
+        "src/WorldPersistence.cpp",
+        "src/editor/ComponentEditors.h"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "tests/PreAlphaLifecycleTests.cpp",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ],
+      "next_action": "Audit lifecycle obligations by subsystem before larger registry refactors."
+    },
+    {
+      "id": "R-01",
+      "workstream": "P1-03",
+      "original_section": "3",
+      "original_quote": "Missed lifecycle updates when new components bypass one manual integration path.",
+      "original_classification": "suspected-risk",
+      "status": "improved",
+      "disposition": "Final combined tests check actual async terrain/collision/navigation publication, failed replacement retaining the solid, origin changes, cold restoration and destroyed pending owners (34 composed checks). Additional87+16 origin/cold checks and atomic capture controls expose ownership/failure paths. Selected lifecycle coverage improves; no all-component combination certification.",
+      "source_paths": [
+        "tests/PreAlphaLifecycleTests.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json",
+        "docs/evidence/prealpha-pass2/diagnostic-integration/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ],
+      "next_action": "Maintain an explicit remaining-composition register.",
+      "pass2_evidence_scope": "Final combined Linux gate with real positive and negative physical endpoints; selected supported combinations only."
+    },
+    {
+      "id": "R-02",
+      "workstream": "P1-03",
+      "original_section": "3",
+      "original_quote": "Debugger pauses interacting poorly with networking timeouts.",
+      "original_classification": "suspected-risk",
+      "status": "open",
+      "disposition": "No bounded combined debugger/network timeout experiment has established exact behaviour. Documentation says debugger freezes world work; remote-peer policy still needs an integration contract.",
+      "source_paths": [
+        "src/editor/ScriptTools.cpp",
+        "src/NetworkSession.cpp",
+        "docs/M94_DEVELOPER_TOOLS.md"
+      ],
+      "evidence_paths": [],
+      "next_action": "Create a two-process pause/resume test that distinguishes expected timeout from unsafe state publication."
+    },
+    {
+      "id": "R-03",
+      "workstream": "P1-01",
+      "original_section": "3",
+      "original_quote": "Resource eviction becoming expensive with large residency sets.",
+      "original_classification": "suspected-risk",
+      "status": "unsupported_by_evidence",
+      "disposition": "Source inspection shows repeated LRU scans, but no preserved controlled large-residency reproduction proves an unacceptable cost. No performance correction is claimed.",
+      "source_paths": [
+        "src/ResourceManager.cpp"
+      ],
+      "evidence_paths": [],
+      "next_action": "Profile increasing residency sets under a fixed memory budget before changing eviction architecture."
+    },
+    {
+      "id": "R-04",
+      "workstream": "P0-02",
+      "original_section": "3",
+      "original_quote": "Blocking export-runtime probing hanging on an unresponsive executable.",
+      "original_classification": "suspected-risk",
+      "status": "resolved",
+      "disposition": "Native and Python process probes now enforce time/output bounds with real stalled/oversized/failed/missing child controls.",
+      "source_paths": [
+        "src/ToolProcess.cpp",
+        "tools/package_sdk.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "tests/BuildIdentityTests.cpp",
+        "scripts/prealpha_packaging_checks.py",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed.",
+      "pass2_evidence_scope": "Previously established bounded mechanism, with selected native identity regressions rerun on final combined Linux; platform-specific limitations remain explicit."
+    },
+    {
+      "id": "R-05",
+      "workstream": "P2-01",
+      "original_section": "3",
+      "original_quote": "Unsupported subsystem combinations producing late failures instead of early authoring diagnostics.",
+      "original_classification": "suspected-risk",
+      "status": "improved",
+      "disposition": "Origin, replication and package diagnostics now identify concrete blockers. There is no universal editor preflight registry for every subsystem combination.",
+      "source_paths": [
+        "src/WorldOrigin.cpp",
+        "src/NetworkSession.cpp",
+        "src/ProjectExporter.cpp",
+        "docs/PREALPHA.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Extend preflight from proved contracts, not guesses; test last-good state on refusal."
+    },
+    {
+      "id": "DX-01",
+      "workstream": "P2-01",
+      "original_section": "4",
+      "original_quote": "New-project onboarding still requires substantial manual assembly of modern character, camera and input behaviour.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "A complete no-input render/camera starter and ordinary project-from-scratch VM/reload workflow pass20 checks on final combined Linux. Actual editor Play/Stop/debugger and a first-project relocated standalone pass separately. Direct human editor create/debug/export usability remains pending; no hidden FPS controller was added.",
+      "source_paths": [
+        "docs/FIRST_PROJECT.md",
+        "docs/judasjs/examples/first-project.js",
+        "tests/FirstProjectTests.cpp"
+      ],
+      "evidence_paths": [
+        "tests/test_cmake_test_targets.py",
+        "docs/evidence/prealpha-pass2/diagnostic-integration/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/supplemental/RESULTS.json"
+      ],
+      "next_action": "Perform the concise human first-project/editor/reload/export checklist; keep automated endpoints distinct from visual/usability acceptance.",
+      "pass2_evidence_scope": "Final20-check first-project contract plus real automated editor/relocated-export receipts; no new human acceptance."
+    },
+    {
+      "id": "DX-02",
+      "workstream": "P2-02",
+      "original_section": "4",
+      "original_quote": "The current M96 guide still says human review is pending despite acceptance.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Current M96 documentation now explicitly records acceptance in the M99 baseline while retaining scoped platform limitations. Historical evidence remains unchanged.",
+      "source_paths": [
+        "docs/M96_UI_TOOLKIT.md",
+        "docs/JUDASJS.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "DX-03",
+      "workstream": "P2-02",
+      "original_section": "4",
+      "original_quote": "Some current documentation describes an older API surface.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "Final live API/type/drift checks agree on473 public symbols and40 exports, with TypeScript5.9.3,51 examples and4 negative drift controls. Pass1 full cookbook remains historical. Current guidance distinguishes support boundaries; no claim that every prose paragraph or historical chronology is machine-certified.",
+      "source_paths": [
+        "docs/JUDASJS.md",
+        "docs/judas.d.ts",
+        "docs/judasjs",
+        "scripts/check_judasjs_api.mjs"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/ui-followup/RESULTS.json",
+        "docs/evidence/prealpha/validation/cookbook-executed/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/supplemental/api_drift_live.log"
+      ],
+      "next_action": "Keep current status/support guidance separate from historical evidence; rerun API/type checks on added examples."
+    },
+    {
+      "id": "DX-04",
+      "workstream": "P2-02",
+      "original_section": "4",
+      "original_quote": "Architecture documentation mixes current guidance with extensive historical chronology.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "The current ownership/support guide leads ARCHITECTURE.md and links historical sections. The extensive history remains intentionally preserved, so the file is not a concise standalone handbook.",
+      "source_paths": [
+        "docs/ARCHITECTURE.md",
+        "docs/PREALPHA.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Maintain concise current contracts; a later archival reorganization must preserve historical bytes."
+    },
+    {
+      "id": "DX-05",
+      "workstream": "P0-02",
+      "original_section": "4",
+      "original_quote": "At least one final-check runner depends on TypeScript installed beneath an older milestone cache directory, making fresh-machine reproduction fragile.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Optional pinned tools/verification setup and shared TypeScript resolution replace hardcoded milestone cache paths; native/game builds still need no npm.",
+      "source_paths": [
+        "tools/verification/package.json",
+        "scripts/typescript_tooling.mjs",
+        "scripts/m99_final_checks.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/typescript-tooling.log",
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "DX-06",
+      "workstream": "P2-01",
+      "original_section": "4",
+      "original_quote": "Networking exposes low-level connection errors where users need clear host/listener/endpoint guidance.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Transport errors include endpoint, native cause and corrective action; actual conflict/refused controls passed without changing connection semantics.",
+      "source_paths": [
+        "src/NetworkTransport.cpp",
+        "tests/NetworkTransportTests.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "DX-07",
+      "workstream": "P1-03",
+      "original_section": "4",
+      "original_quote": "The M99 phone evidence also records an unexplained listener closure before successful USB-forwarded testing.",
+      "original_classification": "suspected-risk",
+      "status": "unsupported_by_evidence",
+      "disposition": "The historical observation remains genuine, but no causal mechanism or current reproducer was established. Ordinary loopback/multi-process passes do not explain or invalidate that phone observation.",
+      "source_paths": [
+        "src/NetworkTransport.cpp",
+        "src/NetworkSession.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/m99/HUMAN_VALIDATION.md"
+      ],
+      "next_action": "Reproduce a controlled Android/listener lifecycle with capture logs when hardware is available."
+    },
+    {
+      "id": "DX-08",
+      "workstream": "P2-02",
+      "original_section": "4",
+      "original_quote": "automated checks for API coverage, links, packaged documentation and current status.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "API drift/types/live enumeration and packaged-document inventory checks exist. A complete semantic prose/status checker and repository-wide link verification do not.",
+      "source_paths": [
+        "scripts/check_judasjs_api.mjs",
+        "tools/package_sdk.py",
+        "packaging/sdk-inventory.json"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Do not claim machine-verified prose accuracy; add narrow checks with actual missing/phantom negative controls."
+    },
+    {
+      "id": "PL-01",
+      "workstream": "P0-02",
+      "original_section": "5",
+      "original_quote": "historical suite passes should be supplemented by a small, reproducible current release gate.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Opt-in focused manifest binds executable bytes/embedded identity and preserves explicit failures. Final combined26/26 selected Linux cases pass; the original25/26 test-setup failure is preserved. A late stale tooling assertion failed5/6 and was corrected to distinguish resolved scheduled arrival from unresolved/manual cases; follow-up6/6 passes, with original failure preserved separately.",
+      "source_paths": [
+        "cmake/JudasValidation.cmake",
+        "scripts/prealpha_validate.py",
+        "tests/ValidationMain.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json",
+        "docs/evidence/prealpha/ci-followup/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/tooling-original/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/tooling-followup/VALIDATION_FOLLOWUP.json",
+        "docs/evidence/prealpha-pass2/integration/final/FINAL_SOURCE_FILES.json"
+      ],
+      "next_action": "Preserve the scoped contracts and actual failure/corrected follow-up; run post-commit clean CI independently."
+    },
+    {
+      "id": "PL-02",
+      "workstream": "P2-03",
+      "original_section": "5",
+      "original_quote": "SDK completeness and latest-feature coverage need attention.",
+      "original_classification": "confirmed",
+      "status": "open",
+      "disposition": "Actual Linux controls pass24 established packaging plus16 new distribution tests, and native Windows Python passes15 after preserved failures/follow-ups. Final Linux host SDK17-tool qualification passes. Current native Windows C++/SDK remains incomplete under guest disk pressure, and Ubuntu24.04 CI/new final-source APK are pending separate receipts. No Windows GPU/performance or new phone acceptance is claimed.",
+      "source_paths": [
+        "cmake/JudasWindowsSdk.cmake",
+        "cmake/JudasSdk.cmake"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/UNAVAILABLE.json",
+        "docs/evidence/prealpha-pass2/packaging/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json"
+      ],
+      "next_action": "Preserve the native-incomplete receipt and finish C++/SDK functional checks only when sufficient guest space is available; this is nonblocking for Linux acceptance."
+    },
+    {
+      "id": "PL-03",
+      "workstream": "P2-03",
+      "original_section": "5",
+      "original_quote": "VM timings must remain diagnostic, not native-host performance claims.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "This remains the deliberate acceptance boundary. Linux host measurements are authoritative for the current performance gate; VM behaviour is functional evidence only.",
+      "source_paths": [
+        "docs/WINDOWS.md",
+        "docs/PREALPHA.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Retain separate environment labels and do not claim VM performance qualification."
+    },
+    {
+      "id": "PL-04",
+      "workstream": "P1-02",
+      "original_section": "5",
+      "original_quote": "The packaging workflow is Linux-hosted.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Android packaging remains explicitly Linux-hosted. Desktop support does not imply a Windows-hosted APK toolchain.",
+      "source_paths": [
+        "tools/build_android.py",
+        "docs/ANDROID.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Keep host requirements explicit; broaden only with a validated native toolchain."
+    },
+    {
+      "id": "PL-05",
+      "workstream": "P1-02",
+      "original_section": "5",
+      "original_quote": "Default packaging identity still originates from the original Android demonstration unless overridden.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "App name/package/version derive from the project or explicit arguments; engine identity remains separate. Required release app identity is validated before building.",
+      "source_paths": [
+        "tools/build_android.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/packaging-closure.json",
+        "scripts/prealpha_packaging_checks.py"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "PL-06",
+      "workstream": "P1-02",
+      "original_section": "5",
+      "original_quote": "Custom signing is already supported; it should become an explicit release preset.",
+      "original_classification": "confirmed",
+      "status": "resolved",
+      "disposition": "Development/release presets validate app identity/version, private keystore/alias/password environment and clean engine provenance. Credentials remain outside source.",
+      "source_paths": [
+        "tools/build_android.py",
+        "docs/ANDROID.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/packaging-closure.json",
+        "scripts/prealpha_packaging_checks.py"
+      ],
+      "next_action": "Preserve the scoped contract and rerun affected gates when changed."
+    },
+    {
+      "id": "PL-07",
+      "workstream": "P2-03",
+      "original_section": "5",
+      "original_quote": "Latest multiplayer phone acceptance used **USB forwarding**, not direct Wi-Fi or Internet connectivity.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Physical phone acceptance covers the recorded USB-forwarded route; no direct Wi-Fi/Internet, broad controller or device matrix certification follows.",
+      "source_paths": [
+        "docs/M99_NETWORK.md",
+        "docs/ANDROID.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/m99/HUMAN_VALIDATION.md"
+      ],
+      "next_action": "Record route/device details in any later hardware validation."
+    },
+    {
+      "id": "PL-08",
+      "workstream": "P1-02",
+      "original_section": "5",
+      "original_quote": "Tracked evidence alone contains approximately **44,700 files and 2.24 GiB of file contents**.",
+      "original_classification": "confirmed",
+      "status": "improved",
+      "disposition": "Curated SDK/source-engine distributions exclude historical projects/research where appropriate while protecting the repository/history. Static tools still duplicate engine/ICU bytes; no compact universal SDK claim is made.",
+      "source_paths": [
+        "packaging/sdk-inventory.json",
+        "tools/package_source.py",
+        "tools/package_sdk.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Measure package needs and preserve access to full research; never delete protected history to shrink a release."
+    },
+    {
+      "id": "L-01",
+      "workstream": "P1-03",
+      "original_section": "8",
+      "original_quote": "**FLU-001:** deferred legacy-PBF settling issue; unchanged.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Original failure/threshold and independent fluid research are preserved; no fluid numerical repair is part of this pass.",
+      "source_paths": [
+        "src/FluidWorld.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+      ],
+      "next_action": "Separate physically justified fluid-contract review; do not count unrelated passes as closure."
+    },
+    {
+      "id": "L-02",
+      "workstream": "P1-03",
+      "original_section": "8",
+      "original_quote": "Historical cold saves lacking continuation data: no invented reconstruction.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "New-format continuation corrections do not manufacture absent historical cache/state. The original a106 snapshot and failing reproduction remain.",
+      "source_paths": [
+        "src/WorldPersistence.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/m78-cold-boundary"
+      ],
+      "next_action": "Preserve exact bytes and report legacy limitations separately."
+    },
+    {
+      "id": "L-03",
+      "workstream": "P1-03",
+      "original_section": "8",
+      "original_quote": "General replication of every Judas physical system.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Current replication remains the explicit M99 subset; admission diagnostics name unsupported physical owners.",
+      "source_paths": [
+        "src/NetworkSession.cpp",
+        "docs/M99_NETWORK.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json"
+      ],
+      "next_action": "See E-04; no universal network-ready claim."
+    },
+    {
+      "id": "L-04",
+      "workstream": "P1-03",
+      "original_section": "8",
+      "original_quote": "Arbitrary native-topology save migration.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Typed save evolution does not expose safe arbitrary rewriting of opaque native topology.",
+      "source_paths": [
+        "src/WorldPersistence.cpp",
+        "docs/M98_SAVE_EVOLUTION.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/application-final/RESULTS.json"
+      ],
+      "next_action": "See E-05/E-06."
+    },
+    {
+      "id": "L-05",
+      "workstream": "P1-03",
+      "original_section": "8",
+      "original_quote": "Unrestricted suspension of every assembly.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Unsupported dependencies/intent remain pinned rather than lost. Selected extensions require physical continuation proof.",
+      "source_paths": [
+        "src/WorldStreaming.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/validation/focused-final/RESULTS.json"
+      ],
+      "next_action": "See E-02; do not remove ownership guards just to unload more regions."
+    },
+    {
+      "id": "L-06",
+      "workstream": "P1-03",
+      "original_section": "8",
+      "original_quote": "Multiple distant simultaneous physics charts.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "There is still one authoritative bounded local physical chart; world origins and tiles do not create independently simulated distant charts.",
+      "source_paths": [
+        "src/WorldOrigin.cpp",
+        "src/RuntimeWorld.h",
+        "docs/M90_ASSEMBLY_TRAVEL.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Maintain chart bounds and explicit retirement/transition requirements."
+    },
+    {
+      "id": "L-07",
+      "workstream": "P1-02",
+      "original_section": "8",
+      "original_quote": "Full per-mip texture streaming.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "M93 residency operates on whole resources/cooked mip chains, not independently streamed mip residency.",
+      "source_paths": [
+        "src/ResourceManager.cpp",
+        "src/CookedTexture.cpp",
+        "docs/M93_ASSET_PIPELINE.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Keep resource residency claims distinct from per-mip streaming."
+    },
+    {
+      "id": "L-08",
+      "workstream": "P1-04",
+      "original_section": "8",
+      "original_quote": "Every renderer feature being instanced or shadowed.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Opaque compatible mesh paths batch; other material/pose/shadow paths retain explicit fallback/selection limits.",
+      "source_paths": [
+        "src/Renderer.cpp",
+        "docs/judasjs/rendering.md"
+      ],
+      "evidence_paths": [],
+      "next_action": "Preserve correctness/fallbacks; profile a specific missing path before extending it."
+    },
+    {
+      "id": "L-09",
+      "workstream": "P2-03",
+      "original_section": "8",
+      "original_quote": "Security certification for untrusted scripts or public Internet servers.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Trusted project scripts and bounded optional transport validation do not constitute a sandbox or Internet-service security audit.",
+      "source_paths": [
+        "src/ScriptSystem.cpp",
+        "src/NetworkTransport.cpp",
+        "docs/M99_NETWORK.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Do not present bounded checks as a security guarantee."
+    },
+    {
+      "id": "L-10",
+      "workstream": "P2-03",
+      "original_section": "8",
+      "original_quote": "Unperformed hardware/platform validation.",
+      "original_classification": "deliberate-limit",
+      "status": "open",
+      "disposition": "Historical platform/human acceptance remains scoped. Final Linux selected automated contracts and native Windows Python controls pass. Actual new Android artifact, older-Linux CI and current native Windows C++/SDK need separate receipts; controller/GPU/device/human qualification is not invented.",
+      "source_paths": [
+        "docs/WINDOWS.md",
+        "docs/ANDROID.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md",
+        "docs/evidence/prealpha/UNAVAILABLE.json",
+        "docs/evidence/prealpha-pass2/packaging/REPORT.md"
+      ],
+      "next_action": "Keep unperformed human/controller/GPU/device acceptance explicit."
+    },
+    {
+      "id": "CAP-01",
+      "workstream": "P2-03",
+      "original_section": "1",
+      "original_quote": "Historical compatibility controllers still exist and need their own regression coverage.",
+      "original_classification": "confirmed",
+      "status": "open",
+      "disposition": "Historical player/vehicle compatibility paths remain. Focused modern-component passes are not a complete legacy-gameplay regression gate.",
+      "source_paths": [
+        "src/PlayerController.cpp",
+        "src/Simulation.cpp",
+        "tests/ProjectTests.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Select a bounded existing legacy project lifecycle/regression before claiming current compatibility qualification."
+    },
+    {
+      "id": "CAP-02",
+      "workstream": "P2-02",
+      "original_section": "1",
+      "original_quote": "Several advanced workflows remain bounded rather than universal.",
+      "original_classification": "deliberate-limit",
+      "status": "deferred",
+      "disposition": "Animation, UI, debugger and renderer limits remain documented; this pass does not promise morph targets, full skeletal keyframe editing, universal instancing or arbitrary expression debugging.",
+      "source_paths": [
+        "docs/M95_ANIMATION_WORKFLOW.md",
+        "docs/M96_UI_TOOLKIT.md",
+        "docs/M94_DEVELOPER_TOOLS.md"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/REPORT.md"
+      ],
+      "next_action": "Keep each supported workflow and its omissions explicit."
+    },
+    {
+      "id": "D-03",
+      "workstream": "P1-02",
+      "original_section": "2.D",
+      "original_quote": "clean-machine checks for every shipped executable.",
+      "original_classification": "confirmed",
+      "status": "open",
+      "disposition": "Actual final host SDK probes verify all17 shipped tools, hashes and dependencies on Linux/glibc2.43. The declared Ubuntu24.04/glibc2.39 CI artifact and current native Windows C++/SDK still require their own receipts. Host closure is not universal clean-machine portability.",
+      "source_paths": [
+        "tools/package_sdk.py",
+        "cmake/JudasSdk.cmake"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha/linux-sdk-elf.json",
+        "docs/evidence/prealpha/UNAVAILABLE.json",
+        "docs/evidence/prealpha-pass2/packaging/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/supplemental/sdk-qualification.json"
+      ],
+      "next_action": "Append the packaging agent's actual platform tests and classify any unavailable tools/libraries."
+    }
+  ],
+  "coverage_gaps": [
+    "Selected26-case combined Linux gate plus32 supplemental positive commands do not provide exhaustive per-member or all-component-combination certification.",
+    "Full90-step one-sided curved-mesh continuation remains4 failing assertions; two ordinary non-axis liquid-bake contracts remain genuinely failed.",
+    "Dense-contact p95/worst remain far outside real time despite matched physical invariants and scoped optimizations.",
+    "Late tooling scheduling assertion5/6 is preserved with6/6 follow-up; post-commit clean CI remains separate.",
+    "Current native Windows C++/SDK, older-Linux CI artifact and actual new Android/device qualification remain incomplete or pending separate receipts.",
+    "Debugger plus live networking timeout behaviour is unverified.",
+    "Large-residency eviction scaling has no matched controlled measurement.",
+    "Repository-wide semantic documentation/status correctness is not mechanically proved.",
+    "Public Internet/Wi-Fi/controller/security and first-project human-usability qualification remain separate."
+  ],
+  "additional_pass2_findings": [
+    {
+      "id": "BUILD-SAVE-DIAGNOSTIC",
+      "status": "resolved",
+      "description": "Actual new SaveService capture records the shared running buildId exactly. Independent legacy headers omitting the informational diagnostic restore unknown. Final storage41 and actual application write14/fresh read20 pass; no native format/content compatibility version changed.",
+      "source_paths": [
+        "src/SaveService.cpp",
+        "src/SaveStorage.h"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/supplemental/save_storage.log",
+        "docs/evidence/prealpha-pass2/integration/final/supplemental/save_application_write.log"
+      ]
+    },
+    {
+      "id": "LIQUID-BAKE-QUATERNION",
+      "status": "deferred",
+      "classification": "new confirmed pre-existing authoring/runtime mismatch",
+      "description": "An authored float quaternion baked without the same normalization used by RuntimeWorld produced an equilibrium-up difference 3.350149682e-7, above the unchanged 1e-7 equivalence threshold, before any origin shift. Original fixture/failure are preserved; the origin-contract proof uses an exactly represented non-Y axis permutation. No numerical tolerance or old bake fingerprint is changed.",
+      "source_paths": [
+        "src/LiquidTypes.cpp",
+        "src/RuntimeWorld.cpp",
+        "tests/OriginEnvironmentTests.cpp"
+      ],
+      "reproduction": [
+        "judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "NEW-owned-output"
+      ],
+      "evidence_status": "Final normal asserting reproduction returns nonzero; original diagnostics and exact new failing bake data retained without threshold changes.",
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/integration/final/known-failures/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/REPORT.md"
+      ]
+    },
+    {
+      "id": "LIQUID-BAKE-SURFACE-KNOTS",
+      "status": "deferred",
+      "classification": "new confirmed pre-existing rotated bake failure",
+      "description": "A separate non-axis rotated basin produces nonmonotonic Surface1 knots during the unchanged bake path. Preserve its original fixture/failure separately from origin-translation validation. No bake implementation, protected fluid research, accepted data or tolerance is modified in this pass.",
+      "source_paths": [
+        "src/LiquidTypes.cpp",
+        "tests/OriginEnvironmentTests.cpp"
+      ],
+      "reproduction": [
+        "judas_origin_environment_tests",
+        "--bake-regression",
+        "knots",
+        "NEW-owned-output"
+      ],
+      "evidence_status": "Final normal asserting reproduction returns nonzero; original diagnostics and exact new failing bake data retained without threshold changes.",
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/integration/final/known-failures/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/REPORT.md"
+      ]
+    },
+    {
+      "id": "LIQUID-ORIGIN-UNPUBLISHED",
+      "status": "resolved",
+      "classification": "generic conservative admission correction with positive/negative final-source controls",
+      "description": "Nonzero origin changes now refuse while authored liquid owner geometry is unpublished, instead of checking only the incomplete runtime state map. No-op remains allowed and normal publication permits supported changes; no blocking I/O or invented bounds. Final87+16 origin/cold checks pass.",
+      "source_paths": [
+        "src/WorldOrigin.cpp",
+        "src/LiquidSystem.cpp",
+        "tests/OriginEnvironmentTests.cpp"
+      ],
+      "evidence_status": "Final combined26/26 selected gate; authored liquid-only pending/no-op/publication controls observed.",
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/integration/FINAL_RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/origin-environment.log"
+      ]
+    },
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved",
+      "classification": "scoped physical correction; final combined Linux gate passed",
+      "description": "Finite-patch swept SAT interval arrival for box/convex against stationary triangle meshes. 193 focused checks pass; exact witness/pair/unwind suite passes 120,283. Full curved continuation remains separately failed, and unsupported shape/motion combinations are not generalized.",
+      "source_paths": [
+        "src/PhysicsWorld.cpp",
+        "src/CollisionGeometry.cpp",
+        "tests/ImpactMeshCostTests.cpp",
+        "tests/CollisionWitnessTests.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/physics/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ]
+    },
+    {
+      "id": "WORLD-TEARDOWN-DENSE",
+      "status": "resolved",
+      "classification": "demonstrated redundant final-destruction cost",
+      "description": "Final whole-world teardown no longer runs a dense wake graph separately for every body immediately before discarding the same world. Matched 270-step process exits successfully in 54.731 s; normal individual entity deletion retains its original wake semantics. Final combined lifecycle checks now pass; this does not close dense-step latency.",
+      "source_paths": [
+        "src/RuntimeWorld.cpp"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/physics/REPORT.md",
+        "docs/evidence/prealpha-pass2/integration/final/followup-manifest/RESULTS.json"
+      ]
+    },
+    {
+      "id": "VALIDATION-SCHEDULING-ASSERTION",
+      "status": "resolved",
+      "classification": "new stale tooling assertion; no physics failure",
+      "description": "A stale gate-unit assertion assumed every known finding stayed unscheduled. Corrected policy independently checks unresolved findings remain unscheduled, manual reproduction cases stay isolated and resolved arrival is scheduled normally. Actual5/6 failure/before-source preserved; focused follow-up6/6 passes. No runtime physics mechanism or acceptance condition changed.",
+      "source_paths": [
+        "tests/test_prealpha_validation.py",
+        "tools/validation/suites.json"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/integration/final/tooling-original/RESULTS.json",
+        "docs/evidence/prealpha-pass2/integration/final/tooling-followup/VALIDATION_FOLLOWUP.json"
+      ]
+    },
+    {
+      "id": "ORIGIN-DELTA-LIMIT",
+      "status": "unsupported_by_evidence",
+      "classification": "suspected pre-existing boundary inconsistency; source-only review, not reproduced",
+      "description": "CanChangeOrigin permits absolute origin components within +/-1e12 while PhysicsWorld::ShiftOrigin rejects a delta component exceeding1e12. A move between opposite extreme endpoints in an empty world may therefore be admitted then throw. No controlled reproduction, introduced-regression claim or correction is included in this pass.",
+      "source_paths": [
+        "src/WorldOrigin.cpp",
+        "src/PhysicsWorld.cpp"
+      ],
+      "next_action": "If prioritized later, independently reproduce exact endpoint/delta admission and atomic refusal before modifying bounds."
+    },
+    {
+      "id": "ANDROID-CANONICAL-ABI",
+      "status": "resolved",
+      "classification": "actual native arm64 artifact exposed verifier alias omission; tooling-only correction",
+      "description": "Actual compiled/signed arm64-v8a APK was rejected because verifier accepted only CPU aliases. Corrected canonical Android ABI recognition accepts the exact same preserved signed bytes; independent positive and wrong-ABI negatives bring Linux distribution controls to16/16. Final source53 artifact qualification and hardware execution remain separate.",
+      "source_paths": [
+        "tools/verify_android.py",
+        "scripts/prealpha_distribution_checks.py"
+      ],
+      "evidence_paths": [
+        "docs/evidence/prealpha-pass2/integration/final/android-abi-followup/CAUSE.json",
+        "docs/evidence/prealpha-pass2/integration/final/android-abi-followup/corrected-verifier.json",
+        "docs/evidence/prealpha-pass2/integration/final/android-abi-followup/distribution-controls.json"
+      ]
+    }
+  ],
+  "final_platform_status": "docs/evidence/prealpha-pass2/PACKAGING_STATUS.json (maintained separately by root; subsequent final-source APK/SDK results do not imply device/human or older-Linux CI acceptance)"
+}

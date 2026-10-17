@@ -14,7 +14,9 @@ FILES = ["engine-version.json", "src/BuildIdentity.cpp", "src/BuildIdentity.h",
          "src/NetworkTransport.cpp", "src/NetworkTransport.h", "tests/BuildIdentityTests.cpp",
          "tests/NetworkTransportTests.cpp", "third_party/nlohmann/json.hpp",
          "cmake/JudasBuildIdentity.cmake", "cmake/JudasBuildIdentity.h.in",
-         "cmake/JudasBuildIdentity.json.in", "cmake/JudasSourceInfo.json.in"]
+         "cmake/JudasBuildIdentity.json.in", "cmake/JudasSourceInfo.json.in",
+         "tools/package_sdk.py", "tools/binary_dependencies.py", "tools/inspect_sdk.py",
+         "tools/verify_android.py", "tools/build_android.py", "scripts/prealpha_distribution_checks.py"]
 
 
 def prepare(output, replace=False):

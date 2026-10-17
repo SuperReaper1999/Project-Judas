@@ -39,7 +39,21 @@ class GateTests(unittest.TestCase):
     def test_deferred_findings_are_not_tests(self):
         manifest = gate.load_manifest(gate.MANIFEST)
         self.assertTrue(manifest['tests'])
-        self.assertTrue(all(not row['scheduled'] for row in manifest['known_findings']))
+        findings = {row['id']: row for row in manifest['known_findings']}
+        # Resolved contracts may graduate into the ordinary gate. Unresolved
+        # findings must not silently become acceptance passes through scheduling.
+        scheduled = {key for key, row in findings.items() if row['scheduled']}
+        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL'})
+        self.assertEqual(findings['CCD-MESH-ARRIVAL']['status'], 'resolved-first-arrival')
+        arrival = next(row for row in manifest['tests'] if row['name'] == 'impact-mesh-arrival')
+        self.assertEqual(arrival['groups'], ['collision'])
+        self.assertFalse(arrival.get('manual', False))
+        for row in manifest['tests']:
+            if row.get('finding') in findings and not findings[row['finding']]['scheduled']:
+                self.assertTrue(row.get('manual', False), row['name'])
+                self.assertEqual(row['groups'], ['known-failures'], row['name'])
+        self.assertTrue(all(row.get('manual', False) for row in manifest['tests']
+                            if 'known-failures' in row['groups']))
         self.assertNotIn('FLU-001', [row['name'] for row in manifest['tests']])
 
     def test_stale_or_absent_embedded_identity_cannot_pass(self):

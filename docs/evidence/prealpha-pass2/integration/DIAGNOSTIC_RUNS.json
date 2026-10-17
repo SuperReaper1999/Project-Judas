@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "kind": "preserved integration development sequence",
+  "scope": "Historical candidate-development observations, not final-source or human acceptance",
+  "runs": [
+    {
+      "run": 1,
+      "status": "failed-diagnostic",
+      "checks_before_failure": 26,
+      "observation": "Capture failed after a translated uniform liquid; original expression printed an empty diagnostic."
+    },
+    {
+      "run": 2,
+      "status": "environment-command-failure",
+      "observation": "Diagnostic executable was not linked yet; no engine test executed."
+    },
+    {
+      "run": 3,
+      "status": "failed-diagnostic",
+      "checks_before_failure": 26,
+      "observation": "Capture rejected spill basins with inconsistent equilibrium fields."
+    },
+    {
+      "run": 4,
+      "status": "failed-diagnostic",
+      "checks_before_failure": 26,
+      "observation": "Measured equilibrium-up discrepancy 3.3501496820591159e-7 exceeds unchanged 1e-7 threshold for raw versus normalized authored quaternion."
+    },
+    {
+      "run": 5,
+      "status": "failed-diagnostic",
+      "checks_before_failure": 13,
+      "observation": "Alternative rotated fixture failed authored bake validation; original expression printed an empty diagnostic."
+    },
+    {
+      "run": 6,
+      "status": "failed-diagnostic",
+      "checks_before_failure": 13,
+      "observation": "Alternative rotation rejected nonmonotonic Surface1 capacity knots; threshold and baked bytes preserved."
+    },
+    {
+      "run": 7,
+      "status": "failed-diagnostic",
+      "checks_before_failure": 65,
+      "observation": "Fresh-process child failed actual physical-state reconstruction; separate cold-debug log preserves its exact failure."
+    },
+    {
+      "run": 8,
+      "status": "diagnostic-pass",
+      "checks": 72,
+      "cold_child_checks": 16,
+      "observation": "Exactly represented non-Y uniform orientation and radial variant pass 72 parent checks plus two 8-check fresh processes."
+    },
+    {
+      "run": 9,
+      "status": "diagnostic-pass",
+      "checks": 72,
+      "cold_child_checks": 16,
+      "observation": "Second diagnostic invocation passes the same 72+16 scope; subsequent late-capture/excluded/global thermal/PBF/prepublication cases still require final combined validation."
+    }
+  ]
+}

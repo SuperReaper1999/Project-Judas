@@ -1,0 +1,3 @@
+atmosphere origin accepted=0 error=active atmosphere has no live-origin contract; unload its owner before changing origin
+combustion origin accepted=0 error=active combustion has no live-origin contract; unload its owners before changing origin
+conserved liquid origin accepted=0 error=active conserved liquid has no live-origin contract; unload its reservoir/container owners before changing origin

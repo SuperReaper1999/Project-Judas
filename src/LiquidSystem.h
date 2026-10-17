@@ -25,6 +25,10 @@ public:
  bool PreparePersistence(RuntimeWorld&,std::string&);
  void Persist(class SaveArchive&);
  LiquidSystem();
+ // Local geometry, wave allocation, flow and quantity remain unchanged.
+ // Only owner poses and detached world-space parcels follow the physics chart.
+ bool CanShiftOrigin(glm::dvec3 delta,std::string& error)const;
+ void ShiftOrigin(glm::dvec3 delta);
  const LiquidStepTimes& StepTimes()const{return m_stepTimes;}
  LiquidHandle AddBasin(SceneObjectId,const LiquidBasinSettings&,const SceneTransform&,std::shared_ptr<const LiquidBasinData>,std::string&);
  LiquidHandle AddContainer(SceneObjectId,const LiquidContainerSettings&,const SceneTransform&,const LiquidGeometry&,const GravityEquilibrium&,std::string&);

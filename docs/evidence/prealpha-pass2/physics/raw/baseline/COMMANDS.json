@@ -1,0 +1,31 @@
+[
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+      "1",
+      "trough",
+      "1.2",
+      "entry"
+    ],
+    "exit": 1,
+    "seconds": 0.36494096599926706
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+      "1",
+      "trough"
+    ],
+    "exit": 1,
+    "seconds": 0.4651135759995668
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+      "60",
+      "trough"
+    ],
+    "exit": 1,
+    "seconds": 3.5712207759988814
+  }
+]

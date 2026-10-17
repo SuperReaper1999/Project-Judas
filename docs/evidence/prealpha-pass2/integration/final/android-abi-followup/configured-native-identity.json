@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "version": "0.1.0-prealpha",
+  "maturity": "pre-alpha",
+  "channel": "Experimental",
+  "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-1c37839dac70-u84f47c24fcd0",
+  "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+  "source_dirty": true,
+  "source_fingerprint": "1c37839dac7066db466418f983819d6c86fe3663bfce38b91434c42d7c312f24",
+  "source_untracked_count": 16,
+  "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+  "source_origin": "git",
+  "platform": "Android",
+  "architecture": "arm64-v8a",
+  "configuration": "Release",
+  "compiler": "Clang",
+  "compiler_version": "19.0.1"
+}

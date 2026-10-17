@@ -7,6 +7,12 @@ accepts its exact candidate. M100 and an Alpha release have not begun.
 See the [first engineering report](evidence/prealpha/REPORT.md) for exact changes,
 measured failures, focused results and the consolidated human checklist.
 
+The [Pass2 finding register](evidence/prealpha-pass2/AUDIT_DISPOSITION.md) reconciles
+every original priority and finding against its exact preserved assessment text.
+Its in-progress status distinguishes earlier evidence, new corrections awaiting
+validation and deliberate support limits. For a first visible project with no
+controller/input setup, follow [Your first visible Judas project](FIRST_PROJECT.md).
+
 ## Ownership and integration contracts
 
 | System | Authority | Supported composition | Explicit boundary |
@@ -14,7 +20,7 @@ measured failures, focused results and the consolidated human checklist.
 | Authored scenes / prefabs | Scene and existing stable IDs | Editor, normal runtime construction, export | Runtime state does not mutate authored content during Play |
 | Physical motion | Existing fixed-step PhysicsWorld / CharacterMotor | Bodies, joints, wheels, powertrains, characters | Scripts supply intent; presentation poses do not own physics |
 | Resources | ResourceManager and its publishing owner | Private worker preparation, staged upload/replacement | Incomplete or failed products must retain last-good resources |
-| Origin changes | RuntimeWorld transaction | M90 assemblies, navigation, attachments, audio and particles within the local chart | Active liquid/PBF, atmosphere and combustion still reject; no silent state deletion |
+| Origin changes | RuntimeWorld transaction | M90 assemblies, conserved liquid owners/parcels, analytic atmosphere and thermal carriers within the local chart | Legacy PBF/emitted fluid and pending stream transactions still reject; no silent state deletion |
 | Terrain edits | RuntimeTerrain | Local field, collision/navigation replacement, origin translation, cold restore | Bounded static unit-scale local volumes; not universal planetary excavation |
 | Regional suspension | WorldStreaming | Retained supported entities, constructed prefabs and terrain | Pending work and unsupported external dependencies pin regions with reasons |
 | Cold saves | SaveService / WorldPersistence | Private candidate preparation before publication, explicit M98 migration | Unknown state is not discarded; native topology and opaque inactive records are not generally migratable |
@@ -26,6 +32,39 @@ every possible combination. Current implementation references:
 [origin](../src/WorldOrigin.cpp), [terrain](../src/RuntimeTerrain.cpp),
 [streaming](../src/WorldStreaming.cpp), [saves](M98_SAVE_EVOLUTION.md),
 [networking](M99_NETWORK.md).
+
+### Selected Pass2 combinations
+
+Live-origin support, regional suspension, cold saves and online replication are
+separate admission contracts. In particular:
+
+- Conserved liquids retain owner-local capacity geometry, wave allocation,
+  previous surface samples and discharge history. Only owner/parcel positions
+  translate; derived world-space optical caches rebuild. Owners and detached
+  parcels must remain inside the 8 km chart. Shifted uniform/radial basins can
+  continue ordinary paired transfers and restore from modern cold saves.
+- Analytic atmosphere translates its frame origin. Combustion retains thermal
+  scalars and the same generation-safe carrier handles. This does **not** add
+  modern-slot persistence for atmosphere/combustion: unsupported participants
+  still fail with their entity/component named. Failed snapshot capture retains
+  the caller's previous complete chunk map.
+- Conserved liquid groups and active articulation remain residency pins. Removing
+  those pins requires a lossless group suspension/publication contract; translating
+  their live coordinates does not establish one.
+- Runtime terrain remains bounded local volumetric editing with private collision
+  and navigation preparation. The composed terrain/origin/save failure checks do
+  not imply planetary heightfield excavation or arbitrary concurrent publication.
+- Save migration retains unknown native records for their real loaders to accept
+  or reject. It does not merge newly authored content automatically into inactive
+  regions or rewrite opaque retained topology.
+- Pausing authoritative gameplay can continue pumping transport heartbeats without
+  advancing physics, scripts or snapshots. A blocking callback, stopped process or
+  unpumped debugger owner is a separate timeout risk. Replication remains the
+  documented M99 subset; authority does not transfer unsupported mechanical state.
+
+The [Pass2 report](evidence/prealpha-pass2/REPORT.md) records exact exercised cases,
+retained failures and remaining coverage. No independent fluid numerical algorithm,
+legacy settling threshold or protected research was changed.
 
 ## Focused validation from a clean checkout
 
@@ -73,11 +112,12 @@ manifest is an explicit focused subset, not a replacement for all production
 regressions or human acceptance. Multi-configuration builds should pass the
 configuration executable directory as `--build-dir`.
 
-The curved-mesh **first-arrival** and 90-step glancing/continuation assertions
-both remain failed on the retained production implementation. Experimental repairs
-fixed arrival but introduced measured performance regressions, so none shipped.
-Run `--group known-failures` to reproduce both contracts; failure still returns
-nonzero. They are explicitly excluded from the default focused subset, not marked
+Pass2 corrects the curved-mesh **first-arrival** contract with finite swept-SAT
+bounds and retains the unchanged asserting test in the ordinary collision group.
+The longer glancing/continuation contract remains failed: contact ownership across
+fixed boundaries needs further work. Rejected expensive patch experiments remain
+preserved. Run `--group known-failures` for continuation and the newly recorded
+rotated-liquid bake failures; failures still return nonzero. They are explicitly excluded from the default focused subset, not marked
 expected-pass. To include them in CTest use
 `-DJUDAS_INCLUDE_KNOWN_FAILURES=ON`. A green focused run does not close this release
 blocker or establish complete CCD correctness.

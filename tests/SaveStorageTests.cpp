@@ -12,15 +12,23 @@ int checks=0,failures=0;void Check(bool ok,const char* label){++checks;failures+
 // Independently construct the documented container with a correct checksum.
 // This bypasses only encoder validation so decoder negatives reach the actual
 // participant-count guard, rather than failing an unrelated checksum/header.
-std::string EnvelopeFixture(const GameSnapshot& source){
+std::string EnvelopeFixture(const GameSnapshot& source,bool includeDiagnostic=true){
  auto participants=source.participants;SaveArchive payload;payload(participants);
  SaveArchive header;uint32_t version=2;auto project=source.project,scene=source.scene,content=source.content,name=source.displayName,metadata=source.metadata,build=source.diagnosticBuild;
  auto timestamp=source.timestamp;auto gameVersion=source.gameVersion;auto hash=SceneFingerprintSha256(payload.bytes);
- header(version,project,scene,content,name,metadata,timestamp,gameVersion,hash,build);
+ header(version,project,scene,content,name,metadata,timestamp,gameVersion,hash);
+ if(includeDiagnostic)header(build);
  SaveArchive envelope;std::string magic="JudasGameSave";envelope(magic,header.bytes,payload.bytes);return envelope.bytes;
 }
 }
 int main(int argc,char** argv){namespace fs=std::filesystem;fs::path root=argc>1?argv[1]:".cache/m61-storage";if(root.filename().string().find("m61-storage")!=0){std::puts("Use an isolated m61-storage* directory");return 2;}fs::remove_all(root);fs::create_directories(root);SaveStorage store(root.string());GameSnapshot snapshot;snapshot.project="test-project";snapshot.scene="Scenes/main.judas";snapshot.content=SceneFingerprintSha256("fixture");snapshot.displayName="日本語 — résumé";snapshot.timestamp=1;snapshot.participants["fixture"]={1,"data"};std::string error;GameSnapshot loaded;bool recovered=false;
+ Check(snapshot.diagnosticBuild=="unknown","an unrecorded build diagnostic defaults to unknown rather than inventing a milestone");
+ auto historical=snapshot;historical.diagnosticBuild="sentinel previous output";
+ Check(DecodeGameSnapshot(EnvelopeFixture(snapshot,false),historical,error)&&historical.diagnosticBuild=="unknown"&&historical.participants.at("fixture").data=="data",
+       "independent old header without build diagnostic restores unknown and preserves participant bytes");
+ auto explicitBuild=snapshot;explicitBuild.diagnosticBuild="fixture exact build identity";GameSnapshot explicitRoundTrip;
+ Check(DecodeGameSnapshot(EncodeGameSnapshot(explicitBuild),explicitRoundTrip,error)&&explicitRoundTrip.diagnosticBuild==explicitBuild.diagnosticBuild,
+       "an explicitly recorded build diagnostic round-trips without becoming a compatibility gate");
  Check(store.Write("one",snapshot,error),"first slot durably commits");Check(store.Read("one",loaded,recovered,error)&&!recovered&&loaded.displayName==snapshot.displayName,"Unicode metadata round trip");snapshot.timestamp=2;Check(store.Write("two",snapshot,error),"independent second slot");Check(store.List(snapshot.project,snapshot.content,error).size()==2,"bounded metadata listing");Check(!store.Write("../escape",snapshot,error)&&!fs::exists(root.parent_path()/"escape.save"),"slot path traversal rejected");
  snapshot.timestamp=3;Check(store.Write("one",snapshot,error),"overwrite publishes previous-good first");std::ofstream(root/"one.save",std::ios::binary|std::ios::trunc)<<"broken";Check(store.Read("one",loaded,recovered,error)&&recovered&&loaded.timestamp==1,"corruption recovers previous committed generation explicitly");Check(store.Write("one",snapshot,error),"corrupt current repaired without destroying previous good");
  store.boundary=[](const char* stage){if(std::string(stage)=="file-synced")throw std::runtime_error("controlled write failure");};snapshot.timestamp=4;Check(!store.Write("one",snapshot,error),"controlled prepublication failure reported");store.boundary={};Check(store.Read("one",loaded,recovered,error)&&loaded.timestamp==3,"failed overwrite leaves current valid");

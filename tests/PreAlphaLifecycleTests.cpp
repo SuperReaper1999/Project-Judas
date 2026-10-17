@@ -127,11 +127,11 @@ int main() {
         atmosphereWorld.legacyGameplay = false;
         const bool atmosphereBuilt = atmosphereWorld.Build(unsupported, nullptr, error);
         Check(atmosphereBuilt, "ordinary atmosphere ownership builds: " + error);
+        atmosphereWorld.legacyGameplay = true;
         Check(!atmosphereWorld.RequestOrigin({512, 0, 0}, error) &&
-              error.find("active atmosphere") != std::string::npos &&
-              error.find("unload its owner") != std::string::npos &&
+              error.find("script-owned") != std::string::npos &&
               atmosphereWorld.Settings().worldOrigin == glm::dvec3(0),
-              "unsupported composition identifies the actual owner and leaves the chart unchanged");
+              "legacy execution remains explicitly unsupported and leaves the chart unchanged");
         std::printf("SUMMARY %u checks 0 failures\n", checks);
         return 0;
     } catch (const std::exception& exception) {

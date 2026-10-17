@@ -1,0 +1,28 @@
+from pathlib import Path
+import json,hashlib,shlex,subprocess,time,statistics
+r=Path.cwd();b=r/'.cache/prealpha-pass2/physics';o=b/'metrics-v7';o.mkdir(exist_ok=True);record=[]
+flags=(r/'build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']:args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+cmd=['/usr/bin/c++',*args,'-c',str(r/'tests/CollisionWitnessTests.cpp'),'-o',str(o/'witness.o')];subprocess.run(cmd,check=True)
+def link(target,out,archive,objects=None):
+ args=shlex.split((r/'build/CMakeFiles'/f'{target}.dir/link.txt').read_text());objs=objects or [x for x in args if x.endswith('.o')];libs=args[args.index('libjudas_engine.a'):];cmd=['/usr/bin/c++','-O3','-DNDEBUG',*objs,'-o',str(out),str(archive),*libs[1:]];subprocess.run(cmd,cwd=r/'build',check=True)
+for label,archive in [('baseline',b/'libjudas_engine-baseline.a'),('candidate',b/'batch-scratch-events-v7/libjudas_engine.a')]:
+ link('judas_impact_mesh_cost_tests',o/('mesh-'+label),archive)
+ link('judas_impact_mesh_cost_tests',o/('witness-'+label),archive,[str(o/'witness.o')])
+ link('judas_physics_scaling_diagnostics',o/('scaling-'+label),archive)
+for rep in range(3):
+ for label in (['baseline','candidate'] if rep%2==0 else ['candidate','baseline']):
+  for kind,args in [('witness',[]),('mesh',['60','trough'])]:
+   cmd=[str(o/(kind+'-'+label)),*args];start=time.monotonic()
+   with(o/(f'{kind}-{label}-{rep}.log')).open('w')as log:p=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=25)
+   record.append({'command':cmd,'rep':rep,'exit':p.returncode,'wallSeconds':time.monotonic()-start});print(kind,label,rep,p.returncode,flush=True)
+for workload,count,warm,steps in [('free',1024,0,120),('pile',256,60,120),('machines_active',256,30,120),('machines_sleeping',256,240,120)]:
+ for label in ['candidate','baseline']:
+  cmd=[str(o/('scaling-'+label)),'--workload',workload,'--count',str(count),'--warm',str(warm),'--steps',str(steps),'--output',str(o/(workload+'-'+label)),'--profile','1']
+  start=time.monotonic()
+  with(o/(workload+'-'+label+'.log')).open('w')as log:
+   try:p=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT,timeout=35);status=p.returncode
+   except subprocess.TimeoutExpired:status='timeout35s'
+  record.append({'command':cmd,'exit':status,'wallSeconds':time.monotonic()-start});print(workload,label,status,flush=True)
+  (o/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n')
+(o/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n')

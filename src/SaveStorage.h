@@ -6,7 +6,7 @@
 
 struct SaveChunk {uint32_t version=1;std::string data;void Save(SaveArchive& a){a(version,data);}};
 struct GameSnapshot {
- std::string project,scene,content,displayName,metadata="{}",diagnosticBuild="Judas M61",modContext;
+ std::string project,scene,content,displayName,metadata="{}",diagnosticBuild="unknown",modContext;
  uint64_t timestamp=0;uint32_t gameVersion=1;
  std::string compatibility;uint32_t contentVersion=0;
  std::map<std::string,SaveChunk> participants;

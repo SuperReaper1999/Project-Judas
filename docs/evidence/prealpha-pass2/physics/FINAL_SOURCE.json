@@ -1,0 +1,13 @@
+{
+  "schema": "judas.prealpha.physics-source.v1",
+  "baselineRevision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "sources": {
+    "src/PhysicsWorld.cpp": "5bddaf349180cfba96f031ace41c02c78860bd38f18e304f9433d21d609f424a",
+    "src/CollisionGeometry.cpp": "bdac4d47978d218e489f437f424901d0293165904e74acd6041239046b5f627e",
+    "src/CollisionGeometry.h": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+    "src/ImpactPairVisitSet.h": "4d0fae30596d51f34745ff1b481c9e98118f4fb4d74931aa847dac11c1caf8a5",
+    "src/ReentrantQueryScratch.h": "e7818f581fce51c7dc0f11df0e20cb170c47a7142cfda544dd6d5597e4173352",
+    "tests/CollisionWitnessTests.cpp": "07dabb2d0ac2da0aa2e508253719f76fa28db3fc7a679cc3bd8040233758914d"
+  },
+  "note": "Final source adds spill-owned recursion beyond32 retained frames after v8 performance capture. final-narrow validates that exact spill source; no geometry arithmetic changed. Combined final-source validation is separately recorded by the parent handoff."
+}

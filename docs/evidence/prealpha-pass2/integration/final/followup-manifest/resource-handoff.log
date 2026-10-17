@@ -1,0 +1,19 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS fresh owned output required
+PASS real self-contained model archive is available
+PASS actual owner-thread GL context: 
+GL renderer: NVIDIA GeForce GTX 970/PCIe/SSE2 vendor: NVIDIA Corporation
+PASS unknown asset fails with diagnostic rather than publishing a placeholder
+PASS completed CPU preparation publishes no partial GPU object
+PASS cancelled private GPU upload cannot publish
+PASS cancellation destroys every actually allocated private mesh and map
+PASS complete 109-joint skeletal asset publishes normally
+PASS complete multipart geometry, clip and all embedded maps publish together
+PASS bounded admission and private publication throughout all pumps
+PASS real staged GPU cancellation and fresh-generation retry exercised
+PASS decode runs on a worker while all GPU operations retain the owner GL context
+PASS retirement returns CPU/GPU residency and actual allocated resources to zero
+PASS resource profiler evidence exported
+SUMMARY 14 checks

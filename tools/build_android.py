@@ -3,7 +3,7 @@
 Uses the ordinary validated M38 content export and the Android-only CMake target.
 Signing credentials stay outside source control. Default signing is DEVELOPMENT ONLY.
 """
-import argparse, datetime, hashlib, json, os, re, shutil, subprocess, sys, zipfile
+import argparse, datetime, hashlib, json, os, re, shutil, subprocess, sys, tempfile, zipfile
 try:
     import fcntl
 except ImportError:
@@ -11,6 +11,7 @@ except ImportError:
 from pathlib import Path
 from xml.sax.saxutils import escape
 from package_sdk import identity, probe_identity
+from verify_android import verify_apk, ANDROID_SYSTEM_LIBRARIES
 
 ROOT = Path(__file__).resolve().parents[1]
 NDK = '28.2.13676358'
@@ -37,6 +38,54 @@ def matching_identity(info,reference):
     if info.get('source_origin')=='git' and reference.get('source_origin')=='git':
         fields+=('source_untracked_count','source_untracked_fingerprint')
     return all(field in info and field in reference and info[field]==reference[field] for field in fields)
+
+def jdk_tools(environment=None):
+    """Use one complete JDK; never mix a JRE's java with a different javac."""
+    env=dict(os.environ if environment is None else environment)
+    home=env.get('JAVA_HOME')
+    compiler=Path(home)/'bin/javac' if home else shutil.which('javac',path=env.get('PATH'))
+    if not compiler or not Path(compiler).is_file():
+        raise ValueError('A complete JDK is required; set JAVA_HOME/PATH to JDK 17+ (a JRE is insufficient)')
+    home=Path(compiler).resolve().parent.parent
+    result={name:home/'bin'/name for name in ('java','javac','keytool')}
+    if any(not path.is_file() for path in result.values()):
+        raise ValueError(f'Incomplete JDK at {home}; java, javac and keytool must come from one JDK 17+')
+    check=subprocess.run([result['javac'],'-version'],capture_output=True,text=True,timeout=10)
+    label=(check.stdout+check.stderr).strip()
+    found=re.search(r'javac (\d+)(?:\.|\s|$)',label)
+    if check.returncode or not found or int(found[1])<17:
+        raise ValueError(f'JDK 17+ is required; detected {label or "unknown javac"}')
+    env['JAVA_HOME']=str(home);env['PATH']=str(home/'bin')+os.pathsep+env.get('PATH','')
+    return result,env,label
+
+def publish_apk(signed,output,report):
+    """Prepare the APK and both receipts, with rollback on ordinary I/O failure.
+
+    Three renames are not power-loss atomic. A reader must verify the checksum
+    pair and must not consume a destination while another process publishes it.
+    """
+    if output.suffix.lower()!='.apk':raise ValueError('Android output must end in .apk')
+    targets=[output,output.with_suffix('.build.json'),output.with_suffix('.sha256')]
+    if any(path.is_symlink() or (path.exists() and not path.is_file()) for path in targets):
+        raise ValueError('APK outputs/receipts must be ordinary files, not symlinks or directories')
+    output.parent.mkdir(parents=True,exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=output.stem+'.publish-',dir=output.parent) as folder:
+        folder=Path(folder);prepared=[folder/path.name for path in targets]
+        shutil.copyfile(signed,prepared[0])
+        report=dict(report,apk=str(output),sha256=digest(prepared[0]))
+        prepared[1].write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+        prepared[2].write_text(f'{report["sha256"]}  {output.name}\n{digest(prepared[1])}  {targets[1].name}\n',encoding='utf-8')
+        backups={};published=[]
+        try:
+            for index,target in enumerate(targets):
+                if target.exists():
+                    backup=folder/('previous-'+str(index));os.replace(target,backup);backups[target]=backup
+                os.replace(prepared[index],target);published.append(target)
+        except BaseException:
+            for target in reversed(published):target.unlink()
+            for target,backup in backups.items():os.replace(backup,target)
+            raise
+    return report
 
 def parse_args(argv=None):
     p=argparse.ArgumentParser(description=__doc__)
@@ -78,6 +127,8 @@ def parse_args(argv=None):
     abis=a.abis.split(',')
     if not abis or len(set(abis))!=len(abis) or any(x not in ('arm64-v8a','x86_64') for x in abis):p.error('Use unique arm64-v8a and/or x86_64 ABIs')
     if not 1<=a.jobs<=32:p.error('jobs must be 1..32')
+    if a.output.suffix.lower()!='.apk':p.error('Android output must end in .apk')
+    if any(path.is_symlink() or (path.exists() and not path.is_file()) for path in (a.output,a.output.with_suffix('.build.json'),a.output.with_suffix('.sha256'))):p.error('APK outputs/receipts must be ordinary files, not symlinks or directories')
     if a.keystore:
         if not a.keystore.is_file():p.error('Signing keystore does not exist')
         if not os.environ.get(a.password_env):p.error('Signing password environment variable is missing')
@@ -86,20 +137,26 @@ def parse_args(argv=None):
 def main():
     a,p=parse_args()
     if sys.platform!='linux' or fcntl is None:p.error('APK packaging currently requires a Linux host; see docs/ANDROID.md')
-    java_home=os.environ.get('JAVA_HOME')
-    compiler=Path(java_home)/'bin/javac' if java_home else shutil.which('javac')
-    if not compiler or not Path(compiler).is_file():p.error('A complete JDK is required; set JAVA_HOME/PATH to JDK 17+')
-    abis=a.abis.split(',')
+    try:jdk,jdk_env,jdk_version=jdk_tools()
+    except (ValueError,subprocess.SubprocessError) as error:p.error(str(error))
+    os.environ.update({key:jdk_env[key] for key in ('JAVA_HOME','PATH')})
     sdk=a.sdk.resolve();cache=a.cache.resolve();cache.mkdir(parents=True,exist_ok=True)
     # One coherent native/staging/signing transaction per cache. Never race an
     # existing build or remove its staging tree during another export.
-    cache_lock=(cache/'.android-build.lock').open('a')
-    try:fcntl.flock(cache_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
-    except BlockingIOError:p.error('Another Android build owns this cache; wait or use --cache elsewhere')
+    with (cache/'.android-build.lock').open('a') as cache_lock:
+        try:fcntl.flock(cache_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:p.error('Another Android build owns this cache; wait or use --cache elsewhere')
+        build_apk(a,p,jdk,jdk_version,sdk,cache)
+
+
+def build_apk(a,p,jdk,jdk_version,sdk,cache):
+    abis=a.abis.split(',')
     tools=sdk/'build-tools'/BUILD_TOOLS;android=sdk/'platforms/android-36/android.jar'
     ndk=sdk/'ndk'/NDK
     for f in [tools/'aapt2',tools/'d8',tools/'apksigner',tools/'zipalign',android,ndk/'build/cmake/android.toolchain.cmake']:
         if not f.is_file():p.error(f'Missing {f}; see docs/ANDROID.md SDK setup')
+    desktop_info={name:probe_identity(executable.resolve()) for name,executable in [('exporter',a.exporter),('desktopRuntime',a.desktop_runtime)]}
+    if not matching_identity(desktop_info['exporter'],desktop_info['desktopRuntime']):p.error('Desktop exporter/runtime identities differ; rebuild both before compiling Android')
     native={};build_identities={}
     known=sorted(cache.glob('android-*/unicode/host/src/judas_icu_host-build/config/icucross.mk'))
     host_tools=a.icu_host_tools.resolve() if a.icu_host_tools else known[0].parent.parent if known else None
@@ -110,18 +167,20 @@ def main():
         run(['cmake','-S',ROOT,'-B',b,f'-DCMAKE_TOOLCHAIN_FILE={ndk}/build/cmake/android.toolchain.cmake',f'-DANDROID_ABI={abi}',
              '-DANDROID_PLATFORM=android-26','-DANDROID_STL=c++_shared','-DCMAKE_BUILD_TYPE=Release',
              f'-DJUDAS_BUILD_CHANNEL={a.channel}']+version+cross_host)
-        run(['cmake','--build',b,'--target','main','-j',a.jobs]);native[abi]=b
         build_identities[abi]=identity(b/'judas-build-info-Release.json',release=a.preset=='release')
+        for name,info in desktop_info.items():
+            if not matching_identity(info,build_identities[abi]):p.error(f'{name} does not match configured Android source/version/channel; rebuild desktop tools before compiling native ABIs')
+        run(['cmake','--build',b,'--target','main','-j',a.jobs]);native[abi]=b
+        completed=identity(b/'judas-build-info-Release.json',release=a.preset=='release')
+        if completed!=build_identities[abi]:p.error(f'{abi} identity changed during native compilation; freeze one candidate and rebuild desktop/native tools before packaging')
+        build_identities[abi]=completed
         own_host=b/'unicode/host/src/judas_icu_host-build'
         if (own_host/'config/icucross.mk').exists():host_tools=own_host
     identities=list(build_identities.values())
     if any(not matching_identity(info,identities[0]) for info in identities):
         p.error('Native ABI builds have different source/version/channel identities; rebuild from one unchanged candidate')
-    desktop_info={}
     for name,executable in [('exporter',a.exporter),('desktopRuntime',a.desktop_runtime)]:
-        desktop_info[name]=probe_identity(executable.resolve())
-        if not matching_identity(desktop_info[name],identities[0]):
-            p.error(f'{name} does not match native source/version/channel; rebuild desktop tools for this candidate')
+        if probe_identity(executable.resolve())!=desktop_info[name]:p.error(f'{name} changed during native compilation; use an unchanged desktop/native candidate')
     stage=cache/'apk-staging'
     if stage.exists():shutil.rmtree(stage)
     stage.mkdir()
@@ -174,8 +233,7 @@ def main():
     run([tools/'aapt2','link','-o',stage/'resources.apk','--manifest',manifest,'-I',android,'--java',java,'-A',assets,stage/'resources.zip'])
     sources+=list(java.rglob('*.java'))
     args=stage/'javac.args';args.write_text('\n'.join('"'+str(x)+'"' for x in sources))
-    compiler=[str(Path(os.environ['JAVA_HOME'])/'bin/javac')] if os.environ.get('JAVA_HOME') else ['javac']
-    run(compiler+['-encoding','UTF-8','--release','8','-classpath',android,'-d',classes,'@'+str(args)])
+    run([jdk['javac'],'-encoding','UTF-8','--release','8','-classpath',android,'-d',classes,'@'+str(args)])
     # d8 accepts a jar of classes, avoiding command-line length limits on Windows.
     jar=stage/'classes.jar'
     with zipfile.ZipFile(jar,'w') as z:
@@ -183,6 +241,7 @@ def main():
     dex=stage/'dex';dex.mkdir()
     run([tools/'d8','--release','--min-api','26','--lib',android,'--output',dex,jar])
     unsigned=stage/'unsigned.apk';shutil.copyfile(stage/'resources.apk',unsigned)
+    shipped_native=[]
     with zipfile.ZipFile(unsigned,'a') as z:
         zip_file(z,dex/'classes.dex','classes.dex')
         for abi,b in native.items():
@@ -191,14 +250,19 @@ def main():
             for f in [b/'libmain.so',b/'_deps/judas_sdl-build/libSDL2.so',shared]:
                 stripped=stage/'native'/abi/f.name;stripped.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(f,stripped)
                 run([ndk/'toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip','--strip-unneeded',stripped])
-                zip_file(z,stripped,f'lib/{abi}/{f.name}',compress_type=zipfile.ZIP_STORED)
+                name=f'lib/{abi}/{f.name}'
+                shipped_native.append({'path':name,'bytes':stripped.stat().st_size,'sha256':digest(stripped)})
+                zip_file(z,stripped,name,compress_type=zipfile.ZIP_STORED)
+        native_manifest=stage/'judas-native.json'
+        native_manifest.write_text(json.dumps({'schema':1,'files':shipped_native},sort_keys=True,separators=(',',':')))
+        zip_file(z,native_manifest,'assets/judas-native.json')
     aligned=stage/'aligned.apk'
     run([tools/'zipalign','-P','16','-f','4',unsigned,aligned])
     keystore=a.keystore
     env=os.environ.copy()
     if keystore is None:
         keystore=cache/'development-signing.p12';env['JUDAS_DEVELOPMENT_PASSWORD']='android'
-        if not keystore.exists():run(['keytool','-genkeypair','-keystore',keystore,'-storepass:env','JUDAS_DEVELOPMENT_PASSWORD','-keypass:env','JUDAS_DEVELOPMENT_PASSWORD','-alias',a.key_alias,'-keyalg','RSA','-keysize','2048','-validity','3650','-dname','CN=Judas Development, O=Local Development, C=GB'],env=env)
+        if not keystore.exists():run([jdk['keytool'],'-genkeypair','-keystore',keystore,'-storepass:env','JUDAS_DEVELOPMENT_PASSWORD','-keypass:env','JUDAS_DEVELOPMENT_PASSWORD','-alias',a.key_alias,'-keyalg','RSA','-keysize','2048','-validity','3650','-dname','CN=Judas Development, O=Local Development, C=GB'],env=env)
         password='JUDAS_DEVELOPMENT_PASSWORD'
     else:
         password=a.password_env
@@ -207,16 +271,13 @@ def main():
     signed=stage/'signed.apk'
     run([tools/'apksigner','sign','--ks',keystore,'--ks-key-alias',a.key_alias,'--ks-pass','env:'+password,'--out',signed,aligned],env=env)
     run([tools/'apksigner','verify','--verbose',signed]);run([tools/'zipalign','-c','-P','16','4',signed])
-    # A failed signing/verification must leave any previous deliverable untouched.
-    temporary=output.with_name(output.name+'.publishing-'+str(os.getpid()))
-    try:
-        shutil.copyfile(signed,temporary)
-        os.replace(temporary,output)
-    finally:
-        if temporary.exists():temporary.unlink()
-    report={'schema':1,'kind':'judas-android-apk','apk':str(output),'sha256':digest(output),'application':{'id':a.id,'name':a.name,'versionCode':a.version_code,'versionName':a.version_name},'preset':a.preset,'engine':build_identities,'desktopTools':desktop_info,'abis':abis,'targetSdk':36,'minSdk':26,'ndk':NDK,'buildTools':BUILD_TOOLS,'developmentSigning':a.keystore is None,'shadows':a.shadows,'contentFiles':len(records),'contentBytes':sum(r['bytes'] for r in records),'native':{abi:{str(f.relative_to(b)):digest(f) for f in [b/'libmain.so',b/'_deps/judas_sdl-build/libSDL2.so']} for abi,b in native.items()}}
-    output.with_suffix('.build.json').write_text(json.dumps(report,indent=2)+'\n')
-    manifest=output.with_suffix('.build.json')
-    output.with_suffix('.sha256').write_text(f'{digest(output)}  {output.name}\n{digest(manifest)}  {manifest.name}\n')
+    verified=verify_apk(signed,expected_identities=build_identities)
+    for name,binary in verified['native'].items():
+        abi=name.split('/')[1];triple='aarch64-linux-android' if abi=='arm64-v8a' else 'x86_64-linux-android'
+        for library in set(binary['needed']) & ANDROID_SYSTEM_LIBRARIES:
+            stub=ndk/f'toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/{triple}/26/{library}'
+            if not stub.is_file():raise ValueError(f'Android system dependency has no API-26 NDK stub: {stub}')
+    report={'schema':1,'kind':'judas-android-apk','application':{'id':a.id,'name':a.name,'versionCode':a.version_code,'versionName':a.version_name},'preset':a.preset,'engine':build_identities,'desktopTools':desktop_info,'abis':abis,'targetSdk':36,'minSdk':26,'ndk':NDK,'buildTools':BUILD_TOOLS,'jdk':jdk_version,'developmentSigning':a.keystore is None,'shadows':a.shadows,'contentFiles':len(records),'contentBytes':sum(r['bytes'] for r in records),'native':{abi:{str(f.relative_to(b)):digest(f) for f in [b/'libmain.so',b/'_deps/judas_sdl-build/libSDL2.so']} for abi,b in native.items()},'shippedNative':verified['shippedNative']}
+    report=publish_apk(signed,output,report)
     print(f'APK: {output}\nSHA256: {report["sha256"]}')
 if __name__=='__main__':main()

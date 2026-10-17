@@ -20,17 +20,30 @@ void layerSettings(SaveArchive& a,AnimationLayerSettings& s){a(s.id,s.clip,s.ref
 void constraint(SaveArchive& a,JointSettings& s,unsigned version){a(s.type,s.anchorA,s.anchorB,s.frameA,s.frameB,s.enabled,s.limits,s.motor,s.spring,s.lower,s.upper,s.speed,s.maxForce,s.rest,s.stiffness,s.damping);if(version>=2)a(s.rotationalResistance);a.Require(ValidJointSettings(s),"invalid saved constraint");}
 bool NeedsAnimationObservation(const RuntimeWorld::AnimationInstance& instance){return instance.asset&&std::any_of(instance.asset->clips.begin(),instance.asset->clips.end(),[](const auto& clip){return !clip.events.empty()||!clip.motion.empty();});}
 uint32_t count(SaveArchive& a,size_t size,uint32_t limit=8192){uint32_t n=uint32_t(size);a(n);a.Require(n<=limit,"participant record limit");return n;}
+const char* UnsupportedSnapshotComponent(const SceneObject& object) {
+ if(object.fluidVolume)return "legacy PBF";
+ if(object.atmosphere)return "atmosphere";
+ if(object.combustible)return "combustion";
+ if(object.vehicle)return "legacy vehicle";
+ if(object.door)return "legacy door";
+ if(object.lightSwitch)return "legacy switch";
+ return nullptr;
+}
+}
+bool WorldPersistence::IncludesEntity(const RuntimeWorld& world,uint64_t id) {
+ if(!world.IsTransientEntity(id))return true;
+ // Articulation children are transient engine objects but durable physical
+ // participants of their saved owner. Other explicitly excluded actors are not.
+ for(const auto& [_,rig]:world.m_ragdolls)
+  for(const auto& bone:rig.bodies)if(bone.entity==id)return true;
+ return false;
 }
 void WorldPersistence::Entities(RuntimeWorld& w,SaveArchive& a){
  std::vector<SceneObject> objects;std::string text;uint64_t next=w.m_nextRuntimeId;double time=w.m_simulationTime;
  if(!a.reading){
-  for(const auto& o:w.ScriptObjects()){
-   const char* component=o.fluidVolume?"legacy PBF":o.atmosphere?"atmosphere":o.combustible?"combustion":o.vehicle?"legacy vehicle":o.door?"legacy door":o.lightSwitch?"legacy switch":nullptr;
-   if(component)throw std::runtime_error("entity "+std::to_string(o.id)+" component "+component+": no modern slot participant; separate legacy contract only");
-  }
   Scene scene;scene.Settings()=w.m_settings;
   for(auto o:w.ScriptObjects()){
-   const auto* e=w.FindEntity(o.id);if(e&&e->transient){bool articulated=false;for(auto& [_,r]:w.m_ragdolls)for(auto& b:r.bodies)articulated|=b.entity==o.id;if(!articulated)continue;}
+   if(!IncludesEntity(w,o.id))continue;
    if(o.deformable){std::string error;auto* deform=w.RuntimeDeformable(o.id,error);if(!deform)throw std::runtime_error(error);*o.deformable=deform->settings;}
    auto t=w.PresentedTransform(o.id,o.transform,1);o.transform=t;o.tags=w.TagsOf(o.id);o.renderLayer=w.RenderLayerOf(o.id);
    auto body=w.RuntimeBody(o.id);if(o.body&&body.IsValid()){w.Physics().GetCollisionFilter(body,o.body->collisionLayer,o.body->collisionMask);o.body->enabled=w.Physics().IsBodyEnabled(body);o.body->sensor=w.Physics().IsBodySensor(body);}
@@ -247,7 +260,13 @@ void WorldPersistence::Audio(RuntimeWorld& w,SaveArchive& a){
  // Master/device gain is a current-machine preference, never overwritten.
  std::set<std::string> groupNames;auto groups=w.audioGroups.groups;uint32_t size=uint32_t(groups.size());a(size);a.Require(size<=16,"saved audio group limit");for(uint32_t i=0;i<size;++i){std::string name;AudioGroupSettings settings;if(!a.reading){auto it=groups.begin();std::advance(it,i);name=it->first;settings=it->second;if(w.m_audioSystem)w.m_audioSystem->GetGroup(name,settings);}a(name,settings.gain,settings.mute,settings.paused);a.Require(groupNames.insert(name).second&&groups.count(name)&&name!="master"&&settings.gain>=0&&settings.gain<=1,"invalid saved project audio group");if(a.reading)w.audioGroups.groups[name]=settings;}
 }
-bool WorldPersistence::Capture(RuntimeWorld& w,std::map<std::string,SaveChunk>& chunks,std::string& error){if(w.NetworkIfLoaded()&&w.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}if(w.Scripts()&&w.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}JUDAS_PROFILE_SCOPE("Save capture");if(!Prepare(w,error))return false;try{chunks.clear();if(w.m_runtimeTerrain&&!w.m_runtimeTerrain->Owners().empty()){SaveArchive a;auto owners=w.m_runtimeTerrain->Owners();uint32_t n=uint32_t(owners.size());a(n);for(auto id:owners){std::string data;if(!w.CaptureRuntimeTerrain(id,data,error))return false;a(id,data);}chunks["runtime-terrain"]={1,std::move(a.bytes)};}if(!w.m_weather.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_weather.size());a(n);for(const auto& [owner,_]:w.m_weather){auto id=owner;std::string record;if(!w.CaptureWeather(id,record,error))return false;a(id,record);}chunks["weather"]={1,std::move(a.bytes)};}if(!w.m_planets.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_planets.size());a(n);for(auto& [id,planet]:w.m_planets){auto focus=planet->CollisionFocus();bool ready=focus.has_value();glm::dvec3 point=focus.value_or(glm::dvec3(0));auto savedId=id;a(savedId,ready,point);}chunks["planets"]={1,std::move(a.bytes)};}const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){ProfileScope participant(PerformanceProfiler::Get().Intern("Save capture "+name));SaveArchive a;unsigned version=1;
+bool WorldPersistence::Capture(RuntimeWorld& world,std::map<std::string,SaveChunk>& chunks,std::string& error) {
+ std::map<std::string,SaveChunk> prepared;
+ if(!CapturePrepared(world,prepared,error))return false;
+ chunks.swap(prepared);
+ return true;
+}
+bool WorldPersistence::CapturePrepared(RuntimeWorld& w,std::map<std::string,SaveChunk>& chunks,std::string& error){if(w.NetworkIfLoaded()&&w.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}if(w.Scripts()&&w.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}JUDAS_PROFILE_SCOPE("Save capture");if(!Prepare(w,error))return false;try{chunks.clear();if(w.m_runtimeTerrain&&!w.m_runtimeTerrain->Owners().empty()){SaveArchive a;auto owners=w.m_runtimeTerrain->Owners();uint32_t n=uint32_t(owners.size());a(n);for(auto id:owners){std::string data;if(!w.CaptureRuntimeTerrain(id,data,error))return false;a(id,data);}chunks["runtime-terrain"]={1,std::move(a.bytes)};}if(!w.m_weather.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_weather.size());a(n);for(const auto& [owner,_]:w.m_weather){auto id=owner;std::string record;if(!w.CaptureWeather(id,record,error))return false;a(id,record);}chunks["weather"]={1,std::move(a.bytes)};}if(!w.m_planets.empty()){SaveArchive a;uint32_t n=uint32_t(w.m_planets.size());a(n);for(auto& [id,planet]:w.m_planets){auto focus=planet->CollisionFocus();bool ready=focus.has_value();glm::dvec3 point=focus.value_or(glm::dvec3(0));auto savedId=id;a(savedId,ready,point);}chunks["planets"]={1,std::move(a.bytes)};}const std::vector<std::pair<std::string,void(*)(RuntimeWorld&,SaveArchive&)>> participants={{"entities",Entities},{"motors",Motors},{"animation",Animation},{"articulation",Articulation},{"navigation",Navigation},{"audio",Audio}};for(auto& [name,fn]:participants){ProfileScope participant(PerformanceProfiler::Get().Intern("Save capture "+name));SaveArchive a;unsigned version=1;
  if(name=="articulation")for(const auto& [_,r]:w.m_ragdolls)for(auto joint:r.joints){JointState state;if(w.Physics().GetJoint(joint,state)&&state.settings.rotationalResistance)version=2;}
  if(name=="articulation"&&std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[](const auto& r){return r.second.physicalControlled;}))version=3;
  if(name=="articulation"&&(!w.m_jointOwners.empty()||std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[](const auto& r){return !r.second.joints.empty();})))version=4;
@@ -266,7 +285,7 @@ bool WorldPersistence::Capture(RuntimeWorld& w,std::map<std::string,SaveChunk>& 
  // Contacts and sleep must retain the same physical owners as the entity
  // participant. Mapped articulation bodies are engine-transient but remain
  // required by their durable owner; ordinary explicitly excluded actors do not.
- const auto includeBody=[&](BodyHandle h){for(const auto& [_,planet]:w.m_planets)if(planet->Owns(h))return false;return !w.IsTransientEntity(w.EntityIdOfBody(h))||std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[&](const auto& r){return std::any_of(r.second.bodies.begin(),r.second.bodies.end(),[&](const auto& b){return b.body.id==h.id;});});};
+ const auto includeBody=[&](BodyHandle h){for(const auto& [_,planet]:w.m_planets)if(planet->Owns(h))return false;return IncludesEntity(w,w.EntityIdOfBody(h));};
  SaveArchive contacts;w.Physics().PersistTouches(contacts,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);},includeBody);
  if(chunks.at("articulation").version>=4)w.Physics().PersistCompletedContactObservations(contacts,[&](BodyHandle h){return w.EntityIdOfBody(h);},[&](uint64_t id){return w.RuntimeBody(id);},includeBody);
  chunks["contacts"]={chunks.at("articulation").version>=4?2u:1u,std::move(contacts.bytes)};
@@ -277,6 +296,13 @@ bool WorldPersistence::Capture(RuntimeWorld& w,std::map<std::string,SaveChunk>& 
 bool WorldPersistence::SceneFrom(const std::map<std::string,SaveChunk>& chunks,Scene& scene,std::string& error){try{auto it=chunks.find("entities");if(it==chunks.end()||it->second.version!=1)throw std::runtime_error("required entity participant missing/newer");SaveArchive a(it->second.data);std::string text;a(text);std::istringstream scan(text);std::string line;size_t objects=0;while(std::getline(scan,line)){std::istringstream tokens(line);std::string keyword;tokens>>keyword;if(keyword=="object"&&++objects>8192)throw std::runtime_error("snapshot entity limit before scene allocation");}if(!LoadSceneFromString(text,scene,error))return false;return true;}catch(const std::exception& e){error=e.what();return false;}}
 bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
  error.clear();
+ // Diagnose unsupported ownership before creating lazy participants or touching
+ // a caller's existing snapshot. Live-origin support does not imply save support.
+ for(const auto& object:w.ScriptObjects())if(const auto* component=UnsupportedSnapshotComponent(object)){
+  error="entity "+std::to_string(object.id)+" component "+component+": no modern slot participant; separate legacy contract only";
+  return false;
+ }
+
  if(w.m_runtimeTerrain&&!w.m_runtimeTerrain->ReadyToSave()){error="loading";return false;}
  // A boot/menu save can precede the first fixed step. Materialize normal lazy
  // participants without advancing motion or rebuilding existing navigation.

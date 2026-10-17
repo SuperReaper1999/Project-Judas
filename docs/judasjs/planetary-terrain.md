@@ -29,8 +29,18 @@ the operation translates positions and preserves directions, velocities, loads,
 sleep, commands and local attachment frames. Detour tiles and immutable mesh/rest
 assets remain in their own local frames.
 
-**Remaining exclusions:** active conserved liquids, legacy PBF, atmosphere and
-combustion reject shifts. An in-flight M59 residency transaction defers the shift
+**Pre-Alpha extension:** conserved liquid owners and detached parcels translate
+within the same 8 km chart. Owner-local capacity geometry, surface waves/history,
+quantity, velocity and handles remain intact; derived optical planes rebuild.
+An owner whose cavity has not yet published refuses nonzero shifts with a
+prepare/retry diagnostic; a no-op origin request still succeeds. This prevents
+liquid-only actors from bypassing geometry bounds during asynchronous startup.
+Analytic atmosphere translates its frame; combustion retains its thermal scalars
+and carrier handles. This does not add regional liquid suspension or modern-slot
+atmosphere/combustion persistence. See the [composition matrix](../PREALPHA.md).
+
+**Remaining exclusions:** legacy PBF and emitted legacy fluid reject shifts.
+An in-flight M59 residency transaction defers the shift
 until it reaches a safe boundary. A live articulation still pins its streamed
 source region under the existing suspension rules; translating it does not add
 articulation suspension support. This is one shared local physics chart, not

@@ -1,0 +1,4 @@
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp:771:91: error: ‘const struct RigidBody’ has no member named ‘localCenter’
+  771 |             const auto& q=pose.orientation;const auto& p=pose.position;const auto& c=pose.localCenter;
+      |                                                                                           ^~~~~~~~~~~

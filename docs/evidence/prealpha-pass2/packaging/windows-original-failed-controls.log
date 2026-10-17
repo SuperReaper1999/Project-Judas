@@ -1,0 +1,150 @@
+python.exe : test_android_publication_restores_entire_previous_bundle_on_failure 
+(__main__.DistributionChecks.test_android_publication_restores_entire_previous_bundle_on_failure) ... ok
+At line:4 char:1
++ & $python "$root\Source\scripts\prealpha_distribution_checks.py" --ou ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_android_pu...failure) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_android_stale_configured_identity_fails_before_native_compile 
+(__main__.DistributionChecks.test_android_stale_configured_identity_fails_before_native_compile) ... ERROR
+test_apk_bad_alignment_identity_and_budget_rejected 
+(__main__.DistributionChecks.test_apk_bad_alignment_identity_and_budget_rejected) ... ok
+test_apk_corruption_missing_and_phantom_content_rejected 
+(__main__.DistributionChecks.test_apk_corruption_missing_and_phantom_content_rejected) ... ok
+test_apk_external_receipt_must_match_shipped_not_build_input 
+(__main__.DistributionChecks.test_apk_external_receipt_must_match_shipped_not_build_input) ... ok
+test_apk_unshipped_or_desktop_native_dependency_rejected 
+(__main__.DistributionChecks.test_apk_unshipped_or_desktop_native_dependency_rejected) ... ok
+test_apk_verified_native_and_content_bytes (__main__.DistributionChecks.test_apk_verified_native_and_content_bytes) 
+... ok
+test_elf_actual_requirements_ignore_exported_version_decoy 
+(__main__.DistributionChecks.test_elf_actual_requirements_ignore_exported_version_decoy) ... ok
+test_elf_malformed_tables_and_chains_fail (__main__.DistributionChecks.test_elf_malformed_tables_and_chains_fail) ... 
+ok
+test_jdk_requires_complete_coherent_modern_tools 
+(__main__.DistributionChecks.test_jdk_requires_complete_coherent_modern_tools) ... FAIL
+test_mocked_complete_builder_reaches_compiler_signing_and_verified_publication 
+(__main__.DistributionChecks.test_mocked_complete_builder_reaches_compiler_signing_and_verified_publication) ... ERROR
+test_native_build_reconfiguration_cannot_publish_stale_identity 
+(__main__.DistributionChecks.test_native_build_reconfiguration_cannot_publish_stale_identity) ... ERROR
+test_pe_regular_and_delayed_imports (__main__.DistributionChecks.test_pe_regular_and_delayed_imports) ... ok
+test_sdk_declared_glibc_gate_rejects_newer_binary 
+(__main__.DistributionChecks.test_sdk_declared_glibc_gate_rejects_newer_binary) ... ok
+test_windows_transitive_missing_import_detected 
+(__main__.DistributionChecks.test_windows_transitive_missing_import_detected) ... ok
+
+======================================================================
+ERROR: test_android_stale_configured_identity_fails_before_native_compile 
+(__main__.DistributionChecks.test_android_stale_configured_identity_fails_before_native_compile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 625, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 
+'C:\\Windows\\TEMP\\judas-distribution-a11x71kt\\cache\\.android-build.lock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 956, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 936, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 790, in rmtree
+    return _rmtree_unsafe(path, onexc)
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 629, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 911, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 
+'C:\\Windows\\TEMP\\judas-distribution-a11x71kt\\cache\\.android-build.lock'
+
+======================================================================
+ERROR: test_mocked_complete_builder_reaches_compiler_signing_and_verified_publication 
+(__main__.DistributionChecks.test_mocked_complete_builder_reaches_compiler_signing_and_verified_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 625, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 
+'C:\\Windows\\TEMP\\judas-distribution-tmep9bh9\\cache\\.android-build.lock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 956, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 936, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 790, in rmtree
+    return _rmtree_unsafe(path, onexc)
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 629, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 911, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 
+'C:\\Windows\\TEMP\\judas-distribution-tmep9bh9\\cache\\.android-build.lock'
+
+======================================================================
+ERROR: test_native_build_reconfiguration_cannot_publish_stale_identity 
+(__main__.DistributionChecks.test_native_build_reconfiguration_cannot_publish_stale_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 625, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 
+'C:\\Windows\\TEMP\\judas-distribution-8yf6_vkr\\cache\\.android-build.lock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 956, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 936, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 790, in rmtree
+    return _rmtree_unsafe(path, onexc)
+  File "C:\JudasValidation\Python\Lib\shutil.py", line 629, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\JudasValidation\Python\Lib\tempfile.py", line 911, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 
+'C:\\Windows\\TEMP\\judas-distribution-8yf6_vkr\\cache\\.android-build.lock'
+
+======================================================================
+FAIL: test_jdk_requires_complete_coherent_modern_tools 
+(__main__.DistributionChecks.test_jdk_requires_complete_coherent_modern_tools)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\JudasValidation\PreAlphaPass2\Source\scripts\prealpha_distribution_checks.py", line 214, in 
+test_jdk_requires_complete_coherent_modern_tools
+    self.assertEqual(env["JAVA_HOME"], str(home))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'C:\\Windows\\Temp\\judas-distribution-crz7gvz_\\jdk' != 
+'C:\\Windows\\TEMP\\judas-distribution-crz7gvz_\\jdk'
+- C:\Windows\Temp\judas-distribution-crz7gvz_\jdk
+?             ^^^
++ C:\Windows\TEMP\judas-distribution-crz7gvz_\jdk
+?             ^^^
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.904s
+
+FAILED (failures=1, errors=3)

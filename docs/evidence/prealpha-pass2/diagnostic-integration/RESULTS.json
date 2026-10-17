@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "diagnostic results only; final combined-source rerun pending",
+  "results": [
+    {
+      "name": "first-project",
+      "checks": 20,
+      "status": "diagnostic-pass",
+      "log": "docs/evidence/prealpha-pass2/diagnostic-integration/first-project-initial.log",
+      "sha256": "b4ca9e1ed8c7431b26a2ae7873e8465a8f636139f718d636bcc9f7d2b9185f8f",
+      "sourceLog": ".cache/prealpha-pass2/integration/run-first-project-1.log",
+      "scope": "Initial combined-candidate execution; not a final-source/binary fingerprint claim or human acceptance."
+    },
+    {
+      "name": "lifecycle",
+      "checks": 34,
+      "status": "diagnostic-pass",
+      "log": "docs/evidence/prealpha-pass2/diagnostic-integration/lifecycle-initial.log",
+      "sha256": "67870b02444a588e2cbbc1ab6f79b84d0342156225b5a75853cbbd0a908aa27f",
+      "sourceLog": ".cache/prealpha-pass2/integration/run-lifecycle-1.log",
+      "scope": "Initial combined-candidate execution; not a final-source/binary fingerprint claim or human acceptance."
+    }
+  ]
+}

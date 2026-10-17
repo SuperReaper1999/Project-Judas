@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "domain": "win10",
+  "status": "paused",
+  "method": "virsh suspend after agent shutdown timed out and normal ACPI request remained running",
+  "scope": "reversible runtime suspension only; no force poweroff or VM configuration edit",
+  "observed_utc": "2026-10-17T23:20:19.063029+00:00"
+}

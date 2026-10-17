@@ -1,6 +1,7 @@
 #include "CollisionGeometry.h"
 #include "CollisionAsset.h"
 #include "RadialTerrain.h"
+#include "ReentrantQueryScratch.h"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -35,18 +36,30 @@ std::pair<V,V> segmentTriangle(V a,V b,V x,V y,V z) {
  auto test=[&](V u,V v){double dist=glm::dot(u-v,u-v);if(dist<best){best=dist;p=u;q=v;}};
  test(b,nearestTriangle(b,x,y,z));for(auto edge:std::array<std::pair<V,V>,3>{{{x,y},{y,z},{z,x}}}){V u,v;segmentPair(a,b,edge.first,edge.second,u,v);test(u,v);}return {p,q};
 }
-Poly poly(const PrimitivePose& pose,V origin=V(0)) {
- Poly p;M r=PrimitiveRotation(pose);V center=PrimitiveCenter(pose)-origin;
- if(pose.shape.type==ShapeType::Box){p.points.reserve(8);p.normals.reserve(6);V h(pose.shape.halfExtents);for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})p.points.push_back(center+r*V(x*h.x,y*h.y,z*h.z));p.faces={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};}
- else if(pose.shape.type==ShapeType::ConvexHull&&pose.shape.asset){for(V v:pose.shape.asset->vertices)p.points.push_back(center+r*v);for(auto& f:pose.shape.asset->polygons){p.faces.emplace_back(f.vertices.begin(),f.vertices.end());p.normals.push_back(r*f.normal);}for(auto e:pose.shape.asset->edges)p.edges.push_back({e[0],e[1]});p.satEdges.assign(pose.shape.asset->satEdges.begin(),pose.shape.asset->satEdges.end());if(p.satEdges.empty())for(unsigned i=0;i<p.edges.size();++i)p.satEdges.push_back(i);return p;}
- else throw std::invalid_argument("poly geometry requires box or cooked convex hull");
- for(auto& f:p.faces)p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));
- // Immutable box topology, in exactly the lexicographic order produced by the
- // former set over these same faces. Witness traversal and SAT axis identities
- // therefore remain unchanged without rebuilding twelve tree nodes per query.
+
+struct PolyScratchFrame {Poly first,second,triangle;std::vector<V> polygon,clipped;};
+using PolyScratchLease=ReentrantQueryScratch<PolyScratchFrame>;
+void polyInto(Poly& p,const PrimitivePose& pose,V origin=V(0)) {
+ p.triangle=false;p.points.clear();p.normals.clear();p.edges.clear();p.satEdges.clear();
+ const M r=PrimitiveRotation(pose);const V center=PrimitiveCenter(pose)-origin;
+ if(pose.shape.type==ShapeType::Box){
+  p.points.reserve(8);p.normals.reserve(6);V h(pose.shape.halfExtents);
+  for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})p.points.push_back(center+r*V(x*h.x,y*h.y,z*h.z));
+  static constexpr unsigned faces[6][4]={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};
+  p.faces.resize(6);for(unsigned i=0;i<6;++i)p.faces[i].assign(std::begin(faces[i]),std::end(faces[i]));
+ }else if(pose.shape.type==ShapeType::ConvexHull&&pose.shape.asset){
+  const auto& asset=*pose.shape.asset;
+  for(V v:asset.vertices)p.points.push_back(center+r*v);
+  p.faces.resize(asset.polygons.size());
+  for(unsigned i=0;i<asset.polygons.size();++i){const auto& f=asset.polygons[i];p.faces[i].assign(f.vertices.begin(),f.vertices.end());p.normals.push_back(r*f.normal);}
+  for(auto e:asset.edges)p.edges.push_back({e[0],e[1]});
+  p.satEdges.assign(asset.satEdges.begin(),asset.satEdges.end());
+  if(p.satEdges.empty())for(unsigned i=0;i<p.edges.size();++i)p.satEdges.push_back(i);
+  return;
+ }else throw std::invalid_argument("poly geometry requires box or cooked convex hull");
+ for(const auto& f:p.faces)p.normals.push_back(unit(glm::cross(p.points[f[1]]-p.points[f[0]],p.points[f[2]]-p.points[f[0]])));
  static constexpr std::array<std::pair<unsigned,unsigned>,12> edges{{{0,1},{0,2},{0,4},{1,3},{1,5},{2,3},{2,6},{3,7},{4,5},{4,6},{5,7},{6,7}}};
  p.edges.assign(edges.begin(),edges.end());p.satEdges={0,1,2};
- return p;
 }
 // Writes the same triangle Poly as triangle() into storage reused across a mesh's
 // candidates, so a contact query does not allocate per triangle. `r` and `center`
@@ -55,9 +68,6 @@ void triangleInto(Poly& p,const CollisionAsset& a,unsigned feature,const M& r,V 
  const auto& f=a.faces[feature];p.triangle=true;p.active=f.active;
  p.points.resize(3);for(unsigned k=0;k<3;++k)p.points[k]=center+r*a.vertices[f.vertices[k]];
  p.faces.resize(1);p.faces[0].assign({0,1,2});p.normals.assign(1,r*f.normal);p.edges.assign({{0,1},{1,2},{0,2}});p.satEdges={0,1,2};
-}
-Poly triangle(const PrimitivePose& pose,unsigned feature,V origin) {
- Poly p;triangleInto(p,*pose.shape.asset,feature,PrimitiveRotation(pose),PrimitiveCenter(pose)-origin);return p;
 }
 void reverseTriangleSide(Poly& p,const CollisionAsset& asset,unsigned feature) {
  // Convex and concave creases exchange roles when viewing a two-sided sheet
@@ -95,33 +105,41 @@ Separation sat(const Poly& a,const Poly& b,bool edgeAware=true) {
  if(actual>0&&actual>best.gap)best.gap=actual;
  return best;
 }
-std::vector<V> clip(std::vector<V> points,V normal,double plane) {
- std::vector<V> out;if(points.empty())return out;V previous=points.back();double before=glm::dot(normal,previous)-plane;
- for(V current:points){double now=glm::dot(normal,current)-plane;if((before<=eps)!=(now<=eps))out.push_back(previous+(current-previous)*(before/(before-now)));if(now<=eps)out.push_back(current);previous=current;before=now;}return out;
+
+void clipInto(const std::vector<V>& points,V normal,double plane,std::vector<V>& out) {
+ out.clear();if(points.empty())return;V previous=points.back();double before=glm::dot(normal,previous)-plane;
+ for(V current:points){const double now=glm::dot(normal,current)-plane;
+  if((before<=eps)!=(now<=eps))out.push_back(previous+(current-previous)*(before/(before-now)));
+  if(now<=eps)out.push_back(current);
+  previous=current;before=now;
+ }
 }
-std::vector<std::pair<V,V>> witnesses(const Poly& a,const Poly& b,const Separation& s,bool* clippedFace=nullptr) {
+template<class Consumer>
+bool visitWitnesses(const Poly& a,const Poly& b,const Separation& s,PolyScratchFrame& scratch,Consumer consume) {
  unsigned reference=0,incident=0;double alignment=-INFINITY,opposite=INFINITY;
  for(unsigned i=0;i<b.normals.size();++i)if(glm::dot(b.normals[i],s.normal)>alignment){alignment=glm::dot(b.normals[i],s.normal);reference=i;}
  for(unsigned i=0;i<a.normals.size();++i)if(glm::dot(a.normals[i],s.normal)<opposite){opposite=glm::dot(a.normals[i],s.normal);incident=i;}
- std::vector<std::pair<V,V>> result;
- if(alignment>1-1e-6&&!s.edge){auto& face=b.faces[reference];V n=b.normals[reference];std::vector<V> polygon;for(auto v:a.faces[incident])polygon.push_back(a.points[v]);for(unsigned i=0;i<face.size();++i){V x=b.points[face[i]],y=b.points[face[(i+1)%face.size()]];V side=unit(glm::cross(y-x,n));polygon=clip(std::move(polygon),side,glm::dot(side,x));}double plane=glm::dot(n,b.points[face[0]]);for(V p:polygon)result.push_back({p,p-n*(glm::dot(n,p)-plane)});}
- // SAT may select A's face just as legitimately as B's. Falling back to
- // an edge/edge witness here loses a real face patch and can put the support
- // point at a distant floor edge. Keep all concave-triangle handling intact.
- if(result.empty()&&!s.edge&&!a.triangle&&!b.triangle&&opposite< -1+1e-6){
-  const auto& face=a.faces[incident];const V n=a.normals[incident];
-  std::vector<V> polygon;for(auto v:b.faces[reference])polygon.push_back(b.points[v]);
-  for(unsigned i=0;i<face.size();++i){const V x=a.points[face[i]],y=a.points[face[(i+1)%face.size()]];
-   const V side=unit(glm::cross(y-x,n));polygon=clip(std::move(polygon),side,glm::dot(side,x));}
-  const double plane=glm::dot(n,a.points[face[0]]);
-  for(V p:polygon)result.push_back({p-n*(glm::dot(n,p)-plane),p});
+ auto& polygon=scratch.polygon;auto& clipped=scratch.clipped;
+ polygon.clear();
+ if(alignment>1-1e-6&&!s.edge){
+  const auto& face=b.faces[reference];const V n=b.normals[reference];for(auto v:a.faces[incident])polygon.push_back(a.points[v]);
+  for(unsigned i=0;i<face.size();++i){const V x=b.points[face[i]],y=b.points[face[(i+1)%face.size()]];const V side=unit(glm::cross(y-x,n));clipInto(polygon,side,glm::dot(side,x),clipped);polygon.swap(clipped);}
+  const double plane=glm::dot(n,b.points[face[0]]);
+  if(!polygon.empty()){for(V p:polygon)if(consume(p,p-n*(glm::dot(n,p)-plane),true))return true;return false;}
  }
- if(clippedFace)*clippedFace=!result.empty();
- if(result.empty()){
-  double supportA=INFINITY,supportB=-INFINITY;V pa=a.points[0],pb=b.points[0];for(V p:a.points)if(glm::dot(p,s.normal)<supportA){supportA=glm::dot(p,s.normal);pa=p;}for(V p:b.points)if(glm::dot(p,s.normal)>supportB){supportB=glm::dot(p,s.normal);pb=p;}
-  // Keep edge witnesses on actual features, rather than inventing a plane point.
-  double nearest=INFINITY;for(auto e:a.edges)for(auto f:b.edges){V x,y;segmentPair(a.points[e.first],a.points[e.second],b.points[f.first],b.points[f.second],x,y);double d=glm::dot(x-y,x-y);if(d<nearest){nearest=d;pa=x;pb=y;}}result.push_back({pa,pb});
- }return result;
+ if(!s.edge&&!a.triangle&&!b.triangle&&opposite< -1+1e-6){
+  const auto& face=a.faces[incident];const V n=a.normals[incident];
+  for(auto v:b.faces[reference])polygon.push_back(b.points[v]);
+  for(unsigned i=0;i<face.size();++i){const V x=a.points[face[i]],y=a.points[face[(i+1)%face.size()]];const V side=unit(glm::cross(y-x,n));clipInto(polygon,side,glm::dot(side,x),clipped);polygon.swap(clipped);}
+  const double plane=glm::dot(n,a.points[face[0]]);
+  if(!polygon.empty()){for(V p:polygon)if(consume(p-n*(glm::dot(n,p)-plane),p,true))return true;return false;}
+ }
+ double supportA=INFINITY,supportB=-INFINITY;V pa=a.points[0],pb=b.points[0];
+ for(V p:a.points)if(glm::dot(p,s.normal)<supportA){supportA=glm::dot(p,s.normal);pa=p;}
+ for(V p:b.points)if(glm::dot(p,s.normal)>supportB){supportB=glm::dot(p,s.normal);pb=p;}
+ double nearest=INFINITY;
+ for(auto e:a.edges)for(auto f:b.edges){V x,y;segmentPair(a.points[e.first],a.points[e.second],b.points[f.first],b.points[f.second],x,y);const double d=glm::dot(x-y,x-y);if(d<nearest){nearest=d;pa=x;pb=y;}}
+ return consume(pa,pb,false);
 }
 std::vector<unsigned> candidates(const PrimitivePose& target,V lo,V hi,double radius) {
  std::vector<uint32_t> list;const auto& asset=*target.shape.asset;
@@ -144,7 +162,7 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
 // sidedness, crease handling or the contacts used by a physical solver.
 template<class Consumer>
 bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY) {
- V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](const Poly& pb){
+ PolyScratchLease lease;auto& scratch=lease.frame;V origin=PrimitiveCenter(b);auto& pa=scratch.first;polyInto(pa,a,origin);auto test=[&](const Poly& pb){
   // A face axis is already a valid SAT axis. Reject shallow convex pairs
   // before enumerating edge axes/clipping; preserve the original full path
   // near the threshold and for every concave triangle response.
@@ -173,20 +191,24 @@ bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,doubl
    double bhi=-INFINITY;for(V p:pb.points)bhi=std::max(bhi,glm::dot(p,n));
    s={alo-bhi,n,false};
   }
-  bool faceWitness=false;
-  const auto pairs=witnesses(pa,pb,s,&faceWitness);
-  for(auto [x,y]:pairs){
+  return visitWitnesses(pa,pb,s,scratch,[&](V x,V y,bool faceWitness){
    const double gap=faceWitness?glm::dot(s.normal,x-y):s.gap;
-   if(gap<=margin&&consume(x+origin,y+origin,s.normal,gap))return true;
-  }
-  return false;
+   if(gap<=margin){
+    return consume(x+origin,y+origin,s.normal,gap);
+   }
+   return false;
+  });
  };
- if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box)return test(poly(b,origin));
+ if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box){polyInto(scratch.second,b,origin);return test(scratch.second);}
  if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());
   // Most candidates of a dense mesh are rejected by a face axis; skip their edge axes
   // (counted as the same convex test) and reuse one triangle's storage throughout.
-  const auto& asset=*b.shape.asset;const M rotation=PrimitiveRotation(b);const V placed=PrimitiveCenter(b)-origin;Poly pb;
-  for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;triangleInto(pb,asset,i,rotation,placed);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!asset.twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,asset,i);}
+  const auto& asset=*b.shape.asset;const M rotation=PrimitiveRotation(b);const V placed=PrimitiveCenter(b)-origin;auto& pb=scratch.triangle;
+  for(auto i:candidates(b,lo,hi,margin)){
+   ++stats.triangles;triangleInto(pb,asset,i,rotation,placed);
+   const double side=glm::dot(pb.normals[0],center-pb.points[0]);
+   if(!asset.twoSided&&side<-eps)continue;
+   if(side<0)reverseTriangleSide(pb,asset,i);
    if(faceAxesSeparate(pa,pb,margin)){++stats.convexTests;continue;}
    if(test(pb))return true;}return false;}
  throw std::invalid_argument("unsupported cooked contact target");
@@ -233,12 +255,83 @@ GeometryDistance PointGeometry(V point,const PrimitivePose& target,double range)
  return result;
 }
 GeometryDistance PolyGeometry(const PrimitivePose& query,const PrimitivePose& target,double range,uint32_t feature) {
- GeometryDistance out;V origin=PrimitiveCenter(target);Poly a=poly(query,origin);
- if(target.shape.type==ShapeType::ConvexHull||target.shape.type==ShapeType::Box){Poly b=poly(target,origin);auto s=sat(a,b);auto pairs=witnesses(a,b,s);out={true,s.gap<0,s.gap,pairs[0].second+origin,pairs[0].first+origin,s.normal,0};return out;}
+ PolyScratchLease lease;auto& scratch=lease.frame;auto& a=scratch.first;
+ GeometryDistance out;const V origin=PrimitiveCenter(target);polyInto(a,query,origin);
+ auto distance=[&](const Poly& b,const Separation& separation,unsigned face){
+  GeometryDistance value;
+  visitWitnesses(a,b,separation,scratch,[&](V first,V second,bool){value={true,separation.gap<0,separation.gap,second+origin,first+origin,separation.normal,face};return true;});
+  return value;
+ };
+ if(target.shape.type==ShapeType::ConvexHull||target.shape.type==ShapeType::Box){polyInto(scratch.second,target,origin);return distance(scratch.second,sat(a,scratch.second),0);}
  if(target.shape.type!=ShapeType::TriangleMesh||!target.shape.asset)return out;
- V lo(INFINITY),hi(-INFINITY);for(V p:a.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);}auto list=feature==UINT32_MAX?candidates(target,lo,hi,range):std::vector<unsigned>{feature};
- for(auto i:list){++stats.triangles;Poly b=triangle(target,i,origin);V center(0);for(V p:a.points)center+=p;center/=double(a.points.size());if(!target.shape.asset->twoSided&&glm::dot(b.normals[0],center-b.points[0])<-eps)continue;if(glm::dot(b.normals[0],center-b.points[0])<0){reverseTriangleSide(b,*target.shape.asset,i);}auto s=sat(a,b,false);if(!out.valid||s.gap<out.gap){auto pairs=witnesses(a,b,s);out={true,false,s.gap,pairs[0].second+origin,pairs[0].first+origin,s.normal,i};}}
+ V lo(INFINITY),hi(-INFINITY),center(0);for(V p:a.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(a.points.size());
+ const auto list=feature==UINT32_MAX?candidates(target,lo,hi,range):std::vector<unsigned>{feature};
+ const M rotation=PrimitiveRotation(target);auto& b=scratch.triangle;
+ for(auto i:list){++stats.triangles;triangleInto(b,*target.shape.asset,i,rotation,V(0));const double side=glm::dot(b.normals[0],center-b.points[0]);
+  if(!target.shape.asset->twoSided&&side<-eps)continue;
+  if(side<0)reverseTriangleSide(b,*target.shape.asset,i);
+  const auto separation=sat(a,b,false);if(!out.valid||separation.gap<out.gap){out=distance(b,separation,i);out.contains=false;}
+ }
  return out;
+}
+double MeshSeparationAdvance(const PrimitivePose& query,const PrimitivePose& mesh,
+                             V velocity,V angularGenerator,double rotationRadius,double duration) {
+ if(mesh.shape.type!=ShapeType::TriangleMesh||!mesh.shape.asset||
+    (query.shape.type!=ShapeType::Box&&query.shape.type!=ShapeType::ConvexHull))
+  throw std::invalid_argument("mesh advancement requires a convex polyhedron and triangle mesh");
+ PolyScratchLease lease;auto& a=lease.frame.first;const V origin=PrimitiveCenter(mesh);polyInto(a,query,origin);
+ V lo(INFINITY),hi(-INFINITY),center(0);
+ for(V p:a.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}
+ center/=double(a.points.size());
+ const V displacement=velocity*duration;
+ lo=glm::min(lo,lo+displacement);hi=glm::max(hi,hi+displacement);
+ const double angular=glm::length(angularGenerator);
+ const auto selected=candidates(mesh,lo,hi,angular*rotationRadius*duration);
+ const auto& asset=*mesh.shape.asset;const M rotation=PrimitiveRotation(mesh);
+ auto& triangleStorage=lease.frame.triangle;double earliest=INFINITY;
+ for(unsigned feature:selected){
+  ++stats.triangles;++stats.convexTests;
+  triangleInto(triangleStorage,asset,feature,rotation,V(0));
+  const auto& b=triangleStorage;
+  if(!asset.twoSided&&glm::dot(b.normals[0],center-b.points[0])<-eps)continue;
+  double enter=0,leave=duration;
+  auto axis=[&](V n){
+   const double length=glm::length(n);if(length<eps)return true;n/=length;
+   double alo=INFINITY,ahi=-INFINITY,blo=INFINITY,bhi=-INFINITY;
+   for(V p:a.points){const double x=glm::dot(p,n);alo=std::min(alo,x);ahi=std::max(ahi,x);}
+   for(V p:b.points){const double x=glm::dot(p,n);blo=std::min(blo,x);bhi=std::max(bhi,x);}
+   const double rate=glm::dot(velocity,n);
+   if(angular==0){
+    // Exact swept SAT for translation. Intersect entry AND exit intervals,
+    // including finite edge axes; extended triangle planes cannot block a miss.
+    if(rate==0)return alo<=bhi&&blo<=ahi;
+    const double first=(rate>0?blo-ahi:bhi-alo)/rate;
+    const double last=(rate>0?bhi-alo:blo-ahi)/rate;
+    enter=std::max(enter,first);leave=std::min(leave,last);
+    return enter<=leave;
+   }
+   // A fixed world axis remains a valid separating axis while the body turns.
+   // Rotation about that axis cannot close its gap. The maximum projected
+   // rotational speed is |n x omega| R, including off-centre compound children.
+   const double rotationSpeed=glm::length(glm::cross(n,angularGenerator))*rotationRadius;
+   double gap=alo-bhi,closing=-rate+rotationSpeed;
+   if(blo-ahi>gap){gap=blo-ahi;closing=rate+rotationSpeed;}
+   if(gap<=0)return true;
+   if(!(closing>0))return false;
+   enter=std::max(enter,gap/closing);
+   return enter<=leave;
+  };
+  bool possible=true;
+  for(V normal:b.normals)if(!axis(normal)){possible=false;break;}
+  if(possible)for(V normal:a.normals)if(!axis(normal)){possible=false;break;}
+  if(possible)for(unsigned first:a.satEdges){const auto e=a.edges[first];
+   for(unsigned second:b.satEdges){const auto f=b.edges[second];
+    if(!axis(glm::cross(a.points[e.second]-a.points[e.first],b.points[f.second]-b.points[f.first]))){possible=false;break;}}
+   if(!possible)break;
+  }
+  if(possible&&leave>=0)earliest=std::min(earliest,std::nextafter(std::max(0.,enter),0.));
+ }
+ return earliest;
 }
 ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
  const bool newA=a.shape.asset!=nullptr,newB=b.shape.asset!=nullptr;

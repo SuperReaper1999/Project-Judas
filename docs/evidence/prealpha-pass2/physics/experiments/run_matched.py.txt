@@ -1,0 +1,17 @@
+from pathlib import Path
+import datetime,hashlib,json,shlex,subprocess,time,os
+root=Path.cwd();base=root/'.cache/prealpha-pass2/physics';out=base/'matched-v6';out.mkdir(exist_ok=True)
+record={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'commands':[],'driverObjects':{}}
+link=shlex.split((root/'build/CMakeFiles/judas_physics_stress_live_benchmark.dir/link.txt').read_text());objects=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):]
+for obj in objects:record['driverObjects'][obj]=hashlib.sha256((root/'build'/obj).read_bytes()).hexdigest()
+for label,archive in [('baseline',base/'libjudas_engine-baseline.a'),('candidate',base/'batch-scratch-memo-v6/libjudas_engine.a')]:
+ command=['/usr/bin/c++','-O3','-DNDEBUG',*objects,'-o',str(out/('live-'+label)),str(archive),*libs[1:]];subprocess.run(command,cwd=root/'build',check=True);record['commands'].append(command)
+ record[label+'ArchiveSha256']=hashlib.sha256(archive.read_bytes()).hexdigest();record[label+'BinarySha256']=hashlib.sha256((out/('live-'+label)).read_bytes()).hexdigest()
+ scene=root/'projects/physics_stress_lab/Scenes/room1024.judas';command=[str(out/('live-'+label)),str(scene),str(out/label),'105','270','0','0','1','0.016666667','1','0','1'];record['commands'].append(command)
+ start=time.monotonic()
+ with (out/(label+'.log')).open('w') as log:
+  try:r=subprocess.run(command,cwd=root,stdout=log,stderr=subprocess.STDOUT,timeout=65);record[label+'Exit']=r.returncode
+  except subprocess.TimeoutExpired:record[label+'Exit']='timeout65s'
+ record[label+'WallSeconds']=time.monotonic()-start
+ (out/'RESULTS.json').write_text(json.dumps(record,indent=2)+'\n')
+ print(label,record[label+'Exit'],record[label+'WallSeconds'],flush=True)

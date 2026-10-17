@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "kind": "prealpha-pass2-packaging-evidence",
+  "files": [
+    {
+      "path": "REPORT.md",
+      "bytes": 13356,
+      "sha256": "6a84412c66ae47cb0bcd45545ef1e57c88f6889b9fac6c2f571462c8e69e983c"
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "bytes": 2002,
+      "sha256": "1bf27a36ed0c5422c76551d016ba313154381559a0a51df7ab965fc4b28fed82"
+    },
+    {
+      "path": "android/COMMAND.json",
+      "bytes": 1305,
+      "sha256": "e8f7a1ba0bce9778ebf8fc3804c54c08b9ef4d28068aea340be7677f51df09c8"
+    },
+    {
+      "path": "android/ConnectedWorkshop-PreAlphaPass2-arm64.build.json",
+      "bytes": 3977,
+      "sha256": "dcb101e67b12c2db021df022442f1ff2bceed3d10f2dd08f5ef33a609e99e95c"
+    },
+    {
+      "path": "android/ConnectedWorkshop-PreAlphaPass2-arm64.sha256",
+      "bytes": 223,
+      "sha256": "07329d8e494a37c6c8012629a353b2cbf044a8f06871feaf92ce62cc113a88ad"
+    },
+    {
+      "path": "android/RESULT.json",
+      "bytes": 1404,
+      "sha256": "9d5c9d231109ff84ce9efe1f9ded66b064dc6e1bc54e722b6233afc03f328c60"
+    },
+    {
+      "path": "android/VERIFICATION.json",
+      "bytes": 4573,
+      "sha256": "8f7f91d919feb9df4a0e61c96958bef6d9187ac132dbce79c3cc8785b7b599c4"
+    },
+    {
+      "path": "android/WARNINGS.json",
+      "bytes": 7198,
+      "sha256": "949178d6e88b5fc008f926c32a648dba4dd8c416fc2f6090e5ab08a150d67dff"
+    },
+    {
+      "path": "android/alignment.log",
+      "bytes": 2103,
+      "sha256": "2b12561bd6bd095fa7a9eeb6093845c5e59c71d1d6dbd56bb8db3102ca2463cc"
+    },
+    {
+      "path": "android/build.log",
+      "bytes": 13875,
+      "sha256": "cc6042902bb97dfec385938318ad6e42fb4f590387cf0945e5360f997768b8ca"
+    },
+    {
+      "path": "android/failure-abi-name/CAUSE.json",
+      "bytes": 3088,
+      "sha256": "d5eeb870f8a1a6e14ccdf00ccdbd398fb874da513f9c2e25db3af02fb5cf9e8e"
+    },
+    {
+      "path": "android/failure-abi-name/COMMAND.json",
+      "bytes": 1305,
+      "sha256": "6deeee0b993efbc993d4e09bb27b3c1919580c0f48714403504f5ed29e763fe8"
+    },
+    {
+      "path": "android/failure-abi-name/RESULT.json",
+      "bytes": 1403,
+      "sha256": "9b374635e423e403d1fcdb45d8f22819acb0ec65bf28866be710a398dd347e6d"
+    },
+    {
+      "path": "android/failure-abi-name/build.log",
+      "bytes": 32771,
+      "sha256": "213a1b5c77275936f414a5f0c8eea6f5b909bddaa7af0f8bd846cb06a50d6deb"
+    },
+    {
+      "path": "android/failure-abi-name/configured-native-identity.json",
+      "bytes": 734,
+      "sha256": "e628c5115cf0fcead25f4ff4c047ea6ae4bd9a07bf41d89310c963f1ec77f9e2"
+    },
+    {
+      "path": "android/failure-abi-name/corrected-verifier.json",
+      "bytes": 3484,
+      "sha256": "62df0c0602f89f3e2344ae02f7c0fd4ef12fa48f251dabe934ebd5d65318cc47"
+    },
+    {
+      "path": "android/failure-abi-name/judas-native.json",
+      "bytes": 413,
+      "sha256": "2bf0b62950ac4b186bb7adc46e70167d177b982aca84bcff3b912c57fee04e92"
+    },
+    {
+      "path": "android/failure-abi-name/original-verifier.py",
+      "bytes": 8221,
+      "sha256": "9a3e0bcca571d8b32279b14b2e526056ff85a4d8a769445ed4c54cb1e348c789"
+    },
+    {
+      "path": "android/manifest.log",
+      "bytes": 924,
+      "sha256": "f91e01c906027b49a75c541801402cd1bfed849a72a5677f57f32e6c97875ea7"
+    },
+    {
+      "path": "android/signature.log",
+      "bytes": 968,
+      "sha256": "38f8cd54072823b6ea7b7a9ca9ba8ec43160eead62c54fe437b5695b8c140377"
+    },
+    {
+      "path": "final-root-sdk-followup/RESULTS.json",
+      "bytes": 656,
+      "sha256": "741a2add64440dfdc8a4cd34ed402a3e0b95109b9223724edf39af9142f6da7d"
+    },
+    {
+      "path": "final-root-sdk-followup/inspect.log",
+      "bytes": 119,
+      "sha256": "44c4a504bb663a2d8e420dcf04fd1c1a41c5d013cf76cc98af5a83af085e81a0"
+    },
+    {
+      "path": "final-root-sdk-followup/qualification.json",
+      "bytes": 98406,
+      "sha256": "82eb1d0da2d0449d72d9818adbaa98f9e740450caf30a4df416c000a2401ff78"
+    },
+    {
+      "path": "final-root-sdk-followup/verify.log",
+      "bytes": 741,
+      "sha256": "7f080262fb3246f92d10e31c1120eaf2ec24e467f3d9d46685ed178cf3962e48"
+    },
+    {
+      "path": "jdk-preflight.json",
+      "bytes": 519,
+      "sha256": "743087ea4457e1cea859ff6d9aa468f2020c068f56aad241f639e292086473dd"
+    },
+    {
+      "path": "linux-distribution-controls.json",
+      "bytes": 225,
+      "sha256": "053319825040db23bf57c5ace8c3466e9b6072c89f92b2918481d004d3f3d4fb"
+    },
+    {
+      "path": "linux-distribution-controls.log",
+      "bytes": 2473,
+      "sha256": "3b65c8cdf43b82335e0470fec60213aaf58b6637b923e5e7dbd5766a6068782e"
+    },
+    {
+      "path": "linux-packaging-controls.json",
+      "bytes": 246,
+      "sha256": "72aac41f056ada19a4f7701ca975fd05dcbfb9df38c9126aea31963669912f49"
+    },
+    {
+      "path": "linux-packaging-controls.log",
+      "bytes": 3455,
+      "sha256": "e90e91c80df1104fced05e9a62901c601d8ef83f758a403f9a23c275c8abeafb"
+    },
+    {
+      "path": "linux-sdk-683cc3dd-host.json",
+      "bytes": 98407,
+      "sha256": "321abb55d394d4b6bdabd2a7558d4eafcbc857c5217b71f1534c38ddf45d2ec2"
+    },
+    {
+      "path": "linux-sdk-683cc3dd-wrong-baseline.json",
+      "bytes": 99743,
+      "sha256": "9c4c70db3630a15d9358abd36be78d5f977dc93afc257a375dc2b86fe259e3d1"
+    },
+    {
+      "path": "python-controls.ps1",
+      "bytes": 1169,
+      "sha256": "e9fcd1fcd7b53b4f895797a81c77d1e8d2635cf47afdb2dc54a598e3d7be113f"
+    },
+    {
+      "path": "python-followup.ps1",
+      "bytes": 1507,
+      "sha256": "dee24b3f4a136ce15b69deda73754374e22db55658f31e780ffa71666bffdfc1"
+    },
+    {
+      "path": "run.ps1",
+      "bytes": 557,
+      "sha256": "4d766351179521cdc6bf4c7229820a6c59e04fadb5e75206ce83ac86d187e621"
+    },
+    {
+      "path": "windows-corrected-controls.json",
+      "bytes": 234,
+      "sha256": "10581967b1206d2cc6c75c253faec7667b6a9f8594553a6800947f250ceb823e"
+    },
+    {
+      "path": "windows-corrected-controls.log",
+      "bytes": 2708,
+      "sha256": "72dd707d28d4408e7325b25555a32a43e04fbbfdb0345f56a83747e8efcc1db9"
+    },
+    {
+      "path": "windows-corrected-controls.raw.log",
+      "bytes": 5418,
+      "sha256": "b9c7d3f0d469050f1a214e3c561ce3fbf855ed3ec22a2fe525a32ed55c161b17"
+    },
+    {
+      "path": "windows-environment.json",
+      "bytes": 3129,
+      "sha256": "ea43866550651c9090e71642912fd22bfda2b670e325dbcd099ffd45e5e25472"
+    },
+    {
+      "path": "windows-final-state.json",
+      "bytes": 309,
+      "sha256": "f12a731742b731ebf386f9486bb7ac0be12e0a8f9998d06677c75c9e0f981570"
+    },
+    {
+      "path": "windows-followup-source-inventory.json",
+      "bytes": 4141,
+      "sha256": "9266fecee6e1c277b83da89d01ac3cdbada38c56c47c4e96955662088fb4b10d"
+    },
+    {
+      "path": "windows-functional.zip",
+      "bytes": 195740,
+      "sha256": "55834f7086ceccab05d954cc13845a950f2d177e32ac7b61a0c744a4ee6bcc1f"
+    },
+    {
+      "path": "windows-native-incomplete.json",
+      "bytes": 2675,
+      "sha256": "9f263219cf5bec2470b1f8cf06333fca99fe543a7d80903c415881fecd8c77f4"
+    },
+    {
+      "path": "windows-original-failed-controls.json",
+      "bytes": 235,
+      "sha256": "d3808f3d33ddef8476f716cb3de4dd765c90b8e71457d155edd22fd56a13a0d7"
+    },
+    {
+      "path": "windows-original-failed-controls.log",
+      "bytes": 8790,
+      "sha256": "2f13bb9241e1d59fc4092eae97a3b5664d5b3892757d0249144759c10d41016e"
+    },
+    {
+      "path": "windows-original-failed-controls.raw.log",
+      "bytes": 17582,
+      "sha256": "6c6b230ad4271c80a1eef4196349bc549ed24e85981da9b509ea05d658742be8"
+    },
+    {
+      "path": "windows-original-source-inventory.json",
+      "bytes": 4141,
+      "sha256": "dd11a360f3d81c6a1c3b802aaa94c9c6a1782118f078fb82ce0b1cd12188b2e5"
+    },
+    {
+      "path": "windows-python-followup.zip",
+      "bytes": 195782,
+      "sha256": "188a66511c5b6a1813d032c14df54bf2ade1b62b8dae9de96c48a4bf53872a21"
+    },
+    {
+      "path": "windows-setup.json",
+      "bytes": 351,
+      "sha256": "92f6efe1841dcb59375ebc4a456622fc8ba3874914a74980c5cc8f709e9c1a1b"
+    },
+    {
+      "path": "windows-system-pe.json",
+      "bytes": 2143,
+      "sha256": "e40ac63df2ce268db1fdf7e0a50291bd38f2c761d0ea6bb9eb0807cd668882a1"
+    }
+  ]
+}

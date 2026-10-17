@@ -11,7 +11,13 @@ struct GravityEquilibrium {
  double Coordinate(glm::dvec3 p)const{return kind==Kind::Plane?glm::dot(up,p):glm::length(p-center);}
  double Potential(glm::dvec3 p)const{return magnitude*Coordinate(p);}
  glm::dvec3 Up(glm::dvec3 p)const{return kind==Kind::Plane?up:(glm::length(p-center)>1e-12?glm::normalize(p-center):glm::dvec3(0));}
- bool Equivalent(const GravityEquilibrium& b)const{return kind==b.kind&&glm::length(up-b.up)<1e-7&&glm::length(center-b.center)<1e-7&&std::abs(magnitude-b.magnitude)<1e-6;}
+ bool Equivalent(const GravityEquilibrium& b) const {
+  if(kind!=b.kind||!(std::abs(magnitude-b.magnitude)<1e-6))return false;
+  // A plane has no centre and a radial field has no preferred axis. Compare
+  // only parameters used by Coordinate/Up; inactive representation fields
+  // must not introduce a physical mismatch after changing the local chart.
+  return kind==Kind::Plane?glm::length(up-b.up)<1e-7:glm::length(center-b.center)<1e-7;
+ }
 };
 
 // Judas's own gravity contract. Every gravity implementation — the uniform

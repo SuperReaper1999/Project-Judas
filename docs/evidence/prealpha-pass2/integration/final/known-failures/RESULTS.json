@@ -1,0 +1,197 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-17T23:41:44.247320+00:00",
+  "sourceRevision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "trackedWorktreeStatus": "M  .github/workflows/prealpha.yml\nM  CMakeLists.txt\nM  README.md\nA  cmake/JudasTestTargets.cmake\nM  cmake/JudasValidation.cmake\nA  cmake/tests/MechanicalTests.cmake\nM  docs/ANDROID.md\nM  docs/ARCHITECTURE.md\nM  docs/DISTRIBUTION.md\nA  docs/FIRST_PROJECT.md\nM  docs/M90_ASSEMBLY_TRAVEL.md\nM  docs/PREALPHA.md\nM  docs/WINDOWS.md\nM  docs/judasjs/cookbook.md\nA  docs/judasjs/examples/first-project.js\nM  docs/judasjs/getting-started.md\nM  docs/judasjs/planetary-terrain.md\nM  docs/judasjs/saves.md\nM  packaging/sdk-inventory.json\nM  packaging/windows/Run-PreAlphaChecks.ps1\nM  projects/physics_stress_lab/README.md\nA  scripts/prealpha_distribution_checks.py\nM  scripts/prealpha_packaging_checks.py\nM  scripts/prepare_windows_prealpha.py\nM  src/CollisionGeometry.cpp\nM  src/CollisionGeometry.h\nM  src/GravityField.h\nA  src/ImpactPairVisitSet.h\nM  src/LiquidSystem.cpp\nM  src/LiquidSystem.h\nM  src/PhysicsWorld.cpp\nA  src/ReentrantQueryScratch.h\nM  src/RuntimeWorld.cpp\nM  src/SaveService.cpp\nM  src/SaveStorage.h\nM  src/WorldOrigin.cpp\nM  src/WorldPersistence.cpp\nM  src/WorldPersistence.h\nA  tests/CollisionWitnessTests.cpp\nA  tests/FirstProjectTests.cpp\nM  tests/NetworkBoundaryTests.cpp\nA  tests/OriginEnvironmentTests.cpp\nM  tests/PreAlphaLifecycleTests.cpp\nM  tests/SaveApplicationTests.cpp\nM  tests/SaveStorageTests.cpp\nA  tests/test_cmake_test_targets.py\nA  tools/binary_dependencies.py\nM  tools/build_android.py\nA  tools/inspect_sdk.py\nM  tools/package_sdk.py\nM  tools/validation/suites.json\nA  tools/verify_android.py",
+  "manifestSha256": "112fbdf96a937ae4f4e555db30bf3ec61e752968f386c1a28e9d2931edc26a8a",
+  "trackedDiffSha256": "c9a39575ec9411a767c57bb6c912f12a8cab4c87d1b7b4f65dcf8ea6eb1677e6",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [
+    "known-failures"
+  ],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+        "60",
+        "",
+        "1.2"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "025280c842e1e72e985416a4379ef423e54dc8b01ce93712510e2a307be331d9",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "025280c842e1e72e985416a4379ef423e54dc8b01ce93712510e2a307be331d9",
+      "seconds": 5.082708490997902,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-353c343902e2-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "353c343902e298fa82c9165d4dce7412338502a42a9e2c85bff0bd81a7d61579",
+        "source_origin": "git",
+        "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+        "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "impact-mesh-continuation",
+      "finding": "CCD-MESH-CONTINUATION",
+      "classification": "open contract; observed result remains authoritative"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/final-linux/known-failures/bake-orientation"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "dae87bd1a98807e6ae12c6caea790eccfd60603b8c2b0e55aac017266be8ee16",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "dae87bd1a98807e6ae12c6caea790eccfd60603b8c2b0e55aac017266be8ee16",
+      "seconds": 0.26449509099984425,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-353c343902e2-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "353c343902e298fa82c9165d4dce7412338502a42a9e2c85bff0bd81a7d61579",
+        "source_origin": "git",
+        "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+        "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-bake-orientation",
+      "finding": "LIQUID-BAKE-ROTATION",
+      "classification": "open contract; observed result remains authoritative"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/final-linux/known-failures/bake-knots"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "dae87bd1a98807e6ae12c6caea790eccfd60603b8c2b0e55aac017266be8ee16",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "dae87bd1a98807e6ae12c6caea790eccfd60603b8c2b0e55aac017266be8ee16",
+      "seconds": 0.26245350099998177,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-353c343902e2-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "353c343902e298fa82c9165d4dce7412338502a42a9e2c85bff0bd81a7d61579",
+        "source_origin": "git",
+        "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+        "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-bake-knots",
+      "finding": "LIQUID-BAKE-KNOTS",
+      "classification": "open contract; observed result remains authoritative"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "open-correctness-failing",
+      "scheduled": false,
+      "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+      "evidence": "docs/evidence/prealpha/physics"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "open-authoring-failing",
+      "scheduled": false,
+      "reason": "An ordinary rotated uniform field/basin exposes bake-versus-runtime quaternion normalization disagreement. The unchanged physical equivalence tolerance rejects the connected owners before any origin shift.",
+      "evidence": "docs/evidence/prealpha-pass2/integration"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "open-authoring-failing",
+      "scheduled": false,
+      "reason": "A non-axis rotated uniform basin can write Surface1 capacity knots that its normal decoder rejects as nonmonotonic. No numerical or decoder acceptance threshold was changed.",
+      "evidence": "docs/evidence/prealpha-pass2/integration"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+    "source_fingerprint": "353c343902e298fa82c9165d4dce7412338502a42a9e2c85bff0bd81a7d61579",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2"
+  },
+  "passed": false,
+  "finishedUtc": "2026-10-17T23:41:50.573000+00:00",
+  "sourceRevisionAfter": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "trackedWorktreeStatusAfter": "M  .github/workflows/prealpha.yml\nM  CMakeLists.txt\nM  README.md\nA  cmake/JudasTestTargets.cmake\nM  cmake/JudasValidation.cmake\nA  cmake/tests/MechanicalTests.cmake\nM  docs/ANDROID.md\nM  docs/ARCHITECTURE.md\nM  docs/DISTRIBUTION.md\nA  docs/FIRST_PROJECT.md\nM  docs/M90_ASSEMBLY_TRAVEL.md\nM  docs/PREALPHA.md\nM  docs/WINDOWS.md\nM  docs/judasjs/cookbook.md\nA  docs/judasjs/examples/first-project.js\nM  docs/judasjs/getting-started.md\nM  docs/judasjs/planetary-terrain.md\nM  docs/judasjs/saves.md\nM  packaging/sdk-inventory.json\nM  packaging/windows/Run-PreAlphaChecks.ps1\nM  projects/physics_stress_lab/README.md\nA  scripts/prealpha_distribution_checks.py\nM  scripts/prealpha_packaging_checks.py\nM  scripts/prepare_windows_prealpha.py\nM  src/CollisionGeometry.cpp\nM  src/CollisionGeometry.h\nM  src/GravityField.h\nA  src/ImpactPairVisitSet.h\nM  src/LiquidSystem.cpp\nM  src/LiquidSystem.h\nM  src/PhysicsWorld.cpp\nA  src/ReentrantQueryScratch.h\nM  src/RuntimeWorld.cpp\nM  src/SaveService.cpp\nM  src/SaveStorage.h\nM  src/WorldOrigin.cpp\nM  src/WorldPersistence.cpp\nM  src/WorldPersistence.h\nA  tests/CollisionWitnessTests.cpp\nA  tests/FirstProjectTests.cpp\nM  tests/NetworkBoundaryTests.cpp\nA  tests/OriginEnvironmentTests.cpp\nM  tests/PreAlphaLifecycleTests.cpp\nM  tests/SaveApplicationTests.cpp\nM  tests/SaveStorageTests.cpp\nA  tests/test_cmake_test_targets.py\nA  tools/binary_dependencies.py\nM  tools/build_android.py\nA  tools/inspect_sdk.py\nM  tools/package_sdk.py\nM  tools/validation/suites.json\nA  tools/verify_android.py",
+  "trackedDiffSha256After": "c9a39575ec9411a767c57bb6c912f12a8cab4c87d1b7b4f65dcf8ea6eb1677e6",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+    "source_fingerprint": "353c343902e298fa82c9165d4dce7412338502a42a9e2c85bff0bd81a7d61579",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2"
+  }
+}

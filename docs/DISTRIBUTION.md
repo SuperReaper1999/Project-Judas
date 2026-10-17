@@ -22,6 +22,38 @@ Python. Linux SDK executables require compatible glibc/libstdc++, SDL2 and OpenG
 3.3 drivers; platform libraries/drivers are not bundled. Windows SDKs include the
 existing ICU/Visual C++ runtime dependency closure and redistribution notices.
 
+### Binary compatibility qualification
+
+The Linux distribution baseline is **Ubuntu 24.04 x86-64**, built and qualified
+on that host in CI. The SDK gate reads ELF **required** symbol versions (not
+exported symbol definitions), rejects glibc requirements above **2.39**, records
+GLIBCXX/CXXABI requirements and checks all 17 tools with the actual host loader.
+It also requires the qualification host to identify as Ubuntu 24.04. This is a
+declared baseline with a mechanical gate; only a completed CI receipt establishes
+that a particular checkpoint passed. GPU/application checks remain separate.
+
+SDKs built on newer systems retain those systems' actual ABI requirements. The
+pass-1 Ubuntu 26.04 build requires glibc 2.43 and is **not** an Ubuntu 24.04 binary.
+Nothing rewrites that requirement or claims universal Linux/AppImage portability.
+Build from source on a compatible host if no qualified binary is available.
+
+```sh
+python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output /outside/sdk-qualification.json
+# Native Windows: inspect regular and delay imports, including each bundled DLL.
+python tools/inspect_sdk.py build/windows-sdk --host-check --system-directory C:/Windows/System32 --output C:/Temp/sdk-qualification.json
+```
+
+The inspector first verifies the SDK inventory/checksums. ELF/PE parsing does
+not run binaries. `--host-check` uses `ldd` on Linux and is appropriate only for
+an SDK you trust; do not use it on arbitrary downloaded executables. Windows
+qualification resolves every non-API-set import to an SDK DLL or the specified
+real system directory. API-set contracts are recorded explicitly; import closure
+does not prove minimum-Windows-version or GPU compatibility. Malformed metadata,
+unknown architecture and unresolved imports fail rather than silently passing.
+The inspector and its stdlib-only binary reader ship in the SDK.
+The independent `tools/verify_android.py` APK verifier ships alongside them;
+APK content/native-byte verification does not need the source checkout or JDK.
+
 [sdk-inventory.json](../packaging/sdk-inventory.json) is the single list used by
 CMake and the packager. It includes the runtime/editor/exporter; model, scene,
 navigation, liquid, environment, deformable, collision and terrain authoring;
@@ -112,6 +144,7 @@ checksums, this is provenance/accidental-drift detection, not publisher signing.
 
 ```sh
 python3 scripts/prealpha_packaging_checks.py --output .cache/prealpha/packaging/checks.json
+python3 scripts/prealpha_distribution_checks.py --output .cache/prealpha/packaging/distribution.json
 ```
 
 These fixture tests exercise omissions, mixed identities, corruption, failed

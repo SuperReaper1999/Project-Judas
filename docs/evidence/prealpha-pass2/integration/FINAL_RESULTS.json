@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "kind": "Pass2 consolidated integration final-source receipt",
+  "status": "scoped Linux automated validation complete; remaining failures explicit",
+  "human_acceptance": "not established",
+  "main_promoted": false,
+  "baseline": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+  "final_manifest": {
+    "receipt": "final/followup-manifest/RESULTS.json",
+    "passed": true,
+    "passed_cases": 26,
+    "failed_cases": 0,
+    "started_utc": "2026-10-17T23:44:29.141007+00:00",
+    "finished_utc": "2026-10-17T23:44:49.893835+00:00",
+    "source_identity": {
+      "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+      "source_fingerprint": "1c37839dac7066db466418f983819d6c86fe3663bfce38b91434c42d7c312f24",
+      "source_dirty": true,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2"
+    },
+    "all_binary_hashes_stable_across_execution": true
+  },
+  "original_manifest": {
+    "receipt": "final/original-manifest/RESULTS.json",
+    "passed_cases": 25,
+    "failed_cases": 1,
+    "failed_case": "origin-environment",
+    "classification": "new test setup error: static metadata actor has no EntityRecord for SetTransient; independently eligible dynamic controls replace it",
+    "followup_changed_files": [
+      "docs/FIRST_PROJECT.md",
+      "tests/OriginEnvironmentTests.cpp"
+    ],
+    "runtime_or_physical_threshold_changed_in_followup": false
+  },
+  "supplemental": {
+    "receipt": "final/supplemental/RESULTS.json",
+    "record_count": 34,
+    "interpretation": "32 ordinary positive commands passed; original manifest failed once; known-failures command correctly exits1 but its3 physical/authoring contracts remain failed. These expectations are not34 correctness passes.",
+    "all_other_recorded_exit_expectations_met": true,
+    "executed_before_followup": true,
+    "followup_scope": "Only onboarding prose and origin test controls changed; supplemental engine runtime bytes/semantics unchanged. Exact earlier binary hashes/identities retained, not relabelled as later identity."
+  },
+  "known_failures": {
+    "receipt": "final/known-failures/RESULTS.json",
+    "contracts": [
+      {
+        "name": "impact-mesh-continuation",
+        "status": "failed",
+        "exit": 1
+      },
+      {
+        "name": "liquid-bake-orientation",
+        "status": "failed",
+        "exit": 1
+      },
+      {
+        "name": "liquid-bake-knots",
+        "status": "failed",
+        "exit": 1
+      }
+    ],
+    "all_three_remain_failed": true
+  },
+  "focused_counts": {
+    "origin_environment_parent": 87,
+    "origin_environment_independent_cold_children": [
+      8,
+      8
+    ],
+    "first_project": 20,
+    "composed_lifecycle": 34,
+    "save_storage": 41,
+    "save_application_write": 14,
+    "save_application_read": 20
+  },
+  "source_verification": {
+    "inventory": "final/INTENDED_SOURCE_FILES.json",
+    "files": 52,
+    "mismatches": [],
+    "verified_utc": "2026-10-17T23:48:18.980041+00:00",
+    "before_followup_inventory": "final/INTENDED_SOURCE_FILES.before-test-setup-followup.json"
+  },
+  "platform_boundaries": [
+    "Linux host is acceptance platform for these scoped automated checks.",
+    "Actual new Android build pending separate artifact receipt; no new phone acceptance.",
+    "Native Windows Python distribution controls pass15; current C++/SDK functional completion unavailable due guest disk pressure.",
+    "Older Linux ABI qualification requires actual post-commit Ubuntu24.04 CI; local host GLIBC2.43 SDK is not that artifact."
+  ],
+  "preserved_limits": [
+    "Full90-step curved mesh continuation fails4 assertions.",
+    "Two general-rotation liquid bake contracts fail unchanged.",
+    "Dense contact p95 still416.695ms; no real-time claim.",
+    "FLU-001 deferred unchanged and not reclassified by unrelated passes.",
+    "Original a106 historical save lacks required continuation data."
+  ],
+  "tooling_followup": {
+    "receipt": "final/tooling-original/RESULTS.json",
+    "cmake_controls": {
+      "passed": 6,
+      "failed": 0
+    },
+    "validation_gate_unit_controls": {
+      "passed": 6,
+      "failed": 0,
+      "failure": "stale assertion assumes resolved arrival must remain unscheduled",
+      "classification": "stale scheduling assertion corrected; unresolved/manual cases remain isolated, resolved arrival remains a normal scheduled regression"
+    },
+    "global_tooling_all_pass": "Only these executed6CMake+6gatecontrols; not a blankettoolingsuiteclaim",
+    "original_validation_failure_preserved": true,
+    "followup_receipt": "final/tooling-followup/VALIDATION_FOLLOWUP.json",
+    "source_delta": "final/tooling-followup/SOURCE_DELTA.json"
+  },
+  "current_source_verification": {
+    "inventory": "final/FINAL_SOURCE_FILES.json",
+    "files": 53,
+    "mismatches": [],
+    "verified_utc": "2026-10-17T23:52:20.042315+00:00",
+    "changes_since_native_52_receipt": {
+      "added": [
+        "tests/test_prealpha_validation.py"
+      ],
+      "changed": [
+        "scripts/prealpha_distribution_checks.py",
+        "tools/verify_android.py"
+      ],
+      "reason": "Stale resolved-finding scheduling assertion and canonical Android ABI-name verifier correction; no native engine, physical fixture, threshold or solver change."
+    },
+    "native_runtime_or_physical_conditions_changed": false,
+    "qualification_scope": "Final provenance-refresh runtime/export/SDK/APK and post-commit clean CI have separate receipts; native26 not relabelled."
+  },
+  "android_abi_followup": {
+    "cause": "final/android-abi-followup/CAUSE.json",
+    "corrected_verifier": "final/android-abi-followup/corrected-verifier.json",
+    "same_failed_signed_apk_bytes_pass_after_tooling_only_correction": true,
+    "sha256": "03de6fa092b5fb23017b6fce3d651c6db4218735fa30f9d87e7779f22ab5bc3e",
+    "scope": "Actual native arm64 compilation/signing reached verifier; canonical arm64-v8a alias rejected by old tool and accepted by corrected tool. Not final53 artifact nor device acceptance.",
+    "distribution_controls": {
+      "passed": 16,
+      "failed": 0
+    }
+  }
+}

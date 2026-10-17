@@ -3,11 +3,14 @@
   "tests": [
     {"name":"build-identity","target":"judas_build_identity_tests","groups":["core"]},
     {"name":"collision-geometry","target":"judas_collision_geometry_tests","groups":["core","collision"]},
+    {"name":"collision-witness","target":"judas_collision_witness_tests","groups":["collision"]},
     {"name":"rigid-contact","target":"judas_rigid_contact_tests","groups":["core","collision"]},
     {"name":"impact-solver","target":"judas_impact_solver_tests","groups":["collision"]},
     {"name":"impact-timing","target":"judas_impact_timing_tests","groups":["collision"]},
-    {"name":"impact-mesh-arrival","target":"judas_impact_mesh_cost_tests","groups":["known-failures"],"manual":true,"finding":"CCD-MESH-ARRIVAL","args":["60","","1.2","entry"]},
+    {"name":"impact-mesh-arrival","target":"judas_impact_mesh_cost_tests","groups":["collision"],"args":["60","","1.2","entry"]},
     {"name":"impact-mesh-continuation","target":"judas_impact_mesh_cost_tests","groups":["known-failures"],"manual":true,"finding":"CCD-MESH-CONTINUATION","args":["60","","1.2"]},
+    {"name":"liquid-bake-orientation","target":"judas_origin_environment_tests","groups":["known-failures"],"manual":true,"finding":"LIQUID-BAKE-ROTATION","args":["--bake-regression","normalization","{output}/bake-orientation"]},
+    {"name":"liquid-bake-knots","target":"judas_origin_environment_tests","groups":["known-failures"],"manual":true,"finding":"LIQUID-BAKE-KNOTS","args":["--bake-regression","knots","{output}/bake-knots"]},
     {"name":"collision-continuity","target":"judas_collision_continuity_tests","groups":["collision"]},
     {"name":"character-motor","target":"judas_character_motor_tests","groups":["core","lifecycle"]},
     {"name":"physics-continuation","target":"judas_physics_continuation_tests","groups":["core","lifecycle"]},
@@ -24,13 +27,17 @@
     {"name":"network-session","target":"judas_network_session_tests","groups":["network"],"args":["{output}/network-session"]},
     {"name":"network-boundaries","target":"judas_network_boundary_tests","groups":["network"],"args":["{output}/network-boundaries"]},
     {"name":"network-js","target":"judas_network_script_tests","groups":["network"],"args":["{output}/network-js"]},
-    {"name":"resource-handoff","target":"judas_resource_handoff_tests","groups":["application"],"args":["{output}/resource-handoff"]}
+    {"name":"resource-handoff","target":"judas_resource_handoff_tests","groups":["application"],"args":["{output}/resource-handoff"]},
+    {"name":"first-project","target":"judas_first_project_tests","groups":["onboarding"],"args":["{output}/first-project"]},
+    {"name":"origin-environment","target":"judas_origin_environment_tests","groups":["lifecycle"],"args":["{output}/origin-environment"]}
   ],
   "known_findings": [
-    {"id":"CCD-MESH-ARRIVAL","status":"open-correctness-failing","scheduled":false,"reason":"Actual-mesh first-arrival assertions fail on the accepted implementation. Candidate repairs were rejected after measured regressions. Run --group known-failures; failure is not counted as a pass.","evidence":"docs/evidence/prealpha/physics"},
+    {"id":"CCD-MESH-ARRIVAL","status":"resolved-first-arrival","scheduled":true,"reason":"Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.","evidence":"docs/evidence/prealpha-pass2/physics"},
     {"id":"CCD-MESH-CONTINUATION","status":"open-correctness-failing","scheduled":false,"reason":"Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.","evidence":"docs/evidence/prealpha/physics"},
     {"id":"FLU-001","status":"deferred-failing","scheduled":false,"reason":"Legacy PBF settling contract retained unchanged; separate fluid review required.","evidence":"docs/evidence/m78-completion/FINDINGS_FINAL.json"},
     {"id":"LEGACY-CONTINUATION","status":"documented-incompatible-history","scheduled":false,"reason":"Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.","evidence":"docs/evidence/m78-cold-boundary"},
-    {"id":"DENSE-CCD-TAIL","status":"open-performance-limit","scheduled":false,"reason":"Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.","evidence":"docs/evidence/m91/REPORT.md"}
+    {"id":"DENSE-CCD-TAIL","status":"open-performance-limit","scheduled":false,"reason":"Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.","evidence":"docs/evidence/m91/REPORT.md"},
+    {"id":"LIQUID-BAKE-ROTATION","status":"open-authoring-failing","scheduled":false,"reason":"An ordinary rotated uniform field/basin exposes bake-versus-runtime quaternion normalization disagreement. The unchanged physical equivalence tolerance rejects the connected owners before any origin shift.","evidence":"docs/evidence/prealpha-pass2/integration"},
+    {"id":"LIQUID-BAKE-KNOTS","status":"open-authoring-failing","scheduled":false,"reason":"A non-axis rotated uniform basin can write Surface1 capacity knots that its normal decoder rejects as nonmonotonic. No numerical or decoder acceptance threshold was changed.","evidence":"docs/evidence/prealpha-pass2/integration"}
   ]
 }

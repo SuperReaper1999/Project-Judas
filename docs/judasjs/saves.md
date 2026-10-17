@@ -47,6 +47,15 @@ accepted at a time per project session; conflicting requests/scene replacement
 throw a useful busy error. Request records and cached lists do not survive process
 restart; slot files do. A caller's entity may disappear while its write completes.
 
+New slot diagnostics record the actual engine build ID rather than a milestone
+label. An older envelope without that optional diagnostic reads as `unknown`;
+no historical build is guessed. This field is provenance, not migration policy
+or a compatibility promise. Unsupported native participants still reject with
+their entity/component named, including unsupported global thermal state even
+when an actor is marked ephemeral. Failed native capture preserves the caller's
+previous complete snapshot; a successful save still uses the normal storage
+publication and recovery contract below.
+
 States are `queued`, `writing`, `reading`, `working`, `preparing`, `restoring`,
 `completed`, `failed`, `cancelled`. Capture occurs atomically inside the frame
 boundary; it is measured but is not a multi-frame pollable phase. Times are

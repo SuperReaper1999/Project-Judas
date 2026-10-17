@@ -235,3 +235,41 @@ pending; emulator/virtual input is described separately in [M89 evidence](eviden
 For repeated builds `--icu-host-tools /absolute/path/to/matching/icu-host-build`
 may reuse ICU 76.1's existing native data tools. The default still builds its own;
 SDK/ICU caches are developer artifacts, never packaged runtime dependencies.
+
+## Pre-Alpha artifact verification
+
+The builder checks one complete JDK 17+ (`java`, `javac`, `keytool`) before
+configuring native code. An explicit `JAVA_HOME` is authoritative; an incomplete
+JRE or older compiler fails with an actionable error. The resolved JDK directory
+is used consistently by Java compilation, DEX tools and development signing.
+Desktop exporter/runtime identities are compared before configuration, and each
+configured ABI is compared before its expensive native build.
+
+APKs contain `assets/judas-build-info.json`, `assets/judas-content.json` and
+`assets/judas-native.json`. The native inventory hashes the **stripped libraries
+actually shipped**, including `libc++_shared.so`; the external `.build.json` also
+retains input-library hashes separately. An independent stdlib-only verifier
+checks all content/native entries, exact library closure, source identities,
+architecture and every library's 16 KiB ELF load alignment:
+
+```sh
+python3 tools/verify_android.py /outside/game.apk --receipt /outside/game.build.json --output /outside/verification.json
+```
+
+This does not replace `apksigner verify`, `zipalign -c -P 16 4`, emulator or
+device testing. The builder performs both Android-tool checks before publication.
+`DT_NEEDED` imports must resolve to the shipped ABI libraries or the verifier's
+explicit public Android library set; the builder additionally verifies those
+system names against the actual API-26 NDK stubs. Private/vendor dependencies are
+refused. This is import-name closure, not a full symbol-by-symbol/minimum-device
+certification. Older APKs without `judas-native.json` cannot retroactively satisfy
+this stronger inventory contract; preserve their original validation scope.
+Corruption, missing/extra content, changed native libraries, duplicate ZIP entries
+and mismatched identities fail. Verification has a 2 GiB total unpacked budget;
+larger custom packages need an explicit application-specific verification policy.
+
+The APK, receipt and checksum are prepared together and restored to their previous
+bytes on an ordinary publication error. The three renames are not power-loss atomic;
+verify the checksum pair and do not read or publish one output concurrently.
+Outputs must be ordinary `.apk` files with ordinary receipt/checksum companions.
+No keys, passwords or phone installations are part of artifact verification.

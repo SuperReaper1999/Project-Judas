@@ -1,0 +1,262 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/witness-baseline"
+    ],
+    "rep": 0,
+    "exit": 0,
+    "wallSeconds": 0.3646698889988329
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/mesh-baseline",
+      "60",
+      "trough"
+    ],
+    "rep": 0,
+    "exit": 1,
+    "wallSeconds": 3.773664595999435
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/witness-candidate"
+    ],
+    "rep": 0,
+    "exit": 0,
+    "wallSeconds": 0.21434745999977167
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/mesh-candidate",
+      "60",
+      "trough"
+    ],
+    "rep": 0,
+    "exit": 1,
+    "wallSeconds": 3.323032485001022
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/witness-candidate"
+    ],
+    "rep": 1,
+    "exit": 0,
+    "wallSeconds": 0.2646773119995487
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/mesh-candidate",
+      "60",
+      "trough"
+    ],
+    "rep": 1,
+    "exit": 1,
+    "wallSeconds": 3.2709554039993236
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/witness-baseline"
+    ],
+    "rep": 1,
+    "exit": 0,
+    "wallSeconds": 0.31462142300006235
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/mesh-baseline",
+      "60",
+      "trough"
+    ],
+    "rep": 1,
+    "exit": 1,
+    "wallSeconds": 3.5211121319989616
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/witness-baseline"
+    ],
+    "rep": 2,
+    "exit": 0,
+    "wallSeconds": 0.31463638599961996
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/mesh-baseline",
+      "60",
+      "trough"
+    ],
+    "rep": 2,
+    "exit": 1,
+    "wallSeconds": 3.5212000720002834
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/witness-candidate"
+    ],
+    "rep": 2,
+    "exit": 0,
+    "wallSeconds": 0.2145607229995221
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/mesh-candidate",
+      "60",
+      "trough"
+    ],
+    "rep": 2,
+    "exit": 1,
+    "wallSeconds": 3.3202538049990835
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-candidate",
+      "--workload",
+      "free",
+      "--count",
+      "1024",
+      "--warm",
+      "0",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/free-candidate",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.16425319900008617
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-baseline",
+      "--workload",
+      "free",
+      "--count",
+      "1024",
+      "--warm",
+      "0",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/free-baseline",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.16431262900005095
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-candidate",
+      "--workload",
+      "pile",
+      "--count",
+      "256",
+      "--warm",
+      "60",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/pile-candidate",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.41485385700070765
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-baseline",
+      "--workload",
+      "pile",
+      "--count",
+      "256",
+      "--warm",
+      "60",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/pile-baseline",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.4152406200009864
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-candidate",
+      "--workload",
+      "machines_active",
+      "--count",
+      "256",
+      "--warm",
+      "30",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/machines_active-candidate",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.16530319200137455
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-baseline",
+      "--workload",
+      "machines_active",
+      "--count",
+      "256",
+      "--warm",
+      "30",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/machines_active-baseline",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.16471682199880888
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-candidate",
+      "--workload",
+      "machines_sleeping",
+      "--count",
+      "256",
+      "--warm",
+      "240",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-candidate",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.1651437119999173
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/scaling-baseline",
+      "--workload",
+      "machines_sleeping",
+      "--count",
+      "256",
+      "--warm",
+      "240",
+      "--steps",
+      "120",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/metrics-v7/machines_sleeping-baseline",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "wallSeconds": 0.16448840999873937
+  }
+]

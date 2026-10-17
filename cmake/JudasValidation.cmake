@@ -55,4 +55,8 @@ if(JUDAS_ENABLE_VALIDATION)
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_prealpha_validation.py -v)
     set_tests_properties(prealpha.gate-negative-controls PROPERTIES LABELS "prealpha;tooling")
+    add_test(NAME prealpha.build-organization
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
+            -p test_cmake_test_targets.py -v)
+    set_tests_properties(prealpha.build-organization PROPERTIES LABELS "prealpha;tooling")
 endif()

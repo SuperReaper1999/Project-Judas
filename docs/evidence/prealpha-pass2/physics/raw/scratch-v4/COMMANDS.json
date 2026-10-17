@@ -1,0 +1,34 @@
+[
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/scratch-v4/mesh",
+      "1",
+      "trough",
+      "1.2",
+      "entry"
+    ],
+    "exit": 0,
+    "seconds": 0.6154800540007273,
+    "scope": "functional; timing provisional"
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/scratch-v4/mesh",
+      "1",
+      "trough"
+    ],
+    "exit": 1,
+    "seconds": 3.9732046049994096,
+    "scope": "functional; timing provisional"
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/scratch-v4/mesh",
+      "60",
+      "trough"
+    ],
+    "exit": 1,
+    "seconds": 14.151844116000575,
+    "scope": "functional; timing provisional"
+  }
+]

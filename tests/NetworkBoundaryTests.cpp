@@ -154,6 +154,29 @@ int main(int argc, char** argv) {
         }
         Check(client.world.Network().Status() == "connected" && !client.world.Network().Entries().empty(),
               "fixed-callback join completes real content-matched multi-world transport handshake");
+        const auto pausedHostClock = host.world.SimulationTimeSeconds();
+        const auto pausedClientClock = client.world.SimulationTimeSeconds();
+        const auto pausedBody = host.world.Physics().GetTransform(host.world.RuntimeBody(2));
+        const auto pausedCalls = State(client.world).at("calls").get<unsigned>();
+        const auto pausedSnapshots = host.world.Network().Stats().snapshots;
+        // InteractivePlay pumps networking before its gameplay/debug pause
+        // boundary. Advance the real transport's supplied monotonic clock by
+        // thirty seconds while deliberately withholding all fixed callbacks.
+        for (unsigned i = 0; i < 300; ++i) {
+            now += .1;
+            host.world.PumpNetwork(now);
+            client.world.PumpNetwork(now);
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+        const auto pausedPeers = host.world.Network().Peers();
+        Check(client.world.Network().Status() == "connected" && !pausedPeers.empty() && pausedPeers.front().connected,
+              "transport heartbeats survive thirty seconds of paused authoritative gameplay");
+        Check(host.world.SimulationTimeSeconds() == pausedHostClock &&
+              client.world.SimulationTimeSeconds() == pausedClientClock &&
+              Near(host.world.Physics().GetTransform(host.world.RuntimeBody(2)).position, pausedBody.position) &&
+              State(client.world).at("calls").get<unsigned>() == pausedCalls &&
+              host.world.Network().Stats().snapshots == pausedSnapshots,
+              "paused transport does not invent simulation, snapshots or script callbacks");
         const auto beforeCloseCalls = State(client.world).at("calls").get<unsigned>();
         const auto beforeCloseClock = client.world.SimulationTimeSeconds();
         Check(client.control->Set("close", "true", error), "ordinary project flag requests close from next fixed callback");

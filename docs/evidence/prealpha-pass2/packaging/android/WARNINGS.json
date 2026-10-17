@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "scope": "Actual260-second full native rebuild diagnostics; final18-second incremental run changed identity/packaging only; source-line comparison is not a new matched historical compiler run",
+  "clangWarningEmissions": 19,
+  "warnings": [
+    {
+      "path": "src/Deformable.cpp",
+      "line": 176,
+      "column": 10,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "}if(found)Wake();",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/Localization.cpp",
+      "line": 33,
+      "column": 3,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "}return true;",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 148,
+      "column": 80,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "auto accumulate=[&](LiquidMoment m,glm::vec3 flow){if(m.volume>0){V c=global(s.pose,m.first/m.volume);",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 154,
+      "column": 45,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "accumulate(LiquidIntersection(body,basin,s.equilibrium,level),flow);",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 231,
+      "column": 161,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "for(unsigned corner=0;corner<8;++corner){V p=V(center)+glm::dquat(child)*V(corner&1?half.x:-half.x,corner&2?half.y:-half.y,corner&4?half.z:-half.z);p=local(s.pose,V(pose.position)+glm::dquat(pose.rotation)*p);lower=glm::min(lower,p);upper=glm::max(upper,p);}",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 236,
+      "column": 6,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "}(world.Physics().IsDynamicBody(body)?dynamicSolids:solids).push_back(std::move(planes));",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 246,
+      "column": 62,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 246,
+      "column": 91,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 306,
+      "column": 32,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "auto& cache=m_opticalCache[{id,index}];",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "line": 307,
+      "column": 54,
+      "message": "captured structured bindings are a C++20 extension [-Wc++20-extensions]",
+      "sourceLine": "if(cache.revision!=revision||cache.pose.position!=s.pose.position||cache.pose.rotation!=s.pose.rotation||!cache.equilibrium.Equivalent(s.equilibrium)){",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "line": 1760,
+      "column": 19,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "return o;}return JS_NULL;}",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "line": 1777,
+      "column": 23,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "return o;}return JS_NULL;}",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "line": 1790,
+      "column": 10,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "}return JS_FALSE;",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "line": 1797,
+      "column": 54,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "e.pool.settings=settings;return JS_TRUE;}return JS_FALSE;}",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/RigidBody.h",
+      "line": 23,
+      "column": 1,
+      "message": "'RigidBody' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]",
+      "sourceLine": "struct RigidBody {",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "line": 3627,
+      "column": 6,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "}return false;",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "line": 3774,
+      "column": 188,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "j.state.constitutive={};j.state.constitutive.material=material;j.warm.fill(0);Wake(j.state.settings.bodyA);if(j.state.settings.bodyB.IsValid())Wake(j.state.settings.bodyB);return true;}return false;",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "line": 3783,
+      "column": 3,
+      "message": "misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]",
+      "sourceLine": "}throw std::runtime_error(\"stale material joint history\");",
+      "sourceLinePresentInAcceptedBaseline": true
+    },
+    {
+      "path": "src/RuntimeOptions.h",
+      "line": 44,
+      "column": 1,
+      "message": "'RuntimeOptions' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]",
+      "sourceLine": "struct RuntimeOptions {",
+      "sourceLinePresentInAcceptedBaseline": true
+    }
+  ],
+  "javaDeprecatedNotes": 1,
+  "cmakeDeprecationWarnings": 4,
+  "comparisonBaseline": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "warningClasses": {
+    "-Wmisleading-indentation": 10,
+    "-Wc++20-extensions": 7,
+    "-Wmismatched-tags": 2
+  }
+}

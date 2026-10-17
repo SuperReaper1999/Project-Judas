@@ -1,0 +1,20 @@
+[
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/batch-planes-v3/mesh",
+      "1",
+      "coarse"
+    ],
+    "exit": 1,
+    "seconds": 1.31657481000002
+  },
+  {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/physics/batch-planes-v3/mesh",
+      "60",
+      "coarse"
+    ],
+    "exit": 1,
+    "seconds": 2.569069146000402
+  }
+]

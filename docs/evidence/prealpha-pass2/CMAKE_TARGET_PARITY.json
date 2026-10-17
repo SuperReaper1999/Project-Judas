@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "kind": "compiler-free executed CMake declaration controls",
+  "startedUtc": "2026-10-17T23:04:56.522645+00:00",
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_cmake_test_targets.py",
+    "-v"
+  ],
+  "returncode": 0,
+  "passed": true,
+  "scope": "20 extracted target names/order/main/application sources/link owner/warning forwarding; six unittest cases including adversarial mutations. No native configure/build or runtime acceptance.",
+  "inputs": {
+    "CMakeLists.txt": "c711ef9d98cd33d9e80cb89764b5aa455f2f537101af4e2d5976de407f28b095",
+    "cmake/JudasTestTargets.cmake": "61f480e15f74d820594abcc9a98628517a22bca3a8539eb5aaaa2593bcb5a0e4",
+    "cmake/tests/MechanicalTests.cmake": "737106fbb74055af3a91654dc0276de58fe782e1d892545a9671e2c14c2004ed",
+    "tests/test_cmake_test_targets.py": "546fbc0bf71be6ce825d1d7fd5041b40d6a3411b6cc31589b7beb3928af58e2c"
+  }
+}

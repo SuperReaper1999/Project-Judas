@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "kind": "exact assistant assessment text recovered from local session",
+  "timestamp": "2026-10-17T21:07:29.934Z",
+  "baseline": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "sourceSession": "/home/conner/.codex/sessions/2026/10/13/rollout-2026-10-13T21-53-40-01a0de9f-7c35-7e13-91f3-49ef61ae2a60_01a1370a-da01-7bc2-bdd6-16e457f1e26a.jsonl",
+  "sourceLine": 57971,
+  "sourceRecordSha256": "4357843f536ea294834a725bd64b247ae8cf848a86a567332db8705683ebc430",
+  "artifact": "ORIGINAL_ASSESSMENT.md",
+  "bytes": 19292,
+  "sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
+  "scope": "Only the original final assessment text is preserved; no session reasoning, private tools or unrelated conversation is packaged. Its historical claims and citations remain historical."
+}

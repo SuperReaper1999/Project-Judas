@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": ".github/workflows/prealpha.yml",
+      "sha256": "4ea973bd1c32a6b76c58f448857ac0eba79104dc6d097fea3de96cd28e1e959f"
+    },
+    {
+      "path": "packaging/sdk-inventory.json",
+      "sha256": "e09d8c24371a543127e017bc71a4c73db14daee9a5da007c69a5dfa9fbf0c909"
+    },
+    {
+      "path": "packaging/windows/Run-PreAlphaChecks.ps1",
+      "sha256": "a6efbba526626d7a447b36ac19ec154d0261a7ec2c93af4eeef174dc1ddd1dd6"
+    },
+    {
+      "path": "tools/package_sdk.py",
+      "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+    },
+    {
+      "path": "tools/build_android.py",
+      "sha256": "750a8245a8347c87e539a5a4fad422674fecd1d6abdcbf95ed2d88b2b85db4d7"
+    },
+    {
+      "path": "tools/binary_dependencies.py",
+      "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+    },
+    {
+      "path": "tools/inspect_sdk.py",
+      "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+    },
+    {
+      "path": "tools/verify_android.py",
+      "sha256": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+    },
+    {
+      "path": "scripts/prealpha_distribution_checks.py",
+      "sha256": "fe0548628ce279f3f82b5cc2795f759846c58540d93677ba13e295b6e50da93d"
+    },
+    {
+      "path": "scripts/prealpha_packaging_checks.py",
+      "sha256": "5c7450b3693fbab73a79738d43d25cf951c00ecea6d2f1e59963d33f8cff4550"
+    },
+    {
+      "path": "scripts/prepare_windows_prealpha.py",
+      "sha256": "b1e2588c5aa19c2e9870b19a3bc3348a7fa6848367cdc5459abb745b3c06c988"
+    },
+    {
+      "path": "docs/ANDROID.md",
+      "sha256": "b787ac2cefba8726325fbc7c06d2078ed46f48f37aa555c526a3a493b683a88f"
+    },
+    {
+      "path": "docs/DISTRIBUTION.md",
+      "sha256": "c9f7033754ba0f637d32a169aa3a3f51038a6269aa702f9d038f45b355f92498"
+    },
+    {
+      "path": "docs/WINDOWS.md",
+      "sha256": "ff661ee924167968d662f541c8e2bcf61b2279e0825d9e87f78b25399fc0f648"
+    }
+  ]
+}

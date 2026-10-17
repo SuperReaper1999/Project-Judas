@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "rootCause": "CMake emits canonical Android ABI arm64-v8a as architecture; verifier accepted only CPU aliases aarch64/arm64",
+  "identity": {
+    "abis": {
+      "arm64-v8a": {
+        "architecture": "arm64-v8a",
+        "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-1c37839dac70-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "Clang",
+        "compiler_version": "19.0.1",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Android",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1c37839dac7066db466418f983819d6c86fe3663bfce38b91434c42d7c312f24",
+        "source_origin": "git",
+        "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+        "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    "kind": "judas-android",
+    "schema": 1
+  },
+  "actualElf": {
+    "lib/arm64-v8a/libmain.so": {
+      "format": "ELF64",
+      "machine": 183,
+      "needed": [
+        "libGLESv3.so",
+        "libSDL2.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libc.so",
+        "libdl.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC",
+          "LIBC_N"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ],
+        "libm.so": [
+          "LIBC"
+        ]
+      },
+      "search_paths": [],
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libSDL2.so": {
+      "format": "ELF64",
+      "machine": 183,
+      "needed": [
+        "libGLESv1_CM.so",
+        "libGLESv2.so",
+        "libOpenSLES.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libc.so",
+        "libdl.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC",
+          "LIBC_N"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ],
+        "libm.so": [
+          "LIBC"
+        ]
+      },
+      "search_paths": [],
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    "lib/arm64-v8a/libc++_shared.so": {
+      "format": "ELF64",
+      "machine": 183,
+      "needed": [
+        "libc.so",
+        "libdl.so",
+        "libm.so"
+      ],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ]
+      },
+      "search_paths": [],
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    }
+  },
+  "apkSha256": "03de6fa092b5fb23017b6fce3d651c6db4218735fa30f9d87e7779f22ab5bc3e",
+  "published": false,
+  "runtimeImpact": "none; metadata validation spelling mismatch after successful build/signature/alignment"
+}

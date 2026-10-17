@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-17T23:50:20.488406+00:00",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_prealpha_validation.py",
+    "-v"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "exit": 0,
+  "seconds": 0.4373062009981368,
+  "logSha256": "873c187d6bac67e004dc047bf1ba55c0a0399e3fc41b936f2ffc6d3c4b0722e1",
+  "sourceSha256": "9614ceaa5e65470ee6eb4fefa37a62f4cb123e4020e2dc779fff4c2dcebbbaa9",
+  "reason": "Resolved arrival is scheduled; unresolved contracts remain manual and isolated. No native/physics changes."
+}

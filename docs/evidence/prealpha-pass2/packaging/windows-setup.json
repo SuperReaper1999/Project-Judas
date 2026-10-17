@@ -1,0 +1,8 @@
+{
+  "operation": "eject only missing readonly installation CD from inactive configuration",
+  "domain": "win10",
+  "vm_started": false,
+  "before_sha256": "011dc2251a87628cd4658711a9e4b6acb90977a255f6d04f222980e0ce50961f",
+  "after_sha256": "2e2384c9412d9e6ffef2cabcea79dc6751ad728d8026a1dfbdd88e151d4bfa0e",
+  "other_configuration_unchanged": true
+}

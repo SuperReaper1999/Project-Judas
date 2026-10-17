@@ -1,0 +1,24 @@
+﻿{
+    "processes":  [
+                      {
+                          "ProcessId":  3280,
+                          "ParentProcessId":  7224,
+                          "Name":  "powershell.exe",
+                          "CommandLine":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoProfile -ExecutionPolicy Bypass -EncodedCommand JABFAHIAcgBvAHIAQQBjAHQAaQBvAG4AUAByAGUAZgBlAHIAZQBuAGMAZQA9ACcAUwB0AG8AcAAnADsAJABQAHIAbwBnAHIAZQBzAHMAUAByAGUAZgBlAHIAZQBuAGMAZQA9ACcAUwBpAGwAZQBuAHQAbAB5AEMAbwBuAHQAaQBuAHUAZQAnAAoAJAByAG8AbwB0AD0AJwBDADoAXABKAHUAZABhAHMAVgBhAGwAaQBkAGEAdABpAG8AbgBcAFAAcgBlAEEAbABwAGgAYQBQAGEAcwBzADIAJwAKAGkAZgAoACgARwBlAHQALQBGAGkAbABlAEgAYQBzAGgAIAAiACQAcgBvAG8AdABcAHcAaQBuAGQAbwB3AHMALQBmAHUAbgBjAHQAaQBvAG4AYQBsAC4AegBpAHAAIgAgAC0AQQBsAGcAbwByAGkAdABoAG0AIABTAEgAQQAyADUANgApAC4ASABhAHMAaAAuAFQAbwBMAG8AdwBlAHIASQBuAHYAYQByAGkAYQBuAHQAKAApACAALQBuAGUAIAAnADUANQA4ADMANABmADcAMAA4ADYAYwBlAGMAYwBhAGIAMAA1AGQAOQA1ADQAYwBjADEAMwA4ADQANQBhADkANQAwAGYAMgBkADEANwA3AGUAMwAyAGEAYwA3AGIANgAxAGEAMABjADcANAA0AGEANABlAGUANgBiAGMAYwAxAGYAJwApAHsAdABoAHIAbwB3ACAAJwBBAHIAYwBoAGkAdgBlACAAaABhAHMAaAAgAG0AaQBzAG0AYQB0AGMAaAAnAH0ACgBpAGYAKABUAGUAcwB0AC0AUABhAHQAaAAgACIAJAByAG8AbwB0AFwAUwBvAHUAcgBjAGUAIgApAHsAdABoAHIAbwB3ACAAJwBUAGEAcwBrACAAcwBvAHUAcgBjAGUAIABhAGwAcgBlAGEAZAB5ACAAZQB4AGkAcwB0AHMAOwAgAHAAcgBlAHMAZQByAHYAZQAgAGUAYQByAGwAaQBlAHIAIAByAHUAbgAnAH0ACgBFAHgAcABhAG4AZAAtAEEAcgBjAGgAaQB2AGUAIAAtAEwAaQB0AGUAcgBhAGwAUABhAHQAaAAgACIAJAByAG8AbwB0AFwAdwBpAG4AZABvAHcAcwAtAGYAdQBuAGMAdABpAG8AbgBhAGwALgB6AGkAcAAiACAALQBEAGUAcwB0AGkAbgBhAHQAaQBvAG4AUABhAHQAaAAgACIAJAByAG8AbwB0AFwAUwBvAHUAcgBjAGUAIgAKACYAIAAiACQAcgBvAG8AdABcAFMAbwB1AHIAYwBlAFwAUgB1AG4ALQBQAHIAZQBBAGwAcABoAGEAQwBoAGUAYwBrAHMALgBwAHMAMQAiACAALQBXAG8AcgBrAFIAbwBvAHQAIAAkAHIAbwBvAHQACgBlAHgAaQB0ACAAJABMAEEAUwBUAEUAWABJAFQAQwBPAEQARQAKAA=="
+                      },
+                      {
+                          "ProcessId":  1468,
+                          "ParentProcessId":  3280,
+                          "Name":  "judas_build_identity_tests.exe",
+                          "CommandLine":  "\"C:\\JudasValidation\\PreAlphaPass2\\Build\\Release\\judas_build_identity_tests.exe\""
+                      },
+                      {
+                          "ProcessId":  5580,
+                          "ParentProcessId":  1468,
+                          "Name":  "judas_build_identity_tests.exe",
+                          "CommandLine":  null
+                      }
+                  ],
+    "reason":  "Bounded configure window expired with only ~80 MiB C: headroom; preserve failure, no full SDK attempt",
+    "freeBytes":  61976576
+}

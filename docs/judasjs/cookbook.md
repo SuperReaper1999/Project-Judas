@@ -12,6 +12,7 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | File | Required setup / task |
 |---|---|
 | [minimal.js](examples/minimal.js) | Any entity; lifecycle/properties/state. |
+| [first-project.js](examples/first-project.js) | Render-only box at `(0,2,0)`; explicit fixed camera and visible rotation, no input/controller dependency. The focused `judas_first_project_tests` case verifies new-project serialization, real VM execution and failed/successful reload. [Complete steps](../FIRST_PROJECT.md). |
 | [input-motion.js](examples/input-motion.js) | Any movable visual entity; `move_x` axis. Explicit teleport example, not collision locomotion. |
 | [spawn.js](examples/spawn.js) | Registered prefab ID property; constructs independent hierarchy. |
 | [queries.js](examples/queries.js) | Floor below origin, colliders; ray and sphere cast, ignore owner. |

@@ -1692,77 +1692,8 @@ add_executable(judas_motor_runtime_tags_tests tests/MotorRuntimeTagsTests.cpp)
 target_link_libraries(judas_motor_runtime_tags_tests PRIVATE judas_engine)
 judas_warnings(judas_motor_runtime_tags_tests -Wpedantic)
 
-# M79 optional structural section model and actual ordinary project lifecycle.
-add_executable(judas_structural_tests tests/StructuralTests.cpp)
-target_link_libraries(judas_structural_tests PRIVATE judas_engine)
-judas_warnings(judas_structural_tests -Wpedantic)
-add_executable(judas_structural_application_tests tests/StructuralApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_structural_application_tests PRIVATE judas_engine)
-judas_warnings(judas_structural_application_tests -Wpedantic)
-
-# M80 reuses the deformable solver and structural interface model.
-add_executable(judas_bending_tests tests/BendingTests.cpp)
-target_link_libraries(judas_bending_tests PRIVATE judas_engine)
-judas_warnings(judas_bending_tests -Wpedantic)
-add_executable(judas_bending_application_tests tests/BendingApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_bending_application_tests PRIVATE judas_engine)
-judas_warnings(judas_bending_application_tests -Wpedantic)
-
-# M81 independent wheel contact/suspension and ordinary project integration.
-add_executable(judas_wheel_tests tests/WheelTests.cpp)
-target_link_libraries(judas_wheel_tests PRIVATE judas_engine)
-judas_warnings(judas_wheel_tests -Wpedantic)
-add_executable(judas_wheel_script_tests tests/WheelScriptTests.cpp)
-target_link_libraries(judas_wheel_script_tests PRIVATE judas_engine)
-judas_warnings(judas_wheel_script_tests -Wpedantic)
-add_executable(judas_wheel_lifecycle_tests tests/WheelLifecycleTests.cpp)
-target_link_libraries(judas_wheel_lifecycle_tests PRIVATE judas_engine)
-judas_warnings(judas_wheel_lifecycle_tests -Wpedantic)
-add_executable(judas_wheel_application_tests tests/WheelApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_wheel_application_tests PRIVATE judas_engine)
-judas_warnings(judas_wheel_application_tests -Wpedantic)
-
-# M82 modular rotational mechanics, actual JS and ordinary lab lifecycles.
-add_executable(judas_powertrain_tests tests/PowertrainTests.cpp)
-target_link_libraries(judas_powertrain_tests PRIVATE judas_engine)
-judas_warnings(judas_powertrain_tests -Wpedantic)
-add_executable(judas_powertrain_script_tests tests/PowertrainScriptTests.cpp)
-target_link_libraries(judas_powertrain_script_tests PRIVATE judas_engine)
-judas_warnings(judas_powertrain_script_tests -Wpedantic)
-add_executable(judas_powertrain_lifecycle_tests tests/PowertrainLifecycleTests.cpp)
-target_link_libraries(judas_powertrain_lifecycle_tests PRIVATE judas_engine)
-judas_warnings(judas_powertrain_lifecycle_tests -Wpedantic)
-add_executable(judas_powertrain_application_tests tests/PowertrainApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_powertrain_application_tests PRIVATE judas_engine)
-judas_warnings(judas_powertrain_application_tests -Wpedantic)
-
-# M83: coupled material damage and mechanical continuity, through normal ownership.
-add_executable(judas_mechanical_damage_tests tests/MechanicalDamageTests.cpp)
-target_link_libraries(judas_mechanical_damage_tests PRIVATE judas_engine)
-judas_warnings(judas_mechanical_damage_tests -Wpedantic)
-add_executable(judas_mechanical_connection_tests tests/MechanicalConnectionTests.cpp)
-target_link_libraries(judas_mechanical_connection_tests PRIVATE judas_engine)
-judas_warnings(judas_mechanical_connection_tests -Wpedantic)
-add_executable(judas_mechanical_damage_application_tests tests/MechanicalDamageApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_mechanical_damage_application_tests PRIVATE judas_engine)
-judas_warnings(judas_mechanical_damage_application_tests -Wpedantic)
-add_executable(judas_mechanical_crash_application_tests tests/MechanicalCrashApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_mechanical_crash_application_tests PRIVATE judas_engine)
-judas_warnings(judas_mechanical_crash_application_tests -Wpedantic)
-add_executable(judas_vehicle_damage_application_tests tests/MechanicalVehicleCrashApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_vehicle_damage_application_tests PRIVATE judas_engine)
-judas_warnings(judas_vehicle_damage_application_tests -Wpedantic)
-add_executable(judas_mechanical_damage_script_tests tests/MechanicalDamageScriptTests.cpp)
-target_link_libraries(judas_mechanical_damage_script_tests PRIVATE judas_engine)
-judas_warnings(judas_mechanical_damage_script_tests -Wpedantic)
-
-# M83 finite material sections; the rejected implicit node experiment is archived.
-add_executable(judas_section_material_tests tests/SectionMaterialTests.cpp)
-target_link_libraries(judas_section_material_tests PRIVATE judas_engine)
-judas_warnings(judas_section_material_tests -Wpedantic)
-add_executable(judas_coarse_crash_application_tests tests/CoarseCrashApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
-target_link_libraries(judas_coarse_crash_application_tests PRIVATE judas_engine)
-judas_warnings(judas_coarse_crash_application_tests -Wpedantic)
+# Physical assembly regression targets; definitions preserve M79–M83 inputs.
+include(cmake/tests/MechanicalTests.cmake)
 
 # M84 bounded editable volumes cook into the existing runtime asset pipeline.
 add_executable(judas_volume_author tools/VolumeTerrainAuthor.cpp)
@@ -2086,6 +2017,10 @@ judas_warnings(judas_network_boundary_tests)
 add_executable(judas_prealpha_lifecycle_tests tests/PreAlphaLifecycleTests.cpp)
 target_link_libraries(judas_prealpha_lifecycle_tests PRIVATE judas_engine)
 judas_warnings(judas_prealpha_lifecycle_tests)
+
+judas_add_engine_test(judas_first_project_tests tests/FirstProjectTests.cpp)
+judas_add_engine_test(judas_origin_environment_tests tests/OriginEnvironmentTests.cpp)
+judas_add_engine_test(judas_collision_witness_tests tests/CollisionWitnessTests.cpp)
 
 # Finalize native packaging only after every subsystem has declared its tools.
 if(WIN32)

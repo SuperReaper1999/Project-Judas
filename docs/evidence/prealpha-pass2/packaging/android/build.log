@@ -1,0 +1,227 @@
++ cmake -S /home/conner/Documents/GitHub/Project-Judas -B /home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-arm64-v8a -DCMAKE_TOOLCHAIN_FILE=/home/conner/Android/Sdk/ndk/28.2.13676358/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-26 -DANDROID_STL=c++_shared -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENGINE_VERSION= -DJUDAS_ICU_HOST_TOOLS=/home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-x86_64/unicode/host/src/judas_icu_host-build
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_sdl-src/CMakeLists.txt:3300 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- 
+-- SDL2 was configured with the following options:
+-- 
+-- Platform: Android-1
+-- 64-bit:   TRUE
+-- Compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
+-- Revision: SDL-release-2.32.10-0-g5d2495703
+-- 
+-- Subsystems:
+--   Atomic:	ON
+--   Audio:	ON
+--   Video:	ON
+--   Render:	ON
+--   Events:	ON
+--   Joystick:	ON
+--   Haptic:	ON
+--   Hidapi:	ON
+--   Power:	ON
+--   Threads:	ON
+--   Timers:	ON
+--   File:	ON
+--   Loadso:	ON
+--   CPUinfo:	ON
+--   Filesystem:	ON
+--   Sensor:	ON
+--   Locale:	ON
+--   Misc:	ON
+-- 
+-- Options:
+--   SDL2_DISABLE_INSTALL        (Wanted: ON): OFF
+--   SDL2_DISABLE_SDL2MAIN       (Wanted: OFF): OFF
+--   SDL2_DISABLE_UNINSTALL      (Wanted: OFF): OFF
+--   SDL_3DNOW                   (Wanted: OFF): OFF
+--   SDL_ALSA                    (Wanted: OFF): OFF
+--   SDL_ALSA_SHARED             (Wanted: OFF): OFF
+--   SDL_ALTIVEC                 (Wanted: ON): OFF
+--   SDL_ARMNEON                 (Wanted: OFF): OFF
+--   SDL_ARMSIMD                 (Wanted: OFF): OFF
+--   SDL_ARTS                    (Wanted: OFF): OFF
+--   SDL_ARTS_SHARED             (Wanted: OFF): OFF
+--   SDL_ASAN                    (Wanted: OFF): OFF
+--   SDL_ASSEMBLY                (Wanted: ON): ON
+--   SDL_ASSERTIONS              (Wanted: auto): auto
+--   SDL_BACKGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_CCACHE                  (Wanted: ON): OFF
+--   SDL_CLOCK_GETTIME           (Wanted: ON): ON
+--   SDL_COCOA                   (Wanted: OFF): OFF
+--   SDL_DBUS                    (Wanted: OFF): OFF
+--   SDL_DIRECTFB                (Wanted: OFF): OFF
+--   SDL_DIRECTFB_SHARED         (Wanted: OFF): OFF
+--   SDL_DIRECTX                 (Wanted: OFF): OFF
+--   SDL_DISKAUDIO               (Wanted: ON): ON
+--   SDL_DUMMYAUDIO              (Wanted: ON): ON
+--   SDL_DUMMYVIDEO              (Wanted: ON): ON
+--   SDL_ESD                     (Wanted: OFF): OFF
+--   SDL_ESD_SHARED              (Wanted: OFF): OFF
+--   SDL_FOREGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND             (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND_SHARED      (Wanted: OFF): OFF
+--   SDL_GCC_ATOMICS             (Wanted: ON): ON
+--   SDL_HIDAPI                  (Wanted: ON): ON
+--   SDL_HIDAPI_JOYSTICK         (Wanted: ON): ON
+--   SDL_HIDAPI_LIBUSB           (Wanted: OFF): OFF
+--   SDL_IBUS                    (Wanted: OFF): OFF
+--   SDL_INSTALL_TESTS           (Wanted: OFF): OFF
+--   SDL_JACK                    (Wanted: OFF): OFF
+--   SDL_JACK_SHARED             (Wanted: OFF): OFF
+--   SDL_KMSDRM                  (Wanted: OFF): OFF
+--   SDL_KMSDRM_SHARED           (Wanted: OFF): OFF
+--   SDL_LASX                    (Wanted: OFF): OFF
+--   SDL_LIBC                    (Wanted: ON): ON
+--   SDL_LIBICONV                (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE           (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE_SHARED    (Wanted: OFF): OFF
+--   SDL_LIBUDEV                 (Wanted: ON): OFF
+--   SDL_LSX                     (Wanted: OFF): OFF
+--   SDL_METAL                   (Wanted: OFF): OFF
+--   SDL_MMX                     (Wanted: OFF): OFF
+--   SDL_NAS                     (Wanted: OFF): OFF
+--   SDL_NAS_SHARED              (Wanted: OFF): OFF
+--   SDL_OFFSCREEN               (Wanted: ON): ON
+--   SDL_OPENGL                  (Wanted: ON): OFF
+--   SDL_OPENGLES                (Wanted: ON): ON
+--   SDL_OSS                     (Wanted: OFF): OFF
+--   SDL_PIPEWIRE                (Wanted: OFF): OFF
+--   SDL_PIPEWIRE_SHARED         (Wanted: OFF): OFF
+--   SDL_PTHREADS                (Wanted: ON): ON
+--   SDL_PTHREADS_SEM            (Wanted: ON): ON
+--   SDL_PULSEAUDIO              (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO_SHARED       (Wanted: OFF): OFF
+--   SDL_RENDER_D3D              (Wanted: OFF): OFF
+--   SDL_RENDER_METAL            (Wanted: OFF): OFF
+--   SDL_RPATH                   (Wanted: OFF): OFF
+--   SDL_RPI                     (Wanted: OFF): OFF
+--   SDL_SNDIO                   (Wanted: OFF): OFF
+--   SDL_SNDIO_SHARED            (Wanted: OFF): OFF
+--   SDL_SSE                     (Wanted: OFF): OFF
+--   SDL_SSE2                    (Wanted: OFF): OFF
+--   SDL_SSE3                    (Wanted: OFF): OFF
+--   SDL_SSEMATH                 (Wanted: OFF): OFF
+--   SDL_STATIC_PIC              (Wanted: OFF): OFF
+--   SDL_SYSTEM_ICONV            (Wanted: ON): OFF
+--   SDL_TESTS                   (Wanted: OFF): OFF
+--   SDL_VENDOR_INFO             (Wanted: ): OFF
+--   SDL_VIRTUAL_JOYSTICK        (Wanted: ON): ON
+--   SDL_VIVANTE                 (Wanted: OFF): OFF
+--   SDL_VULKAN                  (Wanted: ON): ON
+--   SDL_WASAPI                  (Wanted: OFF): OFF
+--   SDL_WAYLAND                 (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR        (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR_SHARED (Wanted: OFF): OFF
+--   SDL_WAYLAND_QT_TOUCH        (Wanted: OFF): OFF
+--   SDL_WAYLAND_SHARED          (Wanted: OFF): OFF
+--   SDL_X11                     (Wanted: OFF): OFF
+--   SDL_X11_SHARED              (Wanted: OFF): OFF
+--   SDL_X11_XCURSOR             (Wanted: OFF): OFF
+--   SDL_X11_XDBE                (Wanted: OFF): OFF
+--   SDL_X11_XFIXES              (Wanted: OFF): OFF
+--   SDL_X11_XINPUT              (Wanted: OFF): OFF
+--   SDL_X11_XRANDR              (Wanted: OFF): OFF
+--   SDL_X11_XSCRNSAVER          (Wanted: OFF): OFF
+--   SDL_X11_XSHAPE              (Wanted: OFF): OFF
+--   SDL_XINPUT                  (Wanted: OFF): OFF
+-- 
+--  CFLAGS:        -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -idirafter "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-arm64-v8a/_deps/judas_sdl-src/src/video/khronos"
+--  EXTRA_CFLAGS:   -Wall -Wundef -fno-strict-aliasing -Wdocumentation -Wdocumentation-unknown-command -fcomment-block-commands=threadsafety -fcomment-block-commands=deprecated -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs
+--  EXTRA_LDFLAGS:  -Wl,--no-undefined
+--  EXTRA_LIBS:    m;OpenSLES;dl;log;android;GLESv1_CM;GLESv2
+-- 
+--  Build Shared Library: ON
+--  Build Static Library: OFF
+-- 
+-- If something was not detected, although the libraries
+-- were installed, then make sure you have set the
+-- CFLAGS and LDFLAGS environment variables correctly.
+-- 
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_glm-src/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_glm-src/CMakeLists.txt:2 (cmake_policy):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- GLM: Version 1.0.1
+-- GLM: Disable -Wc++98-compat warnings
+-- GLM: Build with C++ features auto detection
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (1.5s)
+-- Generating done (0.2s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-arm64-v8a
++ cmake --build /home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-arm64-v8a --target main -j 2
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  8%] Built target freetype
+[ 22%] Built target sdl_headers_copy
+[ 25%] Built target judas_meshoptimizer
+[ 26%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 30%] Built target judas_navigation_backend
+[ 31%] Built target judas_profiler
+[ 31%] Built target judas_jobs
+[ 32%] Built target judas_audio_backend
+[ 32%] Built target harfbuzz
+[ 32%] Built target SDL2main
+[ 65%] Built target SDL2
+[ 67%] Built target judas_navigation_cook
+[ 68%] Built target judas_materials
+[ 69%] Built target judas_app_icon
+[ 69%] Linking CXX static library libjudas_build_identity.a
+[ 69%] Built target judas_build_identity
+[ 98%] Built target judas_engine
+[100%] Linking CXX shared library libmain.so
+[100%] Built target main
++ /home/conner/Documents/GitHub/Project-Judas/build/judas_export /home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/connected_workshop.judasproj /home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-content /home/conner/Documents/GitHub/Project-Judas/build/judas
+Exported /home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-content: 4 assets, 1 scenes, 57059031 bytes, 0.309 seconds
++ /home/conner/Android/Sdk/build-tools/36.0.0/aapt2 compile --dir /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/res -o /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/resources.zip
++ /home/conner/Android/Sdk/build-tools/36.0.0/aapt2 link -o /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/resources.apk --manifest /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/AndroidManifest.xml -I /home/conner/Android/Sdk/platforms/android-36/android.jar --java /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/java -A /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/assets /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/resources.zip
++ /home/conner/Documents/GitHub/Project-Judas/.cache/m88/jdk17/bin/javac -encoding UTF-8 --release 8 -classpath /home/conner/Android/Sdk/platforms/android-36/android.jar -d /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/classes @/home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/javac.args
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
++ /home/conner/Android/Sdk/build-tools/36.0.0/d8 --release --min-api 26 --lib /home/conner/Android/Sdk/platforms/android-36/android.jar --output /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/dex /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/classes.jar
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/native/arm64-v8a/libmain.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/native/arm64-v8a/libSDL2.so
++ /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip --strip-unneeded /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/native/arm64-v8a/libc++_shared.so
++ /home/conner/Android/Sdk/build-tools/36.0.0/zipalign -P 16 -f 4 /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/unsigned.apk /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/aligned.apk
++ /home/conner/Android/Sdk/build-tools/36.0.0/apksigner sign --ks /home/conner/Documents/GitHub/Project-Judas/.cache/m88/development-signing.p12 --ks-key-alias judas-development --ks-pass env:JUDAS_DEVELOPMENT_PASSWORD --out /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/signed.apk /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/aligned.apk
++ /home/conner/Android/Sdk/build-tools/36.0.0/apksigner verify --verbose /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/signed.apk
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
++ /home/conner/Android/Sdk/build-tools/36.0.0/zipalign -c -P 16 4 /home/conner/Documents/GitHub/Project-Judas/.cache/m88/apk-staging/signed.apk
+APK: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk
+SHA256: 43b76986b69c66fbef3a37152eda9c82890a0ef2290a499af4c52163ed14569a

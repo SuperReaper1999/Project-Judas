@@ -11,7 +11,8 @@
   "files": [
     "LICENSE", "README.md", "docs/judas.d.ts", "docs/judasmod.example.json",
     "third_party/RUNTIME_NOTICES.txt", "third_party/imgui/LICENSE.txt",
-    "third_party/android/SDL-LICENSE.txt", "third_party/android/GLM-COPYING.txt"
+    "third_party/android/SDL-LICENSE.txt", "third_party/android/GLM-COPYING.txt",
+    "tools/inspect_sdk.py", "tools/binary_dependencies.py", "tools/verify_android.py"
   ],
   "directories": ["assets/fonts", "docs/judasjs"],
   "current_markdown": "docs",

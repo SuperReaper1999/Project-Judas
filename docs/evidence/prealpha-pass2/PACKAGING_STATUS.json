@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-17T23:54:05.254203+00:00",
+  "scope": "Actual final53-source artifacts; no human/device acceptance or main promotion",
+  "sourceInventory": "FINAL_SOURCE_FILES.json",
+  "nativeAcceptanceIdentity": "1c37839dac7066db466418f983819d6c86fe3663bfce38b91434c42d7c312f24",
+  "artifactIdentity": {
+    "architecture": "arm64-v8a",
+    "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-7a0361d95237-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "Clang",
+    "compiler_version": "19.0.1",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Android",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "7a0361d952377e46966122565e9c9c26d2305d1c041dc36a9a1a9d82dc0c5014",
+    "source_origin": "git",
+    "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+    "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "followupScope": "Only test scheduling and independent APK verifier/control changed after the native26 gate; no native engine, physics, fixture, threshold or solver changes. Desktop SDK and APK rebuilt/repacked with accurate new identity.",
+  "android": {
+    "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass2/android/ConnectedWorkshop-PreAlphaPass2-arm64.apk",
+    "bytes": 53484213,
+    "sha256": "43b76986b69c66fbef3a37152eda9c82890a0ef2290a499af4c52163ed14569a",
+    "buildExit": 0,
+    "seconds": 17.771817241999088,
+    "abis": [
+      "arm64-v8a"
+    ],
+    "contentFiles": 21,
+    "nativeLibraries": 3,
+    "signature": "Actual apksigner verification: v2 and v3 passed, development key",
+    "alignment": "Actual zipalign -c -P 16 4 passed; independent ELF load alignment >=16384 verified",
+    "imports": "Actual shipped DT_NEEDED names resolved against shipped libraries and API26 NDK stubs",
+    "deviceOrEmulatorRun": false,
+    "preservedFailure": "Canonical arm64-v8a name was rejected despite actual ELF machine183; signed failed artifact preserved outside Git, before verifier/receipt retained in packaging evidence"
+  },
+  "linuxSDK": {
+    "path": "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk",
+    "tools": 17,
+    "files": 212,
+    "inventoryAndHostCheckPassed": true,
+    "baseline": "Ubuntu26.04/glibc2.43 host; not an Ubuntu24.04 ABI artifact",
+    "receipt": "packaging/final-root-sdk-followup/qualification.json"
+  },
+  "windows": {
+    "pythonControlsPassed": 15,
+    "finalLinuxControlsPassed": 16,
+    "finalAddedAbiCaseExecutedOnWindows": false,
+    "nativeCppAndSDK": "incomplete: insufficient guest disk capacity",
+    "vmState": "paused; no forced power off",
+    "performanceAcceptance": false
+  },
+  "cleanUbuntu24CI": {
+    "status": "pending post-checkpoint run",
+    "glibcCeiling": "2.39",
+    "artifactIsNotLocalHostSDK": true
+  },
+  "humanAcceptance": "pending",
+  "mainChanged": false
+}

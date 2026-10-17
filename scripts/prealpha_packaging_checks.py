@@ -71,6 +71,11 @@ class PackagingChecks(unittest.TestCase):
         for name in spec["files"] + spec["directories"]:
             self.assertTrue((ROOT / name).exists(), name)
 
+    def test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts(self):
+        for name in ("C:outside.txt", "D:/outside.txt"):
+            with self.assertRaisesRegex(ValueError, "Unsafe"):
+                package_sdk.relative_path(name)
+
     def test_stage_verify_relocate_and_deterministic_manifest(self):
         package_sdk.stage(self.args)
         first = (self.output / "SDK_MANIFEST.json").read_bytes()

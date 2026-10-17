@@ -34,6 +34,7 @@
 #include "RigidMotion.h"
 #include "RigidMotionBounds.h"
 #include "ImpactSolver.h"
+#include "ImpactPairVisitSet.h"
 #include "JointSolver.h"
 #include <atomic>
 
@@ -1012,6 +1013,12 @@ struct PhysicsWorld::Impl {
             if(finite(boundA)&&finite(boundB)&&!boundA.Overlaps(boundB)){++impactBoundsRejected;return finish+1;}
         }
         const auto posa=ImpactPoseAt(a,start).pose,posb=ImpactPoseAt(b,start).pose;
+        const auto firstPrimitive=PrimitiveAt(ba.shape,posa,pa),secondPrimitive=PrimitiveAt(bb.shape,posb,pb);
+        const bool firstMesh=firstPrimitive.shape.type==ShapeType::TriangleMesh&&!ba.HasMotion();
+        const bool secondMesh=secondPrimitive.shape.type==ShapeType::TriangleMesh&&!bb.HasMotion();
+        const auto convexPoly=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::ConvexHull;};
+        const bool meshAdvance=(firstMesh&&convexPoly(secondPrimitive.shape.type))||
+                               (secondMesh&&convexPoly(firstPrimitive.shape.type));
         const glm::dvec3 relative=glm::dvec3(ba.HasMotion()?posa.linearVelocity:glm::vec3(0))-glm::dvec3(bb.HasMotion()?posb.linearVelocity:glm::vec3(0));
         const double angular=(ba.HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,start)))*ba.boundingRadius:0)+
                              (bb.HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,start)))*bb.boundingRadius:0);
@@ -1067,25 +1074,38 @@ struct PhysicsWorld::Impl {
             // The exact endpoint has already been checked. There is no future
             // interval left from which a proximity reach could reveal a hit.
             if(time==finish)return finish+1;
-            const auto manifold=PairAt(a,b,pa,pb,time,reach);
-            if (!manifold.count) return finish+1;
-            const Contact* nearest=&manifold.points[0];
-            for (int k=1;k<manifold.count;++k)
-                if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
-            const double gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
-            if(gap<=0) {
-                // Some specialized geometry (notably terrain) excludes exact
-                // equality at zero margin while a proximity query includes it.
-                // The latter is not a certified separating plane or an impact.
-                // Let bounded actual-contact sampling establish contact truth.
-                ++stats.impactUncertifiedAdvances;
-                uncertifiedAdvance=true;
-                break;
+            double increment;
+            if(meshAdvance){
+                PhysicsWorkTimer geometryTimer(work.geometry,work.active);
+                const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+                const auto query=firstMesh?PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation):
+                                           PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
+                const auto mesh=firstMesh?PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation):
+                                          PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
+                const unsigned moving=firstMesh?b:a;
+                increment=MeshSeparationAdvance(query,mesh,
+                    glm::dvec3(firstMesh?bb.pose.linearVelocity:aa.pose.linearVelocity),
+                    glm::dvec3(DriftGenerator(moving,time)),bodies[moving].boundingRadius,finish-time);
+                if(!std::isfinite(increment))return finish+1;
+                if(!(increment>0)){
+                    ++stats.impactUncertifiedAdvances;uncertifiedAdvance=true;break;
+                }
+            }else{
+                const auto manifold=PairAt(a,b,pa,pb,time,reach);
+                if (!manifold.count) return finish+1;
+                const Contact* nearest=&manifold.points[0];
+                for (int k=1;k<manifold.count;++k)
+                    if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
+                const double gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
+                if(gap<=0) {
+                    ++stats.impactUncertifiedAdvances;uncertifiedAdvance=true;break;
+                }
+                const auto normal=nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
+                const double closing=-glm::dot(relative,normal)+angular;
+                if (!(closing>0)) return finish+1;
+                increment=gap/closing;
+                if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,normal));
             }
-            const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
-            if (!(closing>0)) return finish+1;
-            double increment=gap/closing;
-            if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));
             // Progress in represented time only. A large coordinate orthogonal
             // to motion must not enlarge the step and skip a thin obstacle.
             increment=std::max(increment,std::nextafter(time,finish)-time);
@@ -1268,6 +1288,20 @@ struct PhysicsWorld::Impl {
         };
         for(const auto& key:separatedPairs) schedule(key);
         for(const auto& key:spinningPairs) schedule(key);
+        // Capacities live through this event pass; values and membership are
+        // rebuilt for each event. No cross-time contact truth is cached.
+        ImpactPairVisitSet visitedPairs;
+        struct DiscoveredManifold {
+            std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
+        };
+        std::vector<unsigned> island;
+        std::vector<unsigned char> included;
+        std::vector<std::pair<unsigned,unsigned>> touching;
+        std::vector<DiscoveredManifold> discoveredManifolds;
+        std::vector<std::pair<glm::vec3,glm::vec3>> oldVelocities;
+        std::vector<ImpactContact> rows;
+        std::vector<ContactKey> observationKeys;
+        std::vector<std::array<unsigned,4>> eventPairs;
         for (;;) {
             double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
             std::array<unsigned,4> selected{};
@@ -1293,20 +1327,14 @@ struct PhysicsWorld::Impl {
             for(auto slot:aliveSlots)if(bodies[slot].isKinematic){auto& b=bodies[slot];auto p=PoseAt(slot,now);
                 b.rigidBody.position=p.position;b.rigidBody.orientation=p.orientation;
                 b.rigidBody.linearVelocity=p.linearVelocity;b.rigidBody.angularVelocity=p.angularVelocity;}
-            std::vector<unsigned> island;
-            std::vector<unsigned char> included(bodies.size(),0);
+            island.clear();included.assign(bodies.size(),0);
             auto include=[&](unsigned slot){if(!included[slot] && !bodies[slot].rigidBody.IsStatic()) {
                 if(bodies[slot].sleeping)Wake(slot);
                 included[slot]=1;island.push_back(slot);}};
             include(seedA);include(seedB);
-            std::vector<std::pair<unsigned,unsigned>> touching;
-            // Keep discovery/row order in the vector. Hash membership only
-            // removes repeated queries at this unchanged event-time geometry.
-            std::unordered_set<uint64_t> visitedPairs;
-            struct DiscoveredManifold {
-                std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
-            };
-            std::vector<DiscoveredManifold> discoveredManifolds;
+            touching.clear();discoveredManifolds.clear();visitedPairs.Begin(bodies.size());
+            // Membership removes only previously resolved identical queries;
+            // encounter order and uncertainty handling remain unchanged.
             const auto simplePart=[&](unsigned slot,int part){
                 const auto& shape=bodies[slot].shape;
                 const auto type=shape.type==ShapeType::CompoundBoxes?shape.boxes[std::size_t(part)].type:shape.type;
@@ -1322,7 +1350,7 @@ struct PhysicsWorld::Impl {
                     if (a==b || !CanRespond(a,b)) continue;
                     const auto pair=std::minmax(a,b);
                     const uint64_t pairKey=(uint64_t(pair.first)<<32)|pair.second;
-                    if(visitedPairs.count(pairKey))continue;
+                    if(visitedPairs.Contains(pairKey))continue;
                     bool hit=false,reliableMiss=true;
                     std::optional<DiscoveredManifold> discovered;
                     for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
@@ -1345,13 +1373,13 @@ struct PhysicsWorld::Impl {
                             }
                         }
                     if(hit){
-                        visitedPairs.insert(pairKey);
+                        visitedPairs.Insert(pairKey);
                         if(discovered)discoveredManifolds.push_back(std::move(*discovered));
                         touching.emplace_back(pair);include(b);
                     }else if(reliableMiss){
                         // Only a resolved primitive separation may suppress
                         // the reverse traversal's identical existence query.
-                        visitedPairs.insert(pairKey);
+                        visitedPairs.Insert(pairKey);
                     }
                 }
             }
@@ -1365,7 +1393,7 @@ struct PhysicsWorld::Impl {
             const bool supportedIsland=std::any_of(supportPairs.begin(),supportPairs.end(),supports) ||
                 std::any_of(spinningPairs.begin(),spinningPairs.end(),supports);
             bool capture=supportedIsland;
-            std::vector<std::pair<glm::vec3,glm::vec3>> oldVelocities;
+            oldVelocities.clear();
             oldVelocities.reserve(island.size());
             for(unsigned slot:island) {
                 auto& body=bodies[slot];const auto pose=PoseAt(slot,now);
@@ -1383,9 +1411,7 @@ struct PhysicsWorld::Impl {
                     capture=true;
                 }
             }
-            std::vector<ImpactContact> rows;
-            std::vector<ContactKey> observationKeys;
-            std::vector<std::array<unsigned,4>> eventPairs;
+            rows.clear();observationKeys.clear();eventPairs.clear();
             std::size_t discoveredIndex=0;
             for(std::size_t touchingIndex=0;touchingIndex<touching.size();++touchingIndex){
                 const auto& pair=touching[touchingIndex];

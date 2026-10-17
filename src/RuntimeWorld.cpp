@@ -1411,12 +1411,11 @@ void RuntimeWorld::Destroy() {
     if (!m_built) return;
     if (m_cameraRenderer) for (const auto& camera : m_renderCameras) m_cameraRenderer->DestroyRenderTarget(camera.target);
     m_renderCameras.clear(); m_cameraRenderer = nullptr; m_cameraFrame = 0;
-    for (Door& door : m_doors) door.Destroy(m_physics);
-    for (const DynamicBody& body : m_dynamicBodies) {
-        if (body.IsLive()) m_physics.DestroyBody(body.Handle());
-    }
-    for (const StaticBody& body : m_staticBodies) m_physics.DestroyBody(body.handle);
-    for (const Terrain& terrain : m_terrains) m_physics.DestroyBody(terrain.handle);
+    // Scripts and subsystem consumers have finished above. No physical actor
+    // survives this whole-world retirement: Shutdown below owns every remaining
+    // body/joint. Individual DestroyBody calls would repeatedly wake the same
+    // dense contact island just before deleting it. Ordinary in-game removal
+    // still uses DestroyBody and keeps its normal wake/invalidation semantics.
     if (m_assets && m_assets->GetRenderer() && m_fluidMesh.IsValid()) {
         m_assets->GetRenderer()->DestroyMesh(m_fluidMesh);
     }
