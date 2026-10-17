@@ -1,0 +1,98 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj)
+Scene: Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/Scenes/range.judas)
+World origin (m): 0.000, 0.000, 0.000
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Engine primitives / project behaviour (/home/conner/Documents/GitHub/Project-Judas/projects/boundary_demo/boundary_demo.judasproj)
+Scene: M51 / flat (/home/conner/Documents/GitHub/Project-Judas/projects/boundary_demo/Scenes/flat.judas)
+World origin (m): 0.000, 0.000, 0.000
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / The Packed Museum (/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/asset_lab.judasproj)
+Scene: The Packed Museum / four asset districts (/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/Scenes/museum.judas)
+World origin (m): 6371000.000, 1800000.000, -2200000.000
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj)
+Scene: Streamed Spring Range (/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/Scenes/bootstrap.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=280a91035e80c372fb413f5ba555eee2 entity=10 slot=1 start: TypeError: save/scene service busy
+    at __judas (native)
+    at call (judas:2:51)
+    at refresh (judas:336:193)
+    at start (Assets/scripts/hud.js:10:33)
+    at initialize (Assets/scripts/player.js:12:128)
+    at start (Assets/scripts/player.js:13:15)
+
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / The Repair Bench (/home/conner/Documents/GitHub/Project-Judas/.cache/m94/lab-iteration/developer_lab.judasproj)
+Scene: The Repair Bench (/home/conner/Documents/GitHub/Project-Judas/.cache/m94/lab-iteration/Scenes/workshop.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=2a7da47a9b2c6a240f47518226e469ab entity=30 slot=1 update: RangeError: Calibration gain must be positive. Edit Assets/scripts/calibration.js:2 to gain: 2, then deliberately reload.
+    at calibratedDistance (Assets/scripts/calibration.js:5:30)
+    at update (Assets/scripts/worker.js:10:69)
+
+PASS existing consumer pauses at actual project source with owner identity
+CONSUMER shooter_game startup_to_first_frame_ms=256.9883
+FAIL consumer exposes slot-owned and independent UI lifetime controls
+CONSUMER shooter_game reload_ms=3.6374 bodies=52 error=
+PASS existing consumer can deliberately replace script session with JSON state
+FAIL reload invalidates old slot UI while independent UI survives
+PASS consumer reload does not reconstruct or drop physical bodies
+PASS consumer completed debug/reload/resume application frames
+PASS existing consumer clean startup and shutdown
+PASS existing consumer pauses at actual project source with owner identity
+CONSUMER boundary_demo startup_to_first_frame_ms=143.9953
+FAIL consumer exposes slot-owned and independent UI lifetime controls
+CONSUMER boundary_demo reload_ms=2.9484 bodies=16 error=
+PASS existing consumer can deliberately replace script session with JSON state
+FAIL reload invalidates old slot UI while independent UI survives
+PASS consumer reload does not reconstruct or drop physical bodies
+PASS consumer completed debug/reload/resume application frames
+PASS existing consumer clean startup and shutdown
+PASS existing consumer pauses at actual project source with owner identity
+CONSUMER asset_lab startup_to_first_frame_ms=201.6517
+FAIL consumer exposes slot-owned and independent UI lifetime controls
+CONSUMER asset_lab reload_ms=2.5415 bodies=0 error=
+PASS existing consumer can deliberately replace script session with JSON state
+FAIL reload invalidates old slot UI while independent UI survives
+PASS consumer reload does not reconstruct or drop physical bodies
+PASS consumer completed debug/reload/resume application frames
+PASS existing consumer clean startup and shutdown
+PASS existing consumer pauses at actual project source with owner identity
+CONSUMER streamed_range startup_to_first_frame_ms=267.8207
+FAIL consumer exposes slot-owned and independent UI lifetime controls
+PASS real streamed consumer holds slot-owned and independent region requests
+CONSUMER streamed_range reload_ms=3.3656 bodies=2 error=
+PASS existing consumer can deliberately replace script session with JSON state
+FAIL reload invalidates old slot UI while independent UI survives
+PASS reload retires old slot requests while independent streaming demand survives
+PASS consumer reload does not reconstruct or drop physical bodies
+CONSUMER_ERROR 280a91035e80c372fb413f5ba555eee2 TypeError: save/scene service busy
+    at __judas (native)
+    at call (judas:2:51)
+    at refresh (judas:336:193)
+    at start (Assets/scripts/hud.js:10:33)
+    at initialize (Assets/scripts/player.js:12:128)
+    at start (Assets/scripts/player.js:13:15)
+
+FAIL existing consumer callbacks remain healthy
+PASS existing consumer clean startup and shutdown
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+PASS lab reproduces real helper fault while unrelated presentation stays alive
+PASS external source repair and deliberate fresh reload recover faulted game without restart
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+PASS same E input now executes repaired calibration and worker continues
+PASS real project breakpoints inspect failing and corrected local values
+JS: Worker retired. No physical world reset.
+PASS lab edit-debug-fix-reload cycle shuts down cleanly
+M94_CONSUMERS 35 checks 9 failures

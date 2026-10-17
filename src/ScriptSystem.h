@@ -1,3 +1,4 @@
+#include <functional>
 #include <map>
 #include <optional>
 #pragma once
@@ -13,6 +14,14 @@ struct ScriptStateRecord { SceneObjectId entity=0;std::uint64_t slot=0;std::stri
 struct ScriptProperty {std::string name,type,text;double number=0;bool boolean=false;};
 struct ScriptMetadataStats {uint64_t parserConstructions=0,referenceInspections=0;};
 struct ScriptDiagnostic {SceneObjectId entity=0;std::uint64_t slot=0;std::string asset,callback,message;};
+// Developer tools, not a project/native-dispatch API. All snapshots own strings;
+// no VM handles escape a stopped instruction.
+struct ScriptBreakpoint { std::string file; int line=1; bool enabled=true; };
+struct ScriptDebugVariable { std::string name,value; std::vector<ScriptDebugVariable> children; };
+struct ScriptDebugFrame { std::string file,function,source; bool sourceKnown=false; int line=0,column=0; std::vector<ScriptDebugVariable> variables; };
+struct ScriptDebugStop { SceneObjectId entity=0; uint64_t slot=0; std::vector<ScriptDebugFrame> frames; };
+enum class ScriptDebugAction { Continue, Into, Over, Out, Cancel };
+using ScriptDebugHandler=std::function<ScriptDebugAction(const ScriptDebugStop&)>;
 // One main-thread session per world. No backend objects escape this boundary.
 class ScriptSystem {
 public:
@@ -38,6 +47,16 @@ public:
     bool Restore(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume=false);
     const std::vector<ScriptDiagnostic>& Diagnostics() const;
     void SetBudget(unsigned interruptPolls);
+    void SetDebugger(ScriptDebugHandler handler);
+    void SetBreakpoints(std::vector<ScriptBreakpoint> points);
+    void BreakOnNextInstruction();
+    // Invoke only between callbacks, never from a debug handler. Preflight is
+    // compile/link only; runtime constructor failures remain isolated diagnostics.
+    bool Reload(bool preserveState,std::string& error);
+    bool HasReloaded() const;
+    bool CheckSources(std::string& error) const;
+    const std::vector<std::string>& ConsoleMessages() const;
+
     static bool ValidateJson(const std::string& text,std::string& error,bool requireObject=true);
     static ScriptMetadataStats MetadataStats();
     static std::vector<SceneObjectId> PropertyEntities(const std::string& values);
@@ -46,6 +65,7 @@ public:
     static bool ReadProperties(const std::string& schema,const std::string& values,std::vector<ScriptProperty>& out,std::string& error);
     static std::string WriteProperties(const std::vector<ScriptProperty>& values);
     static bool SourceFingerprint(const AssetDatabase& assets,const Scene& scene,std::string& digest,std::string& error,bool strict=true);
+    static std::vector<ScriptDiagnostic> CheckProjectSources(const AssetDatabase&);
     static bool Inspect(const AssetDatabase& assets,const std::string& asset,std::string& schema,std::string& error);
 private:
     struct Impl;static Impl& PropertyVM();std::unique_ptr<Impl> m;

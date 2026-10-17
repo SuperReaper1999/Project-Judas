@@ -1,0 +1,259 @@
+{
+  "baseline": "3306b5aa66a2e649bad06abc8c5cba452058d3fa",
+  "platform": "native Linux Release",
+  "humanAcceptance": false,
+  "windows": "not run",
+  "android": "not run",
+  "passedCommands": [
+    {
+      "name": "judas_script_developer_tools_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+      ],
+      "seconds": 0.314660639000067,
+      "exit": 0
+    },
+    {
+      "name": "judas_script_tools_editor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tools_editor_tests"
+      ],
+      "seconds": 0.5653334270000414,
+      "exit": 0
+    },
+    {
+      "name": "judas_script_developer_consumer_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_consumer_tests"
+      ],
+      "seconds": 1.7677387399999134,
+      "exit": 0
+    },
+    {
+      "name": "judas_script_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+      ],
+      "seconds": 0.5151170870003625,
+      "exit": 0
+    },
+    {
+      "name": "judas_script_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_application_tests"
+      ],
+      "seconds": 2.2686687209998126,
+      "exit": 0
+    },
+    {
+      "name": "judas_signal_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_signal_tests"
+      ],
+      "seconds": 0.4652912579999793,
+      "exit": 0
+    },
+    {
+      "name": "judas_signal_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_signal_application_tests"
+      ],
+      "seconds": 0.9184983740001371,
+      "exit": 0
+    },
+    {
+      "name": "judas_script_presentation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_presentation_tests"
+      ],
+      "seconds": 0.7658651609999652,
+      "exit": 0
+    },
+    {
+      "name": "judas_runtime_ui_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_tests"
+      ],
+      "seconds": 0.5153017039997394,
+      "exit": 0
+    },
+    {
+      "name": "judas_runtime_ui_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_runtime_ui_application_tests"
+      ],
+      "seconds": 2.270599209000011,
+      "exit": 0
+    },
+    {
+      "name": "judas_scene_transition_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_transition_tests"
+      ],
+      "seconds": 0.6153391230000125,
+      "exit": 0
+    },
+    {
+      "name": "save-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m94/final-remainder/save-write"
+      ],
+      "seconds": 1.0663284350002868,
+      "exit": 0
+    },
+    {
+      "name": "save-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m94/final-remainder/save-read"
+      ],
+      "seconds": 1.0161229450000064,
+      "exit": 0
+    },
+    {
+      "name": "judas_prefab_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_tests"
+      ],
+      "seconds": 0.06426164699996662,
+      "exit": 0
+    },
+    {
+      "name": "judas_mod_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mod_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/modding_lab/modding_lab.judasproj",
+        "zero",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m94/final-remainder/mods-off"
+      ],
+      "seconds": 5.374742001999948,
+      "exit": 0
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "seconds": 0.515105751000192,
+      "exit": 0
+    },
+    {
+      "name": "judasjs_examples_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m94/final-remainder/cookbook"
+      ],
+      "seconds": 15.948714296000162,
+      "exit": 0
+    },
+    {
+      "name": "source-developer_lab",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/developer_lab/developer_lab.judasproj"
+      ],
+      "seconds": 0.01584685999978319,
+      "exit": 0
+    },
+    {
+      "name": "source-shooter_game",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/shooter_game/shooter_game.judasproj"
+      ],
+      "seconds": 0.03197215499994854,
+      "exit": 0
+    },
+    {
+      "name": "source-boundary_demo",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/boundary_demo/boundary_demo.judasproj"
+      ],
+      "seconds": 0.01582760600012989,
+      "exit": 0
+    },
+    {
+      "name": "source-asset_lab",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/asset_lab/asset_lab.judasproj"
+      ],
+      "seconds": 0.015859122999700048,
+      "exit": 0
+    },
+    {
+      "name": "source-core_scramble",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/core_scramble/core_scramble.judasproj"
+      ],
+      "seconds": 0.03193854899973303,
+      "exit": 0
+    },
+    {
+      "name": "source-lastlight",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/lastlight/lastlight.judasproj"
+      ],
+      "seconds": 0.11418576799997027,
+      "exit": 0
+    },
+    {
+      "name": "source-planetfall",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/planetfall/planetfall.judasproj"
+      ],
+      "seconds": 0.1658013769997524,
+      "exit": 0
+    },
+    {
+      "name": "source-streamed_range",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj"
+      ],
+      "seconds": 0.03291235400001824,
+      "exit": 0
+    },
+    {
+      "name": "api",
+      "argv": [
+        "node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+        "--runtime",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m94/final-remainder/cookbook/surface.json"
+      ],
+      "seconds": 1.116390223000053,
+      "exit": 0
+    }
+  ],
+  "nativeM94Checks": 49,
+  "editorM94Checks": 20,
+  "consumerM94Checks": 37,
+  "cookbook": {
+    "executedCases": 35,
+    "checks": 286
+  },
+  "api": {
+    "exports": 37,
+    "publicSymbols": 424,
+    "typeChecker": "5.9.3",
+    "liveEnumeration": true
+  },
+  "lateNarrowReruns": {
+    "native": "final/judas_script_developer_tools_tests.log",
+    "editor": "editor/RESULTS.json",
+    "reason": "Immediate breakpoint edits, final source navigation; unchanged core regression executables need no repeat."
+  },
+  "scope": "Focused subsystem/application regressions, not the full production suite."
+}

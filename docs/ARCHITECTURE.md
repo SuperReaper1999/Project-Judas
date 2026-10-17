@@ -10047,3 +10047,25 @@ scene streaming controls publication; residency does not own simulation lifetime
 
 See [current M93 contracts](M93_ASSET_PIPELINE.md),
 [lab](../projects/asset_lab/README.md) and [evidence](evidence/m93/REPORT.md).
+
+
+## M94 — developer debugging and deliberate script-session iteration
+
+`ScriptSystem` keeps its existing main-thread authoritative VM. The optional
+editor-owned handler uses a small documented QuickJS execution-hook extension
+(source maps plus read-only frame bindings), not rewritten project source or a
+second interpreter. No editor/ImGui dependency enters the engine. Default runtime
+execution has a disabled dispatch branch and no debugger store or service.
+`src/editor/ScriptTools.cpp` owns the stopped SDL/ImGui loop: no world tick,
+streaming publication or scene replacement occurs while the VM stack is suspended.
+Clock/input reset prevents pause-driven catch-up and input leakage.
+
+Deliberate reload compiles/links a replacement VM before retiring old owners,
+uses the ordinary destroy/UI/streaming/signal cleanup paths, and can retain only
+validated instance JSON state. Runtime faults after replacement remain isolated,
+not transactionally rolled back. Reloaded worlds cannot publish baseline-compatible
+saves until Stop/Play. `judas_script_check` shares the compile/link diagnostics
+without evaluating project code. No public JudasJS export/member was added.
+See [M94 developer tools](M94_DEVELOPER_TOOLS.md), the
+[ordinary project](../projects/developer_lab/README.md) and
+[verification/limitations](evidence/m94/REPORT.md). Human review remains separate.

@@ -43,6 +43,7 @@ public:
     int Run(int argc, char** argv);
 
 private:
+    std::unique_ptr<struct ScriptTools> m_scriptTools;
     EditorMilestoneNotice m_milestoneNotice;
     std::unique_ptr<struct TerrainEditor> m_terrain;
     std::unique_ptr<struct VolumeTerrainEditor> m_volumeTerrain;

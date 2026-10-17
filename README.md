@@ -38,11 +38,16 @@ outstanding; M90 Windows/Android checks were not performed. See
 [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
 [validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
 
-Experimental development adds **M93 cooked assets, rigid mesh LOD and optional
+Human-accepted M93 adds **cooked assets, rigid mesh LOD and optional
 visual residency**. Start with [The Packed Museum](projects/asset_lab/README.md),
 [the pipeline guide](docs/M93_ASSET_PIPELINE.md) and
-[M93 evidence](docs/evidence/m93/REPORT.md). M93 human review is pending;
+[M93 evidence](docs/evidence/m93/REPORT.md).
 Windows/Android M93 are unvalidated.
+
+Experimental M94 adds [JudasJS debugging and deliberate reload](docs/M94_DEVELOPER_TOOLS.md):
+source breakpoints, stepping, safe variable snapshots and compile/import diagnostics.
+Try [The Repair Bench](projects/developer_lab/README.md). M94 human review and
+Windows/Android validation remain pending.
 
 ## Highlights
 

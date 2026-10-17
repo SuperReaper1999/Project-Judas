@@ -173,6 +173,7 @@ struct EditorPanelState {
     bool gizmoSnap = false;
     bool gizmoIndividualOrigins = false;
     DebugViewOptions debug;
+    bool showScriptTools = false;
     bool showProfiler = false;
     bool profilerInspect = false;
     bool showProjectSettings = false;

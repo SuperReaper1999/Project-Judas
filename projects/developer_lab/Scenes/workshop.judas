@@ -1,0 +1,568 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "The Repair Bench",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.4,
+        0.85,
+        0.35
+      ],
+      "sun-color": [
+        0.7,
+        0.72,
+        0.76
+      ],
+      "ambient": [
+        0.18,
+        0.21,
+        0.26
+      ],
+      "next-id": 1000,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Workshop presentation",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "1fa8b929e4429afc81f2104ffab75aa1",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "ui.asset": "70a5572c9d93e38ad1971dcdc6a267af",
+          "ui.name": "workshop",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 10,
+        "name": "Workshop floor",
+        "fields": {
+          "position": [
+            0,
+            -0.3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            9,
+            0.3,
+            7
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.085,
+            0.12,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 11,
+        "name": "Repair bench",
+        "fields": {
+          "position": [
+            0,
+            1.1,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3,
+            0.18,
+            1.2
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.24,
+            0.32,
+            0.37
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 20,
+        "name": "Bench support",
+        "fields": {
+          "position": [
+            -2.5,
+            0.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.15,
+            0.5,
+            0.8
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.18,
+            0.23
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 21,
+        "name": "Bench support",
+        "fields": {
+          "position": [
+            2.5,
+            0.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.15,
+            0.5,
+            0.8
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.18,
+            0.23
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 30,
+        "name": "Calibrated assembly",
+        "fields": {
+          "position": [
+            0,
+            1.9,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.6,
+            0.6,
+            0.6
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.9,
+            0.58,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "2a7da47a9b2c6a240f47518226e469ab",
+          "script.0.enabled": true,
+          "script.0.properties": "{}"
+        }
+      },
+      {
+        "id": 40,
+        "name": "Diagnostic strip",
+        "fields": {
+          "position": [
+            -2.5,
+            1.4,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.035,
+            0.08
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.8,
+            0.7
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 41,
+        "name": "Diagnostic strip",
+        "fields": {
+          "position": [
+            -1.5,
+            1.4,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.035,
+            0.08
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.8,
+            0.7
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 42,
+        "name": "Diagnostic strip",
+        "fields": {
+          "position": [
+            -0.5,
+            1.4,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.035,
+            0.08
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.8,
+            0.7
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 43,
+        "name": "Diagnostic strip",
+        "fields": {
+          "position": [
+            0.5,
+            1.4,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.035,
+            0.08
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.8,
+            0.7
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 44,
+        "name": "Diagnostic strip",
+        "fields": {
+          "position": [
+            1.5,
+            1.4,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.035,
+            0.08
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.8,
+            0.7
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 45,
+        "name": "Diagnostic strip",
+        "fields": {
+          "position": [
+            2.5,
+            1.4,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.3,
+            0.035,
+            0.08
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.8,
+            0.7
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      }
+    ]
+  }
+}

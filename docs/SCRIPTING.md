@@ -14,7 +14,7 @@ select an asset, then edit the declared boolean/number/string fields. Add more
 behaviours for ordered slots; persistent slot IDs are separate from slot order.
 Prefab source/instance edits use normal component serialization and overrides.
 Properties may store asset IDs as strings. Editing a property does not rewrite JS.
-Restart Play after changing code; no live state migration is provided.
+Restart Play for a clean world, or use [M94 deliberate script reload](M94_DEVELOPER_TOOLS.md). It can retain bounded JSON instance state; no arbitrary live object/closure migration is provided.
 
 ```js
 import {input, world, console} from 'judas';

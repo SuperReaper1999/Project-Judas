@@ -1,0 +1,12 @@
+FRAMES 160
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+SCREENSHOT 25 /home/conner/Documents/GitHub/Project-Judas/.cache/m94/delivery/standalone-workshop.png
+ACTION pause 1 35 36
+EXPECT_PAUSED 1 40
+ACTION pause 1 50 51
+EXPECT_PAUSED 0 55
+ACTION reset 1 70 71
+WAIT_SERVICES scene 10000 75
+EXPECT_SCENE Scenes/workshop.judas 80
+SCREENSHOT 140 /home/conner/Documents/GitHub/Project-Judas/.cache/m94/delivery/standalone-reloaded.png

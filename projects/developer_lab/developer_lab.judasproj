@@ -1,0 +1,123 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Judas / The Repair Bench",
+    "legacyGameplay": false,
+    "saveIdentity": "5f5a2abd94faedc62f1fccd8314c20b56f02cfed4f5583761cb479efc8a15660",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/workshop.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "closure",
+    "runtimeAssets": [
+      "1fa8b929e4429afc81f2104ffab75aa1",
+      "2a7da47a9b2c6a240f47518226e469ab",
+      "07b95000c3d54a0a6232b39eac20aeaa",
+      "70a5572c9d93e38ad1971dcdc6a267af"
+    ],
+    "exportScenes": [
+      "Scenes/workshop.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "repair_test",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:E",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1.0,
+            "deadzone": 0.0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 2,
+        "entries": [
+          {
+            "id": 0,
+            "name": "lamp"
+          },
+          {
+            "id": 1,
+            "name": "gallery_camera"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {},
+    "visualBudgetMiB": 0
+  }
+}

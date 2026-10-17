@@ -379,6 +379,9 @@ struct JSRuntime {
 
     struct JSStackFrame *current_stack_frame;
 
+    JSExecutionHook *execution_hook;
+    void *execution_opaque;
+    bool in_execution_hook;
     JSInterruptHandler *interrupt_handler;
     void *interrupt_opaque;
 
@@ -432,6 +435,7 @@ typedef struct JSStackFrame {
     struct JSVarRef **var_refs; /* references to arguments or local variables */
     uint8_t *cur_pc; /* only used in bytecode functions : PC of the
                         instruction after the call */
+    uint32_t debug_pc_start, debug_pc_end;
     uint16_t var_ref_count; /* number of var refs */
     uint16_t arg_count;
     bool is_strict_mode;
@@ -8075,8 +8079,8 @@ static int get_sleb128(int32_t *pval, const uint8_t *buf,
     return ret;
 }
 
-static int find_line_num(JSContext *ctx, JSFunctionBytecode *b,
-                         uint32_t pc_value, int *col)
+static int find_line_range(JSContext *ctx, JSFunctionBytecode *b,
+                           uint32_t pc_value, int *col, uint32_t *start, uint32_t *end)
 {
     const uint8_t *p_end, *p;
     int new_line_num, new_col_num, line_num, col_num, pc, ret;
@@ -8084,6 +8088,8 @@ static int find_line_num(JSContext *ctx, JSFunctionBytecode *b,
     unsigned int op;
 
     *col = 1;
+    if (start) *start = 0;
+    if (end) *end = b->byte_code_len;
     p = b->pc2line_buf;
     if (!p)
         goto fail;
@@ -8115,8 +8121,11 @@ static int find_line_num(JSContext *ctx, JSFunctionBytecode *b,
             goto fail;
         p += ret;
         new_col_num = col_num + v;
-        if (pc_value < pc)
+        if (pc_value < pc) {
+            if (end) *end = pc;
             break;
+        }
+        if (start) *start = pc;
         line_num = new_line_num;
         col_num = new_col_num;
     }
@@ -8125,6 +8134,106 @@ static int find_line_num(JSContext *ctx, JSFunctionBytecode *b,
 fail:
     /* should never happen */
     return b->line_num;
+}
+
+static int find_line_num(JSContext *ctx, JSFunctionBytecode *b,
+                         uint32_t pc_value, int *col)
+{
+    return find_line_range(ctx, b, pc_value, col, NULL, NULL);
+}
+
+/* Judas: read-only debugger bridge. Keep all private VM layouts here. */
+void JS_SetExecutionHook(JSRuntime *rt, JSExecutionHook *hook, void *opaque)
+{
+    rt->execution_hook = hook;
+    rt->execution_opaque = opaque;
+}
+
+static const char *get_func_name(JSContext *ctx, JSValueConst func);
+
+JSValue JS_GetDebugFrame(JSContext *ctx, unsigned index)
+{
+    JSStackFrame *sf;
+    JSFunctionBytecode *b;
+    JSObject *p;
+    JSValue result, vars, entry;
+    unsigned n = 0;
+    int i, col, line;
+    if (!ctx->rt->in_execution_hook)
+        return JS_NULL;
+    for (sf = ctx->rt->current_stack_frame; sf; sf = sf->prev_frame) {
+        if (!JS_IsObject(sf->cur_func)) continue;
+        p = JS_VALUE_GET_OBJ(sf->cur_func);
+        if (p->class_id != JS_CLASS_BYTECODE_FUNCTION) continue;
+        if (index--) continue;
+        b = p->u.func.function_bytecode;
+        line = find_line_num(ctx, b, sf->cur_pc ? sf->cur_pc - b->byte_code_buf - 1 : 0, &col);
+        result = JS_NewObject(ctx);
+        JS_SetPropertyStr(ctx, result, "file", JS_AtomToValue(ctx, b->filename));
+        {
+            const char *name = get_func_name(ctx, sf->cur_func);
+            JS_SetPropertyStr(ctx, result, "function", JS_NewString(ctx, name ? name : "<anonymous>"));
+            if (name) JS_FreeCString(ctx, name);
+        }
+        JS_SetPropertyStr(ctx, result, "line", JS_NewInt32(ctx, line));
+        JS_SetPropertyStr(ctx, result, "column", JS_NewInt32(ctx, col));
+        vars = JS_NewArray(ctx);
+        /* Keep shadowed locals distinct. Uninitialized lexical values must not
+           escape as JS_UNINITIALIZED into ordinary object properties. */
+        for (i = 0; b->vardefs && i < b->arg_count + b->var_count && n < 256; ++i) {
+            JSValue value = i < b->arg_count ? sf->arg_buf[i] : sf->var_buf[i - b->arg_count];
+            if (!b->vardefs[i].var_name) continue;
+            entry = JS_NewObject(ctx);
+            JS_SetPropertyStr(ctx, entry, "name", JS_AtomToValue(ctx, b->vardefs[i].var_name));
+            JS_SetPropertyStr(ctx, entry, "scope", JS_NewString(ctx, i < b->arg_count ? "argument" : "local"));
+            JS_SetPropertyStr(ctx, entry, "value", JS_IsUninitialized(value) ? JS_NewString(ctx, "<uninitialized>") : JS_DupValue(ctx, value));
+            JS_SetPropertyUint32(ctx, vars, n++, entry);
+        }
+        for (i = 0; i < b->closure_var_count && n < 256; ++i) {
+            JSVarRef *ref = p->u.func.var_refs[i];
+            JSValue value = ref && ref->pvalue ? *ref->pvalue : JS_UNDEFINED;
+            entry = JS_NewObject(ctx);
+            JS_SetPropertyStr(ctx, entry, "name", JS_AtomToValue(ctx, b->closure_var[i].var_name));
+            JS_SetPropertyStr(ctx, entry, "scope", JS_NewString(ctx, "closure"));
+            JS_SetPropertyStr(ctx, entry, "value", JS_IsUninitialized(value) ? JS_NewString(ctx, "<uninitialized>") : JS_DupValue(ctx, value));
+            JS_SetPropertyUint32(ctx, vars, n++, entry);
+        }
+        JS_SetPropertyStr(ctx, result, "variables", vars);
+        return result;
+    }
+    return JS_NULL;
+}
+
+static int judas_execution_hook(JSContext *ctx, JSStackFrame *sf,
+                                JSFunctionBytecode *b, uint8_t *pc)
+{
+    JSRuntime *rt = ctx->rt;
+    JSStackFrame *f;
+    int depth = 0, col, line, cancel;
+    JSValue saved_exception;
+    uint32_t offset = pc - b->byte_code_buf;
+    if (rt->in_execution_hook) return 0;
+    /* Decode source maps only at source boundaries. This per-frame cache owns
+       no allocation and cannot alias a collected/reused function. Backward
+       branches outside the current range naturally decode again. */
+    if (offset >= sf->debug_pc_start && offset < sf->debug_pc_end) return 0;
+    line = find_line_range(ctx, b, offset, &col, &sf->debug_pc_start, &sf->debug_pc_end);
+    for (f = sf; f; f = f->prev_frame)
+        if (JS_IsObject(f->cur_func) && JS_VALUE_GET_OBJ(f->cur_func)->class_id == JS_CLASS_BYTECODE_FUNCTION) ++depth;
+    sf->cur_pc = pc + 1;
+    saved_exception = rt->current_exception;
+    rt->current_exception = JS_UNINITIALIZED;
+    rt->in_execution_hook = true;
+    cancel = rt->execution_hook(ctx, b->filename, line, col, depth, rt->execution_opaque);
+    rt->in_execution_hook = false;
+    /* Inspector failures cannot replace the debugged program's exception. */
+    JS_FreeValue(ctx, rt->current_exception);
+    rt->current_exception = saved_exception;
+    if (cancel) {
+        JS_ThrowInternalError(ctx, "execution cancelled by debugger");
+        return -1;
+    }
+    return 0;
 }
 
 /* in order to avoid executing arbitrary code during the stack trace
@@ -18059,7 +18168,7 @@ static JSValue JS_CallInternal(JSContext *caller_ctx, JSValueConst func_obj,
 #endif
 
 #if !DIRECT_DISPATCH
-#define SWITCH(pc)      DUMP_BYTECODE_OR_DONT(pc) switch (opcode = *pc++)
+#define SWITCH(pc)      if (unlikely(rt->execution_hook) && judas_execution_hook(ctx, sf, b, pc)) goto exception; DUMP_BYTECODE_OR_DONT(pc) switch (opcode = *pc++)
 #define CASE(op)        case op
 #define DEFAULT         default
 #define BREAK           break
@@ -18070,7 +18179,7 @@ static JSValue JS_CallInternal(JSContext *caller_ctx, JSValueConst func_obj,
 #include "quickjs-opcode.h"
         [ OP_COUNT ... 255 ] = &&case_default
     };
-#define SWITCH(pc)      DUMP_BYTECODE_OR_DONT(pc) __extension__ ({ goto *dispatch_table[opcode = *pc++]; });
+#define SWITCH(pc)      if (unlikely(rt->execution_hook) && judas_execution_hook(ctx, sf, b, pc)) goto exception; DUMP_BYTECODE_OR_DONT(pc) __extension__ ({ goto *dispatch_table[opcode = *pc++]; });
 #define CASE(op)        case_ ## op
 #define DEFAULT         case_default
 #define BREAK           SWITCH(pc)
@@ -18094,6 +18203,7 @@ static JSValue JS_CallInternal(JSContext *caller_ctx, JSValueConst func_obj,
             sp = sf->cur_sp;
             sf->cur_sp = NULL; /* cur_sp is NULL if the function is running */
             pc = sf->cur_pc;
+            sf->debug_pc_start = sf->debug_pc_end = 0;
             sf->prev_frame = rt->current_stack_frame;
             rt->current_stack_frame = sf;
             if (s->throw_flag)
@@ -18164,6 +18274,7 @@ static JSValue JS_CallInternal(JSContext *caller_ctx, JSValueConst func_obj,
     pc = b->byte_code_buf;
     /* sf->cur_pc must we set to pc before any recursive calls to JS_CallInternal. */
     sf->cur_pc = NULL;
+    sf->debug_pc_start = sf->debug_pc_end = 0;
     sf->prev_frame = rt->current_stack_frame;
     rt->current_stack_frame = sf;
     ctx = b->realm; /* set the current realm */
@@ -38377,6 +38488,21 @@ int JS_ResolveModule(JSContext *ctx, JSValueConst obj)
         }
     }
     return 0;
+}
+
+/* Judas deliberate-reload preflight. Keep JS_ResolveModule's upstream
+   semantics unchanged: resolve alone does not reject missing named exports. */
+int JS_PrepareModule(JSContext *ctx, JSValueConst module)
+{
+    JSModuleDef *m;
+    if (JS_VALUE_GET_TAG(module) != JS_TAG_MODULE) {
+        JS_ThrowTypeError(ctx, "module expected");
+        return -1;
+    }
+    if (JS_ResolveModule(ctx, module) < 0) return -1;
+    m = JS_VALUE_GET_PTR(module);
+    if (js_create_module_function(ctx, m) < 0) return -1;
+    return js_link_module(ctx, m);
 }
 
 /*******************************************************************/

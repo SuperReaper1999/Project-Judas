@@ -1,0 +1,28 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real SDL/OpenGL editor host
+PASS ordinary editable developer project
+PASS normal scene loading
+PASS normal world construction
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+PASS stopped editor framebuffer captured
+PASS moving physical body remains unchanged throughout debugger UI pause
+PASS actual SDL F10 resumes nested debugger UI with step-over
+PASS inspection UI leaves all declared script state unchanged while stopped
+PASS moving physical body remains unchanged throughout debugger UI pause
+PASS actual SDL F10 resumes nested debugger UI with step-over
+PASS inspection UI leaves all declared script state unchanged while stopped
+PASS real editor pause loop steps an actual project callback
+PASS debugger requests clock reset and preserves Play
+PASS physical pause probe actually moves when authoritative physics is advanced
+PASS scene and developer panel remain fault-free after resuming
+JS: Worker retired. No physical world reset.
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+PASS editor reload action replaces VM through the same tested boundary
+PASS tracked source edit fixture
+PASS editor saves source through owned staging and atomic replacement
+PASS editor rejects overwriting externally changed source
+PASS external source bytes preserved on rejected edit
+JS: Worker retired. No physical world reset.
+M94_EDITOR 20 checks 0 failures

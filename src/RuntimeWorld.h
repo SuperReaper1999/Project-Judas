@@ -344,6 +344,7 @@ public:
     void UpdateUIScripts(InputSystem* input,float dt);
     void DispatchUIEvents(const InputSystem* input,float dt);
     ScriptSystem* Scripts() const {return m_scripts.get();}
+    ScriptSystem& PrepareScriptTools(); // editor/native tool opt-in; does not invoke gameplay
     struct MetadataWork {uint64_t lookups=0,indexRebuilds=0,definitionsCopied=0,scriptSlotsCopied=0,touchBodyResolutions=0;};
     MetadataWork MetadataStats()const{return m_metadataWork;}
     std::vector<SceneObject> ScriptObjects(bool scriptedOnly=false) const;

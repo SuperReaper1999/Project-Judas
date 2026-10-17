@@ -105,3 +105,5 @@ bool SceneSession::AdvanceOuter(std::unique_ptr<RuntimeWorld>& owner,Interactive
     if(!transitionError.empty()){if(!error.empty())error+="; ";error+=transitionError;}
     return ok;
 }
+
+bool SceneSession::OperationInProgress()const{return !m_accepting||Pending()||(m_saveService&&m_saveService->Busy());}

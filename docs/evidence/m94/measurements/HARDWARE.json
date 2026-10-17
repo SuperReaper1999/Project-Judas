@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-17T00:00:43.976716+00:00",
+  "baseline_commit": "3306b5aa66a2e649bad06abc8c5cba452058d3fa",
+  "build": "Release -O3 -DNDEBUG; QuickJS GNU C11",
+  "cpu": "Architecture:                            x86_64\nCPU(s):                                  8\nModel name:                              Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz\nThread(s) per core:                      2\nCore(s) per socket:                      4\nSocket(s):                               1\nNUMA node0 CPU(s):                       0-7",
+  "gpu": "NVIDIA GeForce GTX 970, 580.178.04, 4096 MiB",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "kernel": "Linux 7.0.0-38-generic",
+  "gpuQueryExit": 0,
+  "glRuntimeEvidence": "Native editor: OpenGL 3.3 NVIDIA 580.178.04 / GeForce GTX 970, in editor-final/tools.log"
+}

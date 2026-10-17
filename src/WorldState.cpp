@@ -12,6 +12,7 @@
 #include <limits>
 #include <set>
 #include <sstream>
+#include <stdexcept>
 
 #include "RuntimeWorld.h"
 #include "SceneFingerprint.h"
@@ -188,6 +189,7 @@ bool ValidateStructure(const WorldState& state, std::string& error) {
 }  // namespace
 
 bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
+    if(world.Scripts()&&world.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}
     for(const auto& definition:world.ScriptObjects()){
         if(!definition.body||world.IsTransientEntity(definition.id))continue;
         const auto handle=world.RuntimeBody(definition.id);if(!handle.IsValid())continue;
@@ -202,6 +204,7 @@ bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
 }
 
 WorldState CaptureWorldState(const RuntimeWorld& world) {
+    if(world.Scripts()&&world.Scripts()->HasReloaded())throw std::logic_error("script session was reloaded; Stop and Play before saving a compatible baseline");
     WorldState out;
     out.baselineName = world.Settings().name;
     out.compatibility.baselineFingerprint = world.BaselineFingerprint();

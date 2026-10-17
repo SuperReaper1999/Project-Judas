@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "2a7da47a9b2c6a240f47518226e469ab"
+type script
+source "Assets/scripts/worker.js"

@@ -372,6 +372,7 @@ add_executable(judas_editor
     src/editor/EditorMain.cpp
     src/editor/EditorMilestoneNotice.cpp
     src/editor/EditorApplication.cpp
+    src/editor/ScriptTools.cpp
     src/editor/EditorCamera.cpp
     src/editor/EditorPicking.cpp
     src/editor/EditorHistory.cpp
@@ -1983,3 +1984,20 @@ judas_warnings(judas_asset_residency_tests)
 add_executable(judas_asset_lab_tests tests/AssetLabTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_asset_lab_tests PRIVATE judas_engine)
 judas_warnings(judas_asset_lab_tests)
+
+# M94: actual VM instruction stops, inspection and deliberate session reload.
+add_executable(judas_script_developer_tools_tests tests/ScriptDeveloperToolsTests.cpp)
+target_link_libraries(judas_script_developer_tools_tests PRIVATE judas_engine)
+judas_warnings(judas_script_developer_tools_tests)
+add_executable(judas_script_check tools/ScriptCheck.cpp)
+target_link_libraries(judas_script_check PRIVATE judas_engine)
+judas_warnings(judas_script_check)
+add_executable(judas_script_vm_benchmark tests/ScriptVMBenchmark.c)
+set_target_properties(judas_script_vm_benchmark PROPERTIES C_STANDARD 11)
+target_link_libraries(judas_script_vm_benchmark PRIVATE judas_quickjs)
+add_executable(judas_script_tools_editor_tests tests/ScriptToolsEditorTests.cpp src/editor/ScriptTools.cpp)
+target_link_libraries(judas_script_tools_editor_tests PRIVATE judas_engine judas_imgui)
+judas_warnings(judas_script_tools_editor_tests)
+add_executable(judas_script_developer_consumer_tests tests/ScriptDeveloperConsumerTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_script_developer_consumer_tests PRIVATE judas_engine)
+judas_warnings(judas_script_developer_consumer_tests)

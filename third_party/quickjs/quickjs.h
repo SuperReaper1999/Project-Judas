@@ -1186,6 +1186,17 @@ JS_EXTERN void JS_SetHostPromiseRejectionTracker(JSRuntime *rt, JSHostPromiseRej
 /* return != 0 if the JS code needs to be interrupted */
 typedef int JSInterruptHandler(JSRuntime *rt, void *opaque);
 JS_EXTERN void JS_SetInterruptHandler(JSRuntime *rt, JSInterruptHandler *cb, void *opaque);
+
+/* Judas editor extension. Disabled unless explicitly attached. The hook runs
+   before an instruction; returning nonzero cancels execution. Frame snapshots
+   are valid only inside the hook, and never evaluate project expressions. */
+typedef int JSExecutionHook(JSContext *ctx, JSAtom file, int line, int column,
+                            int depth, void *opaque);
+JS_EXTERN void JS_SetExecutionHook(JSRuntime *rt, JSExecutionHook *hook, void *opaque);
+JS_EXTERN JSValue JS_GetDebugFrame(JSContext *ctx, unsigned index);
+/* Resolve and link imports/exports without executing module bodies. */
+JS_EXTERN int JS_PrepareModule(JSContext *ctx, JSValueConst module);
+
 /* if can_block is true, Atomics.wait() can be used */
 JS_EXTERN void JS_SetCanBlock(JSRuntime *rt, bool can_block);
 /* set the [IsHTMLDDA] internal slot */

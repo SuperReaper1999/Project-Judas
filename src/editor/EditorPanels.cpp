@@ -423,6 +423,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
         ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
+        ImGui::MenuItem("JudasJS developer tools", nullptr, &state.showScriptTools);
         ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
         ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
         if (ImGui::MenuItem("Check for new milestones")) requests.checkMilestones = true;

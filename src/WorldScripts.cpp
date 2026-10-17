@@ -261,3 +261,8 @@ bool RuntimeWorld::SetBodyMaterial(EntityId id,const std::string& asset,const Ph
  auto settings=*d->body;settings.physicalMaterial=asset;settings.physicalMaterialOverride=factors!=nullptr;settings.friction=material.friction;settings.restitution=material.restitution;m_scriptDefinitions.at(id).body=settings;if(auto* e=FindEntity(id))e->definition.body=settings;
  if(!asset.empty()){m_assets->AddRef(asset);m_referencedAssets.push_back(asset);}return true;
 }
+
+ScriptSystem& RuntimeWorld::PrepareScriptTools(){
+    if(!m_scripts)m_scripts=std::make_unique<ScriptSystem>(this,m_assets?m_assets->Assets():nullptr);
+    return *m_scripts;
+}

@@ -1,0 +1,14 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 1000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m94/delivery/editor.edit.png
+[editor autotest] edit frame: 3 draw calls, 132 triangles, 102 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/m94/delivery/editor.play.png
+[editor autotest] play frame: 0 steps, step 0.019 ms, 0 bodies, 0 contacts, 3 draw calls, 264 triangles, 1 shadow passes, 0 lights, 138 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes
+[editor autotest] jobs: 7 workers, 1 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+JS: Worker retired. No physical world reset.

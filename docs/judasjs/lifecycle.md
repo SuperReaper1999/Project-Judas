@@ -10,6 +10,10 @@ registered script assets. Other bare imports, absolute paths, Node and browser
 modules are unavailable. Source modules are limited to 1 MiB. Modules are cached
 once per world's VM; module globals are shared between instances in that world.
 A new scene/reload/Play creates a fresh VM, not a retained module heap.
+[M94's explicit editor script reload](../M94_DEVELOPER_TOOLS.md#deliberate-edit-and-reload)
+also replaces the VM, optionally retaining bounded instance JSON state while
+keeping the physical world. It runs constructors/start anew; it is not a save
+restore, automatic hot reload or a closure/object-graph migration.
 
 Default-export a constructible class. Each enabled authored slot creates its own
 instance with `{entity, properties, restored, initialState}`. `restored` is true for modern

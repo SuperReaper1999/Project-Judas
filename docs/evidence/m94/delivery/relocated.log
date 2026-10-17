@@ -1,0 +1,14 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / The Repair Bench (/tmp/judas-m94-relocated-zzlvqywp/game.judasproj)
+Scene: The Repair Bench (/tmp/judas-m94-relocated-zzlvqywp/Scenes/workshop.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m94/delivery/standalone-workshop.png
+JS: Worker retired. No physical world reset.
+JS: Worker started; JSON phase is retained on Keep JSON state reload.
+[TestHarness] service scene ready after 0 wait frames at frame 75
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m94/delivery/standalone-reloaded.png
+JS: Worker retired. No physical world reset.

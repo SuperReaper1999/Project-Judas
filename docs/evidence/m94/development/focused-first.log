@@ -1,0 +1,62 @@
+script asset=f9daa5bee8c51cec64b640e40d0031ff entity=1 slot=1 start: TypeError: signals: onSignal must be callable
+    at __judas (native)
+    at call (judas:2:51)
+    at subscribe (judas:4:62)
+    at start (Assets/driver.js:5:38)
+
+script asset=f9daa5bee8c51cec64b640e40d0031ff entity=1 slot=1 start: TypeError: signals: onSignal must be callable
+    at __judas (native)
+    at call (judas:2:51)
+    at subscribe (judas:4:62)
+    at start (Assets/driver.js:5:38)
+
+script asset=f9daa5bee8c51cec64b640e40d0031ff entity=1 slot=1 update: Error: broken consumer
+    at update (Assets/driver.js:1:42)
+
+script asset=f9daa5bee8c51cec64b640e40d0031ff entity=1 slot=1 start: TypeError: signals: onSignal must be callable
+    at __judas (native)
+    at call (judas:2:51)
+    at subscribe (judas:4:62)
+    at start (Assets/driver.js:5:38)
+
+script asset=f9daa5bee8c51cec64b640e40d0031ff entity=1 slot=1 start: TypeError: signals: onSignal must be callable
+    at __judas (native)
+    at call (judas:2:51)
+    at subscribe (judas:4:62)
+    at start (Assets/driver.js:5:38)
+
+PASS normal tracked modules
+PASS ordinary physical world builds
+PASS compile/link preflight does not require constructors or gameplay execution
+PASS preflight did not create instances
+FAIL debugged script completed without fault
+FAIL real source breakpoint before statement with owner and location
+FAIL step into imported helper exposes actual arguments and closure values
+FAIL step out returns to caller
+FAIL resumed instruction executes once with expected numerical result
+FAIL opt-in console captures actual output
+FAIL step over executes helper without stopping inside it
+PASS dependency syntax error rejects reload with source location
+PASS rejected preflight preserves VM state and physical endpoint
+PASS missing named import rejected before teardown
+FAIL valid edited modules reload without rebuilding world
+PASS only declared JSON instance state retained across reload
+FAIL old destroy callback runs exactly through ordinary lifecycle path
+FAIL changed source and start run with retained state
+FAIL reloaded baseline cannot publish incompatible modern saves
+FAIL legacy save also rejects reloaded baseline
+PASS explicit fresh reload available
+FAIL fresh reload resets JS state but uses edited source
+PASS inspection adversary loads
+PASS inspection skips accessors/proxy traps and object coercion
+PASS runtime fault replacement compiles
+PASS runtime errors include useful source stack
+PASS faulted state cannot silently be retained
+PASS fresh reload repairs faulted instance
+FAIL repaired lifecycle runs without application restart
+FAIL debug cancel unwinds VM safely through isolated fault boundary
+PASS cancelled callback can be deliberately replaced
+PERFORMANCE mode=off median_update_us=0.324 worst_batch_us=0.417
+PERFORMANCE mode=debug-attached median_update_us=0.355 worst_batch_us=0.411
+PERFORMANCE mode=debug-attached median_update_us=0.343 worst_batch_us=0.379
+M94 31 checks 15 failures

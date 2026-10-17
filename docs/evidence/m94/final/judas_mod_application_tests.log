@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: modding_lab (/home/conner/Documents/GitHub/Project-Judas/projects/modding_lab/modding_lab.judasproj)
+Scene: Protected hub (/home/conner/Documents/GitHub/Project-Judas/projects/modding_lab/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS required composed terrain/body ready through normal resource path
+PASS ordinary authored UI published
+PASS normal renderer capture
+PASS M56 profiler export
+PASS normal Application shutdown
+5 checks, 0 failures

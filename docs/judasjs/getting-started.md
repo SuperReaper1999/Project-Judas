@@ -4,7 +4,7 @@
 
 Judas runs ordinary project JavaScript. You author entities/components/assets and
 use scripts to supply game rules. No C++ recompilation is needed to change those
-rules. This guide describes the current API including the M71 candidate; its
+rules. This guide describes the current API through M94 developer tooling; its
 human-review status is on the [landing page](../JUDASJS.md).
 
 ## 1. Create an ordinary project
@@ -59,9 +59,11 @@ attach it as a behaviour. There is no Node, npm, browser DOM, timer service or
 general async callback runtime. Top-level module code also runs during inspector
 metadata inspection, without a world: keep native game work inside callbacks.
 
-Code changes take effect in a fresh Play/scene world. Stop, save source, and Play
-again; there is no script hot reload. Editing runtime objects does not rewrite
-your authored scene.
+Stop, save source and Play again for a fresh world. For a deliberate in-place
+script-session replacement, use [M94 developer tools](../M94_DEVELOPER_TOOLS.md).
+Reload can retain bounded JSON state, but reconstructs the VM and callbacks;
+it is not automatic hot reload or arbitrary object migration. Editing runtime
+objects does not rewrite your authored scene.
 
 ## 3. Use properties, state and references deliberately
 

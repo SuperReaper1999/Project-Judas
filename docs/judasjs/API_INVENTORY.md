@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M92 public module based on checkpoint `61a9df6acaa102c0a9fcf1006866a01fc3b33a89 + M92 working surface`. M91 is operator accepted. M92 automated validation and human review are recorded separately; earlier platform acceptance does not certify M92 on those platforms. Earlier acceptance and outstanding platform/authoring reviews are recorded in their own milestone evidence.
+Current M94 repository surface, based on accepted checkpoint `3306b5aa66a2e649bad06abc8c5cba452058d3fa` plus developer tooling. M94 adds no public `judas` exports/members; its debugger, source checks and reload controls are editor/native tooling. See [developer tools](../M94_DEVELOPER_TOOLS.md). M94 human/platform review remains separate from earlier acceptance.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

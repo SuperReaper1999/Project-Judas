@@ -1,0 +1,11 @@
+file:///home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs:101
+if(JSON.stringify(stored)!==JSON.stringify(schema))throw Error('Inventory drift; review actual runtime/type/reference before updating');
+                                                         ^
+
+Error: Inventory drift; review actual runtime/type/reference before updating
+    at file:///home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs:101:58
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2

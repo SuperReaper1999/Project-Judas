@@ -440,6 +440,24 @@ struct ScriptSystem::Impl {
     std::map<std::pair<SceneObjectId,std::uint64_t>,Instance> instances;
     std::map<std::string,JSModuleDef*> modules;
     std::vector<ScriptDiagnostic> diagnostics;
+    bool reloaded=false;
+    unsigned invocationDepth=0;
+    std::vector<std::string> consoleMessages;
+    struct DebugState {
+        ScriptDebugHandler handler;
+        std::vector<ScriptBreakpoint> points;
+        ScriptDebugAction step=ScriptDebugAction::Continue;
+        bool pauseNext=false,inside=false;
+        int stepDepth=0,lastLine=-1,lastDepth=-1;
+        JSAtom lastFile=JS_ATOM_NULL;
+        std::map<JSAtom,std::string> files;
+        std::map<std::string,std::string> sources;
+        size_t sourceBytes=0;
+        std::map<int,std::pair<JSAtom,int>> linesByDepth;
+    };
+    std::unique_ptr<DebugState> debug;
+    #include "ScriptDeveloperTools.inc"
+
     const InputSystem* input=nullptr;bool fixed=false;float delta=0;
     bool inUI=false;bool inPresentation=false;float presentationAlpha=1;
     bool hasView=false;glm::vec3 viewOrigin{0},viewDirection{0};
@@ -474,7 +492,7 @@ struct ScriptSystem::Impl {
             if(record)i.profileLabel=p.Intern("Script asset: "+record->relativePath);
         }return i.profileLabel;
     }
-    ~Impl(){Stop();JS_FreeValue(ctx,plainObjectPrototype);JS_FreeValue(ctx,plainArrayPrototype);for(unsigned i=0;i<profileLabelCount;++i)JS_FreeAtom(ctx,profileLabels[i].atom);JS_FreeContext(ctx);JS_FreeRuntime(rt);}
+    ~Impl(){JS_SetExecutionHook(rt,nullptr,nullptr);Stop();if(debug)for(auto [atom,name]:debug->files){(void)name;JS_FreeAtom(ctx,atom);}JS_FreeValue(ctx,plainObjectPrototype);JS_FreeValue(ctx,plainArrayPrototype);for(unsigned i=0;i<profileLabelCount;++i)JS_FreeAtom(ctx,profileLabels[i].atom);JS_FreeContext(ctx);JS_FreeRuntime(rt);}
     static char* Normalize(JSContext* c,const char* base,const char* name,void* p){
         auto* s=static_cast<Impl*>(p);std::string result;
         if(std::string(name)=="judas")result="judas";
@@ -496,6 +514,7 @@ struct ScriptSystem::Impl {
             std::ifstream file(record->path);std::ostringstream out;out<<file.rdbuf();source=out.str();
             if(!file||source.size()>1024*1024){JS_ThrowReferenceError(ctx,"unreadable or oversized script %s",path.c_str());return nullptr;}
         }
+        if(debug&&path!="judas"&&debug->sourceBytes+source.size()<=8*1024*1024){debug->sources[path]=source;debug->sourceBytes+=source.size();}
         auto value=JS_Eval(ctx,source.data(),source.size(),path.c_str(),JS_EVAL_TYPE_MODULE|JS_EVAL_FLAG_COMPILE_ONLY);
         if(JS_IsException(value))return nullptr;
         auto* module=static_cast<JSModuleDef*>(JS_VALUE_GET_PTR(value));modules[path]=module;JS_FreeValue(ctx,value);return module;
@@ -546,6 +565,7 @@ struct ScriptSystem::Impl {
     void Callback(Instance& i,const char* name,bool presentation=false){
         if(std::strcmp(name,"destroy")==0)SignalRetire({i.entity,i.slot.id});
         if(i.fault)return;
+        struct CallScope { Impl& s; CallScope(Impl& v):s(v){++s.invocationDepth;if(s.debug){s.debug->lastLine=-1;s.debug->linesByDepth.clear();}} ~CallScope(){--s.invocationDepth;} } callScope(*this);
         Invocation invocation(*this,i,std::strcmp(name,"destroy")==0);
         JUDAS_PROFILE_SCOPE("Script lifecycle callback");
         ProfileScope assetScope(AssetLabel(i));
@@ -564,7 +584,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     auto op=String(c,argv[0]);
     auto arg=[&](int i){return i<argc?argv[i]:JS_UNDEFINED;};
     if(op=="modCatalog"){const std::string empty="{\"active\":[],\"contributions\":[],\"exports\":{}}";const auto& data=s->assets&&!s->assets->ModCatalog().empty()?s->assets->ModCatalog():empty;return JS_ParseJSON(c,data.data(),data.size(),"mod catalog");}
-    if(op=="log"){std::fprintf(stdout,"JS: %s\n",String(c,arg(1)).c_str());return JS_UNDEFINED;}
+    if(op=="log"){auto text=String(c,arg(1));std::fprintf(stdout,"JS: %s\n",text.c_str());if(s->debug){if(s->consoleMessages.size()>=256)s->consoleMessages.erase(s->consoleMessages.begin());s->consoleMessages.push_back(text.substr(0,4096));}return JS_UNDEFINED;}
     if(op=="profileScope"){
         if(!JS_IsString(arg(1))||!JS_IsFunction(c,arg(2)))return JS_ThrowTypeError(c,"profiler.scope requires a string and callback");
         ProfileScope scope(s->CustomLabel(arg(1)));
@@ -1670,7 +1690,9 @@ ScriptSystem::~ScriptSystem()=default;
 void ScriptSystem::SetBudget(unsigned n){m->budget=std::max(1u,n);}
 const std::vector<ScriptDiagnostic>& ScriptSystem::Diagnostics()const{return m->diagnostics;}
 void ScriptSystem::Stop(){
- JUDAS_PROFILE_SCOPE("JavaScript destroy");m->Stop();}
+ JUDAS_PROFILE_SCOPE("JavaScript destroy");
+ if(m->debug&&m->debug->inside)throw std::logic_error("Stop requires a callback boundary");
+ JS_SetExecutionHook(m->rt,nullptr,nullptr);m->Stop();}
 std::optional<std::vector<SceneObjectId>> ScriptSystem::DeclaredReferences(SceneObjectId id,const SceneScriptSlot& slot)const{
     auto it=m->instances.find({id,slot.id});if(it==m->instances.end()||it->second.slot.asset!=slot.asset||it->second.slot.properties!=slot.properties)return {};
     return it->second.fault?std::vector<SceneObjectId>{}:it->second.entityReferences;
@@ -1907,3 +1929,5 @@ std::string ScriptSystem::RemapPropertyEntities(const std::string& values,const 
 bool ScriptSystem::SetPropertyEntity(std::string& values,const std::string& name,SceneObjectId id){auto& vm=PropertyVM();auto o=JS_ParseJSON(vm.ctx,values.data(),values.size(),"properties");if(!JS_IsObject(o)){if(JS_IsException(o))Exception(vm.ctx);JS_FreeValue(vm.ctx,o);return false;}auto ref=id?JS_NewObject(vm.ctx):JS_NULL;if(id)JS_SetPropertyStr(vm.ctx,ref,"entity",JS_NewString(vm.ctx,std::to_string(id).c_str()));JS_SetPropertyStr(vm.ctx,o,name.c_str(),ref);auto json=JS_JSONStringify(vm.ctx,o,JS_UNDEFINED,JS_UNDEFINED);values=String(vm.ctx,json);JS_FreeValue(vm.ctx,json);JS_FreeValue(vm.ctx,o);return true;}
 
 void ScriptSystem::DrainSignals(const InputSystem* input,float dt,bool ui){m->CheckThread();m->input=input;m->delta=dt;m->fixed=!ui;m->SignalDrain(ui);}
+
+#include "ScriptDeveloperToolsMethods.inc"

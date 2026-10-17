@@ -1,3 +1,4 @@
+#include "ScriptTools.h"
 #include "Ragdoll.h"
 #include "ModelCook.h"
 #include "RetargetPanel.h"
@@ -517,6 +518,8 @@ bool EditorApplication::StartPlay(std::string& outError) {
         return false;
     }
     if(m_project.IsLoaded()&&!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError)){StopPlay();return false;}
+    if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
+    m_scriptTools->Attach(*m_world,*m_host);
     m_play = std::make_unique<InteractivePlay>();
     if (!m_play->Begin(*m_world, WorldCoordinates(playedScene.Settings().worldOrigin), outError)) {
         m_play.reset();
@@ -1497,6 +1500,7 @@ int EditorApplication::Run(int argc, char** argv) {
         if (closeRequested) window.CancelCloseRequest();
         host.PumpResources();  // M31: GPU upload of finished loads, budget eviction
         const Uint64 currentCounter = SDL_GetPerformanceCounter();
+        if(m_scriptTools&&m_scriptTools->clockReset){previousCounter=currentCounter;m_scriptTools->clockReset=false;}
         const float deltaSeconds = static_cast<float>(currentCounter - previousCounter) / static_cast<float>(frequency);
         previousCounter = currentCounter;
         renderer.ResetStats();
@@ -1538,10 +1542,16 @@ int EditorApplication::Run(int argc, char** argv) {
                 m_panels.profilerInspect = !m_panels.profilerInspect;
                 if (m_panels.profilerInspect) m_panels.showProfiler = true;
             }
-            m_play->SetPointerCaptureAllowed(!(m_panels.showProfiler && m_panels.profilerInspect));
+            if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
+            m_scriptTools->Attach(*m_world,host);
+            m_scriptTools->ApplyReload(*m_world);
+            m_play->SetPointerCaptureAllowed(!(m_panels.showProfiler && m_panels.profilerInspect) && !m_panels.showScriptTools);
             // The identical frame the runtime runs. Escape opens the M13
             // pause menu, which releases the mouse for the editor panels.
             m_play->Frame(window, renderer, deltaSeconds, /*drawHud=*/true);
+            if(m_scriptTools->clockReset){previousCounter=SDL_GetPerformanceCounter();m_scriptTools->clockReset=false;}
+            if(m_scriptTools->stopRequested){requests.stop=true;m_scriptTools->stopRequested=false;}
+            if(m_scriptTools->quitRequested){requests.quit=true;m_scriptTools->quitRequested=false;}
             if(auto scenes=m_world->SceneControl()) {
                 scenes->AdvanceStreaming(*m_world,m_play->IsPaused());
                 auto* previousWorld=m_world.get();
@@ -1572,6 +1582,10 @@ int EditorApplication::Run(int argc, char** argv) {
         static ProfileLabel editorBuildLabel("Editor UI build");
         ProfileScope editorBuildScope(editorBuildLabel);
         DrawEditorMainMenu(m_document, m_panels, requests);
+        if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
+        m_scriptTools->visible=m_panels.showScriptTools;
+        m_scriptTools->Panel(m_world.get(),host.Assets());
+        m_panels.showScriptTools=m_scriptTools->visible;
         DrawEditorWorkspaceChrome(m_document, m_panels, requests);
         // While playing, the engine's own HUD occupies the top-left corner
         // and the authored panels are read-only anyway; only the menu bar

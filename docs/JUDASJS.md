@@ -1,6 +1,6 @@
-# JudasJS — current API reference (M93 repository state)
+# JudasJS — current API reference (M94 repository state)
 
-M93 adds optional [cooked assets, mesh LOD and visual residency](M93_ASSET_PIPELINE.md) without new public JavaScript bindings. Existing asset IDs, material controls, views and saves retain their APIs. M93 human review is pending.
+M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 human review is pending.
 
 M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
 M92 operator acceptance is recorded by release promotion at `bb3dbc402629a60c22738da8520e5017998709f1`; platform coverage remains scoped.
@@ -131,13 +131,13 @@ calling an API does not silently construct missing gameplay machinery.
 Use fixedUpdate for authoritative movement/physics, frame updates for relative
 mouse input, presentationUpdate for render-following poses/cameras, and uiUpdate
 for menus while paused. Worlds have fixed local
-float coordinates with a double absolute origin; no automatic live rebasing or
+float coordinates with a double absolute origin and explicit opt-in origin shifts; no
 universal world up. Tags, collision layers and render layers are distinct.
 Read returned snapshots; assign updates through explicit APIs. Safe wrappers do
 not extend native lifetime and cannot cross scene replacement.
 
 Scripts are trusted QuickJS code, not Node/browser/npm or a malicious-code sandbox.
-No arbitrary async callbacks, debugger/hot reload, raw bones, ECS, runtime layer
+No arbitrary async callbacks, automatic hot reload, raw bone memory, ECS, runtime layer
 registry editing. Current subsystem limits are documented
 on their pages rather than silently upgraded. Human hardware/visual/audio review
 remains authoritative.

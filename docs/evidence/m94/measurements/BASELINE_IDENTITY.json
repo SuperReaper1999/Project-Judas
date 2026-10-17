@@ -1,0 +1,13 @@
+{
+  "commit": "3306b5aa66a2e649bad06abc8c5cba452058d3fa",
+  "original_quickjs_blob": "6ca030b9f15511653fdea2bc5555232e56dfb687",
+  "copied_quickjs_blob": "6ca030b9f15511653fdea2bc5555232e56dfb687",
+  "quickjs_source_sha256": "9fd0e0e68856d165e2872140ac38889845b53eb1bc55150f8598a53eb86948f5",
+  "compiler": "cc -O3 -DNDEBUG -D_GNU_SOURCE -DQUICKJS_NG_BUILD -std=gnu11 -Ithird_party/quickjs",
+  "helper_objects": [
+    "dtoa.c.o",
+    "libregexp.c.o",
+    "libunicode.c.o"
+  ],
+  "notes": "Accepted original quickjs.c; same unchanged helper objects and benchmark source. No baseline physics/gameplay fixture retuning."
+}

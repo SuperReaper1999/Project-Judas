@@ -38,6 +38,7 @@ public:
     bool AdvanceOuter(std::unique_ptr<RuntimeWorld>&,InteractivePlay&,ResourceManager&,InputSystem&,std::string&);
     void SetEditorSaveIsolation(bool editor){m_editorSaves=editor;}
     bool Pending() const { return !m_pending.empty(); }
+    bool OperationInProgress() const; // includes queued scene replacement and active save work
     void EnableSaves(bool enabled) { m_saves=enabled; }
 private:
     friend class SaveService;
