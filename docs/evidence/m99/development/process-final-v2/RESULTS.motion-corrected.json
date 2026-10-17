@@ -1,0 +1,304 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "name": "host",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_session_tests",
+        "--process-host",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/process-final-v2/host",
+        "9"
+      ]
+    },
+    {
+      "name": "proxy",
+      "argv": [
+        "/usr/bin/python3",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/m99_network_proxy.py",
+        "--port",
+        "0",
+        "--upstream-port",
+        "43813",
+        "--latency-ms",
+        "75",
+        "--jitter-ms",
+        "15",
+        "--drop-type",
+        "snapshot",
+        "--drop-every",
+        "5",
+        "--cut-after",
+        "2.5",
+        "--seconds",
+        "8",
+        "--stats",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/process-final-v2/proxy.json"
+      ]
+    },
+    {
+      "name": "direct-client",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_session_tests",
+        "--process-client",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/process-final-v2/host/project",
+        "43813",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/process-final-v2/direct",
+        "6",
+        "direct"
+      ]
+    },
+    {
+      "name": "impaired-client",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_session_tests",
+        "--process-client",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/process-final-v2/host/project",
+        "33565",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/process-final-v2/impaired",
+        "6",
+        "reconnect"
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "passed": true,
+      "description": "two real client processes actuate host physics; connection cut and rejoin reach server"
+    },
+    {
+      "passed": true,
+      "description": "server-owned body is displaced by real impulses and rests on real collision geometry"
+    },
+    {
+      "passed": true,
+      "description": "server-owned CharacterMotor moves from actual delivered remote intent and stays supported"
+    },
+    {
+      "passed": true,
+      "description": "direct client ends connected with both physical replica endpoints"
+    },
+    {
+      "passed": true,
+      "description": "direct client presentation converges to independent host actual physical endpoint"
+    },
+    {
+      "passed": true,
+      "description": "direct session metrics describe actual bidirectional traffic and repeated snapshots"
+    },
+    {
+      "passed": true,
+      "description": "impaired client ends connected with both physical replica endpoints"
+    },
+    {
+      "passed": true,
+      "description": "impaired client presentation converges to independent host actual physical endpoint"
+    },
+    {
+      "passed": true,
+      "description": "impaired session metrics describe actual bidirectional traffic and repeated snapshots"
+    },
+    {
+      "passed": true,
+      "description": "implicit reconnect preserves only the reserved peer identity; direct connection stays intact"
+    },
+    {
+      "passed": true,
+      "description": "75ms directional latency, jitter, application snapshot omission and real TCP interruption were exercised"
+    },
+    {
+      "passed": true,
+      "description": "impaired relay queues remain inside their declared memory bound"
+    },
+    {
+      "passed": true,
+      "description": "direct trace contains genuine in-motion body and motor comparisons"
+    },
+    {
+      "passed": true,
+      "description": "impaired trace contains genuine in-motion body and motor comparisons"
+    }
+  ],
+  "host": {
+    "box": [
+      4.503512382507324,
+      0.4999992549419403,
+      8.190611424652161e-07
+    ],
+    "clock": "std::chrono::steady_clock seconds",
+    "fixedMedianUs": 89.615,
+    "fixedP95Us": 408.548,
+    "fixedWorstUs": 1129.563,
+    "hits": 2,
+    "joins": 3,
+    "leaves": 3,
+    "motor": [
+      -1.9833343029022217,
+      0.917275071144104,
+      0.0
+    ],
+    "ready": true,
+    "receivedBytes": 30989,
+    "rejected": 0,
+    "sentBytes": 180015,
+    "snapshots": 182,
+    "steps": 539
+  },
+  "direct": {
+    "box": [
+      4.503512382507324,
+      0.4999992549419403,
+      8.190611424652161e-07
+    ],
+    "boxReady": true,
+    "clock": "std::chrono::steady_clock seconds",
+    "connectionGaps": [],
+    "error": "",
+    "identities": [
+      "1"
+    ],
+    "motor": [
+      -1.9833343029022217,
+      0.917275071144104,
+      0.0
+    ],
+    "motorReady": true,
+    "receivedBytes": 90576,
+    "reconnects": 0,
+    "sentBytes": 16088,
+    "snapshotAge": 0.045332770999999994,
+    "snapshots": 121,
+    "status": "connected"
+  },
+  "impaired": {
+    "box": [
+      4.503512382507324,
+      0.4999992549419403,
+      8.190611424652161e-07
+    ],
+    "boxReady": true,
+    "clock": "std::chrono::steady_clock seconds",
+    "connectionGaps": [
+      {
+        "end": 4116.321394151,
+        "seconds": 0.18030005200034793,
+        "start": 4116.141094099
+      }
+    ],
+    "error": "",
+    "identities": [
+      "2",
+      "2"
+    ],
+    "motor": [
+      -1.9833343029022217,
+      0.917275071144104,
+      0.0
+    ],
+    "motorReady": true,
+    "receivedBytes": 38762,
+    "reconnects": 1,
+    "sentBytes": 8796,
+    "snapshotAge": 0.030089940999999953,
+    "snapshots": 54,
+    "status": "connected"
+  },
+  "proxy": {
+    "connections": 2,
+    "frames": 280,
+    "omitted": 22,
+    "bytes": 84061,
+    "peakQueuedBytes": 1787,
+    "violations": 0,
+    "forcedDisconnects": 1,
+    "seed": 99,
+    "directionalLatencyMs": 75.0,
+    "jitterMs": 15.0,
+    "omittedMessageKind": "snapshot",
+    "dropEvery": 5,
+    "semantics": "ordered TCP frames; optional application message omission",
+    "elapsedSeconds": 8.002089552999678
+  },
+  "synchronization": {
+    "clock": "shared native steady-clock seconds across independent processes",
+    "reference": "linear interpolation between actual resolved host physical endpoints",
+    "selection": "connected observations whose actual host endpoint finite-difference speed exceeds 0.05 m/s; this selects motion, it is not an acceptance gate",
+    "warmup": "includes initial connected baseline and interpolation warmup; no handpicked error threshold",
+    "units": "position errors in metres, connection gaps in seconds",
+    "direct": {
+      "nominalPresentationLagMs": 100.0,
+      "bodyInMotionError": {
+        "samples": 99,
+        "median": 0.005615748162989168,
+        "p95": 0.014281875601181994,
+        "worst": 0.03298235805427252
+      },
+      "motorInMotionError": {
+        "samples": 61,
+        "median": 0.001775790895896634,
+        "p95": 0.002769175435607618,
+        "worst": 0.0030605187982111204
+      },
+      "connectionGaps": [],
+      "reconnectPresentationGaps": [],
+      "largestPresentationIntervalSeconds": 0.017637277000176255,
+      "maximumConnectedSnapshotAgeSeconds": 0.04731267799999994
+    },
+    "impaired": {
+      "nominalPresentationLagMs": 175.0,
+      "bodyInMotionError": {
+        "samples": 97,
+        "median": 0.013974772129499173,
+        "p95": 0.06592035853561563,
+        "worst": 0.10201884543757522
+      },
+      "motorInMotionError": {
+        "samples": 61,
+        "median": 0.005974243088619158,
+        "p95": 0.013306015571506347,
+        "worst": 0.018585893554737165
+      },
+      "connectionGaps": [
+        {
+          "end": 4116.321394151,
+          "seconds": 0.18030005200034793,
+          "start": 4116.141094099
+        }
+      ],
+      "reconnectPresentationGaps": [
+        {
+          "lastPresentationBeforeDisconnect": 4116.137803889,
+          "firstPresentationAfterReconnect": 4116.338025848,
+          "seconds": 0.20022195900037332,
+          "secondsAfterConnected": 0.016631696999866108
+        }
+      ],
+      "largestPresentationIntervalSeconds": 0.20022195900037332,
+      "maximumConnectedSnapshotAgeSeconds": 0.11619358199999996
+    }
+  },
+  "linkSemantics": "TCP ordered latency/jitter; 1-in-5 application snapshots omitted; one TCP break. Not IP packet-loss emulation.",
+  "processes": [
+    {
+      "name": "host",
+      "pid": 81361,
+      "exit": 0
+    },
+    {
+      "name": "proxy",
+      "pid": 81364,
+      "exit": 0
+    },
+    {
+      "name": "direct-client",
+      "pid": 81365,
+      "exit": 0
+    },
+    {
+      "name": "impaired-client",
+      "pid": 81366,
+      "exit": 0
+    }
+  ],
+  "wallSeconds": 9.070341256000575,
+  "analysisCorrection": "Classify motion from actual endpoint finite differences, not motor velocity observations that may include supported gravity contribution. Original process results and traces remain unchanged."
+}

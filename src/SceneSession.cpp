@@ -47,6 +47,7 @@ WorldStreaming* SceneSession::Streaming(RuntimeWorld& world,std::string& error){
 }
 void SceneSession::AdvanceStreaming(RuntimeWorld& world,bool paused){if(!ComposedProject()){if(!paused)world.AdvanceRuntimeTerrain();return;}std::string error;if(auto* stream=Streaming(world,error))stream->Advance(paused);}
 bool SceneSession::Request(const std::string& scene,std::string& error){
+    if(networkActive){error="Close the network session before changing scenes";return false;}
     if(!m_accepting||(m_saveService&&m_saveService->Busy())){error="Scene/save lifecycle is busy";return false;}
     if(std::find(m_scenes.begin(),m_scenes.end(),scene)==m_scenes.end()){
         error="Scene is not registered in this project: "+scene;return false;

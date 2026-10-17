@@ -1,7 +1,75 @@
 {
-  "checkpoint": "4c26a3bb23b8e3d1a7047283da0dcd2afdcc5e9c + M98 save evolution",
-  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
+  "checkpoint": "84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
+    {
+      "binding": "network.stats",
+      "declaration": "NetworkStats",
+      "fields": [
+        "bytesSent",
+        "bytesReceived",
+        "framesSent",
+        "framesReceived",
+        "backpressure",
+        "coalesced",
+        "rejected",
+        "snapshots",
+        "snapshotAge",
+        "entities",
+        "peers"
+      ],
+      "nativeFile": "src/ScriptNetwork.inl",
+      "needles": [
+        "{\"bytesSent\",t.bytesSent}",
+        "{\"bytesReceived\",t.bytesReceived}",
+        "{\"framesSent\",t.framesSent}",
+        "{\"framesReceived\",t.framesReceived}",
+        "{\"backpressure\",t.backpressure}",
+        "{\"coalesced\",t.dropped}",
+        "{\"rejected\",stats.rejected+t.rejected}",
+        "{\"snapshots\",stats.snapshots}",
+        "{\"snapshotAge\",stats.snapshotAge}",
+        "{\"entities\",stats.entities}",
+        "{\"peers\",stats.peers}"
+      ],
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "binding": "network.launch",
+      "declaration": "NetworkLaunch",
+      "fields": [
+        "mode",
+        "address",
+        "port",
+        "dedicated"
+      ],
+      "nativeFile": "src/ScriptNetwork.inl",
+      "needles": [
+        "{\"mode\",launch.mode}",
+        "{\"address\",launch.address}",
+        "{\"port\",launch.port}",
+        "{\"dedicated\",launch.dedicated}"
+      ],
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "binding": "network.peers",
+      "declaration": "NetworkPeer",
+      "fields": [
+        "id",
+        "name",
+        "connected",
+        "player"
+      ],
+      "nativeFile": "src/ScriptNetwork.inl",
+      "needles": [
+        "{\"id\",p.id}",
+        "{\"name\",p.name}",
+        "{\"connected\",p.connected}",
+        "{\"player\",p.player?std::to_string(p.player):std::string()}"
+      ],
+      "reference": "docs/judasjs/network.md"
+    },
     {
       "binding": "saves.status",
       "declaration": "SaveRequest",
@@ -2515,6 +2583,101 @@
       "reference": "docs/judasjs/navigation.md"
     },
     {
+      "symbol": "NetworkEntity",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity.constructor",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.entity",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkEntry"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.entity",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.forget",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkForget"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.forget",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.generation",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity.generation",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity.id",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.owner",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "networkEntry",
+        "networkOwner"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.owner",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.state",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "networkEntry",
+        "networkState"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.state",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkValid"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.valid",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
       "symbol": "PlayerInput",
       "kinds": [
         "class"
@@ -4055,6 +4218,193 @@
       "reference": "docs/judasjs/navigation.md"
     },
     {
+      "symbol": "network",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:network",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.close",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkClose"
+      ],
+      "type": "docs/judas.d.ts:network.close",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.entities",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkEntities",
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.entities",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.error",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.error",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.host",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkHost"
+      ],
+      "type": "docs/judas.d.ts:network.host",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.input",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkInput"
+      ],
+      "type": "docs/judas.d.ts:network.input",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.join",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkJoin"
+      ],
+      "type": "docs/judas.d.ts:network.join",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.launch",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.launch",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.mode",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.mode",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.peerId",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.peerId",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.peers",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkPeers"
+      ],
+      "type": "docs/judas.d.ts:network.peers",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.port",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.port",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.replicate",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkInfo",
+        "networkReplicate"
+      ],
+      "type": "docs/judas.d.ts:network.replicate",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.sendInput",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkSendInput"
+      ],
+      "type": "docs/judas.d.ts:network.sendInput",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.setInterest",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkInterest"
+      ],
+      "type": "docs/judas.d.ts:network.setInterest",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.stats",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.stats",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.status",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.status",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
       "symbol": "physics",
       "kinds": [
         "namespace"
@@ -5194,6 +5544,21 @@
     "navRaycast",
     "navSample",
     "navStopped",
+    "networkClose",
+    "networkEntities",
+    "networkEntry",
+    "networkForget",
+    "networkHost",
+    "networkInfo",
+    "networkInput",
+    "networkInterest",
+    "networkJoin",
+    "networkOwner",
+    "networkPeers",
+    "networkReplicate",
+    "networkSendInput",
+    "networkState",
+    "networkValid",
     "overlap",
     "parent",
     "particles",

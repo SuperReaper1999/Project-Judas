@@ -1,0 +1,8 @@
+{
+  "serial": "emulator-5586",
+  "api": "36",
+  "abi": "x86_64",
+  "processId": "2564",
+  "graphics": "emulator SwiftShader; no physical-device performance claim",
+  "apkSha256": "fe8a4ac429987409fa7066529b948e503b8ee824c726e2a8c249e12a515bff14"
+}

@@ -1,0 +1,226 @@
+[
+  {
+    "name": "network_transport",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_transport_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.36471118699955696,
+    "binarySha256": "d6f6cbfd6d55805ec0389e6960906cbdb7379b4b784f78fe06dc87bcb457fe84"
+  },
+  {
+    "name": "logical_input",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_logical_input_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.01588609299960808,
+    "binarySha256": "ecc356a2990e062e92fa1d8b6403c3f846480202f125e64f25794e12fcb5588b"
+  },
+  {
+    "name": "character_motor",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.5149628809995193,
+    "binarySha256": "c77cffb979d988f34b7049d44e83a15e194a0265a0f135296645f8e55e4c72d5"
+  },
+  {
+    "name": "local_multiplayer",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.01600569699985499,
+    "binarySha256": "2cbc1b51f1844694c426234c7a76e4a4898df9eb606815ef1eab9f6a794e9fbb"
+  },
+  {
+    "name": "local_multiplayer_script",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_local_multiplayer_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06415357300011237,
+    "binarySha256": "34d4cc9c5aa2c8ba2fb72f110faf0fddc6d3d72d8cea6f5d3ad699534e55d298"
+  },
+  {
+    "name": "input",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_input_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.4648287209993214,
+    "binarySha256": "adf084f860dc340d328ae8a38a51f160396a52fe76bc6352f7c7449424fa7a11"
+  },
+  {
+    "name": "script",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.5652691179993781,
+    "binarySha256": "b1003879590ffb00ef129f2de70c2e267d207844d3f573a412548498313d0d46"
+  },
+  {
+    "name": "physics_continuation",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015989954999895417,
+    "binarySha256": "276c974ed0ce2c46dd792c282d51ed4a251fa2ca5ad8711d9e45afd70a865b7d"
+  },
+  {
+    "name": "script_presentation",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_presentation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.36476148500059935,
+    "binarySha256": "0becd299ed4601837672530247d5544adaab49440185a90123da58429038c44a"
+  },
+  {
+    "name": "network_session",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_session_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/native-fixture"
+    ],
+    "exit": 0,
+    "seconds": 0.7657499540000572,
+    "binarySha256": "22d5a004429971495233e7869d73ddac05cb65ef78f951a1b3ad719d6e45099a"
+  },
+  {
+    "name": "network_boundary",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_boundary_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/boundary-fixture"
+    ],
+    "exit": 0,
+    "seconds": 0.06413505599994096,
+    "binarySha256": "6bedd35bac8a215a26ad71c78348d4e0544eb3297de2a7ed691b5eb1fa9366b1"
+  },
+  {
+    "name": "network_render",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_render_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/renderer-fixture"
+    ],
+    "exit": 0,
+    "seconds": 0.2645457439994061,
+    "binarySha256": "505d31415cc9305d4a6e21d2d2d472c409c3ba15611fd7e64cbdaebe7bad11ea"
+  },
+  {
+    "name": "network_public_js",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/script-fixture"
+    ],
+    "exit": 0,
+    "seconds": 0.3147620200006713,
+    "binarySha256": "a01534c4fe3c035d488f73651448dbf3fd7cd6671f78937f329536ba0b18902e"
+  },
+  {
+    "name": "game_application",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/connected_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/application",
+      "34323"
+    ],
+    "exit": 0,
+    "seconds": 0.8657876470006158,
+    "binarySha256": "d068058bc558fb8c3d79e57dcc166bf50222e694572e307151bd558d205f7bb5"
+  },
+  {
+    "name": "scene_transition",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_scene_transition_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/transitions"
+    ],
+    "exit": 0,
+    "seconds": 0.31472723799925006,
+    "binarySha256": "441a927e9d29af8d0cdc8a6663856c15d68b5c74d2c55a361b29e5e1a302cecb"
+  },
+  {
+    "name": "save_evolution",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/migration-storage"
+    ],
+    "exit": 0,
+    "seconds": 0.2645066159993803,
+    "binarySha256": "62720a02645bf38b24b17deb91752b49c8208fc28cdbcba954e7b8b877af0cb1"
+  },
+  {
+    "name": "offline_evolution_write",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/save_evolution.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/evolution-app"
+    ],
+    "exit": 0,
+    "seconds": 0.515159343999585,
+    "binarySha256": "981bf0ea260e92a1d7c1b5aaf1393acf6cc4b32222b26e50a23302032c75a31f"
+  },
+  {
+    "name": "offline_evolution_read-v2",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v2/save_evolution.judasproj",
+      "read-v2",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/evolution-app"
+    ],
+    "exit": 0,
+    "seconds": 0.5653116989997216,
+    "binarySha256": "981bf0ea260e92a1d7c1b5aaf1393acf6cc4b32222b26e50a23302032c75a31f"
+  },
+  {
+    "name": "offline_evolution_read-v3",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v3/save_evolution.judasproj",
+      "read-v3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/evolution-app"
+    ],
+    "exit": 0,
+    "seconds": 0.615198190999763,
+    "binarySha256": "981bf0ea260e92a1d7c1b5aaf1393acf6cc4b32222b26e50a23302032c75a31f"
+  },
+  {
+    "name": "live_api",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/cookbook",
+      "surface"
+    ],
+    "exit": 0,
+    "seconds": 0.21438982299969211,
+    "binarySha256": "56a26d17c3b435176b179df6496a6e361269712ad8a8afd139bb2c9c7a3d23bb"
+  },
+  {
+    "name": "api_drift",
+    "argv": [
+      "node",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+      "--typescript",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+      "--runtime",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/cookbook/surface.json"
+    ],
+    "exit": 0,
+    "seconds": 1.1663358249998055
+  },
+  {
+    "name": "editor",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/final-source-v2/editor-project/connected_workshop.judasproj"
+    ],
+    "exit": 0,
+    "seconds": 1.8197560520002298,
+    "binarySha256": "13c2134016d31cc27ec87d6f603906e3714aa0aadb04b6fd5acfccee9538c715"
+  }
+]

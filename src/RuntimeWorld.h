@@ -35,6 +35,7 @@
 #include "RuntimeUI.h"
 #include "LocalMultiplayer.h"
 
+class NetworkSession;
 class PlanetTiles;
 struct PlanetView;
 class SceneSession;
@@ -338,6 +339,12 @@ public:
     bool RestoreScriptState(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume=false);
     void EndScripts(){m_scripts.reset();m_ui.reset();m_players.reset();pointerCapture=false;}
     LocalizationSession& Localization();
+    NetworkSession& Network();
+    NetworkSession* NetworkIfLoaded() const{return m_network.get();}
+    bool NetworkClient()const;
+    void NetworkBeforeFixed(float);
+    void NetworkAfterFixed(float);
+    void PumpNetwork(double monotonicSeconds);
     LocalPlayers& Players(){if(!m_players)m_players=std::make_unique<LocalPlayers>();return *m_players;}
     LocalPlayers* PlayersIfLoaded()const{return m_players.get();}
     RuntimeUI& UI(){if(!m_ui)m_ui=std::make_unique<RuntimeUI>(m_assets);m_ui->SetLocalization(&Localization());return *m_ui;}
@@ -658,6 +665,7 @@ private:
     std::map<EntityId,JointHandle> m_runtimeJoints;
     std::unique_ptr<ScriptSystem> m_scripts;
     std::unique_ptr<RuntimeUI> m_ui;
+    std::unique_ptr<NetworkSession> m_network;
     std::unique_ptr<LocalPlayers> m_players;
     std::unique_ptr<LocalizationSession> m_localization;
     std::map<EntityId,SceneObject> m_scriptDefinitions;

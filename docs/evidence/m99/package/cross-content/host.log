@@ -1,0 +1,13 @@
+PASS valid process role
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS arrange actual motor facing test cargo
+PASS arrange actual rigid crate before shared game starts
+READY host port=55993
+PASS actual game process exchanges real session traffic
+PASS both wire directions are exercised
+PASS actual JS raycast/impulse moves real cargo into scoring bay
+SUMMARY checks=11 failures=0

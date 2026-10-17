@@ -1,4 +1,6 @@
-# JudasJS — current API reference (M98 repository state)
+# JudasJS — current API reference (M99 repository state)
+
+M99 adds optional [online sessions, server authority and selected entity replication](judasjs/network.md), alongside existing local multiplayer. M98 is provisionally promoted for combined M98/M99 testing; neither milestone is recorded as human accepted by that promotion. See the [M99 scope and security boundaries](M99_NETWORK.md).
 
 M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 is human accepted. M97 adds [live local volume editing](judasjs/terrain.md) and regional construction persistence; M97 is human accepted. M98 adds [explicit save evolution and recovery](M98_SAVE_EVOLUTION.md); human acceptance is pending.
 
@@ -88,6 +90,7 @@ calling an API does not silently construct missing gameplay machinery.
 
 | Topic | Reference |
 |---|---|
+| network, NetworkEntity, hosting/joining, authority and replicated state | [Online multiplayer](judasjs/network.md) |
 | Weather profiles, sampled wind, transitions and storms | [Weather](judasjs/weather.md) |
 | Owned queued messages | [signals](judasjs/signals.md) |
 | Create a project, attach JS, edit properties, set up completion, export | [Making a game by hand](judasjs/getting-started.md) |

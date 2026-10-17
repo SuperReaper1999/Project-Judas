@@ -1,0 +1,24 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Save Evolution Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/save_evolution.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v1/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS real v1 progress installed in ordinary script state
+PASS project-owned session quest progress
+PASS v1 edits actual terrain
+PASS v1 real prefab construction adopted by region
+PASS persist qualified construction reference
+PASS v1 exact excavated field
+PASS script selects destination region
+PASS travel away normally before cold save
+PASS request destination region
+PASS v1 excavated region genuinely suspended before save
+PASS write older content through existing service
+PASS older-game durable save: 
+PASS genuine legacy-format source identity
+PASS v1 cold save includes retained physical terrain
+PASS project lifecycle remains healthy
+PASS application shutdown
+SUMMARY 16 checks 0 failures

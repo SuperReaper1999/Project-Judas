@@ -1,0 +1,33 @@
+{
+  "runner": "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+  "runner_sha256": "37fcb49fc6a252cd8c1d608db078f8461ea06550df022573529202bab50f4c16",
+  "project": "/home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/connected_workshop.judasproj",
+  "source_files": {
+    "Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "Assets/fonts/DejaVuSans.ttf.judasmeta": "caca70847994723403fcb886a9b6f0c0632a681adc1895c68089cc1ff021dce9",
+    "Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "Assets/scripts/game.js": "955f1ecc1ca08aa9b724927c55645f55c48fd4b7aaa85668f91e54f21998c99d",
+    "Assets/scripts/game.js.judasmeta": "1852af39bf04dce2121195d6668b2ac89d5163137f900e9481e2a8ca7a2927b4",
+    "Assets/scripts/math.js": "561208f143b4ff4755d64ab8cff3af20aa246788cf12708de446dc88b877030b",
+    "Assets/scripts/math.js.judasmeta": "3b94900efa3d5917763e4e5c48aae742a5624ecf2b9143f9458f98e8a4f80f96",
+    "Assets/ui/workshop.judasui": "f309d545268bea4f2fa2f862245ca2cab04b0804ab388622d18228d37938836f",
+    "Assets/ui/workshop.judasui.judasmeta": "13f8606090077fb3bc5296eadae577cddf462e92e843ee0d27e820e18d7c8ba5",
+    "README.md": "b9aa49515a4c81a78ea9b78d383034a39e7cc08eb3eb2578313cf4ef7a31fe2b",
+    "Scenes/workshop.judas": "4e37b6c0c39d0e6e195600bf7c91257b55d7d57012176a6066afae16e9973f1b",
+    "connected_workshop.judasproj": "489b4a32ee6d7c65a1a1ea436e3439b8abdfe1915050c01dfe14b6c643677a22"
+  },
+  "runs": [
+    {
+      "name": "game-host",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+        "--demo",
+        "host",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/connected_workshop.judasproj",
+        "48599",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/demo-first/host.json"
+      ]
+    }
+  ],
+  "process_seconds": 0.02085096099972361
+}

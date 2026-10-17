@@ -45,6 +45,8 @@ struct RuntimeOptions {
     // Milestone 30: the launched project (IsLoaded() false when the scene
     // sits outside any project) and the resolved scene file path.
     Project project;
+    std::string networkMode,networkAddress="127.0.0.1";
+    unsigned networkPort=27999;
     bool noMods=false;
     std::string scenePath;
     std::optional<glm::dvec3> worldOriginOverride;

@@ -60,13 +60,23 @@ class InputSystem {
 public:
     InputSystem();
     std::shared_ptr<TextInputPlatform> textPlatform;
-    void QueueText(TextInputEvent event){if(m_textEvents.size()<128&&event.text.size()<=16384)m_textEvents.push_back(std::move(event));}
+    void QueueText(TextInputEvent event){if(!m_logicalMode&&m_textEvents.size()<128&&event.text.size()<=16384)m_textEvents.push_back(std::move(event));}
     const std::vector<TextInputEvent>& TextEvents()const{return m_textEvents;}
     void ConsumeText(){m_textEvents.clear();}
     // Allocated only when a project opts into device-scoped input.
     mutable std::weak_ptr<InputDeviceHub> localDevices;
     bool SetMap(const InputMap& map,std::string& error);
     const InputMap& Map() const {return m_map;}
+    // Optional external logical source (for example validated remote input).
+    // Source changes neutralize input without inventing edges. Maps/reset keep
+    // this mode but clear its state. The owner still calls BeginFrame and
+    // BeginFixedStep at ordinary input boundaries.
+    void SetLogicalMode(bool enabled);
+    bool LogicalMode() const {return m_logicalMode;}
+    // Complete snapshot of existing scalar action/axis names. Omitted names
+    // become neutral; actions accept exactly 0/1, axes finite [-1,1]. Invalid
+    // submissions leave both levels and accumulated edges unchanged.
+    bool SubmitLogical(const std::map<std::string,float>& values,std::string& error);
     void BeginFrame();
     void SetTouch(std::int64_t device,std::int64_t finger,float x,float y,float pressure,bool down);
     std::uint64_t TouchId(std::int64_t device,std::int64_t finger)const;
@@ -109,10 +119,12 @@ private:
     InputPointer m_pointer;
     std::uint64_t m_resetRevision=0;
     void Evaluate();
+    void SetAction(const std::string& name,bool held);
     bool StickConsumed(const std::string& side) const;
     std::vector<std::string> m_consumed;
     InputMap m_map;
-    std::map<std::string,float> m_raw,m_axes;
+    std::map<std::string,float> m_raw,m_axes,m_logical;
+    bool m_logicalMode=false;
     std::map<std::string,InputVector> m_vectors;
     std::map<std::string,InputActionState> m_actions;
     mutable std::map<std::string,InputActionState> m_pending,m_fixed;

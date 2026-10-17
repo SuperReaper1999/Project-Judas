@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_session_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/native-final-v4/fixture"
+  ],
+  "exit": 0,
+  "seconds": 0.46502963900002214,
+  "sha256": {
+    "src/NetworkSession.cpp": "bdd5f12f4d14fda306e5a57884422d2beb71120550f05c4fcd46607668c1c4b8",
+    "src/Simulation.cpp": "a479c7f9aed781961f372fc34cc6b4f212098bbbd06c4fbeee85cc0626016bf6",
+    "src/WorldState.cpp": "58df6716f159a5faae794ea28702426c69362032f32d81976cc69bfb920e96a5",
+    "tests/NetworkSessionTests.cpp": "96321ffe22ec5cc82bee2425805c537a8aec9361aa5b7e1ac9ff9e2411094c5a",
+    "build/judas_network_session_tests": "6a81659ee405925c8581bbca9ee8d61565147b6ec1f270aaa8c261c24b8ef56d"
+  }
+}

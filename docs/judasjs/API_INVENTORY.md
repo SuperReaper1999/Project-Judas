@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M98 public module based on checkpoint `4c26a3bb23b8e3d1a7047283da0dcd2afdcc5e9c + M98 save evolution`. M98 extends saves.load with explicit migration opt-in and save identity/report fields. See [saves](saves.md). Human/platform acceptance remains separate from earlier milestones.
+Current M99 public module based on checkpoint `84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking`. M99 adds optional network sessions and NetworkEntity handles; see [networking](network.md). M98 remains provisionally promoted pending combined M98/M99 human validation. Human/platform acceptance remains separate from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -218,6 +218,15 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `NavigationAgent.state` | `navAgentState` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `NavigationAgent.steering` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `NavigationAgent.stopped` | `navStopped` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `NetworkEntity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.entity` | `networkEntry` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.forget` | `networkForget` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.generation` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.owner` | `networkEntry`, `networkOwner` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.state` | `networkEntry`, `networkState` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `NetworkEntity.valid` | `networkValid` | [declaration](../judas.d.ts) | [reference](network.md) |
 | `PlayerInput` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `PlayerInput.axis` | `playerInput` | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
 | `PlayerInput.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](local-multiplayer.md) |
@@ -361,6 +370,23 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `navigation.profiles` | `navProfiles` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `navigation.raycast` | `navRaycast` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `navigation.sample` | `navSample` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `network` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.close` | `networkClose` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.entities` | `networkEntities`, `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.error` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.host` | `networkHost` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.input` | `networkInput` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.join` | `networkJoin` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.launch` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.mode` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.peerId` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.peers` | `networkPeers` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.port` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.replicate` | `networkInfo`, `networkReplicate` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.sendInput` | `networkSendInput` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.setInterest` | `networkInterest` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.stats` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
+| `network.status` | `networkInfo` | [declaration](../judas.d.ts) | [reference](network.md) |
 | `physics` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.boxCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.capsuleCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |

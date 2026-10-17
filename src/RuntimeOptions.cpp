@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "RuntimeOptions.h"
 
 #include <cmath>
@@ -46,7 +47,17 @@ bool EndsWith(const std::string& s, const std::string& suffix) {
 bool ParseRuntimeOptions(int argc, char** argv, RuntimeOptions& out, std::string& outError) {
     out = RuntimeOptions{};
     std::vector<char*> filtered{argv[0]};
-    for(int i=1;i<argc;++i){if(std::string(argv[i])=="--no-mods")out.noMods=true;else filtered.push_back(argv[i]);}
+    for(int i=1;i<argc;++i){
+        const std::string option=argv[i];
+        if(option=="--no-mods")out.noMods=true;
+        else if(option=="--host"||option=="--join"){
+            if(!out.networkMode.empty()||i+1>=argc){outError="Use --host PORT or --join IPv4:PORT once";return false;}
+            out.networkMode=option=="--host"?"host":"join";std::string endpoint=argv[++i],port=endpoint;
+            if(option=="--join"){auto colon=endpoint.find(':');if(colon==std::string::npos){outError="--join requires IPv4:PORT";return false;}out.networkAddress=endpoint.substr(0,colon);port=endpoint.substr(colon+1);}
+            else out.networkAddress="0.0.0.0";
+            try{if(port.empty()||port.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("port");auto n=std::stoul(port);if(n<1||n>65535)throw std::runtime_error("port");out.networkPort=unsigned(n);}catch(...){outError="Network port must be1..65535";return false;}
+        }else filtered.push_back(argv[i]);
+    }
     argc=int(filtered.size());argv=filtered.data();
     if (argc > 2) {
         outError = "usage: judas [project.judasproj | scene.judas]";

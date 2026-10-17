@@ -99,3 +99,10 @@ The reusable [`saves`](saves.md) service persists the bounded session map and su
 M73 [signals](signals.md) are world-local transient delivery, not session/save facts.
 World replacement discards subscriptions/queues. Re-register in restore; persist
 required intent explicitly rather than relying on replay of accepted notifications.
+
+## Active network sessions
+
+Close the [network session](network.md) before saving/loading or replacing a scene.
+Requests are rejected before mutation while a session is active; list/delete slot
+management remains available. Sockets, peers, input and presentation buffers are
+transient. Pending save/scene operations likewise prevent hosting or joining.

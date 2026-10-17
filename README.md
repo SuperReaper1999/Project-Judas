@@ -137,4 +137,8 @@ dependencies retain their own notices and licence terms.
 
 M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md). Try [Living World Lab](projects/living_world_lab/README.md); human accepted.
 
-Experimental M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md). Try [Save Evolution Lab](projects/save_evolution_lab/README.md); human acceptance pending.
+Provisionally promoted M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md). Try [Save Evolution Lab](projects/save_evolution_lab/README.md); human acceptance pending.
+
+Experimental M99 adds [optional server-authoritative networking](docs/M99_NETWORK.md).
+Try [Connected Workshop](projects/connected_workshop/README.md) in two processes or Android + Linux.
+M98 and M99 remain pending combined human validation.

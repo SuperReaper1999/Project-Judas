@@ -1,0 +1,42 @@
+PASS existing authored map installs
+PASS injection requires explicit opt-in
+PASS ordinary input works before opt-in
+PASS changing source is neutral without invented release
+PASS logical snapshot uses names without synthetic physical keys
+PASS logical action and axis exposed through ordinary reads
+PASS physical input cannot override logical source
+PASS logical mode does not synthesize unsupported stick/vector/touch/text data
+PASS invalid snapshot preserves complete previous levels
+PASS invalid snapshot preserves complete previous levels
+PASS invalid snapshot preserves complete previous levels
+PASS invalid snapshot preserves complete previous levels
+PASS invalid snapshot preserves complete previous levels
+PASS invalid snapshot preserves complete previous levels
+PASS a late invalid member prevents earlier member mutation
+PASS nonfinite axis rejects transactionally
+PASS frame start clears frame edges while retaining logical levels
+PASS fixed step still sees edge received before zero-step frame
+PASS multiple fixed readers observe same edge
+PASS catch-up fixed step does not repeat edge
+PASS omitted names neutralize held input and axes
+PASS neutralization release reaches authoritative step
+PASS several snapshots may arrive before one fixed step
+PASS short logical press/release survives packets and zero-step frames
+PASS short edge pair drains once
+PASS discarding menu-owned edges preserves held logical state
+PASS reset neutralizes source but retains explicit mode
+PASS reselecting current mode preserves its snapshot
+PASS map replacement clears old logical state
+PASS source can return to normal physical input
+PASS independent world-local identities are ordinary players
+PASS local keyboard route installs
+PASS local routing does not clear external frame edges or overwrite levels
+PASS local and external sources remain independent
+PASS local focus loss neutralizes devices without clearing remote peer input
+PASS ordinary player fixed boundary snapshots external edge
+PASS disconnect neutral snapshot publishes ordinary release
+PASS device assignment may be retained for subsequent source switch
+PASS assigned local device remains ignored in logical mode
+PASS return to device source restores held baseline without artificial press
+PASS subsequent ordinary device edges remain functional
+SUMMARY checks=41 failures=0

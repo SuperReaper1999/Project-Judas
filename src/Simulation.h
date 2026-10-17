@@ -6,6 +6,7 @@
 #include "AerodynamicDrag.h"
 
 class GameSession;
+class InputSystem;
 class Window;
 
 // Milestone 28: optional per-step timing/measurement output. Filled only
@@ -38,3 +39,9 @@ struct FixedStepMeasurements {
 // calling this while a menu is open. Nothing here knows about pausing.
 void StepPlayedWorld(GameSession& session, const Window& window, float fixedDeltaTime,
                      FixedStepMeasurements* measurements = nullptr);
+
+// The same fixed simulation path, without a native window or legacy input
+// policy. Dedicated hosts use ordinary project scripts and logical input.
+// Rejects a legacy-gameplay session before advancing any simulation state.
+void StepAuthoritativeWorld(GameSession& session, const InputSystem& input, float fixedDeltaTime,
+                            FixedStepMeasurements* measurements = nullptr);

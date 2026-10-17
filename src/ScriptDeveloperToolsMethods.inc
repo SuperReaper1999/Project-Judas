@@ -20,6 +20,7 @@ bool ScriptSystem::CheckSources(std::string& error)const{
 }
 bool ScriptSystem::Reload(bool preserveState,std::string& error){
     m->CheckThread();error.clear();
+    if(m->world&&m->world->NetworkIfLoaded()&&m->world->NetworkIfLoaded()->Active()){error="Close the network session before reloading scripts";return false;}
     if(m->invocationDepth||(m->debug&&m->debug->inside)){error="reload requires a callback boundary";return false;}
     if(m->world)if(auto session=m->world->SceneControl();session&&session->OperationInProgress()){
         error="save or scene operation is pending; let it complete before reloading scripts";return false;

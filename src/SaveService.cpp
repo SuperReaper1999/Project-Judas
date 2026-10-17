@@ -71,6 +71,7 @@ void SaveService::RefreshContent(){
 }
 SaveService::~SaveService(){if(auto* jobs=m_resources.Jobs()){jobs->Cancel(m_job);jobs->Cancel(m_identityJob);jobs->Forget(m_job);jobs->Forget(m_identityJob);}}
 uint64_t SaveService::Request(const std::string& operation,const std::string& slot,const std::string& name,const std::string& metadata,std::string& error,bool migrate){
+ if(m_session.networkActive&&(operation=="save"||operation=="load")){error="Close the network session before saving or loading";return 0;}
  if(operation=="save"&&m_protectedSlots.count(slot)){error="migrated source slot is protected; save upgraded progress to a new slot";return 0;}
  if(Busy()||m_session.Pending()||!m_session.Accepting()){error="save/scene service busy";return 0;}
  if(operation!="save"&&operation!="load"&&operation!="delete"&&operation!="list"){error="invalid save operation";return 0;}

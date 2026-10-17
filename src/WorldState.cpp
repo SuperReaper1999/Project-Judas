@@ -1,3 +1,4 @@
+#include "NetworkSession.h"
 #include "WorldState.h"
 #include <map>
 
@@ -189,6 +190,7 @@ bool ValidateStructure(const WorldState& state, std::string& error) {
 }  // namespace
 
 bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
+    if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}
     if(world.Scripts()&&world.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}
     for(const auto& definition:world.ScriptObjects()){
         if(!definition.body||world.IsTransientEntity(definition.id))continue;
@@ -204,6 +206,7 @@ bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
 }
 
 WorldState CaptureWorldState(const RuntimeWorld& world) {
+    if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active())throw std::logic_error("Close the network session before saving");
     if(world.Scripts()&&world.Scripts()->HasReloaded())throw std::logic_error("script session was reloaded; Stop and Play before saving a compatible baseline");
     WorldState out;
     out.baselineName = world.Settings().name;
@@ -259,6 +262,7 @@ WorldState CaptureWorldState(const RuntimeWorld& world) {
 }
 
 bool ApplyWorldState(RuntimeWorld& world, const WorldState& state, std::string& outError) {
+    if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active()){outError="Close the network session before loading";return false;}
     if(world.IsComposed()){outError="Disk saves are unsupported for composed worlds (M59)";return false;}
     outError.clear();
     if (!ValidateStructure(state, outError)) return false;

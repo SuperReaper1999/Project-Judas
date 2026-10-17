@@ -155,3 +155,13 @@ Retirement/fault cleans ownership without relying on destroy. Signal handlers em
 during a drain wait for a later eligible lane boundary. Fixed signals wait while
 paused; explicit UI signals run while modal input owns gameplay. Save capture does
 not flush/persist signals. Existing observation callbacks retain their ordering.
+
+## Online sessions
+
+[Network](network.md) polling runs at the outer input boundary, including paused UI.
+A host publishes accepted remote logical edges before the fixed input snapshot,
+then replicates after authoritative fixed simulation and contact callbacks. Clients
+run script input/presentation without a duplicate authoritative physics step.
+Close the session before scene/save operations or deliberate script reload.
+After an offline script reload, Stop/Play establishes a fresh content baseline
+before hosting/joining. Session teardown releases peer input players and HUDs.

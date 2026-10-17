@@ -49,13 +49,18 @@ void LocalPlayers::Route(const InputDeviceHub& hub){
  JUDAS_PROFILE_SCOPE("Local player input routing");
  if(lastFrame==hub.frame)return;
  lastFrame=hub.frame;
- if(revision!=hub.resetRevision){touchOwners.clear();for(auto& pair:players){pair.second.input.Reset();pair.second.touchSources.clear();pair.second.baseline=true;}revision=hub.resetRevision;}
+ if(revision!=hub.resetRevision){touchOwners.clear();for(auto& pair:players){if(!pair.second.input.LogicalMode())pair.second.input.Reset();pair.second.touchSources.clear();pair.second.baseline=true;}revision=hub.resetRevision;}
  std::vector<std::pair<uint64_t,InputDeviceHub::TouchChange>> routed;
- auto capture=[&](const InputTouch& t){if(!touchOwners.count(t.id))for(auto& pair:players)for(auto& a:pair.second.devices)if(a.device=="touch"&&In(a.region,t.x,t.y)){touchOwners[t.id]=pair.first;return;}};
+ auto capture=[&](const InputTouch& t){if(!touchOwners.count(t.id))for(auto& pair:players)if(!pair.second.input.LogicalMode())for(auto& a:pair.second.devices)if(a.device=="touch"&&In(a.region,t.x,t.y)){touchOwners[t.id]=pair.first;return;}};
  for(auto& event:hub.touchChanges){if(event.down)capture(event.contact);auto owner=touchOwners.find(event.contact.id);if(owner!=touchOwners.end())routed.emplace_back(owner->second,event);if(!event.down)touchOwners.erase(event.contact.id);}
- std::set<uint64_t> live;for(auto& t:hub.touches){live.insert(t.id);if(!touchOwners.count(t.id))for(auto& pair:players)for(auto& a:pair.second.devices)if(a.device=="touch"&&In(a.region,t.x,t.y)){touchOwners[t.id]=pair.first;break;}}
+ std::set<uint64_t> live;for(auto& t:hub.touches){live.insert(t.id);if(!touchOwners.count(t.id))for(auto& pair:players)if(!pair.second.input.LogicalMode())for(auto& a:pair.second.devices)if(a.device=="touch"&&In(a.region,t.x,t.y)){touchOwners[t.id]=pair.first;break;}}
  for(auto it=touchOwners.begin();it!=touchOwners.end();)if(!live.count(it->first))it=touchOwners.erase(it);else ++it;
- for(auto& pair:players){auto& p=pair.second;p.input.BeginFrame();p.input.textPlatform=hub.textPlatform;for(auto event:hub.textEvents){bool keyboardTab=event.player==~uint64_t(0)&&std::any_of(p.devices.begin(),p.devices.end(),[](const auto& a){return a.device=="keyboard"&&Accept(a,"key:Tab");});if(event.player==p.id||keyboardTab){event.player=p.id;p.input.QueueText(std::move(event));}}
+ for(auto& pair:players){auto& p=pair.second;
+  // External snapshots have their own explicit frame boundary; routing must
+  // not clear an edge already submitted before this local device pass. Rejoin
+  // ordinary device input with a held-state baseline when the mode is removed.
+  if(p.input.LogicalMode()){p.baseline=true;continue;}
+  p.input.BeginFrame();p.input.textPlatform=hub.textPlatform;for(auto event:hub.textEvents){bool keyboardTab=event.player==~uint64_t(0)&&std::any_of(p.devices.begin(),p.devices.end(),[](const auto& a){return a.device=="keyboard"&&Accept(a,"key:Tab");});if(event.player==p.id||keyboardTab){event.player=p.id;p.input.QueueText(std::move(event));}}
   std::set<std::string> connected;for(auto& a:p.devices)if(auto* device=hub.Find(a.device);device&&device->connected)connected.insert(a.device);
   if(connected!=p.connectedDevices){p.connectedDevices=std::move(connected);p.input.Reset();p.touchSources.clear();p.baseline=true;}
 

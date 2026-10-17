@@ -2,6 +2,7 @@
 #include "Simulation.h"
 
 #include <chrono>
+#include <stdexcept>
 #include <vector>
 
 #include "CelestialGravity.h"
@@ -19,18 +20,45 @@ double MillisecondsSince(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
 }
 
-}  // namespace
-
-void StepPlayedWorld(GameSession& session, const Window& window, float fixedDeltaTime,
-                     FixedStepMeasurements* measurements) {
+void StepWorld(GameSession& session, const InputSystem& input, const Window* window,
+               float fixedDeltaTime, FixedStepMeasurements* measurements) {
     JUDAS_PROFILE_SCOPE("Simulation systems");
     ProfileFixedStep profileFixedStep(fixedDeltaTime);
     RuntimeWorld& world = session.World();
     const bool legacy = session.UsesLegacyGameplay();
+    if (legacy && !window)
+        throw std::invalid_argument("headless simulation requires legacy-gameplay false");
+    // A replica world has no second authoritative physics solver. Scripts may
+    // submit input and update presentation; remote resolved state is published
+    // through the session's explicit snapshot path.
+    if (world.NetworkClient()) {
+        // Capture a replica step before invoking scripts. Closing the session
+        // inside that callback resumes ordinary physics on the next step; it
+        // cannot integrate a restored offline body midway through this one.
+        world.CommitOrigin();
+        world.NetworkBeforeFixed(fixedDeltaTime);
+        world.FixedScripts(&input, fixedDeltaTime);
+        // Fixed callbacks still own a local fixed clock; suppressing duplicate
+        // physics must not freeze time.elapsed for replica scripts. This is
+        // not a synchronized server clock.
+        world.AdvanceSimulationTime(fixedDeltaTime);
+        world.NetworkAfterFixed(fixedDeltaTime);
+        return;
+    }
     world.CommitOrigin();
     world.UpdateNavigation(fixedDeltaTime);
     world.Liquids().BeginStep();
-    world.FixedScripts(&window.Input(),fixedDeltaTime);
+    world.NetworkBeforeFixed(fixedDeltaTime);
+    world.FixedScripts(&input,fixedDeltaTime);
+    // Joining is legal from a fixed callback (including its first start/restore
+    // callback). Do not run a duplicate local solver merely because the role
+    // was offline when this step began. Callbacks and the local clock still
+    // advance exactly once.
+    if (world.NetworkClient()) {
+        world.AdvanceSimulationTime(fixedDeltaTime);
+        world.NetworkAfterFixed(fixedDeltaTime);
+        return;
+    }
     world.UpdateWeather(fixedDeltaTime);
     // Only opted-in M70 instances advance references before dynamics. Legacy
     // animation stays in its established post-physics phase.
@@ -107,12 +135,12 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
                 const glm::vec3 relativeVelocity = physics.GetLinearVelocity(thrust.handle) - baryVelocity;
                 const glm::vec3 tangentVelocity = relativeVelocity - radial * glm::dot(relativeVelocity, radial);
                 glm::vec3 direction(0.0f);
-                if (window.IsActionActive(Action::PlanetRadialThrust)) {
+                if (window->IsActionActive(Action::PlanetRadialThrust)) {
                     direction = radial;
                 } else if (glm::length(tangentVelocity) > 1.0e-5f) {
                     const glm::vec3 tangent = glm::normalize(tangentVelocity);
-                    if (window.IsActionActive(Action::PlanetProgradeThrust)) direction = tangent;
-                    else if (window.IsActionActive(Action::PlanetRetrogradeThrust)) direction = -tangent;
+                    if (window->IsActionActive(Action::PlanetProgradeThrust)) direction = tangent;
+                    else if (window->IsActionActive(Action::PlanetRetrogradeThrust)) direction = -tangent;
                 }
                 if (glm::length(direction) > 0.0f) physics.ApplyForce(thrust.handle, direction * thrust.force);
             }
@@ -130,14 +158,14 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
                 physics, ComputeCarryOrientation(player.GetOrientation(), player.GetLookDirection()));
         }
     }
-    if (session.HasVehicle()) ApplyFlyingPrimitiveControl(vehicleControl, window, physics);
+    if (window && session.HasVehicle()) ApplyFlyingPrimitiveControl(vehicleControl, *window, physics);
 
     // Doors write their pose to PhysicsWorld BEFORE the player's own
     // FixedUpdate so this step's move-and-slide sees the current panel.
     if (legacy) for (Door& door : world.Doors()) door.FixedUpdate(physics, fixedDeltaTime);
     if (legacy) for (LightSwitch& lightSwitch : world.LightSwitches()) lightSwitch.FixedUpdate(fixedDeltaTime);
     if (world.HasFluid()) {
-        if (legacy && !session.IsPiloting() && window.IsActionActive(Action::AddTerrainWater)) world.EmitFluidParticle();
+        if (legacy && !session.IsPiloting() && window->IsActionActive(Action::AddTerrainWater)) world.EmitFluidParticle();
         world.FluidCoupling().PrepareRigidStep(world, fixedDeltaTime);
     } else player.SetFluidSample({});
     // Mechanical sources advance once; wheel contacts then feed their actual
@@ -196,7 +224,7 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
         // Compatibility observer for legacy diagnostics/interaction. Scripted
         // main-view projects do not run a second locomotion controller.
         player.ObserveExternalView(pose.position-pose.rotation*glm::vec3(0,.7f,0),pose.rotation);
-    }else if (legacy) AdvancePlayerForPiloting(vehicleControl, session.Attachment(), player, physics, window, gravity,
+    }else if (legacy) AdvancePlayerForPiloting(vehicleControl, session.Attachment(), player, physics, *window, gravity,
                              fixedDeltaTime);
     world.UpdateCharacters(fixedDeltaTime,false,true);
     SyncDynamicBodiesFromPhysics(world.DynamicBodies(), physics);
@@ -212,9 +240,10 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
     world.UpdateVisualParticles(fixedDeltaTime);
     world.AdvanceSimulationTime(fixedDeltaTime);
 
-    world.DispatchPhysicsEvents(&window.Input(),fixedDeltaTime);
+    world.DispatchPhysicsEvents(&input,fixedDeltaTime);
     world.DispatchFractureEvents();
-    if(world.Scripts())world.Scripts()->DrainSignals(&window.Input(),fixedDeltaTime,false);
+    if(world.Scripts())world.Scripts()->DrainSignals(&input,fixedDeltaTime,false);
+    world.NetworkAfterFixed(fixedDeltaTime);
 
     // Milestone 29: the scene's fidelity policy runs last, over the settled
     // step, with gameplay's pins (a held object, the player's support) kept
@@ -226,4 +255,16 @@ void StepPlayedWorld(GameSession& session, const Window& window, float fixedDelt
         world.EvaluateFidelityPolicy(context, session.PinnedEntities());
     }
     session.RefreshEntityBindings();
+}
+
+}  // namespace
+
+void StepPlayedWorld(GameSession& session, const Window& window, float fixedDeltaTime,
+                     FixedStepMeasurements* measurements) {
+    StepWorld(session, window.Input(), &window, fixedDeltaTime, measurements);
+}
+
+void StepAuthoritativeWorld(GameSession& session, const InputSystem& input, float fixedDeltaTime,
+                            FixedStepMeasurements* measurements) {
+    StepWorld(session, input, nullptr, fixedDeltaTime, measurements);
 }

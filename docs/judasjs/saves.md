@@ -225,3 +225,10 @@ Ordinary overwrite retains the exact previous valid bytes. `judas_save` provides
 inspection, dry conversion, separate-slot conversion/recovery and previous-good
 recovery. It does not replace the game's full native restore validation.
 See [policy schema, tools, fixtures and boundaries](../M98_SAVE_EVOLUTION.md).
+
+## Active network sessions
+
+Close the [network session](network.md) before saving/loading or replacing a scene.
+Requests are rejected before mutation while a session is active; list/delete slot
+management remains available. Sockets, peers, input and presentation buffers are
+transient. Pending save/scene operations likewise prevent hosting or joining.

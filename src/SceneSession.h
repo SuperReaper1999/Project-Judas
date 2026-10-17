@@ -17,6 +17,8 @@ public:
     ~SceneSession();
     WorldStreaming* Streaming(RuntimeWorld&,std::string& error);
     void AdvanceStreaming(RuntimeWorld&,bool paused);
+    bool networkActive=false; // transient world-owned session gate; never persisted
+    const Project& ProjectConfig()const{return m_project;}
     bool Accepting()const{return m_accepting;}
     WorldStreaming* StreamingIfLoaded()const{return m_streaming.get();}
     bool ComposedProject()const{return !m_project.Settings().worldManifest.empty();}

@@ -196,3 +196,12 @@ and [Terrain's ownership limits](terrain.md). The standalone example is type-che
 the lab/application regression exercises the full asynchronous lifecycle.
 
 [Explicit save evolution](examples/save-evolution.js) shows request/poll/error policy. The executable cross-version lab is [Save Evolution Lab](../../projects/save_evolution_lab/README.md); see [conversion boundaries](../M98_SAVE_EVOLUTION.md).
+
+## Online shared physics (M99)
+
+[Connected Workshop](../../projects/connected_workshop/Assets/scripts/game.js) is
+a copyable ordinary project example: host-authoritative CharacterMotor control,
+validated remote logical input, physical hit-point shoves, replicated JSON score
+and detached input/peer/entity identities. [Network reference](network.md).
+`NetworkScriptTests` executes the public bindings and two independent copies of
+this exact game; see [reproduction and limits](../M99_NETWORK.md).

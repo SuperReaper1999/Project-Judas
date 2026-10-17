@@ -1,0 +1,4 @@
+PASS fresh evidence directory preserves previous failures
+PASS fixture scene writes: 
+FAIL fixture project loads: 
+FAIL fixture project loads:  after 3 checks

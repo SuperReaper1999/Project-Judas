@@ -123,7 +123,7 @@ file(GLOB JUDAS_RECAST third_party/recastnavigation/Recast/Source/*.cpp)
 add_library(judas_navigation_cook STATIC src/NavigationGeometryBake.cpp ${JUDAS_RECAST})
 target_include_directories(judas_navigation_cook SYSTEM PRIVATE third_party/recastnavigation/Recast/Include)
 target_include_directories(judas_navigation_cook PUBLIC src)
-target_link_libraries(judas_navigation_cook PUBLIC judas_navigation_backend)
+target_link_libraries(judas_navigation_cook PUBLIC judas_navigation_backend ${JUDAS_GLM})
 add_library(judas_navigation_baker STATIC src/NavigationBake.cpp)
 target_include_directories(judas_navigation_baker SYSTEM PRIVATE third_party/recastnavigation/Recast/Include)
 target_include_directories(judas_navigation_baker PUBLIC src)
@@ -151,6 +151,8 @@ target_include_directories(judas_materials PUBLIC src)
 target_link_libraries(judas_materials PUBLIC ${JUDAS_GLM} judas_profiler)
 
 add_library(judas_engine STATIC
+    src/NetworkSession.cpp
+    src/NetworkTransport.cpp
     src/Wheel.cpp
     src/WorldWheels.cpp
     src/Powertrain.cpp
@@ -311,6 +313,9 @@ if(UNIX)
 endif()
 target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend judas_meshoptimizer judas_navigation_cook)
 judas_warnings(judas_engine)
+if(WIN32)
+    target_link_libraries(judas_engine PUBLIC ws2_32)
+endif()
 
 # Android builds the same engine and application, loaded by SDL's native Activity.
 # Host editor, import/bake tools and test executables remain desktop-only.
@@ -2051,3 +2056,32 @@ judas_warnings(judas_save_evolution_tests)
 add_executable(judas_save_evolution_application_tests tests/SaveEvolutionApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_save_evolution_application_tests PRIVATE judas_engine)
 judas_warnings(judas_save_evolution_application_tests)
+
+# Optional multiplayer shares the existing authoritative world; no network setup offline.
+add_executable(judas_server src/DedicatedMain.cpp)
+target_link_libraries(judas_server PRIVATE judas_engine)
+judas_warnings(judas_server)
+add_executable(judas_network_transport_tests tests/NetworkTransportTests.cpp src/NetworkTransport.cpp)
+target_include_directories(judas_network_transport_tests PRIVATE src)
+judas_warnings(judas_network_transport_tests)
+if(WIN32)
+ target_link_libraries(judas_network_transport_tests PRIVATE ws2_32)
+endif()
+add_executable(judas_network_session_tests tests/NetworkSessionTests.cpp)
+target_link_libraries(judas_network_session_tests PRIVATE judas_engine)
+judas_warnings(judas_network_session_tests)
+add_executable(judas_logical_input_tests tests/LogicalInputTests.cpp)
+target_link_libraries(judas_logical_input_tests PRIVATE judas_engine)
+judas_warnings(judas_logical_input_tests)
+add_executable(judas_network_script_tests tests/NetworkScriptTests.cpp)
+target_link_libraries(judas_network_script_tests PRIVATE judas_engine)
+judas_warnings(judas_network_script_tests)
+add_executable(judas_network_application_tests tests/NetworkApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_network_application_tests PRIVATE judas_engine)
+judas_warnings(judas_network_application_tests)
+add_executable(judas_network_render_tests tests/NetworkRenderTests.cpp)
+target_link_libraries(judas_network_render_tests PRIVATE judas_engine)
+judas_warnings(judas_network_render_tests)
+add_executable(judas_network_boundary_tests tests/NetworkBoundaryTests.cpp)
+target_link_libraries(judas_network_boundary_tests PRIVATE judas_engine)
+judas_warnings(judas_network_boundary_tests)

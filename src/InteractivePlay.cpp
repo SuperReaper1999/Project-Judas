@@ -97,6 +97,7 @@ bool InteractivePlay::ConsumeResetOccurred() {
 float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDeltaTime, bool drawHud, bool render) {
     JUDAS_PROFILE_SCOPE("Play frame");
     RuntimeWorld& world = m_session.World();
+    world.PumpNetwork(std::chrono::duration<double>(Clock::now().time_since_epoch()).count());
 
     // Paired controller observations belong to this play session. A menu's
     // resume frame must not replay stick movement delivered while it owned input.

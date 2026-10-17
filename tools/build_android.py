@@ -32,6 +32,7 @@ def main():
     p.add_argument('--id',default='org.projectjudas.breakwater')
     p.add_argument('--name',default='Breakwater')
     p.add_argument('--version-code',type=int,default=1)
+    p.add_argument('--version-name',default='M88')
     p.add_argument('--exporter',type=Path,default=ROOT/'build/judas_export')
     p.add_argument('--desktop-runtime',type=Path,default=ROOT/'build/judas')
     p.add_argument('--keystore',type=Path)
@@ -87,7 +88,8 @@ def main():
     res=stage/'res/drawable';res.mkdir(parents=True)
     shutil.copyfile(ROOT/'assets/branding/judas-icon.png',res/'judas_icon.png')
     manifest=stage/'AndroidManifest.xml'
-    manifest.write_text(f'''<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="{a.id}" android:versionCode="{a.version_code}" android:versionName="M88">
+    manifest.write_text(f'''<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="{a.id}" android:versionCode="{a.version_code}" android:versionName="{escape(a.version_name,{chr(34):"&quot;"})}">
+<uses-permission android:name="android.permission.INTERNET"/>
 <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
 <uses-feature android:glEsVersion="0x00030000" android:required="true"/>
 <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>

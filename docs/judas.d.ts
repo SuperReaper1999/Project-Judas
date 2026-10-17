@@ -1,4 +1,4 @@
-/** Current JudasJS through M95. M95 human acceptance remains separate.
+/** Current JudasJS through M99. M98/M99 combined human acceptance is pending.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -821,6 +821,59 @@ declare module "judas" {
     create(name?:string,map?:PlayerInputEntry[]|null):LocalPlayer;
     get(id:string):LocalPlayer|null;
     readonly list:LocalPlayer[];readonly devices:InputDeviceInfo[];
+  };
+
+  export type NetworkMode = "offline" | "host" | "client";
+  export type NetworkStatus = "offline" | "starting" | "listening" | "connecting" | "connected" | "disconnected";
+  export interface NetworkHostOptions {
+    /** Numeric IPv4, default 0.0.0.0; use loopback for a local-only host. */
+    address?:string;
+    /** Default 27999; zero asks the host OS for an ephemeral port. */
+    port?:number;
+    name?:string;
+    /** Remote identities/reservations, 1..7; default 4. */
+    maxPeers?:number;
+    /** Authoritative snapshots per simulated second, 1..30; default 20. */
+    snapshotHz?:number;
+    /** At most 32 project logical scalar action/axis names (not paired vectors). */
+    controls?:string[];
+  }
+  export interface NetworkJoinOptions {address?:string;port?:number;name?:string}
+  export interface NetworkLaunch {mode:""|"host"|"join";address:string;port:number;dedicated:boolean}
+  export interface NetworkPeer {id:string;name:string;connected:boolean;player:LocalPlayer|null}
+  /** Detached counters; byte counts include framing, snapshotAge is seconds. */
+  export interface NetworkStats {
+    bytesSent:number;bytesReceived:number;framesSent:number;framesReceived:number;
+    backpressure:number;coalesced:number;rejected:number;snapshots:number;
+    snapshotAge:number;entities:number;peers:number;
+  }
+  /** Wrapper only; constructing it does not register an entity or grant authority. */
+  export class NetworkEntity {
+    constructor(id:string,generation:number);
+    id:string;generation:number;
+    readonly valid:boolean;
+    readonly entity:Entity;
+    /** Host-only assignment: "host", a current peer ID, or "" for unassigned. */
+    owner:string;
+    /** Copied plain JSON, at most 1024 UTF-8 bytes; writes require host authority. */
+    state:JSONValue;
+    /** Host-only removal from replication, not entity destruction. */
+    forget():boolean;
+  }
+  export const network: {
+    host(options?:NetworkHostOptions):boolean;
+    join(options?:NetworkJoinOptions):boolean;
+    close():void;
+    replicate(entity:Entity,options?:{owner?:string;state?:JSONValue}):NetworkEntity;
+    /** Connected client only. Declared finite axes [-1,1], actions exactly 0 or 1. */
+    sendInput(values:Record<string,number>):boolean;
+    /** Host observation; unknown/disconnected/stale peers return {}. */
+    input(peerId:string):Record<string,number>;
+    /** Absolute double-position metres, NOT local-world coordinates. Radius 1..1e9 m. */
+    setInterest(absolutePosition:Vec3,radius:number):boolean;
+    readonly mode:NetworkMode;readonly status:NetworkStatus;readonly error:string;
+    readonly peerId:string;readonly port:number;readonly launch:NetworkLaunch;
+    readonly stats:NetworkStats;readonly peers:NetworkPeer[];readonly entities:NetworkEntity[];
   };
 
   export type StickSide = "left" | "right";

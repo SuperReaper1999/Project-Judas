@@ -1,0 +1,16 @@
+{
+  "connections": 2,
+  "frames": 282,
+  "omitted": 22,
+  "bytes": 84064,
+  "peakQueuedBytes": 1788,
+  "violations": 0,
+  "forcedDisconnects": 1,
+  "seed": 99,
+  "directionalLatencyMs": 75.0,
+  "jitterMs": 15.0,
+  "omittedMessageKind": "snapshot",
+  "dropEvery": 5,
+  "semantics": "ordered TCP frames; optional application message omission",
+  "elapsedSeconds": 8.001501391000602
+}

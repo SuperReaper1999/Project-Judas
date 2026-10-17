@@ -1,0 +1,9 @@
+PASS fixture scene writes: 
+PASS fixture project loads: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS independent-process host starts: 
+PASS host registers real shared body and motor
+PASS ordinary host assigns physical motor identity
+PASS independent clients exercised actual host gameplay and physics

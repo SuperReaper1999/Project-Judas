@@ -1,0 +1,36 @@
+{
+  "apkBytes": 106380020,
+  "apkSha256": "fe8a4ac429987409fa7066529b948e503b8ee824c726e2a8c249e12a515bff14",
+  "entries": [
+    {
+      "path": "lib/arm64-v8a/libmain.so",
+      "bytes": 49016928,
+      "sha256": "6ca131e0b53be751775bf86baf88ea7c674f924ce62b299090068010da095fba"
+    },
+    {
+      "path": "lib/arm64-v8a/libSDL2.so",
+      "bytes": 1257040,
+      "sha256": "11461a5417b8f89dd19372b8ac1aa52cd035191d8a0a1449d324f96ffdb1a51d"
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    },
+    {
+      "path": "lib/x86_64/libmain.so",
+      "bytes": 50289144,
+      "sha256": "3a405aa9a3e79c1cd4c44859c466801ec253f96ac5674ac6008c749098012a48"
+    },
+    {
+      "path": "lib/x86_64/libSDL2.so",
+      "bytes": 1370960,
+      "sha256": "c2ea3805f01574beacced734d1670457233c0a93562d37a95f27dbb3e1acf3ee"
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256"
+    }
+  ]
+}

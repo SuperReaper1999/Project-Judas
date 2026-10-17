@@ -5,6 +5,9 @@ There is **one authoritative world and fixed-step clock**, regardless of view or
 player count. No networking, replication, prediction, server authority or game
 rules are implied. [Input](input.md), [physics/CharacterMotor](character.md),
 [cameras](effects-camera.md), [UI](ui.md), [scene/save lifetimes](scenes-state.md).
+M99 adds a separate optional [online session layer](network.md) which can associate
+remote peers with these same local-world player identities; this namespace remains
+usable independently of networking.
 
 ## Identity and lifetime
 

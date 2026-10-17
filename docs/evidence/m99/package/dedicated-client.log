@@ -1,0 +1,13 @@
+PASS valid process role
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS actual game process exchanges real session traffic
+PASS both wire directions are exercised
+PASS game UI retains the actual launch address and custom port instead of authored fallbacks
+PASS real dedicated server publishes both authored motors and all twelve physical crates
+PASS ordinary client input moves the actual server-owned motor away from its authored position
+PASS actual replicated cargo endpoint remains finite without fixture rearrangement
+SUMMARY checks=12 failures=0

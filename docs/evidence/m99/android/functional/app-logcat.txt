@@ -1,0 +1,152 @@
+--------- beginning of main
+10-17 21:35:49.320  2564  2564 I nnectedworkshop: Late-enabling -Xcheck:jni
+10-17 21:35:49.370  2564  2564 I nnectedworkshop: Using CollectorTypeCMC GC.
+10-17 21:35:49.371  2564  2564 W nnectedworkshop: Unexpected CPU variant for x86: x86_64.
+10-17 21:35:49.371  2564  2564 W nnectedworkshop: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+10-17 21:35:49.387  2564  2564 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-17 21:35:49.800  2564  2564 D nativeloader: Configuring clns-9 for other apk /data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/lib/x86_64:/data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.projectjudas.connectedworkshop
+10-17 21:35:49.811  2564  2564 I nnectedworkshop: AssetManager2(0x7c5019054878) locale list changing from [] to [en-US]
+10-17 21:35:49.926  2564  2564 V GraphicsEnvironment: Currently set values for:
+10-17 21:35:49.926  2564  2564 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-17 21:35:49.926  2564  2564 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-17 21:35:49.926  2564  2564 V GraphicsEnvironment: org.projectjudas.connectedworkshop is not listed in per-application setting
+10-17 21:35:49.926  2564  2564 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+10-17 21:35:49.926  2564  2564 V GraphicsEnvironment: org.projectjudas.connectedworkshop is not listed in ANGLE allowlist or settings, returning default
+10-17 21:35:49.927  2564  2564 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+--------- beginning of system
+10-17 21:35:50.075  2564  2617 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-17 21:35:50.116  2564  2564 I nnectedworkshop: AssetManager2(0x7c5019052938) locale list changing from [] to [en-US]
+10-17 21:35:50.278  2564  2617 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-17 21:35:50.279  2564  2617 I EGL_emulation: Opening libGLESv2_emulation.so
+10-17 21:35:50.288  2564  2617 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-17 21:35:50.390  2564  2564 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+10-17 21:35:50.416  2564  2564 V SDL     : Device: emu64xa
+10-17 21:35:50.416  2564  2564 V SDL     : Model: sdk_gphone64_x86_64
+10-17 21:35:50.416  2564  2564 V SDL     : onCreate()
+10-17 21:35:50.454  2564  2564 D nativeloader: Load /data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk!/lib/x86_64/libc++_shared.so using class loader ns clns-9 (caller=/data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk): ok
+10-17 21:35:50.479  2564  2564 D nativeloader: Load /data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk!/lib/x86_64/libSDL2.so using class loader ns clns-9 (caller=/data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk): ok
+10-17 21:35:50.577  2564  2564 D nativeloader: Load /data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk!/lib/x86_64/libmain.so using class loader ns clns-9 (caller=/data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/base.apk): ok
+10-17 21:35:50.582  2564  2564 V SDL     : nativeSetupJNI()
+10-17 21:35:50.589  2564  2564 V SDL     : AUDIO nativeSetupJNI()
+10-17 21:35:50.589  2564  2564 V SDL     : CONTROLLER nativeSetupJNI()
+10-17 21:35:50.602  2564  2564 D AudioSystem: onNewService: media.audio_policy service obtained 0x7c4fa9105990
+10-17 21:35:50.607  2564  2564 D AudioSystem: getService: checking for service media.audio_policy: 0x7c4fa9105990
+10-17 21:35:50.703  2564  2564 D CompatChangeReporter: Compat change id reported: 377864165; UID 10219; state: ENABLED
+10-17 21:35:50.707  2564  2564 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+10-17 21:35:50.722  2564  2564 V SDL     : onStart()
+10-17 21:35:50.726  2564  2564 V SDL     : onResume()
+10-17 21:35:50.795  2564  2564 W HWUI    : Unknown dataspace 0
+10-17 21:35:50.967  2564  2564 D InsetsController: Setting requestedVisibleTypes to -14 (was -9)
+10-17 21:35:51.016  2564  2564 D InsetsController: Setting requestedVisibleTypes to -9 (was -14)
+10-17 21:35:51.170  2564  2564 V SDL     : surfaceCreated()
+10-17 21:35:51.170  2564  2564 V SDL     : surfaceChanged()
+10-17 21:35:51.170  2564  2564 V SDL     : Window size: 720x1280
+10-17 21:35:51.170  2564  2564 V SDL     : Device size: 720x1280
+10-17 21:35:51.422  2564  2564 V SDL     : onWindowFocusChanged(): true
+10-17 21:35:51.458  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:35:51.458  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:b205231: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-17 21:35:51.913  2564  2649 V SDL     : Running main function SDL_main from library /data/app/~~7b78mykzL0AqTOgM-k2OtQ==/org.projectjudas.connectedworkshop-LTHR7GLOXUZN4-PY0JjUtQ==/lib/x86_64/libmain.so
+10-17 21:35:51.913  2564  2649 V SDL     : nativeRunMain()
+10-17 21:35:52.091  2564  2649 V hidapi  : initialize(true, false)
+10-17 21:35:52.176  2564  2649 V SDL     : setOrientation() requestedOrientation=13 width=720 height=1280 resizable=true hint=
+10-17 21:35:52.451  2564  2649 I SDL/APP : pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-17 21:35:52.455  2564  2672 I Judas.Native: INFO: pixel format wanted SDL_PIXELFORMAT_RGBX8888 (2), got SDL_PIXELFORMAT_RGBX8888 (2)
+10-17 21:35:52.458  2564  2564 D InsetsController: Setting requestedVisibleTypes to -16 (was -9)
+10-17 21:35:52.502  2564  2672 I Judas.Native: Shadow maps: off
+10-17 21:35:52.502  2564  2672 I Judas.Native: Graphics: OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0.0.1) / Android Emulator OpenGL ES Translator (Google SwiftShader)
+10-17 21:35:52.502  2564  2672 I Judas.Native: Renderer fragment texture units: 16 (material path uses 12)
+10-17 21:35:52.733  2564  2672 I Judas.Native: World state: /data/data/org.projectjudas.connectedworkshop/files/judas/games/6d139e8d1d0f11baddf2fa20eb3105cb30b848f3a0461fdf371b35440436c575/Saves/workshop.judasstate (none saved)
+10-17 21:35:52.733  2564  2672 I Judas.Native: Project: Connected Workshop (/data/user/0/org.projectjudas.connectedworkshop/files/judas-content/7dfa4ad2ade67aae0e0b23d4acb3e834a96e71247811fb497e0463555a035fad/game.judasproj)
+10-17 21:35:52.733  2564  2672 I Judas.Native: Scene: Connected Workshop / shared cargo yard (/data/user/0/org.projectjudas.connectedworkshop/files/judas-content/7dfa4ad2ade67aae0e0b23d4acb3e834a96e71247811fb497e0463555a035fad/Scenes/workshop.judas)
+10-17 21:35:52.733  2564  2672 I Judas.Native: World origin (m): 0.000, 0.000, 0.000
+10-17 21:35:52.894  2564  2691 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.projectjudas.connectedworkshop
+10-17 21:35:53.866  2564  2594 I nnectedworkshop: Compiler allocated 5042KB to compile void android.view.ViewRootImpl.performTraversals()
+10-17 21:36:13.407  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:7440392c: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+10-17 21:36:13.449  2564  2564 W HWUI    : Image decoding logging dropped!
+10-17 21:36:13.458  2564  2564 W HWUI    : Image decoding logging dropped!
+10-17 21:36:13.472  2564  2564 W HWUI    : Image decoding logging dropped!
+10-17 21:36:13.581  2564  2564 D InsetsController: show(ime(), fromIme=false)
+10-17 21:36:13.581  2564  2564 D InsetsController: Setting requestedVisibleTypes to -8 (was -16)
+10-17 21:36:13.998  2564  2564 D InsetsController: show(ime(), fromIme=false)
+10-17 21:36:13.998  2564  2564 I ImeTracker: com.google.android.inputmethod.latin:c7a6ee13: onCancelled at PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+10-17 21:36:13.998  2564  2564 D InsetsController: show(ime(), fromIme=false)
+10-17 21:36:13.999  2564  2564 I ImeTracker: com.google.android.inputmethod.latin:c7a6ee13: onCancelled at PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+10-17 21:36:15.285  2564  2595 I nnectedworkshop: Background concurrent mark compact GC freed 1954KB AllocSpace bytes, 24(1488KB) LOS objects, 49% free, 1865KB/3731KB, paused 88us,52.958ms total 269.900ms
+10-17 21:36:17.394  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:7440392c: onShown
+10-17 21:36:27.647  2564  2564 E FrameTracker: force finish cuj, time out: J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:36:27.648  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 12524, 14780701, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:36:27.648  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 12554, 2682630, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:36:27.648  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 12569, 1425770, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:36:27.648  2564  2564 W FrameTracker: Missed App frame:JANK_APPLICATION, 12651, 24261899, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:36:27.648  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 12693, 23314761, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:36:27.662  2564  2698 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-80 - not enough time since last trigger
+10-17 21:36:38.617  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:bf75f81d: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_REQUEST_HIDE_WITH_CONTROL fromUser true
+10-17 21:36:38.620  2564  2564 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@14f3f7a
+10-17 21:36:38.635  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:2c4135f9: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-17 21:36:38.636  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:36:38.636  2564  2564 D InsetsController: Setting requestedVisibleTypes to -16 (was -8)
+10-17 21:36:38.640  2564  2564 D CompatChangeReporter: Compat change id reported: 395521150; UID 10219; state: ENABLED
+10-17 21:36:38.641  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:36:38.641  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:bf75f81d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-17 21:36:38.872  2564  2564 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+10-17 21:36:39.081  2564  2564 I ImeTracker: system_server:ddd47a97: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+10-17 21:36:39.355  2564  2564 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@14f3f7a
+10-17 21:36:49.197  2564  2564 E FrameTracker: force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.197  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 15298, 706142, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 15313, 17168520, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 15313, 17168520, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 15342, 6153109, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 15358, 19954641, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 15358, 19954641, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 15380, 19441151, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 15380, 19441151, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.198  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 15425, 5282038, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:36:49.203  2564  2698 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-81 - not enough time since last trigger
+10-17 21:36:49.690  2564  2564 E FrameTracker: force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:03.852  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:314cfba2: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-17 21:37:03.853  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:37:03.853  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:314cfba2: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-17 21:37:15.893  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:52f23728: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+10-17 21:37:15.914  2564  2564 D InsetsController: show(ime(), fromIme=false)
+10-17 21:37:15.914  2564  2564 D InsetsController: Setting requestedVisibleTypes to -8 (was -16)
+10-17 21:37:16.716  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:52f23728: onShown
+10-17 21:37:16.778  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 16958, 2779183, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:37:16.779  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 16973, 10002210, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:37:16.779  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 17025, 10811701, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:37:16.779  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 17056, 17148113, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:37:16.780  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 17056, 17148113, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:37:16.780  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 17078, 5584890, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@org.projectjudas.connectedworkshop>
+10-17 21:37:16.781  2564  2698 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-80 - not enough time since last trigger
+10-17 21:37:32.034  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:71d75565: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_REQUEST_HIDE_WITH_CONTROL fromUser true
+10-17 21:37:32.046  2564  2564 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@14f3f7a
+10-17 21:37:32.054  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:c04ebceb: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-17 21:37:32.054  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:37:32.055  2564  2564 D InsetsController: Setting requestedVisibleTypes to -16 (was -8)
+10-17 21:37:32.060  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:37:32.060  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:71d75565: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-17 21:37:32.230  2564  2564 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+10-17 21:37:32.475  2564  2564 I ImeTracker: system_server:20f6fbbb: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+10-17 21:37:32.667  2564  2564 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@14f3f7a
+10-17 21:37:41.946  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:a4728e57: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-17 21:37:41.946  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:37:41.946  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:a4728e57: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-17 21:37:42.650  2564  2564 E FrameTracker: force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 17555, 22997908, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 17555, 22997908, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 17577, 2070458, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 17600, 38648082, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 17600, 38648082, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 17630, 13650759, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed SF frame:JANK_COMPOSER, 17652, 14792894, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed App frame:UNKNOWN: 3, 17683, 43761799, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2564 W FrameTracker: Missed SF frame:UNKNOWN: 3, 17683, 43761799, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:37:42.650  2564  2698 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-81 - not enough time since last trigger
+10-17 21:37:43.087  2564  2564 E FrameTracker: force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@0@org.projectjudas.connectedworkshop>
+10-17 21:38:18.635  2564  2564 V SDL     : onPause()
+10-17 21:38:18.651  2564  2564 V SDL     : onWindowFocusChanged(): false
+10-17 21:38:18.656  2564  2564 V SDL     : nativeFocusChanged()
+10-17 21:38:18.714  2564  2564 V SDL     : onResume()
+10-17 21:38:18.761  2564  2564 V SDL     : onWindowFocusChanged(): true
+10-17 21:38:18.761  2564  2564 V SDL     : nativeFocusChanged()
+10-17 21:38:18.788  2564  2564 D InsetsController: hide(ime(), fromIme=false)
+10-17 21:38:18.788  2564  2564 I ImeTracker: org.projectjudas.connectedworkshop:38e2d439: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN

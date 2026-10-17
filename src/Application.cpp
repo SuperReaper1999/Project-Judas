@@ -1,3 +1,4 @@
+#include "NetworkSession.h"
 #include "PerformanceProfiler.h"
 #include "Application.h"
 #include "AppIcon.h"
@@ -123,6 +124,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
                      error.c_str());
         return 1;
     }
+    if(!options.networkMode.empty())world.Network().SetLaunch(options.networkMode,options.networkAddress,options.networkPort,false);
     InteractivePlay play;
     if (!play.Begin(world, worldCoordinates, error)) {
         std::fprintf(stderr, "%s\n", error.c_str());

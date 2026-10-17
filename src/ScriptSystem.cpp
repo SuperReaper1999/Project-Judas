@@ -1,3 +1,4 @@
+#include "NetworkSession.h"
 #include "PlanetTiles.h"
 #include "CameraProjection.h"
 #include "WorldStreaming.h"
@@ -48,6 +49,34 @@ bool KnownOptions(JSContext* c,JSValueConst value,std::initializer_list<const ch
 }
 const char* library=R"JS(
 const call=(op,...args)=>globalThis.__judas(op,...args);
+export class NetworkEntity {
+ constructor(id,generation){this.id=String(id);this.generation=generation}
+ get valid(){return call('networkValid',this.id,this.generation)}
+ get entity(){return entity(call('networkEntry',this.id,this.generation).entity)}
+ get owner(){return call('networkEntry',this.id,this.generation).owner}
+ set owner(value){call('networkOwner',this.id,this.generation,value)}
+ get state(){return call('networkEntry',this.id,this.generation).state}
+ set state(value){call('networkState',this.id,this.generation,value)}
+ forget(){return call('networkForget',this.id,this.generation)}
+}
+export const network={
+ host:(options={})=>call('networkHost',options),
+ join:(options={})=>call('networkJoin',options),
+ close:()=>call('networkClose'),
+ replicate:(value,options={})=>{if(!(value instanceof Entity))throw new TypeError('Entity required');const id=call('networkReplicate',value.id,options);return new NetworkEntity(id,call('networkInfo').generation)},
+ sendInput:values=>call('networkSendInput',values),
+ input:peer=>call('networkInput',String(peer)),
+ setInterest:(position,radius)=>call('networkInterest',position,radius),
+ get mode(){return call('networkInfo').mode},
+ get status(){return call('networkInfo').status},
+ get error(){return call('networkInfo').error},
+ get peerId(){return call('networkInfo').peerId},
+ get port(){return call('networkInfo').port},
+ get launch(){return call('networkInfo').launch},
+ get stats(){return call('networkInfo').stats},
+ get peers(){return call('networkPeers').map(p=>({...p,player:p.player?new LocalPlayer(p.player):null}))},
+ get entities(){const generation=call('networkInfo').generation;return call('networkEntities').map(e=>new NetworkEntity(e.id,generation))}
+};
 export const signals={
  subscribe:(name,phase='fixed')=>call('signalSubscribe',name,phase),
  unsubscribe:token=>call('signalUnsubscribe',token),
@@ -983,6 +1012,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(!JS_IsUndefined(scale))ok=ok&&ReadVec(c,scale,t.scale)&&t.scale.x>0&&t.scale.y>0&&t.scale.z>0;
         JS_FreeValue(c,p);JS_FreeValue(c,r);JS_FreeValue(c,scale);return ok;};
     #include "ScriptLocalMultiplayer.inl"
+    #include "ScriptNetwork.inl"
     if(op=="setView"){
         const bool initialView=!world.view;SceneTransform t;double fov=70;float nearPlane=.1f,farPlane=500;auto range=arg(3);if(!KnownOptions(c,range,{"near","far"}))return JS_ThrowTypeError(c,"camera range accepts near/far only");for(auto [key,value]:{std::pair<const char*,float*>{"near",&nearPlane},{"far",&farPlane}}){auto v=JS_GetPropertyStr(c,range,key);bool has=!JS_IsUndefined(v);JS_FreeValue(c,v);if(has&&!Number(c,range,key,*value))return JS_ThrowTypeError(c,"finite camera range required");}if(!readTransform(arg(1),t)||JS_ToFloat64(c,&fov,arg(2))||!world.SetRuntimeView(t,float(fov),nearPlane,farPlane))return JS_ThrowTypeError(c,"invalid runtime view");if(initialView)world.ResetAudioMotion();return JS_TRUE;
     }
@@ -1690,7 +1720,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="parent")return JS_NewString(c,std::to_string(definition->parent).c_str());
     if(op=="children"){std::vector<EntityId> result;for(const auto& o:world.ScriptObjects())if(o.parent==id)result.push_back(o.id);return ids(result);}
     if(op=="destroy"){std::string error;if(!world.DestroyHierarchy(id,error))return JS_ThrowTypeError(c,"destroy: %s",error.c_str());return JS_TRUE;}
-    if(op=="transform"||op=="presentedTransform"){auto t=world.PresentedTransform(id,definition->transform,op=="presentedTransform"&&s->inPresentation?s->presentationAlpha:1);auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"position",Vec(c,t.position));JS_SetPropertyStr(c,result,"scale",Vec(c,t.scale));auto q=Vec(c,{t.rotation.x,t.rotation.y,t.rotation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,t.rotation.w));JS_SetPropertyStr(c,result,"rotation",q);return result;}
+    if(op=="transform"||op=="presentedTransform"){auto t=world.PresentedTransform(id,definition->transform,op=="presentedTransform"&&s->inPresentation?s->presentationAlpha:1);if(op=="transform"&&world.NetworkClient()){EntityPhysicalState physical;if(world.GetEntityState(id,physical)){t.position=physical.position;t.rotation=physical.rotation;}}auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"position",Vec(c,t.position));JS_SetPropertyStr(c,result,"scale",Vec(c,t.scale));auto q=Vec(c,{t.rotation.x,t.rotation.y,t.rotation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,t.rotation.w));JS_SetPropertyStr(c,result,"rotation",q);return result;}
     if(op=="setTransform"){auto t=world.PresentedTransform(id,definition->transform,1);if(!readTransform(arg(2),t)||!world.SetRuntimeTransform(id,t))return JS_ThrowTypeError(c,"invalid transform");return JS_TRUE;}
     if(op=="hasTag"||op=="addTag"||op=="removeTag"){auto tag=world.Categories().tags.Find(String(c,arg(2)));if(tag<0)return JS_ThrowTypeError(c,"unknown tag");return JS_NewBool(c,op=="hasTag"?world.HasTag(id,tag):op=="addTag"?world.AddTag(id,tag):world.RemoveTag(id,tag));}
     if(op=="classification"){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"renderLayer",JS_NewUint32(c,world.RenderLayerOf(id)));unsigned layer=0;CategoryMask mask=0;world.Physics().GetCollisionFilter(world.RuntimeBody(id),layer,mask);JS_SetPropertyStr(c,o,"collisionLayer",JS_NewUint32(c,layer));JS_SetPropertyStr(c,o,"collisionMask",JS_NewString(c,std::to_string(mask).c_str()));return o;}

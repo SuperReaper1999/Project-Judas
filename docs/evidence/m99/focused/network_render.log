@@ -1,0 +1,78 @@
+PASS real project scene writes: 
+PASS real project loads: 
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS normal EngineHost initializes real GL renderer: 
+PASS ordinary render/network world builds: 
+PASS ordinary render/network world builds: 
+PASS real native TCP host begins: 
+PASS host publishes a real listening port after content verification
+PASS existing physical root registers for ordinary replication: 
+PASS independent replica world joins through TCP: 
+PASS actual content handshake and repeated physical snapshots arrive
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS read existing authoritative physical body
+PASS publish known authoritative trajectory sample
+PASS client holds distinct authoritative and buffered motion observations
+PASS test creates at least one metre of real latest-versus-buffered pose separation
+PASS preserve actual rendered replica pixels
+REPLICA_RENDER latest_x=2.600000 buffered_x=0.800000 gap_m=1.800000 expected_pixel=175.500 latest_pixel=211.500 observed_pixel=175.500 red_pixels=100
+PASS actual dynamic colour submission renders the buffered network pose
+PASS negative control rejects latest-authoritative drawing despite a correct service buffer
+PASS second real camera projects the same buffered replica pose independently
+PASS actual shadow depth also follows the buffered physical replica
+PASS ordinary material override enables blended rendering
+PASS blended dynamic colour output preserves the buffered replica pose
+PASS ordinary visibility gate hides the replica
+PASS hidden-subject negative control leaves no spurious red-centroid signal
+PASS offline control restores ordinary opaque material
+PASS offline control has its original physical body
+PASS closed-session renderer retains the ordinary non-network physical presentation path
+PASS colour, second view, shadow and blend leave coherent GL state
+SUMMARY checks=73 failures=0

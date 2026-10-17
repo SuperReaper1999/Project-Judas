@@ -1,0 +1,25 @@
+PASS fresh evidence directory preserves previous failures
+PASS fixture scene writes: 
+PASS fixture project loads: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS offline legacy-delta capture remains supported where previously valid
+PASS optional networking starts inactive with no scene gate
+PASS host begins asynchronous content validation: 
+PASS actual listening socket appears after content validation: 
+PASS host publishes actual bound port and authoritative role
+PASS capture real offline endpoint before joining
+PASS two separate client worlds begin real TCP joins: 
+PASS content-matched clients complete protocol handshake
+PASS peer identities are distinct from host and each other
+PASS host opts ordinary body into replication: 
+PASS host explicitly assigns motor ownership to one connection: 
+PASS client cannot publish authoritative registration, ownership or replicated game state
+PASS unsupported hierarchy replication is rejected explicitly
+PASS both independent clients receive server registrations
+FAIL real host rigid-body impulse/contact advances physical endpoint without client simulation
+FAIL real host rigid-body impulse/contact advances physical endpoint without client simulation after 24 checks

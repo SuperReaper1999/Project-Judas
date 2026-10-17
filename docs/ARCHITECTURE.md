@@ -10163,3 +10163,36 @@ creation. See [scope and unsupported conversions](M98_SAVE_EVOLUTION.md).
 M97 is operator accepted. M98 human/platform acceptance remains separate from
 focused Linux evidence. No generic physical-topology or inactive-region script
 conversion is claimed.
+
+
+## M99 — optional server-authoritative sessions
+
+`NetworkSession` is lazily owned by `RuntimeWorld`; offline worlds do not open
+sockets, reserve players or allocate replication histories. `NetworkTransport`
+provides bounded nonblocking framed TCP on Linux, Windows and Android. Content
+identity is prepared with existing asynchronous fingerprint machinery.
+
+The existing authoritative fixed-step path is shared by listen and truly
+headless dedicated hosts. Remote logical levels/edges are published before the
+normal fixed-input snapshot. The host resolves physics and publishes authored
+root poses and project-owned JSON after contacts. Replicas run scripts for input
+and presentation, without a second authoritative physics simulation. Absolute
+double positions cross the wire; bounded presentation samples are converted into
+the current local origin. `transform` remains latest authoritative state and
+`presentedTransform` uses the presentation history.
+
+Connection IDs, reserved session peers, M89 local players, network entity tokens
+and native generation-safe physical handles remain distinct. Ownership delegates
+control policy; it does not move physics authority to a client. Scripts decide
+what validated intent means. No remote code or generic gameplay RPC is executed.
+
+Initial scope is identical unmodded single-scene content, <=7 remote peers and 64
+distinct authored roots per session. Complex articulated/deforming/terrain
+representations and runtime-spawn replication are not generally synchronized.
+Scene changes and cold saves require explicitly closing the session first; pending
+save/scene transactions prevent startup. No socket, reconnect token or interpolation
+history is persisted. TCP head-of-line delay, no prediction, no encryption/auth,
+no NAT traversal and no seamless scene handoff are deliberate current limits.
+See [network reference](judasjs/network.md) and [lab/validation](M99_NETWORK.md).
+M98 was provisionally promoted for combined review; neither that promotion nor
+M99 automation asserts human acceptance.

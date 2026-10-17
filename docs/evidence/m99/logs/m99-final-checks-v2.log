@@ -1,0 +1,23 @@
+network_transport 0
+logical_input 0
+character_motor 0
+local_multiplayer 0
+local_multiplayer_script 0
+input 0
+script 0
+physics_continuation 0
+script_presentation 0
+network_session 0
+network_boundary 0
+network_render 0
+network_public_js 0
+game_application 0
+scene_transition 0
+save_evolution 0
+offline_evolution_write 0
+offline_evolution_read-v2 0
+offline_evolution_read-v3 0
+live_api 0
+api_drift 0
+editor 0
+Focused checks passed; human acceptance remains pending.

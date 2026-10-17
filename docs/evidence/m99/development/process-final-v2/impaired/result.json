@@ -1,0 +1,33 @@
+{
+  "box": [
+    4.503512382507324,
+    0.4999992549419403,
+    8.190611424652161e-07
+  ],
+  "boxReady": true,
+  "clock": "std::chrono::steady_clock seconds",
+  "connectionGaps": [
+    {
+      "end": 4116.321394151,
+      "seconds": 0.18030005200034793,
+      "start": 4116.141094099
+    }
+  ],
+  "error": "",
+  "identities": [
+    "2",
+    "2"
+  ],
+  "motor": [
+    -1.9833343029022217,
+    0.917275071144104,
+    0.0
+  ],
+  "motorReady": true,
+  "receivedBytes": 38762,
+  "reconnects": 1,
+  "sentBytes": 8796,
+  "snapshotAge": 0.030089940999999953,
+  "snapshots": 54,
+  "status": "connected"
+}

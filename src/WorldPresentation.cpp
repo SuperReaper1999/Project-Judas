@@ -1,3 +1,4 @@
+#include "NetworkSession.h"
 #include "CameraProjection.h"
 #include "PerformanceProfiler.h"
 #include "WorldPresentation.h"
@@ -131,6 +132,16 @@ void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderCo
 }
 }  // namespace
 
+namespace {
+SceneTransform PresentedBody(const RuntimeWorld& world, SceneObjectId id,
+                             const DynamicBody& body, float alpha,
+                             glm::vec3 scale=glm::vec3(1)) {
+    SceneTransform pose{body.GetPresentedPosition(alpha), body.GetPresentedOrientation(alpha), scale};
+    if(auto* network=world.NetworkIfLoaded())network->Presentation(id,pose);
+    return pose;
+}
+}
+
 void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession* session,
                        float alpha, const WorldDrawOptions& options) {
     JUDAS_PROFILE_SCOPE("World culling and opaque submission");
@@ -189,8 +200,9 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         const RuntimeWorld::DynamicVisual& v = visuals[i];
         r.SetRenderLayer(world.RenderLayerOf(v.id));
         if (!v.hasRender||!world.IsPublished(v.id)||!world.RenderVisible(v.id)) continue;
-        const glm::vec3 position = bodies[i].GetPresentedPosition(alpha);
-        const glm::quat rotation = bodies[i].GetPresentedOrientation(alpha);
+        const auto pose=PresentedBody(world,v.id,bodies[i],alpha,v.scale);
+        const glm::vec3 position=pose.position;
+        const glm::quat rotation=pose.rotation;
         if (v.render.shape == SceneShape::Compound) {
             r.SetMaterialBindings(BuildRenderMaterialBindings(world.Resources(),v.render));
             // Opaque base in the colour pass; every part in a shadow pass
@@ -244,8 +256,9 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
         r.SetRenderLayer(world.RenderLayerOf(v.id));
             if (!world.IsPublished(v.id)||!world.RenderVisible(v.id)||!v.hasRender || v.render.shape != SceneShape::Compound) continue;
             r.SetMaterialBindings(BuildRenderMaterialBindings(world.Resources(),v.render));
-            const glm::vec3 position = bodies[i].GetPresentedPosition(alpha);
-            const glm::quat rotation = bodies[i].GetPresentedOrientation(alpha);
+            const auto pose=PresentedBody(world,v.id,bodies[i],alpha,v.scale);
+            const glm::vec3 position=pose.position;
+            const glm::quat rotation=pose.rotation;
             for (std::size_t part = 1; part < v.compoundBoxes.size(); ++part) {
                 const CompoundBox& box = v.compoundBoxes[part];
                 DrawCompoundChild(r,world.Resources(),box,position,rotation,v.render.secondaryColor,v.render.secondaryAlpha);
@@ -278,11 +291,12 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
             const ThermalBodyState* state = world.Combustion().State(c.handle);
             if (!state || state->burnRateKgPerSecond <= 0.0f) continue;
             const DynamicBody& body = bodies[c.dynamicIndex];
-            const glm::vec3 position = body.GetPresentedPosition(alpha);
+            const auto pose=PresentedBody(world,c.id,body,alpha);
+            const glm::vec3 position=pose.position;
             const AtmosphereSample gas = atmosphere.field.Sample(position, atmosphere.frame);
             FirePresentationInput input;
             input.position = position;
-            input.orientation = body.GetPresentedOrientation(alpha);
+            input.orientation = pose.rotation;
             input.burnRateKgPerSecond = state->burnRateKgPerSecond;
             input.temperatureKelvin = world.Combustion().PresentedTemperature(c.handle, alpha);
             input.bodyVelocity = world.Physics().GetLinearVelocity(c.handle);
@@ -474,8 +488,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
         for (size_t i = 0; i < bodies.size(); ++i)
             if (visuals[i].hasRender)
                 demand(visuals[i].id, visuals[i].render,
-                       SceneTransform{bodies[i].GetPresentedPosition(alpha),
-                                      bodies[i].GetPresentedOrientation(alpha), visuals[i].scale});
+                       PresentedBody(world,visuals[i].id,bodies[i],alpha,visuals[i].scale));
     }
     const auto beforeStats = renderer.Stats();
     // One sample owns one immutable lighting/environment decision. Auxiliary

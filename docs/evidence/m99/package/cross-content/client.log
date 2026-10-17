@@ -1,0 +1,11 @@
+PASS valid process role
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS actual game process exchanges real session traffic
+PASS both wire directions are exercised
+PASS game UI retains the actual launch address and custom port instead of authored fallbacks
+PASS client receives host score and matching actual cargo endpoint
+SUMMARY checks=10 failures=0

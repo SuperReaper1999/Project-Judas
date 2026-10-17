@@ -1,0 +1,3 @@
+Judas dedicated initialized: project=/tmp/judas-m99-candidate/ConnectedWorkshop/game.judasproj port=39607 fixedHz=60 duration=9.000
+No display, renderer or audio device; project scripts own host startup and gameplay.
+Judas dedicated stopped: fixedSteps=539 discardedCatchupSeconds=0.000000

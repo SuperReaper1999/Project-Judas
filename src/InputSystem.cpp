@@ -76,6 +76,17 @@ InputMap InputMap::Defaults(){
 }
 InputSystem::InputSystem():m_map(InputMap::Defaults()){Evaluate();}
 bool InputSystem::SetMap(const InputMap& map,std::string& error){if(!map.Validate(error))return false;m_map=map;Reset();return true;}
+void InputSystem::SetLogicalMode(bool enabled){if(m_logicalMode==enabled)return;m_logicalMode=enabled;Reset();}
+bool InputSystem::SubmitLogical(const std::map<std::string,float>& values,std::string& error){
+    if(!m_logicalMode){error="input is not in logical source mode";return false;}
+    if(values.size()>m_map.entries.size()){error="logical snapshot exceeds input map";return false;}
+    for(const auto& [name,value]:values){
+        const auto* entry=m_map.Find(name);
+        if(!entry||entry->vector){error="unknown or nonscalar logical input: "+name;return false;}
+        if(!std::isfinite(value)||value < -1||value > 1||(!entry->axis&&value!=0&&value!=1)){error="invalid logical input value: "+name;return false;}
+    }
+    m_logical=values;Evaluate();error.clear();return true;
+}
 float InputSystem::Deadzone(float v,float d){return std::abs(v)<=d?0:std::copysign((std::min(1.f,std::abs(v))-d)/(1-d),v);}
 InputVector InputSystem::CircularDeadzone(InputVector v,float d){
     const float magnitude=std::hypot(v.x,v.y);
@@ -83,7 +94,20 @@ InputVector InputSystem::CircularDeadzone(InputVector v,float d){
     const float response=std::min(1.f,(magnitude-d)/(1-d))/magnitude;
     return {v.x*response,v.y*response};
 }
+void InputSystem::SetAction(const std::string& name,bool held){
+    auto& state=m_actions[name];
+    if(held!=state.held){state.pressed|=held;state.released|=!held;auto& pending=m_pending[name];pending.pressed|=held;pending.released|=!held;}
+    state.held=held;
+}
 void InputSystem::Evaluate(){
+    if(m_logicalMode){
+        for(const auto& entry:m_map.entries){
+            if(entry.vector){m_vectors[entry.name]={};continue;}
+            const auto found=m_logical.find(entry.name);const float value=found==m_logical.end()?0:found->second;
+            if(entry.axis)m_axes[entry.name]=value;else SetAction(entry.name,value==1);
+        }
+        return;
+    }
     for(const auto& e:m_map.entries){float value=0;bool held=false;
         if(e.vector){
             double sumX=0,sumY=0;
@@ -100,20 +124,20 @@ void InputSystem::Evaluate(){
             value+=v;
             held=held||v>.5f;}
         if(e.axis){const bool relative=std::any_of(e.bindings.begin(),e.bindings.end(),[](const auto& b){return b.control=="mouse:dx"||b.control=="mouse:dy"||b.control=="mouse:wheelX"||b.control=="mouse:wheelY";});m_axes[e.name]=relative?value:std::clamp(value,-1.f,1.f);}
-        else {auto& s=m_actions[e.name];if(held!=s.held){s.pressed|=held;s.released|=!held;auto& p=m_pending[e.name];p.pressed|=held;p.released|=!held;}s.held=held;}
+        else SetAction(e.name,held);
     }
 }
 void InputSystem::BeginFrame(){
     m_textEvents.clear();m_consumed.clear();for(int i=0;i<2;++i)m_stickFrameStart[i]={m_raw[StickControl(i,"X")],m_raw[StickControl(i,"Y")]};for(auto& p:m_actions){p.second.pressed=false;p.second.released=false;}for(const char* c:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"})m_raw[c]=0;Evaluate();}
 void InputSystem::SetPhysical(const std::string& c,float v){
-    if(!std::isfinite(v))return;
+    if(m_logicalMode||!std::isfinite(v))return;
     for(int i=0;i<2;++i)if(c==StickControl(i,"X")||c==StickControl(i,"Y")){
         SetStick(i==0?"left":"right",c==StickControl(i,"X")?v:m_raw[StickControl(i,"X")],c==StickControl(i,"Y")?v:m_raw[StickControl(i,"Y")]);return;
     }
     m_raw[c]=v;Evaluate();
 }
 void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline){
-    const int i=StickIndex(side);if(i<0||!std::isfinite(x)||!std::isfinite(y))return;
+    const int i=StickIndex(side);if(m_logicalMode||i<0||!std::isfinite(x)||!std::isfinite(y))return;
     x=std::clamp(x,-1.f,1.f);y=std::clamp(y,-1.f,1.f);
     const bool changed=x!=m_raw[StickControl(i,"X")]||y!=m_raw[StickControl(i,"Y")];
     m_raw[StickControl(i,"X")]=x;m_raw[StickControl(i,"Y")]=y;
@@ -125,10 +149,10 @@ void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline
     }
     Evaluate();
 }
-void InputSystem::AddDelta(const std::string& c,float v){if(std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
+void InputSystem::AddDelta(const std::string& c,float v){if(!m_logicalMode&&std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
 void InputSystem::ClearDevice(const std::string& prefix){if(prefix=="touch:"){m_touchKeys.clear();m_touches.clear();}for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
 void InputSystem::Reset(){
-    m_textEvents.clear();++m_resetRevision;m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
+    m_textEvents.clear();++m_resetRevision;m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_logical.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
 void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}DiscardStickHistory();}
 void InputSystem::DiscardStickHistory(){
     m_stickResetSequence=++m_stickSequence;
@@ -177,11 +201,11 @@ void InputSystem::ConsumeBindings(const std::vector<std::string>& names){
 }
 
 void InputSystem::SetPointer(float x,float y,bool down){
-    if(!std::isfinite(x)||!std::isfinite(y))return;
+    if(m_logicalMode||!std::isfinite(x)||!std::isfinite(y))return;
     m_pointer={std::clamp(x,0.f,1.f),std::clamp(y,0.f,1.f),down};
 }
 void InputSystem::SetTouch(std::int64_t device,std::int64_t finger,float x,float y,float pressure,bool down){
-    if(!std::isfinite(x)||!std::isfinite(y)||!std::isfinite(pressure))return;
+    if(m_logicalMode||!std::isfinite(x)||!std::isfinite(y)||!std::isfinite(pressure))return;
     auto it=std::find_if(m_touchKeys.begin(),m_touchKeys.end(),[&](const TouchKey& k){return k.device==device&&k.finger==finger;});
     if(it==m_touchKeys.end()){
         if(!down||m_touches.size()>=10||m_nextTouch>9007199254740991ull)return;

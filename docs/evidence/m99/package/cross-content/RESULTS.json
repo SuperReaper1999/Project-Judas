@@ -1,0 +1,68 @@
+{
+  "runner": "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+  "runner_sha256": "a01534c4fe3c035d488f73651448dbf3fd7cd6671f78937f329536ba0b18902e",
+  "project": "/tmp/judas-m99-candidate/ConnectedWorkshop/game.judasproj",
+  "client_project": "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/package-candidate/apk-content/game.judasproj",
+  "source_files": {
+    "Assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "Assets/fonts/DejaVuSans.ttf.judasmeta": "a3acb65577fe3623f149a85b2e4859d220837fe802dc8cff236c224680e629ba",
+    "Assets/fonts/LICENSE.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "Assets/scripts/game.js": "18b9cff5a8b06d33cb11d5bfc878eb19fad0c71afeea906c530b88f817949c01",
+    "Assets/scripts/game.js.judasmeta": "175e849f388172172f064609b351ec95a779cd688ea3e267be1cc60d31927a11",
+    "Assets/scripts/math.js": "561208f143b4ff4755d64ab8cff3af20aa246788cf12708de446dc88b877030b",
+    "Assets/scripts/math.js.judasmeta": "ecf68cdf47cb6bd9723f34bc6cc48da12446e7ec742438804824e3a68e28c465",
+    "Assets/ui/workshop.judasui": "f309d545268bea4f2fa2f862245ca2cab04b0804ab388622d18228d37938836f",
+    "Assets/ui/workshop.judasui.judasmeta": "9d1d4cab5d254cbdead0429a3b0cf75ea2eb63408b7fa3a4891cbb99cbbc62d8",
+    "DEPENDENCIES.json": "af787cc87cdc1f60456b789967104ffe359689198b0b90a2d670c0640f959b33",
+    "PLAY_MULTIPLAYER.md": "45865ead74053ad2a968952f13cf56f018ee65591ef2c2ae19ae46457f0f5196",
+    "RUNTIME_REQUIREMENTS.txt": "38115f78d705547426735a24c6c65de6e1261c6f623a78bee2b875463b684416",
+    "Scenes/workshop.judas": "441e38ef7b8baa2ec08722a24e49ca390e23d0e2a58ff8eda8217f41999f2f42",
+    "engine/assets/fonts/DejaVuSans.ttf": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+    "engine/licenses/DejaVuSans.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "engine/licenses/Judas.txt": "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d",
+    "engine/third_party/RUNTIME_NOTICES.txt": "10a8a093b8c4fc51ab006466b0013275b524efd66d81f86ff48307b49d2614fc",
+    "game-icon.png": "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+    "game.judasproj": "ccfd9e13500c67cf38326904796c5b0113a393dc25af86fc828dfc91f414edf2",
+    "judas": "b03c423f0633d8a4a738ccf9b74704013ba5a020a7996f2adcada8b515e2149e",
+    "judas-package.txt": "263e7ecdb11e198536821be90c8f877c02a786f0c79c8f98b8180855f2691292",
+    "launch_local.py": "0fdc537763c9d02e724a6a964b4988d49123dcdce0a3c715ff4ef186d6f1b495"
+  },
+  "runs": [
+    {
+      "name": "game-host",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+        "--demo",
+        "host",
+        "/tmp/judas-m99-candidate/ConnectedWorkshop/game.judasproj",
+        "55993",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/package-candidate/cross-content/host.json"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "game-client",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_script_tests",
+        "--demo",
+        "client",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/package-candidate/apk-content/game.judasproj",
+        "55993",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/package-candidate/cross-content/client.json"
+      ],
+      "exit": 0
+    }
+  ],
+  "process_seconds": 6.070646096000019,
+  "observed": {
+    "host_delivered": 1,
+    "client_delivered": 1,
+    "crate_endpoint_error_m": 0.0,
+    "host_sent_bytes": 523608,
+    "host_received_bytes": 11500,
+    "client_sent_bytes": 11584,
+    "client_received_bytes": 523608,
+    "host_snapshot_count": 121,
+    "client_snapshot_count": 118
+  }
+}

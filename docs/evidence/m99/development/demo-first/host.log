@@ -1,0 +1,6 @@
+PASS valid process role
+PASS project loads: 
+PASS ordinary asset registration has no problems
+FAIL scene loads: 
+FAIL scene loads: 
+SUMMARY checks=4 failures=1

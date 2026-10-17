@@ -1,0 +1,26 @@
+{
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/m99/ConnectedWorkshop.apk",
+  "sha256": "fe8a4ac429987409fa7066529b948e503b8ee824c726e2a8c249e12a515bff14",
+  "abis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "developmentSigning": true,
+  "shadows": "off",
+  "contentFiles": 21,
+  "contentBytes": 2261535,
+  "native": {
+    "arm64-v8a": {
+      "libmain.so": "edb7210c7cd02f6b7a5f0220c482d29c87fdcdfd73ff9726ef1592e4d5bbe291",
+      "_deps/judas_sdl-build/libSDL2.so": "0b91dc0a788b964aa7112bca7d33a17f4ad190099a29a2f6c3841419c8eaf0fc"
+    },
+    "x86_64": {
+      "libmain.so": "2353d0c0a58f365d8c73937e882f1741de7988bb271c7ecb8b92ef5f1ed27613",
+      "_deps/judas_sdl-build/libSDL2.so": "0acd68edae61fcaaa411250fbe5380a01113e3cca819c90a0f32830cdf21ca2c"
+    }
+  }
+}

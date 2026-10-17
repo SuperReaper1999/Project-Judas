@@ -1,0 +1,25 @@
+{
+  "box": [
+    4.503512382507324,
+    0.4999992549419403,
+    8.190611424652161e-07
+  ],
+  "clock": "std::chrono::steady_clock seconds",
+  "fixedMedianUs": 91.088,
+  "fixedP95Us": 329.793,
+  "fixedWorstUs": 1081.828,
+  "hits": 2,
+  "joins": 3,
+  "leaves": 3,
+  "motor": [
+    -1.9833343029022217,
+    0.917275071144104,
+    0.0
+  ],
+  "ready": true,
+  "receivedBytes": 30990,
+  "rejected": 0,
+  "sentBytes": 180017,
+  "snapshots": 183,
+  "steps": 539
+}

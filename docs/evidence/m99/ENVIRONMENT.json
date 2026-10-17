@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-10-17T20:39:26.574730+00:00",
+  "sourceBase": "84121564230242a404785af4d60a1475cdb83f4c",
+  "branch": "Experimental",
+  "build": "Release; incremental final-source build, not a new clean/full production run",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpu": "Intel Core i7-4790 @ 3.60 GHz",
+  "gpu": "NVIDIA GeForce GTX 970 4 GB; driver 580.178.04",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "scope": "Linux acceptance; native Android x86_64 emulator functional smoke; ARM64 compilation; Windows not run; human M98/M99 acceptance pending"
+}

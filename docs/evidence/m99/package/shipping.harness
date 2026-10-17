@@ -1,0 +1,5 @@
+FRAMES 600
+FRAME_SECONDS 0.016666667
+LOG_EVERY 100
+AXIS move_x 1 100 130
+SCREENSHOT 500 /home/conner/Documents/GitHub/Project-Judas/.cache/m99/package-candidate/shipping.png
