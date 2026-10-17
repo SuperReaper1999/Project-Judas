@@ -16,7 +16,13 @@ bool RuntimeWorld::CanChangeOrigin(glm::dvec3 origin,std::string& error)const {
  if(legacyGameplay){error="live origins require script-owned execution";return false;}
  const auto delta=origin-m_settings.worldOrigin;
  for(auto body:m_physics.AliveBodies())if(glm::length(glm::dvec3(m_physics.GetTransform(body).position)-delta)>8192){error="live collision body must be retired before leaving the 8 km physics chart";return false;}
- if(m_hasLiquid||!m_fluidVolumes.empty()||m_emittedParticles||m_atmosphere||!m_combustibles.empty()) {error="active liquid/fluid/atmosphere/combustion has no live-origin contract";return false;}
+ // These are ownership restrictions, not a request to silently drop state.
+ // Name the actual blocker so projects can retire it before retrying.
+ if(m_hasLiquid){error="active conserved liquid has no live-origin contract; unload its reservoir/container owners before changing origin";return false;}
+ if(!m_fluidVolumes.empty()){error="active legacy fluid has no live-origin contract; unload its fluid owners before changing origin";return false;}
+ if(m_emittedParticles){error="active emitted liquid particles have no live-origin contract; retire them before changing origin";return false;}
+ if(m_atmosphere){error="active atmosphere has no live-origin contract; unload its owner before changing origin";return false;}
+ if(!m_combustibles.empty()){error="active combustion has no live-origin contract; unload its owners before changing origin";return false;}
  for(const auto& [id,o]:m_scriptDefinitions){
   if(!RuntimeDefinition(id))continue;
   if(o.body||o.characterMotor||o.render||o.light||o.renderCamera){

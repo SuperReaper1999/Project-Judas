@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "timeUtc": "2026-10-17T21:48:28.000643+00:00",
+  "status": "unavailable",
+  "nativeChecksRun": false,
+  "attempt": [
+    "virsh",
+    "-c",
+    "qemu:///system",
+    "start",
+    "win10"
+  ],
+  "exit": 1,
+  "diagnostic": "Cannot access storage file '/home/conner/Downloads/Win10_22H2_English_x64v1.iso': No such file or directory",
+  "scope": "No VM configuration changes or cleanup permitted; existing guest could not boot. Synthetic packaging checks are not Windows-native evidence.",
+  "sourceFixture": ".cache/prealpha/windows/prepared/windows-functional.zip",
+  "preparedFixtureSha256": "e35de479cb6f8624659ca8684c49312e8a34225e9d8b2c82fa2faac491ac5db2",
+  "preparedSourceFiles": 19
+}

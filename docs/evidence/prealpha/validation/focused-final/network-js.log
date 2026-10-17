@@ -1,0 +1,13 @@
+PASS fresh fixture directory preserves original evidence
+PASS ordinary JS fixture registered: 
+PASS fixture scene writes: 
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS actual public JS opts in and rejects unsupported replication
+PASS default null and nonobject plain JSON replication state match the public contract
+FAIL public host binding reaches real listener
+FAIL public host binding reaches real listener
+SUMMARY checks=11 failures=1

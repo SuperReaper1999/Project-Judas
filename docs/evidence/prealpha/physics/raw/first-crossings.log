@@ -1,0 +1,26 @@
+FIRST i 0 step 2 p -1.20,0.07,-0.63 v 0.03,-10.03,12.69 w 0.00,0.19,0.15 depth 0.06 events 0 queries 1
+FIRST i 1 step 1 p -1.10,-0.14,-0.80 v 0.00,-40.33,6.00 w 0.00,0.00,0.00 depth 0.32 events 0 queries 1
+FIRST i 2 step 1 p -1.00,-0.14,-0.60 v 0.00,-40.33,12.00 w 0.00,0.00,0.00 depth 0.24 events 0 queries 1
+FIRST i 3 step 1 p -0.90,-0.14,-0.40 v 0.00,-40.33,18.00 w 0.00,0.00,0.00 depth 0.19 events 0 queries 1
+FIRST i 4 step 1 p -0.80,-0.14,-0.20 v 0.00,-40.33,24.00 w 0.00,0.00,0.00 depth 0.15 events 0 queries 1
+FIRST i 5 step 1 p -0.70,-0.14,0.00 v 0.00,-40.33,30.00 w 0.00,0.00,0.00 depth 0.14 events 0 queries 1
+FIRST i 6 step 2 p -0.60,0.07,-0.63 v 0.03,-10.03,12.69 w 0.00,0.19,0.15 depth 0.06 events 0 queries 1
+FIRST i 7 step 1 p -0.50,-0.14,-0.80 v 0.00,-40.33,6.00 w 0.00,0.00,0.00 depth 0.32 events 0 queries 1
+FIRST i 8 step 1 p -0.40,-0.14,-0.60 v 0.00,-40.33,12.00 w 0.00,0.00,0.00 depth 0.24 events 0 queries 1
+FIRST i 9 step 1 p -0.30,-0.14,-0.40 v 0.00,-40.33,18.00 w 0.00,0.00,0.00 depth 0.19 events 0 queries 1
+FIRST i 10 step 1 p -0.20,-0.14,-0.20 v 0.00,-40.33,24.00 w 0.00,0.00,0.00 depth 0.15 events 0 queries 1
+FIRST i 11 step 1 p -0.10,-0.14,0.00 v 0.00,-40.33,30.00 w 0.00,0.00,0.00 depth 0.14 events 0 queries 1
+FIRST i 12 step 2 p 0.00,0.07,-0.63 v 0.02,-10.02,12.69 w 0.00,0.19,0.15 depth 0.05 events 0 queries 1
+FIRST i 13 step 1 p 0.10,-0.14,-0.80 v 0.00,-40.33,6.00 w 0.00,0.00,0.00 depth 0.32 events 0 queries 1
+FIRST i 14 step 1 p 0.20,-0.14,-0.60 v 0.00,-40.33,12.00 w 0.00,0.00,0.00 depth 0.24 events 0 queries 1
+FIRST i 15 step 1 p 0.30,-0.14,-0.40 v 0.00,-40.33,18.00 w 0.00,0.00,0.00 depth 0.19 events 0 queries 1
+FIRST i 16 step 1 p 0.40,-0.14,-0.20 v 0.00,-40.33,24.00 w 0.00,0.00,0.00 depth 0.15 events 0 queries 1
+FIRST i 17 step 1 p 0.50,-0.14,0.00 v 0.00,-40.33,30.00 w 0.00,0.00,0.00 depth 0.14 events 0 queries 1
+FIRST i 18 step 2 p 0.60,0.07,-0.63 v 0.03,-10.03,12.69 w 0.00,0.19,0.15 depth 0.06 events 0 queries 1
+FIRST i 19 step 1 p 0.70,-0.14,-0.80 v 0.00,-40.33,6.00 w 0.00,0.00,0.00 depth 0.32 events 0 queries 1
+FIRST i 20 step 1 p 0.80,-0.14,-0.60 v 0.00,-40.33,12.00 w 0.00,0.00,0.00 depth 0.24 events 0 queries 1
+FIRST i 21 step 1 p 0.90,-0.14,-0.40 v 0.00,-40.33,18.00 w 0.00,0.00,0.00 depth 0.19 events 0 queries 1
+FIRST i 22 step 1 p 1.00,-0.14,-0.20 v 0.00,-40.33,24.00 w 0.00,0.00,0.00 depth 0.15 events 0 queries 1
+FIRST i 23 step 1 p 1.10,-0.14,0.00 v 0.00,-40.33,30.00 w 0.00,0.00,0.00 depth 0.14 events 0 queries 1
+SCENARIO "trough 2x26 coarse" triangles 104 steps 1 totalMs 6.25 worstStepMs 6.25 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 24 meshTriangles 24 bvhNodes 165 fastBoxesThrough 24 fastBoxesThrew 0 digest fe142d2fcd4a2716
+checks 52 failures 0

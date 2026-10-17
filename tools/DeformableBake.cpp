@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "Deformable.h"
 #include "ModelLoader.h"
 #include "SceneFingerprint.h"
@@ -6,6 +7,8 @@
 // Developer/editor-compatible helpers. Outputs immutable assets, never runtime
 // geometry rebuilt every frame. Generic indexed import preserves source seams.
 int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "deformable_bake")) return 0;
+
     try{
         if(argc<4)throw std::runtime_error("usage: judas_deformable_bake sheet output columns rows width height subdivision | block output x y z width height depth | fracture|fracture-rigid|structure|flex-structure output x y z width height depth [tension shear compliance] | cloth output source [sourceAssetId]");
         DeformableAsset asset;std::string error,kind=argv[1];

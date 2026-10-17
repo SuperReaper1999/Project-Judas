@@ -142,4 +142,5 @@ int main() {
     }
     std::cout << "Impact response " << cases << " cases " << checks << " checks PASS; safety_fallbacks="
               << fallbacks << " (actual engine timing is validated separately)\n";
+    return 0; // Preserve main's implicit success when the provenance wrapper calls this entrypoint.
 }

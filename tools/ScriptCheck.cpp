@@ -1,8 +1,11 @@
+#include "BuildIdentity.h"
 #include "Project.h"
 #include "AssetDatabase.h"
 #include "ScriptSystem.h"
 #include <cstdio>
 int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "script_check")) return 0;
+
     if(argc!=2){std::fprintf(stderr,"Usage: judas_script_check project.judasproj\nCompile/link registered modules without executing project code.\n");return 2;}
     Project project;std::string error;
     if(!project.Load(argv[1],error)){std::fprintf(stderr,"Project: %s\n",error.c_str());return 2;}

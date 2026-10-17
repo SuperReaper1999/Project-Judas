@@ -1,0 +1,66 @@
+[
+  {
+    "name": "text_localization",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_text_localization_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ui-followup/text_localization"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T22:05:51Z",
+    "binarySha256": "d5aa018e3e5ccfb9479983c68b24914abd3a8d7a9dcbe846bce1b7e45ab5e2a8",
+    "exit": 0,
+    "seconds": 0.16435467100018286
+  },
+  {
+    "name": "localization_application",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_localization_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ui-followup/localization_application"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T22:05:51Z",
+    "binarySha256": "782fc1ee07b8eeab444a51e11238c98bb4874918509eaf4b664747e1073320f7",
+    "exit": 0,
+    "seconds": 5.380604445001154
+  },
+  {
+    "name": "ui_production",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ui_production_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ui-followup/ui_production"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T22:05:57Z",
+    "binarySha256": "c5c7d90d42a34f8a04de204861fb151264802d53e39d7c03cf303913dc4e655c",
+    "exit": 0,
+    "seconds": 0.36477166899931035
+  },
+  {
+    "name": "cookbook",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/ui-followup/cookbook"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T22:05:57Z",
+    "binarySha256": "45b024611dd7f921362dcb8d8feb75eccdbbf492d0d8640556f6b4ae1a0bca2f",
+    "exit": 0,
+    "seconds": 15.19839962199876
+  },
+  {
+    "name": "api_drift",
+    "argv": [
+      "node",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T22:06:13Z",
+    "exit": 0,
+    "seconds": 2.3695187819994317
+  }
+]

@@ -1,0 +1,460 @@
+{
+  "schema": 1,
+  "scope": "All staged non-evidence inputs; evidence inventory is separate",
+  "baseline": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "files": [
+    {
+      "path": ".github/workflows/prealpha.yml",
+      "bytes": 2592,
+      "sha256": "64c96c31a4ea3c004ee5924e81a186c8ab1c1fc0117c5f3ee81b25e2bc44ba92"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 111684,
+      "sha256": "cb1feba57c5df2fa55eb62a1d6049387c2c0037fd306250bdbfc1ce60d425f55"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8336,
+      "sha256": "4b7136b9476486e9847a5ba0d849fd880cc6797c7ae46b1be208216d536d48c6"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.cmake",
+      "bytes": 17145,
+      "sha256": "a0af3dd20b35f01562ea38ae53f3dd5a633f13d10426ead329f5a96496d49899"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.h.in",
+      "bytes": 840,
+      "sha256": "82dc9b20e697990c51d28171bfeab33db8423aa97d82006bdde219df2440ac14"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.json.in",
+      "bytes": 726,
+      "sha256": "37f2ca8c940eb76531157584bfdd1512c238cf9f0d8ca8e0e36f11788cabc720"
+    },
+    {
+      "path": "cmake/JudasEditorMilestone.h.in",
+      "deleted": true
+    },
+    {
+      "path": "cmake/JudasSdk.cmake",
+      "bytes": 2029,
+      "sha256": "419e63488cbf041cdbf763da88e502b2ce658ef922d953d808813ea0c9349f35"
+    },
+    {
+      "path": "cmake/JudasSourceInfo.json.in",
+      "bytes": 219,
+      "sha256": "66ec66caf2f2a36f81024f6ee8bd1d2b9809710c0f0992cd265750b98d9c0385"
+    },
+    {
+      "path": "cmake/JudasValidation.cmake",
+      "bytes": 3491,
+      "sha256": "067ff25bf539689e3b3d88ca7c3b545f56420153e445358ae7aea9440325b3fc"
+    },
+    {
+      "path": "cmake/JudasWindowsSdk.cmake",
+      "bytes": 2720,
+      "sha256": "d49fab78ce9e5622808288e73d3298991b6dbfb6925e4a84292b45fc5081f078"
+    },
+    {
+      "path": "docs/ANDROID.md",
+      "bytes": 14293,
+      "sha256": "09f04a5321eb92ce4aaa4c7a62a25571eab0d6758ee82f2eba9215d4683ec03c"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 627803,
+      "sha256": "9dc89470c19b428c809d76c86e3aca0cb40e62b0d4e240092b0dcaa1169bd779"
+    },
+    {
+      "path": "docs/BUILD_RELEASES.md",
+      "bytes": 10204,
+      "sha256": "a7f1b6756d60f4244cddd45278fa69b013dbc38e8074d13c3335f8abbba50ddb"
+    },
+    {
+      "path": "docs/DISTRIBUTION.md",
+      "bytes": 6749,
+      "sha256": "d9fe46df9dff099aafb0e33694c7169b3776ebe8c6df623aa667ed2aa47c44c8"
+    },
+    {
+      "path": "docs/JUDASJS.md",
+      "bytes": 16436,
+      "sha256": "f246c507e5b1d6fe43d1a64344fab21298b0730a0f0b2c98ea7e80c15d02c2cd"
+    },
+    {
+      "path": "docs/M96_UI_TOOLKIT.md",
+      "bytes": 6961,
+      "sha256": "e94eef2c022fbffa5fe239b3268b3eecfcecb617b9d1a792cbeda600f8e29d55"
+    },
+    {
+      "path": "docs/PREALPHA.md",
+      "bytes": 7243,
+      "sha256": "9fc6452b5fbb4c2797b807e4c2d412f56d0cf4556e62ed2202a8b038e53c3365"
+    },
+    {
+      "path": "docs/WINDOWS.md",
+      "bytes": 15321,
+      "sha256": "80460c1e6ce2976315d8da070157cbcd35f03e7fb11785cc703351a3edee9cc1"
+    },
+    {
+      "path": "docs/judas.d.ts",
+      "bytes": 62071,
+      "sha256": "2568429fbd3c9f190316d7c2e9c20f37cfb15a5a11cd9d3cae9d9bc61b929c0f"
+    },
+    {
+      "path": "docs/judasjs/examples/ui-controls.js",
+      "bytes": 2171,
+      "sha256": "4cad742bb24d03c34ae18b1afd2c55fae07893f5d240c6027dd9e43d4524fcde"
+    },
+    {
+      "path": "docs/judasjs/getting-started.md",
+      "bytes": 9995,
+      "sha256": "0f926f3ee18ca557f0da184f51b67be0d1b06ac6b0b6f88ef831ec10b297f8fc"
+    },
+    {
+      "path": "docs/judasjs/localization.md",
+      "bytes": 7482,
+      "sha256": "bd9f288ec426c7915e847d95593fdedf6561c56412052a1b1905c5f78f7547c3"
+    },
+    {
+      "path": "docs/judasjs/ui.md",
+      "bytes": 6881,
+      "sha256": "8ecef99fc1115ffb02431cdca26f87669c608bf2b2473d9fb43e8acf963c86d4"
+    },
+    {
+      "path": "engine-version.json",
+      "bytes": 76,
+      "sha256": "9e15abe3bee56ff72a23fa37189b22b83d14137c05f19563ec10f7e84d7eaa87"
+    },
+    {
+      "path": "packaging/sdk-inventory.json",
+      "bytes": 843,
+      "sha256": "78fdf9103dc1c861bcd3e0a3f68b1b266e4d2ff98e568537609f7ff234664bcc"
+    },
+    {
+      "path": "packaging/windows/Build-Windows.ps1",
+      "bytes": 2495,
+      "sha256": "f4e8f78fca042dfeebb467e6ba060f19de2ea0f6b25dae184c4d766b7e26e070"
+    },
+    {
+      "path": "packaging/windows/PreAlphaChecks.CMakeLists.txt",
+      "bytes": 1195,
+      "sha256": "02f9054c3496b34c2e8d61ea969a7c94bb5957a6abdc187a29a50b0123764d31"
+    },
+    {
+      "path": "packaging/windows/Run-PreAlphaChecks.ps1",
+      "bytes": 3128,
+      "sha256": "6f8e8dfe34da2cb026fa974e8c8106fb5033a96a9fbe23266ced6c5c14dc9118"
+    },
+    {
+      "path": "scripts/check_judasjs_api.mjs",
+      "bytes": 20513,
+      "sha256": "0419f890183e327a817572069edfc8f6a12f9e6fdead3e081455bec9f9b1af0c"
+    },
+    {
+      "path": "scripts/m99_final_checks.py",
+      "bytes": 3497,
+      "sha256": "23ffa6172f654bb3e0255af0fd11e60f2f3db44504598a2712da5745cfb0b574"
+    },
+    {
+      "path": "scripts/prealpha_build_identity_checks.py",
+      "bytes": 9994,
+      "sha256": "a391de71bc502cbf8b80fc705a56e8fe58beadf9a139b3ef8694ef21f7214b31"
+    },
+    {
+      "path": "scripts/prealpha_packaging_checks.py",
+      "bytes": 19666,
+      "sha256": "0738dd36ef52e77b3af9dbcecdc8ae89858c453b582e7632fcd1ecc0b51232ae"
+    },
+    {
+      "path": "scripts/prealpha_validate.py",
+      "bytes": 13183,
+      "sha256": "051217db24d4f06f1548c4742a3b6b6bd67d9877696249904fd4401f2e2dcc36"
+    },
+    {
+      "path": "scripts/prepare_windows_prealpha.py",
+      "bytes": 4054,
+      "sha256": "f9470e6facbb5eaa36504895de7ae8be4425184fbf9bd50dbfb03fdf463b91b6"
+    },
+    {
+      "path": "scripts/typescript_tooling.mjs",
+      "bytes": 1328,
+      "sha256": "e0d7d164768ae3ade15f8ac8334fcc9ebbfb9e8d1ebd9fbee19060f40ca7f3af"
+    },
+    {
+      "path": "src/AssetCookMain.cpp",
+      "bytes": 1109,
+      "sha256": "f4d86c6386e6d875c61ea8914d1ffc96b153a0e2a55acb929742a88643ee6db4"
+    },
+    {
+      "path": "src/BuildIdentity.cpp",
+      "bytes": 6406,
+      "sha256": "923cfa7eb1112988f05803eae920826f4d8b13d9e3c7b60e5e4a8dcee12ec37d"
+    },
+    {
+      "path": "src/BuildIdentity.h",
+      "bytes": 1560,
+      "sha256": "59ea9985faba0cadc7eaf60398570a0192ff6678767d2a2289ae99ca7681c4f8"
+    },
+    {
+      "path": "src/BuildUpdate.cpp",
+      "bytes": 1505,
+      "sha256": "be63ebc8b81754912c5ed174a15f47892b413fc32bc1fb07cac1240bf90cdd4d"
+    },
+    {
+      "path": "src/BuildUpdate.h",
+      "bytes": 397,
+      "sha256": "7f0ca712638a29e1b481b794287046037063ba5204dd79e89891b42fe86eaa2d"
+    },
+    {
+      "path": "src/DedicatedMain.cpp",
+      "bytes": 7049,
+      "sha256": "becb0771312092aad15dedcb5f2956159d20d509264888645c99865a937d3edd"
+    },
+    {
+      "path": "src/ExportMain.cpp",
+      "bytes": 909,
+      "sha256": "fb0cbec817e344655e074a51993f3cf33eb35fa65d60132b1bdd21a5dcf268b5"
+    },
+    {
+      "path": "src/NetworkSession.cpp",
+      "bytes": 26806,
+      "sha256": "3609a8fd56294d7a3c7418ebea13a19fff205a5a7e16000af0ad3394b93bb5ae"
+    },
+    {
+      "path": "src/NetworkTransport.cpp",
+      "bytes": 22266,
+      "sha256": "d994ae3d119e230e2830de293555069b6799c58efcc50745e22f20d086c6dc90"
+    },
+    {
+      "path": "src/PlatformServices.cpp",
+      "bytes": 10635,
+      "sha256": "93ae40d37a506a0b47adff0418f70c52490742bbb91e7580840490dda10e2239"
+    },
+    {
+      "path": "src/ProcessArguments.h",
+      "bytes": 688,
+      "sha256": "613b55903d610474aa3112e0c270b68edade0bfb1f9b078c906fdaf13ca7c001"
+    },
+    {
+      "path": "src/ProjectExporter.cpp",
+      "bytes": 32106,
+      "sha256": "05f0ba4dba82302710c7f18ce558240df034beff148dbfb6b031201e075b1899"
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "bytes": 260279,
+      "sha256": "443abc32d5d36d180c18b35449e8569c04cd01e7d2597994e73af1a0be600493"
+    },
+    {
+      "path": "src/ToolProcess.cpp",
+      "bytes": 7107,
+      "sha256": "d8eaf7c43acfeaeaecd2f235e40b24a63bc5bcd153a73b3b6468e2efd6957d32"
+    },
+    {
+      "path": "src/ToolProcess.h",
+      "bytes": 863,
+      "sha256": "a0d304161f9908ee5ca9d0a72bec8f490f567c720e891673e2a490ef089cbb17"
+    },
+    {
+      "path": "src/WorldOrigin.cpp",
+      "bytes": 8284,
+      "sha256": "ae35300dbd7b8e6986913a0c8dff4c6971794f563bc43860ed24409623bee618"
+    },
+    {
+      "path": "src/editor/EditorApplication.cpp",
+      "bytes": 150534,
+      "sha256": "b2336ceabeaa50c5fb3b38ef1b7f6c791a66502aa710c88d8aac58039b6f1598"
+    },
+    {
+      "path": "src/editor/EditorMain.cpp",
+      "bytes": 230,
+      "sha256": "5e3dcd8b2963e6a34b1483d32298b1e6538d41e4fe29852cd97b71255a187306"
+    },
+    {
+      "path": "src/editor/EditorMilestoneNotice.cpp",
+      "bytes": 3927,
+      "sha256": "59ca6664a452f596e5006e60c8ed30e983310ef1946aec9b6b2d5f091d4a9646"
+    },
+    {
+      "path": "src/editor/EditorMilestoneNotice.h",
+      "bytes": 580,
+      "sha256": "eddef3452743bad734da93200fdd0802b4fc6d17135f539cd71ab258deaa23e8"
+    },
+    {
+      "path": "src/editor/EditorPanels.cpp",
+      "bytes": 142914,
+      "sha256": "cf73040e3bb91c9eef225ed8ca20b11bcafcbd8a203fbfd5d2f3430b50d7b43d"
+    },
+    {
+      "path": "src/main.cpp",
+      "bytes": 698,
+      "sha256": "0735d1668458fb0bfd96fd33efccae13e99214814e53883fd60125a9dde8211e"
+    },
+    {
+      "path": "tests/BuildIdentityTests.cpp",
+      "bytes": 10890,
+      "sha256": "100449ce36a785ff5148af01335a66a506113f4bb5f8a35728ee97cda51a53b9"
+    },
+    {
+      "path": "tests/ImpactMeshCostTests.cpp",
+      "bytes": 16156,
+      "sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+    },
+    {
+      "path": "tests/ImpactSolverTests.cpp",
+      "bytes": 7013,
+      "sha256": "69ec881500d0b63d8a442e4d1e0d354866fe340d5bd09ddbf488229e978a80ee"
+    },
+    {
+      "path": "tests/JudasJSExamplesTests.cpp",
+      "bytes": 15320,
+      "sha256": "d3d78ab6cf5c0f61ec0848dcf77c82a3cabf98bafc6d25447bd4a7040eb3199a"
+    },
+    {
+      "path": "tests/NetworkSessionTests.cpp",
+      "bytes": 40304,
+      "sha256": "fc489386df13aa5ad94ddff8d02c14fda277379f78a81ac8c9d8b08011ff57aa"
+    },
+    {
+      "path": "tests/NetworkTransportTests.cpp",
+      "bytes": 18363,
+      "sha256": "d532f3769a364022faeefcf14767881b3895e5fd1868a9e8434bcbb9d35d3448"
+    },
+    {
+      "path": "tests/PreAlphaLifecycleTests.cpp",
+      "bytes": 7702,
+      "sha256": "6b138e0d3e4daff9f589419e38096bc3ec06c5d78f9428c0805d1a7a07a803ec"
+    },
+    {
+      "path": "tests/TypeScriptToolingTests.mjs",
+      "bytes": 1665,
+      "sha256": "36d1478fce97ccf7d7ff30efc778169cd64b770cc9baa93f46189d370fb9bdd6"
+    },
+    {
+      "path": "tests/ValidationMain.cpp",
+      "bytes": 616,
+      "sha256": "cadfa47f12ae138639b0ced22343432ce496bd2063ee91572ee2978958eb9649"
+    },
+    {
+      "path": "tests/WindowsReadinessTests.cpp",
+      "bytes": 5346,
+      "sha256": "48657dac87a7c854b587ec2c97d4edc89cd8985e90fcdd6cdf7e574679d9d118"
+    },
+    {
+      "path": "tests/test_prealpha_validation.py",
+      "bytes": 5089,
+      "sha256": "a5ab33a54422df9524bf92bff5260100bae4f7bf5102542364c449116b1a96ea"
+    },
+    {
+      "path": "tools/CollisionCook.cpp",
+      "bytes": 1365,
+      "sha256": "db64dee7c7719045c0500dfc849e7e5b4f93ce1d857d1729f44fb81ad67a1212"
+    },
+    {
+      "path": "tools/DeformableBake.cpp",
+      "bytes": 3976,
+      "sha256": "020987b95caf9a5eb2878d357b40ab271044891556f5b053833fb4233f5578f2"
+    },
+    {
+      "path": "tools/EnvironmentBake.cpp",
+      "bytes": 796,
+      "sha256": "16945f0d1c354c9b58529a9a90b2f1d1ae67b2b47d3a953c003fa42b19ac3c7e"
+    },
+    {
+      "path": "tools/LiquidBake.cpp",
+      "bytes": 2325,
+      "sha256": "32ad17cbe21b733ff208d9763340f83961cd1bc710db9ae741a06b0909da7577"
+    },
+    {
+      "path": "tools/ModTool.cpp",
+      "bytes": 3930,
+      "sha256": "5756b7892071d2dff2d60716c8a121c5dd75821558d808db44f9573e510f0ab0"
+    },
+    {
+      "path": "tools/ModelImportCli.cpp",
+      "bytes": 10191,
+      "sha256": "6e250e3c335366942d016f310e0d0c77fa56e914c681a4de3e0e6c9aba1bbf60"
+    },
+    {
+      "path": "tools/NavigationBake.cpp",
+      "bytes": 2858,
+      "sha256": "286f42638d6e73745eb932006d8725423fcb11ce779661fe3a7a8ec9bbb02ab3"
+    },
+    {
+      "path": "tools/SaveEvolutionMain.cpp",
+      "bytes": 4490,
+      "sha256": "f0c7553316a21fdda054fbae384e61f72a0c00f39b508385fa62f2b45e4abcef"
+    },
+    {
+      "path": "tools/SceneAuthor.cpp",
+      "bytes": 40900,
+      "sha256": "218659b0af35da6a01fbbd4a011fa71e8fe0f73906e0aa79a3dab3caf28b471e"
+    },
+    {
+      "path": "tools/ScriptCheck.cpp",
+      "bytes": 1174,
+      "sha256": "06a300c89734f5f3272b16f6c467274b2ec1a586ed0ccf8382bb96e59b7e7472"
+    },
+    {
+      "path": "tools/TerrainAuthor.cpp",
+      "bytes": 4380,
+      "sha256": "5322fb3f599d3ddc4f65cbdb836c53a6266de6b0a5c0ca4edac1b06514b608a8"
+    },
+    {
+      "path": "tools/VolumeTerrainAuthor.cpp",
+      "bytes": 3872,
+      "sha256": "5b068e87f8a0eb82e58092e9663045898d4547a968b16daed4db4bcde5d7466a"
+    },
+    {
+      "path": "tools/build_android.py",
+      "bytes": 16503,
+      "sha256": "0d97b925cb222a59c2ffb962a4c459ad64cf7125caa6079b642cbff6366b5d04"
+    },
+    {
+      "path": "tools/package_sdk.py",
+      "bytes": 13398,
+      "sha256": "716097d6ab403c2928ec7e86f07f6558d364517a3806eaf3da24b2d5a84eaa81"
+    },
+    {
+      "path": "tools/package_source.py",
+      "bytes": 9399,
+      "sha256": "7d9c94097e3bfba0f7703d7ce0c01790aa8ff71fed1786a6fe8bcc5fea0bb65a"
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "bytes": 4110,
+      "sha256": "7815f42d928553032e5effe0406fbc6b70717c71769e73f7da80bc1e64917275"
+    },
+    {
+      "path": "tools/verification/.gitignore",
+      "bytes": 14,
+      "sha256": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97"
+    },
+    {
+      "path": "tools/verification/package-lock.json",
+      "bytes": 737,
+      "sha256": "0b509b1aadfab916956a4723abe6da237673926ef9b1dd374cbdb9939e74d0b8"
+    },
+    {
+      "path": "tools/verification/package.json",
+      "bytes": 241,
+      "sha256": "ebe1aa4dc6926cdc3b25a88652fc2f07244f20b231c5a3a8d31dfc1243740cbd"
+    }
+  ],
+  "unchangedPhysics": [
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "sha256": "841e67e25d9bae1bad9e11daf88169c43bc2a29d9eea281ae3b159d1aa73f467"
+    },
+    {
+      "path": "src/CollisionGeometry.cpp",
+      "sha256": "7af819b59e19a6fdf0bcf217134177819f867d74d04f2ae81599268e98a00393"
+    },
+    {
+      "path": "src/CollisionGeometry.h",
+      "sha256": "3c4ef5b5181b6cfa30b8e3ec04f6acdbdcb57604f844f27204426002c047b269"
+    }
+  ]
+}

@@ -1,0 +1,3628 @@
+{
+  "schema": 1,
+  "kind": "linux-sdk-elf-dependency-inspection",
+  "timeUtc": "2026-10-17T21:52:21.092761+00:00",
+  "scope": "Read-only ELF/ldd inspection of built SDK on this host; no clean-machine, older-distro, graphics or executable gameplay validation",
+  "distribution": {
+    "PRETTY_NAME": "Ubuntu 26.04.1 LTS",
+    "NAME": "Ubuntu",
+    "VERSION_ID": "26.04",
+    "VERSION": "26.04.1 LTS (Resolute Raccoon)",
+    "VERSION_CODENAME": "resolute",
+    "ID": "ubuntu",
+    "ID_LIKE": "debian",
+    "HOME_URL": "https://www.ubuntu.com/",
+    "SUPPORT_URL": "https://help.ubuntu.com/",
+    "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+    "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+    "UBUNTU_CODENAME": "resolute",
+    "LOGO": "ubuntu-logo"
+  },
+  "kernel": "7.0.0-38-generic",
+  "architecture": "x86_64",
+  "sdkBuild": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-9cf491a-dirty-27836eb42bfa-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "27836eb42bfa996bb1b2c7550f63135023312264463c86bf5c309edced96da52",
+    "source_origin": "git",
+    "source_revision": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+    "source_tree": "009633eddc63e4c5a86202875d804b53e8e3f1f5",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "sdkManifestSha256": "ad67c4bcd1f9bbe3ee3d09b31413882145daa40cf37012708edf7b791696618b",
+  "tools": [
+    {
+      "tool": "judas",
+      "sha256": "254fa0b29886c0f1f1bda76fc3b318a72ffb8088310c4bb2e61d81ae75964ca4",
+      "bytes": 54781240,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_editor",
+      "sha256": "47808118f04208aec1a14b3102f1d21962ab3148d2227c5624717f00356ac326",
+      "bytes": 59841032,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_export",
+      "sha256": "bafcf2ed22f9de77d4ef68e37476ca622b5034b5adb82e9ed8644811fa546a62",
+      "bytes": 54673648,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_scene_author",
+      "sha256": "4f7d3ded221f846ae6205f0a1795891bbe5e8322febcd217a751d89172804ed2",
+      "bytes": 56702160,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_navigation_bake",
+      "sha256": "8f8486a7c32a2ea4579afbffde23153106ca64c8e3f0e1db2f25769c5e478cf5",
+      "bytes": 55200752,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_liquid_bake",
+      "sha256": "fad5b80f9136eaae8d6947c3af063f4e82553d3fe9fd263c6c0176e10e2aa0b4",
+      "bytes": 53924736,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_environment_bake",
+      "sha256": "319ae8dd6972977f65039cb2f977ef754f2244072c23402be7be3dd7579bf09b",
+      "bytes": 53903440,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_deformable_bake",
+      "sha256": "ce10a4c9ccf076562801bee5c698972d8a611af05660401a249e1b95b19f692a",
+      "bytes": 53908136,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_collision_cook",
+      "sha256": "ee899dc5e0b9bd581bbcf408328a2f2514dde72c0437693fac80024e520088eb",
+      "bytes": 53895064,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_model_import_cli",
+      "sha256": "6534c617a1ebda30fdba75fd47f0c3a13f9e4d947ed798d8010cd88bccf6f1bc",
+      "bytes": 56047384,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_terrain_author",
+      "sha256": "ba530881bcc33450adad65a87e9130099da1640a1c064ffbccf0703f7b2f3d93",
+      "bytes": 55291016,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_volume_author",
+      "sha256": "906e2b32d692a1697d0200d86accf4b628e97891ed4a72f451efdb532955a351",
+      "bytes": 55204880,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_mod",
+      "sha256": "72f8d71eab1c85f1b7fcfa0efe0ab5721600b8fcc9ea0fb17e800d030595a55d",
+      "bytes": 55155632,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_cook",
+      "sha256": "c31991a54421aea71e2fcb3890752f6200e3c714bd2efd95bc9c0c2c73087315",
+      "bytes": 53891056,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_script_check",
+      "sha256": "9ce57d05e309db8f0cf31b76288460571d9b1df9ff65a24178a19ee8e9cfc753",
+      "bytes": 53973008,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_save",
+      "sha256": "6c3e8f4b76e007dff3d6a6e9de89962b8e2218ae4c751c4d732f0fb89b3d5632",
+      "bytes": 53953552,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    },
+    {
+      "tool": "judas_server",
+      "sha256": "ec9e9a6a7785750d932954fea86a3be8478e6ba07f502e72065f998f5a5ec826",
+      "bytes": 53937200,
+      "lddExit": 0,
+      "missing": [],
+      "resolvedDependencies": [
+        {
+          "name": "libSDL2-2.0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0"
+        },
+        {
+          "name": "libstdc++.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+        },
+        {
+          "name": "libm.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "name": "libgcc_s.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "name": "libc.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "name": "libasound.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2"
+        },
+        {
+          "name": "libpulse.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0"
+        },
+        {
+          "name": "libsamplerate.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0"
+        },
+        {
+          "name": "libX11.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6"
+        },
+        {
+          "name": "libXext.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6"
+        },
+        {
+          "name": "libXcursor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1"
+        },
+        {
+          "name": "libXi.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6"
+        },
+        {
+          "name": "libXfixes.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3"
+        },
+        {
+          "name": "libXrandr.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2"
+        },
+        {
+          "name": "libXss.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1"
+        },
+        {
+          "name": "libdrm.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2"
+        },
+        {
+          "name": "libgbm.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1"
+        },
+        {
+          "name": "libwayland-egl.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1"
+        },
+        {
+          "name": "libwayland-client.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0"
+        },
+        {
+          "name": "libwayland-cursor.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0"
+        },
+        {
+          "name": "libxkbcommon.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0"
+        },
+        {
+          "name": "libdecor-0.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0"
+        },
+        {
+          "name": "libpulsecommon-17.0.so",
+          "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so"
+        },
+        {
+          "name": "libdbus-1.so.3",
+          "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3"
+        },
+        {
+          "name": "libxcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1"
+        },
+        {
+          "name": "libXrender.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1"
+        },
+        {
+          "name": "libexpat.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1"
+        },
+        {
+          "name": "libffi.so.8",
+          "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8"
+        },
+        {
+          "name": "libsndfile.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1"
+        },
+        {
+          "name": "libX11-xcb.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1"
+        },
+        {
+          "name": "libsystemd.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0"
+        },
+        {
+          "name": "libasyncns.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0"
+        },
+        {
+          "name": "libapparmor.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1"
+        },
+        {
+          "name": "libXau.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6"
+        },
+        {
+          "name": "libXdmcp.so.6",
+          "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6"
+        },
+        {
+          "name": "libFLAC.so.14",
+          "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14"
+        },
+        {
+          "name": "libvorbis.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0"
+        },
+        {
+          "name": "libvorbisenc.so.2",
+          "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2"
+        },
+        {
+          "name": "libopus.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0"
+        },
+        {
+          "name": "libogg.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0"
+        },
+        {
+          "name": "libmpg123.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0"
+        },
+        {
+          "name": "libmp3lame.so.0",
+          "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0"
+        },
+        {
+          "name": "libmvec.so.1",
+          "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+        }
+      ],
+      "directVersionRequirements": {
+        "GLIBC": "2.43",
+        "GLIBCXX": "3.4.32",
+        "CXXABI": "1.3.15"
+      },
+      "binaryStableDuringInspection": true
+    }
+  ],
+  "highestDirectVersionRequirements": {
+    "GLIBC": "2.43",
+    "GLIBCXX": "3.4.32",
+    "CXXABI": "1.3.15"
+  },
+  "missingDependencies": [],
+  "allBinariesStableDuringInspection": true,
+  "allLddSucceeded": true,
+  "portabilityConclusion": "No missing shared libraries on the measured Ubuntu host. These host-built binaries are not universally portable; their declared minimum symbol versions and transitive library requirements must be met. OpenGL driver/context and audio/input hardware readiness are not proved by ldd.",
+  "transitiveLibraries": [
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.34",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": null,
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.33",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.36",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3.1.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6.1.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2.2.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.4",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1.30.7",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.43",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0.3.1",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.34",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.35",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3.38.3",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0.200.5",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2.131.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1.11.2",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8.2.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.34",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.35",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.4",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0.0.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.43",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0.49.4",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.43",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0.8.6",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0.11.1",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.29",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0.24.3",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.34",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libsamplerate.so.0.2.2",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.14",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1.0.37",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.35",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0.42.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.39",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0.4.9",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.35",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2.0.12",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.4",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0.24.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0.24.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.28",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1.24.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.2.5",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0.13.1",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/sdl2-classic/libSDL2-2.0.so.0.3200.10",
+      "readelfExit": 0,
+      "highestNeededVersions": {
+        "GLIBC": "2.38",
+        "GLIBCXX": null,
+        "CXXABI": null
+      }
+    }
+  ],
+  "transitiveVersionNeedsOnly": {
+    "GLIBC": "2.43",
+    "GLIBCXX": null,
+    "CXXABI": null
+  },
+  "abiCaveat": "Direct executable and resolved host-library VERS_NEED inspection, not provided-symbol maxima. A minimum distro is not inferred from the version maxima alone; matching loader/libraries and graphics/audio/input platform support are also required."
+}

@@ -1,0 +1,158 @@
+// Continuous-impact cost of a jointed box ragdoll resting in a static triangle mesh.
+// Reproduces the consumer report "ragdoll in a concave mesh ramp stalls CCD for seconds per step"
+// (Skate & Parkour art half-pipe) without game content: a 12-body ragdoll is thrown into a
+// procedurally cooked trough (curved) or onto a flat sheet, at several triangle densities.
+// Prints per-scenario step time, impact counters, collision-geometry work and a bit-exact
+// trajectory digest, and checks that fast thin boxes fired at each sheet never tunnel. The digest is the evidence that a pure performance change preserved the
+// simulation; timings are reported, never asserted.
+#include "CollisionAsset.h"
+#include "CollisionGeometry.h"
+#include "MeshData.h"
+#include "PhysicsWorld.h"
+#include <algorithm>
+#include <chrono>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
+
+namespace {
+int checks=0,failures=0;
+void Check(bool ok,const std::string& label){++checks;if(!ok){++failures;std::cerr<<"FAIL "<<label<<'\n';}}
+
+// Open sheet over x,z in [-1.5,1.5] with cellsX by cellsZ quads. curved: circular trough
+// across z (radius 1.6 m, bottom at y=0), like a skate half-pipe; otherwise flat at y=0.
+std::shared_ptr<CollisionAsset> Sheet(int cellsX,int cellsZ,bool curved){
+    MeshData m;const float half=1.5f,radius=1.6f;
+    for(int j=0;j<=cellsZ;++j)for(int i=0;i<=cellsX;++i){
+        MeshVertex v;const float x=-half+2*half*float(i)/float(cellsX),z=-half+2*half*float(j)/float(cellsZ);
+        v.position={x,curved?radius-std::sqrt(radius*radius-z*z):0.f,z};m.vertices.push_back(v);
+    }
+    const auto at=[&](int i,int j){return std::uint32_t(j*(cellsX+1)+i);};
+    for(int j=0;j<cellsZ;++j)for(int i=0;i<cellsX;++i){
+        // Upward winding (+y normal on the flat sheet).
+        m.indices.insert(m.indices.end(),{at(i,j),at(i,j+1),at(i+1,j+1),at(i,j),at(i+1,j+1),at(i+1,j)});
+    }
+    CollisionCookSettings settings;auto asset=std::make_shared<CollisionAsset>();std::string error;
+    Check(CookCollision(m,settings,*asset,error),"sheet cooks: "+error);
+    return asset;
+}
+
+struct Part {glm::vec3 position,half;float mass;bool sphere=false;};
+// Rider-sized ragdoll standing at the origin (feet at y=0). Index order is the joint parent order.
+const std::vector<Part> kParts={
+    {{0,1.00f,0},{.15f,.10f,.10f},10},           // 0 hips
+    {{0,1.30f,0},{.15f,.15f,.10f},10},           // 1 spine
+    {{0,1.62f,0},{.11f,.11f,.11f},5,true},       // 2 head (sphere)
+    {{-.30f,1.40f,0},{.13f,.05f,.05f},2.5f},     // 3 left arm
+    {{-.58f,1.40f,0},{.15f,.045f,.045f},2},      // 4 left forearm
+    {{.30f,1.40f,0},{.13f,.05f,.05f},2.5f},      // 5 right arm
+    {{.58f,1.40f,0},{.15f,.045f,.045f},2},       // 6 right forearm
+    {{-.10f,.70f,0},{.075f,.20f,.075f},8},       // 7 left thigh
+    {{-.10f,.31f,0},{.06f,.19f,.06f},4},         // 8 left shin
+    {{-.10f,.05f,.06f},{.05f,.04f,.10f},1.2f},   // 9 left foot
+    {{.10f,.70f,0},{.075f,.20f,.075f},8},        // 10 right thigh
+    {{.10f,.31f,0},{.06f,.19f,.06f},4},          // 11 right shin
+    {{.10f,.05f,.06f},{.05f,.04f,.10f},1.2f}};   // 12 right foot
+struct JointSpec {int a,b;glm::vec3 at;};
+const std::vector<JointSpec> kJoints={{0,1,{0,1.15f,0}},{1,2,{0,1.50f,0}},{1,3,{-.17f,1.40f,0}},{3,4,{-.43f,1.40f,0}},
+    {1,5,{.17f,1.40f,0}},{5,6,{.43f,1.40f,0}},{0,7,{-.10f,.90f,0}},{7,8,{-.10f,.50f,0}},{8,9,{-.10f,.10f,0}},
+    {0,10,{.10f,.90f,0}},{10,11,{.10f,.50f,0}},{11,12,{.10f,.10f,0}}};
+
+struct Result {double totalMs=0,worstMs=0,maxPenetration=0,meanPenetration=0;int deepestStep=0;std::uint64_t digest=1469598103934665603ull;PhysicsWorld::StepStats impacts{};
+    std::uint64_t convexTests=0,triangles=0,nodes=0;};
+void Mix(std::uint64_t& h,const void* data,std::size_t n){auto p=static_cast<const unsigned char*>(data);for(std::size_t i=0;i<n;++i){h^=p[i];h*=1099511628211ull;}}
+
+// Deepest point of a bone below the analytic support surface: the y=0 plane, or the trough's
+// circle (radius 1.6 about y=1.6, z=0), over the sheet's footprint only. A tessellated trough
+// sits up to its chord sagitta above the circle, so this slightly understates penetration there
+// (0.2 mm dense, 1 mm coarse).
+double Penetration(const BodyTransform& t,const Part& part,bool curved){
+    const float radius=1.6f;std::vector<glm::vec3> points;float inflate=0;
+    if(part.sphere){points.push_back(t.position);inflate=part.half.x;}
+    else for(int i=0;i<8;++i)points.push_back(t.position+t.rotation*glm::vec3(i&1?part.half.x:-part.half.x,i&2?part.half.y:-part.half.y,i&4?part.half.z:-part.half.z));
+    double deepest=0;
+    for(const auto& p:points){
+        if(std::abs(p.x)>1.5f||std::abs(p.z)>1.5f)continue;   // beyond the sheet: nothing to penetrate
+        const double below=curved?std::hypot(double(p.y)-radius,double(p.z))-radius:-double(p.y);
+        deepest=std::max(deepest,below+inflate);
+    }
+    return deepest;
+}
+// The ragdoll is laid on its back along the trough, 0.75 m up, thrown along +z (a bail into the
+// ramp, rocking up the far wall; 1.2 m/s unless given) with a little spin, then left to settle for `steps` fixed steps.
+Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps,float throwSpeed){
+    PhysicsWorld w;w.Init();
+    if(ground)w.CreateShape(Shape::Cooked(ground,"impact cost sheet"),{},false,1,.6f,0);
+    else w.CreateStaticBox({0,-.5f,0},{1.5f,.5f,1.5f},.6f,0);
+    // Lay the standing pose face up along the trough (standing up -> +x, forward -> +y, arms across z).
+    const glm::quat lie=glm::quat_cast(glm::mat3(glm::vec3(0,0,1),glm::vec3(1,0,0),glm::vec3(0,1,0)));const glm::vec3 offset{-.8f,.75f,-.5f};
+    std::vector<BodyHandle> bodies;
+    for(const auto& p:kParts){
+        const glm::vec3 at=lie*p.position+offset;
+        BodyHandle h=p.sphere?w.CreateDynamicSphere(at,p.half.x,p.mass,.6f,0):w.CreateDynamicBox(at,p.half,p.mass,.6f,0);
+        w.ResetBody(h,at,lie);
+        w.SetLinearVelocity(h,{0,-.5f,throwSpeed});w.SetAngularVelocity(h,{1.5f,0,.8f});bodies.push_back(h);
+    }
+    // Like WorldRagdoll without self-collision: bones never collide with each other.
+    for(std::size_t a=0;a<bodies.size();++a)for(std::size_t b=a+1;b<bodies.size();++b)w.SetPairCollisionEnabled(bodies[a],bodies[b],false);
+    for(const auto& j:kJoints){
+        JointSettings s;s.type=JointType::Ball;s.bodyA=bodies[std::size_t(j.a)];s.bodyB=bodies[std::size_t(j.b)];
+        // Anchors are body-local; every body starts with the same orientation `lie`.
+        s.anchorA=glm::inverse(lie)*(j.at-kParts[std::size_t(j.a)].position);s.anchorB=glm::inverse(lie)*(j.at-kParts[std::size_t(j.b)].position);
+        Check(w.CreateJoint(s).id!=0,"ragdoll joint created");
+    }
+    Result r;const float dt=1.f/60.f;ResetCollisionGeometryStats();
+    for(int step=0;step<steps;++step){
+        for(auto h:bodies)w.ApplyLinearAcceleration(h,{0,-9.81f,0},dt);
+        const auto begin=std::chrono::steady_clock::now();w.Step(dt);
+        const double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-begin).count();
+        r.totalMs+=ms;r.worstMs=std::max(r.worstMs,ms);
+        const auto& s=w.LastStepStats();
+        r.impacts.impactQueries+=s.impactQueries;r.impacts.impactSearchIterations+=s.impactSearchIterations;r.impacts.impactSearchLimit+=s.impactSearchLimit;r.impacts.impactSearchStalls+=s.impactSearchStalls;
+        r.impacts.impactSamplingFallbacks+=s.impactSamplingFallbacks;r.impacts.impactSamplingTests+=s.impactSamplingTests;r.impacts.impactEvents+=s.impactEvents;
+        double deepest=0;for(std::size_t i=0;i<bodies.size();++i)deepest=std::max(deepest,Penetration(w.GetTransform(bodies[i]),kParts[i],curved));
+        r.meanPenetration+=deepest/steps;if(deepest>r.maxPenetration){r.maxPenetration=deepest;r.deepestStep=step;}
+        for(auto h:bodies){const auto t=w.GetTransform(h);const auto v=w.GetLinearVelocity(h),o=w.GetAngularVelocity(h);
+            Mix(r.digest,&t.position,sizeof(t.position));Mix(r.digest,&t.rotation,sizeof(t.rotation));Mix(r.digest,&v,sizeof(v));Mix(r.digest,&o,sizeof(o));}
+    }
+    const auto g=GetCollisionGeometryStats();r.convexTests=g.convexTests;r.triangles=g.triangles;r.nodes=g.nodes;
+    // Settled: nothing fell through or flew off.
+    for(auto h:bodies){const auto p=w.GetTransform(h).position;Check(std::isfinite(p.x)&&p.y>-.3f&&p.y<3.f&&std::abs(p.x)<4&&std::abs(p.z)<4,"ragdoll stays on its support");}
+    return r;
+}
+}
+
+// Tunnelling comparison: small, thin boxes fired fast at the sheet, from steep to grazing, each
+// in its own world. One-sided meshes stop nothing from behind, so a box that ever gets more than
+// 5 cm beneath the surface (over the sheet) has crossed it; boxes leaving over the trough lip
+// just fly off. Reported, not asserted: at 3bdf09e9 these boxes already cross sloped and curved
+// meshes, and impacts like these can spin such a box past 500 rad/s, where the angular midpoint
+// solve throws (both reported separately, in docs/evidence/ccd-mesh-contacts). The counts let a
+// continuous-impact change show it crosses no more than before.
+struct FastBoxes {int through=0,threw=0;};
+FastBoxes FireFastBoxes(const std::shared_ptr<CollisionAsset>& ground,bool curved){
+    FastBoxes result;
+    for(int i=0;i<24;++i){
+        PhysicsWorld w;w.Init();w.CreateShape(Shape::Cooked(ground,"impact cost sheet"),{},false,1,.6f,0);
+        const float along=-1.2f+.1f*float(i),grazing=float(i%6)*6.f;   // 0..30 m/s across, 40 m/s down
+        auto h=w.CreateDynamicBox({along,1.2f,-1.f},{.02f,.01f,.03f},.2f,.4f,0);w.SetLinearVelocity(h,{0,-40.f,grazing});
+        bool crossed=false;
+        try{
+            for(int step=0;step<90&&!crossed;++step){
+                w.ApplyLinearAcceleration(h,{0,-9.81f,0},1.f/60.f);w.Step(1.f/60.f);
+                const auto p=w.GetTransform(h).position;const bool over=std::abs(p.x)<=1.5f&&std::abs(p.z)<=1.5f;
+                const double below=curved?std::hypot(double(p.y)-1.6,double(p.z))-1.6:-double(p.y);
+                crossed=!std::isfinite(p.y)||(over&&below>.05);
+            }
+        }catch(const std::runtime_error&){++result.threw;continue;}
+        result.through+=crossed;
+    }
+    return result;
+}
+
+int main(){auto ground=Sheet(2,26,true);for(int i=0;i<2;++i){PhysicsWorld w;w.Init();auto g=w.CreateShape(Shape::Cooked(ground,"ground"),{},false,1,.6f,0);auto h=w.CreateDynamicBox({-1.2f,1.2f,-1.f},{.02f,.01f,.03f},.2f,.4f,0);w.SetLinearVelocity(h,{0,-40,float(i*6)});for(int step=0;step<4;++step){auto t=w.GetTransform(h);RigidBody b;b.position=t.position;b.orientation=t.rotation;RigidBody floor;auto m=ComputeContacts(Shape::Box({.02f,.01f,.03f}),b,Shape::Cooked(ground,"s"),floor,1.f);std::cout<<"BEFORE "<<i<<" step "<<step<<" p "<<t.position.x<<","<<t.position.y<<","<<t.position.z<<" count "<<m.count;for(int k=0;k<m.count;++k){auto&c=m.points[k];std::cout<<" c "<<c.signedSeparation<<" n "<<c.normal.x<<","<<c.normal.y<<","<<c.normal.z;}std::cout<<'\n';w.ApplyLinearAcceleration(h,{0,-9.81f,0},1.f/60.f);w.Step(1.f/60.f);auto stats=w.LastStepStats();t=w.GetTransform(h);auto v=w.GetLinearVelocity(h);std::cout<<"AFTER p "<<t.position.x<<","<<t.position.y<<","<<t.position.z<<" v "<<v.x<<","<<v.y<<","<<v.z<<" impact "<<stats.impactEvents<<" query "<<stats.impactQueries<<" search "<<stats.impactSearchIterations<<" fallback "<<stats.impactSamplingFallbacks;for(auto&c:w.LastStepContacts())std::cout<<" normal "<<c.normal.x<<","<<c.normal.y<<","<<c.normal.z;std::cout<<'\n';}}return 0;}

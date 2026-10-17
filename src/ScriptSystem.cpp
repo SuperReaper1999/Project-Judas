@@ -960,7 +960,48 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(!id.empty()&&!e)return JS_ThrowReferenceError(c,"unknown UI element %s",id.c_str());
         bool* flag=key=="visible"?(e?&e->visible:&d->visible):key=="enabled"?(e?&e->enabled:&d->enabled):key=="modal"&&!e?&d->modal:nullptr;
         if(flag){if(op=="uiSet"){if(!JS_IsBool(arg(4)))return JS_ThrowTypeError(c,"UI flag requires boolean");*flag=JS_ToBool(c,arg(4));}return JS_NewBool(c,*flag);}
-        if(e&&(key=="text"||key=="texture"||key=="font"||key=="textKey")){auto& value=key=="text"?e->text:key=="texture"?e->texture:key=="font"?e->font:e->textKey;if(op=="uiSet"){if(!JS_IsString(arg(4)))return JS_ThrowTypeError(c,"UI string required");auto v=String(c,arg(4));if(v.size()>16384)return JS_ThrowTypeError(c,"UI text too long");if(key=="textKey"){std::string error;if(v.size()>128||v.find_first_of("\r\n\0",0,3)!=std::string::npos||!ValidTextUTF8(v,error))return JS_ThrowTypeError(c,"invalid localization key");}if((key=="texture"||key=="font")&&!v.empty()){auto* a=s->assets?s->assets->Find(v):nullptr;if(!a||a->missing||a->type!=(key=="font"?AssetType::Font:AssetType::Texture))return JS_ThrowTypeError(c,"invalid UI asset");}if(key=="text"){std::string utfError;if(!ValidTextUTF8(v,utfError)||v.find('\0')!=std::string::npos||(e->kind==UIKind::TextInput&&(v.size()>e->maxBytes||v.find_first_of("\r\n")!=std::string::npos)))return JS_ThrowTypeError(c,"invalid/bounded UI text");}if(key=="textKey"&&e->kind==UIKind::TextInput&&!v.empty())return JS_ThrowTypeError(c,"editable fields use literal text");value=v;if(key=="text"){e->textKey.clear();if(e->kind==UIKind::TextInput){auto n=TextGraphemes(v).size()-1;world.UI().SelectText(h,id,{n,n});}}}return JS_NewStringLen(c,value.data(),value.size());}
+        if (e && (key == "text" || key == "texture" || key == "font" || key == "textKey")) {
+            auto& value = key == "text" ? e->text : key == "texture" ? e->texture :
+                          key == "font" ? e->font : e->textKey;
+            if (op == "uiSet") {
+                if (!JS_IsString(arg(4))) return JS_ThrowTypeError(c, "UI string required");
+                auto v = String(c, arg(4));
+                if (v.size() > 16384) return JS_ThrowTypeError(c, "UI text too long");
+                if (key == "textKey") {
+                    std::string error;
+                    if (v.size() > 128 || v.find_first_of("\r\n\0", 0, 3) != std::string::npos ||
+                        !ValidTextUTF8(v, error))
+                        return JS_ThrowTypeError(c, "invalid localization key");
+                }
+                if ((key == "texture" || key == "font") && !v.empty()) {
+                    auto* asset = s->assets ? s->assets->Find(v) : nullptr;
+                    if (!asset || asset->missing || asset->type !=
+                        (key == "font" ? AssetType::Font : AssetType::Texture))
+                        return JS_ThrowTypeError(c, "invalid UI asset");
+                }
+                if (key == "text") {
+                    std::string error;
+                    // Ordinary labels retain their established length-bearing
+                    // UTF-8 contract. Editable fields additionally reject NUL
+                    // and line breaks, matching UIDocument validation.
+                    const bool invalidInput = e->kind == UIKind::TextInput &&
+                        (v.size() > e->maxBytes || v.find_first_of("\r\n\0", 0, 3) != std::string::npos);
+                    if (!ValidTextUTF8(v, error) || invalidInput)
+                        return JS_ThrowTypeError(c, "invalid/bounded UI text");
+                }
+                if (key == "textKey" && e->kind == UIKind::TextInput && !v.empty())
+                    return JS_ThrowTypeError(c, "editable fields use literal text");
+                value = v;
+                if (key == "text") {
+                    e->textKey.clear();
+                    if (e->kind == UIKind::TextInput) {
+                        const auto n = TextGraphemes(v).size() - 1;
+                        world.UI().SelectText(h, id, {n, n});
+                    }
+                }
+            }
+            return JS_NewStringLen(c, value.data(), value.size());
+        }
         if(e&&(key=="direction"||key=="textAlignment")){std::vector<std::string> choices=key=="direction"?std::vector<std::string>{"auto","ltr","rtl"}:std::vector<std::string>{"left","right","center","start","end"};int index=key=="direction"?int(e->direction):e->textLogicalAlign;if(op=="uiSet"){if(!JS_IsString(arg(4)))return JS_ThrowTypeError(c,"UI direction/alignment string required");auto v=String(c,arg(4));auto it=std::find(choices.begin(),choices.end(),v);if(it==choices.end())return JS_ThrowTypeError(c,"unsupported UI text direction/alignment");index=int(it-choices.begin());if(key=="direction")e->direction=TextDirection(index);else e->textLogicalAlign=index;}return JS_NewString(c,index<0?"":choices[index].c_str());}
         if(e&&key=="value"){if(op=="uiSet"){double v;if(JS_ToFloat64(c,&v,arg(4))||!std::isfinite(v)||v<e->minimum||v>e->maximum)return JS_ThrowTypeError(c,"UI value outside authored range");e->value=float(v);}return JS_NewFloat64(c,e->value);}
         return JS_ThrowTypeError(c,"unknown UI property");

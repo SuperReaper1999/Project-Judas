@@ -428,7 +428,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::MenuItem("JudasJS developer tools", nullptr, &state.showScriptTools);
         ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
         ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
-        if (ImGui::MenuItem("Check for new milestones")) requests.checkMilestones = true;
+        if (ImGui::MenuItem("Check this channel for updates")) requests.checkMilestones = true;
         if (ImGui::MenuItem("JudasJS reference")) requests.openJudasJS = true;
         if (ImGui::MenuItem("Making your first project")) requests.openQuickStart = true;
         if (ImGui::MenuItem("Reset workspace layout")) {

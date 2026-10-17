@@ -1,4 +1,5 @@
 #include "ScriptTools.h"
+#include "BuildIdentity.h"
 #include "Ragdoll.h"
 #include "ModelCook.h"
 #include "RetargetPanel.h"
@@ -573,7 +574,7 @@ void EditorApplication::StopPlay() {
 }
 
 void EditorApplication::HandleRequests(EditorRequests& r) {
-    if (r.checkMilestones) { m_milestoneNotice.Check(true); m_panels.status = "Checking for new milestones..."; }
+    if (r.checkMilestones) { m_milestoneNotice.Check(true); m_panels.status = "Checking this build channel for updates..."; }
     std::string error;
     bool approvedDocumentAction = false;
     if (m_documentActionApproved) {
@@ -1297,7 +1298,9 @@ int EditorApplication::Run(int argc, char** argv) {
     }
     std::string error;
     EngineHost host;
-    if (!host.Init("Project Judas Editor", kWindowWidth, kWindowHeight, true, error)) {
+    const auto editorTitle = std::string("Project Judas Editor — ") + GetBuildIdentity().version +
+        " [" + GetBuildIdentity().channel + "] " + GetBuildIdentity().buildId;
+    if (!host.Init(editorTitle.c_str(), kWindowWidth, kWindowHeight, true, error)) {
         std::fprintf(stderr, "%s\n", error.c_str());
         return 1;
     }

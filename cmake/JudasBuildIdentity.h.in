@@ -1,0 +1,16 @@
+#pragma once
+#define JUDAS_ID_VERSION "@JUDAS_ID_version@"
+#define JUDAS_ID_MATURITY "@JUDAS_ID_maturity@"
+#define JUDAS_ID_CHANNEL "@JUDAS_ID_channel@"
+#define JUDAS_ID_BUILD_ID "@JUDAS_ID_build_id@"
+#define JUDAS_ID_REVISION "@JUDAS_ID_revision@"
+#define JUDAS_ID_TREE "@JUDAS_ID_tree@"
+#define JUDAS_ID_SOURCE_DIRTY @JUDAS_ID_source_dirty@
+#define JUDAS_ID_SOURCE_FINGERPRINT "@JUDAS_ID_source_fingerprint@"
+#define JUDAS_ID_SOURCE_UNTRACKED_COUNT @JUDAS_ID_source_untracked_count@
+#define JUDAS_ID_SOURCE_UNTRACKED_FINGERPRINT "@JUDAS_ID_source_untracked_fingerprint@"
+#define JUDAS_ID_SOURCE_ORIGIN "@JUDAS_ID_origin@"
+#define JUDAS_ID_PLATFORM "@JUDAS_ID_platform@"
+#define JUDAS_ID_ARCHITECTURE "@JUDAS_ID_architecture@"
+#define JUDAS_ID_COMPILER "@JUDAS_ID_compiler@"
+#define JUDAS_ID_COMPILER_VERSION "@JUDAS_ID_compiler_version@"

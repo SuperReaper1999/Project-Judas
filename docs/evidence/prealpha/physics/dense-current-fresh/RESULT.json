@@ -1,0 +1,116 @@
+{
+  "utc_start": "2026-10-17T21:46:22.014996+00:00",
+  "source_head": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "physics_sources_byte_exact_HEAD": true,
+  "binary_sha256": "d5d986193dcd21efc45b490873103580ab1e19a69be6ab110fedadd709025f09",
+  "scene_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "source_object_sha256": {
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/tests/PhysicsStressLiveBenchmark.cpp.o": "4df2c8a39773f254e6b8a47eb8f38a7f59c341bca1983dbe2cdb2451667e19ff",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/Application.cpp.o": "2537c9f4c5e43409ca1a46fdef29394a1b5fbd99fad6ce7895546357a1a312af",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeOptions.cpp.o": "f934c3914065e6e3d9d5a68b34c0dcc0632850f596891a24048b444ee8c84706",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeDiagnostics.cpp.o": "374f133acc4031764f94892e0d3d51759ce1d0217a015c4dc434608afd3a6767",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/TestHarness.cpp.o": "9c085d9c6d03f399846c85cc504693f9ac711b19fcebc6b78f550d415dd2004f"
+  },
+  "link_command": [
+    "cmake",
+    "--build",
+    "build",
+    "--target",
+    "judas_physics_stress_live_benchmark",
+    "-j2"
+  ],
+  "command": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha/physics/dense-current-fresh/run",
+    "105",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "1",
+    "0",
+    "1"
+  ],
+  "outer_timeout_seconds": 60,
+  "notes": [
+    "Exact M91 frozen scene matches current registered project scene.",
+    "Fresh current application build; physics source restored byte-exact accepted HEAD. No physics optimization shipped.",
+    "Single current diagnostic, not a new before/after improvement claim.",
+    "Application driver objects individually hashed after a fresh affected-target build; this is not a clean full build claim.",
+    "No owner CPU-intensive build/benchmark concurrent. Desktop/GPU activity not controlled."
+  ],
+  "exit": null,
+  "timed_out": true,
+  "wall_seconds": 60.02199613000084,
+  "utc_end": "2026-10-17T21:47:22.210102+00:00",
+  "completed_steps": 270,
+  "fixed_ms": {
+    "median": 31.559865,
+    "p95_nearest_rank": 481.568284,
+    "maximum": 2119.208149
+  },
+  "last_digest": "192f0f4bed728953",
+  "nonfinite_fields": 0,
+  "worst_step": {
+    "step": "270",
+    "frame": "269",
+    "wall_ms": "57042.084115",
+    "fixed_ms": "2119.208149",
+    "bodies": "1285",
+    "awake": "1024",
+    "sleeping": "128",
+    "candidates": "12628",
+    "contacts": "3122",
+    "impact_events": "51",
+    "impact_queries": "501599",
+    "impact_iterations": "46950",
+    "impact_peak": "20",
+    "total_physics_ms": "2117.537169",
+    "broadphase_ms": "4.078465",
+    "narrowphase_ms": "10.201822",
+    "solver_ms": "2099.307476",
+    "trajectory_digest": "192f0f4bed728953",
+    "max_linear_speed": "2.61625123024",
+    "max_angular_speed": "6.46908569336",
+    "nonfinite_fields": "0"
+  },
+  "comparison_to_preserved_m91": {
+    "path": "docs/evidence/m91/raw/profile-verified/after-270-r0/steps.csv.gz",
+    "all_270_equal_fields": {
+      "trajectory_digest": true,
+      "bodies": true,
+      "awake": true,
+      "sleeping": true,
+      "candidates": true,
+      "contacts": true,
+      "impact_events": true,
+      "impact_queries": true,
+      "impact_iterations": true,
+      "impact_peak": true,
+      "max_linear_speed": true,
+      "max_angular_speed": true,
+      "nonfinite_fields": true
+    },
+    "scope": "Physical observations/counters only. Current wall timings are not a claimed speedup; source physics unchanged."
+  },
+  "process_completion_classification": "All270requestedfixedstepsandquality/profileexportscomplete;outer60swatchdogexpiredaftercompletedframes271, duringteardown. Notanapplicationexitpass.",
+  "worst_step_profile_inclusive_nonadditive": {
+    "Physics impact island discovery ms": 723.641937,
+    "Physics CCD geometry inclusive ms": 933.54485,
+    "Physics CCD search inclusive ms": 327.743434,
+    "Physics impact solve ms": 167.183164,
+    "Physics peak impact island bodies": 973,
+    "Physics peak impact contact rows": 2517,
+    "Physics CCD geometry calls": 626049,
+    "Physics impact events": 51,
+    "Physics impact queries": 501599
+  },
+  "worst_step_memory": {
+    "profiler_reserved_estimate_bytes": 70809112,
+    "linux_resident_bytes": 375558144,
+    "linux_virtual_bytes": 2402299904
+  },
+  "maximum_observed_retained_frame_resident_bytes": 420098048
+}

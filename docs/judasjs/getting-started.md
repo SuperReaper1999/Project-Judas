@@ -4,8 +4,9 @@
 
 Judas runs ordinary project JavaScript. You author entities/components/assets and
 use scripts to supply game rules. No C++ recompilation is needed to change those
-rules. This guide describes the current API through M94 developer tooling; its
-human-review status is on the [landing page](../JUDASJS.md).
+rules. This guide describes the current API through the accepted M99 baseline;
+Pre-Alpha tooling changes and platform coverage are recorded on the
+[landing page](../JUDASJS.md) and [Pre-Alpha guide](../PREALPHA.md).
 
 ## 1. Create an ordinary project
 

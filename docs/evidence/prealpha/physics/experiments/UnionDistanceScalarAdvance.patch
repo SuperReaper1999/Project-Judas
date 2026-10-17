@@ -1,0 +1,59 @@
+--- accepted/PhysicsWorld.cpp
++++ scalar/PhysicsWorld.cpp
+@@ -1067,12 +1067,34 @@
+             // The exact endpoint has already been checked. There is no future
+             // interval left from which a proximity reach could reveal a hit.
+             if(time==finish)return finish+1;
+-            const auto manifold=PairAt(a,b,pa,pb,time,reach);
+-            if (!manifold.count) return finish+1;
+-            const Contact* nearest=&manifold.points[0];
+-            for (int k=1;k<manifold.count;++k)
+-                if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
+-            const double gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
++            const bool firstMesh=ba.shape.type==ShapeType::TriangleMesh;
++            const bool mesh=firstMesh||bb.shape.type==ShapeType::TriangleMesh;
++            double gap=0;glm::dvec3 normal(0);
++            if(mesh){
++                PhysicsWorkTimer geometryTimer(work.geometry,work.active);
++                const auto first=PrimitiveAt(ba.shape,ImpactPoseAt(a,time).pose,pa);
++                const auto second=PrimitiveAt(bb.shape,ImpactPoseAt(b,time).pose,pb);
++                const auto& query=firstMesh?second:first;
++                const auto& targetMesh=firstMesh?first:second;
++                GeometryDistance distance;
++                if(query.shape.type==ShapeType::Box||query.shape.type==ShapeType::ConvexHull)
++                    distance=PolyGeometry(query,targetMesh,reach);
++                else {
++                    const auto center=PrimitiveCenter(query);const auto rotation=PrimitiveRotation(query);
++                    const double half=query.shape.type==ShapeType::Capsule?query.shape.halfHeight:0;
++                    distance=SegmentGeometry(center-rotation[1]*half,center+rotation[1]*half,query.shape.radius,targetMesh,reach);
++                }
++                if(!distance.valid)return finish+1;
++                gap=distance.gap;
++            }else{
++                const auto manifold=PairAt(a,b,pa,pb,time,reach);
++                if (!manifold.count) return finish+1;
++                const Contact* nearest=&manifold.points[0];
++                for (int k=1;k<manifold.count;++k)
++                    if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
++                gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
++                normal=nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
++            }
+             if(gap<=0) {
+                 // Some specialized geometry (notably terrain) excludes exact
+                 // equality at zero margin while a proximity query includes it.
+@@ -1082,10 +1104,13 @@
+                 uncertifiedAdvance=true;
+                 break;
+             }
+-            const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
++            // A closest patch's plane is not a separating plane for a concave
++            // union. Its SAT separation is a distance lower bound; the full
++            // relative surface-speed bound remains valid across patch changes.
++            const double closing=mesh?speed:-glm::dot(relative,normal)+angular;
+             if (!(closing>0)) return finish+1;
+             double increment=gap/closing;
+-            if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));
++            if(angular>0&&!mesh) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,normal));
+             // Progress in represented time only. A large coordinate orthogonal
+             // to motion must not enlarge the step and skip a thin obstacle.
+             increment=std::max(increment,std::nextafter(time,finish)-time);

@@ -1,5 +1,29 @@
 # Windows editor and exported games
 
+## Current Pre-Alpha SDK packaging
+
+Native Windows remains a best-effort functional-validation platform. New packaging
+changes do not imply fresh Windows execution or physical GPU acceptance. The shared
+[SDK inventory](../packaging/sdk-inventory.json) now includes asset cooking, script
+checking, save recovery/migration, the dedicated server and all public authoring
+tools. Runtime DLL staging covers executables declared after M76 as well.
+
+`Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel main`,
+`Experimental` or `Local` and an optional `-BuildDirectory` to keep independent
+outputs. Channel selection does not grant human acceptance or promote a branch.
+SDK staging requires Python 3.11+. Existing generated SDKs without the new manifest
+are not overwritten: use a fresh build directory or move the old SDK aside.
+
+Every new SDK contains `BUILD_INFO.json`, `SDK_MANIFEST.json` and `SHA256SUMS`.
+Verify a moved SDK without Git or the engine source checkout:
+
+```powershell
+python "$sdk\tools\package_sdk.py" verify $sdk
+```
+
+See [distribution and package verification](DISTRIBUTION.md). The historical
+Windows receipts below describe their original checkpoints, not new validation.
+
 ## M76 local modding candidate
 
 The provisional [M76 checkpoint](M76.md), **NOT HUMAN VALIDATED**, based on accepted M75 checkpoint
@@ -133,13 +157,14 @@ powershell -ExecutionPolicy Bypass -File .\packaging\windows\Build-Windows.ps1 -
 If a build fails, retain the first error and the build logs; do not treat the
 candidate label as a guarantee that Windows compilation has already passed.
 
-Output: `build\windows\windows-sdk\`. It contains the editor, standalone runtime,
-exporter, model-import and scene/world-authoring tools, a platform readiness test,
-engine fonts, runtime DLLs and license notices. The SDK target rebuilds this
-**generated** directory from scratch; keep authored projects elsewhere.
+Output: `build\windows-Experimental\windows-sdk\` by default. It contains the
+editor, runtime, exporter, public authoring/cooking/debug/save/server tools,
+platform readiness test, fonts, current reference docs, DLLs and license notices.
+The SDK prepares and verifies a replacement before publishing it. Keep authored
+projects outside this generated directory.
 
 ```powershell
-$sdk = (Resolve-Path .\build\windows\windows-sdk).Path
+$sdk = (Resolve-Path .\build\windows-Experimental\windows-sdk).Path
 $game = (Resolve-Path .\projects\shooter_game\shooter_game.judasproj).Path
 & "$sdk\judas_editor.exe" $game
 # Or enter standalone directly:

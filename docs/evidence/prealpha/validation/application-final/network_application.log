@@ -1,0 +1,41 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Connected Workshop (/home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/connected_workshop.judasproj)
+Scene: Connected Workshop / shared cargo yard (/home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/Scenes/workshop.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS generic runtime launch settings start the actual game listener
+PASS overview game starts playable with usable pointer/UI and no global pause
+PASS script-owned presentation camera is independent of motors
+PASS authored HUD binds and reflects real session mode
+PASS HUD displays the effective custom command-line port
+PASS actual project input map installs independently
+PASS hovered UI activation bindings cannot consume the distinct gamepad shove
+PASS all twelve shared cargo entities are actual dynamic bodies
+PASS capture actual renderer plus authored HUD
+PASS real keyboard input drives the existing CharacterMotor through game JS
+PASS arrange motor for controlled interaction fixture
+PASS arrange ordinary cargo before public game action
+PASS ordinary E action produces real hit-point impulse and body motion
+PASS actual physical cargo crosses delivery boundary and scores
+PASS project score is visible through ordinary runtime UI
+PASS capture actual renderer plus authored HUD
+PASS existing editable address field takes ordinary UI focus
+PASS editing connection settings does not pause the shared physical world
+PASS project reflows the same public UI into readable portrait layout
+PASS phone-facing connection fields and buttons remain in bounds without overlap
+PASS capture actual renderer plus authored HUD
+PASS ordinary Disconnect button has a live hit rectangle
+PASS actual Disconnect click closes transport and releases scene/save gate
+PASS closing the session clears transient network entities and peer records
+PASS normal H action retains the effective custom port after disconnect
+PASS ordinary Disconnect button has a live hit rectangle
+PASS actual Disconnect click closes transport and releases scene/save gate
+PASS closing the session clears transient network entities and peer records
+PASS normal scene reload is accepted after explicit session closure
+PASS new scene does not revive live sockets or old network identities
+PASS reload restores authored physical cargo and fresh gameplay score
+PASS reload preserves healthy project lifecycle and pointer policy
+PASS capture actual renderer plus authored HUD
+PASS normal application startup, input, renderer, UI, close/reload and shutdown
+SUMMARY checks=34 failures=0

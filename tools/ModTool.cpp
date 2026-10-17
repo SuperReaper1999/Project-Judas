@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "ModAuthoring.h"
 #include "SceneFingerprint.h"
 #include "EnginePaths.h"
@@ -6,7 +7,9 @@
 #include <iostream>
 using namespace JudasMods;
 namespace fs=std::filesystem;
-int main(int argc,char** argv){try{std::string error;if(argc<3)throw std::runtime_error("judas_mod inspect PACKAGE | kit PROJECT DEST DOCS | new KIT DEST MOD_ID | package PROJECT OUTPUT | validate PROJECT | install GAME PACKAGE | list GAME | enable GAME MOD VERSION HASH [--trust-executable] | disable GAME MOD | remove GAME MOD VERSION HASH | resolve GAME");auto need=[&](bool ok){if(!ok)throw std::runtime_error(error);};std::string command=argv[1];
+int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "mod")) return 0;
+try{std::string error;if(argc<3)throw std::runtime_error("judas_mod inspect PACKAGE | kit PROJECT DEST DOCS | new KIT DEST MOD_ID | package PROJECT OUTPUT | validate PROJECT | install GAME PACKAGE | list GAME | enable GAME MOD VERSION HASH [--trust-executable] | disable GAME MOD | remove GAME MOD VERSION HASH | resolve GAME");auto need=[&](bool ok){if(!ok)throw std::runtime_error(error);};std::string command=argv[1];
  if(command=="inspect"){Package p;need(ReadPackage(argv[2],p,error));std::cout<<ToJSON(p.manifest).dump(2)<<"\nsha256 "<<p.hash<<'\n';return 0;}
  if(command=="new"){if(argc!=5)throw std::runtime_error("new KIT DEST MOD_ID");Project p;need(NewModProject(argv[2],argv[3],argv[4],p,error));std::cout<<p.ProjectFile()<<'\n';return 0;}
  Project p;need(p.Load(argv[2],error));if(command=="kit"){if(argc!=5)throw std::runtime_error("kit PROJECT DEST DOCS");need(ExportKit(p,argv[3],argv[4],error));return 0;}

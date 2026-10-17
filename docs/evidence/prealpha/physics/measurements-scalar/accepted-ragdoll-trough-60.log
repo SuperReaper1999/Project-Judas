@@ -1,0 +1,3 @@
+FAIL trough 60x60 dense fast boxes do not cross actual mesh
+SCENARIO "trough 60x60 dense" triangles 7200 steps 60 totalMs 828.97 worstStepMs 44.14 maxPenetrationMm 21.48 atStep 30 meanDeepestMm 3.78 impactQueries 1728 searchIterations 9517 searchLimits 0 searchStalls 668 samplingFallbacks 674 samplingTests 6448 impactEvents 188 convexTests 3498047 meshTriangles 3812495 bvhNodes 3015935 fastBoxSteps 90 fastBoxesThrough 24 legacyOracleThrough 24 fastBoxesThrew 0 digest d3a8eb57318ad3d9
+checks 64 failures 1

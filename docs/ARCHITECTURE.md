@@ -1,6 +1,22 @@
 # Architecture
 
-## Current — M96 UI toolkit
+## Current architecture and Pre-Alpha stabilization
+
+The accepted baseline is M99 (`9cf491a13dbb1cd82ab9ab9b916e255af2d579d2`).
+The unnumbered Pre-Alpha engineering phase is developed on Experimental; it is
+not an Alpha release or automatic promotion to main. Start with the
+[current ownership and integration matrix](PREALPHA.md),
+[build/distribution identity](BUILD_RELEASES.md) and [JudasJS index](JUDASJS.md).
+The milestone sections below retain architectural history; later explicit
+contracts supersede earlier limits. Raw historical evidence remains unchanged.
+
+RuntimeWorld owns live component state; Scene owns authored definitions;
+Simulation orders fixed-step publication. Workers prepare private products and
+the world/resource owner publishes them. Input, cameras and game rules remain
+project-owned. Save, streaming, origin and replication support are independent
+contracts: a renderable component is not automatically suspendable or replicated.
+
+## M96 UI toolkit
 
 The existing retained RuntimeUI owns text inputs, scroll containers and fixed-row
 virtual lists alongside legacy controls. SDL's text/IME and clipboard adapter
@@ -30,7 +46,7 @@ projects keep eager visual references; per-view selection never changes physics.
 See [M93 contracts](M93_ASSET_PIPELINE.md) and the M93 section below.
 M93 is operator accepted; Windows/Android M93 validation remains pending.
 
-## Current release — M92 rendering scale
+## M92 rendering scale
 
 The current renderer uses per-view CPU-built screen light tiles uploaded through
 one portable RGBA32F texture, a relevance-selected spotlight shadow array, and

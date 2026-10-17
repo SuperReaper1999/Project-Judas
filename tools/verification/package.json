@@ -1,0 +1,9 @@
+{
+  "name": "judas-optional-verification",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional JudasJS declaration/API checker; never a game or native build dependency",
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

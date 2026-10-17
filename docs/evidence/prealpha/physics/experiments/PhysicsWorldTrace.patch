@@ -1,0 +1,25 @@
+--- accepted/PhysicsWorld.cpp
++++ PhysicsWorldTrace.cpp
+@@ -1,3 +1,4 @@
++#include <cstdio>
+ #include "PerformanceProfiler.h"
+ #include "JobSystem.h"
+ #include <exception>
+@@ -1068,7 +1069,7 @@
+             // interval left from which a proximity reach could reveal a hit.
+             if(time==finish)return finish+1;
+             const auto manifold=PairAt(a,b,pa,pb,time,reach);
+-            if (!manifold.count) return finish+1;
++            if (!manifold.count){if(bodies.size()==2&&speed>30)std::fprintf(stderr,"TRACE empty t %.12g end %.12g\n",time,finish);return finish+1;}
+             const Contact* nearest=&manifold.points[0];
+             for (int k=1;k<manifold.count;++k)
+                 if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
+@@ -1083,7 +1084,7 @@
+                 break;
+             }
+             const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
+-            if (!(closing>0)) return finish+1;
++            if(bodies.size()==2&&speed>30)std::fprintf(stderr,"TRACE t %.12g gap %.12g n %.12g %.12g %.12g closing %.12g\n",time,gap,nearest->preciseNormal.x,nearest->preciseNormal.y,nearest->preciseNormal.z,closing);if (!(closing>0)) return finish+1;
+             double increment=gap/closing;
+             if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));
+             // Progress in represented time only. A large coordinate orthogonal

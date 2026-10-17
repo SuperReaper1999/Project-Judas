@@ -1,0 +1,4 @@
+FAIL trough 2x26 coarse fast boxes do not cross actual mesh
+FAIL rotated trough preserves first-contact/crossing contract
+SCENARIO "trough 2x26 coarse" triangles 104 steps 60 totalMs 477.59 worstStepMs 28.19 maxPenetrationMm 9.92 atStep 17 meanDeepestMm 2.61 impactQueries 1614 searchIterations 10166 searchLimits 0 searchStalls 570 samplingFallbacks 576 samplingTests 6653 impactEvents 172 convexTests 1094477 meshTriangles 1218887 bvhNodes 841600 fastBoxSteps 90 fastBoxesThrough 11 legacyOracleThrough 11 fastBoxesThrew 0 digest d19ee7c658173399
+checks 65 failures 2

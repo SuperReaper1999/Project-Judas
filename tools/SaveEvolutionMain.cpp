@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "Project.h"
 #include "AssetDatabase.h"
 #include "SceneSession.h"
@@ -10,6 +11,8 @@
 #include <chrono>
 using J=nlohmann::json;
 int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "save")) return 0;
+
  try{
   if(argc<3)throw std::runtime_error("Usage: judas_save identity project | inspect root slot | check project root slot | migrate project root source unused-destination | recover root source unused-destination | previous root source unused-destination. No command overwrites a source. check/migrate validate data conversion, not native restoration; load the destination in the game before trusting it.");
   std::string cmd=argv[1],error,content;Project project;AssetDatabase assets;

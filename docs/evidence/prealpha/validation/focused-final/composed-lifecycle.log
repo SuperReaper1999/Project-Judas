@@ -1,0 +1,34 @@
+FAIL ordinary atmosphere ownership builds after 33 checks
+PASS ordinary optional terrain world builds
+PASS private geometry/navigation preparation starts
+PASS save refuses pending terrain without clearing caller's previous snapshot
+PASS local immutable preparation can cross an origin shift before publication
+PASS asynchronous result publishes collision at the current owner frame
+PASS negative query at the retired chart cannot hit the shifted owner
+PASS navigation publishes at the shifted physical surface
+PASS publication preserves generation-safe body identity
+PASS world-space edit uses the translated local field
+PASS valid replacement commits successfully
+PASS world-space edit uses the translated local field
+PASS valid replacement commits successfully
+PASS world-space edit uses the translated local field
+PASS valid replacement commits successfully
+PASS world-space edit uses the translated local field
+PASS valid replacement commits successfully
+PASS world-space edit uses the translated local field
+PASS valid replacement commits successfully
+PASS positive excavation control opens actual collision
+PASS independent side ray proves surrounding solid still exists
+PASS empty-product failure is exercised through the public asynchronous path
+PASS failed replacement retains last-good revision and excavated collision
+PASS committed field remains capturable after worker failure
+PASS shifted edited world captures physical state
+PASS cold scene uses the saved precision chart
+PASS independent world reconstructs committed collision and navigation
+PASS restored physical endpoint and exact field agree, not merely cached status
+PASS restored collider has real surrounding solid, not an empty negative-query false positive
+PASS restored tunnel floor is navigable at the translated endpoint
+PASS start replacement immediately before destruction
+PASS destroy pending owner through ordinary lifecycle
+PASS cancelled worker cannot resurrect collision or its retired owner
+FAIL ordinary atmosphere ownership builds

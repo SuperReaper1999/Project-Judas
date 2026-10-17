@@ -1,0 +1,101 @@
+{
+  "accepted_baseline": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "utc_recorded": "2026-10-17T21:27:45.525293+00:00",
+  "historical_baseline_executable_sha256": "7424ce9849ce35776bcc576af2a16e5423c8ca31da3eafa129dbf435c6c33c82",
+  "baseline_binary_provenance_note": "Existing Release executable preserved before mutation. Matched rebuilt HEAD-object comparison is a separate receipt; this hash alone is not proof of a clean rebuild.",
+  "validation": {
+    "entry_contract": {
+      "status": "known_failure_on_final_unchanged_runtime",
+      "checks": 193,
+      "binary": "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+      "command": [
+        "build/judas_impact_mesh_cost_tests",
+        "1",
+        "trough",
+        "1.2",
+        "entry"
+      ],
+      "baseline_crossings": [
+        20,
+        16,
+        16
+      ]
+    },
+    "impact_robustness": {
+      "status": "pass_on_rejected_prototype_not_final_combined_candidate",
+      "checks": 4412
+    },
+    "impact_timing": {
+      "status": "pass_on_rejected_prototype_not_final_combined_candidate",
+      "cases": 89,
+      "checks": 3197
+    },
+    "full_90_step_trough": {
+      "status": "known_failure",
+      "original_counts": [
+        24,
+        24,
+        24
+      ],
+      "provisional_counts": "Rejected research variants only; final runtime remains baseline24/24/24.",
+      "note": "Not full collision correctness closure. Real interior lower-surface crossings remain."
+    }
+  },
+  "performance": "See measurements/,measurements-narrow/,measurements-scalar/; no production performance improvement claimed.",
+  "runtime_status": "All proposed runtime corrections rejected due measured curved-ragdoll performance regressions; PhysicsWorld.cpp/CollisionGeometry.cpp/CollisionGeometry.h restored byte-exact accepted HEAD. No collision runtime fix ships.",
+  "final_sources": {
+    "src/PhysicsWorld.cpp": "841e67e25d9bae1bad9e11daf88169c43bc2a29d9eea281ae3b159d1aa73f467",
+    "src/CollisionGeometry.cpp": "7af819b59e19a6fdf0bcf217134177819f867d74d04f2ae81599268e98a00393",
+    "src/CollisionGeometry.h": "3c4ef5b5181b6cfa30b8e3ec04f6acdbdcb57604f844f27204426002c047b269",
+    "tests/ImpactMeshCostTests.cpp": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+  },
+  "utc_runtime_restored": "2026-10-17T21:40:20.240147+00:00",
+  "rejected_full_patch_sources": {
+    "src/CollisionGeometry.cpp": "b81c7f278b104b3de623045fcd4a3145075b49df3e4d91691ecf3e71aa0cdde2",
+    "src/CollisionGeometry.h": "3cbfa89c76d33010db77c539cbb57d950749175eafdd7c791fc34870f8970fe3",
+    "src/PhysicsWorld.cpp": "f27f1d8b3a28b66aa60302691e53940a82022f190f42d324f3691dd2edbddd9f",
+    "tests/ImpactMeshCostTests.cpp": "db866a5a74654a407e3794c582e671a0fb7a46cddee7455995f63e6f18a58264"
+  },
+  "final_unchanged_physics_oracle": {
+    "entry": {
+      "status": "known_failure",
+      "crossings": [
+        20,
+        16,
+        16
+      ],
+      "checks": 193,
+      "failures": 4
+    },
+    "full_90_steps": {
+      "status": "known_failure",
+      "crossings": [
+        24,
+        24,
+        24
+      ],
+      "checks": 193,
+      "failures": 4
+    },
+    "flat_entry": {
+      "status": "pass",
+      "checks": 128
+    }
+  },
+  "dense_current_cached_observer": {
+    "status": "startup_failure",
+    "signal": 11,
+    "completed_steps": 0,
+    "note": "Cached Oct16 application objects are not ABI-fresh against the common current engine. Fresh rebuild requested; no physics finding inferred."
+  },
+  "dense_current_fresh": {
+    "status": "all270fixedstepsandexportscomplete;outertimeoutduringteardown",
+    "receipt": "dense-current-fresh/RESULT.json",
+    "all270physicaldigests_match_preserved_M91": true,
+    "fixed_ms": {
+      "median": 31.559865,
+      "p95": 481.568284,
+      "maximum": 2119.208149
+    }
+  }
+}

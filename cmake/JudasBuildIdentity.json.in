@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "version": "@JUDAS_ID_version@",
+  "maturity": "@JUDAS_ID_maturity@",
+  "channel": "@JUDAS_ID_channel@",
+  "build_id": "@JUDAS_ID_build_id@",
+  "source_revision": "@JUDAS_ID_revision@",
+  "source_tree": "@JUDAS_ID_tree@",
+  "source_dirty": @JUDAS_ID_source_dirty@,
+  "source_fingerprint": "@JUDAS_ID_source_fingerprint@",
+  "source_untracked_count": @JUDAS_ID_source_untracked_count@,
+  "source_untracked_fingerprint": "@JUDAS_ID_source_untracked_fingerprint@",
+  "source_origin": "@JUDAS_ID_origin@",
+  "platform": "@JUDAS_ID_platform@",
+  "architecture": "@JUDAS_ID_architecture@",
+  "configuration": "$<CONFIG>",
+  "compiler": "@JUDAS_ID_compiler@",
+  "compiler_version": "@JUDAS_ID_compiler_version@"
+}

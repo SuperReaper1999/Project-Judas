@@ -79,6 +79,7 @@ fix the file then call `reload()`.
 show a dynamic formatted result and **clear textKey**. Assign `.textKey` to restore
 binding. Key assignments are ≤128 UTF-8 bytes without NUL/newline; invalid keys
 throw TypeError. `.font` is a registered font ID or empty engine-default selection.
+Ordinary label `.text` preserves embedded NUL; editable TextInput controls reject it.
 `.direction`: `auto` (inherit parent, else paragraph Unicode analysis), `ltr`, `rtl`.
 `.textAlignment`: `left`, `right`, `center`, `start`, `end`; legacy numeric alignment
 reads empty string until explicitly set. Start/end follow each paragraph direction.

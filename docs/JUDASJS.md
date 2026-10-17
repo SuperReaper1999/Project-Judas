@@ -1,5 +1,10 @@
 # JudasJS — current API reference (M99 repository state)
 
+The unnumbered [Pre-Alpha engineering pass](PREALPHA.md) does not add gameplay
+bindings. Optional API/type verification now uses a pinned clean-checkout setup:
+`npm ci --prefix tools/verification`, then `node scripts/check_judasjs_api.mjs`.
+It remains developer tooling; games and native builds do not require npm.
+
 M99 adds optional [online sessions, server authority and selected entity replication](judasjs/network.md), alongside existing local multiplayer. M98/M99 combined operator acceptance was recorded on 2026-10-17; see the [exact candidate and scoped physical-phone test](evidence/m99/HUMAN_VALIDATION.md). See the [M99 scope and security boundaries](M99_NETWORK.md).
 
 M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 is human accepted. M97 adds [live local volume editing](judasjs/terrain.md) and regional construction persistence; M97 is human accepted. M98 adds [explicit save evolution and recovery](M98_SAVE_EVOLUTION.md); combined M98/M99 human acceptance is recorded.

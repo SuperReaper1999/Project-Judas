@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "scope": "dependency-light-functional-fixture-with-custom-CMake-harness",
+  "source": {
+    "schema": 1,
+    "revision": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+    "tree": "009633eddc63e4c5a86202875d804b53e8e3f1f5",
+    "source_dirty": true,
+    "source_fingerprint": "6bf4895cd34a4c698dc11a8fcf3f2e665a6d3a0379ca84180cb1421a008efaaa",
+    "channel": "Experimental",
+    "source_files_sha256": "6bf4895cd34a4c698dc11a8fcf3f2e665a6d3a0379ca84180cb1421a008efaaa",
+    "selection": "dependency-light-functional-fixture-with-custom-CMake-harness"
+  },
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "02f9054c3496b34c2e8d61ea969a7c94bb5957a6abdc187a29a50b0123764d31"
+    },
+    {
+      "path": "Run-PreAlphaChecks.ps1",
+      "sha256": "6f8e8dfe34da2cb026fa974e8c8106fb5033a96a9fbe23266ced6c5c14dc9118"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.cmake",
+      "sha256": "95e23723f4cadea92ce94b6c5222caf396883beef141e7d26c40330e68f224e5"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.h.in",
+      "sha256": "82dc9b20e697990c51d28171bfeab33db8423aa97d82006bdde219df2440ac14"
+    },
+    {
+      "path": "cmake/JudasBuildIdentity.json.in",
+      "sha256": "37f2ca8c940eb76531157584bfdd1512c238cf9f0d8ca8e0e36f11788cabc720"
+    },
+    {
+      "path": "cmake/JudasSourceInfo.json.in",
+      "sha256": "66ec66caf2f2a36f81024f6ee8bd1d2b9809710c0f0992cd265750b98d9c0385"
+    },
+    {
+      "path": "engine-version.json",
+      "sha256": "9e15abe3bee56ff72a23fa37189b22b83d14137c05f19563ec10f7e84d7eaa87"
+    },
+    {
+      "path": "src/BuildIdentity.cpp",
+      "sha256": "814516f64dc5f674dfc19f24efeb49090e6720a2d3805fbd07099abd12b1515b"
+    },
+    {
+      "path": "src/BuildIdentity.h",
+      "sha256": "99d257cd926feaadf386b55e304cc28d30ca94be73c781ef9af0e8035842c5b2"
+    },
+    {
+      "path": "src/BuildUpdate.cpp",
+      "sha256": "be63ebc8b81754912c5ed174a15f47892b413fc32bc1fb07cac1240bf90cdd4d"
+    },
+    {
+      "path": "src/BuildUpdate.h",
+      "sha256": "7f0ca712638a29e1b481b794287046037063ba5204dd79e89891b42fe86eaa2d"
+    },
+    {
+      "path": "src/NetworkTransport.cpp",
+      "sha256": "d994ae3d119e230e2830de293555069b6799c58efcc50745e22f20d086c6dc90"
+    },
+    {
+      "path": "src/NetworkTransport.h",
+      "sha256": "2ec74e7801c1b0e3f3cefc969b93be07f84292bef1b036d03986b3ddea758fb5"
+    },
+    {
+      "path": "src/ProcessArguments.h",
+      "sha256": "613b55903d610474aa3112e0c270b68edade0bfb1f9b078c906fdaf13ca7c001"
+    },
+    {
+      "path": "src/ToolProcess.cpp",
+      "sha256": "7352f1e8d70dd70150d9c00eab81fc7460466c73c713c01dbf84c1ebddd7b54c"
+    },
+    {
+      "path": "src/ToolProcess.h",
+      "sha256": "a0d304161f9908ee5ca9d0a72bec8f490f567c720e891673e2a490ef089cbb17"
+    },
+    {
+      "path": "tests/BuildIdentityTests.cpp",
+      "sha256": "6afed0c8c8565cc031020c8019abba9862809ac2270c6a2700accbf1c64aba5c"
+    },
+    {
+      "path": "tests/NetworkTransportTests.cpp",
+      "sha256": "d532f3769a364022faeefcf14767881b3895e5fd1868a9e8434bcbb9d35d3448"
+    },
+    {
+      "path": "third_party/nlohmann/json.hpp",
+      "sha256": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6"
+    }
+  ],
+  "archiveSha256": "e35de479cb6f8624659ca8684c49312e8a34225e9d8b2c82fa2faac491ac5db2",
+  "bytes": 167693
+}

@@ -1,0 +1,6 @@
+{
+  "utc": "2026-10-17T21:31:45.853682+00:00",
+  "reason": "Per-parent instruction, rejected full-patch continuation after repeated measured ordinary-mesh regression. Stop remaining matrix rather than spend on unsuitable variant. Completed results and any partial CSV retained; no unfinished-step timing invented.",
+  "signalled_owned_measurement_pids": [],
+  "actual_stop_method": "Measurement session interrupted through write_stdin Ctrl-C; exit130. Exact-command process lookup found no exposed PID in this tool namespace."
+}

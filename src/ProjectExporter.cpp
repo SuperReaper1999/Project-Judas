@@ -8,6 +8,8 @@
 #include "Deformable.h"
 #include "AsyncFile.h"
 #include "ProjectExporter.h"
+#include "BuildIdentity.h"
+#include "ToolProcess.h"
 #include "modding/ModRuntime.h"
 #include "AssetDependencies.h"
 #include "../third_party/nlohmann/json.hpp"
@@ -31,10 +33,6 @@
 #include <iomanip>
 #include <set>
 #include <stdexcept>
-#ifndef _WIN32
-#include <sys/wait.h>
-#include <unistd.h>
-#endif
 
 namespace fs = std::filesystem;
 namespace {
@@ -51,30 +49,12 @@ void Copy(const fs::path& from, const fs::path& to) {
 }
 // Query the executable itself, rather than trusting a possibly stale adjacent
 // build file. No shell, renderer, application initialization or asset loading.
-bool ReleaseRuntime(const fs::path& executable) {
-#ifdef _WIN32
+bool ReleaseRuntime(const fs::path& executable, nlohmann::json& identity, std::string& error) {
     std::string text;
-    return WindowsCaptureBuildInfo(executable, text) && text == "Judas runtime Windows Release\n";
-#else
-    int pipefd[2];
-    if (pipe(pipefd) != 0) return false;
-    const pid_t pid = fork();
-    if (pid == 0) {
-        close(pipefd[0]);
-        dup2(pipefd[1], STDOUT_FILENO); close(pipefd[1]);
-        execl(executable.c_str(), executable.c_str(), "--build-info", nullptr);
-        _exit(127);
-    }
-    close(pipefd[1]);
-    if (pid < 0) { close(pipefd[0]); return false; }
-    std::string text; char buffer[128]; ssize_t count;
-    while ((count = read(pipefd[0], buffer, sizeof(buffer))) > 0) {
-        if (text.size() < 1024) text.append(buffer, static_cast<std::size_t>(count));
-    }
-    close(pipefd[0]); int status = 0;
-    while (waitpid(pid, &status, 0) < 0 && errno == EINTR) {}
-    return WIFEXITED(status) && WEXITSTATUS(status) == 0 && text == "Judas runtime Linux Release\n";
-#endif
+    if (!CaptureToolOutput(executable, {"--build-info-json"}, text, error)) return false;
+    if (!ValidateRuntimeBuildIdentity(text, error)) return false;
+    identity = nlohmann::json::parse(text);
+    return true;
 }
 void References(const Scene& scene, const AssetDatabase& assets, const ProjectClassification& categories,const ProjectNavigation& navigation) {
     const auto checkUI=[&](const SceneObject& o){if(!o.ui)return;auto* r=assets.Find(o.ui->asset);UIDocument d;std::string error;Require(r&&!r->missing&&r->type==AssetType::UI,"Missing UI document "+o.ui->asset);Require(LoadUIDocument(r->path,d,error)&&ValidateUIAssets(d,assets,error),"UI: "+error);};
@@ -144,8 +124,13 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
                 "Export destination must be outside the source project and must not contain it");
         const auto executable = fs::absolute(options.runtimeExecutable.empty()
             ? fs::u8path(EngineExecutableDir()) / RuntimeExecutableName() : fs::path(options.runtimeExecutable));
-        Require(fs::is_regular_file(executable) && ReleaseRuntime(executable),
-                "A runnable Release judas executable is required: " + executable.string());
+        nlohmann::json runtimeIdentity;
+        std::string runtimeIdentityError;
+        const bool runtimeMatches = fs::is_regular_file(executable) &&
+            ReleaseRuntime(executable, runtimeIdentity, runtimeIdentityError);
+        Require(runtimeMatches,
+                "A matching runnable Release judas executable is required: " + executable.string() +
+                (runtimeIdentityError.empty() ? "" : ": " + runtimeIdentityError));
         const auto engineRoot = options.engineDataRoot.empty()
             ? fs::path(ResolveEngineDataPath("assets/fonts/DejaVuSans.ttf")).parent_path().parent_path().parent_path()
             : fs::path(options.engineDataRoot);
@@ -194,12 +179,12 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             std::transform(windowsFirst.begin(), windowsFirst.end(), windowsFirst.begin(), [](unsigned char c){ return char(std::tolower(c)); });
             Require(windowsFirst != "judas.exe" && windowsFirst != "engine" &&
                     windowsFirst != "game.judasproj" && windowsFirst != "runtime_requirements.txt" &&
-                    windowsFirst != "game-icon.png" && windowsFirst != "dependencies.json" &&
+                    windowsFirst != "game-icon.png" && windowsFirst != "dependencies.json" && windowsFirst != "build_provenance.json" &&
                     windowsFirst != kGamePackageMarker && fs::path(windowsFirst).extension() != ".dll",
                     "Project content collides with Windows package path: " + relative.string());
 #endif
             Require(first != "engine" && first != "judas" && first != "game.judasproj" &&
-                    first != kGamePackageMarker && first != "RUNTIME_REQUIREMENTS.txt" && first != "game-icon.png" && first != "DEPENDENCIES.json",
+                    first != kGamePackageMarker && first != "RUNTIME_REQUIREMENTS.txt" && first != "game-icon.png" && first != "DEPENDENCIES.json" && first != "BUILD_PROVENANCE.json",
                     "Project content collides with reserved package path: " + relative.string());
         };
         safeContentPath(project.Settings().assetsDir);
@@ -336,6 +321,14 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         }
         report["assetBytes"]=assetBytes;report["deduplicatedBytes"]=deduplicated;report["excludedAssetBytes"]=excluded;report["physicalAssetBytes"]=assetBytes-deduplicated;
         write("DEPENDENCIES.json",report.dump(2)+"\n");
+        std::string runtimeHash;
+        const bool runtimeFingerprinted = SceneFingerprintSha256File(
+            (staging / RuntimeExecutableName()).string(), runtimeHash, error);
+        Require(runtimeFingerprinted,
+                "Cannot fingerprint packaged runtime: " + error);
+        write("BUILD_PROVENANCE.json", nlohmann::json{{"schema", 1},
+            {"exporter", nlohmann::json::parse(BuildIdentityJson())},
+            {"runtime", runtimeIdentity}, {"runtime_sha256", runtimeHash}}.dump(2) + "\n");
         auto packagedSettings=project.Settings();
         packagedSettings.saveIdentity=project.Settings().saveIdentity.empty()?SceneFingerprintSha256(project.Settings().name+"\n"+fs::path(project.ProjectFile()).filename().string()):project.Settings().saveIdentity;
         write("game.judasproj", Project::SerializeToString(packagedSettings));

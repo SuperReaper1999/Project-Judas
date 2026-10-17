@@ -1,0 +1,69 @@
+name: Pre-Alpha focused gates
+
+on:
+  push:
+    branches: [Experimental, main]
+    paths-ignore: ['docs/evidence/**', 'docs/**/*.md', '*.md']
+  pull_request:
+    branches: [Experimental, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: prealpha-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      SDL_AUDIODRIVER: dummy
+      LIBGL_ALWAYS_SOFTWARE: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Native and optional verification prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ libsdl2-dev libglm-dev xvfb libgl1-mesa-dri
+          npm ci --ignore-scripts --prefix tools/verification
+      - name: Tooling positive and negative controls
+        run: |
+          python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
+          python3 scripts/prealpha_packaging_checks.py --output .cache/prealpha/ci/packaging.json
+          python3 -m unittest discover -s tests -p test_prealpha_validation.py -v
+          node tests/TypeScriptToolingTests.mjs
+          node scripts/check_judasjs_api.mjs
+      - name: Configure an explicitly identified build
+        env:
+          CHANNEL: ${{ github.ref_name == 'main' && 'main' || github.ref_name == 'Experimental' && 'Experimental' || 'Local' }}
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON
+      - name: Build focused dependencies and public SDK
+        run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
+      - name: Focused native gates
+        run: xvfb-run -a ctest --test-dir build -L prealpha --output-on-failure
+      - name: Preserve diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: prealpha-linux-${{ github.sha }}
+          path: |
+            .cache/prealpha/validation/
+            .cache/prealpha/ci/
+            build/judas-build-info-Release.json
+            build/Testing/Temporary/
+            build/linux-sdk/SDK_MANIFEST.json
+            build/linux-sdk/BUILD_INFO.json
+            build/linux-sdk/SHA256SUMS
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

@@ -13,7 +13,31 @@
 using Json=nlohmann::json;
 namespace {
 std::string Token(){std::random_device r;std::ostringstream s;for(int i=0;i<4;++i){auto n=r();s<<std::hex<<n<<'-';}return s.str();}
-bool Supported(const SceneObject* d){return d&&d->id<kRuntimeEntityIdBase&&!d->parent&&!d->wheel&&!d->powertrain&&!d->ragdoll&&!d->deformable&&!d->animation&&!d->joint&&!d->socket&&!d->planet&&!d->liquidBasin&&!d->liquidContainer&&!d->fluidVolume&&(!d->body||d->body->shape!=SceneShape::Terrain);}
+const char* RepresentationIssue(const SceneObject* d) {
+    if (!d) return "entity is absent or destroyed";
+    // One support inventory serves both host admission and client validation.
+    // These remain explicit boundaries, never instructions to discard a component.
+    const std::pair<bool, const char*> restrictions[] = {
+        {d->id >= kRuntimeEntityIdBase, "runtime-spawned identity has no replication contract"},
+        {bool(d->parent), "parented entities require an authored root for replication"},
+        {bool(d->wheel), "wheel state is not replicated"},
+        {bool(d->powertrain), "powertrain state is not replicated"},
+        {bool(d->ragdoll), "ragdoll articulation is not replicated"},
+        {bool(d->deformable), "deformable state is not replicated"},
+        {bool(d->animation), "animation state is not replicated"},
+        {bool(d->joint), "joint state is not replicated"},
+        {bool(d->socket), "socket attachment state is not replicated"},
+        {bool(d->planet), "planet state is not replicated"},
+        {bool(d->liquidBasin), "liquid reservoir state is not replicated"},
+        {bool(d->liquidContainer), "liquid container state is not replicated"},
+        {bool(d->fluidVolume), "legacy fluid state is not replicated"},
+        {d->body && d->body->shape == SceneShape::Terrain, "terrain body state is not replicated"},
+    };
+    for (const auto& restriction : restrictions)
+        if (restriction.first) return restriction.second;
+    return nullptr;
+}
+bool Supported(const SceneObject* d) { return RepresentationIssue(d) == nullptr; }
 bool Data(const std::string& s){std::string error;return s.size()<=1024&&ScriptSystem::ValidateJson(s,error,false);}
 Json V(glm::dvec3 v){return Json::array({v.x,v.y,v.z});}
 bool Vec(const Json& j,glm::dvec3& v,double limit=1e15){if(!j.is_array()||j.size()!=3)return false;for(int i=0;i<3;++i){if(!j[i].is_number())return false;v[i]=j[i].get<double>();if(!std::isfinite(v[i])||std::abs(v[i])>limit)return false;}return true;}
@@ -161,7 +185,11 @@ std::vector<NetworkSession::Peer> NetworkSession::Peers()const{std::vector<Peer>
 std::vector<NetworkSession::Entry> NetworkSession::Entries()const{std::vector<Entry> out;for(auto& pair:p->entries)out.push_back(pair.second);return out;}
 bool NetworkSession::Replicate(EntityId entity,const std::string& owner,const std::string& state,std::string& id,std::string& e){
  EntityPhysicalState initial;
- if(p->mode!="host"||!p->world.GetEntityState(entity,initial)||!Supported(p->world.RuntimeDefinition(entity))||(p->entries.size()>=64||(!p->published.count(entity)&&p->published.size()>=64))||!Data(state)){e="Host replication requires an authored root, supported representation, <=64 entries and <=1024-byte JSON state";return false;}
+ if(p->mode!="host"){e="Only a host can register authoritative replication";return false;}
+ if(const auto* issue=RepresentationIssue(p->world.RuntimeDefinition(entity))){e="Cannot replicate entity "+std::to_string(entity)+": "+issue;return false;}
+ if(!p->world.GetEntityState(entity,initial)){e="Replication requires an entity with physical/transform state";return false;}
+ if(p->entries.size()>=64||(!p->published.count(entity)&&p->published.size()>=64)){e="Session replication lifetime limit is 64 authored roots";return false;}
+ if(!Data(state)){e="Replicated state requires valid JSON up to 1024 bytes";return false;}
  if(!owner.empty()&&owner!="host"&&!p->peers.count(owner)){e="Unknown owner peer";return false;}for(auto& pair:p->entries)if(pair.second.entity==entity){e="Entity already replicated";return false;}
  id=p->session+":"+std::to_string(p->nextEntity++);p->published.insert(entity);p->entries[id]={id,owner,state,entity};p->lastSnapshot=-1;return true;
 }

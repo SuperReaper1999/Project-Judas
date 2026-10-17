@@ -1,0 +1,24 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Save Evolution Lab (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v2/save_evolution.judasproj)
+Scene: Living World — workshop (/home/conner/Documents/GitHub/Project-Judas/projects/save_evolution_lab/v2/Scenes/workshop.judas)
+World origin (m): 6371000.000, 0.000, 0.000
+PASS queue public save-service load: 
+LOAD_RESULT completed migration_ms=3.2404 worker_ms=9.79641 restore_ms=54.714 error= report={"operations":1,"sourceContent":"6d65e7e7fa82b62fbf902c7767ceac1212f6878e2307b4e4a25288e8cb58787c","steps":[{"from":0,"to":1}],"targetContent":"4597fb2a3811b998a8f548367c1d3bb9f40064b8c04a4d7c0b4857813cff9e85"}
+PASS load/migration preserves original source bytes
+PASS cold version upgrade publishes only validated new world
+PASS actual restored script inventory and unknown quest retained
+PASS actual restored session quest retained
+PASS upgraded world cannot overwrite source slot
+PASS restored script selects return region
+PASS return to edited region after upgrade
+PASS actual suspended terrain field survives content upgrade
+PASS restored edited geometry has actual collision
+PASS actual constructed prefab returns as an independent physical body
+PASS commit upgraded progress to new slot
+PASS upgraded new-format save durable: 
+PASS project lifecycle remains healthy
+PASS application shutdown
+SUMMARY 15 checks 0 failures

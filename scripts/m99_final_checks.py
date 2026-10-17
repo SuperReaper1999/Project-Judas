@@ -55,8 +55,8 @@ for version,mode in [('v1','write'),('v2','read-v2'),('v3','read-v3')]:
     run('offline_evolution_'+mode,[ROOT/'build/judas_save_evolution_application_tests',
         lab/version/'save_evolution.judasproj',mode,out/'evolution-app'])
 run('live_api',[ROOT/'build/judasjs_examples_tests',out/'cookbook','surface'])
-run('api_drift',['node',ROOT/'scripts/check_judasjs_api.mjs','--typescript',
-    ROOT/'.cache/m90/types/node_modules/typescript','--runtime',out/'cookbook/surface.json'])
+run('api_drift',['node',ROOT/'scripts/check_judasjs_api.mjs',
+    '--runtime',out/'cookbook/surface.json'])
 copy=out/'editor-project'
 shutil.copytree(ROOT/'projects/connected_workshop',copy,ignore=shutil.ignore_patterns('Saves','__pycache__'))
 run('editor',[ROOT/'build/judas_editor',copy/'connected_workshop.judasproj'],

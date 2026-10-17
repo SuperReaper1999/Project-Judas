@@ -1,0 +1,25 @@
+--- accepted/PhysicsWorld.cpp
++++ PhysicsWorldMotionFix.cpp
+@@ -882,8 +882,10 @@
+         if(!convex(typeA)||!convex(typeB)){
+             double oldSweep=0;
+             for(int side=0;side<2;++side){const auto& body=bodies[key[side]];
+-                if(body.HasMotion()&&(side?typeB:typeA)!=ShapeType::Sphere)
+-                    oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++                if(body.HasMotion()){
++                    oldSweep+=double(glm::length(body.rigidBody.linearVelocity))*remaining;
++                    if((side?typeB:typeA)!=ShapeType::Sphere)oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++                }
+             }
+             const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+             return std::isfinite(feature)&&oldSweep>feature;
+@@ -1082,7 +1084,8 @@
+                 uncertifiedAdvance=true;
+                 break;
+             }
+-            const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
++            const bool concave=ba.shape.type==ShapeType::TriangleMesh||bb.shape.type==ShapeType::TriangleMesh;
++            const double closing=concave?speed:-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
+             if (!(closing>0)) return finish+1;
+             double increment=gap/closing;
+             if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));

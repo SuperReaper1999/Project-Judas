@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "revision": "@JUDAS_ID_revision@",
+  "tree": "@JUDAS_ID_tree@",
+  "source_dirty": @JUDAS_ID_source_dirty@,
+  "source_fingerprint": "@JUDAS_ID_source_fingerprint@",
+  "channel": "@JUDAS_ID_channel@"
+}

@@ -127,39 +127,87 @@ Result Run(const std::shared_ptr<CollisionAsset>& ground,bool curved,int steps,f
 }
 }
 
-// Tunnelling comparison: small, thin boxes fired fast at the sheet, from steep to grazing, each
-// in its own world. One-sided meshes stop nothing from behind, so a box that ever gets more than
-// 5 cm beneath the surface (over the sheet) has crossed it; boxes leaving over the trough lip
-// just fly off. Reported, not asserted: at 3bdf09e9 these boxes already cross sloped and curved
-// meshes, and impacts like these can spin such a box past 500 rad/s, where the angular midpoint
-// solve throws (both reported separately, in docs/evidence/ccd-mesh-contacts). The counts let a
-// continuous-impact change show it crosses no more than before.
-struct FastBoxes {int through=0,threw=0;};
-FastBoxes FireFastBoxes(const std::shared_ptr<CollisionAsset>& ground,bool curved){
-    FastBoxes result;
+// Independent oracle for the actual tessellated graph, not the full analytic
+// circle. The circle's upper branch used to classify sufficiently high, legal
+// flight as below the trough. Each authored row has constant y; interpolation
+// between adjacent cooked rows is exactly the triangles' lower surface. Depth
+// is measured along that patch's unit normal, retaining the original 5 cm gate.
+struct SheetOracle {
+    std::vector<std::pair<double,double>> rows;
+    explicit SheetOracle(const CollisionAsset& ground){
+        for(auto p:ground.vertices)rows.emplace_back(p.z,p.y);
+        std::sort(rows.begin(),rows.end());
+        rows.erase(std::unique(rows.begin(),rows.end()),rows.end());
+    }
+    double Depth(glm::vec3 p)const{
+        if(std::abs(p.x)>1.5f||p.z<rows.front().first||p.z>rows.back().first)return 0;
+        auto hi=std::lower_bound(rows.begin(),rows.end(),double(p.z),[](const auto& row,double z){return row.first<z;});
+        if(hi==rows.begin())++hi;
+        if(hi==rows.end())--hi;
+        const auto lo=hi-1;
+        const double height=lo->second+(hi->second-lo->second)*(double(p.z)-lo->first)/(hi->first-lo->first);
+        const double slope=(hi->second-lo->second)/(hi->first-lo->first);
+        return (height-p.y)/std::sqrt(1+slope*slope);
+    }
+};
+
+struct FastBoxes {int through=0,threw=0,legacyThrough=0;};
+FastBoxes FireFastBoxes(const std::shared_ptr<CollisionAsset>& ground,bool curved,
+                       bool collider=true,glm::quat frame=glm::quat(1,0,0,0),int steps=90){
+    const SheetOracle oracle(*ground);FastBoxes result;
     for(int i=0;i<24;++i){
-        PhysicsWorld w;w.Init();w.CreateShape(Shape::Cooked(ground,"impact cost sheet"),{},false,1,.6f,0);
-        const float along=-1.2f+.1f*float(i),grazing=float(i%6)*6.f;   // 0..30 m/s across, 40 m/s down
-        auto h=w.CreateDynamicBox({along,1.2f,-1.f},{.02f,.01f,.03f},.2f,.4f,0);w.SetLinearVelocity(h,{0,-40.f,grazing});
-        bool crossed=false;
+        PhysicsWorld w;w.Init();
+        if(collider)w.CreateShape(Shape::Cooked(ground,"impact cost sheet"),{{0,0,0},frame},false,1,.6f,0);
+        const float along=-1.2f+.1f*float(i),grazing=float(i%6)*6.f;
+        const glm::vec3 start=frame*glm::vec3(along,1.2f,-1.f);
+        auto h=w.CreateDynamicBox(start,{.02f,.01f,.03f},.2f,.4f,0);
+        if(frame!=glm::quat(1,0,0,0))w.ResetBody(h,start,frame);
+        w.SetLinearVelocity(h,frame*glm::vec3(0,-40.f,grazing));
+        bool crossed=false,legacy=false;
         try{
-            for(int step=0;step<90&&!crossed;++step){
-                w.ApplyLinearAcceleration(h,{0,-9.81f,0},1.f/60.f);w.Step(1.f/60.f);
-                const auto p=w.GetTransform(h).position;const bool over=std::abs(p.x)<=1.5f&&std::abs(p.z)<=1.5f;
-                const double below=curved?std::hypot(double(p.y)-1.6,double(p.z))-1.6:-double(p.y);
-                crossed=!std::isfinite(p.y)||(over&&below>.05);
+            for(int step=0;step<steps&&!crossed;++step){
+                w.ApplyLinearAcceleration(h,frame*glm::vec3(0,-9.81f,0),1.f/60.f);w.Step(1.f/60.f);
+                const auto p=glm::inverse(frame)*w.GetTransform(h).position;
+                const bool over=std::abs(p.x)<=1.5f&&std::abs(p.z)<=1.5f;
+                const double oldDepth=curved?std::hypot(double(p.y)-1.6,double(p.z))-1.6:-double(p.y);
+                legacy|=!std::isfinite(p.y)||(over&&oldDepth>.05);
+                crossed=!std::isfinite(p.y)||oracle.Depth(p)>.05;
             }
         }catch(const std::runtime_error&){++result.threw;continue;}
-        result.through+=crossed;
+        result.through+=crossed;result.legacyThrough+=legacy;
     }
     return result;
+}
+
+void CheckOracleAndSidedness(const std::shared_ptr<CollisionAsset>& ground){
+    const SheetOracle oracle(*ground);
+    Check(oracle.Depth({0,4,0})<0,"upper flight is above the actual sheet");
+    Check(oracle.Depth({0,-.1f,0})>.05,"independent lower-sheet oracle detects actual crossing");
+    Check(oracle.Depth({3,-1,0})==0,"oracle excludes finite sheet edges");
+    const auto absent=FireFastBoxes(ground,false,false);
+    Check(absent.through==24&&absent.threw==0,"negative control: removing collision exposes every crossing");
+    for(const auto frame:{glm::quat(1,0,0,0),glm::angleAxis(.79f,glm::normalize(glm::vec3(1,2,-3)))}){
+        PhysicsWorld w;w.Init();w.CreateShape(Shape::Cooked(ground,"one-sided control"),{{0,0,0},frame},false,1,.6f,0);
+        auto back=w.CreateDynamicBox(frame*glm::vec3(0,-.2f,0),{.02f,.01f,.03f},.2f,.4f,0);
+        w.ResetBody(back,frame*glm::vec3(0,-.2f,0),frame);w.SetLinearVelocity(back,frame*glm::vec3(0,40,0));
+        w.Step(1.f/60.f);
+        Check(w.LastStepStats().impactEvents==0,"one-sided rear entry remains unblocked");
+        Check((glm::inverse(frame)*w.GetTransform(back).position).y>.4f,"rear-entry body passes through sheet");
+        auto outside=w.CreateDynamicBox(frame*glm::vec3(3,1.2f,0),{.02f,.01f,.03f},.2f,.4f,0);
+        w.ResetBody(outside,frame*glm::vec3(3,1.2f,0),frame);w.SetLinearVelocity(outside,frame*glm::vec3(0,-40,0));
+        w.Step(1.f/60.f);w.Step(1.f/60.f);
+        Check((glm::inverse(frame)*w.GetTransform(outside).position).y<0,"finite-edge miss is not blocked by an infinite plane");
+    }
 }
 
 int main(int argc,char** argv){
     // Optional: step count, a scenario-name filter (substring, "" for all), the ragdoll's throw
     // speed in m/s (vary it to see run-to-run spread; trajectories are chaotic).
+    // Fourth optional argument "entry" checks initial two-step arrival separately
+    // from the default unchanged 90-step glancing/continuation contract.
     const int steps=argc>1?std::max(1,std::atoi(argv[1])):300;const std::string only=argc>2?argv[2]:"";
     const float throwSpeed=argc>3?float(std::atof(argv[3])):1.2f;
+    const bool entryOnly=argc>4&&std::string(argv[4])=="entry";
     struct Scenario {const char* name;int cellsX,cellsZ;bool curved,primitive;};
     const std::vector<Scenario> scenarios={{"box primitive floor",0,0,false,true},{"flat sheet 6x6",6,6,false,false},{"flat sheet 60x60",60,60,false,false},
         {"trough 2x26 coarse",2,26,true,false},{"trough 30x30",30,30,true,false},{"trough 60x60 dense",60,60,true,false}};
@@ -169,14 +217,23 @@ int main(int argc,char** argv){
         auto ground=s.primitive?nullptr:Sheet(s.cellsX,s.cellsZ,s.curved);
         const auto a=Run(ground,s.curved,steps,throwSpeed),b=Run(ground,s.curved,steps,throwSpeed);
         Check(a.digest==b.digest,std::string(s.name)+" is deterministic run to run");
-        const FastBoxes fast=ground?FireFastBoxes(ground,s.curved):FastBoxes{};
+        const FastBoxes fast=ground?FireFastBoxes(ground,s.curved,true,glm::quat(1,0,0,0),entryOnly?2:90):FastBoxes{};
+        if(ground){
+            Check(fast.through==0,std::string(s.name)+" fast boxes do not cross actual mesh");
+            Check(fast.threw==0,std::string(s.name)+" fast impacts do not throw");
+            CheckOracleAndSidedness(ground);
+            if(s.curved&&s.cellsX==2){
+                const auto rotated=FireFastBoxes(ground,true,true,glm::angleAxis(.79f,glm::normalize(glm::vec3(1,2,-3))),entryOnly?2:90);
+                Check(rotated.through==0&&rotated.threw==0,"rotated trough preserves first-contact/crossing contract");
+            }
+        }
         std::cout<<"SCENARIO \""<<s.name<<"\" triangles "<<(ground?ground->faces.size():0)<<" steps "<<steps
                  <<" totalMs "<<a.totalMs<<" worstStepMs "<<a.worstMs<<" maxPenetrationMm "<<a.maxPenetration*1000<<" atStep "<<a.deepestStep<<" meanDeepestMm "<<a.meanPenetration*1000
                  <<" impactQueries "<<a.impacts.impactQueries<<" searchIterations "<<a.impacts.impactSearchIterations
                  <<" searchLimits "<<a.impacts.impactSearchLimit<<" searchStalls "<<a.impacts.impactSearchStalls<<" samplingFallbacks "<<a.impacts.impactSamplingFallbacks
                  <<" samplingTests "<<a.impacts.impactSamplingTests<<" impactEvents "<<a.impacts.impactEvents
                  <<" convexTests "<<a.convexTests<<" meshTriangles "<<a.triangles<<" bvhNodes "<<a.nodes
-                 <<" fastBoxesThrough "<<fast.through<<" fastBoxesThrew "<<fast.threw<<" digest "<<std::hex<<a.digest<<std::dec<<'\n';
+                 <<" fastBoxSteps "<<(entryOnly?2:90)<<" fastBoxesThrough "<<fast.through<<" legacyOracleThrough "<<fast.legacyThrough<<" fastBoxesThrew "<<fast.threw<<" digest "<<std::hex<<a.digest<<std::dec<<'\n';
     }
     std::cout<<"checks "<<checks<<" failures "<<failures<<'\n';
     return failures?1:0;

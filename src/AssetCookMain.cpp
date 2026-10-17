@@ -1,7 +1,9 @@
 #include "AssetCook.h"
+#include "BuildIdentity.h"
 #include <cstdio>
 #include <cstdlib>
 int main(int argc, char **argv) {
+  if (HandleBuildIdentityArguments(argc, argv, "cook")) return 0;
   if (argc < 3 || argc > 8) {
     std::fprintf(
         stderr,

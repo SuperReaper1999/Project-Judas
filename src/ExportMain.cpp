@@ -1,6 +1,8 @@
 #include "ProjectExporter.h"
+#include "BuildIdentity.h"
 #include <cstdio>
 int main(int argc, char** argv) {
+    if (HandleBuildIdentityArguments(argc, argv, "export")) return 0;
     if (argc < 3 || argc > 4) {
         std::fprintf(stderr, "usage: judas_export project.judasproj package-directory [Release-runtime]\n");
         return 2;

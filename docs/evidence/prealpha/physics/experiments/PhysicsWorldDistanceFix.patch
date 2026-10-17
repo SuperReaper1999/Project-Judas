@@ -1,0 +1,43 @@
+--- accepted/PhysicsWorld.cpp
++++ PhysicsWorldDistanceFix.cpp
+@@ -882,8 +882,10 @@
+         if(!convex(typeA)||!convex(typeB)){
+             double oldSweep=0;
+             for(int side=0;side<2;++side){const auto& body=bodies[key[side]];
+-                if(body.HasMotion()&&(side?typeB:typeA)!=ShapeType::Sphere)
+-                    oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++                if(body.HasMotion()){
++                    oldSweep+=double(glm::length(body.rigidBody.linearVelocity))*remaining;
++                    if((side?typeB:typeA)!=ShapeType::Sphere)oldSweep+=double(glm::length(body.rigidBody.angularVelocity))*body.boundingRadius*remaining;
++                }
+             }
+             const double feature=std::min(PrimitiveFeature(key[0],int(key[2])),PrimitiveFeature(key[1],int(key[3])));
+             return std::isfinite(feature)&&oldSweep>feature;
+@@ -1067,7 +1069,16 @@
+             // The exact endpoint has already been checked. There is no future
+             // interval left from which a proximity reach could reveal a hit.
+             if(time==finish)return finish+1;
+-            const auto manifold=PairAt(a,b,pa,pb,time,reach);
++            auto manifold=PairAt(a,b,pa,pb,time,reach);
++            const auto first=PrimitiveAt(ba.shape,ImpactPoseAt(a,time).pose,pa);
++            const auto second=PrimitiveAt(bb.shape,ImpactPoseAt(b,time).pose,pb);
++            const PrimitivePose* mesh=first.shape.type==ShapeType::TriangleMesh?&first:second.shape.type==ShapeType::TriangleMesh?&second:nullptr;
++            const PrimitivePose* query=mesh==&first?&second:&first;
++            if(mesh&&(query->shape.type==ShapeType::Box||query->shape.type==ShapeType::ConvexHull)){
++                const auto d=PolyGeometry(*query,*mesh,reach);
++                if(!d.valid)return finish+1;
++                manifold={};Contact c;c.hit=true;c.hasLocalAnchors=true;c.signedSeparation=d.gap;c.preciseNormal=mesh==&first?-d.normal:d.normal;c.normal=glm::vec3(c.preciseNormal);manifold.Add(c);
++            }
+             if (!manifold.count) return finish+1;
+             const Contact* nearest=&manifold.points[0];
+             for (int k=1;k<manifold.count;++k)
+@@ -1082,7 +1093,8 @@
+                 uncertifiedAdvance=true;
+                 break;
+             }
+-            const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
++            const bool concave=ba.shape.type==ShapeType::TriangleMesh||bb.shape.type==ShapeType::TriangleMesh;
++            const double closing=concave?speed:-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
+             if (!(closing>0)) return finish+1;
+             double increment=gap/closing;
+             if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));

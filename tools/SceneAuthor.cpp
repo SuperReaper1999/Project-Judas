@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "AuthoringCLI.h"
 #include "ContentServicesCLI.h"
 #include "RecipeCLI.h"
@@ -714,6 +715,8 @@ bool Write(const Scene& s, const std::string& path) {
 }  // namespace
 
 int main(int argc, char** argv) {
+    if (HandleBuildIdentityArguments(argc, argv, "scene_author")) return 0;
+
     if(auto result=RunContentServicesCLI(argc,argv);result>=0)return result;
     if(int result=RunRecipeCLI(argc,argv);result>=0)return result;
     if(int result=RunAuthoringCLI(argc,argv);result>=0)return result;

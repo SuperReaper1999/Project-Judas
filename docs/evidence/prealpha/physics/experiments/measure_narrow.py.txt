@@ -1,0 +1,28 @@
+from pathlib import Path
+import subprocess,json,time,datetime,hashlib,platform,csv,re
+root=Path.cwd();out=root/'docs/evidence/prealpha/physics/measurements-narrow';out.mkdir(parents=True,exist_ok=True)
+binroot=Path('/tmp/judas-prealpha-collision/matched')
+receipt={'utc_start':datetime.datetime.now(datetime.timezone.utc).isoformat(),'platform':platform.platform(),'lscpu':subprocess.check_output(['lscpu'],text=True),'loadavg_start':Path('/proc/loadavg').read_text().strip(),'notes':['Same driver, fixture/settings and support libraries for both physics variants.','Sequential owned workloads; external desktop activity not controlled.','No extrapolation from sixty-step ragdoll prefix to a full300step run.','Timeout preserves a censored failure; no unfinished-step timing is invented.'],'runs':[]}
+def run(name,cmd,timeout=45):
+ t=time.monotonic();record={'name':name,'command':list(map(str,cmd)),'timeout_seconds':timeout,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+ with (out/(name+'.log')).open('w') as log:
+  try:p=subprocess.run(list(map(str,cmd)),stdout=log,stderr=subprocess.STDOUT,timeout=timeout);record['exit']=p.returncode;record['timed_out']=False
+  except subprocess.TimeoutExpired:record['exit']=None;record['timed_out']=True
+ record['wall_seconds']=time.monotonic()-t
+ summary=out/name/'summary.json'
+ if summary.exists():
+  s=json.loads(summary.read_text());record['summary']={k:s[k] for k in ['internal_step_ms','pass','trajectory_digest','maximum_penetration_m','maximum_joint_anchor_error_m','rss_maximum_observed_bytes','final_sleeping_bodies','completed_steps','exception','acceptance']}
+ receipt['runs'].append(record);(out/'RESULTS.json').write_text(json.dumps(receipt,indent=2)+'\n')
+ print(name,record['exit'],'timeout',record['timed_out'],record.get('summary',{}).get('internal_step_ms'),flush=True)
+for repeat in range(2):
+ for count in [256,1024]:
+  for workload in ['free','pile','mesh','machines_sleeping']:
+   for label in (['accepted','candidate'] if repeat%2==0 else ['candidate','accepted']):
+    name=f'{label}-{workload}-{count}-r{repeat}'
+    run(name,[binroot/f'scaling-{label}','--workload',workload,'--count',count,'--warm',300 if workload=='machines_sleeping' else 60,'--steps',120,'--profile',0,'--output',out/name])
+for label in ['accepted','candidate']:
+ for scenario in ['trough 2','trough 60']:
+  name=f'{label}-ragdoll-'+scenario.replace(' ','-')
+  run(name,[binroot/f'mesh-{label}',60,scenario],60)
+ run(f'{label}-mesh-profile',[binroot/f'scaling-{label}','--workload','mesh','--count',1024,'--warm',60,'--steps',120,'--profile',1,'--output',out/f'{label}-mesh-profile'],60)
+receipt['utc_end']=datetime.datetime.now(datetime.timezone.utc).isoformat();receipt['loadavg_end']=Path('/proc/loadavg').read_text().strip();receipt['binary_hashes_after']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in binroot.glob('*') if p.is_file()};(out/'RESULTS.json').write_text(json.dumps(receipt,indent=2)+'\n')

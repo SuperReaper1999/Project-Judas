@@ -1,7 +1,7 @@
 # M96 — reusable game interfaces
 
-Current API: accepted M95 baseline plus M96 on Experimental. Human review is
-pending. The engine owns controls, layout, editing and input routing; project JS
+Current API: M96 is human accepted and included in the accepted M99 baseline.
+Platform coverage remains scoped to the recorded evidence. The engine owns controls, layout, editing and input routing; project JS
 owns screens, inventory data, dialogue and settings policy.
 
 ## Authoring

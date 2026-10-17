@@ -1,7 +1,10 @@
+#include "BuildIdentity.h"
 #include "CollisionAsset.h"
 #include <cstdio>
 #include <stdexcept>
-int main(int argc,char** argv){try{
+int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "collision_cook")) return 0;
+try{
  bool twoSided=argc>6&&std::string(argv[argc-1])=="--two-sided";if(twoSided)--argc;
  if(argc<6||argc>9)throw std::runtime_error("usage: judas_collision_cook mesh|hull source output sourceAssetId primitive [scaleX scaleY scaleZ] [--two-sided]; one-sided mesh by default");
  CollisionCookSettings settings;settings.twoSided=twoSided;std::string kind=argv[1];if(kind!="mesh"&&kind!="hull")throw std::runtime_error("kind must be mesh or hull");settings.convex=kind=="hull";settings.primitive=std::stoul(argv[5]);

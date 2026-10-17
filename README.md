@@ -9,7 +9,7 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-Judas is an **Alpha / pre-Alpha project**. The engine is actively developed,
+Judas is a **Pre-Alpha project**. The engine is actively developed,
 platform coverage is uneven, and some advanced systems remain experimental.
 Read the documented scope and validation evidence before treating any feature
 or performance result as a guarantee.
@@ -20,6 +20,11 @@ The current release on `main` is **M99**, including operator-accepted M98 save
 evolution and M99 optional online multiplayer. Combined acceptance was given on
 2026-10-17 for candidate `696f480bc57250f9bf6f9846e32e20dfc28f5363`; see the
 [acceptance record and platform scope](docs/evidence/m99/HUMAN_VALIDATION.md).
+
+The unnumbered **Pre-Alpha stabilization/rework phase** is now developed on
+`Experimental`; `main` continues to require human acceptance. It is not an Alpha
+release. See [current work, validation and support boundaries](docs/PREALPHA.md)
+and [build identity, channels and distribution](docs/BUILD_RELEASES.md).
 
 Included M92 rendering adds opaque mesh instancing,
 per-view tiled dynamic lighting, selected spotlight shadows, scripted individual
@@ -52,7 +57,7 @@ Human-accepted M94 adds [JudasJS debugging and deliberate reload](docs/M94_DEVEL
 source breakpoints, stepping, safe variable snapshots and compile/import diagnostics.
 Try [The Repair Bench](projects/developer_lab/README.md). Windows/Android M94 validation remains pending.
 
-Experimental M95 adds [animation event tracks, a timeline and collision-aware
+M95 adds [animation event tracks, a timeline and collision-aware
 root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 is human accepted; its Windows/Android validation remains outstanding.
 M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). Try [Field Notes](projects/ui_showcase/README.md); human accepted.
 
@@ -84,10 +89,17 @@ a C++17 compiler, SDL2 and GLM development packages, Python 3, and a working
 OpenGL 3.3 environment. On Ubuntu/Debian:
 
 ```sh
-sudo apt install cmake libsdl2-dev libglm-dev build-essential
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j"$(nproc)"
+sudo apt install cmake libsdl2-dev libglm-dev build-essential python3
+cmake -S . -B build/Experimental -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
+cmake --build build/Experimental --target judas_linux_sdk -j2
 ```
+
+The SDK target builds the public tools and stages a self-contained engine SDK
+inventory with checksums; it does not build every historical test executable.
+Linux system-library requirements remain documented in the distribution guide.
+For only the editor/runtime, build targets `judas_editor judas` instead.
+Use a separate build directory with `-DJUDAS_BUILD_CHANNEL=main` for accepted
+release builds. See [distribution and relocation checks](docs/DISTRIBUTION.md).
 
 Run a project or scene with the runtime, or open one in the editor:
 

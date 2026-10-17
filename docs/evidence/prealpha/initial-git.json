@@ -1,0 +1,17 @@
+{
+  "baseline": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "tracked_start_clean": true,
+  "preserved_unrelated_untracked_prefixes": [
+    "docs/evidence/m78-",
+    "docs/evidence/m83-structural-corrective/",
+    "projects/structural_crash_lab/",
+    "scripts/m83_structural_corrective.py",
+    "src/Structural",
+    "src/DeformableContacts.cpp",
+    "src/DeformableSkin.cpp",
+    "tests/Structural",
+    "tests/CoupledPhysicsTests.cpp",
+    "tools/CreateStructuralCrashLab.py",
+    "POST_M73_REPORT.txt"
+  ]
+}

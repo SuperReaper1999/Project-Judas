@@ -1,0 +1,52 @@
+Localization: missing localization key missing.key
+PASS DejaVuSans.ttf
+PASS NotoSansArabic-Regular.ttf
+PASS NotoSansDevanagari-Regular.ttf
+PASS NotoSansJP-Regular.otf
+PASS strict UTF-8 accepts combining and supplementary scalars
+PASS overlong and surrogate UTF-8 rejected
+PASS runtime malformed sequence replaced safely
+PASS empty text and mandatory CRLF/trailing paragraph
+PASS supplementary is one scalar / two UTF-16 units, no truncation
+PASS Arabic glyph IDs/clusters/positions match independent upstream hb-shape
+PASS Indic reordered glyph IDs/positions match upstream hb-shape
+PASS marks / ligature / kerning match upstream hb-shape
+PASS genuinely missing DejaVu coverage falls back as whole Indic run
+PASS mixed font marks fit real baseline/ascent/descent
+PASS unsupported valid scalar retains visible primary .notdef
+PASS mixed bidi ASCII numbers stay LTR inside reversed Hebrew run (UAX9 expectation)
+PASS CJK wraps without spaces using ICU break opportunities
+PASS wrapped mixed bidi reshapes each line
+PASS wrapped lines keep logical cluster/baseline membership
+PASS wrapped mixed bidi visual glyph order matches independent ICU visual map
+PASS emergency wrapping never cuts combining/Indic clusters
+PASS RTL logical start resolves right
+PASS explicit left remains left under RTL
+PASS unchanged layout cache avoids reshaping
+PASS layout eviction does not invalidate retained immutable font/glyph identities
+PASS ordinary localized project parses
+PASS project locale/font stable ID round trip
+PASS comma process numeric locale preserves project input/navigation parsing and scene bytes
+PASS registered font/catalog dependencies validate
+PASS unpublished catalog is not reported as a missing key
+PASS named placeholders reorder whole messages
+PASS argument strings are data, not executable templates
+PASS missing key visible fallback and diagnostic
+PASS invalid locale cannot half-publish state
+PASS Russian few/many CLDR plural rules
+PASS missing requested message resolves project default
+PASS Arabic two category and locale direction
+PASS wrong plural argument type rejected
+PASS explicit German number formatting independent of host locale
+PASS bounded locale number options
+PASS malformed pattern rejected at import
+PASS unsupported date/positional types rejected at import
+PASS duplicate stable key rejected
+PASS configured fallback cycles rejected
+PASS authored UTF-8/key/direction UI v2 round trip
+PASS authored malformed text fails validation
+PASS authored localization key rejects embedded NUL
+PASS authored element identity also rejects malformed UTF-8
+PASS linked runtime CLDR data version verified
+VERSIONS ICU=76.1 Unicode=16.0 CLDR=46.0
+SUMMARY 49 checks 0 failures

@@ -1,0 +1,256 @@
+diff --git a/src/CollisionGeometry.cpp b/src/CollisionGeometry.cpp
+index 61bd8396..2ed8ae50 100644
+--- a/src/CollisionGeometry.cpp
++++ b/src/CollisionGeometry.cpp
+@@ -143,7 +143,7 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
+ // stop after the first accepted witness; it never changes SAT, clipping, margins,
+ // sidedness, crease handling or the contacts used by a physical solver.
+ template<class Consumer>
+-bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY) {
++bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY,uint32_t meshFeature=UINT32_MAX) {
+  V origin=PrimitiveCenter(b);Poly pa=poly(a,origin);auto test=[&](const Poly& pb){
+   // A face axis is already a valid SAT axis. Reject shallow convex pairs
+   // before enumerating edge axes/clipping; preserve the original full path
+@@ -186,7 +186,7 @@ bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,doubl
+   // Most candidates of a dense mesh are rejected by a face axis; skip their edge axes
+   // (counted as the same convex test) and reuse one triangle's storage throughout.
+   const auto& asset=*b.shape.asset;const M rotation=PrimitiveRotation(b);const V placed=PrimitiveCenter(b)-origin;Poly pb;
+-  for(auto i:candidates(b,lo,hi,margin)){++stats.triangles;triangleInto(pb,asset,i,rotation,placed);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!asset.twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,asset,i);}
++  for(auto i:meshFeature==UINT32_MAX?candidates(b,lo,hi,margin):std::vector<uint32_t>{meshFeature}){++stats.triangles;triangleInto(pb,asset,i,rotation,placed);double side=glm::dot(pb.normals[0],center-pb.points[0]);if(!asset.twoSided&&side<-eps)continue;if(side<0){reverseTriangleSide(pb,asset,i);}
+    if(faceAxesSeparate(pa,pb,margin)){++stats.convexTests;continue;}
+    if(test(pb))return true;}return false;}
+  throw std::invalid_argument("unsupported cooked contact target");
+@@ -240,41 +240,41 @@ GeometryDistance PolyGeometry(const PrimitivePose& query,const PrimitivePose& ta
+  for(auto i:list){++stats.triangles;Poly b=triangle(target,i,origin);V center(0);for(V p:a.points)center+=p;center/=double(a.points.size());if(!target.shape.asset->twoSided&&glm::dot(b.normals[0],center-b.points[0])<-eps)continue;if(glm::dot(b.normals[0],center-b.points[0])<0){reverseTriangleSide(b,*target.shape.asset,i);}auto s=sat(a,b,false);if(!out.valid||s.gap<out.gap){auto pairs=witnesses(a,b,s);out={true,false,s.gap,pairs[0].second+origin,pairs[0].first+origin,s.normal,i};}}
+  return out;
+ }
+-ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
++ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,uint32_t meshFeature) {
+  const bool newA=a.shape.asset!=nullptr,newB=b.shape.asset!=nullptr;
+  if(!newA&&!newB)throw std::invalid_argument("CookedContacts called without cooked geometry");
+- if(a.shape.type==ShapeType::TriangleMesh){auto out=CookedContacts(b,a,margin);for(int i=0;i<out.count;++i){auto& c=out.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return out;}
++ if(a.shape.type==ShapeType::TriangleMesh){auto out=CookedContacts(b,a,margin,meshFeature);for(int i=0;i<out.count;++i){auto& c=out.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return out;}
+  ContactManifold out;std::vector<Contact> contacts;
+- if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule){M r=PrimitiveRotation(a);V center=PrimitiveCenter(a);double half=a.shape.type==ShapeType::Capsule?a.shape.halfHeight:0;auto d=SegmentGeometry(center-r[1]*half,center+r[1]*half,a.shape.radius,b,margin);if(d.valid&&d.gap<=margin)out.Add(make(a,b,d.queryPoint-d.normal*double(a.shape.radius),d.point,d.normal,d.gap));return out;}
+- if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
++ if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule){M r=PrimitiveRotation(a);V center=PrimitiveCenter(a);double half=a.shape.type==ShapeType::Capsule?a.shape.halfHeight:0;auto d=SegmentGeometry(center-r[1]*half,center+r[1]*half,a.shape.radius,b,margin,false,meshFeature);if(d.valid&&d.gap<=margin)out.Add(make(a,b,d.queryPoint-d.normal*double(a.shape.radius),d.point,d.normal,d.gap));return out;}
++ if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin,meshFeature);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
+  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
+  visitCookedPolyContacts(a,b,margin,[&](V x,V y,V normal,double gap){
+   contacts.push_back(make(a,b,x,y,normal,gap));return false;
+- });
++ },INFINITY,meshFeature);
+  reduce(contacts,out);return out;
+ }
+ // Boolean truth for CCD observations, not a replacement response manifold.
+-bool CookedHasContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
+- if(a.shape.type==ShapeType::TriangleMesh)return CookedHasContacts(b,a,margin);
++bool CookedHasContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,uint32_t meshFeature) {
++ if(a.shape.type==ShapeType::TriangleMesh)return CookedHasContacts(b,a,margin,meshFeature);
+  // Keep unoptimized sphere/capsule and unsupported cases on the same dispatcher.
+  if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule||
+     b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule)
+-  return CookedContacts(a,b,margin).count>0;
++  return CookedContacts(a,b,margin,meshFeature).count>0;
+  if(!a.shape.asset&&!b.shape.asset)throw std::invalid_argument("CookedContacts called without cooked geometry");
+  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
+- return visitCookedPolyContacts(a,b,margin,[](V,V,V,double){return true;});
++ return visitCookedPolyContacts(a,b,margin,[](V,V,V,double){return true;},INFINITY,meshFeature);
+ }
+-bool CookedHasPenetrationBeyond(const PrimitivePose& a,const PrimitivePose& b,double threshold) {
++bool CookedHasPenetrationBeyond(const PrimitivePose& a,const PrimitivePose& b,double threshold,uint32_t meshFeature) {
+  if(!std::isfinite(threshold)||threshold<0)throw std::invalid_argument("invalid penetration threshold");
+  const auto polyType=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::ConvexHull;};
+  if(!polyType(a.shape.type)||!polyType(b.shape.type)){
+-  const auto manifold=CookedContacts(a,b,0);
++  const auto manifold=CookedContacts(a,b,0,meshFeature);
+   for(int k=0;k<manifold.count;++k)if(-manifold.points[k].signedSeparation>threshold)return true;
+   return false;
+  }
+  // reduce() retains the deepest witness first. Existence over the same
+  // accepted witnesses is therefore exactly the full manifold's maximum test.
+- return visitCookedPolyContacts(a,b,0,[&](V,V,V,double gap){return -gap>threshold;},threshold);
++ return visitCookedPolyContacts(a,b,0,[&](V,V,V,double gap){return -gap>threshold;},threshold,meshFeature);
+ }
+ CollisionMassProperties ShapeMassProperties(const Shape& shape) {
+  CollisionMassProperties out;
+diff --git a/src/CollisionGeometry.h b/src/CollisionGeometry.h
+index 488f4649..d43fdcfd 100644
+--- a/src/CollisionGeometry.h
++++ b/src/CollisionGeometry.h
+@@ -19,11 +19,11 @@ glm::dmat3 PrimitiveRotation(const PrimitivePose&);
+ glm::dvec3 PrimitiveCenter(const PrimitivePose&);
+ GeometryDistance SegmentGeometry(glm::dvec3 a,glm::dvec3 b,double radius,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity(),bool nearestSurface=false,uint32_t feature=UINT32_MAX);
+ GeometryDistance PointGeometry(glm::dvec3 point,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity());
+-ContactManifold CookedContacts(const PrimitivePose&,const PrimitivePose&,double margin);
++ContactManifold CookedContacts(const PrimitivePose&,const PrimitivePose&,double margin,uint32_t meshFeature=UINT32_MAX);
+ // Exact accepted-contact existence; full manifolds remain authoritative for response.
+-bool CookedHasContacts(const PrimitivePose&,const PrimitivePose&,double margin);
++bool CookedHasContacts(const PrimitivePose&,const PrimitivePose&,double margin,uint32_t meshFeature=UINT32_MAX);
+ // Exact deep-contact existence for continuous penetration searches.
+-bool CookedHasPenetrationBeyond(const PrimitivePose&,const PrimitivePose&,double threshold);
++bool CookedHasPenetrationBeyond(const PrimitivePose&,const PrimitivePose&,double threshold,uint32_t meshFeature=UINT32_MAX);
+ GeometryDistance PolyGeometry(const PrimitivePose& query,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity(),uint32_t feature=UINT32_MAX);
+ struct CollisionMassProperties {double volume=0;glm::dvec3 center{0};glm::dmat3 inertia{0};};
+ CollisionMassProperties ShapeMassProperties(const Shape&);
+diff --git a/src/PhysicsWorld.cpp b/src/PhysicsWorld.cpp
+index 6b0eb68e..c1ac3ed4 100644
+--- a/src/PhysicsWorld.cpp
++++ b/src/PhysicsWorld.cpp
+@@ -745,35 +745,37 @@ struct PhysicsWorld::Impl {
+         if(!rigid_motion_bounds::FiniteBound(first)||!rigid_motion_bounds::FiniteBound(second)||first.Overlaps(second))return false;
+         ++impactActualBoundsRejected;return true;
+     }
+-    ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin) {
++    ContactManifold PairAt(unsigned a,unsigned b,int pa,int pb,double time,float margin,uint32_t meshFeature=UINT32_MAX) {
+         PhysicsWorkTimer timer(work.geometry,work.active);
+         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+         if(margin==0&&SimpleImpactBoundsSeparated(a,b,aa,bb))return {};
+-        return ComputeContacts(PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),
+-            PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation),margin,&*aa.orientation,&*bb.orientation);
++        const auto first=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
++        const auto second=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
++        if(meshFeature!=UINT32_MAX)return CookedContacts(first,second,margin,meshFeature);
++        return ComputeContacts(first,second,margin,&*aa.orientation,&*bb.orientation);
+     }
+     // Deepest actual (zero-margin) penetration of the pair at `time`, metres.
+-    double PairPenetration(unsigned a,unsigned b,int pa,int pb,double time) {
+-        const auto manifold=PairAt(a,b,pa,pb,time,0);double deepest=0;
++    double PairPenetration(unsigned a,unsigned b,int pa,int pb,double time,uint32_t meshFeature=UINT32_MAX) {
++        const auto manifold=PairAt(a,b,pa,pb,time,0,meshFeature);double deepest=0;
+         for(int k=0;k<manifold.count;++k){const auto& c=manifold.points[k];
+             deepest=std::max(deepest,c.hasLocalAnchors?-c.signedSeparation:double(c.penetration));}
+         return deepest;
+     }
+-    bool PairPenetrationExceeds(unsigned a,unsigned b,int pa,int pb,double time,double target) {
++    bool PairPenetrationExceeds(unsigned a,unsigned b,int pa,int pb,double time,double target,uint32_t meshFeature=UINT32_MAX) {
+         PhysicsWorkTimer timer(work.geometry,work.active);
+         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
+         const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
+-        if(posa.shape.asset||posb.shape.asset)return CookedHasPenetrationBeyond(posa,posb,target);
++        if(posa.shape.asset||posb.shape.asset)return CookedHasPenetrationBeyond(posa,posb,target,meshFeature);
+         return PairPenetration(a,b,pa,pb,time)>target;
+     }
+-    bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time) {
++    bool PairTouches(unsigned a,unsigned b,int pa,int pb,double time,uint32_t meshFeature=UINT32_MAX) {
+         PhysicsWorkTimer timer(work.geometry,work.active);
+         const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
+         if(SimpleImpactBoundsSeparated(a,b,aa,bb))return false;
+         const auto posa=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
+         const auto posb=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
+-        if(posa.shape.asset||posb.shape.asset)return CookedHasContacts(posa,posb,0);
++        if(posa.shape.asset||posb.shape.asset)return CookedHasContacts(posa,posb,0,meshFeature);
+         if(posa.childRotation==glm::quat(1,0,0,0)&&posb.childRotation==glm::quat(1,0,0,0))
+             return PrimitiveHasContacts(posa.shape,{posa.parentPosition,posa.parentOrientation,posa.parentLocalCenter},
+                 posb.shape,{posb.parentPosition,posb.parentOrientation,posb.parentLocalCenter},0,&*aa.orientation,&*bb.orientation);
+@@ -988,15 +990,44 @@ struct PhysicsWorld::Impl {
+     // its depth at `start` by target (a pair already touching, e.g. pivoting
+     // on one corner), rather than the first touch. Measuring from the start
+     // depth lets the search continue after an event that ended at the target.
+-    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
++    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0,uint32_t meshFeature=UINT32_MAX) {
+         PhysicsWorkTimer timer(work.toi,work.active);
+         // A target can finish inside the step. Never certify a plane across
+         // its velocity discontinuity; search the two real ledger intervals.
+         for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
+-            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target);
+-                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target);}
++            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target,meshFeature);
++                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target,meshFeature);}
++        // Concave collision is a union of finite patches. A separating plane
++        // or touching support of one patch cannot certify the whole union.
++        // Mirror the public shape-cast path: query the swept volume once and
++        // search each triangle independently, retaining the earliest real hit.
++        const bool firstMesh=bodies[a].shape.type==ShapeType::TriangleMesh;
++        const bool secondMesh=bodies[b].shape.type==ShapeType::TriangleMesh;
++        if(meshFeature==UINT32_MAX&&(firstMesh||secondMesh)){
++            const auto mesh=PrimitiveAt(firstMesh?bodies[a].shape:bodies[b].shape,
++                ImpactPoseAt(firstMesh?a:b,start).pose,firstMesh?pa:pb);
++            const unsigned moving=firstMesh?b:a;
++            const auto bound=RemainingImpactBound(moving,start,finish);
++            const auto inverse=glm::transpose(PrimitiveRotation(mesh));
++            const auto center=PrimitiveCenter(mesh);
++            glm::dvec3 lo(INFINITY),hi(-INFINITY);
++            for(int k=0;k<8;++k){
++                const glm::dvec3 point(k&1?bound.max.x:bound.min.x,k&2?bound.max.y:bound.min.y,k&4?bound.max.z:bound.min.z);
++                const auto local=inverse*(point-center);lo=glm::min(lo,local);hi=glm::max(hi,local);
++            }
++            // Round the transformed enclosure outward, not a simulation skin.
++            for(int k=0;k<3;++k){lo[k]=std::nextafter(lo[k],-INFINITY);hi[k]=std::nextafter(hi[k],INFINITY);}
++            std::vector<uint32_t> candidates;uint64_t visited=0;
++            mesh.shape.asset->Candidates(lo,hi,candidates,&visited);CountCollisionQuery(visited,0);
++            double earliest=finish+1;
++            // A whole-mesh spinning/support observation does not classify a
++            // new triangle as already touching. Each patch decides that from
++            // its own actual geometry before requesting a penetration target.
++            for(auto feature:candidates)earliest=std::min(earliest,ImpactTime(a,b,pa,pb,start,std::min(finish,earliest),0,feature));
++            return earliest;
++        }
+         ++stats.impactQueries;
+-        if(target>0)target+=PairPenetration(a,b,pa,pb,start);
++        if(target>0)target+=PairPenetration(a,b,pa,pb,start,meshFeature);
+         const auto& ba=bodies[a]; const auto& bb=bodies[b];
+         const auto simpleRadius=[](const Body& body){
+             return (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;
+@@ -1029,7 +1060,7 @@ struct PhysicsWorld::Impl {
+             const std::array<float,14> represented={aa.position.x,aa.position.y,aa.position.z,aa.orientation.w,aa.orientation.x,aa.orientation.y,aa.orientation.z,
+                 bb.position.x,bb.position.y,bb.position.z,bb.orientation.w,bb.orientation.x,bb.orientation.y,bb.orientation.z};
+             for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++impactTruthReuses;return old.touching;}
+-            const bool touching=target>0?PairPenetrationExceeds(a,b,pa,pb,at,target):PairTouches(a,b,pa,pb,at);
++            const bool touching=target>0?PairPenetrationExceeds(a,b,pa,pb,at,target,meshFeature):PairTouches(a,b,pa,pb,at,meshFeature);
+             actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
+         };
+         double time=start, previous=start;
+@@ -1056,7 +1087,7 @@ struct PhysicsWorld::Impl {
+                 // unless its spin can turn another feature through the support
+                 // before the interval ends: then search to a penetration target.
+                 if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start) ?
+-                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)})) : finish+1;
++                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}),meshFeature) : finish+1;
+                 double lo=previous,hi=time;
+                 for(int k=0;k<32;++k) {
+                     const double mid=(lo+hi)*.5;
+@@ -1067,7 +1098,22 @@ struct PhysicsWorld::Impl {
+             // The exact endpoint has already been checked. There is no future
+             // interval left from which a proximity reach could reveal a hit.
+             if(time==finish)return finish+1;
+-            const auto manifold=PairAt(a,b,pa,pb,time,reach);
++            ContactManifold manifold;
++            if(meshFeature!=UINT32_MAX){
++                const auto first=PrimitiveAt(ba.shape,ImpactPoseAt(a,time).pose,pa);
++                const auto second=PrimitiveAt(bb.shape,ImpactPoseAt(b,time).pose,pb);
++                const auto& query=firstMesh?second:first;
++                const auto& mesh=firstMesh?first:second;
++                if(query.shape.type==ShapeType::Box||query.shape.type==ShapeType::ConvexHull){
++                    // A response witness can deliberately ignore an internal
++                    // triangle edge. CCD needs the actual separating axis of
++                    // this finite patch, including that edge's positive gap.
++                    const auto d=[&]{PhysicsWorkTimer timer(work.geometry,work.active);
++                        return PolyGeometry(query,mesh,reach,meshFeature);}();
++                    if(d.valid){Contact c;c.hit=true;c.hasLocalAnchors=true;c.signedSeparation=d.gap;
++                        c.preciseNormal=firstMesh?-d.normal:d.normal;c.normal=glm::vec3(c.preciseNormal);manifold.Add(c);}
++                }else manifold=PairAt(a,b,pa,pb,time,reach,meshFeature);
++            }else manifold=PairAt(a,b,pa,pb,time,reach);
+             if (!manifold.count) return finish+1;
+             const Contact* nearest=&manifold.points[0];
+             for (int k=1;k<manifold.count;++k)
+@@ -1258,7 +1304,8 @@ struct PhysicsWorld::Impl {
+         std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
+         auto schedule=[&](const std::array<unsigned,4>& key) {
+             if(!CanRespond(key[0],key[1]))return;
+-            const double time=std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
++            const bool mesh=bodies[key[0]].shape.type==ShapeType::TriangleMesh||bodies[key[1]].shape.type==ShapeType::TriangleMesh;
++            const double time=!mesh&&std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
+                 std::binary_search(spinningPairs.begin(),spinningPairs.end(),key) ?
+                 ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt,SpinPenetrationTarget(key)) :
+                 ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt);
+@@ -1268,6 +1315,8 @@ struct PhysicsWorld::Impl {
+         };
+         for(const auto& key:separatedPairs) schedule(key);
+         for(const auto& key:spinningPairs) schedule(key);
++        for(const auto& key:supportPairs)
++            if(bodies[key[0]].shape.type==ShapeType::TriangleMesh||bodies[key[1]].shape.type==ShapeType::TriangleMesh)schedule(key);
+         for (;;) {
+             double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
+             std::array<unsigned,4> selected{};

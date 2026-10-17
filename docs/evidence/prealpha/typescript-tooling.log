@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: explicit missing compiler fails with an actionable message and no fallback
+ok 1 - explicit missing compiler fails with an actionable message and no fallback
+  ---
+  duration_ms: 3.138925
+  ...
+# Subtest: explicit malformed compiler is rejected instead of pretending tooling passed
+ok 2 - explicit malformed compiler is rejected instead of pretending tooling passed
+  ---
+  duration_ms: 3.406618
+  ...
+# Subtest: environment module handles spaces and Unicode, independently of milestone caches
+ok 3 - environment module handles spaces and Unicode, independently of milestone caches
+  ---
+  duration_ms: 0.846649
+  ...
+# Subtest: real installed compiler parses a declaration
+ok 4 - real installed compiler parses a declaration
+  ---
+  duration_ms: 203.664309
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 221.458318

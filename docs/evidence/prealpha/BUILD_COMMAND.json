@@ -1,0 +1,36 @@
+{
+  "configure": [
+    "cmake",
+    "-S",
+    ".",
+    "-B",
+    "build",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DJUDAS_BUILD_CHANNEL=Experimental",
+    "-DJUDAS_ENABLE_VALIDATION=ON"
+  ],
+  "build": [
+    "cmake",
+    "--build",
+    "build",
+    "--target",
+    "judas_prealpha_tests",
+    "judas_linux_sdk",
+    "judas_impact_robustness_tests",
+    "judas_kinematic_tests",
+    "judas_ragdoll_tests",
+    "judas_post_consumer_ragdoll_tests",
+    "judas_physical_balance_controller_tests",
+    "judas_joint_tests",
+    "judas_contact_cache_tests",
+    "judas_physics_stress_live_benchmark",
+    "judas_ball_pusher_application_tests",
+    "judasjs_examples_tests",
+    "judas_network_application_tests",
+    "judas_save_evolution_application_tests",
+    "judas_script_developer_tools_tests",
+    "judas_prefab_tests",
+    "judas_save_storage_tests",
+    "-j2"
+  ]
+}

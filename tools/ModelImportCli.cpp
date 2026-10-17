@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "ModelImport.h"
 #include "PerformanceProfiler.h"
 #include "ModelLoader.h"
@@ -17,6 +18,8 @@ namespace {
 Json Report(const ModelImportReport& r){Json j={{"sourceBones",r.sourceBones},{"hierarchyNodes",r.hierarchyNodes},{"paletteEntries",r.skinJoints},{"parts",r.parts},{"vertices",r.vertices},{"sourceUnitMeters",r.sourceUnitMeters},{"diagnostics",Json::array()}};for(auto& d:r.diagnostics)j["diagnostics"].push_back({{"severity",d.severity},{"code",d.code},{"source",d.source},{"node",d.node},{"face",d.face},{"vertex",d.vertex},{"message",d.message},{"action",d.action}});return j;}
 }
 int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "model_import_cli")) return 0;
+
   ProfileRun run("Model import CLI");ProfileFrame frame("Model import CLI");
  try{
   std::string error;

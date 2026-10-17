@@ -1,0 +1,5 @@
+FRAMES 240
+FRAME_SECONDS 0.016666667
+LOG_EVERY 60
+AXIS move_x 1 100 130
+SCREENSHOT 200 /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/export-final/shipping.png

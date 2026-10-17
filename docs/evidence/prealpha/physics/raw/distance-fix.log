@@ -1,0 +1,42 @@
+FIRST i 5 step 5 p -0.72,0.11,0.78 v -0.29,1.70,12.17 w 24.54,26.91,3.72 depth 0.08 events 0 queries 1
+FIRST i 13 step 7 p 0.18,0.05,-0.61 v 0.47,-1.29,0.11 w -5.68,-12.90,10.57 depth 0.06 events 0 queries 0
+FIRST i 14 step 4 p 0.20,-0.05,-0.06 v 0.06,-3.49,10.90 w -16.33,2.34,3.86 depth 0.05 events 0 queries 1
+FIRST i 17 step 5 p 0.48,0.11,0.78 v -0.29,1.72,12.16 w 24.13,27.28,3.13 depth 0.08 events 0 queries 1
+SCENARIO "trough 2x26 coarse" triangles 104 steps 1 totalMs 6.07 worstStepMs 6.07 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 24 meshTriangles 24 bvhNodes 165 fastBoxesThrough 4 fastBoxesThrew 0 digest fe142d2fcd4a2716
+FIRST i 0 step 4 p -1.20,-0.10,-0.22 v 0.01,-6.98,12.53 w 0.00,-1.21,-0.64 depth 0.12 events 0 queries 0
+FIRST i 1 step 4 p -1.10,-0.11,-0.15 v 0.01,-6.06,11.78 w -15.59,-0.45,-0.38 depth 0.12 events 0 queries 0
+FIRST i 3 step 4 p -0.88,-0.06,0.22 v 0.28,-2.29,12.82 w -20.18,-22.69,-17.61 depth 0.07 events 0 queries 1
+FIRST i 4 step 11 p -0.51,0.09,0.73 v 1.33,0.25,4.87 w -12.60,47.20,-23.43 depth 0.08 events 0 queries 0
+FIRST i 5 step 5 p -0.71,0.08,0.73 v -0.17,1.22,11.66 w -15.37,-0.98,0.41 depth 0.09 events 0 queries 0
+FIRST i 6 step 4 p -0.60,-0.10,-0.22 v 0.01,-6.98,12.53 w 0.00,-1.21,-0.64 depth 0.12 events 0 queries 0
+FIRST i 7 step 4 p -0.50,-0.11,-0.15 v 0.01,-6.06,11.78 w -15.59,-0.45,-0.38 depth 0.12 events 0 queries 0
+FIRST i 9 step 4 p -0.28,-0.06,0.22 v 0.28,-2.29,12.82 w -20.18,-22.69,-17.61 depth 0.07 events 0 queries 1
+FIRST i 10 step 5 p -0.32,-0.02,0.35 v -1.74,-0.60,8.80 w -2.27,48.54,2.44 depth 0.05 events 0 queries 1
+FIRST i 11 step 6 p -0.00,0.07,0.68 v 1.53,0.62,7.98 w -18.96,-123.48,40.29 depth 0.07 events 0 queries 0
+FIRST i 12 step 4 p 0.00,-0.10,-0.22 v 0.01,-6.98,12.53 w 0.00,-1.21,-0.64 depth 0.12 events 0 queries 0
+FIRST i 13 step 4 p 0.10,-0.11,-0.15 v 0.01,-6.06,11.78 w -15.59,-0.45,-0.38 depth 0.12 events 0 queries 0
+FIRST i 15 step 4 p 0.32,-0.06,0.22 v 0.28,-2.29,12.82 w -20.18,-22.69,-17.61 depth 0.07 events 0 queries 1
+FIRST i 16 step 5 p 0.28,-0.02,0.35 v -1.74,-0.60,8.80 w -2.27,48.54,2.44 depth 0.05 events 0 queries 1
+FIRST i 17 step 6 p 0.60,0.07,0.68 v 1.53,0.62,7.98 w -18.96,-123.48,40.29 depth 0.07 events 0 queries 0
+FIRST i 18 step 4 p 0.60,-0.10,-0.22 v 0.01,-6.98,12.53 w 0.00,-1.21,-0.64 depth 0.12 events 0 queries 0
+FIRST i 19 step 4 p 0.70,-0.11,-0.15 v 0.01,-6.06,11.78 w -15.59,-0.45,-0.38 depth 0.12 events 0 queries 0
+FIRST i 21 step 4 p 0.92,-0.06,0.22 v 0.28,-2.29,12.82 w -20.18,-22.69,-17.61 depth 0.07 events 0 queries 1
+FIRST i 22 step 5 p 0.88,-0.02,0.35 v -1.74,-0.60,8.80 w -2.27,48.54,2.44 depth 0.05 events 0 queries 1
+FIRST i 23 step 5 p 1.09,0.08,0.73 v -0.17,1.22,11.66 w -15.37,-0.98,0.41 depth 0.09 events 0 queries 0
+SCENARIO "trough 30x30" triangles 1800 steps 1 totalMs 0.07 worstStepMs 0.07 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 0 meshTriangles 0 bvhNodes 155 fastBoxesThrough 20 fastBoxesThrew 0 digest fe142d2fcd4a2716
+FIRST i 1 step 13 p -1.11,0.05,0.62 v 0.34,-0.27,3.04 w 7.70,65.30,-5.63 depth 0.07 events 0 queries 0
+FIRST i 3 step 4 p -0.91,-0.06,0.20 v -0.14,-2.43,12.46 w -25.09,4.98,-3.44 depth 0.07 events 0 queries 1
+FIRST i 5 step 5 p -0.70,0.10,0.73 v 0.07,1.76,11.50 w -6.21,1.81,5.60 depth 0.07 events 0 queries 0
+FIRST i 7 step 4 p -0.51,-0.06,-0.17 v -0.19,-5.00,11.48 w -18.13,10.01,-17.74 depth 0.07 events 0 queries 1
+FIRST i 9 step 4 p -0.28,-0.06,0.23 v 0.28,-2.45,12.94 w -17.29,-15.77,13.65 depth 0.08 events 0 queries 1
+FIRST i 10 step 4 p -0.19,-0.01,0.41 v 0.12,-0.68,12.87 w -17.61,-3.42,15.80 depth 0.06 events 0 queries 1
+FIRST i 11 step 5 p -0.10,0.10,0.73 v 0.07,1.76,11.50 w -6.21,1.81,5.60 depth 0.07 events 0 queries 0
+FIRST i 13 step 4 p 0.12,-0.11,-0.16 v 0.31,-6.11,11.61 w -16.55,-1.69,1.45 depth 0.12 events 0 queries 0
+FIRST i 15 step 4 p 0.32,-0.06,0.23 v 0.28,-2.45,12.94 w -17.29,-15.77,13.65 depth 0.08 events 0 queries 1
+FIRST i 16 step 4 p 0.41,-0.01,0.41 v 0.12,-0.68,12.87 w -17.61,-3.42,15.80 depth 0.06 events 0 queries 1
+FIRST i 17 step 5 p 0.50,0.10,0.73 v 0.07,1.76,11.50 w -6.21,1.81,5.60 depth 0.07 events 0 queries 0
+FIRST i 19 step 10 p 0.57,0.06,0.65 v -2.02,0.33,7.06 w -29.34,-10.16,-3.98 depth 0.07 events 0 queries 0
+FIRST i 21 step 4 p 0.92,-0.06,0.23 v 0.28,-2.45,12.94 w -17.29,-15.77,13.65 depth 0.08 events 0 queries 1
+FIRST i 23 step 5 p 1.10,0.10,0.73 v 0.07,1.76,11.50 w -6.21,1.81,5.60 depth 0.07 events 0 queries 0
+SCENARIO "trough 60x60 dense" triangles 7200 steps 1 totalMs 0.07 worstStepMs 0.07 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 7 meshTriangles 7 bvhNodes 153 fastBoxesThrough 14 fastBoxesThrew 0 digest fe142d2fcd4a2716
+checks 156 failures 0

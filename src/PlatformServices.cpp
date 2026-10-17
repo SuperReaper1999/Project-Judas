@@ -1,4 +1,5 @@
 #include "PlatformServices.h"
+#include "ProcessArguments.h"
 #include <atomic>
 #ifdef __ANDROID__
 #include <SDL2/SDL_system.h>
@@ -68,19 +69,9 @@ std::wstring Wide(const std::string& text) {
     MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, text.data(), int(text.size()), result.data(), count);
     return result;
 }
-// Windows CRT argv quoting: backslashes are doubled before quotes and the closing quote.
-std::wstring Quote(const std::wstring& text) {
-    std::wstring result = L"\""; size_t slashes = 0;
-    for (wchar_t ch : text) {
-        if (ch == L'\\') { ++slashes; continue; }
-        result.append(ch == L'\"' ? slashes * 2 + 1 : slashes, L'\\'); slashes = 0;
-        result += ch;
-    }
-    result.append(slashes * 2, L'\\'); result += L'\"'; return result;
-}
 std::wstring Command(const fs::path& executable, const std::vector<std::string>& args) {
-    std::wstring result = Quote(executable.wstring());
-    for (const auto& arg : args) result += L" " + Quote(Wide(arg));
+    std::wstring result = QuoteWindowsProcessArgument(executable.wstring());
+    for (const auto& arg : args) result += L" " + QuoteWindowsProcessArgument(Wide(arg));
     return result;
 }
 }

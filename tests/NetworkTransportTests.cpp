@@ -314,6 +314,16 @@ int main() {
         NetworkTransport listener;
         Check(listener.Listen("127.0.0.1", 0, settings, error), "refused-connect fixture obtains an unused local port");
         const uint16_t port = listener.BoundPort();
+        NetworkTransport conflicting;
+        const bool conflict = !conflicting.Listen("127.0.0.1", port, settings, error);
+        bool conflictExplained = error.find("address already in use") != std::string::npos;
+#ifdef _WIN32
+        // Exclusive Windows listeners can reject a second bind with WSAEACCES.
+        conflictExplained |= error.find("permission denied") != std::string::npos;
+#endif
+        Check(conflict && conflictExplained &&
+              error.find("127.0.0.1:" + std::to_string(port)) != std::string::npos,
+              "real bind conflict names the endpoint and corrective action");
         listener.Stop();
         NetworkTransport client;
         const bool started = client.Connect("127.0.0.1", port, settings, error);
@@ -322,6 +332,11 @@ int main() {
         if (started) for (int i = 0; i < 20; ++i) Tick(client, now, events, .5);
         Check((!started && !error.empty()) || Count(events, Type::Disconnected) == 1,
               "asynchronous connection refusal has an explicit terminal diagnostic");
+        std::string diagnostic = started && !events.empty() ? events.back().data : error;
+        Check(diagnostic.find("connection refused") != std::string::npos &&
+              diagnostic.find("127.0.0.1:" + std::to_string(port)) != std::string::npos &&
+              diagnostic.find("host is listening") != std::string::npos,
+              "connection refusal identifies endpoint and host-listener check without raw-code guessing");
     }
     std::printf("SUMMARY checks=%d failures=%d\n", checks, failures);
     return failures ? 1 : 0;

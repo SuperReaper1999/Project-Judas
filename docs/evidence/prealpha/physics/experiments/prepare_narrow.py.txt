@@ -1,0 +1,17 @@
+from pathlib import Path
+import subprocess,shlex,shutil,hashlib,json,datetime
+root=Path.cwd();scratch=Path('/tmp/judas-prealpha-collision/matched');dest=root/'docs/evidence/prealpha/physics'
+old=dest/'MATCHED_BUILD.json'
+if old.exists():old.rename(dest/'MATCHED_FULL_PATCH_BUILD.json')
+for p in [scratch/'libjudas_engine_candidate.a',scratch/'scaling-candidate',scratch/'mesh-candidate']:
+ if p.exists():shutil.copyfile(p,p.with_name(p.name.replace('candidate','fullpatch')))
+# Keep common archive contents exact; replace only the three candidate physics objects.
+subprocess.run(['ar','r',str(scratch/'libjudas_engine_candidate.a')]+[str(root/'build/CMakeFiles/judas_engine.dir/src'/(n+'.o')) for n in ['PhysicsWorld.cpp','CollisionGeometry.cpp','Narrowphase.cpp']],check=True)
+commands=[];objects={}
+for target,label in [('judas_physics_scaling_benchmarks','scaling'),('judas_impact_mesh_cost_tests','mesh')]:
+ link=shlex.split((root/'build/CMakeFiles'/f'{target}.dir/link.txt').read_text());objs=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):];objects[label]={x:hashlib.sha256((root/'build'/x).read_bytes()).hexdigest() for x in objs}
+ for variant in ['accepted','candidate']:
+  cmd=['/usr/bin/c++','-O3','-DNDEBUG']+objs+['-o',str(scratch/f'{label}-{variant}'),str(scratch/f'libjudas_engine_{variant}.a')]+libs[1:]
+  commands.append(cmd);subprocess.run(cmd,cwd=root/'build',check=True)
+receipt={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'variant':'narrow separated first-arrival only; existing support/continuation unchanged','method':'Same common archive as matched rejected fullpatch experiment. Only three exact physics objects differ between accepted/candidate; HEAD source compile receipt retained in MATCHED_FULL_PATCH_BUILD.json. Same driver object(s), including current validation wrapper where configured, and shared libraries linked for both.','commands':commands,'driver_objects':objects,'candidate_sources':{n:hashlib.sha256((root/'src'/n).read_bytes()).hexdigest() for n in ['PhysicsWorld.cpp','CollisionGeometry.cpp','CollisionGeometry.h','Narrowphase.cpp','Narrowphase.h']},'binary_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in scratch.glob('*') if p.is_file()},'accepted_build_receipt':'MATCHED_FULL_PATCH_BUILD.json'}
+(dest/'MATCHED_BUILD.json').write_text(json.dumps(receipt,indent=2)+'\n');print('narrow matched binaries ready',flush=True)

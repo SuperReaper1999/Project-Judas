@@ -1,0 +1,25 @@
+PASS fresh fixture preserves previous role-boundary evidence
+PASS normal script asset registration
+PASS normal project loads: 
+PASS authored source shared by independent worlds
+PASS ordinary session state selects fixture role
+PASS ordinary public script world builds: 
+PASS session begins: 
+PASS ordinary session state selects fixture role
+PASS ordinary public script world builds: 
+PASS session begins: 
+PASS actual host begins content validation
+PASS actual host publishes bound socket
+PASS runtime connection endpoint is ordinary project session data
+PASS actual first fixedUpdate starts client session exactly once
+PASS join from fixedUpdate suppresses same-step duplicate rigid/gravity/motor simulation
+PASS joining step still advances local fixed clock exactly once
+PASS host registers real physical endpoint
+PASS fixed-callback join completes real content-matched multi-world transport handshake
+PASS ordinary project flag requests close from next fixed callback
+PASS close from client fixed callback executes once and ends connection
+PASS captured replica step does not integrate restored offline bodies midway through close
+PASS closing replica step advances local clock once
+PASS offline physics resumes once on the next full fixed step with original motion
+PASS role changes never duplicate callbacks or fixed clock advancement
+SUMMARY 24 checks 0 failures

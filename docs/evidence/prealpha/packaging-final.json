@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "suite": "prealpha-packaging",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "passed": true,
+  "skipped": 0,
+  "executed": 22,
+  "scope": "Python fixture staging/negative controls; not native Windows or Android execution"
+}

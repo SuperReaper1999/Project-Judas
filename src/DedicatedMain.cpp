@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "AssetDatabase.h"
 #include "GameSession.h"
 #include "InputSystem.h"
@@ -153,6 +154,7 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
 } // namespace
 
 int main(int argc, char** argv) {
+    if (HandleBuildIdentityArguments(argc, argv, "server")) return 0;
     if (argc < 2 || argc > 4) {
         std::fprintf(stderr, "Usage: judas_server project.judasproj [port=27999] [seconds=0]\n");
         return 1;

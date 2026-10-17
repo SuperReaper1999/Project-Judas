@@ -1,0 +1,12 @@
+--- accepted/PhysicsWorld.cpp
++++ PhysicsWorldFix.cpp
+@@ -1082,7 +1082,8 @@
+                 uncertifiedAdvance=true;
+                 break;
+             }
+-            const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
++            const bool concave=ba.shape.type==ShapeType::TriangleMesh||bb.shape.type==ShapeType::TriangleMesh;
++            const double closing=concave?speed:-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;
+             if (!(closing>0)) return finish+1;
+             double increment=gap/closing;
+             if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));

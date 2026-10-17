@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
-project(ProjectJudas C CXX)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/engine-version.json" judas_version_document)
+string(JSON judas_project_version GET "${judas_version_document}" version)
+string(REGEX REPLACE "-.*$" "" judas_project_version "${judas_project_version}")
+project(ProjectJudas VERSION "${judas_project_version}" LANGUAGES C CXX)
 
 if(WIN32)
     if(NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -25,6 +28,29 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include(cmake/JudasBuildIdentity.cmake)
+judas_build_identity("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/generated")
+file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/judas-build-info-$<CONFIG>.json"
+    INPUT "${CMAKE_CURRENT_BINARY_DIR}/generated/judas-build-info.json.in")
+add_library(judas_build_identity STATIC src/BuildIdentity.cpp src/BuildUpdate.cpp src/ToolProcess.cpp)
+set_target_properties(judas_build_identity PROPERTIES POSITION_INDEPENDENT_CODE ON)
+find_package(Threads REQUIRED)
+target_link_libraries(judas_build_identity PUBLIC Threads::Threads)
+target_include_directories(judas_build_identity PUBLIC src PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+target_compile_definitions(judas_build_identity PRIVATE JUDAS_BUILD_CONFIGURATION="$<CONFIG>")
+judas_warnings(judas_build_identity)
+add_executable(judas_build_identity_tests tests/BuildIdentityTests.cpp)
+target_link_libraries(judas_build_identity_tests PRIVATE judas_build_identity)
+judas_warnings(judas_build_identity_tests)
+option(JUDAS_BUILD_IDENTITY_ONLY "Configure only dependency-light build provenance checks" OFF)
+if(JUDAS_BUILD_IDENTITY_ONLY)
+    if(WIN32)
+        target_link_options(judas_build_identity_tests PRIVATE "/MANIFEST:EMBED"
+            "/MANIFESTINPUT:${CMAKE_CURRENT_SOURCE_DIR}/packaging/windows/judas.manifest")
+    endif()
+    return()
+endif()
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -311,7 +337,7 @@ target_link_libraries(judas_audio_backend PUBLIC Threads::Threads ${CMAKE_DL_LIB
 if(UNIX)
     target_link_libraries(judas_audio_backend PUBLIC m)
 endif()
-target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend judas_meshoptimizer judas_navigation_cook)
+target_link_libraries(judas_engine PUBLIC judas_build_identity judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend judas_meshoptimizer judas_navigation_cook)
 judas_warnings(judas_engine)
 if(WIN32)
     target_link_libraries(judas_engine PUBLIC ws2_32)
@@ -356,31 +382,6 @@ add_library(judas_imgui STATIC
 )
 target_include_directories(judas_imgui PUBLIC third_party/imgui third_party/imgui/backends ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_imgui PUBLIC SDL2::SDL2)
-
-# Identify the editor's built milestone; ordinary fixes/docs are not milestones.
-# Archives without Git metadata retain the current released milestone fallback.
-set(JUDAS_EDITOR_MILESTONE 76)
-execute_process(COMMAND git log -100 --format=%s
-    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-    OUTPUT_VARIABLE JUDAS_MILESTONE_SUBJECTS ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-string(REPLACE "\n" ";" JUDAS_MILESTONE_SUBJECTS "${JUDAS_MILESTONE_SUBJECTS}")
-foreach(subject IN LISTS JUDAS_MILESTONE_SUBJECTS)
-    if(subject MATCHES "^(Add|Implement|Complete|Checkpoint) M[0-9]+|^M[0-9]+|^Milestone [0-9]+")
-        string(REGEX MATCHALL "M[0-9]+|Milestone [0-9]+" milestones "${subject}")
-        foreach(milestone IN LISTS milestones)
-            string(REGEX REPLACE "[^0-9]" "" number "${milestone}")
-            if(number GREATER JUDAS_EDITOR_MILESTONE)
-                set(JUDAS_EDITOR_MILESTONE ${number})
-            endif()
-        endforeach()
-    endif()
-endforeach()
-foreach(ref .git/HEAD .git/refs/heads/main .git/packed-refs)
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${ref}")
-        set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${ref}")
-    endif()
-endforeach()
-configure_file(cmake/JudasEditorMilestone.h.in generated/JudasEditorMilestone.h @ONLY)
 
 add_executable(judas_editor
     src/editor/EditorMain.cpp
@@ -1682,10 +1683,6 @@ add_executable(judas_mod_application_tests tests/ModApplicationTests.cpp src/App
 target_link_libraries(judas_mod_application_tests PRIVATE judas_engine)
 judas_warnings(judas_mod_application_tests)
 
-if(WIN32)
-    include(cmake/JudasWindowsSdk.cmake)
-endif()
-
 # M78 correction: saved-scene dependent-bake workflow, no runtime subsystem.
 add_executable(judas_navigation_dependency_tests tests/NavigationDependencyTests.cpp)
 target_link_libraries(judas_navigation_dependency_tests PRIVATE judas_world_authoring)
@@ -2085,3 +2082,14 @@ judas_warnings(judas_network_render_tests)
 add_executable(judas_network_boundary_tests tests/NetworkBoundaryTests.cpp)
 target_link_libraries(judas_network_boundary_tests PRIVATE judas_engine)
 judas_warnings(judas_network_boundary_tests)
+
+add_executable(judas_prealpha_lifecycle_tests tests/PreAlphaLifecycleTests.cpp)
+target_link_libraries(judas_prealpha_lifecycle_tests PRIVATE judas_engine)
+judas_warnings(judas_prealpha_lifecycle_tests)
+
+# Finalize native packaging only after every subsystem has declared its tools.
+if(WIN32)
+    include(cmake/JudasWindowsSdk.cmake)
+endif()
+include(cmake/JudasSdk.cmake)
+include(cmake/JudasValidation.cmake)

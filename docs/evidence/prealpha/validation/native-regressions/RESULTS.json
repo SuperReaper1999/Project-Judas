@@ -1,0 +1,125 @@
+[
+  {
+    "name": "impact_robustness",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:53:47Z",
+    "binarySha256": "e2bb3f50a8899a6ecf0e2c49704e47dec81d975dae2106f2f8a7e3fe29079ac6",
+    "exit": 0,
+    "seconds": 0.8657988249997288
+  },
+  {
+    "name": "kinematic",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:53:48Z",
+    "binarySha256": "5425926b8296e46768df0cfca884630ba2251f812005b522d3d5ad8a3b07b2c9",
+    "exit": 0,
+    "seconds": 0.03221127800134127
+  },
+  {
+    "name": "post_consumer_ragdoll",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_ragdoll_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:53:48Z",
+    "binarySha256": "9dbccc0a71404edf1fd14e40c5358d3988c5885b35cd45f9a5cc478ee3556da0",
+    "exit": 0,
+    "seconds": 21.312083146000077
+  },
+  {
+    "name": "physical_balance_controller",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:09Z",
+    "binarySha256": "f330599d23c8437d88946eee542e11a40a90ad14edb350246f974676c60419cf",
+    "exit": 0,
+    "seconds": 2.671489238000504
+  },
+  {
+    "name": "joint",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:12Z",
+    "binarySha256": "d73a02896d1268b6a59889d7f6a35a120b2779287c70a029966db0a815c201fe",
+    "exit": 0,
+    "seconds": 0.0320349339999666
+  },
+  {
+    "name": "contact_cache",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_cache_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:12Z",
+    "binarySha256": "60b998fa1fb2cf6ab0b3fed6884bdaf0f85abc4fd683a21842f162fa25faa376",
+    "exit": 0,
+    "seconds": 0.0319842549997702
+  },
+  {
+    "name": "prefab",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_prefab_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:12Z",
+    "binarySha256": "052a633a58295d7db34848962c9953743f78bc27e408e7619ca2bb14b9dd416b",
+    "exit": 0,
+    "seconds": 0.0643260390006617
+  },
+  {
+    "name": "save_storage",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/native-regressions/m61-storage-prealpha"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:12Z",
+    "binarySha256": "ea5087b9a62b61a991d6c58b178a04ecc5513092ee4d9ef9634a658eb9b4ed62",
+    "exit": 0,
+    "seconds": 0.1143690829994739
+  },
+  {
+    "name": "ragdoll",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/native-regressions/ragdoll"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:13Z",
+    "binarySha256": "3c72e92e51599372d9a5940d172d54b4c214cf3ec9db66f01faf47fdb518eca5",
+    "exit": 0,
+    "seconds": 0.26457810800093284
+  },
+  {
+    "name": "script_developer_tools",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/native-regressions/developer-fixture",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:13Z",
+    "binarySha256": "5b0c1b354b163180030cee188fa9d571b3a64eb0f3c6512b3d07ba684508ae12",
+    "exit": 1,
+    "seconds": 0.31471167400013655
+  }
+]

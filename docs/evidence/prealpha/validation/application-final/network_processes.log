@@ -1,0 +1,11 @@
+{
+  "host_delivered": 1,
+  "client_delivered": 1,
+  "crate_endpoint_error_m": 0.0,
+  "host_sent_bytes": 525911,
+  "host_received_bytes": 11248,
+  "client_sent_bytes": 11332,
+  "client_received_bytes": 525911,
+  "host_snapshot_count": 121,
+  "client_snapshot_count": 118
+}

@@ -1,0 +1,58 @@
+from pathlib import Path
+import subprocess,shlex,shutil,json,hashlib,datetime
+root=Path.cwd();scratch=Path('/tmp/judas-prealpha-collision/matched');temp=scratch/'scalar-source';temp.mkdir(exist_ok=True);dest=root/'docs/evidence/prealpha/physics'
+(dest/'experiments/PerPatchInitialArrival.patch').write_text(subprocess.check_output(['git','diff','--','src/CollisionGeometry.cpp','src/CollisionGeometry.h','src/PhysicsWorld.cpp'],text=True))
+(temp/'CollisionGeometry.h').write_bytes(subprocess.check_output(['git','show','HEAD:src/CollisionGeometry.h']))
+s=subprocess.check_output(['git','show','HEAD:src/PhysicsWorld.cpp'],text=True)
+old='''            const auto manifold=PairAt(a,b,pa,pb,time,reach);
+            if (!manifold.count) return finish+1;
+            const Contact* nearest=&manifold.points[0];
+            for (int k=1;k<manifold.count;++k)
+                if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
+            const double gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);'''
+new='''            const bool firstMesh=ba.shape.type==ShapeType::TriangleMesh;
+            const bool mesh=firstMesh||bb.shape.type==ShapeType::TriangleMesh;
+            double gap=0;glm::dvec3 normal(0);
+            if(mesh){
+                PhysicsWorkTimer geometryTimer(work.geometry,work.active);
+                const auto first=PrimitiveAt(ba.shape,ImpactPoseAt(a,time).pose,pa);
+                const auto second=PrimitiveAt(bb.shape,ImpactPoseAt(b,time).pose,pb);
+                const auto& query=firstMesh?second:first;
+                const auto& targetMesh=firstMesh?first:second;
+                GeometryDistance distance;
+                if(query.shape.type==ShapeType::Box||query.shape.type==ShapeType::ConvexHull)
+                    distance=PolyGeometry(query,targetMesh,reach);
+                else {
+                    const auto center=PrimitiveCenter(query);const auto rotation=PrimitiveRotation(query);
+                    const double half=query.shape.type==ShapeType::Capsule?query.shape.halfHeight:0;
+                    distance=SegmentGeometry(center-rotation[1]*half,center+rotation[1]*half,query.shape.radius,targetMesh,reach);
+                }
+                if(!distance.valid)return finish+1;
+                gap=distance.gap;
+            }else{
+                const auto manifold=PairAt(a,b,pa,pb,time,reach);
+                if (!manifold.count) return finish+1;
+                const Contact* nearest=&manifold.points[0];
+                for (int k=1;k<manifold.count;++k)
+                    if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
+                gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
+                normal=nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
+            }'''
+assert old in s;s=s.replace(old,new)
+s=s.replace('''            const double closing=-glm::dot(relative,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal))+angular;''','''            // A closest patch's plane is not a separating plane for a concave
+            // union. Its SAT separation is a distance lower bound; the full
+            // relative surface-speed bound remains valid across patch changes.
+            const double closing=mesh?speed:-glm::dot(relative,normal)+angular;''')
+s=s.replace('''            if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal)));''','''            if(angular>0&&!mesh) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,normal));''')
+(temp/'PhysicsWorld.cpp').write_text(s)
+flags=Path('build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']:args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+cmd=['/usr/bin/c++','-I'+str(temp)]+args+['-c',str(temp/'PhysicsWorld.cpp'),'-o',str(temp/'PhysicsWorld.cpp.o')];subprocess.run(cmd,check=True)
+shutil.copyfile(scratch/'libjudas_engine_accepted.a',scratch/'libjudas_engine_scalar.a');subprocess.run(['ar','r',str(scratch/'libjudas_engine_scalar.a'),str(temp/'PhysicsWorld.cpp.o')],check=True)
+commands=[cmd]
+for target,label in [('judas_physics_scaling_benchmarks','scaling'),('judas_impact_mesh_cost_tests','mesh')]:
+ link=shlex.split((root/'build/CMakeFiles'/f'{target}.dir/link.txt').read_text());objs=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):]
+ cmd=['/usr/bin/c++','-O3','-DNDEBUG']+objs+['-o',str(scratch/f'{label}-scalar'),str(scratch/'libjudas_engine_scalar.a')]+libs[1:]
+ commands.append(cmd);subprocess.run(cmd,cwd=root/'build',check=True)
+(dest/'SCALAR_BUILD.json').write_text(json.dumps({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'commands':commands,'method':'Accepted common archive + only prototype PhysicsWorld object replaced. Original CollisionGeometry/Narrowphase APIs and objects unchanged.','source_sha256':hashlib.sha256((temp/'PhysicsWorld.cpp').read_bytes()).hexdigest(),'binaries':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in scratch.glob('*scalar*') if p.is_file()}},indent=2)+'\n')
+print('scalar prototype binaries ready',flush=True)

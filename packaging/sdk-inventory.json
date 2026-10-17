@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "tools": [
+    "judas", "judas_editor", "judas_export", "judas_scene_author",
+    "judas_navigation_bake", "judas_liquid_bake", "judas_environment_bake",
+    "judas_deformable_bake", "judas_collision_cook", "judas_model_import_cli",
+    "judas_terrain_author", "judas_volume_author", "judas_mod", "judas_cook",
+    "judas_script_check", "judas_save", "judas_server"
+  ],
+  "windows_tools": ["judas_windows_readiness_tests"],
+  "files": [
+    "LICENSE", "README.md", "docs/judas.d.ts", "docs/judasmod.example.json",
+    "third_party/RUNTIME_NOTICES.txt", "third_party/imgui/LICENSE.txt",
+    "third_party/android/SDL-LICENSE.txt", "third_party/android/GLM-COPYING.txt"
+  ],
+  "directories": ["assets/fonts", "docs/judasjs"],
+  "current_markdown": "docs",
+  "excluded_markdown": ["docs/DontReadMe_Final.md", "docs/FTFT.md"]
+}

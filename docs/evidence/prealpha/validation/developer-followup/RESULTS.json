@@ -1,0 +1,14 @@
+[
+  {
+    "name": "script_developer_tools",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:54:29Z",
+    "binarySha256": "5b0c1b354b163180030cee188fa9d571b3a64eb0f3c6512b3d07ba684508ae12",
+    "exit": 0,
+    "seconds": 0.31495194299895957
+  }
+]

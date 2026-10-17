@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-17T21:31:51.098948+00:00",
+  "sourceRevision": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M README.md\n D cmake/JudasEditorMilestone.h.in\n M cmake/JudasWindowsSdk.cmake\n M docs/ANDROID.md\n M docs/ARCHITECTURE.md\n M docs/JUDASJS.md\n M docs/M96_UI_TOOLKIT.md\n M docs/WINDOWS.md\n M docs/judasjs/getting-started.md\n M packaging/windows/Build-Windows.ps1\n M scripts/check_judasjs_api.mjs\n M scripts/m99_final_checks.py\n M src/AssetCookMain.cpp\n M src/CollisionGeometry.cpp\n M src/CollisionGeometry.h\n M src/DedicatedMain.cpp\n M src/ExportMain.cpp\n M src/NetworkSession.cpp\n M src/NetworkTransport.cpp\n M src/PhysicsWorld.cpp\n M src/ProjectExporter.cpp\n M src/WorldOrigin.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorMain.cpp\n M src/editor/EditorMilestoneNotice.cpp\n M src/editor/EditorMilestoneNotice.h\n M src/editor/EditorPanels.cpp\n M src/main.cpp\n M tests/ImpactMeshCostTests.cpp\n M tests/NetworkSessionTests.cpp\n M tests/NetworkTransportTests.cpp\n M tests/WindowsReadinessTests.cpp\n M tools/CollisionCook.cpp\n M tools/DeformableBake.cpp\n M tools/EnvironmentBake.cpp\n M tools/LiquidBake.cpp\n M tools/ModTool.cpp\n M tools/ModelImportCli.cpp\n M tools/NavigationBake.cpp\n M tools/SaveEvolutionMain.cpp\n M tools/SceneAuthor.cpp\n M tools/ScriptCheck.cpp\n M tools/TerrainAuthor.cpp\n M tools/VolumeTerrainAuthor.cpp\n M tools/build_android.py",
+  "manifestSha256": "b16706fcb72c63d9637c0fa43f4418f4d3055d95db8bd00a599d7abea5d5a0a5",
+  "trackedDiffSha256": "a418ae4b9a10214e21415463c54e1b992756bb6503c53d49fe9263bd486b3568",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [],
+  "tests": [
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+      ],
+      "error": "Expecting value: line 1 column 1 (char 0)",
+      "name": "rigid-contact"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+    "source_fingerprint": "3a46046f1a273c4f57affceed39c7143933699b18c5fc5fed00ad16fe24930a8",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "e0f1302e237146635b5ad8e675cb5d1feb6122e02454f55123cfeed71ff00515"
+  },
+  "passed": false,
+  "finishedUtc": "2026-10-17T21:31:52.456187+00:00",
+  "sourceRevisionAfter": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M README.md\n D cmake/JudasEditorMilestone.h.in\n M cmake/JudasWindowsSdk.cmake\n M docs/ANDROID.md\n M docs/ARCHITECTURE.md\n M docs/JUDASJS.md\n M docs/M96_UI_TOOLKIT.md\n M docs/WINDOWS.md\n M docs/judasjs/getting-started.md\n M packaging/windows/Build-Windows.ps1\n M scripts/check_judasjs_api.mjs\n M scripts/m99_final_checks.py\n M src/AssetCookMain.cpp\n M src/CollisionGeometry.cpp\n M src/CollisionGeometry.h\n M src/DedicatedMain.cpp\n M src/ExportMain.cpp\n M src/NetworkSession.cpp\n M src/NetworkTransport.cpp\n M src/PhysicsWorld.cpp\n M src/ProjectExporter.cpp\n M src/WorldOrigin.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorMain.cpp\n M src/editor/EditorMilestoneNotice.cpp\n M src/editor/EditorMilestoneNotice.h\n M src/editor/EditorPanels.cpp\n M src/main.cpp\n M tests/ImpactMeshCostTests.cpp\n M tests/NetworkSessionTests.cpp\n M tests/NetworkTransportTests.cpp\n M tests/WindowsReadinessTests.cpp\n M tools/CollisionCook.cpp\n M tools/DeformableBake.cpp\n M tools/EnvironmentBake.cpp\n M tools/LiquidBake.cpp\n M tools/ModTool.cpp\n M tools/ModelImportCli.cpp\n M tools/NavigationBake.cpp\n M tools/SaveEvolutionMain.cpp\n M tools/SceneAuthor.cpp\n M tools/ScriptCheck.cpp\n M tools/TerrainAuthor.cpp\n M tools/VolumeTerrainAuthor.cpp\n M tools/build_android.py",
+  "trackedDiffSha256After": "a418ae4b9a10214e21415463c54e1b992756bb6503c53d49fe9263bd486b3568",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "9cf491a13dbb1cd82ab9ab9b916e255af2d579d2",
+    "source_fingerprint": "3a46046f1a273c4f57affceed39c7143933699b18c5fc5fed00ad16fe24930a8",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "e0f1302e237146635b5ad8e675cb5d1feb6122e02454f55123cfeed71ff00515"
+  }
+}

@@ -49,6 +49,8 @@ Keep game data separate and rebuild presentation in `start`/modern `restore`.
 `handle`, `id` are plain fields: do not retarget them casually.
 `text`, `font`, `textKey`, `direction`, `textAlignment`, `texture`, `visible`,
 `enabled`, `value` retain their existing validated setters. `text` clears textKey.
+Ordinary labels preserve length-bearing UTF-8, including embedded NUL; editable
+TextInput values additionally reject NUL and line breaks without changing the old value.
 Fonts/textures accept empty or a registered, nonmissing asset of the right type.
 `value` must be finite and in authored min/max; toggle uses numeric 0/1.
 `direction`: auto/ltr/rtl. `textAlignment`: left/right/center/start/end; legacy

@@ -114,6 +114,7 @@ export default class extends Base {
    n=="animation-motion"?yes("controlled")&&yes("moved")&&yes("frameGuard")&&state.find("\"markers\":0")==std::string::npos:n=="joint"?yes("controlled"):n=="animation"?yes("ready")&&yes("fade")&&yes("layers"):
    n=="ragdoll"?yes("entered")&&yes("left"):n=="character"?yes("controlled")&&yes("launched"):
    yes("invalid")&&yes("throws")&&yes("characterThrows")&&yes("lookupNull")&&yes("staleLookup");
+  if(n=="ui-controls")Check(yes("inputBounds"),"editable-field NUL/newline/over-capacity rejection is atomic");
   Check(ok,n+" documented outcome");uint64_t stoppedEpoch=0;
   if(n=="deformable"){auto* d=world.RuntimeDeformable(owner,error);stoppedEpoch=d?d->generation:0;}
   game.End();

@@ -927,6 +927,7 @@ declare module "judas" {
     configure(options:UIControlOptions):void;
     readonly layout:UIElementLayout;
     setLayout(patch:Partial<UIElementLayout>):UIElementLayout;
+    /** Labels preserve length-bearing UTF-8 including NUL; TextInput rejects NUL/line breaks and over-capacity values atomically. */
     text: string;
     /** Assigning text clears an authored textKey. Assigning textKey restores localization binding. */
     textKey: string;

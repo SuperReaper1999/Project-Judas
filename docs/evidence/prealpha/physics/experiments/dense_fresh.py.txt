@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess,shlex,json,datetime,hashlib,time,os,csv,platform
+root=Path.cwd();out=root/'docs/evidence/prealpha/physics/dense-current-fresh';out.mkdir(parents=True,exist_ok=True);binary=root/'build/judas_physics_stress_live_benchmark'
+link=shlex.split((root/'build/CMakeFiles/judas_physics_stress_live_benchmark.dir/link.txt').read_text());objs=[x for x in link if x.endswith('.o')];libs=link[link.index('libjudas_engine.a'):]
+linkcmd=['/usr/bin/c++','-O3','-DNDEBUG']+objs+['-o',str(binary),'/tmp/judas-prealpha-collision/matched/libjudas_engine_accepted.a']+libs[1:]
+linkcmd=["cmake", "--build", "build", "--target", "judas_physics_stress_live_benchmark", "-j2"]
+scene=root/'projects/physics_stress_lab/Scenes/room1024.judas';cmd=[str(binary),str(scene),str(out/'run'),'105','270','0','0','1','0.016666667','1','0','1'];env=os.environ.copy();env.update(JUDAS_ENGINE_ROOT=str(root),SDL_AUDIODRIVER='dummy',LC_ALL='C')
+receipt={'utc_start':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'physics_sources_byte_exact_HEAD':not subprocess.check_output(['git','diff','--name-only','--','src/PhysicsWorld.cpp','src/CollisionGeometry.cpp','src/CollisionGeometry.h'],text=True).strip(),'binary_sha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'scene_sha256':hashlib.sha256(scene.read_bytes()).hexdigest(),'source_object_sha256':{n:hashlib.sha256((root/'build'/n).read_bytes()).hexdigest() for n in objs},'link_command':linkcmd,'command':cmd,'outer_timeout_seconds':60,'notes':['Exact M91 frozen scene matches current registered project scene.','Fresh current application build; physics source restored byte-exact accepted HEAD. No physics optimization shipped.','Single current diagnostic, not a new before/after improvement claim.','Application driver objects individually hashed after a fresh affected-target build; this is not a clean full build claim.','No owner CPU-intensive build/benchmark concurrent. Desktop/GPU activity not controlled.']}
+start=time.monotonic()
+with (out/'stdout.log').open('w') as log:
+ try:p=subprocess.run(cmd,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=60);receipt['exit']=p.returncode;receipt['timed_out']=False
+ except subprocess.TimeoutExpired:receipt['exit']=None;receipt['timed_out']=True
+receipt['wall_seconds']=time.monotonic()-start;receipt['utc_end']=datetime.datetime.now(datetime.timezone.utc).isoformat();path=out/'run/steps.csv';rows=list(csv.DictReader(path.open())) if path.exists() else [];receipt['completed_steps']=len(rows)
+if rows:
+ values=sorted(float(r['fixed_ms']) for r in rows);receipt['fixed_ms']={'median':values[len(values)//2],'p95_nearest_rank':values[max(0,__import__('math').ceil(.95*len(values))-1)],'maximum':values[-1]};receipt['last_digest']=rows[-1]['trajectory_digest'];receipt['nonfinite_fields']=sum(int(r['nonfinite_fields']) for r in rows);receipt['worst_step']=max(rows,key=lambda r:float(r['fixed_ms']))
+(out/'RESULT.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({k:receipt.get(k) for k in ['exit','timed_out','wall_seconds','completed_steps','fixed_ms','worst_step']},indent=2),flush=True)

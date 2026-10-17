@@ -1,0 +1,18 @@
+from pathlib import Path
+import subprocess,shlex,shutil,json,hashlib,datetime
+root=Path.cwd();scratch=Path('/tmp/judas-prealpha-collision/matched');old=scratch/'accepted-source';dest=root/'docs/evidence/prealpha/physics'
+flags=Path('build/CMakeFiles/judas_engine.dir/flags.make').read_text().splitlines();args=[]
+for name in ['CXX_DEFINES','CXX_INCLUDES','CXX_FLAGS']:args+=shlex.split(next(x.split('=',1)[1] for x in flags if x.startswith(name+' =')))
+commands=[]
+for name in ['PhysicsWorld.cpp','CollisionGeometry.cpp','Narrowphase.cpp']:
+ cmd=['/usr/bin/c++','-I'+str(old)]+args+['-c',str(old/name),'-o',str(old/(name+'.o'))]
+ commands.append(cmd);subprocess.run(cmd,check=True)
+subprocess.run(['ar','r',str(scratch/'libjudas_engine_accepted.a')]+[str(old/(n+'.o')) for n in ['PhysicsWorld.cpp','CollisionGeometry.cpp','Narrowphase.cpp']],check=True)
+for target,label in [('judas_physics_scaling_benchmarks','scaling'),('judas_impact_mesh_cost_tests','mesh')]:
+ link=shlex.split((root/'build/CMakeFiles'/f'{target}.dir/link.txt').read_text());obj=next(x for x in link if x.endswith('.o'));libs=link[link.index('libjudas_engine.a'):]
+ for variant in ['accepted','candidate']:
+  selected=[str(scratch/f'libjudas_engine_{variant}.a')]+libs[1:]
+  cmd=['/usr/bin/c++','-O3','-DNDEBUG',obj,'-o',str(scratch/f'{label}-{variant}')]+selected
+  commands.append(cmd);subprocess.run(cmd,cwd=root/'build',check=True)
+receipt={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'accepted_head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'commands':commands,'method':'Common candidate engine archive copied twice; accepted variant replaces only PhysicsWorld, CollisionGeometry and Narrowphase objects compiled from exact accepted HEAD sources and original CollisionGeometry header. Unchanged Narrowphase header is resolved from current source to avoid pragma-once duplication (exact HEAD bytes retained as Narrowphase.original.h). Same benchmark driver object and support libraries linked into both variants.','source_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in old.glob('*') if p.suffix in ['.h','.cpp']},'candidate_sources':{n:hashlib.sha256((root/'src'/n).read_bytes()).hexdigest() for n in ['PhysicsWorld.cpp','CollisionGeometry.cpp','CollisionGeometry.h','Narrowphase.cpp','Narrowphase.h']},'binary_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in scratch.glob('*') if p.is_file()},'benchmark_driver_sources':{n:hashlib.sha256((root/'tests'/n).read_bytes()).hexdigest() for n in ['PhysicsScalingBenchmarks.cpp','ImpactMeshCostTests.cpp']}}
+(dest/'MATCHED_BUILD.json').write_text(json.dumps(receipt,indent=2)+'\n');print('matched binaries ready',scratch,flush=True)

@@ -3,6 +3,7 @@
 #include <atomic>
 #include <future>
 #include <string>
+#include "BuildUpdate.h"
 
 // Editor-only notification. Never updates the installation or local repository.
 class EditorMilestoneNotice {
@@ -11,7 +12,7 @@ public:
     void Check(bool manual = false);
     void Draw(std::string& status);
 private:
-    struct Result { int milestone = 0; std::string sha; bool available = false; };
+    using Result = BuildUpdateResult;
     static Result Query(const std::atomic<bool>& cancelled);
     std::atomic<bool> m_cancelled{false};
     std::future<Result> m_pending;

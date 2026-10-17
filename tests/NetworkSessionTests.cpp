@@ -470,7 +470,8 @@ int main(int argc, char** argv) {
               !remote.SetOwner(boxId, remote.PeerId(), error) &&
               !remote.SetState(boxId, "{\"charge\":999}", error),
               "client cannot publish authoritative registration, ownership or replicated game state");
-        Check(!server.Replicate(4, server.PeerId(), "{}", rejectedId, error),
+        Check(!server.Replicate(4, server.PeerId(), "{}", rejectedId, error) &&
+              error.find("entity 4") != std::string::npos && error.find("parented") != std::string::npos,
               "unsupported hierarchy replication is rejected explicitly");
         Check(driver.Until([&] { return remote.Entries().size() == 2 && other.Net().Entries().size() == 2; }),
               "both independent clients receive server registrations");

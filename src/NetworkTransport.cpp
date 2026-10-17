@@ -55,7 +55,21 @@ bool Nonblocking(Socket socket) {
 using SockLength = socklen_t;
 #endif
 std::string Diagnostic(const char* operation, int error) {
-    return std::string(operation) + " (socket error " + std::to_string(error) + ")";
+    const char* detail = "";
+#ifdef _WIN32
+    if (error == WSAECONNREFUSED) detail = ": connection refused; check that the host is listening at this address and port";
+    else if (error == WSAEADDRINUSE) detail = ": address already in use; choose another port or close the existing listener";
+    else if (error == WSAETIMEDOUT) detail = ": connection timed out; check the endpoint and network reachability";
+    else if (error == WSAENETUNREACH || error == WSAEHOSTUNREACH) detail = ": destination unreachable; check the address and route";
+    else if (error == WSAEACCES) detail = ": permission denied; check local network policy";
+#else
+    if (error == ECONNREFUSED) detail = ": connection refused; check that the host is listening at this address and port";
+    else if (error == EADDRINUSE) detail = ": address already in use; choose another port or close the existing listener";
+    else if (error == ETIMEDOUT) detail = ": connection timed out; check the endpoint and network reachability";
+    else if (error == ENETUNREACH || error == EHOSTUNREACH) detail = ": destination unreachable; check the address and route";
+    else if (error == EACCES || error == EPERM) detail = ": permission denied; check local network policy";
+#endif
+    return std::string(operation) + detail + " (socket error " + std::to_string(error) + ")";
 }
 bool Address(const std::string& text, uint16_t port, sockaddr_in& address, std::string& error) {
     address = {};
@@ -103,6 +117,7 @@ struct NetworkTransport::Impl {
     };
     struct Peer {
         Socket socket = InvalidSocket;
+        std::string endpoint; // Diagnostics only; never used for routing or authority.
         bool connecting = false;
         double created = 0, received = 0;
         double sendTokens = 0, receiveTokens = 0;
@@ -200,7 +215,9 @@ bool NetworkTransport::Listen(const std::string& numericIPv4, uint16_t port,
 #endif
     if (!Nonblocking(socket) || bind(socket, reinterpret_cast<sockaddr*>(&address), sizeof(address)) != 0 ||
         listen(socket, static_cast<int>(settings.maxPeers)) != 0) {
-        error = Diagnostic("listen/bind failed", LastError()); Close(socket); return false;
+        const int code = LastError();
+        const auto operation = "listen/bind failed at " + numericIPv4 + ":" + std::to_string(port);
+        error = Diagnostic(operation.c_str(), code); Close(socket); return false;
     }
     SockLength length = sizeof(address);
     if (getsockname(socket, reinterpret_cast<sockaddr*>(&address), &length) != 0) {
@@ -230,12 +247,15 @@ bool NetworkTransport::Connect(const std::string& numericIPv4, uint16_t port,
     }
     ConfigurePeer(socket);
     const int result = connect(socket, reinterpret_cast<sockaddr*>(&address), sizeof(address));
-    if (result != 0 && !Connecting(LastError())) {
-        error = Diagnostic("connect failed", LastError()); Close(socket); return false;
+    const int connectError = result != 0 ? LastError() : 0;
+    if (result != 0 && !Connecting(connectError)) {
+        const auto operation = "connect failed to " + numericIPv4 + ":" + std::to_string(port);
+        error = Diagnostic(operation.c_str(), connectError); Close(socket); return false;
     }
     m_impl->settings = settings;
     m_impl->stats = {};
     m_impl->peers.emplace(1, m_impl->NewPeer(socket, result != 0));
+    m_impl->peers.at(1).endpoint = numericIPv4 + ":" + std::to_string(port);
     if (result == 0) {
         ++m_impl->stats.connections;
         m_impl->pendingEvents.push_back({Event::Connected, 1, {}});
@@ -321,7 +341,11 @@ void NetworkTransport::Poll(double monotonicSeconds) {
                 SockLength length = sizeof(code);
                 if (getsockopt(peer.socket, SOL_SOCKET, SO_ERROR, reinterpret_cast<char*>(&code), &length) != 0)
                     code = LastError();
-                if (code) { impl.Remove(id, Diagnostic("connect failed", code), true); continue; }
+                if (code) {
+                    const auto operation = "connect failed to " + peer.endpoint;
+                    impl.Remove(id, Diagnostic(operation.c_str(), code), true);
+                    continue;
+                }
                 peer.connecting = false;
                 peer.received = impl.now;
                 ++impl.stats.connections;

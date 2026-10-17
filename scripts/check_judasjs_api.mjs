@@ -2,12 +2,16 @@
 // Developer-only AST/typing/drift verification. No engine/runtime dependencies.
 import fs from 'node:fs';
 import path from 'node:path';
-import {createRequire} from 'node:module';
-const require=createRequire(import.meta.url);
+import {fileURLToPath} from 'node:url';
+import {loadTypeScript} from './typescript_tooling.mjs';
 const args=process.argv.slice(2);
 const option=n=>{const i=args.indexOf(n);return i<0?undefined:args[i+1];};
-const ts=require(option('--typescript')||process.env.JUDAS_TYPESCRIPT||'typescript');
-const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
+if(args.includes('--help')){
+ console.log('Usage: node scripts/check_judasjs_api.mjs [--typescript MODULE] [--runtime SURFACE.json] [--write]\nOptional checker: npm ci --prefix tools/verification (no runtime dependency).');
+ process.exit(0);
+}
+const ts=loadTypeScript(option('--typescript'));
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'src/ScriptSystem.cpp'),'utf8');
 const nativeSource=source+'\n'+fs.readFileSync(path.join(root,'src/ScriptLocalMultiplayer.inl'),'utf8')+'\n'+fs.readFileSync(path.join(root,'src/ScriptNetwork.inl'),'utf8');
 const library=source.match(/const char\* library=R"JS\(([\s\S]*?)\)JS";/)?.[1];
@@ -89,7 +93,7 @@ const schema={checkpoint:'84121564230242a404785af4d60a1475cdb83f4c + M99 optiona
 if(args.includes('--write-inventory')){
  fs.writeFileSync(mapPath,JSON.stringify(schema,null,2)+'\n');
  const rows=schema.symbols.map(s=>`| \`${s.symbol}\` | ${s.native.map(n=>'`'+n+'`').join(', ')||'JS wrapper/data'} | [declaration](../judas.d.ts) | [reference](${path.basename(s.reference)}) |`);
- fs.writeFileSync(path.join(root,'docs/judasjs/API_INVENTORY.md'),'# Current public JudasJS inventory\n\nCurrent M99 public module based on checkpoint `'+schema.checkpoint+'`. M99 adds optional network sessions and NetworkEntity handles; see [networking](network.md). M98 remains provisionally promoted pending combined M98/M99 human validation. Human/platform acceptance remains separate from API coverage.\nEach row is a runtime export/member (constructors and plain handle fields included).\nNative dispatcher operations are implementation details, not additional JS APIs.\n\n| Runtime symbol | Native bridge operation | Type | Reference |\n|---|---|---|---|\n'+rows.join('\n')+'\n\n## Lifecycle and dynamic exceptions\n\n'+schema.callbacks.map(n=>'`'+n+'`').join(', ')+' are structural ScriptBehaviour callbacks, not module exports.\n\n'+Object.entries(schema.exceptions).map(([k,v])=>'- **'+k+'**: '+v).join('\n')+'\n\nThe machine check fails missing/phantom exports/members, getter/setter drift and inventory drift.\nStructured return/configuration types and behavioural semantics require source review; it is not full semantic certification.\n');
+ fs.writeFileSync(path.join(root,'docs/judasjs/API_INVENTORY.md'),'# Current public JudasJS inventory\n\nCurrent public module based on checkpoint `'+schema.checkpoint+'`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.\nEach row is a runtime export/member (constructors and plain handle fields included).\nNative dispatcher operations are implementation details, not additional JS APIs.\n\n| Runtime symbol | Native bridge operation | Type | Reference |\n|---|---|---|---|\n'+rows.join('\n')+'\n\n## Lifecycle and dynamic exceptions\n\n'+schema.callbacks.map(n=>'`'+n+'`').join(', ')+' are structural ScriptBehaviour callbacks, not module exports.\n\n'+Object.entries(schema.exceptions).map(([k,v])=>'- **'+k+'**: '+v).join('\n')+'\n\nThe machine check fails missing/phantom exports/members, getter/setter drift and inventory drift.\nStructured return/configuration types and behavioural semantics require source review; it is not full semantic certification.\n');
 }
 function checkSurface(declarations){
  const missing=symbols.filter(k=>!declarations.has(k)),phantom=[...declarations.keys()].filter(k=>!runtime.has(k));

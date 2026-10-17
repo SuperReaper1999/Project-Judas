@@ -51,18 +51,25 @@ runtime for both ABIs, compiles SDL/Judas Java bootstrap code, creates DEX/resou
 strips staging copies of native libraries, aligns and signs an installable APK.
 `--shadows off` is the mobile default; `--shadows on` enables 512² maps.
 This is renderer quality, not a simulation setting. `--abis arm64-v8a` or `--abis x86_64` builds one ABI. `--cache`, `--sdk`, `--jobs`,
-`--exporter`, `--desktop-runtime`, `--id`, `--name` and `--version-code` customize
+`--exporter`, `--desktop-runtime`, `--id`, `--name`, `--version-code` and `--version-name` customize
 the workflow. Use a distinct stable application ID per game. Desktop and mobile
 read the **same ordinary project scripts/scenes/assets**.
 
 Default signing uses a local cached **development** key and a debuggable manifest.
-It is suitable for sideload testing, not publication. Never commit that key. For a
-release-signed, non-debuggable APK, supply your own keystore/alias and put its
-password in the named environment variable:
+It is suitable for sideload testing, not publication. Never commit that key.
+The development preset derives its default app ID/name from the project filename
+and uses version name `development`; it no longer assigns every project the M88
+Breakwater identity. Keep explicit app identity/version arguments when updating an
+existing installation.
+
+`--preset release` refuses to build without an explicit app ID, name, version code,
+version name, keystore and alias. Supply the signing password through its named
+environment variable; it is not written to manifests or command arguments:
 
 ```sh
 python3 tools/build_android.py projects/my_game/my_game.judasproj \
-  --id com.example.mygame --name 'My Game' --version-code 2 \
+  --preset release --channel Experimental \
+  --id com.example.mygame --name 'My Game' --version-code 2 --version-name 1.1 \
   --keystore /private/release.p12 --key-alias release \
   --password-env JUDAS_SIGNING_PASSWORD --output /outside/repository/MyGame.apk
 ```
@@ -71,6 +78,29 @@ Keep the signing key and application ID to update an installed game. A changed k
 cannot update the old installation; uninstalling deletes private saves. App
 bundles/Play Store submission, asset delivery packs and Windows-host APK generation
 are not implemented by this workflow.
+
+### Build identity and reproducibility
+
+The engine channel (`--channel main|Experimental|Local`) is independent of the game
+version and signing preset. The default is Experimental. The checked-in engine
+version is used unless `--engine-version` is explicit. Default caches are separated
+under `.cache/android/<channel>`; `--cache` can reuse an existing native cache.
+To install two channels side by side, give them distinct application IDs; Android
+then treats them as separate apps/storage. Engine channel metadata does not rename
+a game or change its save identity automatically.
+
+Native ABI builds and desktop export tools must match source/version/channel.
+Rebuild the desktop `judas` and `judas_export` for the same unchanged candidate
+first. The APK embeds `assets/judas-build-info.json`, and Android metadata exposes
+the engine version/channel. `<name>.build.json` records exact ABI and desktop-tool
+identities, content hashes and APK hash; `<name>.sha256` covers APK and receipt.
+The removed desktop executable's provenance is not misrepresented as Android's.
+
+Generated ZIP/JAR entries have stable timestamps and ordering. `SOURCE_DATE_EPOCH`
+may select an epoch in ZIP's 1980–2107 range (default 1980). This improves repeatability;
+it is not a promise of byte-identical native output across compilers, NDKs, signing
+keys or different source roots. Signing verification and 16 KiB alignment checks
+still run. See [distribution](DISTRIBUTION.md).
 
 ## Install and run
 

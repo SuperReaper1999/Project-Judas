@@ -1,0 +1,31 @@
+[
+  {
+    "name": "export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/connected_workshop/connected_workshop.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/export-final/export",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environmentOverrides": {},
+    "startedUtc": "2026-10-17T21:55:19Z",
+    "binarySha256": "ed20ea323f033bef879e07f3aac1587f37b0404320995b638c1a9c4038cca454",
+    "exit": 0,
+    "seconds": 0.3149376420005865
+  },
+  {
+    "name": "relocated_runtime",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/export-final/relocated package \u00fc with spaces/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/export-final/unrelated-cwd",
+    "environmentOverrides": {
+      "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/export-final/shipping.harness"
+    },
+    "startedUtc": "2026-10-17T21:55:19Z",
+    "binarySha256": "87643496d41c71e9d062be73f0a2aae5f6212beb5da1cdc065e5e91bb3dacf20",
+    "exit": 0,
+    "seconds": 1.166492319000099
+  }
+]

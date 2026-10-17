@@ -1,4 +1,5 @@
 #include "EnginePaths.h"
+#include "BuildIdentity.h"
 #include "PlatformServices.h"
 #include "GamePackage.h"
 #include "SaveStorage.h"
@@ -18,6 +19,7 @@ int main(int argc,char** argv){
  namespace fs=std::filesystem;
  if(argc==3&&std::string(argv[1])=="--quoted-child"){std::ofstream(fs::u8path(argv[2]))<<"child";return 0;}
  if(argc==2&&std::string(argv[1])=="--build-info"){std::printf("Judas runtime %s Release\n",RuntimePlatformName());return 0;}
+ if(HandleBuildIdentityArguments(argc,argv,"windows_readiness"))return 0;
  int checks=0,failures=0;auto check=[&](bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",label);};
 #ifdef _WIN32
  bool numericLocale=false,numericRestore=false,numericNested=false;

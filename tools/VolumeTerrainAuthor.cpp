@@ -1,3 +1,4 @@
+#include "BuildIdentity.h"
 #include "VolumeTerrain.h"
 #include "ModAuthoring.h"
 #include "Project.h"
@@ -9,7 +10,9 @@ unsigned Count(const char* s){size_t used=0;std::string text=s;auto n=std::stoul
 void Writable(const std::string& path){auto file=Project::FindProjectFileFor(path);if(file.empty())return;Project p;std::string e;if(!p.Load(file,e))throw std::runtime_error(e);if(!fs::exists(fs::path(p.RootDir())/"mod-authoring.json"))return;auto relative=fs::absolute(path).lexically_relative(p.RootDir()).generic_string();if(relative.rfind("Kit/",0)==0||relative.rfind("Dependencies/",0)==0)throw std::runtime_error("published mod source is read-only; fork first");}
 void Qualify(const std::string& path,VolumeTerrainSource& t){auto file=Project::FindProjectFileFor(path);if(file.empty())return;Project p;std::string e;if(!p.Load(file,e))throw std::runtime_error(e);if(fs::exists(fs::path(p.RootDir())/"mod-authoring.json")){t.identity=JudasMods::AuthorIdentity(p,t.identity);t.meshId=JudasMods::AuthorIdentity(p,t.meshId);t.collisionId=JudasMods::AuthorIdentity(p,t.collisionId);}t.productDirectory=(fs::path(p.Settings().assetsDir)/"Volumes"/t.identity).generic_string();}
 }
-int main(int argc,char** argv){try{if(argc<3)throw std::runtime_error("judas_volume_author create SOURCE [nx ny nz width height depth] | validate SOURCE | brush SOURCE remove/add/smooth x y z radius strength | fork SOURCE DEST | cook PROJECT SOURCE");std::string command=argv[1],e;VolumeTerrainDraft d;
+int main(int argc,char** argv){
+    if (HandleBuildIdentityArguments(argc, argv, "volume_author")) return 0;
+try{if(argc<3)throw std::runtime_error("judas_volume_author create SOURCE [nx ny nz width height depth] | validate SOURCE | brush SOURCE remove/add/smooth x y z radius strength | fork SOURCE DEST | cook PROJECT SOURCE");std::string command=argv[1],e;VolumeTerrainDraft d;
  if(command=="create"){Writable(argv[2]);if(fs::exists(argv[2]))throw std::runtime_error("create never overwrites");if(argc!=3&&argc!=9)throw std::runtime_error("create requires all six dimensions or none");d.source=CreateVolumeTerrain(argc==9?glm::uvec3(Count(argv[3]),Count(argv[4]),Count(argv[5])):glm::uvec3(33),argc==9?glm::vec3(std::stof(argv[6]),std::stof(argv[7]),std::stof(argv[8])):glm::vec3(16));Qualify(argv[2],d.source);d.SetPath(argv[2]);if(!d.Save(e))throw std::runtime_error(e);}
  else if(command=="cook"){if(argc!=4)throw std::runtime_error("cook PROJECT SOURCE");Project p;AssetDatabase a;if(!p.Load(argv[2],e)||!JudasMods::OpenAuthorAssets(p,a,e))throw std::runtime_error(e);auto path=p.Resolve(argv[3]);Writable(path);VolumeTerrainSource t;TerrainCookResult r;if(!LoadVolumeTerrain(path,t,e)||!CookVolumeTerrain(t,path,p.RootDir(),a,r,e))throw std::runtime_error(e);std::cout<<"volume cook "<<r.milliseconds<<" ms / "<<r.bytes<<" bytes\n";}
  else{if(!d.Open(argv[2],e))throw std::runtime_error(e);if(command=="validate")std::cout<<"valid volume "<<d.source.density.size()<<" samples\n";
