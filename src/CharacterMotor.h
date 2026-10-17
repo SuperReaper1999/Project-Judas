@@ -3,6 +3,7 @@
 #include "GravityField.h"
 #include <cmath>
 #include <string>
+#include <optional>
 
 // Geometry/physical settings only. Intent, input, camera and gameplay belong
 // to consumers. Capsule's model axis is local +Y, never a world-up axis.
@@ -30,13 +31,15 @@ struct CharacterMotionResult {
 // compatibility caller; new motors use finite bounded impulse transfer.
 void ResolveCharacterSlide(PhysicsWorld&,glm::vec3& center,const glm::quat&,glm::vec3 displacement,
     glm::vec3& velocity,const CharacterMotorSettings&,const PhysicsQueryFilter*,bool movingGeometry,
-    bool legacyPush,bool& collided,BodyHandle observer={});
+    bool legacyPush,bool& collided,BodyHandle observer={},glm::vec3* externalVelocity=nullptr);
 class CharacterMotor {
 public:
     void Persist(class SaveArchive&);
     CharacterMotorSettings settings;
     glm::vec3 position{0},velocity{0};
     glm::quat orientation{1,0,0,0};
+    std::optional<glm::quat> orientationIntent; // WORLD-space heading/pose intent; no teleport or velocity reset
+    glm::vec3 displacementIntent{0}; // WORLD-space one-step motion, does not accumulate into velocity
     glm::vec3 acceleration{0}; // additional acceleration; reset after each step
     PhysicsQueryFilter filter;
     BodyHandle observationBody; // massless geometry registration owned by RuntimeWorld

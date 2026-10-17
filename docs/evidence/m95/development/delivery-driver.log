@@ -1,0 +1,6 @@
+editor 0
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m95_delivery.py", line 17, in <module>
+    if required not in text:raise RuntimeError('Editor receipt missing: '+required)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Editor receipt missing: authored scene after play/stop is IDENTICAL

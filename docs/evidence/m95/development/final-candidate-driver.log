@@ -1,0 +1,16 @@
+judas_animation_workflow_tests 0
+judas_animation_workflow_application_tests 0
+judas_character_motor_tests 0
+judas_motor_runtime_tags_tests 0
+judas_skeletal_animation_tests 0
+judas_pose_composition_tests 0
+judas_physical_animation_tests 0
+judas_animation_retarget_cook_tests 1
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m95_validation.py", line 15, in <module>
+    run(name,[R/'build'/name,*args])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m95_validation.py", line 12, in run
+    if r.returncode:raise RuntimeError(name+' failed; evidence retained')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: judas_animation_retarget_cook_tests failed; evidence retained

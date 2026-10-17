@@ -1,6 +1,6 @@
-# JudasJS — current API reference (M94 repository state)
+# JudasJS — current API reference (M95 repository state)
 
-M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 human review is pending.
+M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 human review is pending.
 
 M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
 M92 operator acceptance is recorded by release promotion at `bb3dbc402629a60c22738da8520e5017998709f1`; platform coverage remains scoped.

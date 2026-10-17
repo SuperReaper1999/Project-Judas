@@ -106,6 +106,7 @@ struct EditorPanelState {
     float assetBrowserHeight = 200.0f;
     bool showSceneSettings = false;
     bool showRetarget = false;
+    bool showAnimationTimeline=false;
     bool showTerrain = false;
     bool showVolumeTerrain = false;
     bool showMods = false;

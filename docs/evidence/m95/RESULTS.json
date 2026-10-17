@@ -1,0 +1,193 @@
+{
+  "base": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "utc": "2026-10-17T01:33:28.789294+00:00",
+  "platform": "Linux native. Windows and Android M95 not run. Human acceptance pending.",
+  "results": {
+    "judas_animation_workflow_tests": {
+      "log": "docs/evidence/m95/linux/judas_animation_workflow_tests.log",
+      "exit": 0,
+      "summary": [
+        "PERFORMANCE instances=1 nodes=72 median_ms=0.013050 p95_ms=0.024215 worst_ms=0.042909 samples=300",
+        "PERFORMANCE instances=32 nodes=72 median_ms=0.428746 p95_ms=0.547677 worst_ms=0.673295 samples=300",
+        "PERFORMANCE instances=100 nodes=72 median_ms=1.366545 p95_ms=1.642800 worst_ms=2.151414 samples=300",
+        "PERFORMANCE marker_interval_us=0.164717 checksum=100000",
+        "SUMMARY 59 checks 0 failures"
+      ]
+    },
+    "judas_animation_workflow_application_tests": {
+      "log": "docs/evidence/m95/linux/judas_animation_workflow_application_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 15 checks 0 failures"
+      ]
+    },
+    "judas_character_motor_tests": {
+      "log": "docs/evidence/m95/linux/judas_character_motor_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 32 checks 0 failures"
+      ]
+    },
+    "judas_motor_runtime_tags_tests": {
+      "log": "docs/evidence/m95/linux/judas_motor_runtime_tags_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 31 checks 0 failures"
+      ]
+    },
+    "judas_skeletal_animation_tests": {
+      "log": "docs/evidence/m95/linux/judas_skeletal_animation_tests.log",
+      "exit": 0,
+      "summary": [
+        "PERFORMANCE pose_sample_resolve_us=0.436505 eight_instances_gl_frame_ms=0.192802 frames=20",
+        "SUMMARY 34 checks 0 failures"
+      ]
+    },
+    "judas_pose_composition_tests": {
+      "log": "docs/evidence/m95/linux/judas_pose_composition_tests.log",
+      "exit": 0,
+      "summary": [
+        "PERFORMANCE three_layers_us=0.563310",
+        "PERFORMANCE eight_instances_32_nodes_three_layers_us=23.700149 samples=1000",
+        "SUMMARY 16 checks 0 failures"
+      ]
+    },
+    "judas_physical_animation_tests": {
+      "log": "docs/evidence/m95/linux/judas_physical_animation_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 64 checks 0 failures"
+      ]
+    },
+    "judas_animation_retarget_cook_tests": {
+      "log": "docs/evidence/m95/linux/judas_animation_retarget_cook_tests.log",
+      "exit": 0,
+      "summary": [
+        "  \"failures\": 0,"
+      ]
+    },
+    "judas_model_reimport_tests": {
+      "log": "docs/evidence/m95/linux/judas_model_reimport_tests.log",
+      "exit": 0,
+      "summary": [
+        "  \"failures\": 0"
+      ]
+    },
+    "judas_save_storage_tests": {
+      "log": "docs/evidence/m95/linux/judas_save_storage_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY checks=38 failures=0"
+      ]
+    },
+    "judas_retarget_editor_tests": {
+      "log": "docs/evidence/m95/linux/judas_retarget_editor_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 20 checks 0 failures"
+      ]
+    },
+    "judas_animation_application_tests": {
+      "log": "docs/evidence/m95/linux/judas_animation_application_tests.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 4 checks 0 failures frames=4"
+      ]
+    },
+    "judas_script_developer_tools_tests": {
+      "log": "docs/evidence/m95/linux/judas_script_developer_tools_tests.log",
+      "exit": 0,
+      "summary": [
+        "PERFORMANCE mode=off median_update_us=9.875 worst_batch_us=11.922",
+        "PERFORMANCE mode=debug-attached median_update_us=11.709 worst_batch_us=13.245",
+        "PERFORMANCE mode=debug-attached median_update_us=11.259 worst_batch_us=11.505",
+        "M94 49 checks 0 failures"
+      ]
+    },
+    "animation-cold-write": {
+      "log": "docs/evidence/m95/linux/animation-cold-write.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 8 checks 0 failures"
+      ]
+    },
+    "animation-cold-read": {
+      "log": "docs/evidence/m95/linux/animation-cold-read.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 8 checks 0 failures"
+      ]
+    },
+    "save-write": {
+      "log": "docs/evidence/m95/linux/save-write.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY mode=write checks=13 failures=0 frames=55"
+      ]
+    },
+    "save-read": {
+      "log": "docs/evidence/m95/linux/save-read.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY mode=read checks=20 failures=0 frames=79"
+      ]
+    },
+    "save-streaming-write": {
+      "log": "docs/evidence/m95/linux/save-streaming-write.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY write checks=11 failures=0 frames=126"
+      ]
+    },
+    "save-streaming-read": {
+      "log": "docs/evidence/m95/linux/save-streaming-read.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY read checks=19 failures=0 frames=173"
+      ]
+    },
+    "save-streaming-read-b": {
+      "log": "docs/evidence/m95/linux/save-streaming-read-b.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY read-b checks=19 failures=0 frames=185"
+      ]
+    },
+    "cookbook-animation-motion": {
+      "log": "docs/evidence/m95/linux/cookbook-animation-motion.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 9 checks 0 failures"
+      ]
+    },
+    "cookbook-animation": {
+      "log": "docs/evidence/m95/linux/cookbook-animation.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 9 checks 0 failures"
+      ]
+    },
+    "cookbook-surface": {
+      "log": "docs/evidence/m95/linux/cookbook-surface.log",
+      "exit": 0,
+      "summary": [
+        "SUMMARY 9 checks 0 failures"
+      ]
+    },
+    "api": {
+      "log": "docs/evidence/m95/linux/api.log",
+      "exit": 0,
+      "summary": []
+    },
+    "source-check": {
+      "log": "docs/evidence/m95/linux/source-check.log",
+      "exit": 0,
+      "summary": [
+        "2 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed."
+      ]
+    }
+  },
+  "delivery": ".cache/m95/checkpoint-delivery",
+  "editor": "unsaved draft switch retained; timeline recook with Asset Browser closed; Play/Stop unchanged authored scene",
+  "cook": ".cache/m95/checkpoint-cook"
+}

@@ -1,0 +1,16 @@
+{
+  "assetId": "e776062a1af7fd60be7830787eb3fdfd",
+  "decodedProducts": 0,
+  "diagnostics": [],
+  "error": "",
+  "hierarchyNodes": 71,
+  "output": "/home/conner/Documents/GitHub/Project-Judas/projects/animation_studio/Assets/models/performer.judasmodel",
+  "paletteEntries": 130,
+  "parts": 6,
+  "receiptHit": true,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "success": true,
+  "unchanged": true,
+  "vertices": 612
+}

@@ -1,0 +1,64 @@
+script asset=ba0dfa4acf96d118eeae4d6ec1f7a249 entity=1 slot=1 update: Error: broken consumer
+    at update (Assets/driver.js:1:42)
+
+script asset=ba0dfa4acf96d118eeae4d6ec1f7a249 entity=1 slot=1 update: InternalError: execution cancelled by debugger
+    at update (Assets/driver.js:10:127)
+
+PASS normal tracked modules
+PASS ordinary physical world builds
+PASS compile/link preflight does not require constructors or gameplay execution
+PASS preflight did not create instances
+PASS register adversarial unattached helper
+PASS project-wide compile/link never executes top-level code
+JS: started
+PASS reload rejected while VM stack suspended
+PASS reload rejected while VM stack suspended
+PASS reload rejected while VM stack suspended
+PASS debugged script completed without fault
+PASS real source breakpoint before statement with owner and location
+PASS stopped source is the exact module snapshot compiled into VM
+PASS step into imported helper exposes actual arguments and closure values
+PASS step out returns to caller
+PASS resumed instruction executes once with expected numerical result
+PASS opt-in console captures actual output
+PASS step over executes helper without stopping inside it
+PASS normal project for scene-operation boundary control
+PASS queued scene replacement rejects script reload without teardown
+PASS project diagnostics detect broken helper independently of active VM
+PASS dependency syntax error rejects reload with source location
+PASS rejected preflight preserves VM state and physical endpoint
+PASS missing named import rejected before teardown
+PASS named-export rejection retains old module/instance state
+PASS valid edited modules reload without rebuilding world
+PASS only declared JSON instance state retained across reload
+PASS old destroy callback runs exactly through ordinary lifecycle path
+JS: started
+PASS changed source and start run with retained state
+PASS reload rebinds one subscription and discards queued old-generation deliveries
+PASS only replacement-generation signal callback receives the new event
+PASS reloaded baseline cannot publish incompatible modern saves
+PASS legacy save also rejects reloaded baseline
+PASS direct native legacy capture cannot certify a stale source baseline
+PASS explicit fresh reload available
+JS: started
+PASS fresh reload resets JS state but uses edited source
+PASS inspection adversary loads
+PASS inspection skips accessors/proxy traps and object coercion
+PASS runtime fault replacement compiles
+PASS runtime errors include useful source stack
+PASS faulted state cannot silently be retained
+PASS fresh reload repairs faulted instance
+JS: started
+PASS repaired lifecycle runs without application restart
+PASS debug cancel unwinds VM safely through isolated fault boundary
+PASS cancelled callback can be deliberately replaced
+JS: started
+PERFORMANCE mode=off median_update_us=9.875 worst_batch_us=11.922
+PERFORMANCE mode=debug-attached median_update_us=11.709 worst_batch_us=13.245
+PERFORMANCE mode=debug-attached median_update_us=11.259 worst_batch_us=11.505
+PASS benchmark remains live and healthy; no faulted-instance timings accepted
+PASS one-line repeated-call fixture reloads
+PASS same-line helper breakpoint fires for each distinct function entry without duplicate instructions
+PASS breakpoint edits at a stop take effect before the next helper call
+PASS whole-session teardown disables debugger before destroy callbacks and retires instances
+M94 49 checks 0 failures

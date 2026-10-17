@@ -17,6 +17,7 @@
 class EngineHost;
 class InteractivePlay;
 class RuntimeWorld;
+struct AnimationTimeline;
 
 // Milestone 28/30: the `judas_editor` executable's orchestration. Brings up
 // the same EngineHost the runtime uses, adds a Dear ImGui layer over the
@@ -103,6 +104,7 @@ private:
     EditorCamera m_camera;
     EditorScenePicker m_scenePicker;
     std::unique_ptr<RuntimeWorld> m_world;
+    std::unique_ptr<AnimationTimeline> m_animationTimeline;
     std::unique_ptr<InteractivePlay> m_play;
     EditorCameraGestureState m_cameraGesture;
     bool m_viewportFocused = true;

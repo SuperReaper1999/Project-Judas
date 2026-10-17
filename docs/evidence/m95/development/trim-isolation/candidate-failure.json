@@ -1,0 +1,12 @@
+{
+  "bakeMs": 9.285387,
+  "bakeSamples": 91,
+  "checks": 37,
+  "failures": 1,
+  "outputBytes": 210937,
+  "previewMatrixMaxError": 0.0,
+  "secondaryTrimFormerPoseSamples": 29412,
+  "secondaryTrimMaxValueError": 0.01111111044883728,
+  "secondaryTrimNodeEvaluations": 14763,
+  "secondaryTrimPoseSamples": 57
+}

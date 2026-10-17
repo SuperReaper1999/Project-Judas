@@ -1,0 +1,1 @@
+Original M95 source geometry and authored motions: CC0-1.0. Built from the original CC0 M70 multipart rig.

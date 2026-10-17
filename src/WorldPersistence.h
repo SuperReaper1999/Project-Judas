@@ -30,6 +30,7 @@ private:
  static void Powertrains(RuntimeWorld&,SaveArchive&);
  static void Animation(RuntimeWorld&,SaveArchive&);
  static void InstanceAnimation(RuntimeWorld&,uint64_t,SaveArchive&);
+ static void AnimationObservation(RuntimeWorld&,uint64_t,SaveArchive&);
  static void Articulation(RuntimeWorld&,SaveArchive&);
  static void ArticulationExtended(RuntimeWorld&,SaveArchive&,unsigned,std::string* deferred=nullptr);
  static void JointContinuation(RuntimeWorld&,SaveArchive&);

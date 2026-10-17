@@ -1,0 +1,39 @@
+{
+  "head": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "utc": "2026-10-17T00:45:21.821747+00:00",
+  "platform": "native Linux; Windows/Android M95 unvalidated",
+  "runs": [
+    {
+      "name": "judas_animation_workflow_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.9159610719998454
+    },
+    {
+      "name": "judas_animation_workflow_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 6.480955806000566
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5151983270006895
+    },
+    {
+      "name": "judas_motor_runtime_tags_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_motor_runtime_tags_tests"
+      ],
+      "exit": 1,
+      "seconds": 0.0077750469999955385
+    }
+  ]
+}

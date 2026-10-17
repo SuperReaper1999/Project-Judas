@@ -60,5 +60,5 @@ bool RuntimeWorld::SetCharacterSettings(EntityId id,const CharacterMotorSettings
     m_physics.SetCollisionFilter(m->observationBody,settings.collisionLayer,settings.collisionMask);
     m_physics.SetBodyTags(m->observationBody,TagsOf(id));
     m_physics.SetBodyEnabled(m->observationBody,settings.enabled);
-    if(!settings.enabled){m->result={};m->acceleration={0,0,0};}return true;
+    if(!settings.enabled){m->result={};m->acceleration=m->displacementIntent={0,0,0};m->orientationIntent.reset();}return true;
 }

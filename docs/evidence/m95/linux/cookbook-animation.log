@@ -1,0 +1,14 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS animation normal registered script
+PASS animation normal project
+PASS animation ordinary scene
+PASS animation runtime builds
+PASS animation ordinary fixed-step session
+PASS animation real VM callbacks without faults
+EXAMPLE animation {"ready":true,"fade":true,"layers":true}
+PASS animation documented outcome
+PASS animation teardown
+SUMMARY 9 checks 0 failures

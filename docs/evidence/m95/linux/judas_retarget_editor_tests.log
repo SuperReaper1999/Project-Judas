@@ -1,0 +1,21 @@
+PASS new draft requires separate profile and recipe saves
+PASS unchanged frames do not manufacture undo entries
+PASS saved draft and comparison initially current
+PASS calibration edit invalidates profile, operation and preview independently of scene state
+PASS normal draft undo restores saved calibration and preview identity
+PASS normal draft redo restores edited calibration
+PASS cancel restores saved draft without rolling back filesystem writes
+PASS cancel is itself reversible in local authoring history
+PASS per-clip/root recipe edits do not corrupt reusable profile dirty state
+PASS panel's shared atomic profile save and reopen service succeeds
+PASS reopened profile retains exact correspondence/calibration and clean profile state
+PASS loading a profile does not pretend a chosen recipe operation was saved
+PASS invalid profile save retains last-good filesystem content
+PASS project replacement retires draft, history and stale comparison identity
+PASS empty initial/reset draft identity never invokes strict publication serialization
+PASS incomplete row, negative scale and zero quaternion remain safe editable dirty states
+PASS nonfinite temporary draft values do not throw while tracking changes
+PASS invalid temporary draft edits are still normally undoable
+PASS draft undo history remains bounded to 32 changes
+PASS new draft edit after undo discards retired redo branch
+SUMMARY 20 checks 0 failures

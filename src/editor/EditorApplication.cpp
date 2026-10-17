@@ -44,6 +44,7 @@ extern char** environ;
 #include "ProjectExporter.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
+#include "AnimationTimeline.h"
 #include "SceneSession.h"
 #include "Scene.h"
 #include "SceneSerialization.h"
@@ -1151,7 +1152,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
 
 void EditorApplication::DrawModelImportPreview(float deltaSeconds) {
  JUDAS_PROFILE_SCOPE("Model import preview");
- if(!m_panels.showAssetBrowser||m_panels.mode!=EditorMode::Edit||!m_panels.importAccepted)return;
+ if((!m_panels.showAssetBrowser&&!m_panels.showAnimationTimeline)||m_panels.mode!=EditorMode::Edit||!m_panels.importAccepted)return;
  auto& task=*m_panels.importAccepted;auto& resources=m_host->Resources();auto& renderer=m_host->GetRenderer();
  if(m_modelPreviewAsset!=task.assetId){if(!m_modelPreviewAsset.empty())resources.ReleaseRef(m_modelPreviewAsset);m_modelPreviewAsset=task.assetId;resources.AddRef(m_modelPreviewAsset);m_panels.modelPreviewTime=0;m_panels.modelPreviewHidden.clear();}
  std::string error;auto mesh=resources.GetMesh(task.assetId,error);if(!mesh.IsValid()||!task.preview)return;
@@ -1455,6 +1456,8 @@ int EditorApplication::Run(int argc, char** argv) {
         std::fprintf(stderr,"[editor autotest] shared collision cook/assign: %s: %s\n",ok?"PASS":"FAIL",m_panels.status.c_str());
     }
     if (autotest) SaveSceneToString(m_document.GetScene(), autotestBaseline);
+    bool animationTimelineRecook=false;
+    const bool animationTimelineAutotest=autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_ANIMATION");
     const char* importRecipe=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_IMPORT"):nullptr;
     if(importRecipe){m_panels.showAssetBrowser=true;m_panels.modelRecipe=importRecipe;m_panels.importTask=QueueModelImport(host.Jobs(),importRecipe);m_panels.importPublished=false;}
     const char* terrainAutotest=autotest?std::getenv("JUDAS_EDITOR_AUTOTEST_TERRAIN"):nullptr;
@@ -1586,6 +1589,10 @@ int EditorApplication::Run(int argc, char** argv) {
         m_scriptTools->visible=m_panels.showScriptTools;
         m_scriptTools->Panel(m_world.get(),host.Assets());
         m_panels.showScriptTools=m_scriptTools->visible;
+        if(!m_animationTimeline)m_animationTimeline=std::make_unique<AnimationTimeline>();
+        m_animationTimeline->visible=m_panels.showAnimationTimeline;
+        m_animationTimeline->Panel(m_panels,m_document.Selected());
+        m_panels.showAnimationTimeline=m_animationTimeline->visible;
         DrawEditorWorkspaceChrome(m_document, m_panels, requests);
         // While playing, the engine's own HUD occupies the top-left corner
         // and the authored panels are read-only anyway; only the menu bar
@@ -1684,7 +1691,7 @@ int EditorApplication::Run(int argc, char** argv) {
         }
 
         if (autotest) {
-            bool waiting=importRecipe&&!m_panels.modelPreviewToken;
+            bool waiting=importRecipe&&(!m_panels.modelPreviewToken||(animationTimelineAutotest&&m_panels.importTask!=m_panels.importAccepted));
             if(waiting&&((m_panels.importTask->done&&!m_panels.importTask->success)||++importWaitFrames>4000)){std::fprintf(stderr,"[editor autotest] import FAIL: %s\n",m_panels.importTask->error.c_str());m_quit=true;}
             if(retargetAutotest){std::string error;int status=RetargetAutotestStatus(m_panels,error);if(status<0||(status==0&&++retargetWaitFrames>4000)){std::fprintf(stderr,"[M74 editor retarget] FAIL: %s\n",error.c_str());m_quit=true;}waiting=waiting||status==0;}
             if(terrainAutotest&&!terrainUiReady){
@@ -1772,6 +1779,16 @@ int EditorApplication::Run(int argc, char** argv) {
             if(retargetAutotest && autotestFrame==1) screenshot(std::string(autotest)+".retarget.png");
             if(importRecipe&&autotestFrame==1)std::fprintf(stderr,"[editor autotest] shared import + GPU preview PASS (%zu parts)\n",m_panels.importAccepted->preview->primitives.size());
             if(importRecipe&&autotestFrame==2){auto* placed=m_document.SelectedObject();std::fprintf(stderr,"[editor autotest] ordinary imported placement %s\n",placed&&placed->render&&placed->animation?"PASS":"FAIL");m_document.Undo();std::string restored;SaveSceneToString(m_document.GetScene(),restored);std::fprintf(stderr,"[editor autotest] imported placement one undo %s\n",restored==autotestBaseline?"PASS":"FAIL");}
+            if(animationTimelineAutotest&&importRecipe){
+                if(autotestFrame==3){m_panels.showAnimationTimeline=true;m_panels.workspace.showAssets=false;}
+                if(autotestFrame==5){m_panels.modelPreviewClip=1;m_panels.modelPreviewPlaying=false;m_panels.modelPreviewTime=.3f;}
+                if(autotestFrame==8){m_panels.modelPreviewPlaying=false;m_panels.modelPreviewTime=.55f;auto& timeline=*m_animationTimeline;timeline.Remember();timeline.draft.events[0].time=.21f;m_panels.modelPreviewClip=2;}
+                if(autotestFrame==9){auto& timeline=*m_animationTimeline;bool retained=timeline.draft.clip=="Walk"&&timeline.draft.Dirty()&&std::abs(timeline.draft.events[0].time-.21f)<1e-6f;std::fprintf(stderr,"[M95 timeline] %s: switching clips retains unsaved marker draft\n",retained?"PASS":"FAIL");m_panels.modelPreviewClip=1;if(!timeline.undo.empty()){timeline.draft.events=std::move(timeline.undo.back());timeline.undo.pop_back();}}
+                if(autotestFrame==10&&!animationTimelineRecook){animationTimelineRecook=true;auto& timeline=*m_animationTimeline;bool loaded=timeline.draft.clip=="Walk"&&timeline.draft.events.size()==2;std::fprintf(stderr,"[M95 timeline] %s: clip draft and real GPU preview\n",loaded&&m_panels.modelPreviewToken?"PASS":"FAIL");if(loaded){timeline.Remember();timeline.draft.events[0].time=.2f;std::string error;bool saved=timeline.draft.Save(error);std::fprintf(stderr,"[M95 timeline] %s: explicit event draft save %s\n",saved?"PASS":"FAIL",error.c_str());m_panels.importTask=QueueModelImport(host.Jobs(),importRecipe);m_panels.importPublished=false;}}
+                if(autotestFrame==13){m_panels.showProfiler=false;m_panels.showWorldBuilding=false;ImGui::SetWindowFocus("Animation timeline");}
+                if(autotestFrame==14){const auto& clips=m_panels.importAccepted->preview->skeletal->clips;bool changed=clips.size()>1&&clips[1].events.size()==2&&std::abs(clips[1].events[0].time-.2f)<1e-6f;std::fprintf(stderr,"[M95 timeline] %s: normal asynchronous recook publishes edited marker\n",changed?"PASS":"FAIL");screenshot(std::string(autotest)+".timeline.png");}
+                if(autotestFrame==16)m_panels.showAnimationTimeline=false;
+            }
             if(importRecipe&&autotestFrame==6){m_panels.modelPreviewPlaying=true;m_panels.modelPreviewTime=.5f;}
             if(importRecipe&&autotestFrame==12){auto& parts=m_panels.importAccepted->preview->primitives;if(!parts.empty())m_panels.modelPreviewHidden={parts.front().part};}
 

@@ -5,5 +5,5 @@ void CharacterMotor::Persist(SaveArchive& a){
  a(result.displacement,result.velocity,result.supportNormal,result.supportVelocity,result.gravity,result.up,result.supported,result.collided,result.recovered,result.stepped);
  // Supporting/ignored bodies are stable entity keys in the owning participant,
  // never native body-slot IDs here. Settings use normal Scene serialization.
- if(a.reading){std::string error;a.Require(ValidCharacterMotor(settings,error),"invalid restored motor");}
+ if(a.reading){displacementIntent={0,0,0};orientationIntent.reset();std::string error;a.Require(ValidCharacterMotor(settings,error),"invalid restored motor");}
 }

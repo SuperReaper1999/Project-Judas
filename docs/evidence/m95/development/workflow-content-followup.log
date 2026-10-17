@@ -1,0 +1,34 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS valid named event track
+PASS forward interval excludes from and includes endpoint
+PASS zero interval / seek produces no action
+PASS reverse interval uses opposite half-open boundary
+PASS loop crossing preserves distinct end and zero markers
+PASS multi-wrap interval reports every crossed marker
+PASS dense skipped interval is explicitly rejected rather than partial event delivery
+PASS duplicate marker IDs rejected
+PASS out-of-range marker rejected
+PASS nonfinite marker rejected
+PASS normal cooked animated model load
+PASS event track and extracted root track survive actual cook
+PASS archive roundtrip retains marker payload/timing
+PASS root displacement matches independent authored metres/second
+PASS timeline draft loads output clip selection
+PASS explicit timeline marker save
+PASS saved event edit roundtrips
+PASS external recipe edit cannot be overwritten silently
+PASS timeline rejects paths outside current project
+PASS root displacement uses capsule wall sweep, no tunnelling
+PASS blocked animation motion does not accumulate persistent velocity
+PASS one-step displacement does not repeat
+PASS authored displacement composes with external velocity without reset
+PASS orientation intent preserves moving motor state
+PASS rotated gravity displacement/support equivalent
+PASS normal GL resource host
+PASS ordinary studio project registration
+FAIL authored scene with motor and animation
+PASS ordinary runtime world
+FAIL asynchronous rig ready
+

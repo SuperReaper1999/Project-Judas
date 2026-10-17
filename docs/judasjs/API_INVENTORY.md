@@ -1,12 +1,13 @@
 # Current public JudasJS inventory
 
-Current M94 repository surface, based on accepted checkpoint `3306b5aa66a2e649bad06abc8c5cba452058d3fa` plus developer tooling. M94 adds no public `judas` exports/members; its debugger, source checks and reload controls are editor/native tooling. See [developer tools](../M94_DEVELOPER_TOOLS.md). M94 human/platform review remains separate from earlier acceptance.
+Current M95 public module based on checkpoint `16889b73423a8fb0e9c7682db1d8f66c648cbfc3 + M95 animation workflow`. M95 adds animation samples and generic motor displacement/orientation intent. See [animation workflow](../M95_ANIMATION_WORKFLOW.md). Human/platform acceptance remains separate from earlier milestones.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
 | Runtime symbol | Native bridge operation | Type | Reference |
 |---|---|---|---|
 | `Animation` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Animation.advance` | `animationAdvance` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.clips` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.configureIK` | `animationIKConfigure` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
@@ -27,6 +28,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Animation.removeLimb` | `animationRemoveLimb` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.resume` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.rootMotion` | `animationRootMotion` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
+| `Animation.sample` | `animationSample` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.seek` | `animationSeek` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.speed` | `animationSet` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Animation.stop` | `animationStop` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
@@ -36,10 +38,12 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Character.actualDisplacement` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.configure` | `characterConfigure` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](character.md) |
+| `Character.displace` | `characterDisplacement` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.enabled` | `characterEnabled` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.gravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.ignore` | `characterIgnore` | [declaration](../judas.d.ts) | [reference](character.md) |
+| `Character.orient` | `characterOrientation` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.state` | `characterState` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.supportNormal` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Character.supportVelocity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](character.md) |

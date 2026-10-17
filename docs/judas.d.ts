@@ -1,4 +1,4 @@
-/** Current JudasJS through M90. M90 release promotion is operator-authorized.
+/** Current JudasJS through M95. M95 human acceptance remains separate.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.
@@ -525,6 +525,10 @@ declare module "judas" {
     raycast(origin:Vec3,direction:Vec3,maximum:number):DeformableHit|null;
   }
   export class Character {
+    /** Add WORLD-space metres for the next fixed step, through motor sweeps. Does not accumulate into velocity. */
+    displace(displacement:Vec3):boolean;
+    /** Fixed-step WORLD orientation intent, preserving velocity. Gravity reorientation remains authoritative. */
+    orient(orientation:Quat):boolean;
     constructor(id: EntityId);
     id: EntityId;
     readonly state: CharacterState;
@@ -623,7 +627,7 @@ declare module "judas" {
     /** Debug colliders/COM/support/planned foot; presentation only. */
     balanceDiagnostics: boolean;
   }
-  export interface ClipInfo { name: string; duration: number }
+  export interface ClipInfo { name: string; duration: number; events:AnimationMarker[] }
   export interface AnimationLayerInfo { id: string; clip: string; weight: number; enabled: boolean; additive: boolean }
   export interface AnimationInfo {
     ready: boolean; playing: boolean; loop: boolean; speed: number; time: number; clip: string;
@@ -670,7 +674,15 @@ declare module "judas" {
     /** Detached snapshot objects; convert explicitly to tuples when resubmitting configuration. */
     rootCorrection: Vec3; targets: FullBodyIKResidual[];
   }
+  export interface AnimationMarker {id:string;name:string;time:number;data:string}
+  export interface AnimationMarkerHit extends AnimationMarker {clip:string;source:string;weight:number;reverse:boolean}
+  export interface AnimationSample {motion:RootMotionDelta;events:AnimationMarkerHit[];overflow:boolean}
+  export interface RootMotionDelta {translation:Vec3;rotation:Quat}
   export class Animation {
+    /** fixedUpdate only, 0 < seconds <= 1, once per tick. Pauses automatic playback; returns this step's blended model-local root delta and crossed markers. */
+    advance(seconds:number):AnimationSample;
+    /** Detached last evaluated fixed sample; held-clock intervals are empty. Not an event queue. */
+    readonly sample:AnimationSample;
     /** Independent clip interval in model-local motion space; never moves physics implicitly. */
     rootMotion(clip: string, from: number, to: number, loop?: boolean): RootMotion | null;
     constructor(entityId: EntityId);

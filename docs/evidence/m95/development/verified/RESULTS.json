@@ -1,0 +1,108 @@
+{
+  "head": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "utc": "2026-10-17T00:51:10.778882+00:00",
+  "platform": "native Linux; Windows/Android M95 unvalidated",
+  "runs": [
+    {
+      "name": "judas_animation_workflow_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_tests"
+      ],
+      "exit": 0,
+      "seconds": 1.1666846939997413
+    },
+    {
+      "name": "judas_animation_workflow_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 6.528104483999414
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5666298619998997
+    },
+    {
+      "name": "judas_motor_runtime_tags_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_motor_runtime_tags_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/verified/judas_motor_runtime_tags_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.015937656000460265
+    },
+    {
+      "name": "judas_skeletal_animation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_skeletal_animation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.26462812299996585
+    },
+    {
+      "name": "judas_pose_composition_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pose_composition_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.06435422000049584
+    },
+    {
+      "name": "judas_physical_animation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.11429603200031124
+    },
+    {
+      "name": "judas_animation_retarget_cook_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_cook_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/verified/judas_animation_retarget_cook_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.9159780489999321
+    },
+    {
+      "name": "judas_retarget_editor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_editor_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/verified/judas_retarget_editor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.01601208099964424
+    },
+    {
+      "name": "judas_animation_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.717766605000179
+    },
+    {
+      "name": "judas_script_developer_tools_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.36487598099938623
+    },
+    {
+      "name": "animation-cold-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/verified/cold-save"
+      ],
+      "exit": 1,
+      "seconds": 0.5150445879999097
+    }
+  ]
+}

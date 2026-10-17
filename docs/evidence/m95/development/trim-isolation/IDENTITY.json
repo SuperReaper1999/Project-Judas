@@ -1,0 +1,6 @@
+{
+  "head": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "baselineModelCookSha256": "b77c4f0811a3268f4f1e26c403e34d8ca8cf4aaf82ae244593011d6bb928c3f7",
+  "method": "Accepted HEAD ModelCook.cpp substituted as the sole import-library translation unit; same test, importer dependencies and candidate ABI. Isolates M95 cook additions, not a full historical binary certification.",
+  "exit": 1
+}

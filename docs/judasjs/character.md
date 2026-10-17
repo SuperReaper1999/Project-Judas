@@ -124,3 +124,13 @@ fixed updates use current entity tags. Runtime changes survive retained streamed
 region retirement/revisit. Authored tags supply the initial state; a fixed update
 does not re-add a tag removed by the script. Collision layers/masks and disabled
 state remain separate filters. See [entity classification](entities.md).
+
+## Animation / generic displacement intent (M95)
+
+`displace(worldMetres)` adds a one-step displacement through the ordinary motor
+sweep/slide/step path without accumulating animation speed into velocity.
+`orient(worldQuaternion)` supplies orientation intent without a teleport or
+velocity reset; normal gravity alignment still applies. Both require
+`fixedUpdate` before motor resolution. See the [root-motion workflow](../M95_ANIMATION_WORKFLOW.md)
+and [animation reference](animation-ragdolls.md). There is no built-in animation
+controller or gameplay state machine.

@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "674590a6dc581153b6e39d10b65b5d45"
+type script
+source "Assets/scripts/math.js"

@@ -404,7 +404,8 @@ public:
     std::map<std::pair<EntityId,uint64_t>,std::string> spawnStates; // consumed once by script construction; never restore defaults
     bool SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane=.1f,float farPlane=500);
     struct AnimationLayer {AnimationLayerSettings settings;AnimationPlayback playback;std::vector<int> mask;SkeletalPose reference;};
-    struct AnimationInstance {EntityId owner=0;std::shared_ptr<const SkeletalAsset> asset;AnimationPlayback playback;PoseMixer mixer;SkeletalPose sourcePose,referencePose,solvedReferencePose,finalPose,previousFinalPose;std::optional<FullBodyIKRuntime> fullBodyIK;bool preparedM70=false;mutable std::vector<glm::mat4> presentedSkin;std::vector<glm::mat4> skin;std::vector<AnimationLayer> layers;std::map<std::string,PoseContribution> external;std::string error;std::vector<glm::mat4> previousWorld,recentWorld;float motionDt=0;};
+    struct AnimationStep {JointTransform motion;std::vector<AnimationEventHit> events;bool overflow=false;};
+    struct AnimationInstance {AnimationStep step;bool scriptAdvanced=false;EntityId owner=0;std::shared_ptr<const SkeletalAsset> asset;AnimationPlayback playback;PoseMixer mixer;SkeletalPose sourcePose,referencePose,solvedReferencePose,finalPose,previousFinalPose;std::optional<FullBodyIKRuntime> fullBodyIK;bool preparedM70=false;mutable std::vector<glm::mat4> presentedSkin;std::vector<glm::mat4> skin;std::vector<AnimationLayer> layers;std::map<std::string,PoseContribution> external;std::string error;std::vector<glm::mat4> previousWorld,recentWorld;float motionDt=0;};
     AnimationInstance* RuntimeAnimation(EntityId);
     bool JointPose(EntityId,const std::string& key,const std::string& space,float alpha,SceneTransform&);
     bool SetLimbIK(EntityId,const LimbIKSettings&,bool remove,std::string&);
@@ -443,6 +444,7 @@ public:
     void RemovePoseContribution(EntityId,const std::string&);
     bool SetAnimationLayer(EntityId,const AnimationLayerSettings&,bool remove,std::string& error);
     void ResolveAnimationPose(AnimationInstance&,float dt);
+    bool AdvanceAnimation(EntityId,float seconds,std::string& error);
 
     struct RagdollMappedBody {int node=-1,parent=-1;EntityId entity=0;BodyHandle body;glm::vec3 offset{0},scale{1};glm::quat orientation{1,0,0,0};};
     struct RagdollInstance {std::shared_ptr<const SkeletalAsset> asset;std::vector<RagdollMappedBody> bodies;std::vector<JointHandle> joints;SceneTransform reference;glm::vec3 rootLocalPosition{0};bool physicalControlled=false,partial=false;std::vector<bool> dynamic;SceneTransform previousPresentation,currentPresentation;bool presentationReady=false;};

@@ -1,0 +1,22 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / Motion Studio (/home/conner/Documents/GitHub/Project-Judas/projects/animation_studio/animation_studio.judasproj)
+Scene: Motion Studio / studio (/home/conner/Documents/GitHub/Project-Judas/projects/animation_studio/Scenes/studio.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS JS fixed root motion actually moves character through normal application
+PASS authored footstep markers reach ordinary JS game logic
+PASS contact marker triggers exactly one game-authored impulse
+PASS real physical target moves after animation-timed hit
+PASS interaction marker drives authored state
+PASS JS jump and animated airborne pose coexist with root-motion motor
+PASS actual gameplay screenshot
+PASS authored pause halts normal gameplay
+PASS authored pause resumes through logical UI activation
+PASS normal M43 transition loads rotated authored scene
+PASS same JS motor and animation remain supported under rotated gravity
+PASS rotated root motion moves along rotated studio plane
+PASS real F6 game input commits a normal SaveService slot
+PASS real F7 game input restores animated motor through normal save-service publication
+PASS ordinary application lifecycle / safe scene replacement / shutdown
+SUMMARY 15 checks 0 failures

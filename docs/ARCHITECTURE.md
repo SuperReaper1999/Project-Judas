@@ -1,12 +1,18 @@
 # Architecture
 
-## Experimental — M93 asset pipeline
+## Experimental — M95 animation production workflow
+
+Optional clip events, editor timeline and explicit fixed-step animation samples
+connect extracted motion to ordinary collision-aware motor intent. See
+[M95 contracts](M95_ANIMATION_WORKFLOW.md). Human/platform acceptance is pending.
+
+## Accepted — M93 asset pipeline
 
 Optional cooked RGBA/BC mip chains, rigid mesh LOD and demand-based visual
 residency extend the existing importer/resource/renderer ownership. Default
 projects keep eager visual references; per-view selection never changes physics.
 See [M93 contracts](M93_ASSET_PIPELINE.md) and the M93 section below.
-M93 human acceptance and Windows/Android validation remain pending.
+M93 is operator accepted; Windows/Android M93 validation remains pending.
 
 ## Current release — M92 rendering scale
 
@@ -10069,3 +10075,32 @@ without evaluating project code. No public JudasJS export/member was added.
 See [M94 developer tools](M94_DEVELOPER_TOOLS.md), the
 [ordinary project](../projects/developer_lab/README.md) and
 [verification/limitations](evidence/m94/REPORT.md). Human review remains separate.
+
+
+## M95 — animation production workflow
+
+Clip markers are immutable `AnimationClip::events`, cooked from selected import
+recipe output clips and validated again by `ModelArchive`. RuntimeWorld observes
+half-open playback intervals while resolving fixed animation samples. Rendering,
+seeking and zero-dt pose recomposition never dispatch gameplay. The optional
+`Animation.advance` path resolves the existing mixer inside authoritative JS
+fixedUpdate and suppresses duplicate end-of-step advancement. Its returned model
+motion/weighted marker sample has no game semantics. Automatic playback retains
+its established ordering. M70 pre-physics reference resolution recognizes an
+already sampled explicit instance.
+
+`Character.displace` submits world-space one-step intent to the existing motor
+sweep/slide/step path. Effective motion participates in bounded dynamic pushing;
+external velocity is resolved against each contact separately, so blocked root
+motion neither accumulates nor destroys unrelated external motion. `orient`
+provides nonteleport orientation intent under existing gravity alignment. Neither
+operation owns an animation state, skeleton, gameplay action or camera.
+
+An optional save participant and extended per-instance streaming record retain
+last-sample observations and reject malformed marker identities. Existing phase,
+mixer, layer and manual pause state continue through their current persistence.
+The editor timeline shares normal asynchronous model import/preview/publication;
+project recipe drafts use explicit bounded edits, atomic save and disk-conflict
+checks. Exported games do not contain editor authoring tools.
+
+See [M95 contracts](M95_ANIMATION_WORKFLOW.md) and [Motion Studio](../projects/animation_studio/README.md).

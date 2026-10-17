@@ -1,0 +1,73 @@
+#include "SkeletalAnimation.h"
+#include "CharacterMotor.h"
+#include "UniformGravity.h"
+#include "RadicalGravity.h"
+#include "ModelLoader.h"
+#include "ModelArchive.h"
+#include "ModelCook.h"
+#include "authoring/AnimationEventAuthoring.h"
+#include "SceneFingerprint.h"
+#include "EngineHost.h"
+#include "RuntimeWorld.h"
+#include "WorldPersistence.h"
+#include "Project.h"
+#include "SceneSerialization.h"
+#include "SaveArchive.h"
+#include <filesystem>
+#include <fstream>
+#include <chrono>
+#include <cstdio>
+#include <limits>
+#include <algorithm>
+static int checks=0,failures=0;
+void Check(bool ok,const char* label){++checks;if(!ok)++failures;std::printf("%s %s\n",ok?"PASS":"FAIL",label);}
+bool Near(glm::vec3 a,glm::vec3 b,float e=.003f){return glm::length(a-b)<e;}
+int main(){namespace fs=std::filesystem;std::string error;bool overflow=false;
+ AnimationClip clip;clip.name="Walk";clip.duration=1;clip.events={{"zero","step","L",0},{"mid","hit","R",.5},{"end","end","",1}};
+ Check(ValidAnimationEvents(clip,error),"valid named event track");auto hits=AnimationEventsBetween(clip,0,.5,false,overflow);Check(!overflow&&hits.size()==1&&hits[0].event.id=="mid","forward interval excludes from and includes endpoint");
+ Check(AnimationEventsBetween(clip,.5,.5,false,overflow).empty(),"zero interval / seek produces no action");
+ hits=AnimationEventsBetween(clip,.5,0,false,overflow);Check(hits.size()==1&&hits[0].event.id=="zero"&&hits[0].reverse,"reverse interval uses opposite half-open boundary");
+ hits=AnimationEventsBetween(clip,.75,1.5,true,overflow);Check(hits.size()==3&&hits[0].event.id=="end"&&hits[1].event.id=="zero"&&hits[2].event.id=="mid","loop crossing preserves distinct end and zero markers");
+ hits=AnimationEventsBetween(clip,0,3,true,overflow);Check(hits.size()==9&&!overflow,"multi-wrap interval reports every crossed marker");
+ AnimationEventsBetween(clip,0,100000,true,overflow);Check(overflow,"dense skipped interval is explicitly rejected rather than partial event delivery");
+ clip.events[1].id="zero";Check(!ValidAnimationEvents(clip,error),"duplicate marker IDs rejected");clip.events[1].id="mid";clip.events[1].time=1.1;Check(!ValidAnimationEvents(clip,error),"out-of-range marker rejected");clip.events[1].time=std::numeric_limits<float>::quiet_NaN();Check(!ValidAnimationEvents(clip,error),"nonfinite marker rejected");
+ MeshData mesh;Check(LoadModelMesh("projects/animation_studio/Assets/models/performer.judasmodel",mesh,error),"normal cooked animated model load");if(!mesh.skeletal){std::puts(error.c_str());return 1;}
+ auto walk=std::find_if(mesh.skeletal->clips.begin(),mesh.skeletal->clips.end(),[](const auto& c){return c.name=="Walk";});Check(walk!=mesh.skeletal->clips.end()&&walk->events.size()==2&&!walk->motion.empty(),"event track and extracted root track survive actual cook");if(walk==mesh.skeletal->clips.end())return 1;
+ std::vector<uint8_t> bytes;MeshData decoded;Check(EncodeModelArchive(mesh,bytes,error)&&DecodeModelArchive(bytes.data(),bytes.size(),decoded,error)&&decoded.skeletal->clips[1].events.size()==2,"archive roundtrip retains marker payload/timing");
+ auto delta=RootMotionInterval(*walk,0,.6,false);Check(Near(delta.translation,{0,0,-1.2}),"root displacement matches independent authored metres/second");
+ auto root=fs::absolute(".cache/m95/authoring");fs::create_directories(root/"Imports");fs::copy_file("projects/animation_studio/Imports/performer.judasimport",root/"Imports/performer.judasimport",fs::copy_options::overwrite_existing);
+ AnimationEventDraft draft;Check(draft.Load(root.string(),"Imports/performer.judasimport",*walk,error),"timeline draft loads output clip selection");Check(!draft.Dirty(),"loaded event draft starts clean");draft.events[0].time=.2;Check(draft.Dirty(),"marker edit records unsaved authoring state");Check(draft.Save(error),"explicit timeline marker save");Check(!draft.Dirty(),"successful atomic save clears unsaved authoring state");AnimationEventDraft loaded;Check(loaded.Load(root.string(),"Imports/performer.judasimport",*walk,error)&&loaded.events[0].time==.2f,"saved event edit roundtrips");
+ {std::ofstream f(draft.path,std::ios::app);f<<' ';}Check(!draft.Save(error),"external recipe edit cannot be overwritten silently");Check(!loaded.Load(root.string(),"../../escape.judasimport",*walk,error),"timeline rejects paths outside current project");
+ PhysicsWorld physics;physics.Init();physics.CreateStaticBox({0,-.5,0},{30,.5,30},.6,0);physics.CreateStaticBox({0,1,-2},{3,1,.2},.6,0);UniformGravity g({0,-9.81f,0});CharacterMotor motor;motor.Reset({0,.92,0},{1,0,0,0});
+ for(int i=0;i<120;++i){physics.Step(1.f/60);motor.displacementIntent={0,0,-.04};motor.Step(physics,g,1.f/60);}Check(motor.position.z>-1.51&&motor.result.collided,"root displacement uses capsule wall sweep, no tunnelling");Check(std::abs(motor.velocity.z)<.001f,"blocked animation motion does not accumulate persistent velocity");
+ motor.Step(physics,g,0);Check(std::isfinite(motor.position.z)&&std::isfinite(motor.velocity.z),"zero-dt publication preserves finite motor state");
+ auto old=motor.position;physics.Step(1.f/60);motor.Step(physics,g,1.f/60);Check(std::abs(motor.position.z-old.z)<.001,"one-step displacement does not repeat");
+ motor.Reset({5,.92,0},{1,0,0,0});motor.velocity={1,0,0};motor.orientationIntent=glm::angleAxis(.6f,glm::vec3(0,1,0));motor.displacementIntent={0,0,-.1};physics.Step(1.f/60);motor.Step(physics,g,1.f/60);Check(std::abs(motor.position.z+.1f)<.003f&&std::abs(motor.velocity.x-1)<.003f,"authored displacement composes with external velocity without reset");Check(std::abs(glm::dot(motor.orientation,glm::angleAxis(.6f,glm::vec3(0,1,0)))-1)<.001,"orientation intent preserves moving motor state");
+ auto q=glm::angleAxis(.9f,glm::normalize(glm::vec3(1,2,3)));PhysicsWorld rotated;rotated.Init();rotated.CreateStaticBox(q*glm::vec3(0,-.5,0),q,{20,.5,20},.6,0);UniformGravity rg(q*glm::vec3(0,-9.81f,0));CharacterMotor r;r.Reset(q*glm::vec3(0,.92,0),q);for(int i=0;i<30;++i){rotated.Step(1.f/60);r.displacementIntent=q*glm::vec3(.03,0,0);r.Step(rotated,rg,1.f/60);}Check(r.result.supported&&Near(glm::inverse(q)*r.position,{.9,.92,0},.015f),"rotated gravity displacement/support equivalent");
+ EngineHost host;Check(host.Init("M95 animation production checks",320,240,false,error),"normal GL resource host");Project project;Check(project.Load("projects/animation_studio/animation_studio.judasproj",error),"ordinary studio project registration");host.OpenProjectAssets(project.RootDir(),project.AssetsDir());auto& resources=host.Resources();Scene scene;Check(LoadSceneFromFile(project.StartupScenePath(),scene,error),"authored scene with motor and animation");if(!error.empty())std::puts(error.c_str());RuntimeWorld world;Check(world.Build(scene,&resources,error),"ordinary runtime world");world.UpdateAnimations(0);resources.WaitForAll();world.UpdateAnimations(0);auto* a=world.RuntimeAnimation(10);Check(a&&a->asset,"asynchronous rig ready");if(!a||!a->asset){std::puts(error.c_str());return 1;}
+ world.UpdateScripts(nullptr,0);
+ a->playback.clip="Walk";a->playback.time=0;a->playback.loop=true;Check(world.AdvanceAnimation(10,.3f,error),"explicit fixed animation advance");Check(a->step.events.size()==1&&a->step.events[0].event.id=="left"&&Near(a->step.motion.translation,{0,0,-.6}),"same-step event and root delta match sample");float time=a->playback.time;Check(!world.AdvanceAnimation(10,.3f,error),"duplicate fixed-step advance rejected");world.UpdateAnimations(.3f);Check(a->playback.time==time,"post-physics stage does not double-advance explicit sample");world.UpdateAnimations(.3f);Check(a->playback.time==time,"manual advance holds clock until next explicit advance or resume");
+ std::string record;Check(WorldPersistence::CaptureAnimation(world,10,record,error),"stream suspension captures sample and manual clock");auto prior=a->step;world.AdvanceAnimation(10,.2f,error);world.UpdateAnimations(.2f);Check(WorldPersistence::RestoreAnimation(world,10,record,error)&&a->playback.time==time&&a->step.events.size()==prior.events.size(),"stream restoration retains event observation and phase");
+ std::map<std::string,SaveChunk> chunks;Check(WorldPersistence::Capture(world,chunks,error)&&chunks.count("animation-observations"),"save captures bounded animation observations");if(!error.empty())std::printf("SAVE DETAIL %s\n",error.c_str());
+ Scene saved;RuntimeWorld restored;bool restoredOk=WorldPersistence::SceneFrom(chunks,saved,error)&&restored.Build(saved,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(restored,error)&&WorldPersistence::Restore(restored,chunks,error);Check(restoredOk,"full new-world save restoration retains animation participant");if(!restoredOk)std::puts(error.c_str());
+ if(restoredOk){WorldPersistence::Published(restored);auto* copy=restored.RuntimeAnimation(10);Check(copy&&copy->playback.time==time&&copy->mixer.paused&&copy->step.events.size()==prior.events.size(),"restored physical/animation endpoint matches saved phase, manual clock and marker");restored.UpdateAnimations(.1f);Check(copy->playback.time==time,"restore does not replay an event or advance manual playback");}
+ restored.Destroy();
+ auto malformed=chunks;if(malformed.count("animation-observations"))malformed["animation-observations"].version=99;RuntimeWorld bad;bool builtBad=bad.Build(saved,&resources,error,nullptr,nullptr,true);Check(builtBad&&!WorldPersistence::Restore(bad,malformed,error),"unknown observation version fails rather than accepting incompatible state");bad.Destroy();
+ a->mixer.CrossFade(a->playback,"Run",.5);world.UpdateAnimations(.1);Check(a->step.events.empty()&&glm::length(a->step.motion.translation)>0,"crossfade root motion is physical sampled blend");
+ a->mixer.CrossFade(a->playback,"Walk",0);a->playback.time=.2;a->playback.loop=true;world.UpdateAnimations(.2);Check(a->step.events.size()==1,"automatic fixed-step playback exposes crossed markers");auto serial=a->step.events[0].event.id;world.ResolveAnimationPose(*a,0);Check(a->step.events.size()==1&&a->step.events[0].event.id==serial,"pose/IK recomposition never re-emits or clears completed sample");
+ SceneTransform palmBefore;bool palmReady=world.JointPose(10,"PalmB","world",1,palmBefore);LimbIKSettings limb;limb.id="root-clock";limb.root="ShoulderB";limb.middle="ElbowB";limb.end="PalmB";limb.target=palmBefore.position+glm::vec3(-.15f,.15f,0);limb.pole=palmBefore.position+glm::vec3(0,.3f,1);
+ bool limbReady=palmReady&&world.SetLimbIK(10,limb,false,error);Check(limbReady,"world-space legacy limb target configures on actual animated performer");
+ if(limbReady){world.AdvanceAnimation(10,.05f,error);auto* m=world.RuntimeCharacter(10);m->velocity={0,0,0};m->displacementIntent=a->step.motion.translation;world.PrepareAnimationReferences(.05f);world.UpdateCharacters(.05f,false,true);world.UpdateAnimations(.05f);SceneTransform actual;bool resolved=world.JointPose(10,"PalmB","world",1,actual);float distance=glm::length(actual.position-limb.target);std::printf("ROOT_IK legacy_world_error=%.9f\n",distance);Check(resolved&&distance<.01f,"legacy world-space limb stays planted after root-motion motor movement");world.SetLimbIK(10,limb,true,error);}
+ Scene ikScene;bool ikLoaded=LoadSceneFromFile("projects/character_lab/Scenes/wall.judas",ikScene,error);auto ik=ikLoaded&&ikScene.Find(10)&&ikScene.Find(10)->animation?ikScene.Find(10)->animation->fullBodyIK:std::optional<FullBodyIKSettings>{};FullBodyIKTarget pinned;pinned.id="root-clock";pinned.chain="palmB";pinned.space=IKTargetSpace::World;SceneTransform hand;world.JointPose(10,"PalmB","world",1,hand);pinned.position=glm::dvec3(hand.position+glm::vec3(-.08f,.04f,0));if(ik)ik->targets={pinned};bool configured=ik&&world.ConfigureFullBodyIK(10,ik,error);Check(configured,"existing M70 shared IK mapping composes with extracted-motion performer");
+ if(configured){bool advanced=world.AdvanceAnimation(10,.05f,error);float phase=a->playback.time;auto* m=world.RuntimeCharacter(10);m->velocity={0,0,0};m->displacementIntent=a->step.motion.translation;world.UpdateCharacters(.05f,true,false);world.PrepareAnimationReferences(.05f);world.UpdateAnimations(.05f);Check(advanced&&a->playback.time==phase&&a->finalPose.local.size()==a->asset->skeleton.rest.local.size(),"manual animation, pre-physics IK references and final pose advance exactly once");SceneTransform actual;bool held=world.JointPose(10,"PalmB","world",1,actual);float distance=glm::length(actual.position-glm::vec3(pinned.position));std::printf("ROOT_IK shared_world_error=%.9f\n",distance);Check(held&&distance<.01f,"shared world-space IK is resolved after root-motion motor movement");world.ConfigureFullBodyIK(10,std::nullopt,error);}
+ auto disabledScene=scene;for(auto& o:disabledScene.Objects()){o.scripts.clear();o.ui.reset();if(o.animation)o.animation->enabled=false;}RuntimeWorld disabled;Check(disabled.Build(disabledScene,&resources,error)&&!disabled.AdvanceAnimation(10,.1f,error),"disabled animation refuses explicit advancement");disabled.Destroy();
+ for(int n:{1,32,100}){
+  Scene workload;auto definition=*scene.Find(10);definition.characterMotor.reset();definition.scripts.clear();for(int i=0;i<n;++i){auto copy=definition;copy.id=1000+i;copy.animation->clip="Walk";workload.InsertObject(copy);}
+  RuntimeWorld benchmark;Check(benchmark.Build(workload,&resources,error),"animation scale workload uses normal world instances");benchmark.UpdateAnimations(0);
+  std::vector<double> times;for(int step=0;step<320;++step){auto start=std::chrono::steady_clock::now();benchmark.UpdateAnimations(1.f/60);double ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();if(step>=20){times.push_back(ms);std::printf("ANIMATION_TIMING instances=%d step=%d milliseconds=%.9f\n",n,step,ms);}}
+  std::sort(times.begin(),times.end());std::printf("PERFORMANCE instances=%d nodes=%zu median_ms=%.6f p95_ms=%.6f worst_ms=%.6f samples=%zu\n",n,mesh.skeletal->skeleton.names.size(),times[times.size()/2],times[size_t(times.size()*.95)],times.back(),times.size());benchmark.Destroy();
+ }
+ world.Destroy();Check(!world.RuntimeAnimation(10),"destruction invalidates animation owner");host.Shutdown();
+ auto start=std::chrono::steady_clock::now();size_t checksum=0;for(int i=0;i<100000;++i){auto e=AnimationEventsBetween(*walk,0,.4,true,overflow);checksum+=e.size();}auto us=std::chrono::duration<double,std::micro>(std::chrono::steady_clock::now()-start).count()/100000;std::printf("PERFORMANCE marker_interval_us=%.6f checksum=%zu\n",us,checksum);
+ std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;
+}

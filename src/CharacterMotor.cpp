@@ -13,7 +13,7 @@ glm::quat Align(glm::vec3 a,glm::vec3 b){
 }
 void ResolveCharacterSlide(PhysicsWorld& physics,glm::vec3& center,const glm::quat& rotation,
     glm::vec3 remaining,glm::vec3& velocity,const CharacterMotorSettings& s,
-    const PhysicsQueryFilter* filter,bool movingGeometry,bool legacyPush,bool& collided,BodyHandle observer){
+    const PhysicsQueryFilter* filter,bool movingGeometry,bool legacyPush,bool& collided,BodyHandle observer,glm::vec3* externalVelocity){
     float bodyMotionTime=0;
     float pushBudget=s.maxPushImpulse;
     for(int i=0;i<4;++i){
@@ -38,13 +38,16 @@ void ResolveCharacterSlide(PhysicsWorld& physics,glm::vec3& center,const glm::qu
         auto leftover=remaining*(1-fraction);float inward=glm::dot(leftover,hit.normal);
         if(inward<0)leftover-=hit.normal*inward;
         remaining=leftover;
-        if(!legacyPush){auto surface=physics.GetPointVelocity(hit.hitBody,hit.point);float into=glm::dot(velocity-surface,hit.normal);if(into<0)velocity-=hit.normal*into;}
+        if(!legacyPush){auto surface=physics.GetPointVelocity(hit.hitBody,hit.point);float into=glm::dot(velocity-surface,hit.normal);if(into<0)velocity-=hit.normal*into;if(externalVelocity){float externalInto=glm::dot(*externalVelocity-surface,hit.normal);if(externalInto<0)*externalVelocity-=hit.normal*externalInto;}}
     }
 }
-void CharacterMotor::Reset(glm::vec3 p,glm::quat q){position=p;orientation=glm::normalize(q);velocity=acceleration=glm::vec3(0);result={};followingSupport=false;}
+void CharacterMotor::Reset(glm::vec3 p,glm::quat q){position=p;orientation=glm::normalize(q);velocity=acceleration=displacementIntent=glm::vec3(0);result={};followingSupport=false;orientationIntent.reset();}
 void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,float dt){
     JUDAS_PROFILE_SCOPE("Character motor");
-    if(!settings.enabled){followingSupport=false;result={};acceleration={0,0,0};return;}
+    if(!settings.enabled){followingSupport=false;result={};acceleration=displacementIntent={0,0,0};orientationIntent.reset();return;}
+    if(orientationIntent){orientation=glm::normalize(*orientationIntent);orientationIntent.reset();}
+    const auto authoredMotion=dt>0?displacementIntent:glm::vec3(0);if(dt>0)displacementIntent={0,0,0};
+    const auto motionVelocity=dt>0?authoredMotion/dt:glm::vec3(0);
     auto oldPosition=position;auto previous=result;result={};result.gravity=gravity.Sample(position);
     const auto intentUp=orientation*glm::vec3(0,1,0);
     auto up=intentUp;if(glm::length(result.gravity)>1e-6f)up=-glm::normalize(result.gravity);
@@ -66,7 +69,7 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
     }
     const auto departureNormal=ground.hit?ground.normal:(previous.supported?previous.supportNormal:up);
     const auto netAcceleration=result.gravity*settings.gravityScale+acceleration;
-    const auto relativeMotion=velocity+netAcceleration*dt-supportMotion;
+    const auto relativeMotion=velocity+netAcceleration*dt-supportMotion+motionVelocity;
     // Skin defines the resolution at which departure is observable. Curvature
     // and capsule/edge normals can rotate within it. Uphill/downhill following
     // is preserved unless intent ascends AND separates beyond that tolerance.
@@ -98,10 +101,11 @@ void CharacterMotor::Step(PhysicsWorld& physics,const GravityField& gravity,floa
         float inward=glm::dot(velocity-carryVelocity,ground.normal);if(inward<0)velocity-=ground.normal*inward;
     }
     velocity+=netAcceleration*dt;acceleration={0,0,0};
-    auto remaining=(velocity-carryVelocity)*dt;
+    auto remaining=(velocity-carryVelocity)*dt+authoredMotion;
     if(supported&&!departing){glm::vec3 stepped;auto tangent=remaining-up*glm::dot(remaining,up);
         if(TryStepMove(physics,center,orientation,up,tangent,settings.stepHeight,slope,settings.skin,stepped,&shape,&filter,settings.collisionLayer,settings.collisionMask)){center=stepped;remaining={0,0,0};result.stepped=true;}}
-    ResolveCharacterSlide(physics,center,orientation,remaining,velocity,settings,&filter,!supported,false,result.collided,observationBody);
+    auto resolvedVelocity=velocity+motionVelocity;
+    ResolveCharacterSlide(physics,center,orientation,remaining,resolvedVelocity,settings,&filter,!supported,false,result.collided,observationBody,&velocity);
     position=center-orientation*settings.offset;
     // End-of-step support reports the current pose, rather than yesterday's ground.
     auto final=sweep(center,-up*settings.supportDistance);

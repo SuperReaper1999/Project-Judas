@@ -1,0 +1,47 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS valid named event track
+PASS forward interval excludes from and includes endpoint
+PASS zero interval / seek produces no action
+PASS reverse interval uses opposite half-open boundary
+PASS loop crossing preserves distinct end and zero markers
+PASS multi-wrap interval reports every crossed marker
+PASS dense skipped interval is explicitly rejected rather than partial event delivery
+PASS duplicate marker IDs rejected
+PASS out-of-range marker rejected
+PASS nonfinite marker rejected
+PASS normal cooked animated model load
+PASS event track and extracted root track survive actual cook
+PASS archive roundtrip retains marker payload/timing
+PASS root displacement matches independent authored metres/second
+PASS timeline draft loads output clip selection
+PASS explicit timeline marker save
+PASS saved event edit roundtrips
+PASS external recipe edit cannot be overwritten silently
+PASS timeline rejects paths outside current project
+PASS root displacement uses capsule wall sweep, no tunnelling
+PASS blocked animation motion does not accumulate persistent velocity
+PASS one-step displacement does not repeat
+PASS authored displacement composes with external velocity without reset
+PASS orientation intent preserves moving motor state
+PASS rotated gravity displacement/support equivalent
+PASS normal GL resource host
+PASS ordinary studio project registration
+PASS authored scene with motor and animation
+PASS ordinary runtime world
+PASS asynchronous rig ready
+PASS explicit fixed animation advance
+PASS same-step event and root delta match sample
+PASS duplicate fixed-step advance rejected
+PASS post-physics stage does not double-advance explicit sample
+PASS manual advance holds clock until next explicit advance or resume
+PASS stream suspension captures sample and manual clock
+PASS stream restoration retains event observation and phase
+FAIL save captures bounded animation observations
+PASS crossfade root motion is physical sampled blend
+PASS automatic fixed-step playback exposes crossed markers
+PASS pose/IK recomposition never re-emits or clears completed sample
+PASS destruction invalidates animation owner
+PERFORMANCE marker_interval_us=0.170713 checksum=100000
+SUMMARY 42 checks 1 failures

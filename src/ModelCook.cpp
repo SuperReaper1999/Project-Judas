@@ -17,7 +17,7 @@
 #include "PlatformServices.h"
 namespace fs=std::filesystem;using Json=nlohmann::json;
 namespace {
-constexpr const char* Revision="M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1";
+constexpr const char* Revision="M66-ufbx-0.23.1-cgltf-1.15-cook-11-M74-retarget-1-model-1-M95-events-1";
 void Require(bool b,const std::string& e){if(!b)throw std::runtime_error(e);}
 Json ReadJson(const fs::path& path){JUDAS_PROFILE_SCOPE("Model recipe/receipt parsing");std::ifstream f(path);Require(bool(f),"cannot read recipe: "+path.string());Require(fs::file_size(path)<=4*1024*1024,"recipe/report exceeds 4 MiB");return Json::parse(f,[](int depth,Json::parse_event_t,const Json&){Require(depth<48,"recipe nesting bound");return true;},true,false);}
 void Write(const fs::path& p,const void* data,size_t size){fs::create_directories(p.parent_path());std::ofstream f(p,std::ios::binary);f.write(static_cast<const char*>(data),size);Require(bool(f),"write failed: "+p.string());}
@@ -72,6 +72,7 @@ AnimationClip TrimClip(const Skeleton& skeleton,const AnimationClip& original,fl
  const size_t grid=size_t(std::ceil((end-begin)*rate));Require(grid+1<=maximumSamples,"clip trim exceeds bounded pose-evaluation work");
  std::set<float> regular{begin,end};for(size_t i=1;i<grid;++i){if((i&1023)==0)CheckCancelled(task);regular.insert(begin+float(i/rate));}
  AnimationClip clip;clip.name=original.name;clip.duration=end-begin;clip.loop=original.loop;
+ for(auto e:original.events)if(e.time>=begin&&e.time<=end){e.time-=begin;clip.events.push_back(std::move(e));}
  // Preserve each track's established key schedule, but evaluate the whole source
  // pose once at the union of those times. Sampling the whole clip separately for
  // every track made a secondary trim of a dense retarget bake quadratic.
@@ -83,9 +84,10 @@ AnimationClip TrimClip(const Skeleton& skeleton,const AnimationClip& original,fl
   Require(times.size()<=kRetargetMaxKeys-keys,"clip trim output exceeds four million keys");keys+=times.size();
   size_t scheduled=0;for(float time:times){if((scheduled++&1023)==0)CheckCancelled(task);unionTimes.insert(time);Require(unionTimes.size()<=maximumSamples,"clip trim exceeds bounded pose-evaluation work");}
   AnimationTrack track;track.node=source.node;track.path=source.path;track.interpolation=source.interpolation==TrackInterpolation::Step?TrackInterpolation::Step:TrackInterpolation::Linear;
-  // Rebase in float can collapse neighbours or overshoot the duration; keep keys strictly increasing within [0,duration].
+  // Rebase can collapse neighbours or overshoot duration. Reject only actual
+  // non-increasing/out-of-range keys; an epsilon also drops distinct legal keys.
   std::vector<float> schedule;schedule.reserve(times.size());track.times.reserve(times.size());track.values.reserve(times.size());
-  float last=-1;for(float time:times){float local=time==end?clip.duration:time-begin;if(time!=end&&(local<=last+1e-6f||local>=clip.duration-1e-6f))continue;last=local;schedule.push_back(time);track.times.push_back(local);}
+  float last=-1;for(float time:times){float local=time==end?clip.duration:time-begin;if(time!=end&&(local<=last||local>=clip.duration))continue;last=local;schedule.push_back(time);track.times.push_back(local);}
   schedules.push_back(std::move(schedule));cursor.push_back(0);clip.tracks.push_back(std::move(track));
  }
  for(float time:unionTimes){
@@ -213,7 +215,7 @@ bool CookModelRecipe(const std::string& recipe,ModelCookTask& t){JUDAS_PROFILE_S
   mesh.skeletal=asset;if(!hasRetarget)ApplyAliases(mesh,options);asset=std::make_shared<SkeletalAsset>(*mesh.skeletal);AddMotionRoot(asset->skeleton);
   if(j.contains("clips")){
    std::vector<AnimationClip> selected;std::set<std::string> selectedSource;
-   for(const auto& entry:j["clips"]){auto name=entry.at("sourceClip").get<std::string>();auto it=std::find_if(asset->clips.begin(),asset->clips.end(),[&](const auto& c){return c.name==name;});Require(it!=asset->clips.end(),"selected clip missing: "+name);auto clip=*it;double rate=retargetRates.count(name)?retargetRates.at(name):settings.sampleRate;if(entry.contains("trim")){auto trim=entry.at("trim");clip=TrimClip(asset->skeleton,clip,trim.at(0),trim.at(1),rate,t);}clip.name=entry.value("name",clip.name);clip.loop=entry.value("loop",false);RootPolicy(*asset,clip,entry.value("rootMotion",retargetPolicies.count(name)?retargetPolicies.at(name):Json{{"policy","preserve"}}),rate);selectedSource.insert(name);selected.push_back(std::move(clip));}
+   for(const auto& entry:j["clips"]){auto name=entry.at("sourceClip").get<std::string>();auto it=std::find_if(asset->clips.begin(),asset->clips.end(),[&](const auto& c){return c.name==name;});Require(it!=asset->clips.end(),"selected clip missing: "+name);auto clip=*it;double rate=retargetRates.count(name)?retargetRates.at(name):settings.sampleRate;if(entry.contains("trim")){auto trim=entry.at("trim");clip=TrimClip(asset->skeleton,clip,trim.at(0),trim.at(1),rate,t);}clip.name=entry.value("name",clip.name);clip.loop=entry.value("loop",false);RootPolicy(*asset,clip,entry.value("rootMotion",retargetPolicies.count(name)?retargetPolicies.at(name):Json{{"policy","preserve"}}),rate);if(entry.contains("events")){Require(entry["events"].is_array()&&entry["events"].size()<=1024,"event track must be an array of at most 1024 markers");clip.events.clear();for(const auto& e:entry["events"]){AnimationEvent marker;marker.id=e.at("id");marker.name=e.at("name");marker.time=e.at("time");marker.data=e.value("data",std::string());clip.events.push_back(std::move(marker));}}std::string eventError;Require(ValidAnimationEvents(clip,eventError),eventError);selectedSource.insert(name);selected.push_back(std::move(clip));}
    // A retarget operation adds ordinary output beside the existing authored clip
    // selection. It never silently drops the target's chosen original clips.
    for(const auto& clip:asset->clips)if(retargetPolicies.count(clip.name)&&!selectedSource.count(clip.name)){auto added=clip;RootPolicy(*asset,added,retargetPolicies.at(clip.name),retargetRates.at(clip.name));selected.push_back(std::move(added));}

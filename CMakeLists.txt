@@ -378,6 +378,7 @@ add_executable(judas_editor
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
     src/editor/RetargetPanel.cpp
+    src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
     src/editor/TerrainTools.cpp
     src/editor/VolumeTerrainTools.cpp
@@ -1461,7 +1462,7 @@ target_link_libraries(judas_post_consumer_ragdoll_tests PRIVATE judas_engine)
 # M66 source import is authoring-only; shipped runtime reads normalized models.
 add_library(judas_ufbx STATIC third_party/ufbx/ufbx.c)
 target_include_directories(judas_ufbx PUBLIC third_party/ufbx)
-add_library(judas_model_import STATIC src/FbxImport.cpp src/ObjImport.cpp src/ModelCook.cpp src/ModelCollision.cpp src/AnimationRetarget.cpp)
+add_library(judas_model_import STATIC src/FbxImport.cpp src/ObjImport.cpp src/ModelCook.cpp src/ModelCollision.cpp src/AnimationRetarget.cpp src/authoring/AnimationEventAuthoring.cpp)
 target_link_libraries(judas_model_import PUBLIC judas_engine judas_ufbx)
 judas_warnings(judas_model_import)
 add_executable(judas_model_import_cli tools/ModelImportCli.cpp)
@@ -2001,3 +2002,14 @@ judas_warnings(judas_script_tools_editor_tests)
 add_executable(judas_script_developer_consumer_tests tests/ScriptDeveloperConsumerTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
 target_link_libraries(judas_script_developer_consumer_tests PRIVATE judas_engine)
 judas_warnings(judas_script_developer_consumer_tests)
+
+# M95 event production, root-motion collision and authoring contracts.
+add_executable(judas_animation_workflow_tests tests/AnimationWorkflowTests.cpp)
+target_link_libraries(judas_animation_workflow_tests PRIVATE judas_model_import)
+judas_warnings(judas_animation_workflow_tests)
+add_executable(judas_animation_workflow_application_tests tests/AnimationWorkflowApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_animation_workflow_application_tests PRIVATE judas_engine)
+judas_warnings(judas_animation_workflow_application_tests)
+add_executable(judas_animation_cold_save_tests tests/AnimationColdSaveTests.cpp)
+target_link_libraries(judas_animation_cold_save_tests PRIVATE judas_engine)
+judas_warnings(judas_animation_cold_save_tests)

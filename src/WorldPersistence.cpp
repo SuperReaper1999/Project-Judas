@@ -17,6 +17,7 @@ void playback(SaveArchive& a,AnimationPlayback& p){a(p.clip,p.playing,p.loop,p.s
 void contribution(SaveArchive& a,PoseContribution& c,const Skeleton& s){pose(a,c.pose);pose(a,c.reference);a(c.weight,c.enabled,c.additive,c.order);std::vector<std::string> keys;if(!a.reading)for(int n:c.mask)keys.push_back(SkeletonJointKey(s,n));a(keys);if(a.reading){std::string e;a.Require(ResolveJointMask(s,keys,c.mask,e),"saved joint mask invalid");a.Require(ValidPose(s,c.pose,e),"saved contribution pose invalid");if(!c.reference.local.empty())a.Require(ValidPose(s,c.reference,e),"saved reference pose invalid");}a.Require(c.weight>=0&&c.weight<=1,"saved pose weight invalid");}
 void layerSettings(SaveArchive& a,AnimationLayerSettings& s){a(s.id,s.clip,s.referenceClip,s.enabled,s.additive,s.weight,s.speed,s.time,s.referenceTime,s.mask);std::string error;a.Require(ValidAnimationLayers({s},error),"invalid saved animation layer");}
 void constraint(SaveArchive& a,JointSettings& s,unsigned version){a(s.type,s.anchorA,s.anchorB,s.frameA,s.frameB,s.enabled,s.limits,s.motor,s.spring,s.lower,s.upper,s.speed,s.maxForce,s.rest,s.stiffness,s.damping);if(version>=2)a(s.rotationalResistance);a.Require(ValidJointSettings(s),"invalid saved constraint");}
+bool NeedsAnimationObservation(const RuntimeWorld::AnimationInstance& instance){return instance.asset&&std::any_of(instance.asset->clips.begin(),instance.asset->clips.end(),[](const auto& clip){return !clip.events.empty()||!clip.motion.empty();});}
 uint32_t count(SaveArchive& a,size_t size,uint32_t limit=8192){uint32_t n=uint32_t(size);a(n);a.Require(n<=limit,"participant record limit");return n;}
 }
 void WorldPersistence::Entities(RuntimeWorld& w,SaveArchive& a){
@@ -114,7 +115,7 @@ void WorldPersistence::InstanceAnimation(RuntimeWorld& w,EntityId id,SaveArchive
   pose(a,v.sourcePose);pose(a,v.finalPose);std::string error;a.Require(ValidPose(skeleton,v.sourcePose,error)&&ValidPose(skeleton,v.finalPose,error),"invalid saved skeletal pose");
   auto external=count(a,v.external.size(),16);std::map<std::string,PoseContribution> contributions;
   for(uint32_t j=0;j<external;++j){std::string key;PoseContribution c;if(!a.reading){auto it=v.external.begin();std::advance(it,j);key=it->first;c=it->second;}a(key);contribution(a,c,skeleton);a.Require(contributions.emplace(key,std::move(c)).second,"duplicate pose producer");}
-  if(a.reading){v.external=std::move(contributions);v.skin=ResolveSkinMatrices(skeleton,v.finalPose);v.previousWorld.clear();v.recentWorld.clear();v.motionDt=0;v.previousFinalPose=v.finalPose;v.fullBodyIK.reset();v.preparedM70=false;
+  if(a.reading){v.external=std::move(contributions);v.skin=ResolveSkinMatrices(skeleton,v.finalPose);v.previousWorld.clear();v.recentWorld.clear();v.motionDt=0;v.step={};v.scriptAdvanced=false;v.previousFinalPose=v.finalPose;v.fullBodyIK.reset();v.preparedM70=false;
     // Durable target intent lives in the ordinary entity definition; recreate
     // only the mapping here, never an invented prior fixed sample or solve cache.
     const auto* definition=w.RuntimeDefinition(id);
@@ -124,8 +125,18 @@ void WorldPersistence::InstanceAnimation(RuntimeWorld& w,EntityId id,SaveArchive
       restoredIK.prepared=true;v.fullBodyIK=std::move(restoredIK);
     }}
 }
+void WorldPersistence::AnimationObservation(RuntimeWorld& w,EntityId id,SaveArchive& a){
+ auto* instance=w.RuntimeAnimation(id);a.Require(instance&&instance->asset,"missing animation observation owner");auto& step=instance->step;
+ a(step.motion.translation,step.motion.rotation,step.overflow);auto n=count(a,step.events.size(),256);if(a.reading)step.events.resize(n);
+ for(auto& hit:step.events){a(hit.event.id,hit.event.name,hit.event.data,hit.event.time,hit.clip,hit.source,hit.crossing,hit.weight,hit.reverse);
+  a.Require(hit.event.id.size()<=128&&hit.event.name.size()<=128&&hit.event.data.size()<=4096&&hit.source.size()<=256&&hit.weight>=0&&hit.weight<=1,"invalid saved animation event");
+  auto clip=std::find_if(instance->asset->clips.begin(),instance->asset->clips.end(),[&](const auto& c){return c.name==hit.clip;});a.Require(clip!=instance->asset->clips.end(),"saved event clip missing");
+  a.Require(std::any_of(clip->events.begin(),clip->events.end(),[&](const auto& e){return e.id==hit.event.id&&e.name==hit.event.name&&e.time==hit.event.time&&e.data==hit.event.data;}),"saved marker no longer matches authored track");
+ }
+ if(a.reading)instance->scriptAdvanced=false;
+}
 bool WorldPersistence::CanSuspendAnimation(RuntimeWorld& w,EntityId id){auto p=w.m_physicalAnimations.find(id);return !w.RagdollActive(id)&&!w.m_ragdollReturns.count(id)&&(p==w.m_physicalAnimations.end()||(!p->second.pending&&p->second.mode==PhysicalAnimationMode::Animation));}
-bool WorldPersistence::CaptureAnimation(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){try{SaveArchive a;InstanceAnimation(w,id,a);a.Require(a.bytes.size()<=1024*1024,"region animation snapshot exceeds 1 MiB");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}}
+bool WorldPersistence::CaptureAnimation(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){try{SaveArchive a;InstanceAnimation(w,id,a);if(NeedsAnimationObservation(*w.RuntimeAnimation(id))){AnimationObservation(w,id,a);a.bytes="M95A"+a.bytes;}a.Require(a.bytes.size()<=1024*1024,"region animation snapshot exceeds 1 MiB");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}}
 bool WorldPersistence::CaptureKinematic(RuntimeWorld& w,EntityId id,std::string& bytes,std::string& error){
  try{auto body=w.RuntimeBody(id);if(!w.Physics().IsKinematicBody(body)){bytes.clear();return true;}SaveArchive a;w.Physics().PersistKinematic(a,body);a.Require(a.bytes.size()<=1024,"kinematic snapshot bound");bytes=std::move(a.bytes);return true;}catch(const std::exception& e){error=e.what();return false;}
 }
@@ -141,7 +152,7 @@ bool WorldPersistence::RestoreAnimation(RuntimeWorld& w,EntityId id,const std::s
  // Private staged entities are exposed only to this owner-thread native fixup.
  // No simulation, callback or publication occurs in this lookup scope.
  bool pending=w.m_regionPending.erase(id)!=0;
- try{SaveArchive a(bytes);InstanceAnimation(w,id,a);a.Finish();if(pending)w.m_regionPending.insert(id);return true;}catch(const std::exception& e){if(pending)w.m_regionPending.insert(id);error=e.what();return false;}
+ try{const bool extended=bytes.rfind("M95A",0)==0;SaveArchive a(extended?bytes.substr(4):bytes);InstanceAnimation(w,id,a);if(extended)AnimationObservation(w,id,a);a.Finish();if(pending)w.m_regionPending.insert(id);return true;}catch(const std::exception& e){if(pending)w.m_regionPending.insert(id);error=e.what();return false;}
 }
 void WorldPersistence::Animation(RuntimeWorld& w,SaveArchive& a){
  auto n=count(a,w.m_animationInstances.size());a.Require(n==w.m_animationInstances.size(),"incomplete skeletal records");std::set<EntityId> seen;
@@ -227,6 +238,7 @@ bool WorldPersistence::Capture(RuntimeWorld& w,std::map<std::string,SaveChunk>& 
  if(name=="articulation"&&std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[](const auto& r){return r.second.physicalControlled;}))version=3;
  if(name=="articulation"&&(!w.m_jointOwners.empty()||std::any_of(w.m_ragdolls.begin(),w.m_ragdolls.end(),[](const auto& r){return !r.second.joints.empty();})))version=4;
  if(name=="articulation")ArticulationExtended(w,a,version);else fn(w,a);chunks[name]={version,std::move(a.bytes)};}
+ if(std::any_of(w.m_animationInstances.begin(),w.m_animationInstances.end(),[](const auto& item){return NeedsAnimationObservation(item.second);})){SaveArchive observations;auto n=count(observations,w.m_animationInstances.size());(void)n;for(auto& [id,_]:w.m_animationInstances){auto owner=id;observations(owner);AnimationObservation(w,id,observations);}chunks["animation-observations"]={1,std::move(observations.bytes)};}
  // Conditional participant leaves existing saves and default authored scenes
  // unchanged. Physical state is restored first; this record reinstates durable
  // intent without synthesizing a previous displacement or CCD history.
@@ -288,6 +300,7 @@ bool WorldPersistence::Restore(RuntimeWorld& w,const std::map<std::string,SaveCh
  if(auto it=chunks.find("kinematic-motion");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer kinematic motion participant");SaveArchive motions(it->second.data);auto n=count(motions,0);for(unsigned i=0;i<n;++i){EntityId id=0;motions(id);auto h=w.RuntimeBody(id);motions.Require(w.Physics().IsKinematicBody(h)&&restoredKinematics.insert(id).second,"saved kinematic body unavailable/duplicate");w.Physics().PersistKinematic(motions,h);}motions.Finish();}
  for(const auto& o:w.ScriptObjects())if(w.Physics().IsKinematicBody(w.RuntimeBody(o.id))&&!w.IsTransientEntity(o.id)&&!restoredKinematics.count(o.id))throw std::runtime_error("required kinematic command record missing");
  std::vector<EntityId> requiredBalances;
+ if(auto it=chunks.find("animation-observations");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer animation observations");SaveArchive observations(it->second.data);auto n=count(observations,0);observations.Require(n==w.m_animationInstances.size(),"animation observation owner mismatch");std::set<EntityId> seen;for(unsigned i=0;i<n;++i){EntityId id=0;observations(id);observations.Require(seen.insert(id).second,"duplicate animation observation owner");AnimationObservation(w,id,observations);}observations.Finish();}
  if(auto it=chunks.find("physical-animation");it!=chunks.end()){if(it->second.version!=1&&it->second.version!=2)throw std::runtime_error("newer physical animation participant");SaveArchive physicalState(it->second.data);PhysicalAnimation(w,physicalState);if(it->second.version==2){auto requiredCount=count(physicalState,0,128);requiredBalances.resize(requiredCount);for(auto& owner:requiredBalances)physicalState(owner);}physicalState.Finish();}
  if(auto it=chunks.find("physical-balance");it!=chunks.end()){if(it->second.version!=1)throw std::runtime_error("newer physical balance participant");SaveArchive balanceState(it->second.data);PhysicalBalance(w,balanceState);balanceState.Finish();}
  if(requiredBalances.size()!=w.m_balances.size())throw std::runtime_error("required physical balance participant missing/incomplete");

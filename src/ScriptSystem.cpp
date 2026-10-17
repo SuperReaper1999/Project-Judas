@@ -245,6 +245,8 @@ export class Character {
  set enabled(v){call('characterEnabled',this.id,v)}
  configure(v){return call('characterConfigure',this.id,v)}
  accelerate(v){return call('characterAcceleration',this.id,v)}
+ displace(v){return call('characterDisplacement',this.id,v)}
+ orient(q){return call('characterOrientation',this.id,q)}
  ignore(entities){return call('characterIgnore',this.id,entities.map(e=>e.id))}
 }
 export class Wheel {
@@ -338,6 +340,8 @@ export class Animation {
  resume(){return this.play()}
  stop(){return call('animationStop',this.entityId)}
  seek(time){return call('animationSeek',this.entityId,time)}
+ advance(seconds){return call('animationAdvance',this.entityId,seconds)}
+ get sample(){return call('animationSample',this.entityId)}
  rootMotion(clip,from,to,loop=false){return call('animationRootMotion',this.entityId,clip,from,to,loop)}
  crossFade(clip,seconds=.3){return call('animationFade',this.entityId,clip,seconds)}
  get layers(){return this.info.layers}
@@ -562,7 +566,9 @@ struct ScriptSystem::Impl {
         auto json=JS_JSONStringify(ctx,value,JS_UNDEFINED,JS_UNDEFINED);if(JS_IsException(json)){error=Exception(ctx);return false;}text=String(ctx,json);JS_FreeValue(ctx,json);
         if(text.size()>65536){error="state exceeds 64KiB";return false;}return true;
     }
+    bool animationControl=false; // only authoritative fixedUpdate, not post-step contact/UI callbacks
     void Callback(Instance& i,const char* name,bool presentation=false){
+        struct AnimationControlScope {Impl& s;bool previous;AnimationControlScope(Impl& v,const char* n):s(v),previous(v.animationControl){s.animationControl=std::strcmp(n,"fixedUpdate")==0;}~AnimationControlScope(){s.animationControl=previous;}} animationScope(*this,name);
         if(std::strcmp(name,"destroy")==0)SignalRetire({i.entity,i.slot.id});
         if(i.fault)return;
         struct CallScope { Impl& s; CallScope(Impl& v):s(v){++s.invocationDepth;if(s.debug){s.debug->lastLine=-1;s.debug->linesByDepth.clear();}} ~CallScope(){--s.invocationDepth;} } callScope(*this);
@@ -1001,10 +1007,15 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         uint64_t id=0;try{id=std::stoull(String(c,arg(1)));}catch(...){return JS_ThrowReferenceError(c,"invalid character entity");}
         auto* m=world.RuntimeCharacter(id);if(op=="characterExists")return JS_NewBool(c,m!=nullptr);
         if(!m)return JS_ThrowReferenceError(c,"stale entity or missing character motor");
-        if(op=="characterVelocity"||op=="characterAcceleration"){
+        if(op=="characterVelocity"||op=="characterAcceleration"||op=="characterDisplacement"){
             if(!s->fixed)return JS_ThrowTypeError(c,"character intent must be supplied in fixedUpdate");
+            if(op=="characterDisplacement"&&!s->animationControl)return JS_ThrowTypeError(c,"displacement belongs in fixedUpdate, before motor resolution");
             glm::vec3 v;if(!ReadVec(c,arg(2),v))return JS_ThrowTypeError(c,"finite vector required");
-            if(op=="characterVelocity")m->velocity=v;else m->acceleration+=v;return JS_TRUE;
+            if(op=="characterVelocity")m->velocity=v;else if(op=="characterDisplacement")m->displacementIntent+=v;else m->acceleration+=v;return JS_TRUE;
+        }
+        if(op=="characterOrientation"){
+            if(!s->fixed||!s->animationControl)return JS_ThrowTypeError(c,"character orientation belongs in fixedUpdate");
+            glm::vec3 xyz;float w=0;if(!ReadVec(c,arg(2),xyz)||!Number(c,arg(2),"w",w))return JS_ThrowTypeError(c,"finite quaternion required");glm::quat q(w,xyz);if(!std::isfinite(glm::dot(q,q))||glm::dot(q,q)<1e-12f)return JS_ThrowTypeError(c,"nondegenerate quaternion required");m->orientationIntent=glm::normalize(q);return JS_TRUE;
         }
         if(op=="characterEnabled"||op=="characterConfigure"){
             auto config=m->settings;
@@ -1461,6 +1472,15 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
             if(instance->fullBodyIK){const auto& result=instance->fullBodyIK->result;JS_SetPropertyStr(c,o,"converged",JS_NewBool(c,result.converged));JS_SetPropertyStr(c,o,"iterations",JS_NewInt32(c,result.iterations));JS_SetPropertyStr(c,o,"solveMicroseconds",JS_NewFloat64(c,result.solveMicroseconds));JS_SetPropertyStr(c,o,"rootCorrection",Vec(c,result.rootCorrection));unsigned i=0;for(const auto& target:result.targets){auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"id",JS_NewString(c,target.id.c_str()));JS_SetPropertyStr(c,v,"status",JS_NewString(c,target.status.c_str()));JS_SetPropertyStr(c,v,"positionError",JS_NewFloat64(c,target.positionError));JS_SetPropertyStr(c,v,"orientationError",JS_NewFloat64(c,target.orientationError));JS_SetPropertyStr(c,v,"actualPosition",Vec(c,target.actualPosition));auto q=Vec(c,{target.actualOrientation.x,target.actualOrientation.y,target.actualOrientation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,target.actualOrientation.w));JS_SetPropertyStr(c,v,"actualOrientation",q);JS_SetPropertyUint32(c,targets,i++,v);}}
             else{JS_SetPropertyStr(c,o,"converged",JS_FALSE);JS_SetPropertyStr(c,o,"iterations",JS_NewInt32(c,0));JS_SetPropertyStr(c,o,"solveMicroseconds",JS_NewFloat64(c,0));JS_SetPropertyStr(c,o,"rootCorrection",Vec(c,glm::vec3(0)));}JS_SetPropertyStr(c,o,"targets",targets);return o;
         }
+        if(op=="animationAdvance"||op=="animationSample"){
+            if(op=="animationAdvance"){
+                if(!s->fixed||!s->animationControl)return JS_ThrowTypeError(c,"animation advance belongs in fixedUpdate");
+                double seconds=0;if(JS_ToFloat64(c,&seconds,arg(2))||!std::isfinite(seconds)||seconds<=0||seconds>1)return JS_ThrowRangeError(c,"advance requires 0 < seconds <= 1");
+                std::string error;if(!world.AdvanceAnimation(id,float(seconds),error))return JS_ThrowTypeError(c,"%s",error.c_str());
+            }
+            const auto& step=instance->step;auto result=JS_NewObject(c);auto motion=JS_NewObject(c);JS_SetPropertyStr(c,motion,"translation",Vec(c,step.motion.translation));auto rotation=Vec(c,{step.motion.rotation.x,step.motion.rotation.y,step.motion.rotation.z});JS_SetPropertyStr(c,rotation,"w",JS_NewFloat64(c,step.motion.rotation.w));JS_SetPropertyStr(c,motion,"rotation",rotation);JS_SetPropertyStr(c,result,"motion",motion);
+            auto events=JS_NewArray(c);unsigned index=0;for(const auto& hit:step.events){auto e=JS_NewObject(c);for(const auto& field:std::vector<std::pair<const char*,std::string>>{{"id",hit.event.id},{"name",hit.event.name},{"data",hit.event.data},{"clip",hit.clip},{"source",hit.source}})JS_SetPropertyStr(c,e,field.first,JS_NewString(c,field.second.c_str()));JS_SetPropertyStr(c,e,"time",JS_NewFloat64(c,hit.event.time));JS_SetPropertyStr(c,e,"weight",JS_NewFloat64(c,hit.weight));JS_SetPropertyStr(c,e,"reverse",JS_NewBool(c,hit.reverse));JS_SetPropertyUint32(c,events,index++,e);}JS_SetPropertyStr(c,result,"events",events);JS_SetPropertyStr(c,result,"overflow",JS_NewBool(c,step.overflow));return result;
+        }
         auto& player=instance->playback;
         if(op=="animationRootMotion"){
             if(!JS_IsString(arg(2))||!JS_IsBool(arg(5)))return JS_ThrowTypeError(c,"clip name and loop flag required");
@@ -1488,7 +1508,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         }
         if(op=="animationInfo"){
             auto result=JS_NewObject(c);JS_SetPropertyStr(c,result,"ready",JS_NewBool(c,bool(instance->asset)));JS_SetPropertyStr(c,result,"playing",JS_NewBool(c,player.playing&&!player.stopped));JS_SetPropertyStr(c,result,"loop",JS_NewBool(c,player.loop));JS_SetPropertyStr(c,result,"speed",JS_NewFloat64(c,player.speed));JS_SetPropertyStr(c,result,"time",JS_NewFloat64(c,player.time));JS_SetPropertyStr(c,result,"clip",JS_NewString(c,player.clip.c_str()));
-            auto clips=JS_NewArray(c);uint32_t i=0;if(instance->asset)for(const auto& clip:instance->asset->clips){auto value=JS_NewObject(c);JS_SetPropertyStr(c,value,"name",JS_NewString(c,clip.name.c_str()));JS_SetPropertyStr(c,value,"duration",JS_NewFloat64(c,clip.duration));JS_SetPropertyUint32(c,clips,i++,value);}JS_SetPropertyStr(c,result,"clips",clips);
+            auto clips=JS_NewArray(c);uint32_t i=0;if(instance->asset)for(const auto& clip:instance->asset->clips){auto value=JS_NewObject(c);JS_SetPropertyStr(c,value,"name",JS_NewString(c,clip.name.c_str()));JS_SetPropertyStr(c,value,"duration",JS_NewFloat64(c,clip.duration));auto markers=JS_NewArray(c);unsigned markerIndex=0;for(const auto& e:clip.events){auto marker=JS_NewObject(c);JS_SetPropertyStr(c,marker,"id",JS_NewString(c,e.id.c_str()));JS_SetPropertyStr(c,marker,"name",JS_NewString(c,e.name.c_str()));JS_SetPropertyStr(c,marker,"data",JS_NewString(c,e.data.c_str()));JS_SetPropertyStr(c,marker,"time",JS_NewFloat64(c,e.time));JS_SetPropertyUint32(c,markers,markerIndex++,marker);}JS_SetPropertyStr(c,value,"events",markers);JS_SetPropertyUint32(c,clips,i++,value);}JS_SetPropertyStr(c,result,"clips",clips);
             JS_SetPropertyStr(c,result,"transitioning",JS_NewBool(c,instance->mixer.Transitioning()));JS_SetPropertyStr(c,result,"transitionFraction",JS_NewFloat64(c,instance->mixer.Fraction()));JS_SetPropertyStr(c,result,"error",JS_NewString(c,instance->error.c_str()));
             auto joints=JS_NewArray(c);i=0;if(instance->asset)for(size_t node=0;node<instance->asset->skeleton.names.size();++node)JS_SetPropertyUint32(c,joints,i++,JS_NewString(c,SkeletonJointKey(instance->asset->skeleton,int(node)).c_str()));JS_SetPropertyStr(c,result,"joints",joints);
             auto layers=JS_NewArray(c);i=0;for(const auto& l:instance->layers){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"id",JS_NewString(c,l.settings.id.c_str()));JS_SetPropertyStr(c,o,"clip",JS_NewString(c,l.settings.clip.c_str()));JS_SetPropertyStr(c,o,"weight",JS_NewFloat64(c,l.settings.weight));JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,l.settings.enabled));JS_SetPropertyStr(c,o,"additive",JS_NewBool(c,l.settings.additive));JS_SetPropertyUint32(c,layers,i++,o);}JS_SetPropertyStr(c,result,"layers",layers);return result;
@@ -1500,6 +1520,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(op=="animationPause"){player.playing=false;instance->mixer.paused=true;return JS_TRUE;}
         if(!instance->asset)return JS_FALSE; // request remains in the ordinary async resource path
         if(op=="animationFade"){
+            instance->step={};
             double seconds;if(!JS_IsString(arg(2))||JS_ToFloat64(c,&seconds,arg(3))!=0||!std::isfinite(seconds)||seconds<0||seconds>3600)return JS_ThrowTypeError(c,"invalid fade");
             auto clip=String(c,arg(2));if(std::none_of(instance->asset->clips.begin(),instance->asset->clips.end(),[&](const auto& v){return v.name==clip;}))return JS_ThrowTypeError(c,"unknown clip");
             if(seconds>0&&instance->mixer.outgoing.size()>=16)return JS_ThrowRangeError(c,"too many interrupted fade contributors");
@@ -1521,10 +1542,10 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(op=="animationPlay"){
             if(!JS_IsString(arg(2)))return JS_ThrowTypeError(c,"clip name must be a string");
             auto clip=String(c,arg(2));
-            if(!clip.empty()){if(std::none_of(instance->asset->clips.begin(),instance->asset->clips.end(),[&](const auto& v){return v.name==clip;}))return JS_ThrowTypeError(c,"unknown animation clip");player.time=0;player.clip=clip;instance->mixer.Clear();}
+            if(!clip.empty()){if(std::none_of(instance->asset->clips.begin(),instance->asset->clips.end(),[&](const auto& v){return v.name==clip;}))return JS_ThrowTypeError(c,"unknown animation clip");player.time=0;player.clip=clip;instance->mixer.Clear();instance->step={};}
             player.playing=true;player.stopped=false;instance->mixer.paused=false;
-        }else if(op=="animationStop"){player.Stop(*instance->asset);instance->mixer.Clear();instance->mixer.paused=true;}
-        else if(op=="animationSeek"){double seconds;if(JS_ToFloat64(c,&seconds,arg(2))!=0||!std::isfinite(seconds)||seconds<0||seconds>1e20)return JS_ThrowTypeError(c,"invalid animation seek");player.Seek(*instance->asset,float(seconds));}
+        }else if(op=="animationStop"){player.Stop(*instance->asset);instance->step={};instance->mixer.Clear();instance->mixer.paused=true;}
+        else if(op=="animationSeek"){double seconds;if(JS_ToFloat64(c,&seconds,arg(2))!=0||!std::isfinite(seconds)||seconds<0||seconds>1e20)return JS_ThrowTypeError(c,"invalid animation seek");player.Seek(*instance->asset,float(seconds));instance->step={};}
         else return JS_ThrowTypeError(c,"unknown animation operation");
         world.ResolveAnimationPose(*instance,0);return JS_TRUE;
     }

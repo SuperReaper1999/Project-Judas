@@ -7,6 +7,29 @@
 #include <algorithm>
 #include <glm/gtc/matrix_transform.hpp>
 namespace {
+// Observation collection is independent of rendering, seeking and pose recomposition.
+void ObserveAnimationInterval(RuntimeWorld::AnimationInstance& a,float dt){
+ a.step={};if(!a.asset||a.mixer.paused||dt<=0)return;
+ float fraction=a.mixer.Transitioning()?std::clamp((a.mixer.elapsed+dt*.5f)/a.mixer.duration,0.f,1.f):1;
+ float total=0;
+ auto sample=[&](const AnimationPlayback& p,float weight,const std::string& source){
+  if(!p.playing||p.stopped||weight<=0)return;
+  auto clip=std::find_if(a.asset->clips.begin(),a.asset->clips.end(),[&](const auto& c){return c.name==p.clip;});
+  if(clip==a.asset->clips.end()){if(p.clip.empty()&&!a.asset->clips.empty())clip=a.asset->clips.begin();else return;}
+  const double from=p.time,to=from+double(dt)*p.speed;
+  bool overflow=false;auto events=AnimationEventsBetween(*clip,from,to,p.loop,overflow);
+  if(overflow||a.step.events.size()+events.size()>256){a.step.overflow=true;a.step.events.clear();}
+  if(!a.step.overflow)for(auto& e:events){e.source=source;e.weight=weight;a.step.events.push_back(std::move(e));}
+  if(source.rfind("layer:",0)==0)return; // layers never implicitly own root/world motion
+  try{auto motion=RootMotionInterval(*clip,from,to,p.loop);a.step.motion.translation+=motion.translation*weight;
+   if(weight>0){a.step.motion.rotation=glm::normalize(glm::slerp(a.step.motion.rotation,motion.rotation,weight/(total+weight)));total+=weight;}}
+  catch(const std::exception& e){a.error=e.what();}
+ };
+ sample(a.playback,fraction,"base");
+ for(size_t i=0;i<a.mixer.outgoing.size();++i)sample(a.mixer.outgoing[i].playback,a.mixer.outgoing[i].weight*(1-fraction),"outgoing:"+std::to_string(i));
+ for(const auto& l:a.layers)if(l.settings.enabled)sample(l.playback,l.settings.weight,"layer:"+l.settings.id);
+ if(a.step.overflow)a.error="animation event interval exceeds 256 markers; no partial events published";
+}
 bool PrepareLayer(const SkeletalAsset& asset,const AnimationLayerSettings& settings,RuntimeWorld::AnimationLayer& layer,std::string& error){
  if(!ValidAnimationLayers({settings},error))return false;
  auto clip=std::find_if(asset.clips.begin(),asset.clips.end(),[&](const auto& c){return c.name==settings.clip;});
@@ -23,7 +46,7 @@ RuntimeWorld::AnimationInstance* RuntimeWorld::RuntimeAnimation(EntityId id){
  const auto* definition=RuntimeDefinition(id);if(!definition||!definition->animation||!definition->render)return nullptr;
  auto [it,fresh]=m_animationInstances.try_emplace(id);auto& instance=it->second;instance.owner=id;
  if(fresh){const auto& a=*definition->animation;instance.playback.clip=a.clip;instance.playback.playing=a.playOnStart;instance.playback.loop=a.loop;instance.playback.speed=a.speed;instance.playback.time=a.time;instance.mixer.paused=!a.playOnStart;}
- if(m_assets){auto asset=m_assets->TryGetSkeletal(definition->render->meshAsset);if(asset!=instance.asset){instance.asset=asset;instance.external.clear();instance.mixer.Clear();instance.layers.clear();instance.error.clear();instance.previousWorld.clear();instance.recentWorld.clear();instance.motionDt=0;instance.preparedM70=false;instance.previousFinalPose={};instance.fullBodyIK.reset();
+ if(m_assets){auto asset=m_assets->TryGetSkeletal(definition->render->meshAsset);if(asset!=instance.asset){instance.asset=asset;instance.step={};instance.scriptAdvanced=false;instance.external.clear();instance.mixer.Clear();instance.layers.clear();instance.error.clear();instance.previousWorld.clear();instance.recentWorld.clear();instance.motionDt=0;instance.preparedM70=false;instance.previousFinalPose={};instance.fullBodyIK.reset();
   if(definition->animation->fullBodyIK){FullBodyIKRuntime k;k.settings=*definition->animation->fullBodyIK;instance.fullBodyIK=std::move(k);}
   if(asset){if(instance.fullBodyIK)instance.fullBodyIK->prepared=PrepareFullBodyIK(asset->skeleton,instance.fullBodyIK->settings,instance.fullBodyIK->mapping,instance.error);for(const auto& setting:definition->animation->layers){AnimationLayer layer;if(PrepareLayer(*asset,setting,layer,instance.error))instance.layers.push_back(std::move(layer));}ResolveAnimationPose(instance,0);}else instance.skin.clear();}}
  return &instance;
@@ -44,6 +67,8 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt){
  // M70 references are evaluated exactly once at the fixed boundary. Physical
  // contributions can be replaced afterward without resampling clips or IK.
  if(!instance.preparedM70||dt>0){
+  if(dt>0)ObserveAnimationInterval(instance,dt);
+  const bool deferWorldIK=dt>0&&instance.scriptAdvanced;
   instance.sourcePose=instance.mixer.Sample(*instance.asset,instance.playback,dt);std::vector<PoseContribution> contributions;
   for(auto& layer:instance.layers){if(!layer.settings.enabled)continue;auto pose=layer.playback.Evaluate(*instance.asset,instance.mixer.paused?0:dt);PoseContribution c;c.pose=std::move(pose);c.reference=layer.reference;c.weight=layer.settings.weight;c.mask=layer.mask;c.additive=layer.settings.additive;contributions.push_back(std::move(c));}
   instance.referencePose=ResolvePose(skeleton,instance.sourcePose,contributions);
@@ -51,9 +76,9 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt){
   std::vector<Producer> sources;for(const auto& [key,c]:instance.external)if(c.order<1000)sources.push_back({c.order,key,&c,nullptr});
   if(const auto* d=RuntimeDefinition(instance.owner);d&&d->animation)for(const auto& k:d->animation->limbs)if(k.enabled)sources.push_back({k.order,k.id,nullptr,&k});
   std::stable_sort(sources.begin(),sources.end(),[](const auto& a,const auto& b){return std::tie(a.order,a.id)<std::tie(b.order,b.id);});
-  for(const auto& source:sources){if(source.external)instance.referencePose=ResolvePose(skeleton,instance.referencePose,{*source.external});else {auto k=*source.limb;const auto* d=RuntimeDefinition(instance.owner);if(!d)continue;auto transform=PresentedTransform(instance.owner,d->transform,1);auto model=glm::translate(glm::mat4(1),transform.position)*glm::mat4_cast(transform.rotation)*glm::scale(glm::mat4(1),transform.scale);auto inverse=glm::inverse(model);k.target=glm::vec3(inverse*glm::vec4(k.target,1));k.pole=glm::vec3(inverse*glm::vec4(k.pole,1));SkeletalPose pose;float error=0;std::string diagnostic;if(SolveLimbIK(skeleton,instance.referencePose,k,pose,error,diagnostic))instance.referencePose=std::move(pose);else instance.error=diagnostic;}}
+  for(const auto& source:sources){if(source.external)instance.referencePose=ResolvePose(skeleton,instance.referencePose,{*source.external});else {if(deferWorldIK)continue;auto k=*source.limb;const auto* d=RuntimeDefinition(instance.owner);if(!d)continue;auto transform=PresentedTransform(instance.owner,d->transform,1);auto model=glm::translate(glm::mat4(1),transform.position)*glm::mat4_cast(transform.rotation)*glm::scale(glm::mat4(1),transform.scale);auto inverse=glm::inverse(model);k.target=glm::vec3(inverse*glm::vec4(k.target,1));k.pole=glm::vec3(inverse*glm::vec4(k.pole,1));SkeletalPose pose;float error=0;std::string diagnostic;if(SolveLimbIK(skeleton,instance.referencePose,k,pose,error,diagnostic))instance.referencePose=std::move(pose);else instance.error=diagnostic;}}
   instance.solvedReferencePose=instance.referencePose;
-  if(instance.fullBodyIK&&instance.fullBodyIK->settings.enabled){auto& ik=*instance.fullBodyIK;if(!ik.prepared)ik.prepared=PrepareFullBodyIK(skeleton,ik.settings,ik.mapping,instance.error);
+  if(!deferWorldIK&&instance.fullBodyIK&&instance.fullBodyIK->settings.enabled){auto& ik=*instance.fullBodyIK;if(!ik.prepared)ik.prepared=PrepareFullBodyIK(skeleton,ik.settings,ik.mapping,instance.error);
    if(ik.prepared&&ik.hasSample){const auto* d=RuntimeDefinition(instance.owner);if(d){auto transform=PresentedTransform(instance.owner,d->transform,1);std::vector<FullBodyIKTarget> modelTargets;
     if(FullBodyIKTargetsToModel(ik.sampledTargets,glm::dvec3(transform.position),transform.rotation,transform.scale,modelTargets,instance.error)&&SolveFullBodyIK(skeleton,instance.referencePose,ik.mapping,modelTargets,ik.result,instance.error))instance.solvedReferencePose=ik.result.pose;
    }}
@@ -69,17 +94,41 @@ void RuntimeWorld::ResolveAnimationPose(AnimationInstance& instance,float dt){
 }
 void RuntimeWorld::PrepareAnimationReferences(float dt){
  for(auto id:m_animationOwners){const auto* d=RuntimeDefinition(id);if(!d||!d->animation||!d->animation->enabled)continue;
-  bool enabled=(d->ragdoll&&d->ragdoll->balance&&d->ragdoll->balance->enabled)||(d->animation->fullBodyIK&&d->animation->fullBodyIK->enabled)||(d->ragdoll&&d->ragdoll->physicalAnimation&&d->ragdoll->physicalAnimation->enabled);if(!enabled){auto found=m_animationInstances.find(id);if(found!=m_animationInstances.end())found->second.preparedM70=false;continue;}
+  bool enabled=(d->ragdoll&&d->ragdoll->balance&&d->ragdoll->balance->enabled)||(d->animation->fullBodyIK&&d->animation->fullBodyIK->enabled)||(d->ragdoll&&d->ragdoll->physicalAnimation&&d->ragdoll->physicalAnimation->enabled);
+  auto scripted=m_animationInstances.find(id);if(scripted!=m_animationInstances.end()&&scripted->second.scriptAdvanced){
+   auto& a=scripted->second;const bool worldIK=(a.fullBodyIK&&a.fullBodyIK->settings.enabled)||std::any_of(d->animation->limbs.begin(),d->animation->limbs.end(),[](const auto& k){return k.enabled;});
+   a.preparedM70=!worldIK;
+   if(worldIK&&enabled){if(a.fullBodyIK){a.fullBodyIK->sampledTargets=a.fullBodyIK->settings.targets;a.fullBodyIK->hasSample=true;}ResolveAnimationPose(a,0);a.preparedM70=true;}
+   // Ordinary motors move later. Their legacy world-space limbs are recomposed
+   // in UpdateAnimations; M70 references resolve here after the pre-step motor.
+   continue;
+  }
+  if(!enabled){auto found=m_animationInstances.find(id);if(found!=m_animationInstances.end())found->second.preparedM70=false;continue;}
   auto* a=RuntimeAnimation(id);if(!a||!a->asset)continue;a->previousFinalPose=a->finalPose;if(a->fullBodyIK){a->fullBodyIK->sampledTargets=a->fullBodyIK->settings.targets;a->fullBodyIK->hasSample=true;}a->preparedM70=false;ResolveAnimationPose(*a,dt);a->preparedM70=true;
  }
 }
 void RuntimeWorld::UpdateAnimations(float dt){
     JUDAS_PROFILE_SCOPE("Animation instances");
  for(auto id:m_animationOwners){const auto* definition=RuntimeDefinition(id);if(!definition){m_animationInstances.erase(id);continue;}
-  auto* instance=RuntimeAnimation(id);if(instance&&instance->asset&&definition->animation->enabled){ResolveAnimationPose(*instance,instance->preparedM70?0:dt);
+  auto* instance=RuntimeAnimation(id);if(instance&&instance->asset&&definition->animation->enabled){ResolveAnimationPose(*instance,(instance->preparedM70||instance->scriptAdvanced)?0:dt);
    if(dt>0){instance->previousWorld=instance->recentWorld;auto transform=PresentedTransform(id,definition->transform,1);auto model=glm::translate(glm::mat4(1),transform.position)*glm::mat4_cast(transform.rotation)*glm::scale(glm::mat4(1),transform.scale);instance->recentWorld=PoseGlobalMatrices(instance->asset->skeleton,instance->finalPose);for(auto& m:instance->recentWorld)m=model*m;instance->motionDt=dt;}
+   if(instance->scriptAdvanced)instance->preparedM70=true;
+   instance->scriptAdvanced=false;
   }
  }
+}
+bool RuntimeWorld::AdvanceAnimation(EntityId id,float seconds,std::string& error){
+ const auto* definition=RuntimeDefinition(id);if(!definition||!definition->animation||!definition->animation->enabled){error="animation component is disabled or unavailable";return false;}
+ auto* a=RuntimeAnimation(id);if(!a||!a->asset){error="animation asset not ready";return false;}
+ if(!std::isfinite(seconds)||seconds<=0||seconds>1||a->scriptAdvanced){error="advance requires 0 < seconds <= 1, once per fixed step";return false;}
+ a->previousFinalPose=a->finalPose;
+ if(a->fullBodyIK){a->fullBodyIK->sampledTargets=a->fullBodyIK->settings.targets;a->fullBodyIK->hasSample=true;}
+ a->scriptAdvanced=true; // clock sampling precedes motion; world IK follows it
+ a->mixer.paused=false;a->playback.playing=true;a->playback.stopped=false;a->preparedM70=false;
+ ResolveAnimationPose(*a,seconds);
+ // Explicit advancement takes the clock until resume/play/crossFade. This uses
+ // the existing persisted pause state; no second hidden playback clock exists.
+ a->mixer.paused=true;a->playback.playing=false;a->scriptAdvanced=true;a->preparedM70=true;return true;
 }
 bool RuntimeWorld::SetPoseContribution(EntityId id,const std::string& name,const PoseContribution& contribution,std::string& error){
  auto* instance=RuntimeAnimation(id);if(!instance||!instance->asset){error="animation asset is not ready";return false;}

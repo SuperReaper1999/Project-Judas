@@ -1,0 +1,63 @@
+{
+  "head": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "utc": "2026-10-17T00:54:13.277904+00:00",
+  "platform": "native Linux; Windows/Android M95 unvalidated",
+  "runs": [
+    {
+      "name": "judas_retarget_editor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_editor_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/remaining/judas_retarget_editor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.008066914000664838
+    },
+    {
+      "name": "judas_animation_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.26465821400051937
+    },
+    {
+      "name": "judas_script_developer_tools_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.3147442350000347
+    },
+    {
+      "name": "animation-cold-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/remaining/cold-save"
+      ],
+      "exit": 0,
+      "seconds": 0.26450652299990907
+    },
+    {
+      "name": "animation-cold-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/remaining/cold-save"
+      ],
+      "exit": 0,
+      "seconds": 0.2144469630002277
+    },
+    {
+      "name": "save-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/remaining/save-write"
+      ],
+      "exit": 1,
+      "seconds": 0.8172650679998696
+    }
+  ]
+}

@@ -21,7 +21,9 @@ struct Skeleton {
 enum class TrackPath {Translation,Rotation,Scale};
 enum class TrackInterpolation {Step,Linear,CubicSpline};
 struct AnimationTrack {int node=0;TrackPath path=TrackPath::Translation;TrackInterpolation interpolation=TrackInterpolation::Linear;std::vector<float> times;std::vector<glm::vec4> values;};
-struct AnimationClip {std::string name;float duration=0;std::vector<AnimationTrack> tracks;bool loop=false;std::vector<float> motionTimes;std::vector<JointTransform> motion;};
+struct AnimationEvent {std::string id,name,data;float time=0;};
+struct AnimationEventHit {AnimationEvent event;std::string clip,source;double crossing=0;float weight=1;bool reverse=false;};
+struct AnimationClip {std::string name;float duration=0;std::vector<AnimationTrack> tracks;std::vector<AnimationEvent> events;bool loop=false;std::vector<float> motionTimes;std::vector<JointTransform> motion;};
 struct SkeletalAsset {Skeleton skeleton;std::vector<AnimationClip> clips;};
 SkeletalPose SampleClip(const Skeleton&,const AnimationClip&,float time);
 std::vector<glm::mat4> ResolveJointMatrices(const Skeleton&,const SkeletalPose&);
@@ -37,3 +39,7 @@ struct AnimationPlayback {
 // Time-addressable extracted model motion; never applied to physics implicitly.
 JointTransform SampleRootMotion(const AnimationClip&,double time,bool loop);
 JointTransform RootMotionInterval(const AnimationClip&,double from,double to,bool loop);
+
+// Half-open intervals: forward (from,to], reverse [to,from). Seeks emit nothing.
+bool ValidAnimationEvents(const AnimationClip&,std::string& error);
+std::vector<AnimationEventHit> AnimationEventsBetween(const AnimationClip&,double from,double to,bool loop,bool& overflow,size_t limit=256);

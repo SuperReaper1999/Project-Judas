@@ -31,10 +31,10 @@ int main(int argc,char** argv){namespace fs=std::filesystem;fs::path root=argc>1
  auto newer=EncodeGameSnapshot(snapshot);SaveArchive env(newer);std::string magic,header,data;env(magic,header,data);header[0]=3;SaveArchive output;output(magic,header,data);Check(!DecodeGameSnapshot(output.bytes,loaded,error),"unknown/newer container rejects");header[0]=1;SaveArchive older;older(magic,header,data);Check(DecodeGameSnapshot(older.bytes,loaded,error)&&loaded.timestamp==4000,"explicit seconds-to-milliseconds envelope migration retains semantic records");
  fs::create_directory(root/"real");fs::create_directory_symlink(root/"real",root/"redirect");SaveStorage escaped((root/"redirect"/"nested").string());Check(!escaped.Write("safe",snapshot,error),"intermediate directory symlink rejected");fs::create_symlink("two.save",root/"link.save");Check(!store.Write("link",snapshot,error)&&!store.Delete("link",error),"slot symlink rejected for write/delete");
  store.boundary=[](const char* stage){if(std::string(stage)=="published")throw std::runtime_error("controlled post-rename sync failure");};Check(!store.Write("late",snapshot,error)&&error.find("durability uncertain")!=std::string::npos,"post-rename uncertainty reported honestly");store.boundary={};Check(store.Read("late",loaded,recovered,error),"late publication remains validated readable state");
- // M85/M86 optional mechanisms can compose up to 21 participants, matching
+ // M95 observation state extends the optional composition to 22 participants, matching
  // SaveService's world schema. This verifies the generic envelope only; the
  // opaque fixture bytes do not pretend to be complete subsystem save records.
- for(unsigned count:{19u,20u,21u}){
+ for(unsigned count:{19u,20u,21u,22u}){
   auto many=snapshot;many.participants.clear();for(unsigned i=0;i<count;++i)many.participants["participant-"+std::to_string(i)]={1,"opaque fixture "+std::to_string(i)};
   const auto slot="participants-"+std::to_string(count);
   const bool wrote=store.Write(slot,many,error);std::printf("PARTICIPANTS count=%u write=%s diagnostic=%s\n",count,wrote?"accepted":"rejected",error.c_str());
@@ -42,9 +42,9 @@ int main(int argc,char** argv){namespace fs=std::filesystem;fs::path root=argc>1
   GameSnapshot decoded;const bool read=DecodeGameSnapshot(EnvelopeFixture(many),decoded,error);
   Check(read&&decoded.participants.size()==count&&EncodeGameSnapshot(decoded)==EncodeGameSnapshot(many),("independent "+std::to_string(count)+"-participant envelope decodes and round-trips exactly").c_str());
  }
- auto tooMany=snapshot;tooMany.participants.clear();for(unsigned i=0;i<22;++i)tooMany.participants["participant-"+std::to_string(i)]={1,"fixture"};
+ auto tooMany=snapshot;tooMany.participants.clear();for(unsigned i=0;i<23;++i)tooMany.participants["participant-"+std::to_string(i)]={1,"fixture"};
  bool oversizedRejected=false;try{EncodeGameSnapshot(tooMany);}catch(const std::exception&){oversizedRejected=true;}
- Check(oversizedRejected,"22-participant envelope remains outside the bounded supported schema");
+ Check(oversizedRejected,"23-participant envelope remains outside the bounded supported schema");
  auto unchanged=snapshot;unchanged.project="preserve-output-on-failure";const auto before=EncodeGameSnapshot(unchanged);
  Check(!DecodeGameSnapshot(EnvelopeFixture(tooMany),unchanged,error)&&EncodeGameSnapshot(unchanged)==before,"oversized checksum-valid decoder input rejects atomically without mutating output");
  std::printf("SUMMARY checks=%d failures=%d\n",checks,failures);return failures?1:0;}

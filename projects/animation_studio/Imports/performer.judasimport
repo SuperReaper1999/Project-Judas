@@ -1,0 +1,144 @@
+{
+  "format": "JudasImport",
+  "version": 1,
+  "assetId": "e776062a1af7fd60be7830787eb3fdfd",
+  "source": "Sources/performer.gltf",
+  "output": "Assets/models/performer.judasmodel",
+  "settings": {
+    "unitMeters": 1,
+    "sampleRate": 60,
+    "dependencyRemaps": {}
+  },
+  "clips": [
+    {
+      "sourceClip": "Idle",
+      "name": "Idle",
+      "loop": true,
+      "events": [],
+      "rootMotion": {
+        "policy": "extract",
+        "node": "OriginHelper",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "sourceClip": "Walk",
+      "name": "Walk",
+      "loop": true,
+      "events": [
+        {
+          "id": "left",
+          "name": "footstep",
+          "time": 0.3,
+          "data": "left"
+        },
+        {
+          "id": "right",
+          "name": "footstep",
+          "time": 0.8999999999999999,
+          "data": "right"
+        }
+      ],
+      "rootMotion": {
+        "policy": "extract",
+        "node": "OriginHelper",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "sourceClip": "Run",
+      "name": "Run",
+      "loop": true,
+      "events": [
+        {
+          "id": "left",
+          "name": "footstep",
+          "time": 0.2,
+          "data": "left"
+        },
+        {
+          "id": "right",
+          "name": "footstep",
+          "time": 0.6000000000000001,
+          "data": "right"
+        }
+      ],
+      "rootMotion": {
+        "policy": "extract",
+        "node": "OriginHelper",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "sourceClip": "Jump",
+      "name": "Jump",
+      "loop": false,
+      "events": [],
+      "rootMotion": {
+        "policy": "extract",
+        "node": "OriginHelper",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "sourceClip": "Interact",
+      "name": "Interact",
+      "loop": false,
+      "events": [
+        {
+          "id": "interact",
+          "name": "interact",
+          "time": 0.55,
+          "data": "beacon"
+        }
+      ],
+      "rootMotion": {
+        "policy": "extract",
+        "node": "OriginHelper",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "sourceClip": "Strike",
+      "name": "Strike",
+      "loop": false,
+      "events": [
+        {
+          "id": "contact",
+          "name": "contact",
+          "time": 0.38,
+          "data": "palm"
+        }
+      ],
+      "rootMotion": {
+        "policy": "extract",
+        "node": "OriginHelper",
+        "translation": [
+          true,
+          false,
+          true
+        ]
+      }
+    }
+  ]
+}

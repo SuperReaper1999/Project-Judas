@@ -44,10 +44,12 @@ visual residency**. Start with [The Packed Museum](projects/asset_lab/README.md)
 [M93 evidence](docs/evidence/m93/REPORT.md).
 Windows/Android M93 are unvalidated.
 
-Experimental M94 adds [JudasJS debugging and deliberate reload](docs/M94_DEVELOPER_TOOLS.md):
+Human-accepted M94 adds [JudasJS debugging and deliberate reload](docs/M94_DEVELOPER_TOOLS.md):
 source breakpoints, stepping, safe variable snapshots and compile/import diagnostics.
-Try [The Repair Bench](projects/developer_lab/README.md). M94 human review and
-Windows/Android validation remain pending.
+Try [The Repair Bench](projects/developer_lab/README.md). Windows/Android M94 validation remains pending.
+
+Experimental M95 adds [animation event tracks, a timeline and collision-aware
+root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 human acceptance and Windows/Android validation remain pending.
 
 ## Highlights
 

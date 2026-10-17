@@ -417,6 +417,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     }
     if (ImGui::BeginMenu("View")) {
         ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
+        ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
         ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
         ImGui::MenuItem("Volumetric terrain - dig / build", nullptr, &state.showVolumeTerrain);
         ImGui::MenuItem("Local mods / game kits", nullptr, &state.showMods);
@@ -904,6 +905,8 @@ bool BakeEditorCollision(EditorDocument& doc,SceneObjectId target,EditorPanelSta
 }
 
 void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
+    // Imports may be initiated by the timeline while the browser is closed.
+    if(state.project&&state.project->IsLoaded()&&state.assets)PublishFinishedEditorImport(state,requests);
     if (!state.workspace.showAssets) return;
     PlaceWorkspacePanel(state.workspace.assets);
     if (!ImGui::Begin("Asset Browser", &state.showAssetBrowser, kWorkspacePanelFlags)) { ImGui::End(); return; }
@@ -920,7 +923,6 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         state.assetCookTask.reset();
     }
     const AssetDatabase& db = *state.assets;
-    PublishFinishedEditorImport(state, requests);
     if (ImGui::BeginTabBar("##assetBrowserTabs")) {
         if (ImGui::BeginTabItem("Assets")) {
     ImGui::BeginChild("assets", ImVec2(0.0f, 0.0f), ImGuiChildFlags_None);

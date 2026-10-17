@@ -1,0 +1,20 @@
+judas_animation_workflow_tests 0
+judas_animation_workflow_application_tests 0
+judas_character_motor_tests 0
+judas_motor_runtime_tags_tests 0
+judas_skeletal_animation_tests 0
+judas_pose_composition_tests 0
+judas_physical_animation_tests 0
+judas_animation_retarget_cook_tests 0
+judas_retarget_editor_tests 0
+judas_animation_application_tests 0
+judas_script_developer_tools_tests 0
+animation-cold-write 1
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m95_validation.py", line 18, in <module>
+    for mode in ['write','read']:run('animation-cold-'+mode,[R/'build/judas_animation_cold_save_tests',mode,out/'cold-save'])
+                                 ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m95_validation.py", line 12, in run
+    if r.returncode:raise RuntimeError(name+' failed; evidence retained')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: animation-cold-write failed; evidence retained

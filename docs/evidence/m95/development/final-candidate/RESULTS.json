@@ -1,0 +1,73 @@
+{
+  "head": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "utc": "2026-10-17T00:48:01.101269+00:00",
+  "platform": "native Linux; Windows/Android M95 unvalidated",
+  "runs": [
+    {
+      "name": "judas_animation_workflow_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_tests"
+      ],
+      "exit": 0,
+      "seconds": 1.2762743690000207
+    },
+    {
+      "name": "judas_animation_workflow_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 6.582824334999714
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5168127790002472
+    },
+    {
+      "name": "judas_motor_runtime_tags_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_motor_runtime_tags_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/final-candidate/judas_motor_runtime_tags_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.016209640000852232
+    },
+    {
+      "name": "judas_skeletal_animation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_skeletal_animation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.565226783000071
+    },
+    {
+      "name": "judas_pose_composition_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pose_composition_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.06432203399981518
+    },
+    {
+      "name": "judas_physical_animation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.11443529200005287
+    },
+    {
+      "name": "judas_animation_retarget_cook_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_cook_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/final-candidate/judas_animation_retarget_cook_tests"
+      ],
+      "exit": 1,
+      "seconds": 0.8664680820002104
+    }
+  ]
+}

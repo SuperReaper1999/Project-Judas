@@ -1,0 +1,32 @@
+PASS ordinary finite project tag classification
+PASS non-motor control uses ordinary dynamic rigid-body construction
+PASS non-motor authored-tag positive and absent-runtime-tag negative controls
+PASS non-motor public AddTag updates entity classification
+PASS non-motor public AddTag updates actual physics query tag
+PASS non-motor public RemoveTag updates entity classification
+PASS non-motor public RemoveTag updates actual physics query tag
+PASS non-motor added tag can also be removed from physics queries
+PASS ordinary motor world builds
+PASS authored tag positive and absent runtime-tag negative controls
+PASS public runtime AddTag changes logical entity classification
+PASS public runtime AddTag immediately changes actual physics query tag
+PASS ordinary zero-time metadata update retains runtime query tag
+PASS public runtime RemoveTag changes logical entity classification
+PASS public runtime RemoveTag immediately excludes actual physics query tag
+PASS ordinary metadata update does not resurrect removed authored query tag
+PASS second ordinary lazy motor world builds
+PASS runtime tag can change before lazy capsule construction
+PASS first lazy capsule construction uses current logical tags
+PASS shape replacement succeeds
+PASS old generation-aware capsule cannot alias replacement
+PASS shape replacement retains added and removed runtime tags
+PASS disabled tagged capsule is excluded from queries
+PASS disabled capsule accepts logical removal
+PASS reenabling does not resurrect removed tags
+PASS authored tag may be explicitly readded at runtime
+PASS tag updates do not bypass collision masks
+PASS lazy remove control builds
+PASS removal before construction does not publish authored tag
+PASS unknown tag and absent owner reject mutation
+PASS all observations occur without elapsed physics time
+SUMMARY 31 checks 0 failures

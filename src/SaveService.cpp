@@ -119,7 +119,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   auto& saved=m_product->snapshot;
   if(saved.modContext!=ModSaveContext(m_session.m_project)){error="save requires a different exact mod loadout/contract; select the saved IDs, versions and content hashes before loading (no automatic trust or substitution)";Finish(error);return;}
   if(saved.project!=m_identity||saved.content!=m_content||std::find(m_session.Scenes().begin(),m_session.Scenes().end(),saved.scene)==m_session.Scenes().end()){error="save incompatible with registered project/content";Finish(error);return;}
-  if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>21)){error="unsupported save game/participant schema";Finish(error);return;}
+  if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>22)){error="unsupported save game/participant schema";Finish(error);return;}
   Scene scene;if(!WorldPersistence::SceneFrom(saved.participants,scene,error)){Finish(error);return;}
   const bool hasWeather=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.weather);});
   if(bool(saved.participants.count("weather"))!=hasWeather){error="weather participant does not match snapshot components";Finish(error);return;}
@@ -132,7 +132,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("powertrains"))!=hasPowertrain){error="powertrain participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("wheels"))!=hasWheel){error="wheel participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("kinematic-motion"))!=hasKinematic){error="kinematic motion participant does not match snapshot components";Finish(error);return;}
-  if(saved.participants.size()!=size_t(11+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
+  if(saved.participants.size()!=size_t(11+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
   m_restoreStart=Clock::now();m_stagedSession=std::make_shared<SceneSession>(m_session.m_project,saved.scene);m_staged=std::make_unique<RuntimeWorld>();m_staged->SetSceneControl(m_stagedSession);m_staged->audioGroups=m_session.m_project.Settings().audio;m_staged->legacyGameplay=m_session.m_project.Settings().legacyGameplay;
   if(!m_staged->Build(scene,&m_resources,error,&m_session.m_project.Settings().classification,&m_session.m_project.Settings().navigation,true)){Finish(error);return;}s.state="preparing";
  }

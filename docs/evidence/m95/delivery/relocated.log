@@ -1,0 +1,11 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / Motion Studio (/tmp/judas-m95-relocated-05pzkch5/game.judasproj)
+Scene: Motion Studio / studio (/tmp/judas-m95-relocated-05pzkch5/Scenes/studio.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-delivery/standalone-studio.png
+[TestHarness] service scene ready after 0 wait frames at frame 235
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-delivery/standalone-rotated.png
+[TestHarness] service scene ready after 0 wait frames at frame 340

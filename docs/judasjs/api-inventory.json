@@ -1,7 +1,38 @@
 {
-  "checkpoint": "3306b5aa66a2e649bad06abc8c5cba452058d3fa + M94 developer tooling; public module unchanged",
+  "checkpoint": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3 + M95 animation workflow",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
+    {
+      "binding": "Animation.advance",
+      "declaration": "AnimationSample",
+      "fields": [
+        "motion",
+        "events",
+        "overflow"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"motion\",motion)",
+        "JS_SetPropertyStr(c,result,\"events\",events)",
+        "JS_SetPropertyStr(c,result,\"overflow\",JS_NewBool(c,step.overflow))"
+      ],
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "binding": "Animation.clips",
+      "declaration": "ClipInfo",
+      "fields": [
+        "name",
+        "duration",
+        "events"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,value,\"events\",markers)",
+        "JS_SetPropertyStr(c,value,\"duration\",JS_NewFloat64(c,clip.duration))"
+      ],
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
     {
       "binding": "Entity.light",
       "declaration": "LightSettings",
@@ -176,6 +207,17 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Animation",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.advance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationAdvance"
+      ],
+      "type": "docs/judas.d.ts:Animation.advance",
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
@@ -388,6 +430,17 @@
       "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
+      "symbol": "Animation.sample",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "animationSample"
+      ],
+      "type": "docs/judas.d.ts:Animation.sample",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
       "symbol": "Animation.seek",
       "kinds": [
         "call"
@@ -480,6 +533,17 @@
       "reference": "docs/judasjs/character.md"
     },
     {
+      "symbol": "Character.displace",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterDisplacement"
+      ],
+      "type": "docs/judas.d.ts:Character.displace",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
       "symbol": "Character.enabled",
       "kinds": [
         "set"
@@ -517,6 +581,17 @@
         "characterIgnore"
       ],
       "type": "docs/judas.d.ts:Character.ignore",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.orient",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterOrientation"
+      ],
+      "type": "docs/judas.d.ts:Character.orient",
       "reference": "docs/judasjs/character.md"
     },
     {
@@ -4693,6 +4768,7 @@
   "nativeOperations": [
     "addTag",
     "angularVelocity",
+    "animationAdvance",
     "animationExists",
     "animationFade",
     "animationIKConfigure",
@@ -4707,6 +4783,7 @@
     "animationRemoveLayer",
     "animationRemoveLimb",
     "animationRootMotion",
+    "animationSample",
     "animationSeek",
     "animationSet",
     "animationStop",
@@ -4731,9 +4808,11 @@
     "castMany",
     "characterAcceleration",
     "characterConfigure",
+    "characterDisplacement",
     "characterEnabled",
     "characterExists",
     "characterIgnore",
+    "characterOrientation",
     "characterState",
     "characterVelocity",
     "children",

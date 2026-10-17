@@ -1,0 +1,1176 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Motion Studio / studio",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.4,
+        0.85,
+        0.35
+      ],
+      "sun-color": [
+        0.7,
+        0.72,
+        0.76
+      ],
+      "ambient": [
+        0.18,
+        0.21,
+        0.26
+      ],
+      "next-id": 1000,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Studio floor",
+        "fields": {
+          "position": [
+            0,
+            -0.3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            10,
+            0.3,
+            10
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.08,
+            0.12,
+            0.17
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            10,
+            0.3,
+            10
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 2,
+        "name": "Gravity field",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "box"
+            },
+            "halfExtents": [
+              100,
+              100,
+              100
+            ]
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Performer / root-motion capsule",
+        "fields": {
+          "position": [
+            0,
+            0.03,
+            4
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "e776062a1af7fd60be7830787eb3fdfd",
+          "render.texture-asset": "",
+          "animation.enabled": true,
+          "animation.play-on-start": true,
+          "animation.clip": "Idle",
+          "animation.loop": true,
+          "animation.speed": 1.0,
+          "animation.time": 0.0,
+          "motor.enabled": true,
+          "motor.radius": 0.28,
+          "motor.halfHeight": 0.6,
+          "motor.offset": [
+            0,
+            0.9,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 80,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0
+        }
+      },
+      {
+        "id": 30,
+        "name": "Physical timing target",
+        "fields": {
+          "position": [
+            0,
+            0.55,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.92,
+            0.53,
+            0.16
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 6,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 31,
+        "name": "Interaction beacon",
+        "fields": {
+          "position": [
+            3,
+            1,
+            -1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.35,
+            1,
+            0.35
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.12,
+            0.75,
+            0.65
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.35,
+            1,
+            0.35
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 40,
+        "name": "Collision wall",
+        "fields": {
+          "position": [
+            -3,
+            1.4,
+            -3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.6,
+            1.4,
+            0.3
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.24,
+            0.34,
+            0.44
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.6,
+            1.4,
+            0.3
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 50,
+        "name": "Practice step",
+        "fields": {
+          "position": [
+            -5,
+            0.1,
+            1.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1,
+            0.1,
+            0.35
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.32,
+            0.42,
+            0.5
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.1,
+            0.35
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 51,
+        "name": "Practice step",
+        "fields": {
+          "position": [
+            -5,
+            0.2,
+            0.35
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1,
+            0.2,
+            0.35
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.32,
+            0.42,
+            0.5
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.2,
+            0.35
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 52,
+        "name": "Practice step",
+        "fields": {
+          "position": [
+            -5,
+            0.30000000000000004,
+            -0.30000000000000004
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1,
+            0.30000000000000004,
+            0.35
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.32,
+            0.42,
+            0.5
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.30000000000000004,
+            0.35
+          ],
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.6,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": false,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 100,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            -8.0,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 101,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            -6.4,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 102,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            -4.8,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 103,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            -3.1999999999999993,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 104,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            -1.5999999999999996,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 105,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            0.0,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 106,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            1.6000000000000014,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 107,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            3.200000000000001,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 108,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            4.800000000000001,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 109,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            6.4,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 110,
+        "name": "Floor lane",
+        "fields": {
+          "position": [
+            8.0,
+            0.012,
+            -0.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.5,
+            0.012,
+            0.025
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.15,
+            0.37,
+            0.4
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 90,
+        "name": "Studio game policy",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "40047076cbccb2d602c2db98300697f3",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"rotated\": false}",
+          "ui.asset": "a5a38d4bdc8057bb1db8387022f0d76a",
+          "ui.name": "studio",
+          "ui.enabled": true
+        }
+      }
+    ]
+  }
+}

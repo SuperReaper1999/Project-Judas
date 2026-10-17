@@ -8,9 +8,17 @@ WHY playback/physical transitions occur; it cannot access raw pose arrays or GL.
 
 ## Animation
 
+See the [M95 timeline and root-motion workflow](../M95_ANIMATION_WORKFLOW.md) for
+event authoring, fixed-step sampling, blend policies, persistence and limitations.
+
+`advance(seconds)` returns an `AnimationSample` during `fixedUpdate`, once per
+tick, then pauses automatic advancement. `sample` reads the last completed sample.
+Both use model-local root motion and marker snapshots; JS decides gameplay.
+
+
 `entity.animation` returns a facade/null. Its `entityId` is a plain opaque field.
 `info` returns `{ready,playing,loop,speed,time,clip,clips,transitioning,
-transitionFraction,error,joints,layers}`. `clips` are `{name,duration}` (seconds);
+transitionFraction,error,joints,layers}`. `clips` are `{name,duration,events}` (seconds; marker records have `id,name,time,data`);
 `joints` are stable hierarchy keys. `layers` contain only
 `{id,clip,weight,enabled,additive}`, not all settings. Empty clips/error while async
 asset loads: check ready. A facade's existence doesn't imply successful mesh import.

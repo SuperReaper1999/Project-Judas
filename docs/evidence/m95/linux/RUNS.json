@@ -1,0 +1,243 @@
+{
+  "head": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3",
+  "utc": "2026-10-17T01:33:28.789294+00:00",
+  "platform": "native Linux; Windows/Android M95 unvalidated",
+  "runs": [
+    {
+      "name": "judas_animation_workflow_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.9159107300001779
+    },
+    {
+      "name": "judas_animation_workflow_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_workflow_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 6.630893794001167
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.5151765379996505
+    },
+    {
+      "name": "judas_motor_runtime_tags_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_motor_runtime_tags_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/judas_motor_runtime_tags_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.016060754000136512
+    },
+    {
+      "name": "judas_skeletal_animation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_skeletal_animation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.21444997999969928
+    },
+    {
+      "name": "judas_pose_composition_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pose_composition_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.0642373270002281
+    },
+    {
+      "name": "judas_physical_animation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.11430809900048189
+    },
+    {
+      "name": "judas_animation_retarget_cook_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_retarget_cook_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/judas_animation_retarget_cook_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.7656740279999212
+    },
+    {
+      "name": "judas_model_reimport_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_model_reimport_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/judas_model_reimport_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.6653518980001536
+    },
+    {
+      "name": "judas_save_storage_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_storage_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/m61-storage-m95"
+      ],
+      "exit": 0,
+      "seconds": 0.26456541900006414
+    },
+    {
+      "name": "judas_retarget_editor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_retarget_editor_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/judas_retarget_editor_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.007828857000276912
+    },
+    {
+      "name": "judas_animation_application_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_application_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.264491182000711
+    },
+    {
+      "name": "judas_script_developer_tools_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_developer_tools_tests"
+      ],
+      "exit": 0,
+      "seconds": 0.3145562859990605
+    },
+    {
+      "name": "animation-cold-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/cold-save"
+      ],
+      "exit": 0,
+      "seconds": 0.21445081300043967
+    },
+    {
+      "name": "animation-cold-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_animation_cold_save_tests",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/cold-save"
+      ],
+      "exit": 0,
+      "seconds": 0.21475537900005293
+    },
+    {
+      "name": "save-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/save-write"
+      ],
+      "exit": 0,
+      "seconds": 0.76554071999999
+    },
+    {
+      "name": "save-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/save_lab/save_lab.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/save-read"
+      ],
+      "exit": 0,
+      "seconds": 0.9660026590008783
+    },
+    {
+      "name": "save-streaming-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/save-streaming-write"
+      ],
+      "exit": 0,
+      "seconds": 0.6170211660009954
+    },
+    {
+      "name": "save-streaming-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/save-streaming-read"
+      ],
+      "exit": 0,
+      "seconds": 0.7655869989994244
+    },
+    {
+      "name": "save-streaming-read-b",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read-b",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/save-streaming-read-b"
+      ],
+      "exit": 0,
+      "seconds": 0.8158157799989567
+    },
+    {
+      "name": "cookbook-animation-motion",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/cookbook",
+        "animation-motion"
+      ],
+      "exit": 0,
+      "seconds": 0.26458520400046837
+    },
+    {
+      "name": "cookbook-animation",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/cookbook",
+        "animation"
+      ],
+      "exit": 0,
+      "seconds": 0.31696282400116615
+    },
+    {
+      "name": "cookbook-surface",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/cookbook",
+        "surface"
+      ],
+      "exit": 0,
+      "seconds": 0.2664262240014068
+    },
+    {
+      "name": "api",
+      "argv": [
+        "node",
+        "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+        "--typescript",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m90/types/node_modules/typescript",
+        "--runtime",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-validation/cookbook/surface.json"
+      ],
+      "exit": 0,
+      "seconds": 1.1663387090011383
+    },
+    {
+      "name": "source-check",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_check",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/animation_studio/animation_studio.judasproj"
+      ],
+      "exit": 0,
+      "seconds": 0.015966353999829153
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+FRAMES 380
+FRAME_SECONDS 0.016666667
+LOG_EVERY 0
+ACTION forward 1 10 110
+ACTION strike 1 120 121
+SCREENSHOT 160 /home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-delivery/standalone-studio.png
+ACTION interact 1 175 176
+ACTION pause 1 195 196
+EXPECT_PAUSED 1 200
+ACTION pause 1 210 211
+EXPECT_PAUSED 0 215
+ACTION rotate 1 230 231
+WAIT_SERVICES scene 10000 235
+EXPECT_SCENE Scenes/rotated.judas 245
+ACTION forward 1 260 310
+SCREENSHOT 320 /home/conner/Documents/GitHub/Project-Judas/.cache/m95/checkpoint-delivery/standalone-rotated.png
+ACTION reset 1 335 336
+WAIT_SERVICES scene 10000 340
+EXPECT_SCENE Scenes/rotated.judas 350
