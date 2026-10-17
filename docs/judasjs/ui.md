@@ -1,80 +1,127 @@
-# Authored runtime UI
+# UI — current M96 controls
 
-[Index](../JUDASJS.md) · [Lifecycle](lifecycle.md) · [Examples](cookbook.md)
+[Index](../JUDASJS.md) · [Input](input.md) · [Local players](local-multiplayer.md)
+· [Save lifecycle](saves.md) · [Authoring and limitations](../M96_UI_TOOLKIT.md)
 
-Judas owns the UI system. Projects own `.judasui` content. JavaScript owns meaning.
-Author canvas/panels/text/images/buttons/sliders/toggles with the editor asset
-workflow; script handles manipulate copied runtime state, not authored source.
+Judas owns the UI system; projects own content; JavaScript owns meaning.
+Runtime edits copy authored data and never change the source asset.
 
 ## ui
 
-`ui.get(name)` returns an existing UIDocument or null. `ui.load(assetID,uniqueName)`
-loads a registered document and returns UIDocument or throws TypeError. Loaded
-documents belong to the invoking entity/script slot; removal/disable unloads them.
-`ui.quit()` requests normal application shutdown, returns undefined.
-`ui.debugOverlayVisible` boolean controls engine diagnostics, separate from game UI.
+`ui.get(name): UIDocument|null`; `ui.load(asset,name): UIDocument` (unique name,
+registered UI asset). Invalid load throws TypeError. Loaded documents belong to
+calling script/entity slot. `ui.quit()` requests ordinary shutdown.
+`ui.debugOverlayVisible` toggles engine diagnostics independently of game UI.
 
 ## UIDocument
 
-`handle` is a plain number, opaque in this world. `get(elementID)` validates and
-returns UIElement; missing ID throws, never null. `visible`, `enabled`, `modal`
-are boolean read/write. `show()`/`hide()` assign visible; `unload()` invalidates all
-its elements. These methods return undefined. Repeated unload/stale properties
-throw ReferenceError; IDs never recycle in that world. There is no `.valid` API.
+`handle` is opaque in this world; `get(id)` returns UIElement or throws
+ReferenceError. Missing/unloaded/stale properties throw; no `.valid` API.
+`visible`, `enabled`, `modal` are booleans. `show/hide/unload()` return undefined.
+Unload, owner removal, Stop, scene change and player departure invalidate handles.
 
-Visible+enabled+modal participates in pause/input ownership; hiding a panel is not
-necessarily hiding its whole document. UI is screen-space with deterministic
-source order, reference-resolution scaling and rectangle clipping. [Authoring/layout](../RUNTIME_UI.md).
+- `player: LocalPlayer|null`: scope layout/input/focus to its viewport. Null is
+  global. A local modal blocks that player; a global modal pauses the world.
+- `focused: string`: selected control ID, or empty.
+- `focus(id: string|null): void`: explicit focus/clear. Hidden, disabled or
+  non-control targets throw TypeError. Scroll ancestors reveal the focused item.
+  Focus changes queue a `focus` event; ordinary value setters do not queue changes.
+- `referenceSize: {x,y}`: live canvas reference dimensions, finite 64–16384.
+  Use with setLayout for portrait/window reflow. It is presentation geometry, not
+  game scale, and is deliberately not restored from another device's UI snapshot.
+- `scale: number`: 0.75–2, scales reference-unit control geometry and text.
+  Author anchored/relative layouts or reflow; this does not magically resize a
+  fixed source layout to fit every font size.
+- `captureState(): UIState`: detached JSON-safe control snapshot.
+- `restoreState(state): void`: validated atomic restore into the same element
+  schema. Rebuild list data first. Text/value, visibility/enabled, scale, focus,
+  selection, scroll and selected key restore; missing keys clear selection.
+  Does not persist layout/style changes, list data, undo, clipboard or IME preedit.
+- `accessibility: UIAccessibleElement[]`: detached visible/enabled semantic roles,
+  labels, descriptions, focus, numeric values and relevant text/selected index.
+  This is **not native screen-reader integration**.
+
+Snapshot bounds are 4 MiB; existing saved script state is limited to 64 KiB.
+Keep game data separate and rebuild presentation in `start`/modern `restore`.
 
 ## UIElement
 
-`handle`, `id` are plain writable handle fields; do not retarget them casually.
-Properties `text`, `visible`, `enabled`, `value`, `texture` read/write through
-validation. Text/texture setters require strings <=16384 bytes. Texture accepts
-empty string to clear, otherwise registered nonmissing Texture asset ID. Text is
-rendered through M58 Unicode shaping, fallback and localization. See [text contracts](localization.md); rich text remains unsupported.
-`value` is finite and within authored min/max; use numeric 0/1 for toggle state,
-not boolean. The setter does not restrict a toggle to those two values.
-Programmatic changes do not synthesize click/change events. Hidden/disabled controls
-reject input; setters still edit their stored state.
+`handle`, `id` are plain fields: do not retarget them casually.
+`text`, `font`, `textKey`, `direction`, `textAlignment`, `texture`, `visible`,
+`enabled`, `value` retain their existing validated setters. `text` clears textKey.
+Fonts/textures accept empty or a registered, nonmissing asset of the right type.
+`value` must be finite and in authored min/max; toggle uses numeric 0/1.
+`direction`: auto/ltr/rtl. `textAlignment`: left/right/center/start/end; legacy
+numeric alignment reads empty. See [Unicode/localization](localization.md).
 
-Text-specific setters include `font`, `textKey`, `direction` and `textAlignment`
-(see below). `setLayout` patches the [supported layout fields](#uielementlayout--setlayout-m67);
-no arbitrary style/colour setter, manual focus setter/getter, hover event,
-per-widget callback registration or DOM exists. Author general layout/style
-and initial font selection in the asset.
+### layout / setLayout(patch)
 
-## onUI and focus
+Copy of `{offset,size,anchorMin,anchorMax,relativeSize,align}`, each `{x,y}`.
+A patch accepts any subset, rejects unknown/nonfinite/invalid fields atomically
+and returns a fresh snapshot. Reference-resolution units; flow parent retains
+axis ownership. Layout, clipping, pointer hit tests and focus use the same geometry.
 
-`onUI({document,element,type,value})`: type is `click`, `change`, `focus`, `back`.
-Events broadcast in queued input order to live scripts; filter document AND element.
-`uiUpdate(dt)` runs while paused and should handle menu input/open/close. For Back,
-interpret the document/type rather than assuming a particular element ID.
-Keyboard/gamepad focus follows authored control order using project `ui_*` actions;
-sliders use left/right, toggles activate. UI consumes overlapping physical bindings
-so a confirm mapped to the same button as launch does not also launch gameplay.
-Do not implement polling loops or private control event buses.
+### configure(options)
 
-Unload/owner destruction/Stop/scene changes invalidate handles. UI runtime values
-are not automatically saved; store game data in bounded `this.state` and rebuild
-presentation in `start` or modern-load `restore`. Script-loaded documents unload
-with their slot. No VM/UI
-heap is carried through scene replacement. Copyable [UI example](examples/ui.js).
+Returns undefined. Validated atomic subset of: `placeholder`, `accessibleLabel`,
+`description`, `readOnly`, `maxBytes`, `fontSize`, `rowHeight`, `background`, `color`,
+`focusColor`. Colours are `{r,g,b,a}`. Font size >0..512; rowHeight 12..512 reference
+pixels; maxBytes integer 1..16384. Unknown keys throw. No DOM or arbitrary CSS.
 
-## M58 text / direction / fonts
+### Text input
 
-`textKey`, `font`, `direction`, `textAlignment` and project locale revisions are documented in [localization](localization.md). Runtime labels use the shared Unicode layout path; the former ASCII-only limitation is superseded. Text entry/IME remains outside the current UI API.
+`selection: {anchor,caret}` reads/writes **extended grapheme indices** in the
+committed text. Bounds reject. `text` is single-line valid UTF-8 within maxBytes;
+programmatic replacement places selection at the end. Placeholder is presentation,
+not the value. Read-only blocks user editing, not programmatic updates.
+The native SDL text/IME path supports clipboard, selection, undo and commit;
+[precise editing/platform limits](../M96_UI_TOOLKIT.md#editing-and-input).
 
-## UIElement.layout / setLayout (M67)
+### Scroll container / virtual list
 
-`element.layout` returns a copy of `{offset,size,anchorMin,anchorMax,relativeSize,align}`, each `{x,y}`. `element.setLayout(patch)` accepts any subset of those six keys, validates the whole patch, updates atomically and returns a fresh layout snapshot. Unknown keys, nonfinite values or invalid sizing throw `TypeError`; unloaded document/element handles throw `ReferenceError`. No raw layout storage is exposed.
+`scroll: {x,y}` is a clamped content offset in reference units (not screen pixels).
+Only Scroll/List kinds accept it. Scroll containers implicitly clip children.
+`setItems([{id,text,enabled?},…])` replaces list rows atomically; unique nonempty
+IDs ≤128 bytes, label ≤512 bytes, ≤10000 rows and ≤2 MiB combined text/IDs.
+`selectedIndex` reads/writes zero-based index or -1. Disabled/out-of-range throws.
+Replacements preserve an enabled selected key; removed keys clear it. Selection
+reveals the row; offscreen data does not create hidden widget trees.
+Rows have one fixed authored rowHeight. Complex cells/variable-height rows are
+outside this implementation. `setItems` and setters do not synthesize change events.
 
-Offsets/sizes use the document reference-resolution units. Anchors, relativeSize and align use the normal RuntimeUI proportions. A flow parent still owns placement on its layout axis: runtime changes do not bypass that rule. Layout invalidation is batched until the next normal input/draw layout pass; drawing, rectangular clipping, focus and pointer tests then use the same computed geometry. A zero/empty patch is legal. Set several fields in one call. These edits are transient presentation state; restore them from the game's existing serialize/restore policy when needed. They do not edit the authored `.judasui` file or automatically become persistent VM state.
+## onUI / frame timing
 
-## Per-player documents (M89)
+`onUI({document,element,type,value,playerId,text,item})` broadcasts queued input
+observations to live scripts; filter document/element/player. Types:
+`click`, `change`, `focus`, `back`, **`submit`**.
 
-`document.player = localPlayer` scopes layout, clipping, pointer ownership and
-focus to that player's normalized viewport. Null restores global scope.
-`onUI` includes `playerId` (string or null). A local modal blocks its player's
-gameplay input while the shared world continues; a global modal retains whole-world
-pause. Leaving unloads bound documents. See [local multiplayer](local-multiplayer.md).
+- Text input change/submit: `text` is committed text, `item` empty.
+- List change/click: `value` is row index, `text` label, `item` stable row key.
+- Other controls retain existing numeric `value`; added strings are empty.
+- IME preedit does not emit changes. Enter submits, not another click.
+
+Use `uiUpdate` for menu policy while paused; normal game update/fixed steps run
+after the UI input boundary. Text consumes keyboard-sharing gameplay bindings.
+UIUpdate itself precedes that boundary; it must not serve as authoritative movement.
+Bind logical `ui_*` controls in the project map; keyboard/gamepad follow source
+order, list arrows select internally, Tab/next moves between controls. Touch drag
+scrolls and suppresses click after dragging. The OS text session has one explicit
+player owner while documents retain independent focus.
+
+```js
+import {ui} from 'judas';
+export default class Menu {
+  start() {
+    this.doc=ui.get('menu'); // authored ordinary scene UI component
+    this.doc.get('inventory').setItems([
+      {id:'rope',text:'Climbing rope'}, {id:'lamp',text:'Survey lamp'}
+    ]);
+    this.doc.get('name').configure({placeholder:'Your callsign',maxBytes:128});
+    this.doc.focus('name');
+  }
+  onUI(e) {
+    if(e.document==='menu' && e.type==='submit')
+      this.doc.get('welcome').text=`Hello, ${e.text}`;
+  }
+}
+```

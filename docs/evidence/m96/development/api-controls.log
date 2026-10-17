@@ -1,0 +1,18 @@
+[96mdocs/judasjs/examples/ui-controls.js[0m:[93m18[0m:[93m39[0m - [91merror[0m[90m TS2322: [0mType '999' is not assignable to type '1'.
+
+[7m18[0m   try{this.doc.restoreState({...saved,version:999});}catch(e){this.state.invalid&&=e instanceof TypeError&&this.name.text==='café';}
+[7m  [0m [91m                                      ~~~~~~~[0m
+
+  [96mdocs/judas.d.ts[0m:[93m841[0m:[93m29[0m
+    [7m841[0m   export interface UIState {version:1;[key:string]:unknown}
+    [7m   [0m [96m                            ~~~~~~~[0m
+    The expected type comes from property 'version' which is declared here on type 'UIState'
+[96mdocs/judasjs/examples/ui-controls.js[0m:[93m23[0m:[93m55[0m - [91merror[0m[90m TS2532: [0mObject is possibly 'undefined'.
+
+[7m23[0m  update(){if(this.state.submitted&&!this.state.stale){this.doc.unload();try{this.name.text;}catch(e){this.state.stale=e instanceof ReferenceError;}}}
+[7m  [0m [91m                                                      ~~~~~~~~[0m
+[96mdocs/judasjs/examples/ui-controls.js[0m:[93m23[0m:[93m77[0m - [91merror[0m[90m TS2532: [0mObject is possibly 'undefined'.
+
+[7m23[0m  update(){if(this.state.submitted&&!this.state.stale){this.doc.unload();try{this.name.text;}catch(e){this.state.stale=e instanceof ReferenceError;}}}
+[7m  [0m [91m                                                                            ~~~~~~~~~[0m
+

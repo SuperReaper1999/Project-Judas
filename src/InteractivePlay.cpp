@@ -113,6 +113,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     bool uiOwned=false;
     if(authoredUI){auto& ui=world.UI();uiOwned=ui.OwnsInput();int x,y;window.GetMousePosition(x,y);ui.Input(window.Input(),{x,y},!window.IsMouseCaptured(),window.Width(),window.Height());if(!ui.OwnsInput())if(auto* players=world.PlayersIfLoaded())for(auto& p:players->All()){const auto pointer=p.second.input.Pointer();ui.Input(p.second.input,{pointer.x*window.Width(),pointer.y*window.Height()},!window.IsMouseCaptured(),window.Width(),window.Height(),p.first);}
     world.DispatchUIEvents(&window.Input(),frameDeltaTime);uiOwned|=ui.OwnsInput();}
+    auto textTarget=world.UIIfLoaded()?world.UI().TextTarget():std::optional<UITextTarget>{};if(textTarget)window.SetTextInput(true,textTarget->player,int(textTarget->rect.position.x),int(textTarget->rect.position.y),int(textTarget->rect.size.x),int(textTarget->rect.size.y),textTarget->token);else window.SetTextInput(false);
     if(world.Scripts())world.Scripts()->DrainSignals(&window.Input(),frameDeltaTime,true);
     uiOwned|=world.UIIfLoaded()&&world.UIIfLoaded()->OwnsInput();
     if (window.ConsumeUIBackRequest()&&!authoredUI&&world.legacyGameplay) m_pauseMenu.HandleBackRequest();

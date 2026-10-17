@@ -58,6 +58,10 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
 
     SDL_GL_SetSwapInterval(1);
 
+    m_input.textPlatform=std::make_shared<TextInputPlatform>();
+    m_input.textPlatform->clipboardRead=[](){char* p=SDL_GetClipboardText();std::string result=p?p:"";SDL_free(p);return result;};
+    m_input.textPlatform->clipboardWrite=[](const std::string& s){SDL_SetClipboardText(s.c_str());};
+    SDL_StopTextInput();
     SDL_GetWindowSize(m_window,&m_width,&m_height);
     return true;
 }
@@ -172,6 +176,13 @@ void Window::RefreshLocalControllers(bool poll){
   for(int a=0;a<6;++a)hub->Set(id,std::string("stick:")+PadAxis(a),available?NormalizedPadAxis(a,SDL_GameControllerGetAxis(pad,SDL_GameControllerAxis(a))):0);
  }
 }
+void Window::SetTextInput(bool enabled,std::uint64_t player,int x,int y,int w,int h,std::uint64_t token){
+ if(enabled&&m_textActive&&(m_textPlayer!=player||m_textToken!=token)){SDL_StopTextInput();m_textActive=false;}
+ enabled=enabled&&m_inputFocused&&m_applicationActive&&!m_keyboardClaimed;
+ if(enabled){SDL_Rect rect{x,y,std::max(1,w),std::max(1,h)};SDL_SetTextInputRect(&rect);if(!m_textActive)SDL_StartTextInput();}
+ else if(m_textActive)SDL_StopTextInput();
+ m_textActive=enabled;m_textPlayer=enabled?player:0;m_textToken=enabled?token:0;
+}
 void Window::PollEvents(){
     m_input.BeginFrame();m_consumed.clear();
     auto hub=m_input.localDevices.lock();if(hub)hub->BeginFrame();
@@ -185,6 +196,9 @@ void Window::PollEvents(){
     m_testPhysical.clear();
     if(m_keyboardClaimed)m_input.ClearDevice("key:");
     if(m_mouseClaimed){m_input.ClearDevice("mouse:");m_input.ClearDevice("touch:");}
+    if(m_keyboardClaimed)SetTextInput(false);
+    if(hub)hub->textPlatform=m_input.textPlatform;
+    auto textEvent=[&](TextInputEvent value){value.player=m_textPlayer;value.token=m_textToken;m_input.QueueText(value);if(hub&&hub->textEvents.size()<128)hub->textEvents.push_back(std::move(value));};
     SDL_Event event;
     while(SDL_PollEvent(&event)){
         // Harness input is injected into InputSystem; real devices must not mix in.
@@ -199,8 +213,27 @@ void Window::PollEvents(){
          else if(event.type==SDL_CONTROLLERAXISMOTION){auto pad=m_localControllers.find(event.caxis.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* axis=PadAxis(event.caxis.axis))hub->Set(pad->second.second,std::string("stick:")+axis,NormalizedPadAxis(event.caxis.axis,event.caxis.value));}
          else if(event.type==SDL_CONTROLLERBUTTONDOWN||event.type==SDL_CONTROLLERBUTTONUP){auto pad=m_localControllers.find(event.cbutton.which);if(pad!=m_localControllers.end()&&!m_keyboardClaimed&&m_inputFocused)if(auto* button=PadButton(event.cbutton.button))hub->Set(pad->second.second,std::string("pad:")+button,event.type==SDL_CONTROLLERBUTTONDOWN?1:0);}
         }
+        if(!m_textActive&&!m_keyboardClaimed&&m_inputFocused&&event.type==SDL_KEYDOWN&&event.key.keysym.sym==SDLK_TAB){
+            TextInputEvent tab{"tab","",(event.key.keysym.mod&KMOD_SHIFT)!=0};m_input.QueueText(tab);
+            if(hub&&hub->textEvents.size()<128){tab.player=~uint64_t(0);hub->textEvents.push_back(tab);}
+        }
+        if(m_textActive&&!m_keyboardClaimed&&m_inputFocused){
+            if(event.type==SDL_TEXTINPUT)textEvent({"insert",event.text.text});
+            else if(event.type==SDL_TEXTEDITING)textEvent({"composition",event.edit.text,false,false,event.edit.start,event.edit.length});
+#if SDL_VERSION_ATLEAST(2,0,22)
+            else if(event.type==SDL_TEXTEDITING_EXT){textEvent({"composition",event.editExt.text?event.editExt.text:"",false,false,event.editExt.start,event.editExt.length});SDL_free(event.editExt.text);event.editExt.text=nullptr;}
+#endif
+            else if(event.type==SDL_KEYDOWN){std::string cmd;auto key=event.key.keysym.sym;bool ctrl=(event.key.keysym.mod&KMOD_CTRL)!=0;
+                if(key==SDLK_LEFT)cmd="left";else if(key==SDLK_RIGHT)cmd="right";else if(key==SDLK_HOME)cmd="home";else if(key==SDLK_END)cmd="end";else if(key==SDLK_BACKSPACE)cmd="backspace";else if(key==SDLK_DELETE)cmd="delete";else if(key==SDLK_RETURN||key==SDLK_KP_ENTER)cmd="submit";else if(key==SDLK_ESCAPE)cmd="cancel";else if(key==SDLK_TAB)cmd="tab";
+                else if(ctrl){if(key==SDLK_a)cmd="all";else if(key==SDLK_c)cmd="copy";else if(key==SDLK_x)cmd="cut";else if(key==SDLK_v)cmd="paste";else if(key==SDLK_z)cmd="undo";else if(key==SDLK_y)cmd="redo";}
+                if(!cmd.empty())textEvent({cmd,"",(event.key.keysym.mod&KMOD_SHIFT)!=0,ctrl});
+            }
+        }
+#if SDL_VERSION_ATLEAST(2,0,22)
+        if(event.type==SDL_TEXTEDITING_EXT&&event.editExt.text){SDL_free(event.editExt.text);event.editExt.text=nullptr;}
+#endif
         if(event.type==SDL_QUIT)m_shouldClose=true;
-        else if(event.type==SDL_APP_WILLENTERBACKGROUND){m_applicationActive=false;m_lifecycleClockReset=true;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
+        else if(event.type==SDL_APP_WILLENTERBACKGROUND){m_applicationActive=false;SetTextInput(false);m_lifecycleClockReset=true;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
         else if(event.type==SDL_APP_DIDENTERFOREGROUND){m_applicationActive=true;m_lifecycleClockReset=true;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
         else if(event.type==SDL_RENDER_DEVICE_RESET){
             // Context loss cannot leave stale native GPU handles in a live world.
@@ -214,7 +247,7 @@ void Window::PollEvents(){
         else if(event.type==SDL_WINDOWEVENT){
             if(event.window.event==SDL_WINDOWEVENT_CLOSE)m_shouldClose=true;
             if(event.window.event==SDL_WINDOWEVENT_SIZE_CHANGED){m_width=event.window.data1;m_height=event.window.data2;}
-            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;m_controllerInputReady=false;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
+            if(event.window.event==SDL_WINDOWEVENT_FOCUS_LOST&&!m_testInputMode){m_inputFocused=false;SetTextInput(false);m_controllerInputReady=false;m_input.Reset();if(hub)hub->Reset();ClearPendingRequests();}
             if(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED){
                 m_inputFocused=true;m_controllerInputReady=false;
                 // SDL/compositor capture can disappear independently of the

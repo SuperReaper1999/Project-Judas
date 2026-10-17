@@ -107,7 +107,9 @@ world exposure. See [UI](ui.md) and [font/layout implementation](../M58.md).
 
 Scalable Unicode outline TTF/OTF, first face only, horizontal grayscale rendering.
 No color emoji/SVG glyph paints, vertical writing, ruby, rich text, advanced
-justification/hyphenation, text entry/IME/caret/selection or automatic translation.
+justification/hyphenation, automatic translation. [M96 UI controls](ui.md) now provide single-line text
+entry, IME, grapheme selection and caret editing; their input/keyboard limitations
+are distinct from text shaping.
 Supplementary decoding is supported independently of font coverage. Demo translations
 have not received native-speaker review. No process-global locale mutation.
 

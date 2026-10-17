@@ -11,7 +11,7 @@ bool ValidTextUTF8(const std::string& text,std::string& error);
 enum class TextDirection {Auto,LTR,RTL};
 enum class TextAlignment {Left,Right,Centre,Start,End};
 struct TextOptions {float pixels=24,width=0;bool wrap=false;TextDirection direction=TextDirection::Auto;TextAlignment alignment=TextAlignment::Left;std::string locale="en";};
-struct ShapedGlyph {std::shared_ptr<const TextFont> font;uint32_t glyph=0,cluster=0;float x=0,y=0;};
+struct ShapedGlyph {std::shared_ptr<const TextFont> font;uint32_t glyph=0,cluster=0;float x=0,y=0,advance=0;bool rtl=false;};
 struct TextLine {uint32_t start=0,end=0;float width=0,baseline=0,ascent=0,descent=0;bool rtl=false;};
 struct TextLayout {std::vector<ShapedGlyph> glyphs;std::vector<TextLine> lines;float width=0,height=0,pixels=24;bool replacedInput=false;unsigned missingClusters=0;};
 struct TextRaster {int width=0,height=0,left=0,top=0;std::vector<uint8_t> coverage;};

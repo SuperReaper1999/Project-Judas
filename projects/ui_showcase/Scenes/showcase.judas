@@ -1,0 +1,68 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Field Notes / UI Showcase",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        -0.4,
+        0.85,
+        0.35
+      ],
+      "sun-color": [
+        0.7,
+        0.72,
+        0.76
+      ],
+      "ambient": [
+        0.18,
+        0.21,
+        0.26
+      ],
+      "next-id": 1000,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Interface policy (project JS)",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "75c884953c8408c3e3568f6dd54fd331",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "ui.asset": "20bc1b3dc528ff0d88abdec9e244789f",
+          "ui.name": "showcase",
+          "ui.enabled": true
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/m96/FieldNotes-arm64.apk",
+  "sha256": "d1ccfa85c0df075f855b7582f09006a00e542d0b4249563ff5cf799c4d42767c",
+  "abis": [
+    "arm64-v8a"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "developmentSigning": true,
+  "shadows": "off",
+  "contentFiles": 23,
+  "contentBytes": 2286396,
+  "native": {
+    "arm64-v8a": {
+      "libmain.so": "9d2bcc0a3fc929c1a52b133a6709155230a3a3552f2e698db32c84f77b7af7c9",
+      "_deps/judas_sdl-build/libSDL2.so": "d048971681a427c0f04d500242df835b9a67696cbf38502def13fcded72c2306"
+    }
+  }
+}

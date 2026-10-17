@@ -1,0 +1,52 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Text coverage missing for 2 clusters; primary-font .notdef shown
+PASS v3 controls lossless archive roundtrip
+PASS named authoring preserves new controls and accessibility
+PASS single-line input rejects newlines
+PASS zero input capacity rejects
+PASS combining sequence is one grapheme
+PASS ZWJ emoji and flag are indivisible graphemes
+PASS replace selection never splits emoji/UTF-8
+PASS invalid UTF-8 transaction rejects
+PASS capacity transaction rejects without truncation
+PASS explicit text focus requests native session
+PASS unknown focus target rejects
+PASS nonfocusable canvas rejects
+PASS committed Unicode input edits field
+PASS clipboard copy honors grapheme selection
+PASS cut removes whole selected grapheme
+PASS paste uses same bounded insertion path
+PASS undo restores text and selection
+PASS redo restores edit
+PASS IME preedit is not committed text
+PASS IME commit inserted once
+PASS submit delivers detached final text exactly once
+PASS read-only blocks user edits
+PASS typing suppresses shared keyboard gameplay bindings
+PASS 10000 dynamic rows accepted without 10000 widgets
+PASS duplicate row keys reject transactionally
+PASS keyboard selection reveals distant virtual row
+PASS disabled rows cannot select
+PASS scroll accepts bounded offset
+PASS scroll clamps to actual child extent
+PASS focus may reveal clipped child
+PASS focus scrolls clipped control into view
+PASS focus last control
+PASS last focused control lies inside scroll viewport
+PASS readable scale validated
+PASS scaling changes real layout geometry
+PASS UI state restores text/selection/list/scroll/scale/focus
+PASS malformed state preserves all live values atomically
+PASS semantic snapshot exposes real control roles and labels
+PASS player-addressed text never changes another document
+PASS text with other owner is ignored
+PASS leaving player releases native text target and handles
+PASS native GL host
+PASS SDL native text event reaches engine input adapter
+PASS actual GL draw shapes only visible virtual rows
+PASS Unicode edit/list/focus pixels captured
+PERFORMANCE rows=10000 widgets=44 median_us=29.503 p95_us=43.583 worst_us=69.912 visible_rows=6 draws=28
+PASS unloaded handles fail safely
+SUMMARY 46 checks 0 failures

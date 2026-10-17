@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <functional>
 #include <memory>
 class InputDeviceHub;
 #include <array>
@@ -53,9 +54,15 @@ struct InputStickSnapshot {
 // IDs are process-local monotonic safe integers, never SDL pointer values.
 struct InputTouch {std::uint64_t id=0;float x=0,y=0,pressure=0;};
 struct InputPointer {float x=0,y=0;bool down=false;};
+struct TextInputEvent {std::string command,text;bool shift=false,control=false;int start=0,length=0;std::uint64_t player=0,token=0;};
+struct TextInputPlatform {std::function<std::string()> clipboardRead;std::function<void(const std::string&)> clipboardWrite;};
 class InputSystem {
 public:
     InputSystem();
+    std::shared_ptr<TextInputPlatform> textPlatform;
+    void QueueText(TextInputEvent event){if(m_textEvents.size()<128&&event.text.size()<=16384)m_textEvents.push_back(std::move(event));}
+    const std::vector<TextInputEvent>& TextEvents()const{return m_textEvents;}
+    void ConsumeText(){m_textEvents.clear();}
     // Allocated only when a project opts into device-scoped input.
     mutable std::weak_ptr<InputDeviceHub> localDevices;
     bool SetMap(const InputMap& map,std::string& error);
@@ -94,6 +101,7 @@ public:
     InputActionState FixedAction(const std::string& name) const;
     static float Deadzone(float value,float deadzone);
 private:
+    std::vector<TextInputEvent> m_textEvents;
     struct TouchKey {std::int64_t device,finger;std::uint64_t id;};
     std::vector<TouchKey> m_touchKeys;
     std::vector<InputTouch> m_touches;

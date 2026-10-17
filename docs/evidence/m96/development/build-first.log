@@ -1,0 +1,163 @@
+[  7%] Built target judas_meshoptimizer
+[  7%] Built target judas_app_icon
+[  7%] Built target judas_icu_build
+[  7%] Built target judas_quickjs
+[ 21%] Built target freetype
+[ 21%] Built target judas_glad
+[ 28%] Built target judas_navigation_backend
+[ 28%] Built target judas_profiler
+[ 28%] Built target judas_jobs
+[ 28%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/TextEditing.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/TextEditing.cpp: In function ‘std::vector<long unsigned int> TextGraphemes(const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/TextEditing.cpp:10:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   10 |  if(it)ubrk_close(it);utext_close(&value);if(result.empty())result.push_back(0);return result;
+      |  ^~
+In file included from /home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include/unicode/platform.h:25,
+                 from /home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include/unicode/ptypes.h:46,
+                 from /home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include/unicode/umachine.h:46,
+                 from /home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include/unicode/utypes.h:38,
+                 from /home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include/unicode/ubrk.h:13,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/TextEditing.cpp:3:
+/home/conner/Documents/GitHub/Project-Judas/src/TextEditing.cpp:10:23: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   10 |  if(it)ubrk_close(it);utext_close(&value);if(result.empty())result.push_back(0);return result;
+      |                       ^~~~~~~~~~~
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 42%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUIControls.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp: In member function ‘bool RuntimeUI::Focus(uint32_t, const std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp:16:90: warning: missing initializer for member ‘UIEvent::text’ [-Wmissing-field-initializers]
+   16 |  if(in.focus!=id){in.widgets[in.focus].composition.clear();in.focus=id;m_events.push_back({in.name,id,"focus",0,in.player});}
+      |                                                                        ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp:16:90: warning: missing initializer for member ‘UIEvent::item’ [-Wmissing-field-initializers]
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp: In member function ‘void RuntimeUI::Edit(Instance&, UIElement&, InputSystem&, uint64_t)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp:59:44: warning: missing initializer for member ‘UIEvent::item’ [-Wmissing-field-initializers]
+   59 |   else if(cmd=="submit"){m_events.push_back({in.name,e.id,"submit",0,in.player,e.text});state.composition.clear();}
+      |                          ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp:62:41: warning: missing initializer for member ‘UIEvent::item’ [-Wmissing-field-initializers]
+   62 |  if(original!=e.text){m_events.push_back({in.name,e.id,"change",0,in.player,e.text});InvalidateLayout();}
+      |                       ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp: In member function ‘bool RuntimeUI::RestoreState(uint32_t, const std::string&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp:75:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   75 |  if(!it->second.doc.Validate(error)||!Focus(h,j.at("focus").get<std::string>()))throw std::runtime_error(error.empty()?"invalid saved focus":error);InvalidateLayout();if(m_layoutWidth)Layout(m_layoutWidth,m_layoutHeight);m_events=std::move(events);error.clear();return true;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUIControls.cpp:75:149: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   75 |  if(!it->second.doc.Validate(error)||!Focus(h,j.at("focus").get<std::string>()))throw std::runtime_error(error.empty()?"invalid saved focus":error);InvalidateLayout();if(m_layoutWidth)Layout(m_layoutWidth,m_layoutHeight);m_events=std::move(events);error.clear();return true;
+      |                                                                                                                                                     ^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp: In member function ‘void RuntimeUI::Activate(Instance&, UIElement&, const char*)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp:101:458: warning: missing initializer for member ‘UIEvent::text’ [-Wmissing-field-initializers]
+  101 | void RuntimeUI::Activate(Instance& in,UIElement& e,const char* type){if(e.kind==UIKind::List){auto& state=in.widgets[e.id];if(state.selected<0||state.selected>=int(state.items.size())||!state.items[state.selected].enabled)return;m_events.push_back({in.name,e.id,type,float(state.selected),in.player,state.items[state.selected].text,state.items[state.selected].id});return;}if(e.kind==UIKind::Toggle){e.value=e.value>.5f?0:1;type="change";}m_events.push_back({in.name,e.id,type,e.value,in.player});}
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                        ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp:101:458: warning: missing initializer for member ‘UIEvent::item’ [-Wmissing-field-initializers]
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp: In member function ‘void RuntimeUI::Input(InputSystem&, glm::vec2, bool, int, int, uint64_t)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp:127:70: warning: missing initializer for member ‘UIEvent::text’ [-Wmissing-field-initializers]
+  127 |         if(input.Action("pause").pressed&&!editing)m_events.push_back({in.name,"","back",0,in.player});
+      |                                                    ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.cpp:127:70: warning: missing initializer for member ‘UIEvent::item’ [-Wmissing-field-initializers]
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 50%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetMaterialSlot(EntityId, unsigned int, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1587:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1587 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1587:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1587 |  if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+      |                                                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp: In member function ‘bool RuntimeWorld::SetRuntimeMaterial(EntityId, const std::string&, const MaterialSlot&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1604:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+ 1604 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.cpp:1604:80: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+ 1604 |  if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+      |                                                                                ^
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 57%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 64%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 64%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_runtime_ui_tests.dir/tests/RuntimeUITests.cpp.o
+[100%] Linking CXX executable judas_runtime_ui_tests
+/usr/bin/x86_64-linux-gnu-ld.bfd: libjudas_engine.a(InteractivePlay.cpp.o): in function `InteractivePlay::Frame(Window&, Renderer&, float, bool, bool)':
+InteractivePlay.cpp:(.text+0x2568): undefined reference to `Window::SetTextInput(bool, unsigned long, int, int, int, int, unsigned long)'
+/usr/bin/x86_64-linux-gnu-ld.bfd: InteractivePlay.cpp:(.text+0x2adc): undefined reference to `Window::SetTextInput(bool, unsigned long, int, int, int, int, unsigned long)'
+collect2: error: ld returned 1 exit status
+gmake[3]: *** [CMakeFiles/judas_runtime_ui_tests.dir/build.make:118: judas_runtime_ui_tests] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:5070: CMakeFiles/judas_runtime_ui_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:5077: CMakeFiles/judas_runtime_ui_tests.dir/rule] Error 2
+gmake: *** [Makefile:1477: judas_runtime_ui_tests] Error 2

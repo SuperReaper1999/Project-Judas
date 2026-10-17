@@ -1,0 +1,27 @@
+Accepted baseline a488c72463f207473838318b978b5a7f8e1f8afb
+CMakeLists.txt SHA256 22fa517778a861414378e6409d6c155803d7db135d39029061fb7cac258b7c70
+Initial M96 Android failure used this unchanged dependency placement:
+303: target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend)
+304: judas_warnings(judas_engine)
+305: 
+306: # Android builds the same engine and application, loaded by SDL's native Activity.
+307: # Host editor, import/bake tools and test executables remain desktop-only.
+308: if(ANDROID)
+309:     target_sources(judas_engine PRIVATE src/AndroidPlatform.cpp)
+310:     target_include_directories(judas_engine SYSTEM PRIVATE third_party/cgltf)
+311:     target_link_libraries(judas_engine PUBLIC judas_quickjs judas_unicode judas_profiler judas_jobs android log)
+312:     add_library(main SHARED src/main.cpp src/Application.cpp src/RuntimeOptions.cpp
+313:         src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+314:     target_link_libraries(main PRIVATE judas_engine SDL2::SDL2main)
+315:     target_compile_definitions(main PRIVATE JUDAS_RUNTIME_BUILD_CONFIG="$<CONFIG>")
+316:     judas_warnings(main)
+317:     return()
+318: endif()
+319: 
+320: add_executable(judas
+1970: target_link_libraries(judas_engine PUBLIC judas_meshoptimizer)
+1971: add_executable(judas_cook src/AssetCookMain.cpp)
+1972: target_link_libraries(judas_cook PRIVATE judas_engine)
+1973: judas_warnings(judas_cook)
+1974: add_executable(judas_asset_pipeline_benchmark tests/AssetPipelineBenchmark.cpp)
+1975: target_link_libraries(judas_asset_pipeline_benchmark PRIVATE judas_engine)

@@ -1,0 +1,14 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS real EngineHost
+PASS ui-controls normal registered script
+PASS ui-controls normal project
+PASS ui-controls ordinary scene
+PASS ui-controls runtime builds
+PASS ui-controls ordinary fixed-step session
+PASS ui-controls real VM callbacks without faults
+EXAMPLE ui-controls {"configured":true,"restored":true,"invalid":true,"submitted":true,"stale":true}
+PASS ui-controls documented outcome
+PASS ui-controls teardown
+SUMMARY 9 checks 0 failures

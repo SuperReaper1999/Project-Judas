@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M95 public module based on checkpoint `16889b73423a8fb0e9c7682db1d8f66c648cbfc3 + M95 animation workflow`. M95 adds animation samples and generic motor displacement/orientation intent. See [animation workflow](../M95_ANIMATION_WORKFLOW.md). Human/platform acceptance remains separate from earlier milestones.
+Current M96 public module based on checkpoint `a488c72463f207473838318b978b5a7f8e1f8afb + M96 UI toolkit`. M96 adds editable text, scroll/list controls, focus, UI state and accessibility observations. See [UI toolkit](../M96_UI_TOOLKIT.md). Human/platform acceptance remains separate from earlier milestones.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -254,17 +254,25 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Ragdoll.requestBalance` | `ragdollBalanceRequest` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Ragdoll.setMode` | `ragdollMode` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `UIDocument` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.accessibility` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.captureState` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.enabled` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.focus` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.focused` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.get` | `uiGet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.handle` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.hide` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.modal` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.player` | `uiPlayer` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.referenceSize` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.restoreState` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIDocument.scale` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.show` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.unload` | `uiUnload` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIDocument.visible` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.configure` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.direction` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.enabled` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
@@ -272,6 +280,10 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `UIElement.handle` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.layout` | `uiLayout` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.scroll` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.selectedIndex` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.selection` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
+| `UIElement.setItems` | `uiControl` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.setLayout` | `uiLayout` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.text` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |
 | `UIElement.textAlignment` | `uiGet`, `uiSet` | [declaration](../judas.d.ts) | [reference](ui.md) |

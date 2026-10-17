@@ -162,6 +162,7 @@ add_library(judas_engine STATIC
     src/Deformable.cpp
     src/WorldDeformables.cpp
     src/TextLayout.cpp
+    src/TextEditing.cpp
     src/Localization.cpp
     src/Material.cpp
     src/Environment.cpp
@@ -187,6 +188,7 @@ add_library(judas_engine STATIC
     src/WorldRegions.cpp
     src/WorldScripts.cpp
     src/RuntimeUI.cpp
+    src/RuntimeUIControls.cpp
     src/ScriptSystem.cpp
     src/Classification.cpp
     src/GamePackage.cpp
@@ -300,7 +302,7 @@ target_link_libraries(judas_audio_backend PUBLIC Threads::Threads ${CMAKE_DL_LIB
 if(UNIX)
     target_link_libraries(judas_audio_backend PUBLIC m)
 endif()
-target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend)
+target_link_libraries(judas_engine PUBLIC judas_app_icon judas_materials SDL2::SDL2 ${JUDAS_GLM} judas_glad Threads::Threads judas_audio_backend judas_navigation_backend judas_meshoptimizer)
 judas_warnings(judas_engine)
 
 # Android builds the same engine and application, loaded by SDL's native Activity.
@@ -1967,7 +1969,6 @@ target_link_libraries(judas_rendering_lab_performance PRIVATE judas_engine)
 judas_warnings(judas_rendering_lab_performance)
 
 # M93 cook/LOD codecs are optional asset paths; no external runtime tool required.
-target_link_libraries(judas_engine PUBLIC judas_meshoptimizer)
 add_executable(judas_cook src/AssetCookMain.cpp)
 target_link_libraries(judas_cook PRIVATE judas_engine)
 judas_warnings(judas_cook)
@@ -2013,3 +2014,11 @@ judas_warnings(judas_animation_workflow_application_tests)
 add_executable(judas_animation_cold_save_tests tests/AnimationColdSaveTests.cpp)
 target_link_libraries(judas_animation_cold_save_tests PRIVATE judas_engine)
 judas_warnings(judas_animation_cold_save_tests)
+
+add_executable(judas_ui_production_tests tests/UIProductionTests.cpp)
+target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring)
+judas_warnings(judas_ui_production_tests)
+
+add_executable(judas_ui_showcase_application_tests tests/UIShowcaseApplicationTests.cpp src/Application.cpp src/RuntimeOptions.cpp src/RuntimeDiagnostics.cpp src/TestHarness.cpp)
+target_link_libraries(judas_ui_showcase_application_tests PRIVATE judas_engine)
+judas_warnings(judas_ui_showcase_application_tests)

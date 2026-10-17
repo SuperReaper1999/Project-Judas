@@ -49,7 +49,8 @@ source breakpoints, stepping, safe variable snapshots and compile/import diagnos
 Try [The Repair Bench](projects/developer_lab/README.md). Windows/Android M94 validation remains pending.
 
 Experimental M95 adds [animation event tracks, a timeline and collision-aware
-root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 human acceptance and Windows/Android validation remain pending.
+root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 is human accepted; its Windows/Android validation remains outstanding.
+Experimental M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). Try [Field Notes](projects/ui_showcase/README.md); human acceptance is pending.
 
 ## Highlights
 

@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "75c884953c8408c3e3568f6dd54fd331"
+type script
+source "Assets/scripts/showcase.js"

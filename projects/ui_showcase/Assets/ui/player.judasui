@@ -1,0 +1,537 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      640,
+      720
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": true,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          640,
+          720
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "title",
+        "parent": "canvas",
+        "text": "YOUR FIELD DESK",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 30,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          26,
+          30
+        ],
+        "size": [
+          580,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "YOUR FIELD DESK",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "hint",
+        "parent": "canvas",
+        "text": "Independent focus and item selection.\nClick the name field to type; F1 returns.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          26,
+          94
+        ],
+        "size": [
+          580,
+          70
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Independent focus and item selection.\nClick the name field to type; F1 returns.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "name",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 7,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          26,
+          182
+        ],
+        "size": [
+          588,
+          54
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "Your callsign",
+        "accessibleLabel": "Player callsign",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "items",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 9,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          26,
+          266
+        ],
+        "size": [
+          588,
+          310
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Player supply inventory",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "status",
+        "parent": "canvas",
+        "text": "Select an item",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          26,
+          610
+        ],
+        "size": [
+          588,
+          85
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Select an item",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      }
+    ]
+  }
+}

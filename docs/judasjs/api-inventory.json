@@ -1,5 +1,5 @@
 {
-  "checkpoint": "16889b73423a8fb0e9c7682db1d8f66c648cbfc3 + M95 animation workflow",
+  "checkpoint": "a488c72463f207473838318b978b5a7f8e1f8afb + M96 UI toolkit",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl",
   "resultShapes": [
     {
@@ -2822,6 +2822,28 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
+      "symbol": "UIDocument.accessibility",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.accessibility",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.captureState",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.captureState",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
       "symbol": "UIDocument.constructor",
       "kinds": [
         "call"
@@ -2841,6 +2863,28 @@
         "uiSet"
       ],
       "type": "docs/judas.d.ts:UIDocument.enabled",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.focus",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.focus",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.focused",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.focused",
       "reference": "docs/judasjs/ui.md"
     },
     {
@@ -2898,6 +2942,41 @@
       "reference": "docs/judasjs/ui.md"
     },
     {
+      "symbol": "UIDocument.referenceSize",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.referenceSize",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.restoreState",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.restoreState",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.scale",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.scale",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
       "symbol": "UIDocument.show",
       "kinds": [
         "call"
@@ -2937,6 +3016,17 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:UIElement",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.configure",
       "reference": "docs/judasjs/ui.md"
     },
     {
@@ -3014,6 +3104,53 @@
         "uiLayout"
       ],
       "type": "docs/judas.d.ts:UIElement.layout",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.scroll",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.scroll",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.selectedIndex",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.selectedIndex",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.selection",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.selection",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.setItems",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.setItems",
       "reference": "docs/judasjs/ui.md"
     },
     {
@@ -5025,6 +5162,7 @@
     "torque",
     "touches",
     "transform",
+    "uiControl",
     "uiDiagnostics",
     "uiFind",
     "uiGet",

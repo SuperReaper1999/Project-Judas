@@ -7,6 +7,7 @@
 #include <array>
 #include <atomic>
 #include "ScriptSystem.h"
+#include "AuthoringJSON.h"
 #include "PlayerController.h"
 #include "CollisionAsset.h"
 #include "AssetDatabase.h"
@@ -394,6 +395,14 @@ export const console={log:(...args)=>call('log',args.map(String).join(' '))};
 
 export class UIElement {
  constructor(handle,id){this.handle=handle;this.id=id}
+ get scroll(){return call('uiControl',this.handle,this.id,'scroll')}
+ set scroll(value){call('uiControl',this.handle,this.id,'scroll',JSON.stringify(value))}
+ get selection(){return call('uiControl',this.handle,this.id,'selection')}
+ set selection(value){call('uiControl',this.handle,this.id,'selection',JSON.stringify(value))}
+ get selectedIndex(){return call('uiControl',this.handle,this.id,'selected')}
+ set selectedIndex(value){call('uiControl',this.handle,this.id,'selected',JSON.stringify(value))}
+ setItems(items){call('uiControl',this.handle,this.id,'items',JSON.stringify(items))}
+ configure(options){call('uiControl',this.handle,this.id,'configure',JSON.stringify(options))}
  get layout(){return call('uiLayout',this.handle,this.id)}
  setLayout(patch){return call('uiLayout',this.handle,this.id,patch)}
  get text(){return call('uiGet',this.handle,this.id,'text')}
@@ -417,6 +426,16 @@ export class UIElement {
 }
 export class UIDocument {
  constructor(handle){this.handle=handle}
+ get referenceSize(){return call('uiControl',this.handle,'','reference')}
+ set referenceSize(value){call('uiControl',this.handle,'','reference',JSON.stringify(value))}
+ get focused(){return call('uiControl',this.handle,'','focus')}
+ focus(id){call('uiControl',this.handle,'','focus',JSON.stringify(id??''))}
+ get scale(){return call('uiControl',this.handle,'','scale')}
+ set scale(value){call('uiControl',this.handle,'','scale',JSON.stringify(value))}
+ captureState(){return call('uiControl',this.handle,'','capture')}
+ restoreState(state){call('uiControl',this.handle,'','restore',JSON.stringify(state))}
+ get accessibility(){return call('uiControl',this.handle,'','accessibility')}
+
  get player(){const id=call("uiPlayer",this.handle);return id?new LocalPlayer(id):null}
  set player(value){call("uiPlayer",this.handle,value?.id??null)}
  get(id){call('uiGet',this.handle,id,'visible');return new UIElement(this.handle,id)}
@@ -841,6 +860,31 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     if(op=="uiFind")return JS_NewUint32(c,world.UI().Find(String(c,arg(1))));
     if(op=="uiQuit"){world.UI().RequestQuit();return JS_UNDEFINED;}
     if(op=="uiLoad"){std::string error;auto h=world.UI().Load(String(c,arg(1)),String(c,arg(2)),s->currentOwner,error,s->currentSlot);if(!h)return JS_ThrowTypeError(c,"UI: %s",error.c_str());return JS_NewUint32(c,h);}
+    if(op=="uiControl"){
+        uint32_t h=0;JS_ToUint32(c,&h,arg(1));auto& ui=world.UI();auto* document=ui.Document(h);if(!document)return JS_ThrowReferenceError(c,"stale UI document");
+        auto id=String(c,arg(2)),action=String(c,arg(3));auto* element=id.empty()?nullptr:ui.Element(h,id);if(!id.empty()&&!element)return JS_ThrowReferenceError(c,"unknown UI element");
+        try{std::string error;bool write=argc>4;nlohmann::json value;if(write){auto text=String(c,arg(4));if(text.size()>4*1024*1024)throw std::runtime_error("UI payload exceeds 4 MiB");value=AuthoringJSON::parse(text);}
+            auto result=[&](const std::string& text){return JS_ParseJSON(c,text.data(),text.size(),"UI observation");};
+            auto require=[&](bool ok,const char* message){if(!ok)throw std::runtime_error(message);};
+            if(action=="focus"&&!element){if(write)require(ui.Focus(h,value.get<std::string>()),"invalid/hidden/disabled focus target");return JS_NewString(c,ui.Focused(h).c_str());}
+            if(action=="reference"&&!element){if(write){auto x=value.at("x").get<float>(),y=value.at("y").get<float>();require(std::isfinite(x)&&std::isfinite(y)&&x>=64&&y>=64&&x<=16384&&y<=16384,"referenceSize must be finite 64..16384");document->reference={x,y};ui.InvalidateLayout();}return result(nlohmann::json{{"x",document->reference.x},{"y",document->reference.y}}.dump());}
+            if(action=="scale"&&!element){if(write)require(value.is_number()&&ui.SetScale(h,value.get<float>()),"UI scale must be 0.75..2");return JS_NewFloat64(c,ui.Scale(h));}
+            if(action=="capture"&&!element)return result(ui.CaptureState(h));
+            if(action=="accessibility"&&!element)return result(ui.Accessibility(h));
+            if(action=="restore"&&!element){require(write&&ui.RestoreState(h,value.dump(),error),error.empty()?"invalid UI state":error.c_str());return JS_UNDEFINED;}
+            require(element!=nullptr,"UI element required");
+            if(action=="scroll"){require(element->kind==UIKind::List||element->kind==UIKind::Scroll,"scroll requires list/scroll container");if(write)require(ui.SetScroll(h,id,{value.at("x").get<float>(),value.at("y").get<float>()}),"invalid scroll offset");auto offset=ui.Scroll(h,id);return result(nlohmann::json{{"x",offset.x},{"y",offset.y}}.dump());}
+            if(action=="selection"){require(element->kind==UIKind::TextInput,"selection requires text input");if(write){auto a=value.at("anchor"),b=value.at("caret");require(a.is_number_integer()&&b.is_number_integer()&&a.get<double>()>=0&&b.get<double>()>=0&&a.get<double>()<=16384&&b.get<double>()<=16384,"bounded nonnegative integer grapheme indices required");require(ui.SelectText(h,id,{a.get<size_t>(),b.get<size_t>()}),"selection outside text");}auto selected=ui.Selection(h,id);return result(nlohmann::json{{"anchor",selected.anchor},{"caret",selected.caret}}.dump());}
+            if(action=="selected"){require(element->kind==UIKind::List,"selection requires list");if(write)require(value.is_number_integer()&&value.get<double>()>=-1&&value.get<double>()<10000&&ui.Select(h,id,value.get<int>()),"invalid/disabled list index");return JS_NewInt32(c,ui.Selected(h,id));}
+            if(action=="items"){require(write&&value.is_array()&&value.size()<=10000,"bounded list item array required");std::vector<UIListItem> items;for(auto& item:value)items.push_back({item.at("id").get<std::string>(),item.at("text").get<std::string>(),item.value("enabled",true)});require(ui.SetItems(h,id,items,error),error.c_str());return JS_UNDEFINED;}
+            if(action=="configure"){
+                require(write&&value.is_object(),"UI style/control object required");auto candidate=*element;
+                for(auto entry=value.begin();entry!=value.end();++entry){auto key=entry.key();auto& v=entry.value();if(key=="placeholder")candidate.placeholder=v.get<std::string>();else if(key=="accessibleLabel")candidate.accessibleLabel=v.get<std::string>();else if(key=="description")candidate.description=v.get<std::string>();else if(key=="readOnly")candidate.readOnly=v.get<bool>();else if(key=="maxBytes"){require(v.is_number_integer()&&v.get<double>()>=1&&v.get<double>()<=16384,"maxBytes must be 1..16384");candidate.maxBytes=v.get<unsigned>();}else if(key=="fontSize")candidate.fontSize=v.get<float>();else if(key=="rowHeight")candidate.rowHeight=v.get<float>();else if(key=="background"||key=="color"||key=="focusColor"){glm::vec4 color{v.at("r").get<float>(),v.at("g").get<float>(),v.at("b").get<float>(),v.at("a").get<float>()};if(key=="background")candidate.background=color;else if(key=="color")candidate.color=color;else candidate.focusColor=color;}else throw std::runtime_error("unknown UI style/control key");}
+                auto proof=*document;for(auto& e:proof.elements)if(e.id==id)e=candidate;require(proof.Validate(error),error.c_str());*element=std::move(candidate);ui.InvalidateLayout();return JS_UNDEFINED;
+            }
+            throw std::runtime_error("unknown UI control operation");
+        }catch(const std::exception& error){return JS_ThrowTypeError(c,"UI: %s",error.what());}
+    }
     if(op=="uiLayout"){uint32_t h=0;JS_ToUint32(c,&h,arg(1));auto id=String(c,arg(2));auto* e=world.UI().Element(h,id);if(!e)return JS_ThrowReferenceError(c,"stale UI document/element");if(argc>3){if(!JS_IsObject(arg(3)))return JS_ThrowTypeError(c,"layout patch object required");std::map<std::string,glm::vec2> patch;JSPropertyEnum* props=nullptr;uint32_t count=0;if(JS_GetOwnPropertyNames(c,&props,&count,arg(3),JS_GPN_STRING_MASK|JS_GPN_ENUM_ONLY))return JS_EXCEPTION;bool valid=count<=6;for(uint32_t i=0;i<count;++i){auto key=JS_AtomToString(c,props[i].atom);auto name=String(c,key);JS_FreeValue(c,key);auto v=JS_GetProperty(c,arg(3),props[i].atom);glm::vec2 xy;valid&=Number(c,v,"x",xy.x)&&Number(c,v,"y",xy.y);patch[name]=xy;JS_FreeValue(c,v);JS_FreeAtom(c,props[i].atom);}js_free(c,props);std::string error;if(!valid||!world.UI().SetElementLayout(h,id,patch,error))return JS_ThrowTypeError(c,"UI layout: %s",error.c_str());e=world.UI().Element(h,id);}auto o=JS_NewObject(c);for(auto [key,v]:{std::pair<const char*,glm::vec2>{"offset",e->offset},{"size",e->size},{"anchorMin",e->anchorMin},{"anchorMax",e->anchorMax},{"relativeSize",e->relativeSize},{"align",e->align}}){auto xy=JS_NewObject(c);JS_SetPropertyStr(c,xy,"x",JS_NewFloat64(c,v.x));JS_SetPropertyStr(c,xy,"y",JS_NewFloat64(c,v.y));JS_SetPropertyStr(c,o,key,xy);}return o;}
     if(op=="uiGet"||op=="uiSet"||op=="uiUnload"){
         uint32_t h=0;JS_ToUint32(c,&h,arg(1));auto* d=world.UI().Document(h);if(!d)return JS_ThrowReferenceError(c,"stale/unloaded UI document");
@@ -849,7 +893,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(!id.empty()&&!e)return JS_ThrowReferenceError(c,"unknown UI element %s",id.c_str());
         bool* flag=key=="visible"?(e?&e->visible:&d->visible):key=="enabled"?(e?&e->enabled:&d->enabled):key=="modal"&&!e?&d->modal:nullptr;
         if(flag){if(op=="uiSet"){if(!JS_IsBool(arg(4)))return JS_ThrowTypeError(c,"UI flag requires boolean");*flag=JS_ToBool(c,arg(4));}return JS_NewBool(c,*flag);}
-        if(e&&(key=="text"||key=="texture"||key=="font"||key=="textKey")){auto& value=key=="text"?e->text:key=="texture"?e->texture:key=="font"?e->font:e->textKey;if(op=="uiSet"){if(!JS_IsString(arg(4)))return JS_ThrowTypeError(c,"UI string required");auto v=String(c,arg(4));if(v.size()>16384)return JS_ThrowTypeError(c,"UI text too long");if(key=="textKey"){std::string error;if(v.size()>128||v.find_first_of("\r\n\0",0,3)!=std::string::npos||!ValidTextUTF8(v,error))return JS_ThrowTypeError(c,"invalid localization key");}if((key=="texture"||key=="font")&&!v.empty()){auto* a=s->assets?s->assets->Find(v):nullptr;if(!a||a->missing||a->type!=(key=="font"?AssetType::Font:AssetType::Texture))return JS_ThrowTypeError(c,"invalid UI asset");}value=v;if(key=="text")e->textKey.clear();}return JS_NewStringLen(c,value.data(),value.size());}
+        if(e&&(key=="text"||key=="texture"||key=="font"||key=="textKey")){auto& value=key=="text"?e->text:key=="texture"?e->texture:key=="font"?e->font:e->textKey;if(op=="uiSet"){if(!JS_IsString(arg(4)))return JS_ThrowTypeError(c,"UI string required");auto v=String(c,arg(4));if(v.size()>16384)return JS_ThrowTypeError(c,"UI text too long");if(key=="textKey"){std::string error;if(v.size()>128||v.find_first_of("\r\n\0",0,3)!=std::string::npos||!ValidTextUTF8(v,error))return JS_ThrowTypeError(c,"invalid localization key");}if((key=="texture"||key=="font")&&!v.empty()){auto* a=s->assets?s->assets->Find(v):nullptr;if(!a||a->missing||a->type!=(key=="font"?AssetType::Font:AssetType::Texture))return JS_ThrowTypeError(c,"invalid UI asset");}if(key=="text"){std::string utfError;if(!ValidTextUTF8(v,utfError)||v.find('\0')!=std::string::npos||(e->kind==UIKind::TextInput&&(v.size()>e->maxBytes||v.find_first_of("\r\n")!=std::string::npos)))return JS_ThrowTypeError(c,"invalid/bounded UI text");}if(key=="textKey"&&e->kind==UIKind::TextInput&&!v.empty())return JS_ThrowTypeError(c,"editable fields use literal text");value=v;if(key=="text"){e->textKey.clear();if(e->kind==UIKind::TextInput){auto n=TextGraphemes(v).size()-1;world.UI().SelectText(h,id,{n,n});}}}return JS_NewStringLen(c,value.data(),value.size());}
         if(e&&(key=="direction"||key=="textAlignment")){std::vector<std::string> choices=key=="direction"?std::vector<std::string>{"auto","ltr","rtl"}:std::vector<std::string>{"left","right","center","start","end"};int index=key=="direction"?int(e->direction):e->textLogicalAlign;if(op=="uiSet"){if(!JS_IsString(arg(4)))return JS_ThrowTypeError(c,"UI direction/alignment string required");auto v=String(c,arg(4));auto it=std::find(choices.begin(),choices.end(),v);if(it==choices.end())return JS_ThrowTypeError(c,"unsupported UI text direction/alignment");index=int(it-choices.begin());if(key=="direction")e->direction=TextDirection(index);else e->textLogicalAlign=index;}return JS_NewString(c,index<0?"":choices[index].c_str());}
         if(e&&key=="value"){if(op=="uiSet"){double v;if(JS_ToFloat64(c,&v,arg(4))||!std::isfinite(v)||v<e->minimum||v>e->maximum)return JS_ThrowTypeError(c,"UI value outside authored range");e->value=float(v);}return JS_NewFloat64(c,e->value);}
         return JS_ThrowTypeError(c,"unknown UI property");
@@ -1846,7 +1890,7 @@ void ScriptSystem::UIEvents(const InputSystem* input,float dt){
     auto events=m->world->UI().TakeEvents();
     for(const auto& event:events)for(auto key:m->world->ScriptKeys()){auto it=m->instances.find(key);if(it==m->instances.end()||it->second.fault||!m->world->RuntimeDefinition(key.first))continue;
         auto& i=it->second;Impl::Invocation invocation(*m,i);ProfileScope assetScope(m->AssetLabel(i));m->polls=0;m->currentOwner=i.entity;m->currentSlot=i.slot.id;auto fn=JS_GetPropertyStr(m->ctx,i.value,"onUI");if(JS_IsException(fn)){m->Error(i,"onUI");JS_FreeValue(m->ctx,fn);continue;}if(JS_IsFunction(m->ctx,fn)){
-            auto e=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,e,"document",JS_NewString(m->ctx,event.document.c_str()));JS_SetPropertyStr(m->ctx,e,"element",JS_NewString(m->ctx,event.element.c_str()));JS_SetPropertyStr(m->ctx,e,"type",JS_NewString(m->ctx,event.type.c_str()));JS_SetPropertyStr(m->ctx,e,"value",JS_NewFloat64(m->ctx,event.value));JS_SetPropertyStr(m->ctx,e,"playerId",event.player?JS_NewString(m->ctx,std::to_string(event.player).c_str()):JS_NULL);
+            auto e=JS_NewObject(m->ctx);JS_SetPropertyStr(m->ctx,e,"document",JS_NewString(m->ctx,event.document.c_str()));JS_SetPropertyStr(m->ctx,e,"element",JS_NewString(m->ctx,event.element.c_str()));JS_SetPropertyStr(m->ctx,e,"type",JS_NewString(m->ctx,event.type.c_str()));JS_SetPropertyStr(m->ctx,e,"value",JS_NewFloat64(m->ctx,event.value));JS_SetPropertyStr(m->ctx,e,"text",JS_NewStringLen(m->ctx,event.text.data(),event.text.size()));JS_SetPropertyStr(m->ctx,e,"item",JS_NewStringLen(m->ctx,event.item.data(),event.item.size()));JS_SetPropertyStr(m->ctx,e,"playerId",event.player?JS_NewString(m->ctx,std::to_string(event.player).c_str()):JS_NULL);
             auto result=JS_Call(m->ctx,fn,i.value,1,&e);if(JS_IsException(result))m->Error(i,"onUI");else if(JS_PromiseState(m->ctx,result)!=JS_PROMISE_NOT_A_PROMISE){JS_ThrowTypeError(m->ctx,"async UI callback unsupported");m->Error(i,"onUI");}JS_FreeValue(m->ctx,result);JS_FreeValue(m->ctx,e);
         }JS_FreeValue(m->ctx,fn);
     }

@@ -179,3 +179,9 @@ to fake damage. Configure the named material/physical connection in content; see
 [Deformables](deformables.md#m83-materialbody-connection-strength) and
 [Powertrains](powertrains.md#physical-connection-prerequisite). The exact example
 executes in the focused M83 QuickJS fixture.
+
+## Editable controls and virtual lists (M96)
+
+[ui-controls.js](examples/ui-controls.js) executes against the ordinary Field Notes
+asset: configuration, grapheme selection, keyed lists, atomic state restore, invalid
+input rejection, submit and stale handles. See [UI reference](ui.md).

@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / Field Notes (/tmp/judas-m96-relocated-gb7crpm7/game.judasproj)
+Scene: Field Notes / UI Showcase (/tmp/judas-m96-relocated-gb7crpm7/Scenes/showcase.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m96/delivery-closure/welcome.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m96/delivery-closure/settings.png
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m96/delivery-closure/inventory.png
+[TestHarness] service save ready after 34 wait frames at frame 80
+[TestHarness] service save ready after 6 wait frames at frame 105
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/m96/delivery-closure/loaded.png

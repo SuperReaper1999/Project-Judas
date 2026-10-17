@@ -1,0 +1,18 @@
+PASS neutral contacts
+PASS normalized contact snapshot
+PASS contact survives render/fixed observation without consumption
+PASS motion retains identity, pressure bounded
+PASS same native finger on different devices remains independent
+PASS release retires only matching contact
+PASS finger reuse never aliases old public contact
+PASS nonfinite sample rejected before mutation
+PASS active touch capacity bounded
+PASS coordinates and pressure bounded
+PASS focus/background reset cancels all contacts
+PASS reset retains generation-safe ID sequence
+PASS UI device ownership cancels held touches
+PASS UI cancellation does not recycle contact identity
+PASS primary pointer snapshot
+PASS pointer clamps normalized coordinates
+PASS reset clears primary pointer
+17 checks, 0 failures

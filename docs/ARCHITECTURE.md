@@ -1,10 +1,26 @@
 # Architecture
 
-## Experimental — M95 animation production workflow
+## Experimental — M96 UI toolkit
+
+The existing retained RuntimeUI owns text inputs, scroll containers and fixed-row
+virtual lists alongside legacy controls. SDL's text/IME and clipboard adapter
+feeds bounded, player-addressed input observations; ICU grapheme boundaries keep
+editing safe while HarfBuzz/FreeType remain the shared rendering authority.
+RuntimeUI owns selection, focus/reveal, clipping, scrolling, semantic snapshots
+and transactional explicit control-state capture/restore. Project JS supplies
+list data, dialogue, screens, settings and persistence policy. UI snapshots do
+not become a hidden save participant or duplicate inventory data. One native
+composition session/window coexists with independent M89 player document focus.
+The editor reuses the normal named UI canvas/source/undo/export pipeline.
+[Contracts and limits](M96_UI_TOOLKIT.md); [showcase](../projects/ui_showcase/README.md).
+M96 human acceptance is pending; native screen-reader integration is not claimed.
+
+
+## M95 animation production workflow (human accepted)
 
 Optional clip events, editor timeline and explicit fixed-step animation samples
 connect extracted motion to ordinary collision-aware motor intent. See
-[M95 contracts](M95_ANIMATION_WORKFLOW.md). Human/platform acceptance is pending.
+[M95 contracts](M95_ANIMATION_WORKFLOW.md). Human accepted; Windows/Android validation remains outstanding.
 
 ## Accepted — M93 asset pipeline
 

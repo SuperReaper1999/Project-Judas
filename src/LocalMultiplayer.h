@@ -12,6 +12,7 @@ public:
  struct Device {std::string id,kind,name;bool connected=true;std::map<std::string,float> values;InputPointer pointer;};
  struct TouchChange {InputTouch contact;bool down=false;};
  std::vector<TouchChange> touchChanges;
+ std::vector<TextInputEvent> textEvents;std::shared_ptr<TextInputPlatform> textPlatform;
  void RecordTouch(InputTouch contact,bool down);
  struct Change {std::string device,control;float value=0;};
  InputDeviceHub();

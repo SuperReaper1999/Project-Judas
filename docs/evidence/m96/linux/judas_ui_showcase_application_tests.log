@@ -1,0 +1,35 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Judas / Field Notes (/home/conner/Documents/GitHub/Project-Judas/projects/ui_showcase/ui_showcase.judasproj)
+Scene: Field Notes / UI Showcase (/home/conner/Documents/GitHub/Project-Judas/projects/ui_showcase/Scenes/showcase.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS authored main interface owns pause
+PASS actual showcase framebuffer captured
+PASS ordinary JS navigates menu to inventory
+PASS 3000-row game list draws bounded visible interval
+PASS dynamic content appended through project JS
+PASS native SDL text commit invokes real JS inventory filtering
+PASS actual showcase framebuffer captured
+PASS list selection drives real dialogue policy
+PASS native text edits actual showcase field
+PASS actual showcase framebuffer captured
+PASS JS captures bounded UI state and normal SaveService commits
+PASS fresh world restores actual text from ordinary saved script state
+PASS filter persists and rebuilds project list data
+PASS ordinary JS creates two independent local UI owners
+PASS HUD documents bind to distinct actual player identities
+PASS both local interfaces retain their own focus
+PASS local selected rows are independent
+PASS actual showcase framebuffer captured
+PASS leaving local mode tears down owner documents and restores shared screen
+PASS whole game sequence has no JS errors
+PASS portrait viewport drives public referenceSize and JS layout reflow
+PASS portrait inventory geometry stays inside live viewport
+PASS actual showcase framebuffer captured
+PASS actual settings slider drives public readable scale and JS reflow
+PASS contrast preference configures actual generic focus styling
+PASS actual showcase framebuffer captured
+PASS responsive scaling and control configuration remain fault-free
+PASS normal application startup, UI/save/player lifecycle and shutdown
+SUMMARY 28 checks 0 failures

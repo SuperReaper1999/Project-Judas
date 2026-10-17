@@ -18,8 +18,8 @@ std::string InputDeviceHub::Connect(const std::string& kind,const std::string& n
 }
 const InputDeviceHub::Device* InputDeviceHub::Find(const std::string& id)const{auto it=devices.find(id);return it==devices.end()?nullptr:&it->second;}
 void InputDeviceHub::Disconnect(const std::string& id){auto it=devices.find(id);if(it==devices.end())return;it->second.connected=false;it->second.values.clear();}
-void InputDeviceHub::BeginFrame(){++frame;changes.clear();touchChanges.clear();overflow=false;for(auto& d:devices)for(auto control:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"}){auto it=d.second.values.find(control);if(it!=d.second.values.end())it->second=0;}}
-void InputDeviceHub::Reset(){for(auto& d:devices){d.second.values.clear();d.second.pointer={};}touches.clear();changes.clear();touchChanges.clear();++resetRevision;}
+void InputDeviceHub::BeginFrame(){textEvents.clear();++frame;changes.clear();touchChanges.clear();overflow=false;for(auto& d:devices)for(auto control:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"}){auto it=d.second.values.find(control);if(it!=d.second.values.end())it->second=0;}}
+void InputDeviceHub::Reset(){textEvents.clear();for(auto& d:devices){d.second.values.clear();d.second.pointer={};}touches.clear();changes.clear();touchChanges.clear();++resetRevision;}
 void InputDeviceHub::Set(const std::string& device,const std::string& control,float value){
  auto it=devices.find(device);if(it==devices.end()||!it->second.connected||!std::isfinite(value)||overflow)return;
  auto& old=it->second.values[control];if(old==value)return;old=value;
@@ -55,7 +55,7 @@ void LocalPlayers::Route(const InputDeviceHub& hub){
  for(auto& event:hub.touchChanges){if(event.down)capture(event.contact);auto owner=touchOwners.find(event.contact.id);if(owner!=touchOwners.end())routed.emplace_back(owner->second,event);if(!event.down)touchOwners.erase(event.contact.id);}
  std::set<uint64_t> live;for(auto& t:hub.touches){live.insert(t.id);if(!touchOwners.count(t.id))for(auto& pair:players)for(auto& a:pair.second.devices)if(a.device=="touch"&&In(a.region,t.x,t.y)){touchOwners[t.id]=pair.first;break;}}
  for(auto it=touchOwners.begin();it!=touchOwners.end();)if(!live.count(it->first))it=touchOwners.erase(it);else ++it;
- for(auto& pair:players){auto& p=pair.second;p.input.BeginFrame();
+ for(auto& pair:players){auto& p=pair.second;p.input.BeginFrame();p.input.textPlatform=hub.textPlatform;for(auto event:hub.textEvents){bool keyboardTab=event.player==~uint64_t(0)&&std::any_of(p.devices.begin(),p.devices.end(),[](const auto& a){return a.device=="keyboard"&&Accept(a,"key:Tab");});if(event.player==p.id||keyboardTab){event.player=p.id;p.input.QueueText(std::move(event));}}
   std::set<std::string> connected;for(auto& a:p.devices)if(auto* device=hub.Find(a.device);device&&device->connected)connected.insert(a.device);
   if(connected!=p.connectedDevices){p.connectedDevices=std::move(connected);p.input.Reset();p.touchSources.clear();p.baseline=true;}
 

@@ -1,0 +1,4887 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280,
+      720
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": true,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          1280,
+          720
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "brand",
+        "parent": "canvas",
+        "text": "JUDAS / FIELD NOTES",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 30,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          36,
+          25
+        ],
+        "size": [
+          680,
+          42
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "JUDAS / FIELD NOTES",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "subtitle",
+        "parent": "canvas",
+        "text": "UI SHOWCASE     /     Native text · Live content · Independent focus",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          38,
+          72
+        ],
+        "size": [
+          1100,
+          32
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "UI SHOWCASE     /     Native text · Live content · Independent focus",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          126
+        ],
+        "size": [
+          222,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav_menu",
+        "parent": "nav",
+        "text": "01   Welcome",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          12
+        ],
+        "size": [
+          198,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.1,
+          0.14,
+          0.2,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "01   Welcome",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav_settings",
+        "parent": "nav",
+        "text": "02   Settings",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          76
+        ],
+        "size": [
+          198,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.1,
+          0.14,
+          0.2,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "02   Settings",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav_inventory",
+        "parent": "nav",
+        "text": "03   Inventory",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          140
+        ],
+        "size": [
+          198,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.1,
+          0.14,
+          0.2,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "03   Inventory",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav_dialogue",
+        "parent": "nav",
+        "text": "04   Dialogue",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          204
+        ],
+        "size": [
+          198,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.1,
+          0.14,
+          0.2,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "04   Dialogue",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav_entry",
+        "parent": "nav",
+        "text": "05   Text entry",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          268
+        ],
+        "size": [
+          198,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.1,
+          0.14,
+          0.2,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "05   Text entry",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "nav_local",
+        "parent": "nav",
+        "text": "06   Local players",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          12,
+          332
+        ],
+        "size": [
+          198,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.1,
+          0.14,
+          0.2,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "06   Local players",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "save",
+        "parent": "canvas",
+        "text": "SAVE",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          647
+        ],
+        "size": [
+          102,
+          42
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "SAVE",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "load",
+        "parent": "canvas",
+        "text": "LOAD",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          142,
+          647
+        ],
+        "size": [
+          102,
+          42
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "LOAD",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "status",
+        "parent": "canvas",
+        "text": "Ready · click a section to explore",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          280,
+          655
+        ],
+        "size": [
+          950,
+          36
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Ready · click a section to explore",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "menu",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          270,
+          126
+        ],
+        "size": [
+          984,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "menu_title",
+        "parent": "menu",
+        "text": "Interfaces with room to breathe",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          18
+        ],
+        "size": [
+          930,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Interfaces with room to breathe",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "menu_subtitle",
+        "parent": "menu",
+        "text": "A working toolkit, with the game meaning left to JavaScript.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          68
+        ],
+        "size": [
+          930,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "A working toolkit, with the game meaning left to JavaScript.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "settings",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          270,
+          126
+        ],
+        "size": [
+          984,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "settings_title",
+        "parent": "settings",
+        "text": "Make it yours",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          18
+        ],
+        "size": [
+          930,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Make it yours",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "settings_subtitle",
+        "parent": "settings",
+        "text": "Readable scale and clear focus. No animation required to use a control.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          68
+        ],
+        "size": [
+          930,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Readable scale and clear focus. No animation required to use a control.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "inventory",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          270,
+          126
+        ],
+        "size": [
+          984,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "inventory_title",
+        "parent": "inventory",
+        "text": "A thousand things, without a thousand widgets",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          18
+        ],
+        "size": [
+          930,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "A thousand things, without a thousand widgets",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "inventory_subtitle",
+        "parent": "inventory",
+        "text": "Filter, add and select live keyed rows. Only visible rows are drawn.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          68
+        ],
+        "size": [
+          930,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Filter, add and select live keyed rows. Only visible rows are drawn.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "dialogue",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          270,
+          126
+        ],
+        "size": [
+          984,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "dialogue_title",
+        "parent": "dialogue",
+        "text": "A conversation, at your pace",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          18
+        ],
+        "size": [
+          930,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "A conversation, at your pace",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "dialogue_subtitle",
+        "parent": "dialogue",
+        "text": "Scrollable text, selectable choices and an editable reply.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          68
+        ],
+        "size": [
+          930,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Scrollable text, selectable choices and an editable reply.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "entry",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          270,
+          126
+        ],
+        "size": [
+          984,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "entry_title",
+        "parent": "entry",
+        "text": "Words belong here",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          18
+        ],
+        "size": [
+          930,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Words belong here",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "entry_subtitle",
+        "parent": "entry",
+        "text": "Unicode, selection, clipboard, undo and native IME composition.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          68
+        ],
+        "size": [
+          930,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Unicode, selection, clipboard, undo and native IME composition.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "local",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          270,
+          126
+        ],
+        "size": [
+          984,
+          506
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.065,
+          0.09,
+          0.13,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "local_title",
+        "parent": "local",
+        "text": "One world. Separate conversations.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          18
+        ],
+        "size": [
+          930,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "One world. Separate conversations.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "local_subtitle",
+        "parent": "local",
+        "text": "Open two independently routed interface viewports.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          68
+        ],
+        "size": [
+          930,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Open two independently routed interface viewports.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "welcome",
+        "parent": "menu",
+        "text": "Welcome to Field Notes.\nTry the inventory, edit your name, or navigate without a mouse.\nEvery screen is an ordinary .judasui asset driven by project JS.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 24,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          145
+        ],
+        "size": [
+          800,
+          154
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Welcome to Field Notes.\nTry the inventory, edit your name, or navigate without a mouse.\nEvery screen is an ordinary .judasui asset driven by project JS.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "explore",
+        "parent": "menu",
+        "text": "OPEN THE INVENTORY   →",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          340
+        ],
+        "size": [
+          360,
+          58
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.19,
+          0.25,
+          0.29,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "OPEN THE INVENTORY   →",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "keys",
+        "parent": "menu",
+        "text": "Mouse / touch · Arrow keys · Tab · Enter · Gamepad D-pad / South",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          428
+        ],
+        "size": [
+          880,
+          55
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Mouse / touch · Arrow keys · Tab · Enter · Gamepad D-pad / South",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "scale_label",
+        "parent": "settings",
+        "text": "Interface scale",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 23,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          140
+        ],
+        "size": [
+          430,
+          36
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Interface scale",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "scale",
+        "parent": "settings",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 1,
+        "minimum": 0.75,
+        "maximum": 1.5,
+        "kind": 5,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          195
+        ],
+        "size": [
+          540,
+          38
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "contrast",
+        "parent": "settings",
+        "text": "        High-contrast focus",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 6,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          265
+        ],
+        "size": [
+          540,
+          52
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "        High-contrast focus",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "volume",
+        "parent": "settings",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0.7,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 5,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          365
+        ],
+        "size": [
+          540,
+          32
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.4,
+          0.7,
+          0.8,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "volume_label",
+        "parent": "settings",
+        "text": "Audio level (project setting)",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 20,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          322
+        ],
+        "size": [
+          540,
+          38
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Audio level (project setting)",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "filter",
+        "parent": "inventory",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 7,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          120
+        ],
+        "size": [
+          560,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "Search salvage…",
+        "accessibleLabel": "Filter inventory",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "add",
+        "parent": "inventory",
+        "text": "ADD SUPPLY CRATE",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          614,
+          120
+        ],
+        "size": [
+          336,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "ADD SUPPLY CRATE",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "items",
+        "parent": "inventory",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 9,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          190
+        ],
+        "size": [
+          560,
+          286
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Supply inventory",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "detail",
+        "parent": "inventory",
+        "text": "Select a supply.\n\nKeys are stable when the list is filtered or refreshed.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          614,
+          200
+        ],
+        "size": [
+          336,
+          260
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Select a supply.\n\nKeys are stable when the list is filtered or refreshed.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "conversation",
+        "parent": "dialogue",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 8,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          125
+        ],
+        "size": [
+          570,
+          250
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "story",
+        "parent": "conversation",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 23,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          16,
+          12
+        ],
+        "size": [
+          530,
+          800
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "reply",
+        "parent": "dialogue",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 7,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          398
+        ],
+        "size": [
+          570,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "Type a reply and press Enter",
+        "accessibleLabel": "Dialogue reply",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "choice",
+        "parent": "dialogue",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 9,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          620,
+          125
+        ],
+        "size": [
+          330,
+          250
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Dialogue choices",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 72
+      },
+      {
+        "id": "dialogue_hint",
+        "parent": "dialogue",
+        "text": "Wheel / drag to revisit the conversation.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          620,
+          400
+        ],
+        "size": [
+          330,
+          76
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Wheel / drag to revisit the conversation.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "name_label",
+        "parent": "entry",
+        "text": "DISPLAY NAME",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 16,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          125
+        ],
+        "size": [
+          460,
+          32
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "DISPLAY NAME",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "name",
+        "parent": "entry",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 7,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          165
+        ],
+        "size": [
+          650,
+          54
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "Conner / café / مرحبا",
+        "accessibleLabel": "Display name",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 128,
+        "rowHeight": 44
+      },
+      {
+        "id": "note_label",
+        "parent": "entry",
+        "text": "FIELD NOTE",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 16,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          242
+        ],
+        "size": [
+          460,
+          30
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "FIELD NOTE",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "note",
+        "parent": "entry",
+        "text": "",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 7,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          282
+        ],
+        "size": [
+          650,
+          54
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "Single-line note, up to 512 UTF-8 bytes",
+        "accessibleLabel": "Field note",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 512,
+        "rowHeight": 44
+      },
+      {
+        "id": "readonly",
+        "parent": "entry",
+        "text": "Read only · select and copy me",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 7,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          370
+        ],
+        "size": [
+          650,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Read-only example",
+        "description": "",
+        "readOnly": true,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "entry_hint",
+        "parent": "entry",
+        "text": "Ctrl+A / C / X / V\nCtrl+Z / Shift+Ctrl+Z\nShift+arrows select\nHome / End\n\nIME uses the platform keyboard.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          700,
+          162
+        ],
+        "size": [
+          244,
+          300
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.56,
+          0.64,
+          0.73,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Ctrl+A / C / X / V\nCtrl+Z / Shift+Ctrl+Z\nShift+arrows select\nHome / End\n\nIME uses the platform keyboard.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "start_local",
+        "parent": "local",
+        "text": "OPEN TWO-PLAYER DESK",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 22,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          155
+        ],
+        "size": [
+          560,
+          60
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.05,
+          0.075,
+          1
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "OPEN TWO-PLAYER DESK",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      },
+      {
+        "id": "local_help",
+        "parent": "local",
+        "text": "Player one: arrows / Enter and mouse.\nPlayer two: W / S / Space, or an assigned gamepad.\nAndroid: each half owns its own touch region.\nF1 returns to this shared interface.",
+        "texture": "",
+        "font": "2f0661b29dc261c7d7a16033f549ee4f",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 23,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          250
+        ],
+        "size": [
+          870,
+          175
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.92,
+          0.94,
+          0.95,
+          1
+        ],
+        "focusColor": [
+          0.98,
+          0.73,
+          0.29,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Player one: arrows / Enter and mouse.\nPlayer two: W / S / Space, or an assigned gamepad.\nAndroid: each half owns its own touch region.\nF1 returns to this shared interface.",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "rowHeight": 44
+      }
+    ]
+  }
+}

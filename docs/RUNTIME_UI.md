@@ -9,6 +9,11 @@ JavaScript owns menus, HUD meaning and reactions. No browser or gameplay UI clas
 [current JS contract](judasjs/localization.md) supersede the original ASCII text
 limitations below. Runtime-label source editing now includes a shaped-text preview.
 
+**Current M96 extension:** [UI toolkit](M96_UI_TOOLKIT.md) and [public API](judasjs/ui.md)
+add native editable text/IME, scrolling, virtual lists, focus, semantic observations
+and explicit control-state snapshots. The editor retains its normal canvas, named
+source, undo and explicit save workflow. M96 human acceptance is pending.
+
 ## Authoring
 
 In Edit mode, Asset Browser **Create UI document** makes a tracked asset. Select it

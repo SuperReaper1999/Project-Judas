@@ -63,6 +63,7 @@ InputMap InputMap::Defaults(){
     for(auto a:actions){m.Add(a.first,false);m.AddBinding(a.first,{std::string("key:")+a.second});}
     for(auto a:{std::pair<const char*,const char*>{"move_forward","Up"},{"move_backward","Down"},{"strafe_left","Left"},{"strafe_right","Right"},{"ui_activate","Keypad Enter"}})m.AddBinding(a.first,{std::string("key:")+a.second});
     for(auto a:{std::pair<const char*,const char*>{"jump","South"},{"interact","West"},{"pause","Start"},{"ui_activate","South"},{"ui_up","DpadUp"},{"ui_down","DpadDown"},{"ui_left","DpadLeft"},{"ui_right","DpadRight"}})m.AddBinding(a.first,{std::string("pad:")+a.second});
+    m.Add("ui_next",false);m.AddBinding("ui_next",{"key:Tab"});m.Add("ui_scroll",true);m.AddBinding("ui_scroll",{"mouse:wheelY"});
     m.Add("ui_click",false);m.AddBinding("ui_click",{"mouse:Left"});
     auto axis=[&](const char* name,const char* negative,const char* positive,const char* stick){m.Add(name,true);m.AddBinding(name,{std::string("key:")+negative,-1});m.AddBinding(name,{std::string("key:")+positive,1});if(stick)m.AddBinding(name,{std::string("stick:")+stick,1,.15f});};
     axis("move_x","A","D","LeftX");axis("move_y","S","W",nullptr);m.AddBinding("move_y",{"stick:LeftY",-1,.15f});
@@ -102,7 +103,8 @@ void InputSystem::Evaluate(){
         else {auto& s=m_actions[e.name];if(held!=s.held){s.pressed|=held;s.released|=!held;auto& p=m_pending[e.name];p.pressed|=held;p.released|=!held;}s.held=held;}
     }
 }
-void InputSystem::BeginFrame(){m_consumed.clear();for(int i=0;i<2;++i)m_stickFrameStart[i]={m_raw[StickControl(i,"X")],m_raw[StickControl(i,"Y")]};for(auto& p:m_actions){p.second.pressed=false;p.second.released=false;}for(const char* c:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"})m_raw[c]=0;Evaluate();}
+void InputSystem::BeginFrame(){
+    m_textEvents.clear();m_consumed.clear();for(int i=0;i<2;++i)m_stickFrameStart[i]={m_raw[StickControl(i,"X")],m_raw[StickControl(i,"Y")]};for(auto& p:m_actions){p.second.pressed=false;p.second.released=false;}for(const char* c:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"})m_raw[c]=0;Evaluate();}
 void InputSystem::SetPhysical(const std::string& c,float v){
     if(!std::isfinite(v))return;
     for(int i=0;i<2;++i)if(c==StickControl(i,"X")||c==StickControl(i,"Y")){
@@ -125,7 +127,8 @@ void InputSystem::SetStick(const std::string& side,float x,float y,bool baseline
 }
 void InputSystem::AddDelta(const std::string& c,float v){if(std::isfinite(v))SetPhysical(c,m_raw[c]+v);}
 void InputSystem::ClearDevice(const std::string& prefix){if(prefix=="touch:"){m_touchKeys.clear();m_touches.clear();}for(auto& p:m_raw)if(p.first.rfind(prefix,0)==0)p.second=0;if(prefix.rfind("stick:",0)==0)DiscardStickHistory();Evaluate();}
-void InputSystem::Reset(){++m_resetRevision;m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
+void InputSystem::Reset(){
+    m_textEvents.clear();++m_resetRevision;m_touchKeys.clear();m_touches.clear();m_pointer={};m_consumed.clear();m_raw.clear();m_axes.clear();m_vectors.clear();m_actions.clear();m_pending.clear();m_fixed.clear();Evaluate();DiscardPending();}
 void InputSystem::DiscardPending(){m_pending.clear();m_fixed.clear();for(auto& s:m_actions){s.second.pressed=false;s.second.released=false;}DiscardStickHistory();}
 void InputSystem::DiscardStickHistory(){
     m_stickResetSequence=++m_stickSequence;

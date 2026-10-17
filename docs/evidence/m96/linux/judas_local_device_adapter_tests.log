@@ -1,0 +1,15 @@
+PASS single-player window allocates no multiplayer device service
+PASS touch-generated mouse event cannot also control another player's physical mouse route
+PASS two standard SDL virtual gamepads attached
+PASS adapter opens/enumerates both independent controller instances
+PASS real SDL polls route opposite axes to distinct players
+PASS mixed touch/gamepad player has a live native touch before unrelated unplug
+PASS unplugged controller leaves neutral player input
+PASS other player's new edge and held axis survive unrelated unplug
+PASS legacy selected-controller reset cannot cancel another player's captured touch
+PASS native reconnect never revives retired device token
+PASS world replacement republishes attached controller under a fresh world token
+PASS new world can assign still-attached native controller without reconnect
+PASS reloaded route preserves real held axis without fabricated button edge
+PASS returning to single-player releases optional hub/controller ownership
+14 checks 0 failures

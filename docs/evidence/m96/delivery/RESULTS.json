@@ -1,0 +1,35 @@
+{
+  "runs": [
+    {
+      "name": "editor",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m96/delivery-closure/editor-project/ui_showcase.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 1.8184666070001185
+    },
+    {
+      "name": "export",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/ui_showcase/ui_showcase.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/m96/delivery-closure/package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.1146316559998013
+    },
+    {
+      "name": "relocated",
+      "argv": [
+        "/tmp/judas-m96-relocated-gb7crpm7/judas"
+      ],
+      "cwd": "/tmp/judas-m96-unrelated-ti5p1ewn",
+      "exit": 0,
+      "seconds": 0.5651920569998765
+    }
+  ]
+}

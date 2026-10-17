@@ -1,5 +1,14 @@
 # Native Android games (M88)
 
+**M96 update:** the UI toolkit adds native editable fields, SDL IME/clipboard,
+scrolling and per-player focus through the shared runtime. The common M93 mesh
+codec link dependency now also reaches Android before its early CMake return.
+M96 arm64 compilation, development APK signature and 16 KiB alignment are checked;
+new keyboard/IME/touch interaction has not received device/emulator acceptance.
+Earlier Android hardware acceptance is not retroactively withdrawn. See the
+[UI contracts](M96_UI_TOOLKIT.md) and [M96 results](evidence/m96/REPORT.md).
+
+
 Android is an **optional runtime target**. Linux and Windows keep their existing
 build/export workflow and do not need an Android SDK. Android builds use the same
 C++ Application, RuntimeWorld, Judas-owned physics, QuickJS gameplay, resources,

@@ -1,0 +1,146 @@
+{
+  "base": "a488c72463f207473838318b978b5a7f8e1f8afb",
+  "utc": "2026-10-17T12:25:19.206887+00:00",
+  "platform": "Native Linux passed; Android arm64 build/package passed, no device/emulator. Windows not run. Human acceptance pending.",
+  "results": {
+    "judas_ui_production_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_ui_production_tests.log",
+      "summary": [
+        "PERFORMANCE rows=10000 widgets=44 median_us=30.498 p95_us=42.124 worst_us=67.025 visible_rows=6 draws=6",
+        "SCALING rows=100 median_us=29.999 p95_us=41.746 worst_us=58.004 visible_rows=6 payload_bytes=10380 draw_cpu_us=372.432",
+        "SCALING rows=1000 median_us=31.123 p95_us=56.245 worst_us=72.957 visible_rows=6 payload_bytes=105780 draw_cpu_us=300.050",
+        "SCALING rows=10000 median_us=33.468 p95_us=58.701 worst_us=65.076 visible_rows=6 payload_bytes=1077780 draw_cpu_us=192.017",
+        "SUMMARY 60 checks 0 failures"
+      ]
+    },
+    "judas_ui_showcase_application_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_ui_showcase_application_tests.log",
+      "summary": [
+        "SUMMARY 28 checks 0 failures"
+      ]
+    },
+    "judas_runtime_ui_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_runtime_ui_tests.log",
+      "summary": [
+        "PERFORMANCE elements=100 layout_us=0.498 render_us=622.632 submissions=103",
+        "SUMMARY 22 checks 0 failures"
+      ]
+    },
+    "judas_runtime_ui_application_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_runtime_ui_application_tests.log",
+      "summary": [
+        "PERFORMANCE UI elements=25 update_us=25.249 render_us=43.693 draws=1",
+        "PERFORMANCE UI elements=25 update_us=21.325 render_us=37.075 draws=1",
+        "SUMMARY 16 checks 0 failures"
+      ]
+    },
+    "judas_text_localization_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_text_localization_tests.log",
+      "summary": [
+        "SUMMARY 49 checks 0 failures"
+      ]
+    },
+    "judas_input_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_input_tests.log",
+      "summary": [
+        "PERFORMANCE bindings=46 update_query_mean_us=7.567297 checksum=5000",
+        "PERFORMANCE bindings=100 update_query_mean_us=21.146318 checksum=5000",
+        "SUMMARY checks=40 failures=0"
+      ]
+    },
+    "judas_touch_input_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_touch_input_tests.log",
+      "summary": [
+        "17 checks, 0 failures"
+      ]
+    },
+    "judas_local_multiplayer_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_local_multiplayer_tests.log",
+      "summary": [
+        "37 checks 0 failures"
+      ]
+    },
+    "judas_local_multiplayer_script_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_local_multiplayer_script_tests.log",
+      "summary": [
+        "14 checks 0 failures"
+      ]
+    },
+    "judas_local_device_adapter_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_local_device_adapter_tests.log",
+      "summary": [
+        "14 checks 0 failures"
+      ]
+    },
+    "judas_animation_workflow_tests": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/judas_animation_workflow_tests.log",
+      "summary": [
+        "PERFORMANCE instances=1 nodes=72 median_ms=0.012981 p95_ms=0.013692 worst_ms=0.153137 samples=300",
+        "PERFORMANCE instances=32 nodes=72 median_ms=0.459298 p95_ms=0.800032 worst_ms=1.031952 samples=300",
+        "PERFORMANCE instances=100 nodes=72 median_ms=1.358100 p95_ms=1.788681 worst_ms=1.939766 samples=300",
+        "PERFORMANCE marker_interval_us=0.173009 checksum=100000",
+        "SUMMARY 59 checks 0 failures"
+      ]
+    },
+    "save-write": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/save-write.log",
+      "summary": [
+        "SUMMARY mode=write checks=13 failures=0 frames=55"
+      ]
+    },
+    "save-read": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/save-read.log",
+      "summary": [
+        "SUMMARY mode=read checks=20 failures=0 frames=79"
+      ]
+    },
+    "cookbook-ui-controls": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/cookbook-ui-controls.log",
+      "summary": [
+        "SUMMARY 9 checks 0 failures"
+      ]
+    },
+    "cookbook-ui": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/cookbook-ui.log",
+      "summary": [
+        "SUMMARY 9 checks 0 failures"
+      ]
+    },
+    "cookbook-surface": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/cookbook-surface.log",
+      "summary": [
+        "SUMMARY 9 checks 0 failures"
+      ]
+    },
+    "api": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/api.log",
+      "summary": []
+    },
+    "source-check": {
+      "exit": 0,
+      "log": "docs/evidence/m96/linux/source-check.log",
+      "summary": [
+        "2 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed."
+      ]
+    }
+  },
+  "delivery": ".cache/m96/delivery-closure",
+  "android": "docs/evidence/m96/android/BUILD.json"
+}

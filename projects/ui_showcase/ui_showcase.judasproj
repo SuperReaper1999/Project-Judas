@@ -1,0 +1,257 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Judas / Field Notes",
+    "legacyGameplay": false,
+    "saveIdentity": "7dceda0cb377ba252245763d9e792c71e1d03d9baa7fb552a55448513eb0b6fb",
+    "iconAsset": "",
+    "worldManifest": "",
+    "startupScene": "Scenes/showcase.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "closure",
+    "runtimeAssets": [
+      "20bc1b3dc528ff0d88abdec9e244789f",
+      "4143c08786d02effe162f805acad2bdd",
+      "75c884953c8408c3e3568f6dd54fd331",
+      "2f0661b29dc261c7d7a16033f549ee4f"
+    ],
+    "exportScenes": [
+      "Scenes/showcase.judas"
+    ],
+    "excludeScenes": [],
+    "input": [
+      {
+        "name": "ui_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Up",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadUp",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Down",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadDown",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_left",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Left",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadLeft",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_right",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Right",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:DpadRight",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_activate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Return",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:South",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_next",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Tab",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:RightShoulder",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_click",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_scroll",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:wheelY",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "pad:Start",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "home",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F1",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F7",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 2,
+        "entries": [
+          {
+            "id": 0,
+            "name": "lamp"
+          },
+          {
+            "id": 1,
+            "name": "gallery_camera"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.30000001192092896,
+          "height": 1.7999999523162842,
+          "slope": 50.0,
+          "climb": 0.3499999940395355
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {},
+    "visualBudgetMiB": 0
+  }
+}

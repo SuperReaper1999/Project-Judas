@@ -5,12 +5,15 @@
 #include <string>
 #include <vector>
 #include "Localization.h"
+#include "TextEditing.h"
+#include <optional>
 class Renderer; class ResourceManager; class AssetDatabase; class InputSystem;
-enum class UIKind { Canvas, Panel, Text, Image, Button, Slider, Toggle };
+enum class UIKind { Canvas, Panel, Text, Image, Button, Slider, Toggle, TextInput, Scroll, List };
 enum class UIFlow { Free, Horizontal, Vertical };
 struct UIRect {glm::vec2 position{0},size{0};bool Contains(glm::vec2 p)const;};
 struct UIElement {
     std::string id,parent,text,texture,font;
+    std::string placeholder,accessibleLabel,description;bool readOnly=false;unsigned maxBytes=4096;float rowHeight=40;glm::vec4 focusColor{1,.78f,.28f,1};
     std::string textKey;TextDirection direction=TextDirection::Auto;int textLogicalAlign=-1;bool mirrorRow=false;
     UIKind kind=UIKind::Panel; UIFlow flow=UIFlow::Free;
     bool visible=true,enabled=true,clip=false,wrap=false,fit=true;
@@ -26,11 +29,13 @@ bool SaveUIDocument(const std::string& path,const UIDocument& doc,std::string& e
 std::string SerializeUIDocument(const UIDocument& doc);
 bool ParseUIDocument(const std::string& text,UIDocument& out,std::string& error);
 bool ValidateUIAssets(const UIDocument& doc,const AssetDatabase& assets,std::string& error);
-struct UIEvent {std::string document,element,type;float value=0;std::uint64_t player=0;};
+struct UIEvent {std::string document,element,type;float value=0;std::uint64_t player=0;std::string text={},item={};};
 struct UILayout {UIRect rect,clip;bool visible=false,enabled=false;};
-struct UIStats {unsigned elements=0,draws=0;double updateUs=0,renderUs=0;};
+struct UIStats {unsigned elements=0,draws=0,listRows=0;double updateUs=0,renderUs=0;};
 // World-owned document instances; monotonically increasing handles never revive
 // after unload. Authored data is copied, never mutated by runtime edits.
+struct UIListItem {std::string id,text;bool enabled=true;};
+struct UITextTarget {std::uint64_t player=0;UIRect rect;std::uint64_t token=0;};
 class RuntimeUI {
 public:
     explicit RuntimeUI(ResourceManager* resources=nullptr):m_resources(resources){}
@@ -48,6 +53,20 @@ public:
     void InvalidateLayout(){++m_layoutRevision;}
     void Input(InputSystem& input,glm::vec2 pointer,bool pointerAvailable,int width,int height,std::uint64_t player=0);
     void Draw(Renderer& renderer,int width,int height);
+    bool Focus(std::uint32_t handle,const std::string& id);
+    std::string Focused(std::uint32_t handle)const;
+    bool SetScale(std::uint32_t handle,float scale);float Scale(std::uint32_t handle)const;
+    bool SetScroll(std::uint32_t handle,const std::string& id,glm::vec2 offset);
+    glm::vec2 Scroll(std::uint32_t handle,const std::string& id)const;
+    bool SetItems(std::uint32_t handle,const std::string& id,const std::vector<UIListItem>& items,std::string& error);
+    int Selected(std::uint32_t handle,const std::string& id)const;
+    bool Select(std::uint32_t handle,const std::string& id,int index);
+    TextSelection Selection(std::uint32_t handle,const std::string& id)const;
+    bool SelectText(std::uint32_t handle,const std::string& id,TextSelection value);
+    std::optional<UITextTarget> TextTarget()const;
+    std::string CaptureState(std::uint32_t handle)const;
+    bool RestoreState(std::uint32_t handle,const std::string& json,std::string& error);
+    std::string Accessibility(std::uint32_t handle)const;
     std::vector<UIEvent> TakeEvents();
     bool Paused(std::uint64_t player=0)const;
     bool SetPlayer(std::uint32_t handle,std::uint64_t player);
@@ -59,12 +78,15 @@ public:
     bool OwnsInput()const;bool Empty()const{return m_documents.empty();}
     const UIStats& Stats()const{return m_stats;}
 private:
-    struct Instance {UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;};
+    struct WidgetState {glm::vec2 scroll{0},extent{0};TextSelection selection;std::string composition;int compositionStart=0,compositionLength=0,selected=-1;std::vector<UIListItem> items;std::vector<std::pair<std::string,TextSelection>> undo,redo;std::vector<float> carets;float textPan=0;};
+    struct Instance {glm::vec2 dragStart{0},dragScroll{0};std::string dragging;bool dragged=false;float scale=1;std::map<std::string,WidgetState> widgets;UIDocument doc;std::string name,focus,pressed;std::uint64_t owner=0,slot=0,player=0,inputRevision=~std::uint64_t(0);glm::vec4 viewport{0,0,1,1};glm::vec2 lastPointer{-1};std::map<std::string,UILayout> layout;std::vector<std::string> refs;};
     std::map<std::uint32_t,Instance> m_documents;std::uint32_t m_next=1;
     ResourceManager* m_resources=nullptr;std::vector<UIEvent> m_events;
     LocalizationSession* m_localization=nullptr;
     std::map<std::pair<uint32_t,std::string>,std::pair<uint64_t,std::string>> m_localizedText;
     uint64_t m_layoutRevision=1,m_computedRevision=0,m_localeRevision=0;int m_layoutWidth=0,m_layoutHeight=0;
+    uint64_t m_textSerial=0;uint32_t m_textDocument=0;std::string m_textElement;
     bool m_quit=false;UIStats m_stats;glm::vec2 m_lastPointer{-1};
+    void Edit(Instance& in,UIElement& e,InputSystem& input,std::uint64_t player);
     void Activate(Instance& doc,UIElement& e,const char* type="click");
 };
