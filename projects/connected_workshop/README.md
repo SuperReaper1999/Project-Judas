@@ -46,7 +46,9 @@ operator; extra connected peers can observe but are not assigned more avatars.
 Touch: drag in the lower-left arena area (above the footer), touch lower-right
 to shove. Host/Join/Disconnect/address controls are normal Judas runtime UI.
 Portrait uses the same overhead camera policy; landscape is easier to play.
-Physical Android device acceptance is separate from desktop validation.
+The operator accepted physical Android-to-Linux play over USB forwarding on
+2026-10-17; [scope and candidate](../../docs/evidence/m99/HUMAN_VALIDATION.md).
+Wi-Fi/Internet reachability and Windows M99 remain unvalidated.
 
 ## Launch configuration
 

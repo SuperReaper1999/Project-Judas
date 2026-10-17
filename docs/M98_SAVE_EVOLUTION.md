@@ -1,6 +1,7 @@
 # M98 — Save evolution
 
-Current Experimental capability; human acceptance is pending. This extends modern
+Operator accepted on Linux in the combined M98/M99 review on 2026-10-17; see the
+[acceptance record](evidence/m98/HUMAN_VALIDATION.md). This extends modern
 `saves` slots, not legacy `.judasstate` deltas. [JudasJS reference](judasjs/saves.md)
 · [Lab](../projects/save_evolution_lab/README.md).
 

@@ -16,8 +16,12 @@ or performance result as a guarantee.
 
 ## Current status
 
-The current release on `main` is **M92**, human-tested and promoted at
-`bb3dbc402629a60c22738da8520e5017998709f1`. It adds opaque mesh instancing,
+The current release on `main` is **M99**, including operator-accepted M98 save
+evolution and M99 optional online multiplayer. Combined acceptance was given on
+2026-10-17 for candidate `696f480bc57250f9bf6f9846e32e20dfc28f5363`; see the
+[acceptance record and platform scope](docs/evidence/m99/HUMAN_VALIDATION.md).
+
+Included M92 rendering adds opaque mesh instancing,
 per-view tiled dynamic lighting, selected spotlight shadows, scripted individual
 lights and shared multi-view planetary LOD. See the
 [Rendering Lab](projects/rendering_lab/README.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
@@ -137,8 +141,9 @@ dependencies retain their own notices and licence terms.
 
 M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md). Try [Living World Lab](projects/living_world_lab/README.md); human accepted.
 
-Provisionally promoted M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md). Try [Save Evolution Lab](projects/save_evolution_lab/README.md); human acceptance pending.
+Human-accepted M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md). Try [Save Evolution Lab](projects/save_evolution_lab/README.md).
 
-Experimental M99 adds [optional server-authoritative networking](docs/M99_NETWORK.md).
+Human-accepted M99 adds [optional server-authoritative networking](docs/M99_NETWORK.md).
 Try [Connected Workshop](projects/connected_workshop/README.md) in two processes or Android + Linux.
-M98 and M99 remain pending combined human validation.
+M99 phone-to-Linux testing used USB forwarding; Wi-Fi, Internet deployment and
+Windows M99 validation remain outstanding.

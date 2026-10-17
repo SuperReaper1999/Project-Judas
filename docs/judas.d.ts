@@ -1,4 +1,5 @@
-/** Current JudasJS through M99. M98/M99 combined human acceptance is pending.
+/** Current JudasJS through M99. M98/M99 operator acceptance recorded 2026-10-17.
+ * M99 physical-phone testing used Android-to-Linux USB forwarding; Wi-Fi remains unvalidated.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
  * Ordinary returned objects are detached snapshots.

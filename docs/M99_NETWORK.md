@@ -5,8 +5,11 @@ supplies game rules; a session supplies bounded transport, peer identities, inpu
 delivery and selected entity replication. It shares the existing authoritative
 world rather than creating a second network physics engine.
 
-M98 was promoted provisionally for combined M98/M99 operator testing. That promotion
-does **not** record human acceptance of M98. M99 human acceptance is also pending.
+M98 was initially promoted provisionally for combined M98/M99 testing. The operator
+accepted both milestones on 2026-10-17 at candidate
+`696f480bc57250f9bf6f9846e32e20dfc28f5363`. Physical Android-to-Linux testing used
+USB forwarding; Wi-Fi, Internet deployment and Windows M99 validation remain
+outstanding. See the [acceptance record](evidence/m99/HUMAN_VALIDATION.md).
 
 See the [JudasJS network reference](judasjs/network.md),
 [local-player reference](judasjs/local-multiplayer.md), and
