@@ -1,0 +1,30 @@
+{
+  "chunk_bytes": [
+    13783,
+    3083,
+    13439
+  ],
+  "concatenated_bytes_identical": true,
+  "corrected_source_sha256": "e91aa35e7076cda032d00525ff237a09d7917fc5725c8e8fe3844588f891b173",
+  "negative_controls": {
+    "change_export_name": {
+      "detected": true,
+      "reason": "virtual-module payload changed"
+    },
+    "insert_javascript_newline": {
+      "detected": true,
+      "reason": "virtual-module payload changed"
+    },
+    "remerge_original_oversized_literal": {
+      "detected": true,
+      "reason": "individual raw literal exceeds the MSVC byte limit"
+    }
+  },
+  "original_chunk_bytes": [
+    16866,
+    13439
+  ],
+  "original_source_sha256": "6f37cc76f1a1f46f6cdf36e465c8ed5d45ef8ff386ee00594f2d7a090f298c76",
+  "payload_bytes": 30305,
+  "payload_sha256": "b9d26c0405d234a31dd9a5f95754a5dd38ad69d46966dad76a915344ee838da2"
+}

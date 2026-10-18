@@ -257,7 +257,7 @@ export class Deformable {
  setMaterial(options){return call('deformableMaterial',this.id,this.epoch,options)}
  raycast(origin,direction,maximum){return call('deformableRaycast',this.id,this.epoch,origin,direction,maximum)}
 }
-export class EntityGravity {
+)JS" R"JS(export class EntityGravity {
  constructor(id){this.id=id}
  get state(){const v=call('entityGravityState',this.id);return {...v,source:entity(v.sourceId)}}
  get acceleration(){return this.state.acceleration}

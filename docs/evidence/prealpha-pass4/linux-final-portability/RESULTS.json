@@ -1,0 +1,219 @@
+[
+  {
+    "name": "build_literal_portability",
+    "argv": [
+      "cmake",
+      "--build",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--target",
+      "judas_linux_sdk",
+      "judas_script_tests",
+      "judasjs_examples_tests",
+      "-j2"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:42:43.981763+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": null,
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 60.96047508399897,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/build_literal_portability.log",
+    "logSha256": "b83d45858ed0110bc2a548c573348537d470e1b07eb3f80f2a92a8fd38ea5a82"
+  },
+  {
+    "name": "script_runtime",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_script_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:44.945268+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": "0410497940bbd771683544779f8954e6dafa52518d60f07b034d66803adfe837",
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 0.5654196560008131,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/script_runtime.log",
+    "logSha256": "9488a9fc66e5022b8ddf8129b13722834db8ffef9229840cbbb174b6a2f21b28"
+  },
+  {
+    "name": "gravity_selection_cookbook",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/cookbook",
+      "gravity-selection"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:45.673283+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": "7cead72e0f97a33174699465a5a40eea7354ce6139afa70dcf4117afce0a1a12",
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 0.26501511500100605,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/gravity_selection_cookbook.log",
+    "logSha256": "67cb3b05a17e2e5c8ac4e5af8dfc209ead4da42d53dcb9ce22286def1cedbd08"
+  },
+  {
+    "name": "live_surface_cookbook",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judasjs_examples_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/cookbook",
+      "surface"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:46.085650+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": "7cead72e0f97a33174699465a5a40eea7354ce6139afa70dcf4117afce0a1a12",
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 0.3150375349996466,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/live_surface_cookbook.log",
+    "logSha256": "6da83ab1b4f44f1569d50b1670922584b732734ba8ac2e89111a80ad89dc6ba4"
+  },
+  {
+    "name": "api_types_live_drift",
+    "argv": [
+      "node",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/check_judasjs_api.mjs",
+      "--typescript",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/verification/node_modules/typescript/lib/typescript.js",
+      "--runtime",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/cookbook/surface.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:46.565648+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": null,
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 2.277126271999805,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/api_types_live_drift.log",
+    "logSha256": "6a86999e60f62fee4f3870f430e56442286cd01ccfdc1a27facbc7ac805f0ce9"
+  },
+  {
+    "name": "sdk_final_verify",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:48.843808+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": null,
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 2.1777027560001443,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/sdk_final_verify.log",
+    "logSha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+  },
+  {
+    "name": "sdk_final_native_loader",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/inspect_sdk.py",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk",
+      "--host-check",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/linux-final-portability/SDK_QUALIFICATION.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:51.022135+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": null,
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 2.7251506709999376,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/sdk_final_native_loader.log",
+    "logSha256": "51f8230c6bda695cdc36422cc44cf41037a1687ab53c98bd611a44f3fc4520db"
+  },
+  {
+    "name": "sdk_final_export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux/stress-project/physics_stress_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/stress-export",
+      "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "startedUtc": "2026-10-18T16:43:53.748055+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config"
+    },
+    "executableSha256": "c53fbd508b5bd0b254eacd1605b272ffe85f73347feca9b9f205d24ff8dc4a97",
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 0.6656453030009288,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/sdk_final_export.log",
+    "logSha256": "50d9c24040b1198cf2dfa319338c46a1a82ee0c81dc97f384535967302072cdf"
+  },
+  {
+    "name": "sdk_final_relocated",
+    "argv": [
+      "/tmp/Judas-PreAlphaPass4-Physics-portability/judas"
+    ],
+    "cwd": "/tmp",
+    "startedUtc": "2026-10-18T16:43:54.581422+00:00",
+    "expectedExit": 0,
+    "environmentOverrides": {
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/user-data",
+      "XDG_CONFIG_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/config",
+      "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/linux-final-portability/relocated.txt"
+    },
+    "executableSha256": "8e072999aaf94d7f67fb5cf5da6ee0c984f292786dc517c1d592f132cf9a52e6",
+    "exit": 0,
+    "exitMatchesExpectation": true,
+    "seconds": 1.4184860579989618,
+    "log": "docs/evidence/prealpha-pass4/linux-final-portability/logs/sdk_final_relocated.log",
+    "logSha256": "89dd8229d2f58ed3194babc429f3b58f82ee66e7e3bff8c5065b04535957cd7c"
+  }
+]

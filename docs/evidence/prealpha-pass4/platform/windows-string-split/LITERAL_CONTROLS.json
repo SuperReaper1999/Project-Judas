@@ -1,0 +1,15 @@
+﻿[
+    {
+        "name":  "original",
+        "compileExit":  2,
+        "compilerOutput":  "literal-original.cpp\r\nP:\\JudasValidation\\PreAlphaPass4\\literal-original.cpp(263): error C2026: string too big, trailing characters truncated\r\n"
+    },
+    {
+        "name":  "split",
+        "compileExit":  0,
+        "compilerOutput":  "literal-split.cpp\r\n",
+        "runExit":  0,
+        "outputBytes":  30305,
+        "outputSHA256":  "b9d26c0405d234a31dd9a5f95754a5dd38ad69d46966dad76a915344ee838da2"
+    }
+]

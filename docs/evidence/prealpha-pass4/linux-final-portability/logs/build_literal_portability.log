@@ -1,0 +1,109 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Found Python3: /usr/bin/python3 (found suitable version "3.14.4", minimum required is "3.11") found components: Interpreter
+-- Configuring done (1.6s)
+-- Generating done (1.4s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[  0%] Built target judas_app_icon
+[  5%] Built target judas_meshoptimizer
+[ 10%] Built target judas_icu_build
+[ 15%] Built target judas_navigation_backend
+[ 15%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 30%] Built target freetype
+[ 30%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 30%] Built target judas_quickjs
+[ 30%] Built target judas_jobs
+[ 30%] Built target judas_audio_backend
+[ 30%] Built target harfbuzz
+[ 30%] Built target judas_imgui
+[ 30%] Built target judas_ufbx
+[ 35%] Built target judas_navigation_cook
+[ 35%] Built target judas_materials
+[ 35%] Linking CXX static library libjudas_build_identity.a
+[ 35%] Built target judas_build_identity
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 35%] Linking CXX static library libjudas_engine.a
+[ 80%] Built target judas_engine
+[ 85%] Linking CXX executable judas_server
+[ 85%] Linking CXX executable judas
+[ 85%] Built target judas_server
+[ 85%] Built target judas
+[ 85%] Built target judas_navigation_baker
+[ 85%] Linking CXX executable judas_export
+[ 85%] Built target judas_model_import
+[ 85%] Linking CXX executable judas_environment_bake
+[ 85%] Built target judas_export
+[ 85%] Built target judas_environment_bake
+[ 85%] Linking CXX executable judas_liquid_bake
+[ 90%] Linking CXX executable judas_deformable_bake
+[ 90%] Built target judas_deformable_bake
+[ 90%] Built target judas_liquid_bake
+[ 90%] Linking CXX executable judas_collision_cook
+[ 90%] Linking CXX executable judas_model_import_cli
+[ 90%] Built target judas_collision_cook
+[ 90%] Linking CXX executable judas_cook
+[ 90%] Built target judas_model_import_cli
+[ 90%] Linking CXX executable judas_script_check
+[ 90%] Built target judas_cook
+[ 90%] Linking CXX executable judas_save
+[ 90%] Built target judas_script_check
+[ 90%] Built target judas_world_authoring
+[ 90%] Linking CXX executable judas_editor
+[ 90%] Built target judas_save
+[ 95%] Linking CXX executable judas_scene_author
+[100%] Built target judas_editor
+[100%] Linking CXX executable judas_navigation_bake
+[100%] Built target judas_scene_author
+[100%] Linking CXX executable judas_terrain_author
+[100%] Built target judas_navigation_bake
+[100%] Linking CXX executable judas_mod
+[100%] Built target judas_terrain_author
+[100%] Linking CXX executable judas_volume_author
+[100%] Built target judas_mod
+[100%] Built target judas_volume_author
+{"build": {"architecture": "x86_64", "build_id": "0.1.0-prealpha-Experimental-60a9217-dirty-f08fa44808d9-u84f47c24fcd0", "channel": "Experimental", "compiler": "GNU", "compiler_version": "15.2.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Linux", "schema": 1, "source_dirty": true, "source_fingerprint": "f08fa44808d978837a68897f4d5b17f957ee4abbe782dfa1f9f6412eb2c8f9ca", "source_origin": "git", "source_revision": "60a92176adbdfb8ccf90cc1fe3a40505416b1559", "source_tree": "b286b77ac4b5b4941a495559fce9c9ce203e9c36", "source_untracked_count": 16, "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2", "version": "0.1.0-prealpha"}, "files": 212, "ok": true, "tools": 17}
+[100%] Built target judas_linux_sdk
+[  0%] Built target judas_app_icon
+[ 12%] Built target freetype
+[ 18%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_glad
+[ 31%] Built target judas_navigation_backend
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_build_identity
+[ 37%] Built target judas_quickjs
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_script_tests
+[100%] Built target judas_script_tests
+[  0%] Built target judas_app_icon
+[ 11%] Built target freetype
+[ 17%] Built target judas_meshoptimizer
+[ 23%] Built target judas_icu_build
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_glad
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_build_identity
+[ 35%] Built target judas_quickjs
+[ 35%] Built target judas_jobs
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 41%] Built target judas_navigation_cook
+[ 41%] Built target judas_materials
+[ 94%] Built target judas_engine
+[100%] Linking CXX executable judasjs_examples_tests
+[100%] Built target judasjs_examples_tests

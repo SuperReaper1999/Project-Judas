@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "kind": "exact MSVC C2026 literal correction evidence",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 42,
+      "sha256": "2cd2d94b29fefaeb59012522c5f4d32f8000aa85d2a549437191194209d789c6"
+    },
+    {
+      "path": "BYTE_PROOF.json",
+      "bytes": 855,
+      "sha256": "cba34823cab3092a85979c2922fb19dac92792e4886915bf808b742ca533ea42"
+    },
+    {
+      "path": "LITERAL_CONTROLS.json",
+      "bytes": 533,
+      "sha256": "ea2374278f5cdb14e37f440276cab9f2e5e79d29559a739a297566f3a509c5f7"
+    },
+    {
+      "path": "PRODUCTION_DIFF.patch",
+      "bytes": 642,
+      "sha256": "92f91fb2ff9bb609f6ec3574b8f5a70dd3ffd8571e59a90f88c37b6063215ea8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2005,
+      "sha256": "b992bc52be823694887703bbb0659be62e3bf3b8292e27241ccf3cdd80529848"
+    },
+    {
+      "path": "literal-control-input.json",
+      "bytes": 368,
+      "sha256": "fcea44bd814b0bb136f78f4979ce77cf73ef10f11d86f2eb99540afb68101c58"
+    },
+    {
+      "path": "literal-controls.ps1",
+      "bytes": 1199,
+      "sha256": "e3cbed07866cedf1695677806f82e9ae35c917e71449b2903bac7dc3efed9498"
+    },
+    {
+      "path": "literal-original.cpp",
+      "bytes": 30597,
+      "sha256": "ad9972f0a89748f0149fd5a893b0cce65161d0903dac93d3a9dcb464295c0abe"
+    },
+    {
+      "path": "literal-split.cpp",
+      "bytes": 30607,
+      "sha256": "ed83ee9bc724d713bddb7d06eb472c231f03b28e041d6571bc07ed1154ce3ff2"
+    },
+    {
+      "path": "verify_literal_split.py",
+      "bytes": 3119,
+      "sha256": "cd9c82bea1ecdeeacdf281be425f7da64c60a9fc214ee2e35b4115385ff6eee5"
+    }
+  ]
+}

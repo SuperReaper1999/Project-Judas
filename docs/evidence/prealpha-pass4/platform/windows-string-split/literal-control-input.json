@@ -1,0 +1,14 @@
+{
+  "payloadBytes": 30305,
+  "payloadSHA256": "b9d26c0405d234a31dd9a5f95754a5dd38ad69d46966dad76a915344ee838da2",
+  "originalChunkBytes": [
+    16866,
+    13439
+  ],
+  "splitChunkBytes": [
+    13783,
+    3083,
+    13439
+  ],
+  "scope": "Exact current virtual-module bytes compiled in task-local negative/positive standalone MSVC fixtures; no production source edit"
+}

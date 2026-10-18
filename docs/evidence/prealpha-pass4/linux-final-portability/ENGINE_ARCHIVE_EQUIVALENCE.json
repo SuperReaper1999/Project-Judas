@@ -1,0 +1,9 @@
+{
+  "frozenArchive": ".cache/prealpha-pass4/dense/libjudas_engine.integrated.a",
+  "rebuiltArchive": "build/libjudas_engine.a",
+  "bytes": 30305200,
+  "frozenSha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441",
+  "rebuiltSha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441",
+  "byteForByteEqual": true,
+  "scope": "GCC15.2 Release recompiled ScriptSystem.cpp with adjacent raw strings. Entire engine archive is byte-identical; build-identity library separately and correctly records changed source provenance."
+}

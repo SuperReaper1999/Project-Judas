@@ -1,0 +1,24 @@
+{
+  "archiveSha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441",
+  "binaries": {
+    "judas": "8e072999aaf94d7f67fb5cf5da6ee0c984f292786dc517c1d592f132cf9a52e6",
+    "judas_editor": "19527eddbf55bc32484e1a85a5b3e5d1f1d1d6cf0c8b22d101a1cf39866212fe",
+    "judas_export": "c53fbd508b5bd0b254eacd1605b272ffe85f73347feca9b9f205d24ff8dc4a97",
+    "judas_scene_author": "85a5f88af7b3e728f7a49ae4511344445155042503da275f9c8779f1c2a924d0",
+    "judas_navigation_bake": "1ae9dd1273aa290df94d08815657e837bf555910a13b611a1c89db23667b6634",
+    "judas_liquid_bake": "1a904b7ac0e737c17c572f8445e1e88dfc9630b4d73d2eff4787523ab7b73730",
+    "judas_environment_bake": "a53b7431f477efc4f903cb393d92a883c6fa5301b54ec62ac20651e0db156c30",
+    "judas_deformable_bake": "5d6175b45459152a677ac1f16f20de9f5118ff03a3f7e697c64029e53584b4e2",
+    "judas_collision_cook": "05c7f1ad9a7bcfb08e6c0371ce5908b92b2375bf53a1f0bec7e89c98ebeb060a",
+    "judas_model_import_cli": "e52be4ea91d2396c45a2f5e3e627139102527c024b2dfe0986b6b2f2c97b2727",
+    "judas_terrain_author": "1061502109c399080fc8612e81512d354f1ad25b2405852769cbe0baf97c4658",
+    "judas_volume_author": "bd94173fe94c9def6394ea4215eac0582a6d50c607035111d1999ce821bd1ba4",
+    "judas_mod": "5b427a53092d9a70decc1bed9fda9767e10538015a020d79106ee0813eccb1c0",
+    "judas_cook": "67fa4f33239af4a204db01f64cd6071633911ec7c99fbf3f0c91720916c113cb",
+    "judas_script_check": "15363fd0d9c92b3b8f11cea34600f5e65d9de1314c39705ce96e21603b9d1bb2",
+    "judas_save": "cce64929939c650dd249822f72d687dfe9d23423f4166a0185f5f915ce0941b4",
+    "judas_server": "9f8de1b5a21ed50d4c5bd9f6ab1b274d68d9d712c2904e2714b520d5503ddffe",
+    "judas_script_tests": "0410497940bbd771683544779f8954e6dafa52518d60f07b034d66803adfe837",
+    "judasjs_examples_tests": "7cead72e0f97a33174699465a5a40eea7354ce6139afa70dcf4117afce0a1a12"
+  }
+}

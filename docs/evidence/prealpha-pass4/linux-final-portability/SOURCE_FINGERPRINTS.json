@@ -1,0 +1,9 @@
+{
+  "baseCheckpoint": "60a92176adbdfb8ccf90cc1fe3a40505416b1559",
+  "files": {
+    "src/ScriptSystem.cpp": "e91aa35e7076cda032d00525ff237a09d7917fc5725c8e8fe3844588f891b173",
+    "tests/ScriptTests.cpp": "379d1811d38afb129c483321677aee91183048c9eb146b5689e5291c78be5172",
+    "tests/JudasJSExamplesTests.cpp": "d3d78ab6cf5c0f61ec0848dcf77c82a3cabf98bafc6d25447bd4a7040eb3199a"
+  },
+  "rationale": "Adjacent C++ raw string literals have an identical concatenated JS payload. No numerical/physics change; no second performance run."
+}
