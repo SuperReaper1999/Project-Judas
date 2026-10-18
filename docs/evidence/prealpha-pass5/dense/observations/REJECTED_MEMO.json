@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "steps": 270,
+  "events": 2796,
+  "totals": {
+    "queries": 5672004,
+    "samePose": 19397,
+    "crossEventSame": 19397,
+    "samePoseHits": 9643,
+    "resultMismatch": 0,
+    "changed": 461647,
+    "proxyMoves": 926
+  },
+  "worstStep270": {
+    "queries": 520167,
+    "samePose": 2637,
+    "crossEventSame": 2637,
+    "samePoseHits": 1787,
+    "resultMismatch": 0,
+    "changed": 38936,
+    "proxyMoves": 2
+  },
+  "conclusion": "Reject exact-pose manifold memo as low potential: 0.342% queries repeat. Few actual proxy changes relative to changed trajectory endpoints motivates derived tree-candidate cache, not reuse of contact truth."
+}

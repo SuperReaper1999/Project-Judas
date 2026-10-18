@@ -1,0 +1,35 @@
+{
+  "cases": [
+    {
+      "name": "helper-positive",
+      "argv": [
+        ".cache/prealpha-pass5/dense/candidate-cache-tests"
+      ],
+      "expectedExit": 0,
+      "exit": 0
+    },
+    {
+      "name": "helper-missing-revision-negative",
+      "argv": [
+        ".cache/prealpha-pass5/dense/candidate-cache-tests",
+        "--omit-revision"
+      ],
+      "expectedExit": 1,
+      "exit": 1
+    },
+    {
+      "name": "helper-missing-filter-negative",
+      "argv": [
+        ".cache/prealpha-pass5/dense/candidate-cache-tests-omit-filter"
+      ],
+      "expectedExit": 1,
+      "exit": 1
+    }
+  ],
+  "sourceHashes": {
+    "ImpactCandidateCache.h": "e657c2810589e030d521c6ffe821dc21b07c5b6d47c1348c52f775e8164ad9db",
+    "ImpactCandidateCacheTests.cpp": "f4d0eadbc3758d909d32ec9e56614ff078cd5233389e4364c91ec187b255bf33",
+    "ImpactCandidateCache.omit-filter.h": "b5107c72e1c1d32f2d3367f91d0fab440f82d0236cc424bd13580438bcb51bc7",
+    "ImpactCandidateCacheTests.omit-filter.cpp": "836cf881db04a88ab69e167f4aac92dcd4e8db382c6dc4c6d3ffd90fd84071ae"
+  }
+}

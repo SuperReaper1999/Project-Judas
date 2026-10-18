@@ -18,7 +18,9 @@ records subsequent corrections and remaining failures; its exact checkpoint
 promoted to main. [Pass 3](evidence/prealpha-pass3/REPORT.md) was subsequently
 human accepted at `7da56c2cc6ce7acda827a6e4019d610622b237e2` and promoted to
 main. Its report preserves the original checkpoint-time review status. Pass 4
-develops on Experimental and requires separate human acceptance. For a first
+was human accepted at `4c141e9bb6c68a50c63dec263dcec398200328ad` and promoted
+to main. Its reports retain their original checkpoint-time review status.
+Pass 5 develops on Experimental and requires separate human acceptance. For a first
 visible project with no controller/input setup, follow
 [Your first visible Judas project](FIRST_PROJECT.md).
 

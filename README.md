@@ -17,14 +17,14 @@ or performance result as a guarantee.
 ## Current status
 
 The current human-accepted `main` checkpoint is
-**`7da56c2cc6ce7acda827a6e4019d610622b237e2`**. It includes M98 save evolution,
-M99 optional online multiplayer, Pre-Alpha Passes 1–3 and the accepted rotated-liquid
+**`4c141e9bb6c68a50c63dec263dcec398200328ad`**. It includes M98 save evolution,
+M99 optional online multiplayer, Pre-Alpha Passes 1–4 and the accepted rotated-liquid
 corrections. Earlier milestone acceptance retains its original
 [platform scope](docs/evidence/m99/HUMAN_VALIDATION.md); it does not certify every
 subsequent platform or system combination.
 
 The unnumbered **Pre-Alpha stabilization/rework phase** continues on
-`Experimental`, currently with Pass 4 engineering; `main` requires separate human
+`Experimental`, currently with Pass 5 engineering; `main` requires separate human
 acceptance of each candidate. It is not an Alpha
 release. See [current work, validation and support boundaries](docs/PREALPHA.md)
 and [build identity, channels and distribution](docs/BUILD_RELEASES.md).

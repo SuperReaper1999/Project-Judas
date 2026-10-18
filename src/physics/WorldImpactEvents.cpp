@@ -1,4 +1,5 @@
 #include "WorldInternal.h"
+#include "ImpactCandidateCache.h"
 
 #include <unordered_map>
 
@@ -222,6 +223,17 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         schedule(key);
     // Capacities live through this event pass; values and membership are
     // rebuilt for each event. No cross-time contact truth is cached.
+    // All proxy changes in this event pass go through CoverStepReach, which
+    // advances reinsertionsSinceStep. Wake changes only sleep/island state;
+    // callers cannot create bodies or run gameplay callbacks inside this pass.
+    ImpactCandidateCache candidateCache;
+    const auto impactCandidates = [&](unsigned slot,
+                                      const Aabb &query) -> const std::vector<unsigned> & {
+        return candidateCache.Get(
+            slot, tree.FatAabb(bodies[slot].proxy), query, reinsertionsSinceStep,
+            [&](const Aabb &box) -> const std::vector<unsigned> & { return QuerySlots(box); },
+            [&](unsigned other) -> const Aabb & { return tree.FatAabb(bodies[other].proxy); });
+    };
     ImpactPairVisitSet visitedPairs;
     struct DiscoveredManifold {
         std::size_t touchingIndex;
@@ -312,7 +324,8 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                     include(neighbour);
                 // Nested geometry and wake paths do not query the tree, so this
                 // scratch remains valid until the next outer body query.
-                const auto &candidates = QuerySlots(ActualImpactBound(a, ImpactPoseAt(a, now)));
+                const auto &candidates =
+                    impactCandidates(a, ActualImpactBound(a, ImpactPoseAt(a, now)));
                 for (unsigned b : candidates) {
                     if (a == b || !CanRespond(a, b))
                         continue;
@@ -613,7 +626,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                 markDirty(event.key);
         dirtyBodyPairs.Begin(bodies.size());
         for (unsigned slot : changed) {
-            const auto &candidates = QuerySlots(tree.FatAabb(bodies[slot].proxy));
+            const auto &candidates = impactCandidates(slot, tree.FatAabb(bodies[slot].proxy));
             for (unsigned other : candidates)
                 if (other != slot && CanRespond(slot, other)) {
                     const auto a = std::min(slot, other), b = std::max(slot, other);

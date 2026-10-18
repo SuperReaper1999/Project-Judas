@@ -1,0 +1,668 @@
+{
+  "schema": 1,
+  "baselineCommit": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "physicalFieldsCompared": [
+    "step",
+    "frame",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "results": {
+    "initial-A": {
+      "steps": 270,
+      "physicalDifferences": [],
+      "endpointDifferences": {},
+      "timings": {
+        "median": 25.645787,
+        "p95_floor": 361.145185,
+        "maximum": 1838.943474
+      },
+      "wallSeconds": 52.493950330997905,
+      "maxRssKiB": 413100,
+      "finalDigest": "192f0f4bed728953",
+      "binarySha256": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_physics_stress_live_benchmark": "2d6b5a4dcdb54a1ac40eb4fdb026f9875bfd33d95ce8d9946000c0eda902a433",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_physics_scaling_diagnostics": "1374f054b4fa1ab65bd7aa4ff66509a0c9ed03fa293b91f0bd4ded8d6aced1c7"
+      }
+    },
+    "initial-B": {
+      "steps": 270,
+      "physicalDifferences": [],
+      "endpointDifferences": {
+        "observation_ms": [
+          31.502486,
+          31.01517
+        ]
+      },
+      "timings": {
+        "median": 25.371454,
+        "p95_floor": 322.786498,
+        "maximum": 1722.174617
+      },
+      "wallSeconds": 50.48453428299763,
+      "maxRssKiB": 413140,
+      "finalDigest": "192f0f4bed728953",
+      "binarySha256": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-cache/judas_physics_stress_live_benchmark": "c5c2312cf36522e82f28b7121ac91e7d42aa4cacc90a7215e9b74faffed16aca"
+      }
+    },
+    "confirm-A2": {
+      "steps": 270,
+      "physicalDifferences": [],
+      "endpointDifferences": {
+        "observation_ms": [
+          31.502486,
+          29.702923
+        ]
+      },
+      "timings": {
+        "median": 25.366625499999998,
+        "p95_floor": 363.919443,
+        "maximum": 1838.907882
+      },
+      "wallSeconds": 51.74750911600131,
+      "maxRssKiB": 414224,
+      "finalDigest": "192f0f4bed728953",
+      "binarySha256": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_physics_stress_live_benchmark": "2d6b5a4dcdb54a1ac40eb4fdb026f9875bfd33d95ce8d9946000c0eda902a433"
+      }
+    },
+    "confirm-B2": {
+      "steps": 270,
+      "physicalDifferences": [],
+      "endpointDifferences": {
+        "observation_ms": [
+          31.502486,
+          29.901701
+        ]
+      },
+      "timings": {
+        "median": 25.580800500000002,
+        "p95_floor": 326.411266,
+        "maximum": 1957.993693
+      },
+      "wallSeconds": 50.641014598000766,
+      "maxRssKiB": 385448,
+      "finalDigest": "192f0f4bed728953",
+      "binarySha256": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-cache/judas_physics_stress_live_benchmark": "c5c2312cf36522e82f28b7121ac91e7d42aa4cacc90a7215e9b74faffed16aca"
+      }
+    },
+    "confirm-A3": {
+      "steps": 270,
+      "physicalDifferences": [],
+      "endpointDifferences": {
+        "observation_ms": [
+          31.502486,
+          29.493837
+        ]
+      },
+      "timings": {
+        "median": 25.872915,
+        "p95_floor": 364.06726,
+        "maximum": 1833.120308
+      },
+      "wallSeconds": 51.75947556000028,
+      "maxRssKiB": 386192,
+      "finalDigest": "192f0f4bed728953",
+      "binarySha256": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_physics_stress_live_benchmark": "2d6b5a4dcdb54a1ac40eb4fdb026f9875bfd33d95ce8d9946000c0eda902a433"
+      }
+    },
+    "confirm-B3": {
+      "steps": 270,
+      "physicalDifferences": [],
+      "endpointDifferences": {
+        "observation_ms": [
+          31.502486,
+          30.210755
+        ]
+      },
+      "timings": {
+        "median": 24.9039005,
+        "p95_floor": 333.755912,
+        "maximum": 1704.814483
+      },
+      "wallSeconds": 50.79732712999976,
+      "maxRssKiB": 385796,
+      "finalDigest": "192f0f4bed728953",
+      "binarySha256": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-cache/judas_physics_stress_live_benchmark": "c5c2312cf36522e82f28b7121ac91e7d42aa4cacc90a7215e9b74faffed16aca"
+      }
+    }
+  },
+  "pairedObservations": [
+    {
+      "baseline": "initial-A",
+      "candidate": "initial-B",
+      "reductionPercent": {
+        "median": 1.0697000641859757,
+        "p95_floor": 10.621403411483952,
+        "maximum": 6.349779569135361
+      },
+      "wallReductionPercent": 3.827900234846122
+    },
+    {
+      "baseline": "confirm-A2",
+      "candidate": "confirm-B2",
+      "reductionPercent": {
+        "median": -0.8443180587816241,
+        "p95_floor": 10.306725216657354,
+        "maximum": -6.4758986660322515
+      },
+      "wallReductionPercent": 2.1382565787275665
+    },
+    {
+      "baseline": "confirm-A3",
+      "candidate": "confirm-B3",
+      "reductionPercent": {
+        "median": 3.7452853688886627,
+        "p95_floor": 8.325754971759876,
+        "maximum": 6.999312835063519
+      },
+      "wallReductionPercent": 1.858883652878572
+    }
+  ],
+  "analysis": "All predeclared confirmations retained. Exact270-step physical observations and endpoint geometry match baseline. Timings describe this host/workload only, not a universal bound. Large remaining tail remains open; no memory saving claimed.",
+  "observer-run": {
+    "steps": 270,
+    "physicalDifferences": [],
+    "instrumentationExcludedFromPerformance": true
+  },
+  "fat-witness-run": {
+    "steps": 270,
+    "physicalDifferences": [],
+    "instrumentationExcludedFromPerformance": true
+  },
+  "baselineWorstProfile": {
+    "frame": 271,
+    "fixed": {
+      "accumulator_seconds": 0,
+      "discarded_seconds": 0,
+      "cap_reached": false,
+      "paused": false,
+      "steps": [
+        {
+          "id": 270,
+          "start_ns": 20210286649961,
+          "end_ns": 20212125592208,
+          "simulation_seconds": 0.01666666753590107
+        }
+      ]
+    },
+    "counters": [
+      {
+        "name": "Resource GPU payload bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource prepared CPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource over budget bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource resident byte estimate",
+        "value": 759720,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource budget bytes",
+        "value": 268435456,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource in flight",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Resource uploads",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Audio voices",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio stream PCM bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio pending retirements",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script instances",
+        "value": 1,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Script callback calls",
+        "value": 4,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Character motor instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physical animation participants",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Powertrain assemblies",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Wheel instances",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry worker lanes",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics parallel initial manifolds",
+        "value": 12212,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial worker completed manifolds",
+        "value": 9196,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics initial geometry scratch bytes",
+        "value": 9236160,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Sleeping physics bodies",
+        "value": 128,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Awake physics bodies",
+        "value": 1024,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics bodies last step",
+        "value": 1285,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics candidate pairs last step",
+        "value": 12628,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics contacts last step",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joints",
+        "value": 96,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact events",
+        "value": 51,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact queries",
+        "value": 501599,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search iterations",
+        "value": 46950,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling fallbacks",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling tests",
+        "value": 2583,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search limits",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact search stalls",
+        "value": 377,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact sampling resolution caps",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose evaluations",
+        "value": 130189,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact pose reuses",
+        "value": 1414693,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact orientation preparations",
+        "value": 78508,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact requests",
+        "value": 64669,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-contact reuses",
+        "value": 8299,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact remaining-bound rejections",
+        "value": 459940,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact actual-bound rejections",
+        "value": 344326,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase passes",
+        "value": 2,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase root queries",
+        "value": 2304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics broadphase overlapping leaves",
+        "value": 51764,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep graph edges",
+        "value": 1845,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep islands",
+        "value": 69,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics sleep scratch bytes",
+        "value": 44172,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics persistent contact rows",
+        "value": 3122,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics joint rows",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation coupled fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation elastic fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics continuation geometry fallback events",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact island bodies",
+        "value": 973,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics peak impact contact rows",
+        "value": 2517,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics impact continuation cache ms",
+        "value": 19.249609,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics support continuation attempts",
+        "value": 3967,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation accepted",
+        "value": 3902,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation partitions",
+        "value": 645,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation over-budget fallback",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics support continuation proof ms",
+        "value": 25.194920999999997,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD search inclusive ms",
+        "value": 299.012384,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry inclusive ms",
+        "value": 837.682919,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics CCD geometry calls",
+        "value": 626049,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact island discovery ms",
+        "value": 591.100245,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact solve ms",
+        "value": 160.255469,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics impact observation publication ms",
+        "value": 12.595829,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation ms",
+        "value": 0.016669,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics joint preparation calls",
+        "value": 52,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked BVH nodes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked triangles",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics cooked convex tests",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Physics geometry predicates",
+        "value": 2798292,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry exact fallbacks",
+        "value": 5,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry unresolved",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Physics geometry numeric gap fallbacks",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Audio occlusion queries",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Instanced draw submissions",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Instances submitted",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light tile overflow",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Light grid GPU bytes",
+        "value": 0,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Shadow GPU bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Submitted draws all passes",
+        "value": 3,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Submitted triangles all passes",
+        "value": 298584,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Visible renderables all passes",
+        "value": 1320,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Frustum rejected all passes",
+        "value": 1314,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Layer rejected all passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Particles submitted",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Secondary passes",
+        "value": 0,
+        "mode": "frame_sum"
+      },
+      {
+        "name": "Text atlas bytes",
+        "value": 4194304,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text layout bytes",
+        "value": 36483,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Text glyph raster total",
+        "value": 110,
+        "mode": "frame_latest_observation"
+      },
+      {
+        "name": "Runtime UI draws",
+        "value": 4,
+        "mode": "frame_latest_observation"
+      }
+    ],
+    "scope": "Counter categories overlap; inclusive times are not additive."
+  }
+}

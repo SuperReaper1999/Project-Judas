@@ -1,0 +1,330 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "PRODUCTION_COMPARISON.json",
+      "bytes": 10611,
+      "sha256": "47853d06ec73b76a73f48d6512391796e6af3e5945414fcd45113238aeffdba2"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4106,
+      "sha256": "c36e374eae065c0fec45bac4694da0d5987234d73c55daab1c725046f6ad9837"
+    },
+    {
+      "path": "dense-linux/ARCHIVE_MEMBER_PROOF.json",
+      "bytes": 33235,
+      "sha256": "cc660be4262f205b750b4203fc89efd108a1a0e0ec6b46c53d3b5163c19d5429"
+    },
+    {
+      "path": "dense-linux/RESULTS.json",
+      "bytes": 12177,
+      "sha256": "a6b703d3f40f79c7ffb0a82d1ad46635dc70e2d1f10ac6e65895965d11b6f47e"
+    },
+    {
+      "path": "dense-linux/build.log",
+      "bytes": 7793,
+      "sha256": "3970e6adf6cbd34fe76eed78b4f9b52e54c9190f4737c7520fb956cae0bd412d"
+    },
+    {
+      "path": "dense-linux/configure.log",
+      "bytes": 911,
+      "sha256": "6217a87ff4b3f2fc5a18a5dc151b7b23766527885a0b641a5e99999a267de57a"
+    },
+    {
+      "path": "dense-linux/judas_character_motor_tests.log",
+      "bytes": 1869,
+      "sha256": "fe99b64f54daed5a223987fc64f2ef8ccf25858abd0b9af0629a2e49565a47e5"
+    },
+    {
+      "path": "dense-linux/judas_contact_cache_tests.log",
+      "bytes": 750,
+      "sha256": "8049440b76af73b8b66bff6d473bc8adb6a8e8583642d2c3fe98dc7b984003b1"
+    },
+    {
+      "path": "dense-linux/judas_contact_lifecycle_tests.log",
+      "bytes": 83838,
+      "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7"
+    },
+    {
+      "path": "dense-linux/judas_impact_candidate_cache_tests.log",
+      "bytes": 1233,
+      "sha256": "697ffc172e360b302f1eca2f3eeeb064e1834329ba26d5b4592d1584c2e58a9d"
+    },
+    {
+      "path": "dense-linux/judas_impact_robustness_tests.log",
+      "bytes": 4877,
+      "sha256": "3b0d8574795a16cff392bd045f95642804f9159f9e95b120fb3b1ff4d68985f1"
+    },
+    {
+      "path": "dense-linux/judas_impact_timing_tests.log",
+      "bytes": 43704,
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f"
+    },
+    {
+      "path": "dense-linux/judas_joint_tests.log",
+      "bytes": 1437,
+      "sha256": "49c212858a288a173b6a1676c306d559db3f1dcf92da2797dc9e5edd8dd6c35b"
+    },
+    {
+      "path": "dense-linux/judas_kinematic_tests.log",
+      "bytes": 6480,
+      "sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d"
+    },
+    {
+      "path": "dense-linux/judas_particle_contact_batch_tests.log",
+      "bytes": 1342,
+      "sha256": "6b7002c4dcdfe7692a6d8019bd81e0fe3ac35c0e97284fdd9cb43d3813df09b9"
+    },
+    {
+      "path": "dense-linux/judas_physics_continuation_tests.log",
+      "bytes": 30,
+      "sha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534"
+    },
+    {
+      "path": "dense-linux/judas_rigid_motion_tests.log",
+      "bytes": 323,
+      "sha256": "d9f968cc8b1bbb021f6b469c8e27314acdcdf2f72c8a2667fc6d8e43877c6cc5"
+    },
+    {
+      "path": "dense-linux/missing_revision_negative.log",
+      "bytes": 574,
+      "sha256": "33526536579a3496118caba3c0d230e7e0d1a27b21051619812d122d73486e0b"
+    },
+    {
+      "path": "dense-production/RESULTS.json",
+      "bytes": 6877,
+      "sha256": "7f8a2b82a4db9324b267a4cdce7655a47361f023cfb86db396a7d2188822252d"
+    },
+    {
+      "path": "dense-production/build.log",
+      "bytes": 3017,
+      "sha256": "6ccf5e11adf4456c94f556996d2fffb4787b21c31150b89d9cc59c51b10848a6"
+    },
+    {
+      "path": "dense-production/original_baseline_full.log",
+      "bytes": 2781,
+      "sha256": "d21a315870b9e4a9df59cf834a15e9854cf441135fc5527d4982c88e6f8a54e1"
+    },
+    {
+      "path": "dense-production/production_full_preserved_failure.log",
+      "bytes": 2781,
+      "sha256": "aff63d49fb77773d63f8f092dd34a6e2823ee6291fbee429a1ba54941657434e"
+    },
+    {
+      "path": "dense-production/production_initial_arrival.log",
+      "bytes": 2533,
+      "sha256": "96e6838838bddfa100fd2c8285d63294a4ab053fe6a05239ba665bafb583fcfb"
+    },
+    {
+      "path": "dense-production/workloads/RESULTS.json",
+      "bytes": 20976,
+      "sha256": "1dff5a4a2754ce5ec17ea3adb036d8559c445bcda4da45880acf71d0504d9870"
+    },
+    {
+      "path": "dense-production/workloads/dense270/begins.csv",
+      "bytes": 7357,
+      "sha256": "10e6927db2fd7d35eaf838376cc4ddbb060917c5f999f5eeb5cb4aa8e0e9aade"
+    },
+    {
+      "path": "dense-production/workloads/dense270/frames.csv",
+      "bytes": 42583,
+      "sha256": "432e9e536a095073c6b4a0c66df7cea02b18456ac6f90e49213dae2cd78499cd"
+    },
+    {
+      "path": "dense-production/workloads/dense270/profile-final.json.gz",
+      "bytes": 323200,
+      "sha256": "330fa7b6f50e22154db3e86e2fc21bab888c5038530b00859cf3c243eeadde66"
+    },
+    {
+      "path": "dense-production/workloads/dense270/profile-final.json.gz.identity.json",
+      "bytes": 129,
+      "sha256": "647e033ebcafc6e5b98f6c3d1c40e7bfab51fa9abb92d77951375b432dda4d1e"
+    },
+    {
+      "path": "dense-production/workloads/dense270/profile-shutdown.json.gz",
+      "bytes": 325227,
+      "sha256": "03cba43b5df6c1ea047407487cbed88ae9222809b41081af790bd69f8b890d4e"
+    },
+    {
+      "path": "dense-production/workloads/dense270/profile-shutdown.json.gz.identity.json",
+      "bytes": 129,
+      "sha256": "1873db137defac602b32f6c2e264dd7c4f16de4716e0742a328a3c24283a5d19"
+    },
+    {
+      "path": "dense-production/workloads/dense270/quality.json",
+      "bytes": 366,
+      "sha256": "078d54d8782a39ff9878d839e0f004796d796f464bfc65ea03a31cd7a7968ce1"
+    },
+    {
+      "path": "dense-production/workloads/dense270/steps.csv",
+      "bytes": 41359,
+      "sha256": "d1f74b98cdb7e1e9df1a96fbae12159de8997cb151242a8c8c523036f9c11b36"
+    },
+    {
+      "path": "dense-production/workloads/dense270.log",
+      "bytes": 613,
+      "sha256": "53da815c38ae0e6d3ff004517cdd26eabdc6900936afa0dde5794bd28b528f59"
+    },
+    {
+      "path": "dense-production/workloads/dense270.rusage.log",
+      "bytes": 1047,
+      "sha256": "dcbe3d6de65e8e56e475bbd6eb47d682672ac255e54a8339782f1bea3634f240"
+    },
+    {
+      "path": "dense-production/workloads/free1024/endpoints.json",
+      "bytes": 396557,
+      "sha256": "18fd4c55a6b64755bdb50fe7b6d042e64cf3d0d4a794025822ec17f06a3c38a8"
+    },
+    {
+      "path": "dense-production/workloads/free1024/profile.json.gz",
+      "bytes": 64869,
+      "sha256": "229bb6092c3b76af9338c3dfaa67563aea6a389e3f517ed23390ea3fbb766642"
+    },
+    {
+      "path": "dense-production/workloads/free1024/profile.json.gz.identity.json",
+      "bytes": 129,
+      "sha256": "781847a816b51ef842bac1461b52dccd42378c7815cd6746a8e1783e099aff9a"
+    },
+    {
+      "path": "dense-production/workloads/free1024/steps.csv",
+      "bytes": 13431,
+      "sha256": "6aed726aed092e5f60d969e92b19140305a363d08fa7ec44b0a902e4699bba1c"
+    },
+    {
+      "path": "dense-production/workloads/free1024/summary.json",
+      "bytes": 3050,
+      "sha256": "22249b688f1b7ff9e84f45070916ebda2a52d7834f8779cd16815aa43fbb18e1"
+    },
+    {
+      "path": "dense-production/workloads/free1024.log",
+      "bytes": 2645,
+      "sha256": "c1d8dfc98a4888a9a1c0b0fd03fc175ecf0218a382d84de9ff41079d988ce8c0"
+    },
+    {
+      "path": "dense-production/workloads/free1024.rusage.log",
+      "bytes": 975,
+      "sha256": "e21d484166868d13cc6ff0123552e8974933321fc62a952204acacdccd81089a"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256/endpoints.json",
+      "bytes": 90183,
+      "sha256": "982b043049e11c9f8fb556bcfbd202cc757a31b3330fefea340263abf9f2c30c"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256/profile.json.gz",
+      "bytes": 66398,
+      "sha256": "ec4f3e28767c181f5f55a5a2301e95bbd24cece38237f42280af50f2f761ec76"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256/profile.json.gz.identity.json",
+      "bytes": 129,
+      "sha256": "6610349e102afd751d9220e033bab2077f3f257d8c3822363a2ae6ffb64266ad"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256/steps.csv",
+      "bytes": 17928,
+      "sha256": "0efe41642de6b3191f6cbf6da6df16654c21e868f2c64d551d2a8f070c9e90fe"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256/summary.json",
+      "bytes": 3075,
+      "sha256": "c83be4d876cbf62f062c07497db68ec6bd966e7fd21bfe952317e6e0e5f95946"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256.log",
+      "bytes": 2670,
+      "sha256": "9142fd6d794509b461b955ce8d3e61270539653a3b6914f29248e94e23f99cbb"
+    },
+    {
+      "path": "dense-production/workloads/machines_active256.rusage.log",
+      "bytes": 995,
+      "sha256": "d2d396544a999e37535ec3a20fc3308b40c9fac078914f1458d4f3e6d650a605"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256/endpoints.json",
+      "bytes": 84073,
+      "sha256": "101274b62b59675c3096d3e117bf878fda9121f0395cd12b3168d6ee9a416ad5"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256/profile.json.gz",
+      "bytes": 63442,
+      "sha256": "c65ba269e621a1d5449617479fe0017e5c8fada00f808103519c35a3d9441014"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256/profile.json.gz.identity.json",
+      "bytes": 129,
+      "sha256": "9790aae470182e2010b432e6405fd2d0abaf6855f474f63f4b2fb56e8e07a681"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256/steps.csv",
+      "bytes": 40849,
+      "sha256": "407563e5c0cecdc4deff76e2d551dabf2b95fa51889bc9b9a8662752317ded4a"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256/summary.json",
+      "bytes": 3106,
+      "sha256": "cb8b672f165d6f0e688cfa42cd57ae4b2b5461fe67e208cba0c69f53c101324e"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256.log",
+      "bytes": 2701,
+      "sha256": "5cd6e9df3ea01466dd4da3f824de2ade7373157f60f36ebe0c0932df521454e7"
+    },
+    {
+      "path": "dense-production/workloads/machines_sleeping256.rusage.log",
+      "bytes": 1001,
+      "sha256": "1fde6315546b5564b63ea15e2095776e0499bc40c455e442eb7d0200e767dd64"
+    },
+    {
+      "path": "dense-production/workloads/pile256/endpoints.json",
+      "bytes": 104590,
+      "sha256": "631ef75f9aee95e95943d0e268ce9995976da667e1ca68922bec9f8faf642f04"
+    },
+    {
+      "path": "dense-production/workloads/pile256/profile.json.gz",
+      "bytes": 64481,
+      "sha256": "22ab362de181dd87cb1cfc344452915273691d093a44c4c9715af1cc42bcc271"
+    },
+    {
+      "path": "dense-production/workloads/pile256/profile.json.gz.identity.json",
+      "bytes": 129,
+      "sha256": "e5838670fc5b33b212f90b9a3d9ac9007a4dbf445316b3e074dbef26bfcbe936"
+    },
+    {
+      "path": "dense-production/workloads/pile256/steps.csv",
+      "bytes": 20946,
+      "sha256": "937c488839b080a04ca07098f5b9529449b40afea834b8c6e43f92d447ae294c"
+    },
+    {
+      "path": "dense-production/workloads/pile256/summary.json",
+      "bytes": 3078,
+      "sha256": "007034d2d601cbbd16143ecdbe93b643851563a408fd147450330df3b3620a31"
+    },
+    {
+      "path": "dense-production/workloads/pile256.log",
+      "bytes": 2673,
+      "sha256": "343aa004434c905fa3e7be97461a10feb23875c2e31afaeae05189e85e80cfca"
+    },
+    {
+      "path": "dense-production/workloads/pile256.rusage.log",
+      "bytes": 974,
+      "sha256": "3fc08e4e48589cf95e2f315d4b1b27e11956d3186fa8699131fb6d078369763d"
+    },
+    {
+      "path": "dense-production/workloads.log",
+      "bytes": 172,
+      "sha256": "079edefae8e1c88e9108e7eba51378fd7b46dff9dfaafd762bd26dcbaac1869f"
+    },
+    {
+      "path": "reproduction/check_dense.py",
+      "bytes": 2696,
+      "sha256": "137871dee9ff182dec2d230ba8e978cbcf032a48fb85bba7e0470aa1d888b071"
+    },
+    {
+      "path": "reproduction/run_production.py",
+      "bytes": 3063,
+      "sha256": "214a10e64153b69800f82a21a9c59d17b6c1625cdc6e698a850d361b27b21f13"
+    }
+  ]
+}

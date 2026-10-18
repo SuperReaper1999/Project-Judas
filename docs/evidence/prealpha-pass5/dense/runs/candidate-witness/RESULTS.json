@@ -1,0 +1,90 @@
+{
+  "utc": "2026-10-18T18:29:08.953128+00:00",
+  "root": "/home/conner/Documents/GitHub/Project-Judas",
+  "git_head_at_start": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "binaries": {
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-witness/judas_physics_stress_live_benchmark": "ae2cd19684a3b1675f75b70cdc1f317aed8b4e56153f032d30ba13efc3976585"
+  },
+  "fixture": {
+    "path": "projects/physics_stress_lab/Scenes/room1024.judas",
+    "sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf"
+  },
+  "results": [
+    {
+      "name": "dense270",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-witness/judas_physics_stress_live_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-witness-run/dense270",
+        "105",
+        "270",
+        "0",
+        "0",
+        "1",
+        "0.016666667",
+        "1",
+        "0",
+        "1"
+      ],
+      "utc": "2026-10-18T18:29:09.098903+00:00",
+      "timeout_seconds": 150,
+      "exit": 0,
+      "wall_seconds": 53.29602423700271,
+      "usage_log": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-witness-run/dense270.rusage.log",
+      "max_rss_kib": 412472,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "median": 27.2363635,
+        "p95_floor": 364.476275,
+        "maximum": 2234.964206
+      },
+      "final_digest": "192f0f4bed728953",
+      "worst_step": {
+        "step": "270",
+        "frame": "269",
+        "wall_ms": "52659.003445",
+        "fixed_ms": "2234.964206",
+        "bodies": "1285",
+        "awake": "1024",
+        "sleeping": "128",
+        "candidates": "12628",
+        "contacts": "3122",
+        "impact_events": "51",
+        "impact_queries": "501599",
+        "impact_iterations": "46950",
+        "impact_peak": "20",
+        "total_physics_ms": "2233.295163",
+        "broadphase_ms": "4.160415",
+        "narrowphase_ms": "10.483722",
+        "solver_ms": "2215.038835",
+        "trajectory_digest": "192f0f4bed728953",
+        "max_linear_speed": "2.61625123024",
+        "max_angular_speed": "6.46908569336",
+        "nonfinite_fields": "0"
+      },
+      "endpoint_quality": {
+        "candidate_pairs": 9327,
+        "contact_points": 2475,
+        "deepest_endpoint_penetration_m": 0.007217108528522143,
+        "observation_ms": 30.453148,
+        "outside_fixed_step_timing": true,
+        "population": 1024,
+        "scope": "endpoint primitive geometry for the authored loose_piece population",
+        "tag_available": true,
+        "uncertain_pairs": 0,
+        "unsupported_candidates": 0
+      }
+    }
+  ],
+  "environment": {
+    "DISPLAY": ":0",
+    "WAYLAND_DISPLAY": "wayland-0",
+    "SDL_VIDEODRIVER": null,
+    "XDG_SESSION_TYPE": "wayland"
+  },
+  "notes": [
+    "Exact unchanged workload/physics args; no parallel owned CPU build or run intended.",
+    "Timing is host diagnostic, not a universal real-time bound. Raw distributions/physical results retained."
+  ],
+  "finished_utc": "2026-10-18T18:30:02.397146+00:00"
+}

@@ -1,0 +1,41 @@
+{
+  "steps": 270,
+  "exactPhysicalFields": [
+    "step",
+    "frame",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "physicalDifferences": [],
+  "endpointDifferences": {
+    "observation_ms": [
+      31.502486,
+      30.453148
+    ]
+  },
+  "requests": 981074,
+  "treeQueries": 143207,
+  "candidateMismatches": 0,
+  "peakRetainedIds": 24628,
+  "peakCachedSlots": 980,
+  "worstBaselineStep": {
+    "requests": 88458,
+    "treeQueries": 1943,
+    "peakRetainedIdCapacity": 24544,
+    "peakCachedSlots": 975,
+    "mismatches": 0
+  },
+  "helperSha256": "e657c2810589e030d521c6ffe821dc21b07c5b6d47c1348c52f775e8164ad9db",
+  "scope": "Every modified call independently reconstructed original QuerySlots(query) in the live270fixture; witness overhead excluded from performance."
+}

@@ -1,0 +1,70 @@
+[
+  {
+    "name": "confirm-A2",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+      "--root",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--live",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_physics_stress_live_benchmark",
+      "--only-dense",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/confirm-A2"
+    ],
+    "exit": 0,
+    "seconds": 52.04215492499861,
+    "finishedUtc": "2026-10-18T18:36:30.262632+00:00"
+  },
+  {
+    "name": "confirm-B2",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+      "--root",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--live",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-cache/judas_physics_stress_live_benchmark",
+      "--only-dense",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/confirm-B2"
+    ],
+    "exit": 0,
+    "seconds": 50.86921337100284,
+    "finishedUtc": "2026-10-18T18:37:21.132173+00:00"
+  },
+  {
+    "name": "confirm-A3",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+      "--root",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--live",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_physics_stress_live_benchmark",
+      "--only-dense",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/confirm-A3"
+    ],
+    "exit": 0,
+    "seconds": 51.97268065999742,
+    "finishedUtc": "2026-10-18T18:38:13.105266+00:00"
+  },
+  {
+    "name": "confirm-B3",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+      "--root",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--live",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/fat-cache/judas_physics_stress_live_benchmark",
+      "--only-dense",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/confirm-B3"
+    ],
+    "exit": 0,
+    "seconds": 51.01214589400115,
+    "finishedUtc": "2026-10-18T18:39:04.117737+00:00"
+  }
+]

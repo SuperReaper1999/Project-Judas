@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T18:44:54.424693+00:00",
+  "scope": "Exact adopted dense-candidate source before parent final combined validation; CMake/suite receipts belong to parent integration.",
+  "files": {
+    "src/physics/ImpactCandidateCache.h": "17a6efa64a9a5dfd5663cd14790f19cfd96c874a589283f9b62d97b179df112d",
+    "src/physics/WorldImpactEvents.cpp": "03c5516c390b2770dc65d788e50246acb8145e87226d4df5cc79d0c05af68d2b",
+    "tests/ImpactCandidateCacheTests.cpp": "e07bcbfbbe0d9930eea1747ec8346f11e6437d806de0b2bcb829f15d701d49df"
+  }
+}

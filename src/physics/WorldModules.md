@@ -31,6 +31,13 @@ checks available to the compiler. `WorldImpactQueries.h` does the same for the
 shared represented-pose/contact query path. Neither header owns independent
 state or supplies an alternative collision policy.
 
+`ImpactCandidateCache.h` retains sorted broadphase candidate lists only during
+one impact-event pass. Any fat-proxy reinsertion invalidates those lists,
+including movement of the other endpoint. A contained query filters the retained
+superset against current proxy bounds; queries outside that enclosure or the
+cache budget use the ordinary tree query. Collision filters, actual geometry,
+contact response and impact times are still evaluated normally.
+
 ## Ordering and interfaces
 
 The public coordinator retains the existing `Step`, `StepCoupled` and origin

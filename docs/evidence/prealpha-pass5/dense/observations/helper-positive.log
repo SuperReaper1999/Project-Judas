@@ -1,0 +1,18 @@
+PASS contained query equals independently sorted tree output including tangency
+PASS unchanged global proxy revision reuses both tight and fat queries
+PASS exact ascending candidate identity order is preserved
+PASS strict fat-only candidate is excluded by the actual subset query
+PASS oversized fat superset falls back to the exact requested subset
+PASS saturated budget avoids repeating the larger preliminary fat query
+PASS another proxy enters a cached query while querying body's own bound is unchanged
+PASS other-proxy departure invalidates cached candidates
+PASS own proxy relocation reconstructs the complete candidate list
+PASS query outside own enclosure falls back without omitting exterior bodies
+PASS destroy/create slot reuse with a new tree revision cannot retain retired membership
+PASS oversized candidate set retains uncached exact result
+PASS retained ID budget does not allocate an oversized graph
+PASS zero slot budget retains the original contained-query path
+PASS candidate caching does not prefilter current collision policy
+PASS current response filtering remains changeable after a cache hit
+PASS sparse high identity does not allocate a body-square table or exceed cache bounds
+SUMMARY 17 checks 0 failures

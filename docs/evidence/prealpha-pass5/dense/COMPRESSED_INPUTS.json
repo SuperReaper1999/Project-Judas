@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "scope": "Lossless gzip with original raw-byte hashes; no source raw files removed.",
+  "files": [
+    {
+      "path": "runs/baseline/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3380504,
+      "uncompressedSha256": "9909d08c00c9db3fdbf73d4e8edefefc9b838de2d6843502debf8ac007195b73",
+      "source": ".cache/prealpha-pass5/baseline-run/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/baseline/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403585,
+      "uncompressedSha256": "20195c70ee5904befb05ccfed6d72cdc0dc8f85024803b7eb5590a1755ec09d5",
+      "source": ".cache/prealpha-pass5/baseline-run/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/baseline/free1024/profile.json.gz",
+      "uncompressedBytes": 1173257,
+      "uncompressedSha256": "a6cf62d8adf5484812a087abe599226f1b42d6cf0f7042bab8fb748c0c8390c5",
+      "source": ".cache/prealpha-pass5/baseline-run/free1024/profile.json"
+    },
+    {
+      "path": "runs/baseline/machines_active256/profile.json.gz",
+      "uncompressedBytes": 1177935,
+      "uncompressedSha256": "f671389a6b007c9de0c42087a7df24060bb69c114b9f9206bfe521a67e47c6a3",
+      "source": ".cache/prealpha-pass5/baseline-run/machines_active256/profile.json"
+    },
+    {
+      "path": "runs/baseline/machines_sleeping256/profile.json.gz",
+      "uncompressedBytes": 1176972,
+      "uncompressedSha256": "ef8b55d9a2628511e08f3fbe49fd54076199b5319ab067034a6c5c2d81162934",
+      "source": ".cache/prealpha-pass5/baseline-run/machines_sleeping256/profile.json"
+    },
+    {
+      "path": "runs/baseline/pile256/profile.json.gz",
+      "uncompressedBytes": 1174970,
+      "uncompressedSha256": "d6a222a2467d7facf56a12da087f44c250e5840e55a3629188abb5f8c46a9adc",
+      "source": ".cache/prealpha-pass5/baseline-run/pile256/profile.json"
+    },
+    {
+      "path": "runs/instrumented-memo-probe/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3380117,
+      "uncompressedSha256": "f23567df2fedd188f7fe27ddb537c81315097072767af938a6218c4eeb53f615",
+      "source": ".cache/prealpha-pass5/dense/observer-run/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/instrumented-memo-probe/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403200,
+      "uncompressedSha256": "58aabfff9f5331fba338e9f7570712b52cf5095d9eb6e35044a3b63ab2107ab2",
+      "source": ".cache/prealpha-pass5/dense/observer-run/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/candidate-witness/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3380644,
+      "uncompressedSha256": "7084dd1977ef6af2b0cb2abcce4dc1a5d921556ad07a5d6be9de10a9962b0a8f",
+      "source": ".cache/prealpha-pass5/dense/fat-witness-run/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/candidate-witness/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403744,
+      "uncompressedSha256": "1a5394567745bb9870e938ca32077d0d078d6495268970374489a92c9a58afe9",
+      "source": ".cache/prealpha-pass5/dense/fat-witness-run/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/preliminary-candidate/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3380568,
+      "uncompressedSha256": "132f75a627f966128b898d33fb3f2b3350c3778f5fdfc664a56d64cfe987938a",
+      "source": ".cache/prealpha-pass5/dense/fat-cache-run/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/preliminary-candidate/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403689,
+      "uncompressedSha256": "1da625ff3ca543627f7b5ca66c1396f858468aebbc574099282a59bf3947467d",
+      "source": ".cache/prealpha-pass5/dense/fat-cache-run/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/confirm-A2/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3379959,
+      "uncompressedSha256": "c9dbd54a44f4e79a7d6a320fe6dab3c3599e65cbd898edf69760c1e719c974e4",
+      "source": ".cache/prealpha-pass5/dense/confirm-A2/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/confirm-A2/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403068,
+      "uncompressedSha256": "eca9b9e3bde073d2231bb3fd15d7139c0bdd458ea9c30534491a388924a120a4",
+      "source": ".cache/prealpha-pass5/dense/confirm-A2/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/confirm-B2/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3379787,
+      "uncompressedSha256": "17b52b6f297e9ec91c5fda54bb6204eaa4da00233ee1b0228975f9b08531ba05",
+      "source": ".cache/prealpha-pass5/dense/confirm-B2/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/confirm-B2/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3402888,
+      "uncompressedSha256": "ae58e6973aea108a07b28bf53d6e6a55778b7fe29ec7c2962ac19f98efd98838",
+      "source": ".cache/prealpha-pass5/dense/confirm-B2/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/confirm-A3/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3380307,
+      "uncompressedSha256": "a8875b1de96bc94a99b1d8e1d9bc39ec259714c4ae2eee3433a8b93650258631",
+      "source": ".cache/prealpha-pass5/dense/confirm-A3/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/confirm-A3/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403414,
+      "uncompressedSha256": "4eb175b87ef55a8075f0c1f75bf98ebe519658f437091893c80e7c0450a44415",
+      "source": ".cache/prealpha-pass5/dense/confirm-A3/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "runs/confirm-B3/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3380460,
+      "uncompressedSha256": "5d33125cf7e821cbbaebfa9ccbbf565f3f6d393c20dd15fefb2a00f85e42a9b2",
+      "source": ".cache/prealpha-pass5/dense/confirm-B3/dense270/profile-final.json"
+    },
+    {
+      "path": "runs/confirm-B3/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3403569,
+      "uncompressedSha256": "05043b7e417faeb7be48b8442d33ae02dcbec13007925d3d4cd2a965b382c2a0",
+      "source": ".cache/prealpha-pass5/dense/confirm-B3/dense270/profile-shutdown.json"
+    },
+    {
+      "path": "observations/observer-events.jsonl.gz",
+      "uncompressedBytes": 690570,
+      "uncompressedSha256": "f3a433061308f710777ff53fcbf8721f045d35cabb5b01c1e3aa2a6bd01e3e5e",
+      "source": ".cache/prealpha-pass5/dense/observer-events.jsonl"
+    }
+  ]
+}

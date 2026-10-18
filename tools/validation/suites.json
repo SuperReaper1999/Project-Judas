@@ -7,6 +7,7 @@
     {"name":"rigid-contact","target":"judas_rigid_contact_tests","groups":["core","collision"]},
     {"name":"impact-solver","target":"judas_impact_solver_tests","groups":["collision"]},
     {"name":"impact-timing","target":"judas_impact_timing_tests","groups":["collision"]},
+    {"name":"impact-candidates","target":"judas_impact_candidate_cache_tests","groups":["collision"]},
     {"name":"impact-mesh-arrival","target":"judas_impact_mesh_cost_tests","groups":["collision"],"args":["60","","1.2","entry"]},
     {"name":"impact-mesh-continuation","target":"judas_impact_mesh_cost_tests","groups":["known-failures"],"manual":true,"finding":"CCD-MESH-CONTINUATION","args":["60","","1.2"]},
     {"name":"liquid-rotation","target":"judas_liquid_rotation_tests","groups":["liquid"]},

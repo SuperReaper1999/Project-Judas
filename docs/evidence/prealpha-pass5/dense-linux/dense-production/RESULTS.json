@@ -1,0 +1,144 @@
+{
+  "utc": "2026-10-18T18:46:39.233908+00:00",
+  "head": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "platform": {
+    "system": "Linux",
+    "node": "conner-ms7850",
+    "release": "7.0.0-38-generic",
+    "version": "#38-Ubuntu SMP PREEMPT_DYNAMIC Fri Sep  4 09:10:14 UTC 2026",
+    "machine": "x86_64",
+    "processor": ""
+  },
+  "cpu": "processor\t: 0\nvendor_id\t: GenuineIntel\ncpu family\t: 6\nmodel\t\t: 60\nmodel name\t: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz\nstepping\t: 3\nmicrocode\t: 0x28\ncpu MHz\t\t: 3938.814\ncache size\t: 8192 KB\nphysical id\t: 0\nsiblings\t: 8\ncore id\t\t: 0\ncpu cores\t: 4\napicid\t\t: 0\ninitial apicid\t: 0\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm cpuid_fault pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d\nvmx flags\t: vnmi preemption_timer invvpid ept_x_only ept_ad ept_1gb flexpriority tsc_offset vtpr mtf vapic ept vpid unrestricted_guest ple shadow_vmcs\nbugs\t\t: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit srbds spectre_v2_user vmscape\nbogomips\t: 7200.24\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 39 bits physical, 48 bits virtual\npower management:",
+  "source": {
+    "CMakeLists.txt": "7dd41f30b706d569b8db4494694411ce0ea917709534402cfb37eecd5fa95457",
+    "tools/validation/suites.json": "7ac89ff43c1fc4ce2c8faf00b99fae96cc276cf377d14c3ae0237f565f75d7f8",
+    "src/physics/ImpactCandidateCache.h": "17a6efa64a9a5dfd5663cd14790f19cfd96c874a589283f9b62d97b179df112d",
+    "src/physics/WorldImpactEvents.cpp": "03c5516c390b2770dc65d788e50246acb8145e87226d4df5cc79d0c05af68d2b",
+    "tests/ImpactCandidateCacheTests.cpp": "e07bcbfbbe0d9930eea1747ec8346f11e6437d806de0b2bcb829f15d701d49df",
+    "src/PhysicsWorld.h": "eddadb36acc2cd46693859e844ca981d4b9f684fde68035b08ed37b757f71f03"
+  },
+  "results": [
+    {
+      "name": "build",
+      "argv": [
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "judas_physics_stress_live_benchmark",
+        "judas_physics_scaling_diagnostics",
+        "judas_impact_mesh_cost_tests",
+        "-j3"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "expected_exit": 0,
+      "utc": "2026-10-18T18:46:39.238643+00:00",
+      "exit": 0,
+      "seconds": 9.1878733750018,
+      "log": "build.log",
+      "log_sha256": "6ccf5e11adf4456c94f556996d2fffb4787b21c31150b89d9cc59c51b10848a6",
+      "pass": true,
+      "binary_sha256": null
+    },
+    {
+      "name": "original_baseline_full",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/judas_impact_mesh_cost_tests",
+        "60",
+        "",
+        "1.2"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "expected_exit": 1,
+      "utc": "2026-10-18T18:46:48.513227+00:00",
+      "exit": 1,
+      "seconds": 4.974756257997797,
+      "log": "original_baseline_full.log",
+      "log_sha256": "d21a315870b9e4a9df59cf834a15e9854cf441135fc5527d4982c88e6f8a54e1",
+      "pass": true,
+      "binary_sha256": "4fe9c536c1740e01c5b93e32434535a3fb39cc3ead7cd52b79df333370630cc4"
+    },
+    {
+      "name": "production_full_preserved_failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+        "60",
+        "",
+        "1.2"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "expected_exit": 1,
+      "utc": "2026-10-18T18:46:53.493463+00:00",
+      "exit": 1,
+      "seconds": 4.974012781000056,
+      "log": "production_full_preserved_failure.log",
+      "log_sha256": "aff63d49fb77773d63f8f092dd34a6e2823ee6291fbee429a1ba54941657434e",
+      "pass": true,
+      "binary_sha256": "fa9d7582230f43a9147cba3d8587f8b848615276b650b498dc8f4edda4e3f321"
+    },
+    {
+      "name": "production_initial_arrival",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+        "60",
+        "",
+        "1.2",
+        "entry"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "expected_exit": 0,
+      "utc": "2026-10-18T18:46:58.471295+00:00",
+      "exit": 0,
+      "seconds": 4.022174065998115,
+      "log": "production_initial_arrival.log",
+      "log_sha256": "96e6838838bddfa100fd2c8285d63294a4ab053fe6a05239ba665bafb583fcfb",
+      "pass": true,
+      "binary_sha256": "fa9d7582230f43a9147cba3d8587f8b848615276b650b498dc8f4edda4e3f321"
+    },
+    {
+      "name": "workloads",
+      "argv": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+        "--live",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+        "--scaling",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_diagnostics",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense-production/workloads"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "expected_exit": 0,
+      "utc": "2026-10-18T18:47:02.498010+00:00",
+      "exit": 0,
+      "seconds": 51.59859797399986,
+      "log": "workloads.log",
+      "log_sha256": "079edefae8e1c88e9108e7eba51378fd7b46dff9dfaafd762bd26dcbaac1869f",
+      "pass": true,
+      "binary_sha256": null
+    }
+  ],
+  "build_info": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-4c141e9-dirty-05a5d5a79190-u02d8d18a4f30",
+    "source_revision": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+    "source_tree": "a2174fd48d5259f2a238df1a0493c69bbdcd44b7",
+    "source_dirty": true,
+    "source_fingerprint": "05a5d5a791909fe0d97c0808d1aa05c330b68d890130856129658d119717bb89",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "02d8d18a4f30f473758b3fe1c45ce89d83cca228407a16cb06482beab241088d",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  },
+  "archive_sha256": "0e0dc7973b7d2b24510743d5297e9ae002cdb7b4dbdc943d55a4bdc4aab78514",
+  "source_unchanged": true,
+  "finished_utc": "2026-10-18T18:47:54.098552+00:00"
+}
