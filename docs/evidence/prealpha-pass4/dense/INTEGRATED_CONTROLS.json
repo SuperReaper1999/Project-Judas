@@ -1,0 +1,130 @@
+{
+  "utc": "2026-10-18T16:13:51.376614+00:00",
+  "scope": "Functional runs while Windows ICU compilation active; timing excluded. Unchanged original fixtures, quality gates and owner-thread allocation interception.",
+  "workloads": {
+    "free1024": {
+      "baseline_pass": true,
+      "integrated_pass": true,
+      "exact_physical_digest": true,
+      "baseline_digest": "beba012f5dfe2273",
+      "integrated_digest": "beba012f5dfe2273",
+      "owner_new_calls": [
+        1045,
+        1045
+      ],
+      "owner_new_bytes": [
+        205944,
+        205944
+      ],
+      "all_original_acceptance": {
+        "actual_motion_exercised": true,
+        "completed": true,
+        "contacts_exercised": true,
+        "every_driven_joint_physically_moves": true,
+        "finite": true,
+        "free_motion_error_below_0_002_m": true,
+        "ground_penetration_below_0_12_m": true,
+        "impulse_wakes_and_moves": true,
+        "joint_anchor_error_below_0_03_m": true,
+        "linear_speed_below_50_m_s": true,
+        "no_exception": true,
+        "profile_exported": true,
+        "sleeping_majority": true,
+        "upper_stacks_remain_load_bearing": true
+      }
+    },
+    "pile256": {
+      "baseline_pass": true,
+      "integrated_pass": true,
+      "exact_physical_digest": true,
+      "baseline_digest": "63b0f10cd668de91",
+      "integrated_digest": "63b0f10cd668de91",
+      "owner_new_calls": [
+        30960,
+        30960
+      ],
+      "owner_new_bytes": [
+        11182080,
+        11182080
+      ],
+      "all_original_acceptance": {
+        "actual_motion_exercised": true,
+        "completed": true,
+        "contacts_exercised": true,
+        "every_driven_joint_physically_moves": true,
+        "finite": true,
+        "free_motion_error_below_0_002_m": true,
+        "ground_penetration_below_0_12_m": true,
+        "impulse_wakes_and_moves": true,
+        "joint_anchor_error_below_0_03_m": true,
+        "linear_speed_below_50_m_s": true,
+        "no_exception": true,
+        "profile_exported": true,
+        "sleeping_majority": true,
+        "upper_stacks_remain_load_bearing": true
+      }
+    },
+    "machines_active256": {
+      "baseline_pass": true,
+      "integrated_pass": true,
+      "exact_physical_digest": true,
+      "baseline_digest": "76999a0d1f196c6b",
+      "integrated_digest": "76999a0d1f196c6b",
+      "owner_new_calls": [
+        21601,
+        21601
+      ],
+      "owner_new_bytes": [
+        6046912,
+        6046912
+      ],
+      "all_original_acceptance": {
+        "actual_motion_exercised": true,
+        "completed": true,
+        "contacts_exercised": true,
+        "every_driven_joint_physically_moves": true,
+        "finite": true,
+        "free_motion_error_below_0_002_m": true,
+        "ground_penetration_below_0_12_m": true,
+        "impulse_wakes_and_moves": true,
+        "joint_anchor_error_below_0_03_m": true,
+        "linear_speed_below_50_m_s": true,
+        "no_exception": true,
+        "profile_exported": true,
+        "sleeping_majority": true,
+        "upper_stacks_remain_load_bearing": true
+      }
+    },
+    "machines_sleeping256": {
+      "baseline_pass": true,
+      "integrated_pass": true,
+      "exact_physical_digest": true,
+      "baseline_digest": "294c73ad4249153b",
+      "integrated_digest": "294c73ad4249153b",
+      "owner_new_calls": [
+        20400,
+        20400
+      ],
+      "owner_new_bytes": [
+        4435200,
+        4435200
+      ],
+      "all_original_acceptance": {
+        "actual_motion_exercised": true,
+        "completed": true,
+        "contacts_exercised": true,
+        "every_driven_joint_physically_moves": true,
+        "finite": true,
+        "free_motion_error_below_0_002_m": true,
+        "ground_penetration_below_0_12_m": true,
+        "impulse_wakes_and_moves": true,
+        "joint_anchor_error_below_0_03_m": true,
+        "linear_speed_below_50_m_s": true,
+        "no_exception": true,
+        "profile_exported": true,
+        "sleeping_majority": true,
+        "upper_stacks_remain_load_bearing": true
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "utc": "2026-10-18T16:08:20.309332+00:00",
+  "cases": [
+    {
+      "target": "judas_character_motor_tests",
+      "events": 0,
+      "original_raw_keys": 0,
+      "unique_keys": 0,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_contact_cache_tests",
+      "events": 0,
+      "original_raw_keys": 0,
+      "unique_keys": 0,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_contact_lifecycle_tests",
+      "events": 3,
+      "original_raw_keys": 17,
+      "unique_keys": 8,
+      "nonzero_part_keys": 1,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_impact_robustness_tests",
+      "events": 159,
+      "original_raw_keys": 477,
+      "unique_keys": 159,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_impact_timing_tests",
+      "events": 76,
+      "original_raw_keys": 328,
+      "unique_keys": 123,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_joint_tests",
+      "events": 1,
+      "original_raw_keys": 5,
+      "unique_keys": 2,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_kinematic_tests",
+      "events": 10,
+      "original_raw_keys": 33,
+      "unique_keys": 12,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_particle_contact_batch_tests",
+      "events": 0,
+      "original_raw_keys": 0,
+      "unique_keys": 0,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_physics_continuation_tests",
+      "events": 0,
+      "original_raw_keys": 0,
+      "unique_keys": 0,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    },
+    {
+      "target": "judas_rigid_motion_tests",
+      "events": 3,
+      "original_raw_keys": 11,
+      "unique_keys": 3,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 0
+    }
+  ],
+  "totals": {
+    "events": 252,
+    "original_raw_keys": 871,
+    "unique_keys": 307,
+    "nonzero_part_keys": 1,
+    "selected_without_changed_endpoint": 0,
+    "mismatches": 0
+  },
+  "actual_key_union_exact": true,
+  "negative": {
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/observer-checks/judas_impact_robustness_tests/judas_impact_robustness_tests"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment_overrides": {
+      "JUDAS_PASS4_NEGATIVE_DIRTY": "omit",
+      "JUDAS_PASS4_DIRTY_REPORT": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/dirty-negative/observer.json"
+    },
+    "seconds": 0.5155343850001373,
+    "exit": 1,
+    "negative_control_detected": true,
+    "observer": {
+      "events": 54,
+      "original_raw_keys": 162,
+      "unique_keys": 54,
+      "nonzero_part_keys": 0,
+      "selected_without_changed_endpoint": 0,
+      "mismatches": 54
+    },
+    "binary_sha256": "2314db6432c43d0fe9bbb1d4ffc2ec5d2e09ec06c03b1810feaef03d7a79373e",
+    "meaning": "Cache-only observer deliberately removes a required dirty key before comparing actual optimized union against original accepted algorithm. Same compiled binary passes when override absent; this failure is intentional validation of the verifier, never production."
+  },
+  "scope": "Actual native event scheduling; unchanged tests, cache-only observer replays original dirty union after optimized loops with no extra geometry. Observer cost never performance evidence. Zero-velocity-change selected event not observed in these fixtures; explicit source selected-retirement clause retained."
+}

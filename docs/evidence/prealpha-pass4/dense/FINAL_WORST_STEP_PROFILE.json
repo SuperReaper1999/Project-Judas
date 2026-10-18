@@ -1,0 +1,45 @@
+{
+  "strict-baseline": {
+    "frame_id": 271,
+    "counters": {
+      "Physics impact events": 51,
+      "Physics impact queries": 501599,
+      "Physics impact search iterations": 46950,
+      "Physics impact pose evaluations": 130189,
+      "Physics impact pose reuses": 1414693,
+      "Physics impact orientation preparations": 78508,
+      "Physics impact remaining-bound rejections": 459940,
+      "Physics impact actual-bound rejections": 344326,
+      "Physics peak impact island bodies": 973,
+      "Physics peak impact contact rows": 2517,
+      "Physics CCD search inclusive ms": 314.67717899999997,
+      "Physics CCD geometry inclusive ms": 861.007136,
+      "Physics CCD geometry calls": 626049,
+      "Physics impact island discovery ms": 608.983758,
+      "Physics impact solve ms": 163.103626,
+      "Physics geometry predicates": 2798292
+    }
+  },
+  "strict-integrated": {
+    "frame_id": 271,
+    "counters": {
+      "Physics impact events": 51,
+      "Physics impact queries": 501599,
+      "Physics impact search iterations": 46950,
+      "Physics impact pose evaluations": 130189,
+      "Physics impact pose reuses": 1414693,
+      "Physics impact orientation preparations": 78508,
+      "Physics impact remaining-bound rejections": 459940,
+      "Physics impact actual-bound rejections": 344326,
+      "Physics peak impact island bodies": 973,
+      "Physics peak impact contact rows": 2517,
+      "Physics CCD search inclusive ms": 308.66283699999997,
+      "Physics CCD geometry inclusive ms": 855.411525,
+      "Physics CCD geometry calls": 626049,
+      "Physics impact island discovery ms": 598.5645939999999,
+      "Physics impact solve ms": 168.531318,
+      "Physics geometry predicates": 2798292
+    }
+  },
+  "note": "Inclusive profiler stages overlap and must not be summed. Same physical event/geometry counters demonstrate no contact or CCD work was dropped; timings are individual observations."
+}

@@ -1,5 +1,7 @@
 #include "WorldInternal.h"
 
+#include <unordered_map>
+
 using namespace JudasPhysicsDetail;
 
 auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
@@ -182,7 +184,21 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     bool jointNeighboursReady = false;
     double now = 0;
     scheduledImpacts.clear();
-    std::map<std::array<unsigned, 4>, std::size_t> scheduledIndex;
+    // This index owns no encounter order. The event vector and sorted dirty
+    // keys retain the existing chronological and lexicographic policy.
+    struct ScheduledKeyHash {
+        std::size_t operator()(const std::array<unsigned, 4> &key) const noexcept {
+            std::uint64_t value = (std::uint64_t(key[0]) << 32) | key[1];
+            const std::uint64_t parts = (std::uint64_t(key[2]) << 32) | key[3];
+            value += parts * 0x9e3779b97f4a7c15ULL;
+            value ^= value >> 30;
+            value *= 0xbf58476d1ce4e5b9ULL;
+            value ^= value >> 27;
+            value *= 0x94d049bb133111ebULL;
+            return std::size_t(value ^ (value >> 31));
+        }
+    };
+    std::unordered_map<std::array<unsigned, 4>, std::size_t, ScheduledKeyHash> scheduledIndex;
     auto schedule = [&](const std::array<unsigned, 4> &key) {
         if (!CanRespond(key[0], key[1]))
             return;
@@ -221,6 +237,9 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     std::vector<ContactKey> observationKeys;
     std::vector<std::array<unsigned, 4>> eventPairs;
     std::vector<std::array<unsigned, 4>> eventPairMembership;
+    ImpactPairVisitSet dirtyBodyPairs;
+    std::vector<unsigned char> dirtyScheduled;
+    std::vector<std::array<unsigned, 4>> dirty;
     for (;;) {
         double earliest = double(dt) + 1;
         unsigned seedA = 0, seedB = 0;
@@ -291,7 +310,9 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                 const unsigned a = island[next];
                 for (unsigned neighbour : impactJointNeighbours[a])
                     include(neighbour);
-                const auto candidates = QuerySlots(ActualImpactBound(a, ImpactPoseAt(a, now)));
+                // Nested geometry and wake paths do not query the tree, so this
+                // scratch remains valid until the next outer body query.
+                const auto &candidates = QuerySlots(ActualImpactBound(a, ImpactPoseAt(a, now)));
                 for (unsigned b : candidates) {
                     if (a == b || !CanRespond(a, b))
                         continue;
@@ -574,23 +595,42 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         // Cached event times depend only on the two anchored trajectories.
         // Recompute incident queries after an actual velocity change; retain
         // every unaffected event (including disjoint simultaneous events).
-        std::vector<std::array<unsigned, 4>> dirty;
-        dirty.push_back(selected); // retire the event even if its impulse is zero
+        dirty.clear();
+        dirtyScheduled.assign(scheduledImpacts.size(), 0);
+        auto markDirty = [&](const std::array<unsigned, 4> &key) {
+            const auto found = scheduledIndex.find(key);
+            if (found != scheduledIndex.end()) {
+                auto &marked = dirtyScheduled[found->second];
+                if (marked)
+                    return;
+                marked = 1;
+            }
+            dirty.push_back(key);
+        };
+        markDirty(selected); // retire the event even if its impulse is zero
         for (const auto &event : scheduledImpacts)
             if (included[event.key[0]] == 2 || included[event.key[1]] == 2)
-                dirty.push_back(event.key);
+                markDirty(event.key);
+        dirtyBodyPairs.Begin(bodies.size());
         for (unsigned slot : changed) {
-            const auto candidates = QuerySlots(tree.FatAabb(bodies[slot].proxy));
+            const auto &candidates = QuerySlots(tree.FatAabb(bodies[slot].proxy));
             for (unsigned other : candidates)
                 if (other != slot && CanRespond(slot, other)) {
                     const auto a = std::min(slot, other), b = std::max(slot, other);
+                    const std::uint64_t pairKey = (std::uint64_t(a) << 32) | b;
+                    // Both changed endpoints can discover the same pair. Expand
+                    // its children once; no contact or TOI result is reused.
+                    if (dirtyBodyPairs.Contains(pairKey))
+                        continue;
+                    dirtyBodyPairs.Insert(pairKey);
                     for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
                         for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb)
-                            dirty.push_back({a, b, unsigned(pa), unsigned(pb)});
+                            markDirty({a, b, unsigned(pa), unsigned(pb)});
                 }
         }
+        // Known keys were marked once; previously unscheduled keys arose from
+        // one canonical body-pair expansion. Retain the original unique order.
         std::sort(dirty.begin(), dirty.end());
-        dirty.erase(std::unique(dirty.begin(), dirty.end()), dirty.end());
         for (const auto &key : dirty)
             schedule(key);
         if (now >= dt)

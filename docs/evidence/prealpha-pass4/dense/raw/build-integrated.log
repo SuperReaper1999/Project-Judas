@@ -1,0 +1,34 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Found Python3: /usr/bin/python3 (found suitable version "3.14.4", minimum required is "3.11") found components: Interpreter
+-- Configuring done (2.9s)
+-- Generating done (1.8s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[ 12%] Built target freetype
+[ 12%] Built target judas_audio_backend
+[ 12%] Built target judas_app_icon
+[ 18%] Built target judas_meshoptimizer
+[ 25%] Built target judas_navigation_backend
+[ 31%] Built target judas_navigation_cook
+[ 31%] Built target judas_glad
+[ 37%] Built target judas_profiler
+[ 37%] Built target judas_materials
+[ 37%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 37%] Linking CXX static library libjudas_build_identity.a
+[ 37%] Built target judas_build_identity
+[ 43%] Built target judas_icu_build
+[ 43%] Built target judas_quickjs
+[ 43%] Built target judas_jobs
+[ 43%] Built target harfbuzz
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldImpactEvents.cpp.o
+[ 43%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine

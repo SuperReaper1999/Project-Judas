@@ -1,0 +1,64 @@
+{
+  "utc": "2026-10-18T16:05:59.952678+00:00",
+  "production_source_sha256": "65dda9f4732e78d02a8461e9e92f8b6490d14bebcb51473f0d573d73d9217b38",
+  "observer_source_sha256": "eddef055d394598c2d24cc31b862b077a452c4377c7823ca3be98b52560ef7ac",
+  "archive_sha256": "8c99dc2d31ea9dad50a9b733cae2180504867c43005a0060ebc5b71e91b91c65",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src/physics",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/WorldImpactEvents.observer.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/dirty-observer/WorldImpactEvents.cpp.o"
+      ],
+      "seconds": 6.5093974779993005,
+      "log": ".cache/prealpha-pass4/dense/dirty-observer/compile.log"
+    },
+    {
+      "argv": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/dirty-observer/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/dirty-observer/WorldImpactEvents.cpp.o"
+      ],
+      "seconds": 0.1842907499994908,
+      "log": ".cache/prealpha-pass4/dense/dirty-observer/archive.log"
+    }
+  ],
+  "scope": "Cache-only original-key-union witness, same actual world/queries. Negative env deliberately omits one key. Never production and never performance evidence."
+}

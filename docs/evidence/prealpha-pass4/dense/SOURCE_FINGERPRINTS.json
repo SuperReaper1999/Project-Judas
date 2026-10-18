@@ -1,0 +1,18 @@
+{
+  "schema": "judas.prealpha.pass4.dense.source.v1",
+  "utc": "2026-10-18T16:24:05.919043+00:00",
+  "accepted_physical_baseline": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+  "implementation_parent": "06318379b5dfc99fe54eaedebbe5e6d964b25de8",
+  "production_files": [
+    {
+      "path": "src/physics/WorldImpactEvents.cpp",
+      "bytes": 34985,
+      "sha256": "65dda9f4732e78d02a8461e9e92f8b6490d14bebcb51473f0d573d73d9217b38"
+    }
+  ],
+  "archive": {
+    "path": ".cache/prealpha-pass4/dense/libjudas_engine.integrated.a",
+    "sha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441"
+  },
+  "verification": "Expected hashes are taken from the already tested integrated archive/source receipt; current bytes were compared and matched. No expected hash was regenerated to mask a mismatch."
+}

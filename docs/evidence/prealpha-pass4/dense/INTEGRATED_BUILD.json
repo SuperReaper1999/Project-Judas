@@ -1,0 +1,48 @@
+{
+  "utc": "2026-10-18T16:08:39.496609+00:00",
+  "head": "06318379b5dfc99fe54eaedebbe5e6d964b25de8",
+  "files": {
+    "src/physics/WorldImpactEvents.cpp": {
+      "bytes": 34985,
+      "sha256": "65dda9f4732e78d02a8461e9e92f8b6490d14bebcb51473f0d573d73d9217b38"
+    },
+    ".cache/prealpha-pass4/dense/WorldImpactEvents.refactor-baseline.cpp": {
+      "bytes": 33041,
+      "sha256": "79dad2fc79f055a48ce7b5cc76d92068efe6b2d8096f8132d90dd51f99eae37f"
+    },
+    ".cache/prealpha-pass4/dense/WorldImpactEvents.integrated.cpp": {
+      "bytes": 34985,
+      "sha256": "65dda9f4732e78d02a8461e9e92f8b6490d14bebcb51473f0d573d73d9217b38"
+    },
+    ".cache/prealpha-pass4/dense/WorldImpactEvents.observer.cpp": {
+      "bytes": 37680,
+      "sha256": "eddef055d394598c2d24cc31b862b077a452c4377c7823ca3be98b52560ef7ac"
+    },
+    ".cache/prealpha-pass4/dense/libjudas_engine.integrated.a": {
+      "bytes": 30305200,
+      "sha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441"
+    },
+    ".cache/prealpha-pass4/dense/integrated-bin/WORKLOAD_BUILDS.json": {
+      "bytes": 6221,
+      "sha256": "1edeb80866cd680e8fc60df5a43189d254afb2a2566ea610022427477bb1b2f6"
+    },
+    ".cache/prealpha-pass4/dense/integrated-bin/judas_physics_scaling_diagnostics": {
+      "bytes": 1459520,
+      "sha256": "1374f054b4fa1ab65bd7aa4ff66509a0c9ed03fa293b91f0bd4ded8d6aced1c7"
+    },
+    ".cache/prealpha-pass4/dense/integrated-bin/judas_physics_scaling_diagnostics.link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/prealpha-pass4/dense/integrated-bin/judas_physics_stress_live_benchmark": {
+      "bytes": 55018624,
+      "sha256": "47ae45b9eb3b247e79bada17ea935dcabf30745e2aa16bf8cc0e7e43263301d1"
+    },
+    ".cache/prealpha-pass4/dense/integrated-bin/judas_physics_stress_live_benchmark.link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "difference_from_cache_experiment": "Final hash uses body64 + oddGoldenConstant*parts64 before same avalanche, rather than body64 XOR parts64. It is lookup-only; exact key equality is unchanged, no iteration order is used. Final integrated code independently validated.",
+  "ownership": "Only WorldImpactEvents.cpp production edit by this workstream; no CCD policy, physical fields or other sources changed."
+}

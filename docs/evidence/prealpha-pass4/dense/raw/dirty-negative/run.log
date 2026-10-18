@@ -1,0 +1,119 @@
+spin-up drops onto a horizontal support
+  slab down 20 side 0 spin 0 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 20 side 0 spin 0: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 20 side 0 spin 15 maxSpin 17.5871 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 20 side 0 spin 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 20 side 0 spin 45 maxSpin 55.069 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 20 side 0 spin 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 20 side 30 spin 0 maxSpin 0 centre below 0 corner below 0
+  slab down 20 side 30 spin 15 maxSpin 18.9188 centre below 0 corner below 0
+  slab down 20 side 30 spin 45 maxSpin 56.7558 centre below 0 corner below 0
+  slab down 40 side 0 spin 0 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 40 side 0 spin 0: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 40 side 0 spin 15 maxSpin 17.5032 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 40 side 0 spin 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 40 side 0 spin 45 maxSpin 52.7639 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 40 side 0 spin 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 40 side 30 spin 0 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 40 side 30 spin 0: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 40 side 30 spin 15 maxSpin 17.5032 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 40 side 30 spin 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab down 40 side 30 spin 45 maxSpin 52.7639 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab down 40 side 30 spin 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 20 side 0 spin 0 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 20 side 0 spin 0: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 20 side 0 spin 15 maxSpin 17.5871 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 20 side 0 spin 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 20 side 0 spin 45 maxSpin 55.069 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 20 side 0 spin 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 20 side 30 spin 0 maxSpin 0 centre below 0 corner below 0
+  mesh down 20 side 30 spin 15 maxSpin 18.9188 centre below 0 corner below 0
+  mesh down 20 side 30 spin 45 maxSpin 56.7558 centre below 0 corner below 0
+  mesh down 40 side 0 spin 0 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 40 side 0 spin 0: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 40 side 0 spin 15 maxSpin 17.5032 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 40 side 0 spin 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 40 side 0 spin 45 maxSpin 52.7639 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 40 side 0 spin 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 40 side 30 spin 0 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 40 side 30 spin 0: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 40 side 30 spin 15 maxSpin 17.5032 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 40 side 30 spin 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh down 40 side 30 spin 45 maxSpin 52.7639 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh down 40 side 30 spin 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+tilted supports
+  slab tilt 0 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 0 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 0 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 0 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 0 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 0 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 5 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 5 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 5 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 5 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 5 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 5 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 15 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 15 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 15 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 15 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 15 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 15 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 30 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 30 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 30 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 30 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 30 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 30 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 45 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 45 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 45 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 45 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab tilt 45 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab tilt 45 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 0 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 0 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 0 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 0 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 0 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 0 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 5 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 5 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 5 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 5 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 5 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 5 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 15 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 15 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 15 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 15 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 15 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 15 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 30 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 30 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 30 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 30 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 30 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 30 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 45 speed 10 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 45 speed 10: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 45 speed 20 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 45 speed 20: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh tilt 45 speed 40 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh tilt 45 speed 40: Step does not throw (Pass4 dirty scheduling witness diverged)
+gentle slides
+  slab slide 15 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab slide 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab slide 30 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab slide 30: Step does not throw (Pass4 dirty scheduling witness diverged)
+  slab slide 45 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL slab slide 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh slide 15 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh slide 15: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh slide 30 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh slide 30: Step does not throw (Pass4 dirty scheduling witness diverged)
+  mesh slide 45 maxSpin 0 centre below 0 corner below 0 THREW Pass4 dirty scheduling witness diverged
+FAIL mesh slide 45: Step does not throw (Pass4 dirty scheduling witness diverged)
+deepest corner below any support 0 m
+checks 4412 failures 54

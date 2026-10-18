@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/observer-checks/judas_impact_robustness_tests/judas_impact_robustness_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environment_overrides": {
+    "JUDAS_PASS4_NEGATIVE_DIRTY": "omit",
+    "JUDAS_PASS4_DIRTY_REPORT": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/dense/dirty-negative/observer.json"
+  },
+  "seconds": 0.5155343850001373,
+  "exit": 1,
+  "negative_control_detected": true,
+  "observer": {
+    "events": 54,
+    "original_raw_keys": 162,
+    "unique_keys": 54,
+    "nonzero_part_keys": 0,
+    "selected_without_changed_endpoint": 0,
+    "mismatches": 54
+  },
+  "binary_sha256": "2314db6432c43d0fe9bbb1d4ffc2ec5d2e09ec06c03b1810feaef03d7a79373e",
+  "meaning": "Cache-only observer deliberately removes a required dirty key before comparing actual optimized union against original accepted algorithm. Same compiled binary passes when override absent; this failure is intentional validation of the verifier, never production."
+}
