@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "head_at_validation": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+  "files": [
+    {
+      "path": "scripts/prealpha_packaging_checks.py",
+      "bytes": 24025,
+      "sha256": "06c94f44ab7759f39b854c0ed18de9b91fca16b8bb033a50f46a1f4982244d8a"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 79232,
+      "sha256": "7dd41f30b706d569b8db4494694411ce0ea917709534402cfb37eecd5fa95457"
+    },
+    {
+      "path": "cmake/JudasTestTargets.cmake",
+      "bytes": 1012,
+      "sha256": "61f480e15f74d820594abcc9a98628517a22bca3a8539eb5aaaa2593bcb5a0e4"
+    },
+    {
+      "path": "cmake/targets/RenderingAssets.cmake",
+      "bytes": 1429,
+      "sha256": "6e75ad497890af40ad23f018bdc8133dc1b7b14390ead719b2b9b8efa51d3ae4"
+    },
+    {
+      "path": "cmake/targets/DeveloperWorkflow.cmake",
+      "bytes": 1773,
+      "sha256": "f7b87b374c79a7a8f807e0c5f75bc9bc52788a5c30dbb35a973e0e667467a267"
+    },
+    {
+      "path": "cmake/targets/WorldLifecycle.cmake",
+      "bytes": 1805,
+      "sha256": "b41ce6d680795fefe3ec241d501f86b9cc0b219ab94b386098e974bae810d213"
+    },
+    {
+      "path": "packaging/sdk-inventory.json",
+      "bytes": 930,
+      "sha256": "e09d8c24371a543127e017bc71a4c73db14daee9a5da007c69a5dfa9fbf0c909"
+    },
+    {
+      "path": "tests/test_cmake_test_targets.py",
+      "bytes": 11299,
+      "sha256": "7b79d15baf7fb07840a71e1dd0b15e668aed89faf2259b96caf18d1c82d3d26e"
+    }
+  ]
+}

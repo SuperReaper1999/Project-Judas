@@ -1,0 +1,29 @@
+# Subsystem build declarations. Test registration remains in JudasValidation.cmake.
+judas_add_engine_test(judas_living_world_tests tests/LivingWorldTests.cpp)
+judas_add_engine_test(judas_living_world_streaming_tests tests/LivingWorldStreamingTests.cpp)
+judas_add_engine_test(judas_living_world_application_tests tests/LivingWorldApplicationTests.cpp APPLICATION)
+
+# M98 persistence evolution uses the existing archive/storage/restore path.
+add_executable(judas_save tools/SaveEvolutionMain.cpp)
+target_link_libraries(judas_save PRIVATE judas_engine)
+judas_warnings(judas_save)
+judas_add_engine_test(judas_save_evolution_tests tests/SaveEvolutionTests.cpp)
+judas_add_engine_test(judas_save_evolution_application_tests tests/SaveEvolutionApplicationTests.cpp APPLICATION)
+
+# Optional multiplayer shares the existing authoritative world; no network setup offline.
+add_executable(judas_server src/DedicatedMain.cpp)
+target_link_libraries(judas_server PRIVATE judas_engine)
+judas_warnings(judas_server)
+add_executable(judas_network_transport_tests tests/NetworkTransportTests.cpp src/NetworkTransport.cpp)
+target_include_directories(judas_network_transport_tests PRIVATE src)
+judas_warnings(judas_network_transport_tests)
+if(WIN32)
+ target_link_libraries(judas_network_transport_tests PRIVATE ws2_32)
+endif()
+judas_add_engine_test(judas_network_session_tests tests/NetworkSessionTests.cpp)
+judas_add_engine_test(judas_logical_input_tests tests/LogicalInputTests.cpp)
+judas_add_engine_test(judas_network_script_tests tests/NetworkScriptTests.cpp)
+judas_add_engine_test(judas_network_application_tests tests/NetworkApplicationTests.cpp APPLICATION)
+judas_add_engine_test(judas_network_render_tests tests/NetworkRenderTests.cpp)
+judas_add_engine_test(judas_network_boundary_tests tests/NetworkBoundaryTests.cpp)
+

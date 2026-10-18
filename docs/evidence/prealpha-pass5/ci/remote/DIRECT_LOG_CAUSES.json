@@ -1,0 +1,70 @@
+[
+  {
+    "run": 39156910751,
+    "errors": [
+      "2026-10-18T19:03:55.3992498Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T19:03:55.3998974Z AssertionError: {'judas_cook', 'judas_windows_readiness_tests', 'judas_save', 'judas_server', 'judas_script_check'} is not false",
+      "2026-10-18T19:03:55.4001663Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39152538526,
+    "errors": [
+      "2026-10-18T18:06:35.2740179Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T18:06:35.2743877Z AssertionError: {'judas_server', 'judas_save', 'judas_cook', 'judas_script_check', 'judas_windows_readiness_tests'} is not false",
+      "2026-10-18T18:06:35.2745386Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39148348070,
+    "errors": [
+      "2026-10-18T17:11:59.3184999Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T17:11:59.3191108Z AssertionError: {'judas_windows_readiness_tests', 'judas_save', 'judas_cook', 'judas_server', 'judas_script_check'} is not false",
+      "2026-10-18T17:11:59.3193116Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39146493986,
+    "errors": [
+      "2026-10-18T16:47:26.7342378Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T16:47:26.7345197Z AssertionError: {'judas_cook', 'judas_save', 'judas_server', 'judas_script_check', 'judas_windows_readiness_tests'} is not false",
+      "2026-10-18T16:47:26.7346237Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39145085107,
+    "errors": [
+      "2026-10-18T16:28:43.7921068Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T16:28:43.7923102Z AssertionError: {'judas_server', 'judas_windows_readiness_tests', 'judas_cook', 'judas_save', 'judas_script_check'} is not false",
+      "2026-10-18T16:28:43.7923835Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39142943843,
+    "errors": [
+      "2026-10-18T16:00:39.4465542Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T16:00:39.4471390Z AssertionError: {'judas_cook', 'judas_windows_readiness_tests', 'judas_script_check', 'judas_save', 'judas_server'} is not false",
+      "2026-10-18T16:00:39.4487525Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39139631370,
+    "errors": [
+      "2026-10-18T15:16:34.5197172Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T15:16:34.5201226Z AssertionError: {'judas_windows_readiness_tests', 'judas_save', 'judas_script_check', 'judas_server', 'judas_cook'} is not false",
+      "2026-10-18T15:16:34.5202670Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39138629167,
+    "errors": [
+      "2026-10-18T15:03:04.6736999Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "2026-10-18T15:03:04.6741821Z AssertionError: {'judas_script_check', 'judas_cook', 'judas_windows_readiness_tests', 'judas_server', 'judas_save'} is not false",
+      "2026-10-18T15:03:04.6743120Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "run": 39073963008,
+    "errors": []
+  }
+]

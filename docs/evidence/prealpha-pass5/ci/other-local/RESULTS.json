@@ -1,0 +1,73 @@
+[
+  {
+    "argv": [
+      "python3",
+      "scripts/prealpha_build_identity_checks.py",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/ci/other-local/identity.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T19:34:03.384305+00:00",
+    "exit": 0,
+    "seconds": 1.019301218999317,
+    "log": "0.log",
+    "sha256": "4011440fac0af608ffd41ce43e1f21a41a74ff342b568ef2cfc0c3062bdb0d70"
+  },
+  {
+    "argv": [
+      "python3",
+      "scripts/prealpha_distribution_checks.py",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/ci/other-local/distribution.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T19:34:03.649665+00:00",
+    "exit": 0,
+    "seconds": 0.2649361490002775,
+    "log": "1.log",
+    "sha256": "e44fc4f60c270bc7208da011817ce6eb89bfd45937c730a8ab6288b5f69ab28d"
+  },
+  {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_prealpha_validation.py",
+      "-v"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T19:34:04.072582+00:00",
+    "exit": 0,
+    "seconds": 0.42246807899937266,
+    "log": "2.log",
+    "sha256": "1ee46a22c78b3d3813f452ef2b68ee63227b0fd0b64d0bb05cc1d931c09b45d6"
+  },
+  {
+    "argv": [
+      "node",
+      "tests/TypeScriptToolingTests.mjs"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T19:34:04.790768+00:00",
+    "exit": 0,
+    "seconds": 0.7178778210000019,
+    "log": "3.log",
+    "sha256": "b852377980b8b73bd05151730b143ede355f2e1e0e0a9d12d741905b058fbe52"
+  },
+  {
+    "argv": [
+      "node",
+      "scripts/check_judasjs_api.mjs"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T19:34:06.108593+00:00",
+    "exit": 0,
+    "seconds": 1.3175040860005538,
+    "log": "4.log",
+    "sha256": "2bb956c4f80ebd387fed20fa326e59b092712211479a1bcd68896b609b9ef856"
+  }
+]

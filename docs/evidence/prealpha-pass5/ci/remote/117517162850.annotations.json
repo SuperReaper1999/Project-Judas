@@ -1,0 +1,14 @@
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/SuperReaper1999/Project-Judas/blob/683cc3ddd81743febd15845e487de1aa7140556d/.github",
+    "start_line": 76,
+    "start_column": null,
+    "end_line": 76,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "",
+    "message": "Process completed with exit code 8.",
+    "raw_details": ""
+  }
+]

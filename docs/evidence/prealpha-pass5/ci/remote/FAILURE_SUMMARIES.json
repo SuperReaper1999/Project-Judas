@@ -1,0 +1,51 @@
+[
+  {
+    "id": 39156910751,
+    "exit": 0,
+    "errors": [
+      "linux\tTooling positive and negative controls\t2026-10-18T19:03:55.3992493Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)",
+      "linux\tTooling positive and negative controls\t2026-10-18T19:03:55.3998968Z AssertionError: {'judas_cook', 'judas_windows_readiness_tests', 'judas_save', 'judas_server', 'judas_script_check'} is not false",
+      "linux\tTooling positive and negative controls\t2026-10-18T19:03:55.4001660Z FAILED (failures=1)"
+    ]
+  },
+  {
+    "id": 39152538526,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39148348070,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39146493986,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39145085107,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39142943843,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39139631370,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39138629167,
+    "exit": 0,
+    "errors": []
+  },
+  {
+    "id": 39073963008,
+    "exit": 0,
+    "errors": []
+  }
+]

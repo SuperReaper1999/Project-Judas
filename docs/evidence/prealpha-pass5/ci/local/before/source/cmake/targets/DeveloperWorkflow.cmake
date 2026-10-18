@@ -1,0 +1,28 @@
+# Subsystem build declarations. Test registration remains in JudasValidation.cmake.
+# M94: actual VM instruction stops, inspection and deliberate session reload.
+judas_add_engine_test(judas_script_developer_tools_tests tests/ScriptDeveloperToolsTests.cpp)
+add_executable(judas_script_check tools/ScriptCheck.cpp)
+target_link_libraries(judas_script_check PRIVATE judas_engine)
+judas_warnings(judas_script_check)
+add_executable(judas_script_vm_benchmark tests/ScriptVMBenchmark.c)
+set_target_properties(judas_script_vm_benchmark PROPERTIES C_STANDARD 11)
+target_link_libraries(judas_script_vm_benchmark PRIVATE judas_quickjs)
+add_executable(judas_script_tools_editor_tests tests/ScriptToolsEditorTests.cpp src/editor/ScriptTools.cpp)
+target_link_libraries(judas_script_tools_editor_tests PRIVATE judas_engine judas_imgui)
+judas_warnings(judas_script_tools_editor_tests)
+judas_add_engine_test(judas_script_developer_consumer_tests tests/ScriptDeveloperConsumerTests.cpp APPLICATION)
+
+# M95 event production, root-motion collision and authoring contracts.
+add_executable(judas_animation_workflow_tests tests/AnimationWorkflowTests.cpp)
+target_link_libraries(judas_animation_workflow_tests PRIVATE judas_model_import)
+judas_warnings(judas_animation_workflow_tests)
+judas_add_engine_test(judas_animation_workflow_application_tests tests/AnimationWorkflowApplicationTests.cpp APPLICATION)
+judas_add_engine_test(judas_animation_cold_save_tests tests/AnimationColdSaveTests.cpp)
+
+add_executable(judas_ui_production_tests tests/UIProductionTests.cpp)
+target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring)
+judas_warnings(judas_ui_production_tests)
+
+judas_add_engine_test(judas_ui_showcase_application_tests tests/UIShowcaseApplicationTests.cpp APPLICATION)
+
+

@@ -33,6 +33,54 @@ BUILD = {"schema": 1, "version": "0.1.0-prealpha", "maturity": "pre-alpha",
          "configuration": "Release", "compiler": "GNU", "compiler_version": "fixture"}
 
 
+def cmake_declared_targets(root, source_overrides=None):
+    """Find literal target declarations in reachable, repository-local CMake files.
+
+    This checks the shared, cross-platform source inventory, not host-specific
+    configured targets. Native configure/build checks independently verify CMake
+    semantics. Keep comments and quoted/bracket text from inventing declarations.
+    """
+    root = root.resolve()
+    overrides = source_overrides or {}
+    tokens = re.compile(
+        r'(?P<space>\s+)|(?P<comment>\#\[(?P<ce>=*)\[.*?\](?P=ce)\]|\#[^\n]*)'
+        r'|(?P<bracket>\[(?P<be>=*)\[.*?\](?P=be)\])'
+        r'|(?P<quoted>"(?:\\.|[^"\\])*")|(?P<open>\()|(?P<close>\))'
+        r'|(?P<word>[^\s()"#]+)', re.DOTALL)
+    pending = [root / "CMakeLists.txt"]
+    visited, targets = set(), set()
+    while pending:
+        path = pending.pop().resolve()
+        if path in visited:
+            continue
+        visited.add(path)
+        source = overrides.get(path.relative_to(root).as_posix())
+        if source is None:
+            source = path.read_text(encoding="utf-8")
+        lexed = [(m.lastgroup, m.group()) for m in tokens.finditer(source)
+                 if m.lastgroup not in ("space", "comment")]
+        for command, opening, argument in zip(lexed, lexed[1:], lexed[2:]):
+            if command[0] != "word" or opening[0] != "open":
+                continue
+            if argument[0] not in ("word", "quoted"):
+                continue
+            name = argument[1].strip('"')
+            kind = command[1].lower()
+            if kind in ("add_executable", "judas_add_engine_test"):
+                if re.fullmatch(r"[A-Za-z0-9_.+-]+", name):
+                    targets.add(name)
+            elif kind == "include":
+                name = name.replace("${CMAKE_CURRENT_LIST_DIR}", str(path.parent))
+                name = name.replace("${CMAKE_CURRENT_SOURCE_DIR}", str(root))
+                include = (root / name).resolve()
+                if "$" not in name and include.is_relative_to(root):
+                    if include.is_file():
+                        pending.append(include)
+                    elif name.endswith(".cmake"):
+                        raise ValueError(f"Missing local CMake include: {name}")
+    return targets
+
+
 class PackagingChecks(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix="judas-package-check-")
@@ -64,12 +112,49 @@ class PackagingChecks(unittest.TestCase):
 
     def test_shared_inventory_contains_every_current_public_tool(self):
         spec = package_sdk.inventory(ROOT / "packaging/sdk-inventory.json")
-        targets = set(re.findall(r"add_executable\(([^\s)]+)", (ROOT / "CMakeLists.txt").read_text()))
-        self.assertFalse(set(spec["tools"] + spec["windows_tools"]) - targets)
+        targets = cmake_declared_targets(ROOT)
+        missing = set(spec["tools"] + spec["windows_tools"]) - targets
+        self.assertFalse(missing, f"SDK tools missing reachable CMake declarations: {sorted(missing)}")
         self.assertTrue({"judas_cook", "judas_script_check", "judas_save", "judas_server",
                          "judas_volume_author", "judas_collision_cook"} <= set(spec["tools"]))
         for name in spec["files"] + spec["directories"]:
             self.assertTrue((ROOT / name).exists(), name)
+
+    def test_inventory_detects_removed_helper_target_and_unreachable_module(self):
+        source = (ROOT / "CMakeLists.txt").read_text(encoding="utf-8")
+        missing_helper, count = re.subn(
+            r"judas_add_engine_test\(judas_windows_readiness_tests[^\n]*", "", source)
+        self.assertEqual(count, 1, "negative control must remove the real helper invocation")
+        self.assertNotIn("judas_windows_readiness_tests",
+                         cmake_declared_targets(ROOT, {"CMakeLists.txt": missing_helper}))
+        missing_include = source.replace("include(cmake/targets/RenderingAssets.cmake)", "")
+        self.assertNotEqual(source, missing_include, "negative control must remove the real include")
+        self.assertNotIn("judas_cook",
+                         cmake_declared_targets(ROOT, {"CMakeLists.txt": missing_include}))
+
+    def test_inventory_follows_includes_without_accepting_inert_text(self):
+        cmake_root = self.root / "cmake-fixture"
+        (cmake_root / "nested").mkdir(parents=True)
+        (cmake_root / "CMakeLists.txt").write_text('''
+# add_executable(commented)
+#[=[
+add_executable(bracket_commented)
+]=]
+message("quoted\nadd_executable(quoted_target)")
+message([==[\nadd_executable(bracket_target)\n]==])
+include(
+    "nested/tools.cmake")
+''')
+        (cmake_root / "nested/tools.cmake").write_text('''
+include("${CMAKE_CURRENT_LIST_DIR}/../CMakeLists.txt")
+add_executable(
+    "real_tool" main.cpp)
+judas_add_engine_test(real_test tests.cpp)
+add_executable(${target} ${sources})
+''')
+        self.assertEqual(cmake_declared_targets(cmake_root), {"real_tool", "real_test"})
+        with self.assertRaisesRegex(ValueError, "Missing local CMake include"):
+            cmake_declared_targets(cmake_root, {"CMakeLists.txt": "include(missing.cmake)"})
 
     def test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts(self):
         for name in ("C:outside.txt", "D:/outside.txt"):

@@ -1,0 +1,156 @@
+[
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T19:02:27Z",
+    "databaseId": 39156910751,
+    "displayTitle": "Reuse unchanged impact broadphase candidates",
+    "headBranch": "Experimental",
+    "headSha": "be621491a6a1a578ac87e8c82e3b297ed8b18614",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39156910751",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T18:05:12Z",
+    "databaseId": 39152538526,
+    "displayTitle": "Record Pre-Alpha Pass 4 qualification and remaining limits",
+    "headBranch": "main",
+    "headSha": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39152538526",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T17:10:28Z",
+    "databaseId": 39148348070,
+    "displayTitle": "Keep packaged SDK verification tools read-only",
+    "headBranch": "Experimental",
+    "headSha": "df8929f73505d407697b5d35b115fc71d9100471",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39148348070",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T16:45:54Z",
+    "databaseId": 39146493986,
+    "displayTitle": "Restore native MSVC compilation without changing JudasJS",
+    "headBranch": "Experimental",
+    "headSha": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39146493986",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T16:27:33Z",
+    "databaseId": 39145085107,
+    "displayTitle": "Reduce redundant impact rescheduling work",
+    "headBranch": "Experimental",
+    "headSha": "b4305b790ee2d4a6b8cfbef31b449ae50d4e03b6",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39145085107",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T15:59:25Z",
+    "databaseId": 39142943843,
+    "displayTitle": "Separate physics world implementation into cohesive modules",
+    "headBranch": "Experimental",
+    "headSha": "06318379b5dfc99fe54eaedebbe5e6d964b25de8",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39142943843",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T15:15:10Z",
+    "databaseId": 39139631370,
+    "displayTitle": "Improve Pre-Alpha correctness, profiling and source maintainability",
+    "headBranch": "main",
+    "headSha": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39139631370",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-18T15:01:53Z",
+    "databaseId": 39138629167,
+    "displayTitle": "Improve Pre-Alpha correctness, profiling and source maintainability",
+    "headBranch": "Experimental",
+    "headSha": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39138629167",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-10-18T13:55:22Z",
+    "databaseId": 39133673577,
+    "displayTitle": "Correct rotated liquid baking and wet-face geometry",
+    "headBranch": "main",
+    "headSha": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39133673577",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-10-18T13:46:28Z",
+    "databaseId": 39133017442,
+    "displayTitle": "Correct rotated liquid baking and wet-face geometry",
+    "headBranch": "Experimental",
+    "headSha": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39133017442",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-10-18T12:47:50Z",
+    "databaseId": 39128787160,
+    "displayTitle": "Improve Pre-Alpha collision, lifecycle and distribution contracts",
+    "headBranch": "main",
+    "headSha": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39128787160",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-10-17T23:56:02Z",
+    "databaseId": 39080883358,
+    "displayTitle": "Improve Pre-Alpha collision, lifecycle and distribution contracts",
+    "headBranch": "Experimental",
+    "headSha": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39080883358",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-10-17T22:34:53Z",
+    "databaseId": 39075653088,
+    "displayTitle": "Make Pre-Alpha resource validation self-contained",
+    "headBranch": "Experimental",
+    "headSha": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39075653088",
+    "workflowName": "Pre-Alpha focused gates"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-10-17T22:10:24Z",
+    "databaseId": 39073963008,
+    "displayTitle": "Establish Pre-Alpha build provenance, packaging and validation",
+    "headBranch": "Experimental",
+    "headSha": "683cc3ddd81743febd15845e487de1aa7140556d",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39073963008",
+    "workflowName": "Pre-Alpha focused gates"
+  }
+]

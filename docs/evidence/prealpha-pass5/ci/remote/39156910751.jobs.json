@@ -1,0 +1,137 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 117761907995,
+      "run_id": 39156910751,
+      "workflow_name": "Pre-Alpha focused gates",
+      "head_branch": "Experimental",
+      "run_url": "https://api.github.com/repos/SuperReaper1999/Project-Judas/actions/runs/39156910751",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUi_n988AAAAbaygdGw",
+      "head_sha": "be621491a6a1a578ac87e8c82e3b297ed8b18614",
+      "url": "https://api.github.com/repos/SuperReaper1999/Project-Judas/actions/jobs/117761907995",
+      "html_url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39156910751/job/117761907995",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-18T19:02:27Z",
+      "started_at": "2026-10-18T19:02:29Z",
+      "completed_at": "2026-10-18T19:03:57Z",
+      "name": "linux",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-18T19:02:30Z",
+          "completed_at": "2026-10-18T19:02:32Z"
+        },
+        {
+          "name": "Run actions/checkout@v7",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-18T19:02:32Z",
+          "completed_at": "2026-10-18T19:03:23Z"
+        },
+        {
+          "name": "Run actions/setup-node@v7",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-18T19:03:23Z",
+          "completed_at": "2026-10-18T19:03:23Z"
+        },
+        {
+          "name": "Native and optional verification prerequisites",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-18T19:03:23Z",
+          "completed_at": "2026-10-18T19:03:53Z"
+        },
+        {
+          "name": "Tooling positive and negative controls",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 5,
+          "started_at": "2026-10-18T19:03:53Z",
+          "completed_at": "2026-10-18T19:03:55Z"
+        },
+        {
+          "name": "Configure an explicitly identified build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-18T19:03:55Z",
+          "completed_at": "2026-10-18T19:03:55Z"
+        },
+        {
+          "name": "Build focused dependencies and public SDK",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-10-18T19:03:55Z",
+          "completed_at": "2026-10-18T19:03:55Z"
+        },
+        {
+          "name": "Focused native gates",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-10-18T19:03:55Z",
+          "completed_at": "2026-10-18T19:03:55Z"
+        },
+        {
+          "name": "Qualify SDK on its declared Linux baseline",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-10-18T19:03:55Z",
+          "completed_at": "2026-10-18T19:03:55Z"
+        },
+        {
+          "name": "Preserve diagnostics even on failure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-18T19:03:55Z",
+          "completed_at": "2026-10-18T19:03:56Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v7",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 19,
+          "started_at": "2026-10-18T19:03:56Z",
+          "completed_at": "2026-10-18T19:03:56Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v7",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-18T19:03:56Z",
+          "completed_at": "2026-10-18T19:03:56Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-18T19:03:56Z",
+          "completed_at": "2026-10-18T19:03:56Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/SuperReaper1999/Project-Judas/check-runs/117761907995",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000015,
+      "runner_name": "GitHub Actions 1000000015",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

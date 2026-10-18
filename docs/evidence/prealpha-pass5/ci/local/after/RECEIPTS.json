@@ -1,0 +1,32 @@
+[
+  {
+    "label": "packaging",
+    "command": [
+      "python3",
+      "scripts/prealpha_packaging_checks.py",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/ci/local/after/RESULTS.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "started_utc": "2026-10-18T19:36:14.968853+00:00",
+    "finished_utc": "2026-10-18T19:36:15.599389+00:00",
+    "returncode": 0
+  },
+  {
+    "label": "cmake-target-contracts",
+    "command": [
+      "python3",
+      "tests/test_cmake_test_targets.py"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "started_utc": "2026-10-18T19:36:15.599418+00:00",
+    "finished_utc": "2026-10-18T19:36:15.834137+00:00",
+    "returncode": 0
+  }
+]

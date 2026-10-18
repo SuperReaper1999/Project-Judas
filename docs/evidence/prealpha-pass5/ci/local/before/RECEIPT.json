@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "command": [
+    "python3",
+    "scripts/prealpha_packaging_checks.py",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/ci/local/before/RESULTS.json"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_utc": "2026-10-18T19:35:15.267011+00:00",
+  "finished_utc": "2026-10-18T19:35:15.914071+00:00",
+  "returncode": 1,
+  "expected_returncode": 1,
+  "head": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+  "source_sha256": {
+    "scripts/prealpha_packaging_checks.py": "5c7450b3693fbab73a79738d43d25cf951c00ecea6d2f1e59963d33f8cff4550",
+    "CMakeLists.txt": "7dd41f30b706d569b8db4494694411ce0ea917709534402cfb37eecd5fa95457",
+    "cmake/JudasTestTargets.cmake": "61f480e15f74d820594abcc9a98628517a22bca3a8539eb5aaaa2593bcb5a0e4",
+    "cmake/targets/RenderingAssets.cmake": "6e75ad497890af40ad23f018bdc8133dc1b7b14390ead719b2b9b8efa51d3ae4",
+    "cmake/targets/DeveloperWorkflow.cmake": "f7b87b374c79a7a8f807e0c5f75bc9bc52788a5c30dbb35a973e0e667467a267",
+    "cmake/targets/WorldLifecycle.cmake": "b41ce6d680795fefe3ec241d501f86b9cc0b219ab94b386098e974bae810d213",
+    "packaging/sdk-inventory.json": "e09d8c24371a543127e017bc71a4c73db14daee9a5da007c69a5dfa9fbf0c909"
+  }
+}
