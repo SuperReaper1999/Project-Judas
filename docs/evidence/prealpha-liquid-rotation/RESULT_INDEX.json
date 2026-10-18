@@ -1,0 +1,165 @@
+[
+  {
+    "name": "rotation",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.26440122999974847,
+    "summary": [
+      "Liquid rotation 419 checks, 37 orientations, 0 failures; fixed seed 0x5b3d84a729c160e7"
+    ]
+  },
+  {
+    "name": "frame",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.016004323000288423,
+    "summary": [
+      "SUMMARY 40 checks 0 failures"
+    ]
+  },
+  {
+    "name": "bake-normalization",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.03219770300029268,
+    "summary": []
+  },
+  {
+    "name": "bake-knots",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.0320834350000041,
+    "summary": []
+  },
+  {
+    "name": "normalization-full-preserved-failure",
+    "exit": 1,
+    "status": "preserved-failure",
+    "seconds": 0.03215739500001291,
+    "summary": []
+  },
+  {
+    "name": "knots-full-preserved-failure",
+    "exit": 1,
+    "status": "preserved-failure",
+    "seconds": 0.03214438999975755,
+    "summary": []
+  },
+  {
+    "name": "origin",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.4650484030003099,
+    "summary": [
+      "SUMMARY 8 checks 0 failures",
+      "SUMMARY 8 checks 0 failures",
+      "SUMMARY 87 checks 0 failures"
+    ]
+  },
+  {
+    "name": "M54",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.5653359979996821,
+    "summary": [
+      "M54 67 checks 0 failures"
+    ]
+  },
+  {
+    "name": "M55",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 1.0160327039998265,
+    "summary": [
+      "M55 core 61 checks 0 failures"
+    ]
+  },
+  {
+    "name": "refill",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 9.13242381300006,
+    "summary": [
+      "M55 refill 34 checks 0 failures"
+    ]
+  },
+  {
+    "name": "M54-application",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 3.980969076999827,
+    "summary": [
+      "M54 application 41 checks 0 failures"
+    ]
+  },
+  {
+    "name": "M55-application",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 7.229767575000096,
+    "summary": [
+      "M55 application 38 checks 0 failures"
+    ]
+  },
+  {
+    "name": "gravity-selection",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.2145422570001756,
+    "summary": [
+      "SUMMARY 70 checks 0 failures"
+    ]
+  },
+  {
+    "name": "gravity-uniform",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.21468983799968555,
+    "summary": [
+      "UniformGravityScene: PASS scenes=136 runtime_constructions=272 steps=32640 checks=12095 failures=0"
+    ]
+  },
+  {
+    "name": "streaming",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.5654412779999802,
+    "summary": []
+  },
+  {
+    "name": "world-persistence",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.03208645299991986,
+    "summary": [
+      "SUMMARY 27 checks 0 failures"
+    ]
+  },
+  {
+    "name": "origin-assembly",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.1142234480003026,
+    "summary": [
+      "SUMMARY 46 checks 0 failures"
+    ]
+  },
+  {
+    "name": "origin-stream",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.06421990799981359,
+    "summary": [
+      "SUMMARY 23 checks 0 failures"
+    ]
+  },
+  {
+    "name": "character",
+    "exit": 0,
+    "status": "passed",
+    "seconds": 0.5152356920002603,
+    "summary": [
+      "SUMMARY 32 checks 0 failures"
+    ]
+  }
+]

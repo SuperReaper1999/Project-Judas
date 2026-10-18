@@ -6,7 +6,7 @@
 #include "RadicalGravity.h"
 #include "GravityContextMap.h"
 #include "GravityVolume.h"
-#include "BoxVolume.h"
+#include "OrientedGravityVolume.h"
 #include "SphericalVolume.h"
 #include <glm/gtc/quaternion.hpp>
 #include <fstream>
@@ -43,9 +43,43 @@ bool PrepareLiquidBake(const Scene& scene,const SceneObject& o,const AssetDataba
  // Bake constructs ordinary authored gravity regions in the SAME registration
  // order as RuntimeWorld. No liquid consumer branches on gravity implementation.
  std::vector<std::unique_ptr<GravityField>> fields;std::vector<std::unique_ptr<GravityVolume>> volumes;GravityContextMap resolver;
- for(auto& x:scene.Objects())if(x.gravity){auto d=*x.gravity;std::unique_ptr<GravityField> f;if(d.kind==SceneGravityKind::Radial)f=std::make_unique<RadicalGravity>(x.transform.position,d.magnitude);else f=std::make_unique<UniformGravity>(x.transform.rotation*glm::vec3(0,-d.magnitude,0));std::unique_ptr<GravityVolume> v;if(d.regionShape==SceneRegionShape::Box)v=std::make_unique<BoxVolume>(x.transform.position,d.regionHalfExtents);else v=std::make_unique<SphericalVolume>(x.transform.position,d.regionRadius);resolver.AddRegion(*f,*v);fields.push_back(std::move(f));volumes.push_back(std::move(v));}
- GravityEquilibrium eq;if(!resolver.Equilibrium(o.transform.position,eq)){error="basin has no supported conservative gravity equilibrium";return false;}for(auto& t:g.cells)for(auto v:t){GravityEquilibrium sampled;auto point=o.transform.position+o.transform.rotation*glm::vec3(v);if(!resolver.Equilibrium(point,sampled)||!eq.Equivalent(sampled)){error="basin spans incompatible gravity regions";return false;}}
- local=eq;local.up=glm::inverse(glm::dquat(o.transform.rotation))*eq.up;local.center=glm::inverse(glm::dquat(o.transform.rotation))*(eq.center-glm::dvec3(o.transform.position));
+ for (const auto& x : scene.Objects()) if (x.gravity) {
+     const auto& settings = *x.gravity;
+     // RuntimeWorld normalizes authored orientations before constructing fields.
+     // Using the raw float quaternion here gives a different physical field.
+     const auto rotation = glm::normalize(x.transform.rotation);
+     std::unique_ptr<GravityField> field;
+     if (settings.kind == SceneGravityKind::Radial)
+         field = std::make_unique<RadicalGravity>(x.transform.position, settings.magnitude);
+     else
+         field = std::make_unique<UniformGravity>(rotation * glm::vec3(0, -settings.magnitude, 0));
+     std::unique_ptr<GravityVolume> volume;
+     if (settings.regionShape == SceneRegionShape::Box)
+         volume = std::make_unique<OrientedGravityVolume>(x.transform.position, rotation, settings.regionHalfExtents);
+     else
+         volume = std::make_unique<SphericalVolume>(x.transform.position, settings.regionRadius);
+     resolver.AddRegion(*field, *volume);
+     fields.push_back(std::move(field));
+     volumes.push_back(std::move(volume));
+ }
+ const auto ownerRotation = glm::normalize(o.transform.rotation);
+ GravityEquilibrium eq;
+ if (!resolver.Equilibrium(o.transform.position, eq)) {
+     error = "basin has no supported conservative gravity equilibrium";
+     return false;
+ }
+ for (const auto& tet : g.cells) for (auto vertex : tet) {
+     GravityEquilibrium sampled;
+     const auto point = o.transform.position + ownerRotation * glm::vec3(vertex);
+     if (!resolver.Equilibrium(point, sampled) || !eq.Equivalent(sampled)) {
+         error = "basin spans incompatible gravity regions";
+         return false;
+     }
+ }
+ local = eq;
+ const auto inverse = glm::inverse(glm::dquat(ownerRotation));
+ local.up = inverse * eq.up;
+ local.center = inverse * (eq.center - glm::dvec3(o.transform.position));
  std::ifstream f(a->path,std::ios::binary);std::ostringstream bytes;bytes<<f.rdbuf();std::ostringstream s;s<<std::setprecision(17)<<"Judas.LiquidBake.1 "<<a->id<<' '<<bytes.str()<<' '<<o.liquidBasin->volumeTolerance<<' '<<o.liquidBasin->heightTolerance<<' '<<int(local.kind)<<' '<<local.up.x<<' '<<local.up.y<<' '<<local.up.z<<' '<<local.center.x<<' '<<local.center.y<<' '<<local.center.z<<' '<<local.magnitude;if(o.liquidBasin->surface.enabled){auto& d=o.liquidBasin->surface;s<<" Surface1 "<<d.columns<<' '<<d.rows<<' '<<d.friction<<' '<<d.tolerance<<' '<<d.iterations<<' '<<d.splashSpeed<<' '<<d.splashFraction<<' '<<d.parcelBudget;}hash=SceneFingerprintSha256(s.str());return true;}
 std::string LiquidSourceFingerprint(const Scene& s,const SceneObject& o,const AssetDatabase& a,std::string& e){LiquidGeometry g;GravityEquilibrium eq;std::string h;if(!PrepareLiquidBake(s,o,a,g,eq,h,e))return {};return h;}
 bool DecodeLiquidResource(const std::vector<unsigned char>& bytes,LiquidResource& out,std::string& error){std::string data(bytes.begin(),bytes.end());if((data.rfind("JudasBasin1 ",0)==0||data.rfind("JudasBasin2 ",0)==0)){auto b=std::make_shared<LiquidBasinData>();if(!DecodeLiquidBasin(bytes,*b,error))return false;out.basin=b;return true;}std::istringstream s(data);std::string magic;size_t n;if(!(s>>magic>>n)||magic!="JudasCavity1"||n>16384){error="invalid liquid geometry asset";return false;}out.geometry.cells.resize(n);for(auto& t:out.geometry.cells)for(auto& p:t)if(!(s>>p.x>>p.y>>p.z)){error="truncated cavity";return false;}s>>std::ws;return s.eof()&&ValidateLiquidGeometry(out.geometry,error);}

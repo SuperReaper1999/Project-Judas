@@ -1,0 +1,14 @@
+PASS fresh failed-reproduction output required
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS unpublished liquid-only actors cannot bypass full-volume chart preflight
+PASS unpublished geometry does not prevent an actual no-op origin request
+PASS ordinary authoritative session
+PASS ordinary unshifted liquid fixture is healthy before testing chart changes
+PASS real basin surface and independent cup resolve
+BAKE_ONLY actual authored bake, strict resource decode and published owners verified; no origin claim

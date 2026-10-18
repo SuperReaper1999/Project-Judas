@@ -1,0 +1,7 @@
+BENCH trial=0 operations=300 milliseconds=57.037252000000002 checksum=297.0000000030023
+BENCH trial=1 operations=300 milliseconds=52.754486999999997 checksum=594.0000000060063
+BENCH trial=2 operations=300 milliseconds=49.321162999999999 checksum=891.00000000901036
+BENCH trial=3 operations=300 milliseconds=48.973590000000002 checksum=1188.0000000120144
+BENCH trial=4 operations=300 milliseconds=49.724753 checksum=1485.0000000150185
+BENCH trial=5 operations=300 milliseconds=49.927590000000002 checksum=1782.0000000180225
+BENCH trial=6 operations=300 milliseconds=50.892018999999998 checksum=2079.0000000210193

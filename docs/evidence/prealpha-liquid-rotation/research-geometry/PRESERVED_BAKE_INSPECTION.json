@@ -1,0 +1,119 @@
+{
+  "method": "Parse preserved serialized text only; no new production/research execution",
+  "assets": [
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-1/Assets/2.judasbasin",
+      "sha256": "11606b8e91bc2c6c9a3c7fe0d7864f1b09e44fb57da5005b5a091d9b8278e1be",
+      "nonmonotonic_rows": []
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-1/Assets/3.judasbasin",
+      "sha256": "8fa5440123909bccf049ebc6d99f12f858b63b65db2afd5cf42375d7a9ccde91",
+      "nonmonotonic_rows": []
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-3/Assets/2.judasbasin",
+      "sha256": "11606b8e91bc2c6c9a3c7fe0d7864f1b09e44fb57da5005b5a091d9b8278e1be",
+      "nonmonotonic_rows": []
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-3/Assets/3.judasbasin",
+      "sha256": "8fa5440123909bccf049ebc6d99f12f858b63b65db2afd5cf42375d7a9ccde91",
+      "nonmonotonic_rows": []
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-4/Assets/2.judasbasin",
+      "sha256": "11606b8e91bc2c6c9a3c7fe0d7864f1b09e44fb57da5005b5a091d9b8278e1be",
+      "nonmonotonic_rows": []
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-4/Assets/3.judasbasin",
+      "sha256": "8fa5440123909bccf049ebc6d99f12f858b63b65db2afd5cf42375d7a9ccde91",
+      "nonmonotonic_rows": []
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-5/Assets/2.judasbasin",
+      "sha256": "1683e73fdae675feb43b092a6ab384c9c07a64f6d8e547d14714ca3ab9e05220",
+      "nonmonotonic_rows": [
+        {
+          "cell": 3,
+          "column": 3,
+          "row": 0,
+          "previous": [
+            0.9999999518695906,
+            0.24999999655046692
+          ],
+          "next": [
+            0.9999999518695907,
+            0.2499999965504669
+          ],
+          "delta_q": 1.1102230246251565e-16,
+          "delta_volume": -2.7755575615628914e-17
+        }
+      ]
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-5/Assets/3.judasbasin",
+      "sha256": "46f11bed87fc63bfbe1ffc596bd615a6f3776e98339e3d314699539e93c85769",
+      "nonmonotonic_rows": [
+        {
+          "cell": 3,
+          "column": 3,
+          "row": 0,
+          "previous": [
+            0.9999999518695906,
+            0.24999999655046692
+          ],
+          "next": [
+            0.9999999518695907,
+            0.2499999965504669
+          ],
+          "delta_q": 1.1102230246251565e-16,
+          "delta_volume": -2.7755575615628914e-17
+        }
+      ]
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-6/Assets/2.judasbasin",
+      "sha256": "1683e73fdae675feb43b092a6ab384c9c07a64f6d8e547d14714ca3ab9e05220",
+      "nonmonotonic_rows": [
+        {
+          "cell": 3,
+          "column": 3,
+          "row": 0,
+          "previous": [
+            0.9999999518695906,
+            0.24999999655046692
+          ],
+          "next": [
+            0.9999999518695907,
+            0.2499999965504669
+          ],
+          "delta_q": 1.1102230246251565e-16,
+          "delta_volume": -2.7755575615628914e-17
+        }
+      ]
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass2/integration/failed-bake-fixtures/origin-run-6/Assets/3.judasbasin",
+      "sha256": "46f11bed87fc63bfbe1ffc596bd615a6f3776e98339e3d314699539e93c85769",
+      "nonmonotonic_rows": [
+        {
+          "cell": 3,
+          "column": 3,
+          "row": 0,
+          "previous": [
+            0.9999999518695906,
+            0.24999999655046692
+          ],
+          "next": [
+            0.9999999518695907,
+            0.2499999965504669
+          ],
+          "delta_q": 1.1102230246251565e-16,
+          "delta_volume": -2.7755575615628914e-17
+        }
+      ]
+    }
+  ]
+}

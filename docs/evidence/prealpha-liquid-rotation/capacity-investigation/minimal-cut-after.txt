@@ -1,0 +1,2 @@
+crossing_tet full=0.333333333339999982047885 clipped=0.333333333337142823094013 excess=-2.85715895387284035678022e-12 complementary_partition_error=0
+strictly_outside_tet full=1.33333333333333336123008e-07 clipped_count=0 clipped_volume=0 min_height=1e-13 max_height=9e-13 plane_height=0

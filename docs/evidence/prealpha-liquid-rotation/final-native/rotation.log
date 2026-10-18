@@ -1,0 +1,388 @@
+PASS analytic nonlinear storage, physical derivative and energy primitive agree
+PASS physical small area is retained when cumulative volume increments round below one ULP
+PASS analytic oblique cut uses actual original box boundary
+PASS oblique analytic volume, first moments and wet-face area agree
+PASS collapsed face heights are dry below, wet exactly at and above full height
+PASS near-plane clipping never extrapolates beyond the original physical volume
+PASS complementary physical half-spaces partition volume without tolerance-band overlap
+PASS all-inside fast path does not retain a strictly outside thin tetrahedron
+PASS exact physical half-space classification is independent of world up
+PASS negative control detects rotating geometry without its gravity frame
+PASS negative control detects translating geometry without shifting plane head
+PASS physical cap normal detects a reversed surface orientation
+PASS rigid-frame volume, moments and clipped aperture covariance case 0
+PASS rotated cap normals follow gravity independently of world axes case 0
+PASS original physical tetrahedron face planes transform covariantly case 0
+PASS physical basin bake case 0: 
+PASS physical dynamic-surface bake case 0: 
+PASS strict serialized knots and sampled physical storage remain monotone case 0
+PASS cubic storage and inverse match independent geometric clipping case 0
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 0
+PASS normal Surface1 serialization case 0
+PASS strict Surface1 decoder accepts generated rotated storage case 0: 
+PASS negative decreasing capacity fixture serializes
+PASS strict decoder rejects decreasing capacity without publishing a surface
+PASS negative duplicate head fixture serializes
+PASS strict decoder rejects duplicate heads without publishing a surface
+PASS rigid-frame volume, moments and clipped aperture covariance case 1
+PASS rotated cap normals follow gravity independently of world axes case 1
+PASS original physical tetrahedron face planes transform covariantly case 1
+PASS physical basin bake case 1: 
+PASS physical dynamic-surface bake case 1: 
+PASS strict serialized knots and sampled physical storage remain monotone case 1
+PASS cubic storage and inverse match independent geometric clipping case 1
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 1
+PASS normal Surface1 serialization case 1
+PASS strict Surface1 decoder accepts generated rotated storage case 1: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 2
+PASS rotated cap normals follow gravity independently of world axes case 2
+PASS original physical tetrahedron face planes transform covariantly case 2
+PASS physical basin bake case 2: 
+PASS physical dynamic-surface bake case 2: 
+PASS strict serialized knots and sampled physical storage remain monotone case 2
+PASS cubic storage and inverse match independent geometric clipping case 2
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 2
+PASS normal Surface1 serialization case 2
+PASS strict Surface1 decoder accepts generated rotated storage case 2: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 3
+PASS rotated cap normals follow gravity independently of world axes case 3
+PASS original physical tetrahedron face planes transform covariantly case 3
+PASS physical basin bake case 3: 
+PASS physical dynamic-surface bake case 3: 
+PASS strict serialized knots and sampled physical storage remain monotone case 3
+PASS cubic storage and inverse match independent geometric clipping case 3
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 3
+PASS normal Surface1 serialization case 3
+PASS strict Surface1 decoder accepts generated rotated storage case 3: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 4
+PASS rotated cap normals follow gravity independently of world axes case 4
+PASS original physical tetrahedron face planes transform covariantly case 4
+PASS physical basin bake case 4: 
+PASS physical dynamic-surface bake case 4: 
+PASS strict serialized knots and sampled physical storage remain monotone case 4
+PASS cubic storage and inverse match independent geometric clipping case 4
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 4
+PASS normal Surface1 serialization case 4
+PASS strict Surface1 decoder accepts generated rotated storage case 4: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 5
+PASS rotated cap normals follow gravity independently of world axes case 5
+PASS original physical tetrahedron face planes transform covariantly case 5
+PASS physical basin bake case 5: 
+PASS physical dynamic-surface bake case 5: 
+PASS strict serialized knots and sampled physical storage remain monotone case 5
+PASS cubic storage and inverse match independent geometric clipping case 5
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 5
+PASS normal Surface1 serialization case 5
+PASS strict Surface1 decoder accepts generated rotated storage case 5: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 6
+PASS rotated cap normals follow gravity independently of world axes case 6
+PASS original physical tetrahedron face planes transform covariantly case 6
+PASS physical basin bake case 6: 
+PASS physical dynamic-surface bake case 6: 
+PASS strict serialized knots and sampled physical storage remain monotone case 6
+PASS cubic storage and inverse match independent geometric clipping case 6
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 6
+PASS normal Surface1 serialization case 6
+PASS strict Surface1 decoder accepts generated rotated storage case 6: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 7
+PASS rotated cap normals follow gravity independently of world axes case 7
+PASS original physical tetrahedron face planes transform covariantly case 7
+PASS physical basin bake case 7: 
+PASS physical dynamic-surface bake case 7: 
+PASS strict serialized knots and sampled physical storage remain monotone case 7
+PASS cubic storage and inverse match independent geometric clipping case 7
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 7
+PASS normal Surface1 serialization case 7
+PASS strict Surface1 decoder accepts generated rotated storage case 7: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 8
+PASS rotated cap normals follow gravity independently of world axes case 8
+PASS original physical tetrahedron face planes transform covariantly case 8
+PASS physical basin bake case 8: 
+PASS physical dynamic-surface bake case 8: 
+PASS strict serialized knots and sampled physical storage remain monotone case 8
+PASS cubic storage and inverse match independent geometric clipping case 8
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 8
+PASS normal Surface1 serialization case 8
+PASS strict Surface1 decoder accepts generated rotated storage case 8: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 9
+PASS rotated cap normals follow gravity independently of world axes case 9
+PASS original physical tetrahedron face planes transform covariantly case 9
+PASS physical basin bake case 9: 
+PASS physical dynamic-surface bake case 9: 
+PASS strict serialized knots and sampled physical storage remain monotone case 9
+PASS cubic storage and inverse match independent geometric clipping case 9
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 9
+PASS normal Surface1 serialization case 9
+PASS strict Surface1 decoder accepts generated rotated storage case 9: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 10
+PASS rotated cap normals follow gravity independently of world axes case 10
+PASS original physical tetrahedron face planes transform covariantly case 10
+PASS physical basin bake case 10: 
+PASS physical dynamic-surface bake case 10: 
+PASS strict serialized knots and sampled physical storage remain monotone case 10
+PASS cubic storage and inverse match independent geometric clipping case 10
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 10
+PASS normal Surface1 serialization case 10
+PASS strict Surface1 decoder accepts generated rotated storage case 10: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 11
+PASS rotated cap normals follow gravity independently of world axes case 11
+PASS original physical tetrahedron face planes transform covariantly case 11
+PASS physical basin bake case 11: 
+PASS physical dynamic-surface bake case 11: 
+PASS strict serialized knots and sampled physical storage remain monotone case 11
+PASS cubic storage and inverse match independent geometric clipping case 11
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 11
+PASS normal Surface1 serialization case 11
+PASS strict Surface1 decoder accepts generated rotated storage case 11: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 12
+PASS rotated cap normals follow gravity independently of world axes case 12
+PASS original physical tetrahedron face planes transform covariantly case 12
+PASS physical basin bake case 12: 
+PASS physical dynamic-surface bake case 12: 
+PASS strict serialized knots and sampled physical storage remain monotone case 12
+PASS cubic storage and inverse match independent geometric clipping case 12
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 12
+PASS normal Surface1 serialization case 12
+PASS strict Surface1 decoder accepts generated rotated storage case 12: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 13
+PASS rotated cap normals follow gravity independently of world axes case 13
+PASS original physical tetrahedron face planes transform covariantly case 13
+PASS physical basin bake case 13: 
+PASS physical dynamic-surface bake case 13: 
+PASS strict serialized knots and sampled physical storage remain monotone case 13
+PASS cubic storage and inverse match independent geometric clipping case 13
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 13
+PASS normal Surface1 serialization case 13
+PASS strict Surface1 decoder accepts generated rotated storage case 13: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 14
+PASS rotated cap normals follow gravity independently of world axes case 14
+PASS original physical tetrahedron face planes transform covariantly case 14
+PASS physical basin bake case 14: 
+PASS physical dynamic-surface bake case 14: 
+PASS strict serialized knots and sampled physical storage remain monotone case 14
+PASS cubic storage and inverse match independent geometric clipping case 14
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 14
+PASS normal Surface1 serialization case 14
+PASS strict Surface1 decoder accepts generated rotated storage case 14: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 15
+PASS rotated cap normals follow gravity independently of world axes case 15
+PASS original physical tetrahedron face planes transform covariantly case 15
+PASS physical basin bake case 15: 
+PASS physical dynamic-surface bake case 15: 
+PASS strict serialized knots and sampled physical storage remain monotone case 15
+PASS cubic storage and inverse match independent geometric clipping case 15
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 15
+PASS normal Surface1 serialization case 15
+PASS strict Surface1 decoder accepts generated rotated storage case 15: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 16
+PASS rotated cap normals follow gravity independently of world axes case 16
+PASS original physical tetrahedron face planes transform covariantly case 16
+PASS physical basin bake case 16: 
+PASS physical dynamic-surface bake case 16: 
+PASS strict serialized knots and sampled physical storage remain monotone case 16
+PASS cubic storage and inverse match independent geometric clipping case 16
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 16
+PASS normal Surface1 serialization case 16
+PASS strict Surface1 decoder accepts generated rotated storage case 16: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 17
+PASS rotated cap normals follow gravity independently of world axes case 17
+PASS original physical tetrahedron face planes transform covariantly case 17
+PASS physical basin bake case 17: 
+PASS physical dynamic-surface bake case 17: 
+PASS strict serialized knots and sampled physical storage remain monotone case 17
+PASS cubic storage and inverse match independent geometric clipping case 17
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 17
+PASS normal Surface1 serialization case 17
+PASS strict Surface1 decoder accepts generated rotated storage case 17: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 18
+PASS rotated cap normals follow gravity independently of world axes case 18
+PASS original physical tetrahedron face planes transform covariantly case 18
+PASS physical basin bake case 18: 
+PASS physical dynamic-surface bake case 18: 
+PASS strict serialized knots and sampled physical storage remain monotone case 18
+PASS cubic storage and inverse match independent geometric clipping case 18
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 18
+PASS normal Surface1 serialization case 18
+PASS strict Surface1 decoder accepts generated rotated storage case 18: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 19
+PASS rotated cap normals follow gravity independently of world axes case 19
+PASS original physical tetrahedron face planes transform covariantly case 19
+PASS physical basin bake case 19: 
+PASS physical dynamic-surface bake case 19: 
+PASS strict serialized knots and sampled physical storage remain monotone case 19
+PASS cubic storage and inverse match independent geometric clipping case 19
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 19
+PASS normal Surface1 serialization case 19
+PASS strict Surface1 decoder accepts generated rotated storage case 19: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 20
+PASS rotated cap normals follow gravity independently of world axes case 20
+PASS original physical tetrahedron face planes transform covariantly case 20
+PASS physical basin bake case 20: 
+PASS physical dynamic-surface bake case 20: 
+PASS strict serialized knots and sampled physical storage remain monotone case 20
+PASS cubic storage and inverse match independent geometric clipping case 20
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 20
+PASS normal Surface1 serialization case 20
+PASS strict Surface1 decoder accepts generated rotated storage case 20: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 21
+PASS rotated cap normals follow gravity independently of world axes case 21
+PASS original physical tetrahedron face planes transform covariantly case 21
+PASS physical basin bake case 21: 
+PASS physical dynamic-surface bake case 21: 
+PASS strict serialized knots and sampled physical storage remain monotone case 21
+PASS cubic storage and inverse match independent geometric clipping case 21
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 21
+PASS normal Surface1 serialization case 21
+PASS strict Surface1 decoder accepts generated rotated storage case 21: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 22
+PASS rotated cap normals follow gravity independently of world axes case 22
+PASS original physical tetrahedron face planes transform covariantly case 22
+PASS physical basin bake case 22: 
+PASS physical dynamic-surface bake case 22: 
+PASS strict serialized knots and sampled physical storage remain monotone case 22
+PASS cubic storage and inverse match independent geometric clipping case 22
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 22
+PASS normal Surface1 serialization case 22
+PASS strict Surface1 decoder accepts generated rotated storage case 22: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 23
+PASS rotated cap normals follow gravity independently of world axes case 23
+PASS original physical tetrahedron face planes transform covariantly case 23
+PASS physical basin bake case 23: 
+PASS physical dynamic-surface bake case 23: 
+PASS strict serialized knots and sampled physical storage remain monotone case 23
+PASS cubic storage and inverse match independent geometric clipping case 23
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 23
+PASS normal Surface1 serialization case 23
+PASS strict Surface1 decoder accepts generated rotated storage case 23: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 24
+PASS rotated cap normals follow gravity independently of world axes case 24
+PASS original physical tetrahedron face planes transform covariantly case 24
+PASS physical basin bake case 24: 
+PASS physical dynamic-surface bake case 24: 
+PASS strict serialized knots and sampled physical storage remain monotone case 24
+PASS cubic storage and inverse match independent geometric clipping case 24
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 24
+PASS normal Surface1 serialization case 24
+PASS strict Surface1 decoder accepts generated rotated storage case 24: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 25
+PASS rotated cap normals follow gravity independently of world axes case 25
+PASS original physical tetrahedron face planes transform covariantly case 25
+PASS physical basin bake case 25: 
+PASS physical dynamic-surface bake case 25: 
+PASS strict serialized knots and sampled physical storage remain monotone case 25
+PASS cubic storage and inverse match independent geometric clipping case 25
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 25
+PASS normal Surface1 serialization case 25
+PASS strict Surface1 decoder accepts generated rotated storage case 25: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 26
+PASS rotated cap normals follow gravity independently of world axes case 26
+PASS original physical tetrahedron face planes transform covariantly case 26
+PASS physical basin bake case 26: 
+PASS physical dynamic-surface bake case 26: 
+PASS strict serialized knots and sampled physical storage remain monotone case 26
+PASS cubic storage and inverse match independent geometric clipping case 26
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 26
+PASS normal Surface1 serialization case 26
+PASS strict Surface1 decoder accepts generated rotated storage case 26: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 27
+PASS rotated cap normals follow gravity independently of world axes case 27
+PASS original physical tetrahedron face planes transform covariantly case 27
+PASS physical basin bake case 27: 
+PASS physical dynamic-surface bake case 27: 
+PASS strict serialized knots and sampled physical storage remain monotone case 27
+PASS cubic storage and inverse match independent geometric clipping case 27
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 27
+PASS normal Surface1 serialization case 27
+PASS strict Surface1 decoder accepts generated rotated storage case 27: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 28
+PASS rotated cap normals follow gravity independently of world axes case 28
+PASS original physical tetrahedron face planes transform covariantly case 28
+PASS physical basin bake case 28: 
+PASS physical dynamic-surface bake case 28: 
+PASS strict serialized knots and sampled physical storage remain monotone case 28
+PASS cubic storage and inverse match independent geometric clipping case 28
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 28
+PASS normal Surface1 serialization case 28
+PASS strict Surface1 decoder accepts generated rotated storage case 28: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 29
+PASS rotated cap normals follow gravity independently of world axes case 29
+PASS original physical tetrahedron face planes transform covariantly case 29
+PASS physical basin bake case 29: 
+PASS physical dynamic-surface bake case 29: 
+PASS strict serialized knots and sampled physical storage remain monotone case 29
+PASS cubic storage and inverse match independent geometric clipping case 29
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 29
+PASS normal Surface1 serialization case 29
+PASS strict Surface1 decoder accepts generated rotated storage case 29: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 30
+PASS rotated cap normals follow gravity independently of world axes case 30
+PASS original physical tetrahedron face planes transform covariantly case 30
+PASS physical basin bake case 30: 
+PASS physical dynamic-surface bake case 30: 
+PASS strict serialized knots and sampled physical storage remain monotone case 30
+PASS cubic storage and inverse match independent geometric clipping case 30
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 30
+PASS normal Surface1 serialization case 30
+PASS strict Surface1 decoder accepts generated rotated storage case 30: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 31
+PASS rotated cap normals follow gravity independently of world axes case 31
+PASS original physical tetrahedron face planes transform covariantly case 31
+PASS physical basin bake case 31: 
+PASS physical dynamic-surface bake case 31: 
+PASS strict serialized knots and sampled physical storage remain monotone case 31
+PASS cubic storage and inverse match independent geometric clipping case 31
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 31
+PASS normal Surface1 serialization case 31
+PASS strict Surface1 decoder accepts generated rotated storage case 31: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 32
+PASS rotated cap normals follow gravity independently of world axes case 32
+PASS original physical tetrahedron face planes transform covariantly case 32
+PASS physical basin bake case 32: 
+PASS physical dynamic-surface bake case 32: 
+PASS strict serialized knots and sampled physical storage remain monotone case 32
+PASS cubic storage and inverse match independent geometric clipping case 32
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 32
+PASS normal Surface1 serialization case 32
+PASS strict Surface1 decoder accepts generated rotated storage case 32: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 33
+PASS rotated cap normals follow gravity independently of world axes case 33
+PASS original physical tetrahedron face planes transform covariantly case 33
+PASS physical basin bake case 33: 
+PASS physical dynamic-surface bake case 33: 
+PASS strict serialized knots and sampled physical storage remain monotone case 33
+PASS cubic storage and inverse match independent geometric clipping case 33
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 33
+PASS normal Surface1 serialization case 33
+PASS strict Surface1 decoder accepts generated rotated storage case 33: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 34
+PASS rotated cap normals follow gravity independently of world axes case 34
+PASS original physical tetrahedron face planes transform covariantly case 34
+PASS physical basin bake case 34: 
+PASS physical dynamic-surface bake case 34: 
+PASS strict serialized knots and sampled physical storage remain monotone case 34
+PASS cubic storage and inverse match independent geometric clipping case 34
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 34
+PASS normal Surface1 serialization case 34
+PASS strict Surface1 decoder accepts generated rotated storage case 34: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 35
+PASS rotated cap normals follow gravity independently of world axes case 35
+PASS original physical tetrahedron face planes transform covariantly case 35
+PASS physical basin bake case 35: 
+PASS physical dynamic-surface bake case 35: 
+PASS strict serialized knots and sampled physical storage remain monotone case 35
+PASS cubic storage and inverse match independent geometric clipping case 35
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 35
+PASS normal Surface1 serialization case 35
+PASS strict Surface1 decoder accepts generated rotated storage case 35: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 36
+PASS rotated cap normals follow gravity independently of world axes case 36
+PASS original physical tetrahedron face planes transform covariantly case 36
+PASS physical basin bake case 36: 
+PASS physical dynamic-surface bake case 36: 
+PASS strict serialized knots and sampled physical storage remain monotone case 36
+PASS cubic storage and inverse match independent geometric clipping case 36
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 36
+PASS normal Surface1 serialization case 36
+PASS strict Surface1 decoder accepts generated rotated storage case 36: 
+ROTATION_ERRORS volume=5.1070259132757201e-15 first_moment=4.2111273014916496e-14 aperture=5.3290705182007514e-15 cap_normal=3.5496771938186219e-08 storage=5.0602577683633854e-12 inverse=2.7222946119564995e-12 partition=3.0067059952898489e-11
+Liquid rotation 386 checks, 37 orientations, 0 failures; fixed seed 0x5b3d84a729c160e7

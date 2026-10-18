@@ -1,0 +1,27 @@
+PASS analytic oblique cut uses actual original box boundary
+PASS oblique analytic volume, first moments and wet-face area agree
+PASS collapsed face heights are dry below, wet exactly at and above full height
+PASS negative control detects rotating geometry without its gravity frame
+PASS negative control detects translating geometry without shifting plane head
+PASS physical cap normal detects a reversed surface orientation
+PASS rigid-frame volume, moments and clipped aperture covariance case 0
+PASS rotated cap normals follow gravity independently of world axes case 0
+PASS original physical tetrahedron face planes transform covariantly case 0
+PASS physical basin bake case 0: 
+PASS physical dynamic-surface bake case 0: 
+PASS strict serialized knots and sampled physical storage remain monotone case 0
+PASS cubic storage and inverse match independent geometric clipping case 0
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 0
+PASS normal Surface1 serialization case 0
+PASS strict Surface1 decoder accepts generated rotated storage case 0: 
+PASS negative decreasing capacity fixture serializes
+PASS strict decoder rejects decreasing capacity without publishing a surface
+PASS negative duplicate head fixture serializes
+PASS strict decoder rejects duplicate heads without publishing a surface
+PASS rigid-frame volume, moments and clipped aperture covariance case 1
+PASS rotated cap normals follow gravity independently of world axes case 1
+PASS original physical tetrahedron face planes transform covariantly case 1
+PASS physical basin bake case 1: 
+PASS physical dynamic-surface bake case 1: 
+FAIL liquid rotation after 26 checks: strict serialized knots and sampled physical storage remain monotone case 1
+ROTATION_ERRORS_SO_FAR volume=1.7763568394002505e-15 first_moment=9.2222050695124064e-15 aperture=1.9984014443252818e-15 cap_normal=2.6912545129924632e-08 storage=1.6653345369377348e-16 inverse=9.4368957093138306e-16 partition=8.8817841970012523e-16

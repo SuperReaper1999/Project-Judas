@@ -1,0 +1,85 @@
+{
+  "method": "Read bytes only. No research scripts imported or executed; no research files modified. Hashes capture inspected sources, not scientific acceptance.",
+  "files": [
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-007-geometry/DERIVATION.md",
+      "sha256": "be73268202a5c09bc4da9efa377d053cb28325a27aa151734f342802bf0b1172",
+      "bytes": 10914
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-007-geometry/README.md",
+      "sha256": "15307419219fab1c19066f2c1cee8beaa5d1197c190d4025776d269e956151c0",
+      "bytes": 5774
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-007-geometry/geometry.py",
+      "sha256": "b68902995809575e6eff6a7308b54f8351b145a0ce8f285f5193d743ebc1e3dc",
+      "bytes": 5669
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-007-geometry/GEOMETRY_WITH_MEMBRANE_CHECKS.json",
+      "sha256": "abf1d2db7ace16aaf08c0be859c59a7bff9fa5a55f23a05d3b2eeb909b5f2a2a",
+      "bytes": 3403
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/DERIVATION.md",
+      "sha256": "139402f36451751099dcd3ba144630f6b5b269cbbf74fa9dde54c94bd86fff27",
+      "bytes": 15259
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/basis_v3.py",
+      "sha256": "ee081ac198324168ba42ab053a08841679482e94267d962ea99a8408f4045a4b",
+      "bytes": 5248
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/basis_v4.py",
+      "sha256": "54063960e5336be5a60911b7bf015d3c1fdc247787d2f92f918a741657604a59",
+      "bytes": 5761
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/BASIS_CHECKS_V3.json",
+      "sha256": "6bad9f31cf9b3d0f0fa1e402e34f09da811be3ff0ea6f40737319a3425d558a9",
+      "bytes": 9969
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/STORAGE_ADAPTER_REVISION.md",
+      "sha256": "9aa80811eb71cca4b9d3658469cf1eea559c4d8f3e4cf2ab7ebcc0f3a5b8e3f2",
+      "bytes": 549
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/LAYER_MEAN_REVISION.md",
+      "sha256": "47d447da6f0433ef158b77ba661d28f55a7f4292f22edabddda44cf25eec72de",
+      "bytes": 1390
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-008-oblique/HORIZONTAL_FACE_REVISION.md",
+      "sha256": "1af0e68133a5236d6878c121f8da66b350594e7d6dbc4d306a01c172648d273b",
+      "bytes": 406
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-013-stable-orbits/DECLARATION.md",
+      "sha256": "8a8258445606ef83bc2532b0de60f1b9087ffe4f9eabbff1e36cff4b073688aa",
+      "bytes": 2852
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-013-stable-orbits/DERIVATION.md",
+      "sha256": "fb015af2f7e90854ece09666da29882896f7093ffb770aad6be689837510460f",
+      "bytes": 10066
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-013-stable-orbits/SUMMARY.json",
+      "sha256": "91d079c2c70b8c3c79a5ec3bfe6ab4c7c4bbcd8e123a6e30eb807e6d4ede11a2",
+      "bytes": 80093
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-013-stable-orbits/FACE_STEP_AUDIT.json",
+      "sha256": "419eee60ec640ba700189700149719ec45f7ed7013464883a55265be54863b35",
+      "bytes": 1289
+    },
+    {
+      "path": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-013-stable-orbits/SOLVER_IDENTITY_CORRECTION.json",
+      "sha256": "300a1b8353fa5a4daa63181a4484711ec258c7649ddd07131b26a8969993b9f5",
+      "bytes": 1237
+    }
+  ]
+}

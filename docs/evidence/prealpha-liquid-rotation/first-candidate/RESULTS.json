@@ -1,0 +1,45 @@
+[
+  {
+    "name": "frame",
+    "argv": [
+      "build/judas_liquid_bake_frame_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/first-candidate/frame"
+    ],
+    "exit": 0,
+    "seconds": 0.014505736000046454,
+    "logSha256": "965d29019215ba718206e3341d906583653c0dc2744d8508850a454a871466ab"
+  },
+  {
+    "name": "rotation",
+    "argv": [
+      "build/judas_liquid_rotation_tests"
+    ],
+    "exit": 1,
+    "seconds": 0.011358710999957111,
+    "logSha256": "e73015a0ce618956a6f9af57ffd905fe014c52d71ce25d7ba705c22839b7d631"
+  },
+  {
+    "name": "normalization",
+    "argv": [
+      "build/judas_origin_environment_tests",
+      "--bake-regression",
+      "normalization",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/first-candidate/normalization"
+    ],
+    "exit": 0,
+    "seconds": 0.03127952200020445,
+    "logSha256": "d98815223e3fd0f0bcb5d1bf2d3fa4dd0aa431b3dbe583c4877cd7e5ab683164"
+  },
+  {
+    "name": "knots",
+    "argv": [
+      "build/judas_origin_environment_tests",
+      "--bake-regression",
+      "knots",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/first-candidate/knots"
+    ],
+    "exit": 1,
+    "seconds": 0.027674844000102894,
+    "logSha256": "f788fcb57643607b98c00aee7e9e1ea9fd56f2b04beb8df5495d9573dfc2860c"
+  }
+]

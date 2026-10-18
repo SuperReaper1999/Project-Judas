@@ -1,0 +1,61 @@
+{
+  "baseline_commit": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "original_failure": {
+    "file": "docs/evidence/prealpha-pass2/integration/final/known-failures/bake-knots/Assets/2.judasbasin",
+    "cell": 3,
+    "previous_q": 0.9999999518695906,
+    "last_q": 0.9999999518695907,
+    "previous_volume": 0.24999999655046692,
+    "last_volume": 0.2499999965504669,
+    "drop_m3": 2.7755575615628914e-17
+  },
+  "seeded_surface_check": {
+    "seed": "0x91d8ab01",
+    "cases": 512,
+    "near_uniform_up_cases": 128,
+    "general_up_cases": 384,
+    "surface_grid": [
+      4,
+      4
+    ],
+    "baseline_strict_decode_passes": 373,
+    "total_only_strict_decode_passes": 449,
+    "final_strict_decode_passes": 512,
+    "final_sampled_capacity_decreases": 0,
+    "final_sampled_out_of_bounds": 0,
+    "final_sampled_negative_areas": 0,
+    "unchanged_partition_geometry_max_capacity_error_m3": 2.2718818204481295e-07
+  },
+  "analytic_geometry_check": {
+    "seed": "0x41cab21",
+    "nonlinear_tet_packets": 4,
+    "rigidly_rotated_boxes": 128,
+    "checks": 14988,
+    "geometric_mass_error_m3": 4.440892098500626e-16,
+    "independent_clip_error_m3": 1.7763568394002505e-15,
+    "analytic_error_m3": 5.329070518200751e-15,
+    "rotated_capacity_error_m3": 7.549516567451064e-15,
+    "inverse_coordinate_error_m": 5.1514348342607263e-14,
+    "cubic_integral_error_m3": 8.881784197001252e-16
+  },
+  "memory": {
+    "old_coefficients_bytes_per_interval": 32,
+    "new_coefficients_bytes_per_interval": 56,
+    "original_fixture_intervals": 104,
+    "original_fixture_extra_bytes": 2496,
+    "construction_tree_controls_per_node_before": 4,
+    "construction_tree_controls_per_node_after": 3
+  },
+  "diagnostic_timing": {
+    "before_seconds": 1.57,
+    "after_seconds": 1.6,
+    "before_peak_rss_kib": 4992,
+    "after_peak_rss_kib": 4892,
+    "qualification": "Single diagnostic run of 512 bake+read+sampling cases, not whole physics performance; final completes 139 additional strict decodes. No speedup or platform acceptance claim."
+  },
+  "source_sha256": {
+    "src/LiquidGeometry.h": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5",
+    "src/LiquidGeometry.cpp": "00f08d37664dbb6ad6686ef332c23f1f32b17237c2cc39f9dfd471bdac3f09a0",
+    "src/LiquidSurface.cpp": "fcb29cda4abf0f5930130394cdbde6ae106c859966c43b43358e45fb4cc7f21a"
+  }
+}

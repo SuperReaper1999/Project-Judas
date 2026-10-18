@@ -1,0 +1,109 @@
+{
+  "files": [
+    {
+      "path": "src/LiquidSurface.cpp",
+      "sha256": "8d46203484875a90f1583e35bde5603cf1f47b15a73d629205451c007f61b625",
+      "bytes": 41423
+    },
+    {
+      "path": "tests/LiquidRotationTests.cpp",
+      "sha256": "e1c7ca9d6b255f7ac3bab82874f010624a7b141e32ffe97867f0480023995130",
+      "bytes": 29946
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/LiquidSurface.extended.cpp",
+      "sha256": "fa6c7f39c4dd48e376bf0af6854e6fa7fa4631a8df99fc51812dc1564b8cb3cb",
+      "bytes": 41274,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/rotation-extended",
+      "sha256": "94e88257faa2e9b5bebecf2f87f3334f764e23064b2c84ce66651ca48c63343f",
+      "bytes": 398000,
+      "binary": true
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/rotation-extended.log",
+      "sha256": "ec9d0aef8a23717206278461ab54a739da59eaea9dda910e082379ef59955bed",
+      "bytes": 29409,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/build-extended.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/bench.cpp",
+      "sha256": "4b4da07d8aff96f9ede38a84ddba9a9ee945e2b586fd2bc67afe029097928d6f",
+      "bytes": 3564,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/bench-double",
+      "sha256": "9b1a8577a0fd0283323dd17fb729f4af656f68a4cf233f29f211b43cc1760dde",
+      "bytes": 348936,
+      "binary": true
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/bench-extended",
+      "sha256": "400f2e069d5624455361ea1923bf667dfb7edd510fcb669779e4c4d6fbb83fb5",
+      "bytes": 348944,
+      "binary": true
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/bench-double.log",
+      "sha256": "bce95429ae10fc5eb881cb5df7ec4d503e11bea01716459339efab782b754a7b",
+      "bytes": 603,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/bench-extended.log",
+      "sha256": "675f9870c7d4ae93d6d7c6372a9690dce9daee9a4dd03100e670db443c3d6e7a",
+      "bytes": 612,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/build-bench.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "binary": false
+    }
+  ],
+  "extended_probe": {
+    "checks": 419,
+    "orientations": 37,
+    "failures": 0,
+    "aperture_error_all_six_cases": 0
+  },
+  "timing": {
+    "scope": "Small O1 standalone 2x2 actual SetSolids sanity; not production Release speedup or scalability evidence. Seven sequential 300-operation trials each; first warmup excluded; source and physical inputs identical except double vs long-double face classification/intersection evaluation.",
+    "double": {
+      "milliseconds_per_300_operations": [
+        55.651156,
+        50.420797,
+        51.478852,
+        50.188572,
+        48.729927,
+        49.859628,
+        48.632299
+      ],
+      "median_excluding_warmup_ms": 50.024100000000004,
+      "median_ms_per_operation": 0.166747
+    },
+    "extended": {
+      "milliseconds_per_300_operations": [
+        57.037252,
+        52.754487,
+        49.321163,
+        48.97359,
+        49.724753,
+        49.92759,
+        50.892019
+      ],
+      "median_excluding_warmup_ms": 49.8261715,
+      "median_ms_per_operation": 0.16608723833333333
+    }
+  }
+}

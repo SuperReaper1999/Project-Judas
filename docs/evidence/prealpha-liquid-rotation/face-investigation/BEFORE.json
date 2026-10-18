@@ -1,0 +1,58 @@
+{
+  "method": "Actual standalone build from three native production source files, public SetSolids and KineticEnergy, independent long-double polygon clipping; no research execution",
+  "command": [
+    "c++",
+    "-std=c++17",
+    "-O1",
+    "-I",
+    "src",
+    "-I",
+    "third_party/glm",
+    ".cache/prealpha-liquid-rotation/face-investigation/probe.cpp",
+    "src/LiquidGeometry.cpp",
+    "src/LiquidSurface.cpp",
+    "src/PerformanceProfiler.cpp",
+    "-pthread",
+    "-o",
+    ".cache/prealpha-liquid-rotation/face-investigation/probe"
+  ],
+  "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "files": [
+    {
+      "path": "src/LiquidGeometry.cpp",
+      "bytes": 24745,
+      "sha256": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6"
+    },
+    {
+      "path": "src/LiquidGeometry.h",
+      "bytes": 4580,
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5"
+    },
+    {
+      "path": "src/LiquidSurface.cpp",
+      "bytes": 40913,
+      "sha256": "9b62e4e521f9e2eae9decf13b87d90e7e7a2cfceb23a7032792c7f7a32986de4"
+    },
+    {
+      "path": "src/LiquidSurface.h",
+      "bytes": 3958,
+      "sha256": "393582e6349650556376b7e52ebd8443c59518280cedbaf56c2174821cdeba76"
+    },
+    {
+      "path": "src/PerformanceProfiler.cpp",
+      "bytes": 24046,
+      "sha256": "0bf7b4993c9a3ea607999db5bf9677bb6d7ac4bd73a24ec5b2137c5fdaea60ee"
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/probe.cpp",
+      "bytes": 3816,
+      "sha256": "6be547f98764336209cce9905df533c336770ac503c480cf2a2ddca94b55f239"
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/probe",
+      "bytes": 348936,
+      "sha256": "2ff275652171eee56b2f04dd852395ecb3d0dc0c7df9ddf8a61ee59b8a2e5f7f"
+    }
+  ]
+}

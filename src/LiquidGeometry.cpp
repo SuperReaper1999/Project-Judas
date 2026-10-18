@@ -14,16 +14,50 @@ double tetVolume(const LiquidTet& t){return std::abs(glm::dot(t[1]-t[0],glm::cro
 Poly poly(const LiquidTet& t){Poly p;V c=(t[0]+t[1]+t[2]+t[3])*.25;for(auto& f:faces){Face a{t[f[0]],t[f[1]],t[f[2]]};if(glm::dot(glm::cross(a[1]-a[0],a[2]-a[0]),c-a[0])>0)std::reverse(a.begin(),a.end());p.push_back(a);}return p;}
 // Convex clipping retains actual faces and a consistently oriented cap.
 Poly cut(const Poly& p,V n,double d,Face* cap=nullptr){
+ // Classification and intersection use the same physical zero plane. An
+ // expanded inside band combined with a zero-plane intersection can classify
+ // two positive distances as a crossing and extrapolate outside their edge.
  // Most clipping planes miss or contain a fragment. Classify first so these
  // cases avoid per-face allocation and preserve the original tessellation.
- bool anyInside=false,anyOutside=false;for(const auto& f:p)for(V v:f){bool inside=glm::dot(n,v)-d<=1e-12;anyInside|=inside;anyOutside|=!inside;}
+ bool anyInside=false,anyOutside=false;for(const auto& f:p)for(V v:f){bool inside=glm::dot(n,v)-d<=0;anyInside|=inside;anyOutside|=!inside;}
  if(!anyInside)return {};
  if(!anyOutside)return p;
- Poly out;Face rim;for(auto& f:p){Face a;for(size_t i=0;i<f.size();++i){V x=f[i],y=f[(i+1)%f.size()];double sx=glm::dot(n,x)-d,sy=glm::dot(n,y)-d;bool ix=sx<=1e-12,iy=sy<=1e-12;if(ix)a.push_back(x);if(ix!=iy){V v=x+(y-x)*(sx/(sx-sy));a.push_back(v);bool unique=true;for(V r:rim)if(glm::length(r-v)<1e-9)unique=false;if(unique)rim.push_back(v);}}if(a.size()>=3)out.push_back(a);}
+ Poly out;Face rim;for(auto& f:p){Face a;for(size_t i=0;i<f.size();++i){V x=f[i],y=f[(i+1)%f.size()];double sx=glm::dot(n,x)-d,sy=glm::dot(n,y)-d;bool ix=sx<=0,iy=sy<=0;if(ix)a.push_back(x);if(ix!=iy){V v=x+(y-x)*(sx/(sx-sy));a.push_back(v);bool unique=true;for(V r:rim)if(glm::length(r-v)<1e-9)unique=false;if(unique)rim.push_back(v);}}if(a.size()>=3)out.push_back(a);}
  if(rim.size()>=3){V c(0);for(V v:rim)c+=v;c/=double(rim.size());V u=glm::normalize(rim[0]-c),v=glm::cross(glm::normalize(n),u);std::sort(rim.begin(),rim.end(),[&](V a,V b){return std::atan2(glm::dot(a-c,v),glm::dot(a-c,u))<std::atan2(glm::dot(b-c,v),glm::dot(b-c,u));});out.push_back(rim);if(cap)*cap=rim;}return out;}
 LiquidMoment moment(const Poly& p){LiquidMoment r;V c(0);size_t count=0;for(auto& f:p)for(V v:f){c+=v;++count;}if(!count)return r;c/=double(count);for(auto& f:p)for(size_t i=1;i+1<f.size();++i){double v=std::abs(glm::dot(f[0]-c,glm::cross(f[i]-c,f[i+1]-c)))/6;r.volume+=v;r.first+=v*(c+f[0]+f[i]+f[i+1])*.25;}return r;}
 bool affine(const LiquidTet& t,const std::array<double,4>& values,V& n,double& d){glm::dmat3 m(t[1]-t[0],t[2]-t[0],t[3]-t[0]);if(std::abs(glm::determinant(m))<1e-15)return false;n=glm::transpose(glm::inverse(m))*V(values[1]-values[0],values[2]-values[0],values[3]-values[0]);d=values[0]-glm::dot(n,t[0]);return true;}
 std::array<double,4> coords(const LiquidTet& t,const GravityEquilibrium& e){return {e.Coordinate(t[0]),e.Coordinate(t[1]),e.Coordinate(t[2]),e.Coordinate(t[3])};}
+
+// Evaluate in the interval's bounded Bernstein coordinate. Extend intermediate
+// precision and round once; do not subtract nearly equal cumulative capacities.
+template<size_t N>
+double bernstein(const std::array<double, N>& source, long double t) {
+    std::array<long double, N> work{};
+    for (size_t i = 0; i < N; ++i) work[i] = source[i];
+    for (size_t degree = N - 1; degree > 0; --degree)
+        for (size_t i = 0; i < degree; ++i) work[i] += t * (work[i + 1] - work[i]);
+    return double(work[0]);
+}
+}
+
+double LiquidCapacityPolynomial::Volume(long double fraction) const {
+    return bernstein(volume, fraction);
+}
+
+double LiquidCapacityPolynomial::Area(long double fraction) const {
+    return bernstein(area, fraction);
+}
+
+double LiquidCapacityPolynomial::Integral(long double fraction) const {
+    // The primitive of a cubic Bernstein polynomial is a quartic. Its adjacent
+    // control differences are the cubic controls divided by four.
+    std::array<long double, 5> primitive{};
+    for (size_t i = 0; i < 4; ++i)
+        primitive[i + 1] = primitive[i] + static_cast<long double>(volume[i]) / 4;
+    for (size_t degree = 4; degree > 0; --degree)
+        for (size_t i = 0; i < degree; ++i)
+            primitive[i] += fraction * (primitive[i + 1] - primitive[i]);
+    return double(primitive[0]);
 }
 LiquidGeometry LiquidBox(V a,V b){std::array<V,8> p;for(int i=0;i<8;++i)p[i]=V(i&1?b.x:a.x,i&2?b.y:a.y,i&4?b.z:a.z);LiquidGeometry g;const int ids[6][4]={{0,1,3,7},{0,3,2,7},{0,2,6,7},{0,6,4,7},{0,4,5,7},{0,5,1,7}};for(auto& t:ids)g.cells.push_back({p[t[0]],p[t[1]],p[t[2]],p[t[3]]});return g;}
 LiquidMoment LiquidClip(const LiquidTet& t,const std::array<double,4>& q,double level,MeshData* mesh){double lo=*std::min_element(q.begin(),q.end()),hi=*std::max_element(q.begin(),q.end());if(level<=lo)return {};if(level>=hi){if(mesh&&std::abs(level-hi)<1e-9)for(auto& f:faces)if(std::abs(q[f[0]]-level)<1e-9&&std::abs(q[f[1]]-level)<1e-9&&std::abs(q[f[2]]-level)<1e-9){V n;double d;if(affine(t,q,n,d))for(int index:f)mesh->vertices.push_back({glm::vec3(t[index]),glm::vec3(glm::normalize(n)),{0,0}});}return {tetVolume(t),tetVolume(t)*(t[0]+t[1]+t[2]+t[3])*.25};}V n;double d;if(!affine(t,q,n,d))return {};Face cap;auto result=moment(cut(poly(t),n,level-d,&cap));if(mesh&&cap.size()>=3)for(size_t i=1;i+1<cap.size();++i)for(V v:{cap[0],cap[i],cap[i+1]})mesh->vertices.push_back({glm::vec3(v),glm::vec3(glm::normalize(n)),{0,0}});return result;}
@@ -48,7 +82,7 @@ bool ValidateLiquidGeometry(const LiquidGeometry& g,std::string& error){if(g.cel
  for(size_t i=0;i<g.cells.size();++i)for(size_t j=0;j<i;++j){V a(1e30),b(-1e30),c=a,d=b;for(V v:g.cells[i]){a=glm::min(a,v);b=glm::max(b,v);}for(V v:g.cells[j]){c=glm::min(c,v);d=glm::max(d,v);}if(b.x<=c.x+1e-9||d.x<=a.x+1e-9||b.y<=c.y+1e-9||d.y<=a.y+1e-9||b.z<=c.z+1e-9||d.z<=a.z+1e-9)continue;Poly p=poly(g.cells[i]);for(auto& f:poly(g.cells[j])){V n=glm::cross(f[1]-f[0],f[2]-f[0]);p=cut(p,n,glm::dot(n,f[0]));}if(moment(p).volume>1e-9){error="overlapping cavity tetrahedra would double-count liquid";return false;}}
  return true;}
 bool LoadLiquidGeometry(const std::string& path,LiquidGeometry& out,std::string& error){std::ifstream s(path);std::string magic;size_t n;LiquidGeometry g;if(!(s>>magic>>n)||magic!="JudasCavity1"||n>16384){error="invalid JudasCavity1 header";return false;}g.cells.resize(n);for(auto& t:g.cells)for(V& v:t)if(!(s>>v.x>>v.y>>v.z)){error="truncated cavity";return false;}s>>std::ws;if(!s.eof()||!ValidateLiquidGeometry(g,error))return false;out=std::move(g);return true;}
-double LiquidInverse(const LiquidBasinData& b,double v){if(v<=0)return b.curve.front().q;if(v>=b.capacity)return b.curve.back().q;auto it=std::lower_bound(b.curve.begin(),b.curve.end(),v,[](auto p,double target){return p.volume<target;});auto a=*(it-1);if(!b.capacityPolynomials.empty()){size_t index=size_t(it-b.curve.begin()-1);auto c=b.capacityPolynomials[index];double low=0,high=1;for(unsigned k=0;k<48;++k){double t=(low+high)*.5,value=c[0]+t*(c[1]+t*(c[2]+t*c[3]));if(value<v)low=t;else high=t;}return a.q+(it->q-a.q)*(low+high)*.5;}return a.q+(it->q-a.q)*(v-a.volume)/(it->volume-a.volume);}
+double LiquidInverse(const LiquidBasinData& b,double v){if(v<=0)return b.curve.front().q;if(v>=b.capacity)return b.curve.back().q;auto it=std::lower_bound(b.curve.begin(),b.curve.end(),v,[](auto p,double target){return p.volume<target;});auto a=*(it-1);if(!b.capacityPolynomials.empty()){size_t index=size_t(it-b.curve.begin()-1);auto c=b.capacityPolynomials[index];double low=0,high=1;for(unsigned k=0;k<48;++k){double t=(low+high)*.5,value=c.Volume(t);if(value<v)low=t;else high=t;}return a.q+(it->q-a.q)*(low+high)*.5;}return a.q+(it->q-a.q)*(v-a.volume)/(it->volume-a.volume);}
 bool RefineLiquidGeometry(const LiquidGeometry& source,const GravityEquilibrium& e,double ht,LiquidGeometry& out,double& coordinateError,std::string& error){out=source;coordinateError=0;
  if(e.kind==GravityEquilibrium::Kind::Radius){std::vector<LiquidTet> pending=source.cells;out.cells.clear();while(!pending.empty()){auto t=pending.back();pending.pop_back();double length=0;int a=0,c=1;for(int i=0;i<4;++i)for(int j=i+1;j<4;++j)if(glm::length(t[i]-t[j])>length){length=glm::length(t[i]-t[j]);a=i;c=j;}double radius=1e30;for(V v:t)radius=std::min(radius,e.Coordinate(v));double lower=radius-length;if(lower<=0){error="radial cavity crosses gravity centre or exceeds local radial domain";return false;}double bound=length*length/(2*lower);if(bound>ht*.25){V mid=(t[a]+t[c])*.5;auto left=t,right=t;left[a]=mid;right[c]=mid;pending.push_back(left);pending.push_back(right);}else{coordinateError=std::max(coordinateError,bound);out.cells.push_back(t);}if(pending.size()+out.cells.size()>262144){error="radial refinement exceeded 262144 cells; loosen declared height tolerance";return false;}}}
  return true;
@@ -76,7 +110,7 @@ void appendTets(const Poly& p,LiquidGeometry& out){if(p.empty()||p.front().empty
 }}
 
 }
-LiquidGeometry LiquidCutGeometry(const LiquidGeometry& g,const std::vector<glm::dvec4>& planes){LiquidGeometry out;for(auto& t:g.cells){bool complete=true;for(auto plane:planes)for(V v:t)complete&=glm::dot(V(plane),v)<=plane.w+1e-12;if(complete){out.cells.push_back(t);continue;}Poly p=poly(t);for(auto plane:planes){p=cut(p,V(plane),plane.w);if(p.empty())break;}appendTets(p,out);}return out;}
+LiquidGeometry LiquidCutGeometry(const LiquidGeometry& g,const std::vector<glm::dvec4>& planes){LiquidGeometry out;for(auto& t:g.cells){bool complete=true;for(auto plane:planes)for(V v:t)complete&=glm::dot(V(plane),v)<=plane.w;if(complete){out.cells.push_back(t);continue;}Poly p=poly(t);for(auto plane:planes){p=cut(p,V(plane),plane.w);if(p.empty())break;}appendTets(p,out);}return out;}
 LiquidGeometry LiquidSubtractSolids(const LiquidGeometry& g,const std::vector<std::vector<glm::dvec4>>& solids){
  LiquidGeometry out;
  for(auto& t:g.cells){std::vector<const std::vector<glm::dvec4>*> candidates;bool covered=false;

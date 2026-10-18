@@ -1,0 +1,188 @@
+{
+  "status": "MATCHED_REACHABLE_APERTURE_DEFECT_CORRECTED",
+  "method": "Public baked 2x2 LiquidSurface; SetSolids; one nonzero public discharge; area inferred from public KineticEnergy; independent long-double polygon half-space area oracle. No private solver memory access or ownership-ledger substitution.",
+  "build_command": [
+    "c++",
+    "-std=c++17",
+    "-O1",
+    "-I",
+    "src",
+    "-I",
+    "third_party/glm",
+    ".cache/prealpha-liquid-rotation/face-investigation/probe.cpp",
+    "src/LiquidGeometry.cpp",
+    "src/LiquidSurface.cpp",
+    "src/PerformanceProfiler.cpp",
+    "-pthread",
+    "-o",
+    ".cache/prealpha-liquid-rotation/face-investigation/probe-after"
+  ],
+  "files": [
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/probe.cpp",
+      "sha256": "6be547f98764336209cce9905df533c336770ac503c480cf2a2ddca94b55f239",
+      "bytes": 3816,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/probe",
+      "sha256": "2ff275652171eee56b2f04dd852395ecb3d0dc0c7df9ddf8a61ee59b8a2e5f7f",
+      "bytes": 348936,
+      "binary": true
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/probe-after",
+      "sha256": "8b23ddb359e446aa9a1dfd6c1c8ffa01a78c91bf9cfd53b95464a9eae152b297",
+      "bytes": 348936,
+      "binary": true
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/build.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/before.log",
+      "sha256": "50ce9d282552eeba53161fcdd715f1cb56785fa1f551aa79864df3091154c605",
+      "bytes": 1173,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/build-after.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/after.log",
+      "sha256": "2b3564edb83baade6ee4a860d51396ad1ede55d76b08bd1fd98bb8686b6db5a5",
+      "bytes": 1069,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/LiquidSurface.before.cpp",
+      "sha256": "9b62e4e521f9e2eae9decf13b87d90e7e7a2cfceb23a7032792c7f7a32986de4",
+      "bytes": 40913,
+      "binary": false
+    },
+    {
+      "path": ".cache/prealpha-liquid-rotation/face-investigation/BEFORE.json",
+      "sha256": "1eabd88bc99969d0251a68e2c781eb2917c6af4f658a9ba090ea268a8dae0b22",
+      "bytes": 1861,
+      "binary": false
+    },
+    {
+      "path": "src/LiquidGeometry.cpp",
+      "sha256": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6",
+      "bytes": 24745,
+      "binary": false
+    },
+    {
+      "path": "src/LiquidGeometry.h",
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5",
+      "bytes": 4580,
+      "binary": false
+    },
+    {
+      "path": "src/LiquidSurface.cpp",
+      "sha256": "ce616b45d373f87859a7b7c65206737ebe25814870d68dc6fec9df7893103e99",
+      "bytes": 41124,
+      "binary": false
+    },
+    {
+      "path": "src/LiquidSurface.h",
+      "sha256": "393582e6349650556376b7e52ebd8443c59518280cedbaf56c2174821cdeba76",
+      "bytes": 3958,
+      "binary": false
+    },
+    {
+      "path": "src/PerformanceProfiler.cpp",
+      "sha256": "0bf7b4993c9a3ea607999db5bf9677bb6d7ac4bd73a24ec5b2137c5fdaea60ee",
+      "bytes": 24046,
+      "binary": false
+    },
+    {
+      "path": "tests/LiquidRotationTests.cpp",
+      "sha256": "e1c7ca9d6b255f7ac3bab82874f010624a7b141e32ffe97867f0480023995130",
+      "bytes": 29946,
+      "binary": false
+    }
+  ],
+  "before": [
+    {
+      "orientation": 0,
+      "face": 0.0,
+      "head": 0.5050505050454029,
+      "before": 0.5050505050454029,
+      "expected": 0.5050505050454029,
+      "actual": 0.5050530302979281,
+      "error": 2.525252525198418e-06,
+      "ratio": 1.000005,
+      "energy": 0.9899950500347511,
+      "overflow": 0.0
+    },
+    {
+      "orientation": 1,
+      "face": 0.0,
+      "head": 0.5050505050454029,
+      "before": 0.5050505050454029,
+      "expected": 0.5050505050454029,
+      "actual": 0.5050533842947593,
+      "error": 2.8792493563800647e-06,
+      "ratio": 1.0000057009137258,
+      "energy": 0.9899943561375879,
+      "overflow": 0.0
+    },
+    {
+      "orientation": 2,
+      "face": 0.0,
+      "head": 0.5050505050454028,
+      "before": 0.5050505050454028,
+      "expected": 0.5050505050454028,
+      "actual": 0.5050535612982574,
+      "error": 3.0562528545718948e-06,
+      "ratio": 1.0000060513806521,
+      "energy": 0.9899940091794085,
+      "overflow": 0.0
+    }
+  ],
+  "after": [
+    {
+      "orientation": 0,
+      "face": 0.0,
+      "head": 0.5050505050454029,
+      "before": 0.5050505050454029,
+      "expected": 0.5050505050454029,
+      "actual": 0.5050505050454029,
+      "error": 0.0,
+      "ratio": 1.0,
+      "energy": 0.9900000000100011,
+      "overflow": 0.0
+    },
+    {
+      "orientation": 1,
+      "face": 0.0,
+      "head": 0.5050505050454029,
+      "before": 0.5050505050454029,
+      "expected": 0.5050505050454029,
+      "actual": 0.5050505050454029,
+      "error": 0.0,
+      "ratio": 1.0,
+      "energy": 0.9900000000100011,
+      "overflow": 0.0
+    },
+    {
+      "orientation": 2,
+      "face": 0.0,
+      "head": 0.5050505050454028,
+      "before": 0.5050505050454028,
+      "expected": 0.5050505050454028,
+      "actual": 0.5050505050454028,
+      "error": 0.0,
+      "ratio": 1.0,
+      "energy": 0.9900000000100013,
+      "overflow": 0.0
+    }
+  ]
+}

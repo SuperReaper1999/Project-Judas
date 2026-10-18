@@ -1,0 +1,50 @@
+{
+  "method": "Read-only source review; hashes identify exact reviewed bytes, not runtime validation",
+  "files": [
+    {
+      "path": "src/LiquidTypes.cpp",
+      "sha256": "441fe10fc6abc9ce2e85f6480bbe1755acb2e1cc949af518193825f2c8e37f2a",
+      "bytes": 11395
+    },
+    {
+      "path": "src/WorldRegions.cpp",
+      "sha256": "3689760c62a2ee3da77326999b1e6822e56ce87c99cb64e1c984f9cbf0db3ada",
+      "bytes": 12394
+    },
+    {
+      "path": "src/RuntimeWorld.cpp",
+      "sha256": "65aa810629784c85ca0e0c888e29ab7292467ec18d854553299f6cd140223332",
+      "bytes": 106848
+    },
+    {
+      "path": "src/WorldOrigin.cpp",
+      "sha256": "3269ba3dd0a079ab838bdf8fce98dc0df8fca6076a60d32055cbe901d9b0f79f",
+      "bytes": 8592
+    },
+    {
+      "path": "src/Prefab.cpp",
+      "sha256": "b6002250b2fa8bad7580d81b77aa7f6e1363ad804c4e6afcbd0618828f8957d3",
+      "bytes": 21305
+    },
+    {
+      "path": "src/OrientedGravityVolume.h",
+      "sha256": "949dc2426caadc21b5f9fee3d598b6315d4ecf6d28bf72fcd7d17f8976e0623a",
+      "bytes": 682
+    },
+    {
+      "path": "src/WorldGravity.cpp",
+      "sha256": "dd246aaa2fcaa6c7784abb58babc96843b8cf7700c2e7ccfdd713ec9999319b8",
+      "bytes": 2726
+    },
+    {
+      "path": "src/WorldStreaming.cpp",
+      "sha256": "5d187cc24972ea9f9c4df49b776e852f25351e65993022b2b1d329b4ec7c2936",
+      "bytes": 69974
+    },
+    {
+      "path": "tests/LiquidBakeFrameTests.cpp",
+      "sha256": "f63bb7ea894860d45cd1949fc1aa2743a581e2da3532de4599aaae2d0c900ab0",
+      "bytes": 8435
+    }
+  ]
+}

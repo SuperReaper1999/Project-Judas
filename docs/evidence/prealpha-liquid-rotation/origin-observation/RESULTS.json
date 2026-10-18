@@ -1,0 +1,24 @@
+[
+  {
+    "mode": "normalization",
+    "argv": [
+      "build/judas_origin_environment_tests",
+      "--bake-regression",
+      "normalization",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/origin-observation/normalization"
+    ],
+    "exit": 1,
+    "seconds": 0.06409547299972473
+  },
+  {
+    "mode": "knots",
+    "argv": [
+      "build/judas_origin_environment_tests",
+      "--bake-regression",
+      "knots",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/origin-observation/knots"
+    ],
+    "exit": 1,
+    "seconds": 0.03201460199989015
+  }
+]

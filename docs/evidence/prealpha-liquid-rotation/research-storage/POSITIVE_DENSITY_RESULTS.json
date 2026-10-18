@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "classification": "independent exact-arithmetic algebra controls, not engine or continuum acceptance",
+  "method": "Positive closed-form quadratic Bernstein density, exact primitive versus independent CDF recurrence, exact mass and de Casteljau restriction",
+  "counts": {
+    "height_packets": 210,
+    "positive_control_checks": 1179,
+    "exact_cdf_checks": 5895,
+    "exact_mass_checks": 210,
+    "restriction_checks": 1179,
+    "rounded_prefix_checks": 393,
+    "exact_derivative_checks": 5895,
+    "exact_energy_primitive_checks": 5895
+  },
+  "research_executed_or_imported": false,
+  "source_sha256": "abe10c470be4af36695e28891282073100a1c2a5f71feb7d382df2fa4cd1b883"
+}

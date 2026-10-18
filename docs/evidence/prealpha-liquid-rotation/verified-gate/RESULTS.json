@@ -1,0 +1,303 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-18T13:42:17.904634+00:00",
+  "sourceRevision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/LIQUID_SURFACES.md\n M docs/PREALPHA.md\n M src/LiquidGeometry.cpp\n M src/LiquidGeometry.h\n M src/LiquidSurface.cpp\n M src/LiquidTypes.cpp\n M src/WorldRegions.cpp\n M tests/OriginEnvironmentTests.cpp\n M tests/test_prealpha_validation.py\n M tools/validation/suites.json",
+  "manifestSha256": "47dff247bf0cbf970ba76a54cbe7df624294e46ce3501da40b5495dc89242c65",
+  "trackedDiffSha256": "93a2d71abdcf96106db7be536908d15317bb0a8ca6860a3b902946eacb432c68",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [
+    "liquid"
+  ],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_rotation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "d7bf68324f4b8b147ce11c950c444247435ba76e6ae403426da808b354dc0d34",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "d7bf68324f4b8b147ce11c950c444247435ba76e6ae403426da808b354dc0d34",
+      "seconds": 0.2673436869999932,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-rotation"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_bake_frame_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/verified-gate/bake-frames"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "2af29c922ac53439b8ec36fc483b3227df1b69628498320dbfc90bff02c762e0",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "2af29c922ac53439b8ec36fc483b3227df1b69628498320dbfc90bff02c762e0",
+      "seconds": 0.24853820100042867,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-bake-frames"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-only",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/verified-gate/bake-normalization"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "5af7b520bf599a4a124514612083d152484df04f94fdeb1eed5e850d6d1f8c58",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "5af7b520bf599a4a124514612083d152484df04f94fdeb1eed5e850d6d1f8c58",
+      "seconds": 0.2626293450002777,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-bake-normalization-only",
+      "finding": "LIQUID-BAKE-ROTATION",
+      "classification": "open contract; observed result remains authoritative"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-only",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/verified-gate/bake-knots"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "5af7b520bf599a4a124514612083d152484df04f94fdeb1eed5e850d6d1f8c58",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "5af7b520bf599a4a124514612083d152484df04f94fdeb1eed5e850d6d1f8c58",
+      "seconds": 0.26174977099981334,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-bake-knots-only",
+      "finding": "LIQUID-BAKE-KNOTS",
+      "classification": "open contract; observed result remains authoritative"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "29af54b56ed35d643ecc159a896c4d6bb14363c4218e183fc6a2f73e497fd99c",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "29af54b56ed35d643ecc159a896c4d6bb14363c4218e183fc6a2f73e497fd99c",
+      "seconds": 0.7978154970001015,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-reservoir"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "f017ce6da4ecbced104495593de5199809daa0701d233fc90d682cf23525909e",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f017ce6da4ecbced104495593de5199809daa0701d233fc90d682cf23525909e",
+      "seconds": 1.213281657999687,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "liquid-surface"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "open-correctness-failing",
+      "scheduled": false,
+      "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+      "evidence": "docs/evidence/prealpha/physics"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "open-exact-total-assertion-failing",
+      "scheduled": false,
+      "reason": "Original arbitrary-rotation integration now bakes, shifts, cold-restores and continues physical flow. Later out-of-chart request is correctly rejected atomically with owner diagnostic, but the original assertion also requires the summed owner total to be bit-identical across prior physical flow: 2.5199999999999996 versus2.52m3. M54 ledger error remains zero. Fixture is unchanged and failed pending separate contract review.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+    "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-18T13:42:22.357413+00:00",
+  "sourceRevisionAfter": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/LIQUID_SURFACES.md\n M docs/PREALPHA.md\n M src/LiquidGeometry.cpp\n M src/LiquidGeometry.h\n M src/LiquidSurface.cpp\n M src/LiquidTypes.cpp\n M src/WorldRegions.cpp\n M tests/OriginEnvironmentTests.cpp\n M tests/test_prealpha_validation.py\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "93a2d71abdcf96106db7be536908d15317bb0a8ca6860a3b902946eacb432c68",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+    "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991"
+  }
+}

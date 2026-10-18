@@ -1,0 +1,227 @@
+{
+  "utc": "2026-10-18T13:43:20.364142+00:00",
+  "researchRoot": "/home/conner/Documents/JudasFluidResearch/fluid_lab",
+  "files": 18794,
+  "bytes": 2346505943,
+  "unchangedMetadata": true,
+  "changedPaths": [],
+  "citedHashes": {
+    "experiments/EXP-007-geometry/README.md": {
+      "expected": "15307419219fab1c19066f2c1cee8beaa5d1197c190d4025776d269e956151c0",
+      "actual": "15307419219fab1c19066f2c1cee8beaa5d1197c190d4025776d269e956151c0",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/DERIVATION.md": {
+      "expected": "be73268202a5c09bc4da9efa377d053cb28325a27aa151734f342802bf0b1172",
+      "actual": "be73268202a5c09bc4da9efa377d053cb28325a27aa151734f342802bf0b1172",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/PREDECLARATION.md": {
+      "expected": "b2d1abe9dbae37a4e3c537d02c5ec2f494245532ba4dc5f180a6f44672adc3d8",
+      "actual": "b2d1abe9dbae37a4e3c537d02c5ec2f494245532ba4dc5f180a6f44672adc3d8",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/HYDROSTATIC_REVISION_DECLARATION.md": {
+      "expected": "23d9abf3e6fc01b9386ced4cdb40995b7f92d9485f5b30e08a2e45cf9ca51cf0",
+      "actual": "23d9abf3e6fc01b9386ced4cdb40995b7f92d9485f5b30e08a2e45cf9ca51cf0",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/MEMBRANE_DECLARATION.md": {
+      "expected": "61979f13d433e1715e5d18c039ec457736bb937fdcf9ec7e5b1e9565409848b8",
+      "actual": "61979f13d433e1715e5d18c039ec457736bb937fdcf9ec7e5b1e9565409848b8",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/geometry.py": {
+      "expected": "b68902995809575e6eff6a7308b54f8351b145a0ce8f285f5193d743ebc1e3dc",
+      "actual": "b68902995809575e6eff6a7308b54f8351b145a0ce8f285f5193d743ebc1e3dc",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/check_geometry.py": {
+      "expected": "af3cd3fb74e0fa126c3f7d9941465c7e9259175df88df765202bac20d416e3e4",
+      "actual": "af3cd3fb74e0fa126c3f7d9941465c7e9259175df88df765202bac20d416e3e4",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/GEOMETRY_WITH_MEMBRANE_CHECKS.json": {
+      "expected": "abf1d2db7ace16aaf08c0be859c59a7bff9fa5a55f23a05d3b2eeb909b5f2a2a",
+      "actual": "abf1d2db7ace16aaf08c0be859c59a7bff9fa5a55f23a05d3b2eeb909b5f2a2a",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/native/witness.cpp": {
+      "expected": "4216914588ea6ad9b2f31dc5636acf05dd338cad599f1e46f70c3b965d2ffe84",
+      "actual": "4216914588ea6ad9b2f31dc5636acf05dd338cad599f1e46f70c3b965d2ffe84",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/native/attempts/001/results.json": {
+      "expected": "d3dfc7ec9104d30ae961fdc977e60bafa49a63899f0162b8196e8a86cea31f80",
+      "actual": "d3dfc7ec9104d30ae961fdc977e60bafa49a63899f0162b8196e8a86cea31f80",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/native/attempts/001/build_status.json": {
+      "expected": "365374a1d94c7faec4fb5192aa22026c5e799160a91e39a7309c891ea1c1b7df",
+      "actual": "365374a1d94c7faec4fb5192aa22026c5e799160a91e39a7309c891ea1c1b7df",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/native/attempts/001/src/LiquidGeometry.cpp": {
+      "expected": "8db926686c2a7126f1be78a0ca02e2061822f654755b26a39a734b05ffdae53b",
+      "actual": "8db926686c2a7126f1be78a0ca02e2061822f654755b26a39a734b05ffdae53b",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/native/attempts/001/src/LiquidSurface.cpp": {
+      "expected": "44330d3cc0a931b5ee3d50c096e349ff1a6748a50b45ba996413ba5e71e7e2c7",
+      "actual": "44330d3cc0a931b5ee3d50c096e349ff1a6748a50b45ba996413ba5e71e7e2c7",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/runs/G1_counterexample/result.json": {
+      "expected": "21564f0a78e1d6f04a0daba1a997c8b263f9ee2f824032a14dd5cb10681c81cc",
+      "actual": "21564f0a78e1d6f04a0daba1a997c8b263f9ee2f824032a14dd5cb10681c81cc",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/runs/G2_initial/summary.json": {
+      "expected": "cd71ab9d0dfbbd25166e3959f3a12b80c320840834ad913a8e58826c22e0da1b",
+      "actual": "cd71ab9d0dfbbd25166e3959f3a12b80c320840834ad913a8e58826c22e0da1b",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/runs/membrane/G2_trace_counterexample.json": {
+      "expected": "88c65f37f0ad85ce53a34d36c29c47bb57f6f1caaf9111738d99cbce547e8d95",
+      "actual": "88c65f37f0ad85ce53a34d36c29c47bb57f6f1caaf9111738d99cbce547e8d95",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/runs/membrane/G3_cases.json": {
+      "expected": "9104e5449fa065c28031c87533a36fe6f9f5d8a1c06d3d42fc29cd81d26a396e",
+      "actual": "9104e5449fa065c28031c87533a36fe6f9f5d8a1c06d3d42fc29cd81d26a396e",
+      "match": true
+    },
+    "experiments/EXP-007-geometry/runs/algebra_frozen/summary.json": {
+      "expected": "34ab4d85f2ad2a2d10a10565563b42708e2df69dff58eea71a2ab43fbcda7252",
+      "actual": "34ab4d85f2ad2a2d10a10565563b42708e2df69dff58eea71a2ab43fbcda7252",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/README.md": {
+      "expected": "fa31a121f707e3d1ba5cd8525fe380f5666194c17cbf9d26f959167aa9df6d8e",
+      "actual": "fa31a121f707e3d1ba5cd8525fe380f5666194c17cbf9d26f959167aa9df6d8e",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/DERIVATION.md": {
+      "expected": "139402f36451751099dcd3ba144630f6b5b269cbbf74fa9dde54c94bd86fff27",
+      "actual": "139402f36451751099dcd3ba144630f6b5b269cbbf74fa9dde54c94bd86fff27",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/DECLARATION.md": {
+      "expected": "827830f65e6b1c1abca630ff078b327797ff3b1055923a6f3c414353a44d1734",
+      "actual": "827830f65e6b1c1abca630ff078b327797ff3b1055923a6f3c414353a44d1734",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/STORAGE_ADAPTER_REVISION.md": {
+      "expected": "9aa80811eb71cca4b9d3658469cf1eea559c4d8f3e4cf2ab7ebcc0f3a5b8e3f2",
+      "actual": "9aa80811eb71cca4b9d3658469cf1eea559c4d8f3e4cf2ab7ebcc0f3a5b8e3f2",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/HORIZONTAL_FACE_REVISION.md": {
+      "expected": "1af0e68133a5236d6878c121f8da66b350594e7d6dbc4d306a01c172648d273b",
+      "actual": "1af0e68133a5236d6878c121f8da66b350594e7d6dbc4d306a01c172648d273b",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/LAYER_MEAN_REVISION.md": {
+      "expected": "47d447da6f0433ef158b77ba661d28f55a7f4292f22edabddda44cf25eec72de",
+      "actual": "47d447da6f0433ef158b77ba661d28f55a7f4292f22edabddda44cf25eec72de",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/NATIVE_BUILD_REVISION.md": {
+      "expected": "49efc5cb286c335b98b4cf8f0b9bf57cff9ccad5088227cb69e120ced5e38711",
+      "actual": "49efc5cb286c335b98b4cf8f0b9bf57cff9ccad5088227cb69e120ced5e38711",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/basis_v3.py": {
+      "expected": "ee081ac198324168ba42ab053a08841679482e94267d962ea99a8408f4045a4b",
+      "actual": "ee081ac198324168ba42ab053a08841679482e94267d962ea99a8408f4045a4b",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/basis_v4.py": {
+      "expected": "54063960e5336be5a60911b7bf015d3c1fdc247787d2f92f918a741657604a59",
+      "actual": "54063960e5336be5a60911b7bf015d3c1fdc247787d2f92f918a741657604a59",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/BASIS_CHECKS_V2.json": {
+      "expected": "68e3bdf07f628ba5d4c4d385cf0d3e2159496d94af2eecfc5d843126d0fa64f4",
+      "actual": "68e3bdf07f628ba5d4c4d385cf0d3e2159496d94af2eecfc5d843126d0fa64f4",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/BASIS_CHECKS_V3.json": {
+      "expected": "6bad9f31cf9b3d0f0fa1e402e34f09da811be3ff0ea6f40737319a3425d558a9",
+      "actual": "6bad9f31cf9b3d0f0fa1e402e34f09da811be3ff0ea6f40737319a3425d558a9",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/EXACT_CONTROLS.json": {
+      "expected": "bdb85455393be60337fbae4877feb0d5c611db87e2ef78c4c8ba0ab7b52cc026",
+      "actual": "bdb85455393be60337fbae4877feb0d5c611db87e2ef78c4c8ba0ab7b52cc026",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/FREE_SURFACE_COUNTEREXAMPLE.json": {
+      "expected": "86934018fc3c6b339a0ac8c7e8a587863716e0c845b6018edbdd449fbb8eee0d",
+      "actual": "86934018fc3c6b339a0ac8c7e8a587863716e0c845b6018edbdd449fbb8eee0d",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/native/witness.cpp": {
+      "expected": "bbed71af8984aa92607c4ae2549c47d4e1da67bf20d1f9b8a15a66d498ead559",
+      "actual": "bbed71af8984aa92607c4ae2549c47d4e1da67bf20d1f9b8a15a66d498ead559",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/native/witness_v2.cpp": {
+      "expected": "5ecb7c37fc59e87307a8002c74b32e8661e00de1cb91b392848469dc0331e6bb",
+      "actual": "5ecb7c37fc59e87307a8002c74b32e8661e00de1cb91b392848469dc0331e6bb",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/native/attempts/002/results.json": {
+      "expected": "9752f711d6c673b2ffe5cdc2a647dd34af468f1a35112ae010278e0154b6cc1e",
+      "actual": "9752f711d6c673b2ffe5cdc2a647dd34af468f1a35112ae010278e0154b6cc1e",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/native/attempts/002/build_status.json": {
+      "expected": "5c9aa483e5a80f99657600e4fd2c0db6770e51d9ec01068fcc1213f766917e5c",
+      "actual": "5c9aa483e5a80f99657600e4fd2c0db6770e51d9ec01068fcc1213f766917e5c",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/runs/H1_initial/summary.json": {
+      "expected": "7cba83efa5de14ca0576d7f7a0b4648c98fe8bc9714e3b16a414ed6affa38c56",
+      "actual": "7cba83efa5de14ca0576d7f7a0b4648c98fe8bc9714e3b16a414ed6affa38c56",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/runs/H1_geometry_v4/summary.json": {
+      "expected": "311f9c38b246a1e86f2419cb9fc1e996192076f9aa91b492a33d6158b7b6ac7e",
+      "actual": "311f9c38b246a1e86f2419cb9fc1e996192076f9aa91b492a33d6158b7b6ac7e",
+      "match": true
+    },
+    "experiments/EXP-008-oblique/runs/adversaries/summary.json": {
+      "expected": "9c29b23e4109b950af4c8d0b765117977309a76766b2c2c65b005c893b5ec27e",
+      "actual": "9c29b23e4109b950af4c8d0b765117977309a76766b2c2c65b005c893b5ec27e",
+      "match": true
+    },
+    "experiments/EXP-013-stable-orbits/DECLARATION.md": {
+      "expected": "8a8258445606ef83bc2532b0de60f1b9087ffe4f9eabbff1e36cff4b073688aa",
+      "actual": "8a8258445606ef83bc2532b0de60f1b9087ffe4f9eabbff1e36cff4b073688aa",
+      "match": true
+    },
+    "experiments/EXP-013-stable-orbits/DERIVATION.md": {
+      "expected": "fb015af2f7e90854ece09666da29882896f7093ffb770aad6be689837510460f",
+      "actual": "fb015af2f7e90854ece09666da29882896f7093ffb770aad6be689837510460f",
+      "match": true
+    },
+    "experiments/EXP-013-stable-orbits/SUMMARY.json": {
+      "expected": "91d079c2c70b8c3c79a5ec3bfe6ab4c7c4bbcd8e123a6e30eb807e6d4ede11a2",
+      "actual": "91d079c2c70b8c3c79a5ec3bfe6ab4c7c4bbcd8e123a6e30eb807e6d4ede11a2",
+      "match": true
+    },
+    "experiments/EXP-013-stable-orbits/FACE_STEP_AUDIT.json": {
+      "expected": "419eee60ec640ba700189700149719ec45f7ed7013464883a55265be54863b35",
+      "actual": "419eee60ec640ba700189700149719ec45f7ed7013464883a55265be54863b35",
+      "match": true
+    },
+    "experiments/EXP-013-stable-orbits/SOLVER_IDENTITY_CORRECTION.json": {
+      "expected": "300a1b8353fa5a4daa63181a4484711ec258c7649ddd07131b26a8969993b9f5",
+      "actual": "300a1b8353fa5a4daa63181a4484711ec258c7649ddd07131b26a8969993b9f5",
+      "match": true
+    }
+  },
+  "allCitedHashesMatch": true,
+  "scope": "All regular-file size/mtimeNs/mode versus pre-investigation snapshot; full byte hashes only for selected cited artifacts. Access times excluded. No research code executed or imported; EXP-016 not restarted."
+}

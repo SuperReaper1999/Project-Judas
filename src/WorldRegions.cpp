@@ -48,7 +48,7 @@ bool RuntimeWorld::StageRegionObject(const SceneObject& definition,const SceneOb
     }
     if(!stage.body||stage.body->motion==SceneBodyMotion::Static){
         EntityRecord e;e.id=definition.id;e.name=definition.name;e.definition=definition;e.authored=false;e.requiresFull=true;
-        e.state.position=definition.transform.position;e.state.rotation=definition.transform.rotation;e.slot=std::numeric_limits<size_t>::max();m_extraEntities.push_back(e);
+        e.state.position=definition.transform.position;e.state.rotation=glm::normalize(definition.transform.rotation);e.slot=std::numeric_limits<size_t>::max();m_extraEntities.push_back(e);
     }
     if(stage.body)m_physics.SetBodySimulationSuspended(m_entityCategories.at(definition.id).body,true);
     m_scriptDefinitions[definition.id]=definition;
@@ -148,11 +148,12 @@ void RuntimeWorld::RebuildRegionGravity(const std::map<EntityId,std::string>& or
         auto key=[&](EntityId id){auto it=order.find(id);return it==order.end()?std::string("0:")+std::to_string(id):it->second;};return key(a.id)<key(b.id);
     });
     for(auto& o:objects)if(o.gravity){auto g=*o.gravity;std::unique_ptr<GravityField> field;
+        const auto rotation=glm::normalize(o.transform.rotation);
         if(g.kind==SceneGravityKind::Radial)field=std::make_unique<RadicalGravity>(o.transform.position,g.magnitude);
-        else field=std::make_unique<UniformGravity>(o.transform.rotation*glm::vec3(0,-g.magnitude,0));
+        else field=std::make_unique<UniformGravity>(rotation*glm::vec3(0,-g.magnitude,0));
         std::unique_ptr<GravityVolume> volume;
         if(g.regionShape==SceneRegionShape::Sphere)volume=std::make_unique<SphericalVolume>(o.transform.position,g.regionRadius);
-        else volume=std::make_unique<OrientedGravityVolume>(o.transform.position,o.transform.rotation,g.regionHalfExtents);
-        m_gravityMap.AddRegion(*field,*volume);m_gravityFields.push_back(std::move(field));m_gravityVolumes.push_back(std::move(volume));m_gravityRegions.push_back({o.id,g,o.transform.position,o.transform.rotation});
+        else volume=std::make_unique<OrientedGravityVolume>(o.transform.position,rotation,g.regionHalfExtents);
+        m_gravityMap.AddRegion(*field,*volume);m_gravityFields.push_back(std::move(field));m_gravityVolumes.push_back(std::move(volume));m_gravityRegions.push_back({o.id,g,o.transform.position,rotation});
     }
 }

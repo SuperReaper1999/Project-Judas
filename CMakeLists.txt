@@ -2020,6 +2020,8 @@ judas_warnings(judas_prealpha_lifecycle_tests)
 
 judas_add_engine_test(judas_first_project_tests tests/FirstProjectTests.cpp)
 judas_add_engine_test(judas_origin_environment_tests tests/OriginEnvironmentTests.cpp)
+judas_add_engine_test(judas_liquid_rotation_tests tests/LiquidRotationTests.cpp)
+judas_add_engine_test(judas_liquid_bake_frame_tests tests/LiquidBakeFrameTests.cpp)
 judas_add_engine_test(judas_collision_witness_tests tests/CollisionWitnessTests.cpp)
 
 # Finalize native packaging only after every subsystem has declared its tools.

@@ -1,0 +1,60 @@
+PASS analytic nonlinear storage, physical derivative and energy primitive agree
+PASS physical small area is retained when cumulative volume increments round below one ULP
+PASS analytic oblique cut uses actual original box boundary
+PASS oblique analytic volume, first moments and wet-face area agree
+PASS collapsed face heights are dry below, wet exactly at and above full height
+PASS negative control detects rotating geometry without its gravity frame
+PASS negative control detects translating geometry without shifting plane head
+PASS physical cap normal detects a reversed surface orientation
+PASS rigid-frame volume, moments and clipped aperture covariance case 0
+PASS rotated cap normals follow gravity independently of world axes case 0
+PASS original physical tetrahedron face planes transform covariantly case 0
+PASS physical basin bake case 0: 
+PASS physical dynamic-surface bake case 0: 
+PASS strict serialized knots and sampled physical storage remain monotone case 0
+PASS cubic storage and inverse match independent geometric clipping case 0
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 0
+PASS normal Surface1 serialization case 0
+PASS strict Surface1 decoder accepts generated rotated storage case 0: 
+PASS negative decreasing capacity fixture serializes
+PASS strict decoder rejects decreasing capacity without publishing a surface
+PASS negative duplicate head fixture serializes
+PASS strict decoder rejects duplicate heads without publishing a surface
+PASS rigid-frame volume, moments and clipped aperture covariance case 1
+PASS rotated cap normals follow gravity independently of world axes case 1
+PASS original physical tetrahedron face planes transform covariantly case 1
+PASS physical basin bake case 1: 
+PASS physical dynamic-surface bake case 1: 
+PASS strict serialized knots and sampled physical storage remain monotone case 1
+PASS cubic storage and inverse match independent geometric clipping case 1
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 1
+PASS normal Surface1 serialization case 1
+PASS strict Surface1 decoder accepts generated rotated storage case 1: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 2
+PASS rotated cap normals follow gravity independently of world axes case 2
+PASS original physical tetrahedron face planes transform covariantly case 2
+PASS physical basin bake case 2: 
+PASS physical dynamic-surface bake case 2: 
+PASS strict serialized knots and sampled physical storage remain monotone case 2
+PASS cubic storage and inverse match independent geometric clipping case 2
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 2
+PASS normal Surface1 serialization case 2
+PASS strict Surface1 decoder accepts generated rotated storage case 2: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 3
+PASS rotated cap normals follow gravity independently of world axes case 3
+PASS original physical tetrahedron face planes transform covariantly case 3
+PASS physical basin bake case 3: 
+PASS physical dynamic-surface bake case 3: 
+PASS strict serialized knots and sampled physical storage remain monotone case 3
+PASS cubic storage and inverse match independent geometric clipping case 3
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 3
+PASS normal Surface1 serialization case 3
+PASS strict Surface1 decoder accepts generated rotated storage case 3: 
+PASS rigid-frame volume, moments and clipped aperture covariance case 4
+PASS rotated cap normals follow gravity independently of world axes case 4
+PASS original physical tetrahedron face planes transform covariantly case 4
+PASS physical basin bake case 4: 
+PASS physical dynamic-surface bake case 4: 
+PASS strict serialized knots and sampled physical storage remain monotone case 4
+FAIL liquid rotation after 59 checks: cubic storage and inverse match independent geometric clipping case 4
+ROTATION_ERRORS_SO_FAR volume=3.1086244689504383e-15 first_moment=2.4821369160012311e-14 aperture=1.9984014443252818e-15 cap_normal=3.0213466469069644e-08 storage=5.6829413880299384e-07 inverse=2.7222946119564995e-12 partition=1.3322676295501878e-15

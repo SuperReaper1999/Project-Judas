@@ -114,7 +114,8 @@ void Prepare(RuntimeWorld& world, ResourceManager& resources, std::string& error
     }
     throw std::runtime_error("required normal liquid preparation: " + error);
 }
-void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat> authoredRotation = {}) {
+void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat> authoredRotation = {},
+                    bool bakeOnly = false) {
     AssetDatabase assets;
     std::string error;
     auto scene = LiquidFixture(output, assets, radial, error, authoredRotation);
@@ -142,6 +143,10 @@ void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat
     const auto handle = liquid.Handle(2), cup = liquid.Handle(4);
     auto* owner = liquid.Get(handle);
     Check(owner && owner->dynamicSurface && liquid.Get(cup), "real basin surface and independent cup resolve");
+    if (bakeOnly) {
+        std::cout << "BAKE_ONLY actual authored bake, strict resource decode and published owners verified; no origin claim\n";
+        return;
+    }
     const auto pose = owner->pose;
     const auto point = pose.position + pose.rotation * glm::vec3(0, .1f, 0);
     Check(liquid.SurfaceImpulse(handle, point, pose.rotation * glm::vec3(8, 0, 0)), "wave receives an ordinary physical impulse");
@@ -175,6 +180,18 @@ void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat
     Check(liquid.Get(handle) == owner && SurfaceState(*owner) == waves && owner->dynamicSurface->Energy() == energy,
           "body-independent handle, complete wave history and energy remain byte-identical");
     const auto shifted = liquid.Sample(point - glm::vec3(delta));
+    if (authoredRotation && shifted) {
+        const auto inverse = glm::inverse(glm::dquat(pose.rotation));
+        const auto beforeLocal = inverse * (glm::dvec3(point) - glm::dvec3(pose.position));
+        const auto afterLocal = inverse * (glm::dvec3(point - glm::vec3(delta)) -
+            glm::dvec3(owner->pose.position));
+        std::cout << std::setprecision(17) << "ROTATED_QUERY before_cell="
+                  << owner->dynamicSurface->Cell(beforeLocal) << " after_cell="
+                  << owner->dynamicSurface->Cell(afterLocal) << " point_error="
+                  << glm::length(beforeLocal - afterLocal) << " surface_error="
+                  << glm::length(shifted->surfacePoint + glm::vec3(delta) - sample->surfacePoint)
+                  << " velocity_error=" << glm::length(shifted->velocity - sample->velocity) << '\n';
+    }
     Check(shifted && Near(shifted->surfacePoint + glm::vec3(delta), sample->surfacePoint) &&
           Near(shifted->normal, sample->normal) && Near(shifted->velocity, sample->velocity),
           "actual depth/normal/flow sample follows the new chart");
@@ -238,7 +255,15 @@ void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat
     Check(world.RequestOrigin({0, 0, 0}, error) && world.CommitOrigin() && liquid.Sample(point),
           "return shift restores the same usable local surface");
     const auto origin = world.Settings().worldOrigin;
-    Check(!world.RequestOrigin({16384, 0, 0}, error) && error.find("liquid owner") != std::string::npos &&
+    const bool rejected = !world.RequestOrigin({16384, 0, 0}, error);
+    if (authoredRotation) {
+        std::cout << std::setprecision(17) << "ROTATED_REJECTION rejected=" << rejected
+                  << " error=" << error << " origin_unchanged="
+                  << (world.Settings().worldOrigin == origin) << " total="
+                  << liquid.Accounting("water").total << " original_total=" << ledger.total
+                  << " total_error=" << liquid.Accounting("water").error << '\n';
+    }
+    Check(rejected && error.find("liquid owner") != std::string::npos &&
           world.Settings().worldOrigin == origin && liquid.Accounting("water").total == ledger.total,
           "out-of-chart liquid is rejected atomically with an owner diagnostic");
     Check(!liquid.CanShiftOrigin({std::numeric_limits<double>::quiet_NaN(), 0, 0}, error),
@@ -385,14 +410,15 @@ void LegacyBoundaryContract() {
 
 int main(int argc, char** argv) {
     try {
-        if (argc == 4 && std::string(argv[1]) == "--bake-regression") {
+        if (argc == 4 && (std::string(argv[1]) == "--bake-regression" ||
+                          std::string(argv[1]) == "--bake-only")) {
             const auto output = fs::absolute(argv[3]);
             Check(!fs::exists(output), "fresh failed-reproduction output required");
             const std::string mode = argv[2];
             if (mode != "normalization" && mode != "knots") throw std::runtime_error("unknown bake regression");
             const auto rotation = mode == "normalization" ?
                 glm::angleAxis(.8f, glm::normalize(glm::vec3(1, 2, 3))) : glm::quat(0, .6f, .8f, 0);
-            LiquidContract(output, false, rotation);
+            LiquidContract(output, false, rotation, std::string(argv[1]) == "--bake-only");
             return 0;
         }
         if (argc == 3 && std::string(argv[1]) == "--cold") {

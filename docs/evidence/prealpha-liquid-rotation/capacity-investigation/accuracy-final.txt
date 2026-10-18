@@ -1,0 +1,1 @@
+SUMMARY analyticPackets=4 rotatedBoxes=128 checks=14988 geometricMassError=4.44089209850062616e-16 independentClipError=1.77635683940025046e-15 analyticError=5.32907051820075139e-15 rotatedCapacityError=7.54951656745106447e-15 inverseCoordinateError=5.15143483426072635e-14 integralError=8.88178419700125232e-16 positiveAndBounded=1

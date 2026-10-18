@@ -1,0 +1,279 @@
+{
+  "utc": "2026-10-18T13:36:23.631054+00:00",
+  "source": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "8c01beb50b7f77a149d9a166b7d7240f1e2b54deb66f1b5b95a841e4ea1c06bf"
+    },
+    {
+      "path": "src/LiquidGeometry.cpp",
+      "sha256": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6"
+    },
+    {
+      "path": "src/LiquidGeometry.h",
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5"
+    },
+    {
+      "path": "src/LiquidSurface.cpp",
+      "sha256": "ce616b45d373f87859a7b7c65206737ebe25814870d68dc6fec9df7893103e99"
+    },
+    {
+      "path": "src/LiquidTypes.cpp",
+      "sha256": "441fe10fc6abc9ce2e85f6480bbe1755acb2e1cc949af518193825f2c8e37f2a"
+    },
+    {
+      "path": "src/WorldRegions.cpp",
+      "sha256": "3689760c62a2ee3da77326999b1e6822e56ce87c99cb64e1c984f9cbf0db3ada"
+    },
+    {
+      "path": "tests/LiquidRotationTests.cpp",
+      "sha256": "e1c7ca9d6b255f7ac3bab82874f010624a7b141e32ffe97867f0480023995130"
+    },
+    {
+      "path": "tests/LiquidBakeFrameTests.cpp",
+      "sha256": "f63bb7ea894860d45cd1949fc1aa2743a581e2da3532de4599aaae2d0c900ab0"
+    },
+    {
+      "path": "tests/OriginEnvironmentTests.cpp",
+      "sha256": "ce9b9db3f2f0031983ad08f1b05be82217a64ed948e8387619aa64b50e7ae8de"
+    }
+  ],
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "environment": {
+    "SDL_VIDEODRIVER": "offscreen",
+    "SDL_AUDIODRIVER": "dummy",
+    "LIBGL_ALWAYS_SOFTWARE": "1"
+  },
+  "runs": [
+    {
+      "name": "rotation",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_rotation_tests"
+      ],
+      "binarySha256": "a17b1c26ed795579a1fb6ce0cce8e8ff497b5e8ac9624682db2b6505fbfa6070",
+      "expectedExit": 0,
+      "exit": 1,
+      "seconds": 0.015969638000115083,
+      "logSha256": "8c5cff1dad77e7b5de319744346fc7c729d110083da795ebcab94b005a7833e9"
+    },
+    {
+      "name": "frame",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_bake_frame_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/frame"
+      ],
+      "binarySha256": "3783601e9c2f86881452c8119ec77d876eeca9bab656ec2751c2e61a90106536",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.015995518999716296,
+      "logSha256": "afecef97830da0a98437ef0d33a0021cf3cadc6e8380dc673ba6f69d35520cf5"
+    },
+    {
+      "name": "bake-normalization",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-only",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/bake-normalization"
+      ],
+      "binarySha256": "7ba4b2549e6f282c575446d95a4108ed1f00ef3506d643c860ee4d07ec9bab2f",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.032059772000138764,
+      "logSha256": "e3b7f161ee4352211fb00e98456c02308e8bb7dad9e0ed00e7e76b470c0068e9"
+    },
+    {
+      "name": "bake-knots",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-only",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/bake-knots"
+      ],
+      "binarySha256": "7ba4b2549e6f282c575446d95a4108ed1f00ef3506d643c860ee4d07ec9bab2f",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.032078725999781454,
+      "logSha256": "e3b7f161ee4352211fb00e98456c02308e8bb7dad9e0ed00e7e76b470c0068e9"
+    },
+    {
+      "name": "normalization-full-preserved-failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/normalization-full"
+      ],
+      "binarySha256": "7ba4b2549e6f282c575446d95a4108ed1f00ef3506d643c860ee4d07ec9bab2f",
+      "expectedExit": 1,
+      "exit": 1,
+      "seconds": 0.03202017900002829,
+      "logSha256": "65053d5cfd328624527afc0388a4d1a79c5ec39b0d762d3f33415c6d47dd3667"
+    },
+    {
+      "name": "knots-full-preserved-failure",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/knots-full"
+      ],
+      "binarySha256": "7ba4b2549e6f282c575446d95a4108ed1f00ef3506d643c860ee4d07ec9bab2f",
+      "expectedExit": 1,
+      "exit": 1,
+      "seconds": 0.03210800700026084,
+      "logSha256": "8dbade024d9a735dfbc22bb7e8441b839cf8999d3159aa6f8864bb566a6b1c88"
+    },
+    {
+      "name": "origin",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/origin"
+      ],
+      "binarySha256": "7ba4b2549e6f282c575446d95a4108ed1f00ef3506d643c860ee4d07ec9bab2f",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.4648774729998877,
+      "logSha256": "ebd967db1174630b5f64fbeedb08e5cb13cb696b65a94061874e5fa98c9c8ec4"
+    },
+    {
+      "name": "M54",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_tests"
+      ],
+      "binarySha256": "511dbf567480709b3eab45df067956da8a9c1763ab509ef8ec64e113246ca95d",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.5151002180000432,
+      "logSha256": "8e21e58cedc821b00747d440e4055dcd195c9302390ced2f4a84874601fc0999"
+    },
+    {
+      "name": "M55",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_tests"
+      ],
+      "binarySha256": "34d5514461248aa7314e61783076c19dab15176f60b810bad4aa7ab37d9ddf72",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 1.016048359999786,
+      "logSha256": "b3c0a272c4ea93991b4888b68841f9f3b6d96946693be96f29037eb669fc8022"
+    },
+    {
+      "name": "refill",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_refill_tests"
+      ],
+      "binarySha256": "1e1aaa240719644f15ce8b806f9a3dc420e76661fcae34147a8ebf727319fea9",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 9.232630828999845,
+      "logSha256": "b840dffa9f34494bd7f1d9920993fb0545eed479f5a4fd312e49cd1d6313f3a2"
+    },
+    {
+      "name": "M54-application",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_application_tests"
+      ],
+      "binarySha256": "b1b4129bcd8217d90c8253abbcce81766f17bffd288fe4a5e737483df03f50e3",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 3.9787884980000854,
+      "logSha256": "3cf938a3252faf9c7d3098515da889359298a1e9e173eb6d7e67f75c7e40e29c"
+    },
+    {
+      "name": "M55-application",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_application_tests"
+      ],
+      "binarySha256": "2072280134d898df6ff887335b5c25aa0d8f7ff54a1934507e6d63e1a30e4932",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 7.2315612659999715,
+      "logSha256": "e4fbed60033b5bb3348dea1a265902d289e72e8af027f4105deec19e75e0b392"
+    },
+    {
+      "name": "gravity-selection",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_gravity_selection_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/gravity-selection"
+      ],
+      "binarySha256": "d7161ee2253421ee2e05c4c335d349cdb1cbe34aaa6974dfd885837700cc3015",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.26471074300025066,
+      "logSha256": "4c1d4006e7d6d7649db6855ce7fbeee3899a6429e198a098abd6e7bd4d70765b"
+    },
+    {
+      "name": "gravity-uniform",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_uniform_gravity_scene_tests",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/final-combined/uniform"
+      ],
+      "binarySha256": "2e4bf365a767f9ebcf89c99d001c48c76d18bd7c5c57b37a913fd5ff056ebb47",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.21452111600001444,
+      "logSha256": "032948c8bb55ea80e97eed61ae6839c60ab2636e36635c574d76fdd1b1778576"
+    },
+    {
+      "name": "streaming",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests"
+      ],
+      "binarySha256": "38683142e7fab26dbf9f349be4e9ae14d1296d92c21c26789e4e65c76f0b8ab9",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.5654781529997308,
+      "logSha256": "cadae28a57f26dc46d88e1ef72bc06fa4a8e6d8266f8ef8771adddbe4de13ce7"
+    },
+    {
+      "name": "world-persistence",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_persistence_tests"
+      ],
+      "binarySha256": "da0ff70b6ffcd8fdc841f2fa8a4855ea162782f6490931b1b9ceddb2618f730a",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.03215927900009774,
+      "logSha256": "b3bd7fbfcc31661e27c06fa311a93dd8ec5dacd983a5d2ba482deec3d616786e"
+    },
+    {
+      "name": "origin-assembly",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_assembly_tests"
+      ],
+      "binarySha256": "25732360fde404d7198cf6392fb2d97e3b668d9f69f8efd2570855230ad1f874",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.11431212700017568,
+      "logSha256": "d5986234162b62e4a4404688531c5b798a5b83c1bbb00f66c9684bf44c736363"
+    },
+    {
+      "name": "origin-stream",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_stream_tests"
+      ],
+      "binarySha256": "b30c67e997ba16324e9d2bb6fa195621aab10e7c7b8d37dfd64cbb0ca76a50ed",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.06416219699985959,
+      "logSha256": "fbdcb66e3e2a00899bd4a65aa5db04a7cab6f8b270fb4ac905d85029e9ee6dbc"
+    },
+    {
+      "name": "character",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "binarySha256": "53657b99a736a4c096f75d8de987c351228ae9a2e5e9a7900fd6400f43c0494e",
+      "expectedExit": 0,
+      "exit": 0,
+      "seconds": 0.5151371400002063,
+      "logSha256": "cd5e35f9960f8fc5063a8d4cb313f9f45e7cb146ad94bb05969dbdd33e56d97d"
+    }
+  ],
+  "codeUnchanged": true,
+  "unexpected": [
+    "rotation"
+  ]
+}

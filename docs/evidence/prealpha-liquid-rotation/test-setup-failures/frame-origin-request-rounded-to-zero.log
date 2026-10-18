@@ -1,0 +1,43 @@
+PASS original rotation with liquid-only owner selects/rejects the same actual region
+PASS original rotation with liquid-only owner bake matches actual published owner/gravity frame
+PASS original rotation with liquid-only owner ordinary regional gravity rebuild remains defined
+PASS original rotation with liquid-only owner rebuilt regional field retains the same physical equilibrium
+PASS half-turn with liquid-only owner selects/rejects the same actual region
+PASS half-turn with liquid-only owner bake matches actual published owner/gravity frame
+PASS half-turn with liquid-only owner ordinary regional gravity rebuild remains defined
+PASS half-turn with liquid-only owner rebuilt regional field retains the same physical equilibrium
+PASS streamed original liquid-only owner selects/rejects the same actual region
+PASS streamed original liquid-only owner bake matches actual published owner/gravity frame
+PASS streamed original liquid-only owner ordinary regional gravity rebuild remains defined
+PASS streamed original liquid-only owner rebuilt regional field retains the same physical equilibrium
+PASS original rotation with rigid owner selects/rejects the same actual region
+PASS original rotation with rigid owner bake matches actual published owner/gravity frame
+PASS original rotation with rigid owner ordinary regional gravity rebuild remains defined
+PASS original rotation with rigid owner rebuilt regional field retains the same physical equilibrium
+PASS half-turn with rigid owner selects/rejects the same actual region
+PASS half-turn with rigid owner bake matches actual published owner/gravity frame
+PASS half-turn with rigid owner ordinary regional gravity rebuild remains defined
+PASS half-turn with rigid owner rebuilt regional field retains the same physical equilibrium
+PASS streamed original rigid owner selects/rejects the same actual region
+PASS streamed original rigid owner bake matches actual published owner/gravity frame
+PASS streamed original rigid owner ordinary regional gravity rebuild remains defined
+PASS streamed original rigid owner rebuilt regional field retains the same physical equilibrium
+PASS nested gravity and liquid owner selects/rejects the same actual region
+PASS nested gravity and liquid owner bake matches actual published owner/gravity frame
+PASS nested gravity and liquid owner ordinary regional gravity rebuild remains defined
+PASS nested gravity and liquid owner rebuilt regional field retains the same physical equilibrium
+PASS independent rebuilt gravity has an actual equilibrium
+PASS rebuilt field participates in the ordinary origin transaction
+REBUILD_ORIGIN found=0 up_error=0 magnitude_error=9.8100004196166992
+FAIL regional rebuild then origin shift retains actual gravity, not a raw rotation cache
+PASS rotated noncubic gravity zone positive selects/rejects the same actual region
+PASS rotated noncubic gravity zone positive bake matches actual published owner/gravity frame
+PASS rotated noncubic gravity zone positive ordinary regional gravity rebuild remains defined
+PASS rotated noncubic gravity zone positive rebuilt regional field retains the same physical equilibrium
+PASS rotated noncubic gravity zone independent outside control selects/rejects the same actual region
+PASS radial owner-frame control selects/rejects the same actual region
+PASS radial owner-frame control bake matches actual published owner/gravity frame
+PASS radial owner-frame control ordinary regional gravity rebuild remains defined
+PASS radial owner-frame control rebuilt regional field retains the same physical equilibrium
+FRAME_ERRORS up=2.4902880875397714e-08 magnitude=0
+SUMMARY 40 checks 1 failures

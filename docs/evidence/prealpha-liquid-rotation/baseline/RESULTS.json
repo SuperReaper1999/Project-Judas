@@ -1,0 +1,70 @@
+{
+  "utc": "2026-10-18T12:57:08.573157+00:00",
+  "acceptedSourceRevision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "runs": [
+    {
+      "mode": "normalization",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/baseline/normalization"
+      ],
+      "exit": 1,
+      "seconds": 0.028357812999956877,
+      "binarySha256": "5bc00887793383fe0c5037913ee6f2d76c13b00afd51a10552f577cd7cf207e2",
+      "embeddedBuildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-1c37839dac70-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1c37839dac7066db466418f983819d6c86fe3663bfce38b91434c42d7c312f24",
+        "source_origin": "git",
+        "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+        "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      },
+      "logSha256": "1e2654c035444bf8684001c3286152d880835ceba09ca8d3a5dbb639979165bf"
+    },
+    {
+      "mode": "knots",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/baseline/knots"
+      ],
+      "exit": 1,
+      "seconds": 0.018631694999839965,
+      "binarySha256": "5bc00887793383fe0c5037913ee6f2d76c13b00afd51a10552f577cd7cf207e2",
+      "embeddedBuildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-528cfb1-dirty-1c37839dac70-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1c37839dac7066db466418f983819d6c86fe3663bfce38b91434c42d7c312f24",
+        "source_origin": "git",
+        "source_revision": "528cfb1b430d710ba5a4d2d13569aad106e3044e",
+        "source_tree": "314d170980b7bb822e5bfbb8be0790ad4543f2e2",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      },
+      "logSha256": "ce496f1770b34bea26d3ca8afe4518ed1f29d6b5c293084c0ad9d9bec7a6bf5f"
+    }
+  ]
+}

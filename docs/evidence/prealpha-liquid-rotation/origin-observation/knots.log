@@ -1,0 +1,22 @@
+PASS fresh failed-reproduction output required
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS unpublished liquid-only actors cannot bypass full-volume chart preflight
+PASS unpublished geometry does not prevent an actual no-op origin request
+PASS ordinary authoritative session
+PASS ordinary unshifted liquid fixture is healthy before testing chart changes
+PASS real basin surface and independent cup resolve
+PASS wave receives an ordinary physical impulse
+PASS detached parcel retains a paired ownership debit
+PASS positive pre-shift physical submersion sample
+PASS positive real displaced-volume and buoyancy integral
+PASS positive optical query primes real world-space caches
+PASS conserved owners and parcels accept live translation: loading
+PASS body-independent handle, complete wave history and energy remain byte-identical
+ROTATED_QUERY before_cell=9 after_cell=10 point_error=1.7261876139525506e-05 surface_error=0.040014658123254776 velocity_error=0.015999620780348778
+FAIL actual depth/normal/flow sample follows the new chart after 21 checks

@@ -1,0 +1,37 @@
+{
+  "root_cause": "Tolerant inside classifications (s<=1e-12) used with a zero-plane intersection s/(s-t) allow negative edge parameters for two positive distances, creating extrapolated geometry. LiquidCutGeometry also kept strictly outside geometry in its expanded all-inside fast path.",
+  "actual_case": {
+    "rotation_angle_radians": 1e-10,
+    "rotation_axis": [
+      1,
+      3,
+      2
+    ],
+    "cell": 2,
+    "head": 0.7499999999799553,
+    "stored_volume_m3": 0.18749999998580175,
+    "old_direct_volume_m3": 0.18750056827994055,
+    "old_discrepancy_m3": 5.682941388029938e-07
+  },
+  "minimal": {
+    "old_clip_excess_m3": 6.666673333932671e-07,
+    "strictly_outside_tet_volume_m3": 1.3333333333333334e-07,
+    "old_outside_retained": true,
+    "corrected_outside_retained": false
+  },
+  "correction": "Use physical zero-plane classifications for cut initial and edge classifications and LiquidCutGeometry complete containment. Other broadphase/weld tolerances, solver/test budgets and geometry remain unchanged.",
+  "final_standalone": {
+    "checks": 386,
+    "orientations": 37,
+    "failures": 0,
+    "maximum_storage_discrepancy_m3": 5.060257768363385e-12,
+    "maximum_inverse_discrepancy_m3": 2.7222946119564995e-12,
+    "maximum_aggregate_partition_error_m3": 3.006705995289849e-11
+  },
+  "source_sha256": {
+    "src/LiquidGeometry.cpp": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6",
+    "src/LiquidGeometry.h": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5",
+    "src/LiquidSurface.cpp": "9b62e4e521f9e2eae9decf13b87d90e7e7a2cfceb23a7032792c7f7a32986de4",
+    "tests/LiquidRotationTests.cpp": "fe2c5427fe044008a33a43e05c7f1d0078d54e76233f96a7c8d3571ebc493300"
+  }
+}

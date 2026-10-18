@@ -1,0 +1,109 @@
+{
+  "experiment": "EXP-013",
+  "source": "/home/conner/Documents/JudasFluidResearch/fluid_lab/experiments/EXP-013-stable-orbits/SUMMARY.json",
+  "selection_counterexample": {
+    "status": "PASS",
+    "selector": "entropy",
+    "case": "axis_-0.0001",
+    "nr": 12,
+    "ne": 12,
+    "elapsed_seconds": 0.247013872001844,
+    "max_wet_area_error": 0.04996953943370428,
+    "max_full_area_error": 0.01497738601915033,
+    "moment_error": 2.3635607360183997e-17,
+    "full_mass_error": 2.220446049250313e-15,
+    "height_error": 1.3877787807814457e-17,
+    "minimum_weight": 6.261261380058513e-13,
+    "maximum_exact_correction": 1.155009601243925e-15,
+    "relative_weight_l1_difference": 3.1768898814442414e-05,
+    "weight_l1_difference": 1.1941837361558246e-05,
+    "path": "runs/001_selection/axis_-0.0001_entropy.json",
+    "solver": {
+      "iterations": 7,
+      "scaled_residual": 1.0680345496894006e-13,
+      "reason": null,
+      "rank": 39,
+      "halvings": 0,
+      "minimum_weight": 6.261261380058513e-13,
+      "maximum_relative_weight": 42.97056092286796,
+      "relative_entropy": 0.04033404403651064,
+      "selector": "relative entropy",
+      "whitened_residual": 6.283862319378386e-14
+    }
+  },
+  "face_step_audit": [
+    {
+      "file": "runs/011_face_first/mass_face_entropy_v2_eta12.json",
+      "status": "PASS",
+      "same_certificate": true,
+      "positive_weights": true,
+      "capacities_exact": true,
+      "nonlinear_old_volume_exact": true,
+      "conservation_exact": true,
+      "new_capacity_exact": true,
+      "wall_normal_trace": 1.0408340855860843e-17,
+      "internal_normal_jump": 1.734723475976807e-17,
+      "owned_violation": 0.0,
+      "exterior_violation": 0.0,
+      "mass_error": 2.6645352591003757e-15,
+      "original_wet_violation": -2.84458219864947e-05,
+      "max_wet_area_error": 1.63202784619898e-14,
+      "max_full_area_error": 3.26405569239796e-14
+    },
+    {
+      "file": "runs/011_face_first/mass_face_entropy_v2_eta24.json",
+      "status": "PASS",
+      "same_certificate": true,
+      "positive_weights": true,
+      "capacities_exact": true,
+      "nonlinear_old_volume_exact": true,
+      "conservation_exact": true,
+      "new_capacity_exact": true,
+      "wall_normal_trace": 8.772031879638422e-18,
+      "internal_normal_jump": 3.122502256758253e-17,
+      "owned_violation": 0.0,
+      "exterior_violation": 0.0,
+      "mass_error": 1.1546319456101628e-14,
+      "original_wet_violation": -5.582589930996917e-06,
+      "max_wet_area_error": 1.630917623174355e-13,
+      "max_full_area_error": 3.299582829185965e-13
+    }
+  ],
+  "accepted_original_dt0030_third_steps": [],
+  "unexecuted": [
+    "Original dt=.03 steps4/5: no accepted dt=.03 third state",
+    "Longer trajectory comparison beyond accepted third: not executed",
+    "Exact Farkas certificates for augmented40-moment/face failures",
+    "General evolved mass-plus-face initialization",
+    "Temporal refinement and all-region continuum-density proof",
+    "Zero-direction/rank selection",
+    "Factored correction integrated into momentum and endpoint-moment history"
+  ],
+  "solver_identity_correction": {
+    "issue": "Text replacement failed because original expression is floor+gamma*base, not floor+base*gamma. No assertion existed in the first generation.",
+    "actual_sparse_force_runs": [
+      "012_third_force",
+      "013_third_broyden",
+      "015_third_smooth",
+      "016_third_physical",
+      "017_third_dt003",
+      "019_factored_initialization",
+      "020_factored_initialization_v2"
+    ],
+    "actual_entropy_runs": [
+      "001_selection entropy rows",
+      "003_faces entropy rows",
+      "007_faces_mass entropy rows",
+      "008_first_refinement entropy rows",
+      "009_faces_mass_v2",
+      "010_face_selection_v2",
+      "011_face_first",
+      "005_third_entropy expanded control"
+    ],
+    "corrected_initializer": "initialize_physical_entropy_v2.py",
+    "corrected_probe": "runs/022_factored_entropy_v2",
+    "preservation": "All mistaken names, source versions, intent declarations and generated results retained. Intent is not executed algorithm identity.",
+    "serialization_fix": "019 summary int64 failure preserved;020 casts rank to int, preserving certificate mathematics.",
+    "corrected_first_failure": "021 correctly replaces branch but missing entropy function import; NameError saved;022 adds explicit import and preflight callable check"
+  }
+}

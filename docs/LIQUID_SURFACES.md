@@ -1,12 +1,13 @@
 # Dynamic liquid surfaces — M55
 
-**Status through M69:** M55 is operator-accepted and checkpointed. Candidate/pending
-statements and measurements below record the original milestone review state,
-not a current outstanding acceptance gate. Later contracts take precedence;
-start with [Architecture](ARCHITECTURE.md) and [JudasJS](JUDASJS.md).
+**Current status:** M55 is operator-accepted and checkpointed. The unnumbered
+Pre-Alpha rotated-bake follow-up described below is a separate correction awaiting
+human acceptance. Original milestone measurements below remain historical;
+later contracts take precedence. Start with [Architecture](ARCHITECTURE.md) and
+[JudasJS](JUDASJS.md).
 
 Starting checkpoint: `d9ebc8c7a987047b1d4175ed5d5de7da8dea472d` (accepted M54).
-Current candidate; operator visual/interactive acceptance is pending.
+This is the historical M55 starting checkpoint, not the current engine revision.
 
 M54 owns liquid quantity. M55 optionally partitions a reservoir into modest
 surface cells. Deep water remains implicit; there are no dynamic depth layers or
@@ -37,6 +38,13 @@ nonconvex coarse subregions reject rather than silently becoming one pool.
 Topology uses original authored geometry; radial quadrature uses the existing M54
 refiner within each cell and retains the declared coordinate-error bound.
 
+The Pre-Alpha follow-up aligns bake-time gravity/owner frames with their runtime
+publication. It also corrects decreasing dynamic-cell capacity knots using the
+positive storage construction below. No basin/surface file-format migration,
+pressure-budget increase or acceptance-threshold change is involved. Existing
+invalid or stale assets still require an ordinary rebake; decoding does not repair
+their bytes. See the [correction and preserved failures](evidence/prealpha-liquid-rotation/REPORT.md).
+
 ## State, method and boundaries
 
 `owner.volume = sum(cell.volume)`. Cells are that same owned water, never extra
@@ -49,9 +57,30 @@ C_i(qnew) - V_old + dt * orientedSum(Qnew) = 0
 ```
 
 Local physical storage C(q) is piecewise cubic in the affine tetrahedral coordinate.
-A positive simplex-spline recurrence and a local-coordinate interval tree cache
-its coefficients without global derivative cancellation. Inversion is bounded
-bisection. Solid unions are subtracted before re-tessellation; unaffected cells
+The projected volume density of each tetrahedron is a nonnegative quadratic
+B-spline. Its Bernstein controls are combined in a local-coordinate interval tree,
+then integrated once in height order. The resulting cubic Bernstein capacities
+share cumulative endpoints, including full capacity; independently evaluated CDF
+endpoints cannot introduce decreasing knots. Capacity, inversion and the energy
+primitive use this same cubic representation. Physical area is retained as the
+positive quadratic density rather than recovered by subtracting nearly equal
+rounded cumulative volumes. An interval smaller than one volume ULP can therefore
+retain a physical derivative without inventing a minimum water depth. This is
+finite-precision evaluation of the same tetrahedral measure, not a new fluid model
+or a post-bake capacity clamp. Inversion retains bounded bisection.
+
+Polynomial metadata is derived from physical tetrahedra on load; `JudasBasin` and
+`Surface1` serialization remain unchanged. Non-opted M54 linear tables keep their
+existing path. Positive storage alone does not establish wet-face accuracy: actual
+clipped aperture areas, normals and first moments are validated separately.
+Convex cuts and solid subtraction classify and intersect against the same physical
+zero plane, so a near-coplanar solid cannot acquire geometry or enlarge an aperture
+through an extrapolated edge crossing. Broadphase and vertex-welding tolerances
+remain separate from physical half-space ownership. Near-parallel wet-face cuts
+retain extended precision in signed distances and intersection fractions before
+rounding final geometry; platform accuracy remains subject to that arithmetic.
+
+Solid unions are subtracted before re-tessellation; unaffected cells
 retain cached geometry/storage. Convex fragments use an existing-vertex boundary fan, skipping incident faces, to avoid redundant centroid subdivisions. No per-frame static bake or dense repeated
 capacity sampling is required. Changed solids stage only affected face apertures;
 exact head/area results are memoized until their geometry changes. Cap extraction
@@ -127,8 +156,21 @@ not automatically rewritten from contained water.
 `LiquidVolume.transferTo`, `applyImpulse`, `surfaceEnabled` and surface diagnostics.
 Authoritative samples report actual available occupancy, level/depth, gravity `up`,
 represented surface `normal`, surface point and modeled tangent velocity.
-Gravity-up and surface/support normals are separate. Coordinates are local world
-coordinates around the fixed double absolute origin; no live rebasing/world-Y.
+Gravity-up and surface/support normals are separate. Queries use local-world
+coordinates around the double absolute origin; capacity geometry and surface state
+remain owner-local. Accepted live-origin support translates conserved owners and
+parcels within the bounded 8 km chart and rebuilds derived optical caches; it does
+not assume world-Y. See [Pre-Alpha integration boundaries](PREALPHA.md).
+
+One newly exposed half-turn case still changes the sampled cell after a 512 m
+origin shift: world/owner conversion rounding moves a boundary query from cell 9
+to cell 10 while authoritative state remains identical. The original bake defects
+are corrected, but the full `--bake-regression knots` command still fails this
+later sampling check. Do not treat successful baking as complete origin-query
+equivalence. The other original rotation also retains a later bit-exact summed-total
+assertion failure after real flow (`2.5199999999999996` versus `2.52` m³, M54 ledger
+error zero). Both original full commands remain failed; the successful bake-only
+checks do not certify them. Exact evidence is in the [follow-up report](evidence/prealpha-liquid-rotation/REPORT.md).
 
 Presentation samples and mesh use the same previous/current levels and alpha as
 presentation-facing cameras. Finite-volume caps are piecewise constant, with

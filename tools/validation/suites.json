@@ -9,8 +9,14 @@
     {"name":"impact-timing","target":"judas_impact_timing_tests","groups":["collision"]},
     {"name":"impact-mesh-arrival","target":"judas_impact_mesh_cost_tests","groups":["collision"],"args":["60","","1.2","entry"]},
     {"name":"impact-mesh-continuation","target":"judas_impact_mesh_cost_tests","groups":["known-failures"],"manual":true,"finding":"CCD-MESH-CONTINUATION","args":["60","","1.2"]},
-    {"name":"liquid-bake-orientation","target":"judas_origin_environment_tests","groups":["known-failures"],"manual":true,"finding":"LIQUID-BAKE-ROTATION","args":["--bake-regression","normalization","{output}/bake-orientation"]},
-    {"name":"liquid-bake-knots","target":"judas_origin_environment_tests","groups":["known-failures"],"manual":true,"finding":"LIQUID-BAKE-KNOTS","args":["--bake-regression","knots","{output}/bake-knots"]},
+    {"name":"liquid-rotation","target":"judas_liquid_rotation_tests","groups":["liquid"]},
+    {"name":"liquid-bake-frames","target":"judas_liquid_bake_frame_tests","groups":["liquid"],"args":["{output}/bake-frames"]},
+    {"name":"liquid-bake-normalization-only","target":"judas_origin_environment_tests","groups":["liquid"],"args":["--bake-only","normalization","{output}/bake-normalization"],"finding":"LIQUID-BAKE-ROTATION"},
+    {"name":"liquid-bake-knots-only","target":"judas_origin_environment_tests","groups":["liquid"],"finding":"LIQUID-BAKE-KNOTS","args":["--bake-only","knots","{output}/bake-knots"]},
+    {"name":"liquid-reservoir","target":"judas_liquid_tests","groups":["liquid"]},
+    {"name":"liquid-surface","target":"judas_liquid_surface_tests","groups":["liquid"]},
+    {"name":"liquid-origin-total-identity","target":"judas_origin_environment_tests","groups":["known-failures"],"finding":"LIQUID-ORIGIN-TOTAL-IDENTITY","args":["--bake-regression","normalization","{output}/bake-orientation"],"manual":true},
+    {"name":"liquid-origin-grid-query","target":"judas_origin_environment_tests","groups":["known-failures"],"manual":true,"finding":"LIQUID-ORIGIN-GRID-QUERY","args":["--bake-regression","knots","{output}/bake-knots"]},
     {"name":"collision-continuity","target":"judas_collision_continuity_tests","groups":["collision"]},
     {"name":"character-motor","target":"judas_character_motor_tests","groups":["core","lifecycle"]},
     {"name":"physics-continuation","target":"judas_physics_continuation_tests","groups":["core","lifecycle"]},
@@ -37,7 +43,9 @@
     {"id":"FLU-001","status":"deferred-failing","scheduled":false,"reason":"Legacy PBF settling contract retained unchanged; separate fluid review required.","evidence":"docs/evidence/m78-completion/FINDINGS_FINAL.json"},
     {"id":"LEGACY-CONTINUATION","status":"documented-incompatible-history","scheduled":false,"reason":"Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.","evidence":"docs/evidence/m78-cold-boundary"},
     {"id":"DENSE-CCD-TAIL","status":"open-performance-limit","scheduled":false,"reason":"Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.","evidence":"docs/evidence/m91/REPORT.md"},
-    {"id":"LIQUID-BAKE-ROTATION","status":"open-authoring-failing","scheduled":false,"reason":"An ordinary rotated uniform field/basin exposes bake-versus-runtime quaternion normalization disagreement. The unchanged physical equivalence tolerance rejects the connected owners before any origin shift.","evidence":"docs/evidence/prealpha-pass2/integration"},
-    {"id":"LIQUID-BAKE-KNOTS","status":"open-authoring-failing","scheduled":false,"reason":"A non-axis rotated uniform basin can write Surface1 capacity knots that its normal decoder rejects as nonmonotonic. No numerical or decoder acceptance threshold was changed.","evidence":"docs/evidence/prealpha-pass2/integration"}
+    {"id":"LIQUID-BAKE-ROTATION","status":"resolved-baking","scheduled":true,"reason":"Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"},
+    {"id":"LIQUID-BAKE-KNOTS","status":"resolved-baking","scheduled":true,"reason":"Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"},
+    {"id":"LIQUID-ORIGIN-GRID-QUERY","status":"open-query-continuity-failing","scheduled":false,"reason":"The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"},
+    {"id":"LIQUID-ORIGIN-TOTAL-IDENTITY","status":"open-exact-total-assertion-failing","scheduled":false,"reason":"Original arbitrary-rotation integration now bakes, shifts, cold-restores and continues physical flow. Later out-of-chart request is correctly rejected atomically with owner diagnostic, but the original assertion also requires the summed owner total to be bit-identical across prior physical flow: 2.5199999999999996 versus2.52m3. M54 ledger error remains zero. Fixture is unchanged and failed pending separate contract review.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"}
   ]
 }

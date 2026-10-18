@@ -1,0 +1,9 @@
+{
+  "base": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "trackedChangesMatchIntendedSourceInventory": true,
+  "trackedHistoricalEvidenceChanges": [],
+  "unrelatedUntrackedBuildInputsFingerprintBefore": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+  "unrelatedUntrackedBuildInputsFingerprintAfter": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+  "match": true,
+  "scope": "Tracked files outside the13 intentional source/doc/tool paths remain byte-identical to base. Unrelated pre-existing untracked build-input files match their original embedded fingerprint; two new regression test sources are excluded from that comparison. Other old untracked evidence is not staged or rewritten."
+}

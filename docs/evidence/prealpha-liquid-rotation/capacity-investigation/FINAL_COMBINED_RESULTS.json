@@ -1,0 +1,58 @@
+{
+  "chronology": "Final storage + actual-plane clipping correction; previous RESULTS/before-cut and variant outputs preserved separately.",
+  "final_checks": {
+    "surface_cases": 512,
+    "baked": 512,
+    "strict_decode_passes": 512,
+    "sampled_cdf_decreases": 0,
+    "sampled_out_of_bounds": 0,
+    "sampled_negative_areas": 0,
+    "maximum_partition_geometry_discrepancy_m3": 2.4430768519323465e-10,
+    "public_rotation_checks": 386,
+    "public_rotation_orientations": 37,
+    "public_rotation_failures": 0
+  },
+  "final_accuracy": {
+    "seed": "0x41cab21",
+    "nonlinear_tet_packets": 4,
+    "rigidly_rotated_boxes": 128,
+    "checks": 14988,
+    "geometric_mass_error_m3": 4.440892098500626e-16,
+    "independent_clip_error_m3": 1.7763568394002505e-15,
+    "analytic_error_m3": 5.329070518200751e-15,
+    "rotated_capacity_error_m3": 7.549516567451064e-15,
+    "inverse_coordinate_error_m": 5.1514348342607263e-14,
+    "cubic_integral_error_m3": 8.881784197001252e-16
+  },
+  "public_rotation_errors": {
+    "checks": 386,
+    "orientations": 37,
+    "failures": 0,
+    "maximum_storage_discrepancy_m3": 5.060257768363385e-12,
+    "maximum_inverse_discrepancy_m3": 2.7222946119564995e-12,
+    "maximum_aggregate_partition_error_m3": 3.006705995289849e-11
+  },
+  "memory": {
+    "old_coefficients_bytes_per_interval": 32,
+    "new_coefficients_bytes_per_interval": 56,
+    "original_fixture_intervals": 104,
+    "original_fixture_extra_bytes": 2496,
+    "construction_tree_controls_per_node_before": 4,
+    "construction_tree_controls_per_node_after": 3
+  },
+  "timing": "Prior diagnostic belongs only to storage-only stage. No matched final combined timing was attempted during root CMake build.",
+  "source_sha256": {
+    "src/LiquidGeometry.cpp": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6",
+    "src/LiquidGeometry.h": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5",
+    "src/LiquidSurface.cpp": "9b62e4e521f9e2eae9decf13b87d90e7e7a2cfceb23a7032792c7f7a32986de4",
+    "tests/LiquidRotationTests.cpp": "fe2c5427fe044008a33a43e05c7f1d0078d54e76233f96a7c8d3571ebc493300"
+  },
+  "raw_outputs": [
+    "runtime-final-cut.txt",
+    "accuracy-final-cut.txt",
+    "rotation-final-cut.txt",
+    "minimal-cut-before.txt",
+    "minimal-cut-after.txt",
+    "clip-repro.txt"
+  ]
+}

@@ -1,0 +1,8 @@
+PASS fresh failed-reproduction output required
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+FAIL authored world validates original baked fingerprint: stale/invalid liquid bake: invalid bounded Surface1 bake: nonmonotonic capacity knots after 8 checks

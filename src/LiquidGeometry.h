@@ -12,12 +12,23 @@ using LiquidTet = std::array<glm::dvec3,4>;
 struct LiquidGeometry {std::vector<LiquidTet> cells;};
 struct LiquidMoment {double volume=0;glm::dvec3 first{0};};
 struct LiquidCurvePoint {double q=0,volume=0;};
+// Exact cubic storage on one height interval. Bernstein volume controls share
+// the cumulative endpoints; the independently retained positive area controls
+// keep the physical Jacobian even when an interval adds less than one volume ULP.
+// This is derived runtime data. JudasBasin/Surface1 serialization is unchanged.
+struct LiquidCapacityPolynomial {
+    std::array<double, 4> volume{};
+    std::array<double, 3> area{};
+    double Volume(long double fraction) const;
+    double Area(long double fraction) const;
+    double Integral(long double fraction) const;
+};
 struct LiquidBasinData {
  std::shared_ptr<const LiquidSurfaceData> dynamicSurface;
  LiquidGeometry geometry;GravityEquilibrium equilibrium;
  std::vector<LiquidCurvePoint> curve;std::string fingerprint;
  // Optional exact piecewise-cubic storage; empty preserves M54 linear tables.
- std::vector<std::array<double,4>> capacityPolynomials;
+ std::vector<LiquidCapacityPolynomial> capacityPolynomials;
  double volumeTolerance=1e-5,heightTolerance=.002,coordinateError=0,capacity=0;
 };
 bool LoadLiquidGeometry(const std::string&,LiquidGeometry&,std::string&);

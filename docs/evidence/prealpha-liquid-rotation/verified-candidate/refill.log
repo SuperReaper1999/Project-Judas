@@ -1,0 +1,229 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+M55 lab ordinary cycle 0 press 0 pool 160 storage 0 wet 336/384 q 1.95600285..2.25 iterations 5 retries 0 residual 1.42287722884e-08 solve 0.459537 ms ledger 0 partition 1.42108547152e-13
+PASS ordinary filled operation is conservative and solves
+M55 lab drain cycle 0 press 1 pool 140 storage 20 wet 336/384 q 1.75981192..2.25 iterations 3 retries 0 residual 2.72380299099e-09 solve 0.430462 ms ledger 0 partition 1.13686837722e-13
+M55 lab drain cycle 0 press 2 pool 120 storage 40 wet 336/384 q 1.52036007..2.25 iterations 3 retries 0 residual 4.55602783682e-09 solve 0.425767 ms ledger 0 partition 7.1054273576e-14
+M55 lab drain cycle 0 press 3 pool 100 storage 60 wet 336/384 q 1.28160867..2.25 iterations 3 retries 0 residual 1.68025385985e-08 solve 0.583847 ms ledger 0 partition 1.70530256582e-13
+M55 lab drain cycle 0 press 4 pool 80 storage 80 wet 336/384 q 1.04320667..2.25 iterations 3 retries 0 residual 6.9232151688e-08 solve 0.413466 ms ledger 0 partition 1.56319401867e-13
+M55 lab drain cycle 0 press 5 pool 60 storage 100 wet 336/384 q 0.80450315..2.25 iterations 4 retries 0 residual 9.74001815887e-11 solve 0.500438 ms ledger 0 partition 1.91846538655e-13
+M55 lab drain cycle 0 press 6 pool 40 storage 120 wet 336/384 q 0.564544841..2.25 iterations 4 retries 0 residual 1.59163642444e-10 solve 0.473406 ms ledger 0 partition 1.7763568394e-13
+M55 lab drain cycle 0 press 7 pool 20 storage 140 wet 336/384 q 0.322034413..2.25 iterations 4 retries 0 residual 1.97530946434e-10 solve 0.450283 ms ledger 0 partition 1.81188397619e-13
+M55 lab drain cycle 0 press 8 pool 0 storage 160 wet 0/384 q 0..2.25 iterations 0 retries 0 residual 8.95892770368e-12 solve 0.287510 ms ledger 0 partition 1.80182474843e-13
+PASS large pool substantially drains through authored Z action
+M55 lab refill cycle 0 press 1 pool 1.3624999868 storage 158.637500013 wet 4/384 q 6.02291315e-08..2.68287017 iterations 16 retries 0 residual 5.56345211108e-10 solve 0.508417 ms ledger 0 partition 1.79856129989e-13
+M55 lab refill cycle 0 press 2 pool 6.36249993511 storage 153.637500065 wet 26/384 q 7.6613665e-08..2.73075557 iterations 26 retries 0 residual 3.6020978389e-09 solve 0.643767 ms ledger 0 partition 1.7763568394e-13
+M55 lab refill cycle 0 press 3 pool 26.3624999351 storage 133.637500065 wet 94/384 q 8.86682178e-08..2.48339934 iterations 28 retries 0 residual 2.23561979799e-09 solve 0.695077 ms ledger 0 partition 1.63424829225e-13
+M55 lab refill cycle 0 press 4 pool 29.0124999089 storage 130.987500091 wet 114/384 q 9.3290439e-08..2.71316018 iterations 21 retries 0 residual 4.53243059891e-09 solve 0.583904 ms ledger 0 partition 1.66977542904e-13
+M55 lab refill cycle 0 press 5 pool 48.7874997027 storage 111.212500297 wet 141/384 q 1.5551911e-05..2.8 iterations 54 retries 0 residual 2.13110137176e-09 solve 0.738426 ms ledger 0 partition 1.98951966013e-13
+M55 lab refill cycle 0 press 6 pool 68.7874997027 storage 91.2125002973 wet 184/384 q 0.317502817..2.8 iterations 25 retries 0 residual 1.46320623326e-09 solve 0.687220 ms ledger 0 partition 1.70530256582e-13
+M55 lab refill cycle 0 press 7 pool 88.7874997027 storage 71.2125002973 wet 220/384 q 0.38491069..2.79999731 iterations 23 retries 0 residual 1.45015644404e-08 solve 0.677991 ms ledger 0 partition 1.84741111298e-13
+M55 lab refill cycle 0 press 8 pool 108.787499703 storage 51.2125002973 wet 252/384 q 0.608046398..2.79995975 iterations 22 retries 0 residual 9.87836045064e-09 solve 0.714441 ms ledger 0 partition 1.42108547152e-13
+M55 lab refill cycle 0 press 9 pool 128.787499703 storage 31.2125002973 wet 288/384 q 0.933728206..2.79977336 iterations 22 retries 0 residual 9.48526320427e-09 solve 0.709910 ms ledger 0 partition 1.70530256582e-13
+M55 lab refill cycle 0 press 10 pool 148.787499703 storage 11.2125002973 wet 325/384 q 1.30436512..2.79914418 iterations 20 retries 0 residual 5.10529180492e-09 solve 0.794316 ms ledger 0 partition 8.52651282912e-14
+M55 lab refill cycle 0 press 11 pool 160 storage 0 wet 339/384 q 1.48107873..2.79736742 iterations 18 retries 0 residual 6.79997223558e-08 solve 0.849788 ms ledger 0 partition 1.42108547152e-13
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 lab drain cycle 1 press 1 pool 139.998292283 storage 20 wet 336/384 q 1.50933839..2.25 iterations 6 retries 0 residual 3.85780013827e-08 solve 0.496330 ms ledger -2.84217094304e-14 partition 1.42108547152e-13
+M55 lab drain cycle 1 press 2 pool 119.998292283 storage 40 wet 336/384 q 1.31921171..2.25 iterations 5 retries 0 residual 1.98479496943e-08 solve 0.497940 ms ledger -2.84217094304e-14 partition 2.13162820728e-13
+M55 lab drain cycle 1 press 3 pool 99.9982922826 storage 60 wet 336/384 q 1.12470986..2.25 iterations 5 retries 0 residual 1.01473785842e-08 solve 0.524361 ms ledger -2.84217094304e-14 partition 1.13686837722e-13
+M55 lab drain cycle 1 press 4 pool 79.9982922826 storage 80 wet 336/384 q 0.925396215..2.25 iterations 5 retries 0 residual 4.80376600922e-09 solve 0.501635 ms ledger -2.84217094304e-14 partition 1.98951966013e-13
+M55 lab drain cycle 1 press 5 pool 59.9982922826 storage 100 wet 336/384 q 0.71957326..2.25 iterations 5 retries 0 residual 2.51629918659e-09 solve 0.488033 ms ledger -2.84217094304e-14 partition 2.27373675443e-13
+M55 lab drain cycle 1 press 6 pool 39.9982922826 storage 120 wet 336/384 q 0.509086054..2.25 iterations 5 retries 0 residual 1.69462218418e-09 solve 0.561991 ms ledger -2.84217094304e-14 partition 2.27373675443e-13
+M55 lab drain cycle 1 press 7 pool 19.9982922826 storage 140 wet 336/384 q 0.294503535..2.25 iterations 5 retries 0 residual 5.14812461813e-09 solve 0.752812 ms ledger -2.84217094304e-14 partition 1.95399252334e-13
+M55 lab drain cycle 1 press 8 pool 0 storage 159.998292283 wet 0/384 q 6.82941699e-08..2.25 iterations 0 retries 0 residual 9.20114384736e-12 solve 0.322630 ms ledger -2.84217094304e-14 partition 2.05307527911e-13
+PASS large pool substantially drains through authored Z action
+M55 lab refill cycle 1 press 1 pool 1.3624999868 storage 158.635792296 wet 4/384 q 6.94123797e-08..2.68287017 iterations 16 retries 0 residual 5.55539533722e-10 solve 0.548814 ms ledger -2.84217094304e-14 partition 2.05391259556e-13
+M55 lab refill cycle 1 press 2 pool 10.1624998863 storage 149.835792396 wet 35/384 q 7.9567737e-08..2.76010605 iterations 26 retries 0 residual 5.81581040944e-09 solve 0.606050 ms ledger -5.68434188608e-14 partition 2.16715534407e-13
+M55 lab refill cycle 1 press 3 pool 30.1624998863 storage 129.835792396 wet 96/384 q 8.9335161e-08..2.62884204 iterations 25 retries 0 residual 2.4278848755e-09 solve 0.654634 ms ledger -5.68434188608e-14 partition 1.91846538655e-13
+M55 lab refill cycle 1 press 4 pool 31.5249998731 storage 128.473292409 wet 121/384 q 9.56219959e-08..2.68287017 iterations 20 retries 0 residual 8.6947126982e-09 solve 0.635463 ms ledger -5.68434188608e-14 partition 2.16715534407e-13
+M55 lab refill cycle 1 press 5 pool 32.8874998599 storage 127.110792423 wet 147/384 q 0..2.68287017 iterations 22 retries 0 residual 5.89282373885e-09 solve 0.645119 ms ledger -5.68434188608e-14 partition 2.0605739337e-13
+M55 lab refill cycle 1 press 6 pool 52.8874998599 storage 107.110792423 wet 206/384 q 0.317384119..2.25 iterations 25 retries 0 residual 1.39728395468e-08 solve 0.707681 ms ledger -5.68434188608e-14 partition 2.0605739337e-13
+M55 lab refill cycle 1 press 7 pool 72.8874998599 storage 87.1107924227 wet 264/384 q 0.616730299..2.30314296 iterations 22 retries 0 residual 8.53028298399e-09 solve 0.734499 ms ledger -5.68434188608e-14 partition 2.13162820728e-13
+M55 lab refill cycle 1 press 8 pool 92.8874998599 storage 67.1107924227 wet 304/384 q 0.60442779..2.404375 iterations 21 retries 0 residual 6.70671252177e-09 solve 0.807455 ms ledger -5.68434188608e-14 partition 2.27373675443e-13
+M55 lab refill cycle 1 press 9 pool 112.88749986 storage 47.1107924227 wet 338/384 q 0.34790125..2.45704257 iterations 21 retries 0 residual 2.75927095048e-08 solve 0.759303 ms ledger -5.68434188608e-14 partition 2.27373675443e-13
+M55 lab refill cycle 1 press 10 pool 132.88749986 storage 27.1107924227 wet 358/384 q 0.321658308..2.46798407 iterations 18 retries 0 residual 5.24540284811e-08 solve 0.813486 ms ledger -5.68434188608e-14 partition 1.98951966013e-13
+M55 lab refill cycle 1 press 11 pool 152.88749986 storage 7.11079242269 wet 367/384 q 0.503306736..2.45135825 iterations 116 retries 3 residual 4.25383471258e-09 solve 4.775199 ms ledger -5.68434188608e-14 partition 1.42108547152e-13
+M55 lab refill cycle 1 press 12 pool 159.998292283 storage 0 wet 384/384 q 0.567210042..2.41991686 iterations 18 retries 0 residual 7.51710811447e-09 solve 0.807344 ms ledger -5.68434188608e-14 partition 3.69482222595e-13
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 lab drain cycle 2 press 1 pool 139.998292283 storage 20 wet 357/384 q 1.65296003..2.25 iterations 10 retries 0 residual 2.51025907512e-08 solve 0.631236 ms ledger -5.68434188608e-14 partition 1.42108547152e-13
+M55 lab drain cycle 2 press 2 pool 119.998292283 storage 40 wet 357/384 q 1.42673019..2.25 iterations 7 retries 0 residual 7.22369803733e-08 solve 0.562229 ms ledger -5.68434188608e-14 partition 2.41584530158e-13
+M55 lab drain cycle 2 press 3 pool 99.9982922826 storage 60 wet 356/384 q 1.20272009..2.25 iterations 10 retries 0 residual 1.33805919185e-09 solve 0.601389 ms ledger -5.68434188608e-14 partition 1.42108547152e-13
+M55 lab drain cycle 2 press 4 pool 79.9982922826 storage 80 wet 354/384 q 0.979900395..2.25 iterations 6 retries 0 residual 6.45818013636e-09 solve 0.780179 ms ledger -5.68434188608e-14 partition 2.13162820728e-13
+M55 lab drain cycle 2 press 5 pool 59.9982922826 storage 100 wet 353/384 q 0.75588911..2.25 iterations 7 retries 0 residual 1.86645688304e-08 solve 0.550929 ms ledger -5.68434188608e-14 partition 2.48689957516e-13
+M55 lab drain cycle 2 press 6 pool 39.9982922826 storage 120 wet 352/384 q 0.531351743..2.25 iterations 8 retries 0 residual 3.16534653744e-08 solve 0.579295 ms ledger -5.68434188608e-14 partition 2.27373675443e-13
+M55 lab drain cycle 2 press 7 pool 19.9982922826 storage 140 wet 351/384 q 0.305048305..2.25 iterations 8 retries 0 residual 8.01326362782e-11 solve 0.609579 ms ledger -5.68434188608e-14 partition 2.48689957516e-13
+M55 lab drain cycle 2 press 8 pool 0 storage 159.998292283 wet 0/384 q 5.62866156e-08..2.25 iterations 0 retries 0 residual 1.0794290909e-11 solve 0.375872 ms ledger -5.68434188608e-14 partition 2.38215601437e-13
+PASS large pool substantially drains through authored Z action
+M55 lab refill cycle 2 press 1 pool 10.2499998762 storage 149.748292406 wet 31/384 q 6.80940889e-08..2.77182327 iterations 22 retries 0 residual 2.50123870506e-09 solve 0.579755 ms ledger -5.68434188608e-14 partition 2.45137243837e-13
+M55 lab refill cycle 2 press 2 pool 30.2499998762 storage 129.748292406 wet 110/384 q 8.69686534e-08..2.67234911 iterations 23 retries 0 residual 2.50264800986e-09 solve 0.880697 ms ledger -5.68434188608e-14 partition 1.84741111298e-13
+M55 lab refill cycle 2 press 3 pool 32.89999985 storage 127.098292433 wet 135/384 q 9.26319488e-08..2.71316018 iterations 21 retries 0 residual 8.65748844765e-09 solve 0.636786 ms ledger -2.84217094304e-14 partition 2.41584530158e-13
+M55 lab refill cycle 2 press 4 pool 34.2624998368 storage 125.735792446 wet 162/384 q 1.00244635e-07..2.68287017 iterations 23 retries 0 residual 2.70375858389e-08 solve 0.670564 ms ledger -2.84217094304e-14 partition 2.48689957516e-13
+M55 lab refill cycle 2 press 5 pool 54.2624998368 storage 105.735792446 wet 220/384 q 0.000329226296..2.25 iterations 25 retries 0 residual 1.1022950945e-09 solve 0.750323 ms ledger -2.84217094304e-14 partition 2.48689957516e-13
+M55 lab refill cycle 2 press 6 pool 74.2624998368 storage 85.7357924458 wet 274/384 q 0.388756307..2.33574175 iterations 23 retries 0 residual 2.59387356371e-08 solve 0.836669 ms ledger -5.68434188608e-14 partition 2.98427949019e-13
+M55 lab refill cycle 2 press 7 pool 94.2624998368 storage 65.7357924458 wet 327/384 q 0.643278773..2.44231138 iterations 22 retries 0 residual 3.4433162606e-08 solve 0.793543 ms ledger -5.68434188608e-14 partition 2.70006239589e-13
+M55 lab refill cycle 2 press 8 pool 114.262499837 storage 45.7357924458 wet 356/384 q 0.404335715..2.51126333 iterations 21 retries 0 residual 5.04753027125e-08 solve 0.817765 ms ledger -5.68434188608e-14 partition 1.84741111298e-13
+M55 lab refill cycle 2 press 9 pool 134.262499837 storage 25.7357924458 wet 374/384 q 0.386470388..2.54593422 iterations 20 retries 0 residual 3.08761476775e-08 solve 1.089327 ms ledger -5.68434188608e-14 partition 2.84217094304e-13
+M55 lab refill cycle 2 press 10 pool 154.262499837 storage 5.73579244579 wet 380/384 q 0.528446899..2.55263704 iterations 19 retries 0 residual 1.68542452026e-08 solve 0.918138 ms ledger -5.68434188608e-14 partition 2.84217094304e-13
+M55 lab refill cycle 2 press 11 pool 159.998292283 storage 0 wet 383/384 q 0.582111021..2.51442865 iterations 18 retries 0 residual 2.24314220279e-09 solve 0.807835 ms ledger -5.68434188608e-14 partition 1.98951966013e-13
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 lab drain cycle 3 press 1 pool 139.998292283 storage 20 wet 369/384 q 1.60978785..2.34620473 iterations 14 retries 0 residual 1.10447154766e-08 solve 0.666817 ms ledger -5.68434188608e-14 partition 1.70530256582e-13
+M55 lab drain cycle 3 press 2 pool 119.998292283 storage 40 wet 369/384 q 1.43113639..2.33944687 iterations 19 retries 0 residual 2.48708146519e-09 solve 0.725356 ms ledger -5.68434188608e-14 partition 2.13162820728e-13
+M55 lab drain cycle 3 press 3 pool 99.9982922826 storage 60 wet 369/384 q 1.22439892..2.33240131 iterations 21 retries 0 residual 5.66257224487e-10 solve 0.687305 ms ledger -5.68434188608e-14 partition 2.27373675443e-13
+M55 lab drain cycle 3 press 4 pool 79.9982922826 storage 80 wet 367/384 q 1.00668088..2.32411441 iterations 12 retries 0 residual 1.27082221526e-09 solve 0.657841 ms ledger -5.68434188608e-14 partition 2.55795384874e-13
+M55 lab drain cycle 3 press 5 pool 59.9982922826 storage 100 wet 365/384 q 0.784243268..2.31424987 iterations 16 retries 0 residual 6.06045560191e-09 solve 0.664237 ms ledger -5.68434188608e-14 partition 2.62900812231e-13
+M55 lab drain cycle 3 press 6 pool 39.9982922826 storage 120 wet 364/384 q 0.550657975..2.30218662 iterations 26 retries 0 residual 4.18580179269e-09 solve 0.840231 ms ledger -5.68434188608e-14 partition 2.34479102801e-13
+M55 lab drain cycle 3 press 7 pool 19.9982922826 storage 140 wet 362/384 q 0.313914284..2.28635357 iterations 28 retries 0 residual 7.43095669524e-10 solve 0.763850 ms ledger -5.68434188608e-14 partition 2.62900812231e-13
+M55 lab drain cycle 3 press 8 pool 0 storage 159.998292283 wet 0/384 q 0..2.25 iterations 0 retries 0 residual 1.04858303523e-11 solve 0.338900 ms ledger -5.68434188608e-14 partition 2.4417657872e-13
+PASS large pool substantially drains through authored Z action
+M55 lab refill cycle 3 press 1 pool 10.2499998762 storage 149.748292406 wet 31/384 q 6.68727472e-08..2.77182327 iterations 22 retries 0 residual 2.44789060907e-09 solve 0.577915 ms ledger -5.68434188608e-14 partition 2.54019028034e-13
+M55 lab refill cycle 3 press 2 pool 16.3124998121 storage 143.685792471 wet 87/384 q 9.22843427e-08..2.73882614 iterations 22 retries 0 residual 2.44983145851e-09 solve 0.621872 ms ledger -5.68434188608e-14 partition 2.20268248086e-13
+M55 lab refill cycle 3 press 3 pool 18.9624997859 storage 141.035792497 wet 122/384 q 1.00625623e-07..2.71316018 iterations 21 retries 0 residual 1.71052085952e-08 solve 0.708425 ms ledger -2.84217094304e-14 partition 2.48689957516e-13
+M55 lab refill cycle 3 press 4 pool 38.9624997859 storage 121.035792497 wet 211/384 q 3.10109533e-05..2.32550587 iterations 23 retries 0 residual 2.72682700024e-08 solve 0.746624 ms ledger -2.84217094304e-14 partition 2.34479102801e-13
+M55 lab refill cycle 3 press 5 pool 58.9624997859 storage 101.035792497 wet 286/384 q 0.337541591..2.25 iterations 22 retries 0 residual 5.48961325689e-08 solve 0.757474 ms ledger -2.84217094304e-14 partition 2.55795384874e-13
+M55 lab refill cycle 3 press 6 pool 78.9624997859 storage 81.0357924968 wet 323/384 q 0.561164603..2.25 iterations 21 retries 0 residual 5.00342000547e-08 solve 0.744051 ms ledger -2.84217094304e-14 partition 2.70006239589e-13
+M55 lab refill cycle 3 press 7 pool 98.9624997859 storage 61.0357924968 wet 350/384 q 0.462044935..2.31282194 iterations 19 retries 0 residual 2.2658377554e-08 solve 0.751011 ms ledger -2.84217094304e-14 partition 2.55795384874e-13
+M55 lab refill cycle 3 press 8 pool 118.962499786 storage 41.0357924968 wet 360/384 q 0.467372684..2.40517136 iterations 18 retries 0 residual 8.50900129053e-09 solve 0.759503 ms ledger -2.84217094304e-14 partition 2.98427949019e-13
+M55 lab refill cycle 3 press 9 pool 138.962499786 storage 21.0357924968 wet 379/384 q 0.415748445..2.47111569 iterations 18 retries 0 residual 3.50890498329e-09 solve 0.794195 ms ledger -2.84217094304e-14 partition 3.12638803734e-13
+M55 lab refill cycle 3 press 10 pool 158.962499786 storage 1.03579249676 wet 384/384 q 0.570482059..2.49750928 iterations 17 retries 0 residual 5.32402019092e-09 solve 0.798280 ms ledger -2.84217094304e-14 partition 1.70530256582e-13
+M55 lab refill cycle 3 press 11 pool 159.998292283 storage 0 wet 384/384 q 0.610479515..2.45258206 iterations 5 retries 0 residual 1.59410472848e-09 solve 0.572996 ms ledger -2.84217094304e-14 partition 1.98951966013e-13
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 lab drain cycle 4 press 1 pool 139.998292283 storage 20 wet 375/384 q 1.62591184..2.26347994 iterations 21 retries 0 residual 5.78429367772e-10 solve 0.794729 ms ledger -2.84217094304e-14 partition 1.98951966013e-13
+M55 lab drain cycle 4 press 2 pool 119.998292283 storage 40 wet 373/384 q 1.42163595..2.25426649 iterations 22 retries 0 residual 2.52505276296e-09 solve 0.756737 ms ledger -2.84217094304e-14 partition 2.27373675443e-13
+M55 lab drain cycle 4 press 3 pool 99.9982922826 storage 60 wet 373/384 q 1.21396384..2.25228904 iterations 39 retries 0 residual 2.6713747901e-08 solve 0.748715 ms ledger -2.84217094304e-14 partition 2.41584530158e-13
+M55 lab drain cycle 4 press 4 pool 79.9982922826 storage 80 wet 372/384 q 1.00124631..2.25082181 iterations 32 retries 0 residual 2.50016220223e-09 solve 0.722259 ms ledger -2.84217094304e-14 partition 2.84217094304e-13
+M55 lab drain cycle 4 press 5 pool 59.9982922826 storage 100 wet 369/384 q 0.772056792..2.2503832 iterations 24 retries 0 residual 6.54366004577e-09 solve 0.742368 ms ledger -2.84217094304e-14 partition 2.77111666946e-13
+M55 lab drain cycle 4 press 6 pool 39.9982922826 storage 120 wet 365/384 q 0.542166898..2.25028697 iterations 16 retries 0 residual 2.32252500414e-09 solve 0.629146 ms ledger -2.84217094304e-14 partition 2.62900812231e-13
+M55 lab drain cycle 4 press 7 pool 19.9982922826 storage 140 wet 357/384 q 0.310570582..2.25000759 iterations 29 retries 0 residual 8.65026168382e-09 solve 0.829078 ms ledger -2.84217094304e-14 partition 2.6645352591e-13
+M55 lab drain cycle 4 press 8 pool 0 storage 159.998292283 wet 0/384 q 1.29465123e-08..2.25 iterations 0 retries 0 residual 1.06930065328e-11 solve 0.340035 ms ledger -2.84217094304e-14 partition 2.46968225978e-13
+PASS large pool substantially drains through authored Z action
+M55 lab refill cycle 4 press 1 pool 7.96249991146 storage 152.035792371 wet 22/384 q 8.23823704e-08..2.75350399 iterations 22 retries 0 residual 3.00326206879e-09 solve 0.573955 ms ledger -2.84217094304e-14 partition 2.41584530158e-13
+M55 lab refill cycle 4 press 2 pool 12.9624998598 storage 147.035792423 wet 67/384 q 9.16476398e-08..2.73075557 iterations 22 retries 0 residual 3.33273927584e-09 solve 0.635997 ms ledger -2.84217094304e-14 partition 2.34479102801e-13
+M55 lab refill cycle 4 press 3 pool 32.9624998598 storage 127.035792423 wet 115/384 q 9.2568971e-08..2.53578851 iterations 24 retries 0 residual 1.88266582779e-08 solve 0.675323 ms ledger -2.84217094304e-14 partition 2.55795384874e-13
+M55 lab refill cycle 4 press 4 pool 52.9624998598 storage 107.035792423 wet 169/384 q 1.00541241e-07..2.25 iterations 24 retries 0 residual 3.83021503478e-08 solve 0.748681 ms ledger -2.84217094304e-14 partition 2.27373675443e-13
+M55 lab refill cycle 4 press 5 pool 72.9624998598 storage 87.0357924229 wet 232/384 q 0.397357224..2.25 iterations 22 retries 0 residual 1.17801869399e-08 solve 0.904211 ms ledger -2.84217094304e-14 partition 2.13162820728e-13
+M55 lab refill cycle 4 press 6 pool 92.9624998598 storage 67.0357924229 wet 267/384 q 0.677223464..2.26551671 iterations 22 retries 0 residual 5.9859898489e-09 solve 0.735028 ms ledger -2.84217094304e-14 partition 2.55795384874e-13
+M55 lab refill cycle 4 press 7 pool 112.96249986 storage 47.0357924229 wet 305/384 q 0.766116465..2.38535901 iterations 21 retries 0 residual 2.37436290237e-08 solve 0.789756 ms ledger -2.84217094304e-14 partition 1.13686837722e-13
+M55 lab refill cycle 4 press 8 pool 132.96249986 storage 27.0357924229 wet 335/384 q 0.84887601..2.44268376 iterations 18 retries 0 residual 5.30243127766e-08 solve 0.726438 ms ledger -2.84217094304e-14 partition 1.42108547152e-13
+M55 lab refill cycle 4 press 9 pool 152.96249986 storage 7.03579242287 wet 363/384 q 1.07221577..2.45386085 iterations 18 retries 0 residual 1.64401412679e-08 solve 0.761060 ms ledger -2.84217094304e-14 partition 2.84217094304e-13
+M55 lab refill cycle 4 press 10 pool 159.998292283 storage 0 wet 370/384 q 1.23922018..2.38722672 iterations 17 retries 0 residual 3.95364294896e-08 solve 0.793843 ms ledger -2.84217094304e-14 partition 1.42108547152e-13
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+PASS five consecutive full drain/refill cycles remain valid
+MEASURE lab ordinary steps 30 iterations mean 6.400 max 13 retries 0 residual max 1.59304350327e-07 solve mean 0.477319 max 0.570029 ms
+MEASURE lab drain steps 80 iterations mean 11.000 max 39 retries 0 residual max 1.0785569791e-07 solve mean 0.570656 max 0.840231 ms
+MEASURE lab refill steps 110 iterations mean 21.000 max 116 retries 3 residual max 1.0797810104e-07 solve mean 0.754826 max 4.775199 ms
+MEASURE lab settle steps 600 iterations mean 10.525 max 31 retries 0 residual max 1.56375725518e-07 solve mean 0.641512 max 1.050523 ms
+M55 radial ordinary cycle 0 press 0 pool 65 storage 0 wet 192/192 q 21.5085556..21.6018965 iterations 6 retries 0 residual 2.1378601195e-09 solve 0.700827 ms ledger 0 partition -2.84217094304e-14
+PASS ordinary filled operation is conservative and solves
+M55 radial drain cycle 0 press 1 pool 55 storage 10 wet 192/192 q 21.1862904..21.4084828 iterations 11 retries 0 residual 2.01658258061e-08 solve 0.718229 ms ledger 0 partition -2.84217094304e-14
+M55 radial drain cycle 0 press 2 pool 45 storage 20 wet 192/192 q 21.0095217..21.2241293 iterations 6 retries 0 residual 2.03505881905e-10 solve 0.631136 ms ledger 0 partition -2.13162820728e-14
+M55 radial drain cycle 0 press 3 pool 35 storage 30 wet 192/192 q 20.8186952..21.0369355 iterations 5 retries 0 residual 8.56944872864e-11 solve 0.613949 ms ledger 0 partition -3.5527136788e-14
+M55 radial drain cycle 0 press 4 pool 25 storage 40 wet 192/192 q 20.6126124..20.8634253 iterations 5 retries 0 residual 2.52648546479e-11 solve 0.513653 ms ledger 0 partition -1.7763568394e-14
+M55 radial drain cycle 0 press 5 pool 15 storage 50 wet 192/192 q 20.3781223..20.724754 iterations 4 retries 0 residual 5.85318743181e-10 solve 0.560805 ms ledger 0 partition -2.84217094304e-14
+M55 radial drain cycle 0 press 6 pool 5 storage 60 wet 192/192 q 20.1323848..20.5967046 iterations 4 retries 0 residual 3.25163887811e-11 solve 0.540139 ms ledger 0 partition -3.28626015289e-14
+M55 radial drain cycle 0 press 7 pool 3.28626015289e-14 storage 65 wet 0/192 q 20..20.4573146 iterations 0 retries 0 residual 8.22216993139e-16 solve 0.173392 ms ledger 0 partition -3.18287063372e-14
+PASS large pool substantially drains through authored Z action
+M55 radial refill cycle 0 press 1 pool 0.706515946596 storage 64.2934840534 wet 5/192 q 20..22.7438703 iterations 16 retries 0 residual 2.70264886859e-12 solve 0.326450 ms ledger 1.42108547152e-14 partition -3.18634008067e-14
+M55 radial refill cycle 0 press 2 pool 9.79510261594 storage 55.2048973841 wet 24/192 q 20.0000001..23.0488611 iterations 82 retries 0 residual 1.54533390164e-09 solve 0.497496 ms ledger 1.42108547152e-14 partition -3.19744231092e-14
+M55 radial refill cycle 0 press 3 pool 19.7951026159 storage 45.2048973841 wet 51/192 q 20.0000002..23.0488611 iterations 41 retries 0 residual 9.64713105407e-10 solve 0.517943 ms ledger 1.42108547152e-14 partition -3.5527136788e-14
+M55 radial refill cycle 0 press 4 pool 20.5015572921 storage 44.4984427079 wet 74/192 q 20.0000002..22.9735262 iterations 39 retries 0 residual 1.65550825553e-08 solve 0.587816 ms ledger 1.42108547152e-14 partition -3.5527136788e-14
+M55 radial refill cycle 0 press 5 pool 30.5015572921 storage 34.4984427079 wet 113/192 q 20.0125018..22.9180102 iterations 27 retries 0 residual 4.74463675596e-10 solve 0.557814 ms ledger 1.42108547152e-14 partition -4.26325641456e-14
+M55 radial refill cycle 0 press 6 pool 31.2079847393 storage 33.7920152607 wet 136/192 q 20.0148626..22.8510021 iterations 35 retries 0 residual 2.25896286149e-08 solve 0.704220 ms ledger 1.42108547152e-14 partition -3.19744231092e-14
+M55 radial refill cycle 0 press 7 pool 41.2079847393 storage 23.7920152607 wet 163/192 q 20.0499487..22.7939173 iterations 24 retries 0 residual 1.28039089015e-09 solve 0.696678 ms ledger 2.84217094304e-14 partition -2.84217094304e-14
+M55 radial refill cycle 0 press 8 pool 51.2079847393 storage 13.7920152607 wet 180/192 q 20.1443301..22.7469416 iterations 23 retries 0 residual 3.72768832767e-09 solve 0.755176 ms ledger 2.84217094304e-14 partition -2.84217094304e-14
+M55 radial refill cycle 0 press 9 pool 51.914324264 storage 13.085675736 wet 186/192 q 20.1706076..22.6573565 iterations 29 retries 0 residual 7.22859672142e-09 solve 0.953431 ms ledger 2.84217094304e-14 partition -1.42108547152e-14
+M55 radial refill cycle 0 press 10 pool 61.914324264 storage 3.08567573597 wet 191/192 q 20.3948576..22.5933038 iterations 36 retries 0 residual 5.83256812531e-11 solve 0.921781 ms ledger 2.84217094304e-14 partition -4.97379915032e-14
+M55 radial refill cycle 0 press 11 pool 65 storage 0 wet 192/192 q 20.4733563..22.5974002 iterations 28 retries 0 residual 2.70853960591e-09 solve 0.857930 ms ledger 2.84217094304e-14 partition -7.1054273576e-14
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 radial drain cycle 1 press 1 pool 55 storage 10 wet 192/192 q 20.9059732..21.8475909 iterations 9 retries 0 residual 1.70450145318e-10 solve 0.736178 ms ledger 2.84217094304e-14 partition -1.42108547152e-14
+M55 radial drain cycle 1 press 2 pool 45 storage 20 wet 192/192 q 20.8532953..21.545345 iterations 7 retries 0 residual 1.06401556402e-09 solve 0.647953 ms ledger 2.84217094304e-14 partition 7.1054273576e-15
+M55 radial drain cycle 1 press 3 pool 35 storage 30 wet 192/192 q 20.734242..21.2451364 iterations 6 retries 0 residual 1.90379411725e-09 solve 0.603974 ms ledger 2.84217094304e-14 partition -3.5527136788e-14
+M55 radial drain cycle 1 press 4 pool 25 storage 40 wet 192/192 q 20.5503062..20.950667 iterations 6 retries 0 residual 4.39866568787e-10 solve 0.633948 ms ledger 2.84217094304e-14 partition -2.84217094304e-14
+M55 radial drain cycle 1 press 5 pool 15 storage 50 wet 192/192 q 20.3424034..20.760008 iterations 5 retries 0 residual 5.21541169626e-11 solve 0.516360 ms ledger 2.84217094304e-14 partition -5.15143483426e-14
+M55 radial drain cycle 1 press 6 pool 5 storage 60 wet 192/192 q 20.1262409..20.6074006 iterations 5 retries 0 residual 1.96212025604e-10 solve 0.510048 ms ledger 2.84217094304e-14 partition -3.28626015289e-14
+M55 radial drain cycle 1 press 7 pool 3.46389583683e-14 storage 65 wet 0/192 q 20.0000003..20.4573146 iterations 0 retries 0 residual 1.85243124861e-15 solve 0.448984 ms ledger 2.84217094304e-14 partition -3.3775933439e-14
+PASS large pool substantially drains through authored Z action
+M55 radial refill cycle 1 press 1 pool 0.706515946596 storage 64.2934840534 wet 5/192 q 20.0000004..22.7438703 iterations 16 retries 0 residual 2.70264886859e-12 solve 0.580988 ms ledger 4.26325641456e-14 partition -3.44169137634e-14
+M55 radial refill cycle 1 press 2 pool 10.7065159466 storage 54.2934840534 wet 134/192 q 20.0756963..22.0527989 iterations 27 retries 0 residual 3.80956791178e-11 solve 0.587644 ms ledger 4.26325641456e-14 partition -3.01980662698e-14
+M55 radial refill cycle 1 press 3 pool 20.7065159466 storage 44.2934840534 wet 181/192 q 20.1684318..21.4438449 iterations 25 retries 0 residual 6.25211355682e-10 solve 0.722205 ms ledger 4.26325641456e-14 partition -4.61852778244e-14
+M55 radial refill cycle 1 press 4 pool 21.412930342 storage 43.587069658 wet 184/192 q 20.1824747..22.7440815 iterations 30 retries 0 residual 2.47909439722e-10 solve 0.786145 ms ledger 4.26325641456e-14 partition -3.5527136788e-14
+M55 radial refill cycle 1 press 5 pool 31.412930342 storage 33.587069658 wet 192/192 q 20.3748471..22.0225496 iterations 23 retries 0 residual 1.32661721143e-09 solve 0.787937 ms ledger 4.26325641456e-14 partition -7.1054273576e-15
+M55 radial refill cycle 1 press 6 pool 41.412930342 storage 23.587069658 wet 192/192 q 20.5640434..21.5444848 iterations 11 retries 0 residual 5.95167027641e-10 solve 0.659067 ms ledger 4.26325641456e-14 partition -7.1054273576e-15
+M55 radial refill cycle 1 press 7 pool 51.412930342 storage 13.587069658 wet 192/192 q 20.6312646..21.7781979 iterations 11 retries 0 residual 9.81407534233e-10 solve 0.786064 ms ledger 4.26325641456e-14 partition -7.1054273576e-15
+M55 radial refill cycle 1 press 8 pool 61.412930342 storage 3.58706965799 wet 192/192 q 20.6409462..22.0298769 iterations 11 retries 0 residual 6.5113735237e-10 solve 0.734856 ms ledger 4.26325641456e-14 partition -4.97379915032e-14
+M55 radial refill cycle 1 press 9 pool 65 storage 0 wet 192/192 q 20.6805478..22.0548192 iterations 11 retries 0 residual 3.46265166453e-09 solve 0.792224 ms ledger 4.26325641456e-14 partition -4.26325641456e-14
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 radial drain cycle 2 press 1 pool 55 storage 10 wet 192/192 q 21.113776..21.4838939 iterations 8 retries 0 residual 2.64805924465e-09 solve 0.675768 ms ledger 4.26325641456e-14 partition -4.26325641456e-14
+M55 radial drain cycle 2 press 2 pool 45 storage 20 wet 192/192 q 20.9475065..21.2793387 iterations 6 retries 0 residual 8.09885314194e-10 solve 0.671730 ms ledger 4.26325641456e-14 partition -5.68434188608e-14
+M55 radial drain cycle 2 press 3 pool 35 storage 30 wet 192/192 q 20.7792669..21.0798019 iterations 6 retries 0 residual 2.56358226097e-10 solve 0.644284 ms ledger 4.26325641456e-14 partition -2.84217094304e-14
+M55 radial drain cycle 2 press 4 pool 25 storage 40 wet 192/192 q 20.5996757..20.8882424 iterations 5 retries 0 residual 4.98341142115e-11 solve 0.517610 ms ledger 4.26325641456e-14 partition -1.7763568394e-14
+M55 radial drain cycle 2 press 5 pool 15 storage 50 wet 192/192 q 20.3765762..20.737616 iterations 4 retries 0 residual 9.10390181332e-10 solve 0.589247 ms ledger 4.26325641456e-14 partition -1.24344978758e-14
+M55 radial drain cycle 2 press 6 pool 5 storage 60 wet 192/192 q 20.1314609..20.601578 iterations 4 retries 0 residual 5.11223581236e-11 solve 0.501100 ms ledger 4.26325641456e-14 partition -1.15463194561e-14
+M55 radial drain cycle 2 press 7 pool 1.15463194561e-14 storage 65 wet 0/192 q 20..20.4573146 iterations 0 retries 0 residual 5.91898063225e-33 solve 0.014002 ms ledger 4.26325641456e-14 partition -1.15463194561e-14
+PASS large pool substantially drains through authored Z action
+M55 radial refill cycle 2 press 1 pool 0.706515946596 storage 64.2934840534 wet 5/192 q 20..22.7438703 iterations 15 retries 0 residual 2.70264886859e-12 solve 0.142415 ms ledger 4.26325641456e-14 partition -1.15463194561e-14
+M55 radial refill cycle 2 press 2 pool 9.79510261594 storage 55.2048973841 wet 24/192 q 20..23.0488611 iterations 82 retries 0 residual 1.54533390164e-09 solve 0.287272 ms ledger 4.26325641456e-14 partition -1.24344978758e-14
+M55 radial refill cycle 2 press 3 pool 19.7951026159 storage 45.2048973841 wet 51/192 q 20..23.0488611 iterations 41 retries 0 residual 9.64713105407e-10 solve 0.359666 ms ledger 5.68434188608e-14 partition -1.42108547152e-14
+M55 radial refill cycle 2 press 4 pool 20.5015572921 storage 44.4984427079 wet 74/192 q 20..22.9735262 iterations 39 retries 0 residual 1.65550825579e-08 solve 0.443032 ms ledger 5.68434188608e-14 partition -1.7763568394e-14
+M55 radial refill cycle 2 press 5 pool 30.5015572921 storage 34.4984427079 wet 111/192 q 20.0062517..22.9182235 iterations 27 retries 0 residual 3.76910409567e-10 solve 0.595677 ms ledger 5.68434188608e-14 partition -3.5527136788e-15
+M55 radial refill cycle 2 press 6 pool 31.2079847393 storage 33.7920152607 wet 136/192 q 20.0092097..22.8511824 iterations 35 retries 0 residual 2.28965607606e-08 solve 0.663992 ms ledger 5.68434188608e-14 partition -3.5527136788e-15
+M55 radial refill cycle 2 press 7 pool 41.2079847393 storage 23.7920152607 wet 163/192 q 20.0320359..22.7942658 iterations 24 retries 0 residual 1.1977108614e-09 solve 0.687507 ms ledger 5.68434188608e-14 partition -1.42108547152e-14
+M55 radial refill cycle 2 press 8 pool 51.2079847393 storage 13.7920152607 wet 180/192 q 20.1443295..22.7473621 iterations 23 retries 0 residual 3.72768549833e-09 solve 0.791582 ms ledger 5.68434188608e-14 partition -4.26325641456e-14
+M55 radial refill cycle 2 press 9 pool 51.914324264 storage 13.085675736 wet 186/192 q 20.1706048..22.6578831 iterations 29 retries 0 residual 1.84261682948e-09 solve 0.814412 ms ledger 5.68434188608e-14 partition 2.13162820728e-14
+M55 radial refill cycle 2 press 10 pool 61.914324264 storage 3.08567573597 wet 191/192 q 20.3948576..22.5938921 iterations 37 retries 0 residual 6.76468558166e-09 solve 0.969794 ms ledger 5.68434188608e-14 partition 7.1054273576e-15
+M55 radial refill cycle 2 press 11 pool 65 storage 0 wet 192/192 q 20.4733563..22.6071429 iterations 28 retries 0 residual 2.70853941649e-09 solve 0.954306 ms ledger 5.68434188608e-14 partition 0
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 radial drain cycle 3 press 1 pool 55 storage 10 wet 192/192 q 20.9377018..21.867349 iterations 9 retries 0 residual 4.96205777856e-10 solve 0.710164 ms ledger 5.68434188608e-14 partition -2.13162820728e-14
+M55 radial drain cycle 3 press 2 pool 45 storage 20 wet 192/192 q 20.8630937..21.5649873 iterations 6 retries 0 residual 4.27125911723e-09 solve 0.647396 ms ledger 5.68434188608e-14 partition -2.13162820728e-14
+M55 radial drain cycle 3 press 3 pool 35 storage 30 wet 192/192 q 20.7350061..21.2595904 iterations 6 retries 0 residual 1.67301068398e-09 solve 0.603974 ms ledger 5.68434188608e-14 partition -2.84217094304e-14
+M55 radial drain cycle 3 press 4 pool 25 storage 40 wet 192/192 q 20.5541738..20.9624288 iterations 6 retries 0 residual 4.21065235847e-10 solve 0.558698 ms ledger 5.68434188608e-14 partition -2.13162820728e-14
+M55 radial drain cycle 3 press 5 pool 15 storage 50 wet 192/192 q 20.3450951..20.759889 iterations 5 retries 0 residual 5.74334544767e-11 solve 0.549101 ms ledger 5.68434188608e-14 partition -1.95399252334e-14
+M55 radial drain cycle 3 press 6 pool 5 storage 60 wet 192/192 q 20.1260639..20.607471 iterations 5 retries 0 residual 2.46155808112e-10 solve 0.512077 ms ledger 5.68434188608e-14 partition -2.39808173319e-14
+M55 radial drain cycle 3 press 7 pool 2.22044604925e-14 storage 65 wet 0/192 q 20..20.4573146 iterations 0 retries 0 residual 2.32920373214e-15 solve 0.126633 ms ledger 5.68434188608e-14 partition -2.19650686528e-14
+PASS large pool substantially drains through authored Z action
+M55 radial refill cycle 3 press 1 pool 10 storage 55 wet 30/192 q 20..22.5268948 iterations 20 retries 0 residual 8.45787207632e-11 solve 0.316554 ms ledger 5.68434188608e-14 partition -2.48689957516e-14
+M55 radial refill cycle 3 press 2 pool 20 storage 45 wet 90/192 q 20..22.5791826 iterations 25 retries 0 residual 2.32343268431e-10 solve 0.544966 ms ledger 5.68434188608e-14 partition -1.7763568394e-14
+M55 radial refill cycle 3 press 3 pool 30 storage 35 wet 127/192 q 20.006252..22.5677549 iterations 26 retries 0 residual 1.6447881214e-09 solve 0.559907 ms ledger 5.68434188608e-14 partition -2.48689957516e-14
+M55 radial refill cycle 3 press 4 pool 40 storage 25 wet 152/192 q 20.0720828..22.6338284 iterations 24 retries 0 residual 2.68589620114e-08 solve 0.748775 ms ledger 5.68434188608e-14 partition 7.1054273576e-15
+M55 radial refill cycle 3 press 5 pool 40.7064274472 storage 24.2935725528 wet 164/192 q 20.0904856..22.8099155 iterations 40 retries 0 residual 3.25443353969e-09 solve 0.816683 ms ledger 4.26325641456e-14 partition -4.26325641456e-14
+M55 radial refill cycle 3 press 6 pool 50.7064274472 storage 14.2935725528 wet 181/192 q 20.1948159..23.0199744 iterations 29 retries 0 residual 7.12414694294e-11 solve 0.782904 ms ledger 4.26325641456e-14 partition -4.97379915032e-14
+M55 radial refill cycle 3 press 7 pool 60.7064274472 storage 4.29357255281 wet 191/192 q 20.3373069..22.8944223 iterations 35 retries 0 residual 1.05821172774e-10 solve 0.897856 ms ledger 4.26325641456e-14 partition -2.84217094304e-14
+M55 radial refill cycle 3 press 8 pool 65 storage 0 wet 192/192 q 20.4775806..22.8239881 iterations 27 retries 0 residual 7.44003197321e-10 solve 0.916796 ms ledger 4.26325641456e-14 partition -2.84217094304e-14
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+M55 radial drain cycle 4 press 1 pool 55 storage 10 wet 192/192 q 20.8822048..21.8521497 iterations 7 retries 0 residual 5.43796709052e-09 solve 0.771599 ms ledger 4.26325641456e-14 partition -4.26325641456e-14
+M55 radial drain cycle 4 press 2 pool 45 storage 20 wet 192/192 q 20.784586..21.5700343 iterations 6 retries 0 residual 2.38150028962e-09 solve 0.678493 ms ledger 4.26325641456e-14 partition -1.42108547152e-14
+M55 radial drain cycle 4 press 3 pool 35 storage 30 wet 192/192 q 20.6819178..21.2792087 iterations 6 retries 0 residual 9.69311122958e-10 solve 0.680714 ms ledger 4.26325641456e-14 partition -2.84217094304e-14
+M55 radial drain cycle 4 press 4 pool 25 storage 40 wet 192/192 q 20.5407742..20.9872124 iterations 6 retries 0 residual 2.61143003868e-10 solve 0.682851 ms ledger 4.26325641456e-14 partition -2.13162820728e-14
+M55 radial drain cycle 4 press 5 pool 15 storage 50 wet 192/192 q 20.3562268..20.7685792 iterations 5 retries 0 residual 2.98425922916e-11 solve 0.620177 ms ledger 4.26325641456e-14 partition -2.6645352591e-14
+M55 radial drain cycle 4 press 6 pool 5 storage 60 wet 192/192 q 20.1338706..20.6104655 iterations 5 retries 0 residual 3.89363680783e-10 solve 0.595170 ms ledger 4.26325641456e-14 partition -2.30926389122e-14
+M55 radial drain cycle 4 press 7 pool 2.39808173319e-14 storage 65 wet 0/192 q 20..20.4573146 iterations 0 retries 0 residual 9.39061827607e-14 solve 0.130830 ms ledger 4.26325641456e-14 partition -1.94479848892e-14
+PASS large pool substantially drains through authored Z action
+M55 radial refill cycle 4 press 1 pool 0.706515946596 storage 64.2934840534 wet 5/192 q 20..22.7438703 iterations 17 retries 0 residual 2.70253090739e-12 solve 0.282914 ms ledger 4.26325641456e-14 partition -1.95399252334e-14
+M55 radial refill cycle 4 press 2 pool 9.79510261594 storage 55.2048973841 wet 24/192 q 20.0000001..23.0488611 iterations 82 retries 0 residual 1.54544308514e-09 solve 0.442882 ms ledger 4.26325641456e-14 partition -1.95399252334e-14
+M55 radial refill cycle 4 press 3 pool 19.7951026159 storage 45.2048973841 wet 51/192 q 20.0000002..23.0488611 iterations 41 retries 0 residual 9.6479151751e-10 solve 0.497378 ms ledger 4.26325641456e-14 partition -2.48689957516e-14
+M55 radial refill cycle 4 press 4 pool 20.5015572921 storage 44.4984427079 wet 74/192 q 20.0000002..22.9735262 iterations 39 retries 0 residual 1.65550825579e-08 solve 0.490366 ms ledger 4.26325641456e-14 partition -3.19744231092e-14
+M55 radial refill cycle 4 press 5 pool 30.5015572921 storage 34.4984427079 wet 113/192 q 20.0125016..22.9180102 iterations 27 retries 0 residual 4.74463675596e-10 solve 0.631944 ms ledger 4.26325641456e-14 partition -3.19744231092e-14
+M55 radial refill cycle 4 press 6 pool 31.2079847393 storage 33.7920152607 wet 136/192 q 20.0148626..22.8510021 iterations 35 retries 0 residual 2.25896286149e-08 solve 0.660246 ms ledger 5.68434188608e-14 partition -2.84217094304e-14
+M55 radial refill cycle 4 press 7 pool 41.2079847393 storage 23.7920152607 wet 163/192 q 20.0499487..22.7938264 iterations 24 retries 0 residual 1.37386777733e-09 solve 0.762493 ms ledger 5.68434188608e-14 partition -7.1054273576e-15
+M55 radial refill cycle 4 press 8 pool 51.2079847393 storage 13.7920152607 wet 180/192 q 20.1443297..22.7468724 iterations 23 retries 0 residual 4.97016671162e-09 solve 0.769059 ms ledger 5.68434188608e-14 partition -3.5527136788e-14
+M55 radial refill cycle 4 press 9 pool 51.914324264 storage 13.085675736 wet 186/192 q 20.1706041..22.6572948 iterations 29 retries 0 residual 8.83654171081e-09 solve 0.914735 ms ledger 5.68434188608e-14 partition -2.13162820728e-14
+M55 radial refill cycle 4 press 10 pool 61.914324264 storage 3.08567573597 wet 191/192 q 20.394857..22.5932459 iterations 37 retries 0 residual 5.83241838072e-11 solve 1.111405 ms ledger 5.68434188608e-14 partition -2.84217094304e-14
+M55 radial refill cycle 4 press 11 pool 65 storage 0 wet 192/192 q 20.4733563..22.5964423 iterations 28 retries 0 residual 2.70853442942e-09 solve 0.889368 ms ledger 5.68434188608e-14 partition -4.26325641456e-14
+PASS large pool refills through authored X action within normal solve budget
+PASS refilled state remains nonnegative with coherent owner/partition/ledger
+PASS five consecutive full drain/refill cycles remain valid
+MEASURE radial ordinary steps 30 iterations mean 6.667 max 8 retries 0 residual max 5.75842580338e-08 solve mean 0.739013 max 0.817609 ms
+MEASURE radial drain steps 70 iterations mean 4.971 max 11 retries 0 residual max 4.06960578804e-08 solve mean 0.551083 max 0.796214 ms
+MEASURE radial refill steps 100 iterations mean 29.310 max 82 retries 0 residual max 4.87935528764e-08 solve mean 0.671320 max 1.111405 ms
+MEASURE radial settle steps 600 iterations mean 11.320 max 29 retries 0 residual max 6.47433640393e-08 solve mean 0.792588 max 1.109934 ms
+M55 refill 34 checks 0 failures

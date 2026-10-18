@@ -1,0 +1,64 @@
+[
+  {
+    "name": "frame",
+    "argv": [
+      "build/judas_liquid_bake_frame_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/combined-candidate/frame"
+    ],
+    "exit": 1,
+    "seconds": 0.014768683999591303
+  },
+  {
+    "name": "rotation",
+    "argv": [
+      "build/judas_liquid_rotation_tests"
+    ],
+    "exit": 1,
+    "seconds": 0.026407620000099996
+  },
+  {
+    "name": "M54",
+    "argv": [
+      "build/judas_liquid_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.5309408799998891
+  },
+  {
+    "name": "M55",
+    "argv": [
+      "build/judas_liquid_surface_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.9897633529999439
+  },
+  {
+    "name": "refill",
+    "argv": [
+      "build/judas_liquid_surface_refill_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/combined-candidate/refill"
+    ],
+    "exit": 0,
+    "seconds": 0.40645311300022513
+  },
+  {
+    "name": "normalization",
+    "argv": [
+      "build/judas_origin_environment_tests",
+      "--bake-regression",
+      "normalization",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/combined-candidate/normalization"
+    ],
+    "exit": 0,
+    "seconds": 0.03175121699996453
+  },
+  {
+    "name": "origin",
+    "argv": [
+      "build/judas_origin_environment_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-liquid-rotation/combined-candidate/origin"
+    ],
+    "exit": 0,
+    "seconds": 0.425308958000187
+  }
+]

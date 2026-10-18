@@ -1,0 +1,268 @@
+{
+  "utc": "2026-10-18T13:43:23.054681+00:00",
+  "baseRevision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+  "scope": "Exact changed source/tool/current-document bytes and built binaries. Evidence files inventoried separately. Embedded build identity is the actual pre-checkpoint dirty candidate, not relabelled as a later clean commit. Final numerical code matches verified-candidate source hashes.",
+  "source": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "8c01beb50b7f77a149d9a166b7d7240f1e2b54deb66f1b5b95a841e4ea1c06bf"
+    },
+    {
+      "path": "docs/LIQUID_SURFACES.md",
+      "sha256": "ce1b198891902f54adb1518e9da0462674ffd293493b89d2a3af6736a90933bf"
+    },
+    {
+      "path": "docs/PREALPHA.md",
+      "sha256": "0d5a15c220cf2edeee76856bfe6685c5eb341a354d7ae8360d79edc9f61c5ad5"
+    },
+    {
+      "path": "src/LiquidGeometry.cpp",
+      "sha256": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6"
+    },
+    {
+      "path": "src/LiquidGeometry.h",
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5"
+    },
+    {
+      "path": "src/LiquidSurface.cpp",
+      "sha256": "8d46203484875a90f1583e35bde5603cf1f47b15a73d629205451c007f61b625"
+    },
+    {
+      "path": "src/LiquidTypes.cpp",
+      "sha256": "441fe10fc6abc9ce2e85f6480bbe1755acb2e1cc949af518193825f2c8e37f2a"
+    },
+    {
+      "path": "src/WorldRegions.cpp",
+      "sha256": "3689760c62a2ee3da77326999b1e6822e56ce87c99cb64e1c984f9cbf0db3ada"
+    },
+    {
+      "path": "tests/LiquidBakeFrameTests.cpp",
+      "sha256": "f63bb7ea894860d45cd1949fc1aa2743a581e2da3532de4599aaae2d0c900ab0"
+    },
+    {
+      "path": "tests/LiquidRotationTests.cpp",
+      "sha256": "e1c7ca9d6b255f7ac3bab82874f010624a7b141e32ffe97867f0480023995130"
+    },
+    {
+      "path": "tests/OriginEnvironmentTests.cpp",
+      "sha256": "ce9b9db3f2f0031983ad08f1b05be82217a64ed948e8387619aa64b50e7ae8de"
+    },
+    {
+      "path": "tests/test_prealpha_validation.py",
+      "sha256": "5f029fcae093a5f84a35af367199bfbdf40cc61e64e7fa8942ca7d6b8504aecf"
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "sha256": "47dff247bf0cbf970ba76a54cbe7df624294e46ce3501da40b5495dc89242c65"
+    }
+  ],
+  "binaries": [
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests",
+      "sha256": "1ece8677153bf302b4982ea7a41e9e7052dd024aa0d66cbfcb62e367bde387bb",
+      "bytes": 53996048
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_gravity_selection_tests",
+      "sha256": "9b725c0cac734fc9729142429d1947ddc543f7ca88c762431b2d252e15d1d08e",
+      "bytes": 54251600
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_application_tests",
+      "sha256": "18ccb138de9b1ff854cbd54ffecda6a8b8829f82b8ad54749d78c940d099b5d7",
+      "bytes": 54016944
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_bake_frame_tests",
+      "sha256": "2af29c922ac53439b8ec36fc483b3227df1b69628498320dbfc90bff02c762e0",
+      "bytes": 53980128,
+      "embeddedIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_rotation_tests",
+      "sha256": "d7bf68324f4b8b147ce11c950c444247435ba76e6ae403426da808b354dc0d34",
+      "bytes": 629240,
+      "embeddedIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_application_tests",
+      "sha256": "e43618abfe9ebaa828f645185e80a9edfc6976334943207caafd2445f71832ec",
+      "bytes": 54037408
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_refill_tests",
+      "sha256": "5b721770692a9fa8b9c40dbd12147a86767e6446071d42272d40b8c2f0378acd",
+      "bytes": 54025128
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_surface_tests",
+      "sha256": "f017ce6da4ecbced104495593de5199809daa0701d233fc90d682cf23525909e",
+      "bytes": 54016656,
+      "embeddedIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_liquid_tests",
+      "sha256": "29af54b56ed35d643ecc159a896c4d6bb14363c4218e183fc6a2f73e497fd99c",
+      "bytes": 53983160,
+      "embeddedIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_assembly_tests",
+      "sha256": "07b36d1099399a5af5c3083fbe0b021da8bcff77f9aa03d46e539cb77750e76c",
+      "bytes": 53988984
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+      "sha256": "5af7b520bf599a4a124514612083d152484df04f94fdeb1eed5e850d6d1f8c58",
+      "bytes": 54061688,
+      "embeddedIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_stream_tests",
+      "sha256": "d41d1f91e453e939d55b3fef7934f0e6edabcf08f4ea350793cd26adb68c12d9",
+      "bytes": 54006288
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_streaming_tests",
+      "sha256": "b944f24dbc914f0616421df0f77487c800658ef81a24b04eda1e591d43539dfe",
+      "bytes": 54076520
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_uniform_gravity_scene_tests",
+      "sha256": "af49506c0db27c6c02ce10281534dd96a9967ab4013805f370a41da35b4baeb6",
+      "bytes": 53997632
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/build/judas_world_persistence_tests",
+      "sha256": "5a9d4ad8843b4fcdfb91c9225898fd21dd756a2b13c9625c300448ed7b7787f7",
+      "bytes": 53951208
+    },
+    {
+      "path": "build/judas_liquid_bake",
+      "sha256": "ba596068992373b732c67bacb689895a654a7f64aacfcda235d4a061fb1815c3",
+      "bytes": 53942744,
+      "embeddedIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-52800ce-dirty-392ab5b18b2e-uc61ec063ec38",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+        "source_origin": "git",
+        "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+        "source_tree": "15b148f3a1f699dac9cc7df1330d7abe7e9addcf",
+        "source_untracked_count": 18,
+        "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "path": "build/libjudas_engine.a",
+      "sha256": "72abdc886dddded90ee8d5379ec81d2c0bbb7fc1d0df594c60259b7cbe1bfe69",
+      "bytes": 29887384
+    }
+  ],
+  "focusedGateExpectedSourceIdentity": {
+    "source_revision": "52800cedcdf47cab743ade96049eb5de1ab8aeb0",
+    "source_fingerprint": "392ab5b18b2e82e495be20418f491c94507a6dcc7a4ef150be76a1a6ad898367",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "c61ec063ec38e534b9710ebb4d8b9179f1eda0cffa1ae633a5f8f4cfa5280991"
+  },
+  "research": true,
+  "protectedTrackedPathsModified": []
+}

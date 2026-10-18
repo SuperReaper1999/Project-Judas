@@ -1,17 +1,21 @@
 # Pre-Alpha stabilization
 
-Accepted starting point: `9cf491a13dbb1cd82ab9ab9b916e255af2d579d2` (M98/M99 human
-accepted). The unnumbered engineering pass is Experimental-only until the operator
-accepts its exact candidate. M100 and an Alpha release have not begun.
+Pass 1 and Pass 2 were human accepted at the exact checkpoint
+`52800cedcdf47cab743ade96049eb5de1ab8aeb0`, promoted from Experimental to main.
+Their accepted starting point was `9cf491a13dbb1cd82ab9ab9b916e255af2d579d2`
+(M98/M99). Subsequent corrections develop on Experimental and require their own
+acceptance before promotion. M100 and an Alpha release have not begun.
 
 See the [first engineering report](evidence/prealpha/REPORT.md) for exact changes,
 measured failures, focused results and the consolidated human checklist.
 
 The [Pass2 finding register](evidence/prealpha-pass2/AUDIT_DISPOSITION.md) reconciles
 every original priority and finding against its exact preserved assessment text.
-Its in-progress status distinguishes earlier evidence, new corrections awaiting
-validation and deliberate support limits. For a first visible project with no
-controller/input setup, follow [Your first visible Judas project](FIRST_PROJECT.md).
+It records the state at that checkpoint; its original pending-review language is
+historical. The [rotated-liquid follow-up](evidence/prealpha-liquid-rotation/REPORT.md)
+records subsequent corrections and remaining failures; that candidate is not yet
+human accepted. For a first visible project with no controller/input setup, follow
+[Your first visible Judas project](FIRST_PROJECT.md).
 
 ## Ownership and integration contracts
 
@@ -66,6 +70,42 @@ The [Pass2 report](evidence/prealpha-pass2/REPORT.md) records exact exercised ca
 retained failures and remaining coverage. No independent fluid numerical algorithm,
 legacy settling threshold or protected research was changed.
 
+### Rotated-liquid baking follow-up
+
+The subsequent [liquid correction report](evidence/prealpha-liquid-rotation/REPORT.md)
+distinguishes corrected baking and clipping defects from later integration limits:
+
+- Bake-time gravity construction and owner-local conversion must use the same
+  physical field and orientation as runtime publication. The original rotated
+  equilibrium mismatch is corrected without relaxing gravity-equivalence tolerances.
+- Dynamic-cell capacity is assembled by integrating nonnegative Bernstein density
+  into one cumulative cubic storage representation. Forward capacity, physical
+  area, inversion and energy use that representation; newly baked resources no
+  longer contain the original decreasing capacity knots. `JudasBasin`/`Surface1`
+  formats, pressure iteration budgets and acceptance thresholds are unchanged.
+- Convex volume cuts and wet-face subtraction use the actual physical zero
+  plane consistently. The former tolerance/intersection disagreement could
+  extrapolate outside an edge, inflate storage or enlarge an aperture. Wet-face
+  crossing distances use extended intermediate precision to avoid cancellation
+  at nearly parallel walls; platform precision limits are recorded in the report.
+- The half-turn case now gets past baking but still exposes a distinct sampling
+  failure after a 512 m origin shift. Authoritative liquid state remains identical;
+  rounding a world-space query back into owner space moves the sample across a
+  grid boundary from cell 9 to cell 10. This is an unresolved query-frame precision
+  issue. The full `--bake-regression knots` reproduction still returns failure and
+  is not certified by the successful bake.
+- The other original rotation proceeds through shifting, cold restoration and
+  further physical flow, then fails its original bit-exact summed-total check
+  (`2.5199999999999996` versus `2.52` m³). The invalid-origin request is rejected
+  atomically with the correct owner diagnostic; the M54 ledger error is zero.
+  The full `--bake-regression normalization` command remains failed pending a
+  separate contract review. No assertion or tolerance has been weakened.
+
+Solbert's EXP-007/008/013 research informs geometric validation and numerical
+reasoning. Its experimental solvers were not integrated; the research directory
+and original failure evidence remain unchanged. See
+[Dynamic liquid surfaces](LIQUID_SURFACES.md) for the current storage contract.
+
 ## Focused validation from a clean checkout
 
 Native development does not require Node/npm. Build the desired native targets
@@ -116,8 +156,10 @@ Pass2 corrects the curved-mesh **first-arrival** contract with finite swept-SAT
 bounds and retains the unchanged asserting test in the ordinary collision group.
 The longer glancing/continuation contract remains failed: contact ownership across
 fixed boundaries needs further work. Rejected expensive patch experiments remain
-preserved. Run `--group known-failures` for continuation and the newly recorded
-rotated-liquid bake failures; failures still return nonzero. They are explicitly excluded from the default focused subset, not marked
+preserved. Run `--group known-failures` for the preserved asserting reproductions;
+the liquid follow-up report identifies which original bake failures were corrected
+and which later assertion still fails. A passing earlier stage does not make a
+failing complete command a pass. These cases are explicitly excluded from the default focused subset, not marked
 expected-pass. To include them in CTest use
 `-DJUDAS_INCLUDE_KNOWN_FAILURES=ON`. A green focused run does not close this release
 blocker or establish complete CCD correctness.
@@ -137,17 +179,22 @@ The checker includes negative controls for missing/phantom members and accessors
 ## Findings that remain separate
 
 - **FLU-001:** original legacy-PBF settling issue remains deferred and failed.
-  This pass does not change fluid code, thresholds or independent research.
+  The rotated-liquid correction does not change legacy-PBF code, its settling
+  threshold or independent research.
 - **Historical continuation:** the original a106 snapshot lacks necessary state;
   new-format cold-save passes do not retroactively repair it.
 - **Dense physics latency:** the M91 1,024-body pile includes severe tails.
   Correctness gates do not certify real-time performance. Matched measurements
   and any bounded changes belong in the current evidence, not rewritten M91 logs.
-- **CCD arrival and glancing continuation:** the newly asserted fast-box contracts
-  still cross curved meshes. Per-triangle and scalar-bound repair variants fixed
-  arrival but introduced measured costs in representative curved-mesh workloads;
-  they were rejected. Production physics remains byte-identical to the accepted
-  baseline. This is a release blocker, not a pass or an implemented correction.
+- **CCD glancing continuation:** accepted Pass 2 corrected first arrival using
+  generic finite swept-SAT bounds; production physics is no longer byte-identical
+  to the M99 baseline. The longer curved-mesh continuation contract still fails
+  across fixed-step contact boundaries. Expensive unsuccessful alternatives remain
+  preserved. This remaining contract is a release blocker, not complete CCD
+  certification.
+- **Liquid origin sampling:** the corrected half-turn bake exposes the separate
+  cell-boundary query-rounding failure described above. Identical stored liquid
+  state does not certify identical sampling at a rounded cell boundary.
 - **Platform scope:** Linux is the acceptance platform. Windows/Android checks
   are recorded individually; missing physical hardware is not a synthetic pass.
 - **Network security/scope:** no public-Internet security certification, universal

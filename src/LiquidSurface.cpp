@@ -19,27 +19,32 @@ double capacity(const LiquidBasinData& b,double q){
  if(q>=b.curve.back().q)return b.capacity;
  size_t i=size_t(std::upper_bound(b.curve.begin(),b.curve.end(),q,[](double v,auto p){return v<p.q;})-b.curve.begin()-1);
  double t=(q-b.curve[i].q)/(b.curve[i+1].q-b.curve[i].q);
- if(!b.capacityPolynomials.empty()){auto c=b.capacityPolynomials[i];return c[0]+t*(c[1]+t*(c[2]+t*c[3]));}
+ if(!b.capacityPolynomials.empty())return b.capacityPolynomials[i].Volume(
+  (static_cast<long double>(q)-b.curve[i].q)/(static_cast<long double>(b.curve[i+1].q)-b.curve[i].q));
  return glm::mix(b.curve[i].volume,b.curve[i+1].volume,t);
 }
 double slope(const LiquidBasinData& b,double q){
  size_t i=size_t(std::upper_bound(b.curve.begin(),b.curve.end(),q,[](double v,auto p){return v<p.q;})-b.curve.begin());
  i=std::clamp(i,size_t(1),b.curve.size()-1)-1;
  double width=b.curve[i+1].q-b.curve[i].q;
- if(!b.capacityPolynomials.empty()){auto c=b.capacityPolynomials[i];double t=std::clamp((q-b.curve[i].q)/width,0.,1.);return (c[1]+t*(2*c[2]+3*t*c[3]))/width;}
+ if(!b.capacityPolynomials.empty())return b.capacityPolynomials[i].Area(
+  std::clamp((static_cast<long double>(q)-b.curve[i].q)/(static_cast<long double>(b.curve[i+1].q)-b.curve[i].q),0.L,1.L));
  return (b.curve[i+1].volume-b.curve[i].volume)/width;
 }
 std::vector<glm::dvec4> planes(const LiquidSurfaceData& d,unsigned col,unsigned row){double u0=glm::mix(d.minimum.x,d.maximum.x,double(col)/d.settings.columns),u1=glm::mix(d.minimum.x,d.maximum.x,double(col+1)/d.settings.columns),v0=glm::mix(d.minimum.y,d.maximum.y,double(row)/d.settings.rows),v1=glm::mix(d.minimum.y,d.maximum.y,double(row+1)/d.settings.rows);if(d.equilibrium.kind==GravityEquilibrium::Kind::Plane)return {{-d.x,-u0},{d.x,u1},{-d.y,-v0},{d.y,v1}};std::vector<glm::dvec4> p;for(V n:{-d.x+u0*d.axis,d.x-u1*d.axis,-d.y+v0*d.axis,d.y-v1*d.axis})p.push_back({n,glm::dot(n,d.equilibrium.center)});return p;}
-// The distribution of a linear coordinate over a tetrahedron is a cubic
-// simplex spline. This positive recurrence also handles repeated coordinates;
-// it avoids fragile divided differences and repeated polygon allocations.
 // Face-space subtraction keeps actual open apertures, including a solid whose
 // boundary lies exactly on the shared face (zero 3D overlap, finite blocked area).
 std::vector<LiquidPolygon> subtractFace(const std::vector<LiquidPolygon>& faces,const std::vector<glm::dvec4>& solid){
  auto clip=[](const LiquidPolygon& p,glm::dvec4 plane,bool inside){LiquidPolygon out;
-  for(size_t i=0;i<p.size();++i){V a=p[i],b=p[(i+1)%p.size()];double x=glm::dot(V(plane),a)-plane.w,y=glm::dot(V(plane),b)-plane.w;bool ia=inside?x<=1e-12:x>1e-12,ib=inside?y<=1e-12:y>1e-12;
+  // Classify and intersect the same physical plane. A tolerance-only inside
+  // vertex can have the same sign as an outside vertex; intersecting zero
+  // would then extrapolate the edge and incorrectly enlarge the aperture.
+  // Near-coplanar oblique faces also need the dot-product cancellation and
+  // intersection fraction evaluated before rounding back to a position.
+  auto distance=[&](V point){return static_cast<long double>(plane.x)*point.x+static_cast<long double>(plane.y)*point.y+static_cast<long double>(plane.z)*point.z-plane.w;};
+  for(size_t i=0;i<p.size();++i){V a=p[i],b=p[(i+1)%p.size()];long double x=distance(a),y=distance(b);bool ia=inside?x<=0:x>0,ib=inside?y<=0:y>0;
    if(ia)out.push_back(a);
-   if(ia!=ib)out.push_back(a+(b-a)*(x/(x-y)));
+   if(ia!=ib)out.push_back(a+(b-a)*double(x/(x-y)));
   }return out;
  };
  auto area=[](const LiquidPolygon& p){double result=0;for(size_t i=1;i+1<p.size();++i)result+=glm::length(glm::cross(p[i]-p[0],p[i+1]-p[0]))*.5;return result;};
@@ -50,62 +55,135 @@ std::vector<LiquidPolygon> subtractFace(const std::vector<LiquidPolygon>& faces,
  }
  return result;
 }
-using Polynomial=std::array<long double,4>;
-// Stable simplex-spline recurrence in the interval's local coordinate t. No
-// global cubic coefficients or divided differences of almost equal heights.
-Polynomial tetraPolynomial(const std::array<double,4>& q,double a,double h){
- std::array<Polynomial,4> f{};long double middle=static_cast<long double>(a)+static_cast<long double>(h)*.5L;
- for(unsigned i=0;i<4;++i)f[i][0]=middle>=q[i]?1:0;
- for(unsigned width=1;width<4;++width)for(unsigned i=0;i+width<4;++i){
-  if(middle<=q[i])f[i]={};
-  else if(middle>=q[i+width])f[i]={1,0,0,0};
-  else{Polynomial next{};long double denominator=q[i+width]-q[i];
-   for(unsigned k=0;k<4;++k){next[k]+=((a-q[i])*f[i][k]+(q[i+width]-a)*f[i+1][k])/denominator;
-    if(k)next[k]+=h*(f[i][k-1]-f[i+1][k-1])/denominator;
-   }f[i]=next;
-  }
- }
- return f[0];
+using Density = std::array<long double, 3>;
+
+// The projected uniform tetrahedron has density 3V/(q3-q0) times the
+// degree-two B-spline on its four sorted vertex heights. These are its
+// Bernstein controls on each nonzero span. Repeated heights need no epsilon.
+Density tetraDensity(const std::array<double, 4>& q, unsigned span) {
+    if (span == 1) {
+        return {0, 0, (static_cast<long double>(q[1]) - q[0]) /
+                      (static_cast<long double>(q[2]) - q[0])};
+    }
+    if (span == 2) {
+        return {(static_cast<long double>(q[1]) - q[0]) /
+                (static_cast<long double>(q[2]) - q[0]), 1,
+                (static_cast<long double>(q[3]) - q[2]) /
+                (static_cast<long double>(q[3]) - q[1])};
+    }
+    return {(static_cast<long double>(q[3]) - q[2]) /
+            (static_cast<long double>(q[3]) - q[1]), 0, 0};
 }
-bool curve(const LiquidGeometry& g,const GravityEquilibrium& e,LiquidBasinData& out){
- if(g.cells.empty())return false;
- struct Tet {std::array<double,4> q;long double volume;};std::vector<Tet> tetrahedra;
- LiquidBasinData b;b.geometry=g;b.equilibrium=e;std::vector<double> knots;
- for(auto& t:g.cells){Tet item;for(unsigned i=0;i<4;++i)item.q[i]=e.Coordinate(t[i]);std::sort(item.q.begin(),item.q.end());
-  item.volume=std::abs(glm::dot(t[1]-t[0],glm::cross(t[2]-t[0],t[3]-t[0])))/6;
-  if(item.q[0]==item.q[3])return false;
-  b.capacity+=double(item.volume);tetrahedra.push_back(item);knots.insert(knots.end(),item.q.begin(),item.q.end());
- }
- std::sort(knots.begin(),knots.end());knots.erase(std::unique(knots.begin(),knots.end()),knots.end());
- if(knots.size()<2)return false;
- // Range-add the positive local cubic pieces into a balanced interval tree.
- // Each node uses its own normalized coordinate, keeping coefficients bounded.
- // This is O(tetrahedra * log(knots)), without derivative cancellation or the
- // O(tetrahedra * knots) active-set assembly cost measured during body motion.
- const size_t intervals=knots.size()-1;std::vector<Polynomial> tree(intervals*4);
- auto restricted=[](const Polynomial& c,long double a,long double width){return Polynomial{
-  c[0]+a*(c[1]+a*(c[2]+a*c[3])),width*(c[1]+a*(2*c[2]+a*3*c[3])),width*width*(c[2]+3*a*c[3]),width*width*width*c[3]};};
- auto add=[&](auto&& self,size_t node,size_t left,size_t right,size_t first,size_t last,double origin,double width,const Polynomial& c)->void{
-  if(right<=first||left>=last)return;
-  if(first<=left&&right<=last){auto contribution=restricted(c,(static_cast<long double>(knots[left])-origin)/width,(static_cast<long double>(knots[right])-knots[left])/width);for(unsigned k=0;k<4;++k)tree[node][k]+=contribution[k];return;}
-  size_t middle=(left+right)/2;if(first<middle)self(self,node*2+1,left,middle,first,last,origin,width,c);if(last>middle)self(self,node*2+2,middle,right,first,last,origin,width,c);
- };
- for(auto& t:tetrahedra){for(unsigned i=1;i<4;++i){double h=t.q[i]-t.q[i-1];if(h<=0)continue;auto c=tetraPolynomial(t.q,t.q[i-1],h);for(auto& value:c)value*=t.volume;
-   size_t first=size_t(std::lower_bound(knots.begin(),knots.end(),t.q[i-1])-knots.begin()),last=size_t(std::lower_bound(knots.begin(),knots.end(),t.q[i])-knots.begin());
-   add(add,0,0,intervals,first,last,t.q[i-1],h,c);
-  }
-  size_t last=size_t(std::lower_bound(knots.begin(),knots.end(),t.q[3])-knots.begin());
-  if(last<intervals)add(add,0,0,intervals,last,intervals,knots.front(),knots.back()-knots.front(),{t.volume,0,0,0});
- }
- auto resolve=[&](auto&& self,size_t node,size_t left,size_t right)->void{auto c=tree[node];
-  if(right-left==1){b.curve.push_back({knots[left],double(c[0])});b.capacityPolynomials.push_back({double(c[0]),double(c[1]),double(c[2]),double(c[3])});return;}
-  size_t middle=(left+right)/2;long double split=(static_cast<long double>(knots[middle])-knots[left])/(static_cast<long double>(knots[right])-knots[left]);
-  auto a=restricted(c,0,split),d=restricted(c,split,1-split);for(unsigned k=0;k<4;++k){tree[node*2+1][k]+=a[k];tree[node*2+2][k]+=d[k];}
-  self(self,node*2+1,left,middle);self(self,node*2+2,middle,right);
- };
- resolve(resolve,0,0,intervals);b.curve.push_back({knots.back(),b.capacity});b.curve.front().volume=0;
- b.volumeTolerance=std::max(1e-12,b.capacity*1e-10);b.heightTolerance=1e-12;
- out=std::move(b);return true;
+
+// Positive quadratic Bernstein restriction (the middle value is the blossom
+// at a,b). All weights are nonnegative for a subinterval of [0,1].
+Density restrictedDensity(const Density& c, long double a, long double b) {
+    const long double l0 = (1 - a) * c[0] + a * c[1];
+    const long double l1 = (1 - a) * c[1] + a * c[2];
+    const long double r0 = (1 - b) * c[0] + b * c[1];
+    const long double r1 = (1 - b) * c[1] + b * c[2];
+    return {(1 - a) * l0 + a * l1, (1 - b) * l0 + b * l1,
+            (1 - b) * r0 + b * r1};
+}
+
+bool curve(const LiquidGeometry& g, const GravityEquilibrium& e, LiquidBasinData& out) {
+    if (g.cells.empty()) return false;
+    struct Tet {
+        std::array<double, 4> q;
+        long double volume;
+    };
+    std::vector<Tet> tetrahedra;
+    LiquidBasinData b;
+    b.geometry = g;
+    b.equilibrium = e;
+    std::vector<double> knots;
+    for (const auto& t : g.cells) {
+        Tet item;
+        for (unsigned i = 0; i < 4; ++i) item.q[i] = e.Coordinate(t[i]);
+        std::sort(item.q.begin(), item.q.end());
+        item.volume = std::abs(glm::dot(t[1] - t[0],
+            glm::cross(t[2] - t[0], t[3] - t[0]))) / 6;
+        if (item.q[0] == item.q[3]) return false;
+        tetrahedra.push_back(item);
+        knots.insert(knots.end(), item.q.begin(), item.q.end());
+    }
+    std::sort(knots.begin(), knots.end());
+    knots.erase(std::unique(knots.begin(), knots.end()), knots.end());
+    if (knots.size() < 2) return false;
+
+    // Add and restrict nonnegative physical area, then integrate once in height
+    // order. Independent CDF/tree reductions disagree at adjacent vertex heights
+    // by ULPs, including at full capacity. A positive density prefix preserves the
+    // nonlinear storage without clamping, merging knots or repairing its result.
+    // The range tree retains O(tetrahedra * log(knots)) work.
+    const size_t intervals = knots.size() - 1;
+    std::vector<Density> tree(intervals * 4);
+    auto add = [&](auto&& self, size_t node, size_t left, size_t right,
+                   size_t first, size_t last, double origin, double finish,
+                   const Density& c) -> void {
+        if (right <= first || left >= last) return;
+        if (first <= left && right <= last) {
+            const long double width = static_cast<long double>(finish) - origin;
+            const auto contribution = restrictedDensity(c,
+                (static_cast<long double>(knots[left]) - origin) / width,
+                (static_cast<long double>(knots[right]) - origin) / width);
+            for (unsigned k = 0; k < 3; ++k) tree[node][k] += contribution[k];
+            return;
+        }
+        const size_t middle = (left + right) / 2;
+        if (first < middle)
+            self(self, node * 2 + 1, left, middle, first, last, origin, finish, c);
+        if (last > middle)
+            self(self, node * 2 + 2, middle, right, first, last, origin, finish, c);
+    };
+    for (const auto& t : tetrahedra) {
+        for (unsigned i = 1; i < 4; ++i) {
+            if (t.q[i] <= t.q[i - 1]) continue;
+            auto c = tetraDensity(t.q, i);
+            for (auto& value : c)
+                value *= 3 * t.volume / (static_cast<long double>(t.q[3]) - t.q[0]);
+            const size_t first = size_t(std::lower_bound(knots.begin(), knots.end(),
+                t.q[i - 1]) - knots.begin());
+            const size_t last = size_t(std::lower_bound(knots.begin(), knots.end(),
+                t.q[i]) - knots.begin());
+            add(add, 0, 0, intervals, first, last, t.q[i - 1], t.q[i], c);
+        }
+    }
+
+    long double cumulative = 0;
+    auto resolve = [&](auto&& self, size_t node, size_t left, size_t right) -> void {
+        const auto c = tree[node];
+        if (right - left == 1) {
+            const long double width = static_cast<long double>(knots[right]) - knots[left];
+            const long double next = cumulative + width * (c[0] + c[1] + c[2]) / 3;
+            b.curve.push_back({knots[left], double(cumulative)});
+            LiquidCapacityPolynomial interval;
+            interval.volume = {double(cumulative), double(cumulative + width * c[0] / 3),
+                double(cumulative + width * (c[0] + c[1]) / 3), double(next)};
+            interval.area = {double(c[0]), double(c[1]), double(c[2])};
+            b.capacityPolynomials.push_back(interval);
+            cumulative = next;
+            return;
+        }
+        const size_t middle = (left + right) / 2;
+        const long double split = (static_cast<long double>(knots[middle]) - knots[left]) /
+                                  (static_cast<long double>(knots[right]) - knots[left]);
+        const auto a = restrictedDensity(c, 0, split);
+        const auto d = restrictedDensity(c, split, 1);
+        for (unsigned k = 0; k < 3; ++k) {
+            tree[node * 2 + 1][k] += a[k];
+            tree[node * 2 + 2][k] += d[k];
+        }
+        self(self, node * 2 + 1, left, middle);
+        self(self, node * 2 + 2, middle, right);
+    };
+    resolve(resolve, 0, 0, intervals);
+    b.capacity = double(cumulative);
+    b.curve.push_back({knots.back(), b.capacity});
+    b.volumeTolerance = std::max(1e-12, b.capacity * 1e-10);
+    b.heightTolerance = 1e-12;
+    out = std::move(b);
+    return true;
 }
 }
 glm::dvec2 LiquidSurfaceData::Chart(V p)const{if(equilibrium.kind==GravityEquilibrium::Kind::Plane)return {glm::dot(p,x),glm::dot(p,y)};V v=p-equilibrium.center;double h=glm::dot(v,axis);return {glm::dot(v,x)/h,glm::dot(v,y)/h};}
@@ -322,7 +400,7 @@ double LiquidSurface::Energy()const{
   double integral=0;
   for(size_t i=1;i<c.storage.curve.size();++i){auto a=c.storage.curve[i-1],b=c.storage.curve[i];if(c.q<=a.q)break;
    double width=b.q-a.q,t=std::min(1.,(c.q-a.q)/width);
-   if(!c.storage.capacityPolynomials.empty()){auto k=c.storage.capacityPolynomials[i-1];integral+=width*(k[0]*t+k[1]*t*t/2+k[2]*t*t*t/3+k[3]*t*t*t*t/4);}
+   if(!c.storage.capacityPolynomials.empty())integral+=width*c.storage.capacityPolynomials[i-1].Integral(t);
    else integral+=width*(a.volume*t+(b.volume-a.volume)*t*t/2);
   }
   result+=data->equilibrium.magnitude*(c.q*c.volume-integral);
